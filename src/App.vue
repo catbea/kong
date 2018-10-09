@@ -4,18 +4,27 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 <script>
+import demoService from '@/services/demoService'
 export default {
+  created() {
+    this.test()
+  },
   mounted() {
     console.log(this.$store.state.system)
+  },
+  methods: {
+    async test() {
+      let a = await demoService.testApi(82612312312, 10)
+      console.log('controll log');
+      console.log(a)
+    }
   }
 }
 </script>
-
-
 <style lang="less">
 // #app {
 //   font-family: "Avenir", Helvetica, Arial, sans-serif;
