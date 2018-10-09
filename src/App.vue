@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
+      <div class="dev">
+
+      </div>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
@@ -26,6 +29,16 @@ export default {
 }
 </script>
 <style lang="less">
+#app {
+  #nav {
+    font-size: 24px;
+  }
+}
+.dev {
+  border: 1px solid red;
+  width: 348px;
+  height: 100px;
+}
 // #app {
 //   font-family: "Avenir", Helvetica, Arial, sans-serif;
 //   -webkit-font-smoothing: antialiased;
