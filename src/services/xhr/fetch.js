@@ -2,6 +2,7 @@ import 'whatwg-fetch'
 import queryString from 'query-string'
 import errHandler from './errorHandler'
 import codeErrHandler from './codeErrHandler'
+import qs from 'qs'
 const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
@@ -17,9 +18,10 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     headers,
     mode: 'cors'
   }
+  const qsParams = qs.stringify(body)
   method === 'GET'
-    ? (url = url + '?' + queryString.stringify(body))
-    : (options.body = body)
+    ? (url = url + '?' + qsParams)
+    : (options.body = qsParams)
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
     // http错误

@@ -6,9 +6,10 @@ const modules = []
 
 files.keys().forEach(key => {
   if (key === './index.js') return
+  if(!files(key).default) return
   for (let temp of files(key).default) {
     modules.push(temp)
   }
 })
-modules.push({ path: '*', redirect: '/' })
+modules.push({ path: '*', redirect: '/dynamics' })
 export default modules

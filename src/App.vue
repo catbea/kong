@@ -1,44 +1,70 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <div class="dev">
-
+    <div id="view-box">
+      <div class="router-view">
+        <router-view></router-view>
       </div>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <tabbar></tabbar>
     </div>
-    <router-view />
   </div>
 </template>
 <script>
+import Navbar from '@/components/Common/Navbar'
+import Tabbar from '@/components/Common/Tabbar'
 import demoService from '@/services/demoService'
 export default {
-  created() {
+  components: {
+    Navbar,
+    Tabbar
+  },
+  created () {
     this.test()
   },
-  mounted() {
-    console.log(this.$store.state.system)
+  mounted () {
+    // console.log(this.$store.state.system)
   },
   methods: {
-    async test() {
+    async test () {
       let a = await demoService.testApi(82612312312, 10)
-      console.log('controll log');
-      console.log(a)
     }
   }
 }
 </script>
 <style lang="less">
+@import './assets/css/reset.less';
+@import './assets/css/common.less';
+
+html {
+  -webkit-text-size-adjust: none;
+  -webkit-overflow-scrolling: touch;
+}
+
 #app {
-  #nav {
-    font-size: 24px;
+  width: 100%;
+  height: 100%;
+  // position: relative;
+  #view-box {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    > .router-view {
+      position: relative;
+      margin-bottom: -1px;
+      width: 100%;
+      height: 100%;
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+      >div{
+        position: absolute;
+        top: 0;
+      }
+    }
   }
 }
-.dev {
-  border: 1px solid red;
-  width: 348px;
-  height: 100px;
-}
+
 // #app {
 //   font-family: "Avenir", Helvetica, Arial, sans-serif;
 //   -webkit-font-smoothing: antialiased;
