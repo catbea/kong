@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build-dev": "vue-cli-service build --model development --modern",
+    "build-cs": "vue-cli-service build --model test --modern",
+    "build-prod": "vue-cli-service build --model production --modern",
+    "serve-dev": "vue-cli-service serve --mode development",
+    "serve-cs": "vue-cli-service serve --mode test",
+    "serve-prod": "vue-cli-service serve --mode production"
   },
   "dependencies": {
     "amfe-flexible": "^2.2.1",
