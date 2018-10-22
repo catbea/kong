@@ -7,8 +7,8 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toUpperCase()
-  const BASE_API_URL = 'https://sit.zooming-data.com/helper-rest' // TODO 挪到环境配置
-  url = BASE_API_URL + url
+  
+  url = process.env.VUE_APP_BASE_API_URL + url
   headers = Object.assign(
     { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
     headers
