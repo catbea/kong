@@ -127,11 +127,7 @@ export default {
           word-break: break-all;
           overflow: auto;
           font-size: 14px;
-          
-          
         }
-
-        // margin-right: 10px;
       }
     }
   }

@@ -91,14 +91,14 @@ export default {
         display: inline-block;
         color: #ffffff;
         &.member-status {
-          color: #E5B37B;
+          color: #e5b37b;
         }
         > .user-name {
           display: inline-flex;
           font-size: 18px;
           line-height: 25px;
           font-weight: 600;
-          >img {
+          > img {
             width: 16px;
             height: 16px;
             padding: 4px;
@@ -108,7 +108,7 @@ export default {
           font-size: 12px;
           font-weight: 400;
           line-height: 17px;
-          margin-top: -5px; 
+          margin-top: -5px;
         }
         > .user-area {
           font-size: 12px;
@@ -119,7 +119,8 @@ export default {
       }
       > .tag-group-container {
         position: absolute;
-        top: 90px;
+        display: flex;
+        top: 115px;
         left: 20px;
       }
       > .user-signature {
