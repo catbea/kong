@@ -29,7 +29,6 @@
 <script>
 import businessCard from 'COMP/Me/BusinessCard'
 import { Cell, CellGroup } from 'vant'
-// import Cell from 'COMP/Cell'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {

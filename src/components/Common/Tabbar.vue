@@ -1,5 +1,5 @@
 <template>
-  <tabbar class="tabbar" v-model="active">
+  <tabbar v-if="tabbar.show" class="tabbar" v-model="active">
     <tabbar-item class="tabbar-item" v-for="item in items" :key="item.name" :replace="true" :to="item.path" :info="infoCount(item.info)">
       <span>{{item.name}}</span>
       <img slot="icon" slot-scope="props" :src="props.active ? item.icon_atc : item.icon">
@@ -8,6 +8,7 @@
 </template>
 <script>
 import { Tabbar, TabbarItem } from 'vant'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Tabbar,
@@ -36,6 +37,9 @@ export default {
     tabClickHandler (path) {
 
     }
+  },
+  computed: {
+    ...mapGetters(['tabbar']),
   }
 }
 </script>

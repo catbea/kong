@@ -1,11 +1,15 @@
 import simpleLogger from './afterEach/simpleLogger'
 import routerMetaHandler from './afterEach/routerMetaHandler'
+import promptClear from './afterEach/promptClear'
+import routeConf from './afterEach/routeConf'
 
 export default (router) => {
-  // if (__DEV__) { // 仅开发时调用
+  // 仅开发时调用
+  if (process.env.NODE_ENV === 'development') {
     router.afterEach(simpleLogger)
-    router.afterEach(routerMetaHandler)
-  // }
-  // if (__PROD__) {  // 进生产环境调用
-  // }
+  }
+  router.afterEach(routerMetaHandler)
+  router.afterEach(promptClear)
+  router.afterEach(routeConf)
+  
 }

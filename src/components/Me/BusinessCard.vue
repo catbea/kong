@@ -1,32 +1,33 @@
 <template>
   <div class="business-card-container">
+
     <div class="business-card-box">
       <div class="bg_img info-box" v-if="userInfo" :style="{backgroundImage:'url(' + infoBg + ')'}">
-        <card-avatar class="card-avatar" :url="userInfo.avatarUrl" :member="true"></card-avatar>
-        <div class="user-info" v-if="userVipInfo" :class="userVipInfo.isvip &&'member-status'">
-          <h5 class="user-name">{{userInfo.name}}</h5>
+        <card-avatar class="card-avatar" :url="userInfo.avatarUrl" :member="true" @click="editCLickHandler"></card-avatar>
+        <div class="user-info" v-if="userVipInfo" :class="userVipInfo.isvip &&'member-status'" @click="editCLickHandler">
+          <div class="user-name">{{userInfo.name}} <img :src="editIcon"> </div>
           <p class="user-company">{{userInfo.distributorName}}</p>
           <p class="user-area">主营区域: {{userInfo.majorRegion}}</p>
         </div>
         <tag-group class="tag-group-container" v-if="userInfo&&userVipInfo" :data="userInfo.userTags" :textColor="textColor" :backColor="backColor"></tag-group>
         <p class="user-signature" :style="{color:userVipInfo&&userVipInfo.isvip ? '#E5B37B': '#A4B8D5'}" v-if="userInfo">“{{userInfo.signature}}”</p>
+        <router-link class="share-handler-icon" to="/me/share-business-card"><img :src="shareIcon"></router-link>
       </div>
-      <img class="modify-img" :src="modifyImg" alt="">
+      <img class="modify-img" :src="modifyImg">
     </div>
     <div class="business-status-box">
       <div class="status-info-left">
         <img :src="crownIcon">
-        <p class="info-title vip-status">已开通VIP</p>
-        <p class="info-desc vip-desc">07/09到期</p>
+        <p class="info-title vip-status">{{isVipInfo}}</p>
+        <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
       </div>
       <div class="status-info-right">
         <img :src="discountIcon">
         <p class="info-title welfare-status">特惠套餐</p>
-        <p class="info-desc welfare-desc">07/09到期</p>
+        <p class="info-desc welfare-desc">{{vipPackage}}</p>
       </div>
     </div>
   </div>
-
 </template>
 <script>
 import CardAvatar from 'COMP/Me/CardAvatar'
@@ -42,7 +43,14 @@ export default {
     modifyImg: require('IMG/me/usercard_bg@2x.png'),
     crownIcon: require('IMG/me/cardGroup5@2x.png'),
     discountIcon: require('IMG/me/SetmealGroup17@2x.png'),
+    shareIcon: require('IMG/me/share.png'),
+    editIcon: require('IMG/me/editInfo@2x.png')
   }),
+  methods: {
+    editCLickHandler () {
+      this.$router.push('/me/edit')
+    }
+  },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
     textColor () {
@@ -50,6 +58,15 @@ export default {
     },
     backColor () {
       return this.userVipInfo.isvip ? 'rgba(229,179,123,0.15)' : 'rgba(164,184,213,0.15)'
+    },
+    isVipInfo () {
+      return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
+    },
+    vipTimeInfo () {
+      return this.userVipInfo.isvip ? this.userVipInfo.vip : '楼盘不限量'
+    },
+    vipPackage () {
+      return this.userVipInfo.isvip ? this.userVipInfo.package : '任选10个盘'
     }
   }
 }
@@ -70,26 +87,34 @@ export default {
       }
       > .user-info {
         position: absolute;
-        top: 20px;
+        top: 5px;
         display: inline-block;
         color: #ffffff;
         &.member-status {
+          color: #E5B37B;
         }
         > .user-name {
-          display: inline-block;
+          display: inline-flex;
           font-size: 18px;
           line-height: 25px;
           font-weight: 600;
+          >img {
+            width: 16px;
+            height: 16px;
+            padding: 4px;
+          }
         }
         > .user-company {
           font-size: 12px;
           font-weight: 400;
           line-height: 17px;
+          margin-top: -5px; 
         }
         > .user-area {
           font-size: 12px;
           font-weight: 400;
           line-height: 17px;
+          margin-top: 5px;
         }
       }
       > .tag-group-container {
@@ -103,11 +128,21 @@ export default {
         left: 20px;
         font-size: 12px;
       }
+      > .share-handler-icon {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        right: 20px;
+        top: 5px;
+        > img {
+          width: 100%;
+        }
+      }
     }
-    >.modify-img {
+    > .modify-img {
       position: absolute;
       bottom: 10px;
-      width:100%;
+      width: 100%;
     }
   }
   > .business-status-box {
@@ -146,7 +181,7 @@ export default {
         left: 55px;
         font-size: 12px;
         font-weight: 400;
-        color:#999999;
+        color: #999999;
         line-height: 1.5;
       }
     }

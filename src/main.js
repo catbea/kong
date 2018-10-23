@@ -8,10 +8,13 @@ import wechatApi from '@/utils/wechatApi'
 
 Vue.config.productionTip = false
 
+// vant
+import { Toast } from 'vant'
+Vue.use(Toast)
 // globle
 wechatApi.init()
 
-new Vue({
+window.vue = new Vue({
   router,
   store,
   render: h => h(App)
