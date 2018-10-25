@@ -27,7 +27,7 @@
   </div>
 </template>
 <script>
-import businessCard from 'COMP/Me/BusinessCard'
+import businessCard from 'COMP/User/BusinessCard'
 import { Cell, CellGroup } from 'vant'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'

@@ -10,8 +10,8 @@ export default {
     member: { type: Boolean, default: false }
   },
   data: _ => ({
-    markIcon: require('IMG/me/crown.png'),
-    defaultAvatar: require('IMG/me/person_icon.png')
+    markIcon: require('IMG/user/crown.png'),
+    defaultAvatar: require('IMG/user/person_icon.png')
   }),
   computed: {
     userAvatar() {

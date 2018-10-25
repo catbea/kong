@@ -20,7 +20,7 @@ export default {
       { name: '动态', icon: require('IMG/tabbar/message.png'), icon_atc: require('IMG/tabbar/message_atc.png'), path: '/dynamics', info: 0 },
       { name: '楼盘', icon: require('IMG/tabbar/market.png'), icon_atc: require('IMG/tabbar/market_atc.png'), path: '/market', info: 0 },
       { name: '客户', icon: require('IMG/tabbar/client.png'), icon_atc: require('IMG/tabbar/client_atc.png'), path: '/myClient', info: 0 },
-      { name: '名片', icon: require('IMG/tabbar/business_card.png'), icon_atc: require('IMG/tabbar/business_card_atc.png'), path: '/me', info: 0 }
+      { name: '名片', icon: require('IMG/tabbar/business_card.png'), icon_atc: require('IMG/tabbar/business_card_atc.png'), path: '/user', info: 0 }
     ]
   }),
   methods: {

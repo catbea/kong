@@ -1,6 +1,5 @@
 <template>
   <div class="business-card-container">
-
     <div class="business-card-box">
       <div class="bg_img info-box" v-if="userInfo" :style="{backgroundImage:'url(' + infoBg + ')'}">
         <card-avatar class="card-avatar" :url="userInfo.avatarUrl" :member="true" @click="editCLickHandler"></card-avatar>
@@ -11,7 +10,7 @@
         </div>
         <tag-group class="tag-group-container" v-if="userInfo&&userVipInfo" :data="userInfo.userTags" :textColor="textColor" :backColor="backColor"></tag-group>
         <p class="user-signature" :style="{color:userVipInfo&&userVipInfo.isvip ? '#E5B37B': '#A4B8D5'}" v-if="userInfo">“{{userInfo.signature}}”</p>
-        <router-link class="share-handler-icon" to="/me/share-business-card"><img :src="shareIcon"></router-link>
+        <router-link class="share-handler-icon" to="/user/share-business-card"><img :src="shareIcon"></router-link>
       </div>
       <img class="modify-img" :src="modifyImg">
     </div>
@@ -30,7 +29,7 @@
   </div>
 </template>
 <script>
-import CardAvatar from 'COMP/Me/CardAvatar'
+import CardAvatar from 'COMP/User/CardAvatar'
 import TagGroup from 'COMP/TagGroup'
 import { mapGetters } from 'vuex'
 export default {
@@ -39,16 +38,18 @@ export default {
     TagGroup
   },
   data: _ => ({
-    infoBg: require('IMG/me/usercard@2x.png'),
-    modifyImg: require('IMG/me/usercard_bg@2x.png'),
-    crownIcon: require('IMG/me/cardGroup5@2x.png'),
-    discountIcon: require('IMG/me/SetmealGroup17@2x.png'),
-    shareIcon: require('IMG/me/share.png'),
-    editIcon: require('IMG/me/editInfo@2x.png')
+    infoBg: require('IMG/user/usercard@2x.png'),
+    modifyImg: require('IMG/user/usercard_bg@2x.png'),
+    crownIcon: require('IMG/user/cardGroup5@2x.png'),
+    discountIcon: require('IMG/user/SetmealGroup17@2x.png'),
+    shareIcon: require('IMG/user/share.png'),
+    editIcon: require('IMG/user/editInfo@2x.png')
   }),
   methods: {
     editCLickHandler () {
-      this.$router.push('/me/edit')
+      console.log(1);
+      
+      this.$router.push('/user/edit')
     }
   },
   computed: {

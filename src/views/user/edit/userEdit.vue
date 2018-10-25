@@ -1,11 +1,11 @@
 <template>
   <div class="user-edit-page">
     <cell-group class="user-base-info">
-      <cell class="cell-item user-avatar" :clickable="true" title="我的头像" is-link>
+      <cell class="cell-item user-avatar" :to="'/user/edit/avatar'" title="我的头像" is-link>
         <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div>
       </cell>
-      <cell class="cell-item" title="姓名" is-link :value="userInfo.name" />
-      <cell class="cell-item" title="手机号" is-link :value="userInfo.mobile" />
+      <cell class="cell-item" title="姓名" is-link :to="'/user/edit/username'" :value="userInfo.name" />
+      <cell class="cell-item" title="手机号" :to="'/user/edit/phone'" is-link :value="userInfo.mobile" />
       <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" />
       <cell class="cell-item" title="平台公司" is-link :value="userInfo.distributorName" />
       <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" />
