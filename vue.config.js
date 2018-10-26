@@ -5,7 +5,7 @@ module.exports = {
     host: '0.0.0.0',
     port: 80,
     disableHostCheck: true,
-  // public: 'frontdev.zooming-data.com'
+    // public: 'sit.zooming-data.com'
   // proxy: 
   },
   chainWebpack: config => {

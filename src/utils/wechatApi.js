@@ -14,6 +14,7 @@ class WechatApi {
 
   async init() {
     const ticket = await this._getTicket()
+    this.wx.config(ticket)
   }
 
   /**
