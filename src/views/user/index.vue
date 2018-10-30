@@ -1,6 +1,6 @@
 <template>
   <div class="me-page">
-    <business-card v-if="userInfo">
+    <business-card >
     </business-card>
     <cell-group class="business-info">
       <cell class="business-info-cell" title="我的楼盘" is-link>
@@ -94,7 +94,7 @@ export default {
       }
     }
   }
-}
+}               
 </style>
 
 
