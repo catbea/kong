@@ -16,7 +16,7 @@ export default [
   },
   {
     path: '/dev/page1',
-    name: 'dev-comp',
+    name: '前端名片生成',
     component: resolve => require(['@/views/dev/rehearse/page1.vue'], resolve),
     meta: {
       tabbar: {

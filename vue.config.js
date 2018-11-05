@@ -1,13 +1,12 @@
 var resolve = require('path').resolve
 module.exports = {
   productionSourceMap: false,
-
   devServer: {
     host: '0.0.0.0',
     port: 80,
     disableHostCheck: true,
     public: 'wx.zhangzihb.com'
-  // proxy: 
+    // proxy:
   },
 
   chainWebpack: config => {
@@ -16,7 +15,5 @@ module.exports = {
       .set('SERVICE', resolve(__dirname, './src/services'))
       .set('ASSETS', resolve(__dirname, './src/assets'))
       .set('IMG', resolve(__dirname, './src/assets/img'))
-  },
-
-  lintOnSave: undefined
+  }
 }
