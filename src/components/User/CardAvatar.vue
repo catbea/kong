@@ -41,6 +41,3 @@ export default {
   }
 }
 </style>
-
-
-

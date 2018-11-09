@@ -46,27 +46,29 @@ export default {
     editIcon: require('IMG/user/editInfo@2x.png')
   }),
   methods: {
-    editCLickHandler () {
-      console.log(1);
-      
+    editCLickHandler() {
+      console.log(1)
+
       this.$router.push('/user/edit')
     }
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
-    textColor () {
+    textColor() {
       return this.userVipInfo.isvip ? '#E5B37B' : '#A4B8D5'
     },
-    backColor () {
-      return this.userVipInfo.isvip ? 'rgba(229,179,123,0.15)' : 'rgba(164,184,213,0.15)'
+    backColor() {
+      return this.userVipInfo.isvip
+        ? 'rgba(229,179,123,0.15)'
+        : 'rgba(164,184,213,0.15)'
     },
-    isVipInfo () {
+    isVipInfo() {
       return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
     },
-    vipTimeInfo () {
+    vipTimeInfo() {
       return this.userVipInfo.isvip ? this.userVipInfo.vip : '楼盘不限量'
     },
-    vipPackage () {
+    vipPackage() {
       return this.userVipInfo.isvip ? this.userVipInfo.package : '任选10个盘'
     }
   }

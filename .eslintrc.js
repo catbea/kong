@@ -5,7 +5,7 @@ module.exports = {
     node: true
   },
 
-  extends: ["plugin:vue/essential", "@vue/prettier"],
+  extends: ['plugin:vue/essential', '@vue/prettier'],
 
   rules: {
     'no-console': 'off',
@@ -15,8 +15,5 @@ module.exports = {
     parser: 'babel-eslint'
   },
 
-  'extends': [
-    'plugin:vue/essential',
-    '@vue/prettier'
-  ]
-};
+  extends: ['plugin:vue/essential', '@vue/prettier']
+}

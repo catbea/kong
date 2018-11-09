@@ -39,6 +39,6 @@ const statusMap = {
   '504': '网关超时',
   '505': '不支持的 HTTP 版本'
 }
-export default (status) => {
+export default status => {
   console.error(`http请求有误，原因: [${statusMap[status] || '未知'}]`)
 }

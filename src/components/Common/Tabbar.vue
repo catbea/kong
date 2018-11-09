@@ -17,14 +17,38 @@ export default {
   data: _ => ({
     active: 0,
     items: [
-      { name: '动态', icon: require('IMG/tabbar/message.png'), icon_atc: require('IMG/tabbar/message_atc.png'), path: '/dynamics', info: 0 },
-      { name: '楼盘', icon: require('IMG/tabbar/market.png'), icon_atc: require('IMG/tabbar/market_atc.png'), path: '/market', info: 0 },
-      { name: '客户', icon: require('IMG/tabbar/client.png'), icon_atc: require('IMG/tabbar/client_atc.png'), path: '/myClient', info: 0 },
-      { name: '名片', icon: require('IMG/tabbar/business_card.png'), icon_atc: require('IMG/tabbar/business_card_atc.png'), path: '/user', info: 0 }
+      {
+        name: '动态',
+        icon: require('IMG/tabbar/message.png'),
+        icon_atc: require('IMG/tabbar/message_atc.png'),
+        path: '/dynamics',
+        info: 0
+      },
+      {
+        name: '楼盘',
+        icon: require('IMG/tabbar/market.png'),
+        icon_atc: require('IMG/tabbar/market_atc.png'),
+        path: '/market',
+        info: 0
+      },
+      {
+        name: '客户',
+        icon: require('IMG/tabbar/client.png'),
+        icon_atc: require('IMG/tabbar/client_atc.png'),
+        path: '/myClient',
+        info: 0
+      },
+      {
+        name: '名片',
+        icon: require('IMG/tabbar/business_card.png'),
+        icon_atc: require('IMG/tabbar/business_card_atc.png'),
+        path: '/user',
+        info: 0
+      }
     ]
   }),
   methods: {
-    infoCount (val) {
+    infoCount(val) {
       val = parseInt(val)
       if (val < 1) {
         return null
@@ -34,12 +58,10 @@ export default {
         return val
       }
     },
-    tabClickHandler (path) {
-
-    }
+    tabClickHandler(path) {}
   },
   computed: {
-    ...mapGetters(['tabbar']),
+    ...mapGetters(['tabbar'])
   }
 }
 </script>
@@ -52,5 +74,3 @@ export default {
   align-items: center;
 }
 </style>
-
-

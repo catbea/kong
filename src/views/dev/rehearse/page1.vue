@@ -50,10 +50,10 @@ export default {
       'http://phga1f2sd.bkt.clouddn.com/0004.jpg',
       'http://phga1f2sd.bkt.clouddn.com/0005.jpg',
       'http://phga1f2sd.bkt.clouddn.com/0006.jpg',
-      'http://phga1f2sd.bkt.clouddn.com/0008.jpg',
+      'http://phga1f2sd.bkt.clouddn.com/0008.jpg'
     ]
   }),
-  created () {
+  created() {
     // console.log(aa);
 
     this.userInfo = {
@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    changeBgHandler (e) {
+    changeBgHandler(e) {
       let r = random(0, this.IMG_LIST.length - 1)
       let randomCount = 0
       while (r === this.currentImgIndex || randomCount > 5) {
@@ -77,10 +77,10 @@ export default {
       }
       this.currentImgIndex = r
     },
-    async buildCardHandler () {
+    async buildCardHandler() {
       this.status = 2
       const dpr = window.devicePixelRatio
-      const canvas = await h2c(document.querySelector("#show-container"), {
+      const canvas = await h2c(document.querySelector('#show-container'), {
         logging: false,
         useCORS: true
       })
@@ -90,7 +90,7 @@ export default {
     }
   },
   computed: {
-    backImg () {
+    backImg() {
       return this.IMG_LIST[this.currentImgIndex]
     }
   }

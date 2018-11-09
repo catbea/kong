@@ -12,17 +12,17 @@ export default {
     userId: -1,
     result: null
   }),
-  created () {
+  created() {
     this.userId = this.userInfo.userId
     this.$toast.loading({
       mask: true,
       message: '海报生成中...',
-      duration:0
-    });
+      duration: 0
+    })
     this.getShareInfo()
   },
   methods: {
-    async getShareInfo () {
+    async getShareInfo() {
       const res = await userService.getShareInfo(0, this.userId, this.userId)
       this.$toast.clear()
       this.result = res.data
@@ -38,11 +38,10 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  >.result-status {
+  > .result-status {
     height: 100%;
     background-color: #07294e;
     background-size: contain;
   }
 }
 </style>
-

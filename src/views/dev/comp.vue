@@ -5,13 +5,9 @@
 </template>
 <script>
 export default {
-  data: _ => ({
-    
-  })
+  data: _ => ({})
 }
 </script>
 
 <style lang="less">
-
 </style>
-
