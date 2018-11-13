@@ -29,18 +29,18 @@ export default {
     Cell,
     CellGroup
   },
-  created () {
+  created() {
     this.getUserInfo()
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
     }
   },
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo'])
   }
 }
 </script>
@@ -133,5 +133,3 @@ export default {
   }
 }
 </style>
-
-

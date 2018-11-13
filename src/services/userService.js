@@ -1,11 +1,10 @@
 import xhr from './xhr/'
 class UserService {
-  
   /**
    * 获取用户信息
    * @param {*} agentId 用户id
    */
-  getUserInfo (agentId) {
+  getUserInfo(agentId) {
     return xhr({
       url: '/user/queryInfo',
       body: {
@@ -16,12 +15,12 @@ class UserService {
 
   /**
    * 获取用户vip信息
-   * @param {*} agentId 
+   * @param {*} agentId
    */
-  getUserVipInfo (agentId) {
+  getUserVipInfo(agentId) {
     return xhr({
-      method:'post',
-      url:'/userPackage/vipPackage',
+      method: 'post',
+      url: '/userPackage/vipPackage',
       body: {
         agentId
       }
@@ -30,14 +29,14 @@ class UserService {
 
   /**
    * 获取分享图片
-   * @param {*} shareType 
-   * @param {*} shareId 
-   * @param {*} agentId 
+   * @param {*} shareType
+   * @param {*} shareId
+   * @param {*} agentId
    */
-  getShareInfo (shareType, shareId, agentId) {
+  getShareInfo(shareType, shareId, agentId) {
     return xhr({
       url: '/shareImg/user',
-      body:{
+      body: {
         shareType,
         shareId,
         agentId

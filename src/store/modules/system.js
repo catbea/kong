@@ -12,9 +12,7 @@ const getters = {
   tabbar: state => state.tabbar
 }
 
-const actions = {
-
-}
+const actions = {}
 
 const mutations = {
   [types.VERSIONS](state, data) {
@@ -29,4 +27,5 @@ export default {
   state,
   getters,
   actions,
-mutations}
+  mutations
+}

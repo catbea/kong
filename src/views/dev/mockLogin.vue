@@ -14,21 +14,21 @@ export default {
     userId: -1,
     result: ''
   }),
-  created () {
+  created() {
     this.userId = this.$route.params.userId
     window.localStorage.setItem('userId', this.userId)
     this.getUserInfo()
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       this.$store.dispatch('getUserInfo', this.userId)
     }
   },
   computed: {
-    ...mapGetters({ userInfo: 'userInfo' }),
+    ...mapGetters({ userInfo: 'userInfo' })
   },
   watch: {
-    userInfo (val) {
+    userInfo(val) {
       try {
         const userInfoStr = JSON.stringify(val)
         window.localStorage.setItem('userInfo', userInfoStr)
@@ -51,4 +51,3 @@ export default {
   }
 }
 </style>
-

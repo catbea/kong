@@ -5,12 +5,14 @@ module.exports = {
     host: '0.0.0.0',
     port: 80,
     disableHostCheck: true,
-  // public: 'frontdev.zooming-data.com'
-  // proxy: 
+    public: 'wx.zhangzihb.com'
+    // proxy:
   },
+
   chainWebpack: config => {
     config.resolve.alias
       .set('COMP', resolve(__dirname, './src/components'))
+      .set('SERVICE', resolve(__dirname, './src/services'))
       .set('ASSETS', resolve(__dirname, './src/assets'))
       .set('IMG', resolve(__dirname, './src/assets/img'))
   }

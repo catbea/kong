@@ -10,12 +10,17 @@ export default {
     TagItem
   },
   props: {
-    data: { type: Array, default: _ => { return [] } },
+    data: {
+      type: Array,
+      default: _ => {
+        return []
+      }
+    },
     textColor: { type: String, default: '#ffffff' },
     backColor: { type: String, default: '#666666' }
   },
   computed: {
-    styleOptions () {
+    styleOptions() {
       return {
         color: this.textColor,
         'background-color': this.backColor
@@ -28,7 +33,3 @@ export default {
 .tag-group {
 }
 </style>
-
-
-
-

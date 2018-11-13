@@ -7,7 +7,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toUpperCase()
-  
+
   url = process.env.VUE_APP_BASE_API_URL + url
   headers = Object.assign(
     { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
@@ -19,9 +19,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     mode: 'cors'
   }
   const qsParams = qs.stringify(body)
-  method === 'GET'
-    ? (url = url + '?' + qsParams)
-    : (options.body = qsParams)
+  method === 'GET' ? (url = url + '?' + qsParams) : (options.body = qsParams)
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
     // http错误

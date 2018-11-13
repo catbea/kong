@@ -17,14 +17,14 @@ export default {
     Navbar,
     Tabbar
   },
-  created () {
+  created() {
     this.test()
   },
-  mounted () {
+  mounted() {
     // console.log(this.$store.state.system)
   },
   methods: {
-    async test () {
+    async test() {
       let a = await demoService.testApi(82612312312, 10)
     }
   }
@@ -56,7 +56,7 @@ html {
       flex: 1;
       overflow-x: hidden;
       overflow-y: auto;
-      >div{
+      > div {
         position: absolute;
         top: 0;
       }

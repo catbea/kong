@@ -1,6 +1,6 @@
 <template>
   <div class="me-page">
-    <business-card v-if="userInfo">
+    <business-card >
     </business-card>
     <cell-group class="business-info">
       <cell class="business-info-cell" title="我的楼盘" is-link>
@@ -37,22 +37,20 @@ export default {
     Cell,
     CellGroup
   },
-  data: _ => ({
-
-  }),
-  created () {
+  data: _ => ({}),
+  created() {
     this.getUserInfo()
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
       this.$store.dispatch('getUserVipInfo', userId)
     }
   },
-  computed: {    
-    ...mapGetters(['userInfo']),
+  computed: {
+    ...mapGetters(['userInfo'])
   }
 }
 </script>
@@ -65,7 +63,8 @@ export default {
       height: 192px;
     }
   }
-  > .business-info ,>.business-help{
+  > .business-info,
+  > .business-help {
     background: #fff;
     margin-top: 10px;
     > .business-info-cell {
@@ -96,5 +95,3 @@ export default {
   }
 }
 </style>
-
-

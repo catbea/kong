@@ -3,5 +3,3 @@
     动态
   </div>
 </template>
-
-

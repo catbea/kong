@@ -14,6 +14,7 @@ class WechatApi {
 
   async init() {
     const ticket = await this._getTicket()
+    this.wx.config(ticket)
   }
 
   /**
@@ -21,7 +22,7 @@ class WechatApi {
    */
   async _getTicket() {
     let url = window.location.href.split('#')[0]
-    let res = await commonService.wxTicket(url ,1)
+    let res = await commonService.wxTicket(url, 1)
     let conf = {
       debug: false, // __DEV__ 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
       appId: res.data.appId, // 必填，公众号的唯一标识

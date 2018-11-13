@@ -4,8 +4,18 @@
 <script>
 export default {
   props: {
-    info: { type: Object, default: _ => { return {} } },
-    styleOptions: { type: Object, default: _ => { return {} } }
+    info: {
+      type: Object,
+      default: _ => {
+        return {}
+      }
+    },
+    styleOptions: {
+      type: Object,
+      default: _ => {
+        return {}
+      }
+    }
   }
 }
 </script>
@@ -19,6 +29,3 @@ export default {
   border-radius: 3px;
 }
 </style>
-
-
-
