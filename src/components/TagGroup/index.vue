@@ -9,8 +9,11 @@ export default {
   components: {
     TagItem
   },
+  data:_=>({
+    data:null
+  }),
   props: {
-    data: {
+    arr: {
       type: Array,
       default: _ => {
         return []
@@ -25,6 +28,11 @@ export default {
         color: this.textColor,
         'background-color': this.backColor
       }
+    }
+  },
+  watch:{
+    arr:function (params) {
+      this.data=params
     }
   }
 }
