@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="view-box">
+    <div id="view-box" ref="viewBox">
       <div class="router-view">
         <router-view></router-view>
       </div>
@@ -22,11 +22,13 @@ export default {
   },
   mounted() {
     // console.log(this.$store.state.system)
+    //给window添加一个滚动滚动监听事件
+  // this.$refs.viewBox.addEventListener('scroll', this.handleScroll)
   },
   methods: {
     async test() {
       let a = await demoService.testApi(82612312312, 10)
-    }
+    },
   }
 }
 </script>
