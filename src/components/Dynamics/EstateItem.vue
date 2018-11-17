@@ -1,13 +1,16 @@
 <template>
-  <div class="estate-item dev" v-if="info">
+  <div class="van-hairline--bottom estate-item" v-if="info">
     <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.linkerUrl + ')'}">
       <!-- TODO 720标示 -->
     </div>
-    <div class="right-container dev">
+    <div class="right-container">
       <h5 class="estate-name">{{info.linkerName}}</h5>
       <p class="estate-location">{{`${info.city} ${info.county}`}}</p>
       <tag-group :arr="info.linkerTags"></tag-group>
-      <div class="estate-info"></div>
+      <div class="estate-info">
+        <p class="estate-price">{{info.price | avgPrice}}</p>
+        <p class="estate-area">{{info.priceUnit}}</p>
+      </div>
     </div>
     <div class="rebate"></div>
   </div>
@@ -26,14 +29,16 @@ export default {
 <style lang="less">
 .estate-item {
   display: flex;
+  overflow: hidden;
   width: 100%;
   height: 122px;
   .left-container {
     display: inline-block;
-    width: 120px;
+    flex-basis: 120px;
     height: 90px;
     margin: 16px;
     border-radius: 6px;
+    flex-shrink: 0;
   }
   .right-container {
     display: inline-block;
@@ -47,6 +52,22 @@ export default {
       font-size: 12px;
       font-weight: 400;
       color: #666666;
+    }
+    .estate-info {
+      >p {
+        display: inline-block;
+      }
+      .estate-price {
+        width: 130px;
+        color: #ea4d2e;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .estate-area {
+        font-size: 12px;
+        font-weight: 400;
+        color: #999999;
+      }
     }
   }
 }

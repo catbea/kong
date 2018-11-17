@@ -16,5 +16,8 @@ export default {
 </script>
 <style lang="less">
 .tag-group {
+  display: flex;
+  overflow: hidden;
+  // flex-wrap: wrap;
 }
 </style>

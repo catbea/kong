@@ -2,15 +2,20 @@
   <div class="estate-recommend">
     <title-bar :conf="titleBarConf"></title-bar>
     <div class="recommend-box">
-
+      <estate-item :info="info"></estate-item>
     </div>
   </div>
 </template>
 <script>
+import EstateItem from 'COMP/Dynamics/EstateItem'
 import TitleBar from 'COMP/TitleBar'
 export default {
   components: {
-    TitleBar
+    TitleBar,
+    EstateItem
+  },
+  props: {
+    info: Object
   },
   data: _ => ({
     titleBarConf: {

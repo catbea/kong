@@ -119,9 +119,6 @@ export default {
         font-size: 12px;
         height: 30px;
         line-height: 24px;
-        // img {
-        //   margin: 0 -25px;
-        // }
       }
     }
   }

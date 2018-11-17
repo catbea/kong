@@ -2,7 +2,7 @@
   <div class="dynamics-page">
     <div class="dynamics-top-container">
       <dynamics-collect :data="collectData"></dynamics-collect>
-      <estate-recommend></estate-recommend>
+      <estate-recommend :info="recommendData"></estate-recommend>
     </div>
     <div class="list-container">
       <my-estate-list :list="estateListData"></my-estate-list>
@@ -54,6 +54,7 @@ export default {
     async getEstateList() {
       const res = await dynamicsService.getEstateInfo()
       this.estateListData = res.myLinkerVOs
+      this.recommendData = res.aiLinkerVO
     }
   }
 }
