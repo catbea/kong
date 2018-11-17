@@ -9,8 +9,12 @@ import wechatApi from '@/utils/wechatApi'
 Vue.config.productionTip = false
 
 // vant
-import { Toast } from 'vant'
+import { Toast, Icon, PullRefresh, List } from 'vant'
+
 Vue.use(Toast)
+Vue.use(Icon)
+Vue.use(PullRefresh)
+Vue.use(List)
 // globle
 wechatApi.init()
 

@@ -1,20 +1,73 @@
 <template>
   <div class="dynamics-page">
-    动态
+    <div class="dynamics-top-container">
+      <dynamics-collect :data="collectData"></dynamics-collect>
+      <estate-recommend></estate-recommend>
+    </div>
+    <div class="list-container">
+      <my-estate-list :list="estateListData"></my-estate-list>
+    </div>
   </div>
 </template>
 <script>
+import DynamicsCollect from 'COMP/Dynamics/DynamicsCollect'
+import EstateRecommend from 'COMP/Dynamics/EstateRecommend'
+import MyEstateList from 'COMP/Dynamics/MyEstateList'
+import dynamicsService from 'SERVICE/dynamicsService'
 export default {
-  data: _ =>({
-    topData:null,
-    recommendData: null,
-    
-  })
+  components: {
+    DynamicsCollect,
+    EstateRecommend,
+    MyEstateList
+  },
+  data: _ => ({
+    collectData: null,        // 数据中心数据
+    recommendData: null,      // 推荐盘数据
+    estateListData: null      // 我的楼盘数据
+  }),
+  created() {
+    this.getCollectInfo()
+    this.getEstateList()
+  },
+  methods: {
+    // 获取头部数据,不包括楼盘信息
+    async getCollectInfo() {
+      const res = await dynamicsService.getDynamicsCollect()
+      // 数据中心部分 数据拼装
+      this.collectData = {
+        newMsg: res.unreadCustomerCount,
+        customerCount: {
+          val: res.customerCount,
+          change: res.unreadCustomerCount
+        },
+        businessCardViews: {
+          val: res.scanCardCount,
+          change: res.unreadScanCardCount
+        },
+        estateViews: {
+          val: res.scanLinkerCount,
+          change: res.unreadScanLinkerCount
+        },
+        simpleDynamic: res.simpleDynamicVOs
+      }
+    },
+    async getEstateList() {
+      const res = await dynamicsService.getEstateInfo()
+      this.estateListData = res.myLinkerVOs
+    }
+  }
 }
 </script>
 <style lang="less">
-.dynamics-page{
-
+.dynamics-page {
+  width: 100%;
+  height: 100%;
+  background: #f7f9fa;
+  .dynamics-top-container {
+    background: #fff;
+  }
+  .list-container {
+    background: #fff;
+  }
 }
 </style>
-

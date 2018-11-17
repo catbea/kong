@@ -20,9 +20,6 @@ export default {
   created() {
     this.test()
   },
-  mounted() {
-    // console.log(this.$store.state.system)
-  },
   methods: {
     async test() {
       let a = await demoService.testApi(82612312312, 10)

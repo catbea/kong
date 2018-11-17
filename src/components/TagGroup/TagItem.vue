@@ -1,21 +1,10 @@
 <template>
-  <div v-if="info" class="tag-item" :style="styleOptions"><span>{{info.labelName}}</span></div>
+  <div v-if="info" class="tag-item"><span>{{info}}</span></div>
 </template>
 <script>
 export default {
   props: {
-    info: {
-      type: Object,
-      default: _ => {
-        return {}
-      }
-    },
-    styleOptions: {
-      type: Object,
-      default: _ => {
-        return {}
-      }
-    }
+    info: { type: String }
   }
 }
 </script>

@@ -18,7 +18,10 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     headers,
     mode: 'cors'
   }
+
+  body.agentId = localStorage.getItem('userId')
   const qsParams = qs.stringify(body)
+
   method === 'GET' ? (url = url + '?' + qsParams) : (options.body = qsParams)
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
@@ -29,7 +32,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     try {
       const res = await response.json()
       const isOk = res.result
-      isOk ? resolve(res) : codeErrHandler(res)
+      isOk ? resolve(res.data) : codeErrHandler(res)
     } catch (err) {
       console.error('Error: ', err)
     }
