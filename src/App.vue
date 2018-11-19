@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="view-box">
+    <div id="view-box" ref="viewBox">
       <div class="router-view">
         <router-view></router-view>
       </div>
@@ -23,7 +23,7 @@ export default {
   methods: {
     async test() {
       let a = await demoService.testApi(82612312312, 10)
-    }
+    },
   }
 }
 </script>

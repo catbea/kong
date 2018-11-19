@@ -9,6 +9,9 @@ export default {
   components: {
     TagItem
   },
+  data:_=>({
+    data:null
+  }),
   props: {
     arr: { type: Array }
   }
