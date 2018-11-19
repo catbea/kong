@@ -13,36 +13,38 @@
 </template>
 <script>
 export default {
-  props:{
-    middleInfo:{
-      type:Object,
-      default:function () {return{}}
-    },
+  props: {
+    middleInfo: {
+      type: Object,
+      default: function() {
+        return {}
+      }
+    }
   }
 }
 </script>
 <style lang="less">
-.market-detail-info-middle-page{
-  width:375px;
-  .middle-info-box{
+.market-detail-info-middle-page {
+  width: 375px;
+  .middle-info-box {
     padding: 0 0 0 15px;
     width: 360px;
-    background: #FFFFFF;
-    ol{
+    background: #ffffff;
+    ol {
       width: 340px;
       overflow: hidden;
-      border-bottom: 1px solid #EEEEEE;
+      border-bottom: 1px solid #eeeeee;
       margin-right: 15px;
-      li{
-        font-size:14px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(51,51,51,1);
-        line-height:normal;
+      li {
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: normal;
         display: flex;
         justify-content: space-between;
         margin: 10px 0 10px 0;
-        div{
+        div {
           width: 120px;
         }
         // margin-bottom: 17px;
@@ -61,7 +63,7 @@ export default {
         //   font-weight:400;
         //   color:rgba(51,51,51,1);
         //   line-height:normal;
-        // } 
+        // }
         // div:nth-child(3){
         //    width: 220px;
         //    font-size:14px;
@@ -69,7 +71,7 @@ export default {
         //   font-weight:400;
         //   color:rgba(51,51,51,1);
         //   line-height:normal;
-        // } 
+        // }
       }
     }
   }

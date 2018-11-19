@@ -18,13 +18,15 @@
 </template>
 <script>
 export default {
-  props:{
-    topInfo:{
-      type:Object,
-      default:function () {return{}}
-    },
-  }, 
-  computed:{
+  props: {
+    topInfo: {
+      type: Object,
+      default: function() {
+        return {}
+      }
+    }
+  },
+  computed: {
     // leftStyle () {
     //   return {
     //     font-size: this.info.leftTextSize || '#5C5F66',
@@ -41,35 +43,35 @@ export default {
 }
 </script>
 <style lang="less">
-.market-detail-info-top-page{
-  width:100%;
-  .top-info-box{
+.market-detail-info-top-page {
+  width: 100%;
+  .top-info-box {
     margin-top: 10px;
     padding: 19px 0 0 15px;
-    
+
     width: 360px;
-    background: #FFFFFF;
-    ul{
+    background: #ffffff;
+    ul {
       width: 100%;
       height: 100%;
-      li{
+      li {
         display: flex;
         margin-bottom: 17px;
-        div:nth-child(1){
+        div:nth-child(1) {
           width: 100px;
-          font-size:14px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(150,158,168,1);
-        line-height:normal;
+          font-size: 14px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(150, 158, 168, 1);
+          line-height: normal;
         }
-         div:nth-child(2){
-           width: 220px;
-           font-size:14px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(51,51,51,1);
-          line-height:normal;
+        div:nth-child(2) {
+          width: 220px;
+          font-size: 14px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
+          line-height: normal;
         }
       }
     }

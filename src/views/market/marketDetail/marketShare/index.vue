@@ -19,69 +19,70 @@
 import * as types from '@/store/mutation-types'
 export default {
   created() {
-     this.$store.commit(types.TABBAR,false)
-  },
+    this.$store.commit(types.TABBAR, false)
+  }
 }
 </script>
 <style lang="less">
-.market-share-page{
+.market-share-page {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  .share-top{
+  .share-top {
     width: 300px;
     height: 480px;
-    border-radius:10px;
+    border-radius: 10px;
     display: flex;
-  justify-content: center;
-  align-items: center;
-  background:rgba(255,255,255,1);
-  box-shadow:0px 3px 6px 0px rgba(58,76,130,0.07),0px 2px 17px 0px rgba(34,47,85,0.05);
-    .share-top-content{
-    width: 271px;
-    height: 448px;
-    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07),
+      0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+    .share-top-content {
+      width: 271px;
+      height: 448px;
+      border: 1px solid black;
     }
   }
-  .share-bottom{
+  .share-bottom {
     margin-top: 12px;
-    p{
+    p {
       text-align: center;
-      font-size:13px;
-      font-family:PingFang-SC-Regular;
-      font-weight:400;
-      color:rgba(153,153,153,1);
-      line-height:normal;
+      font-size: 13px;
+      font-family: PingFang-SC-Regular;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
+      line-height: normal;
     }
-    ul{
+    ul {
       display: flex;
       justify-content: space-between;
       margin-top: 17px;
-      .compile{
-        width:144px;
-        height:44px;
+      .compile {
+        width: 144px;
+        height: 44px;
         line-height: 44px;
         text-align: center;
-        border-radius:4px;
-        border:1px solid;
-        font-size:16px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(0,122,230,1);
+        border-radius: 4px;
+        border: 1px solid;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(0, 122, 230, 1);
       }
-      .save{
-        width:144px;
-        height:44px;
+      .save {
+        width: 144px;
+        height: 44px;
         line-height: 44px;
         text-align: center;
-        background:rgba(0,122,230,1);
-        border-radius:4px;
-        font-size:16px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(255,255,255,1);
+        background: rgba(0, 122, 230, 1);
+        border-radius: 4px;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
       }
     }
   }

@@ -40,60 +40,60 @@
 </template>
 <script>
 export default {
-  data:_=>({
-    list:[1,2]
+  data: _ => ({
+    list: [1, 2]
   })
 }
 </script>
 <style lang="less">
-.commission-page{
+.commission-page {
   width: 100%;
-  height:100%;
-  padding:16px 0 0 16px;
-  background: #F7F9FA;
+  height: 100%;
+  padding: 16px 0 0 16px;
+  background: #f7f9fa;
   line-height: normal;
- > .commission-content{
+  > .commission-content {
     width: 302px;
-    background:rgba(255,255,255,1);
-    border-radius:10px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
     margin-bottom: 10px;
     padding: 16px 25px 0 16px;
-    > li{
+    > li {
       display: inline-block;
-    margin-top: 12px;
-    div:nth-child(1){
-        font-size:15px;
-        font-family:PingFang-SC-Semibold;
-        font-weight:600;
-        color:rgba(51,51,51,1);
+      margin-top: 12px;
+      div:nth-child(1) {
+        font-size: 15px;
+        font-family: PingFang-SC-Semibold;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
       }
-      div:nth-child(2){
+      div:nth-child(2) {
         margin-top: 8px;
-        font-size:13px;
-        font-family:PingFang-SC-Regular;
-        font-weight:400;
-        color:rgba(102,102,102,1);
+        font-size: 13px;
+        font-family: PingFang-SC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
       }
-     }
-    > .commission-content-condition{
-      font-size:18px;
-      font-family:PingFang-SC-Semibold;
-      font-weight:600;
-      color:rgba(51,51,51,1);
     }
-    > .commission-content-deduct{
+    > .commission-content-condition {
+      font-size: 18px;
+      font-family: PingFang-SC-Semibold;
+      font-weight: 600;
+      color: rgba(51, 51, 51, 1);
+    }
+    > .commission-content-deduct {
       margin-top: 16px;
-      span:nth-child(1){
-        font-size:15px;
-        font-family:PingFang-SC-Semibold;
-        font-weight:600;
-        color:rgba(51,51,51,1);
+      span:nth-child(1) {
+        font-size: 15px;
+        font-family: PingFang-SC-Semibold;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
       }
-      span:nth-child(2){
-        font-size:15px;
-        font-family:PingFang-SC-Semibold;
-        font-weight:600;
-        color:#EA4D2E;
+      span:nth-child(2) {
+        font-size: 15px;
+        font-family: PingFang-SC-Semibold;
+        font-weight: 600;
+        color: #ea4d2e;
       }
     }
     // > .commission-content-standard{
@@ -129,10 +129,10 @@ export default {
     //   }
     // }
   }
-  .commission-bottom{
+  .commission-bottom {
     width: 334px;
-    background:rgba(255,255,255,1);
-    border-radius:10px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
     padding: 16px 0 0 16px;
   }
 }

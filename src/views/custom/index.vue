@@ -17,12 +17,9 @@ export default {
     searchVal: '',
     sort: 1
   }),
-  created() {
-  },
+  created() {},
   methods: {
-    onSearchHandler () {
-
-    }
+    onSearchHandler() {}
   }
 }
 </script>
@@ -32,5 +29,3 @@ export default {
   }
 }
 </style>
-
-

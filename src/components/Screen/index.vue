@@ -21,61 +21,61 @@
 </template>
 <script>
 export default {
-  data:_=>({
-    showData:1
+  data: _ => ({
+    showData: 1
   }),
-  methods:{
-    area(){
-      this.showData=1
+  methods: {
+    area() {
+      this.showData = 1
     },
-    average(){
-      this.showData=2
+    average() {
+      this.showData = 2
     },
-    popularity(){
-      this.showData=3
+    popularity() {
+      this.showData = 3
     },
-    state(){
-      this.showData=4
+    state() {
+      this.showData = 4
     }
   }
 }
 </script>
 <style lang="less">
-.active1{
-      color:rgba(0,122,230,1);
-    }
-    .active2{
-      background:rgba(0,122,230,1);
-    }
-.home-screen-box{
+.active1 {
+  color: rgba(0, 122, 230, 1);
+}
+.active2 {
+  background: rgba(0, 122, 230, 1);
+}
+.home-screen-box {
+  display: flex;
+  justify-content: space-between;
+  width: 357px;
+  height: 32px;
+  padding-top: 12px;
+  background: rgba(255, 255, 255, 1);
+  border-bottom: solid 1px #dfdfdf;
+  padding-left: 18px;
+  li {
     display: flex;
-    justify-content: space-between;
-    width:357px;
-    height:32px;
-    padding-top: 12px;
-    background:rgba(255,255,255,1);
-    border-bottom:solid 1px #DFDFDF;
-    padding-left: 18px;
-    li{
-      display: flex;
-    span{
-      display:block;
-      font-size:14px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      line-height:20px;
-      }
-      span:nth-child(2){
-          width: 16px;
-          height: 16px;
-          border: 1px solid black;
-        }
+    span {
+      display: block;
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      line-height: 20px;
     }
-    .sort{
+    span:nth-child(2) {
       width: 16px;
-      height: 17px;
-      background: url("../../assets/img/market/Combined Shape.png") no-repeat;
-      margin-right: 13px;
+      height: 16px;
+      border: 1px solid black;
     }
   }
+  .sort {
+    width: 16px;
+    height: 17px;
+    background: url('../../assets/img/market/Combined Shape.png') no-repeat;
+    margin-right: 13px;
+  }
+}
 </style>

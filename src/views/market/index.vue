@@ -38,24 +38,40 @@ export default {
   },
   data: _ => ({
     describeInfo: [
-      {dredgeFlag:true,borderBottom:true},
-      {dredgeFlag:false,borderBottom:false},
-      {dredgeFlag:true,borderBottom:false},
-      {dredgeFlag:true,borderBottom:true}
+      { dredgeFlag: true, borderBottom: true },
+      { dredgeFlag: false, borderBottom: false },
+      { dredgeFlag: true, borderBottom: false },
+      { dredgeFlag: true, borderBottom: true }
     ],
     info: [
-      {text:'即将发售',textColor:'rgba(234,77,46,1)', backColor:'rgba(234,77,46,0.1)'},
-      {text:'地铁房',textColor:'rgba(92,95,102,1)', backColor:'rgba(143,159,177,0.15)'},
-      {text:'高端社区',textColor:'rgba(92,95,102,1)', backColor:'rgba(143,159,177,0.15)'},
-      {text:'商务区',textColor:'rgba(92,95,102,1)', backColor:'rgba(143,159,177,0.15)'}
+      {
+        text: '即将发售',
+        textColor: 'rgba(234,77,46,1)',
+        backColor: 'rgba(234,77,46,0.1)'
+      },
+      {
+        text: '地铁房',
+        textColor: 'rgba(92,95,102,1)',
+        backColor: 'rgba(143,159,177,0.15)'
+      },
+      {
+        text: '高端社区',
+        textColor: 'rgba(92,95,102,1)',
+        backColor: 'rgba(143,159,177,0.15)'
+      },
+      {
+        text: '商务区',
+        textColor: 'rgba(92,95,102,1)',
+        backColor: 'rgba(143,159,177,0.15)'
+      }
     ],
     marketList: [1, 2, 3, 4]
   }),
   methods: {
-    skipDetail (n) {
-      if(n==1){
-        this.$router.push({path:`/market/marketDetail/${this.userId}`})
-      console.log(n)
+    skipDetail(n) {
+      if (n == 1) {
+        this.$router.push({ path: `/market/marketDetail/${this.userId}` })
+        console.log(n)
       }
     }
   }

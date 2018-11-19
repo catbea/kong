@@ -17,43 +17,43 @@
 <script>
 export default {
   data: _ => ({
-    siteNearbyBoxHintBoxIconIMG:require('IMG/marketDetail/Shape.png'),
+    siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape.png')
   })
 }
 </script>
 <style lang="less">
-  .site-nearby-box{
-    width: 343px;
-    .site-nearby-box-classify{
-      display: flex;
-      justify-content: space-between;
-      div{
-        font-size:14px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(51,51,51,1);
-      }
-      div:last-child{
-        margin-right: 10px;
-      }
+.site-nearby-box {
+  width: 343px;
+  .site-nearby-box-classify {
+    display: flex;
+    justify-content: space-between;
+    div {
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
     }
-    .site-nearby-box-map{
-      width: 343px;
-      height: 188px;
-    }
-    .site-nearby-box-hint-box{
-      display: flex;
-      .site-nearby-box-hint-box-icon{
-        width: 14px;
-        height: 13px;
-        margin:3px 6px 0 0;
-      }
-      .site-nearby-box-hint{
-        font-size:12px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(102,102,102,1);
-      }
+    div:last-child {
+      margin-right: 10px;
     }
   }
+  .site-nearby-box-map {
+    width: 343px;
+    height: 188px;
+  }
+  .site-nearby-box-hint-box {
+    display: flex;
+    .site-nearby-box-hint-box-icon {
+      width: 14px;
+      height: 13px;
+      margin: 3px 6px 0 0;
+    }
+    .site-nearby-box-hint {
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
+    }
+  }
+}
 </style>

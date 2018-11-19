@@ -42,92 +42,92 @@ export default {
     commissionDetailImg: require('IMG/marketDetail/arrow.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png')
   }),
-  methods:{
-    commission(){
-      this.$router.push("/marketDetail/commission")
+  methods: {
+    commission() {
+      this.$router.push('/marketDetail/commission')
     }
   }
 }
 </script>
 <style lang="less">
-.specific-market-detail-box{
-      width: 335px;
-      .specific-market-detail-name{
-        font-size:26px;
-        font-weight:600;
-        color:rgba(51,51,51,1);
+.specific-market-detail-box {
+  width: 335px;
+  .specific-market-detail-name {
+    font-size: 26px;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+  }
+  .specific-market-detail-condition {
+    display: flex;
+    .specific-market-detail-condition-left,
+    .specific-market-detail-condition-right {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+    }
+    .specific-market-detail-condition-line {
+      width: 1px;
+      height: 16px;
+      background: rgba(51, 51, 51, 1);
+      margin: 0 5px 0 5px;
+      margin-top: 3px;
+    }
+  }
+  .specific-market-detail {
+    display: flex;
+    height: auto;
+    width: 335px;
+    margin-top: 5px;
+    .specific-market-detail-left {
+      font-size: 16px;
+      font-weight: 400;
+      color: #8a8f99;
+      margin-right: 9px;
+      li {
+        margin-top: 9px;
       }
-      .specific-market-detail-condition{
+    }
+    .specific-market-detail-right {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(138, 143, 153, 1);
+      flex: 1;
+      li {
+        margin: 9px 0px 0 0;
+        color: #333333;
+      }
+      .average-price-right {
+        color: #ea4d2e;
+      }
+      .commission-right {
         display: flex;
-        .specific-market-detail-condition-left,.specific-market-detail-condition-right{
-          font-size:14px;
-          font-weight:400;
-          color:rgba(51,51,51,1);
+        justify-content: space-between;
+        .commission {
+          margin: 0;
         }
-        .specific-market-detail-condition-line{
-          width: 1px;
-          height: 16px;
-          background: rgba(51,51,51,1);
-          margin: 0 5px 0 5px;
-          margin-top: 3px;
+        .commission-detail {
+          width: 12px;
+          height: 12px;
+          margin: 8px 8px 0 0;
         }
       }
-      .specific-market-detail{
+      .market-site-right {
         display: flex;
-        height: auto;
-        width: 335px;
-        margin-top: 5px;
-        .specific-market-detail-left{
-          font-size:16px;
-          font-weight:400;
-          color:#8A8F99;
-          margin-right: 9px;
-          li{
-            margin-top:9px;
-          }
+        justify-content: space-between;
+        .site {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin: 0;
+          width: 210px;
         }
-        .specific-market-detail-right{
-          font-size:16px;
-          font-weight:400;
-          color:rgba(138,143,153,1);
-          flex:1;
-          li{
-            margin:9px 0px 0 0;
-           color:#333333;
-           
-          }
-          .average-price-right{
-            color:#EA4D2E;
-          }
-          .commission-right{
-            display: flex;
-            justify-content: space-between;
-            .commission{
-              margin: 0;
-            }
-            .commission-detail{
-              width: 12px;
-              height: 12px;
-              margin: 8px 8px 0 0;
-            }
-          }
-          .market-site-right{
-            display: flex;
-            justify-content: space-between;
-            .site{
-              white-space:nowrap;
-            overflow:hidden;
-            text-overflow:ellipsis;
-            margin: 0;
-            width: 210px;
-            }
-            .site-detail{
-              width: 12px;
-              height: 12px;
-              margin: 8px 8px 0 0;
-            }
-          }
+        .site-detail {
+          width: 12px;
+          height: 12px;
+          margin: 8px 8px 0 0;
         }
       }
     }
+  }
+}
 </style>

@@ -23,7 +23,7 @@ export default {
   methods: {
     async test() {
       let a = await demoService.testApi(82612312312, 10)
-    },
+    }
   }
 }
 </script>

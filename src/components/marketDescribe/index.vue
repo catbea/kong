@@ -28,55 +28,53 @@
 </template>
 <script>
 export default {
-  data: ()=>({
-    val:123,
-
+  data: () => ({
+    val: 123
   }),
-  props:{
+  props: {
     // value:'',
-    dredgeFlag:{
+    dredgeFlag: {
       type: Boolean,
       default: true
-      },
-      borderBottom:{
+    },
+    borderBottom: {
       type: Boolean,
       default: false
-      }
+    }
   },
   methods: {
     itemClickHandler() {
-      this.$emit('skipDetail',1)
-      
+      this.$emit('skipDetail', 1)
+
       // if(n.skip==true){
       //   this.$router.push({path:`/market/marketDetail/${this.userId}`})
       // }
       // this.$router.push({ path: '/market/marketDetail', query:{plan:`${this.userId}`}})
     }
   },
-  watch:{
-    value(val){
+  watch: {
+    value(val) {
       this.val = val
     },
-    val(val){
-      this.$emit('change',val)
+    val(val) {
+      this.$emit('change', val)
     }
   }
 }
 </script>
 <style lang="less">
-.line{
-  border-bottom:1px solid #E6E6E6;
+.line {
+  border-bottom: 1px solid #e6e6e6;
 }
-   .market-box-page{
-     background: #FFFFFF;
-    .market-box {
-      width:343px;
-      padding-top: 13px;
-      padding-left: 16px;
-      .all-describe{
-        
-        display: flex;
-       flex-wrap: wrap;
+.market-box-page {
+  background: #ffffff;
+  .market-box {
+    width: 343px;
+    padding-top: 13px;
+    padding-left: 16px;
+    .all-describe {
+      display: flex;
+      flex-wrap: wrap;
       .img {
         width: 120px;
         height: 90px;
@@ -106,25 +104,25 @@ export default {
           display: flex;
           justify-content: space-between;
           margin-bottom: 11px;
-          span:nth-child(1){
-            font-size:16px;
-            font-family:PingFangSC-Semibold;
-            font-weight:600;
-            color:rgba(51,51,51,1);
-            line-height:16px;
+          span:nth-child(1) {
+            font-size: 16px;
+            font-family: PingFangSC-Semibold;
+            font-weight: 600;
+            color: rgba(51, 51, 51, 1);
+            line-height: 16px;
           }
-          span:nth-child(2){
+          span:nth-child(2) {
             width: 16px;
             height: 16px;
             border: 1px solid black;
           }
         }
         .site {
-          font-size:12px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(102,102,102,1);
-          line-height:12px;
+          font-size: 12px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(102, 102, 102, 1);
+          line-height: 12px;
           margin-bottom: 9px;
         }
         .unit-price {
@@ -149,36 +147,36 @@ export default {
         }
       }
       .market-price {
-        width:335px;
-        height:34px;
-        padding:0 0 0 8px;
-        background:rgba(247,249,250,1);
-        border-radius:4px;
+        width: 335px;
+        height: 34px;
+        padding: 0 0 0 8px;
+        background: rgba(247, 249, 250, 1);
+        border-radius: 4px;
         margin: 16px 0 16px 0;
         display: flex;
         span:nth-child(1) {
-          width:16px;
-          height:16px;
-          border-radius:2px;
-          border:1px solid;
-          font-size:10px;
-          font-family:PingFang-SC-Regular;
-          font-weight:400;
-          color:rgba(255,85,51,1);
-          line-height:16px;
+          width: 16px;
+          height: 16px;
+          border-radius: 2px;
+          border: 1px solid;
+          font-size: 10px;
+          font-family: PingFang-SC-Regular;
+          font-weight: 400;
+          color: rgba(255, 85, 51, 1);
+          line-height: 16px;
           margin-top: 9px;
           text-align: center;
         }
         span:nth-child(2) {
           margin: 5px 0 0 10px;
-          font-size:15px;
-          font-family:PingFang-SC-Regular;
-          font-weight:400;
-          color:rgba(51,51,51,1);
+          font-size: 15px;
+          font-family: PingFang-SC-Regular;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
           line-height: 24px;
         }
       }
-      }
     }
-    }
+  }
+}
 </style>

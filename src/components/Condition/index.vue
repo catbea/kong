@@ -6,25 +6,24 @@
 <script>
 import TagItem from './TagItem'
 export default {
-  components:{
+  components: {
     TagItem
   },
-  data:_=>({
-
-  }),
-  props:{
-    info:{
+  data: _ => ({}),
+  props: {
+    info: {
       type: Array,
-      default:function(){return []}
+      default: function() {
+        return []
+      }
     }
-  },
+  }
 }
 </script>
 
 <style lang="less">
-.condition-item{
+.condition-item {
   display: flex;
   height: 15px;
 }
 </style>
-

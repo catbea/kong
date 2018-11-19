@@ -5,24 +5,24 @@
 </template>
 <script>
 export default {
-  data:()=>({
-    list:[1,2,3,4]
+  data: () => ({
+    list: [1, 2, 3, 4]
   })
 }
 </script>
 <style lang="less">
- .swipe-poster-page{
-   margin-top: 20px;
-   width: 375px;
-   display: flex;
-   display: -webkit-box;
-   overflow-x: auto;
-   > .swipe-poster-item{
-     width: 212px;
-     height: 346px;
-     border-radius:0px 0px 6px 6px;
-     border: 1px solid;
-     margin: 0 24px 0 24px;
-   }
- }
+.swipe-poster-page {
+  margin-top: 20px;
+  width: 375px;
+  display: flex;
+  display: -webkit-box;
+  overflow-x: auto;
+  > .swipe-poster-item {
+    width: 212px;
+    height: 346px;
+    border-radius: 0px 0px 6px 6px;
+    border: 1px solid;
+    margin: 0 24px 0 24px;
+  }
+}
 </style>

@@ -11,14 +11,12 @@
 </template>
 <script>
 export default {
-  data: () =>({
-    active:0
+  data: () => ({
+    active: 0
   })
 }
 </script>
 <style lang="less">
-.tab-container{
-
+.tab-container {
 }
 </style>
-

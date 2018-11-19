@@ -6,13 +6,13 @@
 <script>
 import SavePoster from 'COMP/SavePoster/'
 export default {
-  components:{
+  components: {
     SavePoster
   }
 }
 </script>
 <style lang="less">
-.market-share-poster-box-page{
+.market-share-poster-box-page {
   width: 100%;
   height: 100%;
   display: flex;

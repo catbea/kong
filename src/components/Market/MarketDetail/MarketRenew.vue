@@ -16,73 +16,71 @@
 </div>
 </template>
 <script>
-export default {
-  
-}
+export default {}
 </script>
 <style lang="less">
-.market-renew-box{
-display: flex;
-width:375px;
-height:57px;
-padding-top: 14px;
-background:rgba(255,255,255,1);
-border-top: 1px solid #E6E6E6;
-.market-renew-box-recommend{
-margin:0 34px 0 25px;
+.market-renew-box {
+  display: flex;
+  width: 375px;
+  height: 57px;
+  padding-top: 14px;
+  background: rgba(255, 255, 255, 1);
+  border-top: 1px solid #e6e6e6;
+  .market-renew-box-recommend {
+    margin: 0 34px 0 25px;
 
-.market-renew-box-recommend-icon{
-width: 14px;
-height: 19px;
-}
-.market-renew-box-recommend-text{
-font-size:11px;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(153,153,153,1);
-height: 16px;
-}
-}
-.market-renew-box-show{
-margin-right: 34px;
-.market-renew-box-show-icon{
-width: 18px;
-height: 18px;
-}
-.market-renew-box-show-text{
-font-size:11px;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(153,153,153,1);
-height: 16px;
-}
-}
-.market-renew-box-stick{
-margin-right: 34px;
-.market-renew-box-stick-icon{
-width: 15px;
-height: 19px;
-}
-.market-renew-box-stick-text{
-font-size:11px;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(153,153,153,1);
-height: 16px;
-}
-}
-.market-renew-box-button{
-width:156px;
-height:44px;
-border-radius:6px;
-border:1px solid;
-line-height: 44px;
-text-align: center;
-font-size:14px;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(0,122,230,1);
-margin-left: 7px;
-}
+    .market-renew-box-recommend-icon {
+      width: 14px;
+      height: 19px;
+    }
+    .market-renew-box-recommend-text {
+      font-size: 11px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
+      height: 16px;
+    }
+  }
+  .market-renew-box-show {
+    margin-right: 34px;
+    .market-renew-box-show-icon {
+      width: 18px;
+      height: 18px;
+    }
+    .market-renew-box-show-text {
+      font-size: 11px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
+      height: 16px;
+    }
+  }
+  .market-renew-box-stick {
+    margin-right: 34px;
+    .market-renew-box-stick-icon {
+      width: 15px;
+      height: 19px;
+    }
+    .market-renew-box-stick-text {
+      font-size: 11px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
+      height: 16px;
+    }
+  }
+  .market-renew-box-button {
+    width: 156px;
+    height: 44px;
+    border-radius: 6px;
+    border: 1px solid;
+    line-height: 44px;
+    text-align: center;
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(0, 122, 230, 1);
+    margin-left: 7px;
+  }
 }
 </style>

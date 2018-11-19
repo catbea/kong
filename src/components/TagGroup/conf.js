@@ -10,7 +10,8 @@ export default tag => {
         background: 'rgba(234, 77, 46, 0.1)',
         color: '#EA4D2E'
       }
-    default:  // 灰字灰底
+    default:
+      // 灰字灰底
       return {
         background: 'rgba(143, 159, 177, 0.15)',
         color: '#5C5F66'

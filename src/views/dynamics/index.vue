@@ -21,9 +21,9 @@ export default {
     MyEstateList
   },
   data: _ => ({
-    collectData: null,        // 数据中心数据
-    recommendData: null,      // 推荐盘数据
-    estateListData: null      // 我的楼盘数据
+    collectData: null, // 数据中心数据
+    recommendData: null, // 推荐盘数据
+    estateListData: null // 我的楼盘数据
   }),
   created() {
     this.getCollectInfo()

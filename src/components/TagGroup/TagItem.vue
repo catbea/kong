@@ -8,13 +8,13 @@ export default {
     info: { type: String }
   },
   data: () => ({
-    style:null
+    style: null
   }),
-  created () {
+  created() {
     this.computeStyle()
   },
   methods: {
-    computeStyle(){
+    computeStyle() {
       this.style = conf(this.info)
     }
   }
