@@ -47,8 +47,6 @@ export default {
   }),
   methods: {
     editCLickHandler() {
-      console.log(1)
-
       this.$router.push('/user/edit')
     }
   },
@@ -192,8 +190,8 @@ export default {
     > .status-info-left {
       margin: 0 15px;
     }
-    > .status-info-right {
-    }
+    // > .status-info-right {
+    // }
   }
 }
 </style>

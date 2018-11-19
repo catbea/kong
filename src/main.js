@@ -4,13 +4,13 @@ import App from '@/App.vue'
 import router from '@/router/'
 import store from '@/store/'
 import '@/filters'
+import '@/directives'
 import wechatApi from '@/utils/wechatApi'
+import vant from './vant'
 
 Vue.config.productionTip = false
 
-// vant
-import { Toast } from 'vant'
-Vue.use(Toast)
+
 // globle
 wechatApi.init()
 

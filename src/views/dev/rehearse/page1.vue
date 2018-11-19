@@ -54,8 +54,6 @@ export default {
     ]
   }),
   created() {
-    // console.log(aa);
-
     this.userInfo = {
       name: '张佳玮',
       nickname: 'JIaWei Zhang',
