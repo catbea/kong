@@ -20,11 +20,6 @@ export default {
   created() {
     this.test()
   },
-  mounted() {
-    // console.log(this.$store.state.system)
-    //给window添加一个滚动滚动监听事件
-  // this.$refs.viewBox.addEventListener('scroll', this.handleScroll)
-  },
   methods: {
     async test() {
       let a = await demoService.testApi(82612312312, 10)
@@ -60,27 +55,11 @@ html {
       overflow-y: auto;
       > div {
         position: absolute;
+        width: 100%;
+        height: 100%;
         top: 0;
       }
     }
   }
 }
-
-// #app {
-//   font-family: "Avenir", Helvetica, Arial, sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   text-align: center;
-//   color: #2c3e50;
-// }
-// #nav {
-//   padding: 30px;
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
-//   }
-// }
 </style>
