@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 
 
 // vant
-import { Toast, Icon, PullRefresh, List } from 'vant'
+import { Toast, Icon, PullRefresh, List,Popup} from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
 Vue.use(PullRefresh)

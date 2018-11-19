@@ -1,7 +1,7 @@
 <template>
   <div class="market-open-page">
    <market-describe v-for="(item,index) in describeInfo" :key="index" :dredgeFlag="item.dredgeFlag" 
-      :borderBottom="item.borderBottom" v-model="val"></market-describe>
+      :borderBottom="item.borderBottom"></market-describe>
    <market-priceSurface></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
