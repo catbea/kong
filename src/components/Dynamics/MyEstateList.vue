@@ -2,6 +2,7 @@
   <div class="my-estate-list">
     <title-bar :conf="titleBarConf"></title-bar>
     <estate-item v-for="(item,index) in list" :key="index" :info="item"></estate-item>
+
   </div>
 </template>
 <script>
@@ -13,8 +14,8 @@ export default {
     TitleBar,
     EstateItem
   },
-  props:{
-    list:Array
+  props: {
+    list: Array
   },
   data: _ => ({
     titleBarConf: {

@@ -1,7 +1,7 @@
 <template>
   <div class="estate-recommend">
     <title-bar :conf="titleBarConf"></title-bar>
-    <div class="recommend-box">
+    <div class="recommend-box" v-fuzz-dom>
       <estate-item :info="info"></estate-item>
     </div>
   </div>

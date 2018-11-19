@@ -4,6 +4,7 @@ import App from '@/App.vue'
 import router from '@/router/'
 import store from '@/store/'
 import '@/filters'
+import '@/directives'
 import wechatApi from '@/utils/wechatApi'
 
 Vue.config.productionTip = false
