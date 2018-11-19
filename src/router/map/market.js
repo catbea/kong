@@ -44,16 +44,22 @@ export default [
     component: resolve => require(['@/views/market/marketDetail/marketShare/index.vue'], resolve),
     meta: {
       title: '楼盘分享'
+    }
+  },   
+    {
+     path: '/marketDetail/share/save',
+     name: 'save-poster',
+     component: resolve => require(['@/views/market/marketDetail/marketShare/savePoster/index.vue'], resolve),
+     meta: {
+       title: '保存海报'
+     }
     },
-    children:[
-     {
-      path: 'save',
+    {
+      path: '/marketDetail/share/compile',
       name: 'save-poster',
-      component: resolve => require(['@/views/market/marketDetail/marketShare/savePoster/index.vue'], resolve),
+      component: resolve => require(['@/views/market/marketDetail/marketShare/compilePoster/index.vue'], resolve),
       meta: {
-        title: '保存海报'
+        title: '编辑海报'
       }
      }
-    ]
-  }
 ]

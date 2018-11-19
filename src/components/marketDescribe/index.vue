@@ -1,15 +1,15 @@
 <template>
 <div class="market-box-page">
-  <div class="market-box" v-for="(item,index) in describeInfo" :key="index" @click="itemClickHandler(item)">
-    <div class="all-describe" :class="{line:item.borderColor}">
+  <div class="market-box"  @click="itemClickHandler" :class="{line:borderBottom}">
+    <div class="all-describe" >
         <div class="img">
           <div class="label">9.9折</div>
         </div>
-        <input type="text" v-model="val">
+        <!-- <input type="text" v-model="val"> -->
         <ul class="market-describe">
           <li class="market-name">
             <span> 华润城市花园</span>
-            <span class="dredge" v-if="item.dredgeFlag"></span>
+            <span class="dredge" v-if="dredgeFlag"></span>
           </li>
           <li class="site">南山 大冲</li>
           <!-- <condition :info="info"></condition> -->
@@ -33,16 +33,19 @@ export default {
 
   }),
   props:{
-    value:'',
-    describeInfo:{
-      type: Array,
-      default: _ => { return [] }
+    // value:'',
+    dredgeFlag:{
+      type: Boolean,
+      default: true
+      },
+      borderBottom:{
+      type: Boolean,
+      default: false
       }
   },
   methods: {
-    itemClickHandler(e) {
-      console.log('hahahahah');
-      this.$emit('clickasdadsadsa')
+    itemClickHandler() {
+      this.$emit('skipDetail',1)
       
       // if(n.skip==true){
       //   this.$router.push({path:`/market/marketDetail/${this.userId}`})

@@ -1,6 +1,7 @@
 <template>
   <div class="market-open-page">
-   <market-describe :describeInfo="describeInfo" v-model="val" @click="handler"></market-describe>
+   <market-describe v-for="(item,index) in describeInfo" :key="index" :dredgeFlag="item.dredgeFlag" 
+      :borderBottom="item.borderBottom" v-model="val"></market-describe>
    <market-priceSurface></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
@@ -177,9 +178,9 @@ AW大师服务现有单个用户开通单个项目的收费标准为期限1个�
   </div>
 </template>
 <script>
-import MarketDescribe from 'COMP/marketDescribe/'
-import MarketPriceSurface from 'COMP/marketPriceSurface/'
-import OpenPayment from 'COMP/openPayment/'
+import MarketDescribe from 'COMP/MarketDescribe/'
+import MarketPriceSurface from 'COMP/MarketPriceSurface/'
+import OpenPayment from 'COMP/OpenPayment/'
 export default {
   components: {
     MarketDescribe,
@@ -187,9 +188,9 @@ export default {
     OpenPayment
   },
   data: _ => ({
-    describeInfo: [
-      {dredgeFlag:false,skip:false,borderColor:false},
-    ],
+     describeInfo: [
+      {dredgeFlag:false,borderBottom:false}
+     ],
     show:false
   }),
   methods:{

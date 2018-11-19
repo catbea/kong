@@ -2,13 +2,13 @@
   <div class="market-detail-info-top-page">
     <div class="top-info-box" >
     <ul>
-      <li v-for="(item,index) in info" :key="index">
-        <div>{{item.left}}</div>
-        <div>{{item.right}}</div>
+      <li v-for="(item,index) in topInfo.top" :key="index">
+        <div :style="leftStyle">{{item.left}}</div>
+        <div :style="rightStyle">{{item.right}}</div>
       </li>
     </ul>
     <!-- <ol>
-      <li v-for="(item,index) in info" :key="index">
+      <li v-for="(item,index) in middleInfo.middle" :key="index">
         <div>{{item.left}}</div>
         <div>{{item.right}}</div>
       </li>
@@ -19,10 +19,24 @@
 <script>
 export default {
   props:{
-    info:{
-      type:Array,
-      default:function () {return[]}
-    }
+    topInfo:{
+      type:Object,
+      default:function () {return{}}
+    },
+  }, 
+  computed:{
+    // leftStyle () {
+    //   return {
+    //     font-size: this.info.leftTextSize || '#5C5F66',
+    //     color: this.info.leftTextColor || '#8F9FB1'
+    //   }
+    // },
+    // rightStyle () {
+    //   return {
+    //     font-size: this.topInfo.rightTextSize,
+    //     color: this.topInfo.rightTextColor
+    //   }
+    // }
   }
 }
 </script>

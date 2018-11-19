@@ -19,7 +19,8 @@ export default {
 </script>
 <style lang="less">
 .all-market-type-box{
-    display: flex;
+  display: flex;
+    display: -webkit-box;
     overflow-x: auto;
     width:351px;
    .market-type-box{

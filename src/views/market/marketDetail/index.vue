@@ -59,13 +59,13 @@
 import * as types from '@/store/mutation-types'
 import Condition from 'COMP/Condition/'
 import ButtonBox from 'COMP/ButtonBox/'
-import Sort from './Sort'
-import SpecificMarketDetail from './SpecificMarketDetail'
-import AllMarketType from './AllMarketType'
-import SiteNearby from './SiteNearby'
-import AllElseMarket from './AllElseMarket'
-import OpenMarketButton from './OpenMarketButton'
-import MarketRenew from './MarketRenew'
+import Sort from 'COMP/Market/MarketDetail/Sort'
+import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
+import AllMarketType from 'COMP/Market/MarketDetail/AllMarketType'
+import SiteNearby from 'COMP/Market/MarketDetail/SiteNearby'
+import AllElseMarket from 'COMP/Market/MarketDetail/AllElseMarket'
+import OpenMarketButton from 'COMP/Market/MarketDetail/OpenMarketButton'
+import MarketRenew from 'COMP/Market/MarketDetail/MarketRenew'
 export default {
   components:{
     Sort,

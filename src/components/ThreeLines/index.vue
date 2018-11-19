@@ -1,23 +1,23 @@
 <template>
   <div class="market-detail-info-middle-page">
     <div class="middle-info-box" >
-    <ul>
-      <li v-for="(item,index) in info" :key="index">
+      <ol>
+      <li v-for="(item,index) in middleInfo.middle" :key="index">
         <div>{{item.left}}</div>
-        <div>{{item.centent}}</div>
+        <div>{{item.center}}</div>
         <div>{{item.right}}</div>
       </li>
-    </ul>
+    </ol>
     </div>
   </div>
 </template>
 <script>
 export default {
   props:{
-    info:{
-      type:Array,
-      default:function () {return[]}
-    }
+    middleInfo:{
+      type:Object,
+      default:function () {return{}}
+    },
   }
 }
 </script>
@@ -28,7 +28,7 @@ export default {
     padding: 0 0 0 15px;
     width: 360px;
     background: #FFFFFF;
-    ul{
+    ol{
       width: 340px;
       overflow: hidden;
       border-bottom: 1px solid #EEEEEE;
