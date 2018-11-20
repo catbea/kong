@@ -3,7 +3,7 @@ import * as types from '@/store/mutation-types'
 const state = {
   versions: '0.1',
   tabbar: {
-    show: true,
+    show: false,
     items: [
       {
         name: '数据',
@@ -56,7 +56,7 @@ const mutations = {
     state.versions = data
   },
   [types.TABBAR](state, data) {
-    state.tabbar = data
+    state.tabbar = Object.assign(state.tabbar, data)
   }
 }
 

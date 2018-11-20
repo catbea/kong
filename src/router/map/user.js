@@ -13,10 +13,7 @@ export default [
     component: resolve =>
       require(['@/views/user/shareBusinessCard.vue'], resolve),
     meta: {
-      title: '分享名片',
-      tabbar: {
-        show: false
-      }
+      title: '分享名片'
     }
   },
   {
@@ -24,10 +21,7 @@ export default [
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
     meta: {
-      title: '编辑资料',
-      tabbar: {
-        show: false
-      }
+      title: '编辑资料'
     }
   },
   {
@@ -36,10 +30,7 @@ export default [
     component: resolve =>
       require(['@/views/user/edit/userEditAvatar.vue'], resolve),
     meta: {
-      title: '修改头像',
-      tabbar: {
-        show: false
-      }
+      title: '修改头像'
     }
   },
   {
@@ -48,10 +39,7 @@ export default [
     component: resolve =>
       require(['@/views/user/edit/userEditUsername.vue'], resolve),
     meta: {
-      title: '修改姓名',
-      tabbar: {
-        show: false
-      }
+      title: '修改姓名'
     }
   },
   {
@@ -60,10 +48,7 @@ export default [
     component: resolve =>
       require(['@/views/user/edit/userEditPhone.vue'], resolve),
     meta: {
-      title: '修改手机号',
-      tabbar: {
-        show: false
-      }
+      title: '修改手机号'
     }
   }
 ]
