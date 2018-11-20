@@ -3,10 +3,10 @@
     <business-card >
     </business-card>
     <cell-group class="business-info">
-      <cell class="business-info-cell" title="我的楼盘" is-link >
+      <cell class="business-info-cell" title="我的楼盘" is-link @click="goarticles">
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="优惠券" is-link @click="goarticles" > <!--url="/user/articles/historicalArticles" -->
+      <cell class="business-info-cell" title="优惠券" is-link @click="goallDynamics"> <!--url="/user/articles/historicalArticles" -->
         <div slot="extra" class="msg-dot" />
       </cell>
       <cell class="business-info-cell" title="线下报备" is-link>
@@ -49,8 +49,10 @@ export default {
       this.$store.dispatch('getUserVipInfo', userId)
     },
     goarticles(){
-      alert(111)
     this.$router.push('/user/articles/historicalArticles')
+    },
+    goallDynamics(){
+    this.$router.push('/dynamics/allDynamics')
     }
   },
   computed: {

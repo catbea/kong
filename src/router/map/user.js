@@ -50,5 +50,15 @@ export default [
     meta: {
       title: '修改手机号'
     }
+  },
+  //历史文章
+  {
+    path: '/user/articles/historicalArticles',
+    name: 'historicalArticles',
+    component: resolve =>
+      require(['@/views/user/articles/historicalArticles.vue'], resolve),
+    meta: {
+      title: '历史文章'
+    }
   }
 ]

@@ -47,6 +47,8 @@ export default {
 </script>
 <style lang="less">
 .article-container {
+      margin-right: 16px;
+    padding-left: 16px;
   > .article-list {
     // margin: 0 15px;
     display: flex;
@@ -86,7 +88,7 @@ export default {
       position: absolute;
       margin-right: 0;
       padding-right: 0;
-      right: 0;
+      right: 16px;
       > .mark-icon {
         width: 120px;
         height: 90px;
