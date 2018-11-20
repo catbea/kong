@@ -3,10 +3,10 @@
     <business-card >
     </business-card>
     <cell-group class="business-info">
-      <cell class="business-info-cell" title="我的楼盘" is-link>
+      <cell class="business-info-cell" title="我的楼盘" is-link >
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="优惠券" is-link>
+      <cell class="business-info-cell" title="优惠券" is-link @click="goarticles" > <!--url="/user/articles/historicalArticles" -->
         <div slot="extra" class="msg-dot" />
       </cell>
       <cell class="business-info-cell" title="线下报备" is-link>
@@ -20,7 +20,7 @@
       <cell class="business-info-cell" title="邀请有礼" is-link>
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="意见反馈" is-link>
+      <cell class="business-info-cell" title="意见反馈" is-link >
         <div slot="extra" class="msg-dot" />
       </cell>
     </div>
@@ -47,6 +47,10 @@ export default {
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
       this.$store.dispatch('getUserVipInfo', userId)
+    },
+    goarticles(){
+      alert(111)
+    this.$router.push('/user/articles/historicalArticles')
     }
   },
   computed: {
