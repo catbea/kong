@@ -72,8 +72,7 @@ export default {
       }
     },
     itemClickHandler (e) {
-      console.log(e);
-      
+      this.$router.push(`/custom/${e.clientId}`)
     }
   },
   computed: {
