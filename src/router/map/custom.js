@@ -6,5 +6,13 @@ export default [
     meta: {
       title: '我的客户'
     }
-  }
+  },
+  {
+    path: '/custom/:id',
+    name: 'custom-detail',
+    component: resolve => require(['@/views/custom/detail.vue'], resolve),
+    meta: {
+      title: '我的客户'
+    }
+  },
 ]

@@ -2,6 +2,7 @@
 <template>
   <div class="avatar">
     <img :src="avatar||defaultAvatar" alt="">
+    <slot name="extra"></slot>
   </div>
 </template>
 <script>

@@ -34,6 +34,7 @@ export default {
   },
   watch: {
     $route(to, from) {
+      debugger
       for (let i = 0; i < this.tabbar.items.length; i++) {
         if (to.fullPath.indexOf(this.tabbar.items[i].path) !== -1)
           return (this.active = i)
