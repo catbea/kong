@@ -58,6 +58,6 @@ export default {
 </script>
 <style lang="less">
 .allDynamics-page {
-  margin: 20px 16px;
+  margin: 20px 0;
 }
 </style>
