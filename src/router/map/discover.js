@@ -4,7 +4,10 @@ export default [
     name: 'discover',
     component: resolve => require(['@/views/discover/index.vue'], resolve),
     meta: {
-      title: '发现'
+      title: '发现',
+      tabbar:{
+        show: true
+      }
     }
   },
   {

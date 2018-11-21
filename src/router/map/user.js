@@ -4,7 +4,10 @@ export default [
     name: 'user',
     component: resolve => require(['@/views/user/index.vue'], resolve),
     meta: {
-      title: '名片'
+      title: '名片',
+      tabbar:{
+        show: true
+      }
     }
   },
   {
