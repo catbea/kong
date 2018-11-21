@@ -119,6 +119,7 @@ export default {
     color: rgba(41, 46, 51, 1);
     line-height: 20px;
     padding: 12px 0;
+    margin: 0 0.42667rem;
   }
 }
 .dynamics-container-list {
@@ -156,6 +157,7 @@ export default {
         position: absolute;
         right: 16px;
         margin-top: -6px;
+            padding-right: 16px;
         > .agent-right-num {
           font-size: 20px;
           font-weight: 500;
@@ -191,7 +193,8 @@ export default {
       height: 40px;
       > .list-btn-right {
         position: absolute;
-        right: 16px;
+        right: 32px;
+            // margin-top: 20px;
         > .list-btn-follow {
           width: 64px;
           height: 24px;

@@ -52,7 +52,7 @@ export default {
     this.$router.push('/user/articles/historicalArticles')
     },
     goallDynamics(){
-    this.$router.push('/dynamics/allDynamics')
+    this.$router.push('/user/collection/myCollection')
     }
   },
   computed: {

@@ -2,7 +2,7 @@
   <div class="dynamics-collect">
     <div class="top-container">
       <h5>数据中心</h5>
-      <van-icon class="icon-right" name="chat" />
+      <van-icon class="icon-right" name="chat" @click="goMessage"/>
     </div>
     <div class="shadow_box info-box" v-if="data">
       <div class="data-container">
@@ -43,6 +43,11 @@ export default {
   },
   props: {
     data: { type: Object }
+  },
+  methods:{
+    goMessage(){
+      this.$router.push('/dynamics/message/messageList');
+    }
   }
 }
 </script>

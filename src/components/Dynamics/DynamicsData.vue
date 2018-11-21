@@ -1,7 +1,7 @@
 <template>
  
       <div class="dynaData-container">
-        <span class="container-total" @click="godynamicsInfo">
+        <span class="container-total">
           <p class="container-title">{{totalTitle}}</p>
           <p class="card-num">{{totalNum}}</p>
         </span>
@@ -13,7 +13,7 @@
           <p class="container-title">{{propertiesTitle}}</p>
           <p class="card-num">{{propertiesNum}}</p>
         </span>
-        <span calss="container-article" @click="goarticleInfo">
+        <span calss="container-article">
           <p class="container-title">{{articleTitle}}</p>
           <p class="card-num">{{articleNum}}</p>
         </span>
@@ -42,14 +42,8 @@ export default {
   }
 },
 methods: {
- godynamicsInfo () {
-   //跳转到动态详情
-      this.$router.push('/dynamics/dynamicsInfo')
- },
- goarticleInfo(){
-   //跳转到文章详情
-      this.$router.push('/dynamics/articleInfo')
- }
+ 
+
 }
 }
 </script>

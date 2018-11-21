@@ -5,7 +5,7 @@
         <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
       </div>
     </shadow-box>
-    <div class="Properties-list" plain>
+    <div class="Properties-list" plain  @click="godynamicsInfo">
 
       <p class="list-left">碧桂园凤凰国际（未开通）<span class="list-right" @click="onClickConfirm">14条动态</span></p>
       <p class="list-left-btn">南山 深圳湾 | 价格未定</p>
@@ -59,6 +59,10 @@ export default {
         // on cancel
       });
     },
+    godynamicsInfo () {
+   //跳转到动态详情
+      this.$router.push('/dynamics/dynamicsInfo')
+ },
   }
 
 }
@@ -101,7 +105,9 @@ export default {
   // margin: 0 16px;
   > .Properties-list {
     border-bottom: 1px solid #e6e6e6;
+    margin: 0 16px;
     padding: 16px 0;
+    
     > .list-left {
       font-size: 16px;
       font-weight: 600;

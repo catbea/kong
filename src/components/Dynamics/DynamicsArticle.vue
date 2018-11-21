@@ -5,7 +5,7 @@
         <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
       </div>
     </shadow-box>
-    <article-list></article-list>
+    <article-list :info="item" @click="itemArticleInfo"></article-list>
   </div>
 </template>
 <script>
@@ -31,9 +31,16 @@ export default {
       articleNum: '124',
     }
   },
+  methods:{
+    itemArticleInfo (e) {
+      // /discover/headline
+      this.$router.push('/Dynamics/articleInfo')
+    }
+  }
 }
 </script>
 <style lang="less">
 .article-container {
+     
 }
 </style>

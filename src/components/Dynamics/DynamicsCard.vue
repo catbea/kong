@@ -5,17 +5,17 @@
         <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
       </div>
     </shadow-box>
-    <article-list></article-list>
+    <dynamics-list></dynamics-list>
   </div>
 </template>
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
-import ArticleList from 'COMP/Dynamics/ArticleList'
+import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import ShadowBox from 'COMP/ShadowBox'
 export default {
   components: {
     DynamicsData,
-    ArticleList,
+    DynamicsList,
     ShadowBox
 
   },

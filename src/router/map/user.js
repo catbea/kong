@@ -24,7 +24,7 @@ export default [
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
     meta: {
-      title: '编辑资料'
+      title: '名片编辑'
     }
   },
   {
@@ -54,6 +54,41 @@ export default [
       title: '修改手机号'
     }
   },
+  {
+    path: '/user/edit/userWechat',
+    name: 'user-edit-userWechat',
+    component: resolve =>
+      require(['@/views/user/edit/userWechat.vue'], resolve),
+    meta: {
+      title: '修改微信号'
+    }
+  },{
+    path: '/user/edit/userMechanism',
+    name: 'userMechanism',
+    component: resolve =>
+      require(['@/views/user/edit/userMechanism.vue'], resolve),
+    meta: {
+      title: '修改机构'
+    }
+  },
+  {
+    path: '/user/edit/userLabel',
+    name: 'userLabel',
+    component: resolve =>
+      require(['@/views/user/edit/userLabel.vue'], resolve),
+    meta: {
+      title: '修改标签'
+    }
+  },
+  {
+    path: '/user/edit/userIntroduction',
+    name: 'userIntroduction',
+    component: resolve =>
+      require(['@/views/user/edit/userIntroduction.vue'], resolve),
+    meta: {
+      title: '修改个人介绍'
+    }
+  },
   //历史文章
   {
     path: '/user/articles/historicalArticles',
@@ -62,6 +97,15 @@ export default [
       require(['@/views/user/articles/historicalArticles.vue'], resolve),
     meta: {
       title: '历史文章'
+    }
+  },
+  {
+    path: '/user/collection/myCollection',
+    name: 'myCollection',
+    component: resolve =>
+      require(['@/views/user/collection/myCollection.vue'], resolve),
+    meta: {
+      title: '我的收藏'
     }
   }
 ]

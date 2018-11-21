@@ -1,22 +1,28 @@
 <template>
   <div class="user-edit-page">
     <cell-group class="user-base-info">
-      <cell class="cell-item user-avatar" :to="'/user/edit/avatar'" title="我的头像" is-link>
+      <div class="user-avatar">
+        <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}">1111</div>
+        <p class="user-avatar-clik">点击可编辑头像</p>
+      </div>
+      <!-- <cell class="cell-item user-avatar" :to="'/user/edit/avatar'" title="我的头像" is-link>
         <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div>
-      </cell>
-      <cell class="cell-item" title="姓名" is-link :to="'/user/edit/username'" :value="userInfo.name" />
+      </cell> -->
+      <cell class="cell-item" title="名字" is-link :to="'/user/edit/username'" :value="userInfo.name" />
       <cell class="cell-item" title="手机号" :to="'/user/edit/phone'" is-link :value="userInfo.mobile" />
+      <cell class="cell-item" title="微信号" :to="'/user/edit/userWechat'" is-link />
       <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" />
       <cell class="cell-item" title="平台公司" is-link :value="userInfo.distributorName" />
       <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" />
+      <cell class="cell-item" title="我的机构" is-link :to="'/user/edit/userMechanism'"/>
     </cell-group>
     <cell-group class="user-advance-info">
-      <cell class="cell-item tag-edit" title="形象标签" is-link>
+      <cell class="cell-item tag-edit" title="标签展示" is-link :to="'/user/edit/userLabel'">
         <div slot="extra" class="tag-show-container">
           <div class="tag-item" v-for="item in userInfo.userTags" :key="item.labelId">{{item.labelName}}</div>
         </div>
       </cell>
-      <cell class="cell-item user-signature" title="个性签名" is-link :value="userInfo.signature" />
+      <cell class="cell-item user-signature" title="个人介绍" :to="'/user/edit/userIntroduction'" is-link :value="userInfo.signature" />
     </cell-group>
   </div>
 </template>
@@ -29,11 +35,11 @@ export default {
     Cell,
     CellGroup
   },
-  created() {
+  created () {
     this.getUserInfo()
   },
   methods: {
-    async getUserInfo() {
+    async getUserInfo () {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
@@ -52,6 +58,16 @@ export default {
   > .user-base-info,
   > .user-advance-info {
     background: #fff;
+    > .user-avatar {
+      text-align: center;
+      .user-avatar-clik{
+        font-size:12px;
+font-family:PingFangSC-Regular;
+font-weight:400;
+color:rgba(0,122,230,1);
+line-height:17px;
+      }
+    }
     .cell-item {
       height: 56px;
       line-height: 56px;
