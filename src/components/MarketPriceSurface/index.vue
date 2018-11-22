@@ -63,6 +63,7 @@ export default {
 .market-price-surface-page{
   width:375px;
   padding: 20px 0 0 0;
+  margin-top: 10px;
   background:rgba(255,255,255,1);
   .price-box{
     display: flex;

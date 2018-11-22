@@ -1,14 +1,7 @@
 <template>
   <div class="marketDetail-page">
     <Sort v-if="show"></Sort>
-    <div class="market-img">
-      <div class="collect-box">
-        <div class="collect"></div> 收藏
-      </div>
-      <router-link tag="div" to="/marketDetail/share" class="share-box">
-        <div class="share"></div> 分享
-      </router-link>
-    </div>
+    <swipe-box></swipe-box>
     <div class="marketDetail-page-bottom">
     <div class="marketDetail-box">
       <div class="marketDetail-box-top">
@@ -16,7 +9,7 @@
         <!-- <Condition :info="info"></Condition> -->
       </div>
       <div class="house-owner">
-        <div class="browse">12345</div>人浏览过
+        <div class="browse" @click="supplement">12345</div>人浏览过
         <div class="head-portrait">
         </div>
       </div>
@@ -34,7 +27,9 @@
         <div class="button-box-tow-right-text">降价通知</div>
       </div>
     </div>
+    <title-bar :conf="confA"></title-bar>
     <all-marketType></all-marketType>
+    <title-bar :conf="confB"></title-bar>
     <ul class="market-state-box">
       <li class="market-state-box-top">
         山水江南82平小户型已售罄山水江南82平小户型已售罄
@@ -46,12 +41,23 @@
         2018年6月15日
       </li>
     </ul>
+    <title-bar :conf="confC"></title-bar>
     <site-nearby></site-nearby>
+    <title-bar :conf="confD"></title-bar>
     <all-elseMarket></all-elseMarket>
+    <div class="m-statement">
+      <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击 </span>
+      <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
+      <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
+      </router-link>
+    </div>
     </div>
     <open-marketButton></open-marketButton>
     <!-- v-if="openFlag" -->
     <market-renew v-if="renewFlag"></market-renew>
+    <van-popup v-model="show">
+      <popup-box></popup-box>
+    </van-popup>
   </div>
   
 </template>
@@ -66,6 +72,9 @@ import SiteNearby from 'COMP/Market/MarketDetail/SiteNearby'
 import AllElseMarket from 'COMP/Market/MarketDetail/AllElseMarket'
 import OpenMarketButton from 'COMP/Market/MarketDetail/OpenMarketButton'
 import MarketRenew from 'COMP/Market/MarketDetail/MarketRenew'
+import PopupBox from 'COMP/Market/MarketDetail/PopupBox'
+import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
+import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
     Sort,
@@ -76,11 +85,13 @@ export default {
     SiteNearby,
     AllElseMarket,
     OpenMarketButton,
-    MarketRenew
+    MarketRenew,
+    PopupBox,
+    TitleBar,
+    SwipeBox
   },
   created() {
-    this.$store.commit(types.TABBAR, false)
-    this.getUserId()
+    // this.$store.commit(types.TABBAR, false)
     // console.log(this.$route.params.userId)
   },
   mounted() {
@@ -90,9 +101,30 @@ export default {
   },
   data: _ => ({
     show: false,
+    boxShow:false,
     openFlag: true,
     renewFlag: false,
     list: [1, 2, 3, 4],
+    confA:{
+      title:"户型",
+      linkText:"全部户型",
+      link:"/marketDetail/FamilyList"
+    },
+    confB:{
+      title:"楼盘动态 (12)",
+      linkText:"全部动态",
+      link:"/marketDetail/marketAllDynamic"
+    },
+    confC:{
+      title:"位置周边",
+      linkText:"全部周边",
+      link:"/marketDetail/marketDetail/allNear"
+    },
+    confD:{
+      title:"其他楼盘",
+      linkText:"全部楼盘",
+      link:"/market"
+    },
     info: [
       {
         text: '热销中',
@@ -118,15 +150,6 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape.png')
   }),
   methods: {
-    getUserId() {
-      if (this.$route.params.userId == 1) {
-        this.renewFlag = true
-        this.openFlag = false
-      } else {
-        this.renewFlag = false
-        this.openFlag = true
-      }
-    },
     handleScroll() {
       let scrollTop =
         window.pageYOffset ||
@@ -134,10 +157,13 @@ export default {
         document.body.scrollTop
       console.log(scrollTop)
       if (scrollTop >= 200) {
-        this.show = true
+        this.boxShow = true
       } else {
-        this.show = false
+        this.boxShow = false
       }
+    },
+    supplement(){
+      this.show=true
     }
   },
   destroyed() {
@@ -147,42 +173,8 @@ export default {
 </script>
 <style lang="less">
 .marketDetail-page {
-  .market-img {
-    width: 375px;
-    height: 281px;
-    border-bottom: 1px solid black;
-    position: relative;
-    margin-top: 45px;
-    .collect-box {
-      width: 24px;
-      position: absolute;
-      top: 20px;
-      right: 69px;
-      font-size: 12px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: black;
-      .collect {
-        border: 1px solid black;
-        width: 20px;
-        height: 20px;
-      }
-    }
-    .share-box {
-      width: 24px;
-      position: absolute;
-      top: 20px;
-      right: 29px;
-      font-size: 12px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: black;
-      .share {
-        border: 1px solid black;
-        width: 20px;
-        height: 20px;
-      }
-    }
+  .van-popup{
+    border-radius: 12px;
   }
   .marketDetail-page-bottom {
     padding: 20px 0 0 20px;
@@ -272,6 +264,15 @@ export default {
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
       }
+    }
+  }
+  .m-statement {
+    margin-top: 15px;
+  color: rgba(153, 153, 153, 1);;
+  font-size:12px;
+  // line-height: 0.34rem;
+    .feedback {
+      color: #017fff;
     }
   }
 }

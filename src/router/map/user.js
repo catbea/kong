@@ -65,5 +65,17 @@ export default [
         show: false
       }
     }
-  }
+  },
+  {
+    path: '/user/myMarket',
+    name: 'mymarket',
+    component: resolve =>
+      require(['@/views/user/myMarket/index.vue'], resolve),
+    meta: {
+      title: '我的楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]

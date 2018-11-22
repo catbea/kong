@@ -1,56 +1,78 @@
 <template>
 <div class="market-box-page">
   <div class="market-box"  @click="itemClickHandler" :class="{line:borderBottom}">
+    
     <div class="all-describe" >
+      <div class="market-box-page-top">
         <div class="img">
-          <div class="label">9.9折</div>
+          <div class="label">{{itemInfo.sale}}</div>
         </div>
         <!-- <input type="text" v-model="val"> -->
         <ul class="market-describe">
           <li class="market-name">
-            <span> 华润城市花园</span>
-            <span class="dredge" v-if="dredgeFlag"></span>
+            <span> {{itemInfo.linkerName}}</span>
+            <span class="dredge" :style="style" v-if="dredge">{{openStatus}}</span>
           </li>
-          <li class="site">南山 大冲</li>
-          <!-- <condition :info="info"></condition> -->
+          <li class="site">{{itemInfo.linkerAddress}}</li>
+          <tag-group :condition="itemInfo.linkerTags"></tag-group>
           <li class="unit-price">
-            <span>98000元/m2起</span>
-            <span>45次开通</span>
+            <span>{{itemInfo.linkerPrice}}</span>
+            <span>{{itemInfo.openTimes}}次开通</span>
           </li>
         </ul>
-        <div class="market-price">
+      </div>
+        
+        <div class="market-box-page-bottom">
           <span>佣</span>
-          <span>1.56%+111111元/套</span>
+          <span>{{itemInfo.commission}}</span>
         </div>
     </div>
   </div>
 </div>
 </template>
 <script>
+import TagGroup from 'COMP/TagGroup/'
+import conf from './conf'
 export default {
+  components:{
+    TagGroup
+  },
+  created() {
+    this.dredgeColor()
+  },
   data: ()=>({
-    val:123,
-
+    resInfo:null,
+    style:null
   }),
   props:{
     // value:'',
-    dredgeFlag:{
-      type: Boolean,
-      default: true
+      itemInfo:{
+        type: Object
       },
       borderBottom:{
       type: Boolean,
-      default: false
+      default: true
+      },
+      dredge:{
+      type: Boolean,
+      default: true
       }
+  },
+  computed:{
+    openStatus(){
+      if(this.itemInfo.openStatus>=0){
+        return "开通"
+      }else{
+        return "续费"
+      }
+    }
   },
   methods: {
     itemClickHandler() {
       this.$emit('skipDetail',1)
-      
-      // if(n.skip==true){
-      //   this.$router.push({path:`/market/marketDetail/${this.userId}`})
-      // }
-      // this.$router.push({ path: '/market/marketDetail', query:{plan:`${this.userId}`}})
+    },
+    dredgeColor(){
+      this.style=conf(this.openStatus)
     }
   },
   watch:{
@@ -71,13 +93,13 @@ export default {
      background: #FFFFFF;
     .market-box {
       width:343px;
-      padding-top: 13px;
-      padding-left: 16px;
+      margin: 13px 0 0 16px;
       .all-describe{
-        
-        display: flex;
-       flex-wrap: wrap;
-      .img {
+            display: flex;
+    flex-direction: column;
+        .market-box-page-top{
+          display: flex;
+          .img {
         width: 120px;
         height: 90px;
         border-radius: 6px;
@@ -101,12 +123,12 @@ export default {
       }
       .market-describe {
         width: 207px;
-        height: 90px;
         .market-name {
           display: flex;
           justify-content: space-between;
-          margin-bottom: 11px;
+          margin-bottom:5px;
           span:nth-child(1){
+            width: 160px;
             font-size:16px;
             font-family:PingFangSC-Semibold;
             font-weight:600;
@@ -114,9 +136,16 @@ export default {
             line-height:16px;
           }
           span:nth-child(2){
-            width: 16px;
-            height: 16px;
-            border: 1px solid black;
+            width:46px;
+            height:24px;
+            background:rgba(0,122,230,1);
+            border-radius:12px;
+            font-size:12px;
+            font-family:PingFang-SC-Regular;
+            font-weight:400;
+            color:rgba(255,255,255,1);
+            line-height:24px;
+            text-align: center;
           }
         }
         .site {
@@ -130,7 +159,8 @@ export default {
         .unit-price {
           display: flex;
           height: 15px;
-          margin-top: 11px;
+          margin-top: 9px;
+          justify-content: space-between;
           span:nth-child(1) {
             line-height: 15px;
             font-size: 15px;
@@ -144,11 +174,12 @@ export default {
             font-family: PingFangSC-Regular;
             font-weight: 400;
             color: rgba(153, 153, 153, 1);
-            margin-left: 12px;
           }
         }
       }
-      .market-price {
+        }
+      
+      .market-box-page-bottom{
         width:335px;
         height:34px;
         padding:0 0 0 8px;

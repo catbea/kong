@@ -1,6 +1,6 @@
 <template>
   <div class="tag-group">
-    <tag-item v-for="(item, index) in arr" :key="index" :info="item"></tag-item>
+    <tag-item v-for="(item, index) in condition" :key="index" :info="item"></tag-item>
   </div>
 </template>
 <script>
@@ -13,7 +13,12 @@ export default {
     data: null
   }),
   props: {
-    arr: { type: Array }
+    condition: { 
+      type: Array,
+      default:function() {
+        return []
+      }
+    }
   }
 }
 </script>

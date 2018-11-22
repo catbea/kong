@@ -11,12 +11,13 @@ import vant from './vant'
 Vue.config.productionTip = false
 
 // vant
-import { Toast, Icon, PullRefresh, List, Popup } from 'vant'
+import { Toast, Icon, PullRefresh, List, Popup,Search } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
 Vue.use(PullRefresh)
 Vue.use(List)
 Vue.use(Popup)
+Vue.use(Search)
 // globle
 wechatApi.init()
 

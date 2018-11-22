@@ -23,16 +23,16 @@ export default {
   data: _ => ({
     collectData: null, // 数据中心数据
     recommendData: null, // 推荐盘数据
-    estateListData: null // 我的楼盘数据
+    estateListData: null, // 我的楼盘数据
   }),
-  created() {
+  created() { 
     this.getCollectInfo()
     this.getEstateList()
   },
   methods: {
-    // 获取头部数据,不包括楼盘信息
     async getCollectInfo() {
-      const res = await dynamicsService.getDynamicsCollect()
+      const res = await dynamicsService.getDynamicsCollect() 
+      console.log(res)
       // 数据中心部分 数据拼装
       this.collectData = {
         newMsg: res.unreadCustomerCount,

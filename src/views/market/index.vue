@@ -2,76 +2,118 @@
   <div class="market-page">
     <div class="header">
       <div class="search-box">
-        <search></search>
-        <div class="a"></div>
+        <div class="search-box-content">
+          <p>
+            深圳
+            <span :style="{backgroundImage:'url(' + defaultAvatar + ')'}"></span>
+            </p>
+        <form action="/">
+          <van-search
+            v-model="value"
+            placeholder="请输入搜索关键词"
+            @click="onClickHandler"
+          />
+        </form>
+        </div>
+        <div class="a" :style="{backgroundImage:'url(' + locationIcon + ')'}"></div>
       </div>
-      <screen></screen>
+      <screen :functionList="functionList"></screen>
+      <already-open :agentIdInfo="agentIdInfo"></already-open>
     </div>
     <div class="all-market">
-      <div class="inform-box">
-        <div class="inform">
-          <div class="have-opened">
-            已开通16个楼盘
-          </div>
-          <div class="my-market">
-            我的楼盘
-          </div>
-          <van-icon name="arrow" color="rgba(234,77,46,1)" size="7px 12px" />
-        </div>
-      </div>
-<market-describe v-for="(item,index) in describeInfo" :key="index" :dredgeFlag="item.dredgeFlag" 
-      :borderBottom="item.borderBottom" @skipDetail="skipDetail"></market-describe>
+      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
     </div>
   </div>
 </template>
 <script>
 import Condition from 'COMP/Condition/'
-import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'
 import MarketDescribe from 'COMP/MarketDescribe/'
+import TitleBar from 'COMP/TitleBar/'
+import AlreadyOpen from 'COMP/Market/AlreadyOpen/'
+import marketService from 'SERVICE/marketService'
 export default {
+  created () {
+
+  },
   components: {
     Condition,
-    Search,
     Screen,
-    MarketDescribe
+    MarketDescribe,
+    TitleBar,
+    AlreadyOpen
   },
   data: _ => ({
-    describeInfo: [
-      { dredgeFlag: true, borderBottom: true },
-      { dredgeFlag: false, borderBottom: false },
-      { dredgeFlag: true, borderBottom: false },
-      { dredgeFlag: true, borderBottom: true }
-    ],
-    info: [
-      {
-        text: '即将发售',
-        textColor: 'rgba(234,77,46,1)',
-        backColor: 'rgba(234,77,46,0.1)'
-      },
-      {
-        text: '地铁房',
-        textColor: 'rgba(92,95,102,1)',
-        backColor: 'rgba(143,159,177,0.15)'
-      },
-      {
-        text: '高端社区',
-        textColor: 'rgba(92,95,102,1)',
-        backColor: 'rgba(143,159,177,0.15)'
-      },
-      {
-        text: '商务区',
-        textColor: 'rgba(92,95,102,1)',
-        backColor: 'rgba(143,159,177,0.15)'
-      }
-    ],
-    marketList: [1, 2, 3, 4]
+    value:"",
+    defaultAvatar: require('IMG/market/list__arrow_.png'),
+    locationIcon:require('IMG/market/juxing.png'),
+    functionList: null,
+    agentIdInfo: null,
+    resInfo: null,
+    borderBottom: true
   }),
+  created () {
+    this.getMarketDescribeInfo()
+    this.getBrokerInfo()
+  },
   methods: {
-    skipDetail(n) {
+    // // qinqiufangfa
+    // async getMarketDescribeInfo (name, sort1, sort2) {
+    //   const res = await marketService.getMarketDescribe(this.getpayload)
+    //   console.log(res.records)
+    //   // this.resInfo = res.records
+    //   return res.records
+    // },
+    // getpayload(){
+    //   let 
+    //   return {
+    //     projectName: this.
+    //   }
+    // },
+    // nameChangeHandler () {
+    //   let res = await getMarketDescribeInfo(this.name,this.status1,this.status2)
+    // },
+    // areaChangeHandler (){
+    //   // this.areaIndex -> 1 = 2
+    //   switch (this.areaIndex) {
+    //     case 1:
+    //       this.=a1
+    //       break;
+      
+    //     default:
+    //       break;
+    //   }
+    // }
+
+
+
+
+    // s1
+    // a() {
+
+    //   let getMarketDescribeInfo(this.name,this,)
+    // }
+
+    //     b() {
+      
+    //   let getMarketDescribeInfo(this.name,this,)
+    // }
+onClickHandler() {
+  this.$router.push("/market/inputSearch")
+},
+    async getMarketDescribeInfo () {
+      const res = await marketService.getMarketDescribe()
+      console.log(res.records)
+      this.resInfo = res.records
+    },
+    async getBrokerInfo () {
+      const res = await marketService.getBrokerMarket(1)
+      console.log(res)
+      this.agentIdInfo = res
+    },
+    skipDetail (n) {
       if (n == 1) {
-        this.$router.push({ path: `/market/marketDetail/${this.userId}` })
-        console.log(n)
+        this.$router.push("/market/marketDetail")
       }
     }
   }
@@ -90,13 +132,39 @@ export default {
       display: flex;
       width: 375px;
       height: 44px;
+      justify-content: space-between;
       border-bottom: solid 1px #dfdfdf;
+      .search-box-content{
+        display: flex;
+        background:rgba(245,245,245,1);
+        font-size:13px;
+        margin:7px 0 7px 15px; 
+        width: 306px;
+        border-radius:4px;
+        p{
+          margin: 6px 0 0 16px;
+          padding: 0 12px 0 0;
+          display: flex;
+          span{
+            width: 16px;
+            height:16px;
+            margin-top: 4px;
+          }
+        }
+        .van-search{
+          padding: 0;
+        }
+        .van-cell{
+          background:rgba(245,245,245,1);
+          input{
+            line-height: 24px;
+          }
+        }
+      }
       .a {
         width: 20px;
         height: 20px;
-        border: 1px solid black;
-        margin-top: 13px;
-        margin-left: 14px;
+        margin:13px 14px 0 0;
       }
     }
   }
@@ -106,7 +174,7 @@ export default {
     width: 375px;
     height: auto;
     position: relative;
-    margin-top: 90px;
+    margin-top: 160px;
     z-index: 1;
     .inform-box {
       background: white;

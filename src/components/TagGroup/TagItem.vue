@@ -1,11 +1,19 @@
 <template>
-  <div v-if="info" class="tag-item" :style="style"><span>最多六个字</span></div>
+  <div v-if="true" class="tag-item" :style="style">{{info}}</div>
 </template>
 <script>
 import conf from './conf'
 export default {
   props: {
-    info: { type: String }
+    // info: { 
+    //   type:Object,
+    //   default:function () {
+    //     return {}
+    //   }
+    // }
+    info:{
+      type:String,
+    }
   },
   data: () => ({
     style: null
@@ -27,8 +35,10 @@ export default {
   font-size: 12px;
   margin: 0 -5px;
   transform: scale(0.85);
-  margin: 1px 1px 1px -6px;
+  margin: 1px 4px 1px -6px;
   padding: 1px 5px;
   border-radius: 3px;
+  height: 15px;
+  line-height: 15px;
 }
 </style>
