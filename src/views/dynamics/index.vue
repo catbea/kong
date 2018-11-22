@@ -33,6 +33,9 @@ export default {
     // 获取头部数据,不包括楼盘信息
     async getCollectInfo() {
       const res = await dynamicsService.getDynamicsCollect()
+      debugger
+      console.log(res);
+      
       // 数据中心部分 数据拼装
       this.collectData = {
         newMsg: res.unreadCustomerCount,

@@ -1,6 +1,6 @@
 <template>
   <div class="custom-page">
-    <van-search class="search-container" v-model="searchVal" placeholder="请输入搜索关键词" show-action @search="onSearchHandler">
+    <van-search class="search-container" v-model="searchVal" placeholder="请输入搜索关键词" show-action @search="onSearchHandler" @click="onFocusHandler" >
       <div slot="action" @click="onSearchHandler">搜索</div>
     </van-search>
     <div class="tab-container">
@@ -73,6 +73,10 @@ export default {
     },
     itemClickHandler (e) {
       this.$router.push(`/custom/${e.clientId}`)
+    },
+    onFocusHandler(){
+      console.log('fffff');
+      
     }
   },
   computed: {
@@ -85,6 +89,12 @@ export default {
 <style lang="less">
 .custom-page {
   .search-container {
+    .van-field__body {
+      height: 100%;
+    }
+    .van-field__control {
+      height: 100%;
+    }
   }
 }
 </style>
