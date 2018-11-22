@@ -13,7 +13,7 @@
       <cell class="cell-item" title="微信号" :to="'/user/edit/userWechat'" is-link />
       <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" />
       <cell class="cell-item" title="平台公司" is-link :value="userInfo.distributorName" />
-      <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" />
+      <!-- <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" /> -->
       <cell class="cell-item" title="我的机构" is-link :to="'/user/edit/userMechanism'"/>
     </cell-group>
     <cell-group class="user-advance-info">

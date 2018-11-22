@@ -2,7 +2,7 @@
   <div class="discover-Broadcast">
    <swipe :autoplay="3000">
     <swipe-item v-for="(image, index) in images" :key="index" class="Broadcast-img">
-      <img v-lazy="image" class="imgs"/>
+      <img v-lazy="image" class="imgs" :src="image"/>
     </swipe-item>
   </swipe>
   </div>
@@ -21,7 +21,9 @@ export default {
     return {
       current: 0,
       images: [
-        require('IMG/user/crown.png'),
+        require('IMG/user/usercard@2x.png'),
+        require('IMG/user/person_icon.png'),
+          require('IMG/user/usercard@2x.png'),
         require('IMG/user/person_icon.png'),
       ]
      
@@ -38,21 +40,22 @@ export default {
 
 </script>
 <style lang="less">
+.van-swipe__indicator--active {
+    background-color: #ffffff;
+}
 .discover-Broadcast{
     height:206px;
   background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 45%,rgba(0,0,0,0.3) 100%);
   box-shadow:0px 5px 4px 0px rgba(55,53,94,0.21);
 }
-// .Broadcast-img{
-//   height:206px;
-// background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 45%,rgba(0,0,0,0.3) 100%);
-// box-shadow:0px 5px 4px 0px rgba(55,53,94,0.21);
-// }
+
 .imgs {
         width: 100%;
-        height: 210px;
+        height:206px;
         display: block;
-        padding: 30px 60px;
+        background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.05) 45%,rgba(0,0,0,0.3) 100%);
+        box-shadow:0px 5px 4px 0px rgba(55,53,94,0.21);
+        // padding: 30px 60px;
         box-sizing: border-box;
         background-color: #fff;
         pointer-events: none;

@@ -15,8 +15,8 @@
               </p>
               <p class="list-right-time">南山 深圳湾 | 11/2到期</p>
               <p class="list-right-label">
-                <span class="right-label-red">即将发售</span>
-                <span class="right-label-gray">地铁房</span>
+                <span class="right-label right-label-red">即将发售</span>
+                <span class="right-label right-label-gray">地铁房</span>
               </p>
               <p class="list-right-price">
                 98000元/㎡
@@ -119,7 +119,7 @@ export default {
             border-radius: 12px;
             border: 1px solid;
             right: 31px;
-             position: absolute;
+            position: absolute;
             text-align: center;
           }
         }
@@ -130,25 +130,21 @@ export default {
         }
         > .list-right-label {
           line-height: 15px;
-          > .right-label-red {
+          > .right-label {
             font-size: 10px;
-            font-family: PingFangSC-Regular;
             font-weight: 400;
-            color: rgba(234, 77, 46, 1);
+
             line-height: 10px;
             padding: 3px 5px;
+            border-radius: 3px;
+            margin-right: 4px;
+          }
+          > .right-label-red {
             background: rgba(234, 77, 46, 0.1);
-            border-radius: 2px;
+            color: rgba(234, 77, 46, 1);
           }
           > .right-label-gray {
-            font-size: 10px;
-            font-family: PingFangSC-Regular;
-            font-weight: 400;
-            color: rgba(92, 95, 102, 1);
-            line-height: 10px;
             background: rgba(143, 159, 177, 0.15);
-            border-radius: 3px;
-            padding: 3px 5px;
           }
         }
         > .list-right-price {
@@ -180,8 +176,7 @@ export default {
       line-height: 30px;
       padding-left: 11px;
       > .list-commission-word {
-        width: 16px;
-        height: 16px;
+        padding: 0 3px;
         border-radius: 2px;
         border: 1px solid;
         font-size: 10px;

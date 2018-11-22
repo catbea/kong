@@ -9,7 +9,7 @@
       <cell class="business-info-cell" title="优惠券" is-link @click="goallDynamics"> <!--url="/user/articles/historicalArticles" -->
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="线下报备" is-link>
+      <cell class="business-info-cell" title="线下报备" is-link  @click="goallDynamics">
         <div slot="extra" class="msg-dot" />
       </cell>
       <cell class="business-info-cell" title="消费账单" is-link>
@@ -53,7 +53,10 @@ export default {
     },
     goallDynamics(){
     this.$router.push('/user/collection/myCollection')
-    }
+    },
+      goallDynamics(){
+    this.$router.push('/dynamics/allDynamics')
+    },
   },
   computed: {
     ...mapGetters(['userInfo'])

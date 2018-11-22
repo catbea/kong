@@ -39,7 +39,7 @@ export default {
     margin: 0 15px;
     display: flex;
     border-bottom: 1px solid #e6e6e6;
-    padding: 0 0 16px 0;
+    padding: 10px 0 16px 0;
     > .collection-list-left {
       height: 90px;
       position: relative;

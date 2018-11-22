@@ -55,7 +55,7 @@
     </div>
     <!-- <fixed-btn></fixed-btn> -->
 
-    <popup-frame></popup-frame>
+    <popup-frame :show.sync="a"></popup-frame>
 
   </div>
 
@@ -79,6 +79,7 @@ export default {
   },
   data () {
     return {
+      a:false,
       personIcon: require('IMG/user/person_icon.png'),
       backIcon: require('IMG/user/usercard@2x.png'),
       fabulousIcon: require('IMG/discover/fabulous@2x.png'),

@@ -20,10 +20,26 @@
 </template>
 <script>
 import ShadowBox from 'COMP/ShadowBox'
+import dynamicsService from 'SERVICE/dynamicsService'
 export default {
   components: {
     ShadowBox
   },
+  data () {
+    return {
+      systemMessage: [],
+    }
+  },
+  created () {
+    this.getSystemMessageList()
+  },
+  methods: {
+
+    async getSystemMessageList () {
+      const res = await dynamicsService.getSystemMessage()
+      this.systemMessage = res
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -48,7 +64,7 @@ export default {
         font-weight: 600;
         color: rgba(41, 46, 51, 1);
         line-height: 30px;
-            padding-bottom: 8px;
+        padding-bottom: 8px;
       }
       > .sys-shadowBox-time {
         font-size: 14px;

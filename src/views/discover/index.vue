@@ -3,14 +3,16 @@
     <automatic-swipes></automatic-swipes>
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
-        <van-tab title="热门"></van-tab>
+        <van-tab title="热门">
+           <div class="tab-container-heigt"><discover-list></discover-list></div>
+        </van-tab>
         <van-tab title="房产"></van-tab>
         <van-tab title="攻略"></van-tab>
         <van-tab title="政策"></van-tab>
         <van-tab title="娱乐"></van-tab>
       </van-tabs>
     </div>
-    <discover-list></discover-list>
+   
   </div>
 </template>
 <script>
@@ -31,8 +33,11 @@ export default {
 .discover-page {
   width: 100%;
   > .tab-container{
-    margin-top: 28px;
+    margin-top: 20px;
     margin-bottom: 20px;
+    .tab-container-heigt{
+      margin-top: 25px;
+    }
   }
 }
 [class*=van-hairline]::after {

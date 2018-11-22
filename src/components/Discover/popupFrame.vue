@@ -21,6 +21,9 @@
 <script>
 import { Popup } from 'vant';
 export default {
+  props:{
+    value: Boolean
+  },
   components: {
     Popup
   },
@@ -29,6 +32,14 @@ export default {
       show: false,
       editImg: require('IMG/user/editInfo@2x.png'),
       userImg: require('IMG/user/usercard@2x.png')
+    }
+  },
+  watch:{
+    value(val){
+      this.show = val
+    },
+    show(vla){
+      this.$emit('change')
     }
   }
 }
