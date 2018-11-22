@@ -3,13 +3,13 @@
     <business-card >
     </business-card>
     <cell-group class="business-info">
-      <cell class="business-info-cell" title="我的楼盘" is-link>
+      <cell class="business-info-cell" title="我的楼盘" is-link @click="goarticles">
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="优惠券" is-link>
+      <cell class="business-info-cell" title="优惠券" is-link @click="goallDynamics"> <!--url="/user/articles/historicalArticles" -->
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="线下报备" is-link>
+      <cell class="business-info-cell" title="线下报备" is-link  @click="goallDynamics">
         <div slot="extra" class="msg-dot" />
       </cell>
       <cell class="business-info-cell" title="消费账单" is-link>
@@ -20,7 +20,7 @@
       <cell class="business-info-cell" title="邀请有礼" is-link>
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="意见反馈" is-link>
+      <cell class="business-info-cell" title="意见反馈" is-link >
         <div slot="extra" class="msg-dot" />
       </cell>
     </div>
@@ -47,7 +47,16 @@ export default {
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
       this.$store.dispatch('getUserVipInfo', userId)
-    }
+    },
+    goarticles(){
+    this.$router.push('/user/articles/historicalArticles')
+    },
+    goallDynamics(){
+    this.$router.push('/user/collection/myCollection')
+    },
+      goallDynamics(){
+    this.$router.push('/dynamics/allDynamics')
+    },
   },
   computed: {
     ...mapGetters(['userInfo'])

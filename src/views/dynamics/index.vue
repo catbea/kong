@@ -33,6 +33,7 @@ export default {
     async getCollectInfo() {
       const res = await dynamicsService.getDynamicsCollect() 
       console.log(res)
+
       // 数据中心部分 数据拼装
       this.collectData = {
         newMsg: res.unreadCustomerCount,

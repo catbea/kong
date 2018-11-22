@@ -4,7 +4,10 @@ export default [
     name: 'market',
     component: resolve => require(['@/views/market/index.vue'], resolve),
     meta: {
-      title: '楼盘'
+      title: '楼盘',
+      tabbar:{
+        show: true
+      }
     }
   },
   {

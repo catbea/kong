@@ -9,7 +9,7 @@ import wechatApi from '@/utils/wechatApi'
 import vant from './vant'
 
 Vue.config.productionTip = false
-
+Vue.prototype.$devicePixelRatio = window.devicePixelRatio
 // vant
 import { Toast, Icon, PullRefresh, List, Popup,Search } from 'vant'
 Vue.use(Toast)
