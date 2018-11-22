@@ -1,22 +1,40 @@
 <template>
   <div class="allDynamics-page">
-    <Tips></Tips>
-    <!-- 动态全部-->
-    <!-- <shadow-box>
-      <div slot="container">
-        <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
-      </div>
-    </shadow-box>
-    <dynamics-list></dynamics-list> -->
-  <!-- 名片 -->
-    <dynamics-card></dynamics-card>
+    <!-- <Tips></Tips> -->
+    <div class="tab-container">
+      <van-tabs  color="#007AE6" :line-width="15" :swipe-threshold="6">
+        <van-tab title="全部">
+          <!-- 动态全部-->
+          <div class="allDynamics-container">
+            <shadow-box>
+              <div slot="container">
+                <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
+              </div>
+            </shadow-box>
+            <dynamics-list></dynamics-list>
+          </div>
+        </van-tab>
+        <van-tab title="名片">
+          <!-- 名片 -->
+          <div class="allDynamics-container">
+            <dynamics-card></dynamics-card>
+          </div>
+        </van-tab>
+        <van-tab title="楼盘">
+          <!-- 动态楼盘 -->
+          <div class="allDynamics-container">
+            <properties></properties>
+          </div>
+        </van-tab>
+        <van-tab title="文章">
+          <!-- 动态文章 -->
+          <div class="allDynamics-container">
+            <dynamics-article></dynamics-article>
+          </div>
+        </van-tab>
+      </van-tabs>
+    </div>
 
-    <!-- 动态楼盘 -->
-    <!-- <properties></properties>  -->
-
-    <!-- 动态文章 -->
-
-    <!-- <dynamics-article></dynamics-article> -->
   </div>
 </template>
 <script>
@@ -58,6 +76,13 @@ export default {
 </script>
 <style lang="less">
 .allDynamics-page {
-  margin: 20px 0;
+  margin: 0 0 20px 0;
+  > .tab-container {
+    position: fixed;
+    width: 100%;
+     .allDynamics-container{
+      margin-top: 20px;
+    }
+  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="user-edit-username-page">
     <div class="user-edit-username">
-      <p class="edit-username-title">用户昵称</p>
+      <p class="edit-username-title">我的机构选择</p>
       <p class="edit-username-conter"><input type="text" class="edit-username-input" placeholder="Bela"></p>
       <button class=edit-username-query>确认修改</button>
     </div>

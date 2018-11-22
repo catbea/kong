@@ -67,7 +67,7 @@ export default {
 </script>
 <style lang="less">
 .dynamicsInfo-page {
-  margin: 16px;
+  margin: 16px 0;
   .dynamicsInfo-list {
     margin: 0 15px;
 
@@ -118,7 +118,7 @@ export default {
             background: rgba(0, 122, 230, 1);
             border-radius: 12px;
             border: 1px solid;
-            right: 15px;
+            right: 31px;
              position: absolute;
             text-align: center;
           }

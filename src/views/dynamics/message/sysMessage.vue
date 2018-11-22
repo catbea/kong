@@ -29,14 +29,14 @@ export default {
 <style lang="less">
 .sysMessage-page {
   > .sysMessage-container {
-    margin: 16px;
+    margin: 16px 0;
     > .sysMessage-time {
       font-size: 14px;
       font-family: PingFang-SC-Medium;
       font-weight: 500;
       color: rgba(41, 46, 51, 1);
       line-height: 20px;
-      margin: 20px 0 12px 0;
+      margin: 20px 0 12px 16px;
     }
     > .sysMessage-shadowBox {
     }

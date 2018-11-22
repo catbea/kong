@@ -46,7 +46,7 @@ export default {
 </script>
 <style lang="less">
 .articleInfo-page {
-  margin: 16px;
+  margin: 16px 0;
   .articleInfo-list {
     margin: 0 15px;
     display: flex;
@@ -78,7 +78,7 @@ export default {
       position: absolute;
       margin-right: 0;
       padding-right: 0;
-      right: 16px;
+      right: 32px;
       > .mark-icon {
         width: 120px;
         height: 90px;
