@@ -23,9 +23,7 @@ export default {
       linkText: '更多楼盘'
     }
   }),
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 <style lang="less">

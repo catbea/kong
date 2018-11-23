@@ -24,10 +24,10 @@ export default {
     },
     itemHeight: Number
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.destroy()
   },
-  data () {
+  data() {
     return {
       currenTranslateY: 0,
       height: '',
@@ -37,10 +37,10 @@ export default {
     }
   },
   methods: {
-    destroy () {
+    destroy() {
       this.timer && clearInterval(this.timer)
     },
-    init () {
+    init() {
       this.destroy()
       if (this.cloneNode) {
         this.$refs.box.removeChild(this.cloneNode)
@@ -61,7 +61,7 @@ export default {
       }
       return true
     },
-    start () {
+    start() {
       if (this.direction === 'down') this.go(false)
       this.timer = setInterval(() => {
         if (this.direction === 'up') {
@@ -84,7 +84,7 @@ export default {
         }
       }, this.interval + this.duration)
     },
-    go (toFirst) {
+    go(toFirst) {
       this.noAnimate = true
       if (toFirst) {
         this.currentIndex = 0

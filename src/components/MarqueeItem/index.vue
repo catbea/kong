@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'marquee-item',
-  mounted () {
+  mounted() {
     this.$nextTick(() => {
       this.$parent.destroy()
       this.$parent.init()

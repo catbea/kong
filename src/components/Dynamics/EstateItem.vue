@@ -54,7 +54,7 @@ export default {
       color: #666666;
     }
     .estate-info {
-      >p {
+      > p {
         display: inline-block;
       }
       .estate-price {

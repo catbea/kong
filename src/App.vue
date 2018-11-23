@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="view-box">
+    <div id="view-box" ref="viewBox">
       <div class="router-view">
         <router-view></router-view>
       </div>
