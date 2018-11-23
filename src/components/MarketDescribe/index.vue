@@ -14,7 +14,7 @@
             <span class="dredge" :style="style" v-if="dredge">{{openStatus}}</span>
           </li>
           <li class="site">{{itemInfo.linkerAddress}}</li>
-          <tag-group :condition="itemInfo.linkerTags"></tag-group>
+          <tag-group :arr="itemInfo.linkerTags"></tag-group>
           <li class="unit-price">
             <span>{{itemInfo.linkerPrice}}</span>
             <span>{{itemInfo.openTimes}}次开通</span>

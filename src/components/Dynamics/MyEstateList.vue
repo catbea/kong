@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import EstateItem from 'COMP/Dynamics/EstateItem'
+import EstateItem from 'COMP/EstateItem'
 import TitleBar from 'COMP/TitleBar'
 
 export default {

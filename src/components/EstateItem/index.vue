@@ -12,6 +12,7 @@
         <p class="estate-area">{{info.priceUnit}}</p>
       </div>
     </div>
+    <slot name="desc"></slot>
     <div class="rebate"></div>
   </div>
 </template>
