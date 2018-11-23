@@ -44,9 +44,11 @@
         </div>
       </div>
       <div>
-        <estate-item v-for=""></estate-item>
+        <estate-item v-for="(item,index) in tempEstateData" :key="index" :info="item">
+          <p class="interest-desc" slot="desc">1312312312</p>
+        </estate-item>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -73,8 +75,10 @@ export default {
     customBaseInfo: null,
     activeIndex: 0,
     tempTagData: ['地铁房', '高端社区', '商务区'],
-    tempEstateData:[
-      
+    tempEstateData: [
+      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' },
+      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' },
+      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' }
     ]
   }),
   created () {
@@ -150,7 +154,8 @@ export default {
         padding-bottom: 10px;
       }
       .purchase-info-box {
-        >p ,>div {
+        > p,
+        > div {
           line-height: 1.8;
         }
         > p {
@@ -177,6 +182,10 @@ export default {
           }
         }
       }
+    }
+    .interest-desc {
+      margin: 0 15px;
+      font-size: 12px;
     }
   }
 }
