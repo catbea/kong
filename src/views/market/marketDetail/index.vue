@@ -6,7 +6,6 @@
     <div class="marketDetail-box">
       <div class="marketDetail-box-top">
       <div class="left">
-        <!-- <Condition :info="info"></Condition> -->
       </div>
       <div class="house-owner">
         <div class="browse" @click="supplement">12345</div>人浏览过
@@ -49,7 +48,7 @@
       <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击 </span>
       <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
       <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
-      </router-link>
+      <!-- </router-link> -->
     </div>
     </div>
     <open-marketButton></open-marketButton>
@@ -63,7 +62,6 @@
 </template>
 <script>
 import * as types from '@/store/mutation-types'
-import Condition from 'COMP/Condition/'
 import ButtonBox from 'COMP/ButtonBox/'
 import Sort from 'COMP/Market/MarketDetail/Sort'
 import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
@@ -78,7 +76,6 @@ import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
     Sort,
-    Condition,
     ButtonBox,
     SpecificMarketDetail,
     AllMarketType,
