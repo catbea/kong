@@ -72,7 +72,10 @@ export default {
     id: -1,
     customBaseInfo: null,
     activeIndex: 0,
-    tempTagData: ['地铁房', '高端社区', '商务区']
+    tempTagData: ['地铁房', '高端社区', '商务区'],
+    tempEstateData:[
+      
+    ]
   }),
   created () {
     this.id = this.$route.params.id
