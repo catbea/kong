@@ -17,7 +17,7 @@ export default {
   props: {
     info: Object
   },
-  data: _ => ({
+  data: () => ({
     titleBarConf: {
       title: 'AI荐盘',
       linkText: '更多楼盘'

@@ -8,9 +8,9 @@ class MarketService {
     //   projectName: '',
     //   province: '',
     //   ...
-    // },payload) 
+    // },payload)
     return xhr({
-      url: '/linker/getLinkerList',
+      url: '/linker/getLinkerList'
       // body: {
       //   projectName
       // }
@@ -24,8 +24,8 @@ class MarketService {
     return xhr({
       url: '/linker/getAgentSubscribeCount',
       body: {
-        agentId:num
-        }
+        agentId: num
+      }
     })
   }
 }

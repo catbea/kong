@@ -97,12 +97,12 @@ class CustomService {
 
   /**
    * 客户详情-客户基础信息
-   * @param {*} clientId 
+   * @param {*} clientId
    */
   getClientInfo(clientId) {
     return xhr({
       url: '/customerInfo/queryClientInfo',
-      body:{
+      body: {
         clientId
       }
     })

@@ -11,12 +11,12 @@ export default {
     autoAlign: Boolean,
     options: {
       type: Object,
-      default () {
+      default() {
         return {}
       }
     }
   },
-  created () {
+  created() {
     let _options = {
       ...this.$props,
       ...this.options,
@@ -24,6 +24,6 @@ export default {
     }
     this.$parent.setAxis(_options)
   },
-  render () {}
+  render() {}
 }
 </script>

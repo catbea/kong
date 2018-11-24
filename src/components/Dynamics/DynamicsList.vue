@@ -91,20 +91,20 @@
 
 </template>
 <script>
-import { Row, Col } from 'vant';
+import { Row, Col } from 'vant'
 import ShadowBox from 'COMP/ShadowBox'
 export default {
   components: {
     ShadowBox
   },
-  data () {
+  data() {
     return {
       userImg: require('IMG/user/person_icon.png'),
       show1: true
     }
   },
   methods: {
-    goalldynamics () {
+    goalldynamics() {
       this.$router.push('/dynamics/message/messageList')
     }
   }
@@ -157,7 +157,7 @@ export default {
         position: absolute;
         right: 16px;
         margin-top: -6px;
-            padding-right: 16px;
+        padding-right: 16px;
         > .agent-right-num {
           font-size: 20px;
           font-weight: 500;
@@ -194,7 +194,7 @@ export default {
       > .list-btn-right {
         position: absolute;
         right: 32px;
-            // margin-top: 20px;
+        // margin-top: 20px;
         > .list-btn-follow {
           width: 64px;
           height: 24px;

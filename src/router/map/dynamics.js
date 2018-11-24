@@ -5,8 +5,8 @@
     component: resolve => require(['@/views/dynamics/index.vue'], resolve),
     meta: {
       title: '数据',
-      tabbar:{
-        show:true
+      tabbar: {
+        show: true
       }
     }
   },

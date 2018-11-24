@@ -51,13 +51,13 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
-      backIcon: require('IMG/user/usercard@2x.png'),
+      backIcon: require('IMG/user/usercard@2x.png')
     }
   },
   methods: {
-    gosysMessage () {
+    gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     }
   }
@@ -114,10 +114,9 @@ export default {
       }
     }
     > .messageInfo-fill {
-    height: 10px;
-    background:rgba(247,249,250,1);
+      height: 10px;
+      background: rgba(247, 249, 250, 1);
+    }
   }
-  }
-  
 }
 </style>

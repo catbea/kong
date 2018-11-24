@@ -5,7 +5,7 @@ export default [
     component: resolve => require(['@/views/market/index.vue'], resolve),
     meta: {
       title: '楼盘',
-      tabbar:{
+      tabbar: {
         show: true
       }
     }
@@ -62,7 +62,9 @@ export default [
     path: '/marketDetail/marketAllDynamic',
     name: 'marketAllDynamic',
     component: resolve =>
-      require(['@/views/market/marketDetail/marketAllDynamic/index.vue'], resolve),
+      require([
+        '@/views/market/marketDetail/marketAllDynamic/index.vue'
+      ], resolve),
     meta: {
       title: '全部楼盘动态',
       tabbar: {
@@ -82,7 +84,7 @@ export default [
       }
     }
   },
- 
+
   {
     path: '/marketDetail/commission',
     name: 'marketDetail-commission',
@@ -147,9 +149,7 @@ export default [
     path: '/market/inputSearch',
     name: 'no-input',
     component: resolve =>
-      require([
-        '@/views/market/marketSearch/inputSearch/index.vue'
-      ], resolve),
+      require(['@/views/market/marketSearch/inputSearch/index.vue'], resolve),
     meta: {
       title: '搜索楼盘'
     }
@@ -158,9 +158,7 @@ export default [
     path: '/market/marketDetail/photo',
     name: 'no-input',
     component: resolve =>
-      require([
-        '@/views/market/marketDetail/marketPhoto/index.vue'
-      ], resolve),
+      require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
     meta: {
       title: '楼盘相册',
       tabbar: {

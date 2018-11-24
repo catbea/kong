@@ -21,11 +21,8 @@
     
 </template>
 <script>
-
 export default {
-  components: {
-    
-  },
+  components: {},
   props: {
     totalTitle: { type: String, default: '' },
     totalNum: { type: String, default: '' },
@@ -34,41 +31,37 @@ export default {
     propertiesTitle: { type: String, default: '' },
     propertiesNum: { type: String, default: '' },
     articleTitle: { type: String, default: '' },
-    articleNum: { type: String, default: '' },
+    articleNum: { type: String, default: '' }
   },
-  data(){
-    return{
-      total:''
-  }
-},
-methods: {
- 
-
-}
+  data() {
+    return {
+      total: ''
+    }
+  },
+  methods: {}
 }
 </script>
 <style lang="less">
 .dynaData-container {
   display: flex;
-    padding: 20px 0 20px 20px;
-   
-    span{
-      width: 80.7px;
-    }
-   .container-title {
+  padding: 20px 0 20px 20px;
+
+  span {
+    width: 80.7px;
+  }
+  .container-title {
     font-size: 12px;
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
     line-height: 18px;
   }
-   .card-num {
-      font-size: 24px;
-      font-weight: 500;
-      color: rgba(51, 51, 51, 1);
-      line-height: 36px;
-    }
+  .card-num {
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    line-height: 36px;
+  }
   > .container-total {
-    
   }
 }
 </style>

@@ -19,11 +19,13 @@ export default {
       { type: '聊天', count: 11, shadow: 100 }
     ]
   }),
-  mounted () {
-    this.width = document.getElementsByClassName('pie-chart-container')[0].offsetWidth
+  mounted() {
+    this.width = document.getElementsByClassName(
+      'pie-chart-container'
+    )[0].offsetWidth
   },
   methods: {
-    renderBarChart ({ chart }) {
+    renderBarChart({ chart }) {
       this.data.map(obj => {
         obj.virtualCount = obj.count > 99 ? 99 : obj.count
       })
@@ -34,15 +36,25 @@ export default {
       })
       chart.axis('shadow', false)
       chart.axis('virtualCount', false)
-      chart.legend(false);
-      chart.interval().position('type*shadow').color('#F5F5F5').size(10).style({
-        radius: 3
-      })
-      chart.interval().position('type*virtualCount').color('type', val => {
-        return val === '聊天' ? '#f6bc51' : '#2f7bdf'
-      }).size(10).style({
-        radius: 3
-      })
+      chart.legend(false)
+      chart
+        .interval()
+        .position('type*shadow')
+        .color('#F5F5F5')
+        .size(10)
+        .style({
+          radius: 3
+        })
+      chart
+        .interval()
+        .position('type*virtualCount')
+        .color('type', val => {
+          return val === '聊天' ? '#f6bc51' : '#2f7bdf'
+        })
+        .size(10)
+        .style({
+          radius: 3
+        })
       this.data.map(obj => {
         chart.guide().text({
           position: [obj.type, obj.virtualCount],
@@ -55,7 +67,7 @@ export default {
           offsetY: -5
         })
       })
-      chart.render();
+      chart.render()
     }
   }
 }

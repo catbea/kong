@@ -35,11 +35,11 @@ export default {
     Cell,
     CellGroup
   },
-  created () {
+  created() {
     this.getUserInfo()
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
@@ -60,12 +60,12 @@ export default {
     background: #fff;
     > .user-avatar {
       text-align: center;
-      .user-avatar-clik{
-        font-size:12px;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(0,122,230,1);
-line-height:17px;
+      .user-avatar-clik {
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(0, 122, 230, 1);
+        line-height: 17px;
       }
     }
     .cell-item {

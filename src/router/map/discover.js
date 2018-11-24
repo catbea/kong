@@ -5,7 +5,7 @@ export default [
     component: resolve => require(['@/views/discover/index.vue'], resolve),
     meta: {
       title: '发现',
-      tabbar:{
+      tabbar: {
         show: true
       }
     }
@@ -13,8 +13,7 @@ export default [
   {
     path: '/discover/headline',
     name: 'headline',
-    component: resolve =>
-      require(['@/views/discover/headline.vue'], resolve),
+    component: resolve => require(['@/views/discover/headline.vue'], resolve),
     meta: {
       title: '房产头条',
       tabbar: {

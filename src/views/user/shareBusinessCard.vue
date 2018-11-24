@@ -8,7 +8,7 @@
 import userService from '@/services/userService'
 import { mapGetters } from 'vuex'
 export default {
-  data: _ => ({
+  data: () => ({
     userId: -1,
     result: null
   }),

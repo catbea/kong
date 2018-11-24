@@ -29,11 +29,11 @@ import Classify from 'COMP/Classify/'
 import TagGroup from 'COMP/TagGroup/'
 import marketService from 'SERVICE/marketService'
 export default {
-  components:{
+  components: {
     Classify,
     TagGroup
   },
-  created () {
+  created() {
     this.getMarketDescribeInfo()
   },
   data:()=>({

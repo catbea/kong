@@ -40,7 +40,7 @@
 </template>
 <script>
 export default {
-  data: _ => ({
+  data: () => ({
     list: [1, 2]
   })
 }

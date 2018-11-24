@@ -17,22 +17,21 @@ export default {
     DynamicsData,
     ArticleList,
     ShadowBox
-
   },
-  data () {
+  data() {
     return {
       totalTitle: '文章数量',
       totalNum: '90',
       cardTitle: '文章分享',
       cardNum: '0',
       propertiesTitle: '文章访客',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124',
+      articleNum: '124'
     }
   },
-  methods:{
-    itemArticleInfo (e) {
+  methods: {
+    itemArticleInfo(e) {
       // /discover/headline
       this.$router.push('/Dynamics/articleInfo')
     }
@@ -41,6 +40,5 @@ export default {
 </script>
 <style lang="less">
 .article-container {
-     
 }
 </style>

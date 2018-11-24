@@ -11,19 +11,10 @@
 <script>
 import Navbar from '@/components/Common/Navbar'
 import Tabbar from '@/components/Common/Tabbar'
-import demoService from '@/services/demoService'
 export default {
   components: {
     Navbar,
     Tabbar
-  },
-  created() {
-    this.test()
-  },
-  methods: {
-    async test() {
-      let a = await demoService.testApi(82612312312, 10)
-    }
   }
 }
 </script>

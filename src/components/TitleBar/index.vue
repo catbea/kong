@@ -32,7 +32,7 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 342px;
-  margin:42px 0 15px 0;
+  margin: 42px 0 15px 0;
   line-height: 30px;
   .title-text {
     display: inline-block;

@@ -34,33 +34,33 @@ export default {
   data: () => ({
     current: 0,
     flag: false,
-    imgPlay: require("IMG/marketDetail/Oval@2x.png"),
-    collectImg: require("IMG/marketDetail/xx1@2x.png"),
-    collectImgA: require("IMG/marketDetail/xx 9@2x.png"),
+    imgPlay: require('IMG/marketDetail/Oval@2x.png'),
+    collectImg: require('IMG/marketDetail/xx1@2x.png'),
+    collectImgA: require('IMG/marketDetail/xx 9@2x.png'),
     playShow: true,
     show: false
   }),
   methods: {
-    closeDom (n) {
+    closeDom(n) {
       this.show = n
     },
-    photo () {
+    photo() {
       // console.log(0)
-      this.$router.push("/market/marketDetail/photo")
+      this.$router.push('/market/marketDetail/photo')
     },
-    onChange (index) {
+    onChange(index) {
       console.log(index)
-      this.current = index;
+      this.current = index
     },
-    collect () {
+    collect() {
       this.flag = !this.flag
       console.log(this.flag)
     },
-    share () {
+    share() {
       // this.$router.push("/marketDetail/share")
       this.show = !this.show
     },
-    play () {
+    play() {
       this.playShow = !this.playShow
     }
   }

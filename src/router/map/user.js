@@ -5,7 +5,7 @@ export default [
     component: resolve => require(['@/views/user/index.vue'], resolve),
     meta: {
       title: '名片',
-      tabbar:{
+      tabbar: {
         show: true
       }
     }
@@ -62,7 +62,8 @@ export default [
     meta: {
       title: '修改微信号'
     }
-  },{
+  },
+  {
     path: '/user/edit/userMechanism',
     name: 'userMechanism',
     component: resolve =>
@@ -74,8 +75,7 @@ export default [
   {
     path: '/user/edit/userLabel',
     name: 'userLabel',
-    component: resolve =>
-      require(['@/views/user/edit/userLabel.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userLabel.vue'], resolve),
     meta: {
       title: '修改标签'
     }
@@ -111,13 +111,12 @@ export default [
   {
     path: '/user/myMarket',
     name: 'mymarket',
-    component: resolve =>
-      require(['@/views/user/myMarket/index.vue'], resolve),
+    component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
     meta: {
       title: '我的楼盘',
       tabbar: {
         show: false
       }
     }
-  },
+  }
 ]

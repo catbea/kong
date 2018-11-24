@@ -5,14 +5,14 @@
 import conf from './conf'
 export default {
   props: {
-    // info: { 
+    // info: {
     //   type:Object,
     //   default:function () {
     //     return {}
     //   }
     // }
-    info:{
-      type:String,
+    info: {
+      type: String
     }
   },
   data: () => ({

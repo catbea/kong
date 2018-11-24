@@ -20,18 +20,18 @@ export default {
     EstateRecommend,
     MyEstateList
   },
-  data: _ => ({
+  data: () => ({
     collectData: null, // 数据中心数据
     recommendData: null, // 推荐盘数据
-    estateListData: null, // 我的楼盘数据
+    estateListData: null // 我的楼盘数据
   }),
-  created() { 
+  created() {
     this.getCollectInfo()
     this.getEstateList()
   },
   methods: {
     async getCollectInfo() {
-      const res = await dynamicsService.getDynamicsCollect() 
+      const res = await dynamicsService.getDynamicsCollect()
       console.log(res)
 
       // 数据中心部分 数据拼装

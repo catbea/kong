@@ -44,9 +44,9 @@ export default {
   props: {
     data: { type: Object }
   },
-  methods:{
-    goMessage(){
-      this.$router.push('/dynamics/message/messageList');
+  methods: {
+    goMessage() {
+      this.$router.push('/dynamics/message/messageList')
     }
   }
 }
