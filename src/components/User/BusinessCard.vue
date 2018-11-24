@@ -8,7 +8,7 @@
           <p class="user-company">{{userInfo.distributorName}}</p>
           <p class="user-area">主营区域: {{userInfo.majorRegion}}</p>
         </div>
-        <tag-group class="tag-group-container" v-if="userInfo&&userVipInfo" :data="userInfo.userTags" :textColor="textColor" :backColor="backColor"></tag-group>
+        <tag-group class="tag-group-container" v-if="userInfo&&userVipInfo" :arr="userInfo.userTags"></tag-group>
         <p class="user-signature" :style="{color:userVipInfo&&userVipInfo.isvip ? '#E5B37B': '#A4B8D5'}" v-if="userInfo">“{{userInfo.signature}}”</p>
         <router-link class="share-handler-icon" to="/user/share-business-card"><img :src="shareIcon"></router-link>
       </div>
@@ -52,14 +52,6 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
-    textColor() {
-      return this.userVipInfo.isvip ? '#E5B37B' : '#A4B8D5'
-    },
-    backColor() {
-      return this.userVipInfo.isvip
-        ? 'rgba(229,179,123,0.15)'
-        : 'rgba(164,184,213,0.15)'
-    },
     isVipInfo() {
       return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
     },
@@ -190,8 +182,6 @@ export default {
     > .status-info-left {
       margin: 0 15px;
     }
-    // > .status-info-right {
-    // }
   }
 }
 </style>

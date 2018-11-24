@@ -31,6 +31,24 @@
         <bar-chart></bar-chart>
         <p class="chart-desc">该客户默默关注你好久了，不去打声招呼吗~</p>
       </div>
+      <div class="shadow_box purchase-intention">
+        <h5 class="purchase-title">买房意向</h5>
+        <div class="purchase-info-box">
+          <p><span>区域:</span>龙华新区</p>
+          <p><span>户型:</span>三室</p>
+          <p><span>总价:</span>500-600万</p>
+          <p><span>关注:</span>暂不明确</p>
+          <div class="preferences"><span>偏好:</span>
+            <tag-group :arr="tempTagData"></tag-group>
+          </div>
+        </div>
+      </div>
+      <div>
+        <estate-item v-for="(item,index) in tempEstateData" :key="index" :info="item">
+          <p class="interest-desc" slot="desc">1312312312</p>
+        </estate-item>
+      </div>
+
     </div>
   </div>
 </template>
@@ -39,6 +57,8 @@ import Avatar from 'COMP/Avatar'
 import PieChart from 'COMP/Custom/Charts/PieChart'
 import LineChart from 'COMP/Custom/Charts/LineChart'
 import BarChart from 'COMP/Custom/Charts/BarChart'
+import TagGroup from 'COMP/TagGroup'
+import EstateItem from 'COMP/EstateItem'
 import CustomService from 'SERVICE/customService'
 
 export default {
@@ -46,12 +66,20 @@ export default {
     Avatar,
     PieChart,
     LineChart,
-    BarChart
+    BarChart,
+    TagGroup,
+    EstateItem
   },
   data: () => ({
     id: -1,
     customBaseInfo: null,
     activeIndex: 0,
+    tempTagData: ['地铁房', '高端社区', '商务区'],
+    tempEstateData: [
+      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' },
+      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' },
+      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' }
+    ]
   }),
   created () {
     this.id = this.$route.params.id
@@ -114,6 +142,50 @@ export default {
         font-weight: 400;
         color: #333333;
       }
+    }
+    .purchase-intention {
+      position: relative;
+      margin: 0 20px;
+      padding: 15px;
+      .purchase-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333333;
+        padding-bottom: 10px;
+      }
+      .purchase-info-box {
+        > p,
+        > div {
+          line-height: 1.8;
+        }
+        > p {
+          font-size: 15px;
+          font-weight: 400;
+          color: #333333;
+          > span {
+            width: 45px;
+            font-size: 15px;
+            font-weight: 400;
+            color: #8a8f99;
+          }
+        }
+        .preferences {
+          display: flex;
+          font-size: 15px;
+          font-weight: 400;
+          color: #8a8f99;
+          > span {
+            width: 45px;
+          }
+          > div {
+            display: inline-block;
+          }
+        }
+      }
+    }
+    .interest-desc {
+      margin: 0 15px;
+      font-size: 12px;
     }
   }
 }

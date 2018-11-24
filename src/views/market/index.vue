@@ -26,7 +26,6 @@
   </div>
 </template>
 <script>
-import Condition from 'COMP/Condition/'
 import Screen from 'COMP/Screen/'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import TitleBar from 'COMP/TitleBar/'
@@ -37,7 +36,6 @@ export default {
 
   },
   components: {
-    Condition,
     Screen,
     MarketDescribe,
     TitleBar,

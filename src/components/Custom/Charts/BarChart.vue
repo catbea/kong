@@ -32,7 +32,8 @@ export default {
           range: [0, 100]
         }
       })
-      chart.axis(false)
+      chart.axis('shadow', false)
+      chart.axis('virtualCount', false)
       chart.legend(false);
       chart.interval().position('type*shadow').color('#F5F5F5').size(10).style({
         radius: 3

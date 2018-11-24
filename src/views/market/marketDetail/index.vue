@@ -6,7 +6,10 @@
     <div class="marketDetail-box">
       <div class="marketDetail-box-top">
       <div class="left">
+<<<<<<< HEAD
         <tag-group :condition="info"></tag-group>
+=======
+>>>>>>> e832288d5e85ae65ab3ec9ff0dfefe07973f0e90
       </div>
       <div class="house-owner">
         <div class="browse" @click="supplement">12345</div>人浏览过
@@ -62,7 +65,6 @@
 </template>
 <script>
 import * as types from '@/store/mutation-types'
-import Condition from 'COMP/Condition/'
 import ButtonBox from 'COMP/ButtonBox/'
 import Classify from 'COMP/Classify/'
 import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
@@ -77,8 +79,12 @@ import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
+<<<<<<< HEAD
     Classify,
     Condition,
+=======
+    Sort,
+>>>>>>> e832288d5e85ae65ab3ec9ff0dfefe07973f0e90
     ButtonBox,
     SpecificMarketDetail,
     AllMarketType,
