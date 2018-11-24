@@ -10,9 +10,9 @@ export default tag => {
         background: 'rgba(234, 77, 46, 0.1)',
         color: '#EA4D2E'
       }
-      case '住宅': // 白字绿底
+    case '住宅': // 白字绿底
       return {
-        background:'rgba(110,184,163,1)',
+        background: 'rgba(110,184,163,1)',
         color: '#FFFFFF'
       }
     default:

@@ -25,17 +25,16 @@ export default {
   components: {
     ShadowBox
   },
-  data () {
+  data() {
     return {
-      systemMessage: [],
+      systemMessage: []
     }
   },
-  created () {
+  created() {
     this.getSystemMessageList()
   },
   methods: {
-
-    async getSystemMessageList () {
+    async getSystemMessageList() {
       const res = await dynamicsService.getSystemMessage()
       this.systemMessage = res
     }

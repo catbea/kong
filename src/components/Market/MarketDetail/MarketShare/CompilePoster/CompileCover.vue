@@ -13,7 +13,7 @@
 <script>
 export default {
   data: () => ({
-    icon:require('IMG/correction/color.png'),
+    icon: require('IMG/correction/color.png'),
     list: [
       { check: false },
       { check: false },
@@ -21,7 +21,7 @@ export default {
       { check: false }
     ],
     liIndex: 0,
-    num:null
+    num: null
   }),
   computed: {
     // show(){
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     active(index) {
-      this.show=index
+      this.show = index
       console.log(index)
       //this.list[index].check = !this.list[index].check
     }
@@ -61,13 +61,13 @@ export default {
       margin-right: 15px;
       border: 1px solid;
       position: relative;
-        display: flex;
-        span{
-          width:22px;
-          height:22px;
-          position:absolute;
-          right:4px;
-          top:4px;
+      display: flex;
+      span {
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        right: 4px;
+        top: 4px;
       }
     }
   }

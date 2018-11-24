@@ -89,34 +89,34 @@ export default {
     TitleBar,
     SwipeBox
   },
-  mounted () {
+  mounted() {
     window.addEventListener('scroll', this.handleScroll)
   },
-  data: _ => ({
+  data: () => ({
     show: false,
     boxShow: false,
     openFlag: true,
     renewFlag: true,
     list: [1, 2, 3, 4],
     confA: {
-      title: "户型",
-      linkText: "全部户型",
-      link: "/marketDetail/FamilyList"
+      title: '户型',
+      linkText: '全部户型',
+      link: '/marketDetail/FamilyList'
     },
     confB: {
-      title: "楼盘动态 (12)",
-      linkText: "全部动态",
-      link: "/marketDetail/marketAllDynamic"
+      title: '楼盘动态 (12)',
+      linkText: '全部动态',
+      link: '/marketDetail/marketAllDynamic'
     },
     confC: {
-      title: "位置周边",
-      linkText: "全部周边",
-      link: "/marketDetail/marketDetail/allNear"
+      title: '位置周边',
+      linkText: '全部周边',
+      link: '/marketDetail/marketDetail/allNear'
     },
     confD: {
-      title: "其他楼盘",
-      linkText: "全部楼盘",
-      link: "/market"
+      title: '其他楼盘',
+      linkText: '全部楼盘',
+      link: '/market'
     },
     info: ['热销中', '住宅'],
     buttonInfo: {
@@ -132,7 +132,7 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
-    handleScroll () {
+    handleScroll() {
       let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
@@ -144,11 +144,11 @@ export default {
         this.boxShow = false
       }
     },
-    supplement () {
+    supplement() {
       this.show = true
     }
   },
-  destroyed () {
+  destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
   }
 }

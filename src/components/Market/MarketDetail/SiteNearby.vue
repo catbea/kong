@@ -16,7 +16,7 @@
 </template>
 <script>
 export default {
-  data: _ => ({
+  data: () => ({
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   })
 }

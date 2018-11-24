@@ -5,20 +5,12 @@
 </template>
 <script>
 export default {
-  props:{
-
-  },
-  data: () => ({
-
-  }),
-  components:{
-
-  }
+  props: {},
+  data: () => ({}),
+  components: {}
 }
 </script>
 <style lang="less">
-.custom-detail-info{
-
+.custom-detail-info {
 }
 </style>
-

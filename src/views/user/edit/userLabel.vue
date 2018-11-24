@@ -16,15 +16,15 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       texts: [
-        { "id": "1", "name": "资深中介" },
-        { "id": "2", "name": "交易专家" },
-        { "id": "3", "name": "销售达人" },
-        { "id": "4", "name": "佛系卖房" },
-        { "id": "5", "name": "佛系卖房" },
-        { "id": "6", "name": "佛系卖房" },
+        { id: '1', name: '资深中介' },
+        { id: '2', name: '交易专家' },
+        { id: '3', name: '销售达人' },
+        { id: '4', name: '佛系卖房' },
+        { id: '5', name: '佛系卖房' },
+        { id: '6', name: '佛系卖房' }
       ]
     }
   }

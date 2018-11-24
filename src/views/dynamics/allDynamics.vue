@@ -54,24 +54,21 @@ export default {
     ShadowBox,
     DynamicsCard,
     Tips
-
   },
 
-  data () {
+  data() {
     return {
       totalTitle: '总浏览数',
       totalNum: '90',
       cardTitle: '名片浏览',
       cardNum: '0',
       propertiesTitle: '楼盘浏览',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '文章浏览',
-      articleNum: '124',
+      articleNum: '124'
     }
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 <style lang="less">
@@ -80,7 +77,7 @@ export default {
   > .tab-container {
     position: fixed;
     width: 100%;
-     .allDynamics-container{
+    .allDynamics-container {
       margin-top: 20px;
     }
   }

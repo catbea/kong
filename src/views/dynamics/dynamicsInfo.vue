@@ -49,7 +49,7 @@ export default {
     DynamicsData,
     DynamicsList
   },
-  data () {
+  data() {
     return {
       backIcon: require('IMG/user/usercard@2x.png'),
       totalTitle: '楼盘数量',
@@ -57,12 +57,11 @@ export default {
       cardTitle: '楼盘分享',
       cardNum: '0',
       propertiesTitle: '楼盘访客',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124',
-
+      articleNum: '124'
     }
-  },
+  }
 }
 </script>
 <style lang="less">

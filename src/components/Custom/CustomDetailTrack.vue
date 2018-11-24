@@ -10,9 +10,7 @@
 </template>
 <script>
 export default {
-  props: {
-
-  },
+  props: {},
   data: () => ({
     info: [
       { key: '总浏览数', value: 90 },
@@ -21,9 +19,7 @@ export default {
       { key: '文章浏览', value: 124 }
     ]
   }),
-  components: {
-
-  }
+  components: {}
 }
 </script>
 <style lang="less">
@@ -49,4 +45,3 @@ export default {
   }
 }
 </style>
-

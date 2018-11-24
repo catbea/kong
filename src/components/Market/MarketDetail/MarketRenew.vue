@@ -17,27 +17,27 @@
 </template>
 <script>
 export default {
-  data:()=>({
-    flagTj:false,
-    recommendA:require('IMG/marketDetail/tj copy 10@2x.png'),
-    recommend:require('IMG/marketDetail/tj@2x.png'),
-    flagZs:false,
-    showA:require('IMG/marketDetail/zs copy 11@2x.png'),
-    show:require('IMG/marketDetail/zs1@2x.png'),
-    flagZd:false,
-    stickA:require('IMG/marketDetail/zd copy 12@2x.png'),
-    stick:require('IMG/marketDetail/zd2@2x.png'),
+  data: () => ({
+    flagTj: false,
+    recommendA: require('IMG/marketDetail/tj copy 10@2x.png'),
+    recommend: require('IMG/marketDetail/tj@2x.png'),
+    flagZs: false,
+    showA: require('IMG/marketDetail/zs copy 11@2x.png'),
+    show: require('IMG/marketDetail/zs1@2x.png'),
+    flagZd: false,
+    stickA: require('IMG/marketDetail/zd copy 12@2x.png'),
+    stick: require('IMG/marketDetail/zd2@2x.png')
   }),
-  methods:{
-    recommendHandle(){
-      this.flagTj=!this.flagTj
+  methods: {
+    recommendHandle() {
+      this.flagTj = !this.flagTj
     },
-    showHandle(){
-      this.flagZs=!this.flagZs
+    showHandle() {
+      this.flagZs = !this.flagZs
     },
-    stickHandle(){
-      this.flagZd=!this.flagZd
-    },
+    stickHandle() {
+      this.flagZd = !this.flagZd
+    }
   }
 }
 </script>
@@ -49,7 +49,7 @@ export default {
   padding-top: 14px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e6e6e6;
-  li{
+  li {
     display: flex;
     flex-direction: column;
     align-items: center;

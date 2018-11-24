@@ -11,62 +11,62 @@
 </template>
 <script>
 export default {
-  data:()=>({
-    sortShow:true,
-    num:null
+  data: () => ({
+    sortShow: true,
+    num: null
   }),
-  props:{
-    domShowInfo:{
-      type:Object
+  props: {
+    domShowInfo: {
+      type: Object
     }
   },
-  methods:{
-    shade(){
-      this.domShowInfo.sortShow=false
+  methods: {
+    shade() {
+      this.domShowInfo.sortShow = false
     },
-    a(){
-      this.num=1
+    a() {
+      this.num = 1
     },
-    b(){
-      this.num=2
+    b() {
+      this.num = 2
     },
-    c(){
-      this.num=3
+    c() {
+      this.num = 3
     },
-    d(){
-      this.num=4
+    d() {
+      this.num = 4
     }
   }
 }
 </script>
 <style lang="less">
-.sortWay-page{
+.sortWay-page {
   width: 375px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  position:fixed;
-  .active{
-    color:rgba(0,122,230,1) !important;
+  position: fixed;
+  .active {
+    color: rgba(0, 122, 230, 1) !important;
   }
-  ul{
+  ul {
     width: 100%;
-    background:rgba(255,255,255,1);
+    background: rgba(255, 255, 255, 1);
     padding-left: 10px;
-    li{
+    li {
       height: 49px;
-      font-size:15px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(51,51,51,1);
-      line-height:49px;
-      border-bottom: 1px solid #E6E6E6;
+      font-size: 15px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+      line-height: 49px;
+      border-bottom: 1px solid #e6e6e6;
     }
   }
-  .shade{
+  .shade {
     flex: 1;
-    opacity:0.6;
-    background:rgba(0,0,0,0.6);
+    opacity: 0.6;
+    background: rgba(0, 0, 0, 0.6);
   }
 }
 </style>

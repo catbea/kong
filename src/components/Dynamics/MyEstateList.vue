@@ -17,7 +17,7 @@ export default {
   props: {
     list: Array
   },
-  data: _ => ({
+  data: () => ({
     titleBarConf: {
       title: '我的楼盘',
       linkText: '更多楼盘'

@@ -14,62 +14,61 @@
 </template>
 <script>
 export default {
-   data:()=>({
+  data: () => ({
     current: 0
   }),
-  props:{
-    info:{
-      type:Object
+  props: {
+    info: {
+      type: Object
     }
   },
   methods: {
     onChange(index) {
       console.log(index)
-      this.current = index;
+      this.current = index
     },
-    close(){
-      this.info.domShow=false
+    close() {
+      this.info.domShow = false
     }
   }
 }
 </script>
 <style lang="less">
-.full-screen-page{
+.full-screen-page {
   width: 100%;
   height: 100%;
   position: fixed;
-  background:rgba(247,249,250,1); 
-  .full-screen-page-box{
+  background: rgba(247, 249, 250, 1);
+  .full-screen-page-box {
     position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    .van-swipe{
+    .van-swipe {
       width: 100%;
     }
     img {
-    display: block;
-    width:375px;
-    max-height:667px;
+      display: block;
+      width: 375px;
+      max-height: 667px;
     }
-    .a{
+    .a {
       position: absolute;
-    right: 151px;
-    bottom: 25px;
-    font-size:15px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(255,255,255,1);
-    line-height:32px;
-    width:73px;
-    height:32px;
-    background:rgba(0,0,0,1);
-    border-radius:18px;
-    opacity:0.6;
-    text-align: center;
+      right: 151px;
+      bottom: 25px;
+      font-size: 15px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 32px;
+      width: 73px;
+      height: 32px;
+      background: rgba(0, 0, 0, 1);
+      border-radius: 18px;
+      opacity: 0.6;
+      text-align: center;
     }
   }
-  
 }
 </style>

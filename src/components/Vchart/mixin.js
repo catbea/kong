@@ -12,12 +12,12 @@ export default {
     seriesField: String,
     adjust: [String, Object]
   },
-  created () {
+  created() {
     this.$parent.set(this.chartName, {
       shape: defaultShapeMap[this.chartName] || '',
       ...this.$props,
       ...camelAttrs(this.$attrs)
     })
   },
-  render () {}
+  render() {}
 }

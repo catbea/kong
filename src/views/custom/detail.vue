@@ -44,14 +44,14 @@ export default {
   data: () => ({
     id: -1,
     customBaseInfo: null,
-    activeIndex: 0,
+    activeIndex: 0
   }),
-  created () {
+  created() {
     this.id = this.$route.params.id
     this.getCustomBaseInfo(this.id)
   },
   methods: {
-    async getCustomBaseInfo (id) {
+    async getCustomBaseInfo(id) {
       const result = await CustomService.getClientInfo(id)
       this.customBaseInfo = result
     }
@@ -92,4 +92,3 @@ export default {
   }
 }
 </style>
-

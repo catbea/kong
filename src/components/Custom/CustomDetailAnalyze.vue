@@ -41,15 +41,37 @@ import BarChart from 'COMP/Custom/Charts/BarChart'
 import TagGroup from 'COMP/TagGroup'
 import EstateItem from 'COMP/EstateItem'
 export default {
-  props: {
-
-  },
+  props: {},
   data: () => ({
     tempTagData: ['地铁房', '高端社区', '商务区'],
     tempEstateData: [
-      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' },
-      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' },
-      { linkerName: '我是测试', city: '广东', county: '深圳', linkerTags: ['活好', '乖巧', 'but poor'], price: 10000, priceUnit: 2000, linkerUrl: 'http://dummyimage.com/250x250' }
+      {
+        linkerName: '我是测试',
+        city: '广东',
+        county: '深圳',
+        linkerTags: ['活好', '乖巧', 'but poor'],
+        price: 10000,
+        priceUnit: 2000,
+        linkerUrl: 'http://dummyimage.com/250x250'
+      },
+      {
+        linkerName: '我是测试',
+        city: '广东',
+        county: '深圳',
+        linkerTags: ['活好', '乖巧', 'but poor'],
+        price: 10000,
+        priceUnit: 2000,
+        linkerUrl: 'http://dummyimage.com/250x250'
+      },
+      {
+        linkerName: '我是测试',
+        city: '广东',
+        county: '深圳',
+        linkerTags: ['活好', '乖巧', 'but poor'],
+        price: 10000,
+        priceUnit: 2000,
+        linkerUrl: 'http://dummyimage.com/250x250'
+      }
     ]
   }),
   components: {
@@ -128,4 +150,3 @@ export default {
   }
 }
 </style>
-

@@ -5,7 +5,7 @@ export default {
   props: {
     options: {
       type: Object,
-      default () {
+      default() {
         return {}
       }
     },
@@ -14,13 +14,13 @@ export default {
       default: false
     }
   },
-  created () {
+  created() {
     this.$parent.setLegend({
       ...this.options,
       disabled: this.disabled,
       ...camelAttrs(this.$attrs)
     })
   },
-  render () {}
+  render() {}
 }
 </script>

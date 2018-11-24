@@ -9,9 +9,9 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
-      groupIcon: require('IMG/user/collection/Group@2x.png'),
+      groupIcon: require('IMG/user/collection/Group@2x.png')
     }
   }
 }

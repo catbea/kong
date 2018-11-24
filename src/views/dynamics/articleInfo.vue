@@ -28,20 +28,19 @@ export default {
     DynamicsData,
     DynamicsList
   },
-  data () {
+  data() {
     return {
       backIcon: require('IMG/user/usercard@2x.png'),
-       totalTitle: '文章数量',
+      totalTitle: '文章数量',
       totalNum: '90',
       cardTitle: '文章分享',
       cardNum: '0',
       propertiesTitle: '文章访客',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124',
-    
+      articleNum: '124'
     }
-  },
+  }
 }
 </script>
 <style lang="less">

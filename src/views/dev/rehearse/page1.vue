@@ -36,7 +36,7 @@
 import random from 'lodash/random'
 import h2c from 'html2canvas'
 export default {
-  data: _ => ({
+  data: () => ({
     currentImgIndex: 0,
     coverBg: require('IMG/dev/page1/cover@2x.png'),
     logoImg: require('IMG/dev/page1/logo@2x.png'),

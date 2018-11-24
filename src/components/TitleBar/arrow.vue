@@ -17,15 +17,14 @@ export default {
         return {
           title: '',
           linkText: '',
-          link: '',
-          
+          link: ''
         }
       }
     }
   },
-  data(){
+  data() {
     return {
-      arrowIcon: require('IMG/marketDetail/arrow2@2x.png'),
+      arrowIcon: require('IMG/marketDetail/arrow2@2x.png')
     }
   },
   computed: {
@@ -52,12 +51,11 @@ export default {
     font-size: 13px;
     font-weight: 400;
     color: #999999;
-    .left-img{
+    .left-img {
       width: 12px;
       height: 12px;
-          padding-top: 8px;
+      padding-top: 8px;
     }
   }
-
 }
 </style>

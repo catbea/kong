@@ -52,7 +52,7 @@ export default {
     collectionArticle,
     collectionNull
   },
-  data () {
+  data() {
     return {
       backIcon: require('IMG/user/usercard@2x.png'),
       totalTitle: '楼盘数量',
@@ -60,12 +60,11 @@ export default {
       cardTitle: '楼盘分享',
       cardNum: '0',
       propertiesTitle: '楼盘访客',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124',
-
+      articleNum: '124'
     }
-  },
+  }
 }
 </script>
 <style lang="less">
@@ -146,8 +145,8 @@ export default {
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
         line-height: 39px;
-        > .lab-right{
-           font-size: 10px;
+        > .lab-right {
+          font-size: 10px;
           font-weight: 400;
           line-height: 20px;
           width: 60px;
@@ -157,7 +156,7 @@ export default {
           right: 15px;
           position: absolute;
           text-align: center;
-              margin-top: 5px;
+          margin-top: 5px;
         }
         > .right-price-lab-ok {
           color: rgba(0, 122, 230, 1);
@@ -165,8 +164,7 @@ export default {
         > .right-price-lab {
           color: rgba(175, 178, 195, 1);
         }
-        > .right-price{
-          
+        > .right-price {
         }
 
         > .right-price-open {

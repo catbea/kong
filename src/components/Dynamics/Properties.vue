@@ -27,44 +27,45 @@
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import ShadowBox from 'COMP/ShadowBox'
-import { Dialog } from 'vant';
+import { Dialog } from 'vant'
 export default {
   components: {
     DynamicsData,
     ShadowBox,
     Dialog
   },
-  data () {
+  data() {
     return {
       totalTitle: '楼盘数量',
       totalNum: '90',
       cardTitle: '楼盘分享',
       cardNum: '0',
       propertiesTitle: '楼盘访客',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124',
+      articleNum: '124'
     }
   },
   methods: {
-    onClickConfirm () {
-      this.$dialog.confirm({
-        title: '暂未开通楼盘',
-        message: '请开通后查看楼盘详细动态',
-        confirmButtonText: '去开通',
-
-      }).then(() => {
-        // on confirm
-      }).catch(() => {
-        // on cancel
-      });
+    onClickConfirm() {
+      this.$dialog
+        .confirm({
+          title: '暂未开通楼盘',
+          message: '请开通后查看楼盘详细动态',
+          confirmButtonText: '去开通'
+        })
+        .then(() => {
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        })
     },
-    godynamicsInfo () {
-   //跳转到动态详情
+    godynamicsInfo() {
+      //跳转到动态详情
       this.$router.push('/dynamics/dynamicsInfo')
- },
+    }
   }
-
 }
 </script>
 <style lang="less">
@@ -107,7 +108,7 @@ export default {
     border-bottom: 1px solid #e6e6e6;
     margin: 0 16px;
     padding: 16px 0;
-    
+
     > .list-left {
       font-size: 16px;
       font-weight: 600;
@@ -135,4 +136,3 @@ export default {
   }
 }
 </style>
-

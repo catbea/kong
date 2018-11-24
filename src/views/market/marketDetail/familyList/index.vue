@@ -14,32 +14,32 @@ import Classify from 'COMP/Classify/'
 import marketService from 'SERVICE/marketService'
 import MarketDescribe from 'COMP/MarketDescribe/'
 export default {
-  components:{
+  components: {
     Classify,
     MarketDescribe
   },
-  created () {
+  created() {
     this.getMarketDescribeInfo()
   },
-  data:()=>({
-    num:null,
-    resInfo:null,
-    dredge:false
+  data: () => ({
+    num: null,
+    resInfo: null,
+    dredge: false
   }),
-  methods:{
-    activeA(){
-      this.num=1
+  methods: {
+    activeA() {
+      this.num = 1
     },
-    activeB(){
-      this.num=2
+    activeB() {
+      this.num = 2
     },
-    activeC(){
-      this.num=3
+    activeC() {
+      this.num = 3
     },
-    activeD(){
-      this.num=4
+    activeD() {
+      this.num = 4
     },
-    async getMarketDescribeInfo () {
+    async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe()
       console.log(res.records)
       this.resInfo = res.records
@@ -48,26 +48,26 @@ export default {
 }
 </script>
 <style lang="less">
-.family-list-page{
-  .family-list-page-box{
-    margin-top:45px;
+.family-list-page {
+  .family-list-page-box {
+    margin-top: 45px;
   }
-  .family-list-page-ul{
+  .family-list-page-ul {
     height: 44px;
     width: 375px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border-bottom: 1px solid #DDDDDD;
-    .active{
-      color:rgba(0,122,230,1) !important;
+    border-bottom: 1px solid #dddddd;
+    .active {
+      color: rgba(0, 122, 230, 1) !important;
     }
-    li{
-      font-size:14px;
-      font-family:PingFang-SC-Regular;
-      font-weight:400;
-      color:rgba(51,51,51,1);
-      line-height:20px;
+    li {
+      font-size: 14px;
+      font-family: PingFang-SC-Regular;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+      line-height: 20px;
     }
   }
 }

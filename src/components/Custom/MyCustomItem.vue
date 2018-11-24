@@ -21,13 +21,15 @@ export default {
     info: Object
   },
   methods: {
-    clickHandler () {
-      this.$emit('click',this.info)
+    clickHandler() {
+      this.$emit('click', this.info)
     }
   },
   computed: {
-    focusInfo () {
-      return `累计浏览${this.info.browsCount}次，平均停留${Number(this.info.averageTime / 1000).toFixed(1)}s`
+    focusInfo() {
+      return `累计浏览${this.info.browsCount}次，平均停留${Number(
+        this.info.averageTime / 1000
+      ).toFixed(1)}s`
     }
   }
 }
@@ -72,4 +74,3 @@ export default {
   }
 }
 </style>
-

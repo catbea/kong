@@ -9,13 +9,13 @@ export default {
   components: {
     TagItem
   },
-  data: _ => ({
+  data: () => ({
     data: null
   }),
   props: {
-    arr: { 
+    arr: {
       type: Array,
-      default:function() {
+      default: function() {
         return []
       }
     }

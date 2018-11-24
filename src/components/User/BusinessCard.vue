@@ -37,7 +37,7 @@ export default {
     CardAvatar,
     TagGroup
   },
-  data: _ => ({
+  data: () => ({
     infoBg: require('IMG/user/usercard@2x.png'),
     modifyImg: require('IMG/user/usercard_bg@2x.png'),
     crownIcon: require('IMG/user/cardGroup5@2x.png'),

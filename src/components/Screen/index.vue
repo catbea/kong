@@ -28,54 +28,54 @@ import AccreditArea from 'COMP/AccreditArea/'
 import SortWay from './SortWay'
 
 export default {
-  components:{
+  components: {
     AccreditArea,
     SortWay
   },
-  data: _ => ({
-    sortShow:false,
-    accreditShow:false,
+  data: () => ({
+    sortShow: false,
+    accreditShow: false,
     showData: 1,
-    domShowInfo:{
-      liShow:false,
-      domShow:false,
-      sortShow:false
+    domShowInfo: {
+      liShow: false,
+      domShow: false,
+      sortShow: false
     },
-    defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
+    defaultAvatar: require('IMG/market/list__arrow_@2x.png')
   }),
   methods: {
-    sort(){
-      this.domShowInfo.sortShow=true,
-      this.domShowInfo.domShow=false,
-      this.showData=null
+    sort() {
+      ;(this.domShowInfo.sortShow = true),
+        (this.domShowInfo.domShow = false),
+        (this.showData = null)
     },
     area() {
-      this.showData = 1,
-      // this.activeShow=false,
-      this.domShowInfo.domShow=true,
-      this.domShowInfo.liShow=true,
-      this.domShowInfo.sortShow=false
+      ;(this.showData = 1),
+        // this.activeShow=false,
+        (this.domShowInfo.domShow = true),
+        (this.domShowInfo.liShow = true),
+        (this.domShowInfo.sortShow = false)
     },
     average() {
-      this.showData = 2,
-      // this.activeShow=false,
-      this.domShowInfo.domShow=true,
-      this.domShowInfo.liShow=true,
-      this.domShowInfo.sortShow=false
+      ;(this.showData = 2),
+        // this.activeShow=false,
+        (this.domShowInfo.domShow = true),
+        (this.domShowInfo.liShow = true),
+        (this.domShowInfo.sortShow = false)
     },
     popularity() {
-      this.showData = 3,
-      // this.activeShow=true,
-      this.domShowInfo.domShow=true,
-      this.domShowInfo.liShow=false,
-      this.domShowInfo.sortShow=false
+      ;(this.showData = 3),
+        // this.activeShow=true,
+        (this.domShowInfo.domShow = true),
+        (this.domShowInfo.liShow = false),
+        (this.domShowInfo.sortShow = false)
     },
     state() {
-      this.showData = 4,
-      // this.activeShow=false,
-      this.domShowInfo.domShow=true,
-      this.domShowInfo.liShow=true,
-      this.domShowInfo.sortShow=false
+      ;(this.showData = 4),
+        // this.activeShow=false,
+        (this.domShowInfo.domShow = true),
+        (this.domShowInfo.liShow = true),
+        (this.domShowInfo.sortShow = false)
     }
   }
 }
@@ -115,7 +115,7 @@ export default {
     width: 16px;
     height: 17px;
     background: url('../../assets/img/market/Combined Shape@2x.png') no-repeat;
-    background-size:contain;
+    background-size: contain;
     margin-right: 13px;
   }
 }

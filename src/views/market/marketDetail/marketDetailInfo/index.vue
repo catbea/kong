@@ -35,7 +35,7 @@ export default {
   created() {
     this.$store.commit(types.TABBAR, false)
   },
-  data: _ => ({
+  data: () => ({
     topList: [
       {
         top: [{ left: '开发商', right: '惠州市太东地产有限公司' }]

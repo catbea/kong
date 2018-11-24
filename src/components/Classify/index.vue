@@ -8,43 +8,43 @@
 </template>
 <script>
 export default {
-  data: _ => ({
+  data: () => ({
     showData: 1,
-    num:null,
-    list:[
+    num: null,
+    list: [
       {
-        text:"楼盘",
-        textColor:'rgba(0, 122, 230, 1)',
-        backColor:'rgba(0, 122, 230, 1)'
-        },
-        {
-        text:"户型",
-        textColor:'rgba(0, 122, 230, 1)',
-        backColor:'rgba(0, 122, 230, 1)'
-        },
-        {
-        text:"位置",
-        textColor:'rgba(0, 122, 230, 1)',
-        backColor:'rgba(0, 122, 230, 1)'
-        },
-        {
-        text:"周边",
-        textColor:'rgba(0, 122, 230, 1)',
-        backColor:'rgba(0, 122, 230, 1)'
-        },
-        {
-        text:"推荐",
-        textColor:'rgba(0, 122, 230, 1)',
-        backColor:'rgba(0, 122, 230, 1)'
-        },
+        text: '楼盘',
+        textColor: 'rgba(0, 122, 230, 1)',
+        backColor: 'rgba(0, 122, 230, 1)'
+      },
+      {
+        text: '户型',
+        textColor: 'rgba(0, 122, 230, 1)',
+        backColor: 'rgba(0, 122, 230, 1)'
+      },
+      {
+        text: '位置',
+        textColor: 'rgba(0, 122, 230, 1)',
+        backColor: 'rgba(0, 122, 230, 1)'
+      },
+      {
+        text: '周边',
+        textColor: 'rgba(0, 122, 230, 1)',
+        backColor: 'rgba(0, 122, 230, 1)'
+      },
+      {
+        text: '推荐',
+        textColor: 'rgba(0, 122, 230, 1)',
+        backColor: 'rgba(0, 122, 230, 1)'
+      }
     ]
   }),
   created() {
-    this.num=0
+    this.num = 0
   },
   methods: {
-    active(index){
-      this.num=index
+    active(index) {
+      this.num = index
     }
   }
 }
@@ -66,7 +66,7 @@ export default {
   border-bottom: 1px solid #dddddd;
   position: fixed;
   z-index: 10;
-  li{
+  li {
     width: 75px;
     height: 44px;
     text-align: center;

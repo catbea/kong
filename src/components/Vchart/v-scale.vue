@@ -7,13 +7,13 @@ export default {
     y: Boolean,
     field: String
   },
-  render () {},
-  created () {
+  render() {},
+  created() {
     this.emitSetting()
   },
   methods: {
-    emitSetting () {
-      ['x', 'y'].forEach(item => {
+    emitSetting() {
+      ;['x', 'y'].forEach(item => {
         if (this[item]) {
           this.$parent.setScale({
             [item]: {

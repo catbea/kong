@@ -32,25 +32,23 @@ import TitleBar from 'COMP/TitleBar/'
 import AlreadyOpen from 'COMP/Market/AlreadyOpen/'
 import marketService from 'SERVICE/marketService'
 export default {
-  created () {
-
-  },
+  created() {},
   components: {
     Screen,
     MarketDescribe,
     TitleBar,
     AlreadyOpen
   },
-  data: _ => ({
-    value:"",
+  data: () => ({
+    value: '',
     defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
-    locationIcon:require('IMG/market/juxing.png'),
+    locationIcon: require('IMG/market/juxing.png'),
     functionList: null,
     agentIdInfo: null,
     resInfo: null,
     borderBottom: true
   }),
-  created () {
+  created() {
     this.getMarketDescribeInfo()
     this.getBrokerInfo()
   },
@@ -63,7 +61,7 @@ export default {
     //   return res.records
     // },
     // getpayload(){
-    //   let 
+    //   let
     //   return {
     //     projectName: this.
     //   }
@@ -77,14 +75,11 @@ export default {
     //     case 1:
     //       this.=a1
     //       break;
-      
+
     //     default:
     //       break;
     //   }
     // }
-
-
-
 
     // s1
     // a() {
@@ -93,25 +88,25 @@ export default {
     // }
 
     //     b() {
-      
+
     //   let getMarketDescribeInfo(this.name,this,)
     // }
-onClickHandler() {
-  this.$router.push("/market/inputSearch")
-},
-    async getMarketDescribeInfo () {
+    onClickHandler() {
+      this.$router.push('/market/inputSearch')
+    },
+    async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe()
       console.log(res.records)
       this.resInfo = res.records
     },
-    async getBrokerInfo () {
+    async getBrokerInfo() {
       const res = await marketService.getBrokerMarket(1)
       console.log(res)
       this.agentIdInfo = res
     },
-    skipDetail (n) {
+    skipDetail(n) {
       if (n == 1) {
-        this.$router.push("/market/marketDetail")
+        this.$router.push('/market/marketDetail')
       }
     }
   }
@@ -132,29 +127,29 @@ onClickHandler() {
       height: 44px;
       justify-content: space-between;
       border-bottom: solid 1px #dfdfdf;
-      .search-box-content{
+      .search-box-content {
         display: flex;
-        background:rgba(245,245,245,1);
-        font-size:13px;
-        margin:7px 0 7px 15px; 
+        background: rgba(245, 245, 245, 1);
+        font-size: 13px;
+        margin: 7px 0 7px 15px;
         width: 306px;
-        border-radius:4px;
-        p{
+        border-radius: 4px;
+        p {
           margin: 6px 0 0 16px;
           padding: 0 12px 0 0;
           display: flex;
-          span{
+          span {
             width: 16px;
-            height:16px;
+            height: 16px;
             margin-top: 4px;
           }
         }
-        .van-search{
+        .van-search {
           padding: 0;
         }
-        .van-cell{
-          background:rgba(245,245,245,1);
-          input{
+        .van-cell {
+          background: rgba(245, 245, 245, 1);
+          input {
             line-height: 24px;
           }
         }
@@ -162,7 +157,7 @@ onClickHandler() {
       .a {
         width: 20px;
         height: 20px;
-        margin:13px 14px 0 0;
+        margin: 13px 14px 0 0;
       }
     }
   }
