@@ -6,10 +6,7 @@
     <div class="marketDetail-box">
       <div class="marketDetail-box-top">
       <div class="left">
-<<<<<<< HEAD
-        <tag-group :condition="info"></tag-group>
-=======
->>>>>>> e832288d5e85ae65ab3ec9ff0dfefe07973f0e90
+        <tag-group :arr="info"></tag-group>
       </div>
       <div class="house-owner">
         <div class="browse" @click="supplement">12345</div>人浏览过
@@ -79,12 +76,7 @@ import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
-<<<<<<< HEAD
     Classify,
-    Condition,
-=======
-    Sort,
->>>>>>> e832288d5e85ae65ab3ec9ff0dfefe07973f0e90
     ButtonBox,
     SpecificMarketDetail,
     AllMarketType,
