@@ -3,24 +3,21 @@
     <classify></classify>
     <swipe-box></swipe-box>
     <div class="marketDetail-page-bottom">
-    <div class="marketDetail-box">
-      <div class="marketDetail-box-top">
-      <div class="left">
-<<<<<<< HEAD
-        <tag-group :condition="info"></tag-group>
-=======
->>>>>>> e832288d5e85ae65ab3ec9ff0dfefe07973f0e90
-      </div>
-      <div class="house-owner">
-        <div class="browse" @click="supplement">12345</div>人浏览过
-        <div class="head-portrait">
+      <div class="marketDetail-box">
+        <div class="marketDetail-box-top">
+          <div class="left">
+            <tag-group :arr="info"></tag-group>
+          </div>
+          <div class="house-owner">
+            <div class="browse" @click="supplement">12345</div>人浏览过
+            <div class="head-portrait">
+            </div>
+          </div>
         </div>
+        <specific-marketDetail></specific-marketDetail>
       </div>
-      </div>
-      <specific-marketDetail></specific-marketDetail>
-    </div>
-    <button-box :buttonInfo="buttonInfo"></button-box>
-    <!-- <div class="button-box-tow">
+      <button-box :buttonInfo="buttonInfo"></button-box>
+      <!-- <div class="button-box-tow">
       <div class="button-box-tow-left">
         <div class="button-box-tow-left-icon" :style="{'background':'url('+buttonBoxTowLeftIconIMG+') no-repeat','background-size':'contain'}"></div>
         <div class="button-box-tow-left-text" >开盘通知</div>
@@ -30,29 +27,29 @@
         <div class="button-box-tow-right-text">降价通知</div>
       </div>
     </div> -->
-    <title-bar :conf="confA"></title-bar>
-    <all-marketType></all-marketType>
-    <title-bar :conf="confB"></title-bar>
-    <ul class="market-state-box">
-      <li class="market-state-box-top">
-        山水江南82平小户型已售罄山水江南82平小户型已售罄
-      </li>
-      <li class="market-state-box-middle">
-        山水江南项目56-82平的小户型房源已售完，目前仅剩余2013-122平米3-4房在售3-122平目前仅剩余2013-122平米3-4房在售3-122平
-      </li>
-      <li class="market-state-box-bottom">
-        2018年6月15日
-      </li>
-    </ul>
-    <title-bar :conf="confC"></title-bar>
-    <site-nearby></site-nearby>
-    <title-bar :conf="confD"></title-bar>
-    <all-elseMarket></all-elseMarket>
-    <div class="m-statement">
-      <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击 </span>
-      <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
-      <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
-    </div>
+      <title-bar :conf="confA"></title-bar>
+      <all-marketType></all-marketType>
+      <title-bar :conf="confB"></title-bar>
+      <ul class="market-state-box">
+        <li class="market-state-box-top">
+          山水江南82平小户型已售罄山水江南82平小户型已售罄
+        </li>
+        <li class="market-state-box-middle">
+          山水江南项目56-82平的小户型房源已售完，目前仅剩余2013-122平米3-4房在售3-122平目前仅剩余2013-122平米3-4房在售3-122平
+        </li>
+        <li class="market-state-box-bottom">
+          2018年6月15日
+        </li>
+      </ul>
+      <title-bar :conf="confC"></title-bar>
+      <site-nearby></site-nearby>
+      <title-bar :conf="confD"></title-bar>
+      <all-elseMarket></all-elseMarket>
+      <div class="m-statement">
+        <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击 </span>
+        <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
+        <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
+      </div>
     </div>
     <open-marketButton></open-marketButton>
     <!-- v-if="openFlag" -->
@@ -61,7 +58,7 @@
       <popup-box></popup-box>
     </van-popup>
   </div>
-  
+
 </template>
 <script>
 import * as types from '@/store/mutation-types'
@@ -79,12 +76,7 @@ import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
-<<<<<<< HEAD
     Classify,
-    Condition,
-=======
-    Sort,
->>>>>>> e832288d5e85ae65ab3ec9ff0dfefe07973f0e90
     ButtonBox,
     SpecificMarketDetail,
     AllMarketType,
@@ -97,42 +89,36 @@ export default {
     TitleBar,
     SwipeBox
   },
-  created() {
-    // this.$store.commit(types.TABBAR, false)
-    // console.log(this.$route.params.userId)
-  },
-  mounted() {
-    //给window添加一个滚动滚动监听事件
-    console.log(111111111111111111)
+  mounted () {
     window.addEventListener('scroll', this.handleScroll)
   },
   data: _ => ({
     show: false,
-    boxShow:false,
+    boxShow: false,
     openFlag: true,
     renewFlag: true,
     list: [1, 2, 3, 4],
-    confA:{
-      title:"户型",
-      linkText:"全部户型",
-      link:"/marketDetail/FamilyList"
+    confA: {
+      title: "户型",
+      linkText: "全部户型",
+      link: "/marketDetail/FamilyList"
     },
-    confB:{
-      title:"楼盘动态 (12)",
-      linkText:"全部动态",
-      link:"/marketDetail/marketAllDynamic"
+    confB: {
+      title: "楼盘动态 (12)",
+      linkText: "全部动态",
+      link: "/marketDetail/marketAllDynamic"
     },
-    confC:{
-      title:"位置周边",
-      linkText:"全部周边",
-      link:"/marketDetail/marketDetail/allNear"
+    confC: {
+      title: "位置周边",
+      linkText: "全部周边",
+      link: "/marketDetail/marketDetail/allNear"
     },
-    confD:{
-      title:"其他楼盘",
-      linkText:"全部楼盘",
-      link:"/market"
+    confD: {
+      title: "其他楼盘",
+      linkText: "全部楼盘",
+      link: "/market"
     },
-    info: ['热销中','住宅'],
+    info: ['热销中', '住宅'],
     buttonInfo: {
       text: '按钮文字',
       borderRadius: '4px',
@@ -146,7 +132,7 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
-    handleScroll() {
+    handleScroll () {
       let scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
@@ -158,18 +144,18 @@ export default {
         this.boxShow = false
       }
     },
-    supplement(){
-      this.show=true
+    supplement () {
+      this.show = true
     }
   },
-  destroyed() {
+  destroyed () {
     window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>
 <style lang="less">
 .marketDetail-page {
-  .van-popup{
+  .van-popup {
     border-radius: 12px;
   }
   .marketDetail-page-bottom {
@@ -266,9 +252,9 @@ export default {
   }
   .m-statement {
     margin-top: 15px;
-  color: rgba(153, 153, 153, 1);;
-  font-size:12px;
-  // line-height: 0.34rem;
+    color: rgba(153, 153, 153, 1);
+    font-size: 12px;
+    // line-height: 0.34rem;
     .feedback {
       color: #017fff;
     }
