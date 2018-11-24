@@ -21,6 +21,25 @@
         <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
       </div>
       </div>
+      <div class="centent">
+      <div class="big-box">
+      <div class="family-list-page-box-left">
+
+      </div>
+      <ul class="family-list-page-box-center">
+        <li>3室2厅1卫</li>
+        <li>建面 120㎡ 南北朝向</li>
+        <li>
+          <tag-group :arr="info"></tag-group>
+        </li>
+        <li>约320万/套</li>
+      </ul>
+      </div>
+      <div class="family-list-page-box-right">
+        <p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p>
+        <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
+      </div>
+      </div>
     </div>
   </div>
 </template>
@@ -55,15 +74,15 @@ export default {
       display: flex;
     flex-direction: column;
   .family-list-page-box{
-    width:359px;
+    width:375px;
     height:100%;
-    padding:16px 0px 0 16px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     margin-top:45px;
     .centent{
       width:343px;
       height:107px;
+      margin:16px 0px 0 16px;
       border-bottom:1px solid #EEEEEE;
       display: flex;
     justify-content: space-between;
