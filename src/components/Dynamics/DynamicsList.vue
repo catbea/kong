@@ -9,7 +9,7 @@
             <div class="dynamics-list-agent">
               <span class="list-agent-left">
                 <span class="agent-left-left">
-                  <img :src="userImg" class="agent-userImg">
+                  <img :src="lxImg" class="agent-userImg">
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">谢敏</p>
@@ -31,10 +31,12 @@
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="!show1">+关注</button>
+                <button class="list-btn-follow" v-show="!show1">
+                   <img :src="gzImg" class="agent-gzImg">
+                   关注</button>
                 <button class="list-btn-followOK" v-show="show1">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
-                  <img :src="userImg" class="btn-contact-userImg">
+                  <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
               </span>
@@ -44,6 +46,7 @@
         </div>
       </shadow-box>
     </div>
+    
     <div class="dynamics-container-list">
       <shadow-box>
         <div slot="container">
@@ -51,7 +54,7 @@
             <div class="dynamics-list-agent">
               <span class="list-agent-left">
                 <span class="agent-left-left">
-                  <img :src="userImg" class="agent-userImg">
+                  <img :src="lxImg" class="agent-userImg">
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">谢敏</p>
@@ -73,10 +76,12 @@
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="show1">+关注</button>
+                <button class="list-btn-follow" v-show="show1">
+                  <img :src="gzImg" class="agent-gzImg">
+                  关注</button>
                 <button class="list-btn-followOK" v-show="!show1">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
-                  <img :src="userImg" class="btn-contact-userImg">
+                  <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
               </span>
@@ -97,14 +102,15 @@ export default {
   components: {
     ShadowBox
   },
-  data() {
+  data () {
     return {
-      userImg: require('IMG/user/person_icon.png'),
+      lxImg: require('IMG/dynamics/lx@2x.png'),
+      gzImg: require('IMG/dynamics/gz@2x.png'),
       show1: true
     }
   },
   methods: {
-    goalldynamics() {
+    goalldynamics () {
       this.$router.push('/dynamics/message/messageList')
     }
   }
@@ -112,6 +118,7 @@ export default {
 </script>
 <style lang="less">
 .dynamics-container {
+  background: #ffffff;
   margin-top: 15px;
   > .dynamics-time {
     font-size: 14px;
@@ -194,7 +201,7 @@ export default {
       > .list-btn-right {
         position: absolute;
         right: 32px;
-        // margin-top: 20px;
+        // margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
           height: 24px;
@@ -205,6 +212,10 @@ export default {
           color: rgba(0, 122, 230, 1);
           line-height: 17px;
           background: #ffffff;
+          > .agent-gzImg {
+            width: 11px;
+            height: 11px;
+          }
         }
         > .list-btn-followOK {
           font-size: 12px;

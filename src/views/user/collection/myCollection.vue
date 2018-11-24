@@ -3,6 +3,7 @@
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="收藏楼盘">
+          <collection-null :collectionTips="collectionTips" :collectionRemar="collectionRemar" :collectionLike="collectionLike" :collectionIcon="collectionIcon"></collection-null>
           <div class="dynamicsInfo-list">
 
             <div class="dynamicsInfo-list-top">
@@ -36,7 +37,7 @@
         </van-tab>
         <van-tab title="收藏文章">
           <div class="collection-top">
-            <collection-null></collection-null>
+            <collection-null :collectionTips="ArticleTips" :collectionRemar="ArticleRemar" :collectionLike="collectionLike" :collectionIcon="ArticleIcon"></collection-null>
             <collection-article></collection-article>
           </div>
         </van-tab>
@@ -62,13 +63,23 @@ export default {
       propertiesTitle: '楼盘访客',
       propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124'
+      articleNum: '124',
+      collectionIcon: require('IMG/user/collection/Group@2x.png'),
+      collectionTips: '您还没有收藏任何楼盘',
+      collectionRemar: '快去看看我们为您准备的推荐楼盘吧',
+      collectionLike: '猜你喜欢',
+
+      ArticleTips: '您还没有收藏任何文章',
+      ArticleRemar: '快去看看我们为您准备的推荐文章吧',
+      ArticleIcon: require('IMG/user/collection/Article@2x.png'),
+
     }
   }
 }
 </script>
 <style lang="less">
 .collection-page {
+  background: #ffffff;
   .tab-container {
     .collection-top {
       margin-top: 16px;

@@ -64,6 +64,7 @@ export default {
   pointer-events: none;
 }
 .dynamics-collect {
+  background: #ffffff;
   .demo-swipe {
     padding-bottom: 30px;
     .van-swipe {

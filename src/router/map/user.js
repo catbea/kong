@@ -37,6 +37,15 @@ export default [
     }
   },
   {
+    path: '/user/edit/userPortrait',
+    name: 'userPortrait',
+    component: resolve =>
+      require(['@/views/user/edit/userPortrait.vue'], resolve),
+    meta: {
+      title: '修改头像'
+    }
+  },
+  {
     path: '/user/edit/username',
     name: 'user-edit-username',
     component: resolve =>
@@ -95,6 +104,15 @@ export default [
     name: 'historicalArticles',
     component: resolve =>
       require(['@/views/user/articles/historicalArticles.vue'], resolve),
+    meta: {
+      title: '历史文章'
+    }
+  },
+  {
+    path: '/user/articles/updateArticles',
+    name: 'updateArticles',
+    component: resolve =>
+      require(['@/views/user/articles/updateArticles.vue'], resolve),
     meta: {
       title: '历史文章'
     }

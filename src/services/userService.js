@@ -28,6 +28,35 @@ class UserService {
   }
 
   /**
+   * 获取经纪人标签列表
+   * @param {*} Authorization   用户token
+   */
+  getAgentLabel(Authorization) {
+    return xhr({
+      url: '/qywx/dictionary/getAgentLabel',
+      body: {
+        Authorization
+      }
+    })
+  }
+/**
+ * 获取经纪人个性签名列表
+ * @param {*} Authorization 
+ * @param {*} current 
+ * @param {*} size 
+ */
+  getAgentSignaturePage(Authorization=1,current,size=10) {
+    return xhr({
+      url: '/qywx/dictionary/getAgentSignaturePage',
+      body: {
+        Authorization,
+        current,
+        size
+      }
+    })
+  }
+
+  /**
    * 获取分享图片
    * @param {*} shareType
    * @param {*} shareId

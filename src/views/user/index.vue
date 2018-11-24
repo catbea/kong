@@ -6,7 +6,7 @@
       <cell class="business-info-cell" title="我的楼盘" is-link @click="goarticles">
         <div slot="extra" class="msg-dot" />
       </cell>
-      <cell class="business-info-cell" title="优惠券" is-link @click="goallDynamics"> <!--url="/user/articles/historicalArticles" -->
+      <cell class="business-info-cell" title="优惠券" is-link @click="goCollection"> <!--url="/user/articles/historicalArticles" -->
         <div slot="extra" class="msg-dot" />
       </cell>
       <cell class="business-info-cell" title="线下报备" is-link  @click="goallDynamics">
@@ -51,8 +51,11 @@ export default {
     goarticles() {
       this.$router.push('/user/articles/historicalArticles')
     },
-    goallDynamics() {
-      this.$router.push('/user/collection/myCollection')
+    goCollection(){
+    this.$router.push('/user/collection/myCollection')
+    },
+      goallDynamics(){
+    this.$router.push('/dynamics/allDynamics')
     },
     goallDynamics() {
       this.$router.push('/dynamics/allDynamics')

@@ -66,6 +66,7 @@ export default {
 </script>
 <style lang="less">
 .dynamicsInfo-page {
+  background: #ffffff;
   margin: 16px 0;
   .dynamicsInfo-list {
     margin: 0 15px;
@@ -74,6 +75,7 @@ export default {
     padding: 15px 0 16px 0;
     > .dynamicsInfo-list-top {
       display: flex;
+      margin-bottom: 7px;
       > .dynamicsInfo-list-left {
         height: 90px;
         position: relative;
@@ -128,13 +130,13 @@ export default {
           color: rgba(153, 153, 153, 1);
         }
         > .list-right-label {
-          line-height: 15px;
+          line-height: 30px;
           > .right-label {
             font-size: 10px;
             font-weight: 400;
 
             line-height: 10px;
-            padding: 3px 5px;
+            padding: 2px 5px;
             border-radius: 3px;
             margin-right: 4px;
           }
@@ -150,7 +152,7 @@ export default {
           font-size: 15px;
           font-weight: 600;
           color: rgba(234, 77, 46, 1);
-          line-height: 45px;
+          line-height: 25px;
           > .right-price-text {
             font-size: 12px;
           }

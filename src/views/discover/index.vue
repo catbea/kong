@@ -28,6 +28,7 @@ export default {
 </script>
 <style lang="less">
 .discover-page {
+  background: #ffffff;
   width: 100%;
   > .tab-container {
     margin-top: 20px;

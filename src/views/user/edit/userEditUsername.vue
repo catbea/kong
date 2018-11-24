@@ -13,21 +13,23 @@ export default {}
 
 <style lang="less">
 .user-edit-username-page {
+  background: #ffffff;
   > .user-edit-username {
     margin: 27px 16px;
-    > .edit-username-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: rgba(51, 51, 51, 1);
-      line-height: 28px;
-    }
-    > .edit-username-conter {
-      > .edit-username-input {
-        font-size: 15px;
-        font-weight: 500;
-        color: rgba(153, 153, 153, 1);
-        line-height: 21px;
-        width: 99%;
+ > .edit-username-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 28px;
+        margin-bottom: 22px;
+  }
+  > .edit-username-conter{
+> .edit-username-input {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(153, 153, 153, 1);
+    line-height: 21px;
+    width: 99%;
         border: 0;
         border-bottom: 1px solid #eeeeee;
       }

@@ -1,17 +1,23 @@
 <template>
   <div class="collection-null">
-    <img :src="groupIcon" class="collection-null-icon">
-    <p class="collection-null-tips">您还没有收藏任何楼盘</p>
-    <p class="collection-null-tips">快去看看我们为您准备的推荐楼盘吧</p>
-    <div class="collection-null-like">猜你喜欢</div>
+    <img :src="collectionIcon" class="collection-null-icon">
+    <p class="collection-null-tips">{{collectionTips}}</p>
+    <p class="collection-null-tips">{{collectionRemar}}</p>
+    <div class="collection-null-like">{{collectionLike}}</div>
   </div>
 
 </template>
 <script>
 export default {
-  data() {
+  props: {
+    collectionIcon: { type: String, default: '' },
+    collectionTips: { type: String, default: '' },
+    collectionRemar: { type: String, default: '' },
+    collectionLike: { type: String, default: '' },
+  },
+  data () {
     return {
-      groupIcon: require('IMG/user/collection/Group@2x.png')
+      // groupIcon: require('IMG/user/collection/Group@2x.png'),
     }
   }
 }

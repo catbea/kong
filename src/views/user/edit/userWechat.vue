@@ -14,6 +14,7 @@ export default {}
 
 <style lang="less">
 .user-edit-wechat-page {
+  background: #ffffff;
   > .user-edit-wechat {
     margin: 27px 16px;
     > .edit-wechat-title {

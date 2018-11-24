@@ -1,6 +1,6 @@
 <template>
   <div class="user-edit-phone-page">
-   <div class="user-edit-phone">
+    <div class="user-edit-phone">
       <p class="edit-phone-title">注册手机<span class="edit-phone-remark">(不可更改)</span></p>
       <p class="edit-phone-conter"><input type="text" class="edit-phone-input" placeholder="Bela" value="13590200739"></p>
       <p class="edit-phone-card">名片展示手机号</p>
@@ -14,6 +14,7 @@ export default {}
 </script>
 <style lang="less">
 .user-edit-phone-page {
+  background: #ffffff;
   > .user-edit-phone {
     margin: 27px 16px;
     > .edit-phone-title {
@@ -21,6 +22,7 @@ export default {}
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       line-height: 28px;
+      margin-bottom: 22px;
       > .edit-phone-remark {
         font-size: 15px;
         font-weight: 500;
@@ -33,6 +35,7 @@ export default {}
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       line-height: 28px;
+      margin-bottom: 22px;
     }
     > .edit-phone-card-conter {
       > .edit-phone-card-input {
