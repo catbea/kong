@@ -3,6 +3,7 @@
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="收藏楼盘">
+          <collection-null :collectionTips="collectionTips" :collectionRemar="collectionRemar" :collectionLike="collectionLike" :collectionIcon="collectionIcon"></collection-null>
           <div class="dynamicsInfo-list">
 
             <div class="dynamicsInfo-list-top">
@@ -36,7 +37,7 @@
         </van-tab>
         <van-tab title="收藏文章">
           <div class="collection-top">
-            <collection-null></collection-null>
+            <collection-null :collectionTips="ArticleTips" :collectionRemar="ArticleRemar" :collectionLike="collectionLike" :collectionIcon="ArticleIcon"></collection-null>
             <collection-article></collection-article>
           </div>
         </van-tab>
@@ -63,6 +64,14 @@ export default {
       propertiesNum: "190",
       articleTitle: '平均停留(S)',
       articleNum: '124',
+      collectionIcon: require('IMG/user/collection/Group@2x.png'),
+      collectionTips: '您还没有收藏任何楼盘',
+      collectionRemar: '快去看看我们为您准备的推荐楼盘吧',
+      collectionLike: '猜你喜欢',
+
+      ArticleTips: '您还没有收藏任何文章',
+      ArticleRemar: '快去看看我们为您准备的推荐文章吧',
+      ArticleIcon: require('IMG/user/collection/Article@2x.png'),
 
     }
   },
@@ -146,8 +155,8 @@ export default {
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
         line-height: 39px;
-        > .lab-right{
-           font-size: 10px;
+        > .lab-right {
+          font-size: 10px;
           font-weight: 400;
           line-height: 20px;
           width: 60px;
@@ -157,7 +166,7 @@ export default {
           right: 15px;
           position: absolute;
           text-align: center;
-              margin-top: 5px;
+          margin-top: 5px;
         }
         > .right-price-lab-ok {
           color: rgba(0, 122, 230, 1);
@@ -165,8 +174,7 @@ export default {
         > .right-price-lab {
           color: rgba(175, 178, 195, 1);
         }
-        > .right-price{
-          
+        > .right-price {
         }
 
         > .right-price-open {

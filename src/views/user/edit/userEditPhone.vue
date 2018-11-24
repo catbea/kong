@@ -21,6 +21,7 @@ export default {}
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 28px;
+    margin-bottom: 22px;
     > .edit-phone-remark{
       font-size:15px;
 font-weight:500;
@@ -33,6 +34,7 @@ line-height:21px;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 28px;
+    margin-bottom: 22px;
   }
   > .edit-phone-card-conter{
     > .edit-phone-card-input{

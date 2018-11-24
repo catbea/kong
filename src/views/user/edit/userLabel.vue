@@ -3,7 +3,7 @@
     <div class="user-edit-label">
       <p class="edit-label-title">选择标签</p>
       <p class="edit-label-conter">
-        <span v-for="(item,key) in texts" :key="key">
+        <span v-for="(item,key) in agentLabel" :key="key">
           <input :id="item.id" type="checkbox" data-type="welfare" name="reason">
           <label :for="item.id">{{item.name}}</label>
         </span>
@@ -15,6 +15,7 @@
   </div>
 </template>
 <script>
+import userService from 'SERVICE/userService'
 export default {
   data () {
     return {
@@ -25,7 +26,14 @@ export default {
         { "id": "4", "name": "佛系卖房" },
         { "id": "5", "name": "佛系卖房" },
         { "id": "6", "name": "佛系卖房" },
-      ]
+      ],
+      agentLabel:[],
+    }
+  },
+  methods:{
+    async getAgentLabel () {
+      const res = await userService.getAgentLabel()
+      this.agentLabel = res
     }
   }
 }

@@ -21,6 +21,7 @@ export default {}
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 28px;
+    margin-bottom: 22px;
   }
   > .edit-wechat-conter{
 > .edit-wechat-input {

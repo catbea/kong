@@ -194,7 +194,7 @@ export default {
       > .list-btn-right {
         position: absolute;
         right: 32px;
-            // margin-top: 20px;
+         margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
           height: 24px;
