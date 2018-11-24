@@ -23,6 +23,18 @@ export default [
     }
   },
   {
+    path: '/market/marketDetail/perfect',
+    name: 'marketDetailPerfect',
+    component: resolve =>
+      require(['@/views/market/marketDetail/Perfect/index.vue'], resolve),
+    meta: {
+      title: '用户完善资料',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/market/marketDetail/correction',
     name: 'marketDetailCorrection',
     component: resolve =>
@@ -117,7 +129,7 @@ export default [
         '@/views/market/marketDetail/marketShare/savePoster/index.vue'
       ], resolve),
     meta: {
-      title: '保存海报'
+      title: '生成海报'
     }
   },
   {

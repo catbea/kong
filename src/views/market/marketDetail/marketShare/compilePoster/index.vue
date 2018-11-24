@@ -12,7 +12,7 @@
     <compile-cover></compile-cover>
     <div class="compile-button">
       <p>重置海报</p>
-      <p>生成海报</p>
+      <router-link to='/marketDetail/share/save' tag="p" >生成海报</router-link>
     </div>
   </div>
 </template>
@@ -94,7 +94,7 @@ export default {
     display: flex;
     > p:nth-child(1) {
       width: 144px;
-      height: 44px;
+      height: 42px;
       border-radius: 4px;
       border: 1px solid;
       margin-right: 12px;

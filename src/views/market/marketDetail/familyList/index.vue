@@ -1,22 +1,21 @@
 <template>
   <div class="family-list-page">
-    <ul class="family-list-page-ul">
-      <li :class="{active:num==1}" @click="activeA(1)">全部</li>
-      <li :class="{active:num==2}" @click="activeB(2)">一室</li>
-      <li :class="{active:num==3}" @click="activeC(3)">二室</li>
-      <li :class="{active:num==4}" @click="activeD(4)">三室</li>
-    </ul>
+    <classify></classify>
+    <div class="family-list-page-box">
     <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail"
     :dredge="dredge" >
 
     </market-describe>
+    </div>
   </div>
 </template>
 <script>
+import Classify from 'COMP/Classify/'
 import marketService from 'SERVICE/marketService'
 import MarketDescribe from 'COMP/MarketDescribe/'
 export default {
   components:{
+    Classify,
     MarketDescribe
   },
   created () {
@@ -50,6 +49,9 @@ export default {
 </script>
 <style lang="less">
 .family-list-page{
+  .family-list-page-box{
+    margin-top:45px;
+  }
   .family-list-page-ul{
     height: 44px;
     width: 375px;

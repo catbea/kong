@@ -1,7 +1,7 @@
 <template>
   <div class="market-price-surface-page">
     <ul class="price-box">
-      <li>
+      <li @click="highlight" :class="{active:light}">
         <p>1天体验</p>
         <p>¥2</p>
         <p>限购一次</p>
@@ -56,7 +56,13 @@
 export default {
   data:_=>({
     backImg:require('IMG/discountCoupon/arrow.png'),
-  })
+    light:false
+  }),
+  methods:{
+    highlight(){
+      this.light=!this.light
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -68,6 +74,9 @@ export default {
   .price-box{
     display: flex;
     flex-wrap: wrap;
+    .active{
+      background:rgba(0,122,230,0.1);
+    }
     li{
       margin-left: 16px;
       width:104px;

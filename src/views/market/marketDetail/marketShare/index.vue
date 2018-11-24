@@ -8,7 +8,7 @@
       <p>长按保存图片 可分享好友或朋友圈</p>
       <ul>
       <router-link tag="li" to="/marketDetail/share/compile" class="compile">编辑海报</router-link> 
-      <router-link to="/marketDetail/share/save" tag="li" class="save">保存海报</router-link>
+      <li class="save">保存海报</li>
       </ul>
       <router-view></router-view>
     </div>

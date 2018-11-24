@@ -5,7 +5,7 @@
         <div class="search-box-content">
           <p>
             深圳
-            <span :style="{backgroundImage:'url(' + defaultAvatar + ')'}"></span>
+            <span :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
             </p>
         <form action="/">
           <van-search
@@ -15,7 +15,7 @@
           />
         </form>
         </div>
-        <div class="a" :style="{backgroundImage:'url(' + locationIcon + ')'}"></div>
+        <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
       <screen :functionList="functionList"></screen>
       <already-open :agentIdInfo="agentIdInfo"></already-open>
@@ -45,7 +45,7 @@ export default {
   },
   data: _ => ({
     value:"",
-    defaultAvatar: require('IMG/market/list__arrow_.png'),
+    defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
     locationIcon:require('IMG/market/juxing.png'),
     functionList: null,
     agentIdInfo: null,

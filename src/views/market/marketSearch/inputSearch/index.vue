@@ -10,6 +10,7 @@
     @cancel="onCancel"
   />
 </form>
+<screen></screen>
 </div>
 <div class="history-show-box" v-if="true">
   <div class="input-search-page-middle">
@@ -22,6 +23,7 @@
   </li>
   </ul>
 </div>
+<empty></empty>
 <div class="input-search-content">
    <ol>
      <li v-for="(item,index) in list" :key="index">
@@ -30,13 +32,27 @@
      </li>
    </ol>
 </div>
+  <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item"></market-describe>
   </div>
 </template>
 <script>
+import Screen from 'COMP/Screen/'
+import Empty from './Empty'
+import MarketDescribe from 'COMP/MarketDescribe/'
+import marketService from 'SERVICE/marketService'
 export default {
+  components:{
+    Screen,
+    MarketDescribe,
+    Empty
+  },
+    created () {
+    this.getMarketDescribeInfo()
+  },
   data:()=>({
     value:"",
-    list:[1,2,3,4,5,6,7]
+    list:[1,2,3,4,5,6,7],
+    resInfo: null
   }),
   methods:{
     onCancel(){
@@ -47,17 +63,22 @@ export default {
     },
     submit(){
       console.log(1111)
-    }
+    },
+    async getMarketDescribeInfo () {
+      const res = await marketService.getMarketDescribe()
+      console.log(res.records)
+      this.resInfo = res.records
+    },
   }
 }
 </script>
 <style lang="less">
 .input-search-page{
   .input-search-page-top{
-    height: 30px;
-    margin-left: 15px;
+    padding-left: 15px;
     position: fixed;
     background: #FFFFFF;
+    z-index:1;
     .van-search{
     margin:7px 0 0 0px;
     padding: 0;
@@ -84,7 +105,7 @@ export default {
   }
   }
   .history-show-box{
-    margin-top: 60px;
+    margin-top: 100px;
     margin-left: 15px;
     > .input-search-page-middle{
     display: flex;

@@ -2,10 +2,10 @@
   <div class="compile-cover-page">
       <div class="compile-cover-top">选择楼盘封面</div> 
       <ol class="compile-cover-bottom">
-        <li v-for="(item,index) in list" :key="index" @click="taget(index)">
-          <div :class="{active:item.check}">
-            <span></span>
-          </div>
+        <li v-for="(item,index) in list" :key="index" @click="active(index)">
+          <!-- <div :class="{active:item.check}"> -->
+            <span class="bg_img" :style="{backgroundImage:'url('+(num==index?icon:icon)+')'}"></span>
+          <!-- </div> -->
         </li>
       </ol>
     </div>
@@ -13,6 +13,7 @@
 <script>
 export default {
   data: () => ({
+    icon:require('IMG/correction/color.png'),
     list: [
       { check: false },
       { check: false },
@@ -20,7 +21,7 @@ export default {
       { check: false }
     ],
     liIndex: 0,
-    show: false
+    num:null
   }),
   computed: {
     // show(){
@@ -28,9 +29,10 @@ export default {
     // }
   },
   methods: {
-    taget(index) {
-      // this.liIndex=index
-      this.list[index].check = !this.list[index].check
+    active(index) {
+      this.show=index
+      console.log(index)
+      //this.list[index].check = !this.list[index].check
     }
   }
 }
@@ -39,15 +41,6 @@ export default {
 <style lang="less">
 .compile-cover-page {
   margin: 32px 0 0 15px;
-  .active {
-    position: absolute;
-    right: 5px;
-    top: 4px;
-    width: 22px;
-    height: 22px;
-    background: rgba(0, 122, 230, 1);
-    border-radius: 50%;
-  }
   > .compile-cover-top {
     font-size: 16px;
     font-family: PingFang-SC-Semibold;
@@ -68,6 +61,14 @@ export default {
       margin-right: 15px;
       border: 1px solid;
       position: relative;
+        display: flex;
+        span{
+          width:22px;
+          height:22px;
+          position:absolute;
+          right:4px;
+          top:4px;
+      }
     }
   }
 }

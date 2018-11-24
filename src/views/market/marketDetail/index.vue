@@ -1,12 +1,12 @@
 <template>
   <div class="marketDetail-page">
-    <Sort v-if="show"></Sort>
+    <classify></classify>
     <swipe-box></swipe-box>
     <div class="marketDetail-page-bottom">
     <div class="marketDetail-box">
       <div class="marketDetail-box-top">
       <div class="left">
-        <!-- <Condition :info="info"></Condition> -->
+        <tag-group :condition="info"></tag-group>
       </div>
       <div class="house-owner">
         <div class="browse" @click="supplement">12345</div>人浏览过
@@ -17,16 +17,16 @@
       <specific-marketDetail></specific-marketDetail>
     </div>
     <button-box :buttonInfo="buttonInfo"></button-box>
-    <div class="button-box-tow">
+    <!-- <div class="button-box-tow">
       <div class="button-box-tow-left">
-        <div class="button-box-tow-left-icon" :style="{'background':'url('+buttonBoxTowLeftIconIMG+') no-repeat'}"></div>
+        <div class="button-box-tow-left-icon" :style="{'background':'url('+buttonBoxTowLeftIconIMG+') no-repeat','background-size':'contain'}"></div>
         <div class="button-box-tow-left-text" >开盘通知</div>
       </div>
       <div class="button-box-tow-right">
-        <div class="button-box-tow-right-icon" :style="{'background':'url('+buttonBoxTowRightIconIMG+') no-repeat'}"></div>
+        <div class="button-box-tow-right-icon" :style="{'background':'url('+buttonBoxTowRightIconIMG+') no-repeat','background-size':'contain'}"></div>
         <div class="button-box-tow-right-text">降价通知</div>
       </div>
-    </div>
+    </div> -->
     <title-bar :conf="confA"></title-bar>
     <all-marketType></all-marketType>
     <title-bar :conf="confB"></title-bar>
@@ -49,7 +49,6 @@
       <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击 </span>
       <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
       <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
-      </router-link>
     </div>
     </div>
     <open-marketButton></open-marketButton>
@@ -65,7 +64,7 @@
 import * as types from '@/store/mutation-types'
 import Condition from 'COMP/Condition/'
 import ButtonBox from 'COMP/ButtonBox/'
-import Sort from 'COMP/Market/MarketDetail/Sort'
+import Classify from 'COMP/Classify/'
 import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
 import AllMarketType from 'COMP/Market/MarketDetail/AllMarketType'
 import SiteNearby from 'COMP/Market/MarketDetail/SiteNearby'
@@ -74,10 +73,11 @@ import OpenMarketButton from 'COMP/Market/MarketDetail/OpenMarketButton'
 import MarketRenew from 'COMP/Market/MarketDetail/MarketRenew'
 import PopupBox from 'COMP/Market/MarketDetail/PopupBox'
 import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
+import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
-    Sort,
+    Classify,
     Condition,
     ButtonBox,
     SpecificMarketDetail,
@@ -87,6 +87,7 @@ export default {
     OpenMarketButton,
     MarketRenew,
     PopupBox,
+    TagGroup,
     TitleBar,
     SwipeBox
   },
@@ -103,7 +104,7 @@ export default {
     show: false,
     boxShow:false,
     openFlag: true,
-    renewFlag: false,
+    renewFlag: true,
     list: [1, 2, 3, 4],
     confA:{
       title:"户型",
@@ -125,18 +126,7 @@ export default {
       linkText:"全部楼盘",
       link:"/market"
     },
-    info: [
-      {
-        text: '热销中',
-        textColor: 'rgba(255,255,255,1)',
-        backColor: 'rgba(0,122,230,1)'
-      },
-      {
-        text: '住宅',
-        textColor: 'rgba(255,255,255,1)',
-        backColor: 'rgba(110,184,163,1)'
-      }
-    ],
+    info: ['热销中','住宅'],
     buttonInfo: {
       text: '按钮文字',
       borderRadius: '4px',
@@ -145,9 +135,9 @@ export default {
       backColor: 'rgba(0,122,230,0.05)',
       lineHeight: '44px'
     },
-    buttonBoxTowLeftIconIMG: require('IMG/marketDetail/icon.png'),
-    buttonBoxTowRightIconIMG: require('IMG/marketDetail/icon1.png'),
-    siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape.png')
+    buttonBoxTowLeftIconIMG: require('IMG/marketDetail/icon@2x.png'),
+    buttonBoxTowRightIconIMG: require('IMG/marketDetail/icon1@2x.png'),
+    siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
     handleScroll() {
@@ -224,11 +214,13 @@ export default {
         width: 20px;
         height: 20px;
         margin-right: 6px;
+        background-size: 100%;
       }
       .button-box-tow-right .button-box-tow-right-icon {
         width: 20px;
         height: 20px;
         margin-right: 6px;
+        background-size: 100%;
       }
     }
 

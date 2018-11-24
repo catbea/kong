@@ -3,19 +3,19 @@
   <ul class="home-screen-box">
       <li class="area" @click="area()">
           <span :class="{active1:showData==1}">区域</span>
-          <span :class="{active2:showData==1}" :style="{backgroundImage:'url(' + defaultAvatar + ')'}"></span>
+          <span :class="{active2:showData==1}" :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
         </li>
         <li class="average-price" @click="average()">
           <span :class="{active1:showData==2}">均价</span>
-          <span :class="{active2:showData==2}" :style="{backgroundImage:'url(' + defaultAvatar + ')'}"></span>
+          <span :class="{active2:showData==2}" :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
         </li>
         <li class="popularity" @click="popularity()">
           <span :class="{active1:showData==3}">人气</span>
-          <span :class="{active2:showData==3}" :style="{backgroundImage:'url(' + defaultAvatar + ')'}" ></span>
+          <span :class="{active2:showData==3}" :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}" ></span>
         </li>
         <li class="state" @click="state()">
           <span :class="{active1:showData==4}">状态</span>
-          <span :class="{active2:showData==4}" :style="{backgroundImage:'url(' + defaultAvatar + ')'}"></span>
+          <span :class="{active2:showData==4}" :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
         </li>
         <li class="sort" @click="sort"></li>
     </ul>
@@ -41,7 +41,7 @@ export default {
       domShow:false,
       sortShow:false
     },
-    defaultAvatar: require('IMG/market/list__arrow_.png'),
+    defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
   }),
   methods: {
     sort(){
@@ -114,7 +114,8 @@ export default {
   .sort {
     width: 16px;
     height: 17px;
-    background: url('../../assets/img/market/Combined Shape.png') no-repeat;
+    background: url('../../assets/img/market/Combined Shape@2x.png') no-repeat;
+    background-size:contain;
     margin-right: 13px;
   }
 }

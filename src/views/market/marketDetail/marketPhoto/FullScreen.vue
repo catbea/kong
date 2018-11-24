@@ -2,7 +2,7 @@
   <div class="full-screen-page" v-if="info.domShow">
     <div class="full-screen-page-box">
       <van-swipe @change="onChange" :show-indicators="false" >
-  <van-swipe-item v-for="(item,index) in info.arr">
+  <van-swipe-item v-for="(item,index) in info.arr" :key="index">
     <img :src="item" alt="" srcset="" @click="close">
   </van-swipe-item>
    </van-swipe>

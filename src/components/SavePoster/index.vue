@@ -1,10 +1,10 @@
 <template>
   <div class="market-share-poster-page">
-    <div class="box">
+    <!-- <div class="box">
     <div class="share-top">
       <div class="share-top-content"></div>
     </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
