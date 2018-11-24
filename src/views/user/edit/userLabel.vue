@@ -17,7 +17,7 @@
 <script>
 import userService from 'SERVICE/userService'
 export default {
-  data () {
+  data() {
     return {
       texts: [
         { "id": "1", "name": "资深中介" },

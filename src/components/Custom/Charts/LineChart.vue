@@ -21,11 +21,13 @@ export default {
       { time: 1515283200000, count: 24, a: '1' }
     ]
   }),
-  mounted () {
-    this.width = document.getElementsByClassName('pie-chart-container')[0].offsetWidth
+  mounted() {
+    this.width = document.getElementsByClassName(
+      'pie-chart-container'
+    )[0].offsetWidth
   },
   methods: {
-    renderLineChart ({ chart }) {
+    renderLineChart({ chart }) {
       chart.source(this.data, {
         time: {
           type: 'timeCat',
@@ -34,13 +36,24 @@ export default {
         }
       })
       chart.tooltip(false)
-      chart.area().position('time*count').color('l(90) 0:#1890FF 1:#f7f7f7').shape('smooth')
-      chart.line().position('time*count').shape('smooth')
-      chart.point().position('time*count').shape('smooth').style({
-        lineWidth: 1,
-        stroke: '#fff'
-      })
-      this.data.map( obj => {
+      chart
+        .area()
+        .position('time*count')
+        .color('l(90) 0:#1890FF 1:#f7f7f7')
+        .shape('smooth')
+      chart
+        .line()
+        .position('time*count')
+        .shape('smooth')
+      chart
+        .point()
+        .position('time*count')
+        .shape('smooth')
+        .style({
+          lineWidth: 1,
+          stroke: '#fff'
+        })
+      this.data.map(obj => {
         chart.guide().text({
           position: [obj.time, obj.count],
           content: obj.count,

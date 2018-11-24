@@ -7,13 +7,13 @@ export default {
   props: {
     type: {
       type: String,
-      validate: function (val) {
+      validate: function(val) {
         return types.filter(type => type === val).length === 1
       }
     },
     options: {
       type: Object,
-      default () {
+      default() {
         return {}
       }
     },
@@ -24,7 +24,7 @@ export default {
       default: true
     }
   },
-  created () {
+  created() {
     this.$parent.addGuide({
       type: this.type,
       options: {
@@ -35,6 +35,6 @@ export default {
       }
     })
   },
-  render () {}
+  render() {}
 }
 </script>

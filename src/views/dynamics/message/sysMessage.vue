@@ -25,17 +25,16 @@ export default {
   components: {
     ShadowBox
   },
-  data () {
+  data() {
     return {
-      systemMessage: [],
+      systemMessage: []
     }
   },
-  created () {
+  created() {
     this.getSystemMessageList()
   },
   methods: {
-
-    async getSystemMessageList () {
+    async getSystemMessageList() {
       const res = await dynamicsService.getSystemMessage()
       this.systemMessage = res
     }
@@ -48,19 +47,15 @@ export default {
     margin: 16px 0;
     > .sysMessage-time {
       font-size: 14px;
-      font-family: PingFang-SC-Medium;
       font-weight: 500;
       color: rgba(41, 46, 51, 1);
       line-height: 20px;
       margin: 20px 0 12px 16px;
     }
-    > .sysMessage-shadowBox {
-    }
     .sys-shadowBox {
       padding: 16px;
       > .sys-shadowBox-title {
         font-size: 20px;
-        font-family: PingFang-SC-Semibold;
         font-weight: 600;
         color: rgba(41, 46, 51, 1);
         line-height: 30px;
@@ -68,7 +63,6 @@ export default {
       }
       > .sys-shadowBox-time {
         font-size: 14px;
-        font-family: PingFang-SC-Regular;
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 21px;

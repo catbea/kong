@@ -9,12 +9,12 @@ export default {
     },
     seriesField: String
   },
-  created () {
+  created() {
     this.$parent.setPoint({
       ...this.$props,
       ...this.$attrs
     })
   },
-  render () {}
+  render() {}
 }
 </script>

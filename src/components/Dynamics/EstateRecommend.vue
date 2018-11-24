@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import EstateItem from 'COMP/Dynamics/EstateItem'
+import EstateItem from 'COMP/EstateItem'
 import TitleBar from 'COMP/TitleBar'
 export default {
   components: {
@@ -17,7 +17,7 @@ export default {
   props: {
     info: Object
   },
-  data: _ => ({
+  data: () => ({
     titleBarConf: {
       title: 'AI荐盘',
       linkText: '更多楼盘'

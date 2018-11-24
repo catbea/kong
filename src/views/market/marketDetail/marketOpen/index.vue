@@ -1,7 +1,7 @@
 <template>
   <div class="market-open-page">
-   <market-describe v-for="(item,index) in describeInfo" :key="index" :dredgeFlag="item.dredgeFlag" 
-      :borderBottom="item.borderBottom"></market-describe>
+   <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" 
+    :dredge="dredge" :borderBottom="borderBottom"></market-describe>
    <market-priceSurface></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
@@ -178,6 +178,7 @@ AW大师服务现有单个用户开通单个项目的收费标准为期限1个�
   </div>
 </template>
 <script>
+import marketService from 'SERVICE/marketService'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import MarketPriceSurface from 'COMP/MarketPriceSurface/'
 import OpenPayment from 'COMP/OpenPayment/'
@@ -187,13 +188,24 @@ export default {
     MarketPriceSurface,
     OpenPayment
   },
-  data: _ => ({
+  created() {
+    this.getMarketDescribeInfo()
+  },
+  data: () => ({
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
-    show: false
+    show: false,
+    resInfo: null,
+    dredge: false,
+    borderBottom: false
   }),
   methods: {
     vant() {
       this.show = true
+    },
+    async getMarketDescribeInfo() {
+      const res = await marketService.getMarketDescribe()
+      console.log(res.records)
+      this.resInfo = res.records
     }
   }
 }

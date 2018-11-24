@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import EstateItem from 'COMP/Dynamics/EstateItem'
+import EstateItem from 'COMP/EstateItem'
 import TitleBar from 'COMP/TitleBar'
 
 export default {
@@ -17,7 +17,7 @@ export default {
   props: {
     list: Array
   },
-  data: _ => ({
+  data: () => ({
     titleBarConf: {
       title: '我的楼盘',
       linkText: '更多楼盘'

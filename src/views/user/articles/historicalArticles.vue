@@ -40,7 +40,7 @@ export default {
     color: rgba(102, 102, 102, 1);
     line-height: 16px;
     margin: 17px 16px;
-    
+
     > .historicalArticles-title-right {
       font-size: 13px;
       font-weight: 400;

@@ -37,7 +37,7 @@ export default {
     Cell,
     CellGroup
   },
-  data: _ => ({}),
+  data: () => ({}),
   created() {
     this.getUserInfo()
   },
@@ -48,8 +48,8 @@ export default {
       this.$store.dispatch('getUserInfo', userId)
       this.$store.dispatch('getUserVipInfo', userId)
     },
-    goarticles(){
-    this.$router.push('/user/articles/historicalArticles')
+    goarticles() {
+      this.$router.push('/user/articles/historicalArticles')
     },
     goCollection(){
     this.$router.push('/user/collection/myCollection')
@@ -57,6 +57,9 @@ export default {
       goallDynamics(){
     this.$router.push('/dynamics/allDynamics')
     },
+    goallDynamics() {
+      this.$router.push('/dynamics/allDynamics')
+    }
   },
   computed: {
     ...mapGetters(['userInfo'])

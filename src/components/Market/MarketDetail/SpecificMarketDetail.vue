@@ -38,7 +38,7 @@
 </template>
 <script>
 export default {
-  data: _ => ({
+  data: () => ({
     commissionDetailImg: require('IMG/marketDetail/arrow.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png')
   }),

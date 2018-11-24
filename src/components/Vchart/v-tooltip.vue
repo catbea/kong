@@ -25,13 +25,13 @@ export default {
     },
     options: {
       type: Object,
-      default () {
+      default() {
         return {}
       }
     }
   },
-  render () {},
-  created () {
+  render() {},
+  created() {
     const options = {
       disabled: this.disabled,
       showCrosshairs: this.showCrosshairs,
@@ -41,7 +41,7 @@ export default {
       ...camelAttrs(this.$attrs)
     }
     if (this.showXValue) {
-      options.onShow = function (ev) {
+      options.onShow = function(ev) {
         const { items } = ev
         items[0].name = items[0].title
       }

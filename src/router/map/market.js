@@ -5,20 +5,86 @@ export default [
     component: resolve => require(['@/views/market/index.vue'], resolve),
     meta: {
       title: '楼盘',
-      tabbar:{
+      tabbar: {
         show: true
       }
     }
   },
   {
-    path: '/market/marketDetail/:userId',
+    path: '/market/marketDetail',
     name: 'marketDetailNotOpen',
     component: resolve =>
       require(['@/views/market/marketDetail/index.vue'], resolve),
     meta: {
-      title: '楼盘详情'
+      title: '楼盘详情',
+      tabbar: {
+        show: false
+      }
     }
   },
+  {
+    path: '/market/marketDetail/perfect',
+    name: 'marketDetailPerfect',
+    component: resolve =>
+      require(['@/views/market/marketDetail/Perfect/index.vue'], resolve),
+    meta: {
+      title: '用户完善资料',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/market/marketDetail/correction',
+    name: 'marketDetailCorrection',
+    component: resolve =>
+      require(['@/views/market/marketDetail/correction/index.vue'], resolve),
+    meta: {
+      title: '楼盘详情纠错',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/marketDetail/FamilyList',
+    name: 'FamilyList',
+    component: resolve =>
+      require(['@/views/market/marketDetail/familyList/index.vue'], resolve),
+    meta: {
+      title: '户型列表',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/marketDetail/marketAllDynamic',
+    name: 'marketAllDynamic',
+    component: resolve =>
+      require([
+        '@/views/market/marketDetail/marketAllDynamic/index.vue'
+      ], resolve),
+    meta: {
+      title: '全部楼盘动态',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/marketDetail/marketDetail/allNear',
+    name: 'marketAllNear',
+    component: resolve =>
+      require(['@/views/market/marketDetail/marketAllNear/index.vue'], resolve),
+    meta: {
+      title: '楼盘全部周边',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+
   {
     path: '/marketDetail/commission',
     name: 'marketDetail-commission',
@@ -65,7 +131,7 @@ export default [
         '@/views/market/marketDetail/marketShare/savePoster/index.vue'
       ], resolve),
     meta: {
-      title: '保存海报'
+      title: '生成海报'
     }
   },
   {
@@ -77,6 +143,27 @@ export default [
       ], resolve),
     meta: {
       title: '编辑海报'
+    }
+  },
+  {
+    path: '/market/inputSearch',
+    name: 'no-input',
+    component: resolve =>
+      require(['@/views/market/marketSearch/inputSearch/index.vue'], resolve),
+    meta: {
+      title: '搜索楼盘'
+    }
+  },
+  {
+    path: '/market/marketDetail/photo',
+    name: 'no-input',
+    component: resolve =>
+      require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
+    meta: {
+      title: '楼盘相册',
+      tabbar: {
+        show: false
+      }
     }
   }
 ]

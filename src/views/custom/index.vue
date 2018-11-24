@@ -41,13 +41,18 @@ export default {
     searchVal: '',
     sort: 1
   }),
-  created () { },
+  created() {},
   methods: {
-    onSearchHandler () { },
-    async onLoad () {
+    onSearchHandler() {},
+    async onLoad() {
       this.loading = true
-      const result = await CustomService[this.getServeceFunc()](this.search, this.currentData.page, this.pageSize, this.sort)
-      console.log(result);
+      const result = await CustomService[this.getServeceFunc()](
+        this.search,
+        this.currentData.page,
+        this.pageSize,
+        this.sort
+      )
+      console.log(result)
       this.currentData.list = this.currentData.list.concat(result.records)
       if (result.records.length < this.pageSize) {
         this.currentData.finished = true
@@ -55,9 +60,9 @@ export default {
         this.currentData.page++
       }
       this.loading = false
-    }, 
+    },
     // 获取当前serviec处理方法
-    getServeceFunc () {
+    getServeceFunc() {
       switch (this.activeIndex) {
         case 0:
           return 'getCustomerAll'
@@ -71,16 +76,15 @@ export default {
           return 'getCustomerAdd'
       }
     },
-    itemClickHandler (e) {
+    itemClickHandler(e) {
       this.$router.push(`/custom/${e.clientId}`)
     },
-    onFocusHandler(){
-      console.log('fffff');
-      
+    onFocusHandler() {
+      console.log('fffff')
     }
   },
   computed: {
-    currentData () {
+    currentData() {
       return this.data[this.activeIndex]
     }
   }

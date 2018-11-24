@@ -9,15 +9,15 @@
       </ul>
       <div class="site-nearby-box-map"></div>
       <div class="site-nearby-box-hint-box">
-        <div class="site-nearby-box-hint-box-icon" :style="{'background':'url('+siteNearbyBoxHintBoxIconIMG+') no-repeat'}"></div>
+        <div class="site-nearby-box-hint-box-icon" :style="{'background':'url('+siteNearbyBoxHintBoxIconIMG+') no-repeat','background-size':'contain'}"></div>
         <div class="site-nearby-box-hint">数据统计范围为楼盘2公里以内，数据来至于百度地图，仅供参考！</div>
       </div>
     </div>
 </template>
 <script>
 export default {
-  data: _ => ({
-    siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape.png')
+  data: () => ({
+    siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   })
 }
 </script>

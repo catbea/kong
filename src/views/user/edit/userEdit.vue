@@ -38,7 +38,7 @@ export default {
     Cell,
     CellGroup
   },
-  created () {
+  created() {
     this.getUserInfo()
   },
   data () {
@@ -47,7 +47,7 @@ export default {
     }
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)

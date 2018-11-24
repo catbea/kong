@@ -52,25 +52,23 @@
   </div>
 </template>
 <script>
-
 export default {
-
-  data () {
+  data() {
     return {
-      backIcon: require('IMG/user/usercard@2x.png'),
+      backIcon: require('IMG/user/usercard@2x.png')
     }
   },
-   props: {
+  props: {
     info: Object
   },
   methods: {
-    GOheadline () {
+    GOheadline() {
       console.log(1)
       //跳转
-       this.$emit('click',this.info)
+      this.$emit('click', this.info)
       // this.$router.push('/discover/headline')
     }
-  },
+  }
 }
 </script>
 <style lang="less">
@@ -79,7 +77,7 @@ export default {
     // margin: 0 15px;
     display: flex;
     border-bottom: 1px solid #e6e6e6;
-        margin: 0 16px;
+    margin: 0 16px;
     padding: 16px 0 16px 0;
     > .article-list-left {
       height: 90px;
@@ -125,5 +123,3 @@ export default {
   }
 }
 </style>
-
-

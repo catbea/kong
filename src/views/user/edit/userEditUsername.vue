@@ -13,7 +13,7 @@ export default {}
 
 <style lang="less">
 .user-edit-username-page {
-  > .user-edit-username{
+  > .user-edit-username {
     margin: 27px 16px;
  > .edit-username-title {
     font-size: 20px;
@@ -30,23 +30,22 @@ export default {}
     line-height: 21px;
     width: 99%;
         border: 0;
-    border-bottom: 1px solid #EEEEEE;
+        border-bottom: 1px solid #eeeeee;
+      }
+    }
+
+    > .edit-username-query {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 22px;
+      height: 44px;
+      background: rgba(0, 122, 230, 1);
+      border-radius: 4px;
+      width: 100%;
+      border: 0;
+      margin-top: 25px;
+    }
   }
-  }
-  
-  > .edit-username-query {
-    font-size: 16px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 1);
-    line-height: 22px;
-    height: 44px;
-    background: rgba(0, 122, 230, 1);
-    border-radius: 4px;
-    width: 100%;
-    border: 0;
-    margin-top: 25px; 
-  }
-  }
- 
 }
 </style>

@@ -13,21 +13,19 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
-
       cardIcon: require('IMG/discover/Path@2x.png'),
       collectionIcon: require('IMG/discover/Path1@2x.png'),
-      shareIcon: require('IMG/discover/PathCopy@2x.png'),
+      shareIcon: require('IMG/discover/PathCopy@2x.png')
     }
   }
 }
 </script>
 <style lang="less">
 .fixedBtn-container {
-  
   display: flex;
-  margin: 9px 16px 18px ;
+  margin: 9px 16px 18px;
   > .fixedBtn-card {
     width: 138px;
     height: 44px;
@@ -39,7 +37,7 @@ export default {
     color: rgba(174, 177, 194, 1);
     background: #ffffff;
     line-height: 21px;
-     display: flex;
+    display: flex;
     padding: 0 18px;
     > .card-icon {
       width: 24px;
@@ -58,7 +56,7 @@ export default {
     color: rgba(174, 177, 194, 1);
     line-height: 21px;
     margin: 0 8px;
-     display: flex;
+    display: flex;
     padding: 0 18px;
     background: #ffffff;
     > .collection-icon {
@@ -77,7 +75,7 @@ export default {
     color: rgba(255, 255, 255, 1);
     line-height: 21px;
     border: 0;
-        display: flex;
+    display: flex;
     padding: 0 18px;
     > .share-icon {
       width: 24px;

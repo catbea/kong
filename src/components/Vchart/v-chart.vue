@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 // const shapeMap = {
 //   point: ['circle', 'hollowCircle', 'rect'],
 //   line: ['line', 'smooth', 'dash'],
@@ -51,7 +50,7 @@ export default {
       default: false
     }
   },
-  data () {
+  data() {
     return {
       xField: '',
       yField: '',
@@ -87,7 +86,7 @@ export default {
     }
   },
   computed: {
-    currentData () {
+    currentData() {
       if (this.pieOptions) {
         return this.data.slice().map(item => {
           item.a = '1'
@@ -96,7 +95,7 @@ export default {
       }
       return this.data
     },
-    currentXFieldOptions (val) {
+    currentXFieldOptions(val) {
       const defaultOptions = {
         tickCount: 5
       }
@@ -119,7 +118,7 @@ export default {
 
       return Object.assign({}, defaultOptions, this.xFieldOptions)
     },
-    currentYFieldOptions (val) {
+    currentYFieldOptions(val) {
       const defaultOptions = {
         tickCount: 5
       }
@@ -131,37 +130,37 @@ export default {
     }
   },
   watch: {
-    data () {
+    data() {
       this.changeData(this.data)
     }
   },
   methods: {
-    onTouchstart (e) {
+    onTouchstart(e) {
       this.preventDefault && e.preventDefault()
     },
-    set (name, options) {
+    set(name, options) {
       this[`${name}Options`] = options
     },
-    changeData (data) {
+    changeData(data) {
       this.chart && this.chart.changeData(data)
     },
-    setField (axis, item) {
+    setField(axis, item) {
       this[`${axis}Field`] = item
     },
-    repaint () {
+    repaint() {
       this.chart.repaint()
     },
-    rerender () {
+    rerender() {
       this.destroy()
       this.render()
     },
-    destroy () {
+    destroy() {
       this.chart && this.chart.destroy()
     },
-    addGuide (options) {
+    addGuide(options) {
       this.guides.push(options)
     },
-    setScale (options) {
+    setScale(options) {
       if (options.x) {
         this.xFieldOptions = options.x
       }
@@ -169,7 +168,7 @@ export default {
         this.yFieldOptions = options.y
       }
     },
-    setAxis (options) {
+    setAxis(options) {
       if (options.x) {
         this.xAxisOptions = options
         if (typeof options.autoAlign !== 'undefined') {
@@ -180,7 +179,7 @@ export default {
         this.yAxisOptions = options
       }
     },
-    buildColor (c) {
+    buildColor(c) {
       let color = c || ''
       if (Array.isArray(c) && Array.isArray(c[0])) {
         const ctx = this.$refs.chart.getContext('2d')
@@ -191,34 +190,34 @@ export default {
       }
       return color
     },
-    setPie (options = {}) {
+    setPie(options = {}) {
       this.pieOptions = options
     },
-    setBar (options = {}) {
+    setBar(options = {}) {
       this.barOptions = options
     },
-    setLegend (options) {
+    setLegend(options) {
       this.legendOptions = options
     },
-    setTooltip (options) {
+    setTooltip(options) {
       this.tooltipOptions = options
     },
-    setArea (options) {
+    setArea(options) {
       this.areaOptions = options
     },
-    setGuide (options) {
+    setGuide(options) {
       this.guideOptions = options
     },
-    setLine (options) {
+    setLine(options) {
       this.lineOptions = options
     },
-    setPoint (options) {
+    setPoint(options) {
       this.pointOptions = options
     },
-    buildPosition () {
+    buildPosition() {
       return `${this.xField}*${this.yField}`
     },
-    getFields () {
+    getFields() {
       if (this.xField && this.yField) {
         return
       }
@@ -231,7 +230,11 @@ export default {
           const type2 = typeof this.data[0][keys[1]]
           if (type1 === 'number' && type2 !== 'number') {
             indexes = [1, 0]
-          } else if (type1 === 'string' && type2 === 'string' && keys[2] === 'value') {
+          } else if (
+            type1 === 'string' &&
+            type2 === 'string' &&
+            keys[2] === 'value'
+          ) {
             indexes = [0, 2]
           }
           this.xField = keys[indexes[0]]
@@ -239,7 +242,7 @@ export default {
         }
       }
     },
-    render () {
+    render() {
       const _this = this
       let autoAlignXAxis = this.autoAlignXAxis
       if (this.barOptions) {
@@ -248,13 +251,17 @@ export default {
       if (typeof autoAlignXAxis === 'undefined') {
         autoAlignXAxis = true
       }
-      
+
       const windowWidth = window.innerWidth
       const windowHeight = window.innerHeight
       const chart = new F2.Chart({
         el: this.$refs.chart,
         width: this.width || windowWidth,
-        height: this.height ? this.height : (windowWidth > windowHeight ? (windowHeight - 54) : windowWidth * 0.707),
+        height: this.height
+          ? this.height
+          : windowWidth > windowHeight
+            ? windowHeight - 54
+            : windowWidth * 0.707,
         pixelRatio: this.$devicePixelRatio || window.devicePixelRatio,
         ...this.$attrs
       })
@@ -291,8 +298,9 @@ export default {
           if (this.tooltipOptions.showValueInLegend) {
             const customTooltip = {
               custom: true, // 自定义 tooltip 内容框
-              onChange: function (obj) {
-                const legend = _this.chart.get('legendController').legends.top[0]
+              onChange: function(obj) {
+                const legend = _this.chart.get('legendController').legends
+                  .top[0]
                 const tooltipItems = obj.items
                 const legendItems = legend.items
                 const map = {}
@@ -307,7 +315,7 @@ export default {
                 })
                 legend.setItems(Object.values(map))
               },
-              onHide: function () {
+              onHide: function() {
                 const VChart = _this.chart
                 const legend = VChart.get('legendController').legends.top[0]
                 legend.setItems(VChart.getLegendItems().type)
@@ -330,7 +338,7 @@ export default {
 
       if (autoAlignXAxis) {
         chart.axis(this.xField, {
-          label (text, index, total) {
+          label(text, index, total) {
             const textCfg = {}
             if (index === 0) {
               textCfg.textAlign = 'left'
@@ -347,7 +355,10 @@ export default {
         const { shape, adjust, size } = this.lineOptions
         let seriesField = this.lineOptions.seriesField || ''
         let colors = this.buildColor(this.lineOptions.colors)
-        let rs = chart.line().position(this.buildPosition()).shape(shape)
+        let rs = chart
+          .line()
+          .position(this.buildPosition())
+          .shape(shape)
 
         if (size) {
           rs.size(size)
@@ -377,7 +388,10 @@ export default {
       if (this.areaOptions) {
         const { adjust, seriesField } = this.areaOptions
         let color = this.buildColor(this.areaOptions.colors)
-        let rs = chart.area().position(this.buildPosition()).shape(this.areaOptions.shape || '')
+        let rs = chart
+          .area()
+          .position(this.buildPosition())
+          .shape(this.areaOptions.shape || '')
         if (!seriesField && color) {
           rs.color(color)
         } else {
@@ -404,36 +418,49 @@ export default {
         }
       }
 
-      ['x', 'y'].forEach(axis => {
+      ;['x', 'y'].forEach(axis => {
         if (this[`${axis}AxisOptions`]) {
-          chart.axis(this[`${axis}Field`], this[`${axis}Field`].disabled ? false : this[`${axis}AxisOptions`])
+          chart.axis(
+            this[`${axis}Field`],
+            this[`${axis}Field`].disabled ? false : this[`${axis}AxisOptions`]
+          )
         }
       })
 
       if (this.pieOptions) {
         chart.coord(this.pieOptions.coord, this.pieOptions)
         chart.axis(false)
-        chart.interval()
-        .position('a*percent')
-        .color(this.pieOptions.seriesField, (this.pieOptions.colors && this.pieOptions.colors.length) ? this.pieOptions.colors : '')
-        .adjust('stack')
-        .style({
-          lineWidth: 1,
-          stroke: '#fff',
-          lineJoin: 'round',
-          lineCap: 'round'
-        })
-        .animate({
-          appear: {
-            duration: 1200,
-            easing: 'bounceOut'
-          }
-        })
+        chart
+          .interval()
+          .position('a*percent')
+          .color(
+            this.pieOptions.seriesField,
+            this.pieOptions.colors && this.pieOptions.colors.length
+              ? this.pieOptions.colors
+              : ''
+          )
+          .adjust('stack')
+          .style({
+            lineWidth: 1,
+            stroke: '#fff',
+            lineJoin: 'round',
+            lineCap: 'round'
+          })
+          .animate({
+            appear: {
+              duration: 1200,
+              easing: 'bounceOut'
+            }
+          })
       }
 
       if (this.pointOptions) {
         const { seriesField, styles, shape, size, colors } = this.pointOptions
-        let rs = chart.point().position(this.buildPosition()).style(styles).shape(shape)
+        let rs = chart
+          .point()
+          .position(this.buildPosition())
+          .style(styles)
+          .shape(shape)
 
         let color = this.buildColor(colors)
         if (!seriesField && color) {
@@ -452,12 +479,12 @@ export default {
       this.chart = chart
     }
   },
-  async mounted () {
+  async mounted() {
     await this.$nextTick()
     this.render()
     window.addEventListener('resize', this.render)
   },
-  beforeDestroy () {
+  beforeDestroy() {
     window.removeEventListener('resize', this.render)
     this.destroy()
   }
