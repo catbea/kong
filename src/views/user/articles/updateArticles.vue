@@ -77,7 +77,13 @@ export default {
     margin-left: 16px;
         margin-top: 40px;
 }
+.van-checkbox__icon, .van-checkbox__label {
+    display: list-item;
+    vertical-align: -webkit-baseline-middle;
+    line-height: 0.53333rem;
+}
 .updateArticles-page {
+  background: #ffffff;
   > .updateArticles-content {
     > .updateArticles-title {
       font-size: 14px;

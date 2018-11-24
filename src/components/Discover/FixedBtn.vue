@@ -24,6 +24,7 @@ export default {
 </script>
 <style lang="less">
 .fixedBtn-container {
+  background: #ffffff;
   display: flex;
   margin: 9px 16px 18px;
   > .fixedBtn-card {

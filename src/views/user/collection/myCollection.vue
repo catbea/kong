@@ -79,6 +79,7 @@ export default {
 </script>
 <style lang="less">
 .collection-page {
+  background: #ffffff;
   .tab-container {
     .collection-top {
       margin-top: 16px;

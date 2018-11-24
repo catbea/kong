@@ -34,6 +34,7 @@ export default {
 </script>
 <style lang="less">
 .title-agent {
+  background: #ffffff;
   display: flex;
   padding: 30px 20px;
   margin-top: 13px;

@@ -34,5 +34,6 @@ export default {
 </script>
 <style lang="less">
 .article-container {
+  background: #ffffff;
 }
 </style>

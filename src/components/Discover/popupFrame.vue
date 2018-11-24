@@ -46,6 +46,7 @@ export default {
 </script>
 <style lang="less">
 .popupframe-container {
+  background: #ffffff;
   background: rgba(255, 255, 255, 1);
   border-radius: 10px;
   > .popupframe-top {

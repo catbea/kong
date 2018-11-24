@@ -9,5 +9,6 @@ export default {}
 
 <style lang="less">
 .user-edit-avatar-page {
+  background: #ffffff;
 }
 </style>

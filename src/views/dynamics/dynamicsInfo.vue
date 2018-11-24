@@ -66,6 +66,7 @@ export default {
 </script>
 <style lang="less">
 .dynamicsInfo-page {
+  background: #ffffff;
   margin: 16px 0;
   .dynamicsInfo-list {
     margin: 0 15px;

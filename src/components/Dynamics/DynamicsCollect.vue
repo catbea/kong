@@ -53,6 +53,7 @@ export default {
 </script>
 <style lang="less">
 .dynamics-collect {
+  background: #ffffff;
   margin: 0;
   .top-container {
     position: relative;

@@ -43,6 +43,7 @@ export default {
 </script>
 <style lang="less">
 .dynaData-container {
+  background: #ffffff;
   display: flex;
   padding: 20px 0 20px 20px;
 

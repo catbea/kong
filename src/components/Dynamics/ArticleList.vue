@@ -37,6 +37,18 @@
       </span>
 
     </div>
+     <div class="article-list" @click="GOheadline">
+      <span class="article-list-left">
+        <p class="article-left-title">专家：“规避政策”卖房新路子要不得</p>
+        <p class="article-left-time">楚天都市报&nbsp;&nbsp;1小时前
+          <span class="left-time-nub"> 12条动态</span>
+        </p>
+      </span>
+      <span class="article-list-right">
+        <img :src="backIcon" class="mark-icon">
+      </span>
+
+    </div>
     <div class="article-list" @click="GOheadline">
       <span class="article-list-left">
         <p class="article-left-title">专家：“规避政策”卖房新路子要不得</p>
@@ -73,6 +85,8 @@ export default {
 </script>
 <style lang="less">
 .article-container {
+  background: #ffffff;
+  margin-top: 13px;
   > .article-list {
     // margin: 0 15px;
     display: flex;

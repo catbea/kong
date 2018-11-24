@@ -102,6 +102,7 @@ export default {
 </script>
 <style lang="less">
 .headline-page {
+  background: #ffffff;
   > .headline-title {
     margin: 16px 0;
     > .headline-with {

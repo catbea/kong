@@ -31,6 +31,7 @@ export default {
 </script>
 <style lang="less">
 .discover-container {
+  background: #ffffff;
   > .discover-list {
     margin: 0 15px;
     display: flex;
