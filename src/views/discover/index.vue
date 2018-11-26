@@ -3,14 +3,13 @@
     <automatic-swipes></automatic-swipes>
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
-        <van-tab title="热门">
-           <div class="tab-container-heigt"><discover-list></discover-list></div>
-        </van-tab>
+        <van-tab title="热门"/>
         <van-tab title="房产"></van-tab>
         <van-tab title="攻略"></van-tab>
         <van-tab title="政策"></van-tab>
         <van-tab title="娱乐"></van-tab>
       </van-tabs>
+        <div class="tab-container-heigt"><discover-list></discover-list></div>
     </div>
    
   </div>
@@ -23,7 +22,10 @@ export default {
   components: {
     AutomaticSwipes,
     discoverList
-  }
+  },
+  data: () => ({
+    activeIndex:0
+  })
 }
 </script>
 <style lang="less">

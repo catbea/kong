@@ -13,7 +13,7 @@
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">谢敏</p>
-                  <p class="left-right-time">09:13</p>
+                  <p class="left-right-time">2018/10/22 09:13</p>
                 </span>
               </span>
               <span class="list-agent-right">
@@ -22,9 +22,9 @@
               </span>
             </div>
             <div class="dynamics-list-content">
-              <p>查看浏览了楼盘<span>碧桂园凤凰国际项目</span></p>
+              <p>浏览了  <span>你的名片</span></p>
               <p>2018年10月22 日第<span>3 次</span>打开 </p>
-              <p>浏览市场大于<span>60s</span><span>篇幅小于50%</span></p>
+              <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
               <p>累计浏览<span>4次</span>,名片，平均停留<span>5.5s</span></p>
             </div>
 
@@ -58,7 +58,7 @@
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">谢敏</p>
-                  <p class="left-right-time">09:13</p>
+                  <p class="left-right-time">2018/10/22 09:13</p>
                 </span>
               </span>
               <span class="list-agent-right">
@@ -67,9 +67,9 @@
               </span>
             </div>
             <div class="dynamics-list-content">
-              <p>查看浏览了楼盘<span>碧桂园凤凰国际项目</span></p>
+              <p>查看浏览了楼盘&nbsp;<span>碧桂园凤凰国际项目</span></p>
               <p>2018年10月22 日第<span>3 次</span>打开 </p>
-              <p>浏览市场大于<span>60s</span><span>篇幅小于50%</span></p>
+              <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
               <p>累计浏览<span>4次</span>,名片，平均停留<span>5.5s</span></p>
             </div>
 
