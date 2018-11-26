@@ -15,6 +15,7 @@ export default {
 </script>
 <style lang="less">
 .null-container {
+  background: #ffffff;
   text-align: center;
   margin-top: 55%;
   > .nullIcon {

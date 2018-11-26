@@ -43,6 +43,7 @@ export default {
 </script>
 <style lang="less">
 .sysMessage-page {
+  background: #ffffff;
   > .sysMessage-container {
     margin: 16px 0;
     > .sysMessage-time {

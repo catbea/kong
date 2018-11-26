@@ -35,6 +35,7 @@ export default {
 </script>
 <style lang="less">
 .manual-swipes-container {
+  background: #ffffff;
   // margin: 0 16px;
   > .manual-swipes {
     width: 342px;

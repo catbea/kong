@@ -13,6 +13,7 @@ export default {}
 
 <style lang="less">
 .user-edit-username-page {
+  background: #ffffff;
   > .user-edit-username {
     margin: 27px 16px;
     > .edit-username-title {

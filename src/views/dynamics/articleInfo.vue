@@ -45,6 +45,7 @@ export default {
 </script>
 <style lang="less">
 .articleInfo-page {
+  background: #ffffff;
   margin: 16px 0;
   .articleInfo-list {
     margin: 0 15px;

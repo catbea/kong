@@ -14,6 +14,7 @@ export default {}
 </script>
 <style lang="less">
 .user-edit-phone-page {
+  background: #ffffff;
   > .user-edit-phone {
     margin: 27px 16px;
     > .edit-phone-title {

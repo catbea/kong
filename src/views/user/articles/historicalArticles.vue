@@ -33,6 +33,7 @@ export default {
 </script>
 <style lang="less">
 .historicalArticles-page {
+  background: #ffffff;
   > .historicalArticles-content{
  > .historicalArticles-title {
     font-size: 14px;

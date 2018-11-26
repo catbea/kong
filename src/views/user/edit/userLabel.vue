@@ -32,7 +32,7 @@ export default {
   },
   methods:{
     async getAgentLabel () {
-      const res = await userService.getAgentLabel()
+      const res = await userService.getAgentLabel(1)
       this.agentLabel = res
     }
   }
@@ -41,6 +41,7 @@ export default {
 
 <style lang="less">
 .user-edit-label-page {
+  background: #ffffff;
   > .user-edit-label {
     margin: 27px 0;
     > .edit-label-title {
