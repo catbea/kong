@@ -3,19 +3,11 @@
 
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
-<<<<<<< HEAD
-        <van-tab title="热门" />
-        <van-tab title="房产" />
-        <van-tab title="攻略" />
-        <van-tab title="政策" />
-        <van-tab title="娱乐" />
-=======
         <van-tab title="热门"/>
         <van-tab title="房产"></van-tab>
         <van-tab title="攻略"></van-tab>
         <van-tab title="政策"></van-tab>
         <van-tab title="娱乐"></van-tab>
->>>>>>> 037ec04d10b9d197f44e86fa4872d51efec1ba53
       </van-tabs>
         <div class="tab-container-heigt"><discover-list></discover-list></div>
     </div>
@@ -33,21 +25,8 @@ export default {
     discoverList
   },
   data: () => ({
-<<<<<<< HEAD
-
-  }),
-  created () {
-    this.getBaseInfo()
-  },
-  methods:{
-    async getBaseInfo(){
-      
-    }
-  }
-=======
     activeIndex:0
   })
->>>>>>> 037ec04d10b9d197f44e86fa4872d51efec1ba53
 }
 </script>
 <style lang="less">
