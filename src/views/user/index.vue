@@ -5,33 +5,37 @@
     <div class="top-null"></div>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
-       <div class="modify-child">
-          <div v-for="(img,index) in headIcons" :key="index" class="head-img" @click="selectedHead(index,img.type,img.itemCode)">
-            <!--   -->
-            <img :src="img.Icon"/>
-             <p class="grou1Icon-p">{{img.title}}</p>
-            <!--   -->
-            <!--  -->
-           
-          </div>
+      <div class="modify-child">
+        <div
+          v-for="(item,index) in headIcons"
+          :key="index"
+          class="head-img"
+          @click="selectedHead(item,index)"
+        >
+          <img :src="item.Icon" />
+          <p class="grou1Icon-p">{{item.title}}</p>
         </div>
-   
+      </div>
+
     </div>
     <div class="top-null"></div>
     <div class="business-status-tow">
-       <div class="business-status-title">我的服务</div>
-        <div class="modify-child">
-          <div v-for="(img,index) in btnIcons" :key="index" class="head-img" @click="selectedHead(index,img.type,img.itemCode)">
-            <!--   -->
-            <img :src="img.Icon"/>
-             <p class="grou1Icon-p">{{img.title}}</p>
-            <!--   -->
-            <!--  -->
-           
-          </div>
+      <div class="business-status-title">我的服务</div>
+      <div class="modify-child">
+        <div
+          v-for="(img,index) in btnIcons"
+          :key="index"
+          class="head-img"
+          @click="selectedHeads(index,img.type,img.itemCode)"
+        >
+          <!--   -->
+          <img :src="img.Icon" />
+          <p class="grou1Icon-p">{{img.title}}</p>
+
         </div>
+      </div>
     </div>
-     <div class="top-null-css"></div>
+    <div class="top-null-css"></div>
   </div>
 </template>
 <script>
@@ -47,22 +51,23 @@ export default {
 
   },
   data: () => ({
-    headIcons:[
-      {"title":"我的楼盘","Icon":require('IMG/user/Group@2x.png')},
-      {"title":"我的收藏","Icon":require('IMG/user/Group1@2x.png')},
-      {"title":"历史文章","Icon":require('IMG/user/Group3@2x.png')},
-      {"title":"我的报备","Icon":require('IMG/user/Group6@2x.png')},
-      {"title":"我的优惠券","Icon":require('IMG/user/Group5@2x.png')},
-      {"title":"消费账单","Icon":require('IMG/user/Group2@2x.png')},
-      {"title":"邀请有礼","Icon":require('IMG/user/Group4@2x.png')},
+ 
+    headIcons: [
+      { "title": "我的楼盘", "Icon": require('IMG/user/Group@2x.png') },
+      { "title": "我的收藏", "Icon": require('IMG/user/Group1@2x.png') },
+      { "title": "历史文章", "Icon": require('IMG/user/Group3@2x.png') },
+      { "title": "我的报备", "Icon": require('IMG/user/Group6@2x.png') },
+      { "title": "我的优惠券", "Icon": require('IMG/user/Group5@2x.png') },
+      { "title": "消费账单", "Icon": require('IMG/user/Group2@2x.png') },
+      { "title": "邀请有礼", "Icon": require('IMG/user/Group4@2x.png') },
     ],
-    btnIcons:[
-       {"title":"我的优惠券","Icon":require('IMG/user/Group9@2x.png')},
-       {"title":"消费账单","Icon":require('IMG/user/Group7@2x.png')},
-       {"title":"邀请有礼","Icon":require('IMG/user/Group8@2x.png')},
+    btnIcons: [
+      { "title": "我的优惠券", "Icon": require('IMG/user/Group9@2x.png') },
+      { "title": "消费账单", "Icon": require('IMG/user/Group7@2x.png') },
+      { "title": "邀请有礼", "Icon": require('IMG/user/Group8@2x.png') },
     ]
-   
-   
+
+
   }),
   created () {
     this.getUserInfo()
@@ -74,17 +79,31 @@ export default {
       this.$store.dispatch('getUserInfo', userId)
       this.$store.dispatch('getUserVipInfo', userId)
     },
-    goarticles () {
-      this.$router.push('/user/articles/historicalArticles')
-    },
-    goCollection () {
-      this.$router.push('/user/collection/myCollection')
-    },
-    goallDynamics () {
-      this.$router.push('/dynamics/allDynamics')
-    },
-    goallDynamics () {
-      this.$router.push('/dynamics/allDynamics')
+
+    selectedHead (item, index) {
+      switch (index) {
+        case 0:
+          this.$router.push('/dynamics/allDynamics')
+          break;
+        case 1:
+          this.$router.push('/user/collection/myCollection')
+          break;
+        case 2:
+          this.$router.push('/user/articles/historicalArticles')
+          break;
+        case 3:
+
+          break;
+        case 4:
+
+          break;
+        case 5:
+
+          break;
+        case 6:
+
+          break;
+      }
     }
   },
   computed: {
@@ -93,7 +112,6 @@ export default {
 }
 </script>
 <style lang="less">
-
 .me-page {
   height: 100%;
   background: #ffffff;
@@ -108,43 +126,40 @@ export default {
     height: 10px;
     background: rgba(247, 249, 250, 1);
   }
-  .top-null-css{
-     height: 30px;
+  .top-null-css {
+    height: 30px;
     background: rgba(247, 249, 250, 1);
   }
-  .business-status-con{
+  .business-status-con {
     height: 218px;
-
   }
-  .business-status-tow{
+  .business-status-tow {
     height: 140px;
   }
-   .modify-child {
+  .modify-child {
     .head-img {
       float: left;
       margin-left: 16px;
       margin-bottom: 16px;
       height: 60px;
-      width: 60px;
+      width: 65px;
       position: relative;
-          margin-right: 16px;
-          text-align: center;
+      margin-right: 10px;
+      text-align: center;
       img {
         height: 24px;
         width: 24px;
       }
-        > .grou1Icon-p {
+      > .grou1Icon-p {
         font-size: 12px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
       }
-   
     }
-   
   }
-  
+
   // > .business-info,
   // > .business-help {
   //   background: #fff;
