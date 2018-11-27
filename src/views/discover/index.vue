@@ -1,28 +1,38 @@
 <template>
   <div class="discover-page">
-    <automatic-swipes></automatic-swipes>
+
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
-        <van-tab title="热门">
-           <div class="tab-container-heigt"><discover-list></discover-list></div>
-        </van-tab>
-        <van-tab title="房产"></van-tab>
-        <van-tab title="攻略"></van-tab>
-        <van-tab title="政策"></van-tab>
-        <van-tab title="娱乐"></van-tab>
+        <van-tab title="热门" />
+        <van-tab title="房产" />
+        <van-tab title="攻略" />
+        <van-tab title="政策" />
+        <van-tab title="娱乐" />
       </van-tabs>
     </div>
-   
+    <automatic-swipes></automatic-swipes>
+    <discover-list></discover-list>
   </div>
 </template>
 <script>
 import AutomaticSwipes from 'COMP/Swipe/AutomaticSwipes'
 import discoverList from 'COMP/Discover/discoverList'
-
+import discoverService from 'SERVICE/discoverService'
 export default {
   components: {
     AutomaticSwipes,
     discoverList
+  },
+  data: () => ({
+
+  }),
+  created () {
+    this.getBaseInfo()
+  },
+  methods:{
+    async getBaseInfo(){
+      
+    }
   }
 }
 </script>
@@ -31,8 +41,12 @@ export default {
   background: #ffffff;
   width: 100%;
   > .tab-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    .van-tab--active {
+      > span {
+        font-size: 28px;
+        font-weight: bolder;
+      }
+    }
     .tab-container-heigt {
       margin-top: 25px;
     }
@@ -48,7 +62,6 @@ export default {
   -webkit-transform: scale(0.5);
   transform: scale(0.5);
   pointer-events: none;
-  /* box-sizing: border-box; */
   border-top: 0 solid #eee;
 }
 </style>
