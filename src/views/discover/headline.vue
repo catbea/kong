@@ -104,7 +104,7 @@ export default {
 .headline-page {
   background: #ffffff;
   > .headline-title {
-    margin: 16px 0;
+    margin: 14px 0;
     > .headline-with {
       margin: 0 16px;
       h5 {
@@ -184,7 +184,7 @@ export default {
     }
 
     > .headline-title-bar {
-      margin: 0 16px;
+      margin: 5px 16px 0 16px;
       > .title-btn-left {
         font-size: 13px;
         font-weight: 400;
@@ -200,7 +200,7 @@ export default {
         display: flex;
         vertical-align: middle;
         text-align: center;
-        margin-top: 15px;
+        margin-top: 10px;
         > .btn-right-img {
           > .title-img {
             width: 24px;
