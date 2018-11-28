@@ -62,7 +62,7 @@ export default {
       { "title": "邀请有礼", "Icon": require('IMG/user/Group4@2x.png') },
     ],
     btnIcons: [
-      { "title": "我的优惠券", "Icon": require('IMG/user/Group9@2x.png') },
+      { "title": "勿扰模式", "Icon": require('IMG/user/Group9@2x.png') },
       { "title": "消费账单", "Icon": require('IMG/user/Group7@2x.png') },
       { "title": "邀请有礼", "Icon": require('IMG/user/Group8@2x.png') },
     ]
@@ -95,12 +95,25 @@ export default {
           this.$router.push('/user/myReport')
           break;
         case 4:
-
+        this.$router.push('/user/myCoupon')
           break;
         case 5:
           this.$router.push('/user/consumption/consumptionBill')
           break;
         case 6:
+
+          break;
+      }
+    },
+    selectedHeads(index,type,itemCode){
+      switch (index) {
+        case 0:
+          this.$router.push('/user/noDisturb')
+          break;
+        case 1:
+
+          break;
+        case 2:
 
           break;
       }
