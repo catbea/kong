@@ -101,5 +101,11 @@ export default {
       margin-top: 20px;
     }
   }
+  .van-tabs--line .van-tabs__wrap {
+    height: 1.17333rem;
+    position: fixed;
+    /* background: white; */
+    z-index: 11;
+  }
 }
 </style>
