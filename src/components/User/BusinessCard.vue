@@ -61,12 +61,7 @@
     </div>
     <div class="business-status-title">优惠服务</div>
     <div class="business-status-box">
-<<<<<<< HEAD
       <router-link tag="div" to="/user/myMember" class="status-info-left"> 
-=======
-      
-      <div class="status-info-left">
->>>>>>> c53a2afacb899d6e1259ed9cdd8e812acc5535df
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc vip-desc">{{vipTimeInfo}}</p>

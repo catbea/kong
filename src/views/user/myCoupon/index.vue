@@ -15,7 +15,7 @@
       </li>
     </ul>
     <coupon-item :ps="list.ps" v-for="(item,index) in list.info" :key="index" :info="item"></coupon-item>
-    <div class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
+    <!-- <div class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div> -->
     <p class="hint">暂无优惠券</p>
   </div>
 </template>
@@ -32,7 +32,7 @@ export default {
      info:[
        {},{},{}
      ]},
-     availableImg:require('IMG/user/Group@2x.png')
+    //  availableImg:require('IMG/user/Groupa@2x.png')
     }),
   created() {
     this.oneHandle()
