@@ -16,7 +16,7 @@
     "amfe-flexible": "^2.2.1",
     "html2canvas": "^1.0.0-alpha.12",
     "lodash": "^4.17.11",
-    "normalize.css": "^8.0.0",
+    "normalize.css": "^8.0.1",
     "query-string": "^6.2.0",
     "vant": "^1.4.5",
     "vue": "^2.5.17",
@@ -30,11 +30,11 @@
     "@vue/cli-plugin-eslint": "^3.1.5",
     "@vue/cli-service": "^3.1.4",
     "@vue/eslint-config-prettier": "^3.0.4",
-    "babel-plugin-import": "^1.9.1",
-    "less": "^3.0.4",
+    "babel-plugin-import": "^1.11.0",
+    "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "postcss-pxtorem": "^4.0.1",
-    "qs": "^6.5.2",
+    "qs": "^6.6.0",
     "vue-template-compiler": "^2.5.17"
   }
 }
