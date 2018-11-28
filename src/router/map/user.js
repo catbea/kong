@@ -160,6 +160,17 @@ export default [
     }
   },
   {
+    path: '/user/noDisturb',
+    name: 'noDisturb',
+    component: resolve => require(['@/views/user/noDisturb/index.vue'], resolve),
+    meta: {
+      title: '勿扰模式',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/opinionFeedback',
     name: 'opinionFeedback',
     component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),
