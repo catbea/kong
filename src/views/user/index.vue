@@ -53,7 +53,7 @@ export default {
   data: () => ({
  
     headIcons: [
-      { "title": "我的楼盘", "Icon": require('IMG/user/Group@2x.png') },
+      { "title": "我的楼盘", "Icon": require('IMG/user/mm@2x.png') },
       { "title": "我的收藏", "Icon": require('IMG/user/Group1@2x.png') },
       { "title": "历史文章", "Icon": require('IMG/user/Group3@2x.png') },
       { "title": "我的报备", "Icon": require('IMG/user/Group6@2x.png') },
@@ -83,7 +83,7 @@ export default {
     selectedHead (item, index) {
       switch (index) {
         case 0:
-          this.$router.push('/dynamics/allDynamics')
+          this.$router.push('/user/myMarket')
           break;
         case 1:
           this.$router.push('/user/collection/myCollection')
