@@ -96,6 +96,7 @@ export default {
       height: 60px;
       width: 60px;
       position: relative;
+          margin-right: 4px;
       img {
         height: 60px;
         width: 60px;

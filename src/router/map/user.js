@@ -127,11 +127,84 @@ export default [
     }
   },
   {
+    path: '/user/consumption/consumptionBill',
+    name: 'consumptionBill',
+    component: resolve =>
+      require(['@/views/user/consumption/consumptionBill.vue'], resolve),
+    meta: {
+      title: '消费账单'
+    }
+  },
+  {
+    path: '/user/myReport',
+    name: 'myreport',
+    component: resolve =>
+      require(['@/views/user/myReport/index.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
     path: '/user/myMarket',
     name: 'mymarket',
     component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
     meta: {
       title: '我的楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/myCoupon',
+    name: 'myCoupon',
+    component: resolve => require(['@/views/user/myCoupon/index.vue'], resolve),
+    meta: {
+      title: '我的优惠劵',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/myMember',
+    name: 'myMember',
+    component: resolve => require(['@/views/user/myMember/index.vue'], resolve),
+    meta: {
+      title: '我的vip会员',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/noDisturb',
+    name: 'noDisturb',
+    component: resolve => require(['@/views/user/noDisturb/index.vue'], resolve),
+    meta: {
+      title: '勿扰模式',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/opinionFeedback',
+    name: 'opinionFeedback',
+    component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),
+    meta: {
+      title: '意见反馈',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/opinionFeedback/describe',
+    name: 'feedbackDescribe',
+    component: resolve => require(['@/views/user/opinionFeedback/feedbackDescribe/index.vue'], resolve),
+    meta: {
+      title: '反馈问题描述',
       tabbar: {
         show: false
       }
