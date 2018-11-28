@@ -145,6 +145,42 @@ export default [
     }
   },
   {
+    path: '/user/myReport/reportInfo',
+    name: 'reportInfo',
+    component: resolve =>
+      require(['@/views/user/myReport/reportInfo.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
+    path: '/user/myReport/addReport',
+    name: 'addReport',
+    component: resolve =>
+      require(['@/views/user/myReport/addReport.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
+    path: '/user/myReport/reportPhone',
+    name: 'reportPhone',
+    component: resolve =>
+      require(['@/views/user/myReport/reportPhone.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
+    path: '/user/myReport/reportCustomer',
+    name: 'reportCustomer',
+    component: resolve =>
+      require(['@/views/user/myReport/reportCustomer.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
     path: '/user/myMarket',
     name: 'mymarket',
     component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
