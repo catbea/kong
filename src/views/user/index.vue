@@ -51,7 +51,7 @@ export default {
 
   },
   data: () => ({
- 
+
     headIcons: [
       { "title": "我的楼盘", "Icon": require('IMG/user/mm@2x.png') },
       { "title": "我的收藏", "Icon": require('IMG/user/Group1@2x.png') },
@@ -98,7 +98,7 @@ export default {
         this.$router.push('/user/myCoupon')
           break;
         case 5:
-
+          this.$router.push('/user/consumption/consumptionBill')
           break;
         case 6:
 

@@ -127,6 +127,15 @@ export default [
     }
   },
   {
+    path: '/user/consumption/consumptionBill',
+    name: 'consumptionBill',
+    component: resolve =>
+      require(['@/views/user/consumption/consumptionBill.vue'], resolve),
+    meta: {
+      title: '消费账单'
+    }
+  },
+  {
     path: '/user/myMarket',
     name: 'mymarket',
     component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
