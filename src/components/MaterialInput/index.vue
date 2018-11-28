@@ -14,7 +14,7 @@
     </label>
 
     <div v-if="errorMessages" class="material-errors">
-      <div v-for="error in computedErrors" class="material-error">
+      <div v-for="(error,index) in computedErrors" class="material-error" :key="index">
         {{ error }}
       </div>
     </div>
