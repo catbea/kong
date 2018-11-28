@@ -9,7 +9,9 @@ import {
   Tabs,
   Swipe,
   SwipeItem,
-  Uploader
+  Uploader,
+  Switch,
+  DatetimePicker
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -19,3 +21,5 @@ Vue.use(Search)
 Vue.use(Tab).use(Tabs)
 Vue.use(Swipe).use(SwipeItem)
 Vue.use(Uploader)
+Vue.use(Switch)
+Vue.use(DatetimePicker)
