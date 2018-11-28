@@ -1,6 +1,6 @@
 <template>
   <div class="discover-page">
-
+    <automatic-swipes></automatic-swipes>
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="热门"/>
@@ -11,8 +11,8 @@
       </van-tabs>
         <div class="tab-container-heigt"><discover-list></discover-list></div>
     </div>
-    <automatic-swipes></automatic-swipes>
-    <discover-list></discover-list>
+    
+    <!-- <discover-list></discover-list> -->
   </div>
 </template>
 <script>

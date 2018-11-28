@@ -20,10 +20,7 @@
             <p class="right-fx-title">分享</p>
           </span>
         </div>
-        <div
-          class="info-box-content"
-          @click="editCLickHandler"
-        >
+        <div class="info-box-content"  @click="editCLickHandler">
           <span class="box-content-left">
             <p class="content-left-name">
               张佳玮
@@ -64,7 +61,7 @@
     </div>
     <div class="business-status-title">优惠服务</div>
     <div class="business-status-box">
-
+      
       <div class="status-info-left">
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
@@ -132,7 +129,7 @@ export default {
     > .info-box {
       position: relative;
       height: 177px;
-      margin: 12px 16px;
+          margin: 12px 16px;
       border-radius: 10px;
       background: rgba(64, 68, 87, 1);
       display: flex;
