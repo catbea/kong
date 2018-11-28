@@ -8,7 +8,8 @@ import {
   Tab,
   Tabs,
   Swipe,
-  SwipeItem
+  SwipeItem,
+  Uploader
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -17,4 +18,4 @@ Vue.use(List)
 Vue.use(Search)
 Vue.use(Tab).use(Tabs)
 Vue.use(Swipe).use(SwipeItem)
-// Vue.use(Dialog);
+Vue.use(Uploader)

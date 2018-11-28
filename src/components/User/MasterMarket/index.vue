@@ -2,9 +2,10 @@
   <div class="mymarket-page">
     <div class="master-market-box">
       <p>大师推荐</p>
-      <van-swipe >
+      <van-swipe :touchable="true" :loop="true" :autoplay="3000">
         <van-swipe-item v-for="(item,index) in list" :key="index">
           <div class="img-item">
+            <p class="bg_img icon-cancel" :style="{backgroundImage:'url('+img+')'}"></p>
             <ul>
               <li>新亚洲花园</li>
               <li>湖景地产、品牌房企</li>
@@ -19,7 +20,8 @@
 <script>
 export default {
   data:()=>({
-    list:[1,2,3,4]
+    list:[1,2,3,4],
+    img:require('IMG/user/Combined Shape@2x.png')
   }),
 }
 </script>
@@ -44,6 +46,15 @@ export default {
       position: relative;
       border-radius:10px;
       background:red;
+      position: relative;
+      .icon-cancel{
+        position: absolute;
+        right:8px;
+        top:8px;
+        width:16px;
+        height:16px;
+        margin:0;
+      }
       ul{
         position:absolute;
         left:19px;
