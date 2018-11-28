@@ -145,5 +145,49 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/user/myCoupon',
+    name: 'myCoupon',
+    component: resolve => require(['@/views/user/myCoupon/index.vue'], resolve),
+    meta: {
+      title: '我的优惠劵',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/myMember',
+    name: 'myMember',
+    component: resolve => require(['@/views/user/myMember/index.vue'], resolve),
+    meta: {
+      title: '我的vip会员',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/opinionFeedback',
+    name: 'opinionFeedback',
+    component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),
+    meta: {
+      title: '意见反馈',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/opinionFeedback/describe',
+    name: 'feedbackDescribe',
+    component: resolve => require(['@/views/user/opinionFeedback/feedbackDescribe/index.vue'], resolve),
+    meta: {
+      title: '反馈问题描述',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]

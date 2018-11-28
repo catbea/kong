@@ -61,12 +61,11 @@
     </div>
     <div class="business-status-title">优惠服务</div>
     <div class="business-status-box">
-      
-      <div class="status-info-left">
+      <router-link tag="div" to="/user/myMember" class="status-info-left"> 
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
-      </div>
+      </router-link>
       <div class="status-info-right">
         <img :src="discountIcon">
         <p class="info-title welfare-status">特惠套餐</p>
