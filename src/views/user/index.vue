@@ -92,7 +92,7 @@ export default {
           this.$router.push('/user/articles/historicalArticles')
           break;
         case 3:
-
+          this.$router.push('/user/myReport')
           break;
         case 4:
 
