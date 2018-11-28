@@ -1,11 +1,11 @@
 <template>
   <div class="user-edit-page">
     <cell-group class="user-base-info">
-      <div class="user-avatar" >
-      <router-link to="/user/edit/userPortrait">
-        <!-- <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div> -->
-        <img :src="userEditIcon" class="editIcon-icon">
-        <p class="user-avatar-clik">点击可编辑头像</p>
+      <div class="user-avatar">
+        <router-link to="/user/edit/userPortrait">
+          <!-- <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div> -->
+          <img :src="userEditIcon" class="editIcon-icon">
+          <p class="user-avatar-clik">点击可编辑头像</p>
         </router-link>
       </div>
       <!-- <cell class="cell-item user-avatar" :to="'/user/edit/avatar'" title="我的头像" is-link>
@@ -15,7 +15,7 @@
       <cell class="cell-item" title="手机号" :to="'/user/edit/phone'" is-link :value="userInfo.mobile" />
       <cell class="cell-item" title="微信号" :to="'/user/edit/userWechat'" is-link />
       <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" />
-      <cell class="cell-item" title="平台公司" is-link :value="userInfo.distributorName" />
+      <cell class="cell-item" title="平台公司" is-link :value="userInfo.distributorName" @click="godistributorName" />
       <!-- <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" /> -->
       <cell class="cell-item" title="我的机构" is-link :to="'/user/edit/userMechanism'" />
     </cell-group>
@@ -33,12 +33,14 @@
 import { Cell, CellGroup } from 'vant'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
+import { Dialog } from 'vant';
 export default {
   components: {
     Cell,
-    CellGroup
+    CellGroup,
+    Dialog
   },
-  created() {
+  created () {
     this.getUserInfo()
   },
   data () {
@@ -47,10 +49,19 @@ export default {
     }
   },
   methods: {
-    async getUserInfo() {
+    async getUserInfo () {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
+    },
+    godistributorName () {
+      //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面
+
+      Dialog.alert({
+        message: '你最近一个月内已经切换过一次分销平台公司，暂时无法切换'
+      }).then(() => {
+        // on close
+      })
     }
   },
   computed: {
@@ -59,6 +70,19 @@ export default {
 }
 </script>
 <style lang="less">
+.van-dialog{
+  border-radius:12px;
+  width: 72%;
+  text-align: center;
+}
+.van-dialog__message{
+  font-size:15px;
+  color:rgba(51,51,51,1);
+}
+.van-button__text{
+  font-size:18px;
+  color:rgba(0,122,230,1);
+}
 .user-edit-page {
   width: 100%;
   height: 100%;
@@ -71,7 +95,7 @@ export default {
     > .user-avatar {
       padding: 32px 0;
       text-align: center;
-       .editIcon-icon {
+      .editIcon-icon {
         width: 50px;
         height: 50px;
       }

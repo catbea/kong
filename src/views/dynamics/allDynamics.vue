@@ -66,14 +66,14 @@ export default {
       propertiesNum: '190',
       articleTitle: '文章浏览',
       articleNum: '124',
-      item:[],
+      item:[]
     }
   },
   methods: {
-    itemProperties(item) {
+    itemProperties() {
 
-      //跳转到动态详情
-    //   this.$router.push('/dynamics/dynamicsInfo')
+      //跳转到动态详情item
+      // this.$router.push('/dynamics/dynamicsInfo')
       this.$dialog
         .confirm({
           title: '暂未开通楼盘',

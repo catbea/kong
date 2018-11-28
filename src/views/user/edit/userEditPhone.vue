@@ -4,15 +4,51 @@
       <p class="edit-phone-title">注册手机<span class="edit-phone-remark">(不可更改)</span></p>
       <p class="edit-phone-conter"><input type="text" class="edit-phone-input" placeholder="Bela" value="13590200739"></p>
       <p class="edit-phone-card">名片展示手机号</p>
-      <p class="edit-phone-card-conter"><input type="text" class="edit-phone-card-input" placeholder="Bela" value="13590200739"></p>
-      <button class=edit-phone-query>确认修改</button>
+      <p class="edit-phone-card-conter"><input type="text" class="edit-phone-card-input" v-model="Cphone"></p>
+      <button class=edit-phone-query @click="godSub">确认修改</button>
     </div>
   </div>
 </template>
 <script>
-export default {}
+import { Dialog } from 'vant';
+export default {
+  components:{
+    Dialog
+  },
+  data () {
+    return {
+      Cphone: ''
+    }
+  },
+  methods: {
+    godSub () {
+      
+      if (this.Cphone == '' ) {
+        Dialog.alert({
+          message: '名片展示手机号不可为空'
+        }).then(() => {
+          // on close
+        })
+      }
+
+    }
+  }
+}
 </script>
 <style lang="less">
+.van-dialog {
+  border-radius: 12px;
+  width: 72%;
+  text-align: center;
+}
+.van-dialog__message {
+  font-size: 15px;
+  color: rgba(51, 51, 51, 1);
+}
+.van-button__text {
+  font-size: 18px;
+  color: rgba(0, 122, 230, 1);
+}
 .user-edit-phone-page {
   background: #ffffff;
   > .user-edit-phone {
