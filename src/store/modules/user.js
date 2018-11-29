@@ -3,12 +3,16 @@ import userService from '@/services/userService'
 
 const state = {
   userInfo: {},
-  userVipInfo: {}
+  userVipInfo: {},
+  userArea: {
+    city: '深圳市'
+  }
 }
 
 const getters = {
   userInfo: state => state.userInfo,
-  userVipInfo: state => state.userVipInfo
+  userVipInfo: state => state.userVipInfo,
+  userArea: state => state.userArea
 }
 
 const actions = {
@@ -30,6 +34,9 @@ const mutations = {
   },
   [types.USER_VIP_INFO](state, data) {
     state.userVipInfo = data
+  },
+  [types.USER_AREA](state, data) {
+    // state.userArea = Object.assign(state.userArea, data)
   }
 }
 

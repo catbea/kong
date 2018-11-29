@@ -53,7 +53,6 @@
     <div>
       <fixed-btn></fixed-btn>
     </div>
-    <!-- <fixed-btn></fixed-btn> -->
 
     <popup-frame :show.sync="a"></popup-frame>
 

@@ -19,7 +19,6 @@
   </div>
 </template>
 <script>
-import { Swipe, SwipeItem } from 'vant'
 
 export default {
   components: {
