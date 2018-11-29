@@ -1,0 +1,237 @@
+<template>
+  <!-- <div class="discover-detail">
+    
+  </div> -->
+
+  <div class="headline-page">
+    <div class="headline-title">
+      <div class="headline-with">
+        <h5>{{info.title}}</h5>
+        <div class="headline-title-agent">
+          <span class="title-agent-left">
+            <span class="agent-left-img">
+              <img :src="personIcon" class="left-img">
+            </span>
+            <span class="agent-left-introduce">
+              <p class="introduce-name">{{info.agentName}}</p>
+              <p class="introduce-company">{{info.city}}</p>
+            </span>
+          </span>
+        </div>
+        <div class="shadow discover-img" :style="{'backgroundImage':'url('+ info.image +')'}"></div>
+        <div class="headline-title-content" v-html="info.content"></div>
+      </div>
+      <agent-card :info="agentInfo"></agent-card>
+      <div class="headline-title-bar">
+        <span class="title-btn-left">浏览：{{info.scanNum}}</span>
+        <span class="title-btn-right">
+          <span class="btn-right-img"><img :src="fabulousIcon" class="title-img"></span>
+          <span class="btn-right-num">{{info.likeTimes}}</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- <div class="headline-Fill"></div> -->
+    <title-bar :conf="titleProperties"></title-bar>
+    <manual-swipes></manual-swipes>
+    <!-- <div class="headline-Fill"></div> -->
+    <!-- <div class="headline-titlebar"> -->
+    <title-bar :conf="titleArticle"></title-bar>
+    <!-- </div> -->
+    <!-- <discover-list></discover-list> -->
+
+    <div>
+      <fixed-btn></fixed-btn>
+    </div>
+
+    <popup-frame :show.sync="a"></popup-frame>
+
+  </div>
+
+</template>
+<script>
+import FixedBtn from 'COMP/Discover/FixedBtn'
+import AgentCard from 'COMP/AgentCard'
+import popupFrame from 'COMP/Discover/popupFrame'
+import ManualSwipes from 'COMP/Swipe/ManualSwipes'
+import TitleBar from 'COMP/TitleBar/'
+import discoverService from 'SERVICE/discoverService'
+export default {
+  components: {
+    AgentCard,
+    popupFrame,
+    ManualSwipes,
+    TitleBar,
+    FixedBtn
+  },
+  data () {
+    return {
+      id: -1,
+      city: '',
+      info: null,
+      agentInfo: null,
+      // 
+      a: true,
+      personIcon: require('IMG/user/person_icon.png'),
+      fabulousIcon: require('IMG/discover/fabulous@2x.png'),
+      show: false,
+      titleProperties: {
+        title: '推荐房源',
+        linkText: '全部楼盘'
+      },
+      titleArticle: {
+        title: '推荐文章',
+        linkText: '查看全部'
+      }
+    }
+  },
+  created () {
+    this.id = this.$route.params.id
+    this.city = this.$route.params.city
+    this.getDetail()
+  },
+  methods: {
+    async getDetail () {
+      const res = await discoverService.getDiscoverDetail(this.id, this.city)
+      this.info = res
+      this.agentInfo = {
+        agentId: this.info.agentId,
+        agentName: this.info.agentName,
+        avatarUrl: this.info.avatarUrl,
+        distributorName: this.info.distributorName,
+        enterpriseName: this.info.enterpriseName
+      }
+    },
+    gopopup () {
+      this.show = true
+    }
+  }
+}
+</script>
+<style lang="less">
+.headline-page {
+  background: #ffffff;
+  > .headline-title {
+    margin: 14px 0;
+    > .headline-with {
+      margin: 0 16px;
+      h5 {
+        font-size: 22px;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
+        line-height: 30px;
+      }
+      > .headline-title-agent {
+        display: flex;
+
+        margin: 13px 0 10px;
+        > .title-agent-left {
+          display: flex;
+          > .agent-left-img {
+            > .left-img {
+              width: 36px;
+              height: 36px;
+            }
+          }
+          > .agent-left-introduce {
+            margin-left: 8px;
+            > .introduce-name {
+              font-size: 15px;
+              font-weight: 400;
+              color: rgba(51, 51, 51, 1);
+              line-height: 21px;
+            }
+            > .introduce-company {
+              font-size: 12px;
+              font-weight: 400;
+              color: rgba(138, 143, 153, 1);
+              line-height: 17px;
+            }
+          }
+        }
+        > .title-agent-right {
+          position: absolute;
+          right: 90px;
+          > .agent-right {
+            width: 72px;
+            height: 32px;
+            background: rgba(0, 122, 230, 1);
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 20px;
+            border: 0;
+            position: absolute;
+          }
+        }
+      }
+      > .discover-img {
+        width: 100%;
+        height: 193px;
+        border-radius: 10px;
+      }
+      > .headline-title-content {
+        font-size: 17px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 30px;
+        margin-bottom: 20px;
+        > .title-content-p2 {
+          padding: 20px 0;
+        }
+        > .title-content-time {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(138, 143, 153, 1);
+          line-height: 17px;
+          margin-top: 13px;
+          text-align: left;
+        }
+      }
+    }
+
+    > .headline-title-bar {
+      margin: 5px 16px 0 16px;
+      > .title-btn-left {
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(138, 143, 153, 1);
+        line-height: 18px;
+      }
+      > .title-btn-right {
+        float: right;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(138, 143, 153, 1);
+        line-height: 18px;
+        display: flex;
+        vertical-align: middle;
+        text-align: center;
+        margin-top: 10px;
+        > .btn-right-img {
+          > .title-img {
+            width: 24px;
+            height: 24px;
+            display: -webkit-inline-box;
+          }
+        }
+        > .btn-right-num {
+          line-height: 30px;
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+  > .headline-Fill {
+    height: 10px;
+    background: rgba(247, 249, 250, 1);
+  }
+  .headline-titlebar {
+    margin: 0 16px;
+  }
+  > .manual-swipes {
+    margin: 0 16px;
+  }
+}
+</style>

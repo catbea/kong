@@ -1,12 +1,15 @@
 <template>
-  <div class="van-hairline--bottom discover-item">
-    <div class="discover-list-left">
-      <p class="list-left-title">{{data.title}}</p>
-      <p class="list-left-time">{{data.publisher}}&nbsp;&nbsp;{{data.createDate | dateFormatterToHuman}}&nbsp;&nbsp;{{data.scanNum | numberFormatter}}浏览</p>
+  <router-link :to="{name: 'discover-detail', params: {id: data.id, city: data.city}}">
+    <div class="van-hairline--bottom discover-item">
+      <div class="discover-list-left">
+        <p class="list-left-title">{{data.title}}</p>
+        <p class="list-left-time">{{data.publisher}}&nbsp;&nbsp;{{data.createDate | dateFormatterToHuman}}&nbsp;&nbsp;{{data.scanNum | numberFormatter}}浏览</p>
+      </div>
+      <div class="bg_img discover-list-right" :style="{'backgroundImage':'url('+ data.image +')'}">
+      </div>
     </div>
-    <div class="bg_img discover-list-right" :style="{'backgroundImage':'url('+ data.image +')'}">
-    </div>
-  </div>
+  </router-link>
+
 </template>
 <script>
 export default {

@@ -2,29 +2,25 @@
   <div class="manual-swipes-container">
     
     <div class="manual-swipes">
-      <swipe :touchable="true" :width="200" :loop="false" :show-indicators="false">
-        <swipe-item> <img :src="backIcon" class="headline-title-img">
+      <van-swipe :touchable="true" :width="200" :loop="false" :show-indicators="false">
+        <van-swipe-item> <img :src="backIcon" class="headline-title-img">
           <div class="manual-swipes-introduce">
             <p class="introduce-name">凯德公园1号</p>
             <p class="introduce-address">深圳-南山</p>
             <p class="introduce-price">120000元/㎡起</p>
           </div>
-        </swipe-item>
-        <swipe-item> <img :src="backIcon" class="headline-title-img"></swipe-item>
-        <swipe-item> <img :src="backIcon" class="headline-title-img"></swipe-item>
-        <swipe-item> <img :src="backIcon" class="headline-title-img"></swipe-item>
+        </van-swipe-item>
+        <van-swipe-item> <img :src="backIcon" class="headline-title-img"></van-swipe-item>
+        <van-swipe-item> <img :src="backIcon" class="headline-title-img"></van-swipe-item>
+        <van-swipe-item> <img :src="backIcon" class="headline-title-img"></van-swipe-item>
 
-      </swipe>
+      </van-swipe>
     </div>
   </div>
 </template>
 <script>
 
 export default {
-  components: {
-    SwipeItem,
-    Swipe
-  },
   data() {
     return {
       backIcon: require('IMG/user/usercard@2x.png')
