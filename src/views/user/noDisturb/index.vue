@@ -12,10 +12,10 @@
     <ul class="no-disturb-page-bottom" v-if="checked">
       <li @click="setHandle" class="cycle-set">
         <p>周期设置</p>
-        <div class="right">
-          <p class="show-date" v-if="showDate">每天</p>
-         <div class="show-box" v-if="showBox"> 
-           <i v-for="(item,index) in periodList" :key="index" v-if="item.check">{{item.date}}</i>
+        <div class="right" ref="rr">
+          <p class="show-date" v-show="showDate">每天</p>
+         <div class="show-box" v-show="showBox"> 
+           <i v-for="(item,index) in periodList" :key="index" v-show="item.check">{{item.date}}</i>
           </div>
           <span class="bg_img icon" :style="{backgroundImage:'url('+detaliImg+')'}"></span>
         </div>
@@ -23,7 +23,7 @@
          <ol class="period-box">
            <li v-for="(item,index) in periodList" :key="index" @click.stop="periodTaget(index,item)"> 
              {{item.date}}
-             <span class="bg_img" :style="{backgroundImage:'url('+checkImg+')'}" v-if="item.check"></span>
+             <span class="bg_img" :style="{backgroundImage:'url('+checkImg+')'}" v-show="item.check"></span>
            </li>
          </ol>
          <div class="confirm-button" @click.stop="periodHandle">
@@ -50,7 +50,7 @@
         <p>结束时间</p>
         <div class="right">
           <i>
-            <span v-if="greater">次日</span> {{endTime}}
+            <span v-show="greater">次日</span> {{endTime}}
             </i>
           <span class="bg_img icon" :style="{backgroundImage:'url('+detaliImg+')'}"></span>
         </div>
@@ -99,6 +99,7 @@ export default {
       this.checked=checked
     },
     periodHandle(){
+      console.log(this.$refs.rr.innerText)
       this.popupShow=!this.popupShow
       if(
         this.periodList[0].check===true
