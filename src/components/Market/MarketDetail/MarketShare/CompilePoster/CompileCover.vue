@@ -1,38 +1,48 @@
 <template>
   <div class="compile-cover-page">
-      <div class="compile-cover-top">选择楼盘封面</div> 
-      <ol class="compile-cover-bottom">
-        <li v-for="(item,index) in list" :key="index" @click="active(index)">
-          <!-- <div :class="{active:item.check}"> -->
-            <span class="bg_img" :style="{backgroundImage:'url('+(num==index?icon:icon)+')'}"></span>
-          <!-- </div> -->
-        </li>
-      </ol>
-    </div>
+    <div class="compile-cover-top">选择楼盘封面</div>
+    <ol class="compile-cover-bottom">
+      <li
+        v-for="(item,index) in list"
+        :key="index"
+        @click="active(index)"
+      >
+        <!-- <div :class="{active:item.check}"> -->
+        <span
+          class="bg_img"
+          :style="{backgroundImage:'url('+(num==index?icon:icon)+')'}"
+          v-show="listSeletct.indexOf(index)!=-1"
+        ></span>
+        <!-- </div> -->
+      </li>
+    </ol>
+  </div>
 </template>
 <script>
 export default {
   data: () => ({
     icon: require('IMG/correction/color.png'),
     list: [
-      { check: false },
-      { check: false },
-      { check: false },
-      { check: false }
+      1,2,3,4,5
     ],
+    listSeletct: [],
     liIndex: 0,
     num: null
   }),
   computed: {
     // show(){
-    //   if(this.)
+    // if(this.)
     // }
   },
   methods: {
-    active(index) {
-      this.show = index
-      console.log(index)
-      //this.list[index].check = !this.list[index].check
+    active (index) {
+      if (this.listSeletct.indexOf(index) == -1) {
+        this.listSeletct.push(index);
+      } else {
+        this.listSeletct = this.listSeletct.filter((item) => {
+          return item != index;
+        })
+      }
     }
   }
 }

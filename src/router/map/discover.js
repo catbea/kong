@@ -9,8 +9,11 @@ export default [
         show: true
       }
     }
-  },
-  {
+  },{
+    path: '/discover/:id/:city',
+    name: 'discover-detail',
+    component: resolve => require(['@/views/discover/detail.vue'], resolve)
+  },{
     path: '/discover/headline',
     name: 'headline',
     component: resolve => require(['@/views/discover/headline.vue'], resolve),

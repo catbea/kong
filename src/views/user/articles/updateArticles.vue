@@ -36,13 +36,11 @@
   </div>
 </template>
 <script>
-// import discoverList from 'COMP/Discover/discoverList'
 import nullArticles from 'COMP/Null'
 import { Checkbox, CheckboxGroup } from 'vant';
 import { SubmitBar } from 'vant';
 export default {
   components: {
-    //  discoverList,
     Checkbox,
     CheckboxGroup,
     nullArticles,

@@ -1,54 +1,44 @@
 <template>
+  <!-- <div class="discover-detail">
+    
+  </div> -->
+
   <div class="headline-page">
     <div class="headline-title">
       <div class="headline-with">
-        <h5>背景“限竞房”销售AB面：刚需房遇冷 别墅很火爆</h5>
+        <h5>{{info.title}}</h5>
         <div class="headline-title-agent">
           <span class="title-agent-left">
             <span class="agent-left-img">
               <img :src="personIcon" class="left-img">
             </span>
             <span class="agent-left-introduce">
-              <p class="introduce-name">李晓峰</p>
-              <p class="introduce-company">深圳中原地产</p>
+              <p class="introduce-name">{{info.agentName}}</p>
+              <p class="introduce-company">{{info.city}}</p>
             </span>
           </span>
-          <span class="title-agent-right">
-            <button class="agent-right" @click="gopopup">+关注</button>
-          </span>
         </div>
-        <img :src="backIcon" class="headline-title-img">
-        <div class="headline-title-content">
-          在北京的限竞房项目中，承载大多数刚需客的90平方米以下住宅由于是高层，只占据少部分土地面积，而项目广大区域则是被低矮的别墅所占据。在销售中，刚需房源和别墅也呈现出不同的境遇。
-          <p class="title-content-p2">
-            每经记者 王佳飞 摄影报道 每经编辑 魏文艺
-          </p>
-          推出限竞房的目的就是为了平抑上涨的房价，实现居者有其屋。那么，北京“限竞房”是否发挥了其应有的作用？
-          <p class="title-content-time">
-            转载于 华尔街见闻&nbsp;&nbsp; &nbsp;2018/10/02 08:30:00
-          </p>
-        </div>
+        <div class="shadow discover-img" :style="{'backgroundImage':'url('+ info.image +')'}"></div>
+        <div class="headline-title-content" v-html="info.content"></div>
       </div>
-      <agent></agent>
+      <agent-card :info="agentInfo"></agent-card>
       <div class="headline-title-bar">
-        <span class="title-btn-left">浏览：16,983</span>
+        <span class="title-btn-left">浏览：{{info.scanNum}}</span>
         <span class="title-btn-right">
           <span class="btn-right-img"><img :src="fabulousIcon" class="title-img"></span>
-          <span class="btn-right-num">840</span>
+          <span class="btn-right-num">{{info.likeTimes}}</span>
         </span>
       </div>
     </div>
 
-    <div class="headline-Fill"></div>
-    <div class="manual-swipes">
-      <title-bar :conf="titleProperties"></title-bar>
-      <manual-swipes></manual-swipes>
-    </div>
-    <div class="headline-Fill"></div>
-    <div class="headline-titlebar">
-      <title-bar :conf="titleArticle"></title-bar>
-    </div>
-    <discover-list></discover-list>
+    <!-- <div class="headline-Fill"></div> -->
+    <title-bar :conf="titleProperties"></title-bar>
+    <manual-swipes></manual-swipes>
+    <!-- <div class="headline-Fill"></div> -->
+    <!-- <div class="headline-titlebar"> -->
+    <title-bar :conf="titleArticle"></title-bar>
+    <!-- </div> -->
+    <!-- <discover-list></discover-list> -->
 
     <div>
       <fixed-btn></fixed-btn>
@@ -60,26 +50,29 @@
 
 </template>
 <script>
-import discoverList from 'COMP/Discover/discoverList'
 import FixedBtn from 'COMP/Discover/FixedBtn'
-import agent from 'COMP/Discover/agent'
+import AgentCard from 'COMP/AgentCard'
 import popupFrame from 'COMP/Discover/popupFrame'
 import ManualSwipes from 'COMP/Swipe/ManualSwipes'
-import TitleBar from 'COMP/TitleBar/arrow'
+import TitleBar from 'COMP/TitleBar/'
+import discoverService from 'SERVICE/discoverService'
 export default {
   components: {
-    discoverList,
-    agent,
+    AgentCard,
     popupFrame,
     ManualSwipes,
     TitleBar,
     FixedBtn
   },
-  data() {
+  data () {
     return {
-      a: false,
+      id: -1,
+      city: '',
+      info: null,
+      agentInfo: null,
+      // 
+      a: true,
       personIcon: require('IMG/user/person_icon.png'),
-      backIcon: require('IMG/user/usercard@2x.png'),
       fabulousIcon: require('IMG/discover/fabulous@2x.png'),
       show: false,
       titleProperties: {
@@ -92,8 +85,24 @@ export default {
       }
     }
   },
+  created () {
+    this.id = this.$route.params.id
+    this.city = this.$route.params.city
+    this.getDetail()
+  },
   methods: {
-    gopopup() {
+    async getDetail () {
+      const res = await discoverService.getDiscoverDetail(this.id, this.city)
+      this.info = res
+      this.agentInfo = {
+        agentId: this.info.agentId,
+        agentName: this.info.agentName,
+        avatarUrl: this.info.avatarUrl,
+        distributorName: this.info.distributorName,
+        enterpriseName: this.info.enterpriseName
+      }
+    },
+    gopopup () {
       this.show = true
     }
   }
@@ -157,7 +166,7 @@ export default {
           }
         }
       }
-      > .headline-title-img {
+      > .discover-img {
         width: 100%;
         height: 193px;
         border-radius: 10px;

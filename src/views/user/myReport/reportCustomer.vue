@@ -2,7 +2,7 @@
 
 <template>
   <div class="report-page">
-    <van-search
+    <!-- <van-search
       class="search-container"
       v-model="searchVal"
       placeholder="请输入搜索关键词"
@@ -14,7 +14,7 @@
         slot="action"
         @click="onSearchHandler"
       >搜索</div>
-    </van-search>
+    </van-search> -->
     <div class="tab-container">
       <van-tabs
         v-model="activeIndex"

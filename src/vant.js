@@ -10,6 +10,7 @@ import {
   Swipe,
   SwipeItem,
   Uploader,
+  Lazyload,
   Switch,
   DatetimePicker
 } from 'vant'
@@ -21,5 +22,6 @@ Vue.use(Search)
 Vue.use(Tab).use(Tabs)
 Vue.use(Swipe).use(SwipeItem)
 Vue.use(Uploader)
+Vue.use(Lazyload);
 Vue.use(Switch)
 Vue.use(DatetimePicker)
