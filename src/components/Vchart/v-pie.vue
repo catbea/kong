@@ -1,8 +1,10 @@
 <script>
-const camel = function (key) {
-  return key.replace(/(-[a-z])/g, function ($1) { return $1.toUpperCase().replace('-', '') })
+const camel = function(key) {
+  return key.replace(/(-[a-z])/g, function($1) {
+    return $1.toUpperCase().replace('-', '')
+  })
 }
-const camelBatch = function (attrs) {
+const camelBatch = function(attrs) {
   for (let i in attrs) {
     const key = camel(i)
     attrs[key] = attrs[i]
@@ -29,12 +31,12 @@ export default {
       type: Array
     }
   },
-  created () {
+  created() {
     this.$parent.setPie({
       ...this.$props,
       ...camelBatch(this.$attrs)
     })
   },
-  render () {}
+  render() {}
 }
 </script>

@@ -19,26 +19,26 @@
   </popup>
 </template>
 <script>
-import { Popup } from 'vant';
+import { Popup } from 'vant'
 export default {
-  props:{
+  props: {
     value: Boolean
   },
   components: {
     Popup
   },
-  data () {
+  data() {
     return {
       show: false,
       editImg: require('IMG/user/editInfo@2x.png'),
       userImg: require('IMG/user/usercard@2x.png')
     }
   },
-  watch:{
-    value(val){
+  watch: {
+    value(val) {
       this.show = val
     },
-    show(vla){
+    show(vla) {
       this.$emit('change')
     }
   }
@@ -46,6 +46,7 @@ export default {
 </script>
 <style lang="less">
 .popupframe-container {
+  background: #ffffff;
   background: rgba(255, 255, 255, 1);
   border-radius: 10px;
   > .popupframe-top {
@@ -108,44 +109,42 @@ export default {
     line-height: 30px;
   }
 
-.demo-popup {
-  .van-button {
-    margin: 10px 0 10px 15px;
+  .demo-popup {
+    .van-button {
+      margin: 10px 0 10px 15px;
+    }
+    .van-popup {
+      width: 60%;
+      padding: 20px;
+      box-sizing: border-box;
+      &--bottom {
+        width: 100%;
+        padding: 0;
+        border-radius: 0;
+      }
+      .van-tabs__content {
+        height: 156px;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+      }
+      .van-tab__pane:not(:first-child) {
+        padding: 10px;
+        line-height: 1.4;
+        color: #666;
+      }
+      &--top {
+        color: #fff;
+        width: 100%;
+        border-radius: 0;
+        line-height: 20px;
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+      &--left,
+      &--right {
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
-  .van-popup {
-    width: 60%;
-    padding: 20px;
-    box-sizing: border-box;
-    &--bottom {
-      width: 100%;
-      padding: 0;
-      border-radius: 0;
-    }
-    .van-tabs__content {
-      height: 156px;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
-    }
-    .van-tab__pane:not(:first-child) {
-      padding: 10px;
-      line-height: 1.4;
-      color: #666;
-    }
-    &--top {
-      color: #fff;
-      width: 100%;
-      border-radius: 0;
-      line-height: 20px;
-      background-color: rgba(0, 0, 0, 0.8);
-    }
-    &--left,
-    &--right {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-
-
 }
 </style>

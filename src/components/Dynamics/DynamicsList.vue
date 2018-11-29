@@ -9,11 +9,11 @@
             <div class="dynamics-list-agent">
               <span class="list-agent-left">
                 <span class="agent-left-left">
-                  <img :src="userImg" class="agent-userImg">
+                  <img :src="lxImg" class="agent-userImg">
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">谢敏</p>
-                  <p class="left-right-time">09:13</p>
+                  <p class="left-right-time">2018/10/22 09:13</p>
                 </span>
               </span>
               <span class="list-agent-right">
@@ -22,19 +22,21 @@
               </span>
             </div>
             <div class="dynamics-list-content">
-              <p>查看浏览了楼盘<span>碧桂园凤凰国际项目</span></p>
+              <p>浏览了  <span>你的名片</span></p>
               <p>2018年10月22 日第<span>3 次</span>打开 </p>
-              <p>浏览市场大于<span>60s</span><span>篇幅小于50%</span></p>
+              <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
               <p>累计浏览<span>4次</span>,名片，平均停留<span>5.5s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="!show1">+关注</button>
+                <button class="list-btn-follow" v-show="!show1">
+                   <img :src="gzImg" class="agent-gzImg">
+                   关注</button>
                 <button class="list-btn-followOK" v-show="show1">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
-                  <img :src="userImg" class="btn-contact-userImg">
+                  <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
               </span>
@@ -44,6 +46,7 @@
         </div>
       </shadow-box>
     </div>
+    
     <div class="dynamics-container-list">
       <shadow-box>
         <div slot="container">
@@ -51,11 +54,11 @@
             <div class="dynamics-list-agent">
               <span class="list-agent-left">
                 <span class="agent-left-left">
-                  <img :src="userImg" class="agent-userImg">
+                  <img :src="lxImg" class="agent-userImg">
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">谢敏</p>
-                  <p class="left-right-time">09:13</p>
+                  <p class="left-right-time">2018/10/22 09:13</p>
                 </span>
               </span>
               <span class="list-agent-right">
@@ -64,19 +67,21 @@
               </span>
             </div>
             <div class="dynamics-list-content">
-              <p>查看浏览了楼盘<span>碧桂园凤凰国际项目</span></p>
+              <p>查看浏览了楼盘&nbsp;<span>碧桂园凤凰国际项目</span></p>
               <p>2018年10月22 日第<span>3 次</span>打开 </p>
-              <p>浏览市场大于<span>60s</span><span>篇幅小于50%</span></p>
+              <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
               <p>累计浏览<span>4次</span>,名片，平均停留<span>5.5s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="show1">+关注</button>
+                <button class="list-btn-follow" v-show="show1">
+                  <img :src="gzImg" class="agent-gzImg">
+                  关注</button>
                 <button class="list-btn-followOK" v-show="!show1">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
-                  <img :src="userImg" class="btn-contact-userImg">
+                  <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
               </span>
@@ -91,7 +96,7 @@
 
 </template>
 <script>
-import { Row, Col } from 'vant';
+import { Row, Col } from 'vant'
 import ShadowBox from 'COMP/ShadowBox'
 export default {
   components: {
@@ -99,7 +104,8 @@ export default {
   },
   data () {
     return {
-      userImg: require('IMG/user/person_icon.png'),
+      lxImg: require('IMG/dynamics/lx@2x.png'),
+      gzImg: require('IMG/dynamics/gz@2x.png'),
       show1: true
     }
   },
@@ -112,6 +118,7 @@ export default {
 </script>
 <style lang="less">
 .dynamics-container {
+  background: #ffffff;
   margin-top: 15px;
   > .dynamics-time {
     font-size: 14px;
@@ -157,7 +164,7 @@ export default {
         position: absolute;
         right: 16px;
         margin-top: -6px;
-            padding-right: 16px;
+        padding-right: 16px;
         > .agent-right-num {
           font-size: 20px;
           font-weight: 500;
@@ -194,7 +201,7 @@ export default {
       > .list-btn-right {
         position: absolute;
         right: 32px;
-            // margin-top: 20px;
+        // margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
           height: 24px;
@@ -205,6 +212,10 @@ export default {
           color: rgba(0, 122, 230, 1);
           line-height: 17px;
           background: #ffffff;
+          > .agent-gzImg {
+            width: 11px;
+            height: 11px;
+          }
         }
         > .list-btn-followOK {
           font-size: 12px;

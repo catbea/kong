@@ -9,7 +9,7 @@ export default {
   components: {
     ButtonItem
   },
-  data: _ => ({}),
+  data: () => ({}),
   props: {
     buttonInfo: {
       type: Object,

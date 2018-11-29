@@ -1,31 +1,47 @@
 <template>
   <div class="historicalArticles-page">
-    <div class="historicalArticles-title">
+    <div class="historicalArticles-content" v-show="articles=='2'">
+      <div class="historicalArticles-title">
       共12文章
-      <span class="historicalArticles-title-right">编辑</span>
+      <span class="historicalArticles-title-right"><router-link  to='/user/articles/updateArticles'>编辑</router-link></span>
     </div>
       <discover-list></discover-list>
+    </div>
+    <div class="historicalArticles-null" v-show="articles== '1'">
+      <null-articles :nullIcon="nullIcon" :nullcontent="nullcontent"></null-articles>
+    </div>
   </div>
 </template>
 <script>
 import discoverList from 'COMP/Discover/discoverList'
+import nullArticles from 'COMP/Null'
 export default {
  components: {
-    discoverList,
+   discoverList,
+    nullArticles,
    
 
   },
+  data(){
+    return{
+      articles:'2',
+      nullIcon:require('IMG/user/collection/Article@2x.png'),
+      nullcontent:'暂无历史文章',
+    }
+  }
 }
 </script>
 <style lang="less">
 .historicalArticles-page {
-  > .historicalArticles-title {
+  background: #ffffff;
+  > .historicalArticles-content{
+ > .historicalArticles-title {
     font-size: 14px;
     font-weight: 400;
     color: rgba(102, 102, 102, 1);
     line-height: 16px;
     margin: 17px 16px;
-    
+
     > .historicalArticles-title-right {
       font-size: 13px;
       font-weight: 400;
@@ -34,5 +50,10 @@ export default {
       float: right;
     }
   }
+  }
+  > .historicalArticles-null{
+
+  }
+ 
 }
 </style>

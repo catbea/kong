@@ -3,7 +3,7 @@ import base from './mixin'
 
 export default {
   mixins: [base],
-  data () {
+  data() {
     return {
       chartName: 'bar'
     }

@@ -17,7 +17,7 @@ class DynamicsService {
       url: '/homepage/getBuildingInfo'
     })
   }
-    /**
+  /**
    * 消息列表和未读消息数量
    */
   getAgentMsgAndTotal() {
@@ -26,12 +26,12 @@ class DynamicsService {
     })
   }
 
-   /**
-    * 查询经纪人的系统消息列表
-    * @param {*} current 
-    * @param {*} size 
-    */
-  getSystemMessage(current, size=10) {
+  /**
+   * 查询经纪人的系统消息列表
+   * @param {*} current
+   * @param {*} size
+   */
+  getSystemMessage(current, size = 10) {
     return xhr({
       url: '/qywx/cpIM/getSystemMessageList',
       body: {

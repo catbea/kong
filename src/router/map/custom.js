@@ -5,8 +5,8 @@ export default [
     component: resolve => require(['@/views/custom/index.vue'], resolve),
     meta: {
       title: '我的客户',
-      tabbar:{
-        show:true
+      tabbar: {
+        show: true
       }
     }
   },
@@ -17,5 +17,5 @@ export default [
     meta: {
       title: '我的客户'
     }
-  },
+  }
 ]

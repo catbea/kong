@@ -23,7 +23,7 @@
         <van-tab title="楼盘">
           <!-- 动态楼盘 -->
           <div class="allDynamics-container">
-            <properties></properties>
+            <properties  :info="item"  @click="itemProperties"></properties>
           </div>
         </van-tab>
         <van-tab title="文章">
@@ -54,35 +54,58 @@ export default {
     ShadowBox,
     DynamicsCard,
     Tips
-
   },
 
-  data () {
+  data() {
     return {
       totalTitle: '总浏览数',
       totalNum: '90',
       cardTitle: '名片浏览',
       cardNum: '0',
       propertiesTitle: '楼盘浏览',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '文章浏览',
       articleNum: '124',
+      item:[]
     }
   },
   methods: {
+    itemProperties() {
 
+      //跳转到动态详情item
+      // this.$router.push('/dynamics/dynamicsInfo')
+      this.$dialog
+        .confirm({
+          title: '暂未开通楼盘',
+          message: '请开通后查看楼盘详细动态',
+          confirmButtonText: '去开通'
+        })
+        .then(() => {
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        })
+    }
   }
 }
 </script>
 <style lang="less">
 .allDynamics-page {
+  background: #ffffff;
   margin: 0 0 20px 0;
   > .tab-container {
-    position: fixed;
+    // position: fixed;
     width: 100%;
-     .allDynamics-container{
+    .allDynamics-container {
       margin-top: 20px;
     }
+  }
+  .van-tabs--line .van-tabs__wrap {
+    height: 1.17333rem;
+    position: fixed;
+    /* background: white; */
+    z-index: 11;
   }
 }
 </style>

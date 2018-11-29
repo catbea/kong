@@ -9,7 +9,7 @@ export default {
     url: { type: String, default: '' },
     member: { type: Boolean, default: false }
   },
-  data: _ => ({
+  data: () => ({
     markIcon: require('IMG/user/crown.png'),
     defaultAvatar: require('IMG/user/person_icon.png')
   }),

@@ -20,20 +20,18 @@ export default {
     EstateRecommend,
     MyEstateList
   },
-  data: _ => ({
-    collectData: null, // 数据中心数据
-    recommendData: null, // 推荐盘数据
+  data: () => ({
+    collectData: null,    // 数据中心数据
+    recommendData: null,  // 推荐盘数据
     estateListData: null, // 我的楼盘数据
   }),
-  created() { 
+  created () {
     this.getCollectInfo()
     this.getEstateList()
   },
   methods: {
-    async getCollectInfo() {
-      const res = await dynamicsService.getDynamicsCollect() 
-      console.log(res)
-
+    async getCollectInfo () {
+      const res = await dynamicsService.getDynamicsCollect()
       // 数据中心部分 数据拼装
       this.collectData = {
         newMsg: res.unreadCustomerCount,
@@ -52,7 +50,7 @@ export default {
         simpleDynamic: res.simpleDynamicVOs
       }
     },
-    async getEstateList() {
+    async getEstateList () {
       const res = await dynamicsService.getEstateInfo()
       this.estateListData = res.myLinkerVOs
       this.recommendData = res.aiLinkerVO
@@ -67,6 +65,7 @@ export default {
   background: #f7f9fa;
   .dynamics-top-container {
     background: #fff;
+    padding-bottom: 25px;
   }
   .list-container {
     background: #fff;

@@ -5,7 +5,7 @@ export default [
     component: resolve => require(['@/views/user/index.vue'], resolve),
     meta: {
       title: '名片',
-      tabbar:{
+      tabbar: {
         show: true
       }
     }
@@ -37,6 +37,15 @@ export default [
     }
   },
   {
+    path: '/user/edit/userPortrait',
+    name: 'userPortrait',
+    component: resolve =>
+      require(['@/views/user/edit/userPortrait.vue'], resolve),
+    meta: {
+      title: '修改头像'
+    }
+  },
+  {
     path: '/user/edit/username',
     name: 'user-edit-username',
     component: resolve =>
@@ -62,7 +71,8 @@ export default [
     meta: {
       title: '修改微信号'
     }
-  },{
+  },
+  {
     path: '/user/edit/userMechanism',
     name: 'userMechanism',
     component: resolve =>
@@ -74,8 +84,7 @@ export default [
   {
     path: '/user/edit/userLabel',
     name: 'userLabel',
-    component: resolve =>
-      require(['@/views/user/edit/userLabel.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userLabel.vue'], resolve),
     meta: {
       title: '修改标签'
     }
@@ -100,6 +109,15 @@ export default [
     }
   },
   {
+    path: '/user/articles/updateArticles',
+    name: 'updateArticles',
+    component: resolve =>
+      require(['@/views/user/articles/updateArticles.vue'], resolve),
+    meta: {
+      title: '历史文章'
+    }
+  },
+  {
     path: '/user/collection/myCollection',
     name: 'myCollection',
     component: resolve =>
@@ -109,10 +127,63 @@ export default [
     }
   },
   {
+    path: '/user/consumption/consumptionBill',
+    name: 'consumptionBill',
+    component: resolve =>
+      require(['@/views/user/consumption/consumptionBill.vue'], resolve),
+    meta: {
+      title: '消费账单'
+    }
+  },
+  {
+    path: '/user/myReport',
+    name: 'myreport',
+    component: resolve =>
+      require(['@/views/user/myReport/index.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
+    path: '/user/myReport/reportInfo',
+    name: 'reportInfo',
+    component: resolve =>
+      require(['@/views/user/myReport/reportInfo.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
+    path: '/user/myReport/addReport',
+    name: 'addReport',
+    component: resolve =>
+      require(['@/views/user/myReport/addReport.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
+    path: '/user/myReport/reportPhone',
+    name: 'reportPhone',
+    component: resolve =>
+      require(['@/views/user/myReport/reportPhone.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
+    path: '/user/myReport/reportCustomer',
+    name: 'reportCustomer',
+    component: resolve =>
+      require(['@/views/user/myReport/reportCustomer.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
     path: '/user/myMarket',
     name: 'mymarket',
-    component: resolve =>
-      require(['@/views/user/myMarket/index.vue'], resolve),
+    component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
     meta: {
       title: '我的楼盘',
       tabbar: {
@@ -120,4 +191,59 @@ export default [
       }
     }
   },
+  {
+    path: '/user/myCoupon',
+    name: 'myCoupon',
+    component: resolve => require(['@/views/user/myCoupon/index.vue'], resolve),
+    meta: {
+      title: '我的优惠劵',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/myMember',
+    name: 'myMember',
+    component: resolve => require(['@/views/user/myMember/index.vue'], resolve),
+    meta: {
+      title: '我的vip会员',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/noDisturb',
+    name: 'noDisturb',
+    component: resolve => require(['@/views/user/noDisturb/index.vue'], resolve),
+    meta: {
+      title: '勿扰模式',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/opinionFeedback',
+    name: 'opinionFeedback',
+    component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),
+    meta: {
+      title: '意见反馈',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/opinionFeedback/describe',
+    name: 'feedbackDescribe',
+    component: resolve => require(['@/views/user/opinionFeedback/feedbackDescribe/index.vue'], resolve),
+    meta: {
+      title: '反馈问题描述',
+      tabbar: {
+        show: false
+      }
+    }
+  }
 ]

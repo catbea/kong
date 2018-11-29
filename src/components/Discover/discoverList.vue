@@ -14,25 +14,24 @@
   </div>
 </template>
 <script>
-
 export default {
-
-  data () {
+  data() {
     return {
-      backIcon: require('IMG/user/usercard@2x.png'),
+      backIcon: require('IMG/user/usercard@2x.png')
     }
   },
-   methods: {
+  methods: {
     GOheadline() {
       console.log(1)
       //跳转到房产头条
       this.$router.push('/discover/headline')
     }
-  },
+  }
 }
 </script>
 <style lang="less">
 .discover-container {
+  background: #ffffff;
   > .discover-list {
     margin: 0 15px;
     display: flex;
@@ -74,5 +73,3 @@ export default {
   }
 }
 </style>
-
-

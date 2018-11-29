@@ -1,22 +1,45 @@
 <template>
-  <div class="market-renew-box">
-      <ul class="market-renew-box-recommend">
-      <li class="market-renew-box-recommend-icon"></li>
-      <li class="market-renew-box-recommend-text">推荐</li>
-      </ul>
-    <ul class="market-renew-box-show">
-      <li class="market-renew-box-show-icon"></li>
-      <li class="market-renew-box-show-text">展示</li>
-    </ul>
-    <ul class="market-renew-box-stick">
-      <li class="market-renew-box-stick-icon"></li>
-      <li class="market-renew-box-stick-text">置顶</li>
-    </ul>
+  <ul class="market-renew-box">
+      <li class="market-renew-box-recommend" @click="recommendHandle">
+      <span class="bg_img market-renew-box-recommend-icon" :style="{'backgroundImage':'url('+ (flagTj?recommendA:recommend)+')'}"></span>
+      <p class="market-renew-box-recommend-text">推荐</p>
+      </li>
+    <li class="market-renew-box-show" @click="showHandle">
+      <span class="bg_img market-renew-box-show-icon" :style="{'backgroundImage':'url('+ (flagZs?showA:show)+')'}"></span>
+      <p class="market-renew-box-show-text">展示</p>
+    </li>
+    <li class="market-renew-box-stick" @click="stickHandle">
+      <span class="bg_img  market-renew-box-stick-icon" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
+      <p class="market-renew-box-stick-text">置顶</p>
+    </li>
     <div class="market-renew-box-button">续费(07/11到期)</div>
-</div>
+</ul>
 </template>
 <script>
-export default {}
+export default {
+  data: () => ({
+    flagTj: false,
+    recommendA: require('IMG/marketDetail/tj copy 10@2x.png'),
+    recommend: require('IMG/marketDetail/tj@2x.png'),
+    flagZs: false,
+    showA: require('IMG/marketDetail/zs copy 11@2x.png'),
+    show: require('IMG/marketDetail/zs1@2x.png'),
+    flagZd: false,
+    stickA: require('IMG/marketDetail/zd copy 12@2x.png'),
+    stick: require('IMG/marketDetail/zd2@2x.png')
+  }),
+  methods: {
+    recommendHandle() {
+      this.flagTj = !this.flagTj
+    },
+    showHandle() {
+      this.flagZs = !this.flagZs
+    },
+    stickHandle() {
+      this.flagZd = !this.flagZd
+    }
+  }
+}
 </script>
 <style lang="less">
 .market-renew-box {
@@ -26,6 +49,11 @@ export default {}
   padding-top: 14px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e6e6e6;
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .market-renew-box-recommend {
     margin: 0 34px 0 25px;
 

@@ -1,0 +1,91 @@
+<template>
+  <div class="user-edit-phone-page">
+    <div class="user-edit-phone">
+      <p class="edit-phone-title">手机号</p>
+      <p class="edit-phone-conter"><input type="text" class="edit-phone-input" placeholder="请输入手机号码" value="13590200739"></p>
+     
+      <button class=edit-phone-query @click="godSub">确认</button>
+    </div>
+  </div>
+</template>
+<script>
+import { Dialog } from 'vant';
+export default {
+  components:{
+    Dialog
+  },
+  data () {
+    return {
+      Cphone: ''
+    }
+  },
+  methods: {
+    godSub () {
+      
+      if (this.Cphone == '' ) {
+        Dialog.alert({
+          message: '名片展示手机号不可为空'
+        }).then(() => {
+          // on close
+        })
+      }
+
+    }
+  }
+}
+</script>
+<style lang="less">
+.van-dialog {
+  border-radius: 12px;
+  width: 72%;
+  text-align: center;
+}
+.van-dialog__message {
+  font-size: 15px;
+  color: rgba(51, 51, 51, 1);
+}
+.van-button__text {
+  font-size: 18px;
+  color: rgba(0, 122, 230, 1);
+}
+.user-edit-phone-page {
+  background: #ffffff;
+  > .user-edit-phone {
+    margin: 27px 16px;
+    > .edit-phone-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(51, 51, 51, 1);
+      line-height: 28px;
+      margin-bottom: 12px;
+     
+    }
+   
+    > .edit-phone-conter {
+      margin-bottom: 24px;
+      > .edit-phone-input {
+        font-size: 16px;
+        font-weight: 500;
+        color:rgba(187,187,187,1);
+        line-height: 35px;
+        width: 99%;
+        border: 0;
+        border-bottom: 1px solid #eeeeee;
+      }
+    }
+
+    > .edit-phone-query {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 22px;
+      height: 44px;
+      background: rgba(0, 122, 230, 1);
+      border-radius: 4px;
+      width: 100%;
+      border: 0;
+      margin-top: 35px;
+    }
+  }
+}
+</style>

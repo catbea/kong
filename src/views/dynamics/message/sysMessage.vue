@@ -25,17 +25,16 @@ export default {
   components: {
     ShadowBox
   },
-  data () {
+  data() {
     return {
-      systemMessage: [],
+      systemMessage: []
     }
   },
-  created () {
+  created() {
     this.getSystemMessageList()
   },
   methods: {
-
-    async getSystemMessageList () {
+    async getSystemMessageList() {
       const res = await dynamicsService.getSystemMessage()
       this.systemMessage = res
     }
@@ -44,6 +43,7 @@ export default {
 </script>
 <style lang="less">
 .sysMessage-page {
+  background: #ffffff;
   > .sysMessage-container {
     margin: 16px 0;
     > .sysMessage-time {

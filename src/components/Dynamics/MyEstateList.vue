@@ -1,6 +1,6 @@
 <template>
   <div class="my-estate-list">
-    <title-bar :conf="titleBarConf"></title-bar>
+    <title-bar class="title-container" :conf="titleBarConf"></title-bar>
     <estate-item v-for="(item,index) in list" :key="index" :info="item"></estate-item>
 
   </div>
@@ -17,7 +17,7 @@ export default {
   props: {
     list: Array
   },
-  data: _ => ({
+  data: () => ({
     titleBarConf: {
       title: '我的楼盘',
       linkText: '更多楼盘'
@@ -28,5 +28,8 @@ export default {
 </script>
 <style lang="less">
 .my-estate-list {
+  // >.title-container{
+  //   padding-top: 10px;
+  // }
 }
 </style>

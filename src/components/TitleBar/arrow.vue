@@ -3,7 +3,7 @@
     <h5 class="title-text">{{conf.title}}</h5>
     <router-link :to="linkComputed">
       <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}} 
-         <img :src="arrowIcon" class="left-img">
+         <img :src="arrowIcon" class="left-img" @click="img">
       </p>
     </router-link>
   </div>
@@ -17,15 +17,19 @@ export default {
         return {
           title: '',
           linkText: '',
-          link: '',
-          
+          link: ''
         }
       }
     }
   },
-  data(){
+  data() {
     return {
-      arrowIcon: require('IMG/marketDetail/arrow2@2x.png'),
+      arrowIcon: require('IMG/marketDetail/arrow2@2x.png')
+    }
+  },
+  methods:{
+    img(){
+      this.$emit("the",1)
     }
   },
   computed: {
@@ -52,12 +56,11 @@ export default {
     font-size: 13px;
     font-weight: 400;
     color: #999999;
-    .left-img{
+    .left-img {
       width: 12px;
       height: 12px;
-          padding-top: 8px;
+      padding-top: 8px;
     }
   }
-
 }
 </style>

@@ -23,18 +23,18 @@
 import ShadowBox from 'COMP/ShadowBox'
 export default {
   components: {
-    ShadowBox,
-
+    ShadowBox
   },
-   data () {
+  data() {
     return {
-      personIcon: require('IMG/user/person_icon.png'),
+      personIcon: require('IMG/user/person_icon.png')
     }
-  },
+  }
 }
 </script>
 <style lang="less">
 .title-agent {
+  background: #ffffff;
   display: flex;
   padding: 30px 20px;
   margin-top: 13px;
@@ -44,7 +44,7 @@ export default {
       > .left-img {
         width: 60px;
         height: 60px;
-        border-radius:50%;
+        border-radius: 50%;
       }
     }
     > .agent-left-introduce {
@@ -79,21 +79,19 @@ export default {
     right: 110px;
     margin-top: 10px;
     > .agent-right {
-    width:64px;
-height:32px;
-background:rgba(0,122,230,1);
-border-radius:16px;
+      width: 64px;
+      height: 32px;
+      background: rgba(0, 122, 230, 1);
+      border-radius: 16px;
 
-
-font-size:12px;
-font-family:PingFangSC-Regular;
-font-weight:400;
-color:rgba(255,255,255,1);
-line-height:17px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 17px;
       border: 0;
       position: absolute;
     }
   }
 }
 </style>
-

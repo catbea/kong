@@ -5,16 +5,16 @@
         <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
       </div>
     </shadow-box>
-    <div class="Properties-list" plain  @click="godynamicsInfo">
-
-      <p class="list-left">碧桂园凤凰国际（未开通）<span class="list-right" @click="onClickConfirm">14条动态</span></p>
-      <p class="list-left-btn">南山 深圳湾 | 价格未定</p>
+    <div class="Properties-list" v-for="(item,index) in properties" :key="index" plain  @click="onClickConfirm(item)">
+ <!-- @click="onClickConfirm" -->
+      <p class="list-left">{{item.propertiesName}}{{item.statue == 0 ? "（未开通）":""}}<span class="list-right">{{item.num}}条动态</span></p>
+      <p class="list-left-btn">{{item.address}} | {{item.price == 0?"价格待定": item.price}}</p>
     </div>
-    <div class="Properties-list">
+    <!-- <div class="Properties-list">
 
-      <p class="list-left">万科臻湾汇 <span class="list-right" @click="onClickConfirm">14条动态</span></p>
-      <p class="list-left-btn">南山 深圳湾 | 119878元/㎡</p>
-    </div>
+      <p class="list-left"><span class="list-right" >条动态</span></p>
+      <p class="list-left-btn"> | 元/㎡</p>
+    </div> -->
 
     <!-- <dialog :title="$t('confirm')">
       <button type="primary" plain @click="onClickConfirm">
@@ -27,44 +27,42 @@
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import ShadowBox from 'COMP/ShadowBox'
-import { Dialog } from 'vant';
+import { Dialog } from 'vant'
 export default {
   components: {
     DynamicsData,
     ShadowBox,
     Dialog
   },
-  data () {
+   props: {
+    info: Object,
+    item:Object
+  },
+  data() {
     return {
       totalTitle: '楼盘数量',
       totalNum: '90',
       cardTitle: '楼盘分享',
       cardNum: '0',
       propertiesTitle: '楼盘访客',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '平均停留(S)',
       articleNum: '124',
+      properties:[
+        {'id':'1','propertiesName':'碧桂园凤凰国际','statue':'0','num':'14','address':'南山 深圳湾','price':'0'},
+        {'id':'2','propertiesName':'万科臻湾汇 ','statue':'1','num':'20','address':'南山 深圳湾','price':'119878'},
+      ]
     }
   },
   methods: {
-    onClickConfirm () {
-      this.$dialog.confirm({
-        title: '暂未开通楼盘',
-        message: '请开通后查看楼盘详细动态',
-        confirmButtonText: '去开通',
-
-      }).then(() => {
-        // on confirm
-      }).catch(() => {
-        // on cancel
-      });
+    onClickConfirm(item) {
+       this.$emit('click', this.info)
     },
-    godynamicsInfo () {
-   //跳转到动态详情
-      this.$router.push('/dynamics/dynamicsInfo')
- },
+    // godynamicsInfo() {
+    //   //跳转到动态详情
+    //   this.$router.push('/dynamics/dynamicsInfo')
+    // }
   }
-
 }
 </script>
 <style lang="less">
@@ -102,12 +100,13 @@ export default {
   color: rgba(51, 51, 51, 1);
 }
 .Properties-container {
+  background: #ffffff;
   // margin: 0 16px;
   > .Properties-list {
     border-bottom: 1px solid #e6e6e6;
     margin: 0 16px;
     padding: 16px 0;
-    
+
     > .list-left {
       font-size: 16px;
       font-weight: 600;
@@ -135,4 +134,3 @@ export default {
   }
 }
 </style>
-

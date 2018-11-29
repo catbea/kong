@@ -75,11 +75,10 @@ export default {
     ManualSwipes,
     TitleBar,
     FixedBtn
-
   },
-  data () {
+  data() {
     return {
-      a:false,
+      a: false,
       personIcon: require('IMG/user/person_icon.png'),
       backIcon: require('IMG/user/usercard@2x.png'),
       fabulousIcon: require('IMG/discover/fabulous@2x.png'),
@@ -88,15 +87,14 @@ export default {
         title: '推荐房源',
         linkText: '全部楼盘'
       },
-       titleArticle: {
+      titleArticle: {
         title: '推荐文章',
         linkText: '查看全部'
       }
-
     }
   },
   methods: {
-    gopopup () {
+    gopopup() {
       this.show = true
     }
   }
@@ -104,8 +102,9 @@ export default {
 </script>
 <style lang="less">
 .headline-page {
+  background: #ffffff;
   > .headline-title {
-    margin: 16px 0;
+    margin: 14px 0;
     > .headline-with {
       margin: 0 16px;
       h5 {
@@ -185,7 +184,7 @@ export default {
     }
 
     > .headline-title-bar {
-      margin: 0 16px ;
+      margin: 5px 16px 0 16px;
       > .title-btn-left {
         font-size: 13px;
         font-weight: 400;
@@ -201,7 +200,7 @@ export default {
         display: flex;
         vertical-align: middle;
         text-align: center;
-        margin-top: 15px;
+        margin-top: 10px;
         > .btn-right-img {
           > .title-img {
             width: 24px;

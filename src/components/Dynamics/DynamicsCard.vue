@@ -17,23 +17,23 @@ export default {
     DynamicsData,
     DynamicsList,
     ShadowBox
-
   },
-  data () {
+  data() {
     return {
       totalTitle: '名片数量',
       totalNum: '90',
       cardTitle: '名片分享',
       cardNum: '0',
       propertiesTitle: '名片访客',
-      propertiesNum: "190",
+      propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124',
+      articleNum: '124'
     }
-  },
+  }
 }
 </script>
 <style lang="less">
 .article-container {
+  background: #ffffff;
 }
 </style>

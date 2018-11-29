@@ -37,6 +37,18 @@
       </span>
 
     </div>
+     <div class="article-list" @click="GOheadline">
+      <span class="article-list-left">
+        <p class="article-left-title">专家：“规避政策”卖房新路子要不得</p>
+        <p class="article-left-time">楚天都市报&nbsp;&nbsp;1小时前
+          <span class="left-time-nub"> 12条动态</span>
+        </p>
+      </span>
+      <span class="article-list-right">
+        <img :src="backIcon" class="mark-icon">
+      </span>
+
+    </div>
     <div class="article-list" @click="GOheadline">
       <span class="article-list-left">
         <p class="article-left-title">专家：“规避政策”卖房新路子要不得</p>
@@ -52,34 +64,34 @@
   </div>
 </template>
 <script>
-
 export default {
-
-  data () {
+  data() {
     return {
-      backIcon: require('IMG/user/usercard@2x.png'),
+      backIcon: require('IMG/user/usercard@2x.png')
     }
   },
-   props: {
+  props: {
     info: Object
   },
   methods: {
-    GOheadline () {
+    GOheadline() {
       console.log(1)
       //跳转
-       this.$emit('click',this.info)
+      this.$emit('click', this.info)
       // this.$router.push('/discover/headline')
     }
-  },
+  }
 }
 </script>
 <style lang="less">
 .article-container {
+  background: #ffffff;
+  margin-top: 13px;
   > .article-list {
     // margin: 0 15px;
     display: flex;
     border-bottom: 1px solid #e6e6e6;
-        margin: 0 16px;
+    margin: 0 16px;
     padding: 16px 0 16px 0;
     > .article-list-left {
       height: 90px;
@@ -125,5 +137,3 @@ export default {
   }
 }
 </style>
-
-

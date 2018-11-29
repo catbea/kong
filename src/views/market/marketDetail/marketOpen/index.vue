@@ -188,21 +188,21 @@ export default {
     MarketPriceSurface,
     OpenPayment
   },
-   created () {
+  created() {
     this.getMarketDescribeInfo()
   },
-  data: _ => ({
+  data: () => ({
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
     show: false,
-    resInfo:null,
-    dredge:false,
-    borderBottom:false
+    resInfo: null,
+    dredge: false,
+    borderBottom: false
   }),
   methods: {
     vant() {
       this.show = true
     },
-     async getMarketDescribeInfo () {
+    async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe()
       console.log(res.records)
       this.resInfo = res.records

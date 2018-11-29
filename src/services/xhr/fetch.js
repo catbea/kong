@@ -11,6 +11,10 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   url = process.env.VUE_APP_BASE_API_URL + url
   headers = Object.assign(
     { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    {
+      Authorization:
+        'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJwYnFtbmIiLCJzdWIiOiJhZ2VudElkOnd3MjhmNDVkZmUwZTVhZTMxZDoxNjMyIiwiZXhwIjoxNTQzNDg1NDEyLCJpYXQiOjE1NDI4ODA2MTJ9.KuGUQmQSmnwyzICXkrNmNiOeLCzGbcDAniq4Mtb8xBZGAk6ozNJqj3FaP_VZvFKGOeycqY0jzrS_PPTH4hVtrQ'
+    },
     headers
   )
   const options = {
@@ -19,7 +23,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     mode: 'cors'
   }
 
-  body.agentId = localStorage.getItem('userId')
+  // body.agentId = localStorage.getItem('userId')
   const qsParams = qs.stringify(body)
 
   method === 'GET' ? (url = url + '?' + qsParams) : (options.body = qsParams)

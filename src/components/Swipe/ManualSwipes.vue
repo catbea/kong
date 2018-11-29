@@ -19,25 +19,23 @@
   </div>
 </template>
 <script>
-import { Swipe, SwipeItem } from 'vant';
+import { Swipe, SwipeItem } from 'vant'
 
 export default {
   components: {
-
     SwipeItem,
     Swipe
   },
-  data () {
+  data() {
     return {
-      
-      backIcon: require('IMG/user/usercard@2x.png'),
-
+      backIcon: require('IMG/user/usercard@2x.png')
     }
-  },
+  }
 }
 </script>
 <style lang="less">
 .manual-swipes-container {
+  background: #ffffff;
   // margin: 0 16px;
   > .manual-swipes {
     width: 342px;
@@ -49,7 +47,7 @@ export default {
     }
     .manual-swipes-introduce {
       margin-bottom: 19px;
-     
+
       > .introduce-name {
         font-size: 16px;
         font-weight: 500;
