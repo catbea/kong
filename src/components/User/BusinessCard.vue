@@ -2,10 +2,9 @@
   <div class="business-card-container">
 
     <div class="business-card-box">
-      <!-- :style="{backgroundImage:'url(' + infoBg + ')'}" -->
       <div
         class="bg_img info-box"
-        v-if="userInfo"
+      
       >
         <div class="info-box-left">
           <img
@@ -44,15 +43,7 @@
             >
           </span>
         </div>
-        <!-- <card-avatar class="card-avatar" :url="userInfo.avatarUrl" :member="true" @click="editCLickHandler"></card-avatar>
-        <div class="user-info" v-if="userVipInfo" :class="userVipInfo.isvip &&'member-status'" @click="editCLickHandler">
-          <div class="user-name">fdfsdfds <img :src="editIcon"> </div>
-          <p class="user-company">dfdfsdf</p>
-          <p class="user-area">主营区域:dfsdfsdfds</p>
-        </div>
-        <tag-group class="tag-group-container" v-if="userInfo&&userVipInfo" :arr="userInfo.userTags"></tag-group>
-        <p class="user-signature" :style="{color:userVipInfo&&userVipInfo.isvip ? '#E5B37B': '#A4B8D5'}" v-if="userInfo">“cdcsdc”</p>
-        <router-link class="share-handler-icon" to="/user/share-business-card"><img :src="shareIcon"></router-link> -->
+      
       </div>
       <img
         class="modify-img"
