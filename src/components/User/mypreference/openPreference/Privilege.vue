@@ -1,33 +1,19 @@
 <template>
-  <div class="Privilege-describe-page-vip">
-    <p class="VIPprivilege">特权说明</p>
+  <div class="Privilege-describe-page-pt">
+    <p class="privilege">特权说明</p>
     <ol>
       <li>
         <div class="market-iconA bg_img" :style="{backgroundImage:'url('+marketImg+')'}"></div>
         <div class="market-describe">
-          <p>楼盘免费:</p>
-          <p>开通VIP后，可批量开通楼盘，开通截止日期为VIP截止日期；如已开通楼盘将在VIP截止日期基础上增加楼盘开通的剩余时间。如拥有VIP在楼盘列表页面点击开通，将会开通该楼盘至VIP截止日期。如已开通楼盘有剩余时间情况下开通VIP并点击续费，将在VIP截止日期的基础上延长相应楼盘的开通剩余时间。</p>
+          <p>楼盘任选：</p>
+          <p>用户可以在套餐时间内，随时在全部可开通楼盘内任选十个楼盘进行开通</p>
         </div>
       </li>
       <li>
         <div class="market-icon bg_img" :style="{backgroundImage:'url('+welfareImg+')'}"></div>
         <div class="market-describe">
-          <p>专属福利</p>
-          <p>我们将提供不定期福利性活动，对会员进行优惠及赠送豪礼，详细内容以相应活动规则为准；</p>
-        </div>
-      </li>
-      <li>
-        <div class="market-icon bg_img" :style="{backgroundImage:'url('+exaltedImg+')'}"></div>
-        <div class="market-describe">
-          <p>尊贵标识</p>
-          <p>开通VIP后，将为用户带上VIP独有标识，区别于普通用户彰显尊贵身份；</p>
-        </div>
-      </li>
-      <li>
-        <div class="market-icon bg_img" :style="{backgroundImage:'url('+serviceImg+')'}"></div>
-        <div class="market-describe">
-          <p>专属客服</p>
-          <p>VIP用户进行问题反馈，我们将开通VIP专有的服务通道，第一时间为VIP用户解决或解答问题；</p>
+          <p>优享体验</p>
+          <p>套餐从成功购买时间开始结算，套餐时间限制为一个月。使用套餐选盘只能在套餐下的选盘入口进入。开通后增加的开通时间以套餐的剩余时间结算；如开通已开通楼盘，会在现有开通时间基础上延长套餐的剩余时间</p>
         </div>
       </li>
     </ol>
@@ -44,11 +30,11 @@ export default {
 }
 </script>
 <style lang="less">
-.Privilege-describe-page-vip{
+.Privilege-describe-page-pt{
 padding:16px 0 0 16px;
 width:359px;
 background:rgba(255,255,255,1);
-.VIPprivilege{
+.privilege{
   margin-bottom:14px;
 }
 ol{

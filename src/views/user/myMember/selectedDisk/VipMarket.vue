@@ -1,17 +1,17 @@
 <template>
-  <div class="user-market-page">
-    <div class="user-market-page-box">
-      <div class="user-market-page-box-top">
-        <div class="user-market-page-box-top-left">
+  <div class="meal-market-page">
+    <div class="meal-market-page-box">
+      <div class="meal-market-page-box-top">
+        <span class="icon-check bg_img" :style="{backgroundImage:'url('+checkImg+')'}"></span>
+        <div class="meal-market-page-box-top-left">
           <p class="icon-discount">9.9折</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
           <li>
-           <div style="display:flex;"> {{dataArr.title}} 
-             <span class="stick" v-if="dataArr.flag">置顶</span>
+           <div style="display:flex;">
+             {{dataArr.title}} 
              </div>
-           <span class="bg_img icon-share" :style="{backgroundImage:'url('+imgShare+')'}"></span>
           </li>
           <li>
             {{dataArr.site}}
@@ -19,16 +19,12 @@
           <li>
             <tag-group :arr="dataArr.condition"></tag-group>
           </li>
-          <li>{{dataArr.open}}
-            <div class="apostrophe">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div> 
+          <li>
+            {{dataArr.open}}
           </li>
         </ul>
       </div>
-      <div class="user-market-page-box-bottom" v-if="dataArr.price">
+      <div class="meal-market-page-box-bottom" v-if="dataArr.price">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
         {{dataArr.price}}
       </div>
@@ -42,6 +38,8 @@ export default {
     TagGroup
   },
   data:()=>({
+    checkImg:require('IMG/user/mealMarket/check@2x.png'),
+    checkColorImg:require('IMG/user/mealMarket/checkColor@2x.png'),
     imgShare:require('IMG/user/rectangle.png'),
     imgPlay:require('IMG/user/Oval@2x.png'),
     imgCommission:require('IMG/user/collection/Rectangle@2x.png')
@@ -54,20 +52,25 @@ export default {
 }
 </script>
 <style lang="less">
-.user-market-page{
+.meal-market-page{
   display: flex;
- .user-market-page-box{
+ .meal-market-page-box{
    margin-top:16px;
-   padding: 16px 16px 0 16px;
-  width:311px;
+  width:343px;
   box-shadow:0px 3px 6px 0px rgba(58,76,130,0.07),0px 2px 17px 0px rgba(34,47,85,0.05);
   border-radius:10px;
   display: flex;
   flex-direction: column;
-  .user-market-page-box-top{
+  .meal-market-page-box-top{
     display: flex;
+    align-items:center;
     margin-bottom:16px;
-    .user-market-page-box-top-left{
+    .icon-check{
+      width:19px;
+      height:18px;
+      margin:0 16px;
+    }
+    .meal-market-page-box-top-left{
       width:120px;
       height:90px;
       margin-right:10px;
@@ -102,24 +105,6 @@ export default {
         line-height:16px;
         display: flex;
         justify-content: space-between;
-        .stick{
-          width:30px;
-          height:15px;
-          border-radius:2px;
-          border:1px solid;
-          font-size:10px;
-          transform:scale(0.84);
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(0,122,230,1);
-          line-height:15px;
-          text-align: center;
-          margin-left:4px;
-        }
-        .icon-share{
-          width:16px;
-          height:16px;
-        }
       }
       li:nth-of-type(2){
         font-size:12px;
@@ -141,21 +126,10 @@ export default {
         margin-top:12px;
         display: flex;
         justify-content: space-between;
-        .apostrophe{
-          width:20px;
-          display: flex;
-          justify-content: space-between;
-          span{
-            width:4px;
-            height:4px;
-            border-radius:50%;
-            background:rgba(158,158,158,1);
-          }
-        }
       }
     }
   }
-  .user-market-page-box-bottom{
+  .meal-market-page-box-bottom{
     width:311px;
     height:32px;
     display: flex;

@@ -1,5 +1,6 @@
 <template>
   <div class="marketDetail-page">
+    <hint-tire v-if="hintShow" @hintClose="hintHandle"></hint-tire>
     <classify></classify>
     <swipe-box></swipe-box>
     <div class="marketDetail-page-bottom">
@@ -17,16 +18,6 @@
         <specific-marketDetail></specific-marketDetail>
       </div>
       <button-box :buttonInfo="buttonInfo"></button-box>
-      <!-- <div class="button-box-tow">
-      <div class="button-box-tow-left">
-        <div class="button-box-tow-left-icon" :style="{'background':'url('+buttonBoxTowLeftIconIMG+') no-repeat','background-size':'contain'}"></div>
-        <div class="button-box-tow-left-text" >开盘通知</div>
-      </div>
-      <div class="button-box-tow-right">
-        <div class="button-box-tow-right-icon" :style="{'background':'url('+buttonBoxTowRightIconIMG+') no-repeat','background-size':'contain'}"></div>
-        <div class="button-box-tow-right-text">降价通知</div>
-      </div>
-    </div> -->
       <title-bar :conf="confA"></title-bar>
       <all-marketType></all-marketType>
       <title-bar :conf="confB"></title-bar>
@@ -64,6 +55,7 @@
 import * as types from '@/store/mutation-types'
 import ButtonBox from 'COMP/ButtonBox/'
 import Classify from 'COMP/Classify/'
+import HintTire from 'COMP/Market/MarketDetail/HintTire/'
 import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
 import AllMarketType from 'COMP/Market/MarketDetail/AllMarketType'
 import SiteNearby from 'COMP/Market/MarketDetail/SiteNearby'
@@ -76,6 +68,7 @@ import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
+    HintTire,
     Classify,
     ButtonBox,
     SpecificMarketDetail,
@@ -93,6 +86,7 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
   },
   data: () => ({
+    hintShow:true,
     show: false,
     boxShow: false,
     openFlag: true,
@@ -132,6 +126,9 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
+    hintHandle(){
+      this.hintShow=false
+    },
     handleScroll() {
       let scrollTop =
         window.pageYOffset ||

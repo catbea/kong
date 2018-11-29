@@ -7,13 +7,11 @@
         :key="index"
         @click="active(index)"
       >
-        <!-- <div :class="{active:item.check}"> -->
         <span
           class="bg_img"
           :style="{backgroundImage:'url('+(num==index?icon:icon)+')'}"
           v-show="listSeletct.indexOf(index)!=-1"
         ></span>
-        <!-- </div> -->
       </li>
     </ol>
   </div>
@@ -30,17 +28,15 @@ export default {
     num: null
   }),
   computed: {
-    // show(){
-    // if(this.)
-    // }
+
   },
   methods: {
     active (index) {
       if (this.listSeletct.indexOf(index) == -1) {
-        this.listSeletct.push(index);
+        this.listSeletct.push(index)
       } else {
         this.listSeletct = this.listSeletct.filter((item) => {
-          return item != index;
+          return item != index
         })
       }
     }
