@@ -1,30 +1,34 @@
 <template>
-  <div class="dynamics-collect">
+  <div class="bg_img dynamics-collect">
+    <img class="modify-img" :src="bgImg">
     <div class="top-container">
       <h5>数据中心</h5>
-      <van-icon class="icon-right" name="chat" @click="goMessage"/>
+      <van-icon class="icon-right" name="chat" @click="goMessage" />
     </div>
     <div class="shadow_box info-box" v-if="data">
       <div class="data-container">
         <div class="data-item main-data">
+          <div class="data-value">{{data.customerCount.val}}<span class="data-change" v-if="data.customerCount.change !== 0">{{data.customerCount.change}}</span></div>
           <span class="data-title">客户数量</span>
-          <div class="data-value">{{data.customerCount.val}}<span class="data-change">+{{data.customerCount.change}}</span></div>
         </div>
         <div class="data-item">
+          <div class="data-value">{{data.businessCardViews.val}}<span class="data-change" v-if="data.businessCardViews.change !== 0">{{data.businessCardViews.change}}</span></div>
           <span class="data-title">名片浏览</span>
-          <div class="data-value">{{data.businessCardViews.val}}<span class="data-change">+{{data.businessCardViews.change}}</span></div>
         </div>
         <div class="data-item">
+          <div class="data-value">{{data.estateViews.val}}<span class="data-change" v-if="data.estateViews.change !== 0">{{data.estateViews.change}}</span></div>
           <span class="data-title">楼盘浏览</span>
-          <div class="data-value">{{data.estateViews.val}}<span class="data-change">+{{data.estateViews.change}}</span></div>
         </div>
+      </div>
+      <div class="arrow-icon">
+        <van-icon name="arrow" />
       </div>
       <div class="bottom-line"></div>
       <div class="carousel-container">
-        <marquee :itemHeight="30">
+        <marquee :itemHeight="50">
           <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
             <avatar :avatar="item.avatarUrl"></avatar>
-            李文忠 <span>3分钟前</span> 浏览了楼盘 <span>碧桂园凤凰</span>
+            {{item.clientName | textOver(4)}} <span>{{item.timeStr}}</span> 浏览楼盘 <span>{{item.markedWords | textOver(6)}}</span>
           </marquee-item>
         </marquee>
       </div>
@@ -44,8 +48,11 @@ export default {
   props: {
     data: { type: Object }
   },
+  data: () => ({
+    bgImg: require('IMG/dynamics/collectBottom.png')
+  }),
   methods: {
-    goMessage() {
+    goMessage () {
       this.$router.push('/dynamics/message/messageList')
     }
   }
@@ -53,53 +60,72 @@ export default {
 </script>
 <style lang="less">
 .dynamics-collect {
-  background: #ffffff;
-  margin: 0;
+  background-color: #2360ad;
+  margin: 0 0 65px;
+  height: 175px;
+  position: relative;
+  .modify-img {
+    width: 100%;
+    position: absolute;
+    top: 175px;
+  }
   .top-container {
     position: relative;
     margin: 0 16px 0;
     color: #333333;
     font-size: 28px;
     h5 {
+      margin: 20px 0 15px;
       display: inline-block;
+      font-size: 20px;
+      color: #fff;
     }
     .icon-right {
       position: absolute;
-      right: 0;
+      right: 10px;
       top: 50%;
       transform: translateY(-50%);
+      color: #fff;
     }
   }
   .info-box {
+    background: #fff;
     position: relative;
-    margin: 0 16px;
+    margin: 0 15px;
+    padding: 10px;
+    line-height: 1;
     > .data-container {
+      padding: 30px 5px;
+      margin-right: 20px;
       display: flex;
       justify-content: space-around;
       > .data-item {
-        height: 80px;
+        display: inline-block;
         position: relative;
+        width: 70px;
+        height: 50px;
         > .data-title {
+          position: absolute;
+          bottom: 0;
+          width: 200px;
           font-size: 12px;
           font-weight: 400;
           color: #999999;
         }
         > .data-value {
           position: absolute;
-          bottom: 0;
+          bottom: 16px;
           font-size: 20px;
           font-weight: 500;
           color: #333333;
           > .data-change {
             position: absolute;
-            font-size: 14px;
-            transform: scale(0.8);
             font-weight: 500;
             color: #333333;
           }
         }
         &:first-child {
-          margin: 0 16px 0 0;
+          width: 90px;
           .data-value {
             font-size: 28px;
             .data-change {
@@ -110,6 +136,15 @@ export default {
         }
       }
     }
+    > .arrow-icon {
+      position: absolute;
+      display: inline-block;
+      font-size: 16px;
+      color: #8b9198;
+      font-weight: bolder;
+      right: 5px;
+      top: 30px;
+    }
     > .bottom-line {
       margin: auto;
       width: 80%;
@@ -118,13 +153,16 @@ export default {
       background: #eeeeee;
     }
     .carousel-container {
-      text-align: center;
+      margin: 10px 0 -20px;
+      // text-align: center;
       .carousel-item {
+        text-align: left;
         display: flex;
+        height: 50px;
         justify-content: center;
         font-size: 12px;
-        height: 30px;
         line-height: 24px;
+        // margin: 20px 0;
       }
     }
   }
