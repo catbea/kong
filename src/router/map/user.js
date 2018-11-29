@@ -214,6 +214,39 @@ export default [
     }
   },
   {
+    path: '/user/myMember/selectedDisk',
+    name: 'myMember',
+    component: resolve => require(['@/views/user/myMember/selectedDisk/index.vue'], resolve),
+    meta: {
+      title: 'vip选盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/mypreference',
+    name: 'mypreference',
+    component: resolve => require(['@/views/user/mypreference/index.vue'], resolve),
+    meta: {
+      title: '特惠套餐',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/mypreference/openPreference',
+    name: 'mypreference',
+    component: resolve => require(['@/views/user/mypreference/openPreference/index.vue'], resolve),
+    meta: {
+      title: '开通套餐',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/noDisturb',
     name: 'noDisturb',
     component: resolve => require(['@/views/user/noDisturb/index.vue'], resolve),
