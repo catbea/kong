@@ -1,13 +1,13 @@
 <template>
   <div class="discover-container">
   
-    <div class="discover-list" @click="GOheadline">
+    <div class="discover-list" @click="GOheadline" v-if="data" v-for="(item,key) in data" :key="key">
       <span class="discover-list-left">
-        <p class="list-left-title">专家：“规避政策”卖房新路子要不得</p>
-        <p class="list-left-time">华尔街见闻&nbsp;&nbsp;刚刚&nbsp;&nbsp;1.2万浏览</p>
+        <p class="list-left-title">{{item.subTitle}}</p>
+        <p class="list-left-time">{{item.publisher}}&nbsp;&nbsp;{{item.createDate}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
       </span>
       <span class="discover-list-right">
-        <img :src="backIcon" class="mark-icon">
+        <img :src="item.image" class="mark-icon">
       </span>
 
     </div>
@@ -15,9 +15,12 @@
 </template>
 <script>
 export default {
+  props:{
+    data: { type: Array },
+  },
   data() {
     return {
-      backIcon: require('IMG/user/usercard@2x.png')
+      
     }
   },
   methods: {
@@ -36,7 +39,7 @@ export default {
     margin: 0 15px;
     display: flex;
     border-bottom: 1px solid #e6e6e6;
-    padding: 0 0 16px 0;
+    padding: 16px 0 16px 0;
     > .discover-list-left {
       height: 90px;
       position: relative;
