@@ -53,44 +53,6 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
-    // // qinqiufangfa
-    // async getMarketDescribeInfo (name, sort1, sort2) {
-    //   const res = await marketService.getMarketDescribe(this.getpayload)
-    //   console.log(res.records)
-    //   // this.resInfo = res.records
-    //   return res.records
-    // },
-    // getpayload(){
-    //   let
-    //   return {
-    //     projectName: this.
-    //   }
-    // },
-    // nameChangeHandler () {
-    //   let res = await getMarketDescribeInfo(this.name,this.status1,this.status2)
-    // },
-    // areaChangeHandler (){
-    //   // this.areaIndex -> 1 = 2
-    //   switch (this.areaIndex) {
-    //     case 1:
-    //       this.=a1
-    //       break;
-
-    //     default:
-    //       break;
-    //   }
-    // }
-
-    // s1
-    // a() {
-
-    //   let getMarketDescribeInfo(this.name,this,)
-    // }
-
-    //     b() {
-
-    //   let getMarketDescribeInfo(this.name,this,)
-    // }
     onClickHandler() {
       this.$router.push('/market/inputSearch')
     },
