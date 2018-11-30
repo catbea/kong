@@ -4,28 +4,83 @@
       <div class="user-avatar">
         <router-link to="/user/edit/userPortrait">
           <!-- <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div> -->
-          <img :src="userEditIcon" class="editIcon-icon">
+          <img
+            :src="userInfo.avatarUrl"
+            class="editIcon-icon"
+          >
           <p class="user-avatar-clik">点击可编辑头像</p>
         </router-link>
       </div>
       <!-- <cell class="cell-item user-avatar" :to="'/user/edit/avatar'" title="我的头像" is-link>
         <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div>
       </cell> -->
-      <cell class="cell-item" title="名字" is-link :to="'/user/edit/username'" value="看的纯净水" />
-      <cell class="cell-item" title="手机号" :to="'/user/edit/phone'" is-link :value="userInfo.mobile" />
-      <cell class="cell-item" title="微信号" :to="'/user/edit/userWechat'" is-link />
-      <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" />
-      <cell class="cell-item" title="平台公司" is-link :value="userInfo.distributorName" @click="godistributorName" />
+      <cell
+        class="cell-item"
+        title="名字"
+        is-link
+        :to="'/user/edit/username'"
+        :value="userInfo.organizationName"
+      />
+      <cell
+        class="cell-item"
+        title="手机号"
+        :to="'/user/edit/phone'"
+        is-link
+        :value="userInfo.tempPhone"
+      />
+      <cell
+        class="cell-item"
+        title="微信号"
+        :to="'/user/edit/userWechat'"
+        is-link
+        :value="userInfo.registerMobile"
+      />
+      <cell
+        class="cell-item"
+        title="主营区域"
+        is-link
+        :value="userInfo.majorRegion"
+      />
+      <cell
+        class="cell-item"
+        title="平台公司"
+        is-link
+        :value="userInfo.distributorName"
+        @click="godistributorName"
+      />
       <!-- <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" /> -->
-      <cell class="cell-item" title="我的机构" is-link :to="'/user/edit/userMechanism'" />
+      <cell
+        class="cell-item"
+        title="我的机构"
+        is-link
+        :to="'/user/edit/userMechanism'"
+      />
     </cell-group>
     <cell-group class="user-advance-info">
-      <cell class="cell-item tag-edit" title="标签展示" is-link :to="'/user/edit/userLabel'">
-        <div slot="extra" class="tag-show-container">
-          <div class="tag-item" v-for="item in userInfo.userTags" :key="item.labelId">{{item.labelName}}</div>
+      <cell
+        class="cell-item tag-edit"
+        title="标签展示"
+        is-link
+        :to="'/user/edit/userLabel'"
+      >
+        <div
+          slot="extra"
+          class="tag-show-container"
+        >
+          <div
+            class="tag-item"
+            v-for="item in userInfo.labelList"
+            :key="item.labelId"
+          >{{item.labelName}}</div>
         </div>
       </cell>
-      <cell class="cell-item  user-signature" title="个人介绍" :to="'/user/edit/userIntroduction'" is-link value="别问我是谁，请叫我大师" />
+      <cell
+        class="cell-item  user-signature"
+        title="个人介绍"
+        :to="'/user/edit/userIntroduction'"
+        is-link
+        :value="userInfo.signature"
+      />
     </cell-group>
   </div>
 </template>
@@ -66,22 +121,27 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo'])
+  },
+  watch: {
+    userInfo (v) {
+
+    }
   }
 }
 </script>
 <style lang="less">
-.van-dialog{
-  border-radius:12px;
+.van-dialog {
+  border-radius: 12px;
   width: 72%;
   text-align: center;
 }
-.van-dialog__message{
-  font-size:15px;
-  color:rgba(51,51,51,1);
+.van-dialog__message {
+  font-size: 15px;
+  color: rgba(51, 51, 51, 1);
 }
-.van-button__text{
-  font-size:18px;
-  color:rgba(0,122,230,1);
+.van-button__text {
+  font-size: 18px;
+  color: rgba(0, 122, 230, 1);
 }
 .user-edit-page {
   width: 100%;

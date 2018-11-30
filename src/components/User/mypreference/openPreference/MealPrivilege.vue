@@ -1,33 +1,19 @@
 <template>
-  <div class="member-privilege-page">
-    <p class="VIPprivilege">VIP会员特权</p>
+  <div class="meal-privilege-page">
+    <p class="privilege">套餐特权</p>
     <ul>
       <li>
         <div class="market-icon bg_img" :style="{backgroundImage:'url('+marketImg+')'}"></div>
         <div class="market-describe">
-          <p>楼盘免费</p>
-          <p>全楼盘免费开通</p>
+          <p>楼盘任选</p>
+          <p>全楼盘随心选10个</p>
         </div>
       </li>
       <li>
-        <div class="market-icon bg_img" :style="{backgroundImage:'url('+welfareImg+')'}"></div>
+        <div class="market-icon bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></div>
         <div class="market-describe">
-          <p>专属福利</p>
-          <p>不定期豪礼赠送</p>
-        </div>
-      </li>
-      <li>
-        <div class="market-icon bg_img" :style="{backgroundImage:'url('+exaltedImg+')'}"></div>
-        <div class="market-describe">
-          <p>尊贵标识</p>
-          <p>VIP尊贵标识</p>
-        </div>
-      </li>
-      <li>
-        <div class="market-icon bg_img" :style="{backgroundImage:'url('+serviceImg+')'}"></div>
-        <div class="market-describe">
-          <p>专属客服</p>
-          <p>VIP专属客服通道</p>
+          <p>优享体验</p>
+          <p>1个月免费代理服务</p>
         </div>
       </li>
     </ul>
@@ -36,21 +22,18 @@
 <script>
 export default {
   data:()=>({
-    marketImg:require('IMG/myMember/icon1@2x.png'),
-    welfareImg:require('IMG/myMember/welfare1@2x.png'),
-    exaltedImg:require('IMG/myMember/Oval 4 Copy.png'),
-    serviceImg:require('IMG/myMember/Oval 4 Copy 3@2x.png')
+    marketImg:require('IMG/user/alreadyBuy/i1@2x.png'),
+    enjoyImg:require('IMG/user/alreadyBuy/xx@2x.png')
   }),
 }
 </script>
 <style lang="less">
-.member-privilege-page{
+.meal-privilege-page{
 padding:16px 0 0 16px;
-// height:163px;
 width:359px;
 background:rgba(255,255,255,1);
 margin:10px 0 18px 0;
-.VIPprivilege{
+.privilege{
   margin-bottom:14px;
 }
 ul{
@@ -75,7 +58,8 @@ ul{
         line-height:21px;
       }
       p:nth-child(2){
-        width:103px;
+        margin-top:3px;
+        width:104px;
         font-size:12px;
         font-family:PingFangSC-Regular;
         font-weight:400;

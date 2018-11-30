@@ -3,45 +3,88 @@
     <div class="user-edit-label">
       <p class="edit-label-title">选择标签</p>
       <p class="edit-label-conter">
-        <span v-for="(item,key) in agentLabel" :key="key">
-          <input :id="item.id" type="checkbox" data-type="welfare" name="reason">
-          <label :for="item.id">{{item.name}}</label>
+        <span
+          v-for="(item,key) in agentLabel"
+          :key="key"
+        >
+          <input
+            :id="item.id"
+            type="checkbox"
+            data-type="welfare"
+            name="reason"
+            @click="selectLabel(item,key)"
+            :value="item.itemName"
+          >
+          <label :for="item.id">{{item.itemName}}</label>
+
         </span>
+
       </p>
       <div class="edit-label-div">
-        <button class="edit-label-query">确认修改</button>
+        <button
+          class="edit-label-query"
+          @click="SubLabel"
+        >确认修改</button>
       </div>
     </div>
   </div>
 </template>
 <script>
 import userService from 'SERVICE/userService'
+import { Checkbox, CheckboxGroup } from 'vant';
+
 export default {
-  data() {
+  components: {
+    Checkbox,
+    CheckboxGroup
+  },
+  data () {
     return {
-      texts: [
-        { "id": "1", "name": "资深中介" },
-        { "id": "2", "name": "交易专家" },
-        { "id": "3", "name": "销售达人" },
-        { "id": "4", "name": "佛系卖房" },
-        { "id": "5", "name": "佛系卖房" },
-        { "id": "6", "name": "佛系卖房" },
-      ],
-      agentLabel:[],
+      agentLabel: [],
+      itemCode: '',
+      itemName: '',
+      couponsMap: [],
+      namelist:[],
+
     }
   },
-  methods:{
-    async getAgentLabel () {
-      const res = await userService.getAgentLabel(1)
+  created () {
+    this.getAgentLabel()
+  },
+  methods: {
+    async getAgentLabelList () {
+      const res = await userService.getAgentLabelList(1)
       this.agentLabel = res
+    },
+  
+      async SubLabel() {
+        
+        var selectidlist ='';//将选中值拼接成字符串
+      var check = document.getElementsByName("reason");
+      for (var i = 0; i < check.length; i++) {
+        if (check[i].checked == true) {
+          selectidlist = selectidlist+ check[i].id +",";
+        }
+      }
+debugger;
+       console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+selectidlist)
+       let userList ={
+         lableList:selectidlist
+       }
+        const res = await userService.getupdateByUser(userList)
+      }
     }
   }
-}
 </script>
 
 <style lang="less">
 .user-edit-label-page {
   background: #ffffff;
+  .my-label-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0.15rem;
+  }
   > .user-edit-label {
     margin: 27px 0;
     > .edit-label-title {

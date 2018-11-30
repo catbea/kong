@@ -3,8 +3,9 @@
     <ol>
       <li class="olItem">
         <div class="olItem-content">
+          <div class="cover"></div>
         <div class="coupon-item-page-left">
-         <div :class="{textColorA:ps.flag==1,textColorB:ps.flag==0}">¥<h3>19.19</h3></div>
+         <div :class="{textColorA:ps.flag==1,textColorB:ps.flag==0,margin:true}">¥<h3>19.19</h3></div>
           <p>满600元可用</p> 
         </div>
         <ul class="coupon-item-page-center">
@@ -43,8 +44,9 @@ export default {
 <style lang="less">
 .coupon-item-page{
   ol{
+    overflow: hidden;
     margin:16px 0 0 16px;
-    padding:18px 20px 16px 20px;
+    padding:12px 20px 16px 20px;
     width:303px;
     background:rgba(255,255,255,1);
     box-shadow:0px 3px 6px 0px rgba(58,76,130,0.07),0px 2px 17px 0px rgba(34,47,85,0.05);
@@ -59,6 +61,16 @@ export default {
       .olItem-content{
         display: flex;
       justify-content: space-between;
+      position: relative;
+      .cover{
+        width:25px;
+        height:28px;
+        border-radius:50%;
+        background:#f8f6f9;
+        position:absolute;
+        left:-35px;
+        top:26%;
+      }
       }
       .coupon-item-page-left{
         display: flex;
@@ -70,7 +82,9 @@ export default {
         font-weight:600;
         color:rgba(0,122,230,1);
         line-height:20px;
-        
+        .margin{
+            margin-top:15px;
+        }
         div{
           display:flex;
         }

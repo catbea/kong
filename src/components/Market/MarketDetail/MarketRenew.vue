@@ -2,15 +2,15 @@
   <ul class="market-renew-box">
       <li class="market-renew-box-recommend" @click="recommendHandle">
       <span class="bg_img market-renew-box-recommend-icon" :style="{'backgroundImage':'url('+ (flagTj?recommendA:recommend)+')'}"></span>
-      <p class="market-renew-box-recommend-text">推荐</p>
+      <p :class="{recommend:true,active:flagTj}" >推荐</p>
       </li>
     <li class="market-renew-box-show" @click="showHandle">
       <span class="bg_img market-renew-box-show-icon" :style="{'backgroundImage':'url('+ (flagZs?showA:show)+')'}"></span>
-      <p class="market-renew-box-show-text">展示</p>
+      <p :class="{marketShow:true,active:flagZs}">展示</p>
     </li>
     <li class="market-renew-box-stick" @click="stickHandle">
       <span class="bg_img  market-renew-box-stick-icon" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
-      <p class="market-renew-box-stick-text">置顶</p>
+      <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
     <div class="market-renew-box-button">续费(07/11到期)</div>
 </ul>
@@ -49,6 +49,9 @@ export default {
   padding-top: 14px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e6e6e6;
+  .active{
+    color:rgba(0, 122, 230, 1) !important;
+  }
   li {
     display: flex;
     flex-direction: column;
@@ -61,7 +64,7 @@ export default {
       width: 14px;
       height: 19px;
     }
-    .market-renew-box-recommend-text {
+    .recommend {
       font-size: 11px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
@@ -75,7 +78,7 @@ export default {
       width: 18px;
       height: 18px;
     }
-    .market-renew-box-show-text {
+    .marketShow {
       font-size: 11px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
@@ -89,7 +92,7 @@ export default {
       width: 15px;
       height: 19px;
     }
-    .market-renew-box-stick-text {
+    .stickText {
       font-size: 11px;
       font-family: PingFangSC-Regular;
       font-weight: 400;

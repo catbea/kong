@@ -31,12 +31,22 @@ class UserService {
    * 获取经纪人标签列表
    * @param {*} Authorization   用户token
    */
-  getAgentLabel(Authorization) {
+  getAgentLabelList(Authorization) {
     return xhr({
-      url: '/qywx/dictionary/getAgentLabel',
+      url: '/dictionary/getAgentLabel',
       body: {
         Authorization
       }
+    })
+  }
+  /**
+   * 新增经纪人标签基础信息
+ 
+   */
+  getupdateByUser() {
+    return xhr({
+      method:'POST',
+      url: '/user/updateAgentByUserId',
     })
   }
 /**
@@ -45,9 +55,9 @@ class UserService {
  * @param {*} current 
  * @param {*} size 
  */
-  getAgentSignaturePage(Authorization=1,current,size=10) {
+  getAgentSignaturePage(Authorization,current,size=10) {
     return xhr({
-      url: '/qywx/dictionary/getAgentSignaturePage',
+      url: '/dictionary/getAgentSignaturePage',
       body: {
         Authorization,
         current,
@@ -55,7 +65,7 @@ class UserService {
       }
     })
   }
-
+  
   /**
    * 获取分享图片
    * @param {*} shareType
@@ -69,6 +79,83 @@ class UserService {
         shareType,
         shareId,
         agentId
+      }
+    })
+  }
+/**
+ * 【企业微信】文章收藏列表
+ * @param {*} current 
+ * @param {*} size 
+ */
+  getqueryInfoList(current, size=10) {
+    return xhr({
+      url: '/cpCollect/queryInfoList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+
+/**
+ * 【企业微信】楼盘收藏列表
+ * @param {*} current 
+ * @param {*} size 
+ */
+  getqueryLinkerList(current, size=10) {
+    return xhr({
+      url: '/cpCollect/queryLinkerList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 经纪人楼盘收藏 
+   * @param {*} linkerId 
+   * @param {*} status 
+   * @param {*} type 
+   */
+  getlinkerDynamics(linkerId, status,type=1) {
+    return xhr({
+      method:'POST',
+      url: '/cpCollect/linkerCollection',
+      body: {
+        linkerId,
+        status,
+        type
+      }
+    })
+  }
+  /**
+   * 文章收藏
+   * @param {*} infoId 
+   * @param {*} deleteFlag 
+   * @param {*} type 
+   */
+  getlinkerCollection(infoId, deleteFlag,type=1) {
+    return xhr({
+      method:'POST',
+      url: '/cpInformationCollect/insertInfo',
+      body: {
+        infoId,
+        deleteFlag,
+        type
+      }
+    })
+  }
+/**
+ * 历史文章
+ * @param {*} current 
+ * @param {*} size 
+ */
+  gethistoryList(current, size=10) {
+    return xhr({
+      url: '/cpInformation/historyList',
+      body: {
+        current,
+        size
       }
     })
   }
