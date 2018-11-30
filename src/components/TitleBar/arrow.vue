@@ -43,7 +43,7 @@ export default {
 .title-bar {
   display: flex;
   justify-content: space-between;
-  margin: 16px 0;
+  margin:16px 0 16px 0;
   line-height: 30px;
   .title-text {
     display: inline-block;

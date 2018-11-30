@@ -63,8 +63,8 @@ export default {
     ],
     btnIcons: [
       { "title": "勿扰模式", "Icon": require('IMG/user/Group9@2x.png') },
-      { "title": "消费账单", "Icon": require('IMG/user/Group7@2x.png') },
-      { "title": "邀请有礼", "Icon": require('IMG/user/Group8@2x.png') },
+      { "title": "意见反馈", "Icon": require('IMG/user/Group7@2x.png') },
+      { "title": "联系客服", "Icon": require('IMG/user/Group8@2x.png') },
     ]
 
 
@@ -111,7 +111,7 @@ export default {
           this.$router.push('/user/noDisturb')
           break;
         case 1:
-
+        this.$router.push('/user/opinionFeedback/describe')
           break;
         case 2:
 
