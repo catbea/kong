@@ -1,35 +1,75 @@
 <template>
   <div class="collection-page">
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
+      <van-tabs
+        color="#007AE6"
+        :line-width="15"
+        :swipe-threshold="6"
+      >
         <van-tab title="收藏楼盘">
-          <collection-null :collectionTips="collectionTips" :collectionRemar="collectionRemar" :collectionLike="collectionLike" :collectionIcon="collectionIcon"></collection-null>
-          <div class="dynamicsInfo-list">
+          <collection-null
+            v-show="dynamicsList.lenght == 0"
+            :collectionTips="collectionTips"
+            :collectionRemar="collectionRemar"
+            :collectionLike="collectionLike"
+            :collectionIcon="collectionIcon"
+          ></collection-null>
+
+          <div
+            class="dynamicsInfo-list"
+            v-for="(item,key) in dynamicsList"
+            :key="key"
+          >
 
             <div class="dynamicsInfo-list-top">
+              <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
-                <img :src="backIcon" class="mark-icon">
+                <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
+                
+                <img
+                  :src="item.linkerUrl"
+                  class="mark-icon"
+                >
+                <img
+                  :src="ovalIcon"
+                  class="oval-icon"
+                >
+
               </span>
               <span class="dynamicsInfo-list-right">
-                <p class="list-right-title">万科臻湾汇
+                <p class="list-right-title">{{item.linkerName}}
 
                 </p>
-                <p class="list-right-time">南山 深圳湾 &nbsp; 120000元/㎡</p>
+                <p class="list-right-time">{{item.city}} {{item.county}} &nbsp; {{item.price}}{{item.priceUnit}}</p>
                 <p class="list-right-label">
-                  <span class="right-label right-label-red">热销中</span>
-                  <span class="right-label right-label-gray">地铁房</span>
+                  <!-- 销售状态（楼盘）: 0热销中、1即将发售、3售罄 -->
+
+                  <span class="right-label right-label-red">{{saleStatus[item.saleStatus]}}</span>
+                  <span
+                    class="right-label right-label-gray"
+                    v-for="(its,key) in item.linkerTags"
+                    :key="key"
+                  >{{its}}</span>
                 </p>
                 <p class="list-right-price">
-                  <span class="right-price right-price-open">143次开通 &nbsp; 11/22到期</span>
-                  <!-- <span class="lab-right right-price-lab-ok">收藏</span> -->
-                  <span class="lab-right right-price-lab">取消收藏</span>
+                  <span class="right-price right-price-open">{{item.openTimes}}次开通 &nbsp; {{item.subscribeInvalidTime}}到期</span>
+                  <span
+                    class="lab-right right-price-lab-ok"
+                    v-show='statusTpye == 1'
+                    @click="shouc(item)"
+                  >收藏</span>
+                  <span
+                    class="lab-right right-price-lab"
+                    v-show='statusTpye == 0'
+                    @click="shouc(item)"
+                  >取消收藏</span>
                 </p>
               </span>
             </div>
 
             <div class="dynamicsInfo-list-commission">
               <span class="list-commission-word">佣</span>
-              1.056%+50000元/套
+              {{item.divisionRules}}
             </div>
 
           </div>
@@ -37,8 +77,18 @@
         </van-tab>
         <van-tab title="收藏文章">
           <div class="collection-top">
-            <collection-null :collectionTips="ArticleTips" :collectionRemar="ArticleRemar" :collectionLike="collectionLike" :collectionIcon="ArticleIcon"></collection-null>
-            <collection-article></collection-article>
+            <collection-null
+              v-show="collectionList.lenght == 0"
+              :collectionTips="ArticleTips"
+              :collectionRemar="ArticleRemar"
+              :collectionLike="collectionLike"
+              :collectionIcon="ArticleIcon"
+            ></collection-null>
+            <collection-article
+              :data="collectionList"
+              :info="gocollection"
+              @click="gocollection"
+            ></collection-article>
           </div>
         </van-tab>
       </van-tabs>
@@ -48,13 +98,19 @@
 <script>
 import collectionArticle from 'COMP/User/collection/collectionArticle'
 import collectionNull from 'COMP/User/collection/collectionNull'
+import userService from 'SERVICE/userService'
 export default {
   components: {
     collectionArticle,
     collectionNull
   },
-  data() {
+  data () {
     return {
+      dynamicsList: [],
+      collectionList: [],
+      ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
+      rectangIcon: require('IMG/user/collection/Rectanglebeck@2x.png'),
+      saleStatus: { '1': '热销中', '0': '即将发售', '2': '售罄' },
       backIcon: require('IMG/user/usercard@2x.png'),
       totalTitle: '楼盘数量',
       totalNum: '90',
@@ -72,7 +128,49 @@ export default {
       ArticleTips: '您还没有收藏任何文章',
       ArticleRemar: '快去看看我们为您准备的推荐文章吧',
       ArticleIcon: require('IMG/user/collection/Article@2x.png'),
+      statusTpye:0,
 
+    }
+  },
+  created () {
+    this.getdynamicsInfo()
+    this.getcollectionList()
+  },
+  methods: {
+    async getdynamicsInfo () {
+      const res = await userService.getqueryLinkerList()
+      this.dynamicsList = res.records
+      for(let i = 0; i<this.dynamicsList.lenght; i++){
+        this.statusTpye = res.records
+      }
+     
+    },
+    async getcollectionList () {
+      const res = await userService.getqueryInfoList()
+      this.collectionList = res.records
+    },
+    //收藏樓盤
+    async shouc (item) {
+
+      if (item.status == 1) {
+        this.statusTpye = 0
+      } else if(item.status == 0) {
+        this.statusTpye = 1
+      }
+      await userService.getlinkerDynamics(item.linkerId, statusTpye)
+    },
+    //收藏文章
+    async gocollection () {
+      debugger;
+
+      let deleteFlag;
+      if (this.collectionList.deleteType == 1) {
+        deleteFlag = 0
+      } else if (this.collectionList.deleteType == 0){
+        deleteFlag = 1
+      }
+
+      await userService.getlinkerCollection(this.collectionList.id, deleteFlag)
     }
   }
 }
@@ -87,7 +185,7 @@ export default {
   }
 }
 .dynamicsInfo-list {
-  margin: 0 15px;
+  margin: 5px 15px;
 
   border-bottom: 1px solid #e6e6e6;
   padding: 15px 0 16px 0;
@@ -103,6 +201,14 @@ export default {
         height: 90px;
         background: rgba(255, 255, 255, 1);
         border-radius: 6px;
+      }
+      > .oval-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+            position: absolute;
+    left: 45px;
+    top: 30px;
       }
     }
     > .dynamicsInfo-list-right {
@@ -134,7 +240,7 @@ export default {
         color: rgba(153, 153, 153, 1);
       }
       > .list-right-label {
-        line-height: 17px;
+        line-height: 27px;
         > .right-label {
           font-size: 10px;
           font-weight: 400;
@@ -155,7 +261,7 @@ export default {
         font-size: 15px;
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
-        line-height: 39px;
+        margin-bottom: 16px;
         > .lab-right {
           font-size: 10px;
           font-weight: 400;

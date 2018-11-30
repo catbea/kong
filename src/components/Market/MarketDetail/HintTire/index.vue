@@ -19,7 +19,7 @@
 <script>
 export default {
   data:()=>({
-    enjoyImg:require('IMG/marketDetail/rectangle@2x.png')
+    enjoyImg:require('IMG/marketDetail/enjoy@2x.png')
   }),
   methods:{
     knowHandle(){
@@ -41,8 +41,8 @@ export default {
     display:flex;
     flex-direction:column;
     .icon-enjoy{
-    width:16px;
-    height:16px;
+    width:24px;
+    height:24px;
   }
   p{
     font-size:12px;
@@ -69,16 +69,18 @@ export default {
     }
     .line{
       display:flex;
-      width:65px;
-      height:164px;
-      border-right:1px dotted rgba(255,255,255,1);
-      border-bottom:1px dotted rgba(255,255,255,1);
+      width:62px;
+      height:159px;
+      border-right: dashed rgba(255,255,255,1);
+      border-bottom: dashed rgba(255,255,255,1);
+      // border-style: dotted;
       position: relative;
       .one{
         width:5px;
         height:5px;
         position:absolute;
-        right:-3px;
+        right:-4.5px;
+        top:-7px;
         background:rgba(255,255,255,1);
         border-radius:50%;
       }
@@ -86,7 +88,8 @@ export default {
         width:5px;
         height:5px;
         position:absolute;
-        bottom:-3px;
+        bottom:-4.5px;
+        left:-6.5px;
         background:rgba(255,255,255,1);
         border-radius:50%;
       }

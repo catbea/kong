@@ -7,7 +7,7 @@
     <screen></screen>
     </div>
     <div class="market-box">
-    <meal-market  v-for="(item,index) in dataArr" :key="index" :dataArr="item" :indexData="index" :showData="showArr" @click="selectHandle(index)"></meal-market>
+    <meal-market  v-for="(item,index) in dataArr" :key="index" :dataArr="item" :indexData="index" :showData="showArr.indexOf(index) >-1" @click.native="selectHandle(index)"></meal-market>
     </div>
     <div class="check-all-box">
       <div class="img-box">
@@ -45,9 +45,9 @@ export default {
   }),
   methods:{
     selectHandle(index){
+      console.log(11)
       if(this.showArr.indexOf(index) == -1){
         this.showArr.push(index)
-        // console.log(index)
       }else{
         console.log(index)
         this.showArr=this.showArr.filter((item)=>{

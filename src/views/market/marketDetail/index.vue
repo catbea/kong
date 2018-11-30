@@ -147,6 +147,7 @@ export default {
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
+    this.hintShow=false
   }
 }
 </script>

@@ -1,15 +1,22 @@
 <template>
   <div class="collection-container">
 
-    <div class="collection-list" >
+    <div
+      class="collection-list"
+      v-if="data"
+      v-for="(item,key) in data" :key="key"
+    >
       <span class="collection-list-left">
-        <p class="list-left-title">厦门今年第二批9000套保吃大餐吃的深V是的</p>
-        <p class="list-left-conter">政府和企业现在都明白，与建造航母或生产导弹想必，与建造航母或生产导弹想必，在某些情况在某些情况与建造航母或生产导弹想必，在某些情况</p>
-        <!-- <span class="list-left-tab-ok">收藏</span> -->
-        <span class="list-left-tab-no">取消收藏</span>
+        <p class="list-left-title">{{item.title}}</p>
+        <p class="list-left-conter">{{item.content}}</p>
+        <span class="list-left-tab-ok" v-if="item.deleteType ==1" >收藏</span> 
+        <span class="list-left-tab-no" v-else  @click="gocollection">取消收藏</span>
       </span>
       <span class="collection-list-right">
-        <img :src="backIcon" class="mark-icon">
+        <img
+          :src="item.image"
+          class="mark-icon"
+        >
       </span>
 
     </div>
@@ -17,17 +24,24 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       backIcon: require('IMG/user/usercard@2x.png')
     }
   },
+  props: {
+    data: { type: Array },
+    info: {type: Object}
+  },
   methods: {
-    GOheadline() {
-      console.log(1)
-      //跳转到房产头条
-      this.$router.push('/discover/headline')
+    gocollection(){
+      this.$emit('click', this.info)
     }
+    // GOheadline () {
+    //   console.log(1)
+    //   //跳转到房产头条
+    //   this.$router.push('/discover/headline')
+    // }
   }
 }
 </script>
@@ -41,6 +55,7 @@ export default {
     > .collection-list-left {
       height: 90px;
       position: relative;
+      width: 61%;
       > .list-left-title {
         font-size: 16px;
         font-weight: 400;
@@ -49,14 +64,12 @@ export default {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        width: 62%;
       }
       > .list-left-conter {
         font-size: 12px;
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         line-height: 17px;
-        width: 60%;
         margin-top: 5px;
         word-break: break-all;
         text-overflow: ellipsis;
@@ -93,7 +106,8 @@ export default {
       }
     }
     > .collection-list-right {
-      width: 120px;
+      // width: 120px;
+      width: 32%;
       height: 90px;
       border-radius: 6px;
       position: absolute;

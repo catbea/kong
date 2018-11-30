@@ -17,7 +17,7 @@ let zerofill = val => (val >= 10 ? val : '0' + val)
  * @return {String}
  */
 export default (time, type, separate = '-') => {
-  let date = new Date(time)
+  let date = new Date(parseInt(time))
   let year = date.getFullYear()
   let month = date.getMonth() + 1
   let day = date.getDate()
