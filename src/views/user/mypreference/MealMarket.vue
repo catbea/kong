@@ -2,7 +2,7 @@
   <div class="meal-market-page">
     <div class="meal-market-page-box">
       <div class="meal-market-page-box-top">
-        <span class="icon-check bg_img" :style="{backgroundImage:'url('+(showData.indexOf(indexData) != -1?checkColorImg:checkImg)+')'}"></span>
+        <span class="icon-check bg_img" :style="{backgroundImage:'url('+ (showData ? checkColorImg:checkImg)+')'}"></span>
         <div class="meal-market-page-box-top-left">
           <p class="icon-discount">9.9折</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
@@ -55,7 +55,7 @@ export default {
       type:Number
     },
     showData:{
-      type:Array
+      type:Boolean
     }
   },
   watch:{
