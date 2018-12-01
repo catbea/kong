@@ -11,7 +11,7 @@
     </div>
     <div class="check-all-box">
       <div class="img-box">
-      <span class="icon-check bg_img" :style="{backgroundImage:'url('+checkImg+')'}"></span>
+      <span class="icon-check bg_img" :style="{backgroundImage:'url('+(checkShow?checkColorImg:checkImg)+')'}" @click="allSelectHandle"></span>
       全选
       </div>
       <router-link tag="p" to="/user/mypreference/openPreference" class="check-all-button">开通</router-link>
@@ -28,7 +28,11 @@ export default {
     Screen,
     MealMarket
   },
+  created() {
+    this.arrLength()
+  },
   data:()=>({
+    dataArrLength:null,
     showArr:[],
     searchInfo:{
      siteText:"全国",
@@ -36,6 +40,7 @@ export default {
    },
     checkImg:require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg:require('IMG/user/mealMarket/checkColor@2x.png'),
+    checkShow:false,
    dataArr:[
      {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通",price:"1%+5万元/套"},
      {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通",price:"1%+5万元/套"},
@@ -54,6 +59,22 @@ export default {
           return item != index
         })
       }
+    },
+    allSelectHandle(){
+      this.checkShow=! this.checkShow
+      if(this.showArr.length>=this.dataArrLength){
+        this.showArr=this.showArr.splice(0,0)
+      }else{
+        this.showArr=this.showArr.splice(0,0)
+        for (let index = 0; index < this.dataArr.length; index++) {
+        this.showArr.push(index)
+      }
+      }
+      console.log(this.showArr.length)
+      console.log(this.showArr)
+    },
+    arrLength(){
+      this.dataArrLength=this.dataArr.length
     }
   }
 }
