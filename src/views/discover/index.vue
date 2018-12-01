@@ -11,7 +11,9 @@
       </van-swipe-item>
     </van-swipe>
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+
+
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated @click="goList">
         <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName">
           <keep-alive>
             <van-list v-model="loading" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad">
@@ -20,6 +22,7 @@
           </keep-alive>
         </van-tab>
       </van-tabs>
+
     </div>
   </div>
 </template>
@@ -43,6 +46,10 @@ export default {
     this.getInformationCarousel()
   },
   methods: {
+     goList(index,title){
+       alert("1111")
+        alert(index)
+    },
     // 获取轮播和tabs配置
     async getInformationCarousel () {
       const res = await discoverService.informationCarousel(this.userArea.city)
