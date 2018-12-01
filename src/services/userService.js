@@ -45,17 +45,17 @@ class UserService {
    */
   getupdateByUser() {
     return xhr({
-      method:'POST',
+      method: 'POST',
       url: '/user/updateAgentByUserId',
     })
   }
-/**
- * 获取经纪人个性签名列表
- * @param {*} Authorization 
- * @param {*} current 
- * @param {*} size 
- */
-  getAgentSignaturePage(Authorization,current,size=10) {
+  /**
+   * 获取经纪人个性签名列表
+   * @param {*} Authorization 
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getAgentSignaturePage(Authorization, current, size = 10) {
     return xhr({
       url: '/dictionary/getAgentSignaturePage',
       body: {
@@ -65,7 +65,7 @@ class UserService {
       }
     })
   }
-  
+
   /**
    * 获取分享图片
    * @param {*} shareType
@@ -82,12 +82,12 @@ class UserService {
       }
     })
   }
-/**
- * 【企业微信】文章收藏列表
- * @param {*} current 
- * @param {*} size 
- */
-  getqueryInfoList(current, size=10) {
+  /**
+   * 【企业微信】文章收藏列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getqueryInfoList(current, size = 10) {
     return xhr({
       url: '/cpCollect/queryInfoList',
       body: {
@@ -97,12 +97,12 @@ class UserService {
     })
   }
 
-/**
- * 【企业微信】楼盘收藏列表
- * @param {*} current 
- * @param {*} size 
- */
-  getqueryLinkerList(current, size=10) {
+  /**
+   * 【企业微信】楼盘收藏列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getqueryLinkerList(current, size = 10) {
     return xhr({
       url: '/cpCollect/queryLinkerList',
       body: {
@@ -117,9 +117,9 @@ class UserService {
    * @param {*} status 
    * @param {*} type 
    */
-  getlinkerDynamics(linkerId, status,type=1) {
+  getlinkerDynamics(linkerId, status, type = 1) {
     return xhr({
-      method:'POST',
+      method: 'POST',
       url: '/cpCollect/linkerCollection',
       body: {
         linkerId,
@@ -134,9 +134,9 @@ class UserService {
    * @param {*} deleteFlag 
    * @param {*} type 
    */
-  getlinkerCollection(infoId, deleteFlag,type=1) {
+  getlinkerCollection(infoId, deleteFlag, type = 1) {
     return xhr({
-      method:'POST',
+      method: 'POST',
       url: '/cpInformationCollect/insertInfo',
       body: {
         infoId,
@@ -145,12 +145,12 @@ class UserService {
       }
     })
   }
-/**
- * 历史文章
- * @param {*} current 
- * @param {*} size 
- */
-  gethistoryList(current, size=10) {
+  /**
+   * 历史文章
+   * @param {*} current 
+   * @param {*} size 
+   */
+  gethistoryList(current, size = 10) {
     return xhr({
       url: '/cpInformation/historyList',
       body: {
@@ -159,5 +159,54 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 我的账单
+   * @param {*} agentId 
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getMyBillList(agentId, current, size = 10) {
+    return xhr({
+      url: '/account/purchaseHistory',
+      body: {
+        agentId,
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 历史浏览列表
+   * @param {*} agentId 
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getBrowseHistoryList(agentId, current, size = 10) {
+    return xhr({
+      url: '/cpInformation/historyList',
+      body: {
+        agentId,
+        current,
+        size
+      }
+    })
+  }
+
+  /**
+   * 删除文章
+   * @param {*} agentId 
+   * @param {*} infoIds 
+   */
+  deleHistoryArticle(infoIds) {
+    return xhr({
+      method: 'DELETE',
+      url: '/cpInformation/batchDelete',
+      body: {
+        infoIds
+      }
+    })
+  }
+
 }
 export default new UserService()

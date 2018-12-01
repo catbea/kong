@@ -13,7 +13,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
     {
       Authorization:
-        'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJwYnFtbmIiLCJzdWIiOiJhZ2VudElkOnd3MjhmNDVkZmUwZTVhZTMxZDoxNjMyIiwiZXhwIjoxNTQzNDg1NDEyLCJpYXQiOjE1NDI4ODA2MTJ9.KuGUQmQSmnwyzICXkrNmNiOeLCzGbcDAniq4Mtb8xBZGAk6ozNJqj3FaP_VZvFKGOeycqY0jzrS_PPTH4hVtrQ'
+        'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJhd3NocDQiLCJzdWIiOiJhZ2VudElkOnd3MjhmNDVkZmUwZTVhZTMxZDo3MDUiLCJleHAiOjE1NDM5MTc3MjksImlhdCI6MTU0MzMxMjkyOX0.EkTPyJRS0KpHKz6I2-AJeGetHs406f98pXPQnoSdP78HQvQwwg1Wfpgi61Wj7QpyTYu5GJfZIMh9nitXYQwMFQ'
     },
     headers
   )
