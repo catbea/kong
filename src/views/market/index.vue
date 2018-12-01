@@ -6,14 +6,10 @@
           <p>
             深圳
             <span :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
-            </p>
-        <form action="/">
-          <van-search
-            v-model="value"
-            placeholder="请输入搜索关键词"
-            @click="onClickHandler"
-          />
-        </form>
+          </p>
+          <form action="/">
+            <van-search v-model="value" placeholder="请输入搜索关键词" @click="onClickHandler" />
+          </form>
         </div>
         <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
@@ -32,7 +28,7 @@ import TitleBar from 'COMP/TitleBar/'
 import AlreadyOpen from 'COMP/Market/AlreadyOpen/'
 import marketService from 'SERVICE/marketService'
 export default {
-  created() {},
+  created () { },
   components: {
     Screen,
     MarketDescribe,
@@ -48,25 +44,25 @@ export default {
     resInfo: null,
     borderBottom: true
   }),
-  created() {
+  created () {
     this.getMarketDescribeInfo()
     this.getBrokerInfo()
   },
   methods: {
-    onClickHandler() {
+    onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
-    async getMarketDescribeInfo() {
+    async getMarketDescribeInfo () {
       const res = await marketService.getMarketDescribe()
       console.log(res.records)
       this.resInfo = res.records
     },
-    async getBrokerInfo() {
+    async getBrokerInfo () {
       const res = await marketService.getBrokerMarket(1)
       console.log(res)
       this.agentIdInfo = res
     },
-    skipDetail(n) {
+    skipDetail (n) {
       if (n == 1) {
         this.$router.push('/market/marketDetail')
       }

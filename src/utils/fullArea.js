@@ -1,4 +1,23 @@
-export default {
+const getAreaCode = (name) => {
+  name = name.replace(/\s+/g, '')
+  for(let key1 of Object.keys(fullArea)){
+    console.log(key1);
+    for(let key2 of fullArea[key1]){
+      // if()
+      
+    }
+    // for((let tempName, letcode) of fullArea[key]){
+    //   console.log(tempName);
+      
+    //   // if(name === tempName) return 
+    // }
+  }
+}
+const getChildren = () => {
+
+}
+
+const fullArea = {
   province_list: {
     '110000': '北京市',
     '120000': '天津市',
@@ -3781,4 +3800,4 @@ export default {
     '820101': '澳门半岛',
     '820201': '离岛'
   }
-};
+}
