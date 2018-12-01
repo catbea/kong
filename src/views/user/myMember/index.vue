@@ -52,7 +52,8 @@ export default {
       border:'none'
     },
     title:"VIP生效城市待选",
-    content:"是否选择深圳作为VIP开通城市"
+    content:"是否选择深圳作为VIP开通城市",
+    flag:true
   }),
   computed:{
     borderStyle(){

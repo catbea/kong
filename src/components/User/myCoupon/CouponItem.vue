@@ -3,23 +3,24 @@
     <ol>
       <li class="olItem">
         <div class="olItem-content">
-          <div class="cover"></div>
+          <div class="cover-left"></div>
         <div class="coupon-item-page-left">
-         <div :class="{textColorA:ps.flag==1,textColorB:ps.flag==0,margin:true}">¥<h3>19.19</h3></div>
-          <p>满600元可用</p> 
+         <div :class="{textColorA:ps.flag==1,textColorB:ps.flag==0,margin:true}">¥<h3>{{info.satisfyLimit}}</h3></div>
+          <p>{{info.ticketName}}</p> 
         </div>
         <ul class="coupon-item-page-center">
-          <li>新用户专享优惠券</li>
-          <li>2018/06/19-2018/09/30</li>
+          <li>{{ticketType}}</li>
+          <li>{{info.grantTime}}-{{info.deadline}}</li>
           <li>详细信息 <span class="bg_img" :style="{backgroundImage:'url('+detailImg+')'}"></span></li>
         </ul>
         <div class="coupon-item-page-right">
-         <p v-if="ps.mayUse" class="mayUse">立即使用</p>
+         <p v-if="ps.mayUse" class="mayUse" @click="useHandle">立即使用</p>
           <span v-if="ps.yetUse" class="yetUse bg_img" :style="{backgroundImage:'url('+yetUseImg+')'}"></span>
           <span v-if="ps.yetPast" class="yetPast bg_img" :style="{backgroundImage:'url('+yetPastImg+')'}"></span>
           </div>
+          <div class="cover-right"></div>
         </div>
-        <div class="coupon-item-page-bottom">限区域：仅可用于购买广东省内楼盘使用</div>
+        <div class="coupon-item-page-bottom">{{info.useRule}}</div>
       </li>
     </ol>
   </div>
@@ -37,6 +38,27 @@ export default {
     },
     info:{
       type:Object
+    }
+  },
+  methods:{
+    useHandle(){
+      this.$emit("skipHandle",1)
+    }
+  },
+  computed:{
+    ticketType(){
+      switch (this.info.ticketType) {
+        case 10:
+          return "代金券"
+        case 20:
+          return "折扣券"
+          case 30:
+          return "满减券"
+          case 40:
+          return "红包"
+        default:
+          break;
+      }
     }
   }
 }
@@ -62,13 +84,22 @@ export default {
         display: flex;
       justify-content: space-between;
       position: relative;
-      .cover{
+      .cover-left{
         width:25px;
         height:28px;
         border-radius:50%;
         background:#f8f6f9;
         position:absolute;
         left:-35px;
+        top:26%;
+      }
+      .cover-right{
+        width:25px;
+        height:28px;
+        border-radius:50%;
+        background:#f8f6f9;
+        position:absolute;
+        right:-35px;
         top:26%;
       }
       }
@@ -179,7 +210,8 @@ export default {
         color:rgba(153,153,153,1);
         line-height:24px;
         margin-top:16px;
-        text-indent:8px;
+        // text-indent:8px;
+        text-align: center;
       }
     }
   }

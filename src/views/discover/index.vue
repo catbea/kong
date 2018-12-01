@@ -46,6 +46,7 @@ export default {
     // 获取轮播和tabs配置
     async getInformationCarousel () {
       const res = await discoverService.informationCarousel(this.userArea.city)
+      console.log(res)
       this.payloadTabs(res.infoSettingList)
       this.swipeList = res.infoCarouselList
     },

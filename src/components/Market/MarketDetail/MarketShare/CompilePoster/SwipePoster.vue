@@ -1,12 +1,12 @@
 <template>
   <div class="swipe-poster-page">
-      <div class="swipe-poster-item" v-for="(item,index) in list" :key="index"></div>
+      <div class="swipe-poster-item"></div>
     </div>
 </template>
 <script>
 export default {
   data: () => ({
-    list: [1, 2, 3, 4]
+    
   })
 }
 </script>
@@ -15,14 +15,12 @@ export default {
   margin-top: 20px;
   width: 375px;
   display: flex;
-  display: -webkit-box;
-  overflow-x: auto;
+  justify-content: center;
   > .swipe-poster-item {
-    width: 212px;
-    height: 346px;
+    width: 240px;
+    height: 387px;
     border-radius: 0px 0px 6px 6px;
     border: 1px solid;
-    margin: 0 24px 0 24px;
   }
 }
 </style>
