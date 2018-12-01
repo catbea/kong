@@ -25,7 +25,7 @@
               <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-                
+
                 <img
                   :src="item.linkerUrl"
                   class="mark-icon"
@@ -52,22 +52,27 @@
                   >{{its}}</span>
                 </p>
                 <p class="list-right-price">
-                  <span class="right-price right-price-open">{{item.openTimes}}次开通 &nbsp; {{item.subscribeInvalidTime}}到期</span>
+                  <span class="right-price right-price-open">{{item.openTimes}}次开通 &nbsp; <span v-show="item.subscribeInvalidTime !=''">{{ parseInt(item.subscribeInvalidTime) |dateTimeFormatter(0,'/') }}到期</span></span>
                   <span
-                    class="lab-right right-price-lab-ok"
-                    v-show='statusTpye == 1'
-                    @click="shouc(item)"
+                    class=" right-price-lab-ok"
+                    id="rightok"
+                    v-show='item.status == 0'
+                    @click="godynamics(item)"
                   >收藏</span>
                   <span
-                    class="lab-right right-price-lab"
-                    v-show='statusTpye == 0'
-                    @click="shouc(item)"
+                    class="right-price-lab"
+                    v-show='item.status == 1'
+                    id="rightno"
+                    @click="godynamics(item)"
                   >取消收藏</span>
                 </p>
               </span>
             </div>
 
-            <div class="dynamicsInfo-list-commission">
+            <div
+              class="dynamicsInfo-list-commission"
+              v-show="item.divisionRules != '' "
+            >
               <span class="list-commission-word">佣</span>
               {{item.divisionRules}}
             </div>
@@ -86,8 +91,8 @@
             ></collection-null>
             <collection-article
               :data="collectionList"
-              :info="gocollection"
-              @click="gocollection"
+              info="gocollection"
+              @myclick="gocollection"
             ></collection-article>
           </div>
         </van-tab>
@@ -128,7 +133,8 @@ export default {
       ArticleTips: '您还没有收藏任何文章',
       ArticleRemar: '快去看看我们为您准备的推荐文章吧',
       ArticleIcon: require('IMG/user/collection/Article@2x.png'),
-      statusTpye:0,
+      statusTpye: 0,
+      deleteFlag: 0,
 
     }
   },
@@ -137,40 +143,84 @@ export default {
     this.getcollectionList()
   },
   methods: {
+
     async getdynamicsInfo () {
       const res = await userService.getqueryLinkerList()
       this.dynamicsList = res.records
-      for(let i = 0; i<this.dynamicsList.lenght; i++){
-        this.statusTpye = res.records
-      }
-     
+
     },
     async getcollectionList () {
       const res = await userService.getqueryInfoList()
       this.collectionList = res.records
     },
     //收藏樓盤
-    async shouc (item) {
-
-      if (item.status == 1) {
+    async godynamics (item) {
+      debugger
+      if (this.statusTpye != '') {
+        if (this.statusTpye == 1) {
+          this.statusTpye = 0
+        } else if (this.statusTpye == 0) {
+          this.statusTpye = 1
+        }
+      } else {
+        if (this.statusTpye != '') {
+          if (item.status == 1) {
+            this.statusTpye = 0
+          } else if (item.status == 0) {
+            this.statusTpye = 1
+          }
+        }
+      }
+      if (item.status == 1 || this.statusTpye == 1) {
         this.statusTpye = 0
-      } else if(item.status == 0) {
+      } else if (item.status == 0 || this.statusTpye == 0) {
         this.statusTpye = 1
       }
-      await userService.getlinkerDynamics(item.linkerId, statusTpye)
-    },
-    //收藏文章
-    async gocollection () {
-      debugger;
+      await userService.getlinkerDynamics(item.linkerId, this.statusTpye)
+      debugger
+      let rightok = document.getElementById("rightok")
+      let rightno = document.getElementById("rightno")
+      if (this.statusTpye == 1) {
+        rightok.style.display = "none"
+        rightno.style.display = "block"
+      } else if (this.statusTpye == 0) {
+        rightno.style.display = "none"
+        rightok.style.display = "block"
 
-      let deleteFlag;
-      if (this.collectionList.deleteType == 1) {
-        deleteFlag = 0
-      } else if (this.collectionList.deleteType == 0){
-        deleteFlag = 1
+
       }
 
-      await userService.getlinkerCollection(this.collectionList.id, deleteFlag)
+    },
+    //收藏文章
+    async gocollection (cons) {
+      console.log("xxxxxxxxxxxxxxxxxxxxxxxxxx", cons)
+
+      console.log(this.deleteFlag)
+      console.log(cons.deleteType)
+      if (cons.deleteType == 1 || this.deleteFlag == 1) {
+        this.deleteFlag = 0
+      } else if (cons.deleteType == 0 || this.deleteFlag == 0) {
+        this.deleteFlag = 1
+      }
+      // <!-- 收藏状态：1-取消收藏，0-收藏 -->
+
+      debugger
+      let collok = cons.divIdOk
+      let collno = cons.divIdNo
+      collok = document.getElementById(collok)
+      collno = document.getElementById(collno)
+
+      if (this.deleteFlag == 1) {
+        collok.style.display = "block"
+        collno.style.display = "none"
+        this.deleteFlag = 0
+      } else if (this.deleteFlag == 0) {
+        collok.style.display = "none"
+        collno.style.display = "block"
+
+        this.deleteFlag = 1
+      }
+      await userService.getlinkerCollection(cons.infoId, this.deleteFlag)
     }
   }
 }
@@ -192,6 +242,7 @@ export default {
   > .dynamicsInfo-list-top {
     display: flex;
     margin-bottom: 4px;
+    position: relative;
     > .dynamicsInfo-list-left {
       height: 90px;
       position: relative;
@@ -206,15 +257,14 @@ export default {
         width: 32px;
         height: 32px;
         border-radius: 50%;
-            position: absolute;
-    left: 45px;
-    top: 30px;
+        position: absolute;
+        left: 45px;
+        top: 30px;
       }
     }
     > .dynamicsInfo-list-right {
       border-radius: 6px;
       margin-left: 12px;
-
       > .list-right-title {
         font-size: 16px;
         font-weight: 400;
@@ -262,7 +312,8 @@ export default {
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
         margin-bottom: 16px;
-        > .lab-right {
+        > .right-price-lab-ok {
+          color: rgba(0, 122, 230, 1);
           font-size: 10px;
           font-weight: 400;
           line-height: 20px;
@@ -270,16 +321,24 @@ export default {
           height: 20px;
           border-radius: 16px;
           border: 1px solid;
-          right: 15px;
+          right: 0;
           position: absolute;
           text-align: center;
           margin-top: 5px;
         }
-        > .right-price-lab-ok {
-          color: rgba(0, 122, 230, 1);
-        }
         > .right-price-lab {
           color: rgba(175, 178, 195, 1);
+          font-size: 10px;
+          font-weight: 400;
+          line-height: 20px;
+          width: 60px;
+          height: 20px;
+          border-radius: 16px;
+          border: 1px solid;
+          right: 0;
+          position: absolute;
+          text-align: center;
+          margin-top: 5px;
         }
         > .right-price {
         }
