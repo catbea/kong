@@ -19,7 +19,7 @@
                 <p class="list-left-title">{{item.title}}</p>
                 <p
                   class="list-left-time"
-                >{{item.publisher}}&nbsp;&nbsp;{{item.time}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
+                >{{item.publisher}}&nbsp;&nbsp;{{item.createDate}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
               </span>
               <span class="updateArticles-list-right">
                 <img :src="item.image" class="mark-icon">
@@ -43,6 +43,7 @@ import nullArticles from 'COMP/Null'
 import { Checkbox, CheckboxGroup } from 'vant'
 import { SubmitBar } from 'vant'
 import userService from 'SERVICE/userService'
+import timeUtils from '@/utils/timeUtils'
 export default {
   components: {
     Checkbox,
@@ -169,6 +170,8 @@ export default {
       let dataList = res.records
       if (dataList.length !== 0) {
         for (let i = 0; i < dataList.length; i++) {
+          let tempTime=timeUtils.getDateTimeBefor(dataList[i].createDate);
+          dataList[i].createDate=tempTime
           dataList[i].isCheck = false
         }
         this.list = this.list.concat(dataList)
