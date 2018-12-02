@@ -166,11 +166,10 @@ class UserService {
    * @param {*} current 
    * @param {*} size 
    */
-  getMyBillList(agentId, current, size = 10) {
+  getMyBillList(current, size = 4) {
     return xhr({
       url: '/account/purchaseHistory',
       body: {
-        agentId,
         current,
         size
       }
@@ -200,7 +199,7 @@ class UserService {
    */
   deleHistoryArticle(infoIds) {
     return xhr({
-      method: 'DELETE',
+      method: 'POST',
       url: '/cpInformation/batchDelete',
       body: {
         infoIds

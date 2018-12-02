@@ -6,22 +6,28 @@
         <span class="updateArticles-title-right">完成</span>
       </div>
       <!-- <discover-list></discover-list> -->
-      <checkbox-group v-model="result">
-        <!-- v-for="(item, index) in list" :key="index" :name="item" -->
-        <checkbox v-for="(item, index) in list" :key="index" :name="item.id">
-          <div class="updateArticles-list" :id="item.id" @click="getArticleId(item.isCheck,index)">
-            <span class="updateArticles-list-left">
-              <p class="list-left-title">{{item.title}}</p>
-              <p
-                class="list-left-time"
-              >{{item.publisher}}&nbsp;&nbsp;{{item.time}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
-            </span>
-            <span class="updateArticles-list-right">
-              <img :src="item.image" class="mark-icon">
-            </span>
-          </div>
-        </checkbox>
-      </checkbox-group>
+      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
+        <checkbox-group v-model="result">
+          <!-- v-for="(item, index) in list" :key="index" :name="item" -->
+          <checkbox v-for="(item, index) in list" :key="index" :name="item.id">
+            <div
+              class="updateArticles-list"
+              :id="item.id"
+              @click="getArticleId(item.isCheck,index)"
+            >
+              <span class="updateArticles-list-left">
+                <p class="list-left-title">{{item.title}}</p>
+                <p
+                  class="list-left-time"
+                >{{item.publisher}}&nbsp;&nbsp;{{item.time}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
+              </span>
+              <span class="updateArticles-list-right">
+                <img :src="item.image" class="mark-icon">
+              </span>
+            </div>
+          </checkbox>
+        </checkbox-group>
+      </van-list>
       <div class="updateArticles-fixed-btn">
         <div class="fixed-btn-check" @click="toSelectAll">
           <checkbox v-model="checked"></checkbox>
@@ -46,7 +52,7 @@ export default {
   },
 
   created() {
-    this.getHistoryList('1')
+    this.getHistoryList(this.current)
   },
 
   data() {
@@ -60,7 +66,10 @@ export default {
       selectStr: '', //选择的id拼接字符串
       selectAll: false,
       selectName: '全选',
-      checked: false
+      checked: false,
+      loading: false,
+      finished: true,
+      current: 1
     }
   },
 
@@ -121,9 +130,9 @@ export default {
       this.selectAll = !this.selectAll
 
       if (this.selectAll) {
-         this.selectArr = []
+        this.selectArr = []
         for (let i = 0; i < tempList.length; i++) {
-          this.selectArr.push(tempList[i].id);
+          this.selectArr.push(tempList[i].id)
           tempList[i].isCheck = true
           this.result.push(tempList[i].id)
           this.selectName = '取消全选'
@@ -152,6 +161,20 @@ export default {
       this.selectStr = temp
       console.log(temp)
       this.toDeleArticle(temp)
+    },
+
+    //加载更多
+    async onLoad() {
+      let current = current++
+      this.finished=false;
+      const res = await userService.getBrowseHistoryList(current)
+
+      let dataList = res.records
+      for (let i = 0; i < dataList.length; i++) {
+        dataList[i].isCheck = false
+      }
+      this.list = this.list.concat(dataList)
+      this.finished=true
     }
   }
 }

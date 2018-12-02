@@ -20,8 +20,6 @@ export default {
  components: {
    discoverList,
     nullArticles,
-   
-
   },
   data(){
     return{

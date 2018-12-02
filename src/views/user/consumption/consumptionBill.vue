@@ -1,5 +1,12 @@
 <template>
-  <div class="bill-page" :style="{background:show==null?'#ffffff':'#F7F9FA'}">
+  <van-list
+    class="bill-page"
+    :style="{background:show==null?'#ffffff':'#F7F9FA'}"
+    v-model="loading"
+    :finished="finished"
+    :finished-text="'没有更多了'"
+    @load="onLoad"
+  >
     <!-- <Tips></Tips>#F7F9FA; -->
     <!-- v-for="(item, index) in billItem" :key="index" -->
     <div class="bill-container" v-for="(item,index) in billItem" :key="index">
@@ -42,7 +49,7 @@
         </div>
       </shadow-box>
     </div>
-  </div>
+  </van-list>
 </template>
 <script>
 import ShadowBox from 'COMP/ShadowBox'
@@ -59,12 +66,15 @@ export default {
       show: 1,
       billItem: [],
       nullIcon: require('IMG/user/bill-null.png'),
-      nullcontent: '暂还没有消费记录'
+      nullcontent: '暂还没有消费记录',
+      loading: false,
+      finished: false,
+      current: 1
     }
   },
 
   created() {
-    this.getBillList()
+    // this.getBillList(this.current)
   },
 
   methods: {
@@ -85,9 +95,29 @@ export default {
         })
     },
 
-    async getBillList() {
-      const res = await userService.getMyBillList('1')
+    async getBillList(current) {
+      const res = await userService.getMyBillList(current)
       this.billItem = res.records
+      this.current = res.current + 1
+      console.log(this.current)
+    },
+
+    async onLoad() {
+      let tempCurrent = this.current
+      const res = await userService.getMyBillList(tempCurrent)
+      let tempBillItem = res.records
+      if (tempBillItem.length !== 0) {
+        this.billItem = this.billItem.concat(tempBillItem)
+        this.current = tempCurrent + 1
+        this.loading = false
+      }else{
+        this.finished = true
+      }
+      
+
+      if (res.pages == 0 || this.current > res.pages) {
+        this.finished = true
+      }
     }
   }
 }
