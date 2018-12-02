@@ -4,13 +4,28 @@
     <div
       class="collection-list"
       v-if="data"
-      v-for="(item,key) in data" :key="key"
+      v-for="(item,key) in data"
+      :key="key"
     >
       <span class="collection-list-left">
         <p class="list-left-title">{{item.title}}</p>
-        <p class="list-left-conter">{{item.content}}</p>
-        <span class="list-left-tab-ok" v-if="item.deleteType ==1" >收藏</span> 
-        <span class="list-left-tab-no" v-else  @click="gocollection">取消收藏</span>
+        <p
+          class="list-left-conter"
+          v-html="item.subTitle"
+        ></p>
+        <!-- 收藏状态：1-取消收藏，0-收藏 -->
+        <span
+        id="collectiontabok"
+          class="list-left-tab-ok"
+          @click="gocollection(item.deleteType,item.id)"
+          v-show="item.deleteType == 1"
+        >收藏</span>
+        <span
+          class="list-left-tab-no"
+          v-show='item.deleteType == 0'
+          id="collectiontabno"
+          @click="gocollection(item.deleteType,item.id)"
+        >取消收藏</span>
       </span>
       <span class="collection-list-right">
         <img
@@ -31,11 +46,20 @@ export default {
   },
   props: {
     data: { type: Array },
-    info: {type: Object}
+    info: { type: String }
   },
   methods: {
-    gocollection(){
-      this.$emit('click', this.info)
+    gocollection (deleteType,infoId) {
+      
+      console.log('here');
+      let parm ={
+        info: this.info,
+        divIdOk: 'collectiontabok',
+        divIdNo: 'collectiontabno',
+        deleteType: deleteType,
+        infoId: infoId,
+      }
+      this.$emit('myclick', parm)
     }
     // GOheadline () {
     //   console.log(1)

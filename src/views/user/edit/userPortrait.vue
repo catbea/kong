@@ -2,13 +2,13 @@
   <div class="modify-main">
     <div class="modify-main-title">修改头像</div>
     <div class="modify-child">
-      <div v-for="(img,index) in headIcons" :key="index" class="head-img" @click="selectedHead(index,img.type,img.itemCode)">
+      <div v-for="(img,index) in agentImgList" :key="index" class="head-img" @click="selectedHead(index,img.status,img.itemCode)">
+        <!--  v-if="img.status===1"   -->
+        <img :src="img.itemCode"/>
         <!--   -->
-        <img :src="img.itemCode" v-if="img.type===1" />
-        <!--   -->
-        <img v-show='img.isActivted' :src="userEditIcon" class="isActivted" v-if="img.type===1" />
+        <img v-show='img.isActivted' :src="userEditIcon" class="isActivted" v-if="img.status===1" />
         <!--  -->
-        <div flex="dir:top main:center cross:center" class="portrait-select" v-if="img.type===2">
+        <div flex="dir:top main:center cross:center" class="portrait-select" v-if="img.status===2">
           <input type="file" id="file" name="avatar" @change="changeImage($event)" ref="avatarInput" accept="image/*" class="portrait-select-input">
           <span class="portrait-select-add">+</span>
           <!-- <img :src="userIcon" class="portrait-select-Icon" /> -->
@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+import userService from 'SERVICE/userService'
 export default {
   data () {
     return {
@@ -35,12 +36,17 @@ export default {
         { 'id': '6', 'itemCode': require('IMG/user/usercard@2x.png'), 'isActivted': false, 'type': 2 }
 
       ],
-      headIconLast: [
-        { 'itemCode': '', 'isActivted': false, 'type': 2 },
-      ]
+      agentImgList: []
     }
   },
+  created() {
+    this.getAgentLabelList()
+  },
   methods: {
+  async getAgentLabelList () {
+      const res = await userService.getAgentImgList()
+      this.agentImgList = res
+    },
     selectedHead (index, type, avatar) {
       this.avatar = avatar;
       if (type === 1) {

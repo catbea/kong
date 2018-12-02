@@ -2,69 +2,188 @@
   <div class="updateArticles-page">
     <div class="updateArticles-content">
       <div class="updateArticles-title">
-        共12文章
+        共{{this.articleTotal}}文章
         <span class="updateArticles-title-right">完成</span>
       </div>
       <!-- <discover-list></discover-list> -->
-
-      <checkbox-group v-model="result">
-        <!-- v-for="(item, index) in list" :key="index" :name="item" -->
-        <checkbox v-for="(item, index) in list" :key="index" :name="item.id">
-          <div class="updateArticles-list" :id="item.id">
-            <span class="updateArticles-list-left">
-              <p class="list-left-title">{{item.title}}</p>
-              <p class="list-left-time">{{item.time}}&nbsp;&nbsp;刚刚&nbsp;&nbsp;1.2万浏览</p>
-            </span>
-            <span class="updateArticles-list-right">
-              <img :src="item.backIcon" class="mark-icon">
-            </span>
-          </div>
-        </checkbox>
-      </checkbox-group>
-
+      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
+        <checkbox-group v-model="result">
+          <!-- v-for="(item, index) in list" :key="index" :name="item" -->
+          <checkbox v-for="(item, index) in list" :key="index" :name="item.id">
+            <div
+              class="updateArticles-list"
+              :id="item.id"
+              @click="getArticleId(item.isCheck,index)"
+            >
+              <span class="updateArticles-list-left">
+                <p class="list-left-title">{{item.title}}</p>
+                <p
+                  class="list-left-time"
+                >{{item.publisher}}&nbsp;&nbsp;{{item.createDate}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
+              </span>
+              <span class="updateArticles-list-right">
+                <img :src="item.image" class="mark-icon">
+              </span>
+            </div>
+          </checkbox>
+        </checkbox-group>
+      </van-list>
       <div class="updateArticles-fixed-btn">
-        <div class="fixed-btn-check">
+        <div class="fixed-btn-check" @click="toSelectAll">
           <checkbox v-model="checked"></checkbox>
-          <span class="fixed-btn-title">全选</span>
+          <span class="fixed-btn-title">{{this.selectName}}</span>
         </div>
-        <div class="fixed-btn">
-          删除
-        </div>
+        <div class="fixed-btn" @click="deleArticles()">删除</div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
 import nullArticles from 'COMP/Null'
-import { Checkbox, CheckboxGroup } from 'vant';
-import { SubmitBar } from 'vant';
+import { Checkbox, CheckboxGroup } from 'vant'
+import { SubmitBar } from 'vant'
+import userService from 'SERVICE/userService'
+import timeUtils from '@/utils/timeUtils'
 export default {
   components: {
     Checkbox,
     CheckboxGroup,
     nullArticles,
     SubmitBar
-
-
   },
-  data () {
+
+  created() {
+    // this.getHistoryList(this.current)
+  },
+
+  data() {
     return {
       // backIcon: require('IMG/user/usercard@2x.png'),
       // list: ['a', 'b', 'c'],
-      list: [
-        { 'id': '1', 'title': '专家：“规避政策”卖房新路子要不得', 'time': '华尔街见闻', 'backIcon': require('IMG/user/usercard@2x.png') },
-        { 'id': '2', 'title': '测试', 'time': '华尔街见闻2', 'backIcon': require('IMG/user/usercard@2x.png') },
-        { 'id': '3', 'title': '测试', 'time': '华尔街见闻3', 'backIcon': require('IMG/user/usercard@2x.png') },
-        { 'id': '4', 'title': '测试', 'time': '华尔街见闻3', 'backIcon': require('IMG/user/usercard@2x.png') },
-        { 'id': '5', 'title': '测试', 'time': '华尔街见闻3', 'backIcon': require('IMG/user/usercard@2x.png') },
-        { 'id': '6', 'title': '测试', 'time': '华尔街见闻3', 'backIcon': require('IMG/user/usercard@2x.png') },
-        { 'id': '7', 'title': '测试', 'time': '华尔街见闻3', 'backIcon': require('IMG/user/usercard@2x.png') },
-      ],
-      result: [
-        { 'id': '1', 'id': '2' }
-      ]
+      list: [],
+      articleTotal: '',
+      result: [],
+      selectArr: [], //选择的id数组集合
+      selectStr: '', //选择的id拼接字符串
+      selectAll: false,
+      selectName: '全选',
+      checked: false,
+      loading: false,
+      finished: false,
+      current: 1
+    }
+  },
 
+  methods: {
+    //获取文章列表
+    async getHistoryList(current) {
+      const res = await userService.getBrowseHistoryList(current)
+
+      let dataList = res.records
+      for (let i = 0; i < dataList.length; i++) {
+        dataList[i].isCheck = false
+      }
+      this.list = dataList
+      this.articleTotal = res.total
+    },
+
+    //勾选获取文章id
+    getArticleId(checked, position) {
+      if (!checked) {
+        this.list[position].isCheck == true
+      } else {
+        this.list[position].isCheck == false
+      }
+
+      let selectIdArr = this.selectArr
+      let selectId = this.list[position].id
+      if (this.isExistElement(selectIdArr, selectId)) {
+        let index = selectIdArr.indexOf(selectId)
+        if (index > -1) {
+          selectIdArr.splice(index, 1)
+        }
+      } else {
+        selectIdArr.push(selectId)
+      }
+    },
+
+    //删除操作
+    toDeleArticle(selectStr) {
+      const res = userService.deleHistoryArticle(selectStr)
+      console.log(res)
+    },
+
+    //删除文章
+    isExistElement(arr, value) {
+      if (arr.indexOf && typeof arr.indexOf == 'function') {
+        var index = arr.indexOf(value)
+        if (index >= 0) {
+          return true
+        }
+      }
+      return false
+    },
+
+    //全选按钮
+    toSelectAll() {
+      let temp = ''
+      let tempList = this.list
+      this.selectAll = !this.selectAll
+
+      if (this.selectAll) {
+        this.selectArr = []
+        for (let i = 0; i < tempList.length; i++) {
+          this.selectArr.push(tempList[i].id)
+          tempList[i].isCheck = true
+          this.result.push(tempList[i].id)
+          this.selectName = '取消全选'
+          this.checked = true
+        }
+      } else {
+        for (let i = 0; i < tempList.length; i++) {
+          tempList[i].isCheck = false
+          this.result = []
+          this.selectArr = []
+          this.selectName = '全选'
+          this.checked = false
+        }
+        this.list = tempList
+        this.selectStr = ''
+      }
+    },
+
+    //删除文章
+    deleArticles() {
+      let temp = ''
+      let selectArr = this.selectArr
+      for (var i = 0; i < selectArr.length; i++) {
+        temp += selectArr[i] + ','
+      }
+      this.selectStr = temp
+      this.toDeleArticle(temp)
+    },
+
+    //加载更多
+    async onLoad() {
+      let tempCurrent = this.current
+      const res = await userService.getBrowseHistoryList(tempCurrent)
+      let dataList = res.records
+      if (dataList.length !== 0) {
+        for (let i = 0; i < dataList.length; i++) {
+          let tempTime=timeUtils.getDateTimeBefor(dataList[i].createDate);
+          dataList[i].createDate=tempTime
+          dataList[i].isCheck = false
+        }
+        this.list = this.list.concat(dataList)
+        this.current = tempCurrent + 1
+        this.loading = false
+      } else {
+        this.finished = true
+      }
+
+      if (res.pages == 0 || this.current > res.pages) {
+        this.finished = true
+      }
     }
   }
 }
@@ -100,7 +219,7 @@ export default {
 .updateArticles-page {
   background: #ffffff;
   > .updateArticles-content {
-        margin-bottom: 80px;
+    margin-bottom: 80px;
     > .updateArticles-fixed-btn {
       height: 60px;
       // display: flex;
@@ -116,9 +235,9 @@ export default {
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 40px;
-           margin-left: 45px;
-           position: absolute;
-           margin-top: 20px;
+          margin-left: 45px;
+          position: absolute;
+          margin-top: 20px;
         }
       }
       > .fixed-btn {
@@ -142,7 +261,6 @@ export default {
       color: rgba(102, 102, 102, 1);
       line-height: 16px;
       margin: 17px 16px;
-         
 
       > .updateArticles-title-right {
         font-size: 13px;
@@ -168,6 +286,11 @@ export default {
           line-height: 24px;
           margin-right: 60px;
           padding-right: 70px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
         }
         > .list-left-time {
           font-size: 12px;
@@ -189,6 +312,7 @@ export default {
           width: 120px;
           height: 90px;
           background: rgba(255, 255, 255, 1);
+          border-radius: 6px;
         }
       }
     }

@@ -56,11 +56,9 @@ export default {
     li {
       height: 49px;
       font-size: 15px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 49px;
-      border-bottom: 1px solid #e6e6e6;
     }
   }
   .shade {

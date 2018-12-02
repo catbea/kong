@@ -11,6 +11,8 @@
       </van-swipe-item>
     </van-swipe>
     <div class="tab-container">
+
+
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
         <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName">
           <keep-alive>
@@ -20,6 +22,7 @@
           </keep-alive>
         </van-tab>
       </van-tabs>
+
     </div>
   </div>
 </template>
@@ -43,6 +46,7 @@ export default {
     this.getInformationCarousel()
   },
   methods: {
+     
     // 获取轮播和tabs配置
     async getInformationCarousel () {
       const res = await discoverService.informationCarousel(this.userArea.city)
