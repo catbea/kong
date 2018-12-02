@@ -9,7 +9,7 @@ export default new Vuex.Store({
   // getters,
   modules: {
     system,
-    user
+    user,
   },
   strict: true
 })

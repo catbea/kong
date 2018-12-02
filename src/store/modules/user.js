@@ -6,13 +6,20 @@ const state = {
   userVipInfo: {},
   userArea: {
     city: '深圳市'
+  },
+  reportAddInfo: {
+    linkerId: '',
+    linkerName: '',
+    clientName: '',
+    clientPhone: ''
   }
 }
 
 const getters = {
   userInfo: state => state.userInfo,
   userVipInfo: state => state.userVipInfo,
-  userArea: state => state.userArea
+  userArea: state => state.userArea,
+  reportAddInfo: state => state.reportAddInfo
 }
 
 const actions = {
@@ -25,6 +32,9 @@ const actions = {
     // 后端坑爹,是vip时vipStatus为0,加入isvip区分
     res.data.isvip = res.data.vipStatus === 0
     commit(types.USER_VIP_INFO, res.data)
+  },
+  getReportAddInfo({ commit }, data) {
+    commit(types.REPORT_INFO, data)
   }
 }
 
@@ -37,6 +47,9 @@ const mutations = {
   },
   [types.USER_AREA](state, data) {
     // state.userArea = Object.assign(state.userArea, data)
+  },
+  [types.REPORT_INFO](state, data) {
+    state.reportAddInfo = data
   }
 }
 
