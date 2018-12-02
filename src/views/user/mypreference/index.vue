@@ -1,9 +1,7 @@
 <template>
   <div class="my-preference-page">
-    <div style="margin-left:16px;margin-top:7px">
+    <div class="my-preference-header">
     <van-search :obj="searchInfo"></van-search>
-    </div>
-    <div style="margin-left:16px">
     <screen></screen>
     </div>
     <div class="market-box">
@@ -88,16 +86,25 @@ export default {
           this.type=false
           break;
         default:
+        this.type=true
           break;
       }
+      console.log(this.type)
+      console.log(this.$route.query)
     }
   }
 }
 </script>
 <style lang="less">
 .my-preference-page{
+  .my-preference-header{
+    width:100%;
+    position:fixed;
+    background:rgba(255,255,255,1);
+    z-index:11;
+  }
   .market-box{
-    margin:0 0 60px 16px;
+    margin:74px 0 60px 16px;
   }
   .report-confirm{
     border-top:1px solid #E6E6E6;
@@ -108,6 +115,7 @@ export default {
     height:60px;
     position: fixed;
     bottom:0;
+    background:rgba(255,255,255,1);
     P{
       width:72px;
       height:30px;
