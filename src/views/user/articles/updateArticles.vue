@@ -170,8 +170,6 @@ export default {
       if (dataList.length !== 0) {
         for (let i = 0; i < dataList.length; i++) {
           dataList[i].isCheck = false
-
-          console.log("99999999999999999999999")
         }
         this.list = this.list.concat(dataList)
         this.current = tempCurrent + 1
