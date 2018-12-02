@@ -102,6 +102,10 @@ export default {
     position:fixed;
     background:rgba(255,255,255,1);
     z-index:11;
+    padding-top:6px;
+    .van-search-page {
+      margin-left:15px;
+    }
   }
   .market-box{
     margin:74px 0 60px 16px;

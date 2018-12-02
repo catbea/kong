@@ -31,8 +31,6 @@ export default {
 <style lang="less">
 .van-search-page{
         width:343px;
-        margin-left:16px;
-        margin-top:7px;
         .search-box-content {
         display: flex;
         background: rgba(245, 245, 245, 1);
