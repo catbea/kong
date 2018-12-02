@@ -95,7 +95,7 @@ export default {
         })
     },
 
-    async getBillList(current) {
+     async getBillList(current) {
       const res = await userService.getMyBillList(current)
       this.billItem = res.records
       this.current = res.current + 1
@@ -110,10 +110,9 @@ export default {
         this.billItem = this.billItem.concat(tempBillItem)
         this.current = tempCurrent + 1
         this.loading = false
-      }else{
+      } else {
         this.finished = true
       }
-      
 
       if (res.pages == 0 || this.current > res.pages) {
         this.finished = true

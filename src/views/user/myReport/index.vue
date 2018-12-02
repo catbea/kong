@@ -1,74 +1,118 @@
 
 <template>
-  <div
-    class="report-page"
-    :style="{background:show==null?'#F7F9FA':'#FFFFFF'}"
-  >
+  <div class="report-page" :style="{background:show==null?'#F7F9FA':'#FFFFFF'}">
     <!-- <Tips></Tips>#F7F9FA; -->
     <div class="report-container">
-      <shadow-box>
-        <div
-          slot="container"
-          class="report-container-css"
-        >
-          <div class="report-title">
-            <p class="report-title-css">华润城市花园二期 报备单</p>
-            <p class="container-list"> 报备楼盘<span class="container-list-title container-name">华润城市花园二期</span> </p>
-            <p class="container-list"> 报备客户<span class="container-list-title container-spec">李小博</span> </p>
-            <p class="container-list ">
-              <span class="container-list container-list-left"> 代理商<span class="container-list-title ">好房易购</span></span>
-              <span class="container-list-right">待确认</span>
+      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad" v-if="reportList">
+        <shadow-box v-for="item in reportList" :key="item.id">
+          <div slot="container" class="report-container-css">
+            <div class="report-title">
+              <p class="report-title-css">{{item.linkerName}} 报备单</p>
+              <p class="container-list">报备楼盘
+                <span class="container-list-title container-name">{{item.linkerName}}</span>
+              </p>
+              <p class="container-list">报备客户
+                <span class="container-list-title container-spec">{{item.clientName}}</span>
+              </p>
+              <p class="container-list">
+                <span class="container-list container-list-left">代理商
+                  <span class="container-list-title">{{item.distributorName}}</span>
+                </span>
+                <span class="container-list-right">{{reportStatusInfo[item.fillingStatus]}}</span>
+              </p>
+              <p class="container-list">
+                <span class="container-list">报备时间
+                  <span class="container-list-title">{{item.fillingTime}}</span>
+                </span>
+                <botton class="container-list-botton" @click="reportInfo">查看详情</botton>
+              </p>
+            </div>
+            <p class="container-list">报备确认
+              <span class="container-list-title container-discount">{{item.waitingConfirmTime}}</span>
             </p>
-            <p class="container-list ">
-              <span class="container-list">报备时间<span class="container-list-title ">2018/10/18 10:00</span></span>
-              <botton class="container-list-botton" @click="reportInfo">查看详情</botton>
-            </p>
-
           </div>
-          <p class="container-list"> 报备确认<span class="container-list-title container-discount">2018/10/18 10:00</span> </p>
-        </div>
-
-      </shadow-box>
+        </shadow-box>
+      </van-list>
+      <div v-else>
+        <null
+      :nullIcon="nullIcon"
+      :nullcontent="nullcontent"
+    ></null>
+      </div>
     </div>
 
     <div class="report-div-btn">
       <button class="report-btn" @click="addReport">创建报备</button>
     </div>
-    <!-- <null
-      :nullIcon="nullIcon"
-      :nullcontent="nullcontent"
-    ></null> -->
 
   </div>
 </template>
 <script>
 import ShadowBox from 'COMP/ShadowBox'
 import Null from 'COMP/Null'
+import reportService from 'SERVICE/reportService'
 export default {
   components: {
     Null,
-    ShadowBox,
-
+    ShadowBox
   },
 
-  data () {
+  data() {
     return {
       show: 1,
       item: [],
-      nullIcon: require('IMG/user/bill-null.png'),
-      nullcontent: '暂还没有消费记录',
-      
+      nullIcon: require('IMG/user/empty_report@2x.png'),
+      nullcontent: '您还没有任何报备信息',
+      reportList: [],
+      reportStatusInfo: {
+        '0': '待确认',
+        '1': '报备成功',
+        '2': '报备失败',
+        '3': '审核中 '
+      },
+      loading: false,
+      finished: false,
+      current: 1,
     }
   },
+  created() {
+    
+  },
   methods: {
-    reportInfo(){
-       this.$router.push('/user/myReport/reportInfo')
+    /**
+     * 上拉加载更多
+     */
+    onLoad() {
+      this.getReportList(this.current)
+      this.loading = false
+      
     },
-     addReport(){
-       this.$router.push('/user/myReport/addReport')
+    async getReportList(current) {
+      const res = await reportService.reportList(current)
+      this.reportList = res.records
+      var current = this.current + 1
+      if (current >= res.pages) {
+        this.finished = true;
+        this.current = current - 1
+      }else {
+        this.finished = false
+        this.current = current
+      }
+      
     },
-    itemProperties () {
-
+    /**
+     * 进入报备详情
+     */
+    reportInfo() {
+      this.$router.push('/user/myReport/reportInfo')
+    },
+    /**
+     * 创建报备
+     */
+    addReport() {
+      this.$router.push('/user/myReport/addReport')
+    },
+    itemProperties() {
       //跳转到动态详情item
       // this.$router.push('/dynamics/dynamicsInfo')
       this.$dialog
@@ -94,6 +138,7 @@ export default {
     margin: 16px 0;
     .report-container-css {
       padding: 20px 16px;
+      margin-bottom: 16px;
       > .report-title {
         font-size: 16px;
         font-weight: 600;

@@ -22,7 +22,7 @@ class DynamicsService {
    */
   getAgentMsgAndTotal() {
     return xhr({
-      url: '/qywx/cpIM/agentMsgAndTotal'
+      url: '/cpIM/agentMsgAndTotal'
     })
   }
 
@@ -33,7 +33,142 @@ class DynamicsService {
    */
   getSystemMessage(current, size = 10) {
     return xhr({
-      url: '/qywx/cpIM/getSystemMessageList',
+      url: '/cpIM/getSystemMessageList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 【企业微信】全部数据动态统计
+   */
+  getAllDynamicCount() {
+    return xhr({
+      url: '/dataDynamic/getAllDynamicCount',
+    })
+  }
+  /**
+   * 【企业微信】全部数据动态列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getAllDynamicList(current, size = 10) {
+    return xhr({
+      url: '/dataDynamic/getAllDynamicList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+/**
+ * 【企业微信】文章数据动态统计
+ */
+  getArticleDynamicCount() {
+    return xhr({
+      url: '/dataDynamic/getArticleDynamicCount',
+    })
+  }
+  /**
+   * 【企业微信】文章数据动态列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getArticleDynamicList(current, size = 10) {
+    return xhr({
+      url: '/dataDynamic/getArticleDynamicList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+/**
+ * 【企业微信】名片数据动态统计
+ */
+  getCardDynamicCount() {
+    return xhr({
+      url: '/dataDynamic/getCardDynamicCount',
+     
+    })
+  }
+  /**
+   * 【企业微信】名片数据动态列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getCardDynamicList(current, size = 10) {
+    return xhr({
+      url: '/dataDynamic/getCardDynamicList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 【企业微信】楼盘数据动态统计
+   */
+  getHouseDynamicCount() {
+    return xhr({
+      url: '/dataDynamic/getHouseDynamicCount',
+    
+    })
+  }
+  /**
+   * 【企业微信】楼盘动态列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getHouseDynamicList(current, size = 10) {
+    return xhr({
+      url: '/dataDynamic/getHouseDynamicList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 【企业微信】单个文章数据动态统计
+   */
+  getArticleDynamicCount() {
+    return xhr({
+      url: '/dataDynamic/getSingleArticleDynamicCount',
+    
+    })
+  }
+  /**
+   * 【企业微信】查询单个文章客户访问数据动态列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getArticleDynamicList(current, size = 10) {
+    return xhr({
+      url: '/dataDynamic/getSingleArticleDynamicList',
+      body: {
+        current,
+        size
+      }
+    })
+  }
+/**
+ * 【企业微信】单个楼盘数据动态统计
+ */
+  getHouseDynamicCount() {
+    return xhr({
+      url: '/dataDynamic/getSingleHouseDynamicCount',
+    })
+  }
+  /**
+   * 【企业微信】查询单个楼盘数据动态列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getHouseDynamicList(current, size = 10) {
+    return xhr({
+      url: '/dataDynamic/getSingleHouseDynamicList',
       body: {
         current,
         size

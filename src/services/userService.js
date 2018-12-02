@@ -43,6 +43,19 @@ class UserService {
    * 新增经纪人标签基础信息
  
    */
+  // getupdateByUser() {
+  //   return xhr({
+  //     method:'POST',
+  //     url: '/user/updateAgentByUserId',
+  //   })
+  // }
+/**
+ * 获取经纪人个性签名列表
+ * @param {*} Authorization 
+ * @param {*} current 
+ * @param {*} size 
+ */
+
   getupdateByUser() {
     return xhr({
       method: 'POST',
@@ -65,6 +78,13 @@ class UserService {
       }
     })
   }
+  /**获取个人头像列表 */
+  getAgentImgList() {
+    return xhr({
+      url: '/dictionary/getAgentHeadImgList',
+     
+    })
+  }
 
   /**
    * 获取分享图片
@@ -82,6 +102,7 @@ class UserService {
       }
     })
   }
+ 
   /**
    * 【企业微信】文章收藏列表
    * @param {*} current 
@@ -134,13 +155,14 @@ class UserService {
    * @param {*} deleteFlag 
    * @param {*} type 
    */
+
   getlinkerCollection(infoId, deleteFlag, type = 1) {
     return xhr({
       method: 'POST',
       url: '/cpInformationCollect/insertInfo',
       body: {
         infoId,
-        deleteFlag,
+        deleteType,
         type
       }
     })
