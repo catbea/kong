@@ -49,12 +49,12 @@ class UserService {
   //     url: '/user/updateAgentByUserId',
   //   })
   // }
-/**
- * 获取经纪人个性签名列表
- * @param {*} Authorization 
- * @param {*} current 
- * @param {*} size 
- */
+  /**
+   * 获取经纪人个性签名列表
+   * @param {*} Authorization 
+   * @param {*} current 
+   * @param {*} size 
+   */
 
   getupdateByUser() {
     return xhr({
@@ -82,7 +82,7 @@ class UserService {
   getAgentImgList() {
     return xhr({
       url: '/dictionary/getAgentHeadImgList',
-     
+
     })
   }
 
@@ -102,7 +102,7 @@ class UserService {
       }
     })
   }
- 
+
   /**
    * 【企业微信】文章收藏列表
    * @param {*} current 
@@ -232,12 +232,23 @@ class UserService {
   /**
    * 获取热门楼盘
    */
-  getHotLinker(){
+  getHotLinker() {
     return xhr({
       url: '/linker/getLinkerHot',
       body: {
-        
+
       }
+    })
+  }
+
+  /**
+   * 修改经纪人信息
+   */
+  upDateUserInfo(nameEditRq) {
+    return xhr({
+      method: 'POST',
+      url: '/user/updateAgentByUserId',
+      body: nameEditRq
     })
   }
 

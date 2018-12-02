@@ -1,36 +1,69 @@
 <template>
   <div class="user-edit-phone-page">
     <div class="user-edit-phone">
-      <p class="edit-phone-title">注册手机<span class="edit-phone-remark">(不可更改)</span></p>
-      <p class="edit-phone-conter"><input type="text" class="edit-phone-input" placeholder="Bela" value="13590200739"></p>
+      <p class="edit-phone-title">
+        注册手机
+        <span class="edit-phone-remark">(不可更改)</span>
+      </p>
+      <p class="edit-phone-conter">
+        <input
+          type="text"
+          class="edit-phone-input"
+          placeholder="Bela"
+          disabled="disabled"
+          value="13590200739"
+        >
+      </p>
       <p class="edit-phone-card">名片展示手机号</p>
-      <p class="edit-phone-card-conter"><input type="text" class="edit-phone-card-input" v-model="Cphone"></p>
-      <button class=edit-phone-query @click="godSub">确认修改</button>
+      <p class="edit-phone-card-conter">
+        <input type="text" class="edit-phone-card-input" maxlength="11" v-model="Cphone">
+      </p>
+      <button class="edit-phone-query" @click="godSub">确认修改</button>
     </div>
   </div>
 </template>
 <script>
-import { Dialog } from 'vant';
+import { Dialog } from 'vant'
+import userService from 'SERVICE/userService'
+
 export default {
-  components:{
+  components: {
     Dialog
   },
-  data () {
+  data() {
     return {
       Cphone: ''
     }
   },
   methods: {
-    godSub () {
-      
-      if (this.Cphone == '' ) {
+    godSub() {
+      if (this.Cphone == '') {
         Dialog.alert({
           message: '名片展示手机号不可为空'
         }).then(() => {
           // on close
         })
+      } else {
+        let phoneType = this.Cphone.match(/^[0-9]*$/)
+        if (phoneType == null) {
+          this.Cphone = ''
+          Dialog.alert({
+            message: '请输入数字'
+          }).then(() => {
+            // on close
+          })
+        } else {
+          let date = {
+            tempPhone: this.Cphone
+          }
+          this.upDatePhoneNum(date)
+        }
       }
+    },
 
+    upDatePhoneNum(obj) {
+      const result = userService.upDateUserInfo(obj)
+      console.log(result)
     }
   }
 }
@@ -93,6 +126,7 @@ export default {
         line-height: 21px;
         width: 99%;
         border: 0;
+        background-color: #ffffff;
         border-bottom: 1px solid #eeeeee;
       }
     }

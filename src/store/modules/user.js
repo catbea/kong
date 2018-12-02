@@ -2,7 +2,29 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: {},
+  userInfo: {
+    "agentId": "705",
+    "avatarUrl": "http://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/male_001.png",
+    "distributorId": "147",
+    "distributorName": "青岛佳乐分销商SIT测试2",
+    "labelList": [
+      {
+        "id": "",
+        "labelId": "113",
+        "labelName": "交易专家",
+        "userId": ""
+      }
+    ],
+    "majorCity": "深圳市",
+    "majorRegion": "广东省/深圳市/福田区",
+    "name": "123",
+    "organizationId": "",
+    "organizationName": "",
+    "registerMobile": "18907437200",
+    "signature": "创造价值，赢得尊重\n",
+    "tempPhone": "13714860003",
+    "wechatAccount": "string"
+  },
   userVipInfo: {},
   userArea: {
     city: '深圳市'
