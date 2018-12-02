@@ -52,7 +52,7 @@ export default {
   },
 
   created() {
-    this.getHistoryList(this.current)
+    // this.getHistoryList(this.current)
   },
 
   data() {
@@ -68,7 +68,7 @@ export default {
       selectName: '全选',
       checked: false,
       loading: false,
-      finished: true,
+      finished: false,
       current: 1
     }
   },
@@ -159,22 +159,30 @@ export default {
         temp += selectArr[i] + ','
       }
       this.selectStr = temp
-      console.log(temp)
       this.toDeleArticle(temp)
     },
 
     //加载更多
     async onLoad() {
-      let current = current++
-      this.finished=false;
-      const res = await userService.getBrowseHistoryList(current)
-
+      let tempCurrent = this.current
+      const res = await userService.getBrowseHistoryList(tempCurrent)
       let dataList = res.records
-      for (let i = 0; i < dataList.length; i++) {
-        dataList[i].isCheck = false
+      if (dataList.length !== 0) {
+        for (let i = 0; i < dataList.length; i++) {
+          dataList[i].isCheck = false
+
+          console.log("99999999999999999999999")
+        }
+        this.list = this.list.concat(dataList)
+        this.current = tempCurrent + 1
+        this.loading = false
+      } else {
+        this.finished = true
       }
-      this.list = this.list.concat(dataList)
-      this.finished=true
+
+      if (res.pages == 0 || this.current > res.pages) {
+        this.finished = true
+      }
     }
   }
 }
