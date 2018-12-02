@@ -24,7 +24,7 @@
                 <span class="container-list">报备时间
                   <span class="container-list-title">{{item.fillingTime}}</span>
                 </span>
-                <botton class="container-list-botton" @click="reportInfo">查看详情</botton>
+                <button class="container-list-botton" @click="reportInfo(item)">查看详情</button>
               </p>
             </div>
             <p class="container-list">报备确认
@@ -103,8 +103,9 @@ export default {
     /**
      * 进入报备详情
      */
-    reportInfo() {
-      this.$router.push('/user/myReport/reportInfo')
+    reportInfo(item) {
+      // this.$router.push(`/user/myReport/reportInfo/${id}`)
+      this.$router.push({path: '/user/myReport/reportInfo', query: item})
     },
     /**
      * 创建报备
@@ -177,6 +178,7 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(0, 122, 230, 1);
+          background-color: white;
           line-height: 20px;
           width: 65px;
           height: 20px;
@@ -213,6 +215,7 @@ export default {
       border-radius: 6px;
       width: 100%;
       border: 0;
+      margin-bottom: 19px;
     }
   }
 }

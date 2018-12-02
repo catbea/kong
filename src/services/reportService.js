@@ -15,7 +15,18 @@ class reportService {
         })
     }
 
-    
+    /**
+     * 报备审核列表
+     * @param {*} distClientId 
+     */
+    reportAuditList(distClientId) {
+        return xhr({
+            url: '/customerFilling/getFilingAuditList',
+            body: {
+                distClientId
+            }
+        })
+    }
 
 }
 export default new reportService()
