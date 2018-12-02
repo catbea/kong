@@ -55,6 +55,7 @@
 import ShadowBox from 'COMP/ShadowBox'
 import Null from 'COMP/Null'
 import userService from 'SERVICE/userService'
+import timeUtils from '@/utils/timeUtils'
 export default {
   components: {
     Null,
@@ -75,9 +76,11 @@ export default {
 
   created() {
     // this.getBillList(this.current)
+  
   },
 
   methods: {
+
     itemProperties() {
       //跳转到动态详情item
       // this.$router.push('/dynamics/dynamicsInfo')
@@ -95,7 +98,7 @@ export default {
         })
     },
 
-     async getBillList(current) {
+    async getBillList(current) {
       const res = await userService.getMyBillList(current)
       this.billItem = res.records
       this.current = res.current + 1
@@ -107,6 +110,11 @@ export default {
       const res = await userService.getMyBillList(tempCurrent)
       let tempBillItem = res.records
       if (tempBillItem.length !== 0) {
+        for (let i = 0; i < tempBillItem.length; i++) {
+          let payTime = timeUtils.fmtDate(tempBillItem[i].purchaseTime)
+          tempBillItem[i].purchaseTime=payTime
+        }
+
         this.billItem = this.billItem.concat(tempBillItem)
         this.current = tempCurrent + 1
         this.loading = false
@@ -163,7 +171,7 @@ export default {
           border: 1px solid;
           float: right;
           text-align: center;
-          background-color: white
+          background-color: white;
         }
         .container-list-title {
           font-size: 14px;
