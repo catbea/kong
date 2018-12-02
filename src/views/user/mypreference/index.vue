@@ -13,7 +13,7 @@
       <p>确定</p>
     </div>
 
-    <div class="check-all-box" v-if="type">
+    <div class="check-all-box" v-if="!type">
       <div class="img-box">
       <span class="icon-check bg_img" :style="{backgroundImage:'url('+(checkShow?checkColorImg:checkImg)+')'}" @click="allSelectHandle"></span>
       全选
@@ -80,7 +80,16 @@ export default {
     },
     arrLength(){
       this.dataArrLength=this.dataArr.length
-      this.type=this.$route.query
+      switch (this.$route.query) {
+        case "report":
+          this.type=true
+          break;
+        case "open":
+          this.type=false
+          break;
+        default:
+          break;
+      }
     }
   }
 }
