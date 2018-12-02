@@ -6,42 +6,23 @@
 
       <div class="report-container-css">
         <div class="report-title">
-          <p class="report-title-css">华润城市花园二期 报备单</p>
-          <p class="container-list"> 报备楼盘<span class="container-list-title container-name">华润城市花园二期</span> </p>
-          <p class="container-list"> 报备客户<span class="container-list-title container-spec">李小博</span> </p>
-          <p class="container-list container-list-left">代理商<span class="container-list-title ">好房易购</span> </p>
-          <p class="container-list "> 报备时间<span class="container-list-title ">2018/10/18 10:00</span></p>
+          <p class="report-title-css">{{reportInfo.linkerName}} 报备单</p>
+          <p class="container-list"> 报备楼盘<span class="container-list-title container-name">{{reportInfo.linkerName}}</span> </p>
+          <p class="container-list"> 报备客户<span class="container-list-title container-spec">{{reportInfo.clientName}}</span> </p>
+          <p class="container-list container-list-left">代理商<span class="container-list-title ">{{reportInfo.distributorName}}</span> </p>
+          <p class="container-list "> 报备时间<span class="container-list-title ">{{reportInfo.fillingTime}}</span></p>
 
         </div>
 
       </div>
-      <div class="report-btn" v-for="(item, index) in steps" :key="index">
+      <div class="report-btn" v-for="(item, index) in auditList" :key="index">
         <div class="report-btn-left"></div>
         <div class="report-btn-left-x"></div>
         <div class="report-btn-right">
-          <p class="btn-right-title">{{item.title}}</p>
-          <p class="btn-right-time">{{item.time}}</p>
+          <p class="btn-right-title">{{transferInfo[item.transferSts]}}</p>
+          <p class="btn-right-time">{{item.createTime}}</p>
         </div>
       </div>
-     
-      <!-- <steps
-        direction="vertical"
-        :active="0"
-        active-color="#f44"
-      >
-        <step>
-          <h3>报备确认</h3>
-          <p>2018/10/18 10:00</p>
-        </step>
-        <step>
-          <h3>到访时间</h3>
-          <p>2016-07-11 10:00</p>
-        </step>
-        <step>
-          <h3>认筹时间</h3>
-          <p>2016-07-10 09:30</p>
-        </step>
-        </steps> -->
 
     </div>
 
@@ -49,6 +30,7 @@
 </template>
 <script>
 import { Step, Steps } from 'vant';
+import reportService from 'SERVICE/reportService'
 export default {
   components: {
     Step,
@@ -58,20 +40,40 @@ export default {
 
   data () {
     return {
-      show: 1,
-      item: [],
-      nullIcon: require('IMG/user/bill-null.png'),
-      nullcontent: '暂还没有消费记录',
-      steps: [
-        {'id':'1','title':'报备确认','time':'2018/10/18 10:00'},
-        {'id':'2','title':'到访时间','time':'2018/10/18 10:00'},
-        {'id':'3','title':'认筹时间','time':'2018/10/18 10:00'}
-      ]
+      distClientId: '', // 报备单id
+      reportInfo: {}, // 报备信息
+      auditList: [], // 报备审核列表
+      transferInfo: {
+        '0': '报备待确认',
+        '1': '报备成功',
+        '2': '报备失败',
+        '3': '审核中',
+        '10': '未到访',
+        '11': '到访有效',
+        '12': '到访无效',
+        '100': '待跟进',
+        '101': '已认筹',
+        '102': '已认购 ',
+        '103': '已签约',
+        '104': '已结佣',
+        '105': '已放弃',
+      },
+      nullIcon: require('IMG/user/empty_report@2x.png'),
+      nullcontent: '您还没有任何报备信息',
     }
   },
+  created() {
+    this.distClientId = this.$route.query.id
+    this.reportInfo = this.$route.query
+    this.getReportAuditList(this.distClientId)
+  },
   methods: {
-    reportInfo () {
-      this.$router.push('/user/myMarket')
+    /**
+     * 报备审核列表请求
+     */
+    async getReportAuditList(distClientId) {
+      const res = await reportService.reportAuditList(distClientId)
+      this.auditList = res
     },
     itemProperties () {
 
