@@ -156,7 +156,7 @@ class UserService {
    * @param {*} type 
    */
 
-  getlinkerCollection(infoId, deleteFlag, type = 1) {
+  getlinkerCollection(infoId, deleteType, type = 1) {
     return xhr({
       method: 'POST',
       url: '/cpInformationCollect/insertInfo',

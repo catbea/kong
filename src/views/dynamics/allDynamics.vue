@@ -4,7 +4,7 @@
     <div class="tab-container">
 
 
-  <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+  <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated @click="goList">
         <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName" >
           <!-- 动态全部-->
           <div class="allDynamics-container" v-if="item.index === 0">
@@ -106,7 +106,10 @@ export default {
     this.getAllDynamicCount()
   },
   methods: {
-   
+   goList(index,title){
+       alert("1111")
+        alert(index)
+    },
      async getAllDynamicCount () {
         // 全部数据动态统计
       const res = await dynamicsService.getAllDynamicCount()
