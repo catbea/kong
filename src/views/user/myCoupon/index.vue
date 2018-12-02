@@ -1,22 +1,17 @@
 <template>
   <div class="user-myCoupon-page">
-    <ul class="user-myCoupon-page-top">
-      <li @click="oneHandle()" :class="{textActive:index==1}">
-        未使用 {{notNum}}
-        <span :class="{backActive:index==1}"></span>
-      </li>
-      <li @click="twoHandle()" :class="{textActive:index==2}">
-        使用记录 {{recordNum}}
-        <span :class="{backActive:index==2}"></span>
-      </li>
-      <li @click="threeHandle()" :class="{textActive:index==3}">
-        已过期 {{pastNum}}
-        <span :class="{backActive:index==3}"></span>
-      </li>
-    </ul>
-    <div class="coupon-content">
-    <coupon-item :ps="list.ps" v-for="(item,index) in list.info" :key="index" :info="item" @skipHandle="skipMarketDetail"></coupon-item>
-    </div>
+    
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+          <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num">
+            <keep-alive>
+              <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="300" @load="onLoad">
+                <div class="coupon-content">
+                <coupon-item :ps="list.ps" v-for="(item,index) in recordArr.records" :key="index" :info="item"></coupon-item>
+                </div>
+                 </van-list>
+            </keep-alive>
+          </van-tab>
+      </van-tabs>
     <div class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
     <p class="hint">暂无优惠券</p>
   </div>
@@ -29,86 +24,110 @@ export default {
     CouponItem
   },
   data:()=>({
-    index:null,
+    loading:false,
+    finished:false,
+    nameList:[
+      {title:"未使用",num:0},
+      {title:"使用记录",num:0},
+      {title:"已过期",num:0}
+      ],
+      activeIndex:0,
+      aa:[],
+     index:null,
     req:{
       agentId:705,
-      status:{a:1,b:2,c:3}
+      status:{not:1,recor:2,past:3}
     },
     list:{
      ps:{mayUse:true,yetUse:false,yetPast:false,flag:null},
-     info:[
-       {},{},{}
-     ]},
-     notNum:null,
-     recordNum:null,
-     pastNum:null,
+     info:[]
+     },
+     notArr:{records:[]},
+     recordArr:{records:[]},
+     pastArr:{records:[]},
      availableImg:require('IMG/user/Groupa@2x.png')
     }),
     computed:{
       infoLength(){
        return this.list.info.length
-      }
+      },
+      notnum(){
+        return notArr.length
+      },
+      recordnum(){
+        return recordArr.length
+      },
+      pastnum(){
+        return pastArr.length
+      },
     },
   created() {
-    // this.oneHandle()
-    this.couponsList(this.req.agentId,this.req.status.a)
-    // this.couponsList(this.req.agentId,this.req.status.b)
-    // this.couponsList(this.req.agentId,this.req.status.c)
+    // this.couponsList(705,1)
+    
   },
   methods:{
-    // 切换标签事件
-    oneHandle(){
-      this.index=1
-      this.req.status=1
-      this.mayUseHandle()
+    // 请求数据事件
+   async onLoad(){
+      console.log(99999)
+      this.all()
+      let ym= this.recordArr.current
+      // this.b(705,2,2)
+      ym++
+      console.log(ym)
+      if(this.recordArr.pages===ym){
+        this.finished=false
+      }
+      this.loading=false
     },
-    mayUseHandle(){
-      this.list.ps.mayUse=true
-      this.list.ps.yetUse=false
-      this.list.ps.yetPast=false
-      this.list.ps.flag=1
-      this.couponsList()
-    },
-    async couponsList(agentId,status){
-        const res = await mycoupons.couponsStatusList(
-          agentId,
-          status
+      a(){
+        const _this=this
+        let p1= new Promise(function(resolve,reject){
+          //  _this.couponsList(705,1)
+          let res =mycoupons.couponsStatusList(
+            705,
+          1,
+          1
         )
-        if(status==1){
-          this.notNum=res.records.length
-        }else if(status==2){
-          this.recordNum=res.records.length
-        }else{
-          this.pastNum=res.records.length
-        }
-        console.log(this.notNum,this.recordNum,this.pastNum)
-        console.log(res)
-        this.list.info=res.records
+        resolve(res)
+        })
+        return p1
       },
-    twoHandle(){
-      this.index=2
-      this.req.status=2
-      this.yetUseHandle()
-    },
-        yetUseHandle(){
-      this.list.ps.mayUse=false
-      this.list.ps.yetUse=true
-      this.list.ps.yetPast=false
-      this.list.ps.flag=0
-      this.couponsList()
-    },
-    threeHandle(){
-      this.index=3
-      this.req.status=3
-      this.yetPastHandle()
-    },
-        yetPastHandle(){
-      this.list.ps.mayUse=false
-      this.list.ps.yetUse=false
-      this.list.ps.yetPast=true
-      this.list.ps.flag=0
-      this.couponsList()
-    },
+      b(agentId,status,current){
+        const _this=this
+        let p2= new Promise(function(resolve,reject){
+           let res =mycoupons.couponsStatusList(agentId,status,3)
+          resolve(res)
+        })
+        return p2
+      },
+      c(){
+        const _this=this
+        let p3= new Promise(function(resolve,reject){
+           let res =mycoupons.couponsStatusList(
+             705,
+             3,
+             1
+        )
+        resolve(res)
+        });
+        return p3
+      },
+      all(){
+        let _this=this
+        Promise.all([this.a(),this.b(),this.c()])
+        .then(function(r){
+          console.log(r)
+            _this.notArr=r[0]
+            _this.recordArr=r[1]
+            _this.pastArr=r[2]
+        })
+      },                                                                               
+      // async promiseHandle(){
+      // let notHandle =  this.couponsList(this.req.agentId,this.req.status.not)
+      // Promise.all([notHandle])
+      // },
+      // 初始时请求事件
+
 // 立即使用事件
     skipMarketDetail(){
       this.$router.push("/market/marketDetail")

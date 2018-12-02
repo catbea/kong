@@ -9,7 +9,11 @@
     <div class="market-box">
     <meal-market  v-for="(item,index) in dataArr" :key="index" :dataArr="item" :indexData="index" :showData="showArr.indexOf(index) >-1" @click.native="selectHandle(index)"></meal-market>
     </div>
-    <div class="check-all-box">
+    <div class="report-confirm" v-if="type">
+      <p>确定</p>
+    </div>
+
+    <div class="check-all-box" v-if="type">
       <div class="img-box">
       <span class="icon-check bg_img" :style="{backgroundImage:'url('+(checkShow?checkColorImg:checkImg)+')'}" @click="allSelectHandle"></span>
       全选
@@ -32,6 +36,7 @@ export default {
     this.arrLength()
   },
   data:()=>({
+    type:null,
     dataArrLength:null,
     showArr:[],
     searchInfo:{
@@ -75,6 +80,7 @@ export default {
     },
     arrLength(){
       this.dataArrLength=this.dataArr.length
+      this.type=this.$route.query
     }
   }
 }
@@ -83,6 +89,28 @@ export default {
 .my-preference-page{
   .market-box{
     margin:0 0 60px 16px;
+  }
+  .report-confirm{
+    border-top:1px solid #E6E6E6;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    width:100%;
+    height:60px;
+    position: fixed;
+    bottom:0;
+    P{
+      width:72px;
+      height:30px;
+      border-radius:22px;
+      border:1px solid rgba(0,122,230,1);
+      font-size:14px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(0,122,230,1);
+      text-align:center;
+      line-height:30px;
+    }
   }
   .check-all-box{
     background:rgba(255,255,255,1);
