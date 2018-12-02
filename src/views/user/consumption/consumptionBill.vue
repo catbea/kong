@@ -36,7 +36,7 @@
               交易单号
               <span class="container-list-title">{{item.purchaseCode}}</span>
             </span>
-            <botton class="container-list-botton">复制</botton>
+            <Button class="container-list-botton">复制</Button>
           </p>
           <p class="container-list container-list-left bill-container-price">
             总价
@@ -163,6 +163,7 @@ export default {
           border: 1px solid;
           float: right;
           text-align: center;
+          background-color: white
         }
         .container-list-title {
           font-size: 14px;
