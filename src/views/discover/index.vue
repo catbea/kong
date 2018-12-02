@@ -69,6 +69,7 @@ export default {
     async onLoad () {
       let current = this.getCurrentType()
       const result = await discoverService.getDiscoverList(this.userArea.city, current.type, current.page)
+      console.log(result)
       current.list = current.list.concat(result.records)
       current.page++
       if (result.pages === 0 || current.page === result.pages) current.finished = true
