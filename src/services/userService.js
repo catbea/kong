@@ -229,5 +229,17 @@ class UserService {
     })
   }
 
+  /**
+   * 获取热门楼盘
+   */
+  getHotLinker(){
+    return xhr({
+      url: '/linker/getLinkerHot',
+      body: {
+        
+      }
+    })
+  }
+
 }
 export default new UserService()
