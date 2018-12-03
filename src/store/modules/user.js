@@ -26,7 +26,7 @@ const getters = {
 }
 
 const actions = {
-  getUserInfo({ commit }, userInfo) {
+  async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
     await sessionStorage.setItem('userInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
