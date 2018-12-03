@@ -17,7 +17,7 @@ class CommonService {
    * 通过code获取企业微信账户信息
    * @param code 微信跳转地址截取code
    */
-  wxUserInfo(code) {
+  wxUserInfo(code, cropId) {
     return xhr({
       url: '/cp/oauth2/getUserInfoByCode',
       body: {
