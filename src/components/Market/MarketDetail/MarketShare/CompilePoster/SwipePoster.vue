@@ -1,6 +1,6 @@
 <template>
   <div class="swipe-poster-page">
-    <div class="swipe-poster-item">
+    <div class="swipe-poster-item bg_img" :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}">
       <div
         class="content-box bg_img"
         :style="{backgroundImage:'url('+backImg+')'}"
@@ -49,7 +49,6 @@ export default {
     width: 240px;
     height: 387px;
     border-radius: 0px 0px 6px 6px;
-    border: 1px solid;
     position: relative;
     .content-box {
       position: absolute;
