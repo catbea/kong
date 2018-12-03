@@ -14,12 +14,11 @@ const getUrlQueryParams = (url)=>{
 
 export default async (to, from, next) => {
     let userInfo = store.getters.userInfo
-    console.log(userInfo)
+    console.log(userInfo,'user=====')
     if(userInfo && userInfo.token){// 已有用户信息
         next()
     } else {// 没有用户登录信息，跳转微信授权页 
         let parm = getUrlQueryParams(location.href);
-        
         if(parm.code){ // 连接带code，直接取code值，去服务端取用户信息
             let cropId = sessionStorage.getItem('cropId')
             const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
