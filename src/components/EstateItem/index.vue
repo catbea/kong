@@ -1,6 +1,6 @@
 <template>
   <div class="van-hairline--bottom estate-item" v-if="info">
-    <div class="main-container">
+    <div class="main-container" @click="godynamicsInfo">
       <div class="bg_img left-container dev" :style="{backgroundImage:'url(' + info.linkerHeadUrl + ')'}">
         <!-- TODO 720标示 -->
       </div>
@@ -26,6 +26,11 @@ export default {
   },
   components: {
     TagGroup
+  },
+  methods:{
+    godynamicsInfo(){
+      this.$emit('click',this.info)
+    }
   }
 }
 </script>

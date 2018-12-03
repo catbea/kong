@@ -13,7 +13,9 @@ import {
   Lazyload,
   Switch,
   DatetimePicker,
-  Button
+  Button,
+  RadioGroup,
+   Radio
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -27,3 +29,5 @@ Vue.use(Lazyload)
 Vue.use(Switch)
 Vue.use(DatetimePicker)
 Vue.use(Button)
+Vue.use(RadioGroup)
+Vue.use(Radio)

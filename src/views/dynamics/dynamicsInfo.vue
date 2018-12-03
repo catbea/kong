@@ -4,14 +4,14 @@
       <div slot="container">
         <div class="dynamicsInfo-list">
 
-          <div class="dynamicsInfo-list-top">
+          <div class="dynamicsInfo-list-top" @click="godynamicsInfo">
             <span class="dynamicsInfo-list-left">
               <img :src="backIcon" class="mark-icon">
             </span>
             <span class="dynamicsInfo-list-right">
               <p class="list-right-title">万科臻湾汇
                 <!-- <span class="left-title-right">续费</span> -->
-                <span class="left-title-right-open">开通</span>
+                <span class="left-title-right-open" >开通</span>
               </p>
               <p class="list-right-time">南山 深圳湾 | 11/2到期</p>
               <p class="list-right-label">
@@ -73,6 +73,10 @@ export default {
       const res = await dynamicsService.getSingleHouseDynamicList()
       this.SingleHouseDynamicList = res.records
     },
+    //楼盘详情
+    godynamicsInfo(){
+      this.$router.push('/market/marketDetail')
+    }
   }
 }
 </script>

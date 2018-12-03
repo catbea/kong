@@ -2,21 +2,24 @@
   <div class="detail-photo-page">
     <full-screen :info="info"></full-screen>
     <ul>
-      <p>样板间（11）</p>
+      <p>样板间 ({{templateList.length}})</p>
       <div class="template-box">
-        <li tag="li" to="/" v-for="(item,index) in list" :key="index" @click="showClick()"></li>
+        <li tag="li" to="/" class="bg_img" :style="{backgroundImage:'url('+item.a+')'}" 
+         v-for="(item,index) in templateList" :key="index" @click="showClick()"></li>
       </div>   
     </ul>
     <ol>
-      <p>效果图（8）</p>
+      <p>效果图 ({{effectList.length}})</p>
       <div class="effect-box">
-        <li v-for="(item,index) in list" :key="index" @click="showClick()"></li>
+        <li class="bg_img" :style="{backgroundImage:'url('+item.a+')'}" 
+        v-for="(item,index) in effectList" :key="index" @click="showClick()"></li>
       </div> 
     </ol>
     <div class="community-box">
-      <p>小区配置（30）</p>
+      <p>小区配置 ({{communityList.length}})</p>
       <div class="community-box-content">
-        <span v-for="(item,index) in list" :key="index" @click="showClick()"></span>
+        <span class="bg_img" :style="{backgroundImage:'url('+item.a+')'}" 
+        v-for="(item,index) in communityList" :key="index" @click="showClick()"></span>
       </div> 
     </div>
   </div>
@@ -25,14 +28,19 @@
 import FullScreen from './FullScreen'
 export default {
   data: () => ({
-    list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 0, 990, 11, 65],
+    templateList: [
+      {a:require('IMG/dev/timg.jpg')}
+    ],
+    effectList: [
+      {a:require('IMG/dev/timg.jpg')}
+    ],
+    communityList: [
+      {a:require('IMG/dev/timg.jpg')}
+    ],
     show: false,
     info: {
       domShow: false,
       arr: [
-        'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
-        'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
-        'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
         'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
         'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
         'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
@@ -54,7 +62,7 @@ export default {
 .detail-photo-page {
   width: 375px;
   height: 100%;
-  background: rgba(247, 249, 250, 1);
+  background: #ffffff;
   p {
     font-size: 20px;
     font-family: PingFangSC-Semibold;

@@ -1,11 +1,11 @@
 <template>
   <div class="dynamics-page">
     <div class="dynamics-top-container">
-      <dynamics-collect :data="collectData"></dynamics-collect>
-      <estate-recommend :info="recommendData"></estate-recommend>
+      <dynamics-collect :data="collectData" @click="goMessageInfo"></dynamics-collect>
+      <estate-recommend :info="recommendData" @click="goRecommendInfo"></estate-recommend>
     </div>
     <div class="list-container">
-      <my-estate-list :list="estateListData"></my-estate-list>
+      <my-estate-list :list="estateListData"  @click="goRecommendInfo"></my-estate-list>
     </div>
   </div>
 </template>
@@ -30,6 +30,16 @@ export default {
     this.getEstateList()
   },
   methods: {
+    //动态详情
+    async goMessageInfo(num){
+      if(num.customerCount.val !=0 && num.businessCardViews.val !=0 && num.estateViews.val !=0){
+        this.$router.push('/dynamics/allDynamics')
+      }
+    },
+    //楼盘详情
+    async goRecommendInfo(){
+        this.$router.push('/market/marketDetail')
+    },
     async getCollectInfo () {
       const res = await dynamicsService.getDynamicsCollect()
       // 数据中心部分 数据拼装
@@ -54,7 +64,9 @@ export default {
       const res = await dynamicsService.getEstateInfo()
       this.estateListData = res.myLinkerVOs
       this.recommendData = res.aiLinkerVO
-    }
+    },
+    
+  
   }
 }
 </script>
