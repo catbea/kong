@@ -7,36 +7,36 @@ const state = {
     items: [
       {
         name: '数据',
-        icon: require('IMG/tabbar/message.png'),
-        icon_atc: require('IMG/tabbar/message_atc.png'),
+        icon: require('IMG/tabbar/data_tab.png'),
+        icon_atc: require('IMG/tabbar/data_tab_act.png'),
         path: '/dynamics',
         info: 10
       },
       {
         name: '楼盘',
-        icon: require('IMG/tabbar/market.png'),
-        icon_atc: require('IMG/tabbar/market_atc.png'),
+        icon: require('IMG/tabbar/project_tab.png'),
+        icon_atc: require('IMG/tabbar/project_tab_act.png'),
         path: '/market',
         info: 0
       },
       {
         name: '发现',
-        icon: require('IMG/tabbar/client.png'),
-        icon_atc: require('IMG/tabbar/client_atc.png'),
+        icon: require('IMG/tabbar/dis_tab.png'),
+        icon_atc: require('IMG/tabbar/dis_tab_act.png'),
         path: '/discover',
         info: 0
       },
       {
         name: '客户',
-        icon: require('IMG/tabbar/business_card.png'),
-        icon_atc: require('IMG/tabbar/business_card_atc.png'),
+        icon: require('IMG/tabbar/client_tab.png'),
+        icon_atc: require('IMG/tabbar/client_tab_act.png'),
         path: '/custom',
         info: 0
       },
       {
         name: '名片',
-        icon: require('IMG/tabbar/business_card.png'),
-        icon_atc: require('IMG/tabbar/business_card_atc.png'),
+        icon: require('IMG/tabbar/card_tab.png'),
+        icon_atc: require('IMG/tabbar/card_tab_act.png'),
         path: '/user',
         info: 0
       }

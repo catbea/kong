@@ -96,6 +96,7 @@ export default {
           this.$router.push('/user/consumption/consumptionBill')
           break
         case 6:
+         this.$router.push('/user/edit/awWelfare')
           break
       }
     },
