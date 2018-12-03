@@ -8,15 +8,11 @@
       <li class="sort" @click="false"></li>
     </ul>
     <div class="choose-container">
-      <area-filter :show="currentIndex===0" :parent="a" v-model="aa"></area-filter>
-      <price-filter :show="currentIndex===1" v-model="b"></price-filter>
-      <popularity-filter :show="currentIndex===2" v-model="c"></popularity-filter>
-      <more-filter :show="currentIndex===3" v-model="d"></more-filter>
+      <area-filter :show="currentIndex===0" :parent="local" v-model="baseFilters.area"></area-filter>
+      <price-filter :show="currentIndex===1" v-model="baseFilters.price"></price-filter>
+      <popularity-filter :show="currentIndex===2" v-model="baseFilters.popularity"></popularity-filter>
+      <more-filter :show="currentIndex===3" v-model="moreFilters"></more-filter>
     </div>
-
-    <!-- <area-filter :data=""></area-filter> -->
-    <!-- <accredit-area :domShowInfo="domShowInfo"></accredit-area>
-    <sort-way :domShowInfo="domShowInfo"></sort-way> -->
   </div>
 </template>
 <script>
@@ -27,7 +23,6 @@ import PopularityFilter from './PopularityFilter'
 import MoreFilter from './MoreFilter'
 
 
-import AccreditArea from 'COMP/AccreditArea/'
 import SortWay from './SortWay'
 import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 
@@ -37,7 +32,6 @@ export default {
     PriceFilter,
     PopularityFilter,
     MoreFilter,
-    AccreditArea,
     SortWay
   },
 
@@ -48,32 +42,19 @@ export default {
       { index: 2, name: '人气', checked: false },
       { index: 3, name: '更多', checked: false }
     ],
-    a: '武汉市',
-    aa:'',
-    b: '-1,-1',
-    c:'',
-    d:'',
-    currentIndex: -1,
-    sortShow: false,
-    accreditShow: false,
-    showData: 1,
-    domShowInfo: {
-      liShow: false,
-      domShow: false,
-      sortShow: false
+    baseFilters:{
+      area: '',
+      price:'-1,-1',
+      popularity: '-1,-1'
     },
-    defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
+    moreFilters:{
+
+    },
+    local: '武汉市',
+    currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
     arrowDownIcon: require('IMG/market/listArrowDown.png')
   }),
-  created () {
-    // console.log('---------')
-    // console.log(getAreaCode('北京市'))
-
-    // console.log(getChildren('湖北省'));
-
-
-  },
   methods: {
     itemClickHandler (val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
@@ -128,13 +109,6 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     overflow: hidden;
-    // height: 500vw;
   }
 }
-// .active1 {
-//   color: rgba(0, 122, 230, 1);
-// }
-// .active2 {
-//   background: rgba(0, 122, 230, 1);
-// }
 </style>
