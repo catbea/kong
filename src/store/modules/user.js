@@ -2,29 +2,7 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: {
-    "agentId": "705",
-    "avatarUrl": "http://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/male_001.png",
-    "distributorId": "123",
-    "distributorName": "青岛佳乐分销商SIT测试2",
-    "labelList": [
-      {
-        "id": "",
-        "labelId": "113",
-        "labelName": "交易专家",
-        "userId": ""
-      }
-    ],
-    "majorCity": "深圳市",
-    "majorRegion": "广东省/深圳市/福田区",
-    "name": "123",
-    "organizationId": "90",
-    "organizationName": "",
-    "registerMobile": "18907437200",
-    "signature": "创造价值，赢得尊重\n",
-    "tempPhone": "13714860003",
-    "wechatAccount": "string"
-  },
+  userInfo: JSON.parse(sessionStorage.getItem('userInfo')),
   userVipInfo: {},
   userArea: {
     city: '深圳市'
@@ -41,7 +19,7 @@ const state = {
 }
 
 const getters = {
-  userInfo: state => JSON.parse(sessionStorage.getItem('userInfo')),
+  userInfo: state => state.userInfo,
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo
