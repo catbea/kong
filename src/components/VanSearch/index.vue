@@ -6,11 +6,13 @@
             <span class="bg_img" :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
             </p>
             <span class="icon-line"></span>
-        <form action="/">
-          <van-search
-            :placeholder="obj.placeholderText"
-          />
-        </form>
+            <router-link to="/market/inputSearch">
+              <form action="/">
+                <van-search
+                  :placeholder="obj.placeholderText"
+                />
+              </form>
+            </router-link>
         </div>
   </div>
 </template>
@@ -38,8 +40,11 @@ export default {
         border-radius: 6px;
         p {
           margin: 6px 0 0 16px;
-          padding: 0 12px 0 0;
+          width:45px;
           display: flex;
+          overflow: hidden;/*超出部分隐藏*/
+            white-space: nowrap;/*不换行*/
+            text-overflow:ellipsis;
           span {
             width: 16px;
             height: 16px;

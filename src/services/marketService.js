@@ -10,10 +10,10 @@ class MarketService {
     //   ...
     // },payload)
     return xhr({
-      url: '/linker/getLinkerList'
-      // body: {
-      //   projectName
-      // }
+      url: '/linker/getLinkerList',
+      body: {
+        payload
+      }
     })
   }
 
