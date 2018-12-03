@@ -2,7 +2,7 @@
   <div class="all-else-market-box">
     <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
       <van-swipe-item v-for="(item,index) in list" :key="index">
-      <ul class="else-market-box">
+      <ul class="else-market-box" @click="skipMarketDetail()">
         <li class="else-market-box-img bg_img" :style="{backgroundImage:'url(https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1919031430,2707845179&fm=200&gp=0.jpg)'}">
 
         </li>
@@ -17,7 +17,12 @@
 export default {
   data: () => ({
     list: [1, 2, 3, 4]
-  })
+  }),
+  methods:{
+    skipMarketDetail(){
+      this.$router.push('/market/marketDetail')
+    }
+  }
 }
 </script>
 <style lang="less">

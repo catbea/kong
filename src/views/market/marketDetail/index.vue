@@ -21,7 +21,7 @@
         </div>
         <specific-marketDetail></specific-marketDetail>
       </div>
-      <div class="button-box">按钮文字</div>
+      <div class="button-box" @click="moreInfoHandle">更多信息</div>
       <title-bar :conf="confA"></title-bar>
       <all-marketType></all-marketType>
       <title-bar :conf="confB"></title-bar>
@@ -146,6 +146,9 @@ export default {
     },
     supplement() {
       this.show = true
+    },
+    moreInfoHandle(){
+      this.$router.push('/marketDetail/info')
     }
   },
   destroyed() {

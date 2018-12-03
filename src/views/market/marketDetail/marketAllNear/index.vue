@@ -49,7 +49,7 @@ export default {
         i: require('IMG/nearColor/Rectangle 103@2x.png')
       },
       {
-        text: '健身',
+        text: '健身港',
         A: require('IMG/near/Rectangle 104@2x.png'),
         i: require('IMG/nearColor/Rectangle 104@2x.png')
       },
@@ -89,7 +89,8 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin: 0 22px;
+      align-items:center;
+      padding: 0 22px;
       .textColor {
         color: rgba(0, 122, 230, 1) !important;
       }

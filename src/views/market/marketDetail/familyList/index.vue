@@ -72,7 +72,9 @@ export default {
 <style lang="less">
 .family-list-page{
       display: flex;
+      height:100%;
     flex-direction: column;
+    background:#ffffff;
   .family-list-page-box{
     width:375px;
     height:100%;
