@@ -3,9 +3,11 @@
     <div class="compile-cover-top">选择楼盘封面</div>
     <ol class="compile-cover-bottom">
       <li
+        class="bg_img"
         v-for="(item,index) in list"
         :key="index"
         @click="active(index)"
+        :style="{backgroundImage:'url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1629847645,2171518544&fm=27&gp=0.jpg)'}"
       >
         <span
           class="bg_img"
@@ -65,7 +67,6 @@ export default {
       height: 75px;
       border-radius: 4px;
       margin-right: 15px;
-      border: 1px solid;
       position: relative;
       display: flex;
       span {

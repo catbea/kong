@@ -9,24 +9,24 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   method = method.toUpperCase()
 
   url = process.env.VUE_APP_BASE_API_URL + url
+
   headers = Object.assign(
-    { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    { 'Content-Type': 'application/json; charset=UTF-8' },
     {
       Authorization:
         'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJhd3NocDQiLCJzdWIiOiJhZ2VudElkOnd3MjhmNDVkZmUwZTVhZTMxZDo3MDUiLCJleHAiOjE1NDM5MTc3MjksImlhdCI6MTU0MzMxMjkyOX0.EkTPyJRS0KpHKz6I2-AJeGetHs406f98pXPQnoSdP78HQvQwwg1Wfpgi61Wj7QpyTYu5GJfZIMh9nitXYQwMFQ'
     },
     headers
   )
+
+
   const options = {
     method,
     headers,
     mode: 'cors'
   }
 
-  // body.agentId = localStorage.getItem('userId')
-  const qsParams = qs.stringify(body)
-
-  method === 'GET' ? (url = url + '?' + qsParams) : (options.body = qsParams)
+  method === 'GET' ? url = `${url}?${qs.stringify(body)}` : (options.body = JSON.stringify(body))
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
     // http错误

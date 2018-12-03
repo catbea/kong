@@ -1,10 +1,14 @@
 <template>
   <div class="user-mymarket-page">
    <div style="margin-left:16px"><master-market></master-market></div> 
-    <div style="margin-left:16px"><title-bar :conf="titleInfo" @the="popupHandle"></title-bar></div>
+    <div style="margin-left:16px"><title-bar :conf="titleInfo" @titleBarReturn=""></title-bar></div>
     <div style="margin-left:16px"><van-search :obj="searchInfo"></van-search></div>
     <div style="margin-left:16px"><screen></screen></div>
-    <div style="margin-left:16px"><user-market v-for="(item,index) in dataArr" :key="index" :dataArr="item"></user-market></div>
+    <div style="margin-left:16px">
+      <user-market @apostropheReturn="popupHandle" @usmarIconReturn="skipShareHandle" @skipMarketRetuen="skipMarketHandle"
+      v-for="(item,index) in dataArr" :key="index" :dataArr="item">
+      </user-market>
+      </div>
     <div style="margin-left:16px"><van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay>
         <ul>
           <li>续费（08/17到期）</li>
@@ -78,13 +82,20 @@ export default {
       }).catch(() => {
         // on cancel
       });
+    },
+    skipShareHandle(){
+      this.$router.push('/marketDetail/share')
+    },
+    skipMarketHandle(){
+      this.$router.push('/market/marketDetail')
     }
   }
 }
 </script>
 <style lang="less">
 .user-mymarket-page{
-  height:100%;
+  height:auto !important;
+      background: #ffffff;
   // > div{
   //   width:343px;
   // }
