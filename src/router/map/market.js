@@ -115,6 +115,15 @@ export default [
     }
   },
   {
+    path: '/marketDetail/open/agreement',
+    name: 'marketDetail-open-agreement',
+    component: resolve =>
+      require(['@/views/market/marketDetail/marketOpen/BuyAgreement/index.vue'], resolve),
+    meta: {
+      title: '付费协议'
+    }
+  },
+  {
     path: '/marketDetail/share',
     name: 'marketDetail-share',
     component: resolve =>

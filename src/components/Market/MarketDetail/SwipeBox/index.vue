@@ -150,7 +150,7 @@ export default {
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: black;
+    color: #FFFFFF;
     .collect {
       width: 20px;
       height: 20px;
@@ -165,7 +165,7 @@ export default {
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: black;
+    color: #FFFFFF;
     .share {
       width: 20px;
       height: 20px;

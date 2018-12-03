@@ -5,26 +5,39 @@
     <div class="all-describe" >
       <div class="market-box-page-top">
         <div class="img bg_img" :style="{backgroundImage:'url(http://www.anjiazhixun.com/upload/kindeditor/image/20181115/20181115184742_75384.jpg)'}">
-          <div class="label">{{itemInfo.sale}}</div>
+          <div class="label">{{itemInfo.sale}}
+            9.9折
+          </div>
         </div>
         <!-- <input type="text" v-model="val"> -->
         <ul class="market-describe">
           <li class="market-name">
-            <span> {{itemInfo.linkerName}}</span>
+            <span> {{itemInfo.linkerName}}
+              华润城市花园
+            </span>
             <span class="dredge" :style="style" v-if="dredge">{{openStatus}}</span>
           </li>
-          <li class="site">{{itemInfo.linkerAddress}}</li>
+          <li class="site">
+            {{itemInfo.linkerAddress}}南山 深圳湾
+            </li>
           <tag-group :arr="itemInfo.linkerTags"></tag-group>
           <li class="unit-price">
-            <span>{{itemInfo.linkerPrice}}</span>
-            <span>{{itemInfo.openTimes}}次开通</span>
+            <span>
+              {{itemInfo.linkerPrice}}
+              98000元/㎡
+            </span>
+            <span>
+              {{itemInfo.openTimes}}
+              435次开通</span>
           </li>
         </ul>
       </div>
         
         <div class="market-box-page-bottom">
-          <span>佣</span>
-          <span>{{itemInfo.commission}}</span>
+          <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
+          <span>{{itemInfo.commission}}
+            1.056%+50000元/套
+          </span>
         </div>
     </div>
   </div>
@@ -42,7 +55,8 @@ export default {
   },
   data: () => ({
     resInfo: null,
-    style: null
+    style: null,
+    commissionImg:require('IMG/user/collection/Rectangle@2x.png')
   }),
   props: {
     // value:'',
@@ -187,25 +201,13 @@ export default {
         border-radius: 4px;
         margin: 16px 0 16px 0;
         display: flex;
+        align-items:center;
         span:nth-child(1) {
-          width: 15px;
-          height: 15px;
-          padding-left:1px;
-          padding-bottom:1px;
-          border-radius: 2px;
-          border: 1px solid;
-          font-size: 13px;
-          font-family: PingFang-SC-Regular;
-          font-weight: 400;
-          color: rgba(255, 85, 51, 1);
-          // line-height: 16px;
-          margin-top: 9px;
-          // text-align: center;
-          justify-content: center;
-          align-items:center;
+          width:16px;
+          height:16px;
         }
         span:nth-child(2) {
-          margin: 5px 0 0 10px;
+          margin: 0 0 0 4px;
           font-size: 15px;
           font-family: PingFang-SC-Regular;
           font-weight: 400;

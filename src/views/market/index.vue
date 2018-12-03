@@ -18,7 +18,7 @@
       <already-open :agentIdInfo="agentIdInfo"></already-open>
     </div>
     <div class="all-market">
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
+      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="itemInfo" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
     </div>
   </div>
 </template>
@@ -39,6 +39,9 @@ export default {
     AlreadyOpen
   },
   data: () => ({
+    itemInfo:{
+      linkerTags:["热销中","地铁房","学区好房"]
+      },
     searchContent:{
       siteText:'深圳',
       placeholderText:'请输入平台名称'
