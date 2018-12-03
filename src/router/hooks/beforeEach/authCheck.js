@@ -29,6 +29,7 @@ export default async (to, from, next) => {
             if(parm.cropId){
                 let cropId = parm.cropId
                 let wxredirecturl = window.location.href.split("#")[0].split("?")[0]
+                wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
                 sessionStorage.setItem('cropId', cropId)
 
                 console.log(parm.cropId)
@@ -37,7 +38,7 @@ export default async (to, from, next) => {
                 let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
                     + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                     + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect' 
-                window.location.href = wxurl;
+                // window.location.href = wxurl;
             } else {
                 console.log('no cropId')
                 next()
