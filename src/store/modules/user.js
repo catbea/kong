@@ -11,7 +11,19 @@ const state = {
       {
         "id": "",
         "labelId": "113",
-        "labelName": "交易专家",
+        "labelName": "恋爱专家",
+        "userId": ""
+      },
+      {
+        "id": "",
+        "labelId": "112",
+        "labelName": "撩妹高手",
+        "userId": ""
+      },
+      {
+        "id": "",
+        "labelId": "111",
+        "labelName": "情场屠夫",
         "userId": ""
       }
     ],
