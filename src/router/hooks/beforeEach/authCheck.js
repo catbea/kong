@@ -16,17 +16,17 @@ export default async (to, from, next) => {
     let userInfo = store.getters.userInfo
 
     if(userInfo && userInfo.token){// 已有用户信息
-        console.log('userInfo not empty')
         next()
     } else {// 没有用户登录信息，跳转微信授权页 
         let parm = getUrlQueryParams(location.href);
         
         if(parm.code){ // 连接带code，直接取code值，去服务端取用户信息
-            // https://sit.zooming-data.com/?code=x3-UuGsLYQ8n09-BhmOFwzDmaQN14R3-ojC0HAkQVlU&state=062882
             let cropId = sessionStorage.getItem('cropId')
-            console.log(parm.code, 'parm.code')
-            const userInfo = await commonService.wxUserInfo(parm.code, cropId)
-            console.log(userInfo, 'userInfo')
+            const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
+            let userInfo = wxAuthObject.userInfo
+            userInfo.token = wxAuthObject.token
+            store.dispatch('userInfo', userInfo)
+            // console.log(userInfo, 'userInfo')
             next()
         } else { // 没有code，判断是否带了appid，如果带appid就跳微信授权页
             if(parm.cropId){
