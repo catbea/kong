@@ -23,8 +23,11 @@ export default async (to, from, next) => {
         
         if(parm.code){ // 连接带code，直接取code值，去服务端取用户信息
             let cropId = sessionStorage.getItem('cropId')
-            // const userInfo = await commonService.wxUserInfo(parm.code, cropId)
             console.log(cropId, 'cropId')
+            console.log(parm.code, 'parm.code')
+            const userInfo = await commonService.wxUserInfo(parm.code, cropId)
+            console.log(userInfo, 'userInfo')
+            next()
         } else { // 没有code，判断是否带了appid，如果带appid就跳微信授权页
             if(parm.cropId){
                 let cropId = parm.cropId
@@ -39,7 +42,7 @@ export default async (to, from, next) => {
                     + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                     + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect' 
                 window.location.href = wxurl;
-            } else {
+            } else {// 连接没带cropid，跳转错误页面
                 console.log('no cropId')
                 next()
             }
