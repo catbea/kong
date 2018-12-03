@@ -31,6 +31,9 @@ export default {
   width: 100%;
   height: 100%;
   background: #ffffff;
+  .box{
+    margin-bottom:5px;
+  }
   .share-top {
     width: 300px;
     height: 480px;
@@ -71,6 +74,7 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(0, 122, 230, 1);
+            background: #ffffff;
       }
       .save {
         width: 144px;

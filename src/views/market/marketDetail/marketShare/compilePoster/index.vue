@@ -58,6 +58,8 @@ export default {
 <style lang="less">
 .compile-poster-page {
   line-height: 22px;
+      background: #ffffff;
+      height:auto !important;
   .compile-tagline {
     margin-left: 15px;
     .compile-tagline-top {

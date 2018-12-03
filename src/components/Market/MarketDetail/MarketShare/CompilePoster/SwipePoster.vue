@@ -45,6 +45,7 @@ export default {
   width: 375px;
   display: flex;
   justify-content: center;
+  background: #ffffff;
   > .swipe-poster-item {
     width: 240px;
     height: 387px;

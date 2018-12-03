@@ -24,12 +24,12 @@
           <li class="average-price-right">410000元/㎡起</li> 
           <li class="commission-right"> 
             <div class="commission">0.234%</div> 
-            <div class="commission-detail" :style="{'background':'url('+commissionDetailImg+') no-repeat'}" @click="commission"></div>
+            <div class="commission-detail bg_img" :style="{backgroundImage:'url('+commissionDetailImg+')'}" @click="commission"></div>
           </li>
           <li class="opening-quotation-right">2018年06月08日</li>
           <li class="market-site-right">
             <div class="site">深圳市龙岗龙翔大道与怡翠路深圳市龙岗龙翔大道与怡翠路</div> 
-             <router-link tag="div" to="/marketDetail/info" class="site-detail" :style="{'background':'url('+siteDetailImg+') no-repeat'}"></router-link>
+             <router-link tag="div" to="/marketDetail/info"  class="site-detail bg_img" :style="{backgroundImage:'url('+siteDetailImg+')'}"></router-link>
           </li>
           <li class="developers-right">佛山市碧桂园地产实业有限公司</li>
           </ul>

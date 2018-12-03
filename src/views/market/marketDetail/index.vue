@@ -156,6 +156,8 @@ export default {
 </script>
 <style lang="less">
 .marketDetail-page {
+  height:auto !important;
+    background: #ffffff;
   .van-tabs__wrap--scrollable .van-tab{
     flex:1;
   }
