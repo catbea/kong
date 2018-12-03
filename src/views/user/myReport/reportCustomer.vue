@@ -10,66 +10,63 @@
       @search="onSearchHandler"
       @click="onFocusHandler"
     >
-      <div slot="action" @click="onSearchHandler">搜索</div>
     </van-search>
+    <div slot="sort" @click="onSearchHandler"></div>
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
-        <van-tab title="全部" :actionIndex='0'></van-tab>
-        <van-tab title="关注" :actionIndex='1'></van-tab>
-        <van-tab title="访客" :actionIndex='2'></van-tab>
-        <van-tab title="意向" :actionIndex='3'></van-tab>
-        <van-tab title="新增" :actionIndex='4'></van-tab>
+      <van-tabs
+        v-model="activeIndex"
+        color="#007AE6"
+        :line-width="15"
+        :swipe-threshold="6"
+        @click="onClick"
+      >
+        <van-tab title="全部" :actionIndex="0"></van-tab>
+        <van-tab title="关注" :actionIndex="1"></van-tab>
+        <van-tab title="访客" :actionIndex="2"></van-tab>
+        <van-tab title="意向" :actionIndex="3"></van-tab>
+        <van-tab title="新增" :actionIndex="4"></van-tab>
       </van-tabs>
     </div>
     <div class="report-list-continer">
       <van-list v-model="loading" :finished="currentData.finished" @load="onLoad">
-        <div
-          class="list-continer-for"
-          v-for="(item,index) in currentData.list"
-          :key="index"
-          :info="item"
-          @click="itemClickHandler"
-        >
-          <shadow-box>
-            <div slot="container" class="list-continer-padd">
-              <checkbox-group v-model="result">
-                <checkbox v-model="checked" :name="item.id">
-                  <div class="report-list">
-                    <span class="report-list-left">
-                      <img class="report-list-img" :src="item.avatarUrl" >
-                      <img class="list-img-icon" :src="ovalImg" v-if="item.attentionStatus == 0">
-                    </span>
-                    <span class="report-list-right">
-                      <p class="list-right-name">{{item.clientName}}</p>
-                      <p class="list-right-conter">累计浏览{{item.browsCount?item.browsCount:0}}次，平均停留{{item.averageTime?item.averageTime:0}}s</p>
-                    </span>
-                  </div>
-                </checkbox>
-              </checkbox-group>
+        <van-radio-group class="radio-container" v-model="radio" @change="onRadioChangeHandler">
+          <van-radio class="shadow_box radio-item-container"
+            :name="item"
+            v-for="(item,index) in currentData.list"
+            :key="index"
+            :value="item"
+          >
+            <div class="report-list ">
+              <span class="report-list-left">
+                <img class="report-list-img" :src="item.avatarUrl">
+                <img class="list-img-icon" :src="ovalImg" v-if="item.attentionStatus == 0">
+              </span>
+              <span class="report-list-right">
+                <p class="list-right-name">{{item.clientName}}</p>
+                <p
+                  class="list-right-conter"
+                >累计浏览{{item.browsCount?item.browsCount:0}}次，平均停留{{item.averageTime?item.averageTime:0}}s</p>
+              </span>
             </div>
-          </shadow-box>
-        </div>
+          </van-radio>
+        </van-radio-group>
       </van-list>
       <div class="list-fixed">
-        <button class="list-but">确定</button>
+        <button class="list-but" @click="sureHandler">确定</button>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { Checkbox, CheckboxGroup } from 'vant'
-import ShadowBox from 'COMP/ShadowBox'
 import CustomService from 'SERVICE/customService'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    ShadowBox,
-    Checkbox,
-    CheckboxGroup,
     CustomService
   },
   data: () => ({
-    availableImg: require('IMG/user/usercard@2x.png'),
+    radio: {},
     ovalImg: require('IMG/user/Oval 2@2x.png'),
     activeIndex: 0,
     data: {
@@ -79,7 +76,6 @@ export default {
       3: { finished: false, list: [], page: 1 },
       4: { finished: false, list: [], page: 1 }
     },
-    result: [{ id: '1', id: '2' }],
     loading: false,
     search: '',
     pageSize: 10,
@@ -89,7 +85,7 @@ export default {
   created() {},
   methods: {
     onSearchHandler() {},
-    onClick () {
+    onClick() {
       this.onLoad()
     },
     async onLoad() {
@@ -125,22 +121,45 @@ export default {
           return 'getCustomerAdd'
       }
     },
-    itemClickHandler(e) {
-      // this.$router.push(`/custom/${e.clientId}`)
-    },
+    
     onFocusHandler() {
       console.log('fffff')
+    },
+    onRadioChangeHandler(val) {
+      console.log('onChangeHandler')
+      console.log(val)
+    },
+    /**
+     * 确定
+     */
+    sureHandler() {
+      console.log(this.radio)
+      let _reportAddInfo = {
+        clientId: this.radio.clientId,
+        clientName: this.radio.clientName
+      }
+      this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
+      this.$router.back(-1)
     }
   },
   computed: {
     currentData() {
       console.log(this.activeIndex)
       return this.data[this.activeIndex]
-    }
+    },
+    ...mapGetters(['reportAddInfo'])
   }
 }
 </script>
 <style lang="less">
+.sort {
+      width: 16px;
+      height: 17px;
+      background: url('../../../assets/img/market/Combined Shape@2x.png') no-repeat;
+      background-size: contain;
+      margin-right: 13px;
+}
+
 .report-page {
   .search-container {
     .van-field__body {
@@ -152,6 +171,12 @@ export default {
   }
   .report-list-continer {
     margin-top: 16px;
+    .radio-container{
+      >.radio-item-container{
+        margin: 10px 15px;
+        padding: 20px 15px;
+      }
+    }
   }
 }
 
@@ -163,6 +188,7 @@ export default {
 }
 .report-list {
   display: flex;
+  width: 100%;
   > .report-list-left {
     > .report-list-img {
       width: 50px;

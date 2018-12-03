@@ -32,8 +32,11 @@ const state = {
   reportAddInfo: {
     linkerId: '',
     linkerName: '',
+    clientId: '',
     clientName: '',
-    clientPhone: ''
+    clientPhone: '',
+    distributorId: '',
+    institutionId: ''
   }
 }
 
