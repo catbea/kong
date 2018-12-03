@@ -26,7 +26,7 @@ export default async (to, from, next) => {
             let userInfo = wxAuthObject.userInfo
             userInfo.token = wxAuthObject.token
             store.dispatch('userInfo', userInfo)
-            // console.log(userInfo, 'userInfo')
+            console.log(userInfo, 'userInfo')
             next()
         } else { // 没有code，判断是否带了appid，如果带appid就跳微信授权页
             if(parm.cropId){
