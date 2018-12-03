@@ -1,7 +1,7 @@
 <template>
-  <div class="price-filter" v-if="show">
+  <div class="popularity-filter" v-if="show">
     <ul>
-      <li class="van-hairline--bottom" v-for="(item, index) in conf" :key="index" :class="checked===index && 'active'" @click="checked=index">{{item}}</li>
+      <li class="van-hairline--bottom" v-for="(item,index) in conf" :key="index" :class="checked===index&&'active'" @click="checked=index">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -15,11 +15,11 @@ export default {
     checked: null,
     conf: {
       '-1,-1': '不限',
-      '-1,10000': '1万以下',
-      '10000,30000': '1万-3万',
-      '30000,50000': '3万-5万',
-      '50000,100000': '5万-10万',
-      '100000,-1': '10万以上'
+      '-1,500': '500以下',
+      '500,1000': '500-1000',
+      '1000,5000': '1000-5000',
+      '5000,10000': '5000-10000',
+      '10000,-1': '10000以上'
     }
   }),
   watch: {
@@ -33,7 +33,7 @@ export default {
 }
 </script>
 <style lang="less">
-.price-filter {
+.popularity-filter {
   width: 100%;
   height: 82%;
   display: flex;

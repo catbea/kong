@@ -12,7 +12,7 @@
     "serve-prod": "vue-cli-service serve --mode production"
   },
   "dependencies": {
-    "@antv/f2": "^3.3.0",
+    "@antv/f2": "^3.3.1",
     "amfe-flexible": "^2.2.1",
     "html2canvas": "^1.0.0-alpha.12",
     "lodash": "^4.17.11",

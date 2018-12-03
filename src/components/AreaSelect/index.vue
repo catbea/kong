@@ -4,7 +4,7 @@
   </van-popup>
 </template>
 <script>
-import fullArea from '@/utils/fullArea'
+import { fullArea } from '@/utils/fullArea'
 export default {
   props: {
     show: { type: Boolean, default: false },

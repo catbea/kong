@@ -8,7 +8,10 @@
       <li class="sort" @click="false"></li>
     </ul>
     <div class="choose-container">
-    <price-filter :show="currentIndex===1" v-model="a"></price-filter>
+      <area-filter :show="currentIndex===0" :parent="a" v-model="aa"></area-filter>
+      <price-filter :show="currentIndex===1" v-model="b"></price-filter>
+      <popularity-filter :show="currentIndex===2" v-model="c"></popularity-filter>
+      <more-filter :show="currentIndex===3" v-model="d"></more-filter>
     </div>
 
     <!-- <area-filter :data=""></area-filter> -->
@@ -20,13 +23,20 @@
 
 import AreaFilter from './AreaFilter'
 import PriceFilter from './PriceFilter'
+import PopularityFilter from './PopularityFilter'
+import MoreFilter from './MoreFilter'
+
+
 import AccreditArea from 'COMP/AccreditArea/'
 import SortWay from './SortWay'
+import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 
 export default {
   components: {
     AreaFilter,
     PriceFilter,
+    PopularityFilter,
+    MoreFilter,
     AccreditArea,
     SortWay
   },
@@ -36,9 +46,13 @@ export default {
       { index: 0, name: '区域', checked: false },
       { index: 1, name: '均价', checked: false },
       { index: 2, name: '人气', checked: false },
-      { index: 3, name: '区域', checked: false }
+      { index: 3, name: '更多', checked: false }
     ],
-    a:'-1,-1',
+    a: '武汉市',
+    aa:'',
+    b: '-1,-1',
+    c:'',
+    d:'',
     currentIndex: -1,
     sortShow: false,
     accreditShow: false,
@@ -52,6 +66,14 @@ export default {
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
     arrowDownIcon: require('IMG/market/listArrowDown.png')
   }),
+  created () {
+    // console.log('---------')
+    // console.log(getAreaCode('北京市'))
+
+    // console.log(getChildren('湖北省'));
+
+
+  },
   methods: {
     itemClickHandler (val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
@@ -59,8 +81,8 @@ export default {
         document.getElementsByClassName('choose-container')[0].style.height = (document.body.offsetHeight
           - document.getElementsByClassName('search-box')[0].offsetHeight
           - document.getElementsByClassName('screen-container')[0].offsetHeight
-          - document.getElementsByClassName('tabbar')[0].offsetHeight)/37.5+'rem'
-      }else{
+          - document.getElementsByClassName('tabbar')[0].offsetHeight) / 37.5 + 'rem'
+      } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
       }
     }
@@ -103,8 +125,9 @@ export default {
   }
   > .choose-container {
     position: absolute;
-    background-color: rgba(0, 0, 0, .6);
+    background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
+    overflow: hidden;
     // height: 500vw;
   }
 }
