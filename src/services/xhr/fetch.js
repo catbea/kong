@@ -26,10 +26,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     mode: 'cors'
   }
 
-  // body.agentId = localStorage.getItem('userId')
-  const qsParams = qs.stringify(body)
-
-  method === 'GET' ? (url = url + '?' + qsParams) : (options.body = qsParams)
+  method === 'GET' ? url = `${url}?${qs.stringify(body)}` : (options.body = JSON.stringify(body))
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
     console.log(options)
