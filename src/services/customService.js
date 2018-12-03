@@ -3,18 +3,18 @@ class CustomService {
   /**
    * 我的[全部]客户列表
    * @param {*} clientName 客户名称
-   * @param {*} page 当前页
-   * @param {*} pageSize 每页条目数
-   * @param {*} sortOrder 排序顺序 DESC：降序，ASC：升序
+   * @param {*} current 当前页
+   * @param {*} size 每页条目数
+   * @param {*} sortField 排序顺序 intention：意向度，createTime：客户新增时间
    */
-  getCustomerAll(clientName, page, pageSize = 10, sortOrder = 'DESC') {
+  getCustomerAll(clientName, current, size = 10, sortField = 'intention') {
     return xhr({
       url: '/customer/getCustomerAll',
       body: {
         clientName,
-        page,
-        pageSize,
-        sortOrder
+        current,
+        size,
+        sortField
       }
     })
   }
@@ -22,18 +22,18 @@ class CustomService {
   /**
    * 我的[关注]客户列表
    * @param {*} clientName 客户名称
-   * @param {*} page 当前页
-   * @param {*} pageSize 每页条目数
-   * @param {*} sortOrder 排序顺序 DESC：降序，ASC：升序
+   * @param {*} current 当前页
+   * @param {*} size 每页条目数
+   * @param {*} sortField 排序顺序 intention：意向度，createTime：客户新增时间
    */
-  getCustomerFollow(clientName, page, pageSize = 10, sortOrder = 'DESC') {
+  getCustomerFollow(clientName, current, size = 10, sortField = 'intention') {
     return xhr({
-      url: '/customer/getCustomerAll',
+      url: '/customer/getCustomerFollow',
       body: {
         clientName,
-        page,
-        pageSize,
-        sortOrder
+        current,
+        size,
+        sortField
       }
     })
   }
@@ -41,18 +41,18 @@ class CustomService {
   /**
    * 我的[访客]客户列表
    * @param {*} clientName 客户名称
-   * @param {*} page 当前页
-   * @param {*} pageSize 每页条目数
-   * @param {*} sortOrder 排序顺序 DESC：降序，ASC：升序
+   * @param {*} current 当前页
+   * @param {*} size 每页条目数
+   * @param {*} sortField 排序顺序 intention：意向度，createTime：客户新增时间
    */
-  getCustomerVisitor(clientName, page, pageSize = 10, sortOrder = 'DESC') {
+  getCustomerVisitor(clientName, current, size = 10, sortField = 'intention') {
     return xhr({
-      url: '/customer/getCustomerAll',
+      url: '/customer/getCustomerVisitor',
       body: {
         clientName,
-        page,
-        pageSize,
-        sortOrder
+        current,
+        size,
+        sortField
       }
     })
   }
@@ -60,18 +60,18 @@ class CustomService {
   /**
    * 我的[意向]客户列表
    * @param {*} clientName 客户名称
-   * @param {*} page 当前页
-   * @param {*} pageSize 每页条目数
-   * @param {*} sortOrder 排序顺序 DESC：降序，ASC：升序
+   * @param {*} current 当前页
+   * @param {*} size 每页条目数
+   * @param {*} sortField 排序顺序 intention：意向度，createTime：客户新增时间
    */
-  getCustomerIntention(clientName, page, pageSize = 10, sortOrder = 'DESC') {
+  getCustomerIntention(clientName, current, size = 10, sortField = 'intention') {
     return xhr({
-      url: '/customer/getCustomerAll',
+      url: '/customer/getCustomerIntention',
       body: {
         clientName,
-        page,
-        pageSize,
-        sortOrder
+        current,
+        size,
+        sortField
       }
     })
   }
@@ -79,18 +79,18 @@ class CustomService {
   /**
    * 我的[新增]客户列表
    * @param {*} clientName 客户名称
-   * @param {*} page 当前页
-   * @param {*} pageSize 每页条目数
-   * @param {*} sortOrder 排序顺序 DESC：降序，ASC：升序
+   * @param {*} current 当前页
+   * @param {*} size 每页条目数
+   * @param {*} sortField 排序顺序 intention：意向度，createTime：客户新增时间
    */
-  getCustomerAdd(clientName, page, pageSize = 10, sortOrder = 'DESC') {
+  getCustomerAdd(clientName, current, size = 10, sortField = 'intention') {
     return xhr({
-      url: '/customer/getCustomerAll',
+      url: '/customer/getCustomerAdd',
       body: {
         clientName,
-        page,
-        pageSize,
-        sortOrder
+        current,
+        size,
+        sortField
       }
     })
   }
