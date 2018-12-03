@@ -1,0 +1,59 @@
+<template>
+  <div class="area-filter" v-if="show">
+    <ul>
+      <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=item">{{item}}</li>
+    </ul>
+  </div>
+</template>
+<script>
+import { getChildren } from '@/utils/fullArea'
+export default {
+  props: {
+    parent: { type: String, default: '北京市' },
+    show: { type: Boolean, default: false },
+    value: String
+  },
+  data: () => ({
+    list: null,
+    checked: null
+  }),
+  created () {
+    this.list = {
+      '0': '不限'
+    }
+    this.list = Object.assign(this.list, getChildren(this.parent)) 
+  },
+  watch: {
+    checked (val) {
+      this.$emit('input', val)
+    },
+    value (val) {
+      this.checked = val
+    }
+  }
+}
+</script>
+<style lang="less">
+.area-filter {
+  width: 100%;
+  height: 82%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  > ul {
+    background: rgba(255, 255, 255, 1);
+    padding: 0 20px;
+    > .active {
+      color: rgba(0, 122, 230, 1);
+    }
+    li {
+      height: 49px;
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+      line-height: 49px;
+    }
+  }
+}
+</style>
+

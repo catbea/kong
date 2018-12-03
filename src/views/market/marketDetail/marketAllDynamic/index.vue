@@ -33,7 +33,7 @@ export default {
 .market-allDynamic-page {
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 1);
+  background:#ffffff;
   .market-allDynamic-page-top {
     margin: 20px 0 0 15px;
     display: flex;

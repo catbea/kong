@@ -1,20 +1,46 @@
-const getAreaCode = (name) => {
+/**
+ * 根据地区名获取地区code
+ * @param {*} name
+ */
+const getAreaCode = name => {
   name = name.replace(/\s+/g, '')
-  for(let key1 of Object.keys(fullArea)){
-    console.log(key1);
-    for(let key2 of fullArea[key1]){
-      // if()
-      
+  if (!name) return
+  for (let key1 of Object.keys(fullArea)) {
+    console.log(key1)
+    for (let key2 of Object.keys(fullArea[key1])) {
+      if (fullArea[key1][key2] === name) return key2
     }
-    // for((let tempName, letcode) of fullArea[key]){
-    //   console.log(tempName);
-      
-    //   // if(name === tempName) return 
-    // }
   }
 }
-const getChildren = () => {
 
+/**
+ * 根据地区特征获取地图子类
+ * @param {*} feature 特征 type为code时为code, type为name时为name
+ * @param {*} type 特征类型(name, code)
+ */
+const getChildren = (feature, type = 'name') => {
+  const araeCode = type === 'name' ? getAreaCode(feature) : feature
+  let result = {},
+    count = 0
+  if (araeCode.endsWith('0000')) {
+    // 当前地区为省级
+    for (let key of Object.keys(fullArea['city_list'])) {
+      if (key.startsWith(araeCode.slice(0, 2))) {
+        result[key] = fullArea['city_list'][key]
+        // TODO 优化 如果结果不为空,且往下继续找n个都不符合即可break
+      }
+    }
+  } else if (araeCode.endsWith('00')) {
+    // 当前地区为级
+    for (let key of Object.keys(fullArea['county_list'])) {
+      if (key.startsWith(araeCode.slice(0, 4))) {
+        result[key] = fullArea['county_list'][key]
+        // TODO 优化 如果结果不为空,且往下继续找n个都不符合即可break
+      }
+    }
+  } else {
+  }
+  return result
 }
 
 const fullArea = {
@@ -3801,3 +3827,4 @@ const fullArea = {
     '820201': '离岛'
   }
 }
+export { getAreaCode, getChildren, fullArea }
