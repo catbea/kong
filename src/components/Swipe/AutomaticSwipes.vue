@@ -63,8 +63,8 @@ export default {
   background-color: #fff;
   pointer-events: none;
 }
-.dynamics-collect {
-  background: #ffffff;
+// .dynamics-collect {
+//   background: #ffffff;
   .demo-swipe {
     padding-bottom: 30px;
     .van-swipe {
@@ -98,5 +98,5 @@ export default {
       background: rgba(0, 0, 0, 0.1);
     }
   }
-}
+// }
 </style>

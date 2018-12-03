@@ -3,78 +3,76 @@
     <div class="user-edit-label">
       <p class="edit-label-title">选择标签</p>
       <p class="edit-label-conter">
-        <span
-          v-for="(item,key) in agentLabel"
-          :key="key"
-        >
+        <span v-for="(item,key) in agentLabel" :key="key">
           <input
             :id="item.id"
             type="checkbox"
             data-type="welfare"
             name="reason"
-            @click="selectLabel(item,key)"
             :value="item.itemName"
           >
           <label :for="item.id">{{item.itemName}}</label>
-
         </span>
-
       </p>
       <div class="edit-label-div">
-        <button
-          class="edit-label-query"
-          @click="SubLabel"
-        >确认修改</button>
+        <button class="edit-label-query" @click="SubLabel">确认修改</button>
       </div>
     </div>
   </div>
 </template>
 <script>
 import userService from 'SERVICE/userService'
-import { Checkbox, CheckboxGroup } from 'vant';
+import { Checkbox, CheckboxGroup } from 'vant'
 
 export default {
   components: {
     Checkbox,
-    CheckboxGroup
+    CheckboxGroup,
+    Dialog
   },
-  data () {
+  data() {
     return {
       agentLabel: [],
       itemCode: '',
       itemName: '',
       couponsMap: [],
-      namelist:[],
-
+      namelist: []
     }
   },
-  created () {
-    this.getAgentLabel()
+  created() {
+    this.getAgentLabelList()
   },
   methods: {
-    async getAgentLabelList () {
+    async getAgentLabelList() {
       const res = await userService.getAgentLabelList(1)
       this.agentLabel = res
     },
-  
-      async SubLabel() {
-        
-        var selectidlist ='';//将选中值拼接成字符串
-      var check = document.getElementsByName("reason");
+
+    async SubLabel() {
+      var selectidlist = '' //将选中值拼接成字符串
+      var check = document.getElementsByName('reason')
       for (var i = 0; i < check.length; i++) {
         if (check[i].checked == true) {
-          selectidlist = selectidlist+ check[i].id +",";
+          selectidlist = selectidlist + check[i].id + ','
         }
       }
-debugger;
-       console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"+selectidlist)
-       let userList ={
-         lableList:selectidlist
-       }
-        const res = await userService.getupdateByUser(userList)
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' + selectidlist)
+      if (selectidlist.length > 0) {
+        Dialog.alert({
+          message: '请选择个性标签'
+        }).then(() => {
+          // on close
+        })
+      } else {
+        let userList = {
+          lableList: selectidlist
+        }
+        const res = await userService.upDateUserInfo(userList)
+        
       }
     }
   }
+}
 </script>
 
 <style lang="less">

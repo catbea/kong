@@ -37,12 +37,12 @@ export default {
   opacity:0.65;
   z-index:11;
   .enjoy{
-    margin:83px 0px 0 326px;
+    margin:20px 0px 0 323px;
     display:flex;
     flex-direction:column;
     .icon-enjoy{
-    width:24px;
-    height:24px;
+    width:20px;
+    height:20px;
   }
   p{
     font-size:12px;

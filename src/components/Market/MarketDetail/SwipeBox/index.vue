@@ -2,10 +2,10 @@
   <div class="market-img-page">
     <div @click.stop="play" class="market-img-page-box">
       <van-swipe @change="onChange" :show-indicators="false">
-        <van-swipe-item>1</van-swipe-item>
-        <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
+        <van-swipe-item v-for="(item,index) in list" :key="index">
+          <div class="bg_img loopBox" :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY1MTg5XC80M2NkYzMyZTc5NjVhMWExMWY2NDk2YTk1N2UxOWI0My5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}">
+          </div>
+        </van-swipe-item>
       </van-swipe>
       <span class="bg_img market-img-page-play" :style="{'backgroundImage':'url('+imgPlay+')'}" v-if="playShow"></span>
       <div class="market-img-page-panorama">720全景</div>
@@ -19,7 +19,8 @@
         收藏
       </div>
       <div class="share-box" @click.stop="share">
-        <div class="share"></div> 分享
+        <div class="share bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></div> 
+        分享
       </div>
     </div>
     <popup-box @close="closeDom" v-if="show"></popup-box>
@@ -34,6 +35,8 @@ export default {
   data: () => ({
     current: 0,
     flag: false,
+    list:[1,2,3,4],
+    enjoyImg:require('IMG/marketDetail/enjoy@2x.png'),
     imgPlay: require('IMG/marketDetail/Oval@2x.png'),
     collectImg: require('IMG/marketDetail/xx1@2x.png'),
     collectImgA: require('IMG/marketDetail/xx 9@2x.png'),
@@ -75,6 +78,10 @@ export default {
   .market-img-page-box {
     width: 100%;
     height: 100%;
+    .loopBox{
+      width:100%;
+      height:100%;
+    }
   }
   .market-img-page-play {
     display: block;
