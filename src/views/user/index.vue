@@ -72,8 +72,6 @@ export default {
   methods: {
     async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
-      let userId = window.localStorage.getItem('userId')
-      this.$store.dispatch('getUserInfo', userId)
       this.$store.dispatch('getUserVipInfo', userId)
     },
 

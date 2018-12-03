@@ -1,58 +1,41 @@
 <template>
   <div class="business-card-container">
-
     <div class="business-card-box">
-      <div
-        class="bg_img info-box"
-      
-      >
+      <div class="bg_img info-box">
         <div class="info-box-left">
-          <img
-            :src="leftIcon"
-            class="box-left-leftIcon"
-          >
+          <img :src="leftIcon" class="box-left-leftIcon">
           <span class="box-right-fx">
-            <img
-              :src="rightIcon"
-              class="right-fx-rightIcon"
-            >
+            <img :src="rightIcon" class="right-fx-rightIcon">
             <p class="right-fx-title">分享</p>
           </span>
         </div>
-        <div class="info-box-content"  @click="editCLickHandler">
+        <div class="info-box-content" @click="editCLickHandler">
           <span class="box-content-left">
             <p class="content-left-name">
-              张佳玮
-              <img
-                :src="updataIcon"
-                class="updataIcon"
-              >
+              {{userInfo.name}}
+              <img :src="updataIcon" class="updataIcon">
             </p>
-            <p class="content-left-addres">主营：深圳 南油</p>
-            <p class="content-left-compay">深圳尊豪网络科技有限公司</p>
+            <p class="content-left-addres">主营：{{userInfo.majorRegion}}</p>
+            <p class="content-left-compay">{{userInfo.distributorName}}</p>
             <p class="content-left-labe">
-              <button class="left-labe-css">资深中介</button>
-              <button class="left-labe-css">交易专家</button>
+              <a
+                class="left-labe-css"
+                v-for="(item,index) in userInfo.labelList"
+                :key="index"
+              >{{item.labelName}}</a>
             </p>
-            <p class="content-left-remar">十年房产置业生涯专业为您服务</p>
+            <p class="content-left-remar">{{userInfo.signature}}</p>
           </span>
           <span class="box-content-right">
-            <img
-              :src="personIcon"
-              class="personIcon"
-            >
+            <img :src="userInfo.avatarUrl" class="personIcon">
           </span>
         </div>
-      
       </div>
-      <img
-        class="modify-img"
-        :src="modifyImg"
-      >
+      <img class="modify-img" :src="modifyImg">
     </div>
     <div class="business-status-title">优惠服务</div>
     <div class="business-status-box">
-      <router-link tag="div" to="/user/myMember" class="status-info-left"> 
+      <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
@@ -63,7 +46,6 @@
         <p class="info-desc welfare-desc">{{vipPackage}}</p>
       </router-link>
     </div>
-
   </div>
 </template>
 <script>
@@ -85,20 +67,25 @@ export default {
     shareIcon: require('IMG/user/share.png'),
     editIcon: require('IMG/user/editInfo@2x.png')
   }),
+
+  onCreated: {
+  },
+
   methods: {
-    editCLickHandler () {
+    editCLickHandler() {
       this.$router.push('/user/edit')
     }
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
-    isVipInfo () {
+
+    isVipInfo() {
       return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
     },
-    vipTimeInfo () {
+    vipTimeInfo() {
       return this.userVipInfo.isvip ? this.userVipInfo.vip : '楼盘不限量'
     },
-    vipPackage () {
+    vipPackage() {
       return this.userVipInfo.isvip ? this.userVipInfo.package : '任选10个盘'
     }
   }
@@ -119,7 +106,7 @@ export default {
     > .info-box {
       position: relative;
       height: 177px;
-          margin: 12px 16px;
+      margin: 12px 16px;
       border-radius: 10px;
       background: rgba(64, 68, 87, 1);
       display: flex;
@@ -191,6 +178,7 @@ export default {
               border-radius: 4px;
               border: 0;
               margin-right: 8px;
+              color: #aeb1c2;
             }
           }
           > .content-left-remar {

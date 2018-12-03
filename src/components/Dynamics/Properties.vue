@@ -56,7 +56,11 @@ export default {
   },
   methods: {
     onClickConfirm(item) {
-       this.$emit('click', this.info)
+      let parm={
+        info:this.info,
+        statue:item.statue
+      }
+       this.$emit('click', parm)
     },
     // godynamicsInfo() {
     //   //跳转到动态详情

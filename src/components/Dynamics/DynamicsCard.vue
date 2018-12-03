@@ -5,7 +5,7 @@
         <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
       </div>
     </shadow-box>
-    <dynamics-list></dynamics-list>
+    <dynamics-list @click="godynamicsList"></dynamics-list>
   </div>
 </template>
 <script>
@@ -27,7 +27,13 @@ export default {
       propertiesTitle: '名片访客',
       propertiesNum: '190',
       articleTitle: '平均停留(S)',
-      articleNum: '124'
+      articleNum: '124',
+      info:{type:Object}
+    }
+  },
+  methods:{
+    godynamicsList(){
+      this.$emit('click', this.info)
     }
   }
 }

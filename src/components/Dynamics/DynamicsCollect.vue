@@ -5,9 +5,9 @@
       <h5>数据中心</h5>
       <van-icon class="icon-right" name="chat" @click="goMessage" />
     </div>
-    <div class="shadow_box info-box" v-if="data">
-      <div class="data-container">
-        <div class="data-item main-data" @click="goMessageInfo">
+    <div class="shadow_box info-box" v-if="data" @click="goMessageInfo(data)">
+      <div class="data-container" >
+        <div class="data-item main-data">
           <div class="data-value">{{data.customerCount.val}}<span class="data-change" v-if="data.customerCount.change !== 0">{{data.customerCount.change}}</span></div>
           <span class="data-title">客户数量</span>
         </div>
@@ -46,7 +46,8 @@ export default {
     Avatar
   },
   props: {
-    data: { type: Object }
+    data: { type: Object },
+    info:{type: Object }
   },
   data: () => ({
     bgImg: require('IMG/dynamics/collectBottom.png')
@@ -55,8 +56,16 @@ export default {
     goMessage () {
       this.$router.push('/dynamics/message/messageList')
     },
-    goMessageInfo(){
-      this.$router.push('/dynamics/allDynamics')
+    goMessageInfo(data){
+      let parm ={
+        info:this.info,
+        customerCount:data.customerCount,
+        businessCardViews:data.businessCardViews,
+        estateViews:data.estateViews
+
+      }
+      this.$emit('click', parm)
+      
     }
   }
 }

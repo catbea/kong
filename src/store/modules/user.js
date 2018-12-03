@@ -2,28 +2,70 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: {
-    "agentId": "705",
-    "avatarUrl": "http://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/male_001.png",
-    "distributorId": "123",
-    "distributorName": "青岛佳乐分销商SIT测试2",
-    "labelList": [
-      {
-        "id": "",
-        "labelId": "113",
-        "labelName": "交易专家",
-        "userId": ""
-      }
-    ],
-    "majorCity": "深圳市",
-    "majorRegion": "广东省/深圳市/福田区",
-    "name": "123",
-    "organizationId": "90",
-    "organizationName": "",
-    "registerMobile": "18907437200",
-    "signature": "创造价值，赢得尊重\n",
-    "tempPhone": "13714860003",
-    "wechatAccount": "string"
+  userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {
+    address: "",
+    agentMinOpenid: "",
+    agentUpdateId: "",
+    agentid: "",
+    attentAccount: "",
+    avatarUrl: "http://720ljq2test-10037467.cossh.myqcloud.com/ljqzs/shareImg/Time91438ec3-33e2-4024-9ab9-50393f28370e.png",
+    avatarUrlTwo: "http://720ljq2test-10037467.cossh.myqcloud.com/1536198363904JeBNbFsYAKSbAJYm.png",
+    cardFirstView: "",
+    cardProjectFirstView: "",
+    channelId: "",
+    companyLogo: "",
+    companyName: "",
+    createTime: "2018-09-01 10:06:48",
+    createType: 2,
+    customEnterpriseName: "",
+    deleteFlag: 0,
+    distributorId: "124",
+    distributorName: "",
+    enterpriseId: "90",
+    enterpriseName: "尊豪科技SIT",
+    existNewCoupons: "",
+    existNewProject: "",
+    givePrice: 0,
+    id: "4149",
+    ifView: false,
+    institutionId: "46",
+    institutionLogo: "",
+    institutionName: "",
+    isOne: 0,
+    is_update: false,
+    likeNum: "0",
+    linkerGuide: 1,
+    loginCount: 1,
+    loginTime: "2018-11-10 02:28:16",
+    logoUrl: "",
+    majorCity: "",
+    majorRegion: "",
+    masterRecommendTip: "",
+    minOpenid: "",
+    mobile: "18676652795",
+    mpOpenid: "",
+    myLinkerGuide: 0,
+    name: "离园则90",
+    nameGuide: 0,
+    nickName: "离园则",
+    parentUserId: "",
+    pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
+    position: "",
+    price: 0,
+    qrCode: "https://720ljq2test-10037467.file.myqcloud.com/ljqzs/cardQrcode/4149/Timef021faa6-738d-4f03-8b5f-c8840b555494.jpg",
+    recommendTip: "",
+    registerType: "10",
+    shareNum: "0",
+    signature: "别问我是谁，请叫我大师",
+    status: 1,
+    storeId: "224",
+    storeName: "",
+    switchTime: "",
+    tempPhone: "18676652795",
+    token: "eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJvYXU5bGUiLCJzdWIiOiJhZ2VudElkOjQxNDk6d3cyOGY0NWRmZTBlNWFlMzFkIiwiZXhwIjoxNTQ0NDQwOTQwLCJpYXQiOjE1NDM4MzYxNDB9.KNgY3mbCZGpRVRYrICsqmGAGY6hmPRAQNE2No2i20EtD_Hfa3LuronjoIBs1n4OpE2F50U_BxstiTP5M_lsA2Q",
+    updateTime: "2018-10-19 17:37:47",
+    viewNum: 101,
+    wechatAccount: ""
   },
   userVipInfo: {},
   userArea: {
@@ -41,16 +83,16 @@ const state = {
 }
 
 const getters = {
-  userInfo: state => JSON.parse(sessionStorage.getItem('userInfo')),
+  userInfo: state => state.userInfo,
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo
 }
 
 const actions = {
-  getUserInfo({ commit }, userInfo) {
+  async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    sessionStorage.setItem('userInfo', _userInfo);
+    await sessionStorage.setItem('userInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
   },
   async getUserVipInfo({ commit }, payload) {

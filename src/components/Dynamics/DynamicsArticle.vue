@@ -1,5 +1,5 @@
 <template>
-  <div class="article-container"  v-if="data">
+  <div class="article-container" >
     <shadow-box>
       <div slot="container">
         <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
