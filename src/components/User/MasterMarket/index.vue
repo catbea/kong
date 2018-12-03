@@ -4,7 +4,7 @@
       <p>大师推荐</p>
       <van-swipe :touchable="true" :loop="true" :autoplay="3000">
         <van-swipe-item v-for="(item,index) in list" :key="index">
-          <div class="img-item">
+          <div class="img-item" :style="{backgroundImage:'url(https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2868602830,597618051&fm=27&gp=0.jpg)'}">
             <p class="bg_img icon-cancel" :style="{backgroundImage:'url('+img+')'}"></p>
             <ul>
               <li>新亚洲花园</li>
@@ -32,6 +32,9 @@ export default {
     flex-direction: column;
     width:343px;
     height:274px;
+    .van-swipe{
+      border-radius:10px;
+    }
     p{
       margin:18px 0 15px 0;
       font-size:20px;
@@ -45,14 +48,13 @@ export default {
       height:193px;
       position: relative;
       border-radius:10px;
-      background:red;
       position: relative;
       .icon-cancel{
         position: absolute;
-        right:8px;
+        right:7px;
         top:8px;
-        width:16px;
-        height:16px;
+        width:17px;
+        height:17px;
         margin:0;
       }
       ul{

@@ -4,7 +4,7 @@
     
     <div class="all-describe" >
       <div class="market-box-page-top">
-        <div class="img">
+        <div class="img bg_img" :style="{backgroundImage:'url(http://www.anjiazhixun.com/upload/kindeditor/image/20181115/20181115184742_75384.jpg)'}">
           <div class="label">{{itemInfo.sale}}</div>
         </div>
         <!-- <input type="text" v-model="val"> -->
@@ -91,9 +91,10 @@ export default {
 }
 .market-box-page {
   background: #ffffff;
+  width:375px;
   .market-box {
     width: 343px;
-    margin: 13px 0 0 16px;
+    margin: 13px 13px 0 16px;
     .all-describe {
       display: flex;
       flex-direction: column;
@@ -103,7 +104,6 @@ export default {
           width: 120px;
           height: 90px;
           border-radius: 6px;
-          border: 1px solid black;
           margin-right: 12px;
           position: relative;
           .label {
@@ -180,7 +180,7 @@ export default {
       }
 
       .market-box-page-bottom {
-        width: 335px;
+        width:335px;
         height: 34px;
         padding: 0 0 0 8px;
         background: rgba(247, 249, 250, 1);
@@ -188,17 +188,21 @@ export default {
         margin: 16px 0 16px 0;
         display: flex;
         span:nth-child(1) {
-          width: 16px;
-          height: 16px;
+          width: 15px;
+          height: 15px;
+          padding-left:1px;
+          padding-bottom:1px;
           border-radius: 2px;
           border: 1px solid;
-          font-size: 10px;
+          font-size: 13px;
           font-family: PingFang-SC-Regular;
           font-weight: 400;
           color: rgba(255, 85, 51, 1);
-          line-height: 16px;
+          // line-height: 16px;
           margin-top: 9px;
-          text-align: center;
+          // text-align: center;
+          justify-content: center;
+          align-items:center;
         }
         span:nth-child(2) {
           margin: 5px 0 0 10px;

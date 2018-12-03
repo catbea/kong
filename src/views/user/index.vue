@@ -103,7 +103,7 @@ export default {
           this.$router.push('/user/noDisturb')
           break
         case 1:
-          this.$router.push('/user/opinionFeedback/describe')
+          this.$router.push('/user/opinionFeedback')
           break
         case 2:
           break

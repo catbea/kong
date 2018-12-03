@@ -2,7 +2,7 @@
   <div class="market-page">
     <div class="header">
       <div class="search-box">
-        <div class="search-box-content">
+        <!-- <div class="search-box-content">
           <p>
             深圳
             <span :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
@@ -10,7 +10,8 @@
           <form action="/">
             <van-search v-model="value" placeholder="请输入搜索关键词" @click="onClickHandler" />
           </form>
-        </div>
+        </div> -->
+        <van-search :obj="searchContent"></van-search>
         <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
       <screen :functionList="functionList"></screen>
@@ -22,6 +23,7 @@
   </div>
 </template>
 <script>
+import VanSearch from 'COMP/VanSearch'
 import Screen from 'COMP/Screen/'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import TitleBar from 'COMP/TitleBar/'
@@ -30,12 +32,17 @@ import marketService from 'SERVICE/marketService'
 export default {
   created () { },
   components: {
+    VanSearch,
     Screen,
     MarketDescribe,
     TitleBar,
     AlreadyOpen
   },
   data: () => ({
+    searchContent:{
+      siteText:'深圳',
+      placeholderText:'请输入平台名称'
+    },
     value: '',
     defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
     locationIcon: require('IMG/market/juxing.png'),
@@ -53,9 +60,10 @@ export default {
       this.$router.push('/market/inputSearch')
     },
     async getMarketDescribeInfo () {
-      const res = await marketService.getMarketDescribe()
-      console.log(res.records)
-      this.resInfo = res.records
+      const res = await marketService.getMarketDescribe(705)
+      console.log(res)
+      console.log(res.size)
+      this.resInfo = res.size
     },
     async getBrokerInfo () {
       const res = await marketService.getBrokerMarket(1)

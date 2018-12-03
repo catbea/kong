@@ -23,14 +23,15 @@
     </cell-group>
     <p class="addReport-remarks">注：客户手机号只提供前三后四给分销商使用，请放心填写。</p>
     <div class="addReport-botton">
-      <button class="addReport-btn addReport-btn-updata">修改所属机构</button>
-      <button class="addReport-btn addReport-btn-up">提交报备</button>
+      <button class="addReport-btn addReport-btn-updata" @click="editInstitutionHandler">修改所属机构</button>
+      <button class="addReport-btn addReport-btn-up" @click="submitReportHandler">提交报备</button>
     </div>
   </div>
 </template>
 <script>
 import { Cell, CellGroup } from 'vant';
 import { mapGetters } from 'vuex'
+import reportService from 'SERVICE/reportService'
 export default {
   components: {
     Cell,
@@ -47,6 +48,33 @@ export default {
   computed: {
     ...mapGetters(['reportAddInfo'])
   },
+  methods: {
+    async addReportInfo(current) {
+      let params = {
+        clientId: this.reportAddInfo.clientId,
+        clientName: this.reportAddInfo.clientName,
+        clientMobile: this.reportAddInfo.clientPhone,
+        linkerId: this.reportAddInfo.linkerId,
+        linkerName: this.reportAddInfo.linkerName,
+        distributorId: this.reportAddInfo.distributorId,
+        institutionId: this.reportAddInfo.institutionId
+      }
+      const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId)
+      
+    },
+    /**
+     * 修改所属机构
+     */
+    editInstitutionHandler () {
+      this.$router.push('/user/edit/userMechanism')
+    },
+    /**
+     * 创建报备
+     */
+    submitReportHandler () {
+      this.addReportInfo()
+    }
+  }
 }
 </script>
 <style lang="less">

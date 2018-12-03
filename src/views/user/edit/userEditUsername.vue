@@ -18,6 +18,7 @@
 <script>
 import userService from 'SERVICE/userService'
 import { Dialog } from 'vant'
+import strFormat from '@/filters/strFormat'
 
 export default {
   components: {
@@ -46,7 +47,7 @@ export default {
           // on close
         })
       } else {
-        this.userName = userName.replace(/[^\u4E00-\u9FA5]/g, '')
+        this.userName = strFormat(userName);
         let date = {
           name: this.userName
         }

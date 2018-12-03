@@ -3,7 +3,7 @@
     <ul>
       <li>已开通{{agentIdInfo}}个楼盘</li>
       <li>
-        <p>我的楼盘</p>
+          <router-link to="/user/myMarket" tag="p">我的楼盘</router-link>
       </li>
     </ul>
   </div>

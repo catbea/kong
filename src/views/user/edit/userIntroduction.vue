@@ -51,7 +51,8 @@ export default {
     upDateSignature(obj) {
       const result = userService.upDateUserInfo(obj)
       console.log(result)
-    }
+    },
+
   }
 }
 </script>

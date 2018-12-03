@@ -1,7 +1,7 @@
 
 <template>
   <div class="market-share-poster-page">
-    <div class="swipe-poster-item">
+    <div class="swipe-poster-item bg_img" :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}">
       <div
         class="content-box bg_img"
         :style="{backgroundImage:'url('+backImg+')'}"
@@ -58,7 +58,6 @@ export default {
     width: 300px;
     height:485px;
     border-radius: 0px 0px 6px 6px;
-    border: 1px solid;
     position: relative;
     .content-box {
       position: absolute;
@@ -139,7 +138,8 @@ export default {
         }
         .company {
           margin-left: 19px;
-          font-size: 8px;
+          font-size: 12px;
+          transform: scale(0.67);
           font-family: PingFangSC-Regular;
           font-weight: 400;
           color: rgba(164, 184, 213, 1);
