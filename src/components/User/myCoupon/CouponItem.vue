@@ -5,12 +5,20 @@
         <div class="olItem-content">
           <div class="cover-left"></div>
         <div class="coupon-item-page-left">
-         <div :class="{textColorA:ps.flag==1,textColorB:ps.flag==0,margin:true}">¥<h3>{{info.satisfyLimit}}</h3></div>
-          <p>{{info.ticketName}}</p> 
+         <div :class="{textColorA:ps.flag==1,textColorB:ps.flag==0,margin:true}">¥<h3>
+           {{info.satisfyLimit}}
+           </h3></div>
+          <p>
+            {{info.ticketName}}
+            </p> 
         </div>
         <ul class="coupon-item-page-center">
-          <li>{{ticketType}}</li>
-          <li>{{info.grantTime}}-{{info.deadline}}</li>
+          <li>
+            {{ticketType}}
+            </li>
+          <li>
+            {{info.grantTime}}-{{info.deadline}}
+            </li>
           <li>详细信息 <span class="bg_img" :style="{backgroundImage:'url('+detailImg+')'}"></span></li>
         </ul>
         <div class="coupon-item-page-right">
@@ -20,7 +28,9 @@
           </div>
           <div class="cover-right"></div>
         </div>
-        <div class="coupon-item-page-bottom">{{info.useRule}}</div>
+        <div class="coupon-item-page-bottom">
+          {{info.useRule}}
+          </div>
       </li>
     </ol>
   </div>
@@ -37,7 +47,7 @@ export default {
       type:Object
     },
     info:{
-      type:Object
+      // type:Object
     }
   },
   methods:{
@@ -47,18 +57,18 @@ export default {
   },
   computed:{
     ticketType(){
-      switch (this.info.ticketType) {
-        case 10:
-          return "代金券"
-        case 20:
-          return "折扣券"
-          case 30:
-          return "满减券"
-          case 40:
-          return "红包"
-        default:
-          break;
-      }
+      // switch (this.info.ticketType) {
+      //   case 10:
+      //     return "代金券"
+      //   case 20:
+      //     return "折扣券"
+      //     case 30:
+      //     return "满减券"
+      //     case 40:
+      //     return "红包"
+      //   default:
+      //     break;
+      // }
     }
   }
 }

@@ -1,11 +1,13 @@
 import xhr from './xhr/'
 class mycoupons {
-  couponsStatusList(agentId,status) {
+  couponsStatusList(agentId,status,current,size=5) {
     return xhr({
       url: '/userReceive/getAgentCouponsByStatus',
       body: {
         agentId,
-        status
+        status,
+        current,
+        size
       }
     })
   }

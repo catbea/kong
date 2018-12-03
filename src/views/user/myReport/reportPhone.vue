@@ -2,7 +2,7 @@
   <div class="user-edit-phone-page">
     <div class="user-edit-phone">
       <p class="edit-phone-title">手机号</p>
-      <p class="edit-phone-conter"><input type="text" class="edit-phone-input" placeholder="请输入手机号码" value="13590200739"></p>
+      <p class="edit-phone-conter"><input type="number" class="edit-phone-input" maxlength="11" placeholder="请输入手机号码" v-model.trim="Cphone"></p>
      
       <button class=edit-phone-query @click="godSub">确认</button>
     </div>
@@ -10,6 +10,7 @@
 </template>
 <script>
 import { Dialog } from 'vant';
+import { mapGetters } from 'vuex'
 export default {
   components:{
     Dialog
@@ -19,18 +20,38 @@ export default {
       Cphone: ''
     }
   },
+  created () {
+    console.log(this.reportAddInfo)
+  },
+  computed: {
+    ...mapGetters(['reportAddInfo'])
+  },
   methods: {
     godSub () {
-      
+      console.log(this.Cphone)
       if (this.Cphone == '' ) {
         Dialog.alert({
           message: '名片展示手机号不可为空'
         }).then(() => {
           // on close
         })
+        return;
       }
-
+      if (this.Cphone.length < 11 || this.Cphone.length > 11) {
+        Dialog.alert({
+          message: '请输入正确手机号'
+        }).then(() => {
+          // on close
+        })
+        return;
+      }
+      let _reportAddInfo = {
+        clientPhone: this.Cphone
+      }
+      this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
+      this.$router.back(-1)
     }
+
   }
 }
 </script>

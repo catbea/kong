@@ -2,14 +2,49 @@
   <div class="user-edit-wechat-page">
     <div class="user-edit-wechat">
       <p class="edit-wechat-title">微信号</p>
-      <p class="edit-wechat-conter"><input type="text" class="edit-wechat-input" placeholder="Bela76123"></p>
+      <p class="edit-wechat-conter">
+        <input type="text" class="edit-wechat-input" placeholder="Bela76123" v-model="weChatNum">
+      </p>
       <p class="edit-wechat-berak">该微信号仅作为客户添加使用</p>
-      <button class=edit-wechat-query>确认修改</button>
+      <button class="edit-wechat-query" @click="upDataWeChat">确认修改</button>
     </div>
   </div>
 </template>
 <script>
-export default {}
+import { Dialog } from 'vant'
+import userService from 'SERVICE/userService'
+
+export default {
+  data() {
+    return {
+      weChatNum: ''
+    }
+  },
+
+  methods: {
+    upDataWeChat() {
+      let tempWeChat = this.weChatNum
+      if (tempWeChat.length == 0) {
+        Dialog.alert({
+          message: '微信号不可为空'
+        }).then(() => {
+          // on close
+        })
+      } else {
+        this.weChatNum = tempWeChat.replace(/[^\u4E00-\u9FA5]/g, '')
+        let date = {
+          wechatAccount: this.weChatNum
+        }
+        this.upDateWeChat(date)
+      }
+    },
+
+    upDateWeChat(obj) {
+      const result = userService.upDateUserInfo(obj)
+      console.log(result)
+    }
+  }
+}
 </script>
 
 <style lang="less">

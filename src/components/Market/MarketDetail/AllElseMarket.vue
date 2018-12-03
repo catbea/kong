@@ -1,12 +1,16 @@
 <template>
   <div class="all-else-market-box">
-      <ul class="else-market-box" v-for="(item,index) in list" :key="index">
-        <li class="else-market-box-img">
+    <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
+      <van-swipe-item v-for="(item,index) in list" :key="index">
+      <ul class="else-market-box">
+        <li class="else-market-box-img bg_img" :style="{backgroundImage:'url(https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1919031430,2707845179&fm=200&gp=0.jpg)'}">
 
         </li>
         <li class="else-market-box-top">凯德公园1号</li>
         <li class="else-market-box-bottom">深圳-南山</li>
       </ul>
+       </van-swipe-item>
+  </van-swipe>
     </div>
 </template>
 <script>
@@ -18,9 +22,6 @@ export default {
 </script>
 <style lang="less">
 .all-else-market-box {
-  display: flex;
-  overflow-x: auto;
-  width: 351px;
   .else-market-box {
     width: 160px;
     margin: 0 12px 3px 0;

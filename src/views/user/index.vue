@@ -1,7 +1,6 @@
 <template>
   <div class="me-page">
-    <business-card>
-    </business-card>
+    <business-card></business-card>
     <div class="top-null"></div>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
@@ -12,11 +11,10 @@
           class="head-img"
           @click="selectedHead(item,index)"
         >
-          <img :src="item.Icon" />
+          <img :src="item.Icon">
           <p class="grou1Icon-p">{{item.title}}</p>
         </div>
       </div>
-
     </div>
     <div class="top-null"></div>
     <div class="business-status-tow">
@@ -29,9 +27,8 @@
           @click="selectedHeads(index,img.type,img.itemCode)"
         >
           <!--   -->
-          <img :src="img.Icon" />
+          <img :src="img.Icon">
           <p class="grou1Icon-p">{{img.title}}</p>
-
         </div>
       </div>
     </div>
@@ -47,75 +44,69 @@ export default {
   components: {
     businessCard,
     Cell,
-    CellGroup,
-
+    CellGroup
   },
   data: () => ({
-
     headIcons: [
-      { "title": "我的楼盘", "Icon": require('IMG/user/mm@2x.png') },
-      { "title": "我的收藏", "Icon": require('IMG/user/Group1@2x.png') },
-      { "title": "历史文章", "Icon": require('IMG/user/Group3@2x.png') },
-      { "title": "我的报备", "Icon": require('IMG/user/Group6@2x.png') },
-      { "title": "我的优惠券", "Icon": require('IMG/user/Group5@2x.png') },
-      { "title": "消费账单", "Icon": require('IMG/user/Group2@2x.png') },
-      { "title": "邀请有礼", "Icon": require('IMG/user/Group4@2x.png') },
+      { title: '我的楼盘', Icon: require('IMG/user/mm@2x.png') },
+      { title: '我的收藏', Icon: require('IMG/user/Group1@2x.png') },
+      { title: '历史文章', Icon: require('IMG/user/Group3@2x.png') },
+      { title: '我的报备', Icon: require('IMG/user/Group6@2x.png') },
+      { title: '我的优惠券', Icon: require('IMG/user/Group5@2x.png') },
+      { title: '消费账单', Icon: require('IMG/user/Group2@2x.png') },
+      { title: '邀请有礼', Icon: require('IMG/user/Group4@2x.png') }
     ],
     btnIcons: [
-      { "title": "勿扰模式", "Icon": require('IMG/user/Group9@2x.png') },
-      { "title": "意见反馈", "Icon": require('IMG/user/Group7@2x.png') },
-      { "title": "联系客服", "Icon": require('IMG/user/Group8@2x.png') },
+      { title: '勿扰模式', Icon: require('IMG/user/Group9@2x.png') },
+      { title: '意见反馈', Icon: require('IMG/user/Group7@2x.png') },
+      { title: '联系客服', Icon: require('IMG/user/Group8@2x.png') }
     ]
-
-
   }),
-  created () {
+  created() {
     this.getUserInfo()
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
       this.$store.dispatch('getUserVipInfo', userId)
     },
 
-    selectedHead (item, index) {
+    selectedHead(item, index) {
       switch (index) {
         case 0:
           this.$router.push('/user/myMarket')
-          break;
+          break
         case 1:
           this.$router.push('/user/collection/myCollection')
-          break;
+          break
         case 2:
           this.$router.push('/user/articles/historicalArticles')
-          break;
+          break
         case 3:
           this.$router.push('/user/myReport')
-          break;
+          break
         case 4:
-        this.$router.push('/user/myCoupon')
-          break;
+          this.$router.push('/user/myCoupon')
+          break
         case 5:
           this.$router.push('/user/consumption/consumptionBill')
-          break;
+          break
         case 6:
-
-          break;
+          break
       }
     },
-    selectedHeads(index,type,itemCode){
+    selectedHeads(index, type, itemCode) {
       switch (index) {
         case 0:
           this.$router.push('/user/noDisturb')
-          break;
+          break
         case 1:
-        this.$router.push('/user/opinionFeedback/describe')
-          break;
+          this.$router.push('/user/opinionFeedback/describe')
+          break
         case 2:
-
-          break;
+          break
       }
     }
   },

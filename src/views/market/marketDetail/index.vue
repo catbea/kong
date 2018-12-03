@@ -1,7 +1,11 @@
 <template>
   <div class="marketDetail-page">
     <hint-tire v-if="hintShow" @hintClose="hintHandle"></hint-tire>
-    <classify></classify>
+    <!-- <van-tabs v-model="tabIndex" color="#007AE6" :line-width="15" sticky>
+      <van-tab v-for="(item,index) in tabList" :key="index" :title="item">
+        
+      </van-tab>
+    </van-tabs> -->
     <swipe-box></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
@@ -17,7 +21,7 @@
         </div>
         <specific-marketDetail></specific-marketDetail>
       </div>
-      <button-box :buttonInfo="buttonInfo"></button-box>
+      <div class="button-box">按钮文字</div>
       <title-bar :conf="confA"></title-bar>
       <all-marketType></all-marketType>
       <title-bar :conf="confB"></title-bar>
@@ -53,8 +57,7 @@
 </template>
 <script>
 import * as types from '@/store/mutation-types'
-import ButtonBox from 'COMP/ButtonBox/'
-import Classify from 'COMP/Classify/'
+// import Classify from 'COMP/Classify/'
 import HintTire from 'COMP/Market/MarketDetail/HintTire/'
 import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
 import AllMarketType from 'COMP/Market/MarketDetail/AllMarketType'
@@ -69,8 +72,6 @@ import TitleBar from 'COMP/TitleBar/'
 export default {
   components: {
     HintTire,
-    Classify,
-    ButtonBox,
     SpecificMarketDetail,
     AllMarketType,
     SiteNearby,
@@ -92,6 +93,8 @@ export default {
     openFlag: true,
     renewFlag: true,
     list: [1, 2, 3, 4],
+    tabList:["楼盘","户型","位置","周边","推荐"],
+    tabIndex:0,
     confA: {
       title: '户型',
       linkText: '全部户型',
@@ -153,6 +156,9 @@ export default {
 </script>
 <style lang="less">
 .marketDetail-page {
+  .van-tabs__wrap--scrollable .van-tab{
+    flex:1;
+  }
   .van-popup {
     border-radius: 12px;
   }
@@ -181,6 +187,18 @@ export default {
           }
         }
       }
+    }
+    .button-box{
+      width:335px;
+      height:44px;
+      background:rgba(0,122,230,0.05);
+      border-radius:4px;
+      font-size:16px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      text-align:center;
+      line-height:44px;
+      color:rgba(68,81,102,1);
     }
     .button-box-tow {
       margin-top: 12px;

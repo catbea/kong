@@ -19,7 +19,7 @@
         title="名字"
         is-link
         :to="'/user/edit/username'"
-        :value="userInfo.organizationName"
+        :value="userInfo.name"
       />
       <cell
         class="cell-item"
