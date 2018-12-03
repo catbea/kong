@@ -2,17 +2,19 @@
   <div class="user-edit-username-page">
     <div class="user-edit-username">
       <p class="edit-username-title">我的机构选择</p>
-      <p class="edit-username-conter">
-        <input type="text" class="edit-username-input" placeholder="Bela">
-      </p>
+      <!-- <collapse-List :data=this.organizationList></collapse-List> -->
       <button class="edit-username-query">确认修改</button>
     </div>
   </div>
 </template>
 <script>
 import userService from 'SERVICE/userService'
-
+import collapseList from 'COMP/Collapse/index'
 export default {
+  components: {
+    collapseList
+  },
+
   data() {
     return {
       organizationList: []
@@ -33,9 +35,8 @@ export default {
         enterpriseId
       )
 
-      console.log(result)
+      console.log(JSON.stringify(result))
     }
-
   }
 }
 </script>
