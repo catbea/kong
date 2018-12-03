@@ -17,8 +17,7 @@
 <script>
 export default {
   data: () => ({
-    defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
-    a:"aaaa"
+    defaultAvatar: require('IMG/market/list__arrow_@2x.png')
   }),
   props:{
     obj:{
