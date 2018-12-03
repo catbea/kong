@@ -29,7 +29,6 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   method === 'GET' ? url = `${url}?${qs.stringify(body)}` : (options.body = JSON.stringify(body))
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
-    console.log(options)
     // http错误
     if (!response.ok) {
       return errHandler(response)

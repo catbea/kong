@@ -4,16 +4,13 @@
       <div class="user-avatar">
         <router-link to="/user/edit/userPortrait">
           <!-- <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div> -->
-          <img
-            :src="userInfo.avatarUrl"
-            class="editIcon-icon"
-          >
+          <img :src="userInfo.avatarUrl" class="editIcon-icon">
           <p class="user-avatar-clik">点击可编辑头像</p>
         </router-link>
       </div>
       <!-- <cell class="cell-item user-avatar" :to="'/user/edit/avatar'" title="我的头像" is-link>
         <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div>
-      </cell> -->
+      </cell>-->
       <cell
         class="cell-item"
         title="名字"
@@ -35,12 +32,7 @@
         is-link
         :value="userInfo.registerMobile"
       />
-      <cell
-        class="cell-item"
-        title="主营区域"
-        is-link
-        :value="userInfo.majorRegion"
-      />
+      <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion"/>
       <cell
         class="cell-item"
         title="平台公司"
@@ -49,24 +41,17 @@
         @click="godistributorName"
       />
       <!-- <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" /> -->
+      <!-- :to="'/user/edit/userMechanism'+'?distributorId='+userInfo.enterpriseId+'&enterpriseId='+userInfo.organizationId"-->
       <cell
         class="cell-item"
         title="我的机构"
         is-link
-        :to="'/user/edit/userMechanism'"
+        :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.organizationId}}"
       />
     </cell-group>
     <cell-group class="user-advance-info">
-      <cell
-        class="cell-item tag-edit"
-        title="标签展示"
-        is-link
-        :to="'/user/edit/userLabel'"
-      >
-        <div
-          slot="extra"
-          class="tag-show-container"
-        >
+      <cell class="cell-item tag-edit" title="标签展示" is-link :to="'/user/edit/userLabel'">
+        <div slot="extra" class="tag-show-container">
           <div
             class="tag-item"
             v-for="item in userInfo.labelList"
@@ -75,7 +60,7 @@
         </div>
       </cell>
       <cell
-        class="cell-item  user-signature"
+        class="cell-item user-signature"
         title="个人介绍"
         :to="'/user/edit/userIntroduction'"
         is-link
@@ -88,44 +73,42 @@
 import { Cell, CellGroup } from 'vant'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
-import { Dialog } from 'vant';
+import { Dialog } from 'vant'
 export default {
   components: {
     Cell,
     CellGroup,
     Dialog
   },
-  created () {
+  created() {
     this.getUserInfo()
   },
-  data () {
+  data() {
     return {
-      userEditIcon: require('IMG/user/collection/Article@2x.png'),
+      userEditIcon: require('IMG/user/collection/Article@2x.png')
     }
   },
   methods: {
-    async getUserInfo () {
+    async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       let userId = window.localStorage.getItem('userId')
       this.$store.dispatch('getUserInfo', userId)
     },
-    godistributorName () {
+    godistributorName() {
+      //此处不可进行操作
       //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面
-
-      Dialog.alert({
-        message: '你最近一个月内已经切换过一次分销平台公司，暂时无法切换'
-      }).then(() => {
-        // on close
-      })
+      // Dialog.alert({
+      //   message: '你最近一个月内已经切换过一次分销平台公司，暂时无法切换'
+      // }).then(() => {
+      //   // on close
+      // })
     }
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
   watch: {
-    userInfo (v) {
-
-    }
+    userInfo(v) {}
   }
 }
 </script>

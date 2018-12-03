@@ -252,5 +252,20 @@ class UserService {
     })
   }
 
+  /**
+   * 获取机构信息列表
+   * @param {*} distributorId 
+   * @param {*} enterpriseId 
+   */
+  obtainOrganizationInfo(distributorId, enterpriseId) {
+    return xhr({
+      url: '/cpDistributor/queryInstitutionTree',
+      body: {
+        distributorId,
+        enterpriseId
+      }
+    })
+  }
+
 }
 export default new UserService()

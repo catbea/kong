@@ -43,9 +43,11 @@ export default {
       }
     },
 
-    upDateWeChat(obj) {
-      const result = userService.upDateUserInfo(obj)
+  async  upDateWeChat(obj) {
+      const result =await userService.upDateUserInfo(obj)
       console.log(result)
+
+      this.window.close()
     }
   }
 }
