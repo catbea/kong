@@ -278,5 +278,16 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/user/edit/awWelfare',
+    name: 'awWelfare',
+    component: resolve => require(['@/views/user/edit/awWelfare.vue'], resolve),
+    meta: {
+      title: '邀请有礼',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]

@@ -12,7 +12,7 @@
       <span class="bg_img  market-renew-box-stick-icon" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
       <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
-    <div class="market-renew-box-button">续费(07/11到期)</div>
+    <div class="market-renew-box-button" @click="renewHandle">续费(07/11到期)</div>
 </ul>
 </template>
 <script>
@@ -37,6 +37,9 @@ export default {
     },
     stickHandle() {
       this.flagZd = !this.flagZd
+    },
+    renewHandle(){
+     this.$router.push('/marketDetail/open')
     }
   }
 }
