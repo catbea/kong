@@ -16,7 +16,7 @@ export default (to, from, next) => {
     let userInfo = store.getters.userInfo
 
     if(userInfo && userInfo.token){
-
+        console.log('userInfo not empty')
         next()
     } else {// 没有用户登录信息，跳转微信授权页 https://sit.zooming-data.com/?cropId=ww28f45dfe0e5ae31d
         let parm = getUrlQueryParams(location.href);
@@ -25,11 +25,12 @@ export default (to, from, next) => {
         console.log(parm.cropId)
         console.log(wxredirecturl)
         if(parm.cropId){
-            let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxappid + '&redirect_uri=' 
-                + encodeURIComponent(wxredirecturl).toLowerCase() 
-                + '&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect' 
+            let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + wxappid 
+                + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
+                + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect' 
             window.location.href = wxurl;
         } else {
+            console.log('no cropId')
             next()
         }
     }
