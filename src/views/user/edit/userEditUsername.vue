@@ -46,7 +46,7 @@ export default {
           // on close
         })
       } else {
-        this.userName = userName.replace(/[^\u4E00-\u9FA5]/g, '')
+        // this.userName = userName.replace(/[^\u4E00-\u9FA5]/g, '')
         let date = {
           name: this.userName
         }

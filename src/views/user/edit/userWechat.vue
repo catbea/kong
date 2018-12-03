@@ -15,6 +15,10 @@ import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 
 export default {
+  components: {
+    Dialog
+  },
+  
   data() {
     return {
       weChatNum: ''
