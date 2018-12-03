@@ -1,10 +1,10 @@
 <template>
   <div class="estate-recommend">
-    <title-bar :conf="titleBarConf"></title-bar>
+    <title-bar :conf="titleBarConf" ></title-bar>
     <div class="recommend-box" v-fuzz-dom>
       <estate-item :info="info"></estate-item>
     </div>
-    <div class="recommend-info" v-if="info">
+    <div class="recommend-info" v-if="info" @click="goRecommendInfo">
       <div class="desc-box">
         <p class="title">{{`${info.district}·${info.linkerName}`}}</p>
         <p class="desc">{{`${info.city}${info.openTimes}位经纪人都已开通`}}</p>
@@ -29,7 +29,13 @@ export default {
       title: 'AI荐盘',
       linkText: '更多楼盘'
     }
-  })
+  }),
+  methods:{
+    goRecommendInfo(){
+      this.$emit('click', this.info)
+    }
+    
+  }
 }
 </script>
 <style lang="less">

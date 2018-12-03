@@ -6,7 +6,7 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent">
+            <div class="dynamics-list-agent" @click="godynamicsList">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="lxImg" class="agent-userImg">
@@ -21,7 +21,7 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content">
+            <div class="dynamics-list-content" @click="godynamicsList">
               <p>浏览了  <span>你的名片</span></p>
               <p>2018年10月22 日第<span>3 次</span>打开 </p>
               <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
@@ -51,7 +51,7 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent">
+            <div class="dynamics-list-agent"@click="godynamicsList">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="lxImg" class="agent-userImg">
@@ -66,7 +66,7 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content">
+            <div class="dynamics-list-content"@click="godynamicsList">
               <p>查看浏览了楼盘&nbsp;<span>碧桂园凤凰国际项目</span></p>
               <p>2018年10月22 日第<span>3 次</span>打开 </p>
               <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
@@ -106,12 +106,16 @@ export default {
     return {
       lxImg: require('IMG/dynamics/lx@2x.png'),
       gzImg: require('IMG/dynamics/gz@2x.png'),
-      show1: true
+      show1: true,
+      info:{type:Object}
     }
   },
   methods: {
     goalldynamics () {
       this.$router.push('/dynamics/message/messageList')
+    },
+    godynamicsList(){
+      this.$emit('click', this.info)
     }
   }
 }

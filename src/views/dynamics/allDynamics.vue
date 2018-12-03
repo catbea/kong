@@ -18,7 +18,10 @@
           :title="item.typeName"
         >
           <!-- 动态全部-->
-          <div class="allDynamics-container" v-if="item.index === 0" >
+          <div
+            class="allDynamics-container"
+            v-if="item.index === 0"
+          >
             <shadow-box>
               <div slot="container">
                 <dynamics-data
@@ -33,52 +36,37 @@
                 ></dynamics-data>
               </div>
             </shadow-box>
-            <dynamics-list></dynamics-list>
+            <dynamics-list @click="goallDynamics"></dynamics-list>
           </div>
-          <div class="allDynamics-container" v-if="item.index === 1" >
-            <dynamics-card></dynamics-card>
+          <div
+            class="allDynamics-container"
+            v-if="item.index === 1"
+          >
+            <dynamics-card @click="goallDynamics"></dynamics-card>
           </div>
-          <div class="allDynamics-container" v-if="item.index === 2">
-            <properties :info="item" @click="itemProperties"  ></properties>
+          <div
+            class="allDynamics-container"
+            v-if="item.index === 2"
+          >
+            <properties
+              :info="item"
+              @click="itemProperties"
+            ></properties>
           </div>
-          <div class="allDynamics-container" v-if="item.index === 3"  >
-            <dynamics-article :data="HouseDynamicCount" :list="HouseDynamicList"></dynamics-article>
+          <div
+            class="allDynamics-container"
+            v-if="item.index === 3"
+          >
+            <dynamics-article
+              :data="HouseDynamicCount"
+              :list="HouseDynamicList"
+            ></dynamics-article>
           </div>
 
         </van-tab>
       </van-tabs>
 
-      <!-- <van-tabs  color="#007AE6" :line-width="15" :swipe-threshold="6">
-        <van-tab title="全部">
-
-          <div class="allDynamics-container">
-            <shadow-box>
-              <div slot="container">
-                <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
-              </div>
-            </shadow-box>
-            <dynamics-list></dynamics-list>
-          </div>
-        </van-tab>
-        <van-tab title="名片">
-
-          <div class="allDynamics-container">
-            <dynamics-card></dynamics-card>
-          </div>
-        </van-tab>
-        <van-tab title="楼盘">
-
-          <div class="allDynamics-container">
-            <properties  :info="item"  @click="itemProperties"></properties>
-          </div>
-        </van-tab>
-        <van-tab title="文章">
-
-          <div class="allDynamics-container">
-            <dynamics-article></dynamics-article>
-          </div>
-        </van-tab>
-      </van-tabs> -->
+     
     </div>
 
   </div>
@@ -199,22 +187,28 @@ export default {
 
 
 
-    itemProperties () {
-
-      //跳转到动态详情item
-      // this.$router.push('/dynamics/dynamicsInfo')
-      this.$dialog
-        .confirm({
-          title: '暂未开通楼盘',
-          message: '请开通后查看楼盘详细动态',
-          confirmButtonText: '去开通'
-        })
-        .then(() => {
-          // on confirm
-        })
-        .catch(() => {
-          // on cancel
-        })
+    itemProperties (val) {
+      if (val.statue == 0) {
+        this.$dialog
+          .confirm({
+            title: '暂未开通楼盘',
+            message: '请开通后查看楼盘详细动态',
+            confirmButtonText: '去开通'
+          })
+          .then(() => {
+            // on confirm
+          })
+          .catch(() => {
+            // on cancel
+          })
+      } else {
+        //跳转到动态详情item
+         this.$router.push('/dynamics/dynamicsInfo')
+      }
+    },
+    //客户详情
+    goallDynamics(){
+      this.$router.push('/custom/detail')
     }
   }
 }
