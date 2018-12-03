@@ -25,6 +25,7 @@
 <script>
 import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
+import strFormat from '@/filters/strFormat'
 
 export default {
   components: {
@@ -44,7 +45,7 @@ export default {
           // on close
         })
       } else {
-        let phoneType = this.Cphone.match(/^[0-9]*$/)
+        let phoneType = strFormat.fmtNum(this.Cphone)
         if (phoneType == null) {
           this.Cphone = ''
           Dialog.alert({
@@ -64,6 +65,7 @@ export default {
     upDatePhoneNum(obj) {
       const result = userService.upDateUserInfo(obj)
       console.log(result)
+
     }
   }
 }

@@ -2,13 +2,43 @@
   <div class="user-edit-username-page">
     <div class="user-edit-username">
       <p class="edit-username-title">我的机构选择</p>
-      <p class="edit-username-conter"><input type="text" class="edit-username-input" placeholder="Bela"></p>
-      <button class=edit-username-query>确认修改</button>
+      <!-- <collapse-List :data=this.organizationList></collapse-List> -->
+      <button class="edit-username-query">确认修改</button>
     </div>
   </div>
 </template>
 <script>
-export default {}
+import userService from 'SERVICE/userService'
+import collapseList from 'COMP/Collapse/index'
+export default {
+  components: {
+    collapseList
+  },
+
+  data() {
+    return {
+      organizationList: []
+    }
+  },
+
+  created() {
+    let distributorId = this.$route.query.distributorId
+    let enterpriseId = this.$route.query.enterpriseId
+
+    this.queryOrganizationList(distributorId, enterpriseId)
+  },
+
+  methods: {
+    async queryOrganizationList(distributorId, enterpriseId) {
+      const result = await userService.obtainOrganizationInfo(
+        distributorId,
+        enterpriseId
+      )
+
+      console.log(JSON.stringify(result))
+    }
+  }
+}
 </script>
 
 <style lang="less">

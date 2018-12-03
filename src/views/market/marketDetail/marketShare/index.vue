@@ -2,7 +2,7 @@
   <div class="market-share-page">
     <div class="box">
     <div class="share-top">
-      <div class="share-top-content"></div>
+      <div class="share-top-content bg_img" :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}"></div>
     </div>
     <div class="share-bottom">
       <p>长按保存图片 可分享好友或朋友圈</p>
@@ -30,6 +30,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+  background: #ffffff;
   .share-top {
     width: 300px;
     height: 480px;
@@ -43,7 +44,6 @@ export default {
     .share-top-content {
       width: 271px;
       height: 448px;
-      border: 1px solid black;
     }
   }
   .share-bottom {
