@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     linkComputed() {
-      return this.conf.link || '#'
+      return this.conf.link || '/market'
     }
   }
 }
