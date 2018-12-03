@@ -1,13 +1,17 @@
 <template>
   <div class="all-market-type-box">
-     <ol class="market-type-box" v-for="(item,index) in list" :key="index">
-      <li class="market-type-img">
-
-      </li>
-      <li class="market-type-box-top">3室2厅1卫</li>
-      <li class="market-type-box-middle">建面 120㎡ 南北朝向</li>
-      <li class="market-type-box-bottom">约320万/套</li>
-     </ol>
+    <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
+      <van-swipe-item v-for="(item,index) in list" :key="index">
+        <ol class="market-type-box" >
+          <li class="market-type-img bg_img" :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY0NjA0XC83YWQ0NjJhODRhMjcwMTA2MmI5MmRjYWVkYjBkZjZjZi5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}">
+          </li>
+          <li class="market-type-box-top">3室2厅1卫</li>
+          <li class="market-type-box-middle">建面 120㎡ 南北朝向</li>
+          <li class="market-type-box-bottom">约320万/套</li>
+        </ol>
+      </van-swipe-item>
+  </van-swipe>
+     
     </div>
 </template>
 <script>
@@ -19,17 +23,12 @@ export default {
 </script>
 <style lang="less">
 .all-market-type-box {
-  display: flex;
-  display: -webkit-box;
-  overflow-x: auto;
-  width: 351px;
   .market-type-box {
     width: 160px;
     margin-right: 12px;
     .market-type-img {
       width: 160px;
       height: 120px;
-      border: 1px solid;
       margin-bottom: 4px;
     }
     .market-type-box-top {

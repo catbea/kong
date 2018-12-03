@@ -4,16 +4,16 @@
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
           <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num">
             <keep-alive>
-              <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="300" @load="onLoad">
-                <div class="coupon-content">
-                <coupon-item :ps="list.ps" v-for="(item,index) in recordArr.records" :key="index" :info="item"></coupon-item>
-                </div>
+              <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'"   @load="onLoad">
+                <!-- <div class="coupon-content"> -->
+                <coupon-item :ps="list.ps" v-for="(item1,index) in item.list" :key="index" :info="item1"></coupon-item>
+                <!-- </div> -->
                  </van-list>
             </keep-alive>
           </van-tab>
       </van-tabs>
-    <div class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
-    <p class="hint">暂无优惠券</p>
+    <div v-if="false" class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
+    <p v-if="false" class="hint">暂无优惠券</p>
   </div>
 </template>
 <script>
@@ -27,9 +27,9 @@ export default {
     loading:false,
     finished:false,
     nameList:[
-      {title:"未使用",num:0},
-      {title:"使用记录",num:0},
-      {title:"已过期",num:0}
+      {title:"未使用",num:0,list:[]},
+      {title:"使用记录",num:0,list:[]},
+      {title:"已过期",num:0,list:[]},
       ],
       activeIndex:0,
       aa:[],
@@ -42,6 +42,10 @@ export default {
      ps:{mayUse:true,yetUse:false,yetPast:false,flag:null},
      info:[]
      },
+
+     promArr:[],
+     arrInfo:[],
+
      notArr:{records:[]},
      recordArr:{records:[]},
      pastArr:{records:[]},
@@ -63,21 +67,53 @@ export default {
     },
   created() {
     // this.couponsList(705,1)
-    
+    const _this = this
+    this.a().then((res)=>{
+      console.log(res,0)
+     
+      _this.nameList[0].num = res.total;
+      _this.nameList[0].list  = _this.nameList[0].list.concat(res.records);
+
+       _this.loading = false;
+      if(res.current === res.pages){
+        _this.finished = true
+        console.log(11)
+      }
+    });
+
+    this.b().then((res)=>{
+      console.log(res,1)
+     
+      _this.nameList[1].num = res.total;
+      _this.nameList[1].list  = _this.nameList[1].list.concat(res.records);
+
+       _this.loading = false;
+      if(res.current === res.pages){
+        _this.finished = true
+        console.log(11)
+      }
+    });
+      this.c().then((res)=>{
+      console.log(res)
+     
+      _this.nameList[2].num = res.total;
+      _this.nameList[2].list  = _this.nameList[2].list.concat(res.records);
+
+       _this.loading = false;
+      if(res.current === res.pages){
+        _this.finished = true
+        console.log(11)
+      }
+    });
+
   },
   methods:{
     // 请求数据事件
    async onLoad(){
       console.log(99999)
-      this.all()
-      let ym= this.recordArr.current
-      // this.b(705,2,2)
-      ym++
-      console.log(ym)
-      if(this.recordArr.pages===ym){
-        this.finished=false
-      }
-      this.loading=false
+
+      
+      // this.all()
     },
       a(){
         const _this=this
@@ -92,10 +128,10 @@ export default {
         })
         return p1
       },
-      b(agentId,status,current){
+      b(){
         const _this=this
         let p2= new Promise(function(resolve,reject){
-           let res =mycoupons.couponsStatusList(agentId,status,3)
+           let res =mycoupons.couponsStatusList(705,2,1)
           resolve(res)
         })
         return p2
@@ -112,14 +148,32 @@ export default {
         });
         return p3
       },
-      all(){
+     async all(){
+        
         let _this=this
         Promise.all([this.a(),this.b(),this.c()])
         .then(function(r){
           console.log(r)
-            _this.notArr=r[0]
-            _this.recordArr=r[1]
-            _this.pastArr=r[2]
+          _this.promArr=r
+          console.log(_this.promArr)
+            // _this.notArr=r[0]
+            // _this.recordArr=r[1]
+            // _this.pastArr=r[2]
+            // _this.onLoad()
+            if(_this.activeIndex==0){
+            _this.arrInfo=_this.promArr[0]
+          }else if(_this.activeIndex==1){
+            _this.arrInfo=_this.promArr[1]
+          }else{
+            _this.arrInfo=_this.promArr[2]
+          }
+      // if(this.recordArr.pages===ym){
+      //   this.finished=false
+      // }
+          console.log(_this.promArr,11111,_this.arrInfo)
+          _this.loading=false
+          _this.finished=false
+     
         })
       },                                                                               
       // async promiseHandle(){

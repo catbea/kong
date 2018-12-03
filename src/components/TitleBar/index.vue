@@ -1,5 +1,5 @@
 <template>
-  <div class="title-bar">
+  <div class="title-bar-page">
     <h5 class="title-text">{{conf.title}}</h5>
     <router-link :to="linkComputed">
       <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}} </p>
@@ -26,23 +26,24 @@ export default {
     }
   }
 }
-</script>
+</script> 
 <style lang="less">
-.title-bar {
+.title-bar-page{
   display: flex;
   justify-content: space-between;
-  margin: 15px 15px 5px;
+  align-items:center;
   padding-top: 10px;
-  .title-text {
-    display: inline-block;
-    font-size: 20px;
-    font-weight: 600;
-    color: #333333;
+  h5{
+    display:inline-block;
+    font-size:20px;
+    font-weight:600;
+    color:#333333;
   }
   .link-text {
     font-size: 13px;
     font-weight: 400;
     color: #999999;
+    margin-right:23px;
   }
 }
 </style>
