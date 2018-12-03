@@ -14,6 +14,7 @@
   
    </form>
    <p class="num-desc">{{Surplus}}/50</p>
+   <div class="submit-button">确定提交</div>
   </div>
 </template>
 <script>
@@ -117,6 +118,21 @@ export default {
   .num-desc {
     font-size: 12px;
     text-align: right;
+  }
+  .submit-button{
+    margin-top:45px;
+    margin-left:16px;
+    width:343px;
+    height:44px;
+    background:rgba(0,122,230,1);
+    border-radius:6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:#FFFFFF;
   }
 }
 </style>

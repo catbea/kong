@@ -24,16 +24,17 @@ export default {
 <style lang="less">
 .site-nearby-box {
   width: 343px;
+  margin-top:13px;
   .site-nearby-box-classify {
     display: flex;
     justify-content: space-between;
-    div {
+    li{
       font-size: 14px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
     }
-    div:last-child {
+    li:last-child {
       margin-right: 10px;
     }
   }
