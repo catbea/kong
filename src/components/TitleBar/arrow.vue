@@ -1,9 +1,9 @@
 <template>
   <div class="title-bar">
     <h5 class="title-text">{{conf.title}}</h5>
-    <router-link :to="linkComputed">
-      <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}} 
-         <img :src="arrowIcon" class="left-img" @click="img">
+    <router-link :to="linkComputed" >
+      <p class="link-text" @click="byClick">{{`${conf.linkText} ${conf.link?'>':''}`}} 
+         <img :src="arrowIcon" class="left-img">
       </p>
     </router-link>
   </div>
@@ -28,8 +28,11 @@ export default {
     }
   },
   methods:{
-    img(){
-      this.$emit("the",1)
+    // img(){
+    //   this.$emit("the",1)
+    // },
+    byClick(){
+      this.$emit("return",1)
     }
   },
   computed: {

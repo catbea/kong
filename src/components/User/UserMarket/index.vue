@@ -1,17 +1,18 @@
 <template>
   <div class="user-market-page">
-    <div class="user-market-page-box">
+    <div class="user-market-page-box" @click="skipMarketRetuen">
       <div class="user-market-page-box-top">
-        <div class="user-market-page-box-top-left">
+        <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url(https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=3754147596,1105498386&fm=85&s=9A7C7F878A976EDCE0B6A6270300304F)'}">
           <p class="icon-discount">9.9折</p>
-          <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
+          <span class="bg_img icon-play" 
+          :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
           <li>
            <div style="display:flex;"> {{dataArr.title}} 
              <span class="stick" v-if="dataArr.flag">置顶</span>
              </div>
-           <span class="bg_img icon-share" :style="{backgroundImage:'url('+imgShare+')'}"></span>
+           <span class="bg_img icon-share" @click.stop="usmarIconReturn" :style="{backgroundImage:'url('+imgShare+')'}"></span>
           </li>
           <li>
             {{dataArr.site}}
@@ -20,7 +21,7 @@
             <tag-group :arr="dataArr.condition"></tag-group>
           </li>
           <li>{{dataArr.open}}
-            <div class="apostrophe">
+            <div class="apostrophe" @click.stop="apostropheReturn">
               <span></span>
               <span></span>
               <span></span>
@@ -49,6 +50,17 @@ export default {
   props:{
     dataArr:{
       type:Object
+    }
+  },
+  methods:{
+    apostropheReturn(){
+      this.$emit("apostropheReturn",1)
+    },
+    usmarIconReturn(){
+      this.$emit("usmarIconReturn",1)
+    },
+    skipMarketRetuen(){
+      this.$emit("skipMarketRetuen",1)
     }
   }
 }
@@ -86,6 +98,7 @@ export default {
         font-weight:500;
         color:rgba(255,255,255,1);
         line-height:20px;
+        background:rgba(234,77,46,1);
       }
       .icon-play{
         width:32px;
@@ -104,16 +117,17 @@ export default {
         justify-content: space-between;
         .stick{
           width:30px;
-          height:15px;
+          height:13px;
           border-radius:2px;
           border:1px solid;
           font-size:10px;
-          transform:scale(0.84);
+          // transform:scale(0.84);
           font-family:PingFangSC-Regular;
           font-weight:400;
           color:rgba(0,122,230,1);
-          line-height:15px;
-          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           margin-left:4px;
         }
         .icon-share{
@@ -157,7 +171,7 @@ export default {
   }
   .user-market-page-box-bottom{
     width:311px;
-    height:32px;
+    height:39px;
     display: flex;
     align-items: center;
     background:rgba(247,249,250,1);
@@ -166,11 +180,9 @@ export default {
     font-family:PingFangSC-Medium;
     font-weight:500;
     color:rgba(102,102,102,1);
-    padding:7px 0 0 0;
     margin-bottom:16px;
-    margin-left:8px;
     img{
-      margin-right:8px;
+      margin:0 8px;
       width:16px;
       height:16px;
     }

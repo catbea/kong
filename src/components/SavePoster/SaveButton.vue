@@ -2,7 +2,7 @@
   <div class="save-button-page">
     <p>长按保存图片 可分享好友或朋友圈</p>
     <ol class="button-box">
-      <li>编辑海报</li>
+      <router-link tag="li" to="/marketDetail/share/compile">编辑海报</router-link>
       <li>保存海报</li>
     </ol>
   </div>
