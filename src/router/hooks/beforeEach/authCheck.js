@@ -14,7 +14,7 @@ const getUrlQueryParams = (url)=>{
 
 export default async (to, from, next) => {
     let userInfo = store.getters.userInfo
-
+    
     if(userInfo && userInfo.token){// 已有用户信息
         next()
     } else {// 没有用户登录信息，跳转微信授权页 
@@ -25,7 +25,7 @@ export default async (to, from, next) => {
             const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
             let userInfo = wxAuthObject.userInfo
             userInfo.token = wxAuthObject.token
-            store.dispatch('userInfo', userInfo)
+            store.dispatch('getUserInfo', userInfo)
             console.log(userInfo, 'userInfo')
             next()
         } else { // 没有code，判断是否带了appid，如果带appid就跳微信授权页

@@ -38,16 +38,17 @@ const state = {
 }
 
 const getters = {
-  userInfo: state => state.userInfo,
+  userInfo: state => JSON.parse(sessionStorage.getItem('userInfo')),
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo
 }
 
 const actions = {
-  async getUserInfo({ commit }, payload) {
-    const res = await userService.getUserInfo(payload)
-    commit(types.USER_INFO, res.data)
+  getUserInfo({ commit }, userInfo) {
+    let _userInfo = JSON.stringify(userInfo)
+    sessionStorage.setItem('userInfo', _userInfo);
+    commit(types.USER_INFO, userInfo)
   },
   async getUserVipInfo({ commit }, payload) {
     const res = await userService.getUserVipInfo(payload)
