@@ -13,6 +13,7 @@
 <script>
 import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
+import strFormat from '@/filters/strFormat'
 
 export default {
   components: {
@@ -35,7 +36,7 @@ export default {
           // on close
         })
       } else {
-        this.weChatNum = tempWeChat.replace(/[^\u4E00-\u9FA5]/g, '')
+        this.weChatNum = strFormat.fmtStr(tempWeChat)
         let date = {
           wechatAccount: this.weChatNum
         }
