@@ -21,7 +21,8 @@ export default (to, from, next) => {
     } else {// 没有用户登录信息，跳转微信授权页 https://sit.zooming-data.com/?cropId=ww28f45dfe0e5ae31d
         let parm = getUrlQueryParams(location.href);
         let wxappid = parm.cropId
-        let wxredirecturl = window.location.href.split("#")[0]
+        let wxredirecturl = 'https://sit.zooming-data.com'
+        // let wxredirecturl = window.location.href.split("#")[0]
         console.log(parm.cropId)
         console.log(wxredirecturl)
         if(parm.cropId){
