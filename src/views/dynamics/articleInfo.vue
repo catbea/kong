@@ -40,6 +40,18 @@ export default {
       articleTitle: '平均停留(S)',
       articleNum: '124'
     }
+  },
+  methods:{
+      //单个文章数据动态统计
+      async getArticleDynamicCount () {
+      const res = await dynamicsService.getArticleDynamicCount()
+      this.ArticleDynamicCount = res.records
+    },
+    //查询单个文章客户访问数据动态列表
+      async getArticleDynamicList () {
+      const res = await dynamicsService.getArticleDynamicList()
+      this.ArticleDynamicList = res.records
+    },
   }
 }
 </script>

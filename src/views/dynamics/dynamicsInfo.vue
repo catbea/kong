@@ -61,6 +61,18 @@ export default {
       articleTitle: '平均停留(S)',
       articleNum: '124'
     }
+  },
+  methods:{
+    //单个楼盘数据动态统计
+      async getSingleHouseDynamicCount () {
+      const res = await dynamicsService.getSingleHouseDynamicCount()
+      this.SingleHouseDynamicCount = res.records
+    },
+    //查询单个楼盘数据动态列表
+      async getSingleHouseDynamicList () {
+      const res = await dynamicsService.getSingleHouseDynamicList()
+      this.SingleHouseDynamicList = res.records
+    },
   }
 }
 </script>

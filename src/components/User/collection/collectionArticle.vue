@@ -17,14 +17,14 @@
         <span
         id="collectiontabok"
           class="list-left-tab-ok"
-          @click="gocollection(item.deleteType,item.id)"
+          @click="gocollection(item.deleteType,item.id,key)"
           v-show="item.deleteType == 1"
         >收藏</span>
         <span
           class="list-left-tab-no"
           v-show='item.deleteType == 0'
           id="collectiontabno"
-          @click="gocollection(item.deleteType,item.id)"
+          @click="gocollection(item.deleteType,item.id,key)"
         >取消收藏</span>
       </span>
       <span class="collection-list-right">

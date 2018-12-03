@@ -53,18 +53,25 @@
                 </p>
                 <p class="list-right-price">
                   <span class="right-price right-price-open">{{item.openTimes}}次开通 &nbsp; <span v-show="item.subscribeInvalidTime !=''">{{ parseInt(item.subscribeInvalidTime) |dateTimeFormatter(0,'/') }}到期</span></span>
+                 
                   <span
-                    class=" right-price-lab-ok"
-                    id="rightok"
-                    v-show='item.status == 0'
-                    @click="godynamics(item)"
-                  >收藏</span>
-                  <span
-                    class="right-price-lab"
-                    v-show='item.status == 1'
+                    
+                    type="checkbox"
+                    class='right-price-lab'
+                    @click="godynamics(item,key)"
                     id="rightno"
+                  > 
+                   
+                      
+                    取消收藏
+                  </span>
+
+                  <!-- <button
+                    class="right-price-lab"
+                    
+                    
                     @click="godynamics(item)"
-                  >取消收藏</span>
+                  >取消收藏</button> -->
                 </p>
               </span>
             </div>
@@ -133,7 +140,7 @@ export default {
       ArticleTips: '您还没有收藏任何文章',
       ArticleRemar: '快去看看我们为您准备的推荐文章吧',
       ArticleIcon: require('IMG/user/collection/Article@2x.png'),
-      statusTpye: 0,
+      statusTpye: 1,
       deleteFlag: 0,
 
     }
@@ -155,41 +162,34 @@ export default {
     },
     //收藏樓盤
     async godynamics (item) {
+      //0-未收藏；1-已收藏
       debugger
-      if (this.statusTpye != '') {
+      if (this.statusTpye != 1) {
         if (this.statusTpye == 1) {
           this.statusTpye = 0
         } else if (this.statusTpye == 0) {
           this.statusTpye = 1
         }
       } else {
-        if (this.statusTpye != '') {
-          if (item.status == 1) {
-            this.statusTpye = 0
-          } else if (item.status == 0) {
-            this.statusTpye = 1
-          }
+        if (item.status == 1) {
+          this.statusTpye = 0
+        } else if (item.status == 0) {
+          this.statusTpye = 1
         }
       }
-      if (item.status == 1 || this.statusTpye == 1) {
-        this.statusTpye = 0
-      } else if (item.status == 0 || this.statusTpye == 0) {
-        this.statusTpye = 1
-      }
-      await userService.getlinkerDynamics(item.linkerId, this.statusTpye)
-      debugger
-      let rightok = document.getElementById("rightok")
+      //0-未收藏；1-已收藏
       let rightno = document.getElementById("rightno")
       if (this.statusTpye == 1) {
-        rightok.style.display = "none"
-        rightno.style.display = "block"
+       
+        rightno.innerHTML="取消收藏"
+        rightno.style.color="#AFB2C3"
       } else if (this.statusTpye == 0) {
-        rightno.style.display = "none"
-        rightok.style.display = "block"
-
+        
+        rightno.innerHTML="收藏"
+        rightno.style.color="#007AE6"
 
       }
-
+      await userService.getlinkerDynamics(item.linkerId, this.statusTpye)
     },
     //收藏文章
     async gocollection (cons) {
@@ -197,14 +197,22 @@ export default {
 
       console.log(this.deleteFlag)
       console.log(cons.deleteType)
-      if (cons.deleteType == 1 || this.deleteFlag == 1) {
-        this.deleteFlag = 0
-      } else if (cons.deleteType == 0 || this.deleteFlag == 0) {
-        this.deleteFlag = 1
+      if (this.deleteFlag != 0) {
+        //0已收藏 1未收藏
+        if (this.deleteFlag == 1) {
+          this.deleteFlag = 0
+        } else if (this.deleteFlag == 0) {
+          this.deleteFlag = 1
+        }
+      } else {
+        if (cons.deleteType == 1) {
+          this.deleteFlag = 0
+        } else if (cons.deleteType == 0) {
+          this.deleteFlag = 1
+        }
       }
       // <!-- 收藏状态：1-取消收藏，0-收藏 -->
 
-      debugger
       let collok = cons.divIdOk
       let collno = cons.divIdNo
       collok = document.getElementById(collok)
@@ -213,12 +221,11 @@ export default {
       if (this.deleteFlag == 1) {
         collok.style.display = "block"
         collno.style.display = "none"
-        this.deleteFlag = 0
+
       } else if (this.deleteFlag == 0) {
         collok.style.display = "none"
         collno.style.display = "block"
 
-        this.deleteFlag = 1
       }
       await userService.getlinkerCollection(cons.infoId, this.deleteFlag)
     }
@@ -339,6 +346,16 @@ export default {
           position: absolute;
           text-align: center;
           margin-top: 5px;
+          > .bor {
+            color: rgba(0, 122, 230, 1);
+            border-radius: 16px;
+            border: 1px solid;
+          }
+          > .bors {
+            color: rgba(175, 178, 195, 1);
+            border-radius: 16px;
+            border: 1px solid;
+          }
         }
         > .right-price {
         }
