@@ -2,13 +2,59 @@
   <div class="user-edit-username-page">
     <div class="user-edit-username">
       <p class="edit-username-title">用户昵称</p>
-      <p class="edit-username-conter"><input type="text" class="edit-username-input" placeholder="Bela"></p>
-      <button class=edit-username-query>确认修改</button>
+      <p class="edit-username-conter">
+        <input
+          type="text"
+          class="edit-username-input"
+          placeholder="Bela"
+          maxlength="8"
+          v-model="userName"
+        >
+      </p>
+      <button class="edit-username-query" @click="toUpDateName">确认修改</button>
     </div>
   </div>
 </template>
 <script>
-export default {}
+import userService from 'SERVICE/userService'
+import { Dialog } from 'vant'
+
+export default {
+  components: {
+    Dialog
+  },
+
+  data() {
+    return {
+      userName: ''
+    }
+  },
+
+  methods: {
+    //更新用户名
+    upDateUserName(obj) {
+      const result = userService.upDateUserInfo(obj)
+      console.log(result)
+    },
+
+    toUpDateName() {
+      let userName = this.userName
+      if (userName.length == 0) {
+        Dialog.alert({
+          message: '用户名不可为空'
+        }).then(() => {
+          // on close
+        })
+      } else {
+        this.userName = userName.replace(/[^\u4E00-\u9FA5]/g, '')
+        let date = {
+          name: this.userName
+        }
+        this.upDateUserName(date)
+      }
+    }
+  }
+}
 </script>
 
 <style lang="less">
@@ -16,20 +62,20 @@ export default {}
   background: #ffffff;
   > .user-edit-username {
     margin: 27px 16px;
- > .edit-username-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: rgba(51, 51, 51, 1);
-    line-height: 28px;
-        margin-bottom: 22px;
-  }
-  > .edit-username-conter{
-> .edit-username-input {
-    font-size: 15px;
-    font-weight: 500;
-    color: rgba(153, 153, 153, 1);
-    line-height: 21px;
-    width: 99%;
+    > .edit-username-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(51, 51, 51, 1);
+      line-height: 28px;
+      margin-bottom: 22px;
+    }
+    > .edit-username-conter {
+      > .edit-username-input {
+        font-size: 15px;
+        font-weight: 500;
+        color: rgba(153, 153, 153, 1);
+        line-height: 21px;
+        width: 99%;
         border: 0;
         border-bottom: 1px solid #eeeeee;
       }

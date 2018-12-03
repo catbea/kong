@@ -3,16 +3,57 @@
     <div class="user-edit-wechat">
       <p class="edit-wechat-title">个人介绍</p>
       <p class="edit-wechat-conter">
-        <textarea v-model="signature" maxlength="50" placeholder="十年房产置业生涯专业为您服务" class="edit-wechat-input"></textarea>
+        <textarea
+          v-model="signature"
+          maxlength="50"
+          placeholder="十年房产置业生涯专业为您服务"
+          class="edit-wechat-input"
+        ></textarea>
         <!-- <input type="text" class="edit-wechat-input" placeholder="十年房产置业生涯专业为您服务">{{signature.length}}/24 -->
       </p>
       <div class="edit-wechat-number">/50</div>
-      <button class=edit-wechat-query>确认修改</button>
+      <button class="edit-wechat-query" @click="toUpDateSignature">确认修改</button>
     </div>
   </div>
 </template>
 <script>
-export default {}
+import { Dialog } from 'vant'
+import userService from 'SERVICE/userService'
+
+export default {
+  components: {
+    Dialog
+  },
+
+  data() {
+    return {
+      signature: ''
+    }
+  },
+
+  methods: {
+    toUpDateSignature() {
+      let signature = this.signature
+      if (signature.length == 0) {
+        Dialog.alert({
+          message: '个人介绍不可为空'
+        }).then(() => {
+          // on close
+        })
+      } else {
+        let obj = {
+          signature: signature
+        }
+        this.upDateSignature(obj)
+      }
+    },
+
+    upDateSignature(obj) {
+      const result = userService.upDateUserInfo(obj)
+      console.log(result)
+    }
+  }
+}
 </script>
 
 <style lang="less">

@@ -4,18 +4,19 @@
       <cell
         title="报备楼盘"
         is-link
-        value="华润城市花园二期"
+        :value="reportAddInfo.linkerName"
+        :to="{path:'/user/mypreference', query:{type:'report'}}"
       />
       <cell
         title="客户名字"
         is-link
-        value="李小博"
+        :value="reportAddInfo.clientName"
         to="reportCustomer"
       />
       <cell
         title="手机号"
         is-link
-        value="13590200739"
+        :value="reportAddInfo.clientPhone"
         to="reportPhone"
       />
       <!-- <cell title="单元格"  is-link value="内容" label="描述信息" /> -->
@@ -29,11 +30,23 @@
 </template>
 <script>
 import { Cell, CellGroup } from 'vant';
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Cell,
     CellGroup,
-  }
+  },
+  data () {
+    return {
+
+    }
+  },
+  created () {
+    console.log(this.reportAddInfo)
+  },
+  computed: {
+    ...mapGetters(['reportAddInfo'])
+  },
 }
 </script>
 <style lang="less">
