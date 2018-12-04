@@ -48,6 +48,8 @@ export default async (to, from, next) => {
                 }
                 console.log(userInfo, 'userInfo')
             }
+        } else {
+            next()
         }
         // ///////////////////
         // let userInfo = store.getters.userInfo
