@@ -5,7 +5,7 @@ import xhr from './xhr'
 class CommonService {
   wxTicket(url, agentId = '') {
     return xhr({
-      url: '/wx/cp/oauth2/signature/corp',
+      url: '/cp/oauth2/signature/corp',
       body: {
         url,
         agentId
@@ -24,6 +24,18 @@ class CommonService {
         code,
         cropId
       }
+    })
+  }
+
+  /**
+   * 通过code获取企业微信账户信息
+   * @param code 微信跳转地址截取code
+   */
+  payForVip(param) {
+    return xhr({
+      url: '/weixinPay/vipPayment',
+      method: 'post',
+      body: param
     })
   }
 }

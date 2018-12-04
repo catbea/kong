@@ -72,7 +72,7 @@ export default {
   methods: {
     async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
-      this.$store.dispatch('getUserVipInfo', userId)
+      // this.$store.dispatch('getUserVipInfo', userId)
     },
 
     selectedHead(item, index) {

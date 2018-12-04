@@ -7,14 +7,16 @@
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
     </div>
-   <open-payment ></open-payment>
+   <open-payment @paySubmit="paySubmit"></open-payment>
   </div>
 </template>
 <script>
 import marketService from 'SERVICE/marketService'
+import commonService from 'SERVICE/commonService'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import MarketPriceSurface from 'COMP/MarketPriceSurface/'
 import OpenPayment from 'COMP/OpenPayment/'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     MarketDescribe,
@@ -31,9 +33,19 @@ export default {
     dredge: false,
     borderBottom: false
   }),
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
   methods: {
     skipAgreement(){
       this.$router.push('/marketDetail/open/agreement')
+    },
+    async paySubmit() {
+      let param = {
+        subscribeNum: 3,
+        payOpenid: this.userInfo.pcOpenid
+      }
+      const res = await commonService.payForVip(param)
     },
     async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe()
