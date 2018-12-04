@@ -15,7 +15,7 @@
         :finished-text="没有更多了"
         @load="onLoad"
       >-->
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
+      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       <!-- </van-list> -->
     </div>
   </div>
@@ -66,10 +66,10 @@ export default {
       const res = await marketService.getBrokerMarket(1)
       this.agentIdInfo = res
     },
-    skipDetail(n) {
-      if (n == 1) {
-        this.$router.push('/market/marketDetail')
-      }
+    skipDetail(item) {
+      // if (n == 1) {
+        this.$router.push({name:'marketDetailNotOpen', params:{id: item.linkerId}})
+      // }
     }
   }
 }

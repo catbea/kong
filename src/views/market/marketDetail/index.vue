@@ -87,8 +87,7 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
   },
   created() {
-    // this.linkerId = this.$route.params.id
-    this.linkerId = 'c12997581b0c4f96a37e9f95c3906082' // 先写死
+    this.linkerId = this.$route.params.id
     this.getLinkerDetail(this.linkerId)
   },
   data: () => ({
