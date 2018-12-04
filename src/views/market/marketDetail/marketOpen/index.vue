@@ -2,7 +2,7 @@
   <div class="market-open-page">
    <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" 
     :dredge="dredge" :borderBottom="borderBottom"></market-describe>
-   <market-priceSurface></market-priceSurface>
+   <market-priceSurface @priceItemClick="priceItemClick"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
@@ -42,6 +42,9 @@ export default {
     skipAgreement(){
       this.$router.push('/marketDetail/open/agreement')
     },
+    priceItemClick(index) {
+      // console.log(index)
+    },
     async paySubmit() {
       let param = {
         linkerId: 'c387363940c04c6d83a45ee0ccad3d78',
@@ -56,7 +59,7 @@ export default {
     },
     async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe()
-      console.log(res.records)
+      console.log(res.records, 'getMarketDescribeInfo')
       this.resInfo = res.records
     },
     async getLinkerAmountList() {

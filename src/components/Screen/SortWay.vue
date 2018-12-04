@@ -1,41 +1,26 @@
 <template>
-  <div class="sortWay-page" v-if="domShowInfo.sortShow">
+  <div class="sortWay-page" v-if="show">
     <ul>
-      <li :class="{active:num==1}" @click="a">默认排序</li>
-      <li :class="{active:num==2}" @click="b">佣金最高</li>
-      <li :class="{active:num==3}" @click="c">人气最多</li>
-      <li :class="{active:num==4}" @click="d">开通最多</li>
+      <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=item">{{item}}</li>
     </ul>
-    <div class="shade" @click="shade"></div>
   </div>
 </template>
 <script>
 export default {
   data: () => ({
-    sortShow: true,
+    checked: '',
+    conf: {
+      '1': '默认排序',
+      '3': '人气排序',
+      '4': '开通最多'
+    },
     num: null
   }),
   props: {
-    domShowInfo: {
-      type: Object
-    }
+    show: { type: Boolean, default: false },
   },
   methods: {
-    shade() {
-      this.domShowInfo.sortShow = false
-    },
-    a() {
-      this.num = 1
-    },
-    b() {
-      this.num = 2
-    },
-    c() {
-      this.num = 3
-    },
-    d() {
-      this.num = 4
-    }
+
   }
 }
 </script>
@@ -61,10 +46,6 @@ export default {
       line-height: 49px;
     }
   }
-  .shade {
-    flex: 1;
-    opacity: 0.6;
-    background: rgba(0, 0, 0, 0.6);
-  }
+
 }
 </style>

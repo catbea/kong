@@ -1,7 +1,7 @@
 <template>
   <div class="custom-detail-track">
     <div class="shadow_box info-container">
-      <div class="info-item" v-for="(item) in info" :key="item.key">
+      <div class="info-item" v-for="(item) in trackInfo" :key="item.key">
         <p class="info-title">{{item.key}}</p>
         <p class="info-value">{{item.value}}</p>
       </div>
@@ -10,7 +10,9 @@
 </template>
 <script>
 export default {
-  props: {},
+  props: {
+    trackInfo: { type: Array },
+  },
   data: () => ({
     info: [
       { key: '总浏览数', value: 90 },
