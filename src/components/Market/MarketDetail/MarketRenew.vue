@@ -57,7 +57,7 @@ export default {
           this.dialogHandle("已开启该楼盘展示")
           break;
         case true:
-        this.dialogHandle("已取消该楼盘展示")
+        this.dialogHandle("已关闭该楼盘展示")
           break;
       }
     },
@@ -95,7 +95,7 @@ export default {
       width: 142px;
       line-height: 40px;
        color:#ffffff;
-       background:#007ae6;
+      //  background:#007ae6;
        margin-bottom:12px;
      }
     }
