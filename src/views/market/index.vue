@@ -5,7 +5,7 @@
         <van-search :obj="searchContent"></van-search>
         <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
-      <screen v-model="filter" :height="containerHeight"></screen>
+      <screen v-model="filter"></screen>
       <already-open :agentIdInfo="agentIdInfo"></already-open>
     </div>
     <div class="all-market">
@@ -47,12 +47,6 @@ export default {
   created () {
     this.getMarketDescribeInfo()
     this.getBrokerInfo()
-  },
-  mounted () {
-    this.containerHeight = (document.body.offsetHeight
-      - document.getElementsByClassName('search-box')[0].offsetHeight
-      - document.getElementsByClassName('screen-container')[0].offsetHeight
-      - document.getElementsByClassName('tabbar')[0].offsetHeight) / 37.5 + 'rem'
   },
   methods: {
     onClickHandler () {
