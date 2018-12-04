@@ -14,7 +14,7 @@
         :finished="finished"
         :finished-text="没有更多了"
         @load="onLoad"
-      > -->
+      >-->
       <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
       <!-- </van-list> -->
     </div>
@@ -38,7 +38,7 @@ export default {
   data: () => ({
     filter: null,
     itemInfo: {
-      linkerTags: ["热销中", "地铁房", "学区好房"]
+      linkerTags: ['热销中', '地铁房', '学区好房']
     },
     searchContent: {
       siteText: '深圳',
@@ -49,26 +49,26 @@ export default {
     agentIdInfo: null,
     resInfo: null,
     borderBottom: true,
-    containerHeight:'0'
+    containerHeight: '0'
   }),
-  created () {
+  created() {
     this.getMarketDescribeInfo()
     this.getBrokerInfo()
   },
   methods: {
-    onClickHandler () {
+    onClickHandler() {
       this.$router.push('/market/inputSearch')
     },
-    async getMarketDescribeInfo () {
+    async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe(705)
       console.log(res)
       this.resInfo = res.records
     },
-    async getBrokerInfo () {
+    async getBrokerInfo() {
       const res = await marketService.getBrokerMarket(1)
       this.agentIdInfo = res
     },
-    skipDetail (n) {
+    skipDetail(n) {
       if (n == 1) {
         this.$router.push('/market/marketDetail')
       }
