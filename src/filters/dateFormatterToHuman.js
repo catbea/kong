@@ -1,4 +1,4 @@
-import dateTimeFormatter from './dateTimeFormatter'
+import dateTimeFormatter from '@/filters/dateTimeFormatter.js'
 
 const dayDiff = (timestamp1, timestamp2) => {
   const date1 = new Date(dateTimeFormatter(timestamp1, 2))
@@ -14,6 +14,8 @@ const dayDiff = (timestamp1, timestamp2) => {
  * 4、非本年时间显示格式 yy-MM-dd HH:mm'
  */
 export default (date, serverTimestamp) => {
+  
+  
   const _targetDate = new Date(parseInt(date)) // 目标时间
   const _datumDate = serverTimestamp ? new Date(parseInt(serverTimestamp)) : new Date() // 基准时间
   const _targetDateTime = _targetDate.getTime()
@@ -21,7 +23,7 @@ export default (date, serverTimestamp) => {
   const _range =
     _targetDateTime > _datumDateTime ? _targetDateTime - _datumDateTime : 0
   const _rangeDay = dayDiff(_targetDateTime, _datumDateTime)
-  const _targetDateFormat = dateTimeFormatter(_targetDate, 4)
+  const _targetDateFormat = dateTimeFormatter(_targetDate.getTime(), 4)
   // 先判断是不是同一天（时间差不超过(24 * 3600 * 1000毫秒）且getDate()相等
   if (_range < 86400000 && _rangeDay === 0) {
     // 同一天
