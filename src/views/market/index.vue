@@ -3,7 +3,7 @@
     <div class="header">
       <div class="search-box">
         <van-search :obj="searchContent"></van-search>
-        <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
+        <div class="locationIcon" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
       <screen v-model="filter"></screen>
       <already-open :agentIdInfo="agentIdInfo"></already-open>
@@ -37,9 +37,6 @@ export default {
   },
   data: () => ({
     filter: null,
-    itemInfo: {
-      linkerTags: ["热销中", "地铁房", "学区好房"]
-    },
     searchContent: {
       siteText: '深圳',
       placeholderText: '请输入平台名称'
@@ -56,6 +53,7 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
+    
     onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
@@ -118,7 +116,7 @@ export default {
           }
         }
       }
-      .a {
+      .locationIcon {
         width: 20px;
         height: 20px;
         margin: 13px 14px 0 0;
