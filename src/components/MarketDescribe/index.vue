@@ -12,32 +12,21 @@
         <!-- <input type="text" v-model="val"> -->
         <ul class="market-describe">
           <li class="market-name">
-            <span> {{itemInfo.linkerName}}
-              华润城市花园
-            </span>
+            <span> {{itemInfo.linkerName}}华润城市花园</span>
             <span class="dredge" :style="style" v-if="dredge">{{openStatus}}</span>
           </li>
-          <li class="site">
-            {{itemInfo.linkerAddress}}南山 深圳湾
-            </li>
+          <li class="site">{{itemInfo.linkerAddress}}南山 深圳湾</li>
           <tag-group :arr="itemInfo.linkerTags"></tag-group>
           <li class="unit-price">
-            <span>
-              {{itemInfo.linkerPrice}}
-              98000元/㎡
-            </span>
-            <span>
-              {{itemInfo.openTimes}}
-              435次开通</span>
+            <span>{{itemInfo.linkerPrice}}98000元/㎡</span>
+            <span>{{itemInfo.openTimes}}435次开通</span>
           </li>
         </ul>
       </div>
         
         <div class="market-box-page-bottom">
           <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
-          <span>{{itemInfo.commission}}
-            1.056%+50000元/套
-          </span>
+          <span>{{itemInfo.commission}}1.056%+50000元/套</span>
         </div>
     </div>
   </div>
@@ -173,7 +162,7 @@ export default {
           .unit-price {
             display: flex;
             height: 15px;
-            margin-top: 9px;
+            margin-top: 4px;
             justify-content: space-between;
             span:nth-child(1) {
               line-height: 15px;
