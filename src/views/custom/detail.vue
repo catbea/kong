@@ -33,7 +33,8 @@
           />
         </van-tab>
         <van-tab title="足迹">
-          <custom-detail-track/>
+          <custom-detail-track 
+            :trackInfo="trackInfo" />
         </van-tab>
         <van-tab title="资料">
           <custom-detail-info/>
@@ -75,6 +76,10 @@ export default {
     finished: false,
     current: 1,
     size: 10,
+    trackInfo: [],
+    trackCurrent: 1,
+    trackList: [],
+    customerInfo: []
   }),
   created() {
     this.clientId = this.$route.params.id
@@ -83,6 +88,9 @@ export default {
     this.getCustomerSevenDayTrendChart(this.clientId)
     this.getCustomerBarChart(this.clientId)
     this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
+    this.getCustomerDynamicCount(this.clientId)
+    this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
+    this.getCustomerInfo(this.clientId)
   },
   methods: {
     /**
@@ -181,6 +189,61 @@ export default {
       }
       this.loading = false
     },
+    /**
+     * 客户详情-足迹-足迹访问统计
+     */
+    async getCustomerDynamicCount(id) {
+      const result = await CustomService.getCustomerDynamicCount(id)
+      let info = {
+        'allViewNum': '总浏览数', 'cardViewNum': '名片浏览', 'linkerViewNum':'楼盘浏览', 'articleViewNum':'文章浏览'
+      }
+      let trackInfo = []
+      for(var key in info) {
+        var item = {}
+        item.key = info[key]
+        item.value = result[key]
+        trackInfo.push(item)
+      }
+      this.trackInfo = trackInfo
+    },
+    /**
+     * 客户详情-足迹-足迹列表
+     */
+    async getCustomerDynamicList(id, current, size) {
+      const result = await CustomService.getCustomerDynamicList(id, current, size)
+      if (this.trackCurrent > 1) {
+        this.trackList = this.trackList.concat(result.records)
+      }else {
+        this.trackList = result.records
+      }
+    },
+    /**
+     * 客户详情-资料
+     */
+    async getCustomerInfo(id) {
+      const result = await CustomService.getCustomerInfo(id)
+      let info = {
+        'remarkName': '备注名称', 'sex': '性别', 'age':'年龄', 'position':'位置', 'phone': '手机号', 'source': '来源', 'income':'收入', 'industry':'行业', 'buyBuildingPurpose':'购房目的'
+      }
+      let customerInfo = []
+      for(var key in info) {
+        var item = {}
+        item.key = info[key]
+        item.value = result[key]
+        customerInfo.push(item)
+      }
+      console.log(customerInfo)
+      this.customerInfo = customerInfo
+    },
+
+    /**
+     * 更新客户资料信息
+     */
+    async updateCustomerInfo(clientId, info) {
+      const result = await CustomService.updateCustomerInfo(clientId, info.remarkName, info.sex, info.age, 
+        info.position, info.phone, info.income, info.industry, info.buyBuildingPurpose, info.isFollow)
+      
+    }
   }
 }
 </script>
