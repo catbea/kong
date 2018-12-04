@@ -66,7 +66,8 @@ export default {
   },
   data: () => ({
     bgImg: require('IMG/dynamics/collectBottom.png'),
-    msgIcon: require('IMG/dynamics/listArrowUp.png')
+    msgIcon: require('IMG/dynamics/listArrowUp.png'),
+  
   }),
   methods: {
     goMessage() {

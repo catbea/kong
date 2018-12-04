@@ -54,7 +54,7 @@ export default {
       this.swipeList = res.infoCarouselList
     },
     payloadTabs (tabs) {
-      this.tabs.push({ index: 0, type: '', typeName: '热门', page: 0, finished: false, list: [] })
+      this.tabs.push({ index: 0, type: '', typeName: '热门', page: 1, finished: false, list: [] })
       for (let i = 1; i < tabs.length; i++) {
         tabs[i].index = i
         tabs[i].page = 1
@@ -69,7 +69,7 @@ export default {
       const result = await discoverService.getDiscoverList(this.userArea.city, current.type, current.page)
       current.list = current.list.concat(result.records)
       current.page++
-      if (result.pages === 0 || current.page === result.pages-1) current.finished = true
+      if (result.pages === 0 || current.page === result.pages+1) current.finished = true
       this.loading = false
     },
     // 获取当前玄宗tab的typeid
