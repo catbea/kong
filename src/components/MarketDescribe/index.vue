@@ -5,7 +5,7 @@
     <div class="all-describe" >
       <div class="market-box-page-top">
         <div class="img bg_img" :style="{backgroundImage:'url(http://www.anjiazhixun.com/upload/kindeditor/image/20181115/20181115184742_75384.jpg)'}">
-          <div class="label">{{itemInfo.sale}}
+          <div class="label bg_img" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
             9.9折
           </div>
         </div>
@@ -13,7 +13,7 @@
         <ul class="market-describe">
           <li class="market-name">
             <span> {{itemInfo.linkerName}}华润城市花园</span>
-            <span class="dredge" :style="style" v-if="dredge">{{openStatus}}</span>
+            <span class="dredge" :style="style" v-if="dredge" @click.stop="openRenewHandle">{{openStatus}}</span>
           </li>
           <li class="site">{{itemInfo.linkerAddress}}南山 深圳湾</li>
           <tag-group :arr="itemInfo.linkerTags"></tag-group>
@@ -45,7 +45,8 @@ export default {
   data: () => ({
     resInfo: null,
     style: null,
-    commissionImg:require('IMG/user/collection/Rectangle@2x.png')
+    commissionImg:require('IMG/user/collection/Rectangle@2x.png'),
+    labelImg:require('IMG/marketDetail/discount@2x.png')
   }),
   props: {
     // value:'',
@@ -76,6 +77,9 @@ export default {
     },
     dredgeColor() {
       this.style = conf(this.openStatus)
+    },
+    openRenewHandle(){
+      this.$router.push("/marketDetail/open")
     }
   },
   watch: {
@@ -114,10 +118,9 @@ export default {
             left: -4px;
             top: 4px;
             width: 36px;
-            height: 20px;
+            height: 24px;
             text-align: center;
             line-height: 20px;
-            background: rgba(234, 77, 46, 1);
             font-size: 11px;
             font-family: PingFangSC-Medium;
             font-weight: 500;
