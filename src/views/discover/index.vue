@@ -50,17 +50,14 @@ export default {
     // 获取轮播和tabs配置
     async getInformationCarousel () {
       const res = await discoverService.informationCarousel(this.userArea.city)
-      console.log(res)
-      console.log(11111111111)
       this.payloadTabs(res.infoSettingList)
       this.swipeList = res.infoCarouselList
     },
     payloadTabs (tabs) {
-      
       this.tabs.push({ index: 0, type: '', typeName: '热门', page: 0, finished: false, list: [] })
       for (let i = 1; i < tabs.length; i++) {
         tabs[i].index = i
-        tabs[i].page = 0
+        tabs[i].page = 1
         tabs[i].finished = false
         tabs[i].list = []
         this.tabs.push(tabs[i])
@@ -70,17 +67,13 @@ export default {
     async onLoad () {
       let current = this.getCurrentType()
       const result = await discoverService.getDiscoverList(this.userArea.city, current.type, current.page)
-      console.log(result)
       current.list = current.list.concat(result.records)
       current.page++
-      console.log(current.page)
-      if (result.pages === 0 || current.page === result.pages) current.finished = true
-      
+      if (result.pages === 0 || current.page === result.pages-1) current.finished = true
       this.loading = false
     },
     // 获取当前玄宗tab的typeid
     getCurrentType () {
-       console.log(22222222222222222)
       for (let temp of this.tabs) {
         if (temp.index === this.activeIndex) return temp
       }
