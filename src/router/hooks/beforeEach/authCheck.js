@@ -19,8 +19,10 @@ export default async (to, from, next) => {
 
         if(!userInfo.payOpenId) {//payopenid为空，用户授权信息已经获取，通过返回的code获取payopenid
             let parm = getUrlQueryParams(location.href);
-            if(parm.code) {
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId)
+            if(parm.code && payCorpId) {
+                let payCorpId = sessionStorage.getItem('payCorpId')
+                console.log(payCorpId, 'payCorpId=========')
+                const payopenIdObject = await commonService.getPayOpenId(parm.code, payCorpId)
                 console.log(payopenIdObject, 'payopenIdObject---------')
             }
         }
@@ -35,7 +37,7 @@ export default async (to, from, next) => {
             let cropId = sessionStorage.getItem('cropId')
             let payCorpId = sessionStorage.getItem('payCorpId')
             if(payCorpId){// 通过payopenid返回的code
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId)
+                const payopenIdObject = await commonService.getPayOpenId(parm.code, payCorpId)
                 console.log(payopenIdObject, 'payopenIdObject===')
             } else {// 正常用户授权信息返回code
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
