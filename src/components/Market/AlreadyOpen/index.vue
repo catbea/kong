@@ -1,7 +1,9 @@
 <template>
   <div class="already-open-page">
     <ul>
-      <li>已开通{{agentIdInfo}}个楼盘</li>
+      <li>已开通
+        <span>{{agentIdInfo}}</span> 个楼盘
+        </li>
       <li>
           <router-link to="/user/myMarket" tag="p">我的楼盘</router-link>
       </li>
@@ -39,6 +41,9 @@ export default {
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 22px;
+      span{
+        color:#007AE6;
+      }
     }
     li:nth-child(2) {
       font-size: 12px;
