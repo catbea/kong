@@ -34,5 +34,18 @@ class MarketService {
       }
     })
   }
+
+  /**
+   * 楼盘详情-楼盘信息
+   * @param {*} linkerId 
+   */
+  getLinkerDetail(linkerId) {
+    return xhr({
+      url: '/linkerDetail/getLinkerDetail',
+      body: {
+        linkerId
+      }
+    })
+  }
 }
 export default new MarketService()

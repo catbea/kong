@@ -1,13 +1,13 @@
 <template>
   <div class="all-market-type-box">
     <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
-      <van-swipe-item v-for="(item,index) in list" :key="index">
+      <van-swipe-item v-for="(item,index) in houseList" :key="index">
         <ol class="market-type-box"  @click="skipMarketFamilyList()">
-          <li class="market-type-img bg_img" :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY0NjA0XC83YWQ0NjJhODRhMjcwMTA2MmI5MmRjYWVkYjBkZjZjZi5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}">
+          <li class="market-type-img bg_img" :style="{backgroundImage:'url('+item.houseTypeImgUrl+')'}">
           </li>
-          <li class="market-type-box-top">3室2厅1卫</li>
-          <li class="market-type-box-middle">建面 120㎡ 南北朝向</li>
-          <li class="market-type-box-bottom">约320万/套</li>
+          <li class="market-type-box-top">{{item.householdDesc}}</li>
+          <li class="market-type-box-middle">建面 {{item.area}} {{item.orientations}}</li>
+          <li class="market-type-box-bottom">{{item.price}}</li>
         </ol>
       </van-swipe-item>
   </van-swipe>
@@ -16,6 +16,9 @@
 </template>
 <script>
 export default {
+  props: {
+    houseList: { type: Object },
+  },
   data: () => ({
     list: [1, 2, 3, 4]
   }),
