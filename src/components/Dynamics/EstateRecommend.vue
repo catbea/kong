@@ -1,8 +1,7 @@
 <template>
   <div class="estate-recommend">
-    <title-bar :conf="titleBarConf" ></title-bar>
-    <div class="recommend-box" v-fuzz-dom>
-      <estate-item :info="info"></estate-item>
+    <title-bar :conf="titleBarConf"></title-bar>
+    <div class="bg_img recommend-box" :style="{backgroundImage:'url(' + blurImg + ')'}">
     </div>
     <div class="recommend-info" v-if="info" @click="goRecommendInfo">
       <div class="desc-box">
@@ -28,13 +27,13 @@ export default {
     titleBarConf: {
       title: 'AI荐盘',
       linkText: '更多楼盘'
-    }
+    },
+    blurImg: require('IMG/dynamics/blurImg.png')
   }),
-  methods:{
-    goRecommendInfo(){
+  methods: {
+    goRecommendInfo() {
       this.$emit('click', this.info)
     }
-    
   }
 }
 </script>
@@ -42,14 +41,16 @@ export default {
 .estate-recommend {
   position: relative;
   > .recommend-box {
+    width: 345px;
+    height: 125px;
     margin: 0 15px;
     border-radius: 6px;
   }
   > .recommend-info {
     position: absolute;
     width: 100%;
-    top: 65px;
-    left: 45px;
+    top: 80px;
+    left: 35px;
     > .desc-box {
       color: #fff;
       .title {
@@ -63,14 +64,15 @@ export default {
     }
     > .open-btn {
       position: absolute;
-      right: 85px;
+      right: 65px;
       top: 25px;
       display: inline-block;
       font-size: 13px;
       font-weight: 400;
       background-color: #ee7158;
+      color: #fff;
       border-radius: 5px;
-      padding: 1px 5px;
+      padding: 5px 15px;
     }
   }
 }
