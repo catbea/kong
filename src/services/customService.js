@@ -96,12 +96,25 @@ class CustomService {
   }
 
   /**
-   * 客户详情-客户基础信息
+   * 客户详情-分析-客户基础信息以及购房意向度
    * @param {*} clientId
    */
   getClientInfo(clientId) {
     return xhr({
-      url: '/customerInfo/queryClientInfo',
+      url: '/customer/queryClientInfo',
+      body: {
+        clientId
+      }
+    })
+  }
+
+  /**
+   * 客户详情-分析-客户报表饼图
+   * @param {*} clientId 
+   */
+  getCustomerPieChart(clientId) {
+    return xhr({
+      url: '/customer/pieChart',
       body: {
         clientId
       }

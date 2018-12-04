@@ -1,28 +1,39 @@
 <template>
   <div class="custom-detail">
     <div class="custom-info-box">
-      <avatar class="custom-avatar"></avatar>
+      <avatar class="custom-avatar" v-if="customBaseInfo.avatarUrl!=''" :avatar="customBaseInfo.avatarUrl"></avatar>
       <div class="custom-info">
         <div class="custom-name-box">
-          <h5 class="custom-name">Susan Hall</h5>
-          <van-icon name="edit" size="24px" />
+          <h5 class="custom-name">{{customBaseInfo.clientName}}</h5>
+          <van-icon name="edit" size="24px"/>
         </div>
-        <p class="custom-browsed">最近浏览：2018/05/22 22:08</p>
+        <p class="custom-browsed">最近浏览：{{customBaseInfo.lastViewTime}}</p>
       </div>
     </div>
     <div class="custom-analyze-box">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
+      <van-tabs
+        v-model="activeIndex"
+        color="#007AE6"
+        :line-width="15"
+        :swipe-threshold="6"
+        @click="onClick"
+      >
         <van-tab title="分析">
-          <custom-detail-analyze />
+          <custom-detail-analyze
+            :baseInfo="customBaseInfo"
+            :tempTagData="intentionProjectTag"
+            :pieChartHidden="pieChartHidden"
+            :pieData="pieData"
+            v-if="isPieDataReqOk"
+          />
         </van-tab>
         <van-tab title="足迹">
-          <custom-detail-track />
+          <custom-detail-track/>
         </van-tab>
         <van-tab title="资料">
-          <custom-detail-info />
+          <custom-detail-info/>
         </van-tab>
       </van-tabs>
-
     </div>
   </div>
 </template>
@@ -42,18 +53,54 @@ export default {
     CustomDetailInfo
   },
   data: () => ({
-    id: -1,
+    clientId: -1,
+    activeIndex: 0,
     customBaseInfo: null,
-    activeIndex: 0
+    intentionProjectTag: [],
+    isPieDataReqOk: false,
+    pieChartHidden: false,
+    pieData: []
   }),
   created() {
-    this.id = this.$route.params.id
-    this.getCustomBaseInfo(this.id)
+    this.clientId = this.$route.params.id
+    this.getCustomBaseInfo(this.clientId)
+    this.getCustomPieChart(this.clientId)
   },
   methods: {
+    /**
+     * 切换tab
+     */
+    onClick() {},
+    /**
+     * 获取基本信息以及购房意向度
+     */
     async getCustomBaseInfo(id) {
       const result = await CustomService.getClientInfo(id)
       this.customBaseInfo = result
+      let tag = result.intentionProjectTag
+      this.intentionProjectTag = tag.split('|')
+    },
+    async getCustomPieChart(id) {
+      const result = await CustomService.getCustomerPieChart(id)
+      this.pieChartHidden = result.display == 'hide' ? false : true
+      if (this.pieChartHidden == false) {
+        let pieData = []
+        let titles = ['文章', '楼盘', '我']
+        let colors = ['#7eace1', '#5a9be0', '#2f7bdf']
+        let total = result.vo.llzuxq + result.vo.lpxqll + result.vo.mpxqll
+        let percents = [parseFloat(result.vo.llzuxq/total).toFixed(2), parseFloat(result.vo.lpxqll/total).toFixed(2), parseFloat(result.vo.mpxqll/total).toFixed(2)]
+        for (let i = 0; i < 3; i++) {
+          let llzuxq = {};
+          llzuxq.name = titles[i];
+          llzuxq.percent = percents[i];
+          llzuxq.a = '1';
+          llzuxq.color = colors[i];
+          pieData.push(llzuxq)
+        }
+        console.log(pieData)
+        this.pieData = pieData
+      }
+      this.isPieDataReqOk = true
     }
   }
 }
