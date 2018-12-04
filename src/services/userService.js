@@ -286,7 +286,7 @@ class UserService {
   upDataDisturb(disturbSetting) {
     return xhr({
       method: 'POST',
-      url: '/disturbSetting/updateSetting',
+      url: '/disturbSetting/insertSetting',
       body: disturbSetting
     })
   }
