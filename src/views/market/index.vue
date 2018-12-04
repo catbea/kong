@@ -9,7 +9,14 @@
       <already-open :agentIdInfo="agentIdInfo"></already-open>
     </div>
     <div class="all-market">
+      <!-- <van-list
+        v-model="loading"
+        :finished="finished"
+        :finished-text="没有更多了"
+        @load="onLoad"
+      > -->
       <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
+      <!-- </van-list> -->
     </div>
   </div>
 </template>
@@ -49,10 +56,7 @@ export default {
     this.getBrokerInfo()
   },
   mounted () {
-    this.containerHeight = (document.body.offsetHeight
-      - document.getElementsByClassName('search-box')[0].offsetHeight
-      - document.getElementsByClassName('screen-container')[0].offsetHeight
-      - document.getElementsByClassName('tabbar')[0].offsetHeight) / 37.5 + 'rem'
+
   },
   methods: {
     onClickHandler () {
