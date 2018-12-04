@@ -3,7 +3,7 @@
     <div class="header">
       <div class="search-box">
         <van-search :obj="searchContent"></van-search>
-        <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
+        <div class="locationIcon" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
       <screen v-model="filter"></screen>
       <already-open :agentIdInfo="agentIdInfo"></already-open>
@@ -14,7 +14,7 @@
         :finished="finished"
         :finished-text="没有更多了"
         @load="onLoad"
-      > -->
+      >-->
       <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
       <!-- </van-list> -->
     </div>
@@ -37,9 +37,6 @@ export default {
   },
   data: () => ({
     filter: null,
-    itemInfo: {
-      linkerTags: ["热销中", "地铁房", "学区好房"]
-    },
     searchContent: {
       siteText: '深圳',
       placeholderText: '请输入平台名称'
@@ -49,26 +46,27 @@ export default {
     agentIdInfo: null,
     resInfo: null,
     borderBottom: true,
-    containerHeight:'0'
+    containerHeight: '0'
   }),
-  created () {
+  created() {
     this.getMarketDescribeInfo()
     this.getBrokerInfo()
   },
   methods: {
+    
     onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
-    async getMarketDescribeInfo () {
+    async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe(705)
       console.log(res)
       this.resInfo = res.records
     },
-    async getBrokerInfo () {
+    async getBrokerInfo() {
       const res = await marketService.getBrokerMarket(1)
       this.agentIdInfo = res
     },
-    skipDetail (n) {
+    skipDetail(n) {
       if (n == 1) {
         this.$router.push('/market/marketDetail')
       }
@@ -118,7 +116,7 @@ export default {
           }
         }
       }
-      .a {
+      .locationIcon {
         width: 20px;
         height: 20px;
         margin: 13px 14px 0 0;

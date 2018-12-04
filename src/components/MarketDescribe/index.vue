@@ -4,9 +4,9 @@
     
     <div class="all-describe" >
       <div class="market-box-page-top">
-        <div class="img bg_img" :style="{backgroundImage:'url(http://www.anjiazhixun.com/upload/kindeditor/image/20181115/20181115184742_75384.jpg)'}">
+        <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
           <div class="label bg_img" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
-            9.9折
+            {{itemInfo.labels}}折
           </div>
         </div>
         <!-- <input type="text" v-model="val"> -->
