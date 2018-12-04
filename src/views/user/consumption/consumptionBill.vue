@@ -5,6 +5,7 @@
     v-model="loading"
     :finished="finished"
     :finished-text="'没有更多了'"
+    :offset='100'
     @load="onLoad"
   >
     <!-- <Tips></Tips>#F7F9FA; -->

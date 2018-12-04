@@ -1,8 +1,8 @@
 <template>
   <div class="custom-detail-analyze">
-    <div class="shadow_box pie-container">
+    <div class="shadow_box pie-container" v-if="!pieChartHidden">
       <h5 class="chart-title">客户兴趣占比</h5>
-      <pie-chart></pie-chart>
+      <pie-chart v-if="pieData.length" :pieData="pieData"></pie-chart>
       <p class="chart-desc">该客户还未有感兴趣的楼盘，请再接再厉多多 推荐，掌握客户的购房意向吧~</p>
     </div>
     <div class="shadow_box line-container">
@@ -18,10 +18,10 @@
     <div class="shadow_box purchase-intention">
       <h5 class="purchase-title">买房意向</h5>
       <div class="purchase-info-box">
-        <p><span>区域:</span>龙华新区</p>
-        <p><span>户型:</span>三室</p>
-        <p><span>总价:</span>500-600万</p>
-        <p><span>关注:</span>暂不明确</p>
+        <p><span>区域:</span>{{baseInfo.intentionArea}}</p>
+        <p><span>户型:</span>{{baseInfo.intentionHouseType}}</p>
+        <p><span>总价:</span>{{baseInfo.intentionPrice}}</p>
+        <p><span>关注:</span>{{baseInfo.intentionDemand}}</p>
         <div class="preferences"><span>偏好:</span>
           <tag-group :arr="tempTagData"></tag-group>
         </div>
@@ -41,9 +41,17 @@ import BarChart from 'COMP/Custom/Charts/BarChart'
 import TagGroup from 'COMP/TagGroup'
 import EstateItem from 'COMP/EstateItem'
 export default {
-  props: {},
+  props: {
+    baseInfo: { type: Object },
+    tempTagData: { type: Array },
+    pieChartHidden: { type: Boolean },
+    pieData: { type: Array },
+  },
+
+  created () {
+    console.log('.......'+this.pieData)
+  },
   data: () => ({
-    tempTagData: ['地铁房', '高端社区', '商务区'],
     tempEstateData: [
       {
         linkerName: '我是测试',

@@ -1,29 +1,29 @@
 <template>
 <div class="perfect-page">
   <ul class="perfect-page-top">
-    <li>名字
+    <router-link tag="li" to="/user/edit/username">名字
       <div>
         Bela
         <span></span>
       </div>
-    </li>
-    <li>主营区域
+    </router-link>
+    <router-link tag="li" to="">主营区域
       <div>
         深圳市 南山区
         <span></span>
       </div>
-    </li>
-    <li>所属公司
+    </router-link>
+    <router-link tag="li" to="">所属公司
       <div>
         尊豪科技
       </div>
-    </li>
-    <li>我的机构
+    </router-link>
+    <router-link tag="li" to="/user/edit/userMechanism">我的机构
       <div>
         AW大师一号店
         <span></span>
       </div>
-    </li>
+    </router-link>
   </ul>
   <div class="perfect-page-button">保存</div>
   </div>
@@ -61,7 +61,7 @@ export default {
         span {
           width: 16px;
           height: 16px;
-          margin-top: 5px;
+          margin-top: 3px;
           background: url('../../../../assets/img/perfect/arrow.png') no-repeat;
           background-size: contain;
         }

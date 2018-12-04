@@ -37,7 +37,7 @@ export default {
   opacity:0.65;
   z-index:11;
   .enjoy{
-    margin:20px 0px 0 323px;
+    margin:20px 0px 0 322px;
     display:flex;
     flex-direction:column;
     .icon-enjoy{
