@@ -1,37 +1,14 @@
 <template>
   <div class="market-price-surface-page">
     <ul class="price-box">
-      <li @click="highlight" :class="{active:light}">
-        <p>1天体验</p>
-        <p>¥2</p>
-        <p>限购一次</p>
-      </li>
-      <li>
-        <p>1个月</p>
-        <p>¥60</p>
-        <p>111</p>
-      </li>
-      <li>
-        <p>3个月</p>
-        <p>¥180</p>
-        <p>限时立减¥120</p>
-      </li>
-      <li>
-        <p>6个月</p>
-        <p>¥99</p>
-        <p>限购一次</p>
-      </li>
-      <li>
-        <p>12个月</p>
-        <p>¥150</p>
-        <p>¥720</p>
-      </li>
-      <li>
-        <p>VIP会员</p>
-        <p>¥300</p>
+      
+      <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:itemActIndex==index}">
+        <p>{{item.title}}</p>
+        <p>¥{{item.price}}</p>
         <p>立即开通</p>
         <span>不限量</span>
       </li>
+
       <div class="coupon-box">
         <div>优惠劵</div>
         <div>
@@ -56,11 +33,21 @@
 export default {
   data: () => ({
     backImg: require('IMG/discountCoupon/arrow.png'),
+    itemActIndex: 0,
     light: false
   }),
+  props: {
+    priceList: {
+      type: Array,
+      default: function() {
+        return [{title:'test', price: 900},{title:'test', price: 900}]
+      }
+    }
+  },
   methods: {
-    highlight() {
-      this.light = !this.light
+    priceItemClickHandle(index) {
+      this.itemActIndex = index
+      this.$emit('priceItemClick', index)
     }
   }
 }

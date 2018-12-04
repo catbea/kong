@@ -62,7 +62,7 @@ const state = {
     storeName: "",
     switchTime: "",
     tempPhone: "18676652795",
-    token: "eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJvYXU5bGUiLCJzdWIiOiJhZ2VudElkOjQxNDk6d3cyOGY0NWRmZTBlNWFlMzFkIiwiZXhwIjoxNTQ0NDQwOTQwLCJpYXQiOjE1NDM4MzYxNDB9.KNgY3mbCZGpRVRYrICsqmGAGY6hmPRAQNE2No2i20EtD_Hfa3LuronjoIBs1n4OpE2F50U_BxstiTP5M_lsA2Q",
+    token: "eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJhd3NocDQiLCJzdWIiOiJhZ2VudElkOnd3MjhmNDVkZmUwZTVhZTMxZDo3MDUiLCJleHAiOjE1NDM5MTc3MjksImlhdCI6MTU0MzMxMjkyOX0.EkTPyJRS0KpHKz6I2-AJeGetHs406f98pXPQnoSdP78HQvQwwg1Wfpgi61Wj7QpyTYu5GJfZIMh9nitXYQwMFQ",
     updateTime: "2018-10-19 17:37:47",
     viewNum: 101,
     wechatAccount: ""
