@@ -1,6 +1,6 @@
 <template>
   <div class="line-chart-container">
-    <v-chart class="bar-chart" :data="data" :width="width" :animate="false" prevent-render @on-render="renderLineChart" />
+    <v-chart class="bar-chart" :lineData="lineData" :width="width" :animate="false" prevent-render @on-render="renderLineChart" />
   </div>
 </template>
 <script>
@@ -9,17 +9,20 @@ export default {
   components: {
     VChart
   },
+  props: {
+    lineData: { type: Array },
+  },
   data: () => ({
     width: 0,
-    data: [
-      { time: 1514764800000, count: 11, a: '1' },
-      { time: 1514851200000, count: 13, a: '1' },
-      { time: 1514937600000, count: 12, a: '1' },
-      { time: 1515024000000, count: 14, a: '1' },
-      { time: 1515110400000, count: 11, a: '1' },
-      { time: 1515196800000, count: 15, a: '1' },
-      { time: 1515283200000, count: 24, a: '1' }
-    ]
+    // data: [
+    //   { time: 1514764800000, count: 11, a: '1' },
+    //   { time: 1514851200000, count: 13, a: '1' },
+    //   { time: 1514937600000, count: 12, a: '1' },
+    //   { time: 1515024000000, count: 14, a: '1' },
+    //   { time: 1515110400000, count: 11, a: '1' },
+    //   { time: 1515196800000, count: 15, a: '1' },
+    //   { time: 1515283200000, count: 24, a: '1' }
+    // ]
   }),
   mounted() {
     this.width = document.getElementsByClassName(
@@ -28,7 +31,7 @@ export default {
   },
   methods: {
     renderLineChart({ chart }) {
-      chart.source(this.data, {
+      chart.source(this.lineData, {
         time: {
           type: 'timeCat',
           mask: 'YY/DD',
@@ -53,7 +56,7 @@ export default {
           lineWidth: 1,
           stroke: '#fff'
         })
-      this.data.map(obj => {
+      this.lineData.map(obj => {
         chart.guide().text({
           position: [obj.time, obj.count],
           content: obj.count,

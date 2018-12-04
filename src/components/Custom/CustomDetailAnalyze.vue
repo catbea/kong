@@ -5,14 +5,14 @@
       <pie-chart v-if="pieData.length" :pieData="pieData"></pie-chart>
       <p class="chart-desc">该客户还未有感兴趣的楼盘，请再接再厉多多 推荐，掌握客户的购房意向吧~</p>
     </div>
-    <div class="shadow_box line-container">
+    <div class="shadow_box line-container" v-if="!lineChartHidden">
       <h5 class="chart-title">近7日活跃度</h5>
-      <line-chart></line-chart>
+      <line-chart v-if="lineData.length" :lineData="lineData"></line-chart>
       <p class="chart-desc">该客户即将失联，请持续分享活动、名片和楼盘 召唤TA吧~</p>
     </div>
-    <div class="shadow_box bar-container">
+    <div class="shadow_box bar-container" v-if="!barChartHidden">
       <h5 class="chart-title">查看次数统计</h5>
-      <bar-chart></bar-chart>
+      <bar-chart v-if="barData.length" :barData="barData"></bar-chart>
       <p class="chart-desc">该客户默默关注你好久了，不去打声招呼吗~</p>
     </div>
     <div class="shadow_box purchase-intention">
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div>
-      <estate-item v-for="(item,index) in tempEstateData" :key="index" :info="item">
+      <estate-item v-for="(item,index) in analysisListData" :key="index" :info="item">
         <p class="interest-desc" slot="desc">1312312312</p>
       </estate-item>
     </div>
@@ -46,10 +46,15 @@ export default {
     tempTagData: { type: Array },
     pieChartHidden: { type: Boolean },
     pieData: { type: Array },
+    lineChartHidden: { type: Boolean },
+    lineData: { type: Array },
+    barChartHidden: { type: Boolean },
+    barData: { type: Array },
+    analysisListData: { type: Array },
   },
 
   created () {
-    console.log('.......'+this.pieData)
+    
   },
   data: () => ({
     tempEstateData: [

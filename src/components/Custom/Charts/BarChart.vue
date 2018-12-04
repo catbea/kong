@@ -1,6 +1,6 @@
 <template>
   <div class="bar-chart-container">
-    <v-chart class="bar-chart" :data="data" :width="width" :animate="false" prevent-render @on-render="renderBarChart" />
+    <v-chart class="bar-chart" :barData="barData" :width="width" :animate="false" prevent-render @on-render="renderBarChart" />
   </div>
 </template>
 <script>
@@ -9,15 +9,21 @@ export default {
   components: {
     VChart
   },
+  props: {
+    barData: { type: Array },
+  },
+  created () {
+    
+  },
   data: () => ({
     width: 0,
-    data: [
-      { type: '名片', count: 3, shadow: 100 },
-      { type: '楼盘', count: 6, shadow: 100 },
-      { type: '文章', count: 8, shadow: 100 },
-      { type: '活动', count: 3000, shadow: 100 },
-      { type: '聊天', count: 11, shadow: 100 }
-    ]
+    // data: [
+    //   { type: '名片', count: 3, shadow: 100 },
+    //   { type: '楼盘', count: 6, shadow: 100 },
+    //   { type: '文章', count: 8, shadow: 100 },
+    //   { type: '活动', count: 3000, shadow: 100 },
+    //   { type: '聊天', count: 11, shadow: 100 }
+    // ]
   }),
   mounted() {
     this.width = document.getElementsByClassName(
@@ -26,10 +32,10 @@ export default {
   },
   methods: {
     renderBarChart({ chart }) {
-      this.data.map(obj => {
+      this.barData.map(obj => {
         obj.virtualCount = obj.count > 99 ? 99 : obj.count
       })
-      chart.source(this.data, {
+      chart.source(this.barData, {
         count: {
           range: [0, 100]
         }
@@ -55,7 +61,7 @@ export default {
         .style({
           radius: 3
         })
-      this.data.map(obj => {
+      this.barData.map(obj => {
         chart.guide().text({
           position: [obj.type, obj.virtualCount],
           content: obj.count,

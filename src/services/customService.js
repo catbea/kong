@@ -120,5 +120,48 @@ class CustomService {
       }
     })
   }
+
+  /**
+   * 客户详情-分析-客户报表7天趋势图
+   * @param {*} clientId 
+   */
+  getCustomerSevenDayTrendChart(clientId) {
+    return xhr({
+      url: '/customer/sevenDayTrendChart',
+      body: {
+        clientId
+      }
+    })
+  }
+
+  /**
+   * 客户详情-分析-客户报表条形图
+   * @param {*} clientId 
+   */
+  getCustomerBarChart(clientId) {
+    return xhr({
+      url: '/customer/barChart',
+      body: {
+        clientId
+      }
+    })
+  }
+
+  /**
+   * 客户详情-分析-楼盘分析分页列表
+   * @param {*} clientId 
+   * @param {*} current
+   * @param {*} size
+   */
+  getCustomerBuildingAnalysisList(clientId, current, size) {
+    return xhr({
+      url: '/customer/getBuildingAnalysisList',
+      body: {
+        clientId,
+        current,
+        size
+      }
+    })
+  }
 }
 export default new CustomService()
