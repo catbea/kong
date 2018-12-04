@@ -77,28 +77,40 @@ export default {
       4: { finished: false, list: [], page: 1 }
     },
     loading: false,
-    search: '',
     pageSize: 10,
     searchVal: '',
     sort: ' intention' // intention：意向度，createTime：客户新增时间
   }),
   created() {},
   methods: {
-    onSearchHandler() {},
+    onSearchHandler() {
+      this.currentData.page = 1
+      this.onLoad()
+    },
+    onFocusHandler() {
+      console.log('fffff')
+    },
+    /**
+     * 切换tab方法
+     */
     onClick() {
       this.onLoad()
     },
     async onLoad() {
       this.loading = true
       const result = await CustomService[this.getServeceFunc()](
-        this.search,
+        this.searchVal,
         this.currentData.page,
         this.pageSize,
         this.sort
       )
       console.log(result)
-      this.currentData.list = this.currentData.list.concat(result.records)
-      if (result.records.length < this.currentData.page) {
+      if (this.currentData.page > 1) {
+        this.currentData.list = this.currentData.list.concat(result.records)
+      }else {
+        this.currentData.list = result.records
+      }
+      if (result.pages <= this.currentData.page) {
         this.currentData.finished = true
       } else {
         this.currentData.page++
@@ -122,9 +134,7 @@ export default {
       }
     },
     
-    onFocusHandler() {
-      console.log('fffff')
-    },
+    
     onRadioChangeHandler(val) {
       console.log('onChangeHandler')
       console.log(val)

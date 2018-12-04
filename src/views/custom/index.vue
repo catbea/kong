@@ -4,7 +4,7 @@
       <div slot="action" @click="onSearchHandler">搜索</div>
     </van-search>
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6">
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
         <van-tab title="全部"></van-tab>
         <van-tab title="关注"></van-tab>
         <van-tab title="访客"></van-tab>
@@ -29,32 +29,47 @@ export default {
   data: () => ({
     activeIndex: 0,
     data: {
-      0: { finished: false, list: [], page: 0 },
-      1: { finished: false, list: [], page: 0 },
-      2: { finished: false, list: [], page: 0 },
-      3: { finished: false, list: [], page: 0 },
-      4: { finished: false, list: [], page: 0 }
+      0: { finished: false, list: [], page: 1 },
+      1: { finished: false, list: [], page: 1 },
+      2: { finished: false, list: [], page: 1 },
+      3: { finished: false, list: [], page: 1 },
+      4: { finished: false, list: [], page: 1 }
     },
     loading: false,
-    search: '',
     pageSize: 10,
     searchVal: '',
-    sort: 1
+    sort: 'intention' // intention：意向度（默认选项）， createTime：时间
   }),
   created() {},
   methods: {
-    onSearchHandler() {},
+    onSearchHandler() {
+      this.currentData.page = 1
+      this.onLoad()
+    },
+    onFocusHandler() {
+      console.log('fffff')
+    },
+    /**
+     * 切换tab方法
+     */
+    onClick () {
+      this.onLoad()
+    },
     async onLoad() {
       this.loading = true
       const result = await CustomService[this.getServeceFunc()](
-        this.search,
+        this.searchVal,
         this.currentData.page,
         this.pageSize,
         this.sort
       )
       console.log(result)
-      this.currentData.list = this.currentData.list.concat(result.records)
-      if (result.records.length < this.pageSize) {
+      if (this.currentData.page > 1) {
+        this.currentData.list = this.currentData.list.concat(result.records)
+      }else {
+        this.currentData.list = result.records
+      }
+      if (result.pages <= this.currentData.page) {
         this.currentData.finished = true
       } else {
         this.currentData.page++
@@ -79,9 +94,7 @@ export default {
     itemClickHandler(e) {
       this.$router.push(`/custom/${e.clientId}`)
     },
-    onFocusHandler() {
-      console.log('fffff')
-    }
+    
   },
   computed: {
     currentData() {
