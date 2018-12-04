@@ -1,14 +1,14 @@
 <template>
-  <div class="Properties-container">
+  <div class="Properties-container" v-if="HouseDynamicList">
     <shadow-box>
       <div slot="container">
         <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
       </div>
     </shadow-box>
-    <div class="Properties-list" v-for="(item,index) in properties" :key="index" plain  @click="onClickConfirm(item)">
- <!-- @click="onClickConfirm" -->
-      <p class="list-left">{{item.propertiesName}}{{item.statue == 0 ? "（未开通）":""}}<span class="list-right">{{item.num}}条动态</span></p>
-      <p class="list-left-btn">{{item.address}} | {{item.price == 0?"价格待定": item.price}}</p>
+    <div class="Properties-list" v-for="(item,index) in HouseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
+ <!-- @click="onClickConfirm" 1未开通，2未开通-->
+      <p class="list-left">{{item.linkerName }}{{item.openStatus == 2 ? "（未开通）":""}}<span class="list-right">{{item.dynamicCount }}条动态</span></p>
+      <p class="list-left-btn">{{item.area}}  {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
     </div>
     <!-- <div class="Properties-list">
 
@@ -36,7 +36,8 @@ export default {
   },
    props: {
     info: Object,
-    item:Object
+    item:Object,
+    HouseDynamicList: { type: Array }
   },
   data() {
     return {

@@ -2,10 +2,10 @@
   <div class="article-container">
     <shadow-box>
       <div slot="container">
-        <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
+        <dynamics-data  :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
       </div>
     </shadow-box>
-    <dynamics-list @click="godynamicsList"></dynamics-list>
+    <dynamics-list @click="godynamicsList" allDynamicList="allDynamicList"></dynamics-list>
   </div>
 </template>
 <script>
@@ -17,6 +17,12 @@ export default {
     DynamicsData,
     DynamicsList,
     ShadowBox
+  },
+  props:{
+    
+    allDynamicList:{type:Array},
+    CardDynamicCount:{type:Array},
+    CardDynamicList:{type:Array}
   },
   data() {
     return {
