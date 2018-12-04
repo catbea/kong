@@ -168,7 +168,8 @@ export default {
     border-radius: 12px;
   }
   .marketDetail-page-bottom {
-    padding: 20px 0 0 20px;
+    padding: 20px 0 0 0;
+    margin-left:20px;
     .marketDetail-box {
       margin-bottom: 11px;
       .marketDetail-box-top {
