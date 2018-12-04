@@ -196,7 +196,7 @@ export default {
 
 
     itemProperties (val) {
-      if (val.statue == 0) {
+      if (val.openStatus == 1) {
         this.$dialog
           .confirm({
             title: '暂未开通楼盘',
