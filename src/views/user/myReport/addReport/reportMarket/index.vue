@@ -10,20 +10,12 @@
         :key="index"
         :dataArr="item"
         :indexData="index"
-        :showData="showArr.indexOf(index) >-1"
+        :checkData="checkData"
         @click.native="selectHandle(index)"
       ></meal-market>
     </div>
-    <div class="check-all-box">
-      <div class="img-box">
-        <span
-          class="icon-check bg_img"
-          :style="{backgroundImage:'url('+(checkShow?checkColorImg:checkImg)+')'}"
-          @click="allSelectHandle"
-        ></span>
-        全选
-      </div>
-      <router-link tag="p" to="/user/mypreference/openPreference" class="check-all-button">开通</router-link>
+    <div class="report-confirm"  @click="onSureHandler">
+      <p>确定</p>
     </div>
   </div>
 </template>
@@ -39,9 +31,12 @@ export default {
     MealMarket
   },
   created() {
-    this.arrLength()
+
   },
   data: () => ({
+    type: null,
+    checkIndex: -1,
+    checkData:null,
     dataArrLength: null,
     showArr: [],
     searchInfo: {
@@ -87,45 +82,38 @@ export default {
   },
   methods: {
     selectHandle(index) {
-      console.log(12)
-      this.checkIndex = index
-      if (this.showArr.indexOf(index) == -1) {
-        this.showArr.push(index)
-      } else {
-        console.log(index)
-        this.showArr = this.showArr.filter(item => {
-          return item != index
-        })
-      }
+      console.log(11888)
+      this.checkData=index
     },
-    allSelectHandle() {
-      this.checkShow = !this.checkShow
-      if (this.showArr.length >= this.dataArrLength) {
-        this.showArr = this.showArr.splice(0, 0)
-      } else {
-        this.showArr = this.showArr.splice(0, 0)
-        for (let index = 0; index < this.dataArr.length; index++) {
-          this.showArr.push(index)
+    // allSelectHandle() {
+    //   this.checkShow = !this.checkShow
+    //   if (this.showArr.length >= this.dataArrLength) {
+    //     this.showArr = this.showArr.splice(0, 0)
+    //   } else {
+    //     this.showArr = this.showArr.splice(0, 0)
+    //     for (let index = 0; index < this.dataArr.length; index++) {
+    //       this.showArr.push(index)
+    //     }
+    //   }
+    //   console.log(this.showArr.length)
+    //   console.log(this.showArr)
+    // },
+    /**
+     * 报备选择楼盘确定
+     */
+    onSureHandler() {
+      if (this.checkIndex != -1) {
+        var item = this.dataArr[this.checkIndex]
+        let _reportAddInfo = {
+          linkerId: item.linkerId,
+          linkerName: item.linkerName
         }
+        this.$store.dispatch(
+          'reportAddInfo',
+          Object.assign(this.reportAddInfo, _reportAddInfo)
+        )
+        this.$router.back(-1)
       }
-      console.log(this.showArr.length)
-      console.log(this.showArr)
-    },
-    arrLength() {
-      this.dataArrLength = this.dataArr.length
-      switch (this.$route.query) {
-        case 'report':
-          this.type = true
-          break
-        case 'open':
-          this.type = false
-          break
-        default:
-          this.type = true
-          break
-      }
-      console.log(this.type)
-      console.log(this.$route.query)
     }
   }
 }
@@ -166,41 +154,6 @@ export default {
       color: rgba(0, 122, 230, 1);
       text-align: center;
       line-height: 30px;
-    }
-  }
-  .check-all-box {
-    background: rgba(255, 255, 255, 1);
-    width: 100%;
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    .img-box {
-      display: flex;
-      font-size: 12px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-    }
-    .icon-check {
-      width: 18px;
-      height: 18px;
-      margin: 0 16px;
-    }
-    .check-all-button {
-      margin-right: 32px;
-      width: 72px;
-      height: 30px;
-      border-radius: 22px;
-      border: 1px solid;
-      font-size: 14px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(0, 122, 230, 1);
-      line-height: 30px;
-      text-align: center;
     }
   }
 }

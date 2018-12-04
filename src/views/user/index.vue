@@ -30,6 +30,10 @@
           <img :src="img.Icon">
           <p class="grou1Icon-p">{{img.title}}</p>
         </div>
+        <div class="head-img" onclick="qimoChatClick();">
+          <img :src="consultImg">
+          <p class="grou1Icon-p">在线咨询</p> 
+        </div>
       </div>
     </div>
     <div class="top-null-css"></div>
@@ -47,6 +51,7 @@ export default {
     CellGroup
   },
   data: () => ({
+    consultImg:require('IMG/user/Group8@2x.png'),
     headIcons: [
       { title: '我的楼盘', Icon: require('IMG/user/mm@2x.png') },
       { title: '我的收藏', Icon: require('IMG/user/Group1@2x.png') },
@@ -58,8 +63,7 @@ export default {
     ],
     btnIcons: [
       { title: '勿扰模式', Icon: require('IMG/user/Group9@2x.png') },
-      { title: '意见反馈', Icon: require('IMG/user/Group7@2x.png') },
-      { title: '联系客服', Icon: require('IMG/user/Group8@2x.png') }
+      { title: '意见反馈', Icon: require('IMG/user/Group7@2x.png') }
     ]
   }),
   created() {
@@ -68,7 +72,7 @@ export default {
   methods: {
     async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
-      this.$store.dispatch('getUserVipInfo', userId)
+      // this.$store.dispatch('getUserVipInfo', userId)
     },
 
     selectedHead(item, index) {
@@ -92,6 +96,7 @@ export default {
           this.$router.push('/user/consumption/consumptionBill')
           break
         case 6:
+         this.$router.push('/user/edit/awWelfare')
           break
       }
     },
@@ -101,9 +106,10 @@ export default {
           this.$router.push('/user/noDisturb')
           break
         case 1:
-          this.$router.push('/user/opinionFeedback')
+          window.location='https://support.qq.com/product/31776'
           break
         case 2:
+        
           break
       }
     }

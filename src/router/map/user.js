@@ -163,6 +163,15 @@ export default [
     }
   },
   {
+    path: '/user/myReport/addReport/reportMarket',
+    name: 'reportMarket',
+    component: resolve =>
+      require(['@/views/user/myReport/addReport/reportMarket/index.vue'], resolve),
+    meta: {
+      title: '报备楼盘'
+    }
+  },
+  {
     path: '/user/myReport/reportPhone',
     name: 'reportPhone',
     component: resolve =>
@@ -274,6 +283,17 @@ export default [
     component: resolve => require(['@/views/user/opinionFeedback/feedbackDescribe/index.vue'], resolve),
     meta: {
       title: '反馈问题描述',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/edit/awWelfare',
+    name: 'awWelfare',
+    component: resolve => require(['@/views/user/edit/awWelfare.vue'], resolve),
+    meta: {
+      title: '邀请有礼',
       tabbar: {
         show: false
       }

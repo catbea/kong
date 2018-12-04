@@ -2,7 +2,7 @@
   <div class="all-market-type-box">
     <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
       <van-swipe-item v-for="(item,index) in list" :key="index">
-        <ol class="market-type-box" >
+        <ol class="market-type-box"  @click="skipMarketFamilyList()">
           <li class="market-type-img bg_img" :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY0NjA0XC83YWQ0NjJhODRhMjcwMTA2MmI5MmRjYWVkYjBkZjZjZi5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}">
           </li>
           <li class="market-type-box-top">3室2厅1卫</li>
@@ -18,7 +18,12 @@
 export default {
   data: () => ({
     list: [1, 2, 3, 4]
-  })
+  }),
+  methods:{
+    skipMarketFamilyList(){
+    this.$router.push('/marketDetail/FamilyList')
+  }
+  }
 }
 </script>
 <style lang="less">

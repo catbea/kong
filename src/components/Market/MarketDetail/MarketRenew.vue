@@ -1,18 +1,18 @@
 <template>
   <ul class="market-renew-box">
       <li class="market-renew-box-recommend" @click="recommendHandle">
-      <span class="bg_img market-renew-box-recommend-icon" :style="{'backgroundImage':'url('+ (flagTj?recommendA:recommend)+')'}"></span>
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagTj?recommendA:recommend)+')'}"></span>
       <p :class="{recommend:true,active:flagTj}" >推荐</p>
       </li>
     <li class="market-renew-box-show" @click="showHandle">
-      <span class="bg_img market-renew-box-show-icon" :style="{'backgroundImage':'url('+ (flagZs?showA:show)+')'}"></span>
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZs?showA:show)+')'}"></span>
       <p :class="{marketShow:true,active:flagZs}">展示</p>
     </li>
     <li class="market-renew-box-stick" @click="stickHandle">
-      <span class="bg_img  market-renew-box-stick-icon" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
       <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
-    <div class="market-renew-box-button">续费(07/11到期)</div>
+    <div class="market-renew-box-button" @click="renewHandle">续费(07/11到期)</div>
 </ul>
 </template>
 <script>
@@ -37,6 +37,9 @@ export default {
     },
     stickHandle() {
       this.flagZd = !this.flagZd
+    },
+    renewHandle(){
+     this.$router.push('/marketDetail/open')
     }
   }
 }
@@ -56,14 +59,16 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    span{
+      width:24px;
+      height:24px;
+    }
+    p{
+      margin-top:4px;
+    }
   }
   .market-renew-box-recommend {
     margin: 0 34px 0 25px;
-
-    .market-renew-box-recommend-icon {
-      width: 14px;
-      height: 19px;
-    }
     .recommend {
       font-size: 11px;
       font-family: PingFangSC-Regular;
@@ -74,10 +79,6 @@ export default {
   }
   .market-renew-box-show {
     margin-right: 34px;
-    .market-renew-box-show-icon {
-      width: 18px;
-      height: 18px;
-    }
     .marketShow {
       font-size: 11px;
       font-family: PingFangSC-Regular;
@@ -88,10 +89,6 @@ export default {
   }
   .market-renew-box-stick {
     margin-right: 34px;
-    .market-renew-box-stick-icon {
-      width: 15px;
-      height: 19px;
-    }
     .stickText {
       font-size: 11px;
       font-family: PingFangSC-Regular;
@@ -105,8 +102,9 @@ export default {
     height: 44px;
     border-radius: 6px;
     border: 1px solid;
-    line-height: 44px;
-    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     font-size: 14px;
     font-family: PingFangSC-Regular;
     font-weight: 400;

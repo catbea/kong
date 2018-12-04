@@ -5,7 +5,7 @@ import xhr from './xhr'
 class CommonService {
   wxTicket(url, agentId = '') {
     return xhr({
-      url: '/wx/cp/oauth2/signature/corp',
+      url: '/cp/oauth2/signature/corp',
       body: {
         url,
         agentId
@@ -24,6 +24,30 @@ class CommonService {
         code,
         cropId
       }
+    })
+  }
+
+  /**
+   *  vip开通
+   * @param param 
+   */
+  payForVip(param) {
+    return xhr({
+      url: '/weixinPay/vipPayment',
+      method: 'post',
+      body: param
+    })
+  }
+
+  /**
+   *  楼盘开通
+   * @param param 
+   */
+  payForProject(param) {
+    return xhr({
+      url: '/weixinPay/payment',
+      method: 'post',
+      body: param
     })
   }
 }

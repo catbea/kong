@@ -18,7 +18,7 @@
      <InfoMiddle v-for="(item,index) in middleList" :key="index" :middleInfo="item">
      </InfoMiddle>
     <div class="info-bottom">
-      <span></span>
+      <span :style="{backgroundImage:'url('+warnImg+')'}" class="bg_img"></span>
       <p>免责申明：楼盘信息来源于政府共事网站，开发商， 第三方公众平台最终以政府部门登记备案为准，请谨慎检查。</p>
     </div>
   </div>
@@ -36,6 +36,7 @@ export default {
     this.$store.commit(types.TABBAR, false)
   },
   data: () => ({
+    warnImg:require('IMG/marketDetail/warn.png'),
     topList: [
       {
         top: [{ left: '开发商', right: '惠州市太东地产有限公司' }]
@@ -153,11 +154,11 @@ export default {
   }
   .info-bottom {
     display: flex;
-    margin: 13px 0 0 15px;
+    margin: 13px 0 102px 15px;
     span {
       width: 12px;
       height: 12px;
-      border: 1px solid black;
+      margin-top:4px;
     }
     p {
       margin-left: 8px;
