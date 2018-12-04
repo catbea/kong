@@ -1,5 +1,5 @@
 <template>
-  <div class="title-bar-page">
+  <div class="title-bar-page" v-if="isShow">
     <h5 class="title-text">{{conf.title}}</h5>
     <router-link :to="linkComputed">
       <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}} </p>
@@ -18,7 +18,11 @@ export default {
           link: ''
         }
       }
-    }
+    },
+    isShow: { 
+      type: Boolean,
+      default: true
+     },
   },
   computed: {
     linkComputed () {

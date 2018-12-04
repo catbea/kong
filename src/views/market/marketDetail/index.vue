@@ -5,8 +5,8 @@
       <van-tab v-for="(item,index) in tabList" :key="index" :title="item">
         
       </van-tab>
-    </van-tabs> -->
-    <swipe-box></swipe-box>
+    </van-tabs>-->
+    <swipe-box :bannerList="bannerList" :collectionStatus="linkerInfo.collectionStatus" :ifPanorama="linkerInfo.ifPanorama"></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
         <div class="marketDetail-box-top">
@@ -15,33 +15,31 @@
           </div>
           <div class="house-owner">
             <div class="browse" @click="supplement">12345</div>人浏览过
-            <div class="head-portrait bg_img" :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY1MTg5XC80M2NkYzMyZTc5NjVhMWExMWY2NDk2YTk1N2UxOWI0My5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}">
-            </div>
+            <div
+              class="head-portrait bg_img"
+              :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY1MTg5XC80M2NkYzMyZTc5NjVhMWExMWY2NDk2YTk1N2UxOWI0My5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}"
+            ></div>
           </div>
         </div>
-        <specific-marketDetail></specific-marketDetail>
+        <specific-marketDetail :info="linkerInfo"></specific-marketDetail>
       </div>
       <div class="button-box" @click="moreInfoHandle">更多信息</div>
-      <title-bar :conf="confA"></title-bar>
-      <all-marketType></all-marketType>
-      <title-bar :conf="confB"></title-bar>
-      <ul class="market-state-box">
-        <li class="market-state-box-top">
-          山水江南82平小户型已售罄山水江南82平小户型已售罄
-        </li>
-        <li class="market-state-box-middle">
-          山水江南项目56-82平的小户型房源已售完，目前仅剩余2013-122平米3-4房在售3-122平目前仅剩余2013-122平米3-4房在售3-122平
-        </li>
-        <li class="market-state-box-bottom">
-          2018年6月15日
-        </li>
+      <title-bar :conf="confA" :isShow="!linkerInfo.houseList"></title-bar>
+      <all-marketType :houseList="linkerInfo.houseList"></all-marketType>
+      <title-bar :conf="confB" :isShow="!linkerInfo.houseDynamicList"></title-bar>
+      <ul class="market-state-box" v-if="!linkerInfo.houseDynamicList">
+        <li class="market-state-box-top">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].title:''}}</li>
+        <li
+          class="market-state-box-middle"
+        >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].content:''}}</li>
+        <li class="market-state-box-bottom">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].dynamicTime:''}}</li>
       </ul>
       <title-bar :conf="confC"></title-bar>
       <site-nearby></site-nearby>
       <title-bar :conf="confD"></title-bar>
-      <all-elseMarket></all-elseMarket>
+      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList"></all-elseMarket>
       <div class="m-statement">
-        <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击 </span>
+        <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
       </div>
@@ -53,7 +51,6 @@
       <popup-box></popup-box>
     </van-popup>
   </div>
-
 </template>
 <script>
 import * as types from '@/store/mutation-types'
@@ -69,6 +66,9 @@ import PopupBox from 'COMP/Market/MarketDetail/PopupBox'
 import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
 import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/'
+
+import MarketService from 'SERVICE/marketService'
+
 export default {
   components: {
     HintTire,
@@ -86,15 +86,23 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
   },
+  created() {
+    // this.linkerId = this.$route.params.id
+    this.linkerId = 'c12997581b0c4f96a37e9f95c3906082' // 先写死
+    this.getLinkerDetail(this.linkerId)
+  },
   data: () => ({
-    hintShow:true,
+    linkerId: '',
+    linkerInfo: {},
+    bannerList: [],
+    hintShow: true,
     show: false,
     boxShow: false,
     openFlag: true,
     renewFlag: true,
     list: [1, 2, 3, 4],
-    tabList:["楼盘","户型","位置","周边","推荐"],
-    tabIndex:0,
+    tabList: ['楼盘', '户型', '位置', '周边', '推荐'],
+    tabIndex: 0,
     confA: {
       title: '户型',
       linkText: '全部户型',
@@ -129,8 +137,8 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
-    hintHandle(){
-      this.hintShow=false
+    hintHandle() {
+      this.hintShow = false
     },
     handleScroll() {
       let scrollTop =
@@ -147,22 +155,34 @@ export default {
     supplement() {
       this.show = true
     },
-    moreInfoHandle(){
+    moreInfoHandle() {
       this.$router.push('/marketDetail/info')
+    },
+    /**
+     * 楼盘详情信息
+     */
+    async getLinkerDetail(id) {
+      const result = await MarketService.getLinkerDetail(id)
+      this.linkerInfo = result
+      this.bannerList = result.bannerList
+      let houseUseList = result.houseUseList
+      houseUseList.unshift(result.saleStatus)
+      this.info = houseUseList
+      
     }
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
-    this.hintShow=false
+    this.hintShow = false
   }
 }
 </script>
 <style lang="less">
 .marketDetail-page {
-  height:auto !important;
-    background: #ffffff;
-  .van-tabs__wrap--scrollable .van-tab{
-    flex:1;
+  height: auto !important;
+  background: #ffffff;
+  .van-tabs__wrap--scrollable .van-tab {
+    flex: 1;
   }
   .van-popup {
     border-radius: 12px;
@@ -193,17 +213,17 @@ export default {
         }
       }
     }
-    .button-box{
-      width:335px;
-      height:44px;
-      background:rgba(0,122,230,0.05);
-      border-radius:4px;
-      font-size:16px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      text-align:center;
-      line-height:44px;
-      color:rgba(68,81,102,1);
+    .button-box {
+      width: 335px;
+      height: 44px;
+      background: rgba(0, 122, 230, 0.05);
+      border-radius: 4px;
+      font-size: 16px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      text-align: center;
+      line-height: 44px;
+      color: rgba(68, 81, 102, 1);
     }
     .button-box-tow {
       margin-top: 12px;

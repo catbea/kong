@@ -1,16 +1,16 @@
 <template>
   <div class="specific-market-detail-box">
         <div class="specific-market-detail-name">
-          碧桂园。山水江南
+          {{info.linkerName}}
         </div>
         <div class="specific-market-detail-condition">
           <div class="specific-market-detail-condition-left">
-            湖景地产
+            {{info.projectTagList.join(' | ')}}
           </div>
-          <div class="specific-market-detail-condition-line"></div>
+          <!-- <div class="specific-market-detail-condition-line"></div>
           <div class="specific-market-detail-condition-right">
             地铁房
-          </div>
+          </div> -->
         </div>
         <div class="specific-market-detail">
           <ul class="specific-market-detail-left">
@@ -21,23 +21,26 @@
           <li class="developers-left">开发商:</li>
           </ul>
           <ul class="specific-market-detail-right">
-          <li class="average-price-right">410000元/㎡起</li> 
+          <li class="average-price-right">{{info.averagePrice}}</li> 
           <li class="commission-right" @click="commission"> 
             <div class="commission">0.234%</div> 
             <div class="commission-detail bg_img" :style="{backgroundImage:'url('+commissionDetailImg+')'}" ></div>
           </li>
-          <li class="opening-quotation-right">2018年06月08日</li>
+          <li class="opening-quotation-right">{{info.openTime}}</li>
           <li class="market-site-right" @click="siteHandle">
-            <div class="site">深圳市龙岗龙翔大道与怡翠路深圳市龙岗龙翔大道与怡翠路</div> 
+            <div class="site">{{info.detailAddress}}</div> 
              <div  class="site-detail bg_img" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
           </li>
-          <li class="developers-right">佛山市碧桂园地产实业有限公司</li>
+          <li class="developers-right">{{info.developer}}</li>
           </ul>
         </div>
       </div>
 </template>
 <script>
 export default {
+  props: {
+    info: { type: Object },
+  },
   data: () => ({
     commissionDetailImg: require('IMG/marketDetail/arrow.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png')

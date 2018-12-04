@@ -2,20 +2,20 @@
   <div class="market-img-page">
     <div @click.stop="play" class="market-img-page-box">
       <van-swipe @change="onChange" :show-indicators="false">
-        <van-swipe-item v-for="(item,index) in list" :key="index">
-          <div class="bg_img loopBox" :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY1MTg5XC80M2NkYzMyZTc5NjVhMWExMWY2NDk2YTk1N2UxOWI0My5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}">
+        <van-swipe-item v-for="(item,index) in bannerList" :key="index">
+          <div class="bg_img loopBox" :style="{backgroundImage:'url('+item.imgUrl+')'}">
           </div>
         </van-swipe-item>
       </van-swipe>
-      <span class="bg_img market-img-page-play" :style="{'backgroundImage':'url('+imgPlay+')'}" v-if="playShow"></span>
+      <span class="bg_img market-img-page-play" :style="{'backgroundImage':'url('+imgPlay+')'}" v-if="ifPanorama"></span>
       <div class="market-img-page-panorama">720全景</div>
       <div class="market-img-page-photo" @click.stop="photo">图片</div>
       <div class="num">
-        {{ current + 1 }}/4
+        {{ current + 1 }}/{{bannerList.length}}
       </div>
       <div class="collect-box" @click.stop="collect">
         <!-- <div class="collect" :class="{collectActive:flag}" :style="{'backgroundImage':'url('+flag?imgPlay： +')'}"></div>  -->
-        <div class="bg_img collect" :style="{backgroundImage:'url('+ (flag?collectImg:collectImgA)+')'}"></div>
+        <div class="bg_img collect" :style="{backgroundImage:'url('+ (collectionStatus?collectImg:collectImgA)+')'}"></div>
         收藏
       </div>
       <div class="share-box" @click.stop="share">
@@ -32,15 +32,17 @@ export default {
   components: {
     PopupBox
   },
+  props: {
+    bannerList: { type: Array },
+    collectionStatus: { type: String }, // 0-未收藏 1-已收藏 
+    ifPanorama: { type: Number }, // 是否有全景
+  },
   data: () => ({
     current: 0,
-    flag: false,
-    list:[1,2,3,4],
     enjoyImg:require('IMG/marketDetail/enjoy@2x.png'),
     imgPlay: require('IMG/marketDetail/Oval@2x.png'),
     collectImg: require('IMG/marketDetail/xx1@2x.png'),
     collectImgA: require('IMG/marketDetail/xx 9@2x.png'),
-    playShow: true,
     show: false
   }),
   methods: {
@@ -56,8 +58,8 @@ export default {
       this.current = index
     },
     collect() {
-      this.flag = !this.flag
-      console.log(this.flag)
+      this.collectionStatus = !this.collectionStatus
+      console.log(this.collectionStatus)
     },
     share() {
       // this.$router.push("/marketDetail/share")

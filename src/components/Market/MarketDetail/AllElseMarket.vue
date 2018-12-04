@@ -1,13 +1,13 @@
 <template>
   <div class="all-else-market-box">
     <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
-      <van-swipe-item v-for="(item,index) in list" :key="index">
+      <van-swipe-item v-for="(item,index) in linkerOtherList" :key="index">
       <ul class="else-market-box" @click="skipMarketDetail()">
-        <li class="else-market-box-img bg_img" :style="{backgroundImage:'url(https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1919031430,2707845179&fm=200&gp=0.jpg)'}">
+        <li class="else-market-box-img bg_img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
 
         </li>
-        <li class="else-market-box-top">凯德公园1号</li>
-        <li class="else-market-box-bottom">深圳-南山</li>
+        <li class="else-market-box-top">{{item.linkerName}}</li>
+        <li class="else-market-box-bottom">{{item.district}}</li>
       </ul>
        </van-swipe-item>
   </van-swipe>
@@ -15,8 +15,11 @@
 </template>
 <script>
 export default {
+  props: {
+    linkerOtherList: { type: Array },
+  },
   data: () => ({
-    list: [1, 2, 3, 4]
+    // list: [1, 2, 3, 4]
   }),
   methods:{
     skipMarketDetail(){

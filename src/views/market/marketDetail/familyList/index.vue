@@ -52,15 +52,16 @@
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/'
-import marketService from 'SERVICE/marketService'
+import HouseTypeService from 'SERVICE/houseTypeService'
 export default {
   components: {
     TagGroup
   },
   created() {
-    this.getMarketDescribeInfo()
+    this.getHouseTypeInfo(this.linkerId)
   },
   data:()=>({
+    linkerId:'13f8c005b5c6440ea1ba2a0d9341e56c',
     num:null,
     tabs:["全部","一室","二室","三室"],
     activeIndex: 0,
@@ -74,9 +75,9 @@ export default {
     onLoad(){
       console.log(909090909)
     },
-    async getMarketDescribeInfo () {
-      const res = await marketService.getMarketDescribe()
-      console.log(res.records)
+    async getHouseTypeInfo (n) {
+      const res = await HouseTypeService.getHouseType(n)
+      console.log(res)
     }
   }
 }

@@ -14,12 +14,12 @@ export default {
     trackInfo: { type: Array },
   },
   data: () => ({
-    info: [
-      { key: '总浏览数', value: 90 },
-      { key: '名片浏览', value: 17 },
-      { key: '楼盘浏览', value: 190 },
-      { key: '文章浏览', value: 124 }
-    ]
+    // info: [
+    //   { key: '总浏览数', value: 90 },
+    //   { key: '名片浏览', value: 17 },
+    //   { key: '楼盘浏览', value: 190 },
+    //   { key: '文章浏览', value: 124 }
+    // ]
   }),
   components: {}
 }
