@@ -13,7 +13,7 @@ export default {
     pieData: { type: Array },
   },
   created () {
-    console.log('+++++++++'+this.pieData)
+    
   },
   data: () => ({
     width: 0,
@@ -30,6 +30,10 @@ export default {
   },
   methods: {
     renderPieChart({ chart }) {
+      let colors = []
+      for(var i in this.pieData) {
+        colors.push(this.pieData[i].color)
+      }
       chart.source(this.pieData)
       chart.coord('polar', {
         transposed: true,
@@ -59,7 +63,7 @@ export default {
       chart
         .interval()
         .position('a*percent')
-        .color('name', ['#2f7bdf', '#5a9be0', '#7eace1'])
+        .color('name', colors)
         .adjust('stack')
       chart.render()
     }

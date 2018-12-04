@@ -35,6 +35,7 @@ export default {
       width: 160px;
       height: 120px;
       margin-bottom: 4px;
+      border-radius:4px;
     }
     .market-type-box-top {
       height: 18px;

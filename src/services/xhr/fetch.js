@@ -3,6 +3,7 @@ import queryString from 'query-string'
 import errHandler from './errorHandler'
 import codeErrHandler from './codeErrHandler'
 import qs from 'qs'
+import store from '@/store/'
 const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
@@ -13,8 +14,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   headers = Object.assign(
     { 'Content-Type': 'application/json; charset=UTF-8' },
     {
-      Authorization:
-        'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJhd3NocDQiLCJzdWIiOiJhZ2VudElkOnd3MjhmNDVkZmUwZTVhZTMxZDo3MDUiLCJleHAiOjE1NDM5MTc3MjksImlhdCI6MTU0MzMxMjkyOX0.EkTPyJRS0KpHKz6I2-AJeGetHs406f98pXPQnoSdP78HQvQwwg1Wfpgi61Wj7QpyTYu5GJfZIMh9nitXYQwMFQ'
+      Authorization: store.getters.userInfo.token 
     },
     headers
   )
