@@ -3,16 +3,11 @@ class MarketService {
   /**
    * 楼盘数据
    */
-  getMarketDescribe(payload) {
-    // let body = Object.assign({
-    //   projectName: '',
-    //   province: '',
-    //   ...
-    // },payload)
+  getMarketDescribe(agentId) {
     return xhr({
       url: '/linker/getLinkerList',
       body: {
-        payload
+        agentId
       }
     })
   }
@@ -25,6 +20,17 @@ class MarketService {
       url: '/linker/getAgentSubscribeCount',
       body: {
         agentId: num
+      }
+    })
+  }
+
+  /**
+   * 获取楼盘价格列表
+   */
+  getLinkerAmountList() {
+    return xhr({
+      url: '/linkerAmount/getLinkerAmountList',
+      body: {
       }
     })
   }

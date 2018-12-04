@@ -267,5 +267,29 @@ class UserService {
     })
   }
 
+  /**
+   * 查询是否设置过勿扰模式
+   */
+  checkDisturbSetting() {
+    return xhr({
+      url: '/disturbSetting/querySetting',
+      body: {
+
+      }
+    })
+  }
+
+  /**
+   * 更新勿扰模式
+   * @param {*} disturbSetting 
+   */
+  upDataDisturb(disturbSetting) {
+    return xhr({
+      method: 'POST',
+      url: '/disturbSetting/updateSetting',
+      body: disturbSetting
+    })
+  }
+
 }
 export default new UserService()

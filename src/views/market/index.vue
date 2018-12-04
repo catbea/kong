@@ -2,23 +2,21 @@
   <div class="market-page">
     <div class="header">
       <div class="search-box">
-        <!-- <div class="search-box-content">
-          <p>
-            深圳
-            <span :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
-          </p>
-          <form action="/">
-            <van-search v-model="value" placeholder="请输入搜索关键词" @click="onClickHandler" />
-          </form>
-        </div> -->
         <van-search :obj="searchContent"></van-search>
-        <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
+        <div class="locationIcon" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
-      <screen :functionList="functionList"></screen>
+      <screen v-model="filter"></screen>
       <already-open :agentIdInfo="agentIdInfo"></already-open>
     </div>
     <div class="all-market">
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="itemInfo" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
+      <!-- <van-list
+        v-model="loading"
+        :finished="finished"
+        :finished-text="没有更多了"
+        @load="onLoad"
+      >-->
+      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
+      <!-- </van-list> -->
     </div>
   </div>
 </template>
@@ -30,7 +28,6 @@ import TitleBar from 'COMP/TitleBar/'
 import AlreadyOpen from 'COMP/Market/AlreadyOpen/'
 import marketService from 'SERVICE/marketService'
 export default {
-  created () { },
   components: {
     VanSearch,
     Screen,
@@ -39,41 +36,37 @@ export default {
     AlreadyOpen
   },
   data: () => ({
-    itemInfo:{
-      linkerTags:["热销中","地铁房","学区好房"]
-      },
-    searchContent:{
-      siteText:'深圳',
-      placeholderText:'请输入平台名称'
+    filter: null,
+    searchContent: {
+      siteText: '深圳',
+      placeholderText: '请输入平台名称'
     },
     value: '',
-    defaultAvatar: require('IMG/market/list__arrow_@2x.png'),
     locationIcon: require('IMG/market/juxing.png'),
-    functionList: null,
     agentIdInfo: null,
     resInfo: null,
-    borderBottom: true
+    borderBottom: true,
+    containerHeight: '0'
   }),
-  created () {
+  created() {
     this.getMarketDescribeInfo()
     this.getBrokerInfo()
   },
   methods: {
+    
     onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
-    async getMarketDescribeInfo () {
+    async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe(705)
       console.log(res)
-      console.log(res.size)
-      this.resInfo = res.size
+      this.resInfo = res.records
     },
-    async getBrokerInfo () {
+    async getBrokerInfo() {
       const res = await marketService.getBrokerMarket(1)
-      console.log(res)
       this.agentIdInfo = res
     },
-    skipDetail (n) {
+    skipDetail(n) {
       if (n == 1) {
         this.$router.push('/market/marketDetail')
       }
@@ -123,7 +116,7 @@ export default {
           }
         }
       }
-      .a {
+      .locationIcon {
         width: 20px;
         height: 20px;
         margin: 13px 14px 0 0;

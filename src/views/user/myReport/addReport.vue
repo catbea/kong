@@ -5,7 +5,7 @@
         title="报备楼盘"
         is-link
         :value="reportAddInfo.linkerName"
-        :to="{path:'/user/mypreference', query:{type:'report'}}"
+        :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"
       />
       <cell
         title="客户名字"

@@ -21,6 +21,7 @@ export default {
   methods:{
     skipMarketDetail(){
       this.$router.push('/market/marketDetail')
+      console.log(7777777777)
     }
   }
 }
@@ -33,8 +34,8 @@ export default {
     .else-market-box-img {
       width: 160px;
       height: 90px;
-      border: 1px solid;
       margin-bottom: 3px;
+      border-radius:4px;
     }
     .else-market-box-top {
       font-size: 16px;
