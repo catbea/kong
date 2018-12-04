@@ -3,27 +3,27 @@
     <ul class="price-box">
       
       <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:itemActIndex==index}">
-        <p>{{item.title}}</p>
-        <p>¥{{item.price}}</p>
+        <p>{{item.subscribeRemark}}</p>
+        <p>¥{{item.subscribeAmount}}</p>
         <p>立即开通</p>
         <span>不限量</span>
       </li>
 
-      <div class="coupon-box">
+      <div class="coupon-box" @click="couponClickHandle">
         <div>优惠劵</div>
         <div>
-          <p>-￥120</p>
+          <p>-￥{{payInfo.coupon}}</p>
           <p :style="{'background':'url('+backImg+') no-repeat'}"></p>
         </div>
       </div>
       <div class="balance-payment">
         <div>
         <p>余额支付 （￥</p>
-        <p>23:0011111</p>
+        <p>{{payInfo.balanceAmount}}</p>
         <p>）</p>
         </div>
         <div>
-        <p>-￥2322</p>
+        <p>-￥{{payInfo.balancePay}}</p>
         </div>
       </div>
     </ul>
@@ -40,7 +40,17 @@ export default {
     priceList: {
       type: Array,
       default: function() {
-        return [{title:'test', price: 900},{title:'test', price: 900}]
+        return []
+      }
+    },
+    payInfo: {
+      type: Object,
+      default: function() {
+        return {
+          coupon: 0,
+          balanceAmount: 0,
+          balancePay: 0
+        }
       }
     }
   },
@@ -48,6 +58,10 @@ export default {
     priceItemClickHandle(index) {
       this.itemActIndex = index
       this.$emit('priceItemClick', index)
+    },
+
+    couponClickHandle(){
+      this.$emit('couponClick')
     }
   }
 }

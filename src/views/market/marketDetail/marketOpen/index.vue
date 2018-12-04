@@ -2,7 +2,7 @@
   <div class="market-open-page">
    <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" 
     :dredge="dredge" :borderBottom="borderBottom"></market-describe>
-   <market-priceSurface @priceItemClick="priceItemClick"></market-priceSurface>
+   <market-priceSurface :priceList="priceList" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
@@ -28,6 +28,7 @@ export default {
     this.getLinkerAmountList()
   },
   data: () => ({
+    priceList: [],
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
     show: false,
@@ -42,9 +43,14 @@ export default {
     skipAgreement(){
       this.$router.push('/marketDetail/open/agreement')
     },
-    priceItemClick(index) {
+    priceItemClickHandle(index) {
       // console.log(index)
     },
+
+    couponClickHandle() {
+      console.log('couponClickHandle========')
+    },
+
     async paySubmit() {
       let param = {
         linkerId: 'c387363940c04c6d83a45ee0ccad3d78',
@@ -64,7 +70,7 @@ export default {
     },
     async getLinkerAmountList() {
       const res = await marketService.getLinkerAmountList()
-      console.log(res, 'getLinkerAmountList')
+      this.priceList = res
     }
   }
 }
