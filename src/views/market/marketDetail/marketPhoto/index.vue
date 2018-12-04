@@ -85,7 +85,6 @@ export default {
       margin: 0 4px 4px 0;
       width: 83px;
       height: 83px;
-      border: 1px solid;
     }
   }
 }

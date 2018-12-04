@@ -3,34 +3,49 @@
     <img class="modify-img" :src="bgImg">
     <div class="top-container">
       <h5>数据中心</h5>
-      <van-icon class="icon-right" name="chat" @click="goMessage" />
+      <div class="bg_img msg-box" :style="{backgroundImage:'url(' + msgIcon + ')'}" @click="goMessage">
+        <div class="new-msg-num" v-if="data&&data.newMsg">{{data&&data.newMsg | countLimit}}</div>
+      </div>
     </div>
     <div class="shadow_box info-box" v-if="data" @click="goMessageInfo(data)">
-      <div class="data-container" >
+      <div class="data-container">
         <div class="data-item main-data">
-          <div class="data-value">{{data.customerCount.val}}<span class="data-change" v-if="data.customerCount.change !== 0">{{data.customerCount.change}}</span></div>
+          <div class="data-value">
+            {{data.customerCount.val}}
+            <span class="data-change" v-if="data.customerCount.change !== 0">{{data.customerCount.change}}</span>
+          </div>
           <span class="data-title">客户数量</span>
         </div>
         <div class="data-item">
-          <div class="data-value">{{data.businessCardViews.val}}<span class="data-change" v-if="data.businessCardViews.change !== 0">{{data.businessCardViews.change}}</span></div>
+          <div class="data-value">
+            {{data.businessCardViews.val}}
+            <span class="data-change" v-if="data.businessCardViews.change !== 0">{{data.businessCardViews.change}}</span>
+          </div>
           <span class="data-title">名片浏览</span>
         </div>
         <div class="data-item">
-          <div class="data-value">{{data.estateViews.val}}<span class="data-change" v-if="data.estateViews.change !== 0">{{data.estateViews.change}}</span></div>
+          <div class="data-value">
+            {{data.estateViews.val}}
+            <span class="data-change" v-if="data.estateViews.change !== 0">{{data.estateViews.change}}</span>
+          </div>
           <span class="data-title">楼盘浏览</span>
         </div>
       </div>
       <div class="arrow-icon">
-        <van-icon name="arrow" />
+        <van-icon name="arrow"/>
       </div>
       <div class="bottom-line"></div>
       <div class="carousel-container">
-        <marquee :itemHeight="50">
-          <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
-            <avatar :avatar="item.avatarUrl"></avatar>
-            {{item.clientName | textOver(4)}} <span>{{item.timeStr}}</span> 浏览楼盘 <span>{{item.markedWords | textOver(6)}}</span>
-          </marquee-item>
-        </marquee>
+        <div class="marquee-box">
+          <marquee :itemHeight="50">
+            <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
+              <avatar :avatar="item.avatarUrl"></avatar>
+              {{item.clientName | textOver(4)}}
+              <span>{{item.timeStr}}</span> 浏览楼盘
+              <span>{{item.markedWords | textOver(6)}}</span>
+            </marquee-item>
+          </marquee>
+        </div>
       </div>
     </div>
   </div>
@@ -47,25 +62,24 @@ export default {
   },
   props: {
     data: { type: Object },
-    info:{type: Object }
+    info: { type: Object }
   },
   data: () => ({
-    bgImg: require('IMG/dynamics/collectBottom.png')
+    bgImg: require('IMG/dynamics/collectBottom.png'),
+    msgIcon: require('IMG/dynamics/listArrowUp.png')
   }),
   methods: {
-    goMessage () {
+    goMessage() {
       this.$router.push('/dynamics/message/messageList')
     },
-    goMessageInfo(data){
-      let parm ={
-        info:this.info,
-        customerCount:data.customerCount,
-        businessCardViews:data.businessCardViews,
-        estateViews:data.estateViews
-
+    goMessageInfo(data) {
+      let parm = {
+        info: this.info,
+        customerCount: data.customerCount,
+        businessCardViews: data.businessCardViews,
+        estateViews: data.estateViews
       }
       this.$emit('click', parm)
-      
     }
   }
 }
@@ -92,12 +106,26 @@ export default {
       font-size: 20px;
       color: #fff;
     }
-    .icon-right {
+    > .msg-box {
       position: absolute;
+      width: 24px;
+      height: 24px;
       right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #fff;
+      top: 22px;
+      > .new-msg-num {
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate(50%, -50%);
+        width: 22px;
+        height: 22px;
+        background-color: #ea4d2e;
+        border-radius: 100%;
+        color: #fff;
+        font-size: 12px;
+        text-align: center;
+        line-height: 22px;
+      }
     }
   }
   .info-box {
@@ -107,7 +135,7 @@ export default {
     padding: 10px;
     line-height: 1;
     > .data-container {
-      padding: 30px 5px;
+      padding: 25px 5px;
       margin-right: 20px;
       display: flex;
       justify-content: space-around;
@@ -154,27 +182,31 @@ export default {
       font-size: 16px;
       color: #8b9198;
       font-weight: bolder;
-      right: 5px;
-      top: 30px;
+      right: 15px;
+      top: 60px;
     }
     > .bottom-line {
       margin: auto;
-      width: 80%;
+      width: 94%;
       height: 1px;
       border-radius: 1px;
       background: #eeeeee;
     }
     .carousel-container {
       margin: 10px 0 -20px;
-      // text-align: center;
-      .carousel-item {
-        text-align: left;
-        display: flex;
-        height: 50px;
-        justify-content: center;
-        font-size: 12px;
-        line-height: 24px;
-        // margin: 20px 0;
+      > .marquee-box {
+        height: 30px;
+        margin: 10px 0 20px 0;
+        padding-top: 5px;
+        overflow: hidden;
+        .carousel-item {
+          text-align: left;
+          display: flex;
+          height: 50px;
+          justify-content: center;
+          font-size: 12px;
+          line-height: 24px;
+        }
       }
     }
   }

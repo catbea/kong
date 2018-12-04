@@ -1,40 +1,43 @@
 <template>
 
   <div class="dynamics-container">
-    <div class="dynamics-time">2018/08/07</div>
-    <div class="dynamics-container-list">
+    <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
+      <!-- {{times.dynamicDate}} -->
+    <div class="dynamics-time" >{{times.dynamicDate}}</div>
+    <!-- v-for="(item,key) in times.allDynamicInfoVOS" :key="key" -->
+    <div class="dynamics-container-list" v-for="(item,key) in times.allDynamicInfoVOS" :key="key">
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
             <div class="dynamics-list-agent" @click="godynamicsList">
               <span class="list-agent-left">
                 <span class="agent-left-left">
-                  <img :src="lxImg" class="agent-userImg">
+                  <img :src="item.avatarUrl" class="agent-userImg">
                 </span>
                 <span class="agent-left-right">
-                  <p class="left-right-name">谢敏</p>
+                  <p class="left-right-name">{{item.clientName }}</p>
                   <p class="left-right-time">2018/10/22 09:13</p>
                 </span>
               </span>
               <span class="list-agent-right">
-                <p class="agent-right-num">90.8%</p>
+                <p class="agent-right-num">{{item.intentionality}}</p>
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
             <div class="dynamics-list-content" @click="godynamicsList">
               <p>浏览了  <span>你的名片</span></p>
-              <p>2018年10月22 日第<span>3 次</span>打开 </p>
-              <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
+              <p>2018年10月22 日第<span>{{item.todayClickCount}}次</span>打开 </p>
+              <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}</span></p>
               <p>累计浏览<span>4次</span>,名片，平均停留<span>5.5s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="!show1">
+                <button class="list-btn-follow" v-show="item.attentionStatus  == 1">
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
-                <button class="list-btn-followOK" v-show="show1">已关注</button>
+                <button class="list-btn-followOK" v-show="item.attentionStatus  == 0">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
@@ -47,7 +50,7 @@
       </shadow-box>
     </div>
     
-    <div class="dynamics-container-list">
+    <!-- <div class="dynamics-container-list">
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
@@ -90,8 +93,8 @@
 
         </div>
       </shadow-box>
-    </div>
-
+    </div> -->
+</div>
   </div>
 
 </template>
@@ -102,13 +105,20 @@ export default {
   components: {
     ShadowBox
   },
+   props: {
+      info:{type:Object},
+      allDynamicList: { type: Array },
+      // CardDynamicList:{ type: Array }
+   },
   data () {
     return {
       lxImg: require('IMG/dynamics/lx@2x.png'),
       gzImg: require('IMG/dynamics/gz@2x.png'),
-      show1: true,
-      info:{type:Object}
+      
     }
+  },
+  created() {
+    console.log(this.allDynamicList)
   },
   methods: {
     goalldynamics () {
@@ -124,7 +134,7 @@ export default {
 .dynamics-container {
   background: #ffffff;
   margin-top: 15px;
-  > .dynamics-time {
+ .dynamics-time {
     font-size: 14px;
     font-weight: 500;
     color: rgba(41, 46, 51, 1);

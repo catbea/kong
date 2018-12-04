@@ -15,7 +15,7 @@
           </div>
           <div class="house-owner">
             <div class="browse" @click="supplement">12345</div>人浏览过
-            <div class="head-portrait">
+            <div class="head-portrait bg_img" :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY1MTg5XC80M2NkYzMyZTc5NjVhMWExMWY2NDk2YTk1N2UxOWI0My5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}">
             </div>
           </div>
         </div>
@@ -168,7 +168,8 @@ export default {
     border-radius: 12px;
   }
   .marketDetail-page-bottom {
-    padding: 20px 0 0 20px;
+    padding: 20px 0 0 0;
+    margin-left:20px;
     .marketDetail-box {
       margin-bottom: 11px;
       .marketDetail-box-top {
@@ -186,7 +187,6 @@ export default {
           .head-portrait {
             width: 24px;
             height: 24px;
-            border: 1px solid;
             border-radius: 50%;
             margin-left: 5px;
           }

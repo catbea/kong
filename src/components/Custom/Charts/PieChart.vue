@@ -1,6 +1,6 @@
 <template>
   <div class="pie-chart-container">
-    <v-chart class="pie-chart" :data="data" :width="width" :animate="false" prevent-render @on-render="renderPieChart"></v-chart>
+    <v-chart class="pie-chart" v-if="pieData.length" :pieData="pieData" :width="width" :animate="false" prevent-render @on-render="renderPieChart"></v-chart>
   </div>
 </template>
 <script>
@@ -9,14 +9,19 @@ export default {
   components: {
     VChart
   },
+  props: {
+    pieData: { type: Array },
+  },
+  created () {
+    
+  },
   data: () => ({
     width: 0,
-    data: [
-      { name: '活动', percent: 0.14, a: '1', color: '#a7c3e3' },
-      { name: '我', percent: 0.42, a: '1', color: '#2f7bdf' },
-      { name: '楼盘', percent: 0.26, a: '1', color: '#5a9be0' },
-      { name: '文章', percent: 0.18, a: '1', color: '#7eace1' }
-    ]
+    // pieData: [
+    //   { name: '我', percent: 0.42, a: '1', color: '#2f7bdf' },
+    //   { name: '楼盘', percent: 0.26, a: '1', color: '#5a9be0' },
+    //   { name: '文章', percent: 0.18, a: '1', color: '#7eace1' }
+    // ]
   }),
   mounted() {
     this.width = document.getElementsByClassName(
@@ -25,7 +30,11 @@ export default {
   },
   methods: {
     renderPieChart({ chart }) {
-      chart.source(this.data)
+      let colors = []
+      for(var i in this.pieData) {
+        colors.push(this.pieData[i].color)
+      }
+      chart.source(this.pieData)
       chart.coord('polar', {
         transposed: true,
         innerRadius: 0.4,
@@ -37,16 +46,16 @@ export default {
       // 添加饼图文本
       chart.pieLabel({
         sidePadding: 40,
-        label1: function label2(data) {
+        label1: function label2(pieData) {
           return {
-            text: Math.floor(data.percent * 100) + '%',
+            text: Math.floor(pieData.percent * 100) + '%',
             fill: '#333333',
             fontWeight: 'bold'
           }
         },
-        label2: function label1(data, color) {
+        label2: function label1(pieData, color) {
           return {
-            text: data.name,
+            text: pieData.name,
             fill: color
           }
         }
@@ -54,7 +63,7 @@ export default {
       chart
         .interval()
         .position('a*percent')
-        .color('name', ['#a7c3e3', '#2f7bdf', '#5a9be0', '#7eace1'])
+        .color('name', colors)
         .adjust('stack')
       chart.render()
     }

@@ -58,7 +58,8 @@ class DynamicsService {
       url: '/dataDynamic/getAllDynamicList',
       body: {
         current,
-        size
+        size,
+        
       }
     })
   }
@@ -133,7 +134,7 @@ class DynamicsService {
   /**
    * 【企业微信】单个文章数据动态统计
    */
-  getArticleDynamicCount() {
+  getSingleArticleDynamicCount() {
     return xhr({
       url: '/dataDynamic/getSingleArticleDynamicCount',
     
@@ -144,7 +145,7 @@ class DynamicsService {
    * @param {*} current 
    * @param {*} size 
    */
-  getArticleDynamicList(current, size = 10) {
+  getSingleArticleDynamicList(current, size = 10) {
     return xhr({
       url: '/dataDynamic/getSingleArticleDynamicList',
       body: {
@@ -156,7 +157,7 @@ class DynamicsService {
 /**
  * 【企业微信】单个楼盘数据动态统计
  */
-  getHouseDynamicCount() {
+getSingleHouseDynamicCount() {
     return xhr({
       url: '/dataDynamic/getSingleHouseDynamicCount',
     })
@@ -166,7 +167,7 @@ class DynamicsService {
    * @param {*} current 
    * @param {*} size 
    */
-  getHouseDynamicList(current, size = 10) {
+  getSingleHouseDynamicList(current, size = 10) {
     return xhr({
       url: '/dataDynamic/getSingleHouseDynamicList',
       body: {
