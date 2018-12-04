@@ -236,9 +236,15 @@ export default {
         background-size: 100%;
       }
     }
-
+    .all-market-type-box{
+      margin-bottom:40px;
+    }
+    .site-nearby-box{
+      margin-top:13px;
+      margin-bottom:32px;
+    }
     .market-state-box {
-      margin-top: 11px;
+      margin-bottom:41px;
       .market-state-box-top {
         white-space: nowrap;
         overflow: hidden;
