@@ -5,13 +5,14 @@
         <span>{{item.name}}</span>
         <span class="bg_img" :style="{'backgroundImage':'url(' + (item.index===currentIndex ? arrowUpIcon : arrowDownIcon )  + ')'}"></span>
       </li>
-      <li class="sort" @click="false"></li>
+      <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
     </ul>
     <div class="choose-container">
-      <area-filter :show="currentIndex===0" :parent="local" v-model="baseFilters.area"></area-filter>
-      <price-filter :show="currentIndex===1" v-model="baseFilters.price"></price-filter>
-      <popularity-filter :show="currentIndex===2" v-model="baseFilters.popularity"></popularity-filter>
-      <more-filter :show="currentIndex===3" v-model="moreFilters"></more-filter>
+      <area-filter :show="currentIndex===0" :parent="local" v-model="filters.baseFilters.area"></area-filter>
+      <price-filter :show="currentIndex===1" v-model="filters.baseFilters.price"></price-filter>
+      <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity"></popularity-filter>
+      <more-filter :show="currentIndex===3" v-model="filters.moreFilters"></more-filter>
+      <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort"></sort-way>
     </div>
   </div>
 </template>
@@ -21,12 +22,13 @@ import AreaFilter from './AreaFilter'
 import PriceFilter from './PriceFilter'
 import PopularityFilter from './PopularityFilter'
 import MoreFilter from './MoreFilter'
-
-
 import SortWay from './SortWay'
 import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
-
 export default {
+  props: {
+    value: Object,
+    height: {type: String, default:'14rem'}
+  },
   components: {
     AreaFilter,
     PriceFilter,
@@ -34,22 +36,23 @@ export default {
     MoreFilter,
     SortWay
   },
-
   data: () => ({
+    filters: {
+      baseFilters: {
+        area: '',
+        price: '-1,-1',
+        popularity: '-1,-1',
+        sort: ''
+      },
+      moreFilters: {
+      }
+    },
     conf: [
       { index: 0, name: '区域', checked: false },
       { index: 1, name: '均价', checked: false },
       { index: 2, name: '人气', checked: false },
       { index: 3, name: '更多', checked: false }
     ],
-    baseFilters:{
-      area: '',
-      price:'-1,-1',
-      popularity: '-1,-1'
-    },
-    moreFilters:{
-
-    },
     local: '武汉市',
     currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
@@ -59,13 +62,18 @@ export default {
     itemClickHandler (val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
       if (this.currentIndex !== -1) {
-        document.getElementsByClassName('choose-container')[0].style.height = (document.body.offsetHeight
-          - document.getElementsByClassName('search-box')[0].offsetHeight
-          - document.getElementsByClassName('screen-container')[0].offsetHeight
-          - document.getElementsByClassName('tabbar')[0].offsetHeight) / 37.5 + 'rem'
+        document.getElementsByClassName('choose-container')[0].style.height = this.height
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
       }
+    }
+  },
+  watch: {
+    filters: {
+      handler (val) {
+        this.$emit('input', val)
+      },
+      deep: true
     }
   }
 }
