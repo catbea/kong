@@ -1,7 +1,7 @@
 <template>
   <div class="van-hairline--bottom estate-item" v-if="info">
     <div class="main-container" @click="godynamicsInfo">
-      <div class="bg_img left-container dev" :style="{backgroundImage:'url(' + info.linkerHeadUrl + ')'}">
+      <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.linkerHeadUrl + ')'}">
         <!-- TODO 720标示 -->
       </div>
       <div class="right-container">
