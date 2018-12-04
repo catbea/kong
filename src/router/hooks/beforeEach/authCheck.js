@@ -51,6 +51,7 @@ export default async (to, from, next) => {
         } else {
             next()
         }
+        next()
         // ///////////////////
         // let userInfo = store.getters.userInfo
         // console.log(userInfo,'user=====')
