@@ -22,14 +22,14 @@
           </ul>
           <ul class="specific-market-detail-right">
           <li class="average-price-right">410000元/㎡起</li> 
-          <li class="commission-right"> 
+          <li class="commission-right" @click="commission"> 
             <div class="commission">0.234%</div> 
-            <div class="commission-detail bg_img" :style="{backgroundImage:'url('+commissionDetailImg+')'}" @click="commission"></div>
+            <div class="commission-detail bg_img" :style="{backgroundImage:'url('+commissionDetailImg+')'}" ></div>
           </li>
           <li class="opening-quotation-right">2018年06月08日</li>
-          <li class="market-site-right">
+          <li class="market-site-right" @click="siteHandle">
             <div class="site">深圳市龙岗龙翔大道与怡翠路深圳市龙岗龙翔大道与怡翠路</div> 
-             <router-link tag="div" to="/marketDetail/info"  class="site-detail bg_img" :style="{backgroundImage:'url('+siteDetailImg+')'}"></router-link>
+             <div  class="site-detail bg_img" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
           </li>
           <li class="developers-right">佛山市碧桂园地产实业有限公司</li>
           </ul>
@@ -45,6 +45,9 @@ export default {
   methods: {
     commission() {
       this.$router.push('/marketDetail/commission')
+    },
+    siteHandle(){
+      this.$router.push('/marketDetail/info')
     }
   }
 }
