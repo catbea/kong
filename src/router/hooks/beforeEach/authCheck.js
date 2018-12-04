@@ -14,7 +14,8 @@ const getUrlQueryParams = (url)=>{
 
 export default async (to, from, next) => {
     let parm = getUrlQueryParams(location.href);
-
+    let wxredirecturl = window.location.href.split("#")[0].split("?")[0]
+    wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
     if(parm.cropId){
         let cropId = parm.cropId
         await sessionStorage.setItem('cropId', cropId)
@@ -41,9 +42,6 @@ export default async (to, from, next) => {
     
             next()
         } else {// 没有用户登录信息，跳转微信授权页 
-            let wxredirecturl = window.location.href.split("#")[0].split("?")[0]
-            wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
-    
             if(parm.code){ // 连接带code，直接取code值，去服务端取用户信息
                 let cropId = sessionStorage.getItem('cropId')
                 let payCorpId = sessionStorage.getItem('payCorpId')
