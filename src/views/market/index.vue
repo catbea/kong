@@ -2,15 +2,6 @@
   <div class="market-page">
     <div class="header">
       <div class="search-box">
-        <!-- <div class="search-box-content">
-          <p>
-            深圳
-            <span :style="{'background':'url(' + defaultAvatar + ')','background-size':'contain'}"></span>
-          </p>
-          <form action="/">
-            <van-search v-model="value" placeholder="请输入搜索关键词" @click="onClickHandler" />
-          </form>
-        </div> -->
         <van-search :obj="searchContent"></van-search>
         <div class="a" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
       </div>
@@ -18,7 +9,7 @@
       <already-open :agentIdInfo="agentIdInfo"></already-open>
     </div>
     <div class="all-market">
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="itemInfo" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
+      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail" :borderBottom="borderBottom"></market-describe>
     </div>
   </div>
 </template>
@@ -65,12 +56,10 @@ export default {
     async getMarketDescribeInfo () {
       const res = await marketService.getMarketDescribe(705)
       console.log(res)
-      console.log(res.size)
-      this.resInfo = res.size
+      this.resInfo = res.records
     },
     async getBrokerInfo () {
       const res = await marketService.getBrokerMarket(1)
-      console.log(res)
       this.agentIdInfo = res
     },
     skipDetail (n) {
