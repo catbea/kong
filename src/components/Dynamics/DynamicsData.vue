@@ -1,21 +1,21 @@
 <template>
  
-      <div class="dynaData-container">
+      <div class="dynaData-container" v-if="allDynamicCount">
         <span class="container-total">
           <p class="container-title">{{totalTitle}}</p>
-          <p class="card-num">{{totalNum}}</p>
+          <p class="card-num">{{allDynamicCount.scanCardCount}}</p>
         </span>
         <span class="container-card">
           <p class="container-title">{{cardTitle}}</p>
-          <p class="card-num">{{cardNum}}</p>
+          <p class="card-num">{{allDynamicCount.scanCardCount}}</p>
         </span>
         <span class="container-properties " >
           <p class="container-title">{{propertiesTitle}}</p>
-          <p class="card-num">{{propertiesNum}}</p>
+          <p class="card-num">{{allDynamicCount.scanLinkerCount}}</p>
         </span>
         <span calss="container-article">
           <p class="container-title">{{articleTitle}}</p>
-          <p class="card-num">{{articleNum}}</p>
+          <p class="card-num">{{allDynamicCount.scanArticleCount}}</p>
         </span>
       </div>
     
@@ -31,12 +31,15 @@ export default {
     propertiesTitle: { type: String, default: '' },
     propertiesNum: { type: String, default: '' },
     articleTitle: { type: String, default: '' },
-    articleNum: { type: String, default: '' }
+    articleNum: { type: String, default: '' },
+    allDynamicCount: { type: Array },
   },
   data() {
     return {
       total: ''
     }
+  },
+  created() {
   },
   methods: {}
 }

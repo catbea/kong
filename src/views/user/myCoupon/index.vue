@@ -50,54 +50,12 @@ export default {
 
     },
   created() {
-    // this.couponsList(705,1)
     const _this = this
-    // this.a().then((res)=>{
-    //  console.log(res)
-    //   _this.nameList[0].num = res.total;
-    //   // _this.nameList[0].list  = _this.nameList[0].list.concat(res.records);
-
-    //   // //  _this.loading = false;
-    //   // if(res.current === res.pages){
-    //   //   _this.finished = true
-    //   //   console.log(11)
-    //   // }
-    // });
-          
-          
-    //      this.getDataDetail(agentId,status,current).then((res)=>{
-    //   console.log(res,0)
-     
-    //   _this.nameList[0].num = res.total;
-    //   _this.nameList[0].list  = _this.nameList[0].list.concat(res.records);
-
-    //    _this.loading = false;
-    //   if(res.current === res.pages){
-    //     _this.finished = true
-    //     console.log(11)
-    //   }
-    // })
-
     this.b().then((res)=>{
-     
       _this.nameList[1].num = res.total;
-      // _this.nameList[1].list  = _this.nameList[1].list.concat(res.records);
-
-      //  _this.loading = false;
-      // if(res.current === res.pages){
-      //   _this.finished = true
-      //   console.log(11)
-      // }
     });
       this.c().then((res)=>{
       _this.nameList[2].num = res.total;
-      // _this.nameList[2].list  = _this.nameList[2].list.concat(res.records);
-
-      //  _this.loading = false;
-      // if(res.current === res.pages){
-      //   _this.finished = true
-      //   console.log(11)
-      // }
     });
 
   },
@@ -105,28 +63,22 @@ export default {
     // 请求数据事件
    async onLoad(){
       console.log(99999)
-      // let current = this.getCurrentType()
-      // current.list=current.concat(this.a())
-      // this.all()
       let current = this.getCurrentType()
      
          const result = await mycoupons.couponsStatusList(current.agentId, current.index, current.page)
       console.log(result)
-       if(current.index == 0&& current.page ==1){
+      //  if(current.index == 0&& current.page ==1){
         this.nameList[0].num = result.total
-      }
+      // }
       current.list = current.list.concat(result.records)
 
       this.$nextTick(()=>{
-        this.loading = false
       console.log(current.page)
       if (result.pages === 0 || current.page === result.pages) 
       {current.finished = true}
       current.page++
+      this.loading = false
       })
-      
-      
-
     },
     getCurrentType(){
       for (let temp of this.nameList){
@@ -138,7 +90,6 @@ export default {
      async a(){
         const _this=this
         let p1= new Promise(function(resolve,reject){
-          //  _this.couponsList(705,1)
           let res =mycoupons.couponsStatusList(
             705,
           0,
@@ -168,40 +119,6 @@ export default {
         });
         return p3
       },
-    //  async all(){
-        
-    //     let _this=this
-    //     Promise.all([this.a(),this.b(),this.c()])
-    //     .then(function(r){
-    //       console.log(r)
-    //       _this.promArr=r
-    //       console.log(_this.promArr)
-    //         // _this.notArr=r[0]
-    //         // _this.recordArr=r[1]
-    //         // _this.pastArr=r[2]
-    //         // _this.onLoad()
-    //         if(_this.activeIndex==0){
-    //         _this.arrInfo=_this.promArr[0]
-    //       }else if(_this.activeIndex==1){
-    //         _this.arrInfo=_this.promArr[1]
-    //       }else{
-    //         _this.arrInfo=_this.promArr[2]
-    //       }
-    //   // if(this.recordArr.pages===ym){
-    //   //   this.finished=false
-    //   // }
-    //       console.log(_this.promArr,11111,_this.arrInfo)
-    //       _this.loading=false
-    //       _this.finished=false
-     
-    //     })
-    //   },                                                                               
-      // async promiseHandle(){
-      // let notHandle =  this.couponsList(this.req.agentId,this.req.status.not)
-      // Promise.all([notHandle])
-      // },
-      // 初始时请求事件
-
 // 立即使用事件
     skipMarketDetail(){
       this.$router.push("/market/marketDetail")

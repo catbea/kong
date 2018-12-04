@@ -79,13 +79,13 @@ export default {
     popupShow: false,
     checkImg: require('IMG/user/goxuan@2x.png'),
     periodList: [
-      { date: '周一 ', check: false },
-      { date: '周二 ', check: false },
-      { date: '周三 ', check: false },
-      { date: '周四 ', check: false },
-      { date: '周五 ', check: false },
-      { date: '周六 ', check: false },
-      { date: '周日 ', check: false }
+      { date: '周一', check: false },
+      { date: '周二', check: false },
+      { date: '周三', check: false },
+      { date: '周四', check: false },
+      { date: '周五', check: false },
+      { date: '周六', check: false },
+      { date: '周日', check: false }
     ],
     showBox: true,
     date: '每天',
@@ -95,9 +95,10 @@ export default {
     endDate: '12:00',
     endTime: null,
     startShow: false,
-    startDate: '12:00',
+    startDate: '07:00',
     startTime: null,
-    greater: false
+    greater: false,
+    tempDateSelect: [] //临时存放选择的时间数据
   }),
 
   created() {
@@ -107,9 +108,34 @@ export default {
   methods: {
     onSwitch(checked) {
       this.checked = checked
+
+      if (checked) {
+        this.upDateSetting('1')
+      } else {
+        this.upDateSetting('0')
+      }
     },
+
+    //打开设置
+    async upDateSetting(selectStatus) {
+      let obj = {}
+      obj.id = this.id
+      obj.cycleType = '2'
+      obj.beginTime = this.startDate
+      obj.endTime = this.endDate
+      obj.monday = this.monday
+      obj.tuesday = this.tuesday
+      obj.wednesday = this.wednesday
+      obj.thursday = this.thursday
+      obj.friday = this.friday
+      obj.saturday = this.saturday
+      obj.sunday = this.sunday
+      obj.status = selectStatus //status 0:关闭  1:开启
+
+      const result = await userService.upDataDisturb(obj)
+    },
+
     periodHandle() {
-      console.log(this.$refs.rr.innerText)
       this.popupShow = !this.popupShow
       if (
         this.periodList[0].check === true &&
@@ -131,12 +157,77 @@ export default {
       this.popupShow = !this.popupShow
     },
     periodTaget(index, item) {
-      this.periodList[index].check = !this.periodList[index].check
-      console.log(this.periodList)
+      let selectArr = this.tempDateSelect
+      let selectPosition = this.periodList[index].date
+      if (this.isExistElement(selectArr, selectPosition)) {
+        let position = selectArr.indexOf(selectPosition)
+        let arrSize = selectArr.length
+        if (arrSize <= 1) {
+          this.$toast('必须选择一天')
+        } else {
+          if (position > -1) {
+            selectArr.splice(position, 1)
+            this.tempDateSelect = selectArr
+            this.periodList[index].check = !this.periodList[index].check
+            this.commitDayDate(index, 'dele')
+            this.upDateSetting('1')
+          }
+        }
+      } else {
+        selectArr.push(selectPosition)
+        this.tempDateSelect = selectArr
+        this.periodList[index].check = !this.periodList[index].check
+        this.commitDayDate(index, 'add')
+        this.upDateSetting('1')
+      }
     },
-    // onChange(picker,value,index){
-    //   console.log(picker.getColumnValue(0),'-',picker.getColumnValue(1))
-    // },
+
+    isExistElement(arr, value) {
+      if (arr.indexOf && typeof arr.indexOf == 'function') {
+        var index = arr.indexOf(value)
+        if (index >= 0) {
+          return true
+        }
+      }
+      return false
+    },
+
+    commitDayDate(position, operation) {
+      if (operation == 'add') {
+        if (position == 0) {
+          this.monday = '1'
+        } else if (position == 1) {
+          this.tuesday = '1'
+        } else if (position == 2) {
+          this.wednesday = '1'
+        } else if (position == 3) {
+          this.thursday = '1'
+        } else if (position == 4) {
+          this.friday = '1'
+        } else if (position == 5) {
+          this.saturday = '1'
+        } else if (position == 6) {
+          this.sunday = '1'
+        }
+      } else if (operation == 'dele') {
+        if (position == 0) {
+          this.monday = '0'
+        } else if (position == 1) {
+          this.tuesday = '0'
+        } else if (position == 2) {
+          this.wednesday = '0'
+        } else if (position == 3) {
+          this.thursday = '0'
+        } else if (position == 4) {
+          this.friday = '0'
+        } else if (position == 5) {
+          this.saturday = '0'
+        } else if (position == 6) {
+          this.sunday = '0'
+        }
+      }
+    },
+
     startHandle() {
       this.startShow = !this.startShow
     },
@@ -144,6 +235,7 @@ export default {
       this.startTime = N
       this.startShow = !this.startShow
       console.log(this.startShow)
+      this.upDateSetting('1')
     },
     onStartCancel() {
       this.startShow = !this.startShow
@@ -157,10 +249,11 @@ export default {
       this.endShow = !this.endShow
       if (this.endDate < this.startDate) {
         this.greater = true
-        console.log(this.greater)
+        this.upDateSetting('1')
       } else {
         this.greater = false
         console.log(this.greater)
+        this.upDateSetting('1')
       }
     },
     onEndCancel() {
@@ -172,7 +265,10 @@ export default {
       const result = await userService.checkDisturbSetting()
       // let tempList = this.periodList
 
-      if (result != null) {
+      if (result) {
+        let selectArr = this.tempDateSelect
+        this.id = result.id
+
         let monday = result.monday
         let tuesday = result.tuesday
         let wednesday = result.wednesday
@@ -197,42 +293,52 @@ export default {
         } else {
           this.endTime = endTime
           this.endDate = endTime
+          if (this.endDate < this.startDate) {
+            this.greater = true
+          }
         }
 
-        if (monday == '') {
+        if (monday == '' || monday == '0') {
           this.periodList[0].check = false
-        } else {
+        } else if (monday == '1') {
           this.periodList[0].check = true
+          selectArr.push('周一')
         }
-        if (tuesday == '') {
+        if (tuesday == '' || tuesday == '0') {
           this.periodList[1].check = false
-        } else {
+        } else if (tuesday == '1') {
           this.periodList[1].check = true
+          selectArr.push('周二')
         }
-        if (wednesday == '') {
+        if (wednesday == '' || wednesday == '0') {
           this.periodList[2].check = false
-        } else {
+        } else if (wednesday == '1') {
           this.periodList[2].check = true
+          selectArr.push('周三')
         }
-        if (thursday == '') {
+        if (thursday == '' || thursday == '0') {
           this.periodList[3].check = false
-        } else {
+        } else if (thursday == '1') {
           this.periodList[3].check = true
+          selectArr.push('周四')
         }
-        if (friday == '') {
+        if (friday == '' || friday == '0') {
           this.periodList[4].check = false
-        } else {
+        } else if (friday == '1') {
           this.periodList[4].check = true
+          selectArr.push('周五')
         }
-        if (saturday == '') {
+        if (saturday == '' || saturday == '0') {
           this.periodList[5].check = false
-        } else {
+        } else if (saturday == '1') {
           this.periodList[5].check = true
+          selectArr.push('周六')
         }
-        if (sunday == '') {
+        if (sunday == '' || sunday == '0') {
           this.periodList[6].check = false
-        } else {
+        } else if (sunday == '1') {
           this.periodList[6].check = true
+          selectArr.push('周日')
         }
 
         //设置过勿扰模式
@@ -244,6 +350,18 @@ export default {
       } else {
         //没有设置过勿扰模式 开关进行关闭
         this.checked = false
+        this.tempDateSelect = ['周一']
+        this.periodList[0].check = true
+        this.monday = '1'
+        this.tuesday = '0'
+        this.wednesday = '0'
+        this.thursday = '0'
+        this.friday = '0'
+        this.saturday = '0'
+        this.sunday = '0'
+
+        this.startTime = this.startDate
+        this.endTime = this.endDate
       }
     }
   }

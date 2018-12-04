@@ -114,6 +114,7 @@ export default {
   }
   > .choose-container {
     position: absolute;
+    z-index: 99;
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     overflow: hidden;

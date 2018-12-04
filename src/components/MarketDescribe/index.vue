@@ -4,29 +4,29 @@
     
     <div class="all-describe" >
       <div class="market-box-page-top">
-        <div class="img bg_img" :style="{backgroundImage:'url(http://www.anjiazhixun.com/upload/kindeditor/image/20181115/20181115184742_75384.jpg)'}">
+        <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
           <div class="label bg_img" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
-            9.9折
+            {{itemInfo.labels}}
           </div>
         </div>
         <!-- <input type="text" v-model="val"> -->
         <ul class="market-describe">
           <li class="market-name">
-            <span> {{itemInfo.linkerName}}华润城市花园</span>
+            <span> {{itemInfo.linkerName}}</span>
             <span class="dredge" :style="style" v-if="dredge" @click.stop="openRenewHandle">{{openStatus}}</span>
           </li>
-          <li class="site">{{itemInfo.linkerAddress}}南山 深圳湾</li>
+          <li class="site">{{itemInfo.linkerAddress}}</li>
           <tag-group :arr="itemInfo.linkerTags"></tag-group>
           <li class="unit-price">
-            <span>{{itemInfo.linkerPrice}}98000元/㎡</span>
-            <span>{{itemInfo.openTimes}}435次开通</span>
+            <span>{{itemInfo.linkerPrice}}</span>
+            <span>{{itemInfo.openTimes}}次开通</span>
           </li>
         </ul>
       </div>
         
         <div class="market-box-page-bottom">
           <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
-          <span>{{itemInfo.commission}}1.056%+50000元/套</span>
+          <span>{{itemInfo.commission}}</span>
         </div>
     </div>
   </div>

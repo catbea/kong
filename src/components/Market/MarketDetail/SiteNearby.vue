@@ -24,7 +24,6 @@ export default {
 <style lang="less">
 .site-nearby-box {
   width: 343px;
-  margin-top:13px;
   .site-nearby-box-classify {
     display: flex;
     justify-content: space-between;

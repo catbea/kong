@@ -1,11 +1,14 @@
 <template>
   <div class="family-list-page">
-    <classify></classify>
-    <div class="family-list-page-box">
+    <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+          <van-tab v-for="(item,index) in tabs" :key="index" :title="item">
+           <keep-alive>
+            <van-list v-model="loading" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad">
+              <div class="family-list-page-box">
       <div class="centent">
       <div class="big-box">
       <div class="family-list-page-box-left">
-
+           
       </div>
       <ul class="family-list-page-box-center">
         <li>3室2厅1卫</li>
@@ -24,7 +27,7 @@
       <div class="centent">
       <div class="big-box">
       <div class="family-list-page-box-left">
-
+           
       </div>
       <ul class="family-list-page-box-center">
         <li>3室2厅1卫</li>
@@ -41,30 +44,40 @@
       </div>
       </div>
     </div>
+          </van-list>
+          </keep-alive>
+          </van-tab>
+      </van-tabs>
   </div>
 </template>
 <script>
-import Classify from 'COMP/Classify/'
 import TagGroup from 'COMP/TagGroup/'
-import marketService from 'SERVICE/marketService'
+import HouseTypeService from 'SERVICE/houseTypeService'
 export default {
   components: {
-    Classify,
     TagGroup
   },
   created() {
-    this.getMarketDescribeInfo()
+    this.getHouseTypeInfo(this.linkerId)
   },
   data:()=>({
+    linkerId:'13f8c005b5c6440ea1ba2a0d9341e56c',
     num:null,
+    tabs:["全部","一室","二室","三室"],
+    activeIndex: 0,
+    loading: false,
+    finished:false,
     panorama:require('IMG/marketDetail/quanj@2x.png'),
     leave:require('IMG/marketDetail/arrow2.png'),
     info:["热销中","全景看房"]
   }),
   methods:{
-    async getMarketDescribeInfo () {
-      const res = await marketService.getMarketDescribe()
-      console.log(res.records)
+    onLoad(){
+      console.log(909090909)
+    },
+    async getHouseTypeInfo (n) {
+      const res = await HouseTypeService.getHouseType(n)
+      console.log(res)
     }
   }
 }
