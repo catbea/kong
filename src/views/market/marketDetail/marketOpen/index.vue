@@ -44,7 +44,11 @@ export default {
     },
     async paySubmit() {
       let param = {
+        linkerId: 'c387363940c04c6d83a45ee0ccad3d78',
+        linkerName: '【中原地产】泰华明珠',
+        costType: 2, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
         subscribeNum: 3,
+        amountId: 1064, //活动金额
         payOpenid: this.userInfo.pcOpenid
       }
       const res = await commonService.payForProject(param)
