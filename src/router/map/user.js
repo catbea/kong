@@ -163,6 +163,15 @@ export default [
     }
   },
   {
+    path: '/user/myReport/addReport/reportMarket',
+    name: 'reportMarket',
+    component: resolve =>
+      require(['@/views/user/myReport/addReport/reportMarket/index.vue'], resolve),
+    meta: {
+      title: '报备楼盘'
+    }
+  },
+  {
     path: '/user/myReport/reportPhone',
     name: 'reportPhone',
     component: resolve =>

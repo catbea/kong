@@ -26,5 +26,29 @@ class CommonService {
       }
     })
   }
+
+  /**
+   *  vip开通
+   * @param param 
+   */
+  payForVip(param) {
+    return xhr({
+      url: '/weixinPay/vipPayment',
+      method: 'post',
+      body: param
+    })
+  }
+
+  /**
+   *  楼盘开通
+   * @param param 
+   */
+  payForProject(param) {
+    return xhr({
+      url: '/weixinPay/payment',
+      method: 'post',
+      body: param
+    })
+  }
 }
 export default new CommonService()
