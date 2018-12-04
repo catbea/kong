@@ -6,7 +6,7 @@
       <div class="market-box-page-top">
         <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
           <div class="label bg_img" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
-            {{itemInfo.labels}}折
+            {{itemInfo.labels}}
           </div>
         </div>
         <!-- <input type="text" v-model="val"> -->
