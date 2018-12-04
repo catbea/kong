@@ -33,7 +33,6 @@ export default {
     .else-market-box-img {
       width: 160px;
       height: 90px;
-      border: 1px solid;
       margin-bottom: 3px;
     }
     .else-market-box-top {
