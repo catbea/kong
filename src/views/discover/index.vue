@@ -75,6 +75,7 @@ export default {
       current.page++
       console.log(current.page)
       if (result.pages === 0 || current.page === result.pages) current.finished = true
+      
       this.loading = false
     },
     // 获取当前玄宗tab的typeid
