@@ -92,10 +92,10 @@ export default {
     showDate: false,
     itemDate: '',
     endShow: false,
-    endDate: '00:00',
+    endDate: '12:00',
     endTime: null,
     startShow: false,
-    startDate: '12:00',
+    startDate: '07:00',
     startTime: null,
     greater: false,
     tempDateSelect: [] //临时存放选择的时间数据
@@ -136,7 +136,6 @@ export default {
     },
 
     periodHandle() {
-      console.log(this.$refs.rr.innerText)
       this.popupShow = !this.popupShow
       if (
         this.periodList[0].check === true &&
@@ -236,6 +235,7 @@ export default {
       this.startTime = N
       this.startShow = !this.startShow
       console.log(this.startShow)
+      this.upDateSetting('1')
     },
     onStartCancel() {
       this.startShow = !this.startShow
@@ -249,10 +249,11 @@ export default {
       this.endShow = !this.endShow
       if (this.endDate < this.startDate) {
         this.greater = true
-        console.log(this.greater)
+        this.upDateSetting('1')
       } else {
         this.greater = false
         console.log(this.greater)
+        this.upDateSetting('1')
       }
     },
     onEndCancel() {
@@ -292,47 +293,50 @@ export default {
         } else {
           this.endTime = endTime
           this.endDate = endTime
+          if (this.endDate < this.startDate) {
+            this.greater = true
+          }
         }
 
-        if (monday == '') {
+        if (monday == '' || monday == '0') {
           this.periodList[0].check = false
-        } else {
+        } else if (monday == '1') {
           this.periodList[0].check = true
           selectArr.push('周一')
         }
-        if (tuesday == '') {
+        if (tuesday == '' || tuesday == '0') {
           this.periodList[1].check = false
-        } else {
+        } else if (tuesday == '1') {
           this.periodList[1].check = true
           selectArr.push('周二')
         }
-        if (wednesday == '') {
+        if (wednesday == '' || wednesday == '0') {
           this.periodList[2].check = false
-        } else {
+        } else if (wednesday == '1') {
           this.periodList[2].check = true
           selectArr.push('周三')
         }
-        if (thursday == '') {
+        if (thursday == '' || thursday == '0') {
           this.periodList[3].check = false
-        } else {
+        } else if (thursday == '1') {
           this.periodList[3].check = true
           selectArr.push('周四')
         }
-        if (friday == '') {
+        if (friday == '' || friday == '0') {
           this.periodList[4].check = false
-        } else {
+        } else if (friday == '1') {
           this.periodList[4].check = true
           selectArr.push('周五')
         }
-        if (saturday == '') {
+        if (saturday == '' || saturday == '0') {
           this.periodList[5].check = false
-        } else {
+        } else if (saturday == '1') {
           this.periodList[5].check = true
           selectArr.push('周六')
         }
-        if (sunday == '') {
+        if (sunday == '' || sunday == '0') {
           this.periodList[6].check = false
-        } else {
+        } else if (sunday == '1') {
           this.periodList[6].check = true
           selectArr.push('周日')
         }
@@ -356,8 +360,8 @@ export default {
         this.saturday = '0'
         this.sunday = '0'
 
-        this.startTime = this.endDate
-        this.endTime = this.startDate
+        this.startTime = this.startDate
+        this.endTime = this.endDate
       }
     }
   }
