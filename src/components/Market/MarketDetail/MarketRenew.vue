@@ -1,21 +1,22 @@
 <template>
   <ul class="market-renew-box">
-      <li class="market-renew-box-recommend" @click="recommendHandle">
+      <li class="market-renew-box-recommend" @click="recommendHandle(flagTj)">
       <span class="bg_img" :style="{'backgroundImage':'url('+ (flagTj?recommendA:recommend)+')'}"></span>
       <p :class="{recommend:true,active:flagTj}" >推荐</p>
       </li>
-    <li class="market-renew-box-show" @click="showHandle">
+    <li class="market-renew-box-show" @click="showHandle(flagZs)">
       <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZs?showA:show)+')'}"></span>
       <p :class="{marketShow:true,active:flagZs}">展示</p>
     </li>
-    <li class="market-renew-box-stick" @click="stickHandle">
+    <li class="market-renew-box-stick" @click="stickHandle(flagZd)">
       <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
       <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
-    <div class="market-renew-box-button" @click="renewHandle">续费(07/11到期)</div>
+    <div class="market-renew-box-button" @click="renewHandle(content.stick)">续费(07/11到期)</div>
 </ul>
 </template>
 <script>
+import { Dialog } from 'vant'
 export default {
   data: () => ({
     flagTj: false,
@@ -29,14 +30,47 @@ export default {
     stick: require('IMG/marketDetail/zd2@2x.png')
   }),
   methods: {
-    recommendHandle() {
+    dialogHandle(n){
+      Dialog.alert({
+        message: n,
+        confirmButtonText:'知道啦',
+        className:"renewDialog"
+      }).then(() => {
+        // on close
+      });
+    },
+    recommendHandle(n) {
       this.flagTj = !this.flagTj
+      switch (n) {
+        case false:
+          this.dialogHandle("已推荐该楼盘")
+          break;
+        case true:
+        this.dialogHandle("已取消推荐该楼盘")
+          break;
+      }
     },
-    showHandle() {
+    showHandle(n) {
       this.flagZs = !this.flagZs
+      switch (n) {
+        case false:
+          this.dialogHandle("已开启该楼盘展示")
+          break;
+        case true:
+        this.dialogHandle("已取消该楼盘展示")
+          break;
+      }
     },
-    stickHandle() {
+    stickHandle(n) {
       this.flagZd = !this.flagZd
+      switch (n) {
+        case false:
+          this.dialogHandle("置顶成功")
+          break;
+        case true:
+        this.dialogHandle("取消置顶成功")
+          break;
+      }
     },
     renewHandle(){
      this.$router.push('/marketDetail/open')
@@ -45,6 +79,27 @@ export default {
 }
 </script>
 <style lang="less">
+.renewDialog{
+  width:280px;
+    > .van-dialog__content{
+      > .van-dialog__message{
+        text-align: center;
+      }
+    }
+    > .van-dialog__footer{
+      display: flex;
+      justify-content: center;
+     > .van-dialog__confirm{
+      border-radius: 5px;
+      height: 40px;
+      width: 142px;
+      line-height: 40px;
+       color:#ffffff;
+       background:#007ae6;
+       margin-bottom:12px;
+     }
+    }
+  }
 .market-renew-box {
   display: flex;
   width: 375px;
