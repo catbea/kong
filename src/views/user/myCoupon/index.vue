@@ -4,7 +4,7 @@
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
           <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num">
             <keep-alive>
-              <van-list :offset="300" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
+              <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
                 <!-- <div class="coupon-content"> -->
                 <coupon-item :ps="list.ps" v-for="(item1,index) in item.list" :key="index" :info="item1"></coupon-item>
                 <!-- </div> -->
@@ -52,17 +52,17 @@ export default {
   created() {
     // this.couponsList(705,1)
     const _this = this
-    this.a().then((res)=>{
-     
-      _this.nameList[0].num = res.total;
-      // _this.nameList[0].list  = _this.nameList[0].list.concat(res.records);
+    // this.a().then((res)=>{
+    //  console.log(res)
+    //   _this.nameList[0].num = res.total;
+    //   // _this.nameList[0].list  = _this.nameList[0].list.concat(res.records);
 
-      // //  _this.loading = false;
-      // if(res.current === res.pages){
-      //   _this.finished = true
-      //   console.log(11)
-      // }
-    });
+    //   // //  _this.loading = false;
+    //   // if(res.current === res.pages){
+    //   //   _this.finished = true
+    //   //   console.log(11)
+    //   // }
+    // });
           
           
     //      this.getDataDetail(agentId,status,current).then((res)=>{
@@ -90,7 +90,6 @@ export default {
       // }
     });
       this.c().then((res)=>{
-     
       _this.nameList[2].num = res.total;
       // _this.nameList[2].list  = _this.nameList[2].list.concat(res.records);
 
@@ -110,15 +109,23 @@ export default {
       // current.list=current.concat(this.a())
       // this.all()
       let current = this.getCurrentType()
+     
          const result = await mycoupons.couponsStatusList(current.agentId, current.index, current.page)
       console.log(result)
+       if(current.index == 0&& current.page ==1){
+        this.nameList[0].num = result.total
+      }
       current.list = current.list.concat(result.records)
-      
+
+      this.$nextTick(()=>{
+        this.loading = false
       console.log(current.page)
       if (result.pages === 0 || current.page === result.pages) 
       {current.finished = true}
       current.page++
-      this.loading = false
+      })
+      
+      
 
     },
     getCurrentType(){
