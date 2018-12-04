@@ -6,8 +6,8 @@
       </div>
     </shadow-box>
     <div class="Properties-list" v-for="(item,index) in HouseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
- <!-- @click="onClickConfirm" 1未开通，2未开通-->
-      <p class="list-left">{{item.linkerName }}{{item.openStatus == 2 ? "（未开通）":""}}<span class="list-right">{{item.dynamicCount }}条动态</span></p>
+ <!-- @click="onClickConfirm" 1未开通，2已开通-->
+      <p class="list-left">{{item.linkerName }}{{item.openStatus == 1 ? "（未开通）":""}}<span class="list-right">{{item.dynamicCount }}条动态</span></p>
       <p class="list-left-btn">{{item.area}}  {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
     </div>
     <!-- <div class="Properties-list">
@@ -59,7 +59,7 @@ export default {
     onClickConfirm(item) {
       let parm={
         info:this.info,
-        statue:item.statue
+        statue:item.openStatus
       }
        this.$emit('click', parm)
     },
