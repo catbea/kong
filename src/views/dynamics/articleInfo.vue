@@ -43,13 +43,13 @@ export default {
   },
   methods:{
       //单个文章数据动态统计
-      async getArticleDynamicCount () {
-      const res = await dynamicsService.getArticleDynamicCount()
+      async getSingleArticleDynamicCount () {
+      const res = await dynamicsService.getSingleArticleDynamicCount()
       this.ArticleDynamicCount = res.records
     },
     //查询单个文章客户访问数据动态列表
-      async getArticleDynamicList () {
-      const res = await dynamicsService.getArticleDynamicList()
+      async getSingleArticleDynamicList () {
+      const res = await dynamicsService.getSingleArticleDynamicList()
       this.ArticleDynamicList = res.records
     },
   }
