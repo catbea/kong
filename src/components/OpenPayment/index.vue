@@ -2,18 +2,13 @@
   <div class="open-Payment-page">
     <div class="open-Payment-page-top">
     <ul>
-      <li>￥7</li>
-      <li>已优惠120</li>
+      <li>￥{{payInfo.value}}</li>
+      <li>已优惠 {{payInfo.coupon}}</li>
     </ul>
     <ol>
-      <li>立即支付</li>
+      <li @click="payClickHandler">立即支付</li>
     </ol>
     </div>
-    <!-- <div class="open-Payment-page-bottom" v-if="true">
-      <span>点击立即支付，即表示已阅读并同意</span>
-      <span class="agreement" @click="vant">《AW大师付费协议》</span>
-      
-    </div> -->
   </div>
 </template>
 <script>
@@ -21,10 +16,23 @@ export default {
   data: () => ({
     show: false
   }),
-  props: {},
+  props: {
+    payInfo:{
+      type: Object,
+      default: function(){
+        return {
+          value: 0,
+          coupon: 0
+        }
+      }
+    }
+  },
   methods: {
     vant() {
       this.show = true
+    },
+    payClickHandler() {
+      this.$emit('paySubmit')
     }
   }
 }
