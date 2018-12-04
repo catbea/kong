@@ -92,10 +92,10 @@ export default {
     showDate: false,
     itemDate: '',
     endShow: false,
-    endDate: '00:00',
+    endDate: '12:00',
     endTime: null,
     startShow: false,
-    startDate: '12:00',
+    startDate: '07:00',
     startTime: null,
     greater: false,
     tempDateSelect: [] //临时存放选择的时间数据
@@ -136,7 +136,6 @@ export default {
     },
 
     periodHandle() {
-      console.log(this.$refs.rr.innerText)
       this.popupShow = !this.popupShow
       if (
         this.periodList[0].check === true &&
@@ -236,6 +235,7 @@ export default {
       this.startTime = N
       this.startShow = !this.startShow
       console.log(this.startShow)
+      this.upDateSetting('1')
     },
     onStartCancel() {
       this.startShow = !this.startShow
@@ -249,10 +249,11 @@ export default {
       this.endShow = !this.endShow
       if (this.endDate < this.startDate) {
         this.greater = true
-        console.log(this.greater)
+        this.upDateSetting('1')
       } else {
         this.greater = false
         console.log(this.greater)
+        this.upDateSetting('1')
       }
     },
     onEndCancel() {
@@ -292,6 +293,9 @@ export default {
         } else {
           this.endTime = endTime
           this.endDate = endTime
+          if (this.endDate < this.startDate) {
+            this.greater = true
+          }
         }
 
         if (monday == '' || monday == '0') {
