@@ -28,12 +28,24 @@ class CommonService {
   }
 
   /**
-   * 通过code获取企业微信账户信息
-   * @param code 微信跳转地址截取code
+   *  vip开通
+   * @param param 
    */
   payForVip(param) {
     return xhr({
       url: '/weixinPay/vipPayment',
+      method: 'post',
+      body: param
+    })
+  }
+
+  /**
+   *  楼盘开通
+   * @param param 
+   */
+  payForProject(param) {
+    return xhr({
+      url: '/weixinPay/payment',
       method: 'post',
       body: param
     })

@@ -7,7 +7,7 @@
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
     </div>
-   <open-payment @paySubmit="paySubmit"></open-payment>
+   <open-payment :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
   </div>
 </template>
 <script>
@@ -25,8 +25,10 @@ export default {
   },
   created() {
     this.getMarketDescribeInfo()
+    this.getLinkerAmountList()
   },
   data: () => ({
+    submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
     show: false,
     resInfo: null,
@@ -45,12 +47,17 @@ export default {
         subscribeNum: 3,
         payOpenid: this.userInfo.pcOpenid
       }
-      const res = await commonService.payForVip(param)
+      const res = await commonService.payForProject(param)
+      console.log(res, 'paySubmit res')
     },
     async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe()
       console.log(res.records)
       this.resInfo = res.records
+    },
+    async getLinkerAmountList() {
+      const res = await marketService.getLinkerAmountList()
+      console.log(res, 'getLinkerAmountList')
     }
   }
 }
