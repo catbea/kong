@@ -2,7 +2,7 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {
+  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
     address: "",
     agentMinOpenid: "",
     agentUpdateId: "",
@@ -98,7 +98,7 @@ const getters = {
 const actions = {
   async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    await sessionStorage.setItem('userInfo', _userInfo);
+    await localStorage.setItem('userInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
   },
   async getUserVipInfo({ commit }, payload) {

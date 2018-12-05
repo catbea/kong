@@ -15,7 +15,7 @@
       </div>
       <div class="collect-box" @click.stop="collect">
         <!-- <div class="collect" :class="{collectActive:flag}" :style="{'backgroundImage':'url('+flag?imgPlay： +')'}"></div>  -->
-        <div class="bg_img collect" :style="{backgroundImage:'url('+ (collectionStatus?collectImg:collectImgA)+')'}"></div>
+        <div class="bg_img collect" :style="{backgroundImage:'url('+ (collectionStatus=='1'?collectImgA:collectImg)+')'}"></div>
         收藏
       </div>
       <div class="share-box" @click.stop="share">

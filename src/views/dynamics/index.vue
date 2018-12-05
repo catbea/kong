@@ -37,7 +37,8 @@ export default {
       }
     },
     //楼盘详情
-    async goRecommendInfo() {
+    async goRecommendInfo(val) {
+      console.log(val)
       this.$router.push('/market/marketDetail')
     },
     async getCollectInfo() {

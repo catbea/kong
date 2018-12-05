@@ -5,7 +5,7 @@
         一室一厅、单身公寓
       </li>
       <li class="commission-content-deduct">
-        <span>佣金提成：</span> <span>5000元/套</span>
+        <span>佣金提成：</span> <span>{{divisionRules}}</span>
       </li>
       <li class="commission-content-standard">
         <div>结佣标准</div> 
@@ -39,10 +39,27 @@
   </div>
 </template>
 <script>
+import MarketService from 'SERVICE/marketService'
+
 export default {
   data: () => ({
-    list: [1, 2]
-  })
+    list: [1],
+    divisionRules: ''
+  }),
+  created() {
+    this.linkerId = this.$route.params.id
+    this.getHouseCommissionList(this.linkerId)
+  },
+  methods: {
+    /**
+     * 楼盘详情-佣金信息
+     */
+    async getHouseCommissionList(id) {
+      const result = await MarketService.getHouseCommissionList(id)
+      this.divisionRules = result.record.divisionRules
+      
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -80,6 +97,7 @@ export default {
       font-family: PingFang-SC-Semibold;
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
+      display: block;
     }
     > .commission-content-deduct {
       margin-top: 16px;

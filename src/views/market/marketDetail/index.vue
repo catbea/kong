@@ -1,12 +1,7 @@
 <template>
   <div class="marketDetail-page">
     <hint-tire v-if="hintShow" @hintClose="hintHandle"></hint-tire>
-    <!-- <van-tabs v-model="tabIndex" color="#007AE6" :line-width="15" sticky>
-      <van-tab v-for="(item,index) in tabList" :key="index" :title="item">
-        
-      </van-tab>
-    </van-tabs>-->
-    <swipe-box :bannerList="bannerList" :collectionStatus="linkerInfo.collectionStatus" :ifPanorama="linkerInfo.ifPanorama"></swipe-box>
+    <swipe-box :bannerList="bannerList" :collectionStatus="linkerInfo&&linkerInfo.collectionStatus" :ifPanorama="linkerInfo&&linkerInfo.ifPanorama"></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
         <div class="marketDetail-box-top">
@@ -14,20 +9,20 @@
             <tag-group :arr="info"></tag-group>
           </div>
           <div class="house-owner">
-            <div class="browse" @click="supplement">12345</div>人浏览过
+            <div class="browse" @click="supplement">{{linkerInfo&&linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
             <div
               class="head-portrait bg_img"
               :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY1MTg5XC80M2NkYzMyZTc5NjVhMWExMWY2NDk2YTk1N2UxOWI0My5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}"
             ></div>
           </div>
         </div>
-        <specific-marketDetail :info="linkerInfo"></specific-marketDetail>
+        <specific-marketDetail :info="linkerInfo&&linkerInfo"></specific-marketDetail>
       </div>
       <div class="button-box" @click="moreInfoHandle">更多信息</div>
-      <title-bar :conf="confA" :isShow="!linkerInfo.houseList"></title-bar>
-      <all-marketType :houseList="linkerInfo.houseList"></all-marketType>
-      <title-bar :conf="confB" :isShow="!linkerInfo.houseDynamicList"></title-bar>
-      <ul class="market-state-box" v-if="!linkerInfo.houseDynamicList">
+      <title-bar :conf="confA" :isShow="linkerInfo&&linkerInfo.houseTypeList.length>0"></title-bar>
+      <all-marketType :houseTypeList="linkerInfo&&linkerInfo.houseTypeList"></all-marketType>
+      <title-bar :conf="confB" :isShow="linkerInfo&&linkerInfo.houseDynamicList.length>0"></title-bar>
+      <ul class="market-state-box" v-if="linkerInfo&&linkerInfo.houseDynamicList.length>0">
         <li class="market-state-box-top">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].title:''}}</li>
         <li
           class="market-state-box-middle"
@@ -37,7 +32,7 @@
       <title-bar :conf="confC"></title-bar>
       <site-nearby></site-nearby>
       <title-bar :conf="confD"></title-bar>
-      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList" @click.native="skipMarketDetail"></all-elseMarket>
+      <all-elseMarket :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList" @click.native="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
@@ -92,7 +87,7 @@ export default {
   },
   data: () => ({
     linkerId: '',
-    linkerInfo: {},
+    linkerInfo: null,
     bannerList: [],
     hintShow: true,
     show: false,
@@ -197,7 +192,9 @@ export default {
   }
   .marketDetail-page-bottom {
     padding: 20px 0 0 0;
-    margin-left:20px;
+   > div{
+     margin-left:20px;
+   }
     .marketDetail-box {
       margin-bottom: 11px;
       .marketDetail-box-top {

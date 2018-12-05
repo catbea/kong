@@ -1,7 +1,7 @@
 <template>
   <div class="all-market-type-box">
     <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
-      <van-swipe-item v-for="(item,index) in houseList" :key="index">
+      <van-swipe-item v-for="(item,index) in houseTypeList" :key="index">
         <ol class="market-type-box"  @click="skipMarketFamilyList()">
           <li class="market-type-img bg_img" :style="{backgroundImage:'url('+item.houseTypeImgUrl+')'}">
           </li>
@@ -17,7 +17,7 @@
 <script>
 export default {
   props: {
-    houseList: { type: Object },
+    houseTypeList: { type: Array },
   },
   data: () => ({
     list: [1, 2, 3, 4]
