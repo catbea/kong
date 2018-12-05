@@ -51,7 +51,6 @@ const state = {
     parentUserId: "",
     payCorpId: "ww5e4d879ddc307ea1",
     cropId: "ww8f6801ba5fd2a112",
-    payCorpId: "oeKML1F_vZxBRzcW_pKjGsLkiVgQ",
     pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
     position: "",
     price: 0,

@@ -19,19 +19,16 @@ export default async (to, from, next) => {
     if(parm.cropId){
         let cropId = parm.cropId
         await localStorage.setItem('cropId', cropId)
-        // console.log(parm.cropId)
-        // console.log(wxredirecturl.split("?")[0])
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
             + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
             + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
         window.location.href = wxurl;
     } else {
-        let cropId = localStorage.getItem('cropId')
-        let payCorpId = store.getters.userInfo.payCorpId
         console.log(store.getters.userInfo, 'store.getters.userInfo')
         if(parm.code){
+            let cropId = localStorage.getItem('cropId')
+            let payCorpId = store.getters.userInfo.payCorpId
             if(payCorpId){// 通过payopenid返回的code
-                console.log( 'payCorpId ==================')
                 let userInfo = store.getters.userInfo
                 if(userInfo.payOpenId) {
                     next()
@@ -46,7 +43,6 @@ export default async (to, from, next) => {
                 console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
                 next()
             } else {
-                console.log( 'no payCorpId ==================')
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
                 payCorpId = wxAuthObject.payCorpId
                 let userInfo = wxAuthObject.userInfo
@@ -54,7 +50,6 @@ export default async (to, from, next) => {
                 userInfo.cropId = cropId
                 userInfo.token = wxAuthObject.token
                 store.dispatch('getUserInfo', userInfo)
-                console.log( 'wxAuthObject ==================')
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
                     console.log(wxAuthObject,'wxAuthObject=====')
                     await localStorage.setItem('payCorpId', payCorpId)
