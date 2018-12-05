@@ -1,5 +1,5 @@
 <template>
-  <div class="title-bar">
+  <div class="title-bar" v-if="isShow">
     <h5 class="title-text">{{conf.title}}</h5>
     <router-link :to="linkComputed" >
       <p class="link-text" @click="byClick">{{`${conf.linkText} ${conf.link?'':'>'}`}} 
@@ -20,7 +20,11 @@ export default {
           link: ''
         }
       }
-    }
+    },
+    isShow: { 
+      type: Boolean,
+      default: true
+     },
   },
   data() {
     return {

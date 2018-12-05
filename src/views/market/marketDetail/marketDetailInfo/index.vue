@@ -34,6 +34,7 @@ export default {
   },
   created() {
     this.$store.commit(types.TABBAR, false)
+    this.info = this.$route.query
   },
   data: () => ({
     warnImg:require('IMG/marketDetail/warn.png'),

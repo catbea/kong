@@ -19,11 +19,16 @@ export default {
   components: {
     Dialog
   },
-  
+
   data() {
     return {
       weChatNum: ''
     }
+  },
+
+  created() {
+    let wechatAccount = this.$route.query.weChatNum
+    this.weChatNum = wechatAccount
   },
 
   methods: {
@@ -44,11 +49,11 @@ export default {
       }
     },
 
-  async  upDateWeChat(obj) {
-      const result =await userService.upDateUserInfo(obj)
-      console.log(result)
-
-      this.window.close()
+    async upDateWeChat(obj) {
+      const result = await userService.upDateUserInfo(obj)
+     if(result){
+          this.$router.go(-1)
+        }
     }
   }
 }

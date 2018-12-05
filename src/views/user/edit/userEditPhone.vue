@@ -36,6 +36,12 @@ export default {
       Cphone: ''
     }
   },
+
+  created(){
+    let mobileNum= this.$route.query.phoneNum;
+    this.Cphone=mobileNum
+  },
+
   methods: {
     godSub() {
       if (this.Cphone == '') {
@@ -64,7 +70,9 @@ export default {
 
     upDatePhoneNum(obj) {
       const result = userService.upDateUserInfo(obj)
-      console.log(result)
+      if(result){
+          this.$router.go(-1)
+        }
 
     }
   }

@@ -23,9 +23,9 @@ export default {
 </script>
 <style lang="less">
 .dynamic-page {
-  margin-left: 18px;
   ul {
     li {
+      margin-left: 18px;
       display: flex;
       flex-direction: column;
       p {

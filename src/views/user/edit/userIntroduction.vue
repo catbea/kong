@@ -22,6 +22,8 @@ import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 
 export default {
+
+
   components: {
     Dialog
   },
@@ -31,6 +33,11 @@ export default {
       signature: '',
       inputSize: 0
     }
+  },
+
+  created(){
+     let  signature=this.$route.query.signature
+     this.signature=signature
   },
 
   methods: {
@@ -52,7 +59,9 @@ export default {
 
     upDateSignature(obj) {
       const result = userService.upDateUserInfo(obj)
-      console.log(result)
+      if(result){
+          this.$router.go(-1)
+        }
     },
 
     inputListener() {

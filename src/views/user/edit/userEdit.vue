@@ -15,23 +15,23 @@
         class="cell-item"
         title="名字"
         is-link
-        :to="'/user/edit/username'"
+        :to="{path:'/user/edit/username',query:{userName:userInfo.name}}"  
         :value="userInfo.name"
         
       />
       <cell
         class="cell-item"
         title="手机号"
-        :to="'/user/edit/phone'"
+        :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.mobile}}" 
         is-link
         :value="userInfo.tempPhone"
       />
       <cell
         class="cell-item"
         title="微信号"
-        :to="'/user/edit/userWechat'"
+        :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}"
         is-link
-        :value="userInfo.registerMobile"
+        :value="userInfo.wechatAccount"
       />
       <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion"/>
       <cell
@@ -47,7 +47,7 @@
         class="cell-item"
         title="我的机构"
         is-link
-        :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.organizationId}}"
+        :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.enterpriseId}}"
       />
     </cell-group>
     <cell-group class="user-advance-info">
@@ -63,7 +63,7 @@
       <cell
         class="cell-item user-signature"
         title="个人介绍"
-        :to="'/user/edit/userIntroduction'"
+        :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}"
         is-link
         :value="userInfo.signature"
       />
@@ -82,7 +82,7 @@ export default {
     Dialog
   },
   created() {
-    this.getUserInfo()
+
   },
   data() {
     return {
@@ -90,11 +90,6 @@ export default {
     }
   },
   methods: {
-    async getUserInfo() {
-      // TODO jwt启用后应该不需再存userid
-      let userId = window.localStorage.getItem('userId')
-      this.$store.dispatch('getUserInfo', userId)
-    },
     godistributorName() {
       //此处不可进行操作
       //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面
