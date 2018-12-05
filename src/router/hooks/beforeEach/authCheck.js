@@ -16,6 +16,7 @@ export default async (to, from, next) => {
     let parm = getUrlQueryParams(location.href);
     let wxredirecturl = window.location.href.split("#")[0].split("?")[0]
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
+    console.log(store.getters.userInfo, 'store.getters.userInfo===')
     if(parm.cropId){
         let cropId = parm.cropId
         await sessionStorage.setItem('cropId', cropId)
@@ -47,7 +48,6 @@ export default async (to, from, next) => {
                 next()
             } else {
                 console.log( 'no payCorpId ==================')
-                console.log(store.getters.userInfo, 'store.getters.userInfo')
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
                 let userInfo = wxAuthObject.userInfo
                 userInfo.token = wxAuthObject.token
