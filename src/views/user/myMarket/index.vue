@@ -87,7 +87,7 @@ export default {
       this.$router.push('/marketDetail/share')
     },
     skipMarketHandle(){
-      this.$router.push('/market/marketDetail')
+      this.$router.push('/market/marketDetail/:id')
     }
   }
 }
