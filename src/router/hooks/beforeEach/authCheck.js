@@ -18,7 +18,7 @@ export default async (to, from, next) => {
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
     if(parm.cropId){
         let cropId = parm.cropId
-        await sessionStorage.setItem('corpId', cropId)
+        await sessionStorage.setItem('cropId', cropId)
         console.log(parm.cropId)
         console.log(wxredirecturl.split("?")[0])
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
@@ -26,14 +26,14 @@ export default async (to, from, next) => {
             + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
         window.location.href = wxurl;
     } else {
-        let corpId = sessionStorage.getItem('corpId')
+        let cropId = sessionStorage.getItem('cropId')
         let payCorpId = sessionStorage.getItem('payCorpId')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
-                let pcOpenId = sessionStorage.getItem('pcOpenId')
+                let pcOpenId = 'oPeLD1HXPuZsdwb1WdN9HB8eRIw4'//store.getters.userInfo.pcOpenId// sessionStorage.getItem('pcOpenId')
                 console.log(pcOpenId, 'pcOpenId')
                 console.log(parm.code, 'parm.code===')
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, corpId, pcOpenId)
+                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenId)
                 console.log(payopenIdObject, 'payopenIdObject===')
                 next()
             } else {
@@ -45,12 +45,10 @@ export default async (to, from, next) => {
                     payCorpId = wxAuthObject.payCorpId
                     console.log(wxAuthObject,'wxAuthObject=====')
                     await sessionStorage.setItem('payCorpId', payCorpId)
-                    await sessionStorage.setItem('pcOpenId', userInfo.pcOpenId)
-                    console.log(userInfo.pcOpenId)
-                    // let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
-                    //     + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
-                    //     + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-                    // window.location.href = wxurl;
+                    let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
+                        + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
+                        + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+                    window.location.href = wxurl;
                     // console.log(wxurl)
                 }
                 console.log(userInfo, 'userInfo')
