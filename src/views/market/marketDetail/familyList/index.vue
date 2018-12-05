@@ -1,44 +1,25 @@
 <template>
   <div class="family-list-page">
     <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
-          <van-tab v-for="(item,index) in tabs" :key="index" :title="item">
+          <van-tab v-for="(item,index) in tabs" :key="index" :title="item.houseType">
            <keep-alive>
               <div class="family-list-page-box">
-      <div class="centent">
+      <div class="content" v-for="(itemA,indexA) in item.cpHouseTypeDetail" :key="indexA">
       <div class="big-box">
-      <div class="family-list-page-box-left">
+      <div class="family-list-page-box-left bg_img" :style="{backgroundImage:'url('+itemA.imgUrl+')'}">
            
       </div>
       <ul class="family-list-page-box-center">
-        <li>3室2厅1卫</li>
-        <li>建面 120㎡ 南北朝向</li>
+        <li>{{itemA.householdDesc}}</li>
+        <li>建面 {{itemA.area}} {{itemA.orientations}}朝向</li>
         <li>
-          <tag-group :arr="info"></tag-group>
+          <div class="tag-item" :style="style" ref="text">{{saleStatus[itemA.saleStatus]}}</div>
         </li>
-        <li>约320万/套</li>
+        <li>{{itemA.price}}</li>
       </ul>
       </div>
       <div class="family-list-page-box-right">
-        <p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p>
-        <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
-      </div>
-      </div>
-      <div class="centent">
-      <div class="big-box">
-      <div class="family-list-page-box-left">
-           
-      </div>
-      <ul class="family-list-page-box-center">
-        <li>3室2厅1卫</li>
-        <li>建面 120㎡ 南北朝向</li>
-        <li>
-          <tag-group :arr="info"></tag-group>
-        </li>
-        <li>约320万/套</li>
-      </ul>
-      </div>
-      <div class="family-list-page-box-right">
-        <p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p>
+        <a :href=itemA.linkerUrl><p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p></a>
         <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
       </div>
       </div>
@@ -49,11 +30,10 @@
   </div>
 </template>
 <script>
-import TagGroup from 'COMP/TagGroup/'
-import HouseTypeService from 'SERVICE/houseTypeService'
+import marketService from 'SERVICE/marketService'
 export default {
   components: {
-    TagGroup
+    
   },
   created() {
     this.getHouseTypeInfo(this.linkerId)
@@ -61,20 +41,30 @@ export default {
   data:()=>({
     linkerId:'13f8c005b5c6440ea1ba2a0d9341e56c',
     num:null,
-    tabs:["全部","一室","二室","三室"],
-    activeIndex: 0,
+    tabs:[],
+    saleStatus: { '0': '热销中', '1': '即将发售', '3': '售罄' },
+    style:{
+      background: 'rgba(143, 159, 177, 0.15)',
+        color: '#5C5F66'
+    },
+    activeIndex:0,
     loading: false,
     finished:false,
     panorama:require('IMG/marketDetail/quanj@2x.png'),
     leave:require('IMG/marketDetail/arrow2.png'),
     info:["热销中","全景看房"]
   }),
+  computed:{
+    
+    styleColor(){
+     
+    }
+  },
   methods:{
-    onLoad(){
-      console.log(909090909)
-    },
     async getHouseTypeInfo (n) {
-      const res = await HouseTypeService.getHouseType(n)
+      const res = await marketService.getHouseType(n)
+      this.tabs=res
+      this.cpHouseTypeDetail=
       console.log(res)
     }
   }
@@ -91,8 +81,7 @@ export default {
     height:100%;
     display: flex;
     flex-direction: column;
-    margin-top:45px;
-    .centent{
+    .content{
       width:343px;
       height:107px;
       margin:16px 0px 0 16px;
@@ -127,6 +116,19 @@ export default {
       }
       li:nth-of-type(3){
         margin-bottom:9px;
+        display: flex;
+        flex-wrap: wrap;
+        .tag-item {
+        white-space: nowrap;
+        font-size: 12px;
+        margin: 0 -5px;
+        transform: scale(0.85);
+        margin: 1px 4px 1px -6px;
+        padding: 1px 5px;
+        border-radius: 3px;
+        height: 15px;
+        line-height: 15px;
+        }
       }
       li:nth-of-type(4){
         font-size:15px;
