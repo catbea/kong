@@ -7,7 +7,7 @@
       </li>
       <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
     </ul>
-    <div class="choose-container">
+    <div class="choose-container" @click="coverClickHandler">
       <area-filter :show="currentIndex===0" :parent="local" v-model="filters.baseFilters.area"></area-filter>
       <price-filter :show="currentIndex===1" v-model="filters.baseFilters.price"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity"></popularity-filter>
@@ -17,7 +17,6 @@
   </div>
 </template>
 <script>
-
 import AreaFilter from './AreaFilter'
 import PriceFilter from './PriceFilter'
 import PopularityFilter from './PopularityFilter'
@@ -27,7 +26,7 @@ import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 export default {
   props: {
     value: Object,
-    height: {type: String, default:'14rem'}
+    height: { type: String, default: '14rem' }
   },
   components: {
     AreaFilter,
@@ -44,36 +43,35 @@ export default {
         popularity: '-1,-1',
         sort: ''
       },
-      moreFilters: {
-      }
+      moreFilters: {}
     },
-    conf: [
-      { index: 0, name: '区域', checked: false },
-      { index: 1, name: '均价', checked: false },
-      { index: 2, name: '人气', checked: false },
-      { index: 3, name: '更多', checked: false }
-    ],
+    conf: [{ index: 0, name: '区域', checked: false }, { index: 1, name: '均价', checked: false }, { index: 2, name: '人气', checked: false }, { index: 3, name: '更多', checked: false }],
     local: '武汉市',
     currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
     arrowDownIcon: require('IMG/market/listArrowDown.png')
   }),
   methods: {
-    itemClickHandler (val) {
+    itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
-      if (this.currentIndex !== -1) {
-        document.getElementsByClassName('choose-container')[0].style.height = this.height
-      } else {
-        document.getElementsByClassName('choose-container')[0].style.height = 0
-      }
+    },
+    coverClickHandler() {
+      this.currentIndex = -1
     }
   },
   watch: {
     filters: {
-      handler (val) {
+      handler(val) {
         this.$emit('input', val)
       },
       deep: true
+    },
+    currentIndex(val) {
+      if (val !== -1) {
+        document.getElementsByClassName('choose-container')[0].style.height = this.height
+      } else {
+        document.getElementsByClassName('choose-container')[0].style.height = 0
+      }
     }
   }
 }

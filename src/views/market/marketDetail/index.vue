@@ -37,7 +37,7 @@
       <title-bar :conf="confC"></title-bar>
       <site-nearby></site-nearby>
       <title-bar :conf="confD"></title-bar>
-      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList"></all-elseMarket>
+      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList" @click.native="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
@@ -65,7 +65,7 @@ import MarketRenew from 'COMP/Market/MarketDetail/MarketRenew'
 import PopupBox from 'COMP/Market/MarketDetail/PopupBox'
 import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
 import TagGroup from 'COMP/TagGroup/'
-import TitleBar from 'COMP/TitleBar/'
+import TitleBar from 'COMP/TitleBar/arrow.vue'
 
 import MarketService from 'SERVICE/marketService'
 
@@ -157,6 +157,9 @@ export default {
     moreInfoHandle() {
       this.$router.push('/marketDetail/info')
     },
+    skipMarketDetail(){
+      this.$router.push('/market/marketDetail/:id')
+    },
     /**
      * 楼盘详情信息
      */
@@ -178,13 +181,19 @@ export default {
 </script>
 <style lang="less">
 .marketDetail-page {
-  height: auto !important;
+  overflow:auto;
   background: #ffffff;
   .van-tabs__wrap--scrollable .van-tab {
     flex: 1;
   }
   .van-popup {
     border-radius: 12px;
+  }
+  .title-bar{
+    width:339px;
+   > .link-text{
+     align-items: center;
+   }
   }
   .marketDetail-page-bottom {
     padding: 20px 0 0 0;

@@ -20,7 +20,7 @@
           <li class="market-site-left">楼盘地址:</li>
           <li class="developers-left">开发商:</li>
           </ul>
-          <ul class="specific-market-detail-right">
+          <ol class="specific-market-detail-right">
           <li class="average-price-right">{{info.averagePrice}}</li> 
           <li class="commission-right" @click="commission"> 
             <div class="commission">0.234%</div> 
@@ -32,7 +32,7 @@
              <div  class="site-detail bg_img" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
           </li>
           <li class="developers-right">{{info.developer}}</li>
-          </ul>
+          </ol>
         </div>
       </div>
 </template>
@@ -57,7 +57,7 @@ export default {
 </script>
 <style lang="less">
 .specific-market-detail-box {
-  width: 335px;
+  width: 339px;
   .specific-market-detail-name {
     font-size: 26px;
     font-weight: 600;
@@ -108,18 +108,20 @@ export default {
       .commission-right {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         .commission {
           margin: 0;
         }
         .commission-detail {
           width: 12px;
           height: 12px;
-          margin: 8px 8px 0 0;
+          // margin: 0 8px 0 0;
         }
       }
       .market-site-right {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         .site {
           white-space: nowrap;
           overflow: hidden;
@@ -130,7 +132,7 @@ export default {
         .site-detail {
           width: 12px;
           height: 12px;
-          margin: 8px 8px 0 0;
+          // margin: 0px 8px 0 0;
         }
       }
     }
