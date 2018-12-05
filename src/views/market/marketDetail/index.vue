@@ -14,7 +14,7 @@
             <tag-group :arr="info"></tag-group>
           </div>
           <div class="house-owner">
-            <div class="browse" @click="supplement">12345</div>人浏览过
+            <div class="browse" @click="supplement">{{linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
             <div
               class="head-portrait bg_img"
               :style="{backgroundImage:'url(http://imgs.julive.com/l?p=eyJpbWdfcGF0aCI6IlwvVXBsb2FkXC9zcGlkZXJfcHJvamVjdF9pbWdcLzJcLzMwMTY1MTg5XC80M2NkYzMyZTc5NjVhMWExMWY2NDk2YTk1N2UxOWI0My5qcGciLCJpbWdfcGFyYW1fYXJyIjpbXSwieC1vc3MtcHJvY2VzcyI6IlwvcmVzaXplLHdfMjYwLGhfMTgwLG1fZmlsbCJ9_x1.25)'}"

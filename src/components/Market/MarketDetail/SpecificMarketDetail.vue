@@ -23,7 +23,7 @@
           <ol class="specific-market-detail-right">
           <li class="average-price-right">{{info.averagePrice}}</li> 
           <li class="commission-right" @click="commission"> 
-            <div class="commission">0.234%</div> 
+            <div class="commission">{{info.divisionRules}}</div> 
             <div class="commission-detail bg_img" :style="{backgroundImage:'url('+commissionDetailImg+')'}" ></div>
           </li>
           <li class="opening-quotation-right">{{info.openTime}}</li>
@@ -47,10 +47,10 @@ export default {
   }),
   methods: {
     commission() {
-      this.$router.push('/marketDetail/commission')
+      this.$router.push({name:'marketDetail-commission', params:{id: this.info.linkerId}})
     },
     siteHandle(){
-      this.$router.push('/marketDetail/info')
+      this.$router.push({path: '/marketDetail/info', query: this.info})
     }
   }
 }
