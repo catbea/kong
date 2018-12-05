@@ -17,7 +17,7 @@
       </div>
     </div>
     <!-- @click="saveHead" -->
-    <div class="modify-sure">确定</div>
+    <div class="modify-sure" @click="commitImg">确定</div>
   </div>
 </template>
 <script>
@@ -48,7 +48,6 @@ export default {
       this.agentImgList = res
     },
     selectedHead (index, type, avatar) {
-      this.avatar = avatar;
       if (type === 1) {
         this.headIcons.forEach((item, i) => {
           let items = item
@@ -79,6 +78,13 @@ export default {
       }
       return url;
     },
+    
+    /**
+     * 确认操作
+     */
+    commitImg(){
+          console.log('11111111111111111111')
+    }
   }
 }
 </script>
