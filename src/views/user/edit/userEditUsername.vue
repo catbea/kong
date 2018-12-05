@@ -40,7 +40,9 @@ export default {
     //更新用户名
     upDateUserName(obj) {
       const result = userService.upDateUserInfo(obj)
-      console.log(result)
+       if(result){
+          this.$router.go(-1)
+        }
     },
 
     toUpDateName() {

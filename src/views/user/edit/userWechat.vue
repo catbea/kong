@@ -51,9 +51,9 @@ export default {
 
     async upDateWeChat(obj) {
       const result = await userService.upDateUserInfo(obj)
-      console.log(result)
-
-      this.window.close()
+     if(result){
+          this.$router.go(-1)
+        }
     }
   }
 }
