@@ -3,8 +3,7 @@
     <div class="tab-container">
       <van-tabs color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="收藏楼盘">
-          <collection-null
-            v-show="dynamicsList.lenght == 0"
+          <collection-null v-show="dynamicsList[0].listEmpty == true"
             :collectionTips="collectionTips"
             :collectionRemar="collectionRemar"
             :collectionLike="collectionLike"
@@ -17,7 +16,6 @@
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
                  <div class="dynamicsInfo-list-left-bg_img" v-show="item.sale != '' "  :style="{backgroundImage:'url('+labelImg+')'}">
                    {{item.sale}}
-                  
                 </div>
                 <img :src="item.linkerUrl" class="mark-icon">
                 <img :src="ovalIcon" class="oval-icon">
@@ -48,11 +46,10 @@
                     class="right-price-lab"
                     @click="godynamics(item,key)"
                     id="rightno"
-                    style="{'item.status==0' ? color:#AFB2C3 : color:#007AE6 }"
+                    v-bind:style="{'color':item.status==1?'#AFB2C3':'#007AE6'}"
                   >{{item.isCollection}}</button>
                   <!-- <button
                     class="right-price-lab"
-                    
                     
                     @click="godynamics(item)"
                   >取消收藏</button>-->
@@ -147,12 +144,12 @@ export default {
       let tempDynamicsList = this.dynamicsList
       if (tempDynamicsList[index].status == 1) {
         const result = await userService.getlinkerDynamics(item.linkerId, 0)
-        if (result.infoId.length > 0) {
+        if (!result) {
           this.getdynamicsInfo()
         }
       } else if (tempDynamicsList[index].status == 0) {
         const result = await userService.getlinkerDynamics(item.linkerId, 1)
-        if (result.infoId.length > 0) {
+        if (!result) {
           this.getdynamicsInfo()
         }
       }
