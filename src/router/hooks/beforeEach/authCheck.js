@@ -16,7 +16,7 @@ export default async (to, from, next) => {
     let parm = getUrlQueryParams(location.href);
     let wxredirecturl = window.location.href.split("#")[0].split("?")[0]
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
-    console.log(store.getters.userInfo, 'store.getters.userInfo===')
+    console.log(store.getters.userInfo.payCorpId, 'store.getters.userInfo.payCorpId===')
     if(parm.cropId){
         let cropId = parm.cropId
         await sessionStorage.setItem('cropId', cropId)
