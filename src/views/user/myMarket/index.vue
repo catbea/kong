@@ -4,7 +4,7 @@
     <div style="margin-left:16px"><title-bar :conf="titleInfo" @titleBarReturn=""></title-bar></div>
     <div style="margin-left:16px"><van-search :obj="searchInfo"></van-search></div>
     <div style="margin-left:16px"><screen></screen></div>
-    <div style="margin-left:16px">
+    <div>
       <user-market @apostropheReturn="popupHandle" @usmarIconReturn="skipShareHandle" @skipMarketRetuen="skipMarketHandle"
       v-for="(item,index) in dataArr" :key="index" :dataArr="item">
       </user-market>
