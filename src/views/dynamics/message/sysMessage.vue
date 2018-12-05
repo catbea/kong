@@ -1,20 +1,20 @@
 <template>
   <div class="sysMessage-page">
-    <div class="sysMessage-container">
+    <div class="sysMessage-container" v-for="(time ,key) in sysMessage" :key="key">
       <div class="sysMessage-time">
-        2018/08/07 14:23
+        {{time.createDate}}
       </div>
-      <div class="sysMessage-shadowBox">
+       <div class="sysMessage-shadowBox" v-for="(item,key) in time.systemMessages" :key="key">
         <shadow-box>
           <div slot="container">
             <div class="sys-shadowBox">
-              <p class="sys-shadowBox-title">系统通知</p>
-              <p class="sys-shadowBox-time">我们将于2018/11/7日 7：00 对企业微信进行更新，对您造成的不便敬请谅解</p>
-              <p class="sys-shadowBox-remarks">本次主要更新内容有： 1.增加勿扰模式 2.VIP功能优化调整 3.我的楼盘增加关闭展示功能</p>
+              <p class="sys-shadowBox-title">{{item.title}}</p>
+              <p class="sys-shadowBox-time">{{item.content}}</p>
+              <!-- <p class="sys-shadowBox-remarks">本次主要更新内容有： 1.增加勿扰模式 2.VIP功能优化调整 3.我的楼盘增加关闭展示功能</p> -->
             </div>
           </div>
         </shadow-box>
-      </div>
+      </div> 
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      systemMessage: []
+      sysMessage: []
     }
   },
   created() {
@@ -36,7 +36,7 @@ export default {
   methods: {
     async getSystemMessageList() {
       const res = await dynamicsService.getSystemMessage()
-      this.systemMessage = res
+      this.sysMessage = res.records
     }
   }
 }
@@ -44,6 +44,9 @@ export default {
 <style lang="less">
 .sysMessage-page {
   background: #ffffff;
+  .sysMessage-shadowBox{
+    margin-top: 16px;
+  }
   > .sysMessage-container {
     margin: 16px 0;
     > .sysMessage-time {

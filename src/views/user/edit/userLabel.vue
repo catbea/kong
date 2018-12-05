@@ -22,7 +22,7 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
-import { Checkbox, CheckboxGroup } from 'vant'
+import { Checkbox, CheckboxGroup ,Dialog} from 'vant'
 
 export default {
   components: {
@@ -57,7 +57,7 @@ export default {
         }
       }
       console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' + selectidlist)
-      if (selectidlist.length > 0) {
+      if (selectidlist.length <= 0) {
         Dialog.alert({
           message: '请选择个性标签'
         }).then(() => {
@@ -68,7 +68,9 @@ export default {
           lableList: selectidlist
         }
         const res = await userService.upDateUserInfo(userList)
-        
+        if(res){
+          this.$router.go(-1)
+        }
       }
     }
   }

@@ -27,9 +27,10 @@ export default async (to, from, next) => {
         console.log(store.getters.userInfo, 'store.getters.userInfo')
         if(parm.code){
             let cropId = localStorage.getItem('cropId')
-            let payCorpId = store.getters.userInfo.payCorpId
+            let userInfo = store.getters.userInfo
+            let payCorpId = userInfo.payCorpId
             if(payCorpId){// 通过payopenid返回的code
-                let userInfo = store.getters.userInfo
+                console.log(payCorpId, 'payCorpId')
                 if(userInfo.payOpenId) {
                     next()
                     return

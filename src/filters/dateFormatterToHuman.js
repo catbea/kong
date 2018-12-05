@@ -14,7 +14,7 @@ const dayDiff = (timestamp1, timestamp2) => {
  * 4、非本年时间显示格式 yy-MM-dd HH:mm'
  */
 export default (date, serverTimestamp) => {
-  
+  debugger
   
   const _targetDate = new Date(parseInt(date)) // 目标时间
   const _datumDate = serverTimestamp ? new Date(parseInt(serverTimestamp)) : new Date() // 基准时间
