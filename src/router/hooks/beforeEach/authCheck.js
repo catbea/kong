@@ -46,10 +46,11 @@ export default async (to, from, next) => {
                     console.log(wxAuthObject,'wxAuthObject=====')
                     await sessionStorage.setItem('payCorpId', payCorpId)
                     await sessionStorage.setItem('pcOpenId', userInfo.pcOpenId)
-                    let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
-                        + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
-                        + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-                    window.location.href = wxurl;
+                    console.log(userInfo.pcOpenId)
+                    // let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
+                    //     + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
+                    //     + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+                    // window.location.href = wxurl;
                     // console.log(wxurl)
                 }
                 console.log(userInfo, 'userInfo')
