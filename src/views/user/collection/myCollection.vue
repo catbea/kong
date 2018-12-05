@@ -3,8 +3,7 @@
     <div class="tab-container">
       <van-tabs color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="收藏楼盘">
-          <collection-null
-            v-show="dynamicsList.lenght == 0"
+          <collection-null v-show="dynamicsList[0].listEmpty == true"
             :collectionTips="collectionTips"
             :collectionRemar="collectionRemar"
             :collectionLike="collectionLike"
