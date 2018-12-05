@@ -31,8 +31,8 @@ export default async (to, from, next) => {
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
                 console.log(payCorpId, 'payCorpId')
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, payCorpId)
-                console.log(payopenIdObject, 'payopenIdObject===')
+                // const payopenIdObject = await commonService.getPayOpenId(parm.code, payCorpId)
+                console.log(parm.code, 'parm.code===')
             } else {
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
                 let userInfo = wxAuthObject.userInfo
