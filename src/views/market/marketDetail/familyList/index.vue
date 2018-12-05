@@ -3,7 +3,6 @@
     <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
           <van-tab v-for="(item,index) in tabs" :key="index" :title="item">
            <keep-alive>
-            <van-list v-model="loading" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad">
               <div class="family-list-page-box">
       <div class="centent">
       <div class="big-box">
@@ -44,7 +43,6 @@
       </div>
       </div>
     </div>
-          </van-list>
           </keep-alive>
           </van-tab>
       </van-tabs>
