@@ -27,7 +27,7 @@ export default async (to, from, next) => {
         window.location.href = wxurl;
     } else {
         let cropId = sessionStorage.getItem('cropId')
-        
+        let payCorpId = sessionStorage.getItem('payCorpId')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
                 let pcOpenId = store.getters.userInfo.pcOpenId// sessionStorage.getItem('pcOpenId')
