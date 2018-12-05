@@ -24,8 +24,6 @@ export default {
   methods:{
     itemClickHandler(val){
       this.$emit('itemClick',val)
-      // debugger
-      // console.log(7777777777)
     }
   }
 }
