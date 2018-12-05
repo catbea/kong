@@ -57,12 +57,13 @@ export default {
     margin-top: 20px;
     width: 300px;
     height:485px;
-    border-radius: 0px 0px 6px 6px;
+    border-radius:6px;
     position: relative;
     .content-box {
       position: absolute;
       bottom:0px;
       width: 100%;
+      border-radius:0 0 6px 6px;
       height: 217px;
       .box-top {
         width: 100%;

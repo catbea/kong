@@ -65,7 +65,7 @@ import MarketRenew from 'COMP/Market/MarketDetail/MarketRenew'
 import PopupBox from 'COMP/Market/MarketDetail/PopupBox'
 import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
 import TagGroup from 'COMP/TagGroup/'
-import TitleBar from 'COMP/TitleBar/'
+import TitleBar from 'COMP/TitleBar/arrow.vue'
 
 import MarketService from 'SERVICE/marketService'
 
@@ -178,13 +178,19 @@ export default {
 </script>
 <style lang="less">
 .marketDetail-page {
-  height: auto !important;
+  overflow:auto;
   background: #ffffff;
   .van-tabs__wrap--scrollable .van-tab {
     flex: 1;
   }
   .van-popup {
     border-radius: 12px;
+  }
+  .title-bar{
+    width:339px;
+   > .link-text{
+     align-items: center;
+   }
   }
   .marketDetail-page-bottom {
     padding: 20px 0 0 0;
