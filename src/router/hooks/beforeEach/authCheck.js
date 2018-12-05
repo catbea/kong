@@ -30,8 +30,12 @@ export default async (to, from, next) => {
         let payCorpId = sessionStorage.getItem('payCorpId')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, payCorpId)
+                let pcOpenId = store.getters.userInfo.pcOpenId// sessionStorage.getItem('pcOpenId')
+                console.log(pcOpenId, 'pcOpenId')
+                console.log(parm.code, 'parm.code===')
+                // const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenId)
                 console.log(payopenIdObject, 'payopenIdObject===')
+                next()
             } else {
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
                 let userInfo = wxAuthObject.userInfo
@@ -45,13 +49,14 @@ export default async (to, from, next) => {
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
                     window.location.href = wxurl;
+                    // console.log(wxurl)
                 }
                 console.log(userInfo, 'userInfo')
             }
         } else {
             next()
         }
-        next()
+        // next()
         // ///////////////////
         // let userInfo = store.getters.userInfo
         // console.log(userInfo,'user=====')
