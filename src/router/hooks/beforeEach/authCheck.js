@@ -34,6 +34,7 @@ export default async (to, from, next) => {
                 console.log(parm.code, 'parm.code===')
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenId)
                 console.log(payopenIdObject, 'payopenIdObject===')
+                next()
             } else {
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
                 let userInfo = wxAuthObject.userInfo
