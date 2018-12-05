@@ -44,11 +44,11 @@ export default async (to, from, next) => {
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
                     payCorpId = wxAuthObject.payCorpId
                     console.log(wxAuthObject,'wxAuthObject=====')
-                    await sessionStorage.setItem('payAuthObject', JSON.stringify({payCorpId: payCorpId, pcOpenId: userInfo.pcOpenId}) )
-                    let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
-                        + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
-                        + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-                    window.location.href = wxurl;
+                    // await sessionStorage.setItem('payAuthObject', JSON.stringify({payCorpId: payCorpId, pcOpenId: userInfo.pcOpenId}) )
+                    // let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
+                    //     + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
+                    //     + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+                    // window.location.href = wxurl;
                     // console.log(wxurl)
                 }
                 console.log(userInfo, 'userInfo')
@@ -56,7 +56,6 @@ export default async (to, from, next) => {
         } else {
             // next()
         }
-        next()
     }
-    
+    next()
 }
