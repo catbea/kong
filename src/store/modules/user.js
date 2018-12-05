@@ -56,7 +56,7 @@ const state = {
     recommendTip: "",
     registerType: "10",
     shareNum: "0",
-    signature: "别问我是谁，请叫我大师",
+    signature: "别问我是谁，请叫我大湿",
     status: 1,
     storeId: "224",
     storeName: "",
@@ -65,7 +65,13 @@ const state = {
     token: "eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJmYmFqYXoiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDQ1MjQ2MDcsImlhdCI6MTU0MzkxOTgwN30.U-QkrUG6M00Q4z3SbRdoJ1QEJtepaJgOxebXhx3ucVFo_fobIvF_3KNtmNOuRme6isTNux7BSKJGfENlIgYlRQ",
     updateTime: "2018-10-19 17:37:47",
     viewNum: 101,
-    wechatAccount: ""
+    wechatAccount: "112110",
+    labelList: [
+      {
+        labelId: '001',
+        labelName: '价格屠夫'
+      }
+    ]
   },
   userVipInfo: {},
   userArea: {

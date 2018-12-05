@@ -31,11 +31,11 @@ class UserService {
    * 获取经纪人标签列表
    * @param {*} Authorization   用户token
    */
-  getAgentLabelList(Authorization) {
+  getAgentLabelList() {
     return xhr({
       url: '/dictionary/getAgentLabel',
       body: {
-        Authorization
+        
       }
     })
   }
