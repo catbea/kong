@@ -33,8 +33,9 @@ export default {
     InfoMiddle
   },
   created() {
-    this.$store.commit(types.TABBAR, false)
+    this.$store.commit(types.TABBAR,false)
     this.info = this.$route.query
+    console.log(this.info)
   },
   data: () => ({
     warnImg:require('IMG/marketDetail/warn.png'),

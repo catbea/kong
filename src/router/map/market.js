@@ -23,7 +23,7 @@ export default [
     }
   },
   {
-    path: '/market/marketDetail/perfect',
+    path: '/marketDetail/perfect',
     name: 'marketDetailPerfect',
     component: resolve =>
       require(['@/views/market/marketDetail/Perfect/index.vue'], resolve),
@@ -35,7 +35,7 @@ export default [
     }
   },
   {
-    path: '/market/marketDetail/correction',
+    path: '/marketDetail/correction',
     name: 'marketDetailCorrection',
     component: resolve =>
       require(['@/views/market/marketDetail/correction/index.vue'], resolve),

@@ -47,6 +47,7 @@ export default {
   }),
   methods: {
     closeDom(n) {
+      this.$router.push('/marketDetail/perfect')
       this.show = n
     },
     photo() {
