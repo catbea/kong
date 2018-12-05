@@ -23,7 +23,7 @@ export default {
   }),
   methods:{
     skipMarketDetail(){
-      this.$router.push('/market/marketDetail')
+      
       console.log(7777777777)
     }
   }

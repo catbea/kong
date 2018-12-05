@@ -1,11 +1,6 @@
 <template>
   <div class="marketDetail-page">
     <hint-tire v-if="hintShow" @hintClose="hintHandle"></hint-tire>
-    <!-- <van-tabs v-model="tabIndex" color="#007AE6" :line-width="15" sticky>
-      <van-tab v-for="(item,index) in tabList" :key="index" :title="item">
-        
-      </van-tab>
-    </van-tabs>-->
     <swipe-box :bannerList="bannerList" :collectionStatus="linkerInfo.collectionStatus" :ifPanorama="linkerInfo.ifPanorama"></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
@@ -37,7 +32,7 @@
       <title-bar :conf="confC"></title-bar>
       <site-nearby></site-nearby>
       <title-bar :conf="confD"></title-bar>
-      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList"></all-elseMarket>
+      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList" @click.native="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
@@ -157,6 +152,9 @@ export default {
     moreInfoHandle() {
       this.$router.push('/marketDetail/info')
     },
+    skipMarketDetail(){
+      this.$router.push('/market/marketDetail/:id')
+    },
     /**
      * 楼盘详情信息
      */
@@ -194,7 +192,9 @@ export default {
   }
   .marketDetail-page-bottom {
     padding: 20px 0 0 0;
-    margin-left:20px;
+   > div{
+     margin-left:20px;
+   }
     .marketDetail-box {
       margin-bottom: 11px;
       .marketDetail-box-top {

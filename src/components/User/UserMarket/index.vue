@@ -67,6 +67,7 @@ export default {
 </script>
 <style lang="less">
 .user-market-page{
+  margin-left:16px;
   display: flex;
  .user-market-page-box{
    margin-top:16px;
