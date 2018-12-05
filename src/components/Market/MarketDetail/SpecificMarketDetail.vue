@@ -1,11 +1,11 @@
 <template>
   <div class="specific-market-detail-box">
         <div class="specific-market-detail-name">
-          {{info.linkerName}}
+          {{info&&info.linkerName}}
         </div>
         <div class="specific-market-detail-condition">
           <div class="specific-market-detail-condition-left">
-            {{info.projectTagList.join(' | ')}}
+            {{info&&info.projectTagList.join(' | ')}}
           </div>
           <!-- <div class="specific-market-detail-condition-line"></div>
           <div class="specific-market-detail-condition-right">
@@ -21,17 +21,17 @@
           <li class="developers-left">开发商:</li>
           </ul>
           <ol class="specific-market-detail-right">
-          <li class="average-price-right">{{info.averagePrice}}</li> 
+          <li class="average-price-right">{{info&&info.averagePrice}}</li> 
           <li class="commission-right" @click="commission"> 
-            <div class="commission">{{info.divisionRules}}</div> 
+            <div class="commission">{{info&&info.divisionRules}}</div> 
             <div class="commission-detail bg_img" :style="{backgroundImage:'url('+commissionDetailImg+')'}" ></div>
           </li>
-          <li class="opening-quotation-right">{{info.openTime}}</li>
+          <li class="opening-quotation-right">{{info&&info.openTime}}</li>
           <li class="market-site-right" @click="siteHandle">
-            <div class="site">{{info.detailAddress}}</div> 
+            <div class="site">{{info&&info.detailAddress}}</div> 
              <div  class="site-detail bg_img" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
           </li>
-          <li class="developers-right">{{info.developer}}</li>
+          <li class="developers-right">{{info&&info.developer}}</li>
           </ol>
         </div>
       </div>
