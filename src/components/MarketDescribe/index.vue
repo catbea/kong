@@ -101,7 +101,7 @@ export default {
   width:375px;
   .market-box {
     width: 343px;
-    margin: 13px 13px 0 16px;
+    margin: 13px 0px 0 16px;
     .all-describe {
       display: flex;
       flex-direction: column;

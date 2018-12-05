@@ -1,11 +1,6 @@
 <template>
   <div class="marketDetail-page">
     <hint-tire v-if="hintShow" @hintClose="hintHandle"></hint-tire>
-    <!-- <van-tabs v-model="tabIndex" color="#007AE6" :line-width="15" sticky>
-      <van-tab v-for="(item,index) in tabList" :key="index" :title="item">
-        
-      </van-tab>
-    </van-tabs>-->
     <swipe-box :bannerList="bannerList" :collectionStatus="linkerInfo.collectionStatus" :ifPanorama="linkerInfo.ifPanorama"></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
@@ -197,7 +192,9 @@ export default {
   }
   .marketDetail-page-bottom {
     padding: 20px 0 0 0;
-    margin-left:20px;
+   > div{
+     margin-left:20px;
+   }
     .marketDetail-box {
       margin-bottom: 11px;
       .marketDetail-box-top {
