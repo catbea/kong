@@ -30,6 +30,7 @@ export default async (to, from, next) => {
         let payCorpId = sessionStorage.getItem('payCorpId')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
+                console.log(payCorpId, 'payCorpId')
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, payCorpId)
                 console.log(payopenIdObject, 'payopenIdObject===')
             } else {
@@ -44,14 +45,15 @@ export default async (to, from, next) => {
                     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-                    window.location.href = wxurl;
+                    // window.location.href = wxurl;
+                    console.log(wxurl)
                 }
                 console.log(userInfo, 'userInfo')
             }
         } else {
             next()
         }
-        next()
+        // next()
         // ///////////////////
         // let userInfo = store.getters.userInfo
         // console.log(userInfo,'user=====')
