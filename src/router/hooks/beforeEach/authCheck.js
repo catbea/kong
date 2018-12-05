@@ -33,7 +33,7 @@ export default async (to, from, next) => {
                 let pcOpenId = store.getters.userInfo.pcOpenId// sessionStorage.getItem('pcOpenId')
                 console.log(pcOpenId, 'pcOpenId')
                 console.log(parm.code, 'parm.code===')
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenId)
+                // const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenId)
                 console.log(payopenIdObject, 'payopenIdObject===')
                 next()
             } else {
