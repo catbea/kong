@@ -16,7 +16,6 @@ export default async (to, from, next) => {
     let parm = getUrlQueryParams(location.href);
     let wxredirecturl = window.location.href.split("#")[0].split("?")[0]
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
-    console.log(store.getters.userInfo.payCorpId, 'store.getters.userInfo.payCorpId===')
     if(parm.cropId){
         let cropId = parm.cropId
         await localStorage.setItem('cropId', cropId)
@@ -28,7 +27,7 @@ export default async (to, from, next) => {
         window.location.href = wxurl;
     } else {
         let cropId = localStorage.getItem('cropId')
-        let payCorpId = localStorage.getItem('payCorpId')
+        let payCorpId = store.getters.userInfo.payCorpId
         console.log(store.getters.userInfo, 'store.getters.userInfo')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
