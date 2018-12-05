@@ -47,6 +47,7 @@ export default async (to, from, next) => {
                 next()
             } else {
                 console.log( 'no payCorpId ==================')
+                console.log(store.getters.userInfo, 'store.getters.userInfo')
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
                 let userInfo = wxAuthObject.userInfo
                 userInfo.token = wxAuthObject.token
