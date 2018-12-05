@@ -49,26 +49,23 @@ export default async (to, from, next) => {
             } else {
                 console.log( 'no payCorpId ==================')
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
+                payCorpId = wxAuthObject.payCorpId
                 let userInfo = wxAuthObject.userInfo
+                userInfo.payCorpId = payCorpId
+                userInfo.cropId = cropId
                 userInfo.token = wxAuthObject.token
                 store.dispatch('getUserInfo', userInfo)
                 console.log( 'wxAuthObject ==================')
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
-                    payCorpId = wxAuthObject.payCorpId
                     console.log(wxAuthObject,'wxAuthObject=====')
-                    userInfo.payCorpId = payCorpId
-                    userInfo.cropId = cropId
-                    store.dispatch('getUserInfo', userInfo)
                     await localStorage.setItem('payCorpId', payCorpId)
                     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
                     window.location.href = wxurl;
-                    // console.log(wxurl)
                     return
                 }
                 next()
-                console.log(userInfo, 'userInfo')
             }
         } else {
             next()
