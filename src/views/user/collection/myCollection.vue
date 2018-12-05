@@ -16,7 +16,6 @@
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
                  <div class="dynamicsInfo-list-left-bg_img" v-show="item.sale != '' "  :style="{backgroundImage:'url('+labelImg+')'}">
                    {{item.sale}}
-                  
                 </div>
                 <img :src="item.linkerUrl" class="mark-icon">
                 <img :src="ovalIcon" class="oval-icon">
