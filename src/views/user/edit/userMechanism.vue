@@ -2,7 +2,7 @@
   <div class="user-edit-username-page">
     <div class="user-edit-username">
       <p class="edit-username-title">我的机构选择</p>
-      <!-- <collapse-List :data=this.organizationList></collapse-List> -->
+      <collapse-List :data=this.organizationList></collapse-List>
       <button class="edit-username-query">确认修改</button>
     </div>
   </div>
@@ -24,18 +24,31 @@ export default {
   created() {
     let distributorId = this.$route.query.distributorId
     let enterpriseId = this.$route.query.enterpriseId
-
     this.queryOrganizationList(distributorId, enterpriseId)
   },
 
   methods: {
     async queryOrganizationList(distributorId, enterpriseId) {
-      const result = await userService.obtainOrganizationInfo(
-        distributorId,
-        enterpriseId
-      )
+      const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
 
-      console.log(JSON.stringify(result))
+      // console.log(JSON.stringify(result))
+      console.log(JSON.stringify(this.formatData(result, '124')))
+    },
+
+    //递归遍历处理数据
+    formatData(data, pId) {
+      let result = [],
+        temp;
+      for (let i in data) {
+        if (data[i].pId == pId) {
+          result.push(data[i])
+          temp = this.formatData(data, data[i].id)
+          if (temp.length > 0) {
+            data[i].children = temp
+          }
+        }
+      }
+      return result
     }
   }
 }
