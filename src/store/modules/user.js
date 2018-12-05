@@ -2,7 +2,7 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {
+  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
     address: "",
     agentMinOpenid: "",
     agentUpdateId: "",
@@ -49,7 +49,7 @@ const state = {
     nameGuide: 0,
     nickName: "离园则",
     parentUserId: "",
-    payCorpId: "ww5e4d879ddc307ea1",
+    // payCorpId: "ww5e4d879ddc307ea1",
     // cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
     position: "",
