@@ -6,7 +6,6 @@
         <input
           type="text"
           class="edit-username-input"
-          placeholder="Bela"
           maxlength="8"
           v-model="userName"
         >

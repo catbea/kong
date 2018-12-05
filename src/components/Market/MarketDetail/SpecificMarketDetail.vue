@@ -12,20 +12,22 @@
             地铁房
           </div> -->
         </div>
+        <div class="specific-market-detail-commission" @click="commission">
+            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>{{info&&info.divisionRules}}111111
+          </div>
         <div class="specific-market-detail">
           <ul class="specific-market-detail-left">
           <li class="average-price-left">平均价格:</li> 
-          <li class="commission-left">佣金:</li>
           <li class="opening-quotation-left">开盘时间:</li>
           <li class="market-site-left">楼盘地址:</li>
           <li class="developers-left">开发商:</li>
           </ul>
           <ol class="specific-market-detail-right">
           <li class="average-price-right">{{info&&info.averagePrice}}</li> 
-          <li class="commission-right" @click="commission"> 
+          <!-- <li class="commission-right" > 
             <div class="commission">{{info&&info.divisionRules}}</div> 
             <div class="commission-detail bg_img" :style="{backgroundImage:'url('+commissionDetailImg+')'}" ></div>
-          </li>
+          </li> -->
           <li class="opening-quotation-right">{{info&&info.openTime}}</li>
           <li class="market-site-right" @click="siteHandle">
             <div class="site">{{info&&info.detailAddress}}</div> 
@@ -42,7 +44,7 @@ export default {
     info: { type: Object },
   },
   data: () => ({
-    commissionDetailImg: require('IMG/marketDetail/arrow.png'),
+    commissionImg: require('IMG/user/collection/Rectangle@2x.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png')
   }),
   methods: {
@@ -79,6 +81,24 @@ export default {
       margin-top: 3px;
     }
   }
+      .specific-market-detail-commission{
+      width:339px;
+      height:34px;
+      background:rgba(247,249,250,1);
+      border-radius:4px;
+      font-size:15px;
+      font-family:PingFang-SC-Regular;
+      font-weight:400;
+      color:rgba(234,77,46,1);
+      line-height:24px;
+      display:flex;
+      align-items:center;
+      span{
+        width:16px;
+        height:16px;
+        margin:0 8px;
+      }
+    }
   .specific-market-detail {
     display: flex;
     height: auto;
@@ -104,21 +124,6 @@ export default {
       }
       .average-price-right {
         color: #ea4d2e;
-      }
-      .commission-right {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 25px;
-        .commission {
-          margin: 0;
-          height: 25px;
-        }
-        .commission-detail {
-          width: 12px;
-          height: 12px;
-          // margin: 0 8px 0 0;
-        }
       }
       .market-site-right {
         display: flex;

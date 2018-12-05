@@ -32,17 +32,11 @@ export default (time, type, separate = '-') => {
     case 2: // 2017-03-15
       return `${year}${separate}${zerofill(month)}${separate}${zerofill(day)}`
     case 3: // 2017-03-15 11:12
-      return `${year}${separate}${zerofill(month)}${separate}${zerofill(
-        day
-      )} ${zerofill(hours)}:${zerofill(minutes)}`
+      return `${year}${separate}${zerofill(month)}${separate}${zerofill(day)} ${zerofill(hours)}:${zerofill(minutes)}`
     case 4: // 03-15 11:12
-      return `${zerofill(month)}${separate}${zerofill(day)} ${zerofill(
-        hours
-      )}:${zerofill(minutes)}`
+      return `${zerofill(month)}${separate}${zerofill(day)} ${zerofill(hours)}:${zerofill(minutes)}`
     default:
       // 2017-03-15 11:12:13
-      return `${year}${separate}${zerofill(month)}${separate}${zerofill(
-        day
-      )} ${zerofill(hours)}:${zerofill(minutes)}:${zerofill(second)}`
+      return `${year}${separate}${zerofill(month)}${separate}${zerofill(day)} ${zerofill(hours)}:${zerofill(minutes)}:${zerofill(second)}`
   }
 }
