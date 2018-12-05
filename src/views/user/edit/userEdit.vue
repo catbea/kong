@@ -46,7 +46,7 @@
         class="cell-item"
         title="我的机构"
         is-link
-        :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.organizationId}}"
+        :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.enterpriseId}}"
       />
     </cell-group>
     <cell-group class="user-advance-info">

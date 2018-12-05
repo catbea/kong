@@ -25,7 +25,11 @@
               <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-
+                 <div class="dynamicsInfo-list-left-bg_img" :style="{backgroundImage:'url('+labelImg+')'}">
+                   9.9折
+                   <!-- {{itemInfo.sale}}
+                  {{itemInfo.labels}} -->
+                </div>
                 <img
                   :src="item.linkerUrl"
                   class="mark-icon"
@@ -45,16 +49,16 @@
                   <!-- 销售状态（楼盘）: 0热销中、1即将发售、3售罄 -->
 
                   <span class="right-label right-label-red">{{saleStatus[item.saleStatus]}}</span>
-                  <span
+                  <button
                     class="right-label right-label-gray"
                     v-for="(its,key) in item.linkerTags"
                     :key="key"
-                  >{{its}}</span>
+                  >{{its}}</button>
                 </p>
                 <p class="list-right-price">
                   <span class="right-price right-price-open">{{item.openTimes}}次开通 &nbsp; <span v-show="item.subscribeInvalidTime !=''">{{ parseInt(item.subscribeInvalidTime) |dateTimeFormatter(0,'/') }}到期</span></span>
                  
-                  <span
+                  <button
                     
                     type="checkbox"
                     class='right-price-lab'
@@ -64,7 +68,7 @@
                    
                       
                     取消收藏
-                  </span>
+                  </button>
 
                   <!-- <button
                     class="right-price-lab"
@@ -142,7 +146,7 @@ export default {
       ArticleIcon: require('IMG/user/collection/Article@2x.png'),
       statusTpye: 1,
       deleteFlag: 0,
-
+      labelImg:require('IMG/marketDetail/discount@2x.png')
     }
   },
   created () {
@@ -163,7 +167,6 @@ export default {
     //收藏樓盤
     async godynamics (item) {
       //0-未收藏；1-已收藏
-      debugger
       if (this.statusTpye != 1) {
         if (this.statusTpye == 1) {
           this.statusTpye = 0
@@ -254,6 +257,19 @@ export default {
       height: 90px;
       position: relative;
       border-radius: 6px;
+      .dynamicsInfo-list-left-bg_img{
+        text-align: center;
+       width:36px;
+height:22px;
+        font-size:11px;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        line-height:20px;
+              background-size: cover;
+    position: absolute;
+    top: 4px;
+    left: -4px;
+      }
       > .mark-icon {
         width: 120px;
         height: 90px;
@@ -312,6 +328,8 @@ export default {
         }
         > .right-label-gray {
           background: rgba(143, 159, 177, 0.15);
+          border: 0;
+              height: 20px;
         }
       }
       > .list-right-price {
@@ -335,6 +353,7 @@ export default {
         }
         > .right-price-lab {
           color: rgba(175, 178, 195, 1);
+          background: #ffffff;
           font-size: 10px;
           font-weight: 400;
           line-height: 20px;

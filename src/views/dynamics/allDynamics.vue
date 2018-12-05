@@ -139,7 +139,6 @@ export default {
           break;
         case 3:
           this.getArticleDynamicCount()
-          this.getArticleDynamicList()
           break;
       }
     },
@@ -186,7 +185,7 @@ export default {
     async getArticleDynamicCount () {
       const res = await dynamicsService.getArticleDynamicCount()
       this.ArticleDynamicCount = res.records
-      
+      this.getArticleDynamicList()
     },
     //文章数据动态列表
     async getArticleDynamicList () {
