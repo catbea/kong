@@ -35,7 +35,7 @@ export default {
   created() {
     this.$store.commit(types.TABBAR,false)
     this.info = this.$route.query
-    console.log(this.info)
+    console.log(this.info,999999999999999)
   },
   data: () => ({
     warnImg:require('IMG/marketDetail/warn.png'),
