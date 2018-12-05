@@ -81,7 +81,7 @@ export default {
     Dialog
   },
   created() {
-    this.getUserInfo()
+
   },
   data() {
     return {
@@ -89,11 +89,6 @@ export default {
     }
   },
   methods: {
-    async getUserInfo() {
-      // TODO jwt启用后应该不需再存userid
-      let userId = window.localStorage.getItem('userId')
-      this.$store.dispatch('getUserInfo', userId)
-    },
     godistributorName() {
       //此处不可进行操作
       //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面
