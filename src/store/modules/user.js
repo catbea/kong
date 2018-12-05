@@ -2,7 +2,7 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
+  userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {
     address: "",
     agentMinOpenid: "",
     agentUpdateId: "",
