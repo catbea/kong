@@ -15,6 +15,8 @@
               <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
+                 <div class="dynamicsInfo-list-left-bg_img" :style="{backgroundImage:'url('+labelImg+')'}">
+                   {{item.sale}}
                 <div
                   class="dynamicsInfo-list-left-bg_img"
                   :style="{backgroundImage:'url('+labelImg+')'}"
