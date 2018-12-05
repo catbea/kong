@@ -11,7 +11,7 @@ export default [
     }
   },
   {
-    path: '/market/marketDetail',
+    path: '/market/marketDetail/:id',
     name: 'marketDetailNotOpen',
     component: resolve =>
       require(['@/views/market/marketDetail/index.vue'], resolve),
