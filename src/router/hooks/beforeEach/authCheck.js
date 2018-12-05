@@ -28,7 +28,7 @@ export default async (to, from, next) => {
     } else {
         let cropId = sessionStorage.getItem('cropId')
         let payCorpId = sessionStorage.getItem('payCorpId')
-        console.log(payCorpId, 'payCorpId')
+        console.log(store.getters.userInfo, 'store.getters.userInfo')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
                 console.log( 'payCorpId ==================')
@@ -55,6 +55,9 @@ export default async (to, from, next) => {
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
                     payCorpId = wxAuthObject.payCorpId
                     console.log(wxAuthObject,'wxAuthObject=====')
+                    userInfo.payCorpId = payCorpId
+                    userInfo.cropId = cropId
+                    store.dispatch('getUserInfo', userInfo)
                     await sessionStorage.setItem('payCorpId', payCorpId)
                     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
