@@ -19,7 +19,7 @@ Vue.use(List)
 Vue.use(Popup)
 Vue.use(Search)
 // globle
-wechatApi.init()
+// wechatApi.init()
 
 window.vue = new Vue({
   router,
