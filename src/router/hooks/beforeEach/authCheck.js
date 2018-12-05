@@ -38,9 +38,9 @@ export default async (to, from, next) => {
                 let pcOpenid = userInfo.pcOpenid
                 console.log(pcOpenid, 'pcOpenId')
                 console.log(parm.code, 'parm.code===')
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
-                userInfo.payOpenId = payopenIdObject.payOpenId
-                store.dispatch('getUserInfo', userInfo)
+                // const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
+                // userInfo.payOpenId = payopenIdObject.payOpenId
+                // store.dispatch('getUserInfo', userInfo)
                 console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
                 next()
             } else {
