@@ -15,14 +15,9 @@
               <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-                 <div class="dynamicsInfo-list-left-bg_img" :style="{backgroundImage:'url('+labelImg+')'}">
+                 <div class="dynamicsInfo-list-left-bg_img" v-show="item.sale != '' "  :style="{backgroundImage:'url('+labelImg+')'}">
                    {{item.sale}}
-                <div
-                  class="dynamicsInfo-list-left-bg_img"
-                  :style="{backgroundImage:'url('+labelImg+')'}"
-                >9.9折
-                  <!-- {{itemInfo.sale}}
-                  {{itemInfo.labels}}-->
+                  
                 </div>
                 <img :src="item.linkerUrl" class="mark-icon">
                 <img :src="ovalIcon" class="oval-icon">
