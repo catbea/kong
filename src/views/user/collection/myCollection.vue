@@ -15,17 +15,8 @@
               <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-<<<<<<< HEAD
                  <div class="dynamicsInfo-list-left-bg_img" :style="{backgroundImage:'url('+labelImg+')'}">
                    {{item.sale}}
-=======
-                <div
-                  class="dynamicsInfo-list-left-bg_img"
-                  :style="{backgroundImage:'url('+labelImg+')'}"
-                >9.9折
-                  <!-- {{itemInfo.sale}}
-                  {{itemInfo.labels}}-->
->>>>>>> 3fb2762663b51ee9bc4de4d344ff1c99a0349470
                 </div>
                 <img :src="item.linkerUrl" class="mark-icon">
                 <img :src="ovalIcon" class="oval-icon">
