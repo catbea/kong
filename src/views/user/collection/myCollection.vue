@@ -1,11 +1,7 @@
 <template>
   <div class="collection-page">
     <div class="tab-container">
-      <van-tabs
-        color="#007AE6"
-        :line-width="15"
-        :swipe-threshold="6"
-      >
+      <van-tabs color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="收藏楼盘">
           <collection-null
             v-show="dynamicsList.lenght == 0"
@@ -14,40 +10,28 @@
             :collectionLike="collectionLike"
             :collectionIcon="collectionIcon"
           ></collection-null>
-
-          <div
-            class="dynamicsInfo-list"
-            v-for="(item,key) in dynamicsList"
-            :key="key"
-          >
-
+          <div class="dynamicsInfo-list" v-for="(item,key) in dynamicsList" :key="key">
             <div class="dynamicsInfo-list-top">
               <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-                 <div class="dynamicsInfo-list-left-bg_img" :style="{backgroundImage:'url('+labelImg+')'}">
-                   9.9折
-                   <!-- {{itemInfo.sale}}
-                  {{itemInfo.labels}} -->
+                <div
+                  class="dynamicsInfo-list-left-bg_img"
+                  :style="{backgroundImage:'url('+labelImg+')'}"
+                >9.9折
+                  <!-- {{itemInfo.sale}}
+                  {{itemInfo.labels}}-->
                 </div>
-                <img
-                  :src="item.linkerUrl"
-                  class="mark-icon"
-                >
-                <img
-                  :src="ovalIcon"
-                  class="oval-icon"
-                >
-
+                <img :src="item.linkerUrl" class="mark-icon">
+                <img :src="ovalIcon" class="oval-icon">
               </span>
               <span class="dynamicsInfo-list-right">
-                <p class="list-right-title">{{item.linkerName}}
-
-                </p>
-                <p class="list-right-time">{{item.city}} {{item.county}} &nbsp; {{item.price}}{{item.priceUnit}}</p>
+                <p class="list-right-title">{{item.linkerName}}</p>
+                <p
+                  class="list-right-time"
+                >{{item.city}} {{item.county}} &nbsp; {{item.price}}{{item.priceUnit}}</p>
                 <p class="list-right-label">
                   <!-- 销售状态（楼盘）: 0热销中、1即将发售、3售罄 -->
-
                   <span class="right-label right-label-red">{{saleStatus[item.saleStatus]}}</span>
                   <button
                     class="right-label right-label-gray"
@@ -56,40 +40,33 @@
                   >{{its}}</button>
                 </p>
                 <p class="list-right-price">
-                  <span class="right-price right-price-open">{{item.openTimes}}次开通 &nbsp; <span v-show="item.subscribeInvalidTime !=''">{{ parseInt(item.subscribeInvalidTime) |dateTimeFormatter(0,'/') }}到期</span></span>
-                 
+                  <span class="right-price right-price-open">
+                    {{item.openTimes}}次开通 &nbsp;
+                    <span
+                      v-show="item.subscribeInvalidTime !=''"
+                    >{{ parseInt(item.subscribeInvalidTime) |dateTimeFormatter(0,'/') }}到期</span>
+                  </span>
                   <button
-                    
                     type="checkbox"
-                    class='right-price-lab'
+                    class="right-price-lab"
                     @click="godynamics(item,key)"
                     id="rightno"
-                  > 
-                   
-                      
-                    取消收藏
-                  </button>
-
+                    style="{'item.status==0' ? color:#AFB2C3 : color:#007AE6 }"
+                  >{{item.isCollection}}</button>
                   <!-- <button
                     class="right-price-lab"
                     
                     
                     @click="godynamics(item)"
-                  >取消收藏</button> -->
+                  >取消收藏</button>-->
                 </p>
               </span>
             </div>
-
-            <div
-              class="dynamicsInfo-list-commission"
-              v-show="item.divisionRules != '' "
-            >
+            <div class="dynamicsInfo-list-commission" v-show="item.divisionRules != '' ">
               <span class="list-commission-word">佣</span>
               {{item.divisionRules}}
             </div>
-
           </div>
-
         </van-tab>
         <van-tab title="收藏文章">
           <div class="collection-top">
@@ -100,11 +77,7 @@
               :collectionLike="collectionLike"
               :collectionIcon="ArticleIcon"
             ></collection-null>
-            <collection-article
-              :data="collectionList"
-              info="gocollection"
-              @myclick="gocollection"
-            ></collection-article>
+            <collection-article :data="collectionList" info="gocollection" @myclick="gocollection"></collection-article>
           </div>
         </van-tab>
       </van-tabs>
@@ -120,7 +93,7 @@ export default {
     collectionArticle,
     collectionNull
   },
-  data () {
+  data() {
     return {
       dynamicsList: [],
       collectionList: [],
@@ -146,58 +119,49 @@ export default {
       ArticleIcon: require('IMG/user/collection/Article@2x.png'),
       statusTpye: 1,
       deleteFlag: 0,
-      labelImg:require('IMG/marketDetail/discount@2x.png')
+      labelImg: require('IMG/marketDetail/discount@2x.png')
     }
   },
-  created () {
+  created() {
     this.getdynamicsInfo()
     this.getcollectionList()
   },
   methods: {
-
-    async getdynamicsInfo () {
+    async getdynamicsInfo() {
       const res = await userService.getqueryLinkerList()
       this.dynamicsList = res.records
 
+      //status (integer, optional): 收藏状态：0-未收藏；1-已收藏 ,
+      for (let i = 0; i < res.records.length; i++) {
+        if (res.records[i].status == 0) {
+          this.dynamicsList[i].isCollection = '收藏'
+        } else {
+          this.dynamicsList[i].isCollection = '取消收藏'
+        }
+      }
     },
-    async getcollectionList () {
+    async getcollectionList() {
       const res = await userService.getqueryInfoList()
       this.collectionList = res.records
     },
     //收藏樓盤
-    async godynamics (item) {
-      //0-未收藏；1-已收藏
-      if (this.statusTpye != 1) {
-        if (this.statusTpye == 1) {
-          this.statusTpye = 0
-        } else if (this.statusTpye == 0) {
-          this.statusTpye = 1
+    async godynamics(item, index) {
+      //  收藏状态：0-未收藏；1-已收藏
+      let tempDynamicsList = this.dynamicsList
+      if (tempDynamicsList[index].status == 1) {
+        const result = await userService.getlinkerDynamics(item.linkerId, 0)
+        if (result.infoId.length > 0) {
+          this.getdynamicsInfo()
         }
-      } else {
-        if (item.status == 1) {
-          this.statusTpye = 0
-        } else if (item.status == 0) {
-          this.statusTpye = 1
+      } else if (tempDynamicsList[index].status == 0) {
+        const result = await userService.getlinkerDynamics(item.linkerId, 1)
+        if (result.infoId.length > 0) {
+          this.getdynamicsInfo()
         }
       }
-      //0-未收藏；1-已收藏
-      let rightno = document.getElementById("rightno")
-      if (this.statusTpye == 1) {
-       
-        rightno.innerHTML="取消收藏"
-        rightno.style.color="#AFB2C3"
-      } else if (this.statusTpye == 0) {
-        
-        rightno.innerHTML="收藏"
-        rightno.style.color="#007AE6"
-
-      }
-      await userService.getlinkerDynamics(item.linkerId, this.statusTpye)
     },
     //收藏文章
-    async gocollection (cons) {
-      console.log("xxxxxxxxxxxxxxxxxxxxxxxxxx", cons)
-
+    async gocollection(cons) {
       console.log(this.deleteFlag)
       console.log(cons.deleteType)
       if (this.deleteFlag != 0) {
@@ -222,13 +186,11 @@ export default {
       collno = document.getElementById(collno)
 
       if (this.deleteFlag == 1) {
-        collok.style.display = "block"
-        collno.style.display = "none"
-
+        collok.style.display = 'block'
+        collno.style.display = 'none'
       } else if (this.deleteFlag == 0) {
-        collok.style.display = "none"
-        collno.style.display = "block"
-
+        collok.style.display = 'none'
+        collno.style.display = 'block'
       }
       await userService.getlinkerCollection(cons.infoId, this.deleteFlag)
     }
@@ -257,18 +219,18 @@ export default {
       height: 90px;
       position: relative;
       border-radius: 6px;
-      .dynamicsInfo-list-left-bg_img{
+      .dynamicsInfo-list-left-bg_img {
         text-align: center;
-       width:36px;
-height:22px;
-        font-size:11px;
-        font-weight:500;
-        color:rgba(255,255,255,1);
-        line-height:20px;
-              background-size: cover;
-    position: absolute;
-    top: 4px;
-    left: -4px;
+        width: 36px;
+        height: 22px;
+        font-size: 11px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+        line-height: 20px;
+        background-size: cover;
+        position: absolute;
+        top: 4px;
+        left: -4px;
       }
       > .mark-icon {
         width: 120px;
@@ -329,7 +291,7 @@ height:22px;
         > .right-label-gray {
           background: rgba(143, 159, 177, 0.15);
           border: 0;
-              height: 20px;
+          height: 20px;
         }
       }
       > .list-right-price {

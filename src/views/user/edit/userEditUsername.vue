@@ -31,6 +31,11 @@ export default {
     }
   },
 
+  created() {
+    let userName = this.$route.query.userName
+    this.userName = userName
+  },
+
   methods: {
     //更新用户名
     upDateUserName(obj) {
@@ -47,7 +52,7 @@ export default {
           // on close
         })
       } else {
-        this.userName = strFormat(userName);
+        this.userName = strFormat(userName)
         let date = {
           name: this.userName
         }

@@ -60,5 +60,30 @@ class MarketService {
       }
     })
   }
+  /*
+   * 楼盘详情-佣金信息
+   * @param {*} linkerId 
+   */
+  getHouseCommissionList(linkerId) {
+    return xhr({
+      url: '/linkerDetail/houseCommissionList',
+      body: {
+        linkerId
+      }
+    })
+  }
+
+  /**
+   * 楼盘详情-位置周边
+   * @param {*} linkerId 
+   */
+  getHouseAroundType(linkerId) {
+    return xhr({
+      url: '/linkerDetail/getHouseAroundType',
+      body: {
+        linkerId
+      }
+    })
+  }
 }
 export default new MarketService()

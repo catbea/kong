@@ -86,7 +86,7 @@ export default [
   },
 
   {
-    path: '/marketDetail/commission',
+    path: '/marketDetail/commission/:id',
     name: 'marketDetail-commission',
     component: resolve =>
       require(['@/views/market/marketDetail/commission/index.vue'], resolve),
