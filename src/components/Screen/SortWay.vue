@@ -1,26 +1,32 @@
 <template>
   <div class="sortWay-page" v-if="show">
     <ul>
-      <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=item">{{item}}</li>
+      <li v-for="(item,index) in conf" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=index">{{item}}</li>
     </ul>
   </div>
 </template>
 <script>
 export default {
   data: () => ({
-    checked: '',
+    checked: '-1',
     conf: {
       '1': '默认排序',
       '3': '人气排序',
       '4': '开通最多'
-    },
-    num: null
+    }
   }),
   props: {
     show: { type: Boolean, default: false },
+    value: String
   },
-  methods: {
-
+  methods: {},
+  watch: {
+    checked(val) {
+      this.$emit('input', val)
+    },
+    value(val){
+      this.checked = val
+    }
   }
 }
 </script>
@@ -46,6 +52,5 @@ export default {
       line-height: 49px;
     }
   }
-
 }
 </style>

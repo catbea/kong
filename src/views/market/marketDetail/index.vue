@@ -37,7 +37,7 @@
       <title-bar :conf="confC"></title-bar>
       <site-nearby></site-nearby>
       <title-bar :conf="confD"></title-bar>
-      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList"></all-elseMarket>
+      <all-elseMarket :linkerOtherList="linkerInfo.linkerOtherList" @click.native="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
@@ -156,6 +156,9 @@ export default {
     },
     moreInfoHandle() {
       this.$router.push('/marketDetail/info')
+    },
+    skipMarketDetail(){
+      this.$router.push('/market/marketDetail/:id')
     },
     /**
      * 楼盘详情信息
