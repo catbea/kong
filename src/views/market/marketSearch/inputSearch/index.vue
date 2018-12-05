@@ -15,7 +15,7 @@
 <div class="history-show-box" v-if="true">
   <div class="input-search-page-middle">
     <p class="history-search">历史搜索</p>
-    <span></span>
+    <span class="bg_img" :style="{backgroundImage:'url('+bucketImg+')'}"></span>
   </div>
   <ul class="input-search-page-bottom">
   <li v-for="(item,index) in list" :key="index">
@@ -52,7 +52,8 @@ export default {
   data: () => ({
     value: '',
     list: [1, 2, 3, 4, 5, 6, 7],
-    resInfo: null
+    resInfo: null,
+    bucketImg:require('IMG/marketDetail/bucket@2x.png')
   }),
   methods: {
     onCancel() {
@@ -119,9 +120,8 @@ export default {
         line-height: 27px;
       }
       span {
-        width: 12px;
-        height: 12px;
-        border: 1px solid;
+        width: 16px;
+        height: 16px;
       }
     }
   }
