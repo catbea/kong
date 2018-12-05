@@ -109,8 +109,10 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        height: 25px;
         .commission {
           margin: 0;
+          height: 25px;
         }
         .commission-detail {
           width: 12px;
