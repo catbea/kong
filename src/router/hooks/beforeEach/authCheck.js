@@ -18,7 +18,7 @@ export default async (to, from, next) => {
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
     if(parm.cropId){
         let cropId = parm.cropId
-        await sessionStorage.setItem('cropId', cropId)
+        await localStorage.setItem('cropId', cropId)
         // console.log(parm.cropId)
         // console.log(wxredirecturl.split("?")[0])
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
@@ -26,10 +26,12 @@ export default async (to, from, next) => {
             + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
         window.location.href = wxurl;
     } else {
-        let cropId = await sessionStorage.getItem('cropId')
-        let payCorpId = await sessionStorage.getItem('payCorpId')
+        let cropId = localStorage.getItem('cropId')
+        let payCorpId = store.getters.userInfo.payCorpId
+        console.log(store.getters.userInfo, 'store.getters.userInfo')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
+                console.log( 'payCorpId ==================')
                 let userInfo = store.getters.userInfo
                 if(userInfo.payOpenId) {
                     next()
@@ -44,23 +46,25 @@ export default async (to, from, next) => {
                 console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
                 next()
             } else {
+                console.log( 'no payCorpId ==================')
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
+                payCorpId = wxAuthObject.payCorpId
                 let userInfo = wxAuthObject.userInfo
+                userInfo.payCorpId = payCorpId
+                userInfo.cropId = cropId
                 userInfo.token = wxAuthObject.token
                 store.dispatch('getUserInfo', userInfo)
+                console.log( 'wxAuthObject ==================')
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
-                    payCorpId = wxAuthObject.payCorpId
                     console.log(wxAuthObject,'wxAuthObject=====')
-                    await sessionStorage.setItem('payCorpId', payCorpId)
+                    await localStorage.setItem('payCorpId', payCorpId)
                     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
                     window.location.href = wxurl;
-                    // console.log(wxurl)
                     return
                 }
                 next()
-                console.log(userInfo, 'userInfo')
             }
         } else {
             next()

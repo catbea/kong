@@ -2,7 +2,7 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: JSON.parse(sessionStorage.getItem('userInfo')) || {
+  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
     address: "",
     agentMinOpenid: "",
     agentUpdateId: "",
@@ -49,6 +49,9 @@ const state = {
     nameGuide: 0,
     nickName: "离园则",
     parentUserId: "",
+    payCorpId: "ww5e4d879ddc307ea1",
+    cropId: "ww8f6801ba5fd2a112",
+    payCorpId: "oeKML1F_vZxBRzcW_pKjGsLkiVgQ",
     pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
     position: "",
     price: 0,
@@ -56,7 +59,7 @@ const state = {
     recommendTip: "",
     registerType: "10",
     shareNum: "0",
-    signature: "别问我是谁，请叫我大师",
+    signature: "别问我是谁，请叫我大湿",
     status: 1,
     storeId: "224",
     storeName: "",
@@ -65,7 +68,13 @@ const state = {
     token: "eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJmYmFqYXoiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDQ1MjQ2MDcsImlhdCI6MTU0MzkxOTgwN30.U-QkrUG6M00Q4z3SbRdoJ1QEJtepaJgOxebXhx3ucVFo_fobIvF_3KNtmNOuRme6isTNux7BSKJGfENlIgYlRQ",
     updateTime: "2018-10-19 17:37:47",
     viewNum: 101,
-    wechatAccount: ""
+    wechatAccount: "112110",
+    labelList: [
+      {
+        labelId: '001',
+        labelName: '价格屠夫'
+      }
+    ]
   },
   userVipInfo: {},
   userArea: {
@@ -92,7 +101,7 @@ const getters = {
 const actions = {
   async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    await sessionStorage.setItem('userInfo', _userInfo);
+    await localStorage.setItem('userInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
   },
   async getUserVipInfo({ commit }, payload) {
