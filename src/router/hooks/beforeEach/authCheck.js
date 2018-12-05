@@ -30,38 +30,37 @@ export default async (to, from, next) => {
             let userInfo = store.getters.userInfo
             let payCorpId = userInfo.payCorpId
             if(payCorpId){// 通过payopenid返回的code
-                console.log(payCorpId, 'payopenid ==')
+                console.log(payCorpId, 'payCorpId')
                 if(userInfo.payOpenId) {
                     next()
                     return
                 }
-                // let pcOpenid = userInfo.pcOpenid
-                // console.log(pcOpenid, 'pcOpenId')
-                // console.log(parm.code, 'parm.code===')
-                // const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
-                // userInfo.payOpenId = payopenIdObject.payOpenId
-                // store.dispatch('getUserInfo', userInfo)
-                // console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
-                // next()
+                let pcOpenid = userInfo.pcOpenid
+                console.log(pcOpenid, 'pcOpenId')
+                console.log(parm.code, 'parm.code===')
+                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
+                userInfo.payOpenId = payopenIdObject.payOpenId
+                store.dispatch('getUserInfo', userInfo)
+                console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
+                next()
             } else {
-                console.log('no  payopenid ==')
-                // const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
-                // payCorpId = wxAuthObject.payCorpId
-                // let userInfo = wxAuthObject.userInfo
-                // userInfo.payCorpId = payCorpId
-                // userInfo.cropId = cropId
-                // userInfo.token = wxAuthObject.token
-                // store.dispatch('getUserInfo', userInfo)
-                // if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
-                //     console.log(wxAuthObject,'wxAuthObject=====')
-                //     await localStorage.setItem('payCorpId', payCorpId)
-                //     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
-                //         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
-                //         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-                //     window.location.href = wxurl;
-                //     return
-                // }
-                // next()
+                const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
+                payCorpId = wxAuthObject.payCorpId
+                let userInfo = wxAuthObject.userInfo
+                userInfo.payCorpId = payCorpId
+                userInfo.cropId = cropId
+                userInfo.token = wxAuthObject.token
+                store.dispatch('getUserInfo', userInfo)
+                if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
+                    console.log(wxAuthObject,'wxAuthObject=====')
+                    await localStorage.setItem('payCorpId', payCorpId)
+                    let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
+                        + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
+                        + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+                    window.location.href = wxurl;
+                    return
+                }
+                next()
             }
         } else {
             next()
