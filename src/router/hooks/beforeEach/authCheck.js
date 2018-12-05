@@ -30,10 +30,17 @@ export default async (to, from, next) => {
         let payCorpId = sessionStorage.getItem('payCorpId')
         if(parm.code){
             if(payCorpId){// 通过payopenid返回的code
-                let pcOpenId = 'oPeLD1HXPuZsdwb1WdN9HB8eRIw4'//store.getters.userInfo.pcOpenId// sessionStorage.getItem('pcOpenId')
-                console.log(pcOpenId, 'pcOpenId')
+                let userInfo = store.getters.userInfo
+                if(userInfo.payOpenId) {
+                    next()
+                    return
+                }
+                let pcOpenid = userInfo.pcOpenid/
+                console.log(pcOpenid, 'pcOpenId')
                 console.log(parm.code, 'parm.code===')
-                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenId)
+                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
+                userInfo.payOpenId = payopenIdObject.payOpenId
+                store.dispatch('getUserInfo', userInfo)
                 console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
                 next()
             } else {
@@ -41,16 +48,17 @@ export default async (to, from, next) => {
                 let userInfo = wxAuthObject.userInfo
                 userInfo.token = wxAuthObject.token
                 store.dispatch('getUserInfo', userInfo)
-                // if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
-                //     payCorpId = wxAuthObject.payCorpId
-                //     console.log(wxAuthObject,'wxAuthObject=====')
-                //     await sessionStorage.setItem('payCorpId', payCorpId)
-                //     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
-                //         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
-                //         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-                //     window.location.href = wxurl;
-                //     // console.log(wxurl)
-                // }
+                if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
+                    payCorpId = wxAuthObject.payCorpId
+                    console.log(wxAuthObject,'wxAuthObject=====')
+                    await sessionStorage.setItem('payCorpId', payCorpId)
+                    let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
+                        + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
+                        + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+                    window.location.href = wxurl;
+                    // console.log(wxurl)
+                }
+                next()
                 console.log(userInfo, 'userInfo')
             }
         } else {
