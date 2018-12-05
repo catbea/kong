@@ -26,9 +26,7 @@
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
                  <div class="dynamicsInfo-list-left-bg_img" :style="{backgroundImage:'url('+labelImg+')'}">
-                   9.9折
-                   <!-- {{itemInfo.sale}}
-                  {{itemInfo.labels}} -->
+                   {{item.sale}}
                 </div>
                 <img
                   :src="item.linkerUrl"

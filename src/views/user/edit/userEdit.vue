@@ -17,6 +17,7 @@
         is-link
         :to="'/user/edit/username'"
         :value="userInfo.name"
+        
       />
       <cell
         class="cell-item"
@@ -113,6 +114,13 @@ export default {
 }
 </script>
 <style lang="less">
+.van-cell__value {
+    overflow: hidden;
+    text-align: right;
+    position: relative;
+    vertical-align: middle;
+    color: rgba(153,153,153,1);
+}
 .van-dialog {
   border-radius: 12px;
   width: 72%;
@@ -141,6 +149,7 @@ export default {
       .editIcon-icon {
         width: 50px;
         height: 50px;
+        border-radius: 50%;
       }
       .user-avatar-clik {
         font-size: 12px;
