@@ -45,8 +45,8 @@ export default async (to, from, next) => {
                     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-                    // window.location.href = wxurl;
-                    console.log(wxurl)
+                    window.location.href = wxurl;
+                    // console.log(wxurl)
                 }
                 console.log(userInfo, 'userInfo')
             }
