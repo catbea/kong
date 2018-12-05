@@ -60,5 +60,18 @@ class MarketService {
       }
     })
   }
+
+  /**
+   * 楼盘详情-位置周边
+   * @param {*} linkerId 
+   */
+  getHouseAroundType(linkerId) {
+    return xhr({
+      url: '/linkerDetail/getHouseAroundType',
+      body: {
+        linkerId
+      }
+    })
+  }
 }
 export default new MarketService()

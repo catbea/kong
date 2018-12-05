@@ -1,8 +1,8 @@
 <template>
   <div class="all-else-market-box">
     <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
-      <van-swipe-item v-for="(item,index) in linkerOtherList" :key="index">
-      <ul class="else-market-box" @click="skipMarketDetail()">
+      <van-swipe-item v-for="(item,index) in linkerOtherList" :key="index" @click.native="itemClickHandler(item)">
+      <ul class="else-market-box">
         <li class="else-market-box-img bg_img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
 
         </li>
@@ -22,9 +22,10 @@ export default {
     // list: [1, 2, 3, 4]
   }),
   methods:{
-    skipMarketDetail(){
-      
-      console.log(7777777777)
+    itemClickHandler(val){
+      this.$emit('itemClick',val)
+      // debugger
+      // console.log(7777777777)
     }
   }
 }

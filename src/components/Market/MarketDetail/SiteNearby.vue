@@ -16,6 +16,9 @@
 </template>
 <script>
 export default {
+  props: {
+    aroundList: { type: Array },
+  },
   data: () => ({
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   })
