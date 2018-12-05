@@ -2,14 +2,28 @@
   <div class="modify-main">
     <div class="modify-main-title">修改头像</div>
     <div class="modify-child">
-      <div v-for="(img,index) in agentImgList" :key="index" class="head-img" @click="selectedHead(index,img.status,img.itemCode)">
+      <div
+        v-for="(img,index) in agentImgList"
+        :key="index"
+        class="head-img"
+        @click="selectedHead(index,img.status,img.itemCode)"
+      >
         <!--  v-if="img.status===1"   -->
-        <img :src="img.itemCode"/>
+
+        <img :src="img.itemCode">
         <!--   -->
-        <img v-show='img.isActivted' :src="userEditIcon" class="isActivted" v-if="img.status===1" />
+        <img v-show="img.isActivted" :src="userEditIcon" class="isActivted" v-if="img.status===1">
         <!--  -->
         <div flex="dir:top main:center cross:center" class="portrait-select" v-if="img.status===2">
-          <input type="file" id="file" name="avatar" @change="changeImage($event)" ref="avatarInput" accept="image/*" class="portrait-select-input">
+          <input
+            type="file"
+            id="file"
+            name="avatar"
+            @change="changeImage($event)"
+            ref="avatarInput"
+            accept="image/*"
+            class="portrait-select-input"
+          >
           <span class="portrait-select-add">+</span>
           <!-- <img :src="userIcon" class="portrait-select-Icon" /> -->
           <!-- <div class="portrait-select-add">本地相册</div> -->
@@ -23,62 +37,65 @@
 <script>
 import userService from 'SERVICE/userService'
 export default {
-  data () {
+  data() {
     return {
       userEditIcon: require('IMG/user/updata/select.png'),
       userIcon: require('IMG/user/editInfo@2x.png'),
       headIcons: [
-        { 'id': '1', 'itemCode': require('IMG/user/usercard@2x.png'), 'isActivted': false, 'type': 1 },
-        { 'id': '2', 'itemCode': require('IMG/user/usercard@2x.png'), 'isActivted': false, 'type': 1 },
-        { 'id': '3', 'itemCode': require('IMG/user/usercard@2x.png'), 'isActivted': false, 'type': 1 },
-        { 'id': '4', 'itemCode': require('IMG/user/usercard@2x.png'), 'isActivted': false, 'type': 1 },
-        { 'id': '5', 'itemCode': require('IMG/user/usercard@2x.png'), 'isActivted': false, 'type': 1 },
-        { 'id': '6', 'itemCode': require('IMG/user/usercard@2x.png'), 'isActivted': false, 'type': 2 }
-
+        { id: '1', itemCode: require('IMG/user/usercard@2x.png'), isActivted: false, type: 1 },
+        { id: '2', itemCode: require('IMG/user/usercard@2x.png'), isActivted: false, type: 1 },
+        { id: '3', itemCode: require('IMG/user/usercard@2x.png'), isActivted: false, type: 1 },
+        { id: '4', itemCode: require('IMG/user/usercard@2x.png'), isActivted: false, type: 1 },
+        { id: '5', itemCode: require('IMG/user/usercard@2x.png'), isActivted: false, type: 1 },
+        { id: '6', itemCode: require('IMG/user/usercard@2x.png'), isActivted: false, type: 2 }
       ],
       agentImgList: []
     }
   },
   created() {
-    this.getAgentLabelList()
+    this.getAgentImgList()
   },
   methods: {
-  async getAgentLabelList () {
+    async getAgentImgList() {
       const res = await userService.getAgentImgList()
-      this.agentImgList = res
+      this.headIcons = res
     },
-    selectedHead (index, type, avatar) {
-      this.avatar = avatar;
+    selectedHead(index, type, avatar) {
+      this.avatar = avatar
       if (type === 1) {
         this.headIcons.forEach((item, i) => {
           let items = item
           items.isActivted = i === index ? true : false
           this.$set(this.headIcons, i, items)
-        });
+        })
       }
     },
-    changeImage (event) {
-      this.fileObj = event.srcElement;
-      let files = event.target.files || event.dataTransfer.files;
+    changeImage(event) {
+      this.fileObj = event.srcElement
+      let files = event.target.files || event.dataTransfer.files
       let Url = this.getObjectURL(files[0])
       this.$router.replace({ path: 'me/cut', query: { originUrl: Url } })
     },
     //图片转码方法
-    getObjectURL: function (file) {
-      let url = null;
-      if (window.createObjectURL != undefined) { // basic
-        url = window.createObjectURL(file);
-      } else if (window.URL != undefined) { // mozilla(firefox)
-        url = window.URL.createObjectURL(file);
-      } else if (window.webkitURL != undefined) { // webkit or chrome
-        url = window.webkitURL.createObjectURL(file);
-      } else if (window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1) {   //chrome Safari
-        url = window.webkitURL.createObjectURL(file);
+    getObjectURL: function(file) {
+      let url = null
+      if (window.createObjectURL != undefined) {
+        // basic
+        url = window.createObjectURL(file)
+      } else if (window.URL != undefined) {
+        // mozilla(firefox)
+        url = window.URL.createObjectURL(file)
+      } else if (window.webkitURL != undefined) {
+        // webkit or chrome
+        url = window.webkitURL.createObjectURL(file)
+      } else if (window.navigator.userAgent.indexOf('Chrome') >= 1 || window.navigator.userAgent.indexOf('Safari') >= 1) {
+        //chrome Safari
+        url = window.webkitURL.createObjectURL(file)
       } else {
-        url = window.webkitURL.createObjectURL(file);
+        url = window.webkitURL.createObjectURL(file)
       }
-      return url;
-    },
+      return url
+    }
   }
 }
 </script>
@@ -102,7 +119,7 @@ export default {
       height: 60px;
       width: 60px;
       position: relative;
-          margin-right: 4px;
+      margin-right: 4px;
       img {
         height: 60px;
         width: 60px;
@@ -120,7 +137,7 @@ export default {
       width: 60px;
       height: 60px;
       border-radius: 8px;
-      border: 1px solid #B1C2DE;
+      border: 1px solid #b1c2de;
       border-radius: 36px;
       .portrait-select-input {
         position: absolute;
@@ -137,7 +154,6 @@ export default {
         color: rgba(177, 194, 222, 1);
         line-height: 50px;
         margin-left: 16px;
-            
       }
     }
   }
