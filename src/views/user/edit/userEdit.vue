@@ -15,22 +15,22 @@
         class="cell-item"
         title="名字"
         is-link
-        :to="'/user/edit/username'"
+        :to="{path:'/user/edit/username',query:{userName:userInfo.name}}"  
         :value="userInfo.name"
       />
       <cell
         class="cell-item"
         title="手机号"
-        :to="'/user/edit/phone'"
+        :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.mobile}}" 
         is-link
         :value="userInfo.tempPhone"
       />
       <cell
         class="cell-item"
         title="微信号"
-        :to="'/user/edit/userWechat'"
+        :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}"
         is-link
-        :value="userInfo.registerMobile"
+        :value="userInfo.wechatAccount"
       />
       <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion"/>
       <cell
@@ -62,7 +62,7 @@
       <cell
         class="cell-item user-signature"
         title="个人介绍"
-        :to="'/user/edit/userIntroduction'"
+        :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}"
         is-link
         :value="userInfo.signature"
       />

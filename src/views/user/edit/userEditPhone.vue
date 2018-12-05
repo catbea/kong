@@ -36,6 +36,12 @@ export default {
       Cphone: ''
     }
   },
+
+  created(){
+    let mobileNum= this.$route.query.phoneNum;
+    this.Cphone=mobileNum
+  },
+
   methods: {
     godSub() {
       if (this.Cphone == '') {
