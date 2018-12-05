@@ -18,7 +18,7 @@ export default async (to, from, next) => {
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
     if(parm.cropId){
         let cropId = parm.cropId
-        await localStorage.setItem('cropId', cropId)
+        await sessionStorage.setItem('cropId', cropId)
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
             + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
             + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
@@ -26,10 +26,10 @@ export default async (to, from, next) => {
     } else {
         console.log(store.getters.userInfo, 'store.getters.userInfo')
         if(parm.code){
-            let cropId = localStorage.getItem('cropId')
+            let cropId = sessionStorage.getItem('cropId')
             let userInfo = store.getters.userInfo
             let payCorpId = userInfo.payCorpId
-            if(payCorpId){// 通过payopenid返回的code
+            if(userInfo){// 通过payopenid返回的code
                 console.log(payCorpId, 'payCorpId')
                 if(userInfo.payOpenId) {
                     next()
@@ -53,7 +53,7 @@ export default async (to, from, next) => {
                 store.dispatch('getUserInfo', userInfo)
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
                     console.log(wxAuthObject,'wxAuthObject=====')
-                    await localStorage.setItem('payCorpId', payCorpId)
+                    await sessionStorage.setItem('payCorpId', payCorpId)
                     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
