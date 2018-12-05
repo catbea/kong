@@ -35,7 +35,7 @@ export default async (to, from, next) => {
                     next()
                     return
                 }
-                let pcOpenid = userInfo.pcOpenid/
+                let pcOpenid = userInfo.pcOpenid
                 console.log(pcOpenid, 'pcOpenId')
                 console.log(parm.code, 'parm.code===')
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
@@ -57,6 +57,7 @@ export default async (to, from, next) => {
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
                     window.location.href = wxurl;
                     // console.log(wxurl)
+                    return
                 }
                 next()
                 console.log(userInfo, 'userInfo')
