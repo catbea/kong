@@ -53,9 +53,10 @@ export default {
     position: relative;
     .content-box {
       position: absolute;
-      bottom: -3px;
+      border-radius:0 0 6px 6px;
+      bottom:0px;
       width: 100%;
-      height: 217px;
+      height: 214px;
       .box-top {
         width: 100%;
         height: 129px;
