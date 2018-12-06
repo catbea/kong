@@ -69,7 +69,7 @@ export default {
       this.agentIdInfo = res
     },
     skipDetail(item) {
-      this.$router.push({ name: 'marketDetailNotOpen', params: { id: item.linkerId } })
+      this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
     }
   }
 }
