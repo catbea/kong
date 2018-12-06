@@ -15,7 +15,7 @@
         :finished-text="没有更多了"
         @load="onLoad"
       >-->
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       <!-- </van-list> -->
     </div>
   </div>
@@ -53,7 +53,9 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
-    
+        openReturnHandle(){
+      this.$router.push({name:'marketDetail-open', params:{id:1}})
+    },
     onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
