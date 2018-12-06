@@ -1,6 +1,6 @@
 <template>
   <div class="register-step2-page">
-    <reg-step :step="3"></reg-step>
+    <reg-step :step="1" :stepTitle="stepTitle"></reg-step>
     <div class="register-content">
       <div class="register-title">输入手机号注册</div>
       <div class="register-subtitle">获取验证码输入即可完成注册</div>
@@ -34,6 +34,7 @@ export default {
     MaterialInput
   },
   data: () => ({
+    stepTitle: '手机注册',
     inviteName: '李大牛'
   }),
   methods: {}
