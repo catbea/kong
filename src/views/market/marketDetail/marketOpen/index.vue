@@ -28,12 +28,9 @@ export default {
     this.getLinkerAmountList()
 
     wx.ready(()=>{
-            wx.getNetworkType({
-                success:  (res)=> {
-                    console.log(res, 'getNetworkType')
-                }
-            });
-        })
+       console.log(wx.config)
+    })
+    
   },
   data: () => ({
     linkerId: '',
