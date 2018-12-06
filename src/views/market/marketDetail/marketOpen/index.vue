@@ -28,7 +28,7 @@ export default {
     this.getLinkerAmountList()
 
     wx.ready(()=>{
-       console.log(wx.config)
+       console.log(wx)
     })
     
   },
