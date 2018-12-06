@@ -10,10 +10,11 @@
           </div>
           <div class="house-owner">
             <div class="browse" @click="supplement">{{linkerInfo&&linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
-            <div
+            <!-- <div v-if="linkerInfo&&linkerInfo.customerList"
               class="head-portrait bg_img"
               :style="{backgroundImage:'url('+linkerInfo.customerList[0].clientImg+')'}"
-            ></div>
+            ></div> -->
+            <avatar class="head-portrait" :avatar="avatarCompute"></avatar>
           </div>
         </div>
         <specific-marketDetail :info="linkerInfo&&linkerInfo"></specific-marketDetail>
@@ -35,13 +36,13 @@
       <all-elseMarket :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList" @itemClick="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-        <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
+        <router-link to="/marketDetail/correction" class="feedback">反馈纠错</router-link>
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
       </div>
     </div>
-    <open-marketButton></open-marketButton>
+    <open-marketButton v-if="openStatus=='0' || openStatus==''" @click.native="marketOpenHandle"></open-marketButton>
     <!-- v-if="openFlag" -->
-    <market-renew v-if="renewFlag"></market-renew>
+    <market-renew v-if="openStatus=='1' || openStatus=='2'"></market-renew>
     <van-popup v-model="show">
       <popup-box></popup-box>
     </van-popup>
@@ -50,6 +51,7 @@
 <script>
 import * as types from '@/store/mutation-types'
 // import Classify from 'COMP/Classify/'
+import Avatar from 'COMP/Avatar'
 import HintTire from 'COMP/Market/MarketDetail/HintTire/'
 import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
 import AllMarketType from 'COMP/Market/MarketDetail/AllMarketType'
@@ -67,6 +69,7 @@ import MarketService from 'SERVICE/marketService'
 export default {
   components: {
     HintTire,
+    Avatar,
     SpecificMarketDetail,
     AllMarketType,
     SiteNearby,
@@ -90,6 +93,7 @@ export default {
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
+    openStatus: '', // 0未开通 1已开通已过期 2已开通未过期 
     hintShow: true,
     show: false,
     boxShow: false,
@@ -102,7 +106,7 @@ export default {
       link: '/marketDetail/FamilyList'
     },
     confB: {
-      title: '楼盘动态 (12)',
+      title: '楼盘动态 (?)',
       linkText: '全部动态',
       link: '/marketDetail/marketAllDynamic'
     },
@@ -149,10 +153,13 @@ export default {
       this.show = true
     },
     moreInfoHandle() {
-      this.$router.push('/marketDetail/info')
+      this.$router.push({path: '/marketDetail/info', query: this.linkerInfo})
     },
     skipMarketDetail(val){
-      this.$router.push({name:'marketDetailNotOpen', params:{id: val.linkerId}})
+      this.$router.push({name:'marketDetail', params:{id: val.linkerId}})
+    },
+    marketOpenHandle(){
+      this.$router.push({name:'marketDetail-open', params:{id:this.linkerId}})
     },
     /**
      * 楼盘详情信息
@@ -160,19 +167,26 @@ export default {
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
       this.linkerInfo = result
+      console.log(result)
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
       houseUseList.unshift(result.saleStatus)
       this.info = houseUseList
       this.confB.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
+      this.openStatus = result.openStatus
     },
 
     /**
-     * 楼盘详情-位置周年
+     * 楼盘详情-位置周边
      */
     async getHouseAroundType(id) {
       const result = await MarketService.getHouseAroundType(id)
     },
+  },
+  computed:{
+    avatarCompute(){
+      return this.linkerInfo&&this.linkerInfo.customerList.length>0&&this.linkerInfo.customerList[0].clientImg || ''
+    }
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)

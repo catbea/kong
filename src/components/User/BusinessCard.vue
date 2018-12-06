@@ -139,6 +139,8 @@ export default {
         position: relative;
         margin-left: -10px;
         > .box-content-left {
+          position: relative;
+          width: 200px;
           padding-top: 11px;
           > .content-left-name {
             font-size: 26px;
@@ -165,7 +167,7 @@ export default {
             font-weight: 400;
             color: rgba(174, 177, 194, 1);
             line-height: 12px;
-            margin-top: 18px;
+            margin-top: 15px;
           }
           > .content-left-labe {
             font-size: 10px;
@@ -190,7 +192,9 @@ export default {
         }
         > .box-content-right {
           position: relative;
-          right: -30px;
+              right: 10px;
+          width:80px;
+height:80px;
           > .personIcon {
             width: 80px;
             height: 80px;

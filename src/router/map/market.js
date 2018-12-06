@@ -12,7 +12,7 @@ export default [
   },
   {
     path: '/market/marketDetail/:id',
-    name: 'marketDetailNotOpen',
+    name: 'marketDetail',
     component: resolve =>
       require(['@/views/market/marketDetail/index.vue'], resolve),
     meta: {
@@ -23,7 +23,7 @@ export default [
     }
   },
   {
-    path: '/market/marketDetail/perfect',
+    path: '/marketDetail/perfect',
     name: 'marketDetailPerfect',
     component: resolve =>
       require(['@/views/market/marketDetail/Perfect/index.vue'], resolve),
@@ -35,7 +35,7 @@ export default [
     }
   },
   {
-    path: '/market/marketDetail/correction',
+    path: '/marketDetail/correction',
     name: 'marketDetailCorrection',
     component: resolve =>
       require(['@/views/market/marketDetail/correction/index.vue'], resolve),
@@ -106,7 +106,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/open',
+    path: '/marketDetail/open/:id',
     name: 'marketDetail-open',
     component: resolve =>
       require(['@/views/market/marketDetail/marketOpen/index.vue'], resolve),
@@ -156,7 +156,7 @@ export default [
   },
   {
     path: '/market/inputSearch',
-    name: 'no-input',
+    name: 'searchMarket',
     component: resolve =>
       require(['@/views/market/marketSearch/inputSearch/index.vue'], resolve),
     meta: {
@@ -164,8 +164,8 @@ export default [
     }
   },
   {
-    path: '/market/marketDetail/photo',
-    name: 'no-input',
+    path: '/marketDetail/photo',
+    name: 'photoList',
     component: resolve =>
       require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
     meta: {

@@ -6,6 +6,26 @@
         <p class="info-value">{{item.value}}</p>
       </div>
     </div>
+    <ul>
+      <li>
+        <p class="content-title">2018年6月15日 16:12</p>
+        <div class="content-box">
+          <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
+        <p>当日第<span>3</span> 次浏览了楼盘 碧桂园凤凰国际</p>
+        <p>浏览市场<span>大于60s</span> 篇幅<span>小于50%</span></p>
+        <p>累计<span>浏览1次</span>该楼盘, 平均<span>停留5.5s</span></p>
+        </div>
+      </li>
+      <li>
+        <p class="content-title">2018年6月15日 16:12</p>
+        <div class="content-box">
+          <span class="icon-radius" :class="{day:!backColor,dayIn:backColor}"></span>
+        <p>当日第<span>3</span> 次浏览了楼盘 碧桂园凤凰国际</p>
+        <p>浏览市场<span>大于60s</span> 篇幅<span>小于50%</span></p>
+        <p>累计<span>浏览1次</span>该楼盘, 平均<span>停留5.5s</span></p>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 <script>
@@ -20,6 +40,7 @@ export default {
     //   { key: '楼盘浏览', value: 190 },
     //   { key: '文章浏览', value: 124 }
     // ]
+    backColor:true
   }),
   components: {}
 }
@@ -42,6 +63,54 @@ export default {
         font-size: 24px;
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
+      }
+    }
+  }
+  ul{
+    .dayIn{
+        width:7px;
+        height:7px;
+        background:#E5E5E5;
+        top:-13.5px;
+        left:-4.5px;
+    }
+    .day{
+      width:10px;
+      height:10px;
+      background:#007AE6;
+      top:-15.5px;
+      left:-5.5px;
+    }
+    li{
+      width:322px;
+      margin-left:24px;
+      .content-box{
+        border-left:1px solid #E5E5E5;
+        padding-top:12px;
+        position: relative;
+      padding-left:16px;
+      padding-bottom:32px;
+        .icon-radius{
+        border-radius: 50%;
+        position: absolute;
+      }
+      }
+      p{
+        font-size:14px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(102,102,102,1);
+        line-height:22px;
+        display: flex;
+        flex-wrap: wrap;
+        span{
+          color:#007AE6;
+        }
+      }
+      .content-title{
+        font-weight:600;
+        color: #333333;
+        margin-left:16px;
       }
     }
   }

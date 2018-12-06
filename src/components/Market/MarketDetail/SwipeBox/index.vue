@@ -11,7 +11,7 @@
       <div class="market-img-page-panorama">720全景</div>
       <div class="market-img-page-photo" @click.stop="photo">图片</div>
       <div class="num">
-        {{ current + 1 }}/{{bannerList.length}}
+        {{ current + 1 }}/{{bannerList&&bannerList.length}}
       </div>
       <div class="collect-box" @click.stop="collect">
         <!-- <div class="collect" :class="{collectActive:flag}" :style="{'backgroundImage':'url('+flag?imgPlay： +')'}"></div>  -->
@@ -47,11 +47,12 @@ export default {
   }),
   methods: {
     closeDom(n) {
+      this.$router.push('/marketDetail/perfect')
       this.show = n
     },
     photo() {
       // console.log(0)
-      this.$router.push('/market/marketDetail/photo')
+      this.$router.push('/marketDetail/photo')
     },
     onChange(index) {
       console.log(index)

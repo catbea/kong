@@ -17,6 +17,7 @@ export default async (to, from, next) => {
     let wxredirecturl = window.location.href.split("#")[0].split("?")[0]
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
     if(parm.cropId){
+        store.dispatch('getUserInfo', {})
         let cropId = parm.cropId
         await localStorage.setItem('cropId', cropId)
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
@@ -38,9 +39,9 @@ export default async (to, from, next) => {
                 let pcOpenid = userInfo.pcOpenid
                 console.log(pcOpenid, 'pcOpenId')
                 console.log(parm.code, 'parm.code===')
-                // const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
-                // userInfo.payOpenId = payopenIdObject.payOpenId
-                // store.dispatch('getUserInfo', userInfo)
+                const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
+                userInfo.payOpenId = payopenIdObject.payOpenId
+                store.dispatch('getUserInfo', userInfo)
                 console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
                 next()
             } else {

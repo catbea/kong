@@ -37,9 +37,9 @@ export default {
     }
   },
 
-  created(){
-    let mobileNum= this.$route.query.phoneNum;
-    this.Cphone=mobileNum
+  created() {
+    let mobileNum = this.$route.query.phoneNum
+    this.Cphone = mobileNum
   },
 
   methods: {
@@ -68,12 +68,11 @@ export default {
       }
     },
 
-    upDatePhoneNum(obj) {
-      const result = userService.upDateUserInfo(obj)
-      if(result){
-          this.$router.go(-1)
-        }
-
+    async upDatePhoneNum(obj) {
+      const result = await userService.upDateUserInfo(obj)
+      if (result) {
+        this.$router.go(-1)
+      }
     }
   }
 }

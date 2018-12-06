@@ -52,6 +52,7 @@ const state = {
     // payCorpId: "ww5e4d879ddc307ea1",
     // cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
+    payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
     position: "",
     price: 0,
     qrCode: "https://720ljq2test-10037467.file.myqcloud.com/ljqzs/cardQrcode/4149/Timef021faa6-738d-4f03-8b5f-c8840b555494.jpg",
@@ -87,14 +88,18 @@ const state = {
     clientPhone: '',
     distributorId: '',
     institutionId: ''
-  }
+  },
+  //用户头像
+  updateUserAvatar: '',
+
 }
 
 const getters = {
   userInfo: state => state.userInfo,
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
-  reportAddInfo: state => state.reportAddInfo
+  reportAddInfo: state => state.reportAddInfo,
+  updateUserAvatar: state => state.updateUserAvatar,
 }
 
 const actions = {
@@ -111,7 +116,10 @@ const actions = {
   },
   getReportAddInfo({ commit }, data) {
     commit(types.REPORT_INFO, data)
-  }
+  },
+  getUserAvatar({ commit }, data) {
+    commit(types.USER_AVATAR, data)
+  },
 }
 
 const mutations = {
@@ -124,8 +132,8 @@ const mutations = {
   [types.USER_AREA](state, data) {
     // state.userArea = Object.assign(state.userArea, data)
   },
-  [types.REPORT_INFO](state, data) {
-    state.reportAddInfo = data
+  [types.USER_AVATAR](state, data) {
+    state.updateUserAvatar = data
   }
 }
 

@@ -2,12 +2,6 @@
   <div class="market-detail-info-page">
     <InfoTop v-for="(item,index) in topList" :key="index" :topInfo="item">
     </InfoTop>
-    <!-- <InfoTop :info="topa"></InfoTop>
-    <InfoTop :info="topb"></InfoTop>
-    <InfoTop :info="topc"></InfoTop>
-    <InfoTop :info="topd"></InfoTop>
-    <InfoTop :info="tope"></InfoTop>
-    <InfoTop :info="topf"></InfoTop> -->
     <div class="title">
       <ul>
         <li>预售许可证</li>
@@ -33,100 +27,136 @@ export default {
     InfoMiddle
   },
   created() {
-    this.$store.commit(types.TABBAR, false)
+    this.$store.commit(types.TABBAR,false)
     this.info = this.$route.query
+    console.log(this.info,999999999999999)
   },
-  data: () => ({
-    warnImg:require('IMG/marketDetail/warn.png'),
-    topList: [
+  computed:{
+    topList(){
+      return [
       {
-        top: [{ left: '开发商', right: '惠州市太东地产有限公司' }]
+        top: [{ left: '开发商', right: this.info.developer}]
       },
       {
         top: [
-          { left: '楼盘状态', right: '在售 ' },
-          { left: '参考均价', right: '15000元/㎡ ' },
-          { left: '开盘时间', right: '2017年01月23日 ' },
-          { left: '交房时间', right: '2019年01月23日 ' }
+          { left: '楼盘状态', right: this.info.saleStatus },
+          { left: '参考均价', right: this.info.averagePrice },
+          { left: '开盘时间', right:this.info.openTime},
+          { left: '交房时间', right: this.info.expectedOthers}
         ]
       },
       {
         top: [
-          { left: '区域位置', right: '宝安区 ' },
+          { left: '区域位置', right:this.info.district},
           {
             left: '楼盘地址',
-            right:
-              '广东省深圳市宝安区前进一路92号广东省深圳市宝安区前进一路92号广东省深圳市宝安区前进一路92号广东省深圳市宝安区前进一路92号'
+            right:this.info.detailAddress
           },
-          { left: '售楼处地址', right: '广东省深圳市宝安区前进一路92号 ' }
+          { left: '售楼处地址', right:this.info.saleAddress}
         ]
       },
       {
         top: [
-          { left: '建筑风格', right: '在售 ' },
-          { left: '产权年限', right: '在售 ' },
-          { left: '装修标准', right: '在售 ' },
-          { left: '占地面积', right: '在售 ' },
-          { left: '建筑面积', right: '在售 ' },
-          { left: '容积率', right: '在售 ' },
-          { left: '绿化率', right: '在售 ' },
-          { left: '规划户数', right: '在售 ' },
-          { left: '规划车位', right: '在售 ' }
+          { left: '建筑风格', right:this.buildStyle},
+          { left: '产权年限', right:this.info.propertyYears},
+          { left: '装修标准', right:this.decorateStatus},
+          { left: '占地面积', right:this.info.coverArea},
+          { left: '建筑面积', right:this.info.buildArea},
+          { left: '容积率', right:this.info.plotRate},
+          { left: '绿化率', right:this.info.greenRate},
+          { left: '规划户数', right:this.info.householdNum},
+          { left: '规划车位', right:this.info.carNum}
         ]
       },
       {
         top: [
-          { left: '物业类型  ', right: '在售 ' },
-          { left: '物业公司', right: '在售 ' },
-          { left: '物业费', right: '在售 ' }
+          { left: '物业类型  ', right:this.houseUse},
+          { left: '物业公司', right:this.info.management},
+          { left: '物业费', right:this.info.managementPrice}
         ]
       },
       {
         top: [
-          { left: '供暖方式  ', right: '暂无信息' },
-          { left: '供水类型', right: '民水 ' },
-          { left: '供电类型', right: '民电 ' }
-        ]
-      }
-    ],
-    middleList: [
-      {
-        middle: [
-          { left: '供暖方式  ', right: '暂无信息', center: '右边' },
-          { left: '供水类型', right: '民水 ', center: '右边' },
-          { left: '供电类型', right: '民电 ', center: '右边' }
-        ]
-      },
-      {
-        middle: [
-          { left: '供暖方式  ', right: '暂无信息', center: '右边' },
-          { left: '供水类型', right: '民水 ', center: '右边' },
-          { left: '供电类型', right: '民电 ', center: '右边' }
-        ]
-      },
-      {
-        middle: [
-          { left: '供暖方式  ', right: '暂无信息', center: '右边' },
-          { left: '供水类型', right: '民水 ', center: '右边' },
-          { left: '供电类型', right: '民电 ', center: '右边' }
-        ]
-      },
-      {
-        middle: [
-          { left: '供暖方式  ', right: '暂无信息', center: '右边' },
-          { left: '供水类型', right: '民水 ', center: '右边' },
-          { left: '供电类型', right: '民电 ', center: '右边' }
-        ]
-      },
-      {
-        middle: [
-          { left: '供暖方式  ', right: '暂无信息', center: '右边' },
-          { left: '供水类型', right: '民水 ', center: '右边' },
-          { left: '供电类型', right: '民电 ', center: '右边' }
+          { left: '供暖方式  ', right:this.info.heatingType},
+          { left: '供水类型', right:this.info.waterType},
+          { left: '供电类型', right:this.info.electricType}
         ]
       }
     ]
-  })
+    },
+    middleList(){
+      return [
+      {
+        middle: [
+          { left:this.info.licence, right:this.info.certificationTime, center:this.info.bindBuilding}
+        ]
+      }
+    ]
+    },
+    buildStyle(){
+      switch (this.info.buildStyle) {
+        case '0':
+          return '塔楼'
+          case '1':
+          return '板楼'
+          case '2':
+          return '平板'
+          case '3':
+          return '塔板结合'
+        default:
+          return '暂无信息'
+      }
+    },
+    decorateStatus(){
+      switch (this.info.decorateStatus) {
+        case '0':
+          return '精装'
+          case '1':
+          return '毛坯'
+          case '2':
+          return '简单装修'
+          case '3':
+          return '全装修'
+          case '4':
+          return '公共部分精装修'
+        default:
+          return '暂无信息'
+      }
+    },
+    houseUse(){
+      switch (this.info.houseUse) {
+        case '0':
+          return '普通住宅'
+          case '1':
+          return '商住两用'
+          case '2':
+          return '商品房'
+          case '3':
+          return '建筑综合体'
+          case '4':
+          return '商铺'
+          case '5':
+          return '写字楼'
+          case '6':
+          return '别墅'
+          case '7':
+          return '公寓'
+          case '8':
+          return '洋房'
+          case '9':
+          return '酒店 '
+        default:
+          break;
+      }
+    }
+  },
+  data: () => ({
+    info:null,
+    warnImg:require('IMG/marketDetail/warn.png'),
+  }),
+  methods:{
+    
+  }
 }
 </script>
 <style lang="less">
