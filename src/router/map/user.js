@@ -298,5 +298,16 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/user/edit/cutImg',
+    name: 'cutImg',
+    component: resolve => require(['@/views/user/edit/cutImg.vue'], resolve),
+    meta: {
+      title: '照片裁剪',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
