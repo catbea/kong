@@ -72,6 +72,17 @@ export default {
       const res = await commonService.payForProject(param)
       if (res.isPay) {
         console.log(res, '调起支付')
+        ///////
+          let parm = {
+              appId: res.appId,
+              timeStamp: res.timestamp,
+              nonceStr: res.nonceStr,
+              package: res.packageId,
+              signType: 'MD5',
+              paySign: res.signature
+            }
+            console.log(parm, '支付参数')
+        //////
         wx.chooseWXPay({
           //弹出支付
           appId: res.appId,
