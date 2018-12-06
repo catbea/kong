@@ -88,14 +88,18 @@ const state = {
     clientPhone: '',
     distributorId: '',
     institutionId: ''
-  }
+  },
+  //用户头像
+  updateUserAvatar: '',
+
 }
 
 const getters = {
   userInfo: state => state.userInfo,
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
-  reportAddInfo: state => state.reportAddInfo
+  reportAddInfo: state => state.reportAddInfo,
+  updateUserAvatar: state => state.updateUserAvatar,
 }
 
 const actions = {
@@ -112,7 +116,10 @@ const actions = {
   },
   getReportAddInfo({ commit }, data) {
     commit(types.REPORT_INFO, data)
-  }
+  },
+  getUserAvatar({ commit }, data) {
+    commit(types.USER_AVATAR, data)
+  },
 }
 
 const mutations = {
@@ -125,8 +132,8 @@ const mutations = {
   [types.USER_AREA](state, data) {
     // state.userArea = Object.assign(state.userArea, data)
   },
-  [types.REPORT_INFO](state, data) {
-    state.reportAddInfo = data
+  [types.USER_AVATAR](state, data) {
+    state.updateUserAvatar = data
   }
 }
 

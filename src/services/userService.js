@@ -291,5 +291,17 @@ class UserService {
     })
   }
 
+  /**
+   * 更新头像
+   * @param {*} nameEditRq 
+   */
+  upHeaderImg(nameEditRq) {
+    return xhr({
+      method: 'POST',
+      url: '/user/updateUserAavatarByUserId',
+      body: nameEditRq
+    })
+  }
+
 }
 export default new UserService()
