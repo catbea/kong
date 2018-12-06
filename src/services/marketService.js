@@ -60,6 +60,18 @@ class MarketService {
       }
     })
   }
+  /**
+   * 楼盘详情-楼盘未显示的全部楼盘动态
+   * @param {*} linkerId 
+   */
+  getAllDynamicList(linkerId) {
+    return xhr({
+      url: '/linkerDetail/getHouseDynamicList',
+      body: {
+        linkerId
+      }
+    })
+  }
   /*
    * 楼盘详情-佣金信息
    * @param {*} linkerId 
@@ -82,6 +94,18 @@ class MarketService {
       url: '/linkerDetail/getHouseAroundType',
       body: {
         linkerId
+      }
+    })
+  }
+  /**
+   * 楼盘详情-楼盘详情纠错
+   * 
+   */
+  getCorrection() {
+    return xhr({
+      url: '/linkerDetail/houseErrorTionSelect',
+      body: {
+        
       }
     })
   }

@@ -1,18 +1,14 @@
 <template>
-  <div class="search-container dev">
-    <div class="search-box-content">
-      <p @click="siteClickHandler">
-        {{conf.siteText}}
-        <span class="bg_img" :style="{'background':'url(' + arrowIcon + ')','background-size':'contain'}"></span>
-      </p>
-      <span class="icon-line"></span>
-      <!-- <router-link to="/market/inputSearch"> -->
-      <!-- <form action="/"> -->
-      <van-search class="search-box" :placeholder="conf.placeholderText"/>
-      <!-- </form> -->
-      <!-- </router-link> -->
+  <div class="search-container">
+    <div class="site-box" @click="siteClickHandler">
+      {{conf.siteText}}
+      <div class="bg_img arrow-icon" :style="{'backgroundImage':'url(' + arrowIcon + ')'}"></div>
+      <div class="border-right"></div>
     </div>
-    <div class="site-select"></div>
+    <div class="search-input-box">
+      <i class="van-icon van-icon-search van-cell__left-icon"></i>
+      <input type="search" :placeholder="conf.placeholder">
+    </div>
   </div>
 </template>
 <script>
@@ -21,49 +17,72 @@ export default {
     conf: {
       type: Object,
       default: function() {
-        return
+        return { siteText: '北京市' , placeholder: '请输入平台名称'}
       }
     }
   },
   data: () => ({
     arrowIcon: require('IMG/market/list__arrow_@2x.png')
-  })
+  }),
+  methods: {
+    siteClickHandler() {
+      this.$router.push('')
+    }
+  }
 }
 </script>
-
 <style lang="less" scoped>
-.search-container-new {
+.search-container {
   width: 100%;
   height: 100%;
-  // margin: 5px 10px;
   border-radius: 4px;
-  background-color: #F5F5F5;
-  > .search-box-content {
+  background-color: #f5f5f5;
+  display: flex;
+  > .site-box {
+    position: relative;
+    font-size: 12px;
+    color: #666666;
+    line-height: 30px;
+    width: 70px;
+    height: 100%;
+    padding: 0 0 0 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    // border-right: 1px solid red;
+    // margin: 10px 0;
+    > .arrow-icon {
+      position: absolute;
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      top: 7px;
+    }
+    > .border-right {
+      position: absolute;
+      display: inline-block;
+      z-index: 10;
+      border-right: 1px solid #e6e6e6;
+      height: 50%;
+      top: 25%;
+      right: 0px;
+    }
+  }
+  > .search-input-box {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
     display: flex;
-    font-size: 13px;
-    > p {
-      width: 45px;
-      display: flex;
-      overflow: hidden; /*超出部分隐藏*/
-      white-space: nowrap; /*不换行*/
-      text-overflow: ellipsis;
-      > span {
-        width: 16px;
-        height: 16px;
-      }
+    font-size: 12px;
+    > i {
+      padding: 3px 4px 3px 8px;
     }
-    > .icon-line {
-      width: 1px;
-      height: 12px;
-    }
-    > .search-box {
-      padding: 0;
-      .van-cell {
-        background: rgba(245, 245, 245, 1);
-        input {
-          line-height: 24px;
-        }
-      }
+    > input {
+      width: 100%;
+      background-color: #f5f5f5;
+      border: none;
+      border-radius: 4px;
     }
   }
 }

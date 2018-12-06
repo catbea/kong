@@ -20,9 +20,10 @@ const state = {
     customEnterpriseName: "",
     deleteFlag: 0,
     distributorId: "124",
-    distributorName: "",
+    distributorName: "垃圾垃圾",
     enterpriseId: "90",
     enterpriseName: "尊豪科技SIT",
+    organizationName:'机构',
     existNewCoupons: "",
     existNewProject: "",
     givePrice: 0,
@@ -39,7 +40,7 @@ const state = {
     loginTime: "2018-11-10 02:28:16",
     logoUrl: "",
     majorCity: "",
-    majorRegion: "",
+    majorRegion: "111111",
     masterRecommendTip: "",
     minOpenid: "",
     mobile: "18676652795",
@@ -52,6 +53,7 @@ const state = {
     // payCorpId: "ww5e4d879ddc307ea1",
     // cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
+    payOpenId: 'o_iHQ0j9FdSX9B7-1jhI9-0-4d7Y',
     position: "",
     price: 0,
     qrCode: "https://720ljq2test-10037467.file.myqcloud.com/ljqzs/cardQrcode/4149/Timef021faa6-738d-4f03-8b5f-c8840b555494.jpg",
@@ -70,8 +72,8 @@ const state = {
     wechatAccount: "112110",
     labelList: [
       {
-        labelId: '001',
-        labelName: '价格屠夫'
+        id: '001',
+        itemName: '价格屠夫'
       }
     ]
   },

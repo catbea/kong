@@ -18,7 +18,11 @@
   </div>
 </template>
 <script>
+import marketService from 'SERVICE/marketService'
 export default {
+  created() {
+    this.getCorrectionInfo()
+  },
   data: () => ({
     Surplus: 50,
     introduct: '',
@@ -26,7 +30,7 @@ export default {
     list: [
       { text: '价格错误', check: false },
       { text: '位置错误', check: false },
-      { text: '开盘错误', check: false },
+      { text: '', check: false },
       { text: '预计交房错误', check: false },
       { text: '其他错误', check: false }
     ]
@@ -38,6 +42,13 @@ export default {
     descArea() {
       var textVal = this.introduct.length
       this.Surplus = 50 - textVal
+    },
+    async getCorrectionInfo(){
+      let res = await marketService.getCorrection()
+      for (let index = 0; index < this.list.length; index++) {
+        this.list[index].text=res[index].item_name
+      }
+      console.log(res)
     }
   }
 }

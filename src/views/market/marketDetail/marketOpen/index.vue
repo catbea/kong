@@ -1,13 +1,12 @@
 <template>
   <div class="market-open-page">
-   <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" 
-    :dredge="dredge" :borderBottom="borderBottom"></market-describe>
-   <market-priceSurface :priceList="priceList" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
+   <market-describe :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
+   <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
     </div>
-   <open-payment :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
+   <open-payment class="pay-submit-info" :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
   </div>
 </template>
 <script>
@@ -24,15 +23,19 @@ export default {
     OpenPayment
   },
   created() {
+    this.linkerId = this.$route.params.id
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
   },
   data: () => ({
+    linkerId: '',
+    projectInfo: {},
     priceList: [],
+    priceSurfacePayInfo: {},
+    currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
     show: false,
-    resInfo: null,
     dredge: false,
     borderBottom: false
   }),
@@ -40,11 +43,16 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
-    skipAgreement(){
+    skipAgreement() {
       this.$router.push('/marketDetail/open/agreement')
     },
     priceItemClickHandle(index) {
-      // console.log(index)
+      this.currPriceListIndex = index
+      let priceItem = this.priceList[this.currPriceListIndex]
+      this.submitPayInfo = {
+        value: priceItem.subscribeAmount,
+        coupon: 0
+      }
     },
 
     couponClickHandle() {
@@ -52,21 +60,61 @@ export default {
     },
 
     async paySubmit() {
+      let priceItem = this.priceList[this.currPriceListIndex]
       let param = {
-        linkerId: 'c387363940c04c6d83a45ee0ccad3d78',
-        linkerName: '【中原地产】泰华明珠',
+        linkerId: this.linkerId,
+        linkerName: this.projectInfo.linkerName,
         costType: 2, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
-        subscribeNum: 3,
-        amountId: 1064, //活动金额
-        payOpenid: this.userInfo.pcOpenid
+        subscribeNum: priceItem.subscribeNum,
+        amountId: priceItem.id,
+        payOpenid: this.userInfo.payOpenId
       }
       const res = await commonService.payForProject(param)
-      console.log(res, 'paySubmit res')
+      if (res.isPay) {
+        console.log(res, '调起支付')
+        alert('appid:'+res.appId);
+        ///////
+          let parm = {
+              timestamp: res.timestamp,
+              nonceStr: res.nonceStr,
+              package: res.packageId,
+              signType: 'MD5',
+              paySign: res.signature
+            }
+            console.log(parm, '支付参数')
+        //////
+        wx.chooseWXPay({
+          //弹出支付
+          timestamp: res.timestamp,
+          nonceStr: res.nonceStr,
+          package: res.packageId,
+          signType: 'MD5',
+          paySign: res.signature,
+          success: function(res) {
+            console.log('支付suss')
+          },
+          cancel: function(res) {
+            //用户付钱失败。没钱，密码错误，取消付款
+          },
+          fail: function(res) {
+            console.log(res,'支付取消了')
+          }
+        })
+      }
     },
+
     async getMarketDescribeInfo() {
-      const res = await marketService.getMarketDescribe()
-      console.log(res.records, 'getMarketDescribeInfo')
-      this.resInfo = res.records
+      const res = await marketService.getLinkerDetail(this.linkerId)
+      console.log(res, 'getMarketDescribeInfo')
+      this.projectInfo = {
+        linkerImg: res.headImgUrl,
+        linkerAddress: `${res.city} ${res.county}`,
+        linkerTags: res.projectTagList,
+        linkerPrice: res.averagePrice,
+        linkerName: res.linkerName,
+        openTimes: res.openTimes,
+        commission: res.commission
+      }
     },
     async getLinkerAmountList() {
       const res = await marketService.getLinkerAmountList()
@@ -79,11 +127,16 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
+  .pay-submit-info {
+    position: fixed;
+    bottom: 0px;
+    z-index: 9;
+  }
   .agreement-box {
     height: 65px;
     line-height: 65px;
     text-align: center;
-    margin: 16px 0 16px 0;
+    margin: 16px 0 66px 0;
     span:nth-child(1) {
       font-size: 10px;
       font-family: PingFang-SC-Regular;

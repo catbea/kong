@@ -52,7 +52,7 @@ export default {
     },
     photo() {
       // console.log(0)
-      this.$router.push('/market/marketDetail/photo')
+      this.$router.push('/marketDetail/photo')
     },
     onChange(index) {
       console.log(index)

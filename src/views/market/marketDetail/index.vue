@@ -20,9 +20,9 @@
         <specific-marketDetail :info="linkerInfo&&linkerInfo"></specific-marketDetail>
       </div>
       <div class="button-box" @click="moreInfoHandle">更多信息</div>
-      <title-bar :conf="confA" :isShow="linkerInfo&&linkerInfo.houseTypeList.length>0"></title-bar>
+      <title-bar :conf="confType" :isShow="linkerInfo&&linkerInfo.houseTypeList.length>0"></title-bar>
       <all-marketType :houseTypeList="linkerInfo&&linkerInfo.houseTypeList"></all-marketType>
-      <title-bar :conf="confB" :isShow="linkerInfo&&linkerInfo.houseDynamicList.length>0"></title-bar>
+      <title-bar :conf="confDynamic" :isShow="linkerInfo&&linkerInfo.houseDynamicList.length>0"></title-bar>
       <ul class="market-state-box" v-if="linkerInfo&&linkerInfo.houseDynamicList.length>0">
         <li class="market-state-box-top">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].title:''}}</li>
         <li
@@ -30,9 +30,9 @@
         >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].content:''}}</li>
         <li class="market-state-box-bottom">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].dynamicTime:''}}</li>
       </ul>
-      <title-bar :conf="confC" :isShow="linkerInfo&&linkerInfo.aroundList.length>0"></title-bar>
+      <title-bar :conf="confLocation" :isShow="linkerInfo&&linkerInfo.aroundList.length>0"></title-bar>
       <site-nearby :aroundList="linkerInfo&&linkerInfo.aroundList"></site-nearby>
-      <title-bar :conf="confD" :isShow="linkerInfo&&linkerInfo.linkerOtherList.length>0"></title-bar>
+      <title-bar :conf="confElse" :isShow="linkerInfo&&linkerInfo.linkerOtherList.length>0"></title-bar>
       <all-elseMarket :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList" @itemClick="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
@@ -100,22 +100,22 @@ export default {
     openFlag: true,
     tabList: ['楼盘', '户型', '位置', '周边', '推荐'],
     tabIndex: 0,
-    confA: {
+    confType: {
       title: '户型',
       linkText: '全部户型',
       link: '/marketDetail/FamilyList'
     },
-    confB: {
-      title: '楼盘动态 (12)',
+    confDynamic: {
+      title: '楼盘动态 (?)',
       linkText: '全部动态',
-      link: '/marketDetail/marketAllDynamic'
+      link: '/marketDetail/marketAllDynamic/'
     },
-    confC: {
+    confLocation: {
       title: '位置周边',
       linkText: '全部周边',
       link: '/marketDetail/marketDetail/allNear'
     },
-    confD: {
+    confElse: {
       title: '其他楼盘',
       linkText: '全部楼盘',
       link: '/market'
@@ -134,6 +134,14 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
+    /**
+     * 楼盘详情内展开更多信息
+     */
+    titleBarHandle(){
+      // this.confElse.link=this.confElse.link+this.linkerId
+      this.confDynamic.link=this.confDynamic.link+this.linkerId
+
+    },
     hintHandle() {
       this.hintShow = false
     },
@@ -153,14 +161,13 @@ export default {
       this.show = true
     },
     moreInfoHandle() {
-      this.$router.push('/marketDetail/info')
+      this.$router.push({path: '/marketDetail/info', query: this.linkerInfo})
     },
     skipMarketDetail(val){
       this.$router.push({name:'marketDetail', params:{id: val.linkerId}})
     },
     marketOpenHandle(){
       this.$router.push({name:'marketDetail-open', params:{id:this.linkerId}})
-      console.log(1111111878788)
     },
     /**
      * 楼盘详情信息
@@ -168,12 +175,14 @@ export default {
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
       this.linkerInfo = result
+      console.log(result)
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
       houseUseList.unshift(result.saleStatus)
       this.info = houseUseList
-      this.confB.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
+      this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.openStatus = result.openStatus
+      this.titleBarHandle()
     },
 
     /**

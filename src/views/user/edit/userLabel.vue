@@ -10,6 +10,7 @@
             data-type="welfare"
             name="reason"
             :value="item.itemName"
+            @click="selectLabel(key)"
           >
           <label :for="item.id">{{item.itemName}}</label>
         </span>
@@ -22,7 +23,8 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
-import { Checkbox, CheckboxGroup ,Dialog} from 'vant'
+import { Checkbox, CheckboxGroup, Dialog } from 'vant'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -36,13 +38,35 @@ export default {
       itemCode: '',
       itemName: '',
       couponsMap: [],
-      namelist: []
+      namelist: [],
+      selectLabelList: []
     }
   },
   created() {
     this.getAgentLabelList()
   },
+
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+
   methods: {
+    selectLabel(index) {
+      let obj = this.agentLabel[index]
+
+      let isExist = this.isExistElement(this.selectLabelList, obj)
+      if (isExist) {
+        //存在
+        let index = this.selectLabelList.indexOf(obj)
+        if (index > -1) {
+          this.selectLabelList.splice(index, 1)
+        }
+      } else {
+        //不存在
+        this.selectLabelList.push(obj)
+      }
+    },
+
     async getAgentLabelList() {
       const res = await userService.getAgentLabelList(1)
       this.agentLabel = res
@@ -51,6 +75,9 @@ export default {
     async SubLabel() {
       var selectidlist = '' //将选中值拼接成字符串
       var check = document.getElementsByName('reason')
+
+      let obj = {}
+
       for (var i = 0; i < check.length; i++) {
         if (check[i].checked == true) {
           selectidlist = selectidlist + check[i].id + ','
@@ -64,14 +91,26 @@ export default {
           // on close
         })
       } else {
+       
         let userList = {
           lableList: selectidlist
         }
         const res = await userService.upDateUserInfo(userList)
         if(res){
+          this.$store.dispatch('userInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
           this.$router.go(-1)
         }
       }
+    },
+
+    isExistElement(arr, value) {
+      if (arr.indexOf && typeof arr.indexOf == 'function') {
+        var index = arr.indexOf(value)
+        if (index >= 0) {
+          return true
+        }
+      }
+      return false
     }
   }
 }

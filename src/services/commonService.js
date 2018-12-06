@@ -66,5 +66,23 @@ class CommonService {
       body: param
     })
   }
+
+  /**
+   * 获取所有城市列表
+   */
+  getCityList() {
+    return xhr({
+      url: '/common/getCity'
+    })
+  }
+
+  /**
+   * 获取热门城市列表
+   */
+  getHotCityList() {
+    return xhr({
+      url: '/common/getCityHot'
+    })
+  }
 }
 export default new CommonService()
