@@ -303,5 +303,15 @@ class UserService {
     })
   }
 
+  /**
+   * 获取cos签名
+   */
+  getCosAppSign(){
+    return xhr({
+      method: 'POST',
+      url: '/cos/getCosSignature',
+    })
+  }
+
 }
 export default new UserService()

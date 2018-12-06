@@ -36,6 +36,7 @@
 <script>
 import userService from 'SERVICE/userService'
 import { Dialog } from 'vant'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Dialog
@@ -56,6 +57,12 @@ export default {
       headIconLast: { itemCode: '', isActivted: false, type: 2 }
     }
   },
+
+
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+
   created() {
     this.getAgentLabelList()
   },
@@ -113,9 +120,12 @@ export default {
 
     async upHeaderImg(obj) {
       const result = await userService.upHeaderImg(obj)
-      if (result) {
-        this.$router.go(-1)
-      }
+       if(result){
+        
+       }else{
+         this.$store.dispatch('userInfo', Object.assign(this.userInfo, { avatarUrl: this.avatar }))
+          this.$router.go(-1)
+       }
     },
 
     /**
