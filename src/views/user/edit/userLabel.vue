@@ -65,8 +65,6 @@ export default {
         //不存在
         this.selectLabelList.push(obj)
       }
-
-      console.log(this.selectLabelList)
     },
 
     async getAgentLabelList() {
