@@ -72,6 +72,7 @@ export default {
       const res = await commonService.payForProject(param)
       if (res.isPay) {
         console.log(res, '调起支付')
+        alert('appid:'+res.appId);
         ///////
           let parm = {
               appId: res.appId,
