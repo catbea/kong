@@ -26,6 +26,14 @@ export default {
     this.linkerId = this.$route.params.id
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
+
+    wx.ready(()=>{
+            wx.getNetworkType({
+                success:  (res)=> {
+                    console.log(res, 'getNetworkType')
+                }
+            });
+        })
   },
   data: () => ({
     linkerId: '',
