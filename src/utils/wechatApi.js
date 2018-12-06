@@ -21,7 +21,7 @@ class WechatApi {
    * 获取微信Ticket
    */
   async _getTicket() {
-    let url = window.location.href.split('#')[0].split("?")[0]
+    let url = window.location.href.split('#')[0]
     console.log(url, 'sign url')
     let res = await commonService.wxTicket(url, 1)
     let conf = {
@@ -32,6 +32,7 @@ class WechatApi {
       nonceStr: res.nonceStr, // 必填，生成签名的随机串
       signature: res.signature, // 必填，签名，见附录1
       jsApiList: [
+          'chooseWXPay',
           'hideOptionMenu',
           'showOptionMenu',
           'getLocation',

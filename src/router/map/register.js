@@ -30,5 +30,13 @@ export default [
     meta: {
       title: '注册'
     }
+  },
+  {
+    path: '/register/searchCompany',
+    name: 'search-company',
+    component: resolve => require(['@/views/register/searchCompany.vue'], resolve),
+    meta: {
+      title: '搜索公司'
+    }
   }
 ]

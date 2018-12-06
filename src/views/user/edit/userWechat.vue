@@ -14,6 +14,7 @@
 import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 import strFormat from '@/filters/strFormat'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -24,6 +25,11 @@ export default {
     return {
       weChatNum: ''
     }
+  },
+
+  
+   computed: {
+    ...mapGetters(['userInfo'])
   },
 
   created() {
@@ -52,6 +58,7 @@ export default {
     async upDateWeChat(obj) {
       const result = await userService.upDateUserInfo(obj)
      if(result){
+       this.$store.dispatch('userInfo', Object.assign(this.userInfo, { wechatAccount: this.weChatNum }))
           this.$router.go(-1)
         }
     }
