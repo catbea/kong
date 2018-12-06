@@ -85,8 +85,7 @@ export default {
         //////
         wx.chooseWXPay({
           //弹出支付
-          appId: res.appId,
-          timeStamp: res.timestamp,
+          timestamp: res.timestamp,
           nonceStr: res.nonceStr,
           package: res.packageId,
           signType: 'MD5',
