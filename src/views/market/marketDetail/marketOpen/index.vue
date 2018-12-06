@@ -26,9 +26,6 @@ export default {
     this.linkerId = this.$route.params.id
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
-
-    this.getTikck()
-    
   },
   data: () => ({
     linkerId: '',
@@ -62,20 +59,6 @@ export default {
       console.log('couponClickHandle========')
     },
 
-    async getTikck() {
-        let url = window.location.href;
-        let res = await commonService.wxTicket(url)
-        wx.config({
-              beta: true,
-              debug: false,
-              appId: res.appId,
-              timestamp: res.timestamp,
-              nonceStr: res.nonceStr,
-              signature: res.signature,
-              jsApiList: ["chooseWXPay"]
-        });
-    },
-
     async paySubmit() {
       let priceItem = this.priceList[this.currPriceListIndex]
       let param = {
@@ -89,13 +72,24 @@ export default {
       const res = await commonService.payForProject(param)
       if (res.isPay) {
         console.log(res, '调起支付')
+        alert('appid:'+res.appId);
+        ///////
+          let parm = {
+              timestamp: res.timestamp,
+              nonceStr: res.nonceStr,
+              package: res.packageId,
+              signType: 'MD5',
+              paySign: res.signature
+            }
+            console.log(parm, '支付参数')
+        //////
         wx.chooseWXPay({
           //弹出支付
-          timestamp: res.timeStamp,
+          timestamp: res.timestamp,
           nonceStr: res.nonceStr,
-          package: res.packageValue,
+          package: res.packageId,
           signType: 'MD5',
-          paySign: res.paySign,
+          paySign: res.signature,
           success: function(res) {
             console.log('支付suss')
           },

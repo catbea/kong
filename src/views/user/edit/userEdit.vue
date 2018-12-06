@@ -57,8 +57,8 @@
           <div
             class="tag-item"
             v-for="item in userInfo.labelList"
-            :key="item.labelId"
-          >{{item.labelName}}</div>
+            :key="item.id"
+          >{{item.itemName}}</div>
         </div>
       </cell>
       <cell
