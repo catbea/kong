@@ -27,9 +27,17 @@ export default {
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
 
-    wx.ready(()=>{
-       console.log(wx)
-    })
+    let url = window.location.href;
+    let res = await commonService.wxTicket(url)
+    wx.config({
+          beta: true,
+          debug: false,
+          appId: res.appId,
+          timestamp: res.timestamp,
+          nonceStr: res.nonceStr,
+          signature: res.signature,
+          jsApiList: ["chooseWXPay"]
+    });
     
   },
   data: () => ({
