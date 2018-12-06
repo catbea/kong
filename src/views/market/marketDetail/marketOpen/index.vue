@@ -90,7 +90,7 @@ export default {
           nonceStr: res.nonceStr,
           package: res.packageId,
           signType: 'MD5',
-          paySign: res.signature,
+          paySign: res.signature.toLowerCase(),
           success: function(res) {
             console.log('支付suss')
           },
