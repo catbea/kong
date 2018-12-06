@@ -23,7 +23,7 @@
         <p>）</p>
         </div>
         <div>
-        <p>-￥{{payInfo.balancePay}}</p>
+        <p>-￥{{payInfo.balancePay | priceFormart}}</p>
         </div>
       </div>
     </ul>
