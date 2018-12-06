@@ -36,11 +36,11 @@
       <all-elseMarket :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList" @itemClick="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-        <router-link to="/market/marketDetail/correction" class="feedback">反馈纠错</router-link>
+        <router-link to="/marketDetail/correction" class="feedback">反馈纠错</router-link>
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
       </div>
     </div>
-    <open-marketButton v-if="openStatus=='0' || openStatus==''"></open-marketButton>
+    <open-marketButton v-if="openStatus=='0' || openStatus==''" @click.native="marketOpenHandle"></open-marketButton>
     <!-- v-if="openFlag" -->
     <market-renew v-if="openStatus=='1' || openStatus=='2'"></market-renew>
     <van-popup v-model="show">
@@ -156,7 +156,11 @@ export default {
       this.$router.push('/marketDetail/info')
     },
     skipMarketDetail(val){
-      this.$router.push({name:'marketDetailNotOpen', params:{id: val.linkerId}})
+      this.$router.push({name:'marketDetail', params:{id: val.linkerId}})
+    },
+    marketOpenHandle(){
+      this.$router.push({name:'marketDetail-open', params:{id:this.linkerId}})
+      console.log(1111111878788)
     },
     /**
      * 楼盘详情信息

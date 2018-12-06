@@ -30,10 +30,10 @@ export default {
     padding: 0 0 0 15px;
     width: 360px;
     background: #ffffff;
+    border-bottom: 1px solid #eeeeee;
     ol {
       width: 340px;
       overflow: hidden;
-      border-bottom: 1px solid #eeeeee;
       margin-right: 15px;
       li {
         font-size: 14px;
@@ -47,31 +47,6 @@ export default {
         div {
           width: 120px;
         }
-        // margin-bottom: 17px;
-        // div:nth-child(1){
-        //   width: 100px;
-        //   font-size:14px;
-        // font-family:PingFangSC-Regular;
-        // font-weight:400;
-        // color:rgba(150,158,168,1);
-        // line-height:normal;
-        // }
-        //  div:nth-child(2){
-        //    width: 220px;
-        //    font-size:14px;
-        //   font-family:PingFangSC-Regular;
-        //   font-weight:400;
-        //   color:rgba(51,51,51,1);
-        //   line-height:normal;
-        // }
-        // div:nth-child(3){
-        //    width: 220px;
-        //    font-size:14px;
-        //   font-family:PingFangSC-Regular;
-        //   font-weight:400;
-        //   color:rgba(51,51,51,1);
-        //   line-height:normal;
-        // }
       }
     }
   }

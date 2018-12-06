@@ -7,12 +7,6 @@
         <div :style="rightStyle">{{item.right}}</div>
       </li>
     </ul>
-    <!-- <ol>
-      <li v-for="(item,index) in middleInfo.middle" :key="index">
-        <div>{{item.left}}</div>
-        <div>{{item.right}}</div>
-      </li>
-    </ol> -->
     </div>
   </div>
 </template>
@@ -27,18 +21,20 @@ export default {
     }
   },
   computed: {
-    // leftStyle () {
-    //   return {
-    //     font-size: this.info.leftTextSize || '#5C5F66',
-    //     color: this.info.leftTextColor || '#8F9FB1'
-    //   }
-    // },
-    // rightStyle () {
-    //   return {
-    //     font-size: this.topInfo.rightTextSize,
-    //     color: this.topInfo.rightTextColor
-    //   }
-    // }
+
+  },
+  methods:{
+    textChange(){
+      // switch (this.topInfo.right) {
+      //   case :
+          
+      //     break;
+      
+      //   default:
+      //     break;
+      // }
+      
+    }
   }
 }
 </script>

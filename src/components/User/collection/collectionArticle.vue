@@ -1,45 +1,34 @@
 <template>
   <div class="collection-container">
-
-    <div
-      class="collection-list"
-      v-if="data"
-      v-for="(item,key) in data"
-      :key="key"
-    >
+    <div class="collection-list" v-if="data" v-for="(item,key) in data" :key="key">
       <span class="collection-list-left">
         <p class="list-left-title">{{item.title}}</p>
-        <p
-          class="list-left-conter"
-          v-html="item.subTitle"
-        ></p>
+        <p class="list-left-conter" v-html="item.subTitle"></p>
         <!-- 收藏状态：1-取消收藏，0-收藏 -->
         <span
-        id="collectiontabok"
+          id="collectiontabok"
           class="list-left-tab-ok"
           @click="gocollection(item.deleteType,item.id,key)"
           v-show="item.deleteType == 1"
+           style="color:#007AE6"
         >收藏</span>
         <span
           class="list-left-tab-no"
-          v-show='item.deleteType == 0'
+          v-show="item.deleteType == 0"
           id="collectiontabno"
           @click="gocollection(item.deleteType,item.id,key)"
+          style="color:#AFB2C3"
         >取消收藏</span>
       </span>
       <span class="collection-list-right">
-        <img
-          :src="item.image"
-          class="mark-icon"
-        >
+        <img :src="item.image" class="mark-icon">
       </span>
-
     </div>
   </div>
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       backIcon: require('IMG/user/usercard@2x.png')
     }
@@ -49,15 +38,15 @@ export default {
     info: { type: String }
   },
   methods: {
-    gocollection (deleteType,infoId) {
-      
-      console.log('here');
-      let parm ={
+    gocollection(deleteType, infoId, key) {
+      console.log('here')
+      let parm = {
         info: this.info,
         divIdOk: 'collectiontabok',
         divIdNo: 'collectiontabno',
         deleteType: deleteType,
         infoId: infoId,
+        index: key
       }
       this.$emit('myclick', parm)
     }

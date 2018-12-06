@@ -57,8 +57,8 @@ export default {
       }
     },
 
-    upDateSignature(obj) {
-      const result = userService.upDateUserInfo(obj)
+  async  upDateSignature(obj) {
+      const result =await userService.upDateUserInfo(obj)
       if(result){
           this.$router.go(-1)
         }
