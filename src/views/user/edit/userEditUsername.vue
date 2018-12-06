@@ -3,12 +3,7 @@
     <div class="user-edit-username">
       <p class="edit-username-title">用户昵称</p>
       <p class="edit-username-conter">
-        <input
-          type="text"
-          class="edit-username-input"
-          maxlength="8"
-          v-model="userName"
-        >
+        <input type="text" class="edit-username-input" maxlength="8" v-model="userName">
       </p>
       <button class="edit-username-query" @click="toUpDateName">确认修改</button>
     </div>
@@ -37,11 +32,11 @@ export default {
 
   methods: {
     //更新用户名
-    upDateUserName(obj) {
-      const result = userService.upDateUserInfo(obj)
-       if(result){
-          this.$router.go(-1)
-        }
+    async upDateUserName(obj) {
+      const result = await userService.upDateUserInfo(obj)
+      if (result) {
+        this.$router.go(-1)
+      }
     },
 
     toUpDateName() {
@@ -53,7 +48,7 @@ export default {
           // on close
         })
       } else {
-        this.userName = strFormat(userName)
+        this.userName = strFormat.fmtStr(userName)
         let date = {
           name: this.userName
         }

@@ -4,7 +4,7 @@
       <div class="user-avatar">
         <router-link to="/user/edit/userPortrait">
           <!-- <div class="bg_img self-avtar" slot="extra" :style="{backgroundImage:'url(' + userInfo.avatarUrl + ')'}"></div> -->
-          <img :src=userInfo.avatarUrl class="editIcon-icon">
+          <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="editIcon-icon">
           <p class="user-avatar-clik">点击可编辑头像</p>
         </router-link>
       </div>

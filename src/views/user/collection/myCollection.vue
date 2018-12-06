@@ -3,7 +3,8 @@
     <div class="tab-container">
       <van-tabs color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="收藏楼盘">
-          <collection-null v-show="dynamicsList[0].listEmpty == true"
+          <collection-null
+            v-show="this.listEmpty == true"
             :collectionTips="collectionTips"
             :collectionRemar="collectionRemar"
             :collectionLike="collectionLike"
@@ -14,9 +15,11 @@
               <!-- rectangIcon -->
               <span class="dynamicsInfo-list-left">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-                 <div class="dynamicsInfo-list-left-bg_img" v-show="item.sale != '' "  :style="{backgroundImage:'url('+labelImg+')'}">
-                   {{item.sale}}
-                </div>
+                <div
+                  class="dynamicsInfo-list-left-bg_img"
+                  v-show="item.sale != '' "
+                  :style="{backgroundImage:'url('+labelImg+')'}"
+                >{{item.sale}}</div>
                 <img :src="item.linkerUrl" class="mark-icon">
                 <img :src="ovalIcon" class="oval-icon">
               </span>
@@ -65,7 +68,7 @@
         <van-tab title="收藏文章">
           <div class="collection-top">
             <collection-null
-              v-show="collectionList.lenght == 0"
+              v-show="this.articleEmpty == true"
               :collectionTips="ArticleTips"
               :collectionRemar="ArticleRemar"
               :collectionLike="collectionLike"
@@ -113,7 +116,9 @@ export default {
       ArticleIcon: require('IMG/user/collection/Article@2x.png'),
       statusTpye: 1,
       deleteFlag: 0,
-      labelImg: require('IMG/marketDetail/discount@2x.png')
+      labelImg: require('IMG/marketDetail/discount@2x.png'),
+      listEmpty: false,
+      articleEmpty: false
     }
   },
   created() {
@@ -123,11 +128,11 @@ export default {
   methods: {
     async getdynamicsInfo() {
       const res = await userService.getqueryLinkerList()
-      this.dynamicsList = res.records
-
+      this.dynamicsList = res.list.records
+      this.listEmpty = res.listEmpty
       //status (integer, optional): 收藏状态：0-未收藏；1-已收藏 ,
-      for (let i = 0; i < res.records.length; i++) {
-        if (res.records[i].status == 0) {
+      for (let i = 0; i < res.list.records.length; i++) {
+        if (res.list.records[i].status == 0) {
           this.dynamicsList[i].isCollection = '收藏'
         } else {
           this.dynamicsList[i].isCollection = '取消收藏'
@@ -136,7 +141,7 @@ export default {
     },
     async getcollectionList() {
       const res = await userService.getqueryInfoList()
-      this.collectionList = res.records
+      this.collectionList = res.list.records
     },
     //收藏樓盤
     async godynamics(item, index) {
@@ -144,49 +149,63 @@ export default {
       let tempDynamicsList = this.dynamicsList
       if (tempDynamicsList[index].status == 1) {
         const result = await userService.getlinkerDynamics(item.linkerId, 0)
-        if (!result) {
-          this.getdynamicsInfo()
-        }
+        this.dynamicsList[index].status = 0
+        console.log(this.dynamicsList)
       } else if (tempDynamicsList[index].status == 0) {
+        this.dynamicsList[index].status = 1
         const result = await userService.getlinkerDynamics(item.linkerId, 1)
-        if (!result) {
-          this.getdynamicsInfo()
-        }
       }
     },
     //收藏文章
     async gocollection(cons) {
-      console.log(this.deleteFlag)
-      console.log(cons.deleteType)
-      if (this.deleteFlag != 0) {
-        //0已收藏 1未收藏
-        if (this.deleteFlag == 1) {
-          this.deleteFlag = 0
-        } else if (this.deleteFlag == 0) {
-          this.deleteFlag = 1
-        }
+      
+      let index = cons.index
+      console.log(this.collectionList[index].deleteType);
+      if (this.collectionList[index].deleteType == 1) {
+        this.collectionList[index].deleteType = 0
+         await userService.getlinkerCollection(cons.infoId, 1)
       } else {
-        if (cons.deleteType == 1) {
-          this.deleteFlag = 0
-        } else if (cons.deleteType == 0) {
-          this.deleteFlag = 1
-        }
+        this.collectionList[index].deleteType = 1
+         await userService.getlinkerCollection(cons.infoId,0)
       }
-      // <!-- 收藏状态：1-取消收藏，0-收藏 -->
 
-      let collok = cons.divIdOk
-      let collno = cons.divIdNo
-      collok = document.getElementById(collok)
-      collno = document.getElementById(collno)
+      // if (cons[index] ==0) {
+      //   this.collectionList[index].deleteFlag = 1
+      // } else {
+      //   this.collectionList[index].deleteFlag = 0
+      // }
 
-      if (this.deleteFlag == 1) {
-        collok.style.display = 'block'
-        collno.style.display = 'none'
-      } else if (this.deleteFlag == 0) {
-        collok.style.display = 'none'
-        collno.style.display = 'block'
-      }
-      await userService.getlinkerCollection(cons.infoId, this.deleteFlag)
+      // console.log(this.deleteFlag)
+      // console.log(cons.deleteType)
+      // if (this.deleteFlag != 0) {
+      //   //0已收藏 1未收藏
+      //   if (this.deleteFlag == 1) {
+      //     this.deleteFlag = 0
+      //   } else if (this.deleteFlag == 0) {
+      //     this.deleteFlag = 1
+      //   }
+      // } else {
+      //   if (cons.deleteType == 1) {
+      //     this.deleteFlag = 0
+      //   } else if (cons.deleteType == 0) {
+      //     this.deleteFlag = 1
+      //   }
+      // }
+      // // <!-- 收藏状态：1-取消收藏，0-收藏 -->
+
+      // let collok = cons.divIdOk
+      // let collno = cons.divIdNo
+      // collok = document.getElementById(collok)
+      // collno = document.getElementById(collno)
+
+      // if (this.deleteFlag == 1) {
+      //   collok.style.display = 'block'
+      //   collno.style.display = 'none'
+      // } else if (this.deleteFlag == 0) {
+      //   collok.style.display = 'none'
+      //   collno.style.display = 'block'
+      // }
+      //
     }
   }
 }

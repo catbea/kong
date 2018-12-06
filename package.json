@@ -14,7 +14,10 @@
   "dependencies": {
     "@antv/f2": "^3.3.0",
     "amfe-flexible": "^2.2.1",
+    "cos-js-sdk-v4": "^1.1.11",
+    "cropperjs": "^1.4.3",
     "html2canvas": "^1.0.0-alpha.12",
+    "i": "^0.3.6",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.1",
     "query-string": "^6.2.0",
