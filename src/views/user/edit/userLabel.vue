@@ -23,6 +23,7 @@
 <script>
 import userService from 'SERVICE/userService'
 import { Checkbox, CheckboxGroup ,Dialog} from 'vant'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -42,6 +43,11 @@ export default {
   created() {
     this.getAgentLabelList()
   },
+
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+
   methods: {
     async getAgentLabelList() {
       const res = await userService.getAgentLabelList(1)
@@ -51,11 +57,16 @@ export default {
     async SubLabel() {
       var selectidlist = '' //将选中值拼接成字符串
       var check = document.getElementsByName('reason')
+
+      let obj={}
+
       for (var i = 0; i < check.length; i++) {
         if (check[i].checked == true) {
           selectidlist = selectidlist + check[i].id + ','
+          
         }
       }
+      console.log(check);
       console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' + selectidlist)
       if (selectidlist.length <= 0) {
         Dialog.alert({
@@ -69,6 +80,7 @@ export default {
         }
         const res = await userService.upDateUserInfo(userList)
         if(res){
+          // this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { labelList: this.labelList }))
           this.$router.go(-1)
         }
       }

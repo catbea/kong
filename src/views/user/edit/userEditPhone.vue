@@ -26,6 +26,7 @@
 import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 import strFormat from '@/filters/strFormat'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -40,6 +41,10 @@ export default {
   created() {
     let mobileNum = this.$route.query.phoneNum
     this.Cphone = mobileNum
+  },
+
+  computed: {
+    ...mapGetters(['userInfo'])
   },
 
   methods: {
@@ -71,6 +76,7 @@ export default {
     async upDatePhoneNum(obj) {
       const result = await userService.upDateUserInfo(obj)
       if (result) {
+        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { tempPhone: this.Cphone }))
         this.$router.go(-1)
       }
     }
