@@ -2,12 +2,6 @@
   <div class="market-detail-info-page">
     <InfoTop v-for="(item,index) in topList" :key="index" :topInfo="item">
     </InfoTop>
-    <!-- <InfoTop :info="topa"></InfoTop>
-    <InfoTop :info="topb"></InfoTop>
-    <InfoTop :info="topc"></InfoTop>
-    <InfoTop :info="topd"></InfoTop>
-    <InfoTop :info="tope"></InfoTop>
-    <InfoTop :info="topf"></InfoTop> -->
     <div class="title">
       <ul>
         <li>预售许可证</li>
@@ -63,9 +57,9 @@ export default {
       },
       {
         top: [
-          { left: '建筑风格', right:this.info.buildStyle},
+          { left: '建筑风格', right:this.buildStyle},
           { left: '产权年限', right:this.info.propertyYears},
-          { left: '装修标准', right:this.info.decorateStatus},
+          { left: '装修标准', right:this.decorateStatus},
           { left: '占地面积', right:this.info.coverArea},
           { left: '建筑面积', right:this.info.buildArea},
           { left: '容积率', right:this.info.plotRate},
@@ -76,7 +70,7 @@ export default {
       },
       {
         top: [
-          { left: '物业类型  ', right:this.info.houseUseList},
+          { left: '物业类型  ', right:this.houseUse},
           { left: '物业公司', right:this.info.management},
           { left: '物业费', right:this.info.managementPrice}
         ]
@@ -98,12 +92,71 @@ export default {
         ]
       }
     ]
+    },
+    buildStyle(){
+      switch (this.info.buildStyle) {
+        case '0':
+          return '塔楼'
+          case '1':
+          return '板楼'
+          case '2':
+          return '平板'
+          case '3':
+          return '塔板结合'
+        default:
+          return '暂无信息'
+      }
+    },
+    decorateStatus(){
+      switch (this.info.decorateStatus) {
+        case '0':
+          return '精装'
+          case '1':
+          return '毛坯'
+          case '2':
+          return '简单装修'
+          case '3':
+          return '全装修'
+          case '4':
+          return '公共部分精装修'
+        default:
+          return '暂无信息'
+      }
+    },
+    houseUse(){
+      switch (this.info.houseUse) {
+        case '0':
+          return '普通住宅'
+          case '1':
+          return '商住两用'
+          case '2':
+          return '商品房'
+          case '3':
+          return '建筑综合体'
+          case '4':
+          return '商铺'
+          case '5':
+          return '写字楼'
+          case '6':
+          return '别墅'
+          case '7':
+          return '公寓'
+          case '8':
+          return '洋房'
+          case '9':
+          return '酒店 '
+        default:
+          break;
+      }
     }
   },
   data: () => ({
     info:null,
     warnImg:require('IMG/marketDetail/warn.png'),
-  })
+  }),
+  methods:{
+    
+  }
 }
 </script>
 <style lang="less">

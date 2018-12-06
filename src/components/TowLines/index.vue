@@ -3,8 +3,8 @@
     <div class="top-info-box" >
     <ul>
       <li v-for="(item,index) in topInfo.top" :key="index">
-        <div :style="leftStyle">{{item.left}}</div>
-        <div :style="rightStyle">{{item.right}}</div>
+        <div >{{item.left}}</div>
+        <div >{{item.right}}</div>
       </li>
     </ul>
     </div>
@@ -25,15 +25,6 @@ export default {
   },
   methods:{
     textChange(){
-      // switch (this.topInfo.right) {
-      //   case :
-          
-      //     break;
-      
-      //   default:
-      //     break;
-      // }
-      
     }
   }
 }

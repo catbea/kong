@@ -156,7 +156,7 @@ export default [
   },
   {
     path: '/market/inputSearch',
-    name: 'no-input',
+    name: 'searchMarket',
     component: resolve =>
       require(['@/views/market/marketSearch/inputSearch/index.vue'], resolve),
     meta: {
@@ -164,8 +164,8 @@ export default [
     }
   },
   {
-    path: '/market/marketDetail/photo',
-    name: 'no-input',
+    path: '/marketDetail/photo',
+    name: 'photoList',
     component: resolve =>
       require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
     meta: {
