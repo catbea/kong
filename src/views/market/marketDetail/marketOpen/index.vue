@@ -6,7 +6,7 @@
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
     </div>
-   <open-payment :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
+   <open-payment class="pay-submit-info" :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
   </div>
 </template>
 <script>
@@ -115,6 +115,11 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
+  .pay-submit-info {
+    position: fixed;
+    bottom: 0px;
+    z-index: 9;
+  }
   .agreement-box {
     height: 65px;
     line-height: 65px;
