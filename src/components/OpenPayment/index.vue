@@ -2,8 +2,8 @@
   <div class="open-Payment-page">
     <div class="open-Payment-page-top">
     <ul>
-      <li>￥{{payInfo.value}}</li>
-      <li>已优惠 {{payInfo.coupon}}</li>
+      <li>￥{{payInfo.value | priceFormart}}</li>
+      <li>已优惠 {{payInfo.coupon | priceFormart}}</li>
     </ul>
     <ol>
       <li @click="payClickHandler">立即支付</li>

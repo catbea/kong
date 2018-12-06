@@ -4,7 +4,7 @@
       
       <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:itemActIndex==index}">
         <p>{{item.subscribeRemark}}</p>
-        <p>¥{{item.subscribeAmount}}</p>
+        <p>¥{{item.subscribeAmount | priceFormart}}</p>
         <p>立即开通</p>
         <span>不限量</span>
       </li>
@@ -19,11 +19,11 @@
       <div class="balance-payment">
         <div>
         <p>余额支付 （￥</p>
-        <p>{{payInfo.balanceAmount}}</p>
+        <p>{{payInfo.balanceAmount | priceFormart}}</p>
         <p>）</p>
         </div>
         <div>
-        <p>-￥{{payInfo.balancePay}}</p>
+        <p>-￥{{payInfo.balancePay | priceFormart}}</p>
         </div>
       </div>
     </ul>
