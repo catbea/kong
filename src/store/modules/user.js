@@ -72,8 +72,8 @@ const state = {
     wechatAccount: "112110",
     labelList: [
       {
-        labelId: '001',
-        labelName: '价格屠夫'
+        id: '001',
+        itemName: '价格屠夫'
       }
     ]
   },
