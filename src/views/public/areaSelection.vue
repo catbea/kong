@@ -16,6 +16,7 @@ import Search from 'COMP/Search'
 import { fullArea } from '@/utils/fullArea'
 import letter from '@/utils/letter'
 export default {
+  
   components: {
     Search
   },
