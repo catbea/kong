@@ -85,7 +85,7 @@ export default {
             //用户付钱失败。没钱，密码错误，取消付款
           },
           fail: function(res) {
-            console.log('支付取消了')
+            console.log(res,'支付取消了')
           }
         })
       }
