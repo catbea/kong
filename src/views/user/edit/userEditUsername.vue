@@ -13,6 +13,7 @@
 import userService from 'SERVICE/userService'
 import { Dialog } from 'vant'
 import strFormat from '@/filters/strFormat'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -30,11 +31,19 @@ export default {
     this.userName = userName
   },
 
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+
   methods: {
     //更新用户名
     async upDateUserName(obj) {
+      let nameObj = {
+        name: this.userName
+      }
       const result = await userService.upDateUserInfo(obj)
       if (result) {
+        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { name: this.userName }))
         this.$router.go(-1)
       }
     },

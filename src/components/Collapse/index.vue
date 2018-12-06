@@ -1,11 +1,16 @@
 <template>
-    <div class="">
-        <van-collapse v-model="activeNames">
-            <van-collapse-item title="有赞微商城" name="1">提供多样店铺模板，快速搭建网上商城</van-collapse-item>
-            <van-collapse-item title="有赞零售" name="2">网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失</van-collapse-item>
-            <van-collapse-item title="有赞美业" name="3" disabled>线上拓客，随时预约，贴心顺手的开单收银</van-collapse-item>
-        </van-collapse>
-    </div>
+  <div>
+    <li>
+      <div :class="{bold: isFolder}" @click="toggle" @dblclick="changeType">
+        {{ model.name }}
+        <span v-if="isFolder">[{{ open ? '-' : '+' }}]</span>
+      </div>
+      <ul v-show="open" v-if="isFolder">
+        <item class="item" v-for="(model, index) in model.children" :key="index" :model="model"></item>
+        <li class="add" @click="addChild">+</li>
+      </ul>
+    </li>
+  </div>
 </template>
 <script>
 export default {
@@ -16,11 +21,47 @@ export default {
 
   data() {
     return {
-      activeNames: ['1']
+      data: {
+        name: 'My Tree',
+        children: [
+          { name: 'hello' },
+          { name: 'wat' },
+          {
+            name: 'child folder',
+            children: [
+              {
+                name: 'child folder',
+                children: [{ name: 'hello' }, { name: 'wat' }]
+              },
+              { name: 'hello' },
+              { name: 'wat' },
+              {
+                name: 'child folder',
+                children: [{ name: 'hello' }, { name: 'wat' }]
+              }
+            ]
+          }
+        ]
+      }
     }
   }
 }
 </script>
 
 <style lang="less">
+body {
+  font-family: Menlo, Consolas, monospace;
+  color: #444;
+}
+.item {
+  cursor: pointer;
+}
+.bold {
+  font-weight: bold;
+}
+ul {
+  padding-left: 1em;
+  line-height: 1.5em;
+  list-style-type: dot;
+}
 </style>
