@@ -1,5 +1,5 @@
 <template>
-  <div class="search-container dev">
+  <div class="search-container">
     <div class="search-box-content">
       <p @click="siteClickHandler">
         {{conf.siteText}}
@@ -7,9 +7,9 @@
       </p>
       <span class="icon-line"></span>
       <!-- <router-link to="/market/inputSearch"> -->
-      <!-- <form action="/"> -->
+      <form action="/">
       <van-search class="search-box" :placeholder="conf.placeholderText"/>
-      <!-- </form> -->
+      </form>
       <!-- </router-link> -->
     </div>
     <div class="site-select"></div>
@@ -27,7 +27,12 @@ export default {
   },
   data: () => ({
     arrowIcon: require('IMG/market/list__arrow_@2x.png')
-  })
+  }),
+  methods: {
+    siteClickHandler () {
+      
+    }
+  }
 }
 </script>
 
