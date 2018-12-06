@@ -31,10 +31,3 @@ export default {
   }
 }
 </script>
-<style lang="less">
-.my-estate-list {
-  // >.title-container{
-  //   padding-top: 10px;
-  // }
-}
-</style>

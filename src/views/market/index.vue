@@ -68,7 +68,7 @@ export default {
     },
     skipDetail(item) {
       // if (n == 1) {
-        this.$router.push({name:'marketDetailNotOpen', params:{id: item.linkerId}})
+        this.$router.push({name:'marketDetail', params:{id: item.linkerId}})
       // }
     }
   }

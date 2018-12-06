@@ -12,8 +12,8 @@
             地铁房
           </div> -->
         </div>
-        <div class="specific-market-detail-commission" @click="commission">
-            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>{{info&&info.divisionRules}}111111
+        <div class="specific-market-detail-commission" @click="commission" v-if="info&&info.divisionRules">
+            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>{{info&&info.divisionRules}}
           </div>
         <div class="specific-market-detail">
           <ul class="specific-market-detail-left">
