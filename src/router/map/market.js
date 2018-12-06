@@ -59,7 +59,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/marketAllDynamic',
+    path: '/marketDetail/marketAllDynamic/:id',
     name: 'marketAllDynamic',
     component: resolve =>
       require([
