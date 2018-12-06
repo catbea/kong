@@ -27,17 +27,7 @@ export default {
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
 
-    let url = window.location.href;
-    let res = await commonService.wxTicket(url)
-    wx.config({
-          beta: true,
-          debug: false,
-          appId: res.appId,
-          timestamp: res.timestamp,
-          nonceStr: res.nonceStr,
-          signature: res.signature,
-          jsApiList: ["chooseWXPay"]
-    });
+    this.getTikck()
     
   },
   data: () => ({
@@ -70,6 +60,20 @@ export default {
 
     couponClickHandle() {
       console.log('couponClickHandle========')
+    },
+
+    async getTikck() {
+        let url = window.location.href;
+        let res = await commonService.wxTicket(url)
+        wx.config({
+              beta: true,
+              debug: false,
+              appId: res.appId,
+              timestamp: res.timestamp,
+              nonceStr: res.nonceStr,
+              signature: res.signature,
+              jsApiList: ["chooseWXPay"]
+        });
     },
 
     async paySubmit() {
