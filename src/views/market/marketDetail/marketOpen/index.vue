@@ -70,7 +70,7 @@ export default {
       }
       const res = await commonService.payForProject(param)
       if (res.isPay) {
-        console.log('调起支付')
+        console.log(res, '调起支付')
         wx.chooseWXPay({
           //弹出支付
           timestamp: res.timeStamp,
