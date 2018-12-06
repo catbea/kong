@@ -32,7 +32,7 @@ export default {
     propertiesNum: { type: String, default: '' },
     articleTitle: { type: String, default: '' },
     articleNum: { type: String, default: '' },
-    allDynamicCount: { type: Array },
+    allDynamicCount: { type: Object },
   },
   data() {
     return {
@@ -40,6 +40,8 @@ export default {
     }
   },
   created() {
+      console.log("名片==========++++++++++")
+    console.log(this.allDynamicCount)
   },
   methods: {}
 }

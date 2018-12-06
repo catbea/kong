@@ -134,10 +134,12 @@ class DynamicsService {
   /**
    * 【企业微信】单个文章数据动态统计
    */
-  getSingleArticleDynamicCount() {
+  getSingleArticleCount(articleId) {
     return xhr({
       url: '/dataDynamic/getSingleArticleDynamicCount',
-    
+      body: {
+        articleId
+      }
     })
   }
   /**
@@ -145,12 +147,13 @@ class DynamicsService {
    * @param {*} current 
    * @param {*} size 
    */
-  getSingleArticleDynamicList(current, size = 10) {
+  getSingleArticleList(current, size = 10,articleId) {
     return xhr({
       url: '/dataDynamic/getSingleArticleDynamicList',
       body: {
         current,
-        size
+        size,
+        articleId
       }
     })
   }
