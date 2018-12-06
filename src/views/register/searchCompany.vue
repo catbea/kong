@@ -1,6 +1,10 @@
 <template>
   <div class="search-container">
-    <search :conf="conf"></search>
+      <div class="search-area" style="height:1rem;">
+          <form action="/">
+            <van-search v-model="value" placeholder="请输入公司名称" show-action @search="onSearch" @cancel="onCancel"></van-search>
+          </form>
+      </div>
   </div>
 </template>
 <script>
@@ -10,11 +14,16 @@ export default {
     Search
   },
   data: () => ({
-      conf: {
-          siteText: '',
-          placeholderText: '请输入公司名称'
+      value: ''
+  }),
+  methods: {
+      onSearch () {
+
+      },
+      onCancel () {
+
       }
-  })
+  }
 }
 </script>
 <style lang="less">

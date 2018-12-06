@@ -1,16 +1,17 @@
 <template>
   <div class="reg-step-container">
-    <div class="step-box" :class="(step === 1&&'current-step')||(step > 1&&'step-over')">1<span>注册完成</span></div>
+    <div class="step-box" :class="(step === 1&&'current-step')||(step > 1&&'step-over')">1<span>{{stepTitle}}</span></div>
     <div class="bg_img interim-box" :style="{backgroundImage:'url(' + (step>1?arr1:arr2) + ')'}"></div>
     <div class="step-box" :class="(step === 2&&'current-step')||(step > 2&&'step-over')">2<span>扫码关注</span></div>
     <div class="bg_img interim-box" :style="{backgroundImage:'url(' + (step>2?arr1:arr2) + ')'}"></div>
-    <div class="step-box" :class="step === 3&&'current-step'">3<span>进入经纪人</span></div>
+    <div class="step-box" :class="step === 3&&'current-step'">3<span>进入经纪人端</span></div>
   </div>
 </template>
 <script>
 export default {
   props: {
-    step: { type: Number, default: 1 }
+    step: { type: Number, default: 1 },
+    stepTitle: { type: String, default: '注册完善' }
   },
   data: () => ({
     arr1: require('IMG/register/stepArr1.png'),
@@ -37,9 +38,9 @@ export default {
       position: absolute;
       color: #969ea8;
       font-size: 12px;
-      width: 70px;
+      width: 80px;
       left: 50%;
-      top: 135%;
+      top: 145%;
       transform: translate(-50%, -50%);
     }
     &.current-step {
