@@ -1,13 +1,13 @@
 <template>
   <div class="market-page">
-    <div class="header">
-      <div class="search-box">
-        <van-search :obj="searchContent"></van-search>
-        <div class="locationIcon" :style="{'background':'url(' + locationIcon + ')','background-size':'contain'}"></div>
+    <div class="search-box van-hairline--bottom">
+      <div class="search-comp">
+        <search :conf="searchContent"></search>
       </div>
-      <screen v-model="filter"></screen>
-      <already-open :agentIdInfo="agentIdInfo"></already-open>
+      <div class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></div>
     </div>
+    <screen v-model="filter"></screen>
+    <already-open :agentIdInfo="agentIdInfo"></already-open>
     <div class="all-market">
       <!-- <van-list
         v-model="loading"
@@ -15,13 +15,13 @@
         :finished-text="没有更多了"
         @load="onLoad"
       >-->
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       <!-- </van-list> -->
     </div>
   </div>
 </template>
 <script>
-import VanSearch from 'COMP/VanSearch'
+import Search from 'COMP/Search'
 import Screen from 'COMP/Screen/'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import TitleBar from 'COMP/TitleBar/'
@@ -29,7 +29,7 @@ import AlreadyOpen from 'COMP/Market/AlreadyOpen/'
 import marketService from 'SERVICE/marketService'
 export default {
   components: {
-    VanSearch,
+    Search,
     Screen,
     MarketDescribe,
     TitleBar,
@@ -53,7 +53,9 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
-    
+        openReturnHandle(item){
+      this.$router.push({name:'marketDetail-open', params: { id: item.linkerId }})
+    },
     onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
@@ -67,95 +69,34 @@ export default {
       this.agentIdInfo = res
     },
     skipDetail(item) {
-      // if (n == 1) {
-        this.$router.push({name:'marketDetail', params:{id: item.linkerId}})
-      // }
+      this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
     }
   }
 }
 </script>
-
 <style lang="less">
 .market-page {
   width: 100%;
   height: 100%;
-  .header {
-    position: fixed;
-    background: white;
-    z-index: 11;
-    .search-box {
-      display: flex;
-      width: 375px;
-      height: 44px;
-      justify-content: space-between;
-      border-bottom: solid 1px #dfdfdf;
-      .search-box-content {
-        display: flex;
-        background: rgba(245, 245, 245, 1);
-        font-size: 13px;
-        margin: 7px 0 7px 15px;
-        width: 306px;
-        border-radius: 4px;
-        p {
-          margin: 6px 0 0 16px;
-          padding: 0 12px 0 0;
-          display: flex;
-          span {
-            width: 16px;
-            height: 16px;
-            margin-top: 4px;
-          }
-        }
-        .van-search {
-          padding: 0;
-        }
-        .van-cell {
-          background: rgba(245, 245, 245, 1);
-          input {
-            line-height: 24px;
-          }
-        }
-      }
-      .locationIcon {
-        width: 20px;
-        height: 20px;
-        margin: 13px 14px 0 0;
-      }
-    }
-  }
-  .all-market {
-    display: flex;
-    flex-wrap: wrap;
-    width: 375px;
-    height: auto;
+  > .search-box {
     position: relative;
-    margin-top: 160px;
-    z-index: 1;
-    .inform-box {
-      background: white;
-      position: fixed;
-      z-index: 111;
-      width: 100%;
-      .inform {
-        display: flex;
-        padding-top: 8px;
-        width: 100%;
-        height: 28px;
-        background: rgba(234, 77, 46, 0.15);
-
-        .have-opened {
-          font-size: 14px;
-          font-weight: 400;
-          color: rgba(234, 77, 46, 1);
-          margin-left: 16px;
-        }
-        .my-market {
-          font-size: 14px;
-          font-weight: 400;
-          color: rgba(234, 77, 46, 1);
-          margin-left: 176px;
-        }
-      }
+    width: 375px;
+    height: 44px;
+    > div {
+      display: inline-block;
+    }
+    > .search-comp {
+      width: 305px;
+      height: 30px;
+      margin: 7px 50px 7px 10px;
+    }
+    > .location-icon {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      transform: translate(-50%, -50%);
+      right: 8px;
+      top: 22px;
     }
   }
 }

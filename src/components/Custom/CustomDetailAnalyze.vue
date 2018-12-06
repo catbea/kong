@@ -32,6 +32,7 @@
         <p class="interest-desc" slot="desc">1312312312</p>
       </estate-item>
     </div>
+    <custom-operation></custom-operation>
   </div>
 </template>
 <script>
@@ -40,6 +41,7 @@ import LineChart from 'COMP/Custom/Charts/LineChart'
 import BarChart from 'COMP/Custom/Charts/BarChart'
 import TagGroup from 'COMP/TagGroup'
 import EstateItem from 'COMP/EstateItem'
+import CustomOperation from './CustomOperation.vue'
 export default {
   props: {
     baseInfo: { type: Object },
@@ -92,7 +94,8 @@ export default {
     LineChart,
     BarChart,
     TagGroup,
-    EstateItem
+    EstateItem,
+    CustomOperation
   }
 }
 </script>

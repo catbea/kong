@@ -1,12 +1,12 @@
 <template>
   <div class="market-open-page">
    <market-describe :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
-   <market-priceSurface :priceList="priceList" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
+   <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
     </div>
-   <open-payment :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
+   <open-payment class="pay-submit-info" :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
   </div>
 </template>
 <script>
@@ -26,11 +26,15 @@ export default {
     this.linkerId = this.$route.params.id
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
+
+    this.getTikck()
+    
   },
   data: () => ({
     linkerId: '',
     projectInfo: {},
     priceList: [],
+    priceSurfacePayInfo: {},
     currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
@@ -56,6 +60,20 @@ export default {
 
     couponClickHandle() {
       console.log('couponClickHandle========')
+    },
+
+    async getTikck() {
+        let url = window.location.href;
+        let res = await commonService.wxTicket(url)
+        wx.config({
+              beta: true,
+              debug: false,
+              appId: res.appId,
+              timestamp: res.timestamp,
+              nonceStr: res.nonceStr,
+              signature: res.signature,
+              jsApiList: ["chooseWXPay"]
+        });
     },
 
     async paySubmit() {
@@ -115,11 +133,16 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
+  .pay-submit-info {
+    position: fixed;
+    bottom: 0px;
+    z-index: 9;
+  }
   .agreement-box {
     height: 65px;
     line-height: 65px;
     text-align: center;
-    margin: 16px 0 16px 0;
+    margin: 16px 0 66px 0;
     span:nth-child(1) {
       font-size: 10px;
       font-family: PingFang-SC-Regular;

@@ -22,6 +22,7 @@ class WechatApi {
    */
   async _getTicket() {
     let url = window.location.href.split('#')[0]
+    console.log(url, 'sign url')
     let res = await commonService.wxTicket(url, 1)
     let conf = {
       beta: true, // 必须这么写，否则wx.invoke调用形式的jsapi会有问题
@@ -31,6 +32,7 @@ class WechatApi {
       nonceStr: res.nonceStr, // 必填，生成签名的随机串
       signature: res.signature, // 必填，签名，见附录1
       jsApiList: [
+          'chooseWXPay',
           'hideOptionMenu',
           'showOptionMenu',
           'getLocation',
