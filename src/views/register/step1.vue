@@ -6,32 +6,32 @@
       <p class="desc">请仔细填写信息，一旦提交，无法更改</p>
       <div class="from-container">
         <div class="phone-cell">
-          <material-input placeholder="请输入手机号"></material-input>
-          <div class="send-btn">获取验证码</div>
+          <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile"></material-input>
+          <div class="send-btn" :disabled="disabled" @click="sendCodeHandler">获取验证码</div>
         </div>
         <div class="code-cell">
           <material-input placeholder="请输入验证码"></material-input>
         </div>
-        <div class="van-hairline--bottom form-cell">
+        <div class="van-hairline--bottom form-cell" @click="popAreaHandler">
           <p class="title">主营区域</p>
           <p class="value">广东/深圳
             <van-icon name="arrow" />
           </p>
         </div>
-        <div class="van-hairline--bottom form-cell">
+        <div class="van-hairline--bottom form-cell" @click="seachCompanyHandler">
           <p class="title">所属公司</p>
           <p class="value">广东/深圳
             <van-icon name="arrow" />
           </p>
         </div>
-        <div class="van-hairline--bottom form-cell">
+        <div class="van-hairline--bottom form-cell" @click="selectInstitutionHandler">
           <p class="title">所属机构</p>
           <p class="value">广东/深圳
             <van-icon name="arrow" />
           </p>
         </div>
       </div>
-      <div class="next-step" @click="test">下一步</div>
+      <div class="next-step" @click="nextHandler">下一步</div>
       <p class="protocol">注册代表您同意 <router-link to="/">AW大师用户协议</router-link>
       </p>
     </div>
@@ -42,6 +42,8 @@
 import RegStep from 'COMP/Register/RegStep'
 import MaterialInput from 'COMP/MaterialInput'
 import AreaSelect from 'COMP/AreaSelect'
+
+import RegisterService from 'SERVICE/registService'
 export default {
   components: {
     RegStep,
@@ -53,12 +55,46 @@ export default {
       phone: '18612341234',
       code: '1234'
     },
+    mobile: '',
+    disabled: false,
     areaShow: false,
     areaCode: '120104'
   }),
+  created () {
+
+  },
+  computed: {
+
+  },
   methods: {
-    test () {
+    /**
+     * 发送验证码
+     */
+    sendCodeHandler () {
+      // const result = RegisterService.sendMsgRegister(this.mobile)
+      debugger
+      this.disabled = true;
+    },
+    /**
+     * 弹出主营区域选择框
+     */
+    popAreaHandler () {
       this.areaShow = !this.areaShow
+    },
+    /**
+     * 搜索公司
+     */
+    seachCompanyHandler () {
+      this.$router.push('/register/searchCompany')
+    },
+    /**
+     * 选择机构
+     */
+    selectInstitutionHandler () {
+      this.$router.push('/user/edit/userMechanism')
+    },
+    nextHandler () {
+      this.$router.push('/register/step2')
     },
     confirmHandler(val) {
       console.log(val);

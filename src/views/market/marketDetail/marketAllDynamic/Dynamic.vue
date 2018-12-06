@@ -4,21 +4,34 @@
       <li v-for="(item,index) in list" :key="index">
         <p>
           <span></span>
-          2018年6月15日
+          {{item.houseDynamicList[0].dynamicTime}}
         </p>
         <div class="dynamic-page-box">
-          <h1>山水江南现有3-4房在售</h1>
-          <h2>山水江南项目56-82平的小户型房源已售完，目前仅 剩余2013-122平米3-4房在售3-122平米3-4房</h2>
+          <h1>{{item.houseDynamicList[0].title}}</h1>
+          <h2>{{item.houseDynamicList[0].content}}</h2>
         </div>
       </li>
     </ul>
   </div>
 </template>
 <script>
+import MarketService from 'SERVICE/marketService'
 export default {
+  created() {
+    this.linkerId=this.$route.params.id
+    this.getAllDynamicListInfo(this.linkerId)
+  },
   data: () => ({
-    list: [1, 2, 3, 4]
-  })
+    list: [],
+    linkerId:null
+  }),
+  methods:{
+   async getAllDynamicListInfo(id){
+      let res = await MarketService.getAllDynamicList(id)
+      this.list=res
+      console.log(res)
+    }
+  }
 }
 </script>
 <style lang="less">
