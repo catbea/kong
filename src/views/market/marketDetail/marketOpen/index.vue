@@ -77,7 +77,7 @@ export default {
           appId: res.appId,
           timestamp: res.timeStamp,
           nonceStr: res.nonceStr,
-          package: res.packageValue,
+          package: res.packageId,
           signType: 'MD5',
           paySign: res.paySign,
           success: function(res) {
