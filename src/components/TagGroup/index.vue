@@ -13,12 +13,7 @@ export default {
     data: null
   }),
   props: {
-    arr: {
-      type: Array,
-      default: function() {
-        return []
-      }
-    }
+    arr: [Array, String]
   }
 }
 </script>

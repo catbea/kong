@@ -30,7 +30,7 @@
                 :cardTitle="all.cardTitle"
                 :propertiesTitle="all.propertiesTitle"
                 :articleTitle="all.articleTitle"
-                :allDynamicCount="allDynamicCount"
+                :allDynamicCount="activeIndex ===0? allDynamicCount : CardDynamicCount"
               ></dynamics-data>
             </div>
           </shadow-box>

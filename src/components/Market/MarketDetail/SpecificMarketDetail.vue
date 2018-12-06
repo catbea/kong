@@ -52,7 +52,7 @@ export default {
       this.$router.push({name:'marketDetail-commission', params:{id: this.info.linkerId}})
     },
     siteHandle(){
-      this.$router.push({path: '/marketDetail/info', query: this.info})
+      this.$router.push('/marketDetail/marketDetail/allNear')
     }
   }
 }

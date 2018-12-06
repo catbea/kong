@@ -22,15 +22,17 @@ class WechatApi {
    */
   async _getTicket() {
     let url = window.location.href.split('#')[0]
+    console.log(url, 'sign url')
     let res = await commonService.wxTicket(url, 1)
     let conf = {
       beta: true, // 必须这么写，否则wx.invoke调用形式的jsapi会有问题
       debug: false, // __DEV__ 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-      appId: res.data.appId, // 必填，公众号的唯一标识
-      timestamp: res.data.timestamp, // 必填，生成签名的时间戳
-      nonceStr: res.data.nonceStr, // 必填，生成签名的随机串
-      signature: res.data.signature, // 必填，签名，见附录1
+      appId: res.appId, // 必填，公众号的唯一标识
+      timestamp: res.timestamp, // 必填，生成签名的时间戳
+      nonceStr: res.nonceStr, // 必填，生成签名的随机串
+      signature: res.signature, // 必填，签名，见附录1
       jsApiList: [
+          'chooseWXPay',
           'hideOptionMenu',
           'showOptionMenu',
           'getLocation',

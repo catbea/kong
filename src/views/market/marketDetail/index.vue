@@ -106,7 +106,7 @@ export default {
       link: '/marketDetail/FamilyList'
     },
     confB: {
-      title: '楼盘动态 (12)',
+      title: '楼盘动态 (?)',
       linkText: '全部动态',
       link: '/marketDetail/marketAllDynamic'
     },
@@ -153,14 +153,13 @@ export default {
       this.show = true
     },
     moreInfoHandle() {
-      this.$router.push('/marketDetail/info')
+      this.$router.push({path: '/marketDetail/info', query: this.linkerInfo})
     },
     skipMarketDetail(val){
       this.$router.push({name:'marketDetail', params:{id: val.linkerId}})
     },
     marketOpenHandle(){
       this.$router.push({name:'marketDetail-open', params:{id:this.linkerId}})
-      console.log(1111111878788)
     },
     /**
      * 楼盘详情信息
@@ -168,6 +167,7 @@ export default {
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
       this.linkerInfo = result
+      console.log(result)
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
       houseUseList.unshift(result.saleStatus)
