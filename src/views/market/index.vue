@@ -9,7 +9,6 @@
     <screen v-model="filter"></screen>
     <already-open :agentIdInfo="agentIdInfo"></already-open>
     <div class="all-market">
-<<<<<<< HEAD
       <!-- <van-list
         v-model="loading"
         :finished="finished"
@@ -18,9 +17,6 @@
       >-->
       <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       <!-- </van-list> -->
-=======
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
->>>>>>> 4ecddbd8370731374c60710cb92e7e3c6c9619b1
     </div>
   </div>
 </template>
@@ -57,14 +53,10 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
-<<<<<<< HEAD
         openReturnHandle(){
       this.$router.push({name:'marketDetail-open', params:{id:1}})
     },
     onClickHandler () {
-=======
-    onClickHandler() {
->>>>>>> 4ecddbd8370731374c60710cb92e7e3c6c9619b1
       this.$router.push('/market/inputSearch')
     },
     async getMarketDescribeInfo() {
