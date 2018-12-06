@@ -75,8 +75,7 @@ export default {
         alert('appid:'+res.appId);
         ///////
           let parm = {
-              appId: res.appId,
-              timeStamp: res.timestamp,
+              timestamp: res.timestamp,
               nonceStr: res.nonceStr,
               package: res.packageId,
               signType: 'MD5',
