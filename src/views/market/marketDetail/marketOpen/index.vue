@@ -74,7 +74,7 @@ export default {
         console.log(res, '调起支付')
         wx.chooseWXPay({
           //弹出支付
-          appId: res.timeStamp.appId,
+          appId: res.appId,
           timestamp: res.timeStamp,
           nonceStr: res.nonceStr,
           package: res.packageValue,
