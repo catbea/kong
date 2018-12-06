@@ -66,7 +66,7 @@ export default {
         costType: 2, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
         subscribeNum: priceItem.subscribeNum,
         amountId: priceItem.id,
-        payOpenid: this.userInfo.payOpenid
+        payOpenid: this.userInfo.payOpenId
       }
       const res = await commonService.payForProject(param)
       if (res.isPay) {
