@@ -1,6 +1,6 @@
 <template>
   <div class="market-open-page">
-   <market-describe :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
+   <market-describe class="project-info" :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
    <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
@@ -95,7 +95,7 @@ export default {
     },
 
     async getMarketDescribeInfo() {
-      const res = await marketService.getLinkerDetail(this.linkerId)
+      const res = await marketService.getLinkerSimpleDetail(this.linkerId)
       console.log(res, 'getMarketDescribeInfo')
       this.projectInfo = {
         linkerImg: res.headImgUrl,
@@ -104,6 +104,7 @@ export default {
         linkerPrice: res.averagePrice,
         linkerName: res.linkerName,
         openTimes: res.openTimes,
+        sale: res.sale,
         commission: res.commission
       }
     },
@@ -120,6 +121,12 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
+  .project-info {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-top: -13px;
+    margin-bottom: 10px;
+  }
   .pay-submit-info {
     position: fixed;
     bottom: 0px;

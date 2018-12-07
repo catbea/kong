@@ -35,9 +35,8 @@ export default async (to, from, next) => {
             if(payCorpId){// 通过payopenid返回的code
                 console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
-                let _jssdkConfig = store.getters.jssdkConfig;
-                console.log(_jssdkConfig ,'_jssdkConfig====')
-                if(!_jssdkConfig){
+                console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
+                if(!store.getters.jssdkConfig){
                     console.log('wx jssdk init ')
                     wechatApi.init()
                 }
@@ -70,14 +69,12 @@ export default async (to, from, next) => {
                     return
                 }
 
-                next()
-
-                let _jssdkConfig = store.getters.jssdkConfig;
-                console.log(_jssdkConfig ,'_jssdkConfig----')
-                if(!_jssdkConfig){
-                    console.log('wx jssdk init for get user info')
+                console.log(store.getters.jssdkConfig ,'_jssdkConfig----')
+                if(!store.getters.jssdkConfig){
                     await wechatApi.init()
                 }
+
+                next()
             }
         } else {
             next()

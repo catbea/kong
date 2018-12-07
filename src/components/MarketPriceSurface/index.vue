@@ -5,6 +5,12 @@
       <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:itemActIndex==index}">
         <p>{{item.subscribeRemark}}</p>
         <p>¥{{item.subscribeAmount | priceFormart}}</p>
+        <p>-</p>
+      </li>
+
+      <li>
+        <p>VIP会员</p>
+        <p>¥300</p>
         <p>立即开通</p>
         <span>不限量</span>
       </li>
