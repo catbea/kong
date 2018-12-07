@@ -41,10 +41,10 @@ export default async (to, from, next) => {
                 //     wechatApi.init()
                 // }
 
-                // if(userInfo.payOpenId) {
-                //     next()
-                //     return
-                // }
+                if(userInfo.payOpenId) {
+                    next()
+                    return
+                }
 
                 let pcOpenid = userInfo.pcOpenid
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
