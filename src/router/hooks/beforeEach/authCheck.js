@@ -35,6 +35,7 @@ export default async (to, from, next) => {
                 console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
                 let _jssdkConfig = store.getters.jssdkConfig;
+                console.log(_jssdkConfig, '_jssdkConfig=====')
                 if(_jssdkConfig){
                     console.log('wx jssdk init ')
                     wechatApi.init()
@@ -60,8 +61,9 @@ export default async (to, from, next) => {
                 userInfo.cropId = cropId
                 userInfo.token = wxAuthObject.token
                 store.dispatch('getUserInfo', userInfo)
+                console.log(wxAuthObject, 'get user info =====')
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
-                    console.log(wxAuthObject,'wxAuthObject=====')
+                    console.log(wxAuthObject,'跳转获取payopenid=====')
                     await localStorage.setItem('payCorpId', payCorpId)
                     let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + payCorpId 
                         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() 
