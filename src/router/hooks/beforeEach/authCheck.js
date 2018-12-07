@@ -19,6 +19,7 @@ export default async (to, from, next) => {
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
     if(parm.cropId){
         store.dispatch('getUserInfo', {})
+        store.dispatch('setJssdkConfig', null)
         let cropId = parm.cropId
         await localStorage.setItem('cropId', cropId)
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
