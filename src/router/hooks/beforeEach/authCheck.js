@@ -73,11 +73,13 @@ export default async (to, from, next) => {
                 let _jssdkConfig = store.getters.jssdkConfig;
                 console.log(_jssdkConfig ,'_jssdkConfig----')
                 if(!_jssdkConfig){
-                    console.log('wx jssdk init ')
+                    console.log('wx jssdk init for get user info')
                     wechatApi.init()
                 }
 
                 next()
+
+                console.log('wx jssdk init for ===============')
             }
         } else {
             next()
