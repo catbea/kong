@@ -35,7 +35,6 @@ export default async (to, from, next) => {
                 console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
                 let _jssdkConfig = store.getters.jssdkConfig;
-                console.log(_jssdkConfig, '_jssdkConfig=====')
                 if(!_jssdkConfig){
                     console.log('wx jssdk init ')
                     wechatApi.init()
@@ -46,8 +45,6 @@ export default async (to, from, next) => {
                     return
                 }
                 let pcOpenid = userInfo.pcOpenid
-                console.log(pcOpenid, 'pcOpenId')
-                console.log(parm.code, 'parm.code===')
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
                 userInfo.payOpenId = payopenIdObject.payOpenId
                 store.dispatch('getUserInfo', userInfo)
@@ -61,7 +58,6 @@ export default async (to, from, next) => {
                 userInfo.cropId = cropId
                 userInfo.token = wxAuthObject.token
                 store.dispatch('getUserInfo', userInfo)
-                console.log(wxAuthObject, 'get user info =====')
                 if(!userInfo.payOpenId) {//返回的payopenid为空，则从新授权获取
                     console.log(wxAuthObject,'跳转获取payopenid=====')
                     await localStorage.setItem('payCorpId', payCorpId)
@@ -70,6 +66,12 @@ export default async (to, from, next) => {
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
                     window.location.href = wxurl;
                     return
+                } else {
+                    let _jssdkConfig = store.getters.jssdkConfig;
+                    if(!_jssdkConfig){
+                        console.log('wx jssdk init')
+                        wechatApi.init()
+                    }
                 }
                 next()
             }
