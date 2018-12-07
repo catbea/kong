@@ -9,4 +9,6 @@ export const USER_AREA = 'USER_AREA'
 export const REPORT_INFO = 'REPORT_INFO' 
 export const USER_AVATAR = 'USER_AVATAR' 
 
+// city
+export const CITY_LIST = 'CITY_LIST'
 export const WX_JSSDK = 'WX_JSSDK' 

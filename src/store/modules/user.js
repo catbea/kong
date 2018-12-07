@@ -80,7 +80,9 @@ const state = {
   },
   userVipInfo: {},
   userArea: {
-    city: '深圳市'
+    province:'',
+    city:'深圳市',
+    county: ''
   },
   reportAddInfo: {
     linkerId: '',
@@ -137,7 +139,7 @@ const mutations = {
     state.userVipInfo = data
   },
   [types.USER_AREA](state, data) {
-    // state.userArea = Object.assign(state.userArea, data)
+    state.userArea = Object.assign(state.userArea, data)
   },
   [types.USER_AVATAR](state, data) {
     state.updateUserAvatar = data
