@@ -2,8 +2,8 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  jssdkConfig: JSON.parse(localStorage.getItem('jssdkConfig')) || null,
-  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
+  jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     address: "",
     agentMinOpenid: "",
     agentUpdateId: "",
@@ -110,11 +110,11 @@ const getters = {
 const actions = {
   async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    await localStorage.setItem('userInfo', _userInfo);
+    await localStorage.setItem('awMasterUserInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
   },
   setJssdkConfig({ commit }, jssdkConfig) {
-    localStorage.setItem('jssdkConfig', JSON.stringify(jssdkConfig));
+    localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig));
     commit([types.WX_JSSDK], jssdkConfig);
   },
   async getUserVipInfo({ commit }, payload) {
