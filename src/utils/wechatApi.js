@@ -1,5 +1,6 @@
 // const wx = require('weixin-js-sdk')
 // import wx from 'http://res.wx.qq.com/open/js/jweixin-1.2.0.js'
+import store from '@/store/'
 import commonService from '@/services/commonService'
 class WechatApi {
   constructor() {
@@ -14,7 +15,7 @@ class WechatApi {
 
   async init() {
     const ticket = await this._getTicket()
-    store.dispatch("setJssdkConfig",ticket);
+    store.dispatch("setJssdkConfig", ticket)
     this.wx.config(ticket)
   }
 
