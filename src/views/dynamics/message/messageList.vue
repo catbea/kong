@@ -4,7 +4,10 @@
       <div class="messageInfo-sys" @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
-             <button class="messageInfo-sys-num" >{{sysMessage.unreadMsgCount}}</button>
+             <button  :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-num' :'messageInfo-sys-nums' "   v-if="sysMessage.unreadMsgCount != 0 " >
+               <span v-if="sysMessage.unreadMsgCount > 99">99+</span>
+               <span v-else>{{sysMessage.unreadMsgCount}}</span>
+             </button>
             <img :src="backIcon" class="sys-left-img">
           </span>
           <span class="messageInfo-sys-right">
@@ -22,7 +25,9 @@
       <div class="messageInfo-sys" v-for="(item,key) in messageList" :key="key">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
-            <button class="messageInfo-sys-num" v-show="item.unreadMsgCount !=0">{{item.unreadMsgCount}}</button>
+            <button :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' " v-show="item.unreadMsgCount !=0">
+              <span v-if="item.unreadMsgCount > 99 ">99+</span><span v-else>{{item.unreadMsgCount}}</span>
+            </button>
             <img :src="item.c2cImage" class="sys-left-img">
             
           </span>
@@ -102,7 +107,20 @@ export default {
           }
           .messageInfo-sys-num{
             font-size:12px;
-            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:rgba(255,255,255,1);
+            line-height:16px;
+            background:rgba(234,77,46,1);
+            border-radius:50%;
+            // width:18px;
+            // height:18px;
+            border: 0;
+            position: absolute;
+            margin-left: 35px;
+            padding: 1px 2px;
+          }
+          .messageInfo-sys-nums{
+            font-size:12px;
             font-weight:400;
             color:rgba(255,255,255,1);
             line-height:16px;
@@ -113,7 +131,6 @@ export default {
             border: 0;
             position: absolute;
             margin-left: 35px;
-
           }
         }
         > .messageInfo-sys-right {

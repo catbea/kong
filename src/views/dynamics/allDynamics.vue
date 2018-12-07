@@ -38,6 +38,8 @@
           <dynamics-list
             @click="goallDynamics"
             :allDynamicList="allDynamicList"
+            :item="item"
+            
           ></dynamics-list>
         </div>
         <div
@@ -193,10 +195,14 @@ export default {
       const res = await dynamicsService.getArticleDynamicList(1)
       this.articleDynamicList = res.records
     },
-
-
+    //关注
+ async getupdateCustomerInfo (item) {
+    debugger
+      const res = await dynamicsService.getupdateCustomerInfo()
+      
+    },
+  
     itemProperties (val) {
-      debugger
       if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog
           .confirm({
@@ -216,7 +222,7 @@ export default {
       }
     },
     //客户详情
-    goallDynamics () {
+    goallDynamics (item) {
       this.$router.push('/custom/detail')
     }
   }
@@ -226,6 +232,9 @@ export default {
 .allDynamics-page {
   background: #ffffff;
   margin: 0 0 20px 0;
+  .data-container{
+        margin-top: 60px;
+  }
   > .tab-container {
     // position: fixed;
     width: 100%;
@@ -233,6 +242,11 @@ export default {
       margin-top: 20px;
     }
   }
+  .van-tabs--line {
+    padding-top: 1.17333rem;
+    position: fixed;
+    top: 0;
+}
   .van-tabs--line .van-tabs__wrap {
     height: 1.17333rem;
     position: fixed;
