@@ -62,7 +62,6 @@ export default {
   methods:{
     // 请求数据事件
    async onLoad(){
-      console.log(99999)
       let current = this.getCurrentType()
      
          const result = await mycoupons.couponsStatusList(current.agentId, current.index, current.page)

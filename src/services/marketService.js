@@ -3,11 +3,13 @@ class MarketService {
   /**
    * 楼盘数据
    */
-  getMarketDescribe(agentId) {
+  getMarketDescribe(agentId,current,size=10) {
     return xhr({
       url: '/linker/getLinkerList',
       body: {
-        agentId
+        agentId,
+        current,
+        size
       }
     })
   }
