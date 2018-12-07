@@ -35,11 +35,11 @@ export default async (to, from, next) => {
             if(payCorpId){// 通过payopenid返回的code
                 // console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
-                // console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
-                // if(!store.getters.jssdkConfig){
-                //     console.log('wx jssdk init ')
-                //     wechatApi.init()
-                // }
+                console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
+                if(!store.getters.jssdkConfig){
+                    console.log('wx jssdk init ')
+                    wechatApi.init()
+                }
                 console.log(userInfo.payOpenId, 'userInfo.payOpenId')
                 if(userInfo.payOpenId) {
                     next()
