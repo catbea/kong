@@ -6,11 +6,12 @@
       <div class="register-subtitle">获取验证码输入即可完成注册</div>
       <div class="from-container">
         <div class="phone-cell">
-          <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile"></material-input>
-          <div class="send-btn" :disabled="disabled" @click="sendCodeHandler">获取验证码</div>
+          <div class="phone-tip" v-if="phoneFocus">请使用当前微信绑定号码进行注册</div>
+          <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler"></material-input>
         </div>
         <div class="code-cell">
-          <material-input placeholder="请输入验证码"></material-input>
+          <material-input placeholder="请输入验证码" :type="'number'" :maxlength='6' v-model="code"></material-input>
+          <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
         </div>
         <div class="invite-cell">
           <div class="invite-name">邀请人：{{inviteName}}</div>
@@ -28,6 +29,8 @@
 <script>
 import RegStep from 'COMP/Register/RegStep'
 import MaterialInput from 'COMP/MaterialInput'
+
+import RegisterService from 'SERVICE/registService'
 export default {
   components: {
     RegStep,
@@ -35,9 +38,54 @@ export default {
   },
   data: () => ({
     stepTitle: '手机注册',
-    inviteName: '李大牛'
+    inviteName: '李大牛',
+    mobile: '',
+    code: '',
+    sendCodeText: '获取验证码',
+    codeTime: 60,
+    disabled: false,
+    phoneFocus: false,
   }),
-  methods: {}
+  created () {
+
+  },
+  methods: {
+    /**
+     * 发送验证码
+     */
+    sendCodeHandler () {
+      if (this.disabled == false) {
+        this.disabled = !this.disabled;
+        // const result = RegisterService.sendMsgRegister(this.mobile)
+        this.countDown()
+      }
+    },
+    countDown () {
+      this.sendCodeText = '重新发送(' + this.codeTime + 's)'
+      let timer = setInterval(() => {
+        debugger
+        this.codeTime --
+        this.sendCodeText = '重新发送(' + this.codeTime + 's)'
+        if (this.codeTime < 0) {
+          clearInterval(timer)
+          this.sendCodeText = '重新发送'
+          this.codeTime = 60
+          this.disabled = false
+        }
+      }, 1000)
+    },
+    focusHandler (focus) {
+      console.log(focus)
+      this.phoneFocus = focus
+    },
+    blurHandler (focus) {
+      console.log(focus)
+      this.phoneFocus = focus
+    },
+    registerHandler () {
+      
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -75,6 +123,15 @@ export default {
   .from-container {
     margin: 45px 15px 15px;
     .phone-cell {
+      margin: 10px 15px;
+      > .phone-tip {
+          color: #969EA8;
+          font-size: 12pt;
+          text-align: left;
+          margin-left: 5px;
+        }
+    }
+    .code-cell {
       position: relative;
       margin: 10px 15px;
       > .send-btn {
@@ -95,9 +152,6 @@ export default {
           opacity: 0.5;
         }
       }
-    }
-    .code-cell {
-      margin: 10px 15px;
     }
     .invite-cell {
       margin: 26px 15px;
