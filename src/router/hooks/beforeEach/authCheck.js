@@ -69,10 +69,10 @@ export default async (to, from, next) => {
                     return
                 }
 
-                console.log(store.getters.jssdkConfig ,'_jssdkConfig----')
-                if(!store.getters.jssdkConfig){
-                    await wechatApi.init()
-                }
+                // console.log(store.getters.jssdkConfig ,'_jssdkConfig----')
+                // if(!store.getters.jssdkConfig){
+                //     await wechatApi.init()
+                // }
 
                 next()
             }
