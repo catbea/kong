@@ -26,7 +26,7 @@ export default {
   }),
   methods: {
     siteClickHandler() {
-      this.$router.push('')
+      this.$router.push('/public/AreaSelection')
     }
   }
 }
@@ -50,8 +50,6 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     display: inline-block;
-    // border-right: 1px solid red;
-    // margin: 10px 0;
     > .arrow-icon {
       position: absolute;
       display: inline-block;
