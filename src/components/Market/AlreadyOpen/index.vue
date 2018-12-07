@@ -4,8 +4,8 @@
       <li>已开通
         <span>{{agentIdInfo}}</span> 个楼盘
         </li>
-      <li>
-          <router-link to="/user/myMarket" tag="p">我的楼盘</router-link>
+      <li @click="myMarket">
+          <p>我的楼盘</p>
       </li>
     </ul>
   </div>
@@ -15,6 +15,11 @@ export default {
   props: {
     agentIdInfo: {
       type: Number
+    }
+  },
+  methods:{
+    myMarket(){
+      this.$emit('returnMyMarket',1)
     }
   }
 }

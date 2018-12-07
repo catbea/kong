@@ -28,6 +28,7 @@ import TitleBar from 'COMP/TitleBar/arrow.vue'
 import VanSearch from 'COMP/VanSearch/'
 import Screen from 'COMP/Screen/'
 import UserMarket from 'COMP/User/UserMarket/'
+import userService from 'SERVICE/userService'
 export default {
   components:{
     MasterMarket,
@@ -37,6 +38,11 @@ export default {
     UserMarket
   },
   data:()=>({
+    agentId:705,
+    displayFlag:0,
+    recommendList:987,
+    masterList:[],
+    commonList:[],
     show:false,
    titleInfo:{
      title:"我的楼盘",
@@ -54,7 +60,30 @@ export default {
      {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通 11/22到期",flag:true,price:"1%+5万元/套"}
    ]
   }),
+  created() {
+    this.agentId=this.$route.params.id
+    this.getMyMarketInfo()
+    this.getRecommendInfo()
+  },
   methods:{
+    async getRecommendInfo(){//推荐楼盘的数据
+      const res = await userService.getRecommend(this.agentId)
+      console.log(res,78787878)
+      this.recommendList=res.records
+      console.log(33)
+      await this.a()
+    },
+    a(){
+      this.recommendList =this.recommendList.filter((item)=>{
+        return item.masterRecommand === 1
+      })
+      console.log(44)
+      console.log(this.recommendList)
+    },
+    async getMyMarketInfo(){//请求展示的楼盘数据
+      const res = await userService.getMyMarket(this.agentId,this.displayFlag)
+      console.log(res)
+    },
     popupHandle(){
       this.show=!this.show
     },

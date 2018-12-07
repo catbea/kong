@@ -2,7 +2,8 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
+  jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     address: "",
     agentMinOpenid: "",
     agentUpdateId: "",
@@ -79,7 +80,9 @@ const state = {
   },
   userVipInfo: {},
   userArea: {
-    city: '深圳市'
+    province:'',
+    city:'深圳市',
+    county: ''
   },
   reportAddInfo: {
     linkerId: '',
@@ -101,13 +104,18 @@ const getters = {
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   updateUserAvatar: state => state.updateUserAvatar,
+  jssdkConfig: state => { return state.jssdkConfig; }
 }
 
 const actions = {
   async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    await localStorage.setItem('userInfo', _userInfo);
+    await localStorage.setItem('awMasterUserInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
+  },
+  setJssdkConfig({ commit }, jssdkConfig) {
+    localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig));
+    commit([types.WX_JSSDK], jssdkConfig);
   },
   async getUserVipInfo({ commit }, payload) {
     const res = await userService.getUserVipInfo(payload)
@@ -131,10 +139,13 @@ const mutations = {
     state.userVipInfo = data
   },
   [types.USER_AREA](state, data) {
-    // state.userArea = Object.assign(state.userArea, data)
+    state.userArea = Object.assign(state.userArea, data)
   },
   [types.USER_AVATAR](state, data) {
     state.updateUserAvatar = data
+  },
+  [types.WX_JSSDK](state, jssdkConfig) {
+    state.jssdkConfig = jssdkConfig;
   }
 }
 

@@ -7,7 +7,7 @@
       <div class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></div>
     </div>
     <screen v-model="filter"></screen>
-    <already-open :agentIdInfo="agentIdInfo"></already-open>
+    <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list
         v-model="loading"
@@ -36,6 +36,7 @@ export default {
     AlreadyOpen
   },
   data: () => ({
+    broker:705,
     marketList:[],
     page:1,
     loading:false,
@@ -56,7 +57,7 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
-   async onLoad(){
+   async onLoad(){//楼盘信息请求
       const res = await marketService.getMarketDescribe(705,this.page)
         console.log(res)
       this.marketList=this.marketList.concat(res.records)
@@ -73,13 +74,11 @@ export default {
     onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
-    // async getMarketDescribeInfo(agentId,current) {
-    //   const res = await marketService.getMarketDescribe(agentId,current)
-    //   console.log(res)
-    //   this.resInfo = res.records
-    // },
-    async getBrokerInfo() {
-      const res = await marketService.getBrokerMarket(1)
+    returnMyMarket(){
+      this.$router.push({name:'mymarket',params:{id:this.broker}})
+    },
+    async getBrokerInfo() {//经纪人Id请求
+      const res = await marketService.getBrokerMarket(this.broker)
       this.agentIdInfo = res
     },
     skipDetail(item) {
