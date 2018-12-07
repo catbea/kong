@@ -25,10 +25,10 @@
               </span>
             </div>
             <div class="dynamics-list-content" @click="godynamicsList">
-              <p>浏览了  <span>你的名片</span></p>
-              <p>2018年10月22 日第<span>{{item.todayClickCount}}次</span>打开 </p>
+              <p>查看浏览了楼盘  <span>{{item.objectName}}</span></p>
+              <p>{{item.updateTime }} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}</span></p>
-              <p>累计浏览<span>4次</span>,名片，平均停留<span>5.5s</span></p>
+              <p>累计浏览<span>{{item.todayClickCount }}次</span>,名片，平均停留<span>{{item.totalTime}}s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
@@ -49,51 +49,6 @@
         </div>
       </shadow-box>
     </div>
-    
-    <!-- <div class="dynamics-container-list">
-      <shadow-box>
-        <div slot="container">
-          <div class="dynamics-list">
-            <div class="dynamics-list-agent"@click="godynamicsList">
-              <span class="list-agent-left">
-                <span class="agent-left-left">
-                  <img :src="lxImg" class="agent-userImg">
-                </span>
-                <span class="agent-left-right">
-                  <p class="left-right-name">谢敏</p>
-                  <p class="left-right-time">2018/10/22 09:13</p>
-                </span>
-              </span>
-              <span class="list-agent-right">
-                <p class="agent-right-nums">40.8%</p>
-                <p class="agent-right-title">意向度</p>
-              </span>
-            </div>
-            <div class="dynamics-list-content"@click="godynamicsList">
-              <p>查看浏览了楼盘&nbsp;<span>碧桂园凤凰国际项目</span></p>
-              <p>2018年10月22 日第<span>3 次</span>打开 </p>
-              <p>浏览市场大于<span>60s</span>&nbsp;篇幅小于<span>50%</span></p>
-              <p>累计浏览<span>4次</span>,名片，平均停留<span>5.5s</span></p>
-            </div>
-
-            <div class="dynamics-list-btn">
-              <span></span>
-              <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="show1">
-                  <img :src="gzImg" class="agent-gzImg">
-                  关注</button>
-                <button class="list-btn-followOK" v-show="!show1">已关注</button>
-                <button class="list-btn-contact" @click="goalldynamics">
-                  <img :src="lxImg" class="btn-contact-userImg">
-                  联系
-                </button>
-              </span>
-            </div>
-          </div>
-
-        </div>
-      </shadow-box>
-    </div> -->
 </div>
   </div>
 
@@ -114,13 +69,29 @@ export default {
     return {
       lxImg: require('IMG/dynamics/lx@2x.png'),
       gzImg: require('IMG/dynamics/gz@2x.png'),
+      element:''
       
     }
   },
   created() {
-    console.log(this.allDynamicList)
+    // this.golist()
+  
   },
   methods: {
+    // golist(){
+    //   if(this.allDynamicList){
+    //   debugger
+    //   for (let i = 0; i <= this.allDynamicList.length; i++) {
+    //     debugger
+    //     const element = this.allDynamicList[i].dynamicDate;
+    //     console.log(element)
+    //   }
+  
+    // console.log("全部==========++++++++++")
+    //   }
+      
+    
+    // },
     goalldynamics () {
       this.$router.push('/dynamics/message/messageList')
     },

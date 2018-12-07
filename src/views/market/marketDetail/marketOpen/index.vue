@@ -1,6 +1,6 @@
 <template>
   <div class="market-open-page">
-   <market-describe :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
+   <market-describe class="project-info" :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
    <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
@@ -31,7 +31,7 @@ export default {
     linkerId: '',
     projectInfo: {},
     priceList: [],
-    priceSurfacePayInfo: {},
+    priceSurfacePayInfo: {balanceAmount: 0, balancePay: 0, coupon: 0},
     currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
@@ -72,17 +72,7 @@ export default {
       const res = await commonService.payForProject(param)
       if (res.isPay) {
         console.log(res, '调起支付')
-        alert('appid:'+res.appId);
-        ///////
-          let parm = {
-              timestamp: res.timestamp,
-              nonceStr: res.nonceStr,
-              package: res.packageId,
-              signType: 'MD5',
-              paySign: res.signature
-            }
-            console.log(parm, '支付参数')
-        //////
+        // alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
           timestamp: res.timestamp,
@@ -90,21 +80,22 @@ export default {
           package: res.packageId,
           signType: 'MD5',
           paySign: res.signature,
-          success: function(res) {
+          success: (res)=> {
             console.log('支付suss')
           },
-          cancel: function(res) {
+          cancel: (res)=> {
             //用户付钱失败。没钱，密码错误，取消付款
+            console.log(res,'支付取消')
           },
-          fail: function(res) {
-            console.log(res,'支付取消了')
+          fail: (res)=> {
+            console.log(res,'支付失败')
           }
         })
       }
     },
 
     async getMarketDescribeInfo() {
-      const res = await marketService.getLinkerDetail(this.linkerId)
+      const res = await marketService.getLinkerSimpleDetail(this.linkerId)
       console.log(res, 'getMarketDescribeInfo')
       this.projectInfo = {
         linkerImg: res.headImgUrl,
@@ -113,12 +104,15 @@ export default {
         linkerPrice: res.averagePrice,
         linkerName: res.linkerName,
         openTimes: res.openTimes,
+        sale: res.sale,
         commission: res.commission
       }
     },
     async getLinkerAmountList() {
       const res = await marketService.getLinkerAmountList()
       this.priceList = res
+      this.priceSurfacePayInfo = {balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0}
+      this.priceItemClickHandle(0)
     }
   }
 }
@@ -127,6 +121,12 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
+  .project-info {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-top: -13px;
+    margin-bottom: 10px;
+  }
   .pay-submit-info {
     position: fixed;
     bottom: 0px;

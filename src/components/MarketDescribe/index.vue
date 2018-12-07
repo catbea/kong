@@ -24,7 +24,7 @@
         </ul>
       </div>
         
-        <div class="market-box-page-bottom">
+        <div class="market-box-page-bottom" v-show="itemInfo.commission">
           <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
           <span>{{itemInfo.commission}}</span>
         </div>

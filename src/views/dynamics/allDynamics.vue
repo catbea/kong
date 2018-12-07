@@ -2,7 +2,7 @@
   <div class="allDynamics-page">
     <div class="tab-container">
       <van-tabs
-        v-model="activeIndex"
+        v-model="active"
         color="#007AE6"
         :line-width="15"
         :swipe-threshold="6"
@@ -21,52 +21,53 @@
         <!-- 动态全部-->
         <div
           class="allDynamics-container"
-          v-if="activeIndex === 0 || activeIndex === 1"
+          v-if="active === 0 "
         >
           <shadow-box>
             <div slot="container">
+              <!-- active === 0? allDynamicCount :CardDynamicCount -->
               <dynamics-data
                 :totalTitle="all.totalTitle"
                 :cardTitle="all.cardTitle"
                 :propertiesTitle="all.propertiesTitle"
                 :articleTitle="all.articleTitle"
-                :allDynamicCount="activeIndex ===0? allDynamicCount : CardDynamicCount"
+                :allDynamicCount="allDynamicCount"
               ></dynamics-data>
             </div>
           </shadow-box>
           <dynamics-list
             @click="goallDynamics"
-            :allDynamicList="activeIndex ===0?allDynamicList :CardDynamicList"
+            :allDynamicList="allDynamicList"
           ></dynamics-list>
         </div>
-        <!-- <div
+        <div
             class="allDynamics-container"
-            v-if="activeIndex === 1"
+            v-if="active === 1"
           >
             <dynamics-card
               @click="goallDynamics"
-              :CardDynamicCount="CardDynamicCount"
-              :CardDynamicList="CardDynamicList"
+              :cardDynamicCount="cardDynamicCount"
+              :cardDynamicList="cardDynamicList"
             ></dynamics-card>
-          </div> -->
+          </div>
         <div
           class="allDynamics-container"
-          v-if="activeIndex === 2"
+          v-if="active === 2"
         >
           <properties
             :info="item"
             @click="itemProperties"
-            :HouseDynamicList="HouseDynamicList"
-            :HouseDynamicCount="HouseDynamicCount"
+            :houseDynamicList="houseDynamicList"
+            :houseDynamicCount="houseDynamicCount"
           ></properties>
         </div>
         <div
           class="allDynamics-container"
-          v-if="activeIndex === 3"
+          v-if="active === 3"
         >
           <dynamics-article
-            :ArticleDynamicCount="ArticleDynamicCount"
-            :ArticleDynamicList="ArticleDynamicList"
+            :articleDynamicCount="articleDynamicCount"
+            :articleDynamicList="articleDynamicList"
           ></dynamics-article>
         </div>
       </div>
@@ -105,7 +106,7 @@ export default {
       },
 
       item: [],
-      activeIndex: [],
+      active: [],
       tabs: [
         { index: 0, type: '', typeName: '全部', page: 0, finished: false, list: [] },
         { index: 1, type: '', typeName: '名片', page: 0, finished: false, list: [] },
@@ -114,12 +115,12 @@ export default {
       ],
       allDynamicCount: [],
       allDynamicList: [],
-      CardDynamicCount: [],
-      CardDynamicList: [],
-      HouseDynamicCount: [],
-      HouseDynamicList: [],
-      ArticleDynamicCount: [],
-      ArticleDynamicList: [],
+      cardDynamicCount: [],
+      cardDynamicList: [],
+      houseDynamicCount: [],
+      houseDynamicList: [],
+      articleDynamicCount: [],
+      articleDynamicList: [],
     }
   },
   created () {
@@ -158,44 +159,45 @@ export default {
     //名片数据动态统计
     async getCardDynamicCount () {
       const res = await dynamicsService.getCardDynamicCount()
-      this.CardDynamicCount = res.records
+      this.cardDynamicCount = res
       this.getCardDynamicList()
     },
 
     //名片数据动态列表
     async getCardDynamicList () {
       const res = await dynamicsService.getCardDynamicList()
-      this.CardDynamicList = res.records
+      this.cardDynamicList = res.records
 
     },
 
     //楼盘数据动态统计
     async getHouseDynamicCount () {
       const res = await dynamicsService.getHouseDynamicCount()
-      this.HouseDynamicCount = res.records
+      this.houseDynamicCount = res
       this.getHouseDynamicList()
     },
     //楼盘动态列表
     async getHouseDynamicList () {
       const res = await dynamicsService.getHouseDynamicList()
-      this.HouseDynamicList = res.records
+      this.houseDynamicList = res.records
     },
 
     //文章数据动态统计
     async getArticleDynamicCount () {
       const res = await dynamicsService.getArticleDynamicCount()
-      this.ArticleDynamicCount = res.records
+      this.articleDynamicCount = res
       this.getArticleDynamicList()
     },
     //文章数据动态列表
     async getArticleDynamicList () {
       const res = await dynamicsService.getArticleDynamicList(1)
-      this.ArticleDynamicList = res.records
+      this.articleDynamicList = res.records
     },
 
 
     itemProperties (val) {
-      if (val.openStatus == 1) {
+      debugger
+      if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog
           .confirm({
             title: '暂未开通楼盘',
@@ -210,7 +212,7 @@ export default {
           })
       } else {
         //跳转到动态详情item
-        this.$router.push('/dynamics/dynamicsInfo')
+        this.$router.push({path:'/Dynamics/dynamicsInfo',query: {itemDynamiclist:val.itemDynamiclist}})
       }
     },
     //客户详情

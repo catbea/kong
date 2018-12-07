@@ -36,7 +36,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     try {
       const res = await response.json()
       const isOk = res.result
-      isOk ? resolve(res.data) : codeErrHandler(res)
+      isOk ? resolve(res.data) : codeErrHandler(res, url)
     } catch (err) {
       console.error('Error: ', err)
     }

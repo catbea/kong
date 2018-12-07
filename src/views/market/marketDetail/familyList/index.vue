@@ -4,26 +4,26 @@
           <van-tab v-for="(item,index) in tabs" :key="index" :title="item.houseType">
            <keep-alive>
               <div class="family-list-page-box">
-      <div class="content" v-for="(itemA,indexA) in item.cpHouseTypeDetail" :key="indexA">
-      <div class="big-box">
-      <div class="family-list-page-box-left bg_img" :style="{backgroundImage:'url('+itemA.imgUrl+')'}">
-           
-      </div>
-      <ul class="family-list-page-box-center">
-        <li>{{itemA.householdDesc}}</li>
-        <li>建面 {{itemA.area}} {{itemA.orientations}}朝向</li>
-        <li>
-          <div class="tag-item" :style="style" ref="text">{{saleStatus[itemA.saleStatus]}}</div>
-        </li>
-        <li>{{itemA.price}}</li>
-      </ul>
-      </div>
-      <div class="family-list-page-box-right">
-        <a :href=itemA.linkerUrl><p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p></a>
-        <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
-      </div>
-      </div>
-    </div>
+              <div class="content" v-for="(itemA,indexA) in item.cpHouseTypeDetail" :key="indexA">
+              <div class="big-box">
+              <div class="family-list-page-box-left bg_img" :style="{backgroundImage:'url('+itemA.imgUrl+')'}">
+                    
+              </div>
+              <ul class="family-list-page-box-center">
+                <li>{{itemA.householdDesc}}</li>
+                <li>建面 {{itemA.area}} {{itemA.orientations}}朝向</li>
+                <li>
+                  <div class="tag-item"  :class="styleColor[indexA]"  ref="text">{{saleStatus[itemA.saleStatus]}}</div>
+                </li>
+                <li>{{itemA.price}}</li>
+              </ul>
+              </div>
+              <div class="family-list-page-box-right">
+                <a :href=itemA.linkerUrl><p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p></a>
+                <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
+              </div>
+              </div>
+            </div>
           </keep-alive>
           </van-tab>
       </van-tabs>
@@ -52,11 +52,22 @@ export default {
     finished:false,
     panorama:require('IMG/marketDetail/quanj@2x.png'),
     leave:require('IMG/marketDetail/arrow2.png'),
-    info:["热销中","全景看房"]
+    info:["热销中","全景看房"],
   }),
   computed:{
     
     styleColor(){
+      if(this.tabs){
+         return  this.tabs[this.activeIndex].cpHouseTypeDetail.map((item)=>{
+          if(item.saleStatus === "0"){
+            return "blue"
+          }else if(item.saleStatus ==="1"){
+            return "orange"
+          }else{
+            return "gary"
+          }
+        })
+      }
      
     }
   },
@@ -115,6 +126,18 @@ export default {
         line-height:12px;
       }
       li:nth-of-type(3){
+        .blue{
+          background: rgba(0, 122, 230, 1);
+        color:#FFFFFF;
+        }
+        .orange{
+          background: orange;
+          color:#FFFFFF;
+        }
+        .gary{
+          background:rgba(143, 159, 177, 0.15);
+        color: #5C5F66;
+        }
         margin-bottom:9px;
         display: flex;
         flex-wrap: wrap;

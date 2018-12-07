@@ -7,16 +7,16 @@
       <div class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></div>
     </div>
     <screen v-model="filter"></screen>
-    <already-open :agentIdInfo="agentIdInfo"></already-open>
+    <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
-      <!-- <van-list
+      <van-list
         v-model="loading"
         :finished="finished"
-        :finished-text="没有更多了"
+        :finished-text="'没有更多了'"
         @load="onLoad"
-      >-->
-      <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
-      <!-- </van-list> -->
+      >
+      <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+      </van-list>
     </div>
   </div>
 </template>
@@ -36,6 +36,11 @@ export default {
     AlreadyOpen
   },
   data: () => ({
+    broker:705,
+    marketList:[],
+    page:1,
+    loading:false,
+    finished:false,
     filter: null,
     searchContent: {
       siteText: '深圳',
@@ -49,23 +54,31 @@ export default {
     containerHeight: '0'
   }),
   created() {
-    this.getMarketDescribeInfo()
     this.getBrokerInfo()
   },
   methods: {
+   async onLoad(){//楼盘信息请求
+      const res = await marketService.getMarketDescribe(705,this.page)
+        console.log(res)
+      this.marketList=this.marketList.concat(res.records)
+      if(res.pages===0||this.page === res.pages){
+        this.finished=true
+      }
+      this.page++
+      this.loading=false
+      console.log(99999)
+    },
         openReturnHandle(item){
       this.$router.push({name:'marketDetail-open', params: { id: item.linkerId }})
     },
     onClickHandler () {
       this.$router.push('/market/inputSearch')
     },
-    async getMarketDescribeInfo() {
-      const res = await marketService.getMarketDescribe(705)
-      console.log(res)
-      this.resInfo = res.records
+    returnMyMarket(){
+      this.$router.push({name:'mymarket',params:{id:this.broker}})
     },
-    async getBrokerInfo() {
-      const res = await marketService.getBrokerMarket(1)
+    async getBrokerInfo() {//经纪人Id请求
+      const res = await marketService.getBrokerMarket(this.broker)
       this.agentIdInfo = res
     },
     skipDetail(item) {

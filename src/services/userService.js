@@ -167,6 +167,28 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 首页查看我的楼盘
+   */
+  getMyMarket(agentId,displayFlag) {//展示楼盘的数据
+    return xhr({
+      url: '/myLinker/myProject',
+      body: {
+        agentId,
+        displayFlag
+      }
+    })
+  }
+
+  getRecommend(agentId) {//推荐楼盘的数据
+    return xhr({
+      url: '/myLinker/displayRecommendLinker',
+      body: {
+        agentId
+      }
+    })
+  }
   /**
    * 历史文章
    * @param {*} current 
