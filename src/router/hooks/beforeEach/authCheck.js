@@ -35,16 +35,17 @@ export default async (to, from, next) => {
             if(payCorpId){// 通过payopenid返回的code
                 // console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
-                console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
-                if(!store.getters.jssdkConfig){
-                    console.log('wx jssdk init ')
-                    wechatApi.init()
-                }
+                // console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
+                // if(!store.getters.jssdkConfig){
+                //     console.log('wx jssdk init ')
+                //     wechatApi.init()
+                // }
 
-                if(userInfo.payOpenId) {
-                    next()
-                    return
-                }
+                // if(userInfo.payOpenId) {
+                //     next()
+                //     return
+                // }
+
                 let pcOpenid = userInfo.pcOpenid
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
                 userInfo.payOpenId = payopenIdObject.payOpenId

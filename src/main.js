@@ -5,7 +5,7 @@ import router from '@/router/'
 import store from '@/store/'
 import '@/filters'
 import '@/directives'
-// import wechatApi from '@/utils/wechatApi'
+import wechatApi from '@/utils/wechatApi'
 import vant from './vant'
 
 Vue.config.productionTip = false
@@ -19,7 +19,7 @@ Vue.use(List)
 Vue.use(Popup)
 Vue.use(Search)
 // globle
-// wechatApi.init()
+wechatApi.init()
 
 window.vue = new Vue({
   router,
