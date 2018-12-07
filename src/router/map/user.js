@@ -190,7 +190,7 @@ export default [
     }
   },
   {
-    path: '/user/myMarket',
+    path: '/user/myMarket/:id',
     name: 'mymarket',
     component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
     meta: {
