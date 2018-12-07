@@ -24,16 +24,16 @@ export default {
     }
   },
   watch: {
-    show (val) {
+    show(val) {
       this.isShow = val
     },
-    isShow (val) {
+    isShow(val) {
       this.$emit('update:show', val)
     },
-    code (val) {
+    code(val) {
       this.value = val
     },
-    value (val) {
+    value(val) {
       this.$emit('update:code', val)
     }
   }

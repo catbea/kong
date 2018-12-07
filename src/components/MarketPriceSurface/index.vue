@@ -3,8 +3,14 @@
     <ul class="price-box">
       
       <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:itemActIndex==index}">
-        <p>{{item.subscribeRemark}}</p>
+        <p>{{item.subscribeNum}} {{item.type==4 ? '天' : '个月'}}</p>
         <p>¥{{item.subscribeAmount | priceFormart}}</p>
+        <p :class="item.subscribeNum == 3 || item.subscribeNum == 1 ? '':'through'">{{item.subscribeRemark}}</p>
+      </li>
+
+      <li>
+        <p>VIP会员</p>
+        <p>¥300</p>
         <p>立即开通</p>
         <span>不限量</span>
       </li>
@@ -67,6 +73,9 @@ export default {
 }
 </script>
 <style lang="less">
+.through{
+  text-decoration: line-through;
+}
 .market-price-surface-page {
   width: 375px;
   padding: 20px 0 0 0;

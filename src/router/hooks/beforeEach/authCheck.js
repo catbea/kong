@@ -19,6 +19,7 @@ export default async (to, from, next) => {
     wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length-1)
     if(parm.cropId){
         store.dispatch('getUserInfo', {})
+        store.dispatch('setJssdkConfig', null)
         let cropId = parm.cropId
         await localStorage.setItem('cropId', cropId)
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + cropId 
@@ -32,10 +33,10 @@ export default async (to, from, next) => {
             let userInfo = store.getters.userInfo
             let payCorpId = userInfo.payCorpId
             if(payCorpId){// 通过payopenid返回的code
-                console.log(payCorpId, 'payCorpId')
+                // console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
-                let _jssdkConfig = store.getters.jssdkConfig;
-                if(!_jssdkConfig){
+                console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
+                if(!store.getters.jssdkConfig){
                     console.log('wx jssdk init ')
                     wechatApi.init()
                 }
@@ -48,7 +49,7 @@ export default async (to, from, next) => {
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
                 userInfo.payOpenId = payopenIdObject.payOpenId
                 store.dispatch('getUserInfo', userInfo)
-                console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
+                console.log(payopenIdObject.payOpenId, 'payOpenId===')
                 next()
             } else {
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
@@ -66,13 +67,13 @@ export default async (to, from, next) => {
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
                     window.location.href = wxurl;
                     return
-                } else {
-                    let _jssdkConfig = store.getters.jssdkConfig;
-                    if(!_jssdkConfig){
-                        console.log('wx jssdk init')
-                        wechatApi.init()
-                    }
                 }
+
+                // console.log(store.getters.jssdkConfig ,'_jssdkConfig----')
+                // if(!store.getters.jssdkConfig){
+                //     await wechatApi.init()
+                // }
+
                 next()
             }
         } else {
