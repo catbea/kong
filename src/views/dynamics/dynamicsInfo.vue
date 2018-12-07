@@ -10,8 +10,8 @@
             </span>
             <span class="dynamicsInfo-list-right">
               <p class="list-right-title">{{dynamicCount.linkerVO.linkerName}}
-                <!-- <span class="left-title-right">续费</span> -->
-                <span class="left-title-right-open" >开通</span>
+                 <span class="left-title-right" v-if="dynamicCount.linkerVO.linkerOpenEndTime !=''">续费</span>
+                <span class="left-title-right-open" v-else>开通</span>
               </p>
               <p class="list-right-time">{{dynamicCount.linkerVO.city}}  {{dynamicCount.linkerVO.district}} | {{dynamicCount.linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
               <p class="list-right-label">
@@ -209,12 +209,12 @@ export default {
             font-size: 12px;
             font-weight: 400;
             color: rgba(0, 122, 230, 1);
-            line-height: 27px;
+            line-height: 24px;
             border-radius: 12px;
             border: 1px solid;
             width: 46px;
             height: 24px;
-            right: 15px;
+            right: 30px;
             position: absolute;
             text-align: center;
           }

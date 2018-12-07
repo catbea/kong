@@ -70,8 +70,8 @@ export default {
         payOpenid: this.userInfo.payOpenId
       }
       const res = await commonService.payForProject(param)
+      console.log(res, '支付接口返回')
       if (res.isPay) {
-        console.log(res, '调起支付')
         // alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
