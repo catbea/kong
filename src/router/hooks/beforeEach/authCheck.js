@@ -36,7 +36,7 @@ export default async (to, from, next) => {
                 // 获取jssdk授权
                 let _jssdkConfig = store.getters.jssdkConfig;
                 console.log(_jssdkConfig, '_jssdkConfig=====')
-                if(_jssdkConfig){
+                if(!_jssdkConfig){
                     console.log('wx jssdk init ')
                     wechatApi.init()
                 }
