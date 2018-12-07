@@ -49,10 +49,17 @@ export default {
     priceItemClickHandle(index) {
       this.currPriceListIndex = index
       let priceItem = this.priceList[this.currPriceListIndex]
+
+      let submitPrice =  priceItem.subscribeAmount - this.userInfo.price
+      if(submitPrice < 0) submitPrice = 0
+      let balancePay = this.userInfo.price - priceItem.subscribeAmount
+      if(priceItem.subscribeAmount > this.userInfo.price) balancePay = this.userInfo.price
+
       this.submitPayInfo = {
-        value: priceItem.subscribeAmount,
+        value: submitPrice,
         coupon: 0
       }
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, {balancePay: balancePay})
     },
 
     couponClickHandle() {
@@ -72,7 +79,7 @@ export default {
       const res = await commonService.payForProject(param)
       console.log(res, '支付接口返回')
       if (res.isPay) {
-        // alert('appid:'+res.appId);
+        alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
           timestamp: res.timestamp,
