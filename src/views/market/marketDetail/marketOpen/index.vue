@@ -31,7 +31,7 @@ export default {
     linkerId: '',
     projectInfo: {},
     priceList: [],
-    priceSurfacePayInfo: {},
+    priceSurfacePayInfo: {balanceAmount: 0, balancePay: 0, coupon: 0},
     currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
@@ -72,17 +72,7 @@ export default {
       const res = await commonService.payForProject(param)
       if (res.isPay) {
         console.log(res, '调起支付')
-        alert('appid:'+res.appId);
-        ///////
-          let parm = {
-              timestamp: res.timestamp,
-              nonceStr: res.nonceStr,
-              package: res.packageId,
-              signType: 'MD5',
-              paySign: res.signature
-            }
-            console.log(parm, '支付参数')
-        //////
+        // alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
           timestamp: res.timestamp,
@@ -90,14 +80,15 @@ export default {
           package: res.packageId,
           signType: 'MD5',
           paySign: res.signature,
-          success: function(res) {
+          success: (res)=> {
             console.log('支付suss')
           },
-          cancel: function(res) {
+          cancel: (res)=> {
             //用户付钱失败。没钱，密码错误，取消付款
+            console.log(res,'支付取消')
           },
-          fail: function(res) {
-            console.log(res,'支付取消了')
+          fail: (res)=> {
+            console.log(res,'支付失败')
           }
         })
       }
@@ -119,6 +110,8 @@ export default {
     async getLinkerAmountList() {
       const res = await marketService.getLinkerAmountList()
       this.priceList = res
+      this.priceSurfacePayInfo = {balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0}
+      this.priceItemClickHandle(0)
     }
   }
 }
