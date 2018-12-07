@@ -35,6 +35,7 @@ export default async (to, from, next) => {
                 console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
                 let _jssdkConfig = store.getters.jssdkConfig;
+                console.log(_jssdkConfig ,'_jssdkConfig====')
                 if(!_jssdkConfig){
                     console.log('wx jssdk init ')
                     wechatApi.init()
@@ -66,13 +67,15 @@ export default async (to, from, next) => {
                         + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
                     window.location.href = wxurl;
                     return
-                } else {
-                    let _jssdkConfig = store.getters.jssdkConfig;
-                    if(!_jssdkConfig){
-                        console.log('wx jssdk init')
-                        wechatApi.init()
-                    }
                 }
+
+                let _jssdkConfig = store.getters.jssdkConfig;
+                console.log(_jssdkConfig ,'_jssdkConfig----')
+                if(!_jssdkConfig){
+                    console.log('wx jssdk init ')
+                    wechatApi.init()
+                }
+
                 next()
             }
         } else {
