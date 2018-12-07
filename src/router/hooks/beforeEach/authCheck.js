@@ -40,7 +40,7 @@ export default async (to, from, next) => {
                 //     console.log('wx jssdk init ')
                 //     wechatApi.init()
                 // }
-
+                console.log(userInfo.payOpenId, 'userInfo.payOpenId')
                 if(userInfo.payOpenId) {
                     next()
                     return
