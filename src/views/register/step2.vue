@@ -1,6 +1,6 @@
 <template>
   <div class="register-step2-page">
-    <reg-step :step="2"></reg-step>
+    <reg-step :step="2" :stepTitle="stepTitle"></reg-step>
     <div class="register-content">
       <div class="register-title">长按识别二维码</div>
       <div class="register-subtitle">关注企业公众号后，点击经纪人端即可使用</div>
@@ -18,7 +18,8 @@ export default {
   data: () => ({
     isShow: false,
     value: '110000',
-    qrcodeImg: ''
+    stepTitle: '已注册',
+    qrcodeImg: '',
   }),
   methods: {}
 }
