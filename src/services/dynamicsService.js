@@ -160,9 +160,12 @@ class DynamicsService {
 /**
  * 【企业微信】单个楼盘数据动态统计
  */
-getSingleHouseDynamicCount() {
+getSingleHouseDynamicCount(linkerId) {
     return xhr({
       url: '/dataDynamic/getSingleHouseDynamicCount',
+      body: {
+        linkerId
+      }
     })
   }
   /**
@@ -170,12 +173,13 @@ getSingleHouseDynamicCount() {
    * @param {*} current 
    * @param {*} size 
    */
-  getSingleHouseDynamicList(current, size = 10) {
+  getSingleHouseDynamicList(current, size = 10,linkerId) {
     return xhr({
       url: '/dataDynamic/getSingleHouseDynamicList',
       body: {
         current,
-        size
+        size,
+        linkerId
       }
     })
   }

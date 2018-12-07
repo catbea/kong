@@ -4,11 +4,11 @@
       <div slot="container">
         <div class="articleInfo-list">
           <span class="articleInfo-list-left">
-            <p class="list-left-title">为什么好多人买房都不选高层今天为您解答奥秘。</p>
-            <p class="list-left-time">楚天都市报&nbsp;&nbsp;1小时前</p>
+            <p class="list-left-title">{{itemlist.articleTitle}}</p>
+            <p class="list-left-time">{{itemlist.articleSource }}&nbsp;&nbsp;{{itemlist.articleTime | dateFormatterToHuman}}</p>
           </span>
           <span class="articleInfo-list-right">
-            <img :src="backIcon" class="mark-icon">
+            <img :src="itemlist.articleImgUrl" class="mark-icon">
           </span>
 
         </div>
@@ -58,7 +58,7 @@
             </div>
             <div class="dynamics-list-content">
               <p>浏览了文章 <span>{{item.articleName}}</span></p>
-              <p>{{item.updateTime }} 日第<span>{{item.clickCount }}次</span>打开 </p>
+              <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}</span></p>
               <p>累计浏览<span>{{item.todayClickCount}}次</span>,名片，平均停留<span>{{item.totalTime}}</span></p>
             </div>
@@ -103,7 +103,7 @@ export default {
       gzImg: require('IMG/dynamics/gz@2x.png'),
       articleDynamicCount:[],
       articleDynamicList:[],
-      articleId:this.$route.query.articleId,
+      itemlist:this.$route.query.itemlist,
     }
   },
   created() {
@@ -113,14 +113,14 @@ export default {
       
     //查询单个文章客户访问数据动态列表
       async getSingleArticleDynamicList () {
-        alert(this.articleId)
-      const res = await dynamicsService.getSingleArticleList(1,10,this.articleId)
+        console.log(this.itemlist)
+      const res = await dynamicsService.getSingleArticleList(1,10,this.itemlist.articleId)
       this.articleDynamicList = res.records
       this.getSingleArticleDynamicCount()
     },
     //单个文章数据动态统计
       async getSingleArticleDynamicCount () {
-      const res = await dynamicsService.getSingleArticleCount(this.articleId)
+      const res = await dynamicsService.getSingleArticleCount(this.itemlist.articleId)
       this.articleDynamicCount = res
     },
   }

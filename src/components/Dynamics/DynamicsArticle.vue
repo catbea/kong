@@ -26,7 +26,7 @@
     <div class="article-list" v-for="(item,key) in articleDynamicList" :key="key"  @click="itemArticleInfo(item)">
       <span class="article-list-left">
         <p class="article-left-title">{{item.articleTitle }}</p>
-        <p class="article-left-time">{{item.articleSource }}&nbsp;&nbsp;{{item.articleTime}}
+        <p class="article-left-time">{{item.articleSource }}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}
           <span class="left-time-nub"> {{item.dynamicCount}}条动态</span>
         </p>
       </span>
@@ -71,7 +71,7 @@ export default {
   methods: {
     itemArticleInfo(item) {
       // /discover/headlinepath：'/Dynamics/articleInfo',query{}
-      this.$router.push({path:'/Dynamics/articleInfo',query: {articleId:item.articleId}})
+      this.$router.push({path:'/Dynamics/articleInfo',query: {itemlist:item}})
     }
   }
 }

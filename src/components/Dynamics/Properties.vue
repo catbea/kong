@@ -68,7 +68,8 @@ export default {
     onClickConfirm(item) {
       let parm={
         // info:this.info,
-        statue:item.openStatus
+        itemDynamiclist:item,
+        // statue:item.openStatus
       }
        this.$emit('click', parm)
     },

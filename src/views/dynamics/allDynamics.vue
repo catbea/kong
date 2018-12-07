@@ -196,7 +196,8 @@ export default {
 
 
     itemProperties (val) {
-      if (val.openStatus == 1) {
+      debugger
+      if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog
           .confirm({
             title: '暂未开通楼盘',
@@ -211,7 +212,7 @@ export default {
           })
       } else {
         //跳转到动态详情item
-        this.$router.push('/dynamics/dynamicsInfo')
+        this.$router.push({path:'/Dynamics/dynamicsInfo',query: {itemDynamiclist:val.itemDynamiclist}})
       }
     },
     //客户详情
