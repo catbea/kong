@@ -78,7 +78,7 @@ export default {
     selectedHead(item, index) {
       switch (index) {
         case 0:
-          this.$router.push('/user/myMarket')
+          this.$router.push('/user/myMarket/705')
           break
         case 1:
           this.$router.push('/user/collection/myCollection')

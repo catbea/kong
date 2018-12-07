@@ -11,3 +11,4 @@ export const USER_AVATAR = 'USER_AVATAR'
 
 // city
 export const CITY_LIST = 'CITY_LIST'
+export const WX_JSSDK = 'WX_JSSDK' 

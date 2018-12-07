@@ -1,11 +1,27 @@
 <template>
-  <div class="Properties-container" v-if="HouseDynamicList">
-    <shadow-box>
-      <div slot="container">
-        <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data>
+  <div class="Properties-container" >
+    <div class="shadow-box">
+     <div class="dynaData-container" v-if="houseDynamicCount">
+        <span class="container-total">
+          <p class="container-title">楼盘数量</p>
+          <p class="card-num">{{houseDynamicCount.linkerCount  }}</p>
+        </span>
+        <span class="container-card">
+          <p class="container-title">楼盘分享</p>
+          <p class="card-num">{{houseDynamicCount.linkerShareCount  }}</p>
+        </span>
+        <span class="container-properties " >
+          <p class="container-title">楼盘访客</p>
+          <p class="card-num">{{houseDynamicCount.linkerVisitorCount }}</p>
+        </span>
+        <span calss="container-article">
+          <p class="container-title">平均停留(S)</p>
+          <p class="card-num">{{houseDynamicCount.avgStayLinkerTime }}</p>
+        </span>
       </div>
-    </shadow-box>
-    <div class="Properties-list" v-for="(item,index) in HouseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
+    </div>
+
+    <div class="Properties-list" v-for="(item,index) in houseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
  <!-- @click="onClickConfirm" 1未开通，2已开通-->
       <p class="list-left">{{item.linkerName }}{{item.openStatus == 1 ? "（未开通）":""}}<span class="list-right">{{item.dynamicCount }}条动态</span></p>
       <p class="list-left-btn">{{item.area}}  {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
@@ -35,20 +51,13 @@ export default {
     Dialog
   },
    props: {
-    info: Object,
+    // info: Object,
     item:Object,
-    HouseDynamicList: { type: Array }
+    houseDynamicList: { type: Array },
+    houseDynamicCount: {type: Object }
   },
   data() {
     return {
-      totalTitle: '楼盘数量',
-      totalNum: '90',
-      cardTitle: '楼盘分享',
-      cardNum: '0',
-      propertiesTitle: '楼盘访客',
-      propertiesNum: '190',
-      articleTitle: '平均停留(S)',
-      articleNum: '124',
       properties:[
         {'id':'1','propertiesName':'碧桂园凤凰国际','statue':'0','num':'14','address':'南山 深圳湾','price':'0'},
         {'id':'2','propertiesName':'万科臻湾汇 ','statue':'1','num':'20','address':'南山 深圳湾','price':'119878'},
@@ -58,8 +67,9 @@ export default {
   methods: {
     onClickConfirm(item) {
       let parm={
-        info:this.info,
-        statue:item.openStatus
+        // info:this.info,
+        itemDynamiclist:item,
+        // statue:item.openStatus
       }
        this.$emit('click', parm)
     },
@@ -107,6 +117,35 @@ export default {
 .Properties-container {
   background: #ffffff;
   // margin: 0 16px;
+  .shadow-box {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07),
+    0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+  border-radius: 6px;
+  margin: 0 16px;
+  .dynaData-container {
+  background: #ffffff;
+  display: flex;
+  padding: 20px 0 20px 20px;
+
+  span {
+    width: 80.7px;
+  }
+  .container-title {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+    line-height: 18px;
+  }
+  .card-num {
+    font-size: 24px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    line-height: 36px;
+  }
+  
+}
+}
   > .Properties-list {
     border-bottom: 1px solid #e6e6e6;
     margin: 0 16px;

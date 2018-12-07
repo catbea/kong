@@ -26,10 +26,15 @@
         </div>
       </li>
     </ul>
+    <custom-operation></custom-operation>
   </div>
 </template>
 <script>
+import CustomOperation from './CustomOperation.vue'
 export default {
+  components:{
+    CustomOperation
+  },
   props: {
     trackInfo: { type: Array },
   },
@@ -41,8 +46,7 @@ export default {
     //   { key: '文章浏览', value: 124 }
     // ]
     backColor:true
-  }),
-  components: {}
+  })
 }
 </script>
 <style lang="less">

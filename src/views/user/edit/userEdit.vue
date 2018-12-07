@@ -38,7 +38,7 @@
         class="cell-item"
         title="平台公司"
         is-link
-        :value="userInfo.distributorName"
+        :value='userInfo.organizationName'
         @click="godistributorName"
       />
       <!-- <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" /> -->
@@ -47,6 +47,7 @@
         class="cell-item"
         title="我的机构"
         is-link
+        :value='userInfo.distributorName'
         :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.enterpriseId}}"
       />
     </cell-group>
@@ -56,8 +57,8 @@
           <div
             class="tag-item"
             v-for="item in userInfo.labelList"
-            :key="item.labelId"
-          >{{item.labelName}}</div>
+            :key="item.id"
+          >{{item.itemName}}</div>
         </div>
       </cell>
       <cell

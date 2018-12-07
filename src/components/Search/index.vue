@@ -7,7 +7,7 @@
     </div>
     <div class="search-input-box">
       <i class="van-icon van-icon-search van-cell__left-icon"></i>
-      <input type="search" placeholder="请输入平台名称">
+      <input type="search" :placeholder="conf.placeholder">
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
     conf: {
       type: Object,
       default: function() {
-        return { siteText: '北京市' }
+        return { siteText: '北京市' , placeholder: '请输入平台名称'}
       }
     }
   },

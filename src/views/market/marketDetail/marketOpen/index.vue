@@ -1,7 +1,7 @@
 <template>
   <div class="market-open-page">
    <market-describe :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
-   <market-priceSurface :priceList="priceList" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
+   <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
@@ -31,6 +31,7 @@ export default {
     linkerId: '',
     projectInfo: {},
     priceList: [],
+    priceSurfacePayInfo: {balanceAmount: 0, balancePay: 0, coupon: 0},
     currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
@@ -71,21 +72,23 @@ export default {
       const res = await commonService.payForProject(param)
       if (res.isPay) {
         console.log(res, '调起支付')
+        // alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
-          timestamp: res.timeStamp,
+          timestamp: res.timestamp,
           nonceStr: res.nonceStr,
-          package: res.packageValue,
+          package: res.packageId,
           signType: 'MD5',
-          paySign: res.paySign,
-          success: function(res) {
+          paySign: res.signature,
+          success: (res)=> {
             console.log('支付suss')
           },
-          cancel: function(res) {
+          cancel: (res)=> {
             //用户付钱失败。没钱，密码错误，取消付款
+            console.log(res,'支付取消')
           },
-          fail: function(res) {
-            console.log(res,'支付取消了')
+          fail: (res)=> {
+            console.log(res,'支付失败')
           }
         })
       }
@@ -107,6 +110,8 @@ export default {
     async getLinkerAmountList() {
       const res = await marketService.getLinkerAmountList()
       this.priceList = res
+      this.priceSurfacePayInfo = {balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0}
+      this.priceItemClickHandle(0)
     }
   }
 }
@@ -124,7 +129,7 @@ export default {
     height: 65px;
     line-height: 65px;
     text-align: center;
-    margin: 16px 0 16px 0;
+    margin: 16px 0 66px 0;
     span:nth-child(1) {
       font-size: 10px;
       font-family: PingFang-SC-Regular;

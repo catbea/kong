@@ -15,7 +15,9 @@ import {
   DatetimePicker,
   Button,
   RadioGroup,
-   Radio
+  Radio,
+  Area,
+  Popup
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -31,3 +33,5 @@ Vue.use(DatetimePicker)
 Vue.use(Button)
 Vue.use(RadioGroup)
 Vue.use(Radio)
+Vue.use(Area)
+Vue.use(Popup)

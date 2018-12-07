@@ -13,7 +13,7 @@
         <ul class="market-describe">
           <li class="market-name">
             <span> {{itemInfo.linkerName}}</span>
-            <span class="dredge" :style="style" v-if="dredge" @click.stop="openRenewHandle">{{openStatus}}</span>
+            <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
           </li>
           <li class="site">{{itemInfo.linkerAddress}}</li>
           <tag-group :arr="itemInfo.linkerTags"></tag-group>
@@ -78,8 +78,9 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
-    openRenewHandle(){
-      this.$router.push("/marketDetail/open")
+    openHandle(){
+      this.$emit('openReturnHandle',1)
+      
     }
   },
   watch: {

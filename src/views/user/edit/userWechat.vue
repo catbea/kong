@@ -3,7 +3,13 @@
     <div class="user-edit-wechat">
       <p class="edit-wechat-title">微信号</p>
       <p class="edit-wechat-conter">
-        <input type="text" class="edit-wechat-input" placeholder="Bela76123" v-model="weChatNum">
+        <input
+          type="text"
+          class="edit-wechat-input"
+          placeholder="Bela76123"
+          v-model="weChatNum"
+          maxlength="20"
+        >
       </p>
       <p class="edit-wechat-berak">该微信号仅作为客户添加使用</p>
       <button class="edit-wechat-query" @click="upDataWeChat">确认修改</button>
@@ -14,6 +20,7 @@
 import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 import strFormat from '@/filters/strFormat'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -24,6 +31,10 @@ export default {
     return {
       weChatNum: ''
     }
+  },
+
+  computed: {
+    ...mapGetters(['userInfo'])
   },
 
   created() {
@@ -41,19 +52,37 @@ export default {
           // on close
         })
       } else {
-        this.weChatNum = strFormat.fmtStr(tempWeChat)
-        let date = {
-          wechatAccount: this.weChatNum
+        let inputStr = strFormat.fmtWebCode(tempWeChat)
+        this.weChatNum = inputStr
+
+        if (inputStr.length < 6) {
+          this.$toast('微信号长度不得小于6位')
+        } else {
+          let chinses = strFormat.isChinese(this.weChatNum)
+          if (chinses) {
+            this.$toast('微信号不得存中文')
+          } else {
+            let firstStr = this.weChatNum.substr(0, 1)
+            let isEnghish = strFormat.isEnghish(firstStr)
+            if (!isEnghish) {
+              this.$toast('微信号需以字母开头')
+            } else {
+              let date = {
+                wechatAccount: this.weChatNum
+              }
+              this.upDateWeChat(date)
+            }
+          }
         }
-        this.upDateWeChat(date)
       }
     },
 
     async upDateWeChat(obj) {
       const result = await userService.upDateUserInfo(obj)
-     if(result){
-          this.$router.go(-1)
-        }
+      if (result) {
+        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { wechatAccount: this.weChatNum }))
+        this.$router.go(-1)
+      }
     }
   }
 }

@@ -1,0 +1,32 @@
+<template>
+  <div class="search-container">
+      <div class="search-area" style="height:1rem;">
+          <form action="/">
+            <van-search v-model="value" placeholder="请输入公司名称" show-action @search="onSearch" @cancel="onCancel"></van-search>
+          </form>
+      </div>
+  </div>
+</template>
+<script>
+import Search from 'COMP/Search'
+export default {
+  components: {
+    Search
+  },
+  data: () => ({
+      value: ''
+  }),
+  methods: {
+      onSearch () {
+
+      },
+      onCancel () {
+
+      }
+  }
+}
+</script>
+<style lang="less">
+</style>
+
+

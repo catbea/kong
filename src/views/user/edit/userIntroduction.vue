@@ -20,10 +20,9 @@
 <script>
 import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
+import { mapGetters } from 'vuex'
 
 export default {
-
-
   components: {
     Dialog
   },
@@ -35,9 +34,13 @@ export default {
     }
   },
 
-  created(){
-     let  signature=this.$route.query.signature
-     this.signature=signature
+  created() {
+    let signature = this.$route.query.signature
+    this.signature = signature
+  },
+
+  computed: {
+    ...mapGetters(['userInfo'])
   },
 
   methods: {
@@ -57,11 +60,12 @@ export default {
       }
     },
 
-  async  upDateSignature(obj) {
-      const result =await userService.upDateUserInfo(obj)
-      if(result){
-          this.$router.go(-1)
-        }
+    async upDateSignature(obj) {
+      const result = await userService.upDateUserInfo(obj)
+      if (result) {
+        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { signature: this.signature }))
+        this.$router.go(-1)
+      }
     },
 
     inputListener() {

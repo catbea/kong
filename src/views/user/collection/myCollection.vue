@@ -163,10 +163,10 @@ export default {
       console.log(this.collectionList[index].deleteType);
       if (this.collectionList[index].deleteType == 1) {
         this.collectionList[index].deleteType = 0
-         await userService.getlinkerCollection(cons.infoId, 1)
+         await userService.getlinkerCollection(cons.infoId, 0)
       } else {
         this.collectionList[index].deleteType = 1
-         await userService.getlinkerCollection(cons.infoId,0)
+         await userService.getlinkerCollection(cons.infoId,1)
       }
 
       // if (cons[index] ==0) {
