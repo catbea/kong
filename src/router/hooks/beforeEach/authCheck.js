@@ -1,5 +1,6 @@
 import store from '@/store/'
 import commonService from '@/services/commonService'
+import wechatApi from '@/utils/wechatApi'
 
 const getUrlQueryParams = (url)=>{
     var params = {},
@@ -32,6 +33,13 @@ export default async (to, from, next) => {
             let payCorpId = userInfo.payCorpId
             if(payCorpId){// 通过payopenid返回的code
                 console.log(payCorpId, 'payCorpId')
+                // 获取jssdk授权
+                let _jssdkConfig = store.getters.jssdkConfig;
+                if(_jssdkConfig){
+                    console.log('wx jssdk init ')
+                    wechatApi.init()
+                }
+
                 if(userInfo.payOpenId) {
                     next()
                     return

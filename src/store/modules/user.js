@@ -2,6 +2,7 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
+  jssdkConfig: JSON.parse(localStorage.getItem('jssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
     address: "",
     agentMinOpenid: "",
@@ -101,6 +102,7 @@ const getters = {
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   updateUserAvatar: state => state.updateUserAvatar,
+  jssdkConfig: state => { return state.jssdkConfig; }
 }
 
 const actions = {
@@ -108,6 +110,10 @@ const actions = {
     let _userInfo = JSON.stringify(userInfo)
     await localStorage.setItem('userInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
+  },
+  setJssdkConfig({ commit }, jssdkConfig) {
+    localStorage.setItem('jssdkConfig', JSON.stringify(jssdkConfig));
+    commit([types.WX_JSSDK], jssdkConfig);
   },
   async getUserVipInfo({ commit }, payload) {
     const res = await userService.getUserVipInfo(payload)
@@ -135,6 +141,9 @@ const mutations = {
   },
   [types.USER_AVATAR](state, data) {
     state.updateUserAvatar = data
+  },
+  [types.WX_JSSDK](state, jssdkConfig) {
+    state.jssdkConfig = jssdkConfig;
   }
 }
 

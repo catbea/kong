@@ -14,6 +14,7 @@ class WechatApi {
 
   async init() {
     const ticket = await this._getTicket()
+    store.dispatch("setJssdkConfig",ticket);
     this.wx.config(ticket)
   }
 
