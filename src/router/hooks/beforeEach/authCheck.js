@@ -33,7 +33,7 @@ export default async (to, from, next) => {
             let userInfo = store.getters.userInfo
             let payCorpId = userInfo.payCorpId
             if(payCorpId){// 通过payopenid返回的code
-                console.log(payCorpId, 'payCorpId')
+                // console.log(payCorpId, 'payCorpId')
                 // 获取jssdk授权
                 console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
                 if(!store.getters.jssdkConfig){
@@ -49,7 +49,7 @@ export default async (to, from, next) => {
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
                 userInfo.payOpenId = payopenIdObject.payOpenId
                 store.dispatch('getUserInfo', userInfo)
-                console.log(payopenIdObject.payOpenId, 'payopenIdObject===')
+                console.log(payopenIdObject.payOpenId, 'payOpenId===')
                 next()
             } else {
                 const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
