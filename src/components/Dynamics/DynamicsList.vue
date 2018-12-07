@@ -34,10 +34,10 @@
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="item.attentionStatus  == 1">
+                <button class="list-btn-follow" v-show="item.attentionStatus  == 1" @click="getupdateCustomerInfo(item)">
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
-                <button class="list-btn-followOK" v-show="item.attentionStatus  == 0">已关注</button>
+                <button class="list-btn-followOK" v-show="item.attentionStatus  == 0" @click="getupdateCustomerInfo(item)">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
@@ -62,6 +62,7 @@ export default {
   },
    props: {
       info:{type:Object},
+      item: {type: Array},
       allDynamicList: { type: Array },
       // CardDynamicList:{ type: Array }
    },
@@ -78,20 +79,9 @@ export default {
   
   },
   methods: {
-    // golist(){
-    //   if(this.allDynamicList){
-    //   debugger
-    //   for (let i = 0; i <= this.allDynamicList.length; i++) {
-    //     debugger
-    //     const element = this.allDynamicList[i].dynamicDate;
-    //     console.log(element)
-    //   }
-  
-    // console.log("全部==========++++++++++")
-    //   }
-      
-    
-    // },
+    getupdateCustomerInfo(item){
+      this.$emit('click', item)
+    },
     goalldynamics () {
       this.$router.push('/dynamics/message/messageList')
     },

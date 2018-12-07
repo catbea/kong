@@ -183,5 +183,20 @@ getSingleHouseDynamicCount(linkerId) {
       }
     })
   }
+  /**
+   * 关注
+   * @param {*} clientId 
+   * @param {*} isFollow 
+   */
+  getupdateCustomerInfo(clientId, isFollow) {
+    return xhr({
+      method:'POST',
+      url: '/customerInfo/updateCustomerInfo',
+      body: {
+        clientId,
+        isFollow
+      }
+    })
+  }
 }
 export default new DynamicsService()

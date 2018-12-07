@@ -6,17 +6,15 @@
     <input v-if="type === 'password'" type="password" class="material-input" :name="name" :id="id" :placeholder="placeholder" v-model="valueCopy" :readonly="readonly" :disabled="disabled" :autocomplete="autocomplete" :max="max" :min="min" :step="step" :required="required" @focus="handleFocus(true)" @blur="handleFocus(false)" @input="handleModelInput">
     <input v-if="type === 'tel'" type="tel" class="material-input" :name="name" :id="id" :placeholder="placeholder" v-model="valueCopy" :readonly="readonly" :disabled="disabled" :autocomplete="autocomplete" :required="required" @focus="handleFocus(true)" @blur="handleFocus(false)" @input="handleModelInput">
     <input v-if="type === 'text'" type="text" class="material-input" :name="name" :id="id" :placeholder="placeholder" v-model="valueCopy" :readonly="readonly" :disabled="disabled" :autocomplete="autocomplete" :minlength="minlength" :maxlength="maxlength" :required="required" @focus="handleFocus(true)" @blur="handleFocus(false)" @input="handleModelInput">
-
+    
     <span class="material-input-bar"></span>
-
+    
     <label class="material-label">
       <slot></slot>
     </label>
 
     <div v-if="errorMessages" class="material-errors">
-      <div v-for="(error,index) in computedErrors" class="material-error" :key="index">
-        {{ error }}
-      </div>
+      <div v-for="(error,index) in computedErrors" class="material-error" :key="index">{{ error }}</div>
     </div>
   </div>
 </template>
@@ -25,55 +23,61 @@
 export default {
   name: 'material-input',
   computed: {
-    computedErrors () {
-      return typeof this.errorMessages === 'string'
-        ? [this.errorMessages] : this.errorMessages
+    computedErrors() {
+      return typeof this.errorMessages === 'string' ? [this.errorMessages] : this.errorMessages
     },
-    computedClasses () {
+    computedClasses() {
       return {
         'material--active': this.focus,
         'material--disabled': this.disabled,
-        'material--has-errors': Boolean(
-          !this.valid ||
-          (this.errorMessages && this.errorMessages.length)),
+        'material--has-errors': Boolean(!this.valid || (this.errorMessages && this.errorMessages.length)),
         'material--raised': Boolean(
           this.focus ||
           this.valueCopy || // has value
-          (this.placeholder && !this.valueCopy)) // has placeholder
+            (this.placeholder && !this.valueCopy)
+        ) // has placeholder
       }
     }
   },
-  data () {
+  data() {
     return {
       valueCopy: null,
       focus: false,
       valid: true
     }
   },
-  beforeMount () {
+  beforeMount() {
     // Here we are following the Vue2 convention on custom v-model:
     // https://github.com/vuejs/vue/issues/2873#issuecomment-223759341
     this.copyValue(this.value)
   },
   methods: {
-    handleModelInput (event) {
+    handleModelInput(event) {
+      if (this.type === 'number' && this.valueCopy.length > this.maxlength) {
+        this.valueCopy = event.target.value = event.target.value.slice(0, this.maxlength)
+      }
       this.$emit('input', event.target.value, event)
       this.handleValidation()
     },
-    handleFocus (focused) {
+    handleFocus(focused) {
       this.focus = focused
+      if (focused == true) {
+        this.$emit('focus', focused)
+      }else {
+        this.$emit('blur', focused)
+      }
+      
     },
-    handleValidation () {
-      this.valid = this.$el ? this.$el.querySelector(
-        '.material-input').validity.valid : this.valid
+    handleValidation() {
+      this.valid = this.$el ? this.$el.querySelector('.material-input').validity.valid : this.valid
     },
-    copyValue (value) {
+    copyValue(value) {
       this.valueCopy = value
       this.handleValidation()
     }
   },
   watch: {
-    value (newValue) {
+    value(newValue) {
       // This watch works from the code side of the 2-way-binding:
       this.copyValue(newValue)
     }

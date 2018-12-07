@@ -50,6 +50,19 @@ class MarketService {
     })
   }
 
+    /**
+   * 楼盘-楼盘信息-楼盘开通调用
+   * @param {*} linkerId 
+   */
+  getLinkerSimpleDetail(linkerId) {
+    return xhr({
+      url: '/linkerDetail/getLinkerSimpleDetail',
+      body: {
+        linkerId
+      }
+    })
+  }
+
   /**
    * 楼盘详情-楼盘未显示的全部户型
    * @param {*} linkerId 
