@@ -70,7 +70,7 @@
         :value="userInfo.signature"
       />
     </cell-group>
-    <area-select :show="this.isOpen" @confirmCityData="this.getCityName"></area-select>
+    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"></area-select>
   </div>
 </template>
 <script>
@@ -115,8 +115,12 @@ export default {
     },
 
     getCityName(data) {
-      this.majorRegion=data[0].name+"-"+data[1].name+"-"+data[2].name
-      this.upDateUserName(this.majorRegion);
+      this.majorRegion = data[0].name + '-' + data[1].name + '-' + data[2].name
+      this.isOpen = false
+      this.upDateUserName(this.majorRegion)
+    },
+    cancelPopu() {
+      this.isOpen = false
     },
 
     async upDateUserName(obj) {
@@ -127,7 +131,7 @@ export default {
       if (result) {
         this.$store.dispatch('userInfo', Object.assign(this.userInfo, { majorRegion: this.majorRegion }))
       }
-    },
+    }
   },
   computed: {
     ...mapGetters(['userInfo'])
