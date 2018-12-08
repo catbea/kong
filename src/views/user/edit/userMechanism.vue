@@ -2,8 +2,8 @@
   <div class="user-edit-username-page">
     <div class="user-edit-username">
       <p class="edit-username-title">我的机构选择</p>
-      <collapse-List :model="organizationList"></collapse-List>
-      <button class="edit-username-query">确认修改</button>
+      <collapse-List :model="organizationList" @click="refreshList"></collapse-List>
+      <button class="edit-username-query" @click="commitChangeInfo">确认修改</button>
     </div>
   </div>
 </template>
@@ -28,14 +28,37 @@ export default {
   },
 
   methods: {
+    //提交更新信息
+    commitChangeInfo(){
+
+    },
+
+    async upDateInfo(id){
+      let obj={}
+      obj.distributorId=id;
+      const result=await userService.upDateUserInfo(obj);
+      console.log(result)
+    },
+
+    //刷新列表
+    refreshList(val){
+      debugger
+      console.log(val)
+    },
+
     async queryOrganizationList(distributorId, enterpriseId) {
       let obj = {}
       const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
 
-      if (result) {
+      if (result.length > 0) {
         // this.organizationList
-        let tempArr = this.formatData(result, '124')
+        let tempArr = this.formatData(result, result[0].pId)
         obj.children = tempArr
+        obj.name = '选择机构'
+        this.organizationList = obj
+      } else {
+        obj.name = '暂无可供选择的数据'
+        obj.children = []
         this.organizationList = obj
       }
     },
@@ -45,6 +68,7 @@ export default {
       let result = []
       let temp = []
       for (let i in data) {
+        data[i].checked = false
         if (data[i].pId == pId) {
           result.push(data[i])
           temp = this.formatData(data, data[i].id)
