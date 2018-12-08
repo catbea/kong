@@ -4,7 +4,7 @@
       <div class="search-comp">
         <search :conf="searchContent"></search>
       </div>
-      <div class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></div>
+      <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
     <screen v-model="filter"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>

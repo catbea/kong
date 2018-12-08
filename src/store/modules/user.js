@@ -24,7 +24,7 @@ const state = {
     distributorName: "垃圾垃圾",
     enterpriseId: "90",
     enterpriseName: "尊豪科技SIT",
-    organizationName:'机构',
+    organizationName: '机构',
     existNewCoupons: "",
     existNewProject: "",
     givePrice: 0,
@@ -80,9 +80,11 @@ const state = {
   },
   userVipInfo: {},
   userArea: {
-    province:'',
-    city:'深圳市',
-    county: ''
+    longitude: '',      // 经度
+    latitude: '',       // 纬度
+    province: '',       // 省
+    city: '深圳市',      // 市
+    county: ''          // 区
   },
   reportAddInfo: {
     linkerId: '',
