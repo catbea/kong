@@ -1,6 +1,6 @@
 <template>
   <div class="me-page">
-    <business-card @showPopup="this.showPopp"></business-card>
+    <business-card @showPopup="this.showPopp" @shareUserCard='this.enterSharePage'></business-card>
     <div class="top-null"></div>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
@@ -88,6 +88,10 @@ export default {
     this.getQrCode()
   },
   methods: {
+    enterSharePage(){
+      this.$router.push({name:'share-business-card'})
+    },
+
     overlayClose() {
       this.openPopup = false
     },

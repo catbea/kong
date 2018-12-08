@@ -90,15 +90,13 @@ class UserService {
    * 获取分享图片
    * @param {*} shareType
    * @param {*} shareId
-   * @param {*} agentId
    */
-  getShareInfo(shareType, shareId, agentId) {
+  getShareInfo(shareType, shareId) {
     return xhr({
       url: '/shareImg/user',
       body: {
         shareType,
-        shareId,
-        agentId
+        shareId
       }
     })
   }

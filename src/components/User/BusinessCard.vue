@@ -4,7 +4,7 @@
       <div class="bg_img info-box">
         <div class="info-box-left">
           <img :src="leftIcon" class="box-left-leftIcon" @click="showQrCode">
-          <span class="box-right-fx">
+          <span class="box-right-fx" @click="shareUserCard">
             <img :src="rightIcon" class="right-fx-rightIcon">
             <p class="right-fx-title">分享</p>
           </span>
@@ -78,7 +78,12 @@ export default {
 
     showQrCode(){
       this.$emit('showPopup', '')
+    },
+
+    shareUserCard(){
+      this.$emit('shareUserCard', '')
     }
+
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
