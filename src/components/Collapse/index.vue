@@ -9,7 +9,7 @@
         class="parent-view-right"
         v-if="model"
         v-model="model.checked"
-        @click="selectOrganiz(model.id)"
+        @change="selectOrganiz(model.id)"
       ></checkbox>
     </div>
     <ul class="ul-view" v-show="open" v-if="isFolder">

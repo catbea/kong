@@ -17,7 +17,8 @@ export default {
 
   data() {
     return {
-      organizationList: []
+      organizationList: [],
+      organizationInfo: []
     }
   },
 
@@ -29,21 +30,31 @@ export default {
 
   methods: {
     //提交更新信息
-    commitChangeInfo(){
+    commitChangeInfo() {},
 
-    },
-
-    async upDateInfo(id){
-      let obj={}
-      obj.distributorId=id;
-      const result=await userService.upDateUserInfo(obj);
+    async upDateInfo(id) {
+      let obj = {}
+      obj.distributorId = id
+      const result = await userService.upDateUserInfo(obj)
       console.log(result)
     },
 
     //刷新列表
-    refreshList(val){
-      debugger
-      console.log(val)
+    refreshList(val) {
+      for (let i = 0; i < this.organizationInfo.length; i++) {
+        this.organizationInfo[i].checked = false
+        if (this.organizationInfo[i].id == val) {
+          this.organizationInfo[i].checked = true
+        }
+      }
+     
+
+      let organizationInfo = this.organizationInfo
+      // this.organizationList
+      let tempArr = this.formatData(organizationInfo, organizationInfo[0].pId)
+      obj.children = tempArr
+      obj.name = '选择机构'
+      this.organizationList = obj
     },
 
     async queryOrganizationList(distributorId, enterpriseId) {
@@ -51,6 +62,7 @@ export default {
       const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
 
       if (result.length > 0) {
+        let organizationInfo = result
         // this.organizationList
         let tempArr = this.formatData(result, result[0].pId)
         obj.children = tempArr
