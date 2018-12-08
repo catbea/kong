@@ -6,7 +6,7 @@
             <keep-alive>
               <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
                 <!-- <div class="coupon-content"> -->
-                <coupon-item :ps="list.ps" v-for="(item1,index) in item.list" :key="index" :info="item1"></coupon-item>
+                <coupon-item v-for="(item1,index) in item.list" :key="index" :info="item1"></coupon-item>
                 <!-- </div> -->
                  </van-list>
             </keep-alive>

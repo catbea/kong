@@ -22,9 +22,9 @@
           <li>详细信息 <span class="bg_img" :style="{backgroundImage:'url('+detailImg+')'}"></span></li>
         </ul>
         <div class="coupon-item-page-right">
-         <p v-if="ps.mayUse" class="mayUse" @click="useHandle">立即使用</p>
-          <span v-if="ps.yetUse" class="yetUse bg_img" :style="{backgroundImage:'url('+yetUseImg+')'}"></span>
-          <span v-if="ps.yetPast" class="yetPast bg_img" :style="{backgroundImage:'url('+yetPastImg+')'}"></span>
+         <p v-if="info.status==0" class="mayUse" @click="useHandle">立即使用</p>
+          <span v-if="info.status==1" class="yetUse bg_img" :style="{backgroundImage:'url('+yetUseImg+')'}"></span>
+          <span v-if="info.status==2" class="yetPast bg_img" :style="{backgroundImage:'url('+yetPastImg+')'}"></span>
           </div>
           <div class="cover-right"></div>
         </div>
@@ -43,11 +43,8 @@ export default {
     yetPastImg:require('IMG/user/guoq@2x.png')
   }),
   props:{
-    ps:{
-      type:Object
-    },
     info:{
-      // type:Object
+      type:Object
     }
   },
   methods:{
