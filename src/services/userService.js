@@ -90,15 +90,13 @@ class UserService {
    * 获取分享图片
    * @param {*} shareType
    * @param {*} shareId
-   * @param {*} agentId
    */
-  getShareInfo(shareType, shareId, agentId) {
+  getShareInfo(shareType, shareId) {
     return xhr({
       url: '/shareImg/user',
       body: {
         shareType,
-        shareId,
-        agentId
+        shareId
       }
     })
   }
@@ -332,6 +330,15 @@ class UserService {
     return xhr({
       method: 'POST',
       url: '/cos/getCosSignature',
+    })
+  }
+
+  /**
+   * 获取分享二维码
+   */
+  getQrCode(){
+    return xhr({
+       url:'/cpShare/nameCardShare'
     })
   }
 

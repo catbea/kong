@@ -1,7 +1,7 @@
 <template>
   <div class="register-page">
     <div class="bg_img top-container" :style="{backgroundImage:'url(' + bgImg + ')'}">
-      <router-link to="/register/step1">
+      <router-link :to="params">
         <div class="reg-btn">立即注册</div>
       </router-link>
     </div>
@@ -19,6 +19,7 @@
   </div>
 </template>
 <script>
+import qs from 'qs'
 export default {
   data: () => ({
     bgImg: require('IMG/register/registerBg@2.png'),
@@ -29,8 +30,20 @@ export default {
       { title: '大数据分析', desc: '分析客户真实购房需求, 快速形成用户标签', icon: require('IMG/register/regIcon4.png') },
       { title: '200万用户', desc: '与200万AW大师并肩作战', icon: require('IMG/register/regIcon5.png') },
       { title: '2元试用', desc: '您与快速成交的工具 只差两元', icon: require('IMG/register/regIcon6.png') }
-    ]
-  })
+    ],
+    params: null,
+    query: null
+  }),
+  created() {
+    this.query = this.$route.query
+    console.log(this.query)
+    // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
+    if (this.query.registerType == '30') {
+      this.params = `/register/step1?${qs.stringify(this.$route.query)}`
+    }else {
+      this.params = `/register/step3?${qs.stringify(this.$route.query)}`
+    }
+  }
 }
 </script>
 <style lang="less">

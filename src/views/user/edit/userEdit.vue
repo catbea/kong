@@ -15,14 +15,13 @@
         class="cell-item"
         title="名字"
         is-link
-        :to="{path:'/user/edit/username',query:{userName:userInfo.name}}"  
+        :to="{path:'/user/edit/username',query:{userName:userInfo.name}}"
         :value="userInfo.name"
-        
       />
       <cell
         class="cell-item"
         title="手机号"
-        :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.mobile}}" 
+        :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.mobile}}"
         is-link
         :value="userInfo.tempPhone"
       />
@@ -33,12 +32,18 @@
         is-link
         :value="userInfo.wechatAccount"
       />
-      <cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion"/>
+      <cell
+        class="cell-item"
+        title="主营区域"
+        is-link
+        :value="userInfo.majorRegion"
+        @click="openAreaSelect()"
+      />
       <cell
         class="cell-item"
         title="平台公司"
         is-link
-        :value='userInfo.organizationName'
+        :value="userInfo.organizationName"
         @click="godistributorName"
       />
       <!-- <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" /> -->
@@ -47,18 +52,14 @@
         class="cell-item"
         title="我的机构"
         is-link
-        :value='userInfo.distributorName'
+        :value="userInfo.distributorName"
         :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.enterpriseId}}"
       />
     </cell-group>
     <cell-group class="user-advance-info">
       <cell class="cell-item tag-edit" title="标签展示" is-link :to="'/user/edit/userLabel'">
         <div slot="extra" class="tag-show-container">
-          <div
-            class="tag-item"
-            v-for="item in userInfo.labelList"
-            :key="item.id"
-          >{{item.itemName}}</div>
+          <div class="tag-item" v-for="item in userInfo.labelList" :key="item.id">{{item.itemName}}</div>
         </div>
       </cell>
       <cell
@@ -69,6 +70,7 @@
         :value="userInfo.signature"
       />
     </cell-group>
+    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"></area-select>
   </div>
 </template>
 <script>
@@ -76,21 +78,27 @@ import { Cell, CellGroup } from 'vant'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 import { Dialog } from 'vant'
+import areaSelect from 'COMP/AreaSelect/index'
+import userService from 'SERVICE/userService'
 export default {
   components: {
     Cell,
     CellGroup,
-    Dialog
+    Dialog,
+    areaSelect
   },
   created() {
-
+    
   },
   data() {
     return {
-      userEditIcon: require('IMG/user/collection/Article@2x.png')
+      userEditIcon: require('IMG/user/collection/Article@2x.png'),
+      isOpen: false,
     }
   },
   methods: {
+   
+
     godistributorName() {
       //此处不可进行操作
       //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面
@@ -99,6 +107,34 @@ export default {
       // }).then(() => {
       //   // on close
       // })
+    },
+
+    //选择地区
+    openAreaSelect() {
+      if (this.isOpen) {
+        this.isOpen = !this.isOpen
+      } else {
+        this.isOpen = !this.isOpen
+      }
+    },
+
+    getCityName(data) {
+      this.majorRegion = data[0].name + '-' + data[1].name + '-' + data[2].name
+      this.isOpen = false
+      this.upDateUserName(this.majorRegion)
+    },
+    cancelPopu() {
+      this.isOpen = false
+    },
+
+    async upDateUserName(obj) {
+      let nameObj = {
+        majorRegion: obj
+      }
+      const result = await userService.upDateUserInfo(nameObj)
+      if (result) {
+        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { majorRegion: this.majorRegion }))
+      }
     }
   },
   computed: {
@@ -111,11 +147,11 @@ export default {
 </script>
 <style lang="less">
 .van-cell__value {
-    overflow: hidden;
-    text-align: right;
-    position: relative;
-    vertical-align: middle;
-    color: rgba(153,153,153,1);
+  overflow: hidden;
+  text-align: right;
+  position: relative;
+  vertical-align: middle;
+  color: rgba(153, 153, 153, 1);
 }
 .van-dialog {
   border-radius: 12px;

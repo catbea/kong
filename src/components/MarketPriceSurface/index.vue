@@ -3,16 +3,22 @@
     <ul class="price-box">
       
       <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:itemActIndex==index}">
-        <p>{{item.subscribeRemark}}</p>
+        <p>{{item.subscribeNum}} {{item.type==4 ? '天' : '个月'}}</p>
         <p>¥{{item.subscribeAmount | priceFormart}}</p>
+        <p :class="item.subscribeNum == 3 || item.subscribeNum == 1 ? '':'through'">{{item.subscribeRemark}}</p>
+      </li>
+
+      <li>
+        <p>VIP会员</p>
+        <p>¥300</p>
         <p>立即开通</p>
         <span>不限量</span>
       </li>
 
-      <div class="coupon-box" @click="couponClickHandle">
+      <div class="coupon-box" v-show="payInfo.isShowCoupon" @click="couponClickHandle">
         <div>优惠劵</div>
         <div>
-          <p>-￥{{payInfo.coupon}}</p>
+          <p>{{payInfo.coupon}}</p>
           <p :style="{'background':'url('+backImg+') no-repeat'}"></p>
         </div>
       </div>
@@ -47,6 +53,7 @@ export default {
       type: Object,
       default: function() {
         return {
+          isShowCoupon: false,
           coupon: 0,
           balanceAmount: 0,
           balancePay: 0
@@ -67,6 +74,9 @@ export default {
 }
 </script>
 <style lang="less">
+.through{
+  text-decoration: line-through;
+}
 .market-price-surface-page {
   width: 375px;
   padding: 20px 0 0 0;

@@ -1,6 +1,6 @@
 <template>
   <div class="me-page">
-    <business-card></business-card>
+    <business-card @showPopup="this.showPopp" @shareUserCard='this.enterSharePage'></business-card>
     <div class="top-null"></div>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
@@ -32,15 +32,32 @@
         </div>
         <div class="head-img" onclick="qimoChatClick();">
           <img :src="consultImg">
-          <p class="grou1Icon-p">在线咨询</p> 
+          <p class="grou1Icon-p">在线咨询</p>
         </div>
       </div>
     </div>
     <div class="top-null-css"></div>
+    <van-popup
+      class="popup-view"
+      v-model="openPopup"
+      :overlay="true"
+      :lock-scroll="true"
+      :close-on-click-overlay="true"
+      :click-overlay="overlayClose"
+    >
+      <div class="close-titile">
+        <img class="closePopup" :src="this.closeImg" @click="overlayClose">
+      </div>
+      <img class="qrcode-view" :src="this.qrcodeImg">
+      <span class="notice-view">扫描二维码关注</span>
+      <span class="username-view">{{userInfo.name}}</span>
+      <span class="company-view">{{userInfo.enterpriseName}}</span>
+    </van-popup>
   </div>
 </template>
 <script>
 import businessCard from 'COMP/User/BusinessCard'
+import userService from 'SERVICE/userService'
 import { Cell, CellGroup } from 'vant'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
@@ -51,7 +68,8 @@ export default {
     CellGroup
   },
   data: () => ({
-    consultImg:require('IMG/user/Group8@2x.png'),
+    consultImg: require('IMG/user/Group8@2x.png'),
+    closeImg: require('IMG/user/close_popup.png'),
     headIcons: [
       { title: '我的楼盘', Icon: require('IMG/user/mm@2x.png') },
       { title: '我的收藏', Icon: require('IMG/user/Group1@2x.png') },
@@ -61,15 +79,35 @@ export default {
       { title: '消费账单', Icon: require('IMG/user/Group2@2x.png') },
       { title: '邀请有礼', Icon: require('IMG/user/Group4@2x.png') }
     ],
-    btnIcons: [
-      { title: '勿扰模式', Icon: require('IMG/user/Group9@2x.png') },
-      { title: '意见反馈', Icon: require('IMG/user/Group7@2x.png') }
-    ]
+    btnIcons: [{ title: '勿扰模式', Icon: require('IMG/user/Group9@2x.png') }, { title: '意见反馈', Icon: require('IMG/user/Group7@2x.png') }],
+    openPopup: false,
+    qrcodeImg: ''
   }),
   created() {
     this.getUserInfo()
+    this.getQrCode()
   },
   methods: {
+    enterSharePage(){
+      this.$router.push({name:'share-business-card'})
+    },
+
+    overlayClose() {
+      this.openPopup = false
+    },
+
+    //展示二维码框
+    showPopp() {
+      this.openPopup = true
+    },
+    //点击获取二维码
+    async getQrCode() {
+      const result = await userService.getQrCode()
+      if (result) {
+        this.qrcodeImg = result.miniQrCode
+      }
+    },
+
     async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       // this.$store.dispatch('getUserVipInfo', userId)
@@ -96,7 +134,7 @@ export default {
           this.$router.push('/user/consumption/consumptionBill')
           break
         case 6:
-         this.$router.push('/user/edit/awWelfare')
+          this.$router.push('/user/edit/awWelfare')
           break
       }
     },
@@ -106,10 +144,9 @@ export default {
           this.$router.push('/user/noDisturb')
           break
         case 1:
-          window.location='https://support.qq.com/product/31776'
+          window.location = 'https://support.qq.com/product/31776'
           break
         case 2:
-        
           break
       }
     }
@@ -120,6 +157,49 @@ export default {
 }
 </script>
 <style lang="less">
+.popup-view {
+  width: 280px;
+  height: 417px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > .close-titile {
+    width: 100%;
+    height: 24px;
+    display: flex;
+    flex-direction: row-reverse;
+
+    > .closePopup {
+      width: 24px;
+      height: 24px;
+      margin-top: 16px;
+      margin-right: 16px;
+    }
+  }
+
+  > .qrcode-view {
+    width: 200px;
+    height: 200px;
+    text-align: center;
+    margin-top: 28px;
+  }
+  > .notice-view {
+    color: #969ea8;
+    font-size: 12px;
+  }
+  > .username-view {
+    color: #333333;
+    font-size: 18px;
+    margin-top: 60px;
+  }
+  > .company-view {
+    margin-top: 7px;
+    color: #333333;
+    font-size: 12px;
+  }
+}
 .me-page {
   height: 100%;
   background: #ffffff;

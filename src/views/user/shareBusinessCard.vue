@@ -13,7 +13,6 @@ export default {
     result: null
   }),
   created() {
-    this.userId = this.userInfo.userId
     this.$toast.loading({
       mask: true,
       message: '海报生成中...',
@@ -23,7 +22,7 @@ export default {
   },
   methods: {
     async getShareInfo() {
-      const res = await userService.getShareInfo(0, this.userId, this.userId)
+      const res = await userService.getQrCode()
       this.$toast.clear()
       this.result = res.data
     }

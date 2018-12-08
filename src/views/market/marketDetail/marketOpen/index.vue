@@ -1,6 +1,6 @@
 <template>
   <div class="market-open-page">
-   <market-describe :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
+   <market-describe class="project-info" :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
    <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
@@ -12,6 +12,7 @@
 <script>
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'
+import mycoupons from 'SERVICE/mycoupons'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import MarketPriceSurface from 'COMP/MarketPriceSurface/'
 import OpenPayment from 'COMP/OpenPayment/'
@@ -31,7 +32,7 @@ export default {
     linkerId: '',
     projectInfo: {},
     priceList: [],
-    priceSurfacePayInfo: {balanceAmount: 0, balancePay: 0, coupon: 0},
+    priceSurfacePayInfo: {balanceAmount: 0, balancePay: 0, coupon: 0, isShowCoupon:false},
     currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
@@ -49,14 +50,31 @@ export default {
     priceItemClickHandle(index) {
       this.currPriceListIndex = index
       let priceItem = this.priceList[this.currPriceListIndex]
+
+      let submitPrice =  priceItem.subscribeAmount - this.userInfo.price
+      if(submitPrice < 0) submitPrice = 0
+      let balancePay = this.userInfo.price - priceItem.subscribeAmount
+      if(priceItem.subscribeAmount > this.userInfo.price) balancePay = this.userInfo.price
+
       this.submitPayInfo = {
-        value: priceItem.subscribeAmount,
+        value: submitPrice,
         coupon: 0
       }
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, {balancePay: balancePay})
+      this.getCoupan()
     },
 
     couponClickHandle() {
-      console.log('couponClickHandle========')
+      this.$router.push('/market/couponSelect')
+    },
+
+    async getCoupan() {
+      let priceItem = this.priceList[this.currPriceListIndex]
+      // console.log(priceItem)
+      let res = await mycoupons.getMyCoupons(this.linkerId, priceItem.subscribeAmount, 1, 1000)
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, {coupon: res.canUseNum+'张可用', isShowCoupon: (res.canUseNum>0) ? true : false})
+      this.$store.dispatch("setProjectCoupons", res.page.records)
+      // this.couponList = res.records
     },
 
     async paySubmit() {
@@ -70,8 +88,8 @@ export default {
         payOpenid: this.userInfo.payOpenId
       }
       const res = await commonService.payForProject(param)
+      console.log(res, '支付接口返回')
       if (res.isPay) {
-        console.log(res, '调起支付')
         // alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
@@ -95,7 +113,7 @@ export default {
     },
 
     async getMarketDescribeInfo() {
-      const res = await marketService.getLinkerDetail(this.linkerId)
+      const res = await marketService.getLinkerSimpleDetail(this.linkerId)
       console.log(res, 'getMarketDescribeInfo')
       this.projectInfo = {
         linkerImg: res.headImgUrl,
@@ -104,6 +122,7 @@ export default {
         linkerPrice: res.averagePrice,
         linkerName: res.linkerName,
         openTimes: res.openTimes,
+        sale: res.sale,
         commission: res.commission
       }
     },
@@ -120,6 +139,12 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
+  .project-info {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    margin-top: -13px;
+    margin-bottom: 10px;
+  }
   .pay-submit-info {
     position: fixed;
     bottom: 0px;

@@ -2,8 +2,8 @@ import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
 
 const state = {
-  jssdkConfig: JSON.parse(localStorage.getItem('jssdkConfig')) || null,
-  userInfo: JSON.parse(localStorage.getItem('userInfo')) || {
+  jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     address: "",
     agentMinOpenid: "",
     agentUpdateId: "",
@@ -56,7 +56,7 @@ const state = {
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
     payOpenId: 'o_iHQ0j9FdSX9B7-1jhI9-0-4d7Y',
     position: "",
-    price: 0,
+    price: 2000,
     qrCode: "https://720ljq2test-10037467.file.myqcloud.com/ljqzs/cardQrcode/4149/Timef021faa6-738d-4f03-8b5f-c8840b555494.jpg",
     recommendTip: "",
     registerType: "10",
@@ -97,7 +97,12 @@ const state = {
   },
   //用户头像
   updateUserAvatar: '',
-
+  userRegistInfo: {
+    distributorId: '190', // 公司ID
+    distributorName: 'AW大师',
+    institutionId: '190', // 机构ID
+    institutionName: 'AW大师'
+  }
 }
 
 const getters = {
@@ -106,17 +111,18 @@ const getters = {
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   updateUserAvatar: state => state.updateUserAvatar,
-  jssdkConfig: state => { return state.jssdkConfig; }
+  jssdkConfig: state => { return state.jssdkConfig; },
+  userRegistInfo: state => state.userRegistInfo
 }
 
 const actions = {
   async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    await localStorage.setItem('userInfo', _userInfo);
+    await localStorage.setItem('awMasterUserInfo', _userInfo);
     commit(types.USER_INFO, userInfo)
   },
   setJssdkConfig({ commit }, jssdkConfig) {
-    localStorage.setItem('jssdkConfig', JSON.stringify(jssdkConfig));
+    localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig));
     commit([types.WX_JSSDK], jssdkConfig);
   },
   async getUserVipInfo({ commit }, payload) {
@@ -131,6 +137,9 @@ const actions = {
   getUserAvatar({ commit }, data) {
     commit(types.USER_AVATAR, data)
   },
+  getUserRegistInfo({ commit }, data) {
+    commit(types.USER_REGIST_INFO, data)
+  }
 }
 
 const mutations = {
@@ -143,11 +152,17 @@ const mutations = {
   [types.USER_AREA](state, data) {
     state.userArea = Object.assign(state.userArea, data)
   },
+  [types.REPORT_INFO](state, data) {
+    state.reportAddInfo = data
+  },
   [types.USER_AVATAR](state, data) {
     state.updateUserAvatar = data
   },
   [types.WX_JSSDK](state, jssdkConfig) {
     state.jssdkConfig = jssdkConfig;
+  },
+  [types.USER_REGIST_INFO](state, data) {
+    state.userRegistInfo = data
   }
 }
 
