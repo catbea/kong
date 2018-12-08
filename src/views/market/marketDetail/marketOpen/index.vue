@@ -64,6 +64,7 @@ export default {
 
     couponClickHandle() {
       console.log('couponClickHandle========')
+      this.$router.push('/market/couponSelect')
     },
 
     async paySubmit() {

@@ -174,5 +174,17 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/market/couponSelect',
+    name: 'couponSelect',
+    component: resolve =>
+      require(['@/views/market/couponSelect.vue'], resolve),
+    meta: {
+      title: '优惠券选择',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
