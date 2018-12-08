@@ -1,5 +1,5 @@
 <template>
-  <div class="user-myCoupon-page">
+  <div class="coupon-select-page">
     <div class="van-hairline--bottom un-use-coupon">
         <span class="label">不使用优惠券</span>
         <span class="icon-check bg_img" @click="unUseCoupanhandle" :style="{backgroundImage:'url('+unCheckImg+')'}"></span>
@@ -10,39 +10,52 @@
 <script>
 import mycoupons from 'SERVICE/mycoupons'
 import CouponItem from 'COMP/User/myCoupon/CouponItem.vue'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     CouponItem
   },
+  computed: {
+    ...mapGetters(['projectCoupons'])
+  },
   data: () => ({
-      couponList: [],
-      unCheckImg:require('IMG/user/mealMarket/check@2x.png'),
-      checkEndImg:require('IMG/user/mealMarket/checkColor@2x.png'),
+    couponList: [],
+    unCheckImg: require('IMG/user/mealMarket/check@2x.png'),
+    checkEndImg: require('IMG/user/mealMarket/checkColor@2x.png')
   }),
 
   created() {
-      this.getCoupan()
+      this.couponList = this.projectCoupons
+      let _list = []
+      for(let item of this.projectCoupons) {
+          let obj = {
+              
+          }
+      }
+    // this.getCoupan()
   },
 
   methods: {
-      unUseCoupanhandle(){
-          this.$router.go('-1')
-      },
+    unUseCoupanhandle() {
+      this.$router.go('-1')
+    },
 
-      async getCoupan(){
-        let res = await mycoupons.couponsStatusList(0, 1, 1000)
-        this.couponList = res.records
-      },
+    // async getCoupan() {
+    //   let res = await mycoupons.getMyCoupons(0, 1, 1000)
+    //   this.couponList = res.records
+    // },
 
-      couponItemClickHandle(item){
-          console.log(item)
-          this.$router.go('-1')
-      }
+    couponItemClickHandle(item) {
+      console.log(item)
+      this.$router.go('-1')
+    }
   }
 }
 </script>
 <style lang="less">
-.un-use-coupon {
+.coupon-select-page {
+  background: #FFF;
+  .un-use-coupon {
     display: flex;
     height: 32px;
     font-size: 14px;
@@ -50,14 +63,15 @@ export default {
     padding-top: 12px;
 
     .label {
-        flex: 1;
+      flex: 1;
     }
 
-    .icon-check{
+    .icon-check {
       margin-top: 4px;
       width: 19px;
       height: 19px;
       margin: 0 40px 0 16px;
     }
+  }
 }
 </style>

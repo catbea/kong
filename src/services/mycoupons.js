@@ -10,5 +10,17 @@ class mycoupons {
       }
     })
   }
+
+  getMyCoupons(linkerId, mon, current=0, size=0) {
+    return xhr({
+      url: '/userReceive/getMyCoupons',
+      body: {
+        linkerId,
+        mon,
+        current,
+        size
+      }
+    })
+  }
 }
 export default new mycoupons()

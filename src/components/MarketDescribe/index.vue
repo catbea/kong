@@ -5,7 +5,7 @@
     <div class="all-describe" >
       <div class="market-box-page-top">
         <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
-          <div class="label bg_img" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
+          <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
             {{itemInfo.labels}}
           </div>
         </div>

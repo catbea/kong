@@ -12,3 +12,7 @@ export const USER_AVATAR = 'USER_AVATAR'
 // city
 export const CITY_LIST = 'CITY_LIST'
 export const WX_JSSDK = 'WX_JSSDK' 
+
+// market
+export const PROJECT_COUPONS = 'PROJECT_COUPONS' 
+export const CURR_SELECTED_COUPON = 'CURR_SELECTED_COUPON' 
