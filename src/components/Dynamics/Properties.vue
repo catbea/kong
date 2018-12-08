@@ -22,7 +22,7 @@
     </div>
 
     <div class="Properties-list" v-for="(item,index) in houseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
- <!-- @click="onClickConfirm" 1未开通，2已开通-->
+ <!-- @click="onClickConfirm" 1未开通，2已开通{{item.linkerName }}-->
       <p class="list-left">{{item.linkerName }}{{item.openStatus == 1 ? "（未开通）":""}}<span class="list-right">{{item.dynamicCount }}条动态</span></p>
       <p class="list-left-btn">{{item.area}}  {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
     </div>
@@ -156,6 +156,7 @@ export default {
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       line-height: 22px;
+      height: 25px;
       > .list-right {
         font-size: 12px;
         font-weight: 400;

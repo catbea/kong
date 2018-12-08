@@ -72,7 +72,8 @@ export default {
     itemArticleInfo(item) {
       // /discover/headlinepath：'/Dynamics/articleInfo',query{}
       this.$router.push({path:'/Dynamics/articleInfo',query: {itemlist:item}})
-    }
+    },
+    
   }
 }
 </script>

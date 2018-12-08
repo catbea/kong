@@ -55,7 +55,7 @@
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0">已关注</button>
-                <button class="list-btn-contact">
+                <button class="list-btn-contact"  @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -95,7 +95,10 @@ export default {
   methods:{
     godynamicsList(){
       this.$emit('click', this.info)
-    }
+    },
+    goalldynamics () {
+      this.$router.push('/dynamics/message/messageList')
+    },
   }
 }
 </script>
@@ -215,6 +218,7 @@ export default {
       > .list-btn-right {
         position: absolute;
         right: 32px;
+        line-height: 30px;
         // margin-top: 15px;
         > .list-btn-follow {
           width: 64px;

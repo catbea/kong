@@ -6,7 +6,13 @@
 
           <div class="dynamicsInfo-list-top" @click="godynamicsInfo">
             <span class="dynamicsInfo-list-left">
+               <div
+                  class="dynamicsInfo-left-bg_img"
+                  v-show="dynamicCount.linkerVO.sale != '' "
+                  :style="{backgroundImage:'url('+labelImg+')'}"
+                >{{dynamicCount.linkerVO.sale}}</div>
               <img :src="dynamicCount.linkerVO.linkerHeadUrl" class="mark-icon">
+              <img :src="ovalIcon" class="oval-icon" v-show="dynamicCount.linkerVO.ifPanorama == 1">
             </span>
             <span class="dynamicsInfo-list-right">
               <p class="list-right-title">{{dynamicCount.linkerVO.linkerName}}
@@ -20,7 +26,7 @@
                 <span class="right-label right-label-red" v-show="dynamicCount.linkerVO.saleStatus == 2">售罄</span>
                 <span class="right-label right-label-gray" v-for="(linkerTags ,key) in dynamicCount.linkerVO.linkerTags " :key="key">{{linkerTags}}</span>
               </p>
-              <p class="list-right-price">
+              <p class="dynamicsInfo-list-right-price">
                 {{dynamicCount.linkerVO.price }}{{dynamicCount.linkerVO.priceUnit }}
                 <span class="right-price-text">起</span>
                 <span class="right-price-open">{{dynamicCount.linkerVO.openTimes }}次开通</span>
@@ -28,9 +34,9 @@
             </span>
           </div>
 
-          <div class="dynamicsInfo-list-commission">
+          <div class="dynamicsInfo-list-commission" v-show="dynamicCount.linkerVO.divisionRules != ''">
             <span class="list-commission-word">佣</span>
-            1.056%+50000元/套
+            <!-- 1.056%+50000元/套 -->{{dynamicCount.linkerVO.divisionRules}}
           </div>
 
         </div>
@@ -92,7 +98,7 @@
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0">已关注</button>
-                <button class="list-btn-contact">
+                <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -127,6 +133,8 @@ export default {
       dynamicCount:[],
       SingleHouseDynamicList:[],
       itemDynamiclist:this.$route.query.itemDynamiclist,
+      labelImg: require('IMG/marketDetail/discount@2x.png'),
+      ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
     }
   },
   created() {
@@ -147,7 +155,11 @@ export default {
     //楼盘详情
     godynamicsInfo(){
       this.$router.push('/market/marketDetail')
-    }
+    },
+    //联系
+    goalldynamics () {
+      this.$router.push('/dynamics/message/messageList')
+    },
   }
 }
 </script>
@@ -189,12 +201,33 @@ export default {
         height: 90px;
         position: relative;
         border-radius: 6px;
+        .dynamicsInfo-left-bg_img {
+        text-align: center;
+        width: 36px;
+        height: 22px;
+        font-size: 11px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+        line-height: 20px;
+        background-size: cover;
+        position: absolute;
+        top: 4px;
+        left: -4px;
+      }
         > .mark-icon {
           width: 120px;
           height: 90px;
           background: rgba(255, 255, 255, 1);
           border-radius: 6px;
         }
+         > .oval-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        position: absolute;
+        left: 45px;
+        top: 30px;
+      }
       }
       > .dynamicsInfo-list-right {
         border-radius: 6px;
@@ -257,7 +290,7 @@ export default {
             background: rgba(143, 159, 177, 0.15);
           }
         }
-        > .list-right-price {
+        > .dynamicsInfo-list-right-price {
           font-size: 15px;
           font-weight: 600;
           color: rgba(234, 77, 46, 1);

@@ -86,7 +86,8 @@ export default {
       this.$router.push('/dynamics/message/messageList')
     },
     godynamicsList(){
-      this.$emit('click', this.info)
+      // this.$emit('click', this.info)
+      this.$router.push('/custom/detail')
     }
   }
 }
@@ -176,7 +177,8 @@ export default {
       > .list-btn-right {
         position: absolute;
         right: 32px;
-        // margin-top: 15px;
+        line-height: 40px;
+        //  margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
           height: 24px;
