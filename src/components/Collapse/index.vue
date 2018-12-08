@@ -1,23 +1,26 @@
 <template>
-  <div>
-    <li>
-      <div class="parent-view">
-        <div class="parent-view-left" @click="toggle(model.id)" @dblclick="changeType">
-          <img class="parent-img" :src="tempImgs">
-          <span class="campany-name">{{model.name}}</span>
-        </div>
-        <checkbox class="parent-view-right"></checkbox>
+  <li>
+    <div class="parent-view">
+      <div class="parent-view-left" @dblclick="changeType" @click="toggle">
+        <img class="parent-img" :src="model.logo?model.logo:this.tempImgs">
+        <span class="campany-name">{{model.name}}</span>
       </div>
-      <ul v-show="open" v-if="isFolder">
-        <collapse-List
-          class="CollapseList"
-          v-for="(model, index) in model.children"
-          :key="index"
-          :model="model"
-        ></collapse-List>
-      </ul>
-    </li>
-  </div>
+      <checkbox
+        class="parent-view-right"
+        v-if="model"
+        v-model="model.checked"
+        @change="selectOrganiz(model.id)"
+      ></checkbox>
+    </div>
+    <ul class="ul-view" v-show="open" v-if="isFolder">
+      <collapse-List
+        class="CollapseList"
+        v-for="(model, index) in model.children"
+        :key="index"
+        :model="model"
+      ></collapse-List>
+    </ul>
+  </li>
 </template>
 <script>
 import { Checkbox } from 'vant'
@@ -34,7 +37,6 @@ export default {
     }
   },
   props: ['model'],
-  computed: {},
 
   computed: {
     isFolder: function() {
@@ -43,16 +45,16 @@ export default {
   },
 
   methods: {
-    toggle: function(date) {
+    selectOrganiz(id) {
+      this.$emit('click', id)
+    },
+
+    toggle: function() {
       if (this.isFolder) {
         //点击可以展开或者子数据
         this.open = !this.open
-        
-        // this.$emit('click', this.info)
-      }else{
+      } else {
         //没有子数据
-        
-        // this.$emit('click', this.info)
       }
     },
     changeType: function() {
@@ -60,8 +62,7 @@ export default {
         Vue.set(this.model, 'children', [])
         this.open = true
       }
-    },
-  
+    }
   }
 }
 </script>
@@ -85,6 +86,7 @@ export default {
     > .parent-img {
       width: 24px;
       height: 24px;
+      border-radius: 50%;
     }
     > .campany-name {
       color: #333333;
@@ -94,5 +96,9 @@ export default {
   }
   > .parent-view-right {
   }
+}
+
+.ul-view {
+  padding-left: 1em;
 }
 </style>
