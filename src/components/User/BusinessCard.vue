@@ -40,7 +40,7 @@
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
       </router-link>
-      <router-link tag="div" to="/user/mypreference" class="status-info-right">
+      <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
         <img :src="discountIcon">
         <p class="info-title welfare-status">特惠套餐</p>
         <p class="info-desc welfare-desc">{{vipPackage}}</p>
