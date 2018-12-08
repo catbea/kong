@@ -1,15 +1,18 @@
 <template>
   <div class="user-mymarket-page">
-   <div style="margin-left:16px"><master-market></master-market></div> 
-    <div style="margin-left:16px"><title-bar :conf="titleInfo" @titleBarReturn=""></title-bar></div>
+   <div style="margin-left:16px">
+     <master-market :marster="masterList" :common="commonList"></master-market>
+     </div> 
+    <div style="margin-left:16px"><title-bar :conf="titleInfo" @return="returnHandle" ></title-bar></div>
     <div style="margin-left:16px"><van-search :obj="searchInfo"></van-search></div>
     <div style="margin-left:16px"><screen></screen></div>
-    <div>
+    <div class="user-market-box" v-if="myMarketShow">
       <user-market @apostropheReturn="popupHandle" @usmarIconReturn="skipShareHandle" @skipMarketRetuen="skipMarketHandle"
-      v-for="(item,index) in dataArr" :key="index" :dataArr="item">
+      v-for="(item,index) in myMarketList" :key="index" :dataArr="item">
       </user-market>
       </div>
-    <div style="margin-left:16px"><van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay>
+    <div style="margin-left:16px">
+      <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay>
         <ul>
           <li>续费（08/17到期）</li>
           <li>大师推荐</li>
@@ -18,7 +21,8 @@
           <li @click="exhibitionHandle">开启楼盘展示</li>
           <li @click="closeHandle">取消</li>
         </ul>
-    </van-popup></div>
+    </van-popup>
+    </div>
   </div>
 </template>
 <script>
@@ -43,6 +47,8 @@ export default {
     recommendList:987,
     masterList:[],
     commonList:[],
+    myMarketShow:true,
+    myMarketList:[],
     show:false,
    titleInfo:{
      title:"我的楼盘",
@@ -69,20 +75,27 @@ export default {
     async getRecommendInfo(){//推荐楼盘的数据
       const res = await userService.getRecommend(this.agentId)
       console.log(res,78787878)
-      this.recommendList=res.records
-      console.log(33)
-      await this.a()
+      this.recommendList=res
+       this.master()
+       this.common()
     },
-    a(){
-      this.recommendList =this.recommendList.filter((item)=>{
+    master(){
+      this.masterList =this.recommendList.filter((item)=>{
         return item.masterRecommand === 1
       })
-      console.log(44)
-      console.log(this.recommendList)
+    },
+    common(){
+      this.commonList =this.commonList.filter((item)=>{
+        return item.masterRecommand === 2
+      })
     },
     async getMyMarketInfo(){//请求展示的楼盘数据
       const res = await userService.getMyMarket(this.agentId,this.displayFlag)
-      console.log(res)
+      console.log(res.records,56565656)
+      this.myMarketList=res.records
+    },
+    returnHandle(){
+      this.show=true
     },
     popupHandle(){
       this.show=!this.show
