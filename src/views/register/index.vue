@@ -36,6 +36,7 @@ export default {
   }),
   created() {
     this.query = this.$route.query
+    console.log(this.query)
     // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
     if (this.query.registerType == '30') {
       this.params = `/register/step1?${qs.stringify(this.$route.query)}`
