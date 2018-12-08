@@ -95,7 +95,12 @@ const state = {
   },
   //用户头像
   updateUserAvatar: '',
-
+  userRegistInfo: {
+    distributorId: '190', // 公司ID
+    distributorName: 'AW大师',
+    institutionId: '190', // 机构ID
+    institutionName: 'AW大师'
+  }
 }
 
 const getters = {
@@ -104,7 +109,8 @@ const getters = {
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   updateUserAvatar: state => state.updateUserAvatar,
-  jssdkConfig: state => { return state.jssdkConfig; }
+  jssdkConfig: state => { return state.jssdkConfig; },
+  userRegistInfo: state => state.userRegistInfo
 }
 
 const actions = {
@@ -129,6 +135,9 @@ const actions = {
   getUserAvatar({ commit }, data) {
     commit(types.USER_AVATAR, data)
   },
+  getUserRegistInfo({ commit }, data) {
+    commit(types.USER_REGIST_INFO, data)
+  }
 }
 
 const mutations = {
@@ -141,11 +150,17 @@ const mutations = {
   [types.USER_AREA](state, data) {
     state.userArea = Object.assign(state.userArea, data)
   },
+  [types.REPORT_INFO](state, data) {
+    state.reportAddInfo = data
+  },
   [types.USER_AVATAR](state, data) {
     state.updateUserAvatar = data
   },
   [types.WX_JSSDK](state, jssdkConfig) {
     state.jssdkConfig = jssdkConfig;
+  },
+  [types.USER_REGIST_INFO](state, data) {
+    state.userRegistInfo = data
   }
 }
 

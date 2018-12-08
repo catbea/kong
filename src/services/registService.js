@@ -25,5 +25,31 @@ class registService {
             body: registerRequestVO
         })
     }
+
+    /**
+     * 通过enterpriseId查询企业相关信息
+     * @param {*} enterpriseId 
+     */
+    queryByRegister(enterpriseId) {
+        return xhr({
+            url: '/register/queryByRegister',
+            body: {
+                enterpriseId
+            }
+        })
+    }
+
+    /**
+     * 查询推荐人信息
+     * @param {} aegntId 
+     */
+    queryReferrerInfo(aegntId) {
+        return xhr({
+            url: '/register/queryInfo',
+            body: {
+                aegntId
+            }
+        })
+    }
 }
 export default new registService()

@@ -8,6 +8,7 @@ export const USER_VIP_INFO = 'USER_VIP_INFO'
 export const USER_AREA = 'USER_AREA'
 export const REPORT_INFO = 'REPORT_INFO' 
 export const USER_AVATAR = 'USER_AVATAR' 
+export const USER_REGIST_INFO = 'USER_REGIST_INFO'
 
 // city
 export const CITY_LIST = 'CITY_LIST'
