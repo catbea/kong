@@ -12,15 +12,6 @@
 </template>
 
 <script>
-// const shapeMap = {
-//   point: ['circle', 'hollowCircle', 'rect'],
-//   line: ['line', 'smooth', 'dash'],
-//   area: ['area', 'smooth'],
-//   interval: ['rect'],
-//   polygon: ['polygon'],
-//   schema: ['candle']
-// }
-
 import F2 from '@antv/f2/dist/f2-all.min'
 
 export default {
@@ -230,11 +221,7 @@ export default {
           const type2 = typeof this.data[0][keys[1]]
           if (type1 === 'number' && type2 !== 'number') {
             indexes = [1, 0]
-          } else if (
-            type1 === 'string' &&
-            type2 === 'string' &&
-            keys[2] === 'value'
-          ) {
+          } else if (type1 === 'string' && type2 === 'string' && keys[2] === 'value') {
             indexes = [0, 2]
           }
           this.xField = keys[indexes[0]]
@@ -257,11 +244,7 @@ export default {
       const chart = new F2.Chart({
         el: this.$refs.chart,
         width: this.width || windowWidth,
-        height: this.height
-          ? this.height
-          : windowWidth > windowHeight
-            ? windowHeight - 54
-            : windowWidth * 0.707,
+        height: this.height ? this.height : windowWidth > windowHeight ? windowHeight - 54 : windowWidth * 0.707,
         pixelRatio: this.$devicePixelRatio || window.devicePixelRatio,
         ...this.$attrs
       })
@@ -299,8 +282,7 @@ export default {
             const customTooltip = {
               custom: true, // 自定义 tooltip 内容框
               onChange: function(obj) {
-                const legend = _this.chart.get('legendController').legends
-                  .top[0]
+                const legend = _this.chart.get('legendController').legends.top[0]
                 const tooltipItems = obj.items
                 const legendItems = legend.items
                 const map = {}
@@ -420,10 +402,7 @@ export default {
 
       ;['x', 'y'].forEach(axis => {
         if (this[`${axis}AxisOptions`]) {
-          chart.axis(
-            this[`${axis}Field`],
-            this[`${axis}Field`].disabled ? false : this[`${axis}AxisOptions`]
-          )
+          chart.axis(this[`${axis}Field`], this[`${axis}Field`].disabled ? false : this[`${axis}AxisOptions`])
         }
       })
 
@@ -433,12 +412,7 @@ export default {
         chart
           .interval()
           .position('a*percent')
-          .color(
-            this.pieOptions.seriesField,
-            this.pieOptions.colors && this.pieOptions.colors.length
-              ? this.pieOptions.colors
-              : ''
-          )
+          .color(this.pieOptions.seriesField, this.pieOptions.colors && this.pieOptions.colors.length ? this.pieOptions.colors : '')
           .adjust('stack')
           .style({
             lineWidth: 1,

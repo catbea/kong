@@ -61,7 +61,7 @@ export default {
     async onLoad() {
       let current = this.getCurrentType()
 
-      const result = await mycoupons.couponsStatusList( current.index, current.page)
+      const result = await mycoupons.couponsStatusList(current.index, current.page)
       console.log(result)
       //  if(current.index == 0&& current.page ==1){
       this.nameList[0].num = result.total
@@ -89,7 +89,7 @@ export default {
     async a() {
       const _this = this
       let p1 = new Promise(function(resolve, reject) {
-        let res = mycoupons.couponsStatusList( 0, 1)
+        let res = mycoupons.couponsStatusList(0, 1)
         resolve(res)
       })
       return p1
@@ -97,7 +97,7 @@ export default {
     async b() {
       const _this = this
       let p2 = new Promise(function(resolve, reject) {
-        let res = mycoupons.couponsStatusList( 1, 1)
+        let res = mycoupons.couponsStatusList(1, 1)
         resolve(res)
       })
       return p2
@@ -105,7 +105,7 @@ export default {
     async c() {
       const _this = this
       let p3 = new Promise(function(resolve, reject) {
-        let res = mycoupons.couponsStatusList( 2, 1)
+        let res = mycoupons.couponsStatusList(2, 1)
         resolve(res)
       })
       return p3

@@ -25,10 +25,9 @@ export default {
   },
   props: {
     info: Object,
-    HouseDynamicList:{type:Array}
+    HouseDynamicList: { type: Array }
   },
-  created() {
-  },
+  created() {},
   methods: {
     GOheadline() {
       console.log(1)

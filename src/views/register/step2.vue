@@ -21,9 +21,9 @@ export default {
     value: '110000',
     stepTitle: '已注册',
     qrcodeImg: '',
-    enterpriseId: '',
+    enterpriseId: ''
   }),
-  created () {
+  created() {
     console.log(this.$route.query)
     this.enterpriseId = this.$route.query.enterpriseId
     this.queryByRegister(this.enterpriseId)
@@ -32,7 +32,7 @@ export default {
     async queryByRegister(enterpriseId) {
       const result = await RegisterService.queryByRegister(enterpriseId)
       this.qrcodeImg = result.qrCode
-    },
+    }
   }
 }
 </script>
@@ -55,21 +55,17 @@ export default {
     margin-bottom: 40px;
   }
   .register-qrcode {
-      margin: 0 auto;
-      text-align: center;
-      width: 200px;
-      height: 200px;
+    margin: 0 auto;
+    text-align: center;
+    width: 200px;
+    height: 200px;
   }
   .register-desc {
     margin-top: 12px;
-    color: #969EA8;
+    color: #969ea8;
     font-size: 12pt;
     font-weight: 'Regular';
     text-align: center;
   }
 }
 </style>
-
-
-
-

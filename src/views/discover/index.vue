@@ -42,18 +42,17 @@ export default {
     activeIndex: 0,
     loading: false
   }),
-  created () {
+  created() {
     this.getInformationCarousel()
   },
   methods: {
-     
     // 获取轮播和tabs配置
-    async getInformationCarousel () {
+    async getInformationCarousel() {
       const res = await discoverService.informationCarousel(this.userArea.city)
       this.payloadTabs(res.infoSettingList)
       this.swipeList = res.infoCarouselList
     },
-    payloadTabs (tabs) {
+    payloadTabs(tabs) {
       this.tabs.push({ index: 0, type: '', typeName: '热门', page: 1, finished: false, list: [] })
       for (let i = 1; i < tabs.length; i++) {
         tabs[i].index = i
@@ -62,18 +61,17 @@ export default {
         tabs[i].list = []
         this.tabs.push(tabs[i])
       }
-
     },
-    async onLoad () {
+    async onLoad() {
       let current = this.getCurrentType()
       const result = await discoverService.getDiscoverList(this.userArea.city, current.type, current.page)
       current.list = current.list.concat(result.records)
       current.page++
-      if (result.pages === 0 || current.page === result.pages+1) current.finished = true
+      if (result.pages === 0 || current.page === result.pages + 1) current.finished = true
       this.loading = false
     },
     // 获取当前玄宗tab的typeid
-    getCurrentType () {
+    getCurrentType() {
       for (let temp of this.tabs) {
         if (temp.index === this.activeIndex) return temp
       }
@@ -81,8 +79,7 @@ export default {
   },
   computed: {
     ...mapGetters(['userArea'])
-
-  },
+  }
 }
 </script>
 <style lang="less">
@@ -109,7 +106,7 @@ export default {
           font-size: 12px;
           font-weight: 400;
           padding: 5px 30px 0;
-          opacity: .85;
+          opacity: 0.85;
         }
       }
     }

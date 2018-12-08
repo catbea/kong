@@ -21,22 +21,22 @@ export default {
         }
       }
     },
-    isShow: { 
+    isShow: {
       type: Boolean,
       default: true
-     },
+    }
   },
   data() {
     return {
       arrowIcon: require('IMG/marketDetail/arrow2@2x.png')
     }
   },
-  methods:{
+  methods: {
     // img(){
     //   this.$emit("the",1)
     // },
-    byClick(){
-      this.$emit("return",1)
+    byClick() {
+      this.$emit('return', 1)
     }
   },
   computed: {
@@ -50,7 +50,7 @@ export default {
 .title-bar {
   display: flex;
   justify-content: space-between;
-  margin:16px 0 16px 0;
+  margin: 16px 0 16px 0;
   line-height: 30px;
   .title-text {
     display: inline-block;

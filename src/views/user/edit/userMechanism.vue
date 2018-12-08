@@ -47,7 +47,6 @@ export default {
           this.organizationInfo[i].checked = true
         }
       }
-     
 
       let organizationInfo = this.organizationInfo
       // this.organizationList

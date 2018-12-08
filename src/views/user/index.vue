@@ -88,8 +88,8 @@ export default {
     this.getQrCode()
   },
   methods: {
-    enterSharePage(){
-      this.$router.push({name:'share-business-card'})
+    enterSharePage() {
+      this.$router.push({ name: 'share-business-card' })
     },
 
     overlayClose() {

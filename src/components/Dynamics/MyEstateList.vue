@@ -16,17 +16,17 @@ export default {
   },
   props: {
     list: Array,
-     info: { type: Object }
+    info: { type: Object }
   },
   data: () => ({
     titleBarConf: {
       title: '我的楼盘',
-      linkText: '更多楼盘',
+      linkText: '更多楼盘'
     }
   }),
   methods: {
-     godynamicsInfo(){
-      this.$emit('click',this.info)
+    godynamicsInfo() {
+      this.$emit('click', this.info)
     }
   }
 }

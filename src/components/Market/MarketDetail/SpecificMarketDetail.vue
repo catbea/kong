@@ -41,7 +41,7 @@
 <script>
 export default {
   props: {
-    info: { type: Object },
+    info: { type: Object }
   },
   data: () => ({
     commissionImg: require('IMG/user/collection/Rectangle@2x.png'),
@@ -49,9 +49,9 @@ export default {
   }),
   methods: {
     commission() {
-      this.$router.push({name:'marketDetail-commission', params:{id: this.info.linkerId}})
+      this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
-    siteHandle(){
+    siteHandle() {
       this.$router.push('/marketDetail/marketDetail/allNear')
     }
   }
@@ -81,24 +81,24 @@ export default {
       margin-top: 3px;
     }
   }
-      .specific-market-detail-commission{
-      width:339px;
-      height:34px;
-      background:rgba(247,249,250,1);
-      border-radius:4px;
-      font-size:15px;
-      font-family:PingFang-SC-Regular;
-      font-weight:400;
-      color:rgba(234,77,46,1);
-      line-height:24px;
-      display:flex;
-      align-items:center;
-      span{
-        width:16px;
-        height:16px;
-        margin:0 8px;
-      }
+  .specific-market-detail-commission {
+    width: 339px;
+    height: 34px;
+    background: rgba(247, 249, 250, 1);
+    border-radius: 4px;
+    font-size: 15px;
+    font-family: PingFang-SC-Regular;
+    font-weight: 400;
+    color: rgba(234, 77, 46, 1);
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    span {
+      width: 16px;
+      height: 16px;
+      margin: 0 8px;
     }
+  }
   .specific-market-detail {
     display: flex;
     height: auto;

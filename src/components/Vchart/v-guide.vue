@@ -34,7 +34,6 @@ export default {
         ...camelAttrs(this.$attrs)
       }
     })
-  },
-  render() {}
+  }
 }
 </script>

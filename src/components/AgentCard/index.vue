@@ -26,7 +26,7 @@ export default {
   props: {
     info: Object
   },
-  data () {
+  data() {
     return {
       personIcon: require('IMG/user/person_icon.png')
     }

@@ -1,13 +1,17 @@
 import * as types from '@/store/mutation-types'
 
 const state = {
-    currSelectedCoupon: null,
-    projectCoupons: null
+  currSelectedCoupon: null,
+  projectCoupons: null
 }
 
 const getters = {
-  projectCoupons: state => { return state.projectCoupons; },
-  currSelectedCoupon: state => { return state.currSelectedCoupon; }
+  projectCoupons: state => {
+    return state.projectCoupons
+  },
+  currSelectedCoupon: state => {
+    return state.currSelectedCoupon
+  }
 }
 
 const actions = {

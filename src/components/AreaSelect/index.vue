@@ -8,18 +8,23 @@ import { fullArea } from '@/utils/fullArea'
 export default {
   props: {
     show: { type: Boolean, default: false },
-    areaList: { type: Object, default: function () { return fullArea } },
+    areaList: {
+      type: Object,
+      default: function() {
+        return fullArea
+      }
+    },
     code: { type: String },
-    title: { type: String },
+    title: { type: String }
   },
   data: () => ({
-    isShow: false,
+    isShow: false
   }),
   methods: {
-    confirmHandler (val) {
+    confirmHandler(val) {
       this.$emit('confirm', val)
     },
-    cancelHandler (val) {
+    cancelHandler(val) {
       this.$emit('cancel', val)
     }
   },
@@ -43,4 +48,3 @@ export default {
 .area-select {
 }
 </style>
-

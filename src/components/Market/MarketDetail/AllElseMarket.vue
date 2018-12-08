@@ -16,14 +16,14 @@
 <script>
 export default {
   props: {
-    linkerOtherList: { type: Array },
+    linkerOtherList: { type: Array }
   },
   data: () => ({
     // list: [1, 2, 3, 4]
   }),
-  methods:{
-    itemClickHandler(val){
-      this.$emit('itemClick',val)
+  methods: {
+    itemClickHandler(val) {
+      this.$emit('itemClick', val)
     }
   }
 }
@@ -37,7 +37,7 @@ export default {
       width: 160px;
       height: 90px;
       margin-bottom: 3px;
-      border-radius:4px;
+      border-radius: 4px;
     }
     .else-market-box-top {
       font-size: 16px;

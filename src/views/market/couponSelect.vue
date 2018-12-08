@@ -25,13 +25,11 @@ export default {
   }),
 
   created() {
-      this.couponList = this.projectCoupons
-      let _list = []
-      for(let item of this.projectCoupons) {
-          let obj = {
-              
-          }
-      }
+    this.couponList = this.projectCoupons
+    let _list = []
+    for (let item of this.projectCoupons) {
+      let obj = {}
+    }
     // this.getCoupan()
   },
 
@@ -54,7 +52,7 @@ export default {
 </script>
 <style lang="less">
 .coupon-select-page {
-  background: #FFF;
+  background: #fff;
   .un-use-coupon {
     display: flex;
     height: 32px;

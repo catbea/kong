@@ -1,6 +1,6 @@
 import xhr from './xhr/'
 class mycoupons {
-  couponsStatusList(status,current,size=5) {
+  couponsStatusList(status, current, size = 5) {
     return xhr({
       url: '/userReceive/getAgentCouponsByStatus',
       body: {
@@ -11,7 +11,7 @@ class mycoupons {
     })
   }
 
-  getMyCoupons(linkerId, mon, current=0, size=0) {
+  getMyCoupons(linkerId, mon, current = 0, size = 0) {
     return xhr({
       url: '/userReceive/getMyCoupons',
       body: {

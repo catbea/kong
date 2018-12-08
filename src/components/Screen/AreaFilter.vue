@@ -17,17 +17,17 @@ export default {
     list: null,
     checked: null
   }),
-  created () {
+  created() {
     this.list = {
       '0': '不限'
     }
-    this.list = Object.assign(this.list, getChildren(this.parent)) 
+    this.list = Object.assign(this.list, getChildren(this.parent))
   },
   watch: {
-    checked (val) {
+    checked(val) {
       this.$emit('input', val)
     },
-    value (val) {
+    value(val) {
       this.checked = val
     }
   }
@@ -56,4 +56,3 @@ export default {
   }
 }
 </style>
-

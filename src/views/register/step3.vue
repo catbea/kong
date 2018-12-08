@@ -49,7 +49,7 @@ export default {
     parentUserId: '',
     parentUserName: ''
   }),
-  created () {
+  created() {
     console.log(this.$route.query)
     this.query = this.$route.query
     this.registerType = this.query.registerType
@@ -62,17 +62,17 @@ export default {
     /**
      * 发送验证码
      */
-    sendCodeHandler () {
+    sendCodeHandler() {
       if (this.disabled == false) {
-        this.disabled = !this.disabled;
+        this.disabled = !this.disabled
         // const result = RegisterService.sendMsgRegister(this.mobile)
         this.countDown()
       }
     },
-    countDown () {
+    countDown() {
       this.sendCodeText = '重新发送(' + this.codeTime + 's)'
       let timer = setInterval(() => {
-        this.codeTime --
+        this.codeTime--
         this.sendCodeText = '重新发送(' + this.codeTime + 's)'
         if (this.codeTime < 0) {
           clearInterval(timer)
@@ -82,19 +82,19 @@ export default {
         }
       }, 1000)
     },
-    focusHandler (focus) {
+    focusHandler(focus) {
       this.phoneFocus = focus
     },
-    blurHandler (focus) {
+    blurHandler(focus) {
       this.phoneFocus = focus
     },
-    registerHandler () {
+    registerHandler() {
       console.log('11111')
       // let params = {
-          // enterpriseId: this.enterpriseId
-        // }
-        // debugger
-        // this.$router.push({path: '/register/step2', query: params})
+      // enterpriseId: this.enterpriseId
+      // }
+      // debugger
+      // this.$router.push({path: '/register/step2', query: params})
       // this.register()
     },
     /**
@@ -107,21 +107,21 @@ export default {
     /**
      * 注册
      */
-    async register () {
+    async register() {
       let vo = {
         mobile: this.mobile,
         code: this.code,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
-        parentUserId: this.parentUserId,
+        parentUserId: this.parentUserId
       }
       const result = await RegisterService.register(vo)
-      if (JSON.stringify(data) != "{}") {
+      if (JSON.stringify(data) != '{}') {
         let params = {
           enterpriseId: this.enterpriseId
         }
-        this.$router.push({path: '/register/step2', query: params})
-          // location.href = '/?cropId=ww8f6801ba5fd2a112'
+        this.$router.push({ path: '/register/step2', query: params })
+        // location.href = '/?cropId=ww8f6801ba5fd2a112'
       }
     }
   }
@@ -158,17 +158,17 @@ export default {
     // font-weight: 'Regular';
     text-align: center;
   }
-  
+
   .from-container {
     margin: 45px 15px 15px;
     .phone-cell {
       margin: 10px 15px;
       > .phone-tip {
-          color: #969EA8;
-          font-size: 12pt;
-          text-align: left;
-          margin-left: 5px;
-        }
+        color: #969ea8;
+        font-size: 12pt;
+        text-align: left;
+        margin-left: 5px;
+      }
     }
     .code-cell {
       position: relative;
@@ -203,11 +203,11 @@ export default {
   }
 }
 .register-bottom {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    .next-step {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  .next-step {
     width: 343px;
     margin-left: 16px;
     background: #007ae6;
@@ -216,7 +216,6 @@ export default {
     font-weight: 400;
     color: #fff;
     padding: 10px 0;
-    
   }
   .protocol {
     margin: 10px;
@@ -228,7 +227,3 @@ export default {
   }
 }
 </style>
-
-
-
-

@@ -20,7 +20,6 @@ export default {
       disabled: this.disabled,
       ...camelAttrs(this.$attrs)
     })
-  },
-  render() {}
+  }
 }
 </script>

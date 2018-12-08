@@ -30,7 +30,7 @@ class CommonService {
   /**
    * 通过code获取企业微信账户信息
    * @param code 微信跳转地址截取code
-   * @param payCorpId 
+   * @param payCorpId
    */
   getPayOpenId(code, corpId, pcOpenId) {
     return xhr({
@@ -45,7 +45,7 @@ class CommonService {
 
   /**
    *  vip开通
-   * @param param 
+   * @param param
    */
   payForVip(param) {
     return xhr({
@@ -57,7 +57,7 @@ class CommonService {
 
   /**
    *  楼盘开通
-   * @param param 
+   * @param param
    */
   payForProject(param) {
     return xhr({

@@ -50,29 +50,29 @@ export default {
     ShadowBox,
     Dialog
   },
-   props: {
+  props: {
     // info: Object,
-    item:Object,
+    item: Object,
     houseDynamicList: { type: Array },
-    houseDynamicCount: {type: Object }
+    houseDynamicCount: { type: Object }
   },
   data() {
     return {
-      properties:[
-        {'id':'1','propertiesName':'碧桂园凤凰国际','statue':'0','num':'14','address':'南山 深圳湾','price':'0'},
-        {'id':'2','propertiesName':'万科臻湾汇 ','statue':'1','num':'20','address':'南山 深圳湾','price':'119878'},
+      properties: [
+        { id: '1', propertiesName: '碧桂园凤凰国际', statue: '0', num: '14', address: '南山 深圳湾', price: '0' },
+        { id: '2', propertiesName: '万科臻湾汇 ', statue: '1', num: '20', address: '南山 深圳湾', price: '119878' }
       ]
     }
   },
   methods: {
     onClickConfirm(item) {
-      let parm={
+      let parm = {
         // info:this.info,
-        itemDynamiclist:item,
+        itemDynamiclist: item
         // statue:item.openStatus
       }
-       this.$emit('click', parm)
-    },
+      this.$emit('click', parm)
+    }
     // godynamicsInfo() {
     //   //跳转到动态详情
     //   this.$router.push('/dynamics/dynamicsInfo')
@@ -118,34 +118,32 @@ export default {
   background: #ffffff;
   // margin: 0 16px;
   .shadow-box {
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07),
-    0px 2px 17px 0px rgba(34, 47, 85, 0.05);
-  border-radius: 6px;
-  margin: 0 16px;
-  .dynaData-container {
-  background: #ffffff;
-  display: flex;
-  padding: 20px 0 20px 20px;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+    border-radius: 6px;
+    margin: 0 16px;
+    .dynaData-container {
+      background: #ffffff;
+      display: flex;
+      padding: 20px 0 20px 20px;
 
-  span {
-    width: 80.7px;
+      span {
+        width: 80.7px;
+      }
+      .container-title {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        line-height: 18px;
+      }
+      .card-num {
+        font-size: 24px;
+        font-weight: 500;
+        color: rgba(51, 51, 51, 1);
+        line-height: 36px;
+      }
+    }
   }
-  .container-title {
-    font-size: 12px;
-    font-weight: 400;
-    color: rgba(153, 153, 153, 1);
-    line-height: 18px;
-  }
-  .card-num {
-    font-size: 24px;
-    font-weight: 500;
-    color: rgba(51, 51, 51, 1);
-    line-height: 36px;
-  }
-  
-}
-}
   > .Properties-list {
     border-bottom: 1px solid #e6e6e6;
     margin: 0 16px;

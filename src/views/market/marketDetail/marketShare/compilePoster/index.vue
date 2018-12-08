@@ -58,8 +58,8 @@ export default {
 <style lang="less">
 .compile-poster-page {
   line-height: 22px;
-      background: #ffffff;
-      height:auto !important;
+  background: #ffffff;
+  height: auto !important;
   .compile-tagline {
     margin-left: 15px;
     .compile-tagline-top {
@@ -74,7 +74,7 @@ export default {
       width: 325px;
       height: 44px;
       display: flex;
-      align-items:center;
+      align-items: center;
       padding: 0 0 0 16px;
       border-radius: 4px;
       border: 1px solid;
@@ -87,8 +87,8 @@ export default {
         width: 320px;
         height: 21px;
         border: none;
-        padding-bottom:3px;
-        font-size:16px;
+        padding-bottom: 3px;
+        font-size: 16px;
       }
     }
   }

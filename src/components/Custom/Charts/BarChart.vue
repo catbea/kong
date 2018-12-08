@@ -10,13 +10,11 @@ export default {
     VChart
   },
   props: {
-    barData: { type: Array },
+    barData: { type: Array }
   },
-  created () {
-    
-  },
+  created() {},
   data: () => ({
-    width: 0,
+    width: 0
     // data: [
     //   { type: '名片', count: 3, shadow: 100 },
     //   { type: '楼盘', count: 6, shadow: 100 },
@@ -26,9 +24,7 @@ export default {
     // ]
   }),
   mounted() {
-    this.width = document.getElementsByClassName(
-      'pie-chart-container'
-    )[0].offsetWidth
+    this.width = document.getElementsByClassName('pie-chart-container')[0].offsetWidth
   },
   methods: {
     renderBarChart({ chart }) {

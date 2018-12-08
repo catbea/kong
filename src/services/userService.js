@@ -51,22 +51,22 @@ class UserService {
   // }
   /**
    * 获取经纪人个性签名列表
-   * @param {*} Authorization 
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} Authorization
+   * @param {*} current
+   * @param {*} size
    */
 
   getupdateByUser() {
     return xhr({
       method: 'POST',
-      url: '/user/updateAgentByUserId',
+      url: '/user/updateAgentByUserId'
     })
   }
   /**
    * 获取经纪人个性签名列表
-   * @param {*} Authorization 
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} Authorization
+   * @param {*} current
+   * @param {*} size
    */
   getAgentSignaturePage(Authorization, current, size = 10) {
     return xhr({
@@ -81,8 +81,7 @@ class UserService {
   /**获取个人头像列表 */
   getAgentImgList() {
     return xhr({
-      url: '/dictionary/getAgentHeadImgList',
-
+      url: '/dictionary/getAgentHeadImgList'
     })
   }
 
@@ -103,8 +102,8 @@ class UserService {
 
   /**
    * 【企业微信】文章收藏列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getqueryInfoList(current, size = 10) {
     return xhr({
@@ -118,8 +117,8 @@ class UserService {
 
   /**
    * 【企业微信】楼盘收藏列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getqueryLinkerList(current, size = 10) {
     return xhr({
@@ -131,10 +130,10 @@ class UserService {
     })
   }
   /**
-   * 经纪人楼盘收藏 
-   * @param {*} linkerId 
-   * @param {*} status 
-   * @param {*} type 
+   * 经纪人楼盘收藏
+   * @param {*} linkerId
+   * @param {*} status
+   * @param {*} type
    */
   getlinkerDynamics(linkerId, status, type = 1) {
     return xhr({
@@ -149,9 +148,9 @@ class UserService {
   }
   /**
    * 文章收藏
-   * @param {*} infoId 
-   * @param {*} deleteFlag 
-   * @param {*} type 
+   * @param {*} infoId
+   * @param {*} deleteFlag
+   * @param {*} type
    */
 
   getlinkerCollection(infoId, deleteType, type = 1) {
@@ -169,7 +168,8 @@ class UserService {
   /**
    * 首页查看我的楼盘
    */
-  getMyMarket(agentId,displayFlag) {//展示楼盘的数据
+  getMyMarket(agentId, displayFlag) {
+    //展示楼盘的数据
     return xhr({
       url: '/myLinker/myProject',
       body: {
@@ -179,7 +179,8 @@ class UserService {
     })
   }
 
-  getRecommend(agentId) {//推荐楼盘的数据
+  getRecommend(agentId) {
+    //推荐楼盘的数据
     return xhr({
       url: '/myLinker/displayRecommendLinker',
       body: {
@@ -189,8 +190,8 @@ class UserService {
   }
   /**
    * 历史文章
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   gethistoryList(current, size = 10) {
     return xhr({
@@ -204,9 +205,9 @@ class UserService {
 
   /**
    * 我的账单
-   * @param {*} agentId 
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} agentId
+   * @param {*} current
+   * @param {*} size
    */
   getMyBillList(current, size = 4) {
     return xhr({
@@ -219,9 +220,9 @@ class UserService {
   }
   /**
    * 历史浏览列表
-   * @param {*} agentId 
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} agentId
+   * @param {*} current
+   * @param {*} size
    */
   getBrowseHistoryList(agentId, current, size = 10) {
     return xhr({
@@ -236,8 +237,8 @@ class UserService {
 
   /**
    * 删除文章
-   * @param {*} agentId 
-   * @param {*} infoIds 
+   * @param {*} agentId
+   * @param {*} infoIds
    */
   deleHistoryArticle(infoIds) {
     return xhr({
@@ -255,9 +256,7 @@ class UserService {
   getHotLinker() {
     return xhr({
       url: '/linker/getLinkerHot',
-      body: {
-
-      }
+      body: {}
     })
   }
 
@@ -274,8 +273,8 @@ class UserService {
 
   /**
    * 获取机构信息列表
-   * @param {*} distributorId 
-   * @param {*} enterpriseId 
+   * @param {*} distributorId
+   * @param {*} enterpriseId
    */
   obtainOrganizationInfo(distributorId, enterpriseId) {
     return xhr({
@@ -293,15 +292,13 @@ class UserService {
   checkDisturbSetting() {
     return xhr({
       url: '/disturbSetting/querySetting',
-      body: {
-
-      }
+      body: {}
     })
   }
 
   /**
    * 更新勿扰模式
-   * @param {*} disturbSetting 
+   * @param {*} disturbSetting
    */
   upDataDisturb(disturbSetting) {
     return xhr({
@@ -313,7 +310,7 @@ class UserService {
 
   /**
    * 更新头像
-   * @param {*} nameEditRq 
+   * @param {*} nameEditRq
    */
   upHeaderImg(nameEditRq) {
     return xhr({
@@ -326,21 +323,20 @@ class UserService {
   /**
    * 获取cos签名
    */
-  getCosAppSign(){
+  getCosAppSign() {
     return xhr({
       method: 'POST',
-      url: '/cos/getCosSignature',
+      url: '/cos/getCosSignature'
     })
   }
 
   /**
    * 获取分享二维码
    */
-  getQrCode(){
+  getQrCode() {
     return xhr({
-       url:'/cpShare/nameCardShare'
+      url: '/cpShare/nameCardShare'
     })
   }
-
 }
 export default new UserService()

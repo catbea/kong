@@ -21,9 +21,9 @@ export default {
     EstateItem
   },
   props: {
-    info:{
-      type:String
-    } 
+    info: {
+      type: String
+    }
   },
   data: () => ({
     titleBarConf: {

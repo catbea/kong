@@ -67,14 +67,14 @@ export default {
       this.$emit('priceItemClick', index)
     },
 
-    couponClickHandle(){
+    couponClickHandle() {
       this.$emit('couponClick')
     }
   }
 }
 </script>
 <style lang="less">
-.through{
+.through {
   text-decoration: line-through;
 }
 .market-price-surface-page {

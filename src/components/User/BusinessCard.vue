@@ -68,22 +68,20 @@ export default {
     editIcon: require('IMG/user/editInfo@2x.png')
   }),
 
-  onCreated: {
-  },
+  onCreated: {},
 
   methods: {
     editCLickHandler() {
       this.$router.push('/user/edit')
     },
 
-    showQrCode(){
+    showQrCode() {
       this.$emit('showPopup', '')
     },
 
-    shareUserCard(){
+    shareUserCard() {
       this.$emit('shareUserCard', '')
     }
-
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
@@ -201,9 +199,9 @@ export default {
         }
         > .box-content-right {
           position: relative;
-              right: 10px;
-          width:80px;
-height:80px;
+          right: 10px;
+          width: 80px;
+          height: 80px;
           > .personIcon {
             width: 80px;
             height: 80px;

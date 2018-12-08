@@ -18,17 +18,17 @@
 import MarketService from 'SERVICE/marketService'
 export default {
   created() {
-    this.linkerId=this.$route.params.id
+    this.linkerId = this.$route.params.id
     this.getAllDynamicListInfo(this.linkerId)
   },
   data: () => ({
     list: [],
-    linkerId:null
+    linkerId: null
   }),
-  methods:{
-   async getAllDynamicListInfo(id){
+  methods: {
+    async getAllDynamicListInfo(id) {
       let res = await MarketService.getAllDynamicList(id)
-      this.list=res
+      this.list = res
       console.log(res)
     }
   }

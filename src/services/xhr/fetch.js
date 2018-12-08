@@ -14,11 +14,10 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   headers = Object.assign(
     { 'Content-Type': 'application/json; charset=UTF-8' },
     {
-      Authorization: store.getters.userInfo.token 
+      Authorization: store.getters.userInfo.token
     },
     headers
   )
-
 
   const options = {
     method,
@@ -26,7 +25,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     mode: 'cors'
   }
 
-  method === 'GET' ? url = `${url}?${qs.stringify(body)}` : (options.body = JSON.stringify(body))
+  method === 'GET' ? (url = `${url}?${qs.stringify(body)}`) : (options.body = JSON.stringify(body))
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
     // http错误

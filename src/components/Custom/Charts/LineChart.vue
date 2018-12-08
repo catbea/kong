@@ -10,10 +10,10 @@ export default {
     VChart
   },
   props: {
-    lineData: { type: Array },
+    lineData: { type: Array }
   },
   data: () => ({
-    width: 0,
+    width: 0
     // data: [
     //   { time: 1514764800000, count: 11, a: '1' },
     //   { time: 1514851200000, count: 13, a: '1' },
@@ -25,9 +25,7 @@ export default {
     // ]
   }),
   mounted() {
-    this.width = document.getElementsByClassName(
-      'pie-chart-container'
-    )[0].offsetWidth
+    this.width = document.getElementsByClassName('pie-chart-container')[0].offsetWidth
   },
   methods: {
     renderLineChart({ chart }) {

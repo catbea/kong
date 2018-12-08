@@ -17,15 +17,15 @@
 <script>
 export default {
   props: {
-    houseTypeList: { type: Array },
+    houseTypeList: { type: Array }
   },
   data: () => ({
     list: [1, 2, 3, 4]
   }),
-  methods:{
-    skipMarketFamilyList(){
-    this.$router.push('/marketDetail/FamilyList')
-  }
+  methods: {
+    skipMarketFamilyList() {
+      this.$router.push('/marketDetail/FamilyList')
+    }
   }
 }
 </script>
@@ -38,7 +38,7 @@ export default {
       width: 160px;
       height: 120px;
       margin-bottom: 4px;
-      border-radius:4px;
+      border-radius: 4px;
     }
     .market-type-box-top {
       height: 18px;
