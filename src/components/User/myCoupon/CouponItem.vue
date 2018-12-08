@@ -5,7 +5,7 @@
         <div class="olItem-content">
           <div class="cover-left"></div>
         <div class="coupon-item-page-left">
-         <div :class="{textColorA:ps.flag==1,textColorB:ps.flag==0,margin:true}">¥<h3>
+         <div :class="{textColorA:info.status==0,textColorB:info.status==1,margin:true}">¥<h3>
            {{info.satisfyLimit}}
            </h3></div>
           <p>

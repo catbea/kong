@@ -63,7 +63,6 @@ export default {
     countDown () {
       this.sendCodeText = '重新发送(' + this.codeTime + 's)'
       let timer = setInterval(() => {
-        debugger
         this.codeTime --
         this.sendCodeText = '重新发送(' + this.codeTime + 's)'
         if (this.codeTime < 0) {
@@ -83,7 +82,7 @@ export default {
       this.phoneFocus = focus
     },
     registerHandler () {
-      
+
     }
   }
 }

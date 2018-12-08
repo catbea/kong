@@ -64,6 +64,7 @@ export default {
 
     couponClickHandle() {
       console.log('couponClickHandle========')
+      this.$router.push('/market/couponSelect')
     },
 
     async paySubmit() {
@@ -79,7 +80,7 @@ export default {
       const res = await commonService.payForProject(param)
       console.log(res, '支付接口返回')
       if (res.isPay) {
-        alert('appid:'+res.appId);
+        // alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
           timestamp: res.timestamp,
