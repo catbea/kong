@@ -40,11 +40,12 @@ export default async (to, from, next) => {
                     console.log('wx jssdk init ')
                     wechatApi.init()
                 }
-
+                console.log(userInfo.payOpenId, 'userInfo.payOpenId')
                 if(userInfo.payOpenId) {
                     next()
                     return
                 }
+
                 let pcOpenid = userInfo.pcOpenid
                 const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
                 userInfo.payOpenId = payopenIdObject.payOpenId

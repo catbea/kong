@@ -49,14 +49,22 @@ export default {
     priceItemClickHandle(index) {
       this.currPriceListIndex = index
       let priceItem = this.priceList[this.currPriceListIndex]
+
+      let submitPrice =  priceItem.subscribeAmount - this.userInfo.price
+      if(submitPrice < 0) submitPrice = 0
+      let balancePay = this.userInfo.price - priceItem.subscribeAmount
+      if(priceItem.subscribeAmount > this.userInfo.price) balancePay = this.userInfo.price
+
       this.submitPayInfo = {
-        value: priceItem.subscribeAmount,
+        value: submitPrice,
         coupon: 0
       }
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, {balancePay: balancePay})
     },
 
     couponClickHandle() {
       console.log('couponClickHandle========')
+      this.$router.push('/market/couponSelect')
     },
 
     async paySubmit() {
