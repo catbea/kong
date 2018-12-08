@@ -335,5 +335,14 @@ class UserService {
     })
   }
 
+  /**
+   * 获取分享二维码
+   */
+  getQrCode(){
+    return xhr({
+       url:'/cpShare/nameCardShare'
+    })
+  }
+
 }
 export default new UserService()

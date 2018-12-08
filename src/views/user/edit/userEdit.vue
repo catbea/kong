@@ -87,14 +87,18 @@ export default {
     Dialog,
     areaSelect
   },
-  created() {},
+  created() {
+    
+  },
   data() {
     return {
       userEditIcon: require('IMG/user/collection/Article@2x.png'),
-      isOpen: false
+      isOpen: false,
     }
   },
   methods: {
+   
+
     godistributorName() {
       //此处不可进行操作
       //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面

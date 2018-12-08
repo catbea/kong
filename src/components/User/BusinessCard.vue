@@ -3,7 +3,7 @@
     <div class="business-card-box">
       <div class="bg_img info-box">
         <div class="info-box-left">
-          <img :src="leftIcon" class="box-left-leftIcon">
+          <img :src="leftIcon" class="box-left-leftIcon" @click="showQrCode">
           <span class="box-right-fx">
             <img :src="rightIcon" class="right-fx-rightIcon">
             <p class="right-fx-title">分享</p>
@@ -74,6 +74,10 @@ export default {
   methods: {
     editCLickHandler() {
       this.$router.push('/user/edit')
+    },
+
+    showQrCode(){
+      this.$emit('showPopup', '')
     }
   },
   computed: {
