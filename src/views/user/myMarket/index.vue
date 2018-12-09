@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant';
+import { Dialog } from 'vant'
 import MasterMarket from 'COMP/User/MasterMarket/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
 import VanSearch from 'COMP/VanSearch/'
@@ -34,178 +34,185 @@ import Screen from 'COMP/Screen/'
 import UserMarket from 'COMP/User/UserMarket/'
 import userService from 'SERVICE/userService'
 export default {
-  components:{
+  components: {
     MasterMarket,
     TitleBar,
     VanSearch,
     Screen,
     UserMarket
   },
-  data:()=>({
-    agentId:705,
-    displayFlag:0,
-    recommendList:987,
-    masterList:[],
-    commonList:[],
-    myMarketShow:true,
-    myMarketList:[],
-    show:false,
-   titleInfo:{
-     title:"我的楼盘",
-     linkText:"切换关闭展示楼盘",
-     link:""
-   },
-   searchInfo:{
-     siteText:"全国",
-     placeholderText:"请输入楼盘"
-   },
-   dataArr:[
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通 11/22到期",flag:true,price:"1%+5万元/套"},
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通 11/22到期",flag:true,price:"1%+5万元/套"},
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通 11/22到期",flag:true,price:"1%+5万元/套"},
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通 11/22到期",flag:true,price:"1%+5万元/套"}
-   ]
+  data: () => ({
+    agentId: 705,
+    displayFlag: 0,
+    recommendList: 987,
+    masterList: [],
+    commonList: [],
+    myMarketShow: true,
+    myMarketList: [],
+    show: false,
+    titleInfo: {
+      title: '我的楼盘',
+      linkText: '切换关闭展示楼盘',
+      link: ''
+    },
+    searchInfo: {
+      siteText: '全国',
+      placeholderText: '请输入楼盘'
+    },
+    dataArr: [
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通 11/22到期', flag: true, price: '1%+5万元/套' },
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通 11/22到期', flag: true, price: '1%+5万元/套' },
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通 11/22到期', flag: true, price: '1%+5万元/套' },
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通 11/22到期', flag: true, price: '1%+5万元/套' }
+    ]
   }),
   created() {
-    this.agentId=this.$route.params.id
+    this.agentId = this.$route.params.id
     this.getMyMarketInfo()
     this.getRecommendInfo()
   },
-  methods:{
-    async getRecommendInfo(){//推荐楼盘的数据
+  methods: {
+    async getRecommendInfo() {
+      //推荐楼盘的数据
       const res = await userService.getRecommend(this.agentId)
-      console.log(res,78787878)
-      this.recommendList=res
-       this.master()
-       this.common()
+      console.log(res, 78787878)
+      this.recommendList = res
+      this.master()
+      this.common()
     },
-    master(){
-      this.masterList =this.recommendList.filter((item)=>{
+    master() {
+      this.masterList = this.recommendList.filter(item => {
         return item.masterRecommand === 1
       })
     },
-    common(){
-      this.commonList =this.commonList.filter((item)=>{
+    common() {
+      this.commonList = this.commonList.filter(item => {
         return item.masterRecommand === 2
       })
     },
-    async getMyMarketInfo(){//请求展示的楼盘数据
-      const res = await userService.getMyMarket(this.agentId,this.displayFlag)
-      console.log(res.records,56565656)
-      this.myMarketList=res.records
+    async getMyMarketInfo() {
+      //请求展示的楼盘数据
+      const res = await userService.getMyMarket(this.agentId, this.displayFlag)
+      console.log(res.records, 56565656)
+      this.myMarketList = res.records
     },
-    returnHandle(){
-      this.show=true
+    returnHandle() {
+      this.show = true
     },
-    popupHandle(){
-      this.show=!this.show
+    popupHandle() {
+      this.show = !this.show
     },
-    closeHandle(){
-      this.show=!this.show
+    closeHandle() {
+      this.show = !this.show
     },
-    stickHandle(){
+    stickHandle() {
       Dialog.confirm({
         title: '是否确定关闭该楼盘名片展示',
         message: '关闭该楼盘展示将取消推荐和置顶状态'
-      }).then(() => {
-        // on confirm
-        console.log("确uerren")
-      }).catch(() => {
-        // on cancel
-         console.log("取消")
-      });
-          },
-    exhibitionHandle(){
+      })
+        .then(() => {
+          // on confirm
+          console.log('确uerren')
+        })
+        .catch(() => {
+          // on cancel
+          console.log('取消')
+        })
+    },
+    exhibitionHandle() {
       Dialog.confirm({
         title: '是否确定关闭该楼盘名片展示',
         message: '关闭该楼盘展示将取消推荐和置顶状态'
-      }).then(() => {
-        // on confirm
-      }).catch(() => {
-        // on cancel
-      });
+      })
+        .then(() => {
+          // on confirm
+        })
+        .catch(() => {
+          // on cancel
+        })
     },
-    skipShareHandle(){
+    skipShareHandle() {
       this.$router.push('/marketDetail/share')
     },
-    skipMarketHandle(){
+    skipMarketHandle() {
       this.$router.push('/market/marketDetail/:id')
     }
   }
 }
 </script>
 <style lang="less">
-.user-mymarket-page{
-  height:auto !important;
-      background: #ffffff;
+.user-mymarket-page {
+  height: auto !important;
+  background: #ffffff;
   // > div{
   //   width:343px;
   // }
-  .title-bar,.van-search-page{
-    width:343px;
+  .title-bar,
+  .van-search-page {
+    width: 343px;
   }
-  .van-popup--bottom{
-    height:316px;
-    background:rgba(255,255,255,1);
-    ul{
-      li{
-        width:375px;
-        height:50px;
-        line-height:50px;
-        text-align:center;
-        font-size:16px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(51,51,51,1);
+  .van-popup--bottom {
+    height: 316px;
+    background: rgba(255, 255, 255, 1);
+    ul {
+      li {
+        width: 375px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
       }
-      li:nth-of-type(2){
-        border-bottom:1px solid #EEEEEE;
+      li:nth-of-type(2) {
+        border-bottom: 1px solid #eeeeee;
       }
-      li:nth-of-type(4){
-        border-bottom:1px solid #EEEEEE;
-        color:rgba(234,77,46,1);
+      li:nth-of-type(4) {
+        border-bottom: 1px solid #eeeeee;
+        color: rgba(234, 77, 46, 1);
       }
-      li:last-of-type{
-        border-top:6px solid #E8E8E8;
+      li:last-of-type {
+        border-top: 6px solid #e8e8e8;
       }
     }
   }
-  .van-modal{
-    width:100%;
+  .van-modal {
+    width: 100%;
   }
-  .user-mymarket-page-search{
-    height:44px;
+  .user-mymarket-page-search {
+    height: 44px;
   }
 }
-.van-dialog{
-          width:280px;
-          height:168px;
-          background:rgba(255,255,255,1);
-          border-radius:12px;
-          display: flex;
-          flex-direction: column;
-          .van-dialog__header{
-            font-size:18px;
-            font-family:PingFangSC-Medium;
-            font-weight:600;
-            color:rgba(51,51,51,1);
-            padding-top:26px;
-          }
-          .van-dialog__message--has-title{
-            font-size:15px;
-            font-family:PingFangSC-Regular;
-            font-weight:400;
-            color:rgba(51,51,51,1);
-            text-align: center;
-            width:203px;
-            padding:0;
-            margin:9px 0 15px 35px; 
-          }
-          .van-dialog__footer--buttons{
-            flex:1;
-            .van-hairline--left{
-            color:rgba(0,122,230,1);
-             }
-          }
-        }
+.van-dialog {
+  width: 280px;
+  height: 168px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  .van-dialog__header {
+    font-size: 18px;
+    font-family: PingFangSC-Medium;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    padding-top: 26px;
+  }
+  .van-dialog__message--has-title {
+    font-size: 15px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    text-align: center;
+    width: 203px;
+    padding: 0;
+    margin: 9px 0 15px 35px;
+  }
+  .van-dialog__footer--buttons {
+    flex: 1;
+    .van-hairline--left {
+      color: rgba(0, 122, 230, 1);
+    }
+  }
+}
 </style>

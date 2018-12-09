@@ -51,7 +51,7 @@
 </template>
 <script>
 export default {
-  created () {
+  created() {
     if (this.common.length > 0) {
       this.commonList()
     }
@@ -75,33 +75,32 @@ export default {
     img: require('IMG/user/Combined Shape@2x.png')
   }),
   methods: {
-    marsterList () {
+    marsterList() {
       // for (let i = 0; i < this.marster.length; i++) {
       //   let temp = this.marster[i]
       //   temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
       //   this.$set(this.marster, temp, i)
+      // this.marster[i] =
+    }
+    //  this.marster.map((item)=>{
+    //   item.linkerTags = item.linkerTags.join("、")
 
-        // this.marster[i] = 
-      }
-      //  this.marster.map((item)=>{
-      //   item.linkerTags = item.linkerTags.join("、")
+    // })
+    // console.log('---------');
 
-      // }) 
-      // console.log('---------');
-
-      // console.log(this.marster);
+    // console.log(this.marster);
 
     // commonList(){
     //    this.common.map((item)=>{
     //     item.linkerTags = item.linkerTags.join("、")
-    //   }) 
+    //   })
     // }
   },
   watch: {
     marster: {
-      handler (val) {
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa',val);
-        
+      handler(val) {
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa', val)
+
         for (let i = 0; i < val.length; i++) {
           let temp = val[i]
           temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
@@ -110,7 +109,6 @@ export default {
       },
       deep: true
     }
-
   }
 }
 </script>

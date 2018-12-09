@@ -18,8 +18,7 @@ export default (date, serverTimestamp) => {
   const _datumDate = serverTimestamp ? new Date(parseInt(serverTimestamp)) : new Date() // 基准时间
   const _targetDateTime = _targetDate.getTime()
   const _datumDateTime = _datumDate.getTime()
-  const _range =
-    _targetDateTime > _datumDateTime ? _targetDateTime - _datumDateTime : 0
+  const _range = _targetDateTime > _datumDateTime ? _targetDateTime - _datumDateTime : 0
   const _rangeDay = dayDiff(_targetDateTime, _datumDateTime)
   const _targetDateFormat = dateTimeFormatter(_targetDate.getTime(), 4)
   // 先判断是不是同一天（时间差不超过(24 * 3600 * 1000毫秒）且getDate()相等

@@ -30,13 +30,11 @@ export default {
     Screen,
     MealMarket
   },
-  created() {
-
-  },
+  created() {},
   data: () => ({
     type: null,
     checkIndex: -1,
-    checkData:null,
+    checkData: null,
     dataArrLength: null,
     showArr: [],
     searchInfo: {
@@ -83,7 +81,7 @@ export default {
   methods: {
     selectHandle(index) {
       console.log(11888)
-      this.checkData=index
+      this.checkData = index
     },
     // allSelectHandle() {
     //   this.checkShow = !this.checkShow
@@ -108,10 +106,7 @@ export default {
           linkerId: item.linkerId,
           linkerName: item.linkerName
         }
-        this.$store.dispatch(
-          'reportAddInfo',
-          Object.assign(this.reportAddInfo, _reportAddInfo)
-        )
+        this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
         this.$router.back(-1)
       }
     }

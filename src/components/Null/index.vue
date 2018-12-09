@@ -9,7 +9,7 @@
 export default {
   props: {
     nullIcon: { type: String, default: '' },
-    nullcontent: { type: String, default: '' },
+    nullcontent: { type: String, default: '' }
   }
 }
 </script>

@@ -60,32 +60,30 @@ export default {
   components: {
     ShadowBox
   },
-   props: {
-      info:{type:Object},
-      item: {type: Array},
-      allDynamicList: { type: Array },
-      // CardDynamicList:{ type: Array }
-   },
-  data () {
+  props: {
+    info: { type: Object },
+    item: { type: Array },
+    allDynamicList: { type: Array }
+    // CardDynamicList:{ type: Array }
+  },
+  data() {
     return {
       lxImg: require('IMG/dynamics/lx@2x.png'),
       gzImg: require('IMG/dynamics/gz@2x.png'),
-      element:''
-      
+      element: ''
     }
   },
   created() {
     // this.golist()
-  
   },
   methods: {
-    getupdateCustomerInfo(item){
+    getupdateCustomerInfo(item) {
       this.$emit('click', item)
     },
-    goalldynamics () {
+    goalldynamics() {
       this.$router.push('/dynamics/message/messageList')
     },
-    godynamicsList(){
+    godynamicsList() {
       this.$emit('click', this.info)
     }
   }
@@ -95,7 +93,7 @@ export default {
 .dynamics-container {
   background: #ffffff;
   margin-top: 15px;
- .dynamics-time {
+  .dynamics-time {
     font-size: 14px;
     font-weight: 500;
     color: rgba(41, 46, 51, 1);

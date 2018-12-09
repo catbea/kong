@@ -7,7 +7,6 @@ export default {
     y: Boolean,
     field: String
   },
-  render() {},
   created() {
     this.emitSetting()
   },

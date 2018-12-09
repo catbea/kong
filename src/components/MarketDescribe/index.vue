@@ -5,7 +5,7 @@
     <div class="all-describe" >
       <div class="market-box-page-top">
         <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
-          <div class="label bg_img" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
+          <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
             {{itemInfo.labels}}
           </div>
         </div>
@@ -45,8 +45,8 @@ export default {
   data: () => ({
     resInfo: null,
     style: null,
-    commissionImg:require('IMG/user/collection/Rectangle@2x.png'),
-    labelImg:require('IMG/marketDetail/discount@2x.png')
+    commissionImg: require('IMG/user/collection/Rectangle@2x.png'),
+    labelImg: require('IMG/marketDetail/discount@2x.png')
   }),
   props: {
     // value:'',
@@ -78,9 +78,8 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
-    openHandle(){
-      this.$emit('openReturnHandle',1)
-      
+    openHandle() {
+      this.$emit('openReturnHandle', 1)
     }
   },
   watch: {
@@ -99,7 +98,7 @@ export default {
 }
 .market-box-page {
   background: #ffffff;
-  width:375px;
+  width: 375px;
   .market-box {
     width: 343px;
     margin: 13px 0px 0 16px;
@@ -187,17 +186,17 @@ export default {
       }
 
       .market-box-page-bottom {
-        width:335px;
+        width: 335px;
         height: 34px;
         padding: 0 0 0 8px;
         background: rgba(247, 249, 250, 1);
         border-radius: 4px;
         margin: 16px 0 16px 0;
         display: flex;
-        align-items:center;
+        align-items: center;
         span:nth-child(1) {
-          width:16px;
-          height:16px;
+          width: 16px;
+          height: 16px;
         }
         span:nth-child(2) {
           margin: 0 0 0 4px;

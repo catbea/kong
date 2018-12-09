@@ -3,9 +3,11 @@
  * @param {Number} 格式化数值
  * @param {Int} 格式化类型
  */
-export default (num, type=0) => {
+export default (num, type = 0) => {
   let _num = Number(num)
-  switch (type) { // 需要的数字过滤器在这里加
+  switch (
+    type // 需要的数字过滤器在这里加
+  ) {
     case 0: // 中文 11000 -> 11万 || 110000000 -> 1.1亿 (万位取整,亿取1位小数点)
       return numProcess(_num)
     case 1: // 英文 1100 -> 11k
@@ -25,9 +27,9 @@ export default (num, type=0) => {
 
 /**
  * 中文数字简化方案
- * @param {*} num 
+ * @param {*} num
  */
-function numProcess (num) {
+function numProcess(num) {
   if (num >= 100000000) {
     if (num % 100000000 === 0) {
       return num / 100000000 + '亿'

@@ -29,16 +29,15 @@
   </div>
 </template>
 <script>
-import { Step, Steps } from 'vant';
+import { Step, Steps } from 'vant'
 import reportService from 'SERVICE/reportService'
 export default {
   components: {
     Step,
     Steps
-
   },
 
-  data () {
+  data() {
     return {
       distClientId: '', // 报备单id
       reportInfo: {}, // 报备信息
@@ -56,10 +55,10 @@ export default {
         '102': '已认购 ',
         '103': '已签约',
         '104': '已结佣',
-        '105': '已放弃',
+        '105': '已放弃'
       },
       nullIcon: require('IMG/user/empty_report@2x.png'),
-      nullcontent: '您还没有任何报备信息',
+      nullcontent: '您还没有任何报备信息'
     }
   },
   created() {
@@ -75,8 +74,7 @@ export default {
       const res = await reportService.reportAuditList(distClientId)
       this.auditList = res
     },
-    itemProperties () {
-
+    itemProperties() {
       //跳转到动态详情item
       // this.$router.push('/dynamics/dynamicsInfo')
       this.$dialog
@@ -160,8 +158,8 @@ export default {
         height: 13px;
         border-radius: 50%;
       }
-     
-       > .report-btn-left-x {
+
+      > .report-btn-left-x {
         height: 60px;
         width: 3px;
         background: #007ae6;
@@ -187,5 +185,3 @@ export default {
   }
 }
 </style>
-
-

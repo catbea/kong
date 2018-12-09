@@ -40,7 +40,7 @@
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
       </router-link>
-      <router-link tag="div" to="/user/mypreference" class="status-info-right">
+      <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
         <img :src="discountIcon">
         <p class="info-title welfare-status">特惠套餐</p>
         <p class="info-desc welfare-desc">{{vipPackage}}</p>
@@ -68,22 +68,20 @@ export default {
     editIcon: require('IMG/user/editInfo@2x.png')
   }),
 
-  onCreated: {
-  },
+  onCreated: {},
 
   methods: {
     editCLickHandler() {
       this.$router.push('/user/edit')
     },
 
-    showQrCode(){
+    showQrCode() {
       this.$emit('showPopup', '')
     },
 
-    shareUserCard(){
+    shareUserCard() {
       this.$emit('shareUserCard', '')
     }
-
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
@@ -201,9 +199,9 @@ export default {
         }
         > .box-content-right {
           position: relative;
-              right: 10px;
-          width:80px;
-height:80px;
+          right: 10px;
+          width: 80px;
+          height: 80px;
           > .personIcon {
             width: 80px;
             height: 80px;

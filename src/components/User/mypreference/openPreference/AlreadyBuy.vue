@@ -33,11 +33,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background:rgba(255,255,255,1);
-  .already-buy-page-left{
+  background: rgba(255, 255, 255, 1);
+  .already-buy-page-left {
     display: flex;
     font-size: 1222px;
-    margin-left:16px;
+    margin-left: 16px;
     .icon-already {
       width: 44px;
       height: 44px;
@@ -57,7 +57,7 @@ export default {
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         line-height: 17px;
-        margin-top:3px;
+        margin-top: 3px;
       }
     }
   }
@@ -68,7 +68,7 @@ export default {
     font-weight: 600;
     color: rgba(102, 102, 102, 1);
     line-height: 17px;
-    margin-right:16px;
+    margin-right: 16px;
     .icon-detail {
       width: 16px;
       height: 16px;
@@ -76,4 +76,3 @@ export default {
   }
 }
 </style>
-

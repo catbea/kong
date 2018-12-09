@@ -22,22 +22,18 @@
 export default {
   data: () => ({
     icon: require('IMG/correction/color.png'),
-    list: [
-      1,2,3,4,5
-    ],
+    list: [1, 2, 3, 4, 5],
     listSeletct: [],
     liIndex: 0,
     num: null
   }),
-  computed: {
-
-  },
+  computed: {},
   methods: {
-    active (index) {
+    active(index) {
       if (this.listSeletct.indexOf(index) == -1) {
         this.listSeletct.push(index)
       } else {
-        this.listSeletct = this.listSeletct.filter((item) => {
+        this.listSeletct = this.listSeletct.filter(item => {
           return item != index
         })
       }

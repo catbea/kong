@@ -12,6 +12,7 @@
 <script>
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'
+import mycoupons from 'SERVICE/mycoupons'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import MarketPriceSurface from 'COMP/MarketPriceSurface/'
 import OpenPayment from 'COMP/OpenPayment/'
@@ -31,7 +32,7 @@ export default {
     linkerId: '',
     projectInfo: {},
     priceList: [],
-    priceSurfacePayInfo: {balanceAmount: 0, balancePay: 0, coupon: 0},
+    priceSurfacePayInfo: { balanceAmount: 0, balancePay: 0, coupon: 0, isShowCoupon: false },
     currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
@@ -50,21 +51,30 @@ export default {
       this.currPriceListIndex = index
       let priceItem = this.priceList[this.currPriceListIndex]
 
-      let submitPrice =  priceItem.subscribeAmount - this.userInfo.price
-      if(submitPrice < 0) submitPrice = 0
+      let submitPrice = priceItem.subscribeAmount - this.userInfo.price
+      if (submitPrice < 0) submitPrice = 0
       let balancePay = this.userInfo.price - priceItem.subscribeAmount
-      if(priceItem.subscribeAmount > this.userInfo.price) balancePay = this.userInfo.price
+      if (priceItem.subscribeAmount > this.userInfo.price) balancePay = this.userInfo.price
 
       this.submitPayInfo = {
         value: submitPrice,
         coupon: 0
       }
-      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, {balancePay: balancePay})
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balancePay: balancePay })
+      this.getCoupan()
     },
 
     couponClickHandle() {
-      console.log('couponClickHandle========')
       this.$router.push('/market/couponSelect')
+    },
+
+    async getCoupan() {
+      let priceItem = this.priceList[this.currPriceListIndex]
+      // console.log(priceItem)
+      let res = await mycoupons.getMyCoupons(this.linkerId, priceItem.subscribeAmount, 1, 1000)
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: res.canUseNum + '张可用', isShowCoupon: res.canUseNum > 0 ? true : false })
+      this.$store.dispatch('setProjectCoupons', res.page.records)
+      // this.couponList = res.records
     },
 
     async paySubmit() {
@@ -88,15 +98,15 @@ export default {
           package: res.packageId,
           signType: 'MD5',
           paySign: res.signature,
-          success: (res)=> {
+          success: res => {
             console.log('支付suss')
           },
-          cancel: (res)=> {
+          cancel: res => {
             //用户付钱失败。没钱，密码错误，取消付款
-            console.log(res,'支付取消')
+            console.log(res, '支付取消')
           },
-          fail: (res)=> {
-            console.log(res,'支付失败')
+          fail: res => {
+            console.log(res, '支付失败')
           }
         })
       }
@@ -119,7 +129,7 @@ export default {
     async getLinkerAmountList() {
       const res = await marketService.getLinkerAmountList()
       this.priceList = res
-      this.priceSurfacePayInfo = {balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0}
+      this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
       this.priceItemClickHandle(0)
     }
   }

@@ -28,15 +28,9 @@
 import FullScreen from './FullScreen'
 export default {
   data: () => ({
-    templateList: [
-      {a:require('IMG/dev/timg.jpg')}
-    ],
-    effectList: [
-      {a:require('IMG/dev/timg.jpg')}
-    ],
-    communityList: [
-      {a:require('IMG/dev/timg.jpg')}
-    ],
+    templateList: [{ a: require('IMG/dev/timg.jpg') }],
+    effectList: [{ a: require('IMG/dev/timg.jpg') }],
+    communityList: [{ a: require('IMG/dev/timg.jpg') }],
     show: false,
     info: {
       domShow: false,

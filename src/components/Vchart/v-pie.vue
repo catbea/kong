@@ -36,7 +36,6 @@ export default {
       ...this.$props,
       ...camelBatch(this.$attrs)
     })
-  },
-  render() {}
+  }
 }
 </script>

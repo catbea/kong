@@ -15,7 +15,7 @@ class WechatApi {
 
   async init() {
     const ticket = await this._getTicket()
-    store.dispatch("setJssdkConfig", ticket)
+    store.dispatch('setJssdkConfig', ticket)
     this.wx.config(ticket)
   }
 
@@ -34,24 +34,24 @@ class WechatApi {
       nonceStr: res.nonceStr, // 必填，生成签名的随机串
       signature: res.signature, // 必填，签名，见附录1
       jsApiList: [
-          'chooseWXPay',
-          'hideOptionMenu',
-          'showOptionMenu',
-          'getLocation',
-          'getNetworkType',
-          'onMenuShareAppMessage',
-          'onMenuShareTimeline',
-          'chooseImage',
-          'getLocalImgData',
-          'startRecord', // 录音开始api
-          'stopRecord', // 录音结束api
-          'onVoiceRecordEnd', // 超过一分钟自动停止api
-          'playVoice', // 播放录音api
-          'pauseVoice', // 暂停录音api
-          'stopVoice', // 停止播放api
-          'uploadVoice', // 上传语音api
-          'onVoicePlayEnd', // 监听语音播放完毕api
-          'translateVoice'
+        'chooseWXPay',
+        'hideOptionMenu',
+        'showOptionMenu',
+        'getLocation',
+        'getNetworkType',
+        'onMenuShareAppMessage',
+        'onMenuShareTimeline',
+        'chooseImage',
+        'getLocalImgData',
+        'startRecord', // 录音开始api
+        'stopRecord', // 录音结束api
+        'onVoiceRecordEnd', // 超过一分钟自动停止api
+        'playVoice', // 播放录音api
+        'pauseVoice', // 暂停录音api
+        'stopVoice', // 停止播放api
+        'uploadVoice', // 上传语音api
+        'onVoicePlayEnd', // 监听语音播放完毕api
+        'translateVoice'
       ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     }
     return conf

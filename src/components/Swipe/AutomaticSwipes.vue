@@ -20,12 +20,7 @@ export default {
   data() {
     return {
       current: 0,
-      images: [
-        require('IMG/user/usercard@2x.png'),
-        require('IMG/user/person_icon.png'),
-        require('IMG/user/usercard@2x.png'),
-        require('IMG/user/person_icon.png')
-      ]
+      images: [require('IMG/user/usercard@2x.png'), require('IMG/user/person_icon.png'), require('IMG/user/usercard@2x.png'), require('IMG/user/person_icon.png')]
     }
   },
   methods: {},
@@ -38,12 +33,7 @@ export default {
 }
 .discover-Broadcast {
   height: 206px;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.05) 45%,
-    rgba(0, 0, 0, 0.3) 100%
-  );
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.3) 100%);
   box-shadow: 0px 5px 4px 0px rgba(55, 53, 94, 0.21);
 }
 
@@ -51,12 +41,7 @@ export default {
   width: 100%;
   height: 206px;
   display: block;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.05) 45%,
-    rgba(0, 0, 0, 0.3) 100%
-  );
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.3) 100%);
   box-shadow: 0px 5px 4px 0px rgba(55, 53, 94, 0.21);
   // padding: 30px 60px;
   box-sizing: border-box;
@@ -65,38 +50,38 @@ export default {
 }
 // .dynamics-collect {
 //   background: #ffffff;
-  .demo-swipe {
-    padding-bottom: 30px;
-    .van-swipe {
-      cursor: pointer;
-      &-item {
-        color: #fff;
-        font-size: 20px;
-        text-align: center;
-        line-height: 150px;
-        &:nth-child(even) {
-          background-color: #39a9ed;
-        }
-        &:nth-child(odd) {
-          background-color: #66c6f2;
-        }
-      }
-    }
-    &--vertical {
-      height: 200px;
-      .van-swipe-item {
-        line-height: 200px;
-      }
-    }
-    .custom-indicator {
-      position: absolute;
-      right: 5px;
-      bottom: 5px;
-      padding: 2px 5px;
-      font-size: 12px;
+.demo-swipe {
+  padding-bottom: 30px;
+  .van-swipe {
+    cursor: pointer;
+    &-item {
       color: #fff;
-      background: rgba(0, 0, 0, 0.1);
+      font-size: 20px;
+      text-align: center;
+      line-height: 150px;
+      &:nth-child(even) {
+        background-color: #39a9ed;
+      }
+      &:nth-child(odd) {
+        background-color: #66c6f2;
+      }
     }
   }
+  &--vertical {
+    height: 200px;
+    .van-swipe-item {
+      line-height: 200px;
+    }
+  }
+  .custom-indicator {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    padding: 2px 5px;
+    font-size: 12px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
 // }
 </style>

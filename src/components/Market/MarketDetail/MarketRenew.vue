@@ -30,76 +30,76 @@ export default {
     stick: require('IMG/marketDetail/zd2@2x.png')
   }),
   methods: {
-    dialogHandle(n){
+    dialogHandle(n) {
       Dialog.alert({
         message: n,
-        confirmButtonText:'知道啦',
-        className:"renewDialog"
+        confirmButtonText: '知道啦',
+        className: 'renewDialog'
       }).then(() => {
         // on close
-      });
+      })
     },
     recommendHandle(n) {
       this.flagTj = !this.flagTj
       switch (n) {
         case false:
-          this.dialogHandle("已推荐该楼盘")
-          break;
+          this.dialogHandle('已推荐该楼盘')
+          break
         case true:
-        this.dialogHandle("已取消推荐该楼盘")
-          break;
+          this.dialogHandle('已取消推荐该楼盘')
+          break
       }
     },
     showHandle(n) {
       this.flagZs = !this.flagZs
       switch (n) {
         case false:
-          this.dialogHandle("已开启该楼盘展示")
-          break;
+          this.dialogHandle('已开启该楼盘展示')
+          break
         case true:
-        this.dialogHandle("已关闭该楼盘展示")
-          break;
+          this.dialogHandle('已关闭该楼盘展示')
+          break
       }
     },
     stickHandle(n) {
       this.flagZd = !this.flagZd
       switch (n) {
         case false:
-          this.dialogHandle("置顶成功")
-          break;
+          this.dialogHandle('置顶成功')
+          break
         case true:
-        this.dialogHandle("取消置顶成功")
-          break;
+          this.dialogHandle('取消置顶成功')
+          break
       }
     },
-    renewHandle(){
-     this.$router.push('/marketDetail/open')
+    renewHandle() {
+      this.$router.push('/marketDetail/open')
     }
   }
 }
 </script>
 <style lang="less">
-.renewDialog{
-  width:280px;
-    > .van-dialog__content{
-      > .van-dialog__message{
-        text-align: center;
-      }
+.renewDialog {
+  width: 280px;
+  > .van-dialog__content {
+    > .van-dialog__message {
+      text-align: center;
     }
-    > .van-dialog__footer{
-      display: flex;
-      justify-content: center;
-     > .van-dialog__confirm{
+  }
+  > .van-dialog__footer {
+    display: flex;
+    justify-content: center;
+    > .van-dialog__confirm {
       border-radius: 5px;
       height: 40px;
       width: 142px;
       line-height: 40px;
-       color:#ffffff;
-       background:#007AE6;
-       margin-bottom:12px;
-     }
+      color: #ffffff;
+      background: #007ae6;
+      margin-bottom: 12px;
     }
   }
+}
 .market-renew-box {
   display: flex;
   width: 375px;
@@ -107,19 +107,19 @@ export default {
   padding-top: 14px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e6e6e6;
-  .active{
-    color:rgba(0, 122, 230, 1) !important;
+  .active {
+    color: rgba(0, 122, 230, 1) !important;
   }
   li {
     display: flex;
     flex-direction: column;
     align-items: center;
-    span{
-      width:24px;
-      height:24px;
+    span {
+      width: 24px;
+      height: 24px;
     }
-    p{
-      margin-top:4px;
+    p {
+      margin-top: 4px;
     }
   }
   .market-renew-box-recommend {
@@ -157,7 +157,7 @@ export default {
     height: 44px;
     border-radius: 6px;
     border: 1px solid;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;

@@ -17,9 +17,9 @@ export default {
     show: false
   }),
   props: {
-    payInfo:{
+    payInfo: {
       type: Object,
-      default: function(){
+      default: function() {
         return {
           value: 0,
           coupon: 0

@@ -54,9 +54,9 @@ export default {
         font-size: 14px;
       }
     }
-    &.step-over{
-      background:#445166;
-      >span{
+    &.step-over {
+      background: #445166;
+      > span {
         color: #445166;
       }
     }
@@ -68,4 +68,3 @@ export default {
   }
 }
 </style>
-

@@ -11,6 +11,7 @@
 </template>
 <script>
 import RegStep from 'COMP/Register/RegStep'
+import RegisterService from 'SERVICE/registService'
 export default {
   components: {
     RegStep
@@ -20,8 +21,19 @@ export default {
     value: '110000',
     stepTitle: '已注册',
     qrcodeImg: '',
+    enterpriseId: ''
   }),
-  methods: {}
+  created() {
+    console.log(this.$route.query)
+    this.enterpriseId = this.$route.query.enterpriseId
+    this.queryByRegister(this.enterpriseId)
+  },
+  methods: {
+    async queryByRegister(enterpriseId) {
+      const result = await RegisterService.queryByRegister(enterpriseId)
+      this.qrcodeImg = result.qrCode
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -40,23 +52,20 @@ export default {
     font-size: 12pt;
     font-weight: 'Regular';
     text-align: center;
+    margin-bottom: 40px;
   }
   .register-qrcode {
-      margin-top: 40px;
-      text-align: center;
-      width: 200px;
-      height: 200px;
+    margin: 0 auto;
+    text-align: center;
+    width: 200px;
+    height: 200px;
   }
   .register-desc {
     margin-top: 12px;
-    color: #969EA8;
+    color: #969ea8;
     font-size: 12pt;
     font-weight: 'Regular';
     text-align: center;
   }
 }
 </style>
-
-
-
-

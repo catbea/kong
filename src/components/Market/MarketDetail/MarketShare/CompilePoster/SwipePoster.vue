@@ -49,12 +49,12 @@ export default {
   > .swipe-poster-item {
     width: 240px;
     height: 387px;
-    border-radius:6px;
+    border-radius: 6px;
     position: relative;
     .content-box {
       position: absolute;
-      border-radius:0 0 6px 6px;
-      bottom:0px;
+      border-radius: 0 0 6px 6px;
+      bottom: 0px;
       width: 100%;
       height: 214px;
       .box-top {

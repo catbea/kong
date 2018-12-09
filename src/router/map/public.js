@@ -8,7 +8,7 @@ export default [
     }
   },
   {
-    path: '/public/map-Search',
+    path: '/public/map-Search/',
     name: 'AreaSelection',
     component: resolve => require(['@/views/public/mapSearch.vue'], resolve),
     meta: {

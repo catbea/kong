@@ -91,12 +91,11 @@ export default {
           // on close
         })
       } else {
-       
         let userList = {
           lableList: selectidlist
         }
         const res = await userService.upDateUserInfo(userList)
-        if(res){
+        if (res) {
           this.$store.dispatch('userInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
           this.$router.go(-1)
         }

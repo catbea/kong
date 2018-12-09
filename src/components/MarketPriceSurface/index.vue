@@ -15,10 +15,10 @@
         <span>不限量</span>
       </li>
 
-      <div class="coupon-box" @click="couponClickHandle">
+      <div class="coupon-box" v-show="payInfo.isShowCoupon" @click="couponClickHandle">
         <div>优惠劵</div>
         <div>
-          <p>-￥{{payInfo.coupon}}</p>
+          <p>{{payInfo.coupon}}</p>
           <p :style="{'background':'url('+backImg+') no-repeat'}"></p>
         </div>
       </div>
@@ -53,6 +53,7 @@ export default {
       type: Object,
       default: function() {
         return {
+          isShowCoupon: false,
           coupon: 0,
           balanceAmount: 0,
           balancePay: 0
@@ -66,14 +67,14 @@ export default {
       this.$emit('priceItemClick', index)
     },
 
-    couponClickHandle(){
+    couponClickHandle() {
       this.$emit('couponClick')
     }
   }
 }
 </script>
 <style lang="less">
-.through{
+.through {
   text-decoration: line-through;
 }
 .market-price-surface-page {

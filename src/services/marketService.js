@@ -3,7 +3,7 @@ class MarketService {
   /**
    * 楼盘数据
    */
-  getMarketDescribe(agentId,current,size=10) {
+  getMarketDescribe(agentId, current, size = 10) {
     return xhr({
       url: '/linker/getLinkerList',
       body: {
@@ -32,14 +32,13 @@ class MarketService {
   getLinkerAmountList() {
     return xhr({
       url: '/linkerAmount/getLinkerAmountList',
-      body: {
-      }
+      body: {}
     })
   }
 
   /**
    * 楼盘详情-楼盘信息
-   * @param {*} linkerId 
+   * @param {*} linkerId
    */
   getLinkerDetail(linkerId) {
     return xhr({
@@ -50,9 +49,9 @@ class MarketService {
     })
   }
 
-    /**
+  /**
    * 楼盘-楼盘信息-楼盘开通调用
-   * @param {*} linkerId 
+   * @param {*} linkerId
    */
   getLinkerSimpleDetail(linkerId) {
     return xhr({
@@ -65,7 +64,7 @@ class MarketService {
 
   /**
    * 楼盘详情-楼盘未显示的全部户型
-   * @param {*} linkerId 
+   * @param {*} linkerId
    */
   getHouseType(linkerId) {
     return xhr({
@@ -77,7 +76,7 @@ class MarketService {
   }
   /**
    * 楼盘详情-楼盘未显示的全部楼盘动态
-   * @param {*} linkerId 
+   * @param {*} linkerId
    */
   getAllDynamicList(linkerId) {
     return xhr({
@@ -102,7 +101,7 @@ class MarketService {
 
   /**
    * 楼盘详情-位置周边
-   * @param {*} linkerId 
+   * @param {*} linkerId
    */
   getHouseAroundType(linkerId) {
     return xhr({
@@ -114,14 +113,12 @@ class MarketService {
   }
   /**
    * 楼盘详情-楼盘详情纠错
-   * 
+   *
    */
   getCorrection() {
     return xhr({
       url: '/linkerDetail/houseErrorTionSelect',
-      body: {
-        
-      }
+      body: {}
     })
   }
 }

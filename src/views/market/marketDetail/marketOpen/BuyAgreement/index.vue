@@ -123,43 +123,42 @@
 </template>
 <script>
 export default {
-  data:()=>({
-    content:[
-    ]
+  data: () => ({
+    content: []
   })
 }
 </script>
 
 <style lang="less">
-.open-agreement-page{
-  height:auto !important;
+.open-agreement-page {
+  height: auto !important;
   display: flex;
   justify-content: center;
   align-items: center;
-  .agreement-box{
-    width:343px;
-    background: #FFFFFF;
-    font-size:13px;
-    font-family:PingFang-SC-Regular;
-    font-weight:400;
-    color:rgba(41,46,51,1);
-    h3{
+  .agreement-box {
+    width: 343px;
+    background: #ffffff;
+    font-size: 13px;
+    font-family: PingFang-SC-Regular;
+    font-weight: 400;
+    color: rgba(41, 46, 51, 1);
+    h3 {
       margin-bottom: 8px;
-      font-size:13px;
-      font-family:PingFang-SC-Semibold;
-      font-weight:600;
-      color:rgba(41,46,51,1);
-      line-height:20px;
+      font-size: 13px;
+      font-family: PingFang-SC-Semibold;
+      font-weight: 600;
+      color: rgba(41, 46, 51, 1);
+      line-height: 20px;
     }
-    p{
-      font-size:13px;
-      font-family:PingFang-SC-Regular;
-      font-weight:400;
-      color:rgba(41,46,51,1);
-      line-height:20px;
+    p {
+      font-size: 13px;
+      font-family: PingFang-SC-Regular;
+      font-weight: 400;
+      color: rgba(41, 46, 51, 1);
+      line-height: 20px;
     }
-    div{
-      margin-bottom:16px;
+    div {
+      margin-bottom: 16px;
     }
   }
 }

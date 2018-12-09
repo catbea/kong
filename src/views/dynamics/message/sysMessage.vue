@@ -44,7 +44,7 @@ export default {
 <style lang="less">
 .sysMessage-page {
   background: #ffffff;
-  .sysMessage-shadowBox{
+  .sysMessage-shadowBox {
     margin-top: 16px;
   }
   > .sysMessage-container {
