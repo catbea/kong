@@ -63,8 +63,8 @@ export default {
       console.log(this.collectionStatus)
     },
     share() {
-      // this.$router.push("/marketDetail/share")
-      this.show = !this.show
+      this.$router.push("/marketDetail/share")
+      // this.show = !this.show
     },
     play() {
       this.playShow = !this.playShow
