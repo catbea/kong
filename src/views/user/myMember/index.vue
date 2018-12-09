@@ -6,9 +6,9 @@
         <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag?headImgB:headImgA)+')'}"></span>
       </div>
       <ul class="head-describe">
-        <li>周星驰</li>
+        <li>{{userInfo.nickName}}</li>
         <li>AW大师VIP: 2018年10月09日</li>
-        <li>余额：23元</li>
+        <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
       <router-link tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
       </div>
@@ -33,6 +33,8 @@ import SetMeal from 'COMP/myMember/SetMeal.vue'
 import MemberPrivilege from 'COMP/myMember/MemberPrivilege.vue'
 import PrivilegeDescribe from 'COMP/myMember/PrivilegeDescribe.vue'
 import Agreement from 'COMP/myMember/Agreement.vue'
+import marketService from 'SERVICE/marketService'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     SetMeal,
@@ -42,6 +44,7 @@ export default {
   },
   created() {
     this.unselectedPopup()
+    this.getVipInfo()
   },
   data: () => ({
     backImg: require('IMG/myMember/person_card_bg@2x.png'),
@@ -56,6 +59,7 @@ export default {
     flag: true
   }),
   computed: {
+    ...mapGetters(['userInfo']),
     borderStyle() {
       if (this.bdr == 1) {
         this.borderColor.border = '1px solid #C6C6C6'
@@ -67,6 +71,10 @@ export default {
     }
   },
   methods: {
+    async getVipInfo() {
+      let res = await marketService.vipInfo()
+      console.log(res)
+    },
     unselectedPopup() {
       Dialog.confirm({
         title: this.title,

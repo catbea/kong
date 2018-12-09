@@ -30,7 +30,7 @@ const mutations = {
   },
 
   [types.CURR_SELECTED_COUPON](state, currSelectedCoupon) {
-    state.canUseCouponsNum = currSelectedCoupon
+    state.currSelectedCoupon = currSelectedCoupon
   }
 }
 
