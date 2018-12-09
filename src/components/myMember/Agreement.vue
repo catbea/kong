@@ -182,48 +182,48 @@ AW大师服务现有单个用户开通单个项目的收费标准为期限1个�
 </template>
 <script>
 export default {
-  data:()=>({
-    popupShow:false
+  data: () => ({
+    popupShow: false
   }),
-  methods:{
-    agreementHandle(){
-      this.popupShow=!this.popupShow
+  methods: {
+    agreementHandle() {
+      this.popupShow = !this.popupShow
     }
   }
 }
 </script>
 <style lang="less">
-.read-page{
-  margin-bottom:56px;
-  .read{
-    height:60px;
+.read-page {
+  margin-bottom: 56px;
+  .read {
+    height: 60px;
     text-align: center;
-    font-size:12px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(153,153,153,1);
-    line-height:60px;
-    background: #F7F9FA;
-    .Payment-agreement{
-      color: #A07E72;
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+    line-height: 60px;
+    background: #f7f9fa;
+    .Payment-agreement {
+      color: #a07e72;
     }
   }
-  .popup-box{
+  .popup-box {
     top: 0;
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0,0,0,.7);
-    .agreement-popup{
-    width:300px;
-    height:400px;
-    border-radius:5px;
-    background:#FFFFFF;
-    font-size:13px;
-    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    .agreement-popup {
+      width: 300px;
+      height: 400px;
+      border-radius: 5px;
+      background: #ffffff;
+      font-size: 13px;
+      overflow-y: auto;
     }
   }
 }

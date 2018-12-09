@@ -52,21 +52,16 @@ export default {
     /**
      * 切换tab方法
      */
-    onClick () {
+    onClick() {
       this.onLoad()
     },
     async onLoad() {
       this.loading = true
-      const result = await CustomService[this.getServeceFunc()](
-        this.searchVal,
-        this.currentData.page,
-        this.pageSize,
-        this.sort
-      )
+      const result = await CustomService[this.getServeceFunc()](this.searchVal, this.currentData.page, this.pageSize, this.sort)
       console.log(result)
       if (this.currentData.page > 1) {
         this.currentData.list = this.currentData.list.concat(result.records)
-      }else {
+      } else {
         this.currentData.list = result.records
       }
       if (result.pages <= this.currentData.page) {
@@ -93,8 +88,7 @@ export default {
     },
     itemClickHandler(e) {
       this.$router.push(`/custom/${e.clientId}`)
-    },
-    
+    }
   },
   computed: {
     currentData() {

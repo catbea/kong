@@ -1,7 +1,7 @@
 <template>
-  <div class="register-step2-page">
+  <div class="register-step3-page">
     <reg-step :step="1" :stepTitle="stepTitle"></reg-step>
-    <div class="register-content">
+    <div class="register-content van-hairline--top">
       <div class="register-title">输入手机号注册</div>
       <div class="register-subtitle">获取验证码输入即可完成注册</div>
       <div class="from-container">
@@ -14,7 +14,7 @@
           <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
         </div>
         <div class="invite-cell">
-          <div class="invite-name">邀请人：{{inviteName}}</div>
+          <div class="invite-name">邀请人：{{parentUserName}}</div>
         </div>
       </div>
     </div>
@@ -38,33 +38,41 @@ export default {
   },
   data: () => ({
     stepTitle: '手机注册',
-    inviteName: '李大牛',
     mobile: '',
     code: '',
     sendCodeText: '获取验证码',
     codeTime: 60,
     disabled: false,
     phoneFocus: false,
+    registerType: '',
+    enterpriseId: '',
+    parentUserId: '',
+    parentUserName: ''
   }),
-  created () {
-
+  created() {
+    console.log(this.$route.query)
+    this.query = this.$route.query
+    this.registerType = this.query.registerType
+    this.enterpriseId = this.query.enterpriseId
+    this.parentUserId = this.query.parentUserId
+    this.queryReferrerInfo(this.parentUserId)
+    // document.getElementsByClassName('next-step')[0].addEventListener('click', function(){console.log(3333)},true)
   },
   methods: {
     /**
      * 发送验证码
      */
-    sendCodeHandler () {
+    sendCodeHandler() {
       if (this.disabled == false) {
-        this.disabled = !this.disabled;
+        this.disabled = !this.disabled
         // const result = RegisterService.sendMsgRegister(this.mobile)
         this.countDown()
       }
     },
-    countDown () {
+    countDown() {
       this.sendCodeText = '重新发送(' + this.codeTime + 's)'
       let timer = setInterval(() => {
-        debugger
-        this.codeTime --
+        this.codeTime--
         this.sendCodeText = '重新发送(' + this.codeTime + 's)'
         if (this.codeTime < 0) {
           clearInterval(timer)
@@ -74,36 +82,67 @@ export default {
         }
       }, 1000)
     },
-    focusHandler (focus) {
-      console.log(focus)
+    focusHandler(focus) {
       this.phoneFocus = focus
     },
-    blurHandler (focus) {
-      console.log(focus)
+    blurHandler(focus) {
       this.phoneFocus = focus
     },
-    registerHandler () {
-      
+    registerHandler() {
+      console.log('11111')
+      // let params = {
+      // enterpriseId: this.enterpriseId
+      // }
+      // debugger
+      // this.$router.push({path: '/register/step2', query: params})
+      // this.register()
+    },
+    /**
+     * 查询推荐人信息
+     */
+    async queryReferrerInfo(parentUserId) {
+      const result = await RegisterService.queryReferrerInfo(1)
+      this.parentUserName = result.name
+    },
+    /**
+     * 注册
+     */
+    async register() {
+      let vo = {
+        mobile: this.mobile,
+        code: this.code,
+        registerType: this.registerType,
+        enterpriseId: this.enterpriseId,
+        parentUserId: this.parentUserId
+      }
+      const result = await RegisterService.register(vo)
+      if (JSON.stringify(data) != '{}') {
+        let params = {
+          enterpriseId: this.enterpriseId
+        }
+        this.$router.push({ path: '/register/step2', query: params })
+        // location.href = '/?cropId=ww8f6801ba5fd2a112'
+      }
     }
   }
 }
 </script>
 <style lang="less">
 .register-content {
-  border-top: 1px solid #dddddd;
-  margin-top: 20px;
-  margin-left: 16px;
+  // border-top: 1px solid #dddddd;
+  // margin-top: 20px;
+  // margin-left: 16px;
   .register-title {
     color: #333333;
     font-size: 24pt;
-    font-weight: 'Semibold';
+    // font-weight: 'Semibold';
     text-align: center;
     margin-top: 32px;
   }
   .register-subtitle {
     color: #666666;
     font-size: 12pt;
-    font-weight: 'Regular';
+    // font-weight: 'Regular';
     text-align: center;
   }
   .register-qrcode {
@@ -116,20 +155,20 @@ export default {
     margin-top: 12px;
     color: #969ea8;
     font-size: 12pt;
-    font-weight: 'Regular';
+    // font-weight: 'Regular';
     text-align: center;
   }
-  
+
   .from-container {
     margin: 45px 15px 15px;
     .phone-cell {
       margin: 10px 15px;
       > .phone-tip {
-          color: #969EA8;
-          font-size: 12pt;
-          text-align: left;
-          margin-left: 5px;
-        }
+        color: #969ea8;
+        font-size: 12pt;
+        text-align: left;
+        margin-left: 5px;
+      }
     }
     .code-cell {
       position: relative;
@@ -164,11 +203,11 @@ export default {
   }
 }
 .register-bottom {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    .next-step {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  .next-step {
     width: 343px;
     margin-left: 16px;
     background: #007ae6;
@@ -177,7 +216,6 @@ export default {
     font-weight: 400;
     color: #fff;
     padding: 10px 0;
-    
   }
   .protocol {
     margin: 10px;
@@ -189,7 +227,3 @@ export default {
   }
 }
 </style>
-
-
-
-

@@ -10,13 +10,11 @@ export default {
     VChart
   },
   props: {
-    pieData: { type: Array },
+    pieData: { type: Array }
   },
-  created () {
-    
-  },
+  created() {},
   data: () => ({
-    width: 0,
+    width: 0
     // pieData: [
     //   { name: '我', percent: 0.42, a: '1', color: '#2f7bdf' },
     //   { name: '楼盘', percent: 0.26, a: '1', color: '#5a9be0' },
@@ -24,14 +22,12 @@ export default {
     // ]
   }),
   mounted() {
-    this.width = document.getElementsByClassName(
-      'pie-chart-container'
-    )[0].offsetWidth
+    this.width = document.getElementsByClassName('pie-chart-container')[0].offsetWidth
   },
   methods: {
     renderPieChart({ chart }) {
       let colors = []
-      for(var i in this.pieData) {
+      for (var i in this.pieData) {
         colors.push(this.pieData[i].color)
       }
       chart.source(this.pieData)

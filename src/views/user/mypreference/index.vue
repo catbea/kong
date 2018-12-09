@@ -29,24 +29,22 @@ export default {
     VipMarket
   },
   data: () => ({
-    waitImg:require('IMG/user/alreadyBuy/wait@2x.png'),
+    waitImg: require('IMG/user/alreadyBuy/wait@2x.png'),
     searchInfo: {
       siteText: '全国',
       placeholderText: '请输入楼盘'
     },
-    dataArr:[
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通",price:"1%+5万元/套"},
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通",price:"1%+5万元/套"},
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通",price:"1%+5万元/套"},
-     {title:"龙光·久钻",site:"深圳 南山 120000元/㎡", condition:["热销中","地铁房","低密度"],open:"125次开通",price:"1%+5万元/套"}
-   ]
+    dataArr: [
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通', price: '1%+5万元/套' },
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通', price: '1%+5万元/套' },
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通', price: '1%+5万元/套' },
+      { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通', price: '1%+5万元/套' }
+    ]
   }),
   computed: {
     ...mapGetters(['reportAddInfo'])
   },
-  methods: {
-    
-  }
+  methods: {}
 }
 </script>
 <style lang="less">
@@ -63,10 +61,10 @@ export default {
   }
   .market-box {
     margin: 74px 0 0px 0px;
-    .meal-market-page{
-      .meal-market-page-box{
-        margin-left:16px;
-        margin-top:16px;
+    .meal-market-page {
+      .meal-market-page-box {
+        margin-left: 16px;
+        margin-top: 16px;
       }
     }
   }
@@ -109,22 +107,22 @@ export default {
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
     }
-    .icon-wait{
-      width:20px;
-      height:17px;
-      margin:0 5px 0 16px;
+    .icon-wait {
+      width: 20px;
+      height: 17px;
+      margin: 0 5px 0 16px;
     }
-    .check-all-button{
-      margin-right:32px;
-      width:72px;
-      height:30px;
-      border-radius:22px;
-      border:1px solid;
-      font-size:14px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(0,122,230,1);
-      line-height:30px;
+    .check-all-button {
+      margin-right: 32px;
+      width: 72px;
+      height: 30px;
+      border-radius: 22px;
+      border: 1px solid;
+      font-size: 14px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(0, 122, 230, 1);
+      line-height: 30px;
       text-align: center;
     }
   }

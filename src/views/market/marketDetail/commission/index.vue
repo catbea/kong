@@ -57,7 +57,6 @@ export default {
     async getHouseCommissionList(id) {
       const result = await MarketService.getHouseCommissionList(id)
       this.divisionRules = result.record.divisionRules
-      
     }
   }
 }

@@ -64,8 +64,8 @@ export default {
   data() {
     return {
       backIcon: require('IMG/dynamics/top-img.png'),
-      messageList:[],
-      sysMessage:[],
+      messageList: [],
+      sysMessage: []
     }
   },
   created() {
@@ -79,7 +79,6 @@ export default {
       const res = await dynamicsService.getAgentMsgAndTotal()
       this.messageList = res.msgList
       this.sysMessage = res.systemMessage
-      
     }
   }
 }
@@ -105,13 +104,13 @@ export default {
             background: rgba(0, 122, 230, 1);
             border-radius: 50%;
           }
-          .messageInfo-sys-num{
-            font-size:12px;
-            font-weight:400;
-            color:rgba(255,255,255,1);
-            line-height:16px;
-            background:rgba(234,77,46,1);
-            border-radius:50%;
+          .messageInfo-sys-num {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 16px;
+            background: rgba(234, 77, 46, 1);
+            border-radius: 50%;
             // width:18px;
             // height:18px;
             border: 0;
@@ -119,15 +118,15 @@ export default {
             margin-left: 35px;
             padding: 1px 2px;
           }
-          .messageInfo-sys-nums{
-            font-size:12px;
-            font-weight:400;
-            color:rgba(255,255,255,1);
-            line-height:16px;
-            background:rgba(234,77,46,1);
-            border-radius:50%;
-            width:18px;
-            height:18px;
+          .messageInfo-sys-nums {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 16px;
+            background: rgba(234, 77, 46, 1);
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
             border: 0;
             position: absolute;
             margin-left: 35px;

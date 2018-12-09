@@ -29,20 +29,18 @@
   </div>
 </template>
 <script>
-import { Cell, CellGroup } from 'vant';
+import { Cell, CellGroup } from 'vant'
 import { mapGetters } from 'vuex'
 import reportService from 'SERVICE/reportService'
 export default {
   components: {
     Cell,
-    CellGroup,
+    CellGroup
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   },
-  created () {
+  created() {
     console.log(this.reportAddInfo)
   },
   computed: {
@@ -60,18 +58,17 @@ export default {
         institutionId: this.reportAddInfo.institutionId
       }
       const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId)
-      
     },
     /**
      * 修改所属机构
      */
-    editInstitutionHandler () {
+    editInstitutionHandler() {
       this.$router.push('/user/edit/userMechanism')
     },
     /**
      * 创建报备
      */
-    submitReportHandler () {
+    submitReportHandler() {
       this.addReportInfo()
     }
   }

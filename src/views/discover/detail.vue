@@ -64,13 +64,13 @@ export default {
     TitleBar,
     FixedBtn
   },
-  data () {
+  data() {
     return {
       id: -1,
       city: '',
       info: null,
       agentInfo: null,
-      // 
+      //
       a: true,
       personIcon: require('IMG/user/person_icon.png'),
       fabulousIcon: require('IMG/discover/fabulous@2x.png'),
@@ -85,13 +85,13 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.getDetail()
   },
   methods: {
-    async getDetail () {
+    async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id, this.city)
       this.info = res
       this.agentInfo = {
@@ -102,7 +102,7 @@ export default {
         enterpriseName: this.info.enterpriseName
       }
     },
-    gopopup () {
+    gopopup() {
       this.show = true
     }
   }

@@ -38,7 +38,7 @@
   </div>
 </template>
 <script>
-import { Checkbox, CheckboxGroup } from 'vant';
+import { Checkbox, CheckboxGroup } from 'vant'
 import ShadowBox from 'COMP/ShadowBox'
 export default {
   components: {
@@ -46,35 +46,33 @@ export default {
     Checkbox,
     CheckboxGroup
   },
-  data () {
+  data() {
     return {
       availableImg: require('IMG/user/usercard@2x.png'),
       ovalImg: require('IMG/user/Oval 2@2x.png'),
       list: [
-        { 'id': '1', 'title': '李晓峰', 'conter': '累计浏览5次，平均停留5.5s' },
-        { 'id': '2', 'title': '测试', 'conter': '累计浏览5次，平均停留5.5s' },
-        { 'id': '3', 'title': '测试', 'conter': '累计浏览5次，平均停留5.5s'},
-        { 'id': '4', 'title': '测试', 'conter': '华尔街见闻3'},
-        { 'id': '5', 'title': '测试', 'conter': '华尔街见闻3'},
-        { 'id': '6', 'title': '测试', 'conter': '华尔街见闻3' },
-        { 'id': '7', 'title': '测试', 'conter': '华尔街见闻3'},
+        { id: '1', title: '李晓峰', conter: '累计浏览5次，平均停留5.5s' },
+        { id: '2', title: '测试', conter: '累计浏览5次，平均停留5.5s' },
+        { id: '3', title: '测试', conter: '累计浏览5次，平均停留5.5s' },
+        { id: '4', title: '测试', conter: '华尔街见闻3' },
+        { id: '5', title: '测试', conter: '华尔街见闻3' },
+        { id: '6', title: '测试', conter: '华尔街见闻3' },
+        { id: '7', title: '测试', conter: '华尔街见闻3' }
       ],
-      result: [
-        { 'id': '1', 'id': '2' }
-      ]
+      result: [{ id: '1', id: '2' }]
     }
   }
 }
 </script>
 <style lang="less">
 .van-checkbox__icon--checked .van-icon {
-    color: #fff;
-    border-color: #007AE6;
-    background-color: #007AE6;
+  color: #fff;
+  border-color: #007ae6;
+  background-color: #007ae6;
 }
 .list-continer {
   margin-bottom: 75px;
-  .list-continer-for{
+  .list-continer-for {
     margin-bottom: 16px;
   }
   .list-continer-padd {
@@ -133,7 +131,6 @@ export default {
       border-radius: 22px;
       border: 1px solid;
       background: rgba(255, 255, 255, 1);
-      
     }
   }
 }

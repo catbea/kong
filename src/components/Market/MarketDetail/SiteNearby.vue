@@ -17,7 +17,7 @@
 <script>
 export default {
   props: {
-    aroundList: { type: Array },
+    aroundList: { type: Array }
   },
   data: () => ({
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
@@ -30,7 +30,7 @@ export default {
   .site-nearby-box-classify {
     display: flex;
     justify-content: space-between;
-    li{
+    li {
       font-size: 14px;
       font-family: PingFangSC-Regular;
       font-weight: 400;

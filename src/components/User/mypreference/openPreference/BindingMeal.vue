@@ -17,73 +17,73 @@
 </template>
 <script>
 export default {
-  data:()=>({
-    alreadyImg:require('IMG/user/alreadyBuy/icon@2x.png')
+  data: () => ({
+    alreadyImg: require('IMG/user/alreadyBuy/icon@2x.png')
   })
 }
 </script>
 <style lang="less">
-.binding-meal-page{
-  margin:10px 0 ;
+.binding-meal-page {
+  margin: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height:152px;
-  background:rgba(255,255,255,1);
-  .binding-meal-page-content{
-    width:343px;
-    height:120px;
-    background:rgba(192,152,106,1);
-    box-shadow:0px 4px 2px 0px rgba(149,155,182,0.2);
-    border-radius:6px;
+  height: 152px;
+  background: rgba(255, 255, 255, 1);
+  .binding-meal-page-content {
+    width: 343px;
+    height: 120px;
+    background: rgba(192, 152, 106, 1);
+    box-shadow: 0px 4px 2px 0px rgba(149, 155, 182, 0.2);
+    border-radius: 6px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  .binding-meal-page-left{
-    display: flex;
-    .left-num{
-      p:nth-child(1){
-        width:170px;
-        font-size:16px;
-        font-family:PingFangSC-Semibold;
-        font-weight:600;
-        color:rgba(255,255,255,1);
-        line-height:22px;
+    .binding-meal-page-left {
+      display: flex;
+      .left-num {
+        p:nth-child(1) {
+          width: 170px;
+          font-size: 16px;
+          font-family: PingFangSC-Semibold;
+          font-weight: 600;
+          color: rgba(255, 255, 255, 1);
+          line-height: 22px;
+        }
+        p:nth-child(2) {
+          width: 170px;
+          margin-top: 6px;
+          font-size: 12px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 1);
+          line-height: 17px;
+        }
       }
-      p:nth-child(2){
-        width:170px;
-        margin-top:6px;
-        font-size:12px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(255,255,255,1);
-        line-height:17px;
+      .icon-already {
+        width: 44px;
+        height: 44px;
+        margin: 0 12px 0 16px;
       }
     }
-    .icon-already{
-      width:44px;
-      height:44px;
-      margin:0 12px 0 16px;
+    .binding-meal-page-right {
+      margin-right: 17px;
+      i:nth-child(1) {
+        font-style: normal;
+        font-size: 11px;
+        font-family: ArialUnicodeMS;
+        color: rgba(255, 255, 255, 1);
+        line-height: 15px;
+      }
+      i:nth-child(2) {
+        font-style: normal;
+        font-size: 28px;
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 1);
+        line-height: 40px;
+      }
     }
-  }
-  .binding-meal-page-right{
-    margin-right:17px;
-    i:nth-child(1){
-      font-style: normal;
-      font-size:11px;
-      font-family:ArialUnicodeMS;
-      color:rgba(255,255,255,1);
-      line-height:15px;
-    }
-    i:nth-child(2){
-      font-style: normal;
-      font-size:28px;
-    font-family:PingFangSC-Semibold;
-    font-weight:600;
-    color:rgba(255,255,255,1);
-    line-height:40px;
-    }
-  }
   }
 }
 </style>

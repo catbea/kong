@@ -98,16 +98,11 @@ export default {
     },
     async onLoad() {
       this.loading = true
-      const result = await CustomService[this.getServeceFunc()](
-        this.searchVal,
-        this.currentData.page,
-        this.pageSize,
-        this.sort
-      )
+      const result = await CustomService[this.getServeceFunc()](this.searchVal, this.currentData.page, this.pageSize, this.sort)
       console.log(result)
       if (this.currentData.page > 1) {
         this.currentData.list = this.currentData.list.concat(result.records)
-      }else {
+      } else {
         this.currentData.list = result.records
       }
       if (result.pages <= this.currentData.page) {
@@ -133,8 +128,7 @@ export default {
           return 'getCustomerAdd'
       }
     },
-    
-    
+
     onRadioChangeHandler(val) {
       console.log('onChangeHandler')
       console.log(val)
@@ -163,11 +157,11 @@ export default {
 </script>
 <style lang="less">
 .sort {
-      width: 16px;
-      height: 17px;
-      background: url('../../../assets/img/market/Combined Shape@2x.png') no-repeat;
-      background-size: contain;
-      margin-right: 13px;
+  width: 16px;
+  height: 17px;
+  background: url('../../../assets/img/market/Combined Shape@2x.png') no-repeat;
+  background-size: contain;
+  margin-right: 13px;
 }
 
 .report-page {
@@ -181,8 +175,8 @@ export default {
   }
   .report-list-continer {
     margin-top: 16px;
-    .radio-container{
-      >.radio-item-container{
+    .radio-container {
+      > .radio-item-container {
         margin: 10px 15px;
         padding: 20px 15px;
       }

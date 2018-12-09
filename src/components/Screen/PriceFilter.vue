@@ -23,10 +23,10 @@ export default {
     }
   }),
   watch: {
-    checked (val) {
+    checked(val) {
       this.$emit('input', val)
     },
-    value (val) {
+    value(val) {
       this.checked = val
     }
   }

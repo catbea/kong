@@ -37,7 +37,7 @@
 <script>
 import SaveButton from './SaveButton'
 export default {
-  components:{
+  components: {
     SaveButton
   },
   data: () => ({
@@ -47,23 +47,23 @@ export default {
 </script>
 <style lang="less">
 .market-share-poster-page {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   > .swipe-poster-item {
     margin-top: 20px;
     width: 300px;
-    height:485px;
-    border-radius:6px;
+    height: 485px;
+    border-radius: 6px;
     position: relative;
     .content-box {
       position: absolute;
-      bottom:0px;
+      bottom: 0px;
       width: 100%;
-      border-radius:0 0 6px 6px;
+      border-radius: 0 0 6px 6px;
       height: 217px;
       .box-top {
         width: 100%;

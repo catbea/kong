@@ -34,26 +34,26 @@ import VanSearch from 'COMP/VanSearch/'
 import Screen from 'COMP/Screen/'
 import MealMarket from './MealMarket.vue'
 export default {
-  components:{
+  components: {
     VanSearch,
     Screen,
-    MealMarket  
+    MealMarket
   },
-   created() {
+  created() {
     this.arrLength()
   },
-  data:()=>({
+  data: () => ({
     dataArrLength: null,
     showArr: [],
-    searchInfo:{
-     siteText:"全国",
-     placeholderText:"请输入楼盘"
-   },
-   checkImg: require('IMG/user/mealMarket/check@2x.png'),
+    searchInfo: {
+      siteText: '全国',
+      placeholderText: '请输入楼盘'
+    },
+    checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
-    checkShow: false,  
-   
-       dataArr: [
+    checkShow: false,
+
+    dataArr: [
       {
         linkerName: '龙光·久钻',
         site: '深圳 南山 120000元/㎡',
@@ -84,7 +84,7 @@ export default {
       }
     ]
   }),
-  methods:{
+  methods: {
     selectHandle(index) {
       console.log(12)
       this.checkIndex = index
@@ -96,16 +96,16 @@ export default {
           return item != index
         })
       }
-      if(this.checkShow===true){
-        this.checkShow=false
+      if (this.checkShow === true) {
+        this.checkShow = false
       }
     },
     allSelectHandle() {
       this.checkShow = !this.checkShow
       if (this.showArr.length >= this.dataArrLength) {
-        this.showArr =[]
+        this.showArr = []
       } else {
-        this.showArr =[]
+        this.showArr = []
         for (let index = 0; index < this.dataArr.length; index++) {
           this.showArr.push(index)
         }
@@ -120,29 +120,29 @@ export default {
 }
 </script>
 <style lang="less">
-.my-member-page{
-  .market-box{
-    .meal-market-page{
-      .meal-market-page-box{
-        margin:16px 0 0 16px;
+.my-member-page {
+  .market-box {
+    .meal-market-page {
+      .meal-market-page-box {
+        margin: 16px 0 0 16px;
       }
     }
   }
-  .check-all-box{
-    background:rgba(255,255,255,1);
-    width:100%;
-    height:60px;
-    display:flex;
+  .check-all-box {
+    background: rgba(255, 255, 255, 1);
+    width: 100%;
+    height: 60px;
+    display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     position: fixed;
-    bottom:0;
-    .img-box{
+    bottom: 0;
+    .img-box {
       display: flex;
-      font-size:12px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(102,102,102,1);
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(102, 102, 102, 1);
     }
     .icon-check {
       width: 18px;

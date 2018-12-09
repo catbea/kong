@@ -4,7 +4,7 @@
       <div class="search-comp">
         <search :conf="searchContent"></search>
       </div>
-      <div class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></div>
+      <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
     <screen v-model="filter"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
@@ -36,11 +36,11 @@ export default {
     AlreadyOpen
   },
   data: () => ({
-    broker:705,
-    marketList:[],
-    page:1,
-    loading:false,
-    finished:false,
+    broker: 705,
+    marketList: [],
+    page: 1,
+    loading: false,
+    finished: false,
     filter: null,
     searchContent: {
       siteText: '深圳',
@@ -57,27 +57,29 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
-   async onLoad(){//楼盘信息请求
-      const res = await marketService.getMarketDescribe(705,this.page)
-        console.log(res)
-      this.marketList=this.marketList.concat(res.records)
-      if(res.pages===0||this.page === res.pages){
-        this.finished=true
+    async onLoad() {
+      //楼盘信息请求
+      const res = await marketService.getMarketDescribe(705, this.page)
+      console.log(res)
+      this.marketList = this.marketList.concat(res.records)
+      if (res.pages === 0 || this.page === res.pages) {
+        this.finished = true
       }
       this.page++
-      this.loading=false
+      this.loading = false
       console.log(99999)
     },
-        openReturnHandle(item){
-      this.$router.push({name:'marketDetail-open', params: { id: item.linkerId }})
+    openReturnHandle(item) {
+      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
     },
-    onClickHandler () {
+    onClickHandler() {
       this.$router.push('/market/inputSearch')
     },
-    returnMyMarket(){
-      this.$router.push({name:'mymarket',params:{id:this.broker}})
+    returnMyMarket() {
+      this.$router.push({ name: 'mymarket', params: { id: this.broker } })
     },
-    async getBrokerInfo() {//经纪人Id请求
+    async getBrokerInfo() {
+      //经纪人Id请求
       const res = await marketService.getBrokerMarket(this.broker)
       this.agentIdInfo = res
     },

@@ -110,7 +110,7 @@ class CustomService {
 
   /**
    * 客户详情-分析-客户报表饼图
-   * @param {*} clientId 
+   * @param {*} clientId
    */
   getCustomerPieChart(clientId) {
     return xhr({
@@ -123,7 +123,7 @@ class CustomService {
 
   /**
    * 客户详情-分析-客户报表7天趋势图
-   * @param {*} clientId 
+   * @param {*} clientId
    */
   getCustomerSevenDayTrendChart(clientId) {
     return xhr({
@@ -136,7 +136,7 @@ class CustomService {
 
   /**
    * 客户详情-分析-客户报表条形图
-   * @param {*} clientId 
+   * @param {*} clientId
    */
   getCustomerBarChart(clientId) {
     return xhr({
@@ -149,7 +149,7 @@ class CustomService {
 
   /**
    * 客户详情-分析-楼盘分析分页列表
-   * @param {*} clientId 
+   * @param {*} clientId
    * @param {*} current
    * @param {*} size
    */
@@ -166,7 +166,7 @@ class CustomService {
 
   /**
    * 客户详情-足迹-客户访问足迹统计
-   * @param {*} clientId 
+   * @param {*} clientId
    */
   getCustomerDynamicCount(clientId) {
     return xhr({
@@ -179,7 +179,7 @@ class CustomService {
 
   /**
    * 客户详情-足迹-足迹列表
-   * @param {*} clientId 
+   * @param {*} clientId
    * @param {*} current
    * @param {*} size
    */
@@ -196,7 +196,7 @@ class CustomService {
 
   /**
    * 客户详情-资料-客户资料
-   * @param {*} clientId 
+   * @param {*} clientId
    */
   getCustomerInfo(clientId) {
     return xhr({
@@ -208,7 +208,7 @@ class CustomService {
   }
   /**
    * 客户详情-资料-更新客户资料
-   * @param {*} clientId 
+   * @param {*} clientId
    * @param {*} remarkName
    * @param {*} sex  1：男 2：女
    * @param {*} age
@@ -237,7 +237,5 @@ class CustomService {
       }
     })
   }
-  
-
 }
 export default new CustomService()

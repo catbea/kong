@@ -23,7 +23,6 @@ export default {
       ...camelAttrs(this.$attrs)
     }
     this.$parent.setAxis(_options)
-  },
-  render() {}
+  }
 }
 </script>

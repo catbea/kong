@@ -30,7 +30,6 @@ export default {
       }
     }
   },
-  render() {},
   created() {
     const options = {
       disabled: this.disabled,

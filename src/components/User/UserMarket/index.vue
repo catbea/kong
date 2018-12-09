@@ -67,7 +67,7 @@ import TagGroup from 'COMP/TagGroup/'
 import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
-  components:{
+  components: {
     TagGroup
   },
   data:()=>({
@@ -146,35 +146,28 @@ export default {
     apostropheReturn(){
       this.$emit("apostropheReturn",1)
     },
-    usmarIconReturn(){
-      this.$emit("usmarIconReturn",1)
+    usmarIconReturn() {
+      this.$emit('usmarIconReturn', 1)
     },
-    skipMarketRetuen(){
-      this.$emit("skipMarketRetuen",1)
+    skipMarketRetuen() {
+      this.$emit('skipMarketRetuen', 1)
     }
   }
 }
 </script>
 <style lang="less">
-.user-market-page{
-  margin-left:16px;
+.user-market-page {
+  margin-left: 16px;
   display: flex;
- .user-market-page-box{
-   margin-top:16px;
-   padding: 16px 16px 0 16px;
-  width:311px;
-  box-shadow:0px 3px 6px 0px rgba(58,76,130,0.07),0px 2px 17px 0px rgba(34,47,85,0.05);
-  border-radius:10px;
-  display: flex;
-  flex-direction: column;
-  .user-market-page-box-top{
+  .user-market-page-box {
+    margin-top: 16px;
+    padding: 16px 16px 0 16px;
+    width: 311px;
+    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+    border-radius: 10px;
     display: flex;
-    margin-bottom:16px;
-    .user-market-page-box-top-left{
-      width:120px;
-      height:90px;
-      margin-right:10px;
-      position: relative;
+    flex-direction: column;
+    .user-market-page-box-top {
       display: flex;
       justify-content:center;
       align-items:center;
@@ -204,25 +197,24 @@ export default {
         color:rgba(51,51,51,1);
         line-height:16px;
         display: flex;
-        justify-content: space-between;
-        .stick{
-          width:30px;
-          height:13px;
-          border-radius:2px;
-          border:1px solid;
-          font-size:10px;
-          // transform:scale(0.84);
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(0,122,230,1);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-left:4px;
+        justify-content: center;
+        align-items: center;
+        .icon-discount {
+          width: 36px;
+          height: 20px;
+          position: absolute;
+          top: 4px;
+          left: -4px;
+          font-size: 11px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 1);
+          line-height: 20px;
+          background: rgba(234, 77, 46, 1);
         }
-        .icon-share{
-          width:16px;
-          height:16px;
+        .icon-play {
+          width: 32px;
+          height: 32px;
         }
       }
       li:nth-of-type(2){
@@ -248,9 +240,7 @@ export default {
           background:rgba(143, 159, 177, 0.15);
           color:#5C5F66;
         }
-        .tag-item-statu,.tag-item{
-          display: inline-block;
-          white-space: nowrap;
+        li:nth-of-type(2) {
           font-size: 12px;
           transform: scale(0.85);
           margin: 2px 4px 0px -6px;
@@ -258,10 +248,39 @@ export default {
           border-radius: 3px;
           height: 15px;
           line-height: 15px;
+          margin: 10px 0 10px 0;
         }
-        .tag-item {
-          background:rgba(143,159,177,0.15);
-          color: #5C5F66;
+        li:nth-of-type(3) {
+          display: flex;
+          flex-wrap: wrap;
+          .blue {
+            background: rgba(0, 122, 230, 1);
+            color: #ffffff;
+          }
+          .red {
+            background: rgba(234, 77, 46, 0.1);
+            color: #ea4d2e;
+          }
+          .gary {
+            background: rgba(143, 159, 177, 0.15);
+            color: #5c5f66;
+          }
+          .tag-item-statu,
+          .tag-item {
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 12px;
+            transform: scale(0.85);
+            margin: 0px 4px 0px -6px;
+            padding: 1px 5px;
+            border-radius: 3px;
+            height: 15px;
+            line-height: 15px;
+          }
+          .tag-item {
+            background: rgba(143, 159, 177, 0.15);
+            color: #5c5f66;
+          }
         }
       }
       li:nth-of-type(4){
@@ -278,32 +297,37 @@ export default {
           width:20px;
           display: flex;
           justify-content: space-between;
-          span{
-            width:4px;
-            height:4px;
-            border-radius:50%;
-            background:rgba(158,158,158,1);
+          .apostrophe {
+            width: 20px;
+            display: flex;
+            justify-content: space-between;
+            span {
+              width: 4px;
+              height: 4px;
+              border-radius: 50%;
+              background: rgba(158, 158, 158, 1);
+            }
           }
         }
       }
     }
-  }
-  .user-market-page-box-bottom{
-    width:311px;
-    height:39px;
-    display: flex;
-    align-items: center;
-    background:rgba(247,249,250,1);
-    border-radius:4px;
-    font-size:13px;
-    font-family:PingFangSC-Medium;
-    font-weight:500;
-    color:rgba(102,102,102,1);
-    margin-bottom:16px;
-    img{
-      margin:0 8px;
-      width:16px;
-      height:16px;
+    .user-market-page-box-bottom {
+      width: 311px;
+      height: 39px;
+      display: flex;
+      align-items: center;
+      background: rgba(247, 249, 250, 1);
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(102, 102, 102, 1);
+      margin-bottom: 16px;
+      img {
+        margin: 0 8px;
+        width: 16px;
+        height: 16px;
+      }
     }
   }
  }

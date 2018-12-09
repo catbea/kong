@@ -30,41 +30,41 @@
 </template>
 <script>
 export default {
-  data:()=>({
-    detailImg:require("IMG/user/arrow2@2x.png")
+  data: () => ({
+    detailImg: require('IMG/user/arrow2@2x.png')
   })
 }
 </script>
 <style lang="less">
-.opinion-feedback-page{
-  ul{
-    margin-left:16px;
-    margin-top:19px;
-    width:345px;
-    li{
+.opinion-feedback-page {
+  ul {
+    margin-left: 16px;
+    margin-top: 19px;
+    width: 345px;
+    li {
       position: relative;
       display: flex;
       flex-direction: column;
-      margin-bottom:50px;
-      font-size:20px;
-      font-family:PingFangSC-Semibold;
-      font-weight:600;
-      color:rgba(51,51,51,1);
-      p{
-        font-size:12px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(102,102,102,1);
+      margin-bottom: 50px;
+      font-size: 20px;
+      font-family: PingFangSC-Semibold;
+      font-weight: 600;
+      color: rgba(51, 51, 51, 1);
+      p {
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
       }
-      span{
-        width:12px;
-        height:12px;
+      span {
+        width: 12px;
+        height: 12px;
         position: absolute;
-        top:50%;
-        right:0;
+        top: 50%;
+        right: 0;
       }
-      .opinion-feedback-page-title{
-        font-size:24px;
+      .opinion-feedback-page-title {
+        font-size: 24px;
       }
     }
   }

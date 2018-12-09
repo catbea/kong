@@ -35,7 +35,7 @@ export default {
     // }
   },
   computed: {
-    ...mapGetters['cityMap','userArea']
+    ...mapGetters[('cityMap', 'userArea')]
   }
 }
 </script>
@@ -52,4 +52,3 @@ export default {
   }
 }
 </style>
-

@@ -31,8 +31,8 @@ export default {
   width: 100%;
   height: 100%;
   background: #ffffff;
-  .box{
-    margin-bottom:5px;
+  .box {
+    margin-bottom: 5px;
   }
   .share-top {
     width: 300px;
@@ -42,8 +42,7 @@ export default {
     justify-content: center;
     align-items: center;
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07),
-      0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
     .share-top-content {
       width: 271px;
       height: 448px;
@@ -74,7 +73,7 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(0, 122, 230, 1);
-            background: #ffffff;
+        background: #ffffff;
       }
       .save {
         width: 144px;

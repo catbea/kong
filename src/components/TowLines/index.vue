@@ -20,12 +20,9 @@ export default {
       }
     }
   },
-  computed: {
-
-  },
-  methods:{
-    textChange(){
-    }
+  computed: {},
+  methods: {
+    textChange() {}
   }
 }
 </script>

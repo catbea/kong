@@ -82,11 +82,11 @@ export default {
     }
   }),
   methods: {
-    itemClickHandler (type, value) {
+    itemClickHandler(type, value) {
       switch (type) {
         case 'size':
           this.currentValue.size = this.currentValue.size === value ? '-1,-1' : value
-          break;
+          break
         case 'type':
           this.currentValue.type = this.currentValue.value === value ? '-2' : value
           break
@@ -105,38 +105,38 @@ export default {
           break
       }
     },
-    activeCheck (mainKey, index) {
+    activeCheck(mainKey, index) {
       let status = false
       switch (mainKey) {
         case 'size':
           if (index === this.currentValue.size) status = true
-          break;
+          break
         case 'type':
           if (index === this.currentValue.type) status = true
-          break;
+          break
         case 'feature':
           if (index === '100' && this.currentValue.featureFullView) status = true
           if (index === '200' && this.currentValue.featureOnSell) status = true
-          break;
+          break
         case 'sellStatus':
           if (index === this.currentValue.sellStatus) status = true
-          break;
+          break
         case 'openStatus':
           if (index === this.currentValue.openStatus) status = true
-          break;
+          break
         case 'attentionStatus':
           if (index === this.currentValue.attentionStatus) status = true
-          break;
+          break
       }
       return status && 'active'
     }
   },
   watch: {
-    value (val) {
+    value(val) {
       this.currentValue = val
     },
     currentValue: {
-      handler (val) {
+      handler(val) {
         this.$emit('input', val)
       },
       deep: true
@@ -177,4 +177,3 @@ export default {
   }
 }
 </style>
-

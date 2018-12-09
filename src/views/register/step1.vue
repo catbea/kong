@@ -21,13 +21,13 @@
         </div>
         <div class="van-hairline--bottom form-cell" @click="seachCompanyHandler">
           <p class="title">所属公司</p>
-          <p class="value">{{enterpriseName}}
+          <p class="value">{{userRegistInfo.distributorName}}
             <van-icon name="arrow" />
           </p>
         </div>
         <div class="van-hairline--bottom form-cell" @click="selectInstitutionHandler">
           <p class="title">所属机构</p>
-          <p class="value">{{institutionName}}
+          <p class="value">{{userRegistInfo.institutionName}}
             <van-icon name="arrow" />
           </p>
         </div>
@@ -43,6 +43,7 @@
 import RegStep from 'COMP/Register/RegStep'
 import MaterialInput from 'COMP/MaterialInput'
 import AreaSelect from 'COMP/AreaSelect'
+import { mapGetters } from 'vuex'
 
 import RegisterService from 'SERVICE/registService'
 export default {
@@ -62,34 +63,38 @@ export default {
     areaShow: false,
     areaTitle: '请选择区域',
     areaCode: '440305',
+    registerType: '',
+    enterpriseId: '',
     majorRegion: '广东省/深圳市/南山区',
-    enterpriseName: 'AW大师',
+    distributorName: 'AW大师',
     institutionName: 'AW大师'
   }),
-  created () {
+  created() {
     console.log(this.$route.query)
     this.query = this.$route.query
+    this.registerType = this.query.registerType
+    this.enterpriseId = this.query.enterpriseId
     // registerType 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
-    
+    console.log(this.userRegistInfo)
   },
   computed: {
-
+    ...mapGetters(['userRegistInfo'])
   },
   methods: {
     /**
      * 发送验证码
      */
-    sendCodeHandler () {
+    sendCodeHandler() {
       if (this.disabled == false) {
-        this.disabled = !this.disabled;
-        // const result = RegisterService.sendMsgRegister(this.mobile)
+        this.disabled = !this.disabled
+        const result = RegisterService.sendMsgRegister(this.mobile)
         this.countDown()
       }
     },
-    countDown () {
+    countDown() {
       this.sendCodeText = '重新发送(' + this.codeTime + 's)'
       let timer = setInterval(() => {
-        this.codeTime --
+        this.codeTime--
         this.sendCodeText = '重新发送(' + this.codeTime + 's)'
         if (this.codeTime < 0) {
           clearInterval(timer)
@@ -99,42 +104,65 @@ export default {
         }
       }, 1000)
     },
-    focusHandler (focus) {
+    focusHandler(focus) {
       console.log(focus)
       this.phoneFocus = focus
     },
-    blurHandler (focus) {
+    blurHandler(focus) {
       console.log(focus)
       this.phoneFocus = focus
     },
     /**
      * 弹出主营区域选择框
      */
-    popAreaHandler () {
+    popAreaHandler() {
       this.areaShow = !this.areaShow
     },
     /**
      * 搜索公司
      */
-    seachCompanyHandler () {
+    seachCompanyHandler() {
       this.$router.push('/register/searchCompany')
     },
     /**
      * 选择机构
      */
-    selectInstitutionHandler () {
+    selectInstitutionHandler() {
       this.$router.push('/user/edit/userMechanism')
     },
-    nextHandler () {
-      this.$router.push('/register/step2')
+    nextHandler() {
+      let params = {
+        enterpriseId: this.enterpriseId
+      }
+      this.$router.push({ path: '/register/step2', query: params })
+      // this.register()
     },
-    cancelHandler (val) {
+    async register() {
+      let vo = {
+        mobile: this.mobile,
+        code: this.code,
+        registerType: this.registerType,
+        enterpriseId: this.enterpriseId,
+        majorRegion: this.majorRegion,
+        distributorId: this.userRegistInfo.distributorId,
+        institutionId: this.userRegistInfo.institutionId
+      }
+      const result = await RegisterService.register(vo)
+      if (JSON.stringify(data) != '{}') {
+        let params = {
+          enterpriseId: this.enterpriseId
+        }
+        this.$router.push({ path: '/register/step2', query: params })
+        // location.href = '/?cropId=ww8f6801ba5fd2a112'
+      }
+    },
+    cancelHandler(val) {
       this.areaShow = false
-      console.log(val);
+      console.log(val)
     },
     confirmHandler(val) {
       this.areaShow = false
-      console.log(val);
+      console.log(val)
       this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
       console.log(this.majorRegion)
     }
@@ -165,7 +193,7 @@ export default {
       .phone-cell {
         margin: 30px 15px;
         > .phone-tip {
-          color: #969EA8;
+          color: #969ea8;
           font-size: 12pt;
           text-align: left;
           margin-left: 5px;
@@ -230,4 +258,3 @@ export default {
   }
 }
 </style>
-

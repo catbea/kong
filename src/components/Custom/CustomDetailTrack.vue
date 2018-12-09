@@ -32,11 +32,11 @@
 <script>
 import CustomOperation from './CustomOperation.vue'
 export default {
-  components:{
+  components: {
     CustomOperation
   },
   props: {
-    trackInfo: { type: Array },
+    trackInfo: { type: Array }
   },
   data: () => ({
     // info: [
@@ -45,7 +45,7 @@ export default {
     //   { key: '楼盘浏览', value: 190 },
     //   { key: '文章浏览', value: 124 }
     // ]
-    backColor:true
+    backColor: true
   })
 }
 </script>
@@ -70,51 +70,51 @@ export default {
       }
     }
   }
-  ul{
-    .dayIn{
-        width:7px;
-        height:7px;
-        background:#E5E5E5;
-        top:-13.5px;
-        left:-4.5px;
+  ul {
+    .dayIn {
+      width: 7px;
+      height: 7px;
+      background: #e5e5e5;
+      top: -13.5px;
+      left: -4.5px;
     }
-    .day{
-      width:10px;
-      height:10px;
-      background:#007AE6;
-      top:-15.5px;
-      left:-5.5px;
+    .day {
+      width: 10px;
+      height: 10px;
+      background: #007ae6;
+      top: -15.5px;
+      left: -5.5px;
     }
-    li{
-      width:322px;
-      margin-left:24px;
-      .content-box{
-        border-left:1px solid #E5E5E5;
-        padding-top:12px;
+    li {
+      width: 322px;
+      margin-left: 24px;
+      .content-box {
+        border-left: 1px solid #e5e5e5;
+        padding-top: 12px;
         position: relative;
-      padding-left:16px;
-      padding-bottom:32px;
-        .icon-radius{
-        border-radius: 50%;
-        position: absolute;
-      }
-      }
-      p{
-        font-size:14px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(102,102,102,1);
-        line-height:22px;
-        display: flex;
-        flex-wrap: wrap;
-        span{
-          color:#007AE6;
+        padding-left: 16px;
+        padding-bottom: 32px;
+        .icon-radius {
+          border-radius: 50%;
+          position: absolute;
         }
       }
-      .content-title{
-        font-weight:600;
+      p {
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+        line-height: 22px;
+        display: flex;
+        flex-wrap: wrap;
+        span {
+          color: #007ae6;
+        }
+      }
+      .content-title {
+        font-weight: 600;
         color: #333333;
-        margin-left:16px;
+        margin-left: 16px;
       }
     }
   }

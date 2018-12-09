@@ -35,55 +35,56 @@
 </template>
 <script>
 export default {
-  data:()=>({
-    marketImg:require('IMG/myMember/Group 3@2x.png'),
-    welfareImg:require('IMG/myMember/welfare@2x.png'),
-    exaltedImg:require('IMG/myMember/icon@2x.png'),
-    serviceImg:require('IMG/myMember/kef@2x.png')
-  }),
+  data: () => ({
+    marketImg: require('IMG/myMember/Group 3@2x.png'),
+    welfareImg: require('IMG/myMember/welfare@2x.png'),
+    exaltedImg: require('IMG/myMember/icon@2x.png'),
+    serviceImg: require('IMG/myMember/kef@2x.png')
+  })
 }
 </script>
 <style lang="less">
-.Privilege-describe-page-vip{
-padding:16px 0 0 16px;
-width:359px;
-background:rgba(255,255,255,1);
-.VIPprivilege{
-  margin-bottom:14px;
-}
-ol{
-  width:343px;
-  li{
-    display:flex;
-    margin-bottom:17px;
-    .market-iconA{
-        width:20px;
-        height:17px;
-        margin-right:10px;
+.Privilege-describe-page-vip {
+  padding: 16px 0 0 16px;
+  width: 359px;
+  background: rgba(255, 255, 255, 1);
+  .VIPprivilege {
+    margin-bottom: 14px;
+    font-size: 20px;
+  }
+  ol {
+    width: 343px;
+    li {
+      display: flex;
+      margin-bottom: 17px;
+      .market-iconA {
+        width: 20px;
+        height: 17px;
+        margin-right: 10px;
       }
-    .market-icon{
-        width:20px;
-        height:20px;
-        margin-right:10px;
+      .market-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
       }
-    .market-describe{
-      p:nth-child(1){
-        font-size:15px;
-        font-family:PingFang-SC-Medium;
-        font-weight:600;
-        color:rgba(51,51,51,1);
-        line-height:21px;
-      }
-      p:nth-child(2){
-        width:308px;
-        font-size:12px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(153,153,153,1);
-        line-height:17px;
+      .market-describe {
+        p:nth-child(1) {
+          font-size: 15px;
+          font-family: PingFang-SC-Medium;
+          font-weight: 600;
+          color: rgba(51, 51, 51, 1);
+          line-height: 21px;
+        }
+        p:nth-child(2) {
+          width: 308px;
+          font-size: 12px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+          line-height: 17px;
+        }
       }
     }
   }
-}
 }
 </style>

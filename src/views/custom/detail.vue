@@ -117,13 +117,13 @@ export default {
         let titles = ['我', '楼盘', '文章']
         let colors = ['#2f7bdf', '#5a9be0', '#7eace1']
         let total = result.vo.llzuxq + result.vo.lpxqll + result.vo.mpxqll
-        let percents = [Number(Number(result.vo.mpxqll/total).toFixed(2)), Number(Number(result.vo.lpxqll/total).toFixed(2)), Number(Number(result.vo.llzuxq/total).toFixed(2))]
+        let percents = [Number(Number(result.vo.mpxqll / total).toFixed(2)), Number(Number(result.vo.lpxqll / total).toFixed(2)), Number(Number(result.vo.llzuxq / total).toFixed(2))]
         for (let i = 0; i < 3; i++) {
-          let llzuxq = {};
-          llzuxq.name = titles[i];
-          llzuxq.percent = percents[i];
-          llzuxq.a = '1';
-          llzuxq.color = colors[i];
+          let llzuxq = {}
+          llzuxq.name = titles[i]
+          llzuxq.percent = percents[i]
+          llzuxq.a = '1'
+          llzuxq.color = colors[i]
           pieData.push(llzuxq)
         }
         console.log(pieData)
@@ -141,11 +141,11 @@ export default {
         let lineData = []
         let times = []
         let counts = []
-        for (let i = 0,len=result.vo.length; i < len; i++) {
-          let item = {};
-          item.time = result.vo[i].day;
-          item.count = result.vo[i].total;
-          item.a = '1';
+        for (let i = 0, len = result.vo.length; i < len; i++) {
+          let item = {}
+          item.time = result.vo[i].day
+          item.count = result.vo[i].total
+          item.a = '1'
           lineData.push(item)
         }
         console.log(lineData)
@@ -160,12 +160,12 @@ export default {
       this.barChartHidden = result.display == 'hide' ? true : false
       if (this.barChartHidden == false) {
         let barData = []
-        let types = {'mpxqll': '名片', 'lpxqll': '楼盘', 'llzuxq': '文章', 'im': '聊天'}
+        let types = { mpxqll: '名片', lpxqll: '楼盘', llzuxq: '文章', im: '聊天' }
         for (var key in types) {
-          let item = {};
-          item.type = types[key];
-          item.count = result.vo[key];
-          item.shadow = 100;
+          let item = {}
+          item.type = types[key]
+          item.count = result.vo[key]
+          item.shadow = 100
           barData.push(item)
         }
         console.log(barData)
@@ -179,7 +179,7 @@ export default {
       const result = await CustomService.getCustomerBuildingAnalysisList(id, current, size)
       if (this.current > 1) {
         this.analysisListData = this.analysisListData.concat(result.records)
-      }else {
+      } else {
         this.analysisListData = result.records
       }
       if (result.pages <= this.current) {
@@ -195,10 +195,13 @@ export default {
     async getCustomerDynamicCount(id) {
       const result = await CustomService.getCustomerDynamicCount(id)
       let info = {
-        'allViewNum': '总浏览数', 'cardViewNum': '名片浏览', 'linkerViewNum':'楼盘浏览', 'articleViewNum':'文章浏览'
+        allViewNum: '总浏览数',
+        cardViewNum: '名片浏览',
+        linkerViewNum: '楼盘浏览',
+        articleViewNum: '文章浏览'
       }
       let trackInfo = []
-      for(var key in info) {
+      for (var key in info) {
         var item = {}
         item.key = info[key]
         item.value = result[key]
@@ -213,7 +216,7 @@ export default {
       const result = await CustomService.getCustomerDynamicList(id, current, size)
       if (this.trackCurrent > 1) {
         this.trackList = this.trackList.concat(result.records)
-      }else {
+      } else {
         this.trackList = result.records
       }
     },
@@ -223,10 +226,18 @@ export default {
     async getCustomerInfo(id) {
       const result = await CustomService.getCustomerInfo(id)
       let info = {
-        'remarkName': '备注名称', 'sex': '性别', 'age':'年龄', 'position':'位置', 'phone': '手机号', 'source': '来源', 'income':'收入', 'industry':'行业', 'buyBuildingPurpose':'购房目的'
+        remarkName: '备注名称',
+        sex: '性别',
+        age: '年龄',
+        position: '位置',
+        phone: '手机号',
+        source: '来源',
+        income: '收入',
+        industry: '行业',
+        buyBuildingPurpose: '购房目的'
       }
       let customerInfo = []
-      for(var key in info) {
+      for (var key in info) {
         var item = {}
         item.key = info[key]
         item.value = result[key]
@@ -240,9 +251,18 @@ export default {
      * 更新客户资料信息
      */
     async updateCustomerInfo(clientId, info) {
-      const result = await CustomService.updateCustomerInfo(clientId, info.remarkName, info.sex, info.age, 
-        info.position, info.phone, info.income, info.industry, info.buyBuildingPurpose, info.isFollow)
-      
+      const result = await CustomService.updateCustomerInfo(
+        clientId,
+        info.remarkName,
+        info.sex,
+        info.age,
+        info.position,
+        info.phone,
+        info.income,
+        info.industry,
+        info.buyBuildingPurpose,
+        info.isFollow
+      )
     }
   }
 }

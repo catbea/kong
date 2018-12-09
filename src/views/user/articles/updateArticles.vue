@@ -170,8 +170,8 @@ export default {
       let dataList = res.records
       if (dataList.length !== 0) {
         for (let i = 0; i < dataList.length; i++) {
-          let tempTime=timeUtils.getDateTimeBefor(dataList[i].createDate);
-          dataList[i].createDate=tempTime
+          let tempTime = timeUtils.getDateTimeBefor(dataList[i].createDate)
+          dataList[i].createDate = tempTime
           dataList[i].isCheck = false
         }
         this.list = this.list.concat(dataList)
