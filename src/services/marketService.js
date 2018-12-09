@@ -121,5 +121,16 @@ class MarketService {
       body: {}
     })
   }
+
+  /**
+   * 获取vip开通的信息
+   *
+   */
+  vipInfo() {
+    return xhr({
+      url: '/brokerVip/vipInfo',
+      body: {}
+    })
+  }
 }
 export default new MarketService()

@@ -52,6 +52,7 @@ export default {
   margin: 10px 0 18px 0;
   .VIPprivilege {
     margin-bottom: 14px;
+    font-size: 20px;
   }
   ul {
     display: flex;

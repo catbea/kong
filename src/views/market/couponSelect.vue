@@ -44,7 +44,7 @@ export default {
     // },
 
     couponItemClickHandle(item) {
-      console.log(item)
+      this.$store.dispatch('setCurrSelectedCoupon', item)
       this.$router.go('-1')
     }
   }

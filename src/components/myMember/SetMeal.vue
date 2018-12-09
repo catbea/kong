@@ -9,7 +9,7 @@
       </div>
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
-        <li :class="{active:num==index}" v-for="(item,index) in list" :key="index" @click="taget(index)">
+        <li :class="{active:num==index}" v-for="(item,index) in vipList" :key="index" @click="taget(index)">
           <p>1个月</p>
           <div class="price">
             <span>¥</span>
@@ -23,7 +23,7 @@
 <script>
 export default {
   data: () => ({
-    list: [1, 2, 3],
+    vipList: [1, 2, 3],
     num: 0,
     siteImg: require('IMG/myMember/location@2x.png')
   }),
