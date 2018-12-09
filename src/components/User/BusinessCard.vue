@@ -22,7 +22,7 @@
                 class="left-labe-css"
                 v-for="(item,index) in userInfo.labelList"
                 :key="index"
-              >{{item.itemName}}</a>
+              >{{item.labelName}}</a>
             </p>
             <p class="content-left-remar">{{userInfo.signature}}</p>
           </span>

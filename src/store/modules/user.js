@@ -74,8 +74,8 @@ const state = {
     wechatAccount: '112110',
     labelList: [
       {
-        id: '001',
-        itemName: '价格屠夫'
+        labelId: '001',
+        labelName: '价格屠夫'
       }
     ]
   },
@@ -97,7 +97,11 @@ const state = {
     institutionId: ''
   },
   //用户头像
-  updateUserAvatar: '',
+  treeInfo: {
+    id: '',
+    name: ''
+  },
+
   userRegistInfo: {
     distributorId: '190', // 公司ID
     distributorName: 'AW大师',
@@ -111,7 +115,7 @@ const getters = {
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
-  updateUserAvatar: state => state.updateUserAvatar,
+  treeInfo: state => state.treeInfo,
   jssdkConfig: state => {
     return state.jssdkConfig
   },
@@ -137,8 +141,8 @@ const actions = {
   getReportAddInfo({ commit }, data) {
     commit(types.REPORT_INFO, data)
   },
-  getUserAvatar({ commit }, data) {
-    commit(types.USER_AVATAR, data)
+  getTreeInfo({ commit }, data) {
+    commit(types.TREE_INFO, data)
   },
   getUserRegistInfo({ commit }, data) {
     commit(types.USER_REGIST_INFO, data)
@@ -158,8 +162,8 @@ const mutations = {
   [types.REPORT_INFO](state, data) {
     state.reportAddInfo = data
   },
-  [types.USER_AVATAR](state, data) {
-    state.updateUserAvatar = data
+  [types.TREE_INFO](state, data) {
+    state.treeInfo = data
   },
   [types.WX_JSSDK](state, jssdkConfig) {
     state.jssdkConfig = jssdkConfig

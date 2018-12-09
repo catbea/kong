@@ -46,7 +46,8 @@ export default {
 
   methods: {
     selectOrganiz(id) {
-      this.$emit('click', id)
+      console.log(id)
+      this.$emit('clickListener', id)
     },
 
     toggle: function() {

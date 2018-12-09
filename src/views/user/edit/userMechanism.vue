@@ -2,7 +2,7 @@
   <div class="user-edit-username-page">
     <div class="user-edit-username">
       <p class="edit-username-title">我的机构选择</p>
-      <collapse-List :model="organizationList" @click="refreshList"></collapse-List>
+      <collapse-List :model="organizationList" @clickListener="refreshList"></collapse-List>
       <button class="edit-username-query" @click="commitChangeInfo">确认修改</button>
     </div>
   </div>
@@ -41,19 +41,20 @@ export default {
 
     //刷新列表
     refreshList(val) {
-      for (let i = 0; i < this.organizationInfo.length; i++) {
-        this.organizationInfo[i].checked = false
-        if (this.organizationInfo[i].id == val) {
-          this.organizationInfo[i].checked = true
-        }
-      }
+      console.log(val)
+      // for (let i = 0; i < this.organizationInfo.length; i++) {
+      //   this.organizationInfo[i].checked = false
+      //   if (this.organizationInfo[i].id == val) {
+      //     this.organizationInfo[i].checked = true
+      //   }
+      // }
 
-      let organizationInfo = this.organizationInfo
-      // this.organizationList
-      let tempArr = this.formatData(organizationInfo, organizationInfo[0].pId)
-      obj.children = tempArr
-      obj.name = '选择机构'
-      this.organizationList = obj
+      // let organizationInfo = this.organizationInfo
+      // // this.organizationList
+      // let tempArr = this.formatData(organizationInfo, organizationInfo[0].pId)
+      // obj.children = tempArr
+      // obj.name = '选择机构'
+      // this.organizationList = obj
     },
 
     async queryOrganizationList(distributorId, enterpriseId) {
