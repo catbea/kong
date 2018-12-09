@@ -6,6 +6,7 @@
         <p
           class="bg_img icon-cancel"
           :style="{backgroundImage:'url('+img+')'}"
+          @click="closeHandle"
         ></p>
         <van-swipe
           :touchable="true"
@@ -52,14 +53,7 @@
 <script>
 export default {
   created () {
-    if (this.common.length > 0) {
-      this.commonList()
-    }
-    // if(this.marster.length>0){
-    this.marsterList()
-    // }
-    console.log(this.marster.length, 333333)
-    console.log(this.marster, 22222)
+    this.dataLength()
   },
   props: {
     marster: {
@@ -75,42 +69,46 @@ export default {
     img: require('IMG/user/Combined Shape@2x.png')
   }),
   methods: {
-    marsterList () {
-      // for (let i = 0; i < this.marster.length; i++) {
-      //   let temp = this.marster[i]
-      //   temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
-      //   this.$set(this.marster, temp, i)
-
-        // this.marster[i] = 
+    closeHandle(){
+      this.$emit('returnCloseHandle',1)
+      
+    },
+    dataLength() {
+      let arrLength = this.marster.length+this.common.length
+      if(arrLength>5){
+        // console.log('大于5')
+        // console.log(this.marster.length,this.common.length)
+        if(this.common.length>0){
+          const commonLength = arrLength-5
+            this.common.splice(0,commonLength)
+        }else{
+         const spliceLength=arrLength-5
+          this.marster.splice(0,spliceLength)
+        }
       }
-      //  this.marster.map((item)=>{
-      //   item.linkerTags = item.linkerTags.join("、")
-
-      // }) 
-      // console.log('---------');
-
-      // console.log(this.marster);
-
-    // commonList(){
-    //    this.common.map((item)=>{
-    //     item.linkerTags = item.linkerTags.join("、")
-    //   }) 
-    // }
+      }
   },
   watch: {
     marster: {
-      handler (val) {
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaa',val);
-        
+      handler (val) {     
         for (let i = 0; i < val.length; i++) {
           let temp = val[i]
           temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
         }
-        this.masterSave = val
+        // this.masterSave = val
+      },
+      deep: true
+    },
+    common: {
+      handler (val) {     
+       for (let i = 0; i < val.length; i++) {
+          let temp = val[i]
+          temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
+        }
+        // this.masterSave = val
       },
       deep: true
     }
-
   }
 }
 </script>

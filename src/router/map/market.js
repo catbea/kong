@@ -47,7 +47,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/FamilyList',
+    path: '/marketDetail/FamilyList/:id',
     name: 'FamilyList',
     component: resolve =>
       require(['@/views/market/marketDetail/familyList/index.vue'], resolve),

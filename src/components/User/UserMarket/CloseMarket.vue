@@ -1,8 +1,8 @@
 <template>
-  <div class="user-market-page">
-    <div class="user-market-page-box" @click="skipMarketDetail(dataArr.linkerId)">
-      <div class="user-market-page-box-top">
-        <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
+  <div class="close-market-page">
+    <div class="close-market-page-box" @click="skipMarketRetuen">
+      <div class="close-market-page-box-top">
+        <div class="close-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" 
           :style="{backgroundImage:'url('+imgPlay+')'}"></span>
@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <div class="user-market-page-box-bottom" v-if="dataArr.price">
+      <div class="close-market-page-box-bottom" v-if="dataArr.price">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
         {{dataArr.divisionRules}}
       </div>
@@ -53,8 +53,8 @@
             <span v-show="!stickShow">取消置顶</span>
           </li>
           <li @click="exhibitionHandle">
-            <span v-show="exhibitionMarketShow">关闭楼盘展示</span> 
-            <span v-show="!exhibitionMarketShow">开启楼盘展示</span> 
+            <span v-show="!exhibitionMarketShow">关闭楼盘展示</span> 
+            <span v-show="exhibitionMarketShow">开启楼盘展示</span> 
             </li>
           <li @click="closeHandle">取消</li>
         </ul>
@@ -71,7 +71,6 @@ export default {
     TagGroup
   },
   data:()=>({
-    linkerId:null,
     discountImg:require('IMG/marketDetail/discount@2x.png'),
     show: false,
     stickSwitch:null,
@@ -97,10 +96,6 @@ export default {
     async changeUserStatus(linkerId,operationType,status){
        await userService.changeMarketData(linkerId,operationType,status)
     },//修改楼盘状态
-    
-    skipMarketDetail(linkerId){
-      this.$router.push('/market/marketDetail/'+linkerId)
-    },
     popupHandle () {//更多
       this.show = !this.show
     },
@@ -116,7 +111,7 @@ export default {
     closeHandle () {
       this.show = !this.show
     },
-    masterHandle(){
+     masterHandle(){
       // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
       console.log('已改为大师推荐')
@@ -128,17 +123,15 @@ export default {
     },
     exhibitionHandle () {
       Dialog.confirm({
-        title: '是否确定关闭该楼盘名片展示',
-        message: '关闭该楼盘展示将取消推荐和置顶状态'
+        title: '是否确定开启该楼盘名片展示',
+        message: '开启该楼盘展示将处于推荐和置顶状态'
       }).then(() => {
         // on confirm
         this.stickShow=false
         this.exhibitionMarketShow=false
-        this.changeUserStatus(this.linkerId,30,1)//改为不展示
-        console.log(this.dataArr,111111111111)
-        this.getMyMarketInfo()
+        this.changeUserStatus(this.linkerId,30,0)
         // this.dataArr.displayFlag='1'
-        // this.$emit('closeCut',this.marketIndex)
+        // this.$emit('openCut',this.marketIndex)
       }).catch(() => {
         // on cancel
       });
@@ -156,10 +149,11 @@ export default {
 }
 </script>
 <style lang="less">
-.user-market-page{
+.close-market-page{
   margin-left:16px;
   display: flex;
- .user-market-page-box{
+  background: #EA4D2E;
+ .close-market-page-box{
    margin-top:16px;
    padding: 16px 16px 0 16px;
   width:311px;
@@ -167,10 +161,10 @@ export default {
   border-radius:10px;
   display: flex;
   flex-direction: column;
-  .user-market-page-box-top{
+  .close-market-page-box-top{
     display: flex;
     margin-bottom:16px;
-    .user-market-page-box-top-left{
+    .close-market-page-box-top-left{
       width:120px;
       height:90px;
       margin-right:10px;
@@ -288,7 +282,7 @@ export default {
       }
     }
   }
-  .user-market-page-box-bottom{
+  .close-market-page-box-bottom{
     width:311px;
     height:39px;
     display: flex;

@@ -36,6 +36,7 @@ export default {
     
   },
   created() {
+    // this.linkerId=this.$route.params.id
     this.getHouseTypeInfo(this.linkerId)
   },
   data:()=>({
@@ -75,7 +76,7 @@ export default {
     async getHouseTypeInfo (n) {
       const res = await marketService.getHouseType(n)
       this.tabs=res
-      this.cpHouseTypeDetail=
+      // this.cpHouseTypeDetail=
       console.log(res)
     }
   }

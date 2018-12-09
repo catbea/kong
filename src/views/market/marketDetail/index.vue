@@ -90,6 +90,7 @@ export default {
     this.getHouseAroundType(this.linkerId)
   },
   data: () => ({
+    a:1111,
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
@@ -118,7 +119,7 @@ export default {
     confElse: {
       title: '其他楼盘',
       linkText: '全部楼盘',
-      link: '/market'
+      link: "/market"
     },
     info: [],
     buttonInfo: {
@@ -134,14 +135,6 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
-    /**
-     * 楼盘详情内展开更多信息
-     */
-    titleBarHandle(){
-      // this.confElse.link=this.confElse.link+this.linkerId
-      this.confDynamic.link=this.confDynamic.link+this.linkerId
-
-    },
     hintHandle() {
       this.hintShow = false
     },
@@ -182,9 +175,14 @@ export default {
       this.info = houseUseList
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.openStatus = result.openStatus
+      
       this.titleBarHandle()
     },
-
+      //跳转更多内容
+      skipMoreContent(){
+        this.confType.link=this.confType.link+this.linkerId
+        this.confDynamic.link=this.confDynamic.link+this.linkerId
+      },
     /**
      * 楼盘详情-位置周边
      */
