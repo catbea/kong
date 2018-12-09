@@ -361,7 +361,6 @@ export default {
   .van-modal {
     width: 100%;
   }
-}
 .van-dialog {
   width: 280px;
   height: 168px;
