@@ -32,13 +32,13 @@ class CommonService {
    * @param code 微信跳转地址截取code
    * @param payCorpId
    */
-  getPayOpenId(code, corpId, pcOpenId) {
+  getPayOpenId(code, corpId, pcOpenid) {
     return xhr({
       url: '/cp/oauth2/getPayOpenId',
       body: {
         code,
         corpId,
-        pcOpenId
+        pcOpenid
       }
     })
   }

@@ -167,5 +167,20 @@ class MarketService {
     })
   }
 
+    /**
+   * vip楼盘开通
+   *
+   */
+  addHouseByVip(isCheckLinkerIds, isCheckAll=false) {
+    return xhr({
+      url: '/brokerVip/addHouseByVip',
+      method: 'post',
+      body: {
+        isCheckLinkerIds: isCheckLinkerIds,
+        isCheckAll:isCheckAll
+      }
+    })
+  }
+
 }
 export default new MarketService()

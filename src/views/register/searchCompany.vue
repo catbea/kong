@@ -8,7 +8,7 @@
           show-action
           @search="onSearch"
           @cancel="onCancel"
-          @focus="onFocus"
+          v-on:input="onInput"
         >
           <!-- <div slot="action" @click="onSearch">搜索</div> -->
         </van-search>
@@ -16,11 +16,11 @@
     </div>
     <div class="search-content">
       <div class="search-tips">
-        <div class="search-tips-icon bg_img" :style="{backgroundImage:'url(' + searchIcon + ')'}"></div>
+        <div class="bg_img search-tips-icon" :style="{backgroundImage:'url(' + searchIcon + ')'}"></div>
         <div class="search-tips-cnt">请输入主营区域下所属公司</div>
       </div>
-      <div class="search-list" v-for="(item, index) in searchList" :key="index">
-        <div class="search-item">
+      <div class="search-list" v-for="(item, index) in regLists" :key="index">
+        <div class="search-item" @click="onSelectHandler(index)">
           {{item.distributorName}}
         </div>
       </div>
@@ -30,6 +30,7 @@
 <script>
 import Search from 'COMP/Search'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import RegisterService from 'SERVICE/registService'
 export default {
   components: {
@@ -38,56 +39,68 @@ export default {
   data: () => ({
     value: '',
     searchIcon: require('IMG/register/searchIcon@2x.png'),
-    searchLists: null
+    searchLists: null,
+    regLists: null,
+    enterpriseId: '',
+    city: '',
+    area: ''
   }),
   created() {
     console.log(this.userRegistInfo)
+    this.enterpriseId = this.$route.query.enterpriseId
+    this.city = this.$route.query.city
+    this.area = this.$route.query.area
+    this.queryRegisterDistributor(this.enterpriseId, this.city, this.area)
   },
   computed: {
     ...mapGetters(['userRegistInfo'])
   },
   methods: {
+    async queryRegisterDistributor(enterpriseId, city, area) {
+      const result = await RegisterService.queryRegisterDistributor(enterpriseId, city, area)
+      this.searchLists = result
+    },
     onSearch(val) {
       console.log(val)
       if (val.length >= 4) {
         let len = this.searchLists.length
         let arr = []
-        let reg = new RegExp(val)
         for(let i=0; i<len; i++) {
-          // 如果字符串中不包含目标字符会返回-1
-          debugger
-          if (this.searchLists[i].match(reg)) {
+          val = val.toLocaleLowerCase()
+          let tempTarget = this.searchLists[i].distributorName.toLocaleLowerCase()
+          if (tempTarget.indexOf(val) !== -1) {
             arr.push(this.searchLists[i])
           }
         }
+        this.regLists = arr
       }
     },
     onCancel() {
       console.log('cancel')
        this.$router.back(-1)
     },
-    onFocus(val) {
+    onInput(val) {
       console.log(val)
       if (val.length >= 4) {
         let len = this.searchLists.length
         let arr = []
-        let reg = new RegExp(val)
         for(let i=0; i<len; i++) {
-          // 如果字符串中不包含目标字符会返回-1
-          debugger
-          if (this.searchLists[i].match(reg)) {
+          val = val.toLocaleLowerCase()
+          let tempTarget = this.searchLists[i].distributorName.toLocaleLowerCase()
+          if (tempTarget.indexOf(val) !== -1) {
             arr.push(this.searchLists[i])
           }
         }
+        this.regLists = arr
       }
     },
-    onSelectHandler() {
+    onSelectHandler(index) {
       let _userRegistInfo = {
-        distributorId: '',
-        distributorName: ''
+        distributorId: this.regLists[index].distributorId,
+        distributorName: this.regLists[index].distributorName
       }
-      this.$store.dispatch('userRegistInfo', Object.assign(this.userRegistInfo, _userRegistInfo))
-       this.$router.back(-1)
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+      this.$router.back(-1)
     }
   }
 }
@@ -115,7 +128,6 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: center;
       .search-item {
         color: #333333;
         font-size: 16pt;

@@ -30,6 +30,8 @@
             :barChartHidden="barChartHidden"
             :barData="barData"
             :analysisListData="analysisListData"
+            :attentionFlag="attentionFlag" :clientMobile="clientMobile"
+            @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"
           />
         </van-tab>
         <van-tab title="足迹">
@@ -48,7 +50,7 @@ import Avatar from 'COMP/Avatar'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
 import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
 import CustomDetailInfo from 'COMP/Custom/CustomDetailInfo'
-
+import { mapGetters } from 'vuex'
 import CustomService from 'SERVICE/customService'
 
 export default {
@@ -61,6 +63,8 @@ export default {
   data: () => ({
     clientId: -1,
     activeIndex: 0,
+    isSecondReq: false, // 足迹页签是否请求成功
+    isThirdReq: false, // 资料页签是否请求成功
     customBaseInfo: null,
     intentionProjectTag: [],
     isPieDataReqOk: false,
@@ -79,8 +83,13 @@ export default {
     trackInfo: [],
     trackCurrent: 1,
     trackList: [],
-    customerInfo: []
+    customerInfo: [],
+    attentionFlag: false,
+    clientMobile: ''
   }),
+  computed: {
+    ...mapGetters(['reportAddInfo'])
+  },
   created() {
     this.clientId = this.$route.params.id
     this.getCustomBaseInfo(this.clientId)
@@ -88,15 +97,48 @@ export default {
     this.getCustomerSevenDayTrendChart(this.clientId)
     this.getCustomerBarChart(this.clientId)
     this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
-    this.getCustomerDynamicCount(this.clientId)
-    this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
-    this.getCustomerInfo(this.clientId)
   },
   methods: {
     /**
      * 切换tab
      */
-    onClick() {},
+    onClick() {
+      console.log(this.activeIndex)
+      if (this.activeIndex == 1 && this.isSecondReq == false) {
+        this.getCustomerDynamicCount(this.clientId)
+        this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
+        this.isSecondReq = true
+      }else if (this.activeIndex == 2 && this.isThirdReq == false) {
+        this.getCustomerInfo(this.clientId)
+        this.isThirdReq = true
+      }
+    },
+    attentionHandler() {
+      this.attentionFlag = !this.attentionFlag
+      let params = {
+        clientId: this.clientId,
+        isFollow: this.attentionFlag ? 0 : 1
+      }
+      this.updateCustomerInfo(params)
+      
+    },
+    reportHandler() {
+      let _reportAddInfo = {
+          clientId: this.clientId,
+          clientName: this.customBaseInfo.clientName,
+          clientPhone: this.clientMobile,
+          distributorId: this.customBaseInfo.distributorId,
+          institutionId: this.customBaseInfo.institutionId
+        }
+      this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
+      this.$router.push('/user/myReport/addReport')
+    },
+    phoneHandler() {
+      
+    },
+    consultHandler() {
+      
+    },
     /**
      * 客户基本信息以及购房意向度
      */
@@ -105,6 +147,8 @@ export default {
       this.customBaseInfo = result
       let tag = result.intentionProjectTag
       this.intentionProjectTag = tag.split('|')
+      this.attentionFlag = result.attentionStatus == 1 ? false : true
+      this.clientMobile = result.clientMobile
     },
     /**
      * 客户详情报表饼图
@@ -250,19 +294,8 @@ export default {
     /**
      * 更新客户资料信息
      */
-    async updateCustomerInfo(clientId, info) {
-      const result = await CustomService.updateCustomerInfo(
-        clientId,
-        info.remarkName,
-        info.sex,
-        info.age,
-        info.position,
-        info.phone,
-        info.income,
-        info.industry,
-        info.buyBuildingPurpose,
-        info.isFollow
-      )
+    async updateCustomerInfo(params) {
+      const result = await CustomService.updateCustomerInfo(params)
     }
   }
 }

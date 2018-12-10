@@ -206,7 +206,7 @@ export default [
   },
   {
     path: '/user/myMember/selectedDisk',
-    name: 'myMember',
+    name: 'selected-disk',
     component: resolve => require(['@/views/user/myMember/selectedDisk/index.vue'], resolve),
     meta: {
       title: 'vip选盘',
@@ -228,7 +228,7 @@ export default [
   },
   {
     path: '/user/mypreference/openPreference',
-    name: 'mypreference',
+    name: 'open-preference',
     component: resolve => require(['@/views/user/mypreference/openPreference/index.vue'], resolve),
     meta: {
       title: '开通套餐',

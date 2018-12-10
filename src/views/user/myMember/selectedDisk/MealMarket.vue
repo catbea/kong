@@ -2,9 +2,9 @@
   <div class="meal-market-page">
     <div class="meal-market-page-box">
       <div class="meal-market-page-box-top">
-        <span class="icon-check bg_img" :style="{backgroundImage:'url('+ (showData ? checkColorImg:checkImg)+')'}"></span>
-        <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url(https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/pacific/1026046346.jpg)'}">
-          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">9.9折</p>
+        <span class="icon-check bg_img" :style="{backgroundImage:'url('+ (dataArr.isChecked ? checkColorImg:checkImg)+')'}"></span>
+        <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
+          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
@@ -24,9 +24,9 @@
           </li>
         </ul>
       </div>
-      <div class="meal-market-page-box-bottom" v-if="dataArr.price">
+      <div class="meal-market-page-box-bottom" v-if="dataArr.commission">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
-        {{dataArr.price}}
+        {{dataArr.commission}}
       </div>
     </div>
   </div>

@@ -10,7 +10,7 @@
         <li>AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
         <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip === 0" tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
+      <router-link v-show="isVip === 1" tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
       </div>
     </div>
     <set-meal :vipList="vipList" :info="setMealInfo" @priceClick="priceClickHandle"></set-meal>
@@ -136,13 +136,11 @@ export default {
         message: this.content,
         cancelButtonText: '其他城市',
         className: 'unselect'
-      })
-        .then(() => {
+      }).then(() => {
           // on confirm
-        })
-        .catch(() => {
+      }).catch(() => {
           // on cancel
-        })
+      })
     },
     affirmPopup() {}
   }

@@ -84,7 +84,7 @@ export default {
       height: 3px;
       background: rgba(0, 122, 230, 1);
       border-radius: 2px;
-      margin-top: -50px;
+      margin-top: 25px;
     }
     .items-container {
       display: flex;

@@ -1,6 +1,6 @@
 // import xhr from './axios'
-// import xhr from './superAgent'
-import xhr from './fetch'
+import xhr from './superAgent'
+// import xhr from './fetch'
 /**
  * XHR 请求接口定义
  * @param  {String} options.method 请求方法，默认为 get
