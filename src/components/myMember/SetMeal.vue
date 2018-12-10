@@ -2,7 +2,7 @@
   <div class="mymember-set-meal-page">
     <div class="mymember-set-meal-page-content">
       <div class="mymember-set-meal-page-content-top">
-      <p class="forestall-open">2568人已经抢先开通VIP套餐</p>
+      <p class="forestall-open">{{setMealInfo.openCount}}人已经抢先开通VIP套餐</p>
       <div class="meal-site">
         <p>选择城市我我额人发他个</p>
         <span class="site-icon bg_img" :style="{backgroundImage:'url('+siteImg+')'}"></span>
@@ -10,10 +10,10 @@
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
         <li :class="{active:num==index}" v-for="(item,index) in vipList" :key="index" @click="taget(index)">
-          <p>1个月</p>
+          <p>{{item.subscribeRemark}}个月</p>
           <div class="price">
             <span>¥</span>
-            <p>300</p> 
+            <p>{{item.subscribeAmount | priceFormart}}</p> 
           </div>
         </li>
       </ol>
@@ -22,14 +22,30 @@
 </template>
 <script>
 export default {
+  props: {
+    setMealInfo: {
+      type: Object,
+      default: function() {
+        return {
+          openCount: 0
+        }
+      }
+    },
+    vipList: {
+      type: Array,
+      default: function() {
+        return []
+      }
+    }
+  },
   data: () => ({
-    vipList: [1, 2, 3],
     num: 0,
     siteImg: require('IMG/myMember/location@2x.png')
   }),
   methods: {
     taget(index) {
       this.num = index
+      this.$emit("priceClick",index)
     }
   }
 }

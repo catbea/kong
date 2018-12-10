@@ -48,6 +48,17 @@ class MarketService {
       }
     })
   }
+  /** 
+   * 楼盘详情-该楼盘相册
+  */
+  getMarketDetailPhoto(linkerId){
+    return xhr({
+      url:'/linkerDetail/getHouseBannerTypeList',
+      body:{
+        linkerId
+      }
+    })
+  }
 
   /**
    * 楼盘-楼盘信息-楼盘开通调用
@@ -130,6 +141,17 @@ class MarketService {
     return xhr({
       url: '/brokerVip/vipInfo',
       body: {}
+    })
+  }
+
+  /**
+   * 获取vip楼盘
+   *
+   */
+  vipLinkerList(parm) {
+    return xhr({
+      url: '/brokerVip/vipLinkerList',
+      body: parm
     })
   }
 }

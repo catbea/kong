@@ -168,23 +168,22 @@ class UserService {
   /**
    * 首页查看我的楼盘
    */
-  getMyMarket(agentId, displayFlag) {
+  getMyMarket(displayFlag) {
     //展示楼盘的数据
     return xhr({
       url: '/myLinker/myProject',
       body: {
-        agentId,
         displayFlag
       }
     })
   }
 
-  getRecommend(agentId) {
+  getRecommend() {
     //推荐楼盘的数据
     return xhr({
       url: '/myLinker/displayRecommendLinker',
       body: {
-        agentId
+        
       }
     })
   }
@@ -194,7 +193,6 @@ class UserService {
    * @param {*} status 关注状态：0：已关注 1：未关注 
    * @param {*}  大师推荐 0：未推荐 1：大师推荐，2：普通推荐
    * @param {*} operationType 展示状态：0-展示，1-不展示； 置顶状态：0-否,10-置顶
-   * @param {*} agentId 经纪人id
    */
   changeMarketData(linkerId,operationType,status) {
     return xhr({

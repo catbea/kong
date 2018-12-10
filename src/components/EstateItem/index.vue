@@ -9,7 +9,7 @@
         <p class="estate-location">{{`${info.city} ${info.county}`}}</p>
         <tag-group :arr="info.projectTagArr"></tag-group>
         <div class="estate-info">
-          <p class="estate-price">{{info.averagePrice  | averagePrice }}</p>
+          <p class="estate-price">{{info.averagePrice  | priceFormart }}</p>
           <p class="estate-area">{{info.priceUnit}}</p>
         </div>
       </div>

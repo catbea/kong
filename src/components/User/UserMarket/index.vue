@@ -1,9 +1,9 @@
 <template>
-  <div class="user-market-page">
+  <div class="user-market-page" v-if="dataArr.displayFlag==0">
     <div class="user-market-page-box" @click="skipMarketDetail(dataArr.linkerId)">
       <div class="user-market-page-box-top">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
-          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
+          <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" 
           :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <div class="user-market-page-box-bottom" v-if="dataArr.price">
+      <div class="user-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
         {{dataArr.divisionRules}}
       </div>
@@ -119,11 +119,13 @@ export default {
     masterHandle(){
       // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
+      this.show = !this.show
       console.log('已改为大师推荐')
     },
     commonHandle(){
       // this.$emit('returncommonHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,2)//改为普通推荐
+      this.show = !this.show
       console.log('已改为普通推荐')
     },
     exhibitionHandle () {
@@ -135,6 +137,7 @@ export default {
         this.stickShow=false
         this.exhibitionMarketShow=false
         this.changeUserStatus(this.linkerId,30,1)//改为不展示
+        this.dataArr.displayFlag=1
         console.log(this.dataArr,111111111111)
         this.getMyMarketInfo()
         // this.dataArr.displayFlag='1'
