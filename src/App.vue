@@ -18,6 +18,11 @@ export default {
   },
   mounted() {
     document.addEventListener('touchstart', handler, false)
+  },
+  methods:{
+    handler(e){
+      e.preventDefault()
+    }
   }
 }
 </script>
