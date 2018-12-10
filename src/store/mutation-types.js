@@ -12,6 +12,7 @@ export const USER_REGIST_INFO = 'USER_REGIST_INFO'
 
 // city
 export const CITY_LIST = 'CITY_LIST'
+export const HOT_CITY_CITY = 'HOT_CITY_CITY'
 export const WX_JSSDK = 'WX_JSSDK'
 
 // market
