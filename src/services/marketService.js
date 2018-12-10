@@ -51,10 +51,10 @@ class MarketService {
   /** 
    * 楼盘详情-该楼盘相册
   */
-  getMarketDetailPhoto(linkerId){
+  getMarketDetailPhoto(linkerId) {
     return xhr({
-      url:'/linkerDetail/getHouseBannerTypeList',
-      body:{
+      url: '/linkerDetail/getHouseBannerTypeList',
+      body: {
         linkerId
       }
     })
@@ -147,19 +147,19 @@ class MarketService {
   /**
    * 分享我的楼盘信息
    */
-  shareBuildingCard(linkerId){
+  shareBuildingCard(linkerId) {
     return xhr({
-      url:'/linkerDetail/share',
-      body:{
+      url: '/linkerDetail/share',
+      body: {
         linkerId
       }
     })
   }
 
 
-   /* 获取vip楼盘
-   *
-   */
+  /* 获取vip楼盘
+  *
+  */
   vipLinkerList(parm) {
     return xhr({
       url: '/brokerVip/vipLinkerList',
@@ -171,23 +171,25 @@ class MarketService {
    * 分享楼盘需要的楼盘图片列表
    * @param {*} linkerId 
    */
-  getBannerList(linkerId){
+  getBannerList(linkerId) {
     return xhr({
-      url:'/linkerDetail/getLinkerBannerList',
-      body:{
+      url: '/linkerDetail/getLinkerBannerList',
+      body: {
         linkerId
-	  }
-	  
+      }
+    })
+  }
+
 	/* VIP楼盘开通
    *
    */
-  addHouseByVip(isCheckLinkerIds, isCheckAll=false) {
+  addHouseByVip(isCheckLinkerIds, isCheckAll = false) {
     return xhr({
       url: '/brokerVip/addHouseByVip',
       method: 'post',
       body: {
         isCheckLinkerIds: isCheckLinkerIds,
-        isCheckAll:isCheckAll
+        isCheckAll: isCheckAll
       }
     })
   }
