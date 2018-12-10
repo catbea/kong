@@ -36,7 +36,7 @@
         </van-tab>
         <van-tab title="足迹">
           <custom-detail-track 
-            :trackInfo="trackInfo" />
+            :trackInfo="trackInfo" :trackList="trackList" />
         </van-tab>
         <van-tab title="资料">
           <custom-detail-info/>
