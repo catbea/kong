@@ -52,7 +52,12 @@ export default {
     //   }
     // ],
   }),
-  methods: {}
+  methods: {},
+
+  created(){
+    let objInfo = this.$route.query.name
+    console.log(objInfo)
+  }
 }
 </script>
 <style lang="less">

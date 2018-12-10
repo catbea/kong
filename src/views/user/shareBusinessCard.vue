@@ -25,7 +25,7 @@
       </div>
       <div class="edit-container">
         <!-- <div @click="changeBgHandler">修改背景</div> -->
-        <div @click="buildCardHandler">确认</div>
+        <!-- <div @click="buildCardHandler">确认</div> -->
       </div>
     </div>
     <div class="result" id="card-result" v-show="status === 2"></div>

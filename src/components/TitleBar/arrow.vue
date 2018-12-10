@@ -2,7 +2,7 @@
   <div class="title-bar" v-if="isShow">
     <h5 class="title-text">{{conf.title}}</h5>
     <router-link :to="linkComputed" >
-      <p class="link-text" @click="byClick">{{`${conf.linkText} ${conf.link?'':'>'}`}} 
+      <p class="link-text" @click="byClick">{{`${conf.linkText} ${conf.link?'':''}`}} 
          <img :src="arrowIcon" class="left-img">
       </p>
     </router-link>
