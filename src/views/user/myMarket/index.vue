@@ -93,20 +93,18 @@ export default {
     ]
   }),
   created () {
-    this.agentId = this.$route.params.id
     this.getMyMarketInfo()
     this.getRecommendInfo()
   },
   methods: {
     async getChangeMarketData(){
-      const res = await userService.changeMarketData(this.agentId)
+      const res = await userService.changeMarketData()
     },
     returnCloseHandle () {
       this.closeSwipe = !this.closeSwipe
     },
     async getRecommendInfo () {//推荐楼盘的数据
-      const res = await userService.getRecommend(this.agentId)
-      console.log(res, 78787878)
+      const res = await userService.getRecommend()
       this.recommendList = res
       this.master()
       this.common()
@@ -123,10 +121,8 @@ export default {
     },
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
       const show = await userService.getMyMarket(this.agentId,0)
-      console.log(show.records, '展示')
       this.myMarketShowList = show.records
       const notShow = await userService.getMyMarket(this.agentId,1)
-      console.log(notShow.records, "不展示")
       this.myMarketNotShowList = notShow.records
     },
     returnHandle () {//切换展示与否
@@ -137,14 +133,12 @@ export default {
     },
     closeCut(n){
       this.myMarketList[n].displayFlag='1'
-     console.log(this.myMarketList[n])
     },
     returnMasterHandle(n){
       this.masterList.push(this.myMarketList[n])
     },
     returncommonHandle(n){
       this.commonList.push(this.myMarketList[n])
-      console.log(this.commonList,7777777777777)
     },
     openCut(n){
       this.myMarketList[n].displayFlag='0'
@@ -156,9 +150,6 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
-  // > div{
-  //   width:343px;
-  // }
   .user-market-box{
     display: flex;
   }

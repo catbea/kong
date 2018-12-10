@@ -10,7 +10,7 @@ const state = {
         icon: require('IMG/tabbar/data_tab.png'),
         icon_atc: require('IMG/tabbar/data_tab_act.png'),
         path: '/dynamics',
-        info: 10
+        info: 0
       },
       {
         name: '楼盘',

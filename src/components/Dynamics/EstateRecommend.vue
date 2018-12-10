@@ -1,8 +1,7 @@
 <template>
   <div class="estate-recommend">
     <title-bar :conf="titleBarConf"></title-bar>
-    <div class="bg_img recommend-box" :style="{backgroundImage:'url(' + blurImg + ')'}">
-    </div>
+    <div class="bg_img recommend-box" :style="{backgroundImage:'url(' + blurImg + ')'}"></div>
     <div class="recommend-info" v-if="info" @click="goRecommendInfo">
       <div class="desc-box">
         <p class="title">{{`${info.district}·${info.linkerName}`}}</p>
@@ -28,7 +27,8 @@ export default {
   data: () => ({
     titleBarConf: {
       title: 'AI荐盘',
-      linkText: '更多楼盘'
+      linkText: '更多楼盘',
+      link: '/market'
     },
     blurImg: require('IMG/dynamics/blurImg.png')
   }),
