@@ -14,23 +14,24 @@
           :autoplay="3000"
         >
           <van-swipe-item
-            v-for="(itemMarster,indexMarster) in marster"
-            :key="indexMarster"
+            v-for="(item,index) in limitList"
+            :key="index"
           >
             <div class="master-box">
               <div
+                :class="{dim:item.masterRecommand==1}"
                 class="bg_img master-item"
                 :style="{backgroundImage:'url(https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2868602830,597618051&fm=27&gp=0.jpg)'}"
               >
               </div>
               <ol>
-                <li>{{itemMarster.linkerName}}</li>
-                <li>{{itemMarster.linkerTags}}</li>
-                <li>{{itemMarster.city}}{{itemMarster.county}} <span>{{itemMarster.scanTimes}}</span> 人关注了它</li>
+                <li>{{item.linkerName}}</li>
+                <li>{{item.linkerTags | linkerTags}}</li>
+                <li>{{item.city}}{{item.county}} <span>{{item.scanTimes}}</span> 人关注了它</li>
               </ol>
             </div>
           </van-swipe-item>
-          <van-swipe-item
+          <!-- <van-swipe-item
             v-for="(itemCommon,indexCommon) in common"
             :key="indexCommon"
           >
@@ -44,7 +45,7 @@
                 <li>{{itemCommon.city}}{{itemCommon.county}} {{itemCommon.openTimes}} 人开通 <span>{{itemCommon.price}}{{itemCommon.priceUnit}}</span></li>
               </ul>
             </div>
-          </van-swipe-item>
+          </van-swipe-item> -->
         </van-swipe>
       </div>
     </div>
@@ -53,18 +54,15 @@
 <script>
 export default {
   created () {
-    this.dataLength()
+    // this.dataLength()
+    console.log(this.swipeList,'推荐图片')
   },
   props: {
-    marster: {
-      type: Array
-    },
-    common: {
+    swipeList: {
       type: Array
     }
   },
   data: () => ({
-    list: [1, 2, 3, 4],
     masterSave: null,
     img: require('IMG/user/Combined Shape@2x.png')
   }),
@@ -73,43 +71,53 @@ export default {
       this.$emit('returnCloseHandle',1)
       
     },
-    dataLength() {
-      let arrLength = this.marster.length+this.common.length
-      if(arrLength>5){
-        // console.log('大于5')
-        // console.log(this.marster.length,this.common.length)
-        if(this.common.length>0){
-          const commonLength = arrLength-5
-            this.common.splice(0,commonLength)
-        }else{
-         const spliceLength=arrLength-5
-          this.marster.splice(0,spliceLength)
-        }
-      }
-      }
+    
+    // dataLength() {
+    //   let arrLength = this.marster.length+this.common.length
+    //   if(arrLength>5){
+    //     // console.log('大于5')
+    //     // console.log(this.marster.length,this.common.length)
+    //     if(this.common.length>0){
+    //       const commonLength = arrLength-5
+    //         this.common.splice(0,commonLength)
+    //     }else{
+    //      const spliceLength=arrLength-5
+    //       this.marster.splice(0,spliceLength)
+    //     }
+    //   }
+    //   }
   },
-  watch: {
-    marster: {
-      handler (val) {     
-        for (let i = 0; i < val.length; i++) {
-          let temp = val[i]
-          temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
-        }
-        // this.masterSave = val
-      },
-      deep: true
-    },
-    common: {
-      handler (val) {     
-       for (let i = 0; i < val.length; i++) {
-          let temp = val[i]
-          temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
-        }
-        // this.masterSave = val
-      },
-      deep: true
+  computed:{
+    limitList(){
+      if(this.swipeList.length>5){
+       return this.swipeList.slice(0,5)
+      }else{
+        return this.swipeList
+      }
     }
   }
+  // watch: {
+  //   marster: {
+  //     handler (val) {     
+  //       for (let i = 0; i < val.length; i++) {
+  //         let temp = val[i]
+  //         temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
+  //       }
+  //       // this.masterSave = val
+  //     },
+  //     deep: true
+  //   },
+  //   common: {
+  //     handler (val) {     
+  //      for (let i = 0; i < val.length; i++) {
+  //         let temp = val[i]
+  //         temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
+  //       }
+  //       // this.masterSave = val
+  //     },
+  //     deep: true
+  //   }
+  // }
 }
 </script>
 <style lang="less">
@@ -121,6 +129,9 @@ export default {
     height: 274px;
     .vanSWipe-box {
       position: relative;
+      .dim{
+        filter: blur(6px);
+      }
       .icon-cancel {
         position: absolute;
         right: 7px;
@@ -147,7 +158,6 @@ export default {
       .master-item {
         width: 343px;
         height: 193px;
-        filter: blur(6px);
       }
       ol {
         position: absolute;

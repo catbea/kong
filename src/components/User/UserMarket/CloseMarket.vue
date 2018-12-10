@@ -1,9 +1,9 @@
 <template>
-  <div class="close-market-page">
+  <div class="close-market-page" v-if="dataArr.displayFlag==1">
     <div class="close-market-page-box" @click="skipMarketRetuen">
       <div class="close-market-page-box-top">
         <div class="close-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
-          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
+          <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" 
           :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <div class="close-market-page-box-bottom" v-if="dataArr.price">
+      <div class="close-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
         {{dataArr.divisionRules}}
       </div>
@@ -130,6 +130,7 @@ export default {
         this.stickShow=false
         this.exhibitionMarketShow=false
         this.changeUserStatus(this.linkerId,30,0)
+        this.dataArr.displayFlag=0
         // this.dataArr.displayFlag='1'
         // this.$emit('openCut',this.marketIndex)
       }).catch(() => {
