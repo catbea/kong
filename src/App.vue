@@ -19,7 +19,7 @@ export default {
 }
 </script>
 <style lang="less">
-@import '~normalize.css';
+@import '~normalize.css/normalize.css';
 @import './assets/css/reset.less';
 @import './assets/css/common.less';
 

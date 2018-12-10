@@ -6,11 +6,11 @@
       </div>
       <div class="right-container">
         <h5 class="estate-name">{{info.linkerName}}</h5>
-        <p class="estate-location">{{`${info.city} ${info.county}`}}</p>
-        <tag-group :arr="info.projectTagArr"></tag-group>
+        <p class="estate-location">{{`${info.city} ${info.county?info.county:''}`}}</p>
+        <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
         <div class="estate-info">
-          <p class="estate-price">{{info.averagePrice  | priceFormart }}</p>
-          <p class="estate-area">{{info.priceUnit}}</p>
+          <p class="estate-price">{{info.averagePrice  | priceFormart }} {{info.priceUnit}}</p>
+          <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
         </div>
       </div>
     </div>
@@ -42,6 +42,7 @@ export default {
     overflow: hidden;
     .left-container {
       display: inline-block;
+      background-color: #999999;
       flex-basis: 120px;
       height: 90px;
       margin: 16px;
@@ -62,6 +63,7 @@ export default {
         color: #666666;
       }
       .estate-info {
+        white-space: nowrap;
         > p {
           display: inline-block;
         }
