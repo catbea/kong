@@ -132,5 +132,18 @@ class MarketService {
       body: {}
     })
   }
+
+  /**
+   * 分享我的楼盘信息
+   */
+  shareBuildingCard(linkerId){
+    return xhr({
+      url:'/linkerDetail/share',
+      body:{
+        linkerId
+      }
+    })
+  }
+
 }
 export default new MarketService()
