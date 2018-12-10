@@ -94,7 +94,6 @@ export default {
     ]
   }),
   created () {
-    this.agentId = this.$route.params.id
     this.getMyMarketInfo()
     this.getRecommendInfo()
   },
@@ -160,7 +159,6 @@ export default {
     },
     returncommonHandle(n){
       this.commonList.push(this.myMarketList[n])
-      console.log(this.commonList,7777777777777)
     },
     openCut(n){
       // this.myMarketList[n].displayFlag='0'
@@ -172,9 +170,6 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
-  // > div{
-  //   width:343px;
-  // }
   .user-market-box{
     display: flex;
   }

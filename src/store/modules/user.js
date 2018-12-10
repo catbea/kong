@@ -4,6 +4,7 @@ import userService from '@/services/userService'
 const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
+    isVip: '0',
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
