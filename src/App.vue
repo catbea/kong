@@ -15,6 +15,9 @@ export default {
   components: {
     Navbar,
     Tabbar
+  },
+  mounted() {
+    document.addEventListener('touchstart', handler, false)
   }
 }
 </script>
