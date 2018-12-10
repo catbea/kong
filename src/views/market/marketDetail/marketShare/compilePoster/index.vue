@@ -1,18 +1,18 @@
 <template>
   <div class="compile-poster-page">
-    <swipe-poster></swipe-poster>
+    <swipe-poster :model="buildingInfo"></swipe-poster>
     <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
-    <poster-describe></poster-describe>
+    <poster-describe :model="buildingInfo"></poster-describe>
     <div class="compile-tagline">
-      <div class="compile-tagline-top">宣传语</div> 
+      <div class="compile-tagline-top">宣传语</div>
       <div class="compile-tagline-bottom">
         <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
       </div>
     </div>
-    <compile-cover></compile-cover>
+    <compile-cover :model="bannerList"></compile-cover>
     <div class="compile-button">
       <p>重置海报</p>
-      <router-link to='/marketDetail/share/save' tag="p" >生成海报</router-link>
+      <router-link to="/marketDetail/share/save" tag="p">生成海报</router-link>
     </div>
   </div>
 </template>
@@ -20,7 +20,12 @@
 import SwipePoster from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/SwipePoster'
 import PosterDescribe from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/PosterDescribe'
 import CompileCover from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/CompileCover'
+import marketService from 'SERVICE/marketService'
+import { mapGetters } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters(['buildId'])
+  },
   components: {
     SwipePoster,
     PosterDescribe,
@@ -28,7 +33,9 @@ export default {
   },
   data: () => ({
     list: [1, 2, 3, 4],
-    show: false
+    show: false,
+    buildingInfo: {},
+    bannerList: []
     // topList:[
     //   {
     //    top:[
@@ -52,11 +59,28 @@ export default {
     //   }
     // ],
   }),
-  methods: {},
+  methods: {
+    async getPosterInfo(buildId) {
+      const result = await marketService.shareBuildingCard(buildId)
+      if (result) {
+        this.buildingInfo = result
+      }
+    },
 
-  created(){
-    let objInfo = this.$route.query.name
-    console.log(objInfo)
+    async getBuildingImg(buildId) {
+      const bannerResult = await marketService.getBannerList(buildId)
+      if (bannerResult) {
+        for (let i = 0; i < bannerResult.length; i++) {
+          bannerResult[i].checked = '0'
+        }
+        this.bannerList = bannerResult
+      }
+    }
+  },
+
+  created() {
+    this.getPosterInfo(this.buildId)
+    this.getBuildingImg(this.buildId)
   }
 }
 </script>

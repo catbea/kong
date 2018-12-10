@@ -1,25 +1,33 @@
 <template>
   <div class="compile-poster-describe-page">
-      <ul>
-        <li>
-          <div>经纪:</div>
-          <div>碧桂园地产开发有限公司</div>
-        </li>
-        <li>
-          <div>经纪人:</div>
-          <div>碧桂园地产开发有限公司</div>
-        </li>
-        <li>
-          <div>经纪人姓名经纪人姓名:</div>
-          <div>碧桂园地产开发有限公司碧桂园地产开发有限公司</div>
-        </li>
-        <li>
-          <div>经纪人姓名:</div>
-          <div>碧桂园地产开发有限公司</div>
-        </li>
-      </ul>
-    </div>
+    <ul>
+      <li>
+        <div>楼盘名称:</div>
+        <div>{{model.linkerName}}</div>
+      </li>
+      <li>
+        <div>楼盘价格:</div>
+        <div>{{model.linkerPrice}}{{model.priceUnit}}</div>
+      </li>
+      <li>
+        <div>经纪人姓名:</div>
+        <div>{{model.agentName}}</div>
+      </li>
+      <li>
+        <div>授权开发商:</div>
+        <div>{{model.developer}}</div>
+      </li>
+    </ul>
+  </div>
 </template>
+<script>
+export default {
+  props: {
+    model: Object
+  }
+}
+</script>
+
 <style lang="less">
 .compile-poster-describe-page {
   display: flex;

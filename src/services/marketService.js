@@ -167,8 +167,18 @@ class MarketService {
     })
   }
 
-    /**
-   * vip楼盘开通
+  /**
+   * 分享楼盘需要的楼盘图片列表
+   * @param {*} linkerId 
+   */
+  getBannerList(linkerId){
+    return xhr({
+      url:'/linkerDetail/getLinkerBannerList',
+      body:{
+        linkerId
+	  }
+	  
+	/* VIP楼盘开通
    *
    */
   addHouseByVip(isCheckLinkerIds, isCheckAll=false) {
@@ -178,6 +188,18 @@ class MarketService {
       body: {
         isCheckLinkerIds: isCheckLinkerIds,
         isCheckAll:isCheckAll
+      }
+    })
+  }
+
+  /**
+   * 楼盘套餐信息
+   *
+   */
+  userPackageSituation() {
+    return xhr({
+      url: '/userPackage/userPackageSituation',
+      body: {
       }
     })
   }

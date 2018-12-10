@@ -2,24 +2,26 @@
   <div class="market-share-page">
     <div class="box">
       <div class="share-top">
-        <img class="avatar-img" :src="buildingInfo.headImgUrl" alt="">
+        <img class="avatar-img" :src="buildingInfo.avatarMediaid" alt="">
         <img class="cover-img" :src="coverBg">
-        <div class="logo-img"></div>
+        <img class="logo-img" :src="buildingInfo.qrCode">
         <span class="distinguish-span">长按识别更多</span>
         <span class="building-name">{{buildingInfo.linkerName}}</span>
-        <span class="building-price">价格：{{buildingInfo.averagePrice}}</span>
-        <!-- <div class="line-view"></div> -->
-        <img class="avatar-view" :src="buildingInfo.headImgUrl">
-        <span class="username-view">{{userInfo.name}}</span>
-        <span class="mobile-view">{{userInfo.tempPhone}}</span>
-        <span class="canpamy-view">授权开发商：深圳万科地产集团有限公司</span>
+        <span class="building-price">价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
+        <img class="avatar-view" :src="buildingInfo.avatarMediaid">
+        <span class="username-view">{{buildingInfo.agentName}}</span>
+        <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
+        <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
       </div>
       <div class="share-bottom">
         <p>长按保存图片 可分享好友或朋友圈</p>
         <ul>
-           <!-- <router-link :to="{name: 'discover-detail', params: {id: data.id, city: data.city}}"> -->
-          <router-link tag="li" :to="{path:'/marketDetail/share/compile',query:{name:this.buildingInfo}}" class="compile">编辑海报</router-link>
-          <li class="save" @click="savePoster">保存海报</li>
+          <router-link
+            tag="li"
+            :to="{path:'/marketDetail/share/compile',query:{name:this.buildingInfo}}"
+            class="compile"
+          >编辑海报</router-link>
+          <li class="save" @click>保存海报</li>
         </ul>
         <router-view></router-view>
       </div>
@@ -29,15 +31,15 @@
 <script>
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
+import marketService from 'SERVICE/marketService'
 export default {
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo', 'buildId'])
   },
 
   created() {
-    let objInfo = this.$route.params.buildInfo
-    this.buildingInfo = objInfo
     this.$store.commit(types.TABBAR, false)
+    this.getPosterInfo(this.buildId)
   },
 
   data() {
@@ -49,9 +51,12 @@ export default {
     }
   },
 
-  methods:{
-    savePoster(){
-
+  methods: {
+    async getPosterInfo(buildId) {
+      const result = await marketService.shareBuildingCard(buildId)
+      if (result) {
+        this.buildingInfo = result
+      }
     }
   }
 }
@@ -100,7 +105,7 @@ export default {
       top: 236px;
       right: 20px;
       z-index: 2;
-      background-color: #ffffff;
+
     }
 
     > .distinguish-span {

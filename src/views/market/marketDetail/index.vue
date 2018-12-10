@@ -81,8 +81,8 @@ import PopupBox from 'COMP/Market/MarketDetail/PopupBox'
 import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
 import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
-
 import MarketService from 'SERVICE/marketService'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -99,11 +99,19 @@ export default {
     TitleBar,
     SwipeBox
   },
+
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
   },
   created() {
     this.linkerId = this.$route.params.id
+
+    this.$store.commit(types.USER_BUILD_INFO, this.linkerId)
+
     this.getLinkerDetail(this.linkerId)
     this.skipMoreContent()
     this.getHouseAroundType(this.linkerId)
@@ -155,7 +163,7 @@ export default {
   }),
   methods: {
     shareBuildingPage() {
-      this.$router.push({name: 'marketDetail-share', params: {buildInfo: this.linkerInfo}})
+      this.$router.push({ name: 'marketDetail-share' })
     },
     hintHandle() {
       this.hintShow = false
@@ -196,7 +204,6 @@ export default {
       this.openStatus = result.openStatus
 
       //this.titleBarHandle()
-
     },
     //跳转更多内容
     skipMoreContent() {

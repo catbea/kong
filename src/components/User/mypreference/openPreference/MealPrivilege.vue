@@ -6,14 +6,14 @@
         <div class="market-icon bg_img" :style="{backgroundImage:'url('+marketImg+')'}"></div>
         <div class="market-describe">
           <p>楼盘任选</p>
-          <p>全楼盘随心选10个</p>
+          <p>全楼盘随心选{{itemInfo.limitTotal}}个</p>
         </div>
       </li>
       <li>
         <div class="market-icon bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></div>
         <div class="market-describe">
           <p>优享体验</p>
-          <p>1个月免费代理服务</p>
+          <p>{{itemInfo.timeNum}}个{{itemInfo.timeUnit===0 ? '天' : itemInfo.timeUnit===1 ? '月' : '年'}}免费代理服务</p>
         </div>
       </li>
     </ul>
@@ -21,6 +21,19 @@
 </template>
 <script>
 export default {
+  props: {
+    itemInfo: {
+      type: Object,
+      default: function() {
+        return {
+          price: 0,
+          timeNum: 0,
+          limitTotal: 0,
+          timeUnit: 0
+        }
+      }
+    }
+  },
   data: () => ({
     marketImg: require('IMG/user/alreadyBuy/i1@2x.png'),
     enjoyImg: require('IMG/user/alreadyBuy/xx@2x.png')
@@ -35,6 +48,7 @@ export default {
   margin: 10px 0 18px 0;
   .privilege {
     margin-bottom: 14px;
+    font-size: 20px;
   }
   ul {
     display: flex;

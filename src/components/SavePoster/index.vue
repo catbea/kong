@@ -1,48 +1,68 @@
 
 <template>
   <div class="market-share-poster-page">
-    <div class="swipe-poster-item bg_img" :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}">
-      <div
-        class="content-box bg_img"
-        :style="{backgroundImage:'url('+backImg+')'}"
-      >
+    <div
+      class="swipe-poster-item bg_img"
+      :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}"
+    >
+      <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}">
         <div class="box-top">
           <ul>
-            <li>境墅高层</li>
-            <li>碧桂园·十里银滩</li>
-            <li>价格：58888元/㎡</li>
+            <!-- <li>境墅高层</li> -->
+            <li>{{buildingInfo.linkerName}}</li>
+            <li>{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</li>
           </ul>
           <div class="QRcode">
-            <span></span>
+            <img class="qrcode-view" :src="buildingInfo.qrCode">
             <p>长按识别更多</p>
           </div>
         </div>
         <div class="box-bottom">
           <div class="message">
-            <span></span>
+            <img class="header-view" :src="buildingInfo.avatarMediaid">
             <div class="name">
-              <p>张杰柯</p>
-              <p>18776586534</p>
+              <p>{{buildingInfo.agentName}}</p>
+              <p>{{buildingInfo.agentMobile}}</p>
             </div>
           </div>
-          <p class="company">
-            授权开发商：深圳万科地产集团有限公司
-          </p>
+          <p class="company">授权开发商：{{buildingInfo.developer}}</p>
         </div>
       </div>
     </div>
-    <save-button></save-button>
+    <!-- <save-button></save-button> -->
   </div>
 </template>
 <script>
 import SaveButton from './SaveButton'
+import { mapGetters } from 'vuex'
+import marketService from 'SERVICE/marketService'
+
 export default {
+  computed: {
+    ...mapGetters(['buildId'])
+  },
+
   components: {
     SaveButton
   },
+
+  created() {
+    this.getPosterInfo(this.buildId)
+  },
+
   data: () => ({
-    backImg: require('IMG/marketDetail/back@2x.png')
-  })
+    backImg: require('IMG/marketDetail/back@2x.png'),
+    buildingInfo: {}
+  }),
+
+  methods: {
+    async getPosterInfo(buildId) {
+      const result = await marketService.shareBuildingCard(buildId)
+      if (result) {
+        this.buildingInfo = result
+      }
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -99,12 +119,13 @@ export default {
         .QRcode {
           display: flex;
           flex-direction: column;
-          margin-top: 19px;
-          margin-left: 19px;
-          span {
+          margin-top: 10px;
+          margin-left: 60px;
+          .qrcode-view {
             margin-bottom: 7px;
             width: 58px;
             height: 58px;
+            border-radius: 50%;
           }
           p {
             font-size: 7px;
@@ -121,7 +142,7 @@ export default {
         .message {
           margin: 21px 0 11px 19px;
           display: flex;
-          span {
+          .header-view {
             width: 29px;
             height: 29px;
             border-radius: 50%;
@@ -138,7 +159,6 @@ export default {
           }
         }
         .company {
-          margin-left: 19px;
           font-size: 12px;
           transform: scale(0.67);
           font-family: PingFangSC-Regular;
