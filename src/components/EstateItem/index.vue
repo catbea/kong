@@ -56,11 +56,13 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: #333333;
+        padding-bottom: 10px;
       }
       .estate-location {
         font-size: 12px;
         font-weight: 400;
         color: #666666;
+        padding-bottom: 10px;
       }
       .estate-info {
         white-space: nowrap;

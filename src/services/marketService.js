@@ -176,6 +176,30 @@ class MarketService {
       url:'/linkerDetail/getLinkerBannerList',
       body:{
         linkerId
+	  }
+	  
+	/* VIP楼盘开通
+   *
+   */
+  addHouseByVip(isCheckLinkerIds, isCheckAll=false) {
+    return xhr({
+      url: '/brokerVip/addHouseByVip',
+      method: 'post',
+      body: {
+        isCheckLinkerIds: isCheckLinkerIds,
+        isCheckAll:isCheckAll
+      }
+    })
+  }
+
+  /**
+   * 楼盘套餐信息
+   *
+   */
+  userPackageSituation() {
+    return xhr({
+      url: '/userPackage/userPackageSituation',
+      body: {
       }
     })
   }

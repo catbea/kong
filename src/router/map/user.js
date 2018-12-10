@@ -206,7 +206,7 @@ export default [
   },
   {
     path: '/user/myMember/selectedDisk',
-    name: 'myMember',
+    name: 'selected-disk',
     component: resolve => require(['@/views/user/myMember/selectedDisk/index.vue'], resolve),
     meta: {
       title: 'vip选盘',
@@ -228,7 +228,7 @@ export default [
   },
   {
     path: '/user/mypreference/openPreference',
-    name: 'mypreference',
+    name: 'open-preference',
     component: resolve => require(['@/views/user/mypreference/openPreference/index.vue'], resolve),
     meta: {
       title: '开通套餐',
@@ -271,9 +271,20 @@ export default [
     }
   },
   {
-    path: '/user/edit/awWelfare',
+    path: '/user/invitation/awWelfare',
     name: 'awWelfare',
-    component: resolve => require(['@/views/user/edit/awWelfare.vue'], resolve),
+    component: resolve => require(['@/views/user/invitation/awWelfare.vue'], resolve),
+    meta: {
+      title: '邀请有礼',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/invitation/teammateList',
+    name: 'teammateList',
+    component: resolve => require(['@/views/user/invitation/teammateList.vue'], resolve),
     meta: {
       title: '邀请有礼',
       tabbar: {

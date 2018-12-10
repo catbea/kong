@@ -5,18 +5,31 @@
       <span class="icon-already bg_img" :style="{backgroundImage:'url('+alreadyImg+')'}"></span>
       <div class="left-num">
         <p>楼盘捆绑套餐</p>
-        <p>购买套餐可任选10个楼盘，优享1个月免费代理服务</p>
+        <p>购买套餐可任选{{itemInfo.limitTotal}}个楼盘，优享{{itemInfo.timeNum}}个{{itemInfo.timeUnit===0 ? '天' : itemInfo.timeUnit===1 ? '月' : '年'}}免费代理服务</p>
       </div>
     </div>
     <div class="binding-meal-page-right">
       <i>¥</i>
-      <i>158</i>
+      <i>{{itemInfo.price | priceFormart}}</i>
     </div>
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    itemInfo: {
+      type: Object,
+      default: function() {
+        return {
+          price: 0,
+          timeNum: 0,
+          limitTotal: 0,
+          timeUnit: 0
+        }
+      }
+    }
+  },
   data: () => ({
     alreadyImg: require('IMG/user/alreadyBuy/icon@2x.png')
   })

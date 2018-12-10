@@ -26,7 +26,7 @@
             </div>
             <div class="dynamics-list-content" @click="godynamicsList">
               <p>查看浏览了楼盘  <span>{{item.objectName}}</span></p>
-              <p>{{item.updateTime }} 日第<span>{{item.clickCount }}次</span>打开 </p>
+              <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}</span></p>
               <p>累计浏览<span>{{item.todayClickCount }}次</span>,名片，平均停留<span>{{item.totalTime}}s</span></p>
             </div>
@@ -34,10 +34,10 @@
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-                <button class="list-btn-follow" v-show="item.attentionStatus  == 1" @click="getupdateCustomerInfo(item)">
+                <button id="attentionStatusNO" class="list-btn-follow" v-show="item.attentionStatus  == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
-                <button class="list-btn-followOK" v-show="item.attentionStatus  == 0" @click="getupdateCustomerInfo(item)">已关注</button>
+                <button id="attentionStatusOK" class="list-btn-followOK" v-show="item.attentionStatus  == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
@@ -77,15 +77,29 @@ export default {
     // this.golist()
   },
   methods: {
-    getupdateCustomerInfo(item) {
-      this.$emit('click', item)
+    getupdateCustomerInfo(item,key) {
+       let pram = {
+      statusOK: 'attentionStatusOK',
+      statusNO: 'attentionStatusNO',
+      item: item,
+      index: key,
+      type:'update'
+    }
+      this.$emit('click', pram)
     },
     goalldynamics() {
-      this.$router.push('/dynamics/message/messageList')
+      let pram = {
+         type:'messageList'
+      }
+      this.$emit('click',pram)
     },
     godynamicsList(){
-      // this.$emit('click', this.info)
-      this.$router.push('/custom/detail')
+      let pram = {
+        info: this.info,
+        type:'detail'
+      }
+      this.$emit('click', pram)
+     
     }
   }
 }
@@ -187,6 +201,9 @@ export default {
           color: rgba(0, 122, 230, 1);
           line-height: 17px;
           background: #ffffff;
+              position: absolute;
+                  right: 80px;
+    top: 12px;
           > .agent-gzImg {
             width: 11px;
             height: 11px;
@@ -202,6 +219,9 @@ export default {
           border-radius: 16px;
           border: 1px solid #999999;
           background: #ffffff;
+          position: absolute;
+              right: 80px;
+    top: 12px;
         }
         > .list-btn-contact {
           width: 64px;

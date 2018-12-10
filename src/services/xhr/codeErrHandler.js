@@ -6,7 +6,6 @@ export default (msg, url) => {
   if (!msg.result) {
     console.error('!!![重大错误]!!!-接口返回数据不符合规范', msg)
     console.error(url)
-
-    // vue.$router.back()
   }
+  return true
 }

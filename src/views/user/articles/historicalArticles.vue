@@ -1,6 +1,6 @@
 <template>
   <div class="historicalArticles-page">
-    <div class="historicalArticles-content" v-show="articles=='2'">
+    <div class="historicalArticles-content" v-show="historyList.length != '' ">
       <div class="historicalArticles-title">
         共{{total}}文章
         <span class="historicalArticles-title-right">
@@ -9,7 +9,7 @@
       </div>
       <discover-list :data="historyList"></discover-list>
     </div>
-    <div class="historicalArticles-null" v-show="articles== '1'">
+    <div class="historicalArticles-null" v-show="articles == ''">
       <null-articles :nullIcon="nullIcon" :nullcontent="nullcontent"></null-articles>
     </div>
   </div>
@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      articles: '2',
+      articles: '1',
       nullIcon: require('IMG/user/collection/Article@2x.png'),
       nullcontent: '暂无历史文章',
       historyList: [],

@@ -32,13 +32,13 @@ class CommonService {
    * @param code 微信跳转地址截取code
    * @param payCorpId
    */
-  getPayOpenId(code, corpId, pcOpenId) {
+  getPayOpenId(code, corpId, pcOpenid) {
     return xhr({
       url: '/cp/oauth2/getPayOpenId',
       body: {
         code,
         corpId,
-        pcOpenId
+        pcOpenid
       }
     })
   }
@@ -67,6 +67,17 @@ class CommonService {
     })
   }
 
+    /**
+   * 陶盘支付
+   */
+  packagePayment(param) {
+    return xhr({
+      url: '/weixinPay/packagePayment',
+      method: 'post',
+      body: param
+    })
+  }
+
   /**
    * 获取所有城市列表
    */
@@ -84,5 +95,6 @@ class CommonService {
       url: '/common/getCityHot'
     })
   }
+
 }
 export default new CommonService()

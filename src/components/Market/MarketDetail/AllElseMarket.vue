@@ -1,7 +1,7 @@
 <template>
   <div class="all-else-market-box">
     <van-swipe :touchable="true" :width="172" :loop="false" :show-indicators="false">
-      <van-swipe-item v-for="(item,index) in linkerOtherList" :key="index" @click.native="itemClickHandler(item)">
+      <van-swipe-item v-for="(item,index) in linkerOtherList" :key="index" @click.native="itemClickHandler(item.linkerId)">
       <ul class="else-market-box">
         <li class="else-market-box-img bg_img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
 

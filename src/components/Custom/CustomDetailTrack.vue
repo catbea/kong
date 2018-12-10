@@ -7,16 +7,17 @@
       </div>
     </div>
     <ul>
-      <li>
-        <p class="content-title">2018年6月15日 16:12</p>
-        <div class="content-box">
+      <li v-for="(times,key) in trackList" :key="key">
+        <p class="content-title">{{times.timeStr}}</p>
+        <div class="content-box" v-for="(item,key) in times.msgList" :key="key">
           <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
-        <p>当日第<span>3</span> 次浏览了楼盘 碧桂园凤凰国际</p>
+          <p>{{item.markedWords}}</p>
+        <!-- <p>当日第<span>3</span> 次浏览了楼盘 碧桂园凤凰国际</p>
         <p>浏览市场<span>大于60s</span> 篇幅<span>小于50%</span></p>
-        <p>累计<span>浏览1次</span>该楼盘, 平均<span>停留5.5s</span></p>
+        <p>累计<span>浏览1次</span>该楼盘, 平均<span>停留5.5s</span></p> -->
         </div>
       </li>
-      <li>
+      <!-- <li>
         <p class="content-title">2018年6月15日 16:12</p>
         <div class="content-box">
           <span class="icon-radius" :class="{day:!backColor,dayIn:backColor}"></span>
@@ -24,7 +25,7 @@
         <p>浏览市场<span>大于60s</span> 篇幅<span>小于50%</span></p>
         <p>累计<span>浏览1次</span>该楼盘, 平均<span>停留5.5s</span></p>
         </div>
-      </li>
+      </li> -->
     </ul>
     <custom-operation></custom-operation>
   </div>
@@ -36,7 +37,8 @@ export default {
     CustomOperation
   },
   props: {
-    trackInfo: { type: Array }
+    trackInfo: { type: Array },
+    trackList: { type : Array }
   },
   data: () => ({
     // info: [
@@ -88,6 +90,7 @@ export default {
     li {
       width: 322px;
       margin-left: 24px;
+          margin-bottom: 80px;
       .content-box {
         border-left: 1px solid #e5e5e5;
         padding-top: 12px;

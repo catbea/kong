@@ -15,7 +15,7 @@
         </div>
         <div class="van-hairline--bottom form-cell" @click="popAreaHandler">
           <p class="title">主营区域</p>
-          <p class="value">{{majorRegion}}
+          <p class="value">{{userRegistInfo.majorRegion}}
             <van-icon name="arrow" />
           </p>
         </div>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="next-step" @click="nextHandler">下一步</div>
-      <p class="protocol">注册代表您同意 <router-link to="/">AW大师用户协议</router-link>
+      <p class="protocol">注册代表您同意 <router-link to="/register/agreement?name=AW大师">AW大师用户协议</router-link>
       </p>
     </div>
     <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler"></area-select>
@@ -44,7 +44,7 @@ import RegStep from 'COMP/Register/RegStep'
 import MaterialInput from 'COMP/MaterialInput'
 import AreaSelect from 'COMP/AreaSelect'
 import { mapGetters } from 'vuex'
-
+import * as types from '@/store/mutation-types'
 import RegisterService from 'SERVICE/registService'
 export default {
   components: {
@@ -65,9 +65,9 @@ export default {
     areaCode: '440305',
     registerType: '',
     enterpriseId: '',
-    majorRegion: '广东省/深圳市/南山区',
-    distributorName: 'AW大师',
-    institutionName: 'AW大师'
+    majorRegion: '',
+    city: '',
+    area: '',
   }),
   created() {
     console.log(this.$route.query)
@@ -76,6 +76,9 @@ export default {
     this.enterpriseId = this.query.enterpriseId
     // registerType 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
     console.log(this.userRegistInfo)
+    this.majorRegion = this.userRegistInfo.majorRegion
+    this.city = this.userRegistInfo.city
+    this.area = this.userRegistInfo.area
   },
   computed: {
     ...mapGetters(['userRegistInfo'])
@@ -122,7 +125,12 @@ export default {
      * 搜索公司
      */
     seachCompanyHandler() {
-      this.$router.push('/register/searchCompany')
+      let params = {
+        enterpriseId: this.enterpriseId,
+        city: this.city,
+        area: this.area
+      }
+      this.$router.push({path: '/register/searchCompany', query: params})
     },
     /**
      * 选择机构
@@ -135,11 +143,11 @@ export default {
       this.$router.push({path: '/user/edit/userMechanism', query: params})
     },
     nextHandler() {
-      let params = {
-        enterpriseId: this.enterpriseId
-      }
-      this.$router.push({ path: '/register/step2', query: params })
-      // this.register()
+      // let params = {
+      //   enterpriseId: this.enterpriseId
+      // }
+      // this.$router.push({ path: '/register/step2', query: params })
+      this.register()
     },
     async register() {
       let vo = {
@@ -152,7 +160,7 @@ export default {
         institutionId: this.userRegistInfo.institutionId
       }
       const result = await RegisterService.register(vo)
-      if (JSON.stringify(data) != '{}') {
+      if (JSON.stringify(result) != '{}') {
         let params = {
           enterpriseId: this.enterpriseId
         }
@@ -168,6 +176,14 @@ export default {
       this.areaShow = false
       console.log(val)
       this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
+      this.city = val[1].name
+      this.area = val[2].name
+      let _userRegistInfo = {
+        majorRegion: this.majorRegion,
+        city: this.city,
+        area: this.area
+      }
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
       console.log(this.majorRegion)
     }
   }

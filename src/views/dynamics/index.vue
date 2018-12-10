@@ -33,7 +33,7 @@ export default {
     //动态详情
     async goMessageInfo(num) {
       if (num.customerCount.val != 0 && num.businessCardViews.val != 0 && num.estateViews.val != 0) {
-        this.$router.push('/dynamics/allDynamics')
+        this.$router.push({ name: 'allDynamics', params: { customerCount: num.customerCount.val, businessCardViews: num.businessCardViews.val, estateViews: num.estateViews.val } })
       }
     },
     //楼盘详情
@@ -80,6 +80,7 @@ export default {
   }
   .list-container {
     background: #fff;
+    margin-top: 15px;
   }
 }
 </style>

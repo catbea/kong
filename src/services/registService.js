@@ -50,5 +50,39 @@ class registService {
       }
     })
   }
+
+  /**
+   * 查询分销商列表
+   * @param {*} enterpriseId 
+   * @param {*} city 
+   * @param {*} area 
+   */
+  queryRegisterDistributor(enterpriseId, city, area) {
+    return xhr({
+      url: '/register/queryRegisterDistributor',
+      body: {
+        enterpriseId,
+        city,
+        area
+      }
+    })
+  }
+
+  /**
+   * 查询注册推荐人信息
+   * @param {*} enterpriseId 
+   * @param {*} registerType 
+   * @param {*} parentUserId 
+   */
+  queryRegisterRecommendInfo(enterpriseId, registerType, parentUserId) {
+    return xhr({
+      url: '/register/queryRecommendInfo',
+      body: {
+        enterpriseId,
+        registerType,
+        parentUserId
+      }
+    })
+  }
 }
 export default new registService()

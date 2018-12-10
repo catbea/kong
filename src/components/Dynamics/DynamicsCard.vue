@@ -26,7 +26,7 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent">
+            <div class="dynamics-list-agent" @click="godynamicsList">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="item.avatarUrl" class="agent-userImg">
@@ -41,7 +41,7 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content">
+            <div class="dynamics-list-content" @click="godynamicsList">
               <p>浏览了 <span>你的名片</span></p>
               <p>{{item.updateTime }} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}</span></p>
@@ -51,10 +51,10 @@
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-               <button class="list-btn-follow" v-show="item.attentionStatus   == 1">
+               <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
-                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0">已关注</button>
+                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                 <button class="list-btn-contact"  @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
@@ -93,10 +93,25 @@ export default {
   },
   methods: {
     godynamicsList() {
-      this.$emit('click', this.info)
+      let pram ={
+        info: this.info,
+         type:'detail'
+      }
+      this.$emit('click', pram)
+    },
+    getupdateCustomerInfo(item,key){
+      let pram = {
+          item:item,
+          index:key,
+          type:'guanz'
+      }
+      this.$emit('click',pram)
     },
     goalldynamics () {
-      this.$router.push('/dynamics/message/messageList')
+      let pram = {
+        type:'messageList'
+      }
+      this.$emit('click',pram)
     },
   }
 }

@@ -6,12 +6,12 @@
         :style="{backgroundImage:'url('+alreadyImg+')'}"
       ></span>
       <div class="left-num">
-        <p>已购套餐1</p>
-        <p>将于2018年10月15日到期</p>
+        <p>{{packageItem.title}}</p>
+        <p>将于{{packageItem.expireDate | dateTimeFormatter(2,'-')}}到期</p>
       </div>
     </div>
-    <div class="already-buy-page-right">
-      待选楼盘 (8/10)
+    <div class="already-buy-page-right" @click="selectProjectHandle">
+      待选楼盘 ({{packageItem.projectSelected}}/{{packageItem.projectCount}})
       <span
         class="icon-detail bg_img"
         :style="{backgroundImage:'url('+detailImg+')'}"
@@ -21,10 +21,28 @@
 </template>
 <script>
 export default {
+  props: {
+    packageItem: {
+      type: Object,
+      default: function() {
+        return {
+          title: '已购套餐',
+          projectSelected: 0,
+          projectCount: 0,
+          expireDate: 0
+        }
+      }
+    }
+  },
   data: () => ({
     alreadyImg: require('IMG/user/alreadyBuy/icontag@2x.png'),
     detailImg: require('IMG/user/alreadyBuy/arrow2@2x.png')
-  })
+  }),
+  methods: {
+    selectProjectHandle() {
+      this.$emit('selectProject', this.packageItem)
+    }
+  }
 }
 </script>
 <style lang="less">

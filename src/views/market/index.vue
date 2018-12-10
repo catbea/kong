@@ -7,7 +7,8 @@
       <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
     <screen v-model="filter"></screen>
-    <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
+    <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket">
+    </already-open>
     <div class="all-market">
       <van-list
         v-model="loading"
@@ -93,13 +94,15 @@ export default {
 .market-page {
   width: 100%;
   height: 100%;
+  // .already-open-page{
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items:center;
+  // }
   > .search-box {
     position: relative;
     width: 375px;
     height: 44px;
-    > div {
-      display: inline-block;
-    }
     > .search-comp {
       width: 305px;
       height: 30px;
@@ -111,7 +114,7 @@ export default {
       height: 24px;
       transform: translate(-50%, -50%);
       right: 8px;
-      top: 22px;
+      top: 15px;
     }
   }
 }

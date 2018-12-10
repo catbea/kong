@@ -86,7 +86,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/info',
+    path: '/inDetail/info/:id',
     name: 'marketDetail-info',
     component: resolve => require(['@/views/market/marketDetail/marketDetailInfo/index.vue'], resolve),
     meta: {
@@ -127,7 +127,7 @@ export default [
   },
   {
     path: '/marketDetail/share/compile',
-    name: 'save-poster',
+    name: 'compile-poster',
     component: resolve => require(['@/views/market/marketDetail/marketShare/compilePoster/index.vue'], resolve),
     meta: {
       title: '编辑海报'
@@ -142,7 +142,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/photo',
+    path: '/marketDetail/photo/:id',
     name: 'photoList',
     component: resolve => require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
     meta: {

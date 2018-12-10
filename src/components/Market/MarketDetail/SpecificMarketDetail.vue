@@ -52,7 +52,13 @@ export default {
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
     siteHandle() {
-      this.$router.push('/marketDetail/marketDetail/allNear')
+      this.$router.push({
+    path:'/public/map-Search',
+    query:{
+        latitude:this.info.longitude,
+        longitude:this.info.latitude
+    }
+    })
     }
   }
 }

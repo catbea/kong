@@ -17,12 +17,12 @@ export default {
     Tabbar
   },
   mounted() {
-    document.addEventListener('touchstart', handler, false)
+    // document.addEventListener('touchstart', this.handler, false)
   },
   methods:{
-    handler(e){
-      e.preventDefault()
-    }
+    // handler(e){
+    //   e.preventDefault()
+    // }
   }
 }
 </script>
