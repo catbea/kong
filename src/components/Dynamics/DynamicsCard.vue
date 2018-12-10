@@ -55,7 +55,7 @@
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0">已关注</button>
-                <button class="list-btn-contact">
+                <button class="list-btn-contact"  @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -94,7 +94,10 @@ export default {
   methods: {
     godynamicsList() {
       this.$emit('click', this.info)
-    }
+    },
+    goalldynamics () {
+      this.$router.push('/dynamics/message/messageList')
+    },
   }
 }
 </script>
@@ -207,26 +210,27 @@ export default {
           color: rgba(0, 122, 230, 1);
         }
       }
-      > .dynamics-list-btn {
-        height: 40px;
-        > .list-btn-right {
-          position: absolute;
-          right: 32px;
-          // margin-top: 15px;
-          > .list-btn-follow {
-            width: 64px;
-            height: 24px;
-            border-radius: 16px;
-            border: 1px solid;
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(0, 122, 230, 1);
-            line-height: 17px;
-            background: #ffffff;
-            > .agent-gzImg {
-              width: 11px;
-              height: 11px;
-            }
+    }
+    > .dynamics-list-btn {
+      height: 40px;
+      > .list-btn-right {
+        position: absolute;
+        right: 32px;
+        line-height: 30px;
+        // margin-top: 15px;
+        > .list-btn-follow {
+          width: 64px;
+          height: 24px;
+          border-radius: 16px;
+          border: 1px solid;
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(0, 122, 230, 1);
+          line-height: 17px;
+          background: #ffffff;
+          > .agent-gzImg {
+            width: 11px;
+            height: 11px;
           }
           > .list-btn-followOK {
             font-size: 12px;

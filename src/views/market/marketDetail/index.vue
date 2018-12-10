@@ -193,7 +193,8 @@ export default {
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.openStatus = result.openStatus
 
-      this.titleBarHandle()
+      //this.titleBarHandle()
+
     },
     //跳转更多内容
     skipMoreContent() {

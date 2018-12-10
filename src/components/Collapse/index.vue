@@ -9,7 +9,7 @@
         class="parent-view-right"
         v-if="model"
         v-model="model.checked"
-        @change="selectOrganiz(model.id)"
+        @change="selectOrganiz(model)"
       ></checkbox>
     </div>
     <ul class="ul-view" v-show="open" v-if="isFolder">
@@ -18,6 +18,7 @@
         v-for="(model, index) in model.children"
         :key="index"
         :model="model"
+        @clickListener="selectOrganiz"
       ></collapse-List>
     </ul>
   </li>
@@ -45,9 +46,9 @@ export default {
   },
 
   methods: {
-    selectOrganiz(id) {
-      console.log(id)
-      this.$emit('clickListener', id)
+    selectOrganiz(model) {
+      console.log(model)
+      this.$emit('clickListener', model)
     },
 
     toggle: function() {

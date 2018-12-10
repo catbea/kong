@@ -70,7 +70,7 @@
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0">已关注</button>
-                <button class="list-btn-contact">
+                <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -121,7 +121,11 @@ export default {
     async getSingleArticleDynamicCount() {
       const res = await dynamicsService.getSingleArticleCount(this.itemlist.articleId)
       this.articleDynamicCount = res
-    }
+    },
+    //联系
+    goalldynamics () {
+      this.$router.push('/dynamics/message/messageList')
+    },
   }
 }
 </script>

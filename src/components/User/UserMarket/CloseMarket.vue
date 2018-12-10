@@ -1,9 +1,9 @@
 <template>
-  <div class="close-market-page">
+  <div class="close-market-page" v-if="dataArr.displayFlag==1">
     <div class="close-market-page-box" @click="skipMarketRetuen">
       <div class="close-market-page-box-top">
         <div class="close-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
-          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
+          <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" 
           :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <div class="close-market-page-box-bottom" v-if="dataArr.price">
+      <div class="close-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
         {{dataArr.divisionRules}}
       </div>
@@ -46,8 +46,8 @@
       >
         <ul>
           <li>续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
-          <li @click="masterHandle">大师推荐</li>
-          <li @click="commonHandle">普通推荐</li>
+          <!-- <li @click="masterHandle">大师推荐</li>
+          <li @click="commonHandle">普通推荐</li> -->
           <li @click="stickHandle">
             <span v-show="stickShow">置顶</span>
             <span v-show="!stickShow">取消置顶</span>
@@ -130,6 +130,7 @@ export default {
         this.stickShow=false
         this.exhibitionMarketShow=false
         this.changeUserStatus(this.linkerId,30,0)
+        this.dataArr.displayFlag=0
         // this.dataArr.displayFlag='1'
         // this.$emit('openCut',this.marketIndex)
       }).catch(() => {
@@ -152,8 +153,8 @@ export default {
 .close-market-page{
   margin-left:16px;
   display: flex;
-  background: #EA4D2E;
  .close-market-page-box{
+   background: rgba(143, 159, 177, 0.15);
    margin-top:16px;
    padding: 16px 16px 0 16px;
   width:311px;
@@ -303,7 +304,6 @@ export default {
  }
  //弹窗
  .van-popup--bottom {
-    height: 316px;
     background: rgba(255, 255, 255, 1);
     ul {
       li {
