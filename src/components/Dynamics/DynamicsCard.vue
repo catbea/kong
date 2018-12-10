@@ -80,20 +80,19 @@ export default {
     DynamicsList,
     ShadowBox
   },
-  props:{
-    
-    cardDynamicCount:{type:Object},
-    cardDynamicList:{type:Array}
+  props: {
+    cardDynamicCount: { type: Object },
+    cardDynamicList: { type: Array }
   },
   data() {
     return {
-      info:{type:Object},
-       lxImg: require('IMG/dynamics/lx@2x.png'),
-      gzImg: require('IMG/dynamics/gz@2x.png'),
+      info: { type: Object },
+      lxImg: require('IMG/dynamics/lx@2x.png'),
+      gzImg: require('IMG/dynamics/gz@2x.png')
     }
   },
-  methods:{
-    godynamicsList(){
+  methods: {
+    godynamicsList() {
       this.$emit('click', this.info)
     },
     goalldynamics () {
@@ -106,111 +105,110 @@ export default {
 .article-container {
   background: #ffffff;
   .shadow-box {
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07),
-    0px 2px 17px 0px rgba(34, 47, 85, 0.05);
-  border-radius: 6px;
-  margin: 0 16px;
-  .dynaData-container {
-  background: #ffffff;
-  display: flex;
-  padding: 20px 0 20px 20px;
-
-  span {
-    width: 80.7px;
-  }
-  .container-title {
-    font-size: 12px;
-    font-weight: 400;
-    color: rgba(153, 153, 153, 1);
-    line-height: 18px;
-  }
-  .card-num {
-    font-size: 24px;
-    font-weight: 500;
-    color: rgba(51, 51, 51, 1);
-    line-height: 36px;
-  }
-  
-}
-}
-  .dynamics-container {
-  background: #ffffff;
-  margin-top: 15px;
- .dynamics-time {
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(41, 46, 51, 1);
-    line-height: 20px;
-    padding: 12px 0;
-    margin: 0 0.42667rem;
-  }
-}
-.dynamics-container-list {
-  margin-bottom: 20px;
-  .dynamics-list {
-    padding: 20px 16px;
-    > .dynamics-list-agent {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+    border-radius: 6px;
+    margin: 0 16px;
+    .dynaData-container {
+      background: #ffffff;
       display: flex;
-      > .list-agent-left {
-        display: flex;
-        > .agent-left-left {
-          > .agent-userImg {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-          }
-        }
-        > .agent-left-right {
-          padding-left: 12px;
-          > .left-right-name {
-            font-size: 15px;
-            font-weight: 600;
-            color: rgba(41, 46, 51, 1);
-            line-height: 21px;
-          }
-          > .left-right-time {
-            font-size: 13px;
-            font-weight: 400;
-            color: rgba(153, 153, 153, 1);
-            line-height: 28px;
-          }
-        }
+      padding: 20px 0 20px 20px;
+
+      span {
+        width: 80.7px;
       }
-      > .list-agent-right {
-        position: absolute;
-        right: 16px;
-        margin-top: -6px;
-        padding-right: 16px;
-        > .agent-right-num {
-          font-size: 20px;
-          font-weight: 500;
-          color: rgba(0, 122, 230, 1);
-          line-height: 30px;
-        }
-        > .agent-right-nums {
-          font-size: 20px;
-          font-weight: 500;
-          color: rgba(102, 102, 102, 1);
-          line-height: 30px;
-        }
-        > .agent-right-title {
-          font-size: 11px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          line-height: 16px;
-          text-align: center;
-        }
+      .container-title {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        line-height: 18px;
+      }
+      .card-num {
+        font-size: 24px;
+        font-weight: 500;
+        color: rgba(51, 51, 51, 1);
+        line-height: 36px;
       }
     }
-    > .dynamics-list-content {
+  }
+  .dynamics-container {
+    background: #ffffff;
+    margin-top: 15px;
+    .dynamics-time {
       font-size: 14px;
-      font-family: PingFang-SC-Regular;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-      line-height: 21px;
-      > p span {
-        color: rgba(0, 122, 230, 1);
+      font-weight: 500;
+      color: rgba(41, 46, 51, 1);
+      line-height: 20px;
+      padding: 12px 0;
+      margin: 0 0.42667rem;
+    }
+  }
+  .dynamics-container-list {
+    margin-bottom: 20px;
+    .dynamics-list {
+      padding: 20px 16px;
+      > .dynamics-list-agent {
+        display: flex;
+        > .list-agent-left {
+          display: flex;
+          > .agent-left-left {
+            > .agent-userImg {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
+          }
+          > .agent-left-right {
+            padding-left: 12px;
+            > .left-right-name {
+              font-size: 15px;
+              font-weight: 600;
+              color: rgba(41, 46, 51, 1);
+              line-height: 21px;
+            }
+            > .left-right-time {
+              font-size: 13px;
+              font-weight: 400;
+              color: rgba(153, 153, 153, 1);
+              line-height: 28px;
+            }
+          }
+        }
+        > .list-agent-right {
+          position: absolute;
+          right: 16px;
+          margin-top: -6px;
+          padding-right: 16px;
+          > .agent-right-num {
+            font-size: 20px;
+            font-weight: 500;
+            color: rgba(0, 122, 230, 1);
+            line-height: 30px;
+          }
+          > .agent-right-nums {
+            font-size: 20px;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1);
+            line-height: 30px;
+          }
+          > .agent-right-title {
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: 16px;
+            text-align: center;
+          }
+        }
+      }
+      > .dynamics-list-content {
+        font-size: 14px;
+        font-family: PingFang-SC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+        line-height: 21px;
+        > p span {
+          color: rgba(0, 122, 230, 1);
+        }
       }
     }
     > .dynamics-list-btn {
@@ -234,37 +232,36 @@ export default {
             width: 11px;
             height: 11px;
           }
-        }
-        > .list-btn-followOK {
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          line-height: 17px;
-          width: 64px;
-          height: 24px;
-          border-radius: 16px;
-          border: 1px solid #999999;
-          background: #ffffff;
-        }
-        > .list-btn-contact {
-          width: 64px;
-          height: 24px;
-          background: rgba(0, 122, 230, 1);
-          border-radius: 16px;
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(255, 255, 255, 1);
-          line-height: 17px;
-          border: 0;
-          margin-left: 24px;
-          > .btn-contact-userImg {
-            width: 11px;
-            height: 11px;
+          > .list-btn-followOK {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: 17px;
+            width: 64px;
+            height: 24px;
+            border-radius: 16px;
+            border: 1px solid #999999;
+            background: #ffffff;
+          }
+          > .list-btn-contact {
+            width: 64px;
+            height: 24px;
+            background: rgba(0, 122, 230, 1);
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 17px;
+            border: 0;
+            margin-left: 24px;
+            > .btn-contact-userImg {
+              width: 11px;
+              height: 11px;
+            }
           }
         }
       }
     }
   }
-}
 }
 </style>

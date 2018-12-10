@@ -58,7 +58,6 @@ export default {
     }
   },
 
-
   computed: {
     ...mapGetters(['userInfo'])
   },
@@ -120,12 +119,11 @@ export default {
 
     async upHeaderImg(obj) {
       const result = await userService.upHeaderImg(obj)
-       if(result){
-        
-       }else{
-         this.$store.dispatch('userInfo', Object.assign(this.userInfo, { avatarUrl: this.avatar }))
-          this.$router.go(-1)
-       }
+      if (result) {
+      } else {
+        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { avatarUrl: this.avatar }))
+        this.$router.go(-1)
+      }
     },
 
     /**

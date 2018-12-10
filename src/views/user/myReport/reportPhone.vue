@@ -9,33 +9,33 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant';
+import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 export default {
-  components:{
+  components: {
     Dialog
   },
-  data () {
+  data() {
     return {
       Cphone: ''
     }
   },
-  created () {
+  created() {
     console.log(this.reportAddInfo)
   },
   computed: {
     ...mapGetters(['reportAddInfo'])
   },
   methods: {
-    godSub () {
+    godSub() {
       console.log(this.Cphone)
-      if (this.Cphone == '' ) {
+      if (this.Cphone == '') {
         Dialog.alert({
           message: '名片展示手机号不可为空'
         }).then(() => {
           // on close
         })
-        return;
+        return
       }
       if (this.Cphone.length < 11 || this.Cphone.length > 11) {
         Dialog.alert({
@@ -43,7 +43,7 @@ export default {
         }).then(() => {
           // on close
         })
-        return;
+        return
       }
       let _reportAddInfo = {
         clientPhone: this.Cphone
@@ -51,7 +51,6 @@ export default {
       this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
       this.$router.back(-1)
     }
-
   }
 }
 </script>
@@ -79,15 +78,14 @@ export default {
       color: rgba(51, 51, 51, 1);
       line-height: 28px;
       margin-bottom: 12px;
-     
     }
-   
+
     > .edit-phone-conter {
       margin-bottom: 24px;
       > .edit-phone-input {
         font-size: 16px;
         font-weight: 500;
-        color:rgba(187,187,187,1);
+        color: rgba(187, 187, 187, 1);
         line-height: 35px;
         width: 99%;
         border: 0;

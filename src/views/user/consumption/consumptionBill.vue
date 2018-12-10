@@ -1,62 +1,71 @@
 <template>
-  <van-list
-    class="bill-page"
-    :style="{background:show==null?'#ffffff':'#F7F9FA'}"
-    v-model="loading"
-    :finished="finished"
-    :finished-text="'没有更多了'"
-    :offset='100'
-    @load="onLoad"
-  >
-    <!-- <Tips></Tips>#F7F9FA; -->
-    <!-- v-for="(item, index) in billItem" :key="index" -->
-    <div class="bill-container" v-for="(item,index) in billItem" :key="index">
-      <shadow-box>
-        <div slot="container" class="bill-container-css">
-          <div class="bill-title">
-            {{item.costTypeDesc}}
-            <span class="bill-title-price">
-              ¥
-              <span class="bill-title-num">{{item.payPrice}}</span>
-            </span>
+  <div>
+    <van-list
+      class="bill-page"
+      :style="{background:show==null?'#ffffff':'#F7F9FA'}"
+      v-model="loading"
+      :finished="finished"
+      :finished-text="'没有更多了'"
+      :offset="100"
+      @load="onLoad"
+      v-if="billItem"
+    >
+      <!-- <Tips></Tips>#F7F9FA; -->
+      <!-- v-for="(item, index) in billItem" :key="index" -->
+      <div class="bill-container" v-for="(item,index) in billItem" :key="index">
+        <shadow-box>
+          <div slot="container" class="bill-container-css">
+            <div class="bill-title">
+              {{item.costTypeDesc}}
+              <span class="bill-title-price">
+                ¥
+                <span class="bill-title-num">{{item.payPrice}}</span>
+              </span>
+            </div>
+            <p class="container-list bill-container-name">
+              购买楼盘
+              <span class="container-list-title container-name">{{item.linkerName}}</span>
+            </p>
+            <p class="container-list bill-container-spec">
+              购买规格
+              <span class="container-list-title container-spec">{{item.buyRule}}</span>
+            </p>
+            <p class="container-list bill-container-time">
+              下单时间
+              <span class="container-list-title container-time">{{item.purchaseTime}}</span>
+            </p>
+            <p class="container-list bill-container-num">
+              <span class="container-list">
+                交易单号
+                <span class="container-list-title">{{item.purchaseCode}}</span>
+              </span>
+              <Button
+                class="container-list-botton"
+                :data-clipboard-text="item.purchaseCode"
+                @click="copy"
+              >复制</Button>
+            </p>
+            <p class="container-list container-list-left bill-container-price">
+              总价
+              <span class="container-list-title container-price">¥{{item.purchasePrice}}</span>
+            </p>
+            <p class="container-list container-list-left bill-container-discount">
+              优惠
+              <span class="container-list-title container-discount">¥{{item.preferenPrice }}</span>
+            </p>
           </div>
-          <p class="container-list bill-container-name">
-            购买楼盘
-            <span class="container-list-title container-name">{{item.linkerName}}</span>
-          </p>
-          <p class="container-list bill-container-spec">
-            购买规格
-            <span class="container-list-title container-spec">{{item.buyRule}}</span>
-          </p>
-          <p class="container-list bill-container-time">
-            下单时间
-            <span class="container-list-title container-time">{{item.purchaseTime}}</span>
-          </p>
-          <p class="container-list bill-container-num">
-            <span class="container-list">
-              交易单号
-              <span class="container-list-title">{{item.purchaseCode}}</span>
-            </span>
-            <Button class="container-list-botton">复制</Button>
-          </p>
-          <p class="container-list container-list-left bill-container-price">
-            总价
-            <span class="container-list-title container-price">¥{{item.purchasePrice}}</span>
-          </p>
-          <p class="container-list container-list-left bill-container-discount">
-            优惠
-            <span class="container-list-title container-discount">¥{{item.preferenPrice }}</span>
-          </p>
-        </div>
-      </shadow-box>
-    </div>
-  </van-list>
+        </shadow-box>
+      </div>
+    </van-list>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-else></null>
+  </div>
 </template>
 <script>
 import ShadowBox from 'COMP/ShadowBox'
 import Null from 'COMP/Null'
 import userService from 'SERVICE/userService'
 import timeUtils from '@/utils/timeUtils'
+import Clipboard from 'clipboard'
 export default {
   components: {
     Null,
@@ -77,11 +86,9 @@ export default {
 
   created() {
     // this.getBillList(this.current)
-  
   },
 
   methods: {
-
     itemProperties() {
       //跳转到动态详情item
       // this.$router.push('/dynamics/dynamicsInfo')
@@ -99,6 +106,22 @@ export default {
         })
     },
 
+    //复制功能
+    copy() {
+      var clipboard = new Clipboard('.container-list-botton')
+      clipboard.on('success', e => {
+        console.log(e)
+        // 释放内存
+        clipboard.destroy()
+      })
+      clipboard.on('error', e => {
+        // 不支持复制
+        console.log('该浏览器不支持自动复制')
+        // 释放内存
+        clipboard.destroy()
+      })
+    },
+
     async getBillList(current) {
       const res = await userService.getMyBillList(current)
       this.billItem = res.records
@@ -113,7 +136,7 @@ export default {
       if (tempBillItem.length !== 0) {
         for (let i = 0; i < tempBillItem.length; i++) {
           let payTime = timeUtils.fmtDate(tempBillItem[i].purchaseTime)
-          tempBillItem[i].purchaseTime=payTime
+          tempBillItem[i].purchaseTime = payTime
         }
 
         this.billItem = this.billItem.concat(tempBillItem)

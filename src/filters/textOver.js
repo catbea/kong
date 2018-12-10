@@ -7,5 +7,5 @@
  */
 export default (str, length = 32, symbol = '...') => {
   str = str + ''
-  return str.length >= length ? (str.substr(0, length) + symbol) : str
+  return str.length >= length ? str.substr(0, length) + symbol : str
 }

@@ -5,14 +5,14 @@
       <p class="edit-label-conter">
         <span v-for="(item,key) in agentLabel" :key="key">
           <input
-            :id="item.id"
+            :id="item.labelId"
             type="checkbox"
             data-type="welfare"
             name="reason"
-            :value="item.itemName"
+            :value="item.labelName"
             @click="selectLabel(key)"
           >
-          <label :for="item.id">{{item.itemName}}</label>
+          <label :for="item.labelId">{{item.labelName}}</label>
         </span>
       </p>
       <div class="edit-label-div">
@@ -91,12 +91,11 @@ export default {
           // on close
         })
       } else {
-       
         let userList = {
           lableList: selectidlist
         }
         const res = await userService.upDateUserInfo(userList)
-        if(res){
+        if (res) {
           this.$store.dispatch('userInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
           this.$router.go(-1)
         }

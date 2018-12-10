@@ -1,7 +1,7 @@
 import * as types from '@/store/mutation-types'
 import commonService from '@/services/commonService'
 const state = {
-  cityMap:{}
+  cityMap: {}
 }
 
 const getters = {
@@ -9,12 +9,12 @@ const getters = {
 }
 
 const actions = {
-  async getAllCity({commit}) {
-    const res = await Promise.all([commonService.getHotCityList(),commonService.getCityList()])
+  async getAllCity({ commit }) {
+    const res = await Promise.all([commonService.getHotCityList(), commonService.getCityList()])
     let tempResult = []
-    tempResult.push ({
+    tempResult.push({
       character: '热',
-      city:res[0]
+      city: res[0]
     })
     tempResult = tempResult.concat(res[1])
     commit(types.CITY_LIST, tempResult)

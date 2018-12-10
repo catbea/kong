@@ -52,12 +52,10 @@ export default {
     lineData: { type: Array },
     barChartHidden: { type: Boolean },
     barData: { type: Array },
-    analysisListData: { type: Array },
+    analysisListData: { type: Array }
   },
 
-  created () {
-    
-  },
+  created() {},
   data: () => ({
     tempEstateData: [
       {

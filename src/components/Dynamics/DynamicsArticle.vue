@@ -50,9 +50,9 @@ export default {
     ArticleList,
     ShadowBox
   },
-  props:{
-    articleDynamicCount:{type:Array},
-    articleDynamicList:{type:Array}
+  props: {
+    articleDynamicCount: { type: Array },
+    articleDynamicList: { type: Array }
   },
   data() {
     return {
@@ -66,8 +66,7 @@ export default {
       articleNum: '124'
     }
   },
-  created() {
-  },
+  created() {},
   methods: {
     itemArticleInfo(item) {
       // /discover/headlinepath：'/Dynamics/articleInfo',query{}
@@ -78,89 +77,86 @@ export default {
 }
 </script>
 <style lang="less">
-
 .article-container {
   background: #ffffff;
   .article-container {
-  background: #ffffff;
-  margin-top: 13px;
-   .shadow-box {
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07),
-    0px 2px 17px 0px rgba(34, 47, 85, 0.05);
-  border-radius: 6px;
-  margin: 0 16px;
-  .dynaData-container {
-  background: #ffffff;
-  display: flex;
-  padding: 20px 0 20px 20px;
+    background: #ffffff;
+    margin-top: 13px;
+    .shadow-box {
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+      border-radius: 6px;
+      margin: 0 16px;
+      .dynaData-container {
+        background: #ffffff;
+        display: flex;
+        padding: 20px 0 20px 20px;
 
-  span {
-    width: 80.7px;
-  }
-  .container-title {
-    font-size: 12px;
-    font-weight: 400;
-    color: rgba(153, 153, 153, 1);
-    line-height: 18px;
-  }
-  .card-num {
-    font-size: 24px;
-    font-weight: 500;
-    color: rgba(51, 51, 51, 1);
-    line-height: 36px;
-  }
-  
-}
-}
-  > .article-list {
-    // margin: 0 15px;
-    display: flex;
-    border-bottom: 1px solid #e6e6e6;
-    margin: 0 16px;
-    padding: 16px 0 16px 0;
-    > .article-list-left {
-      height: 90px;
-      position: relative;
-      > .article-left-title {
-        font-size: 16px;
-        font-weight: 400;
-        color: rgba(51, 51, 51, 1);
-        line-height: 24px;
-        margin-right: 60px;
-        padding-right: 70px;
-      }
-      > .article-left-time {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(153, 153, 153, 1);
-        position: absolute;
-        bottom: 0;
-        > .left-time-nub {
+        span {
+          width: 80.7px;
+        }
+        .container-title {
           font-size: 12px;
-          font-family: PingFangSC-Regular;
           font-weight: 400;
-          color: rgba(0, 122, 230, 1);
-          line-height: 17px;
-          padding-left: 50px;
+          color: rgba(153, 153, 153, 1);
+          line-height: 18px;
+        }
+        .card-num {
+          font-size: 24px;
+          font-weight: 500;
+          color: rgba(51, 51, 51, 1);
+          line-height: 36px;
         }
       }
     }
-    > .article-list-right {
-      width: 120px;
-      height: 90px;
-      border-radius: 6px;
-      position: absolute;
-      margin-right: 0;
-      padding-right: 0;
-      right: 16px;
-      > .mark-icon {
+    > .article-list {
+      // margin: 0 15px;
+      display: flex;
+      border-bottom: 1px solid #e6e6e6;
+      margin: 0 16px;
+      padding: 16px 0 16px 0;
+      > .article-list-left {
+        height: 90px;
+        position: relative;
+        > .article-left-title {
+          font-size: 16px;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
+          line-height: 24px;
+          margin-right: 60px;
+          padding-right: 70px;
+        }
+        > .article-left-time {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+          position: absolute;
+          bottom: 0;
+          > .left-time-nub {
+            font-size: 12px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(0, 122, 230, 1);
+            line-height: 17px;
+            padding-left: 50px;
+          }
+        }
+      }
+      > .article-list-right {
         width: 120px;
         height: 90px;
-        background: rgba(255, 255, 255, 1);
+        border-radius: 6px;
+        position: absolute;
+        margin-right: 0;
+        padding-right: 0;
+        right: 16px;
+        > .mark-icon {
+          width: 120px;
+          height: 90px;
+          background: rgba(255, 255, 255, 1);
+        }
       }
     }
   }
-}
 }
 </style>

@@ -34,19 +34,18 @@ class DiscoverService {
   }
 
   /**
-   * 
-   * @param {*} infoId 
-   * @param {*} city 
+   *
+   * @param {*} infoId
+   * @param {*} city
    */
   getDiscoverDetail(infoId, city) {
     return xhr({
       url: '/cpInformation/informationPreview',
-      body:{
+      body: {
         infoId,
         city
       }
     })
   }
-
 }
 export default new DiscoverService()

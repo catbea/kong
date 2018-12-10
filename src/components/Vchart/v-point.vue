@@ -14,7 +14,6 @@ export default {
       ...this.$props,
       ...this.$attrs
     })
-  },
-  render() {}
+  }
 }
 </script>

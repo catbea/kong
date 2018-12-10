@@ -1,24 +1,5 @@
 import Vue from 'vue'
-import {
-  Toast,
-  Icon,
-  PullRefresh,
-  List,
-  Search,
-  Tab,
-  Tabs,
-  Swipe,
-  SwipeItem,
-  Uploader,
-  Lazyload,
-  Switch,
-  DatetimePicker,
-  Button,
-  RadioGroup,
-  Radio,
-  Area,
-  Popup
-} from 'vant'
+import { Toast, Icon, PullRefresh, List, Search, Tab, Tabs, Swipe, SwipeItem, Uploader, Lazyload, Switch, DatetimePicker, Button, RadioGroup, Radio, Area, Popup } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
 Vue.use(PullRefresh)

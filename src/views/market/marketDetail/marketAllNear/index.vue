@@ -89,7 +89,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items:center;
+      align-items: center;
       padding: 0 22px;
       .textColor {
         color: rgba(0, 122, 230, 1) !important;

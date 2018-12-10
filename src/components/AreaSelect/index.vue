@@ -1,6 +1,6 @@
 <template>
   <van-popup v-model="isShow" position="bottom">
-    <van-area :area-list="areaList" :value="value" @confirm="confirmHandler" @cancel="closePopup"/>
+    <van-area :area-list="areaList" :value="code" :title="title" @cancel="cancelHandler" @confirm="confirmHandler" />
   </van-popup>
 </template>
 <script>
@@ -14,19 +14,18 @@ export default {
         return fullArea
       }
     },
-    code: { type: String }
+    code: { type: String },
+    title: { type: String }
   },
   data: () => ({
-    isShow: false,
-    value: '110000'
+    isShow: false
   }),
   methods: {
     confirmHandler(val) {
-      this.$emit('confirmCityData', val)
-      this.isShow = false
+      this.$emit('confirm', val)
     },
-    closePopup() {
-      this.isShow = false
+    cancelHandler(val) {
+      this.$emit('cancel', val)
     }
   },
   watch: {
@@ -49,4 +48,3 @@ export default {
 .area-select {
 }
 </style>
-

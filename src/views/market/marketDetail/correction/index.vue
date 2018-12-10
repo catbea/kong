@@ -27,13 +27,7 @@ export default {
     Surplus: 50,
     introduct: '',
     backImg: require('IMG/correction/color.png'),
-    list: [
-      { text: '价格错误', check: false },
-      { text: '位置错误', check: false },
-      { text: '', check: false },
-      { text: '预计交房错误', check: false },
-      { text: '其他错误', check: false }
-    ]
+    list: [{ text: '价格错误', check: false }, { text: '位置错误', check: false }, { text: '', check: false }, { text: '预计交房错误', check: false }, { text: '其他错误', check: false }]
   }),
   methods: {
     taget(index) {
@@ -43,10 +37,10 @@ export default {
       var textVal = this.introduct.length
       this.Surplus = 50 - textVal
     },
-    async getCorrectionInfo(){
+    async getCorrectionInfo() {
       let res = await marketService.getCorrection()
       for (let index = 0; index < this.list.length; index++) {
-        this.list[index].text=res[index].item_name
+        this.list[index].text = res[index].item_name
       }
       console.log(res)
     }
@@ -86,8 +80,7 @@ export default {
         line-height: 22px;
         .active {
           // background: blue;
-          background: url('../../../../assets/img/correction/color.png')
-            no-repeat;
+          background: url('../../../../assets/img/correction/color.png') no-repeat;
           background-size: 100% 100%;
         }
         span {
@@ -130,20 +123,20 @@ export default {
     font-size: 12px;
     text-align: right;
   }
-  .submit-button{
-    margin-top:45px;
-    margin-left:16px;
-    width:343px;
-    height:44px;
-    background:rgba(0,122,230,1);
-    border-radius:6px;
+  .submit-button {
+    margin-top: 45px;
+    margin-left: 16px;
+    width: 343px;
+    height: 44px;
+    background: rgba(0, 122, 230, 1);
+    border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size:16px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:#FFFFFF;
+    font-size: 16px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: #ffffff;
   }
 }
 </style>

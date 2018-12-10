@@ -13,8 +13,7 @@ export default [
   {
     path: '/user/share-business-card',
     name: 'share-business-card',
-    component: resolve =>
-      require(['@/views/user/shareBusinessCard.vue'], resolve),
+    component: resolve => require(['@/views/user/shareBusinessCard.vue'], resolve),
     meta: {
       title: '分享名片'
     }
@@ -30,8 +29,7 @@ export default [
   {
     path: '/user/edit/avatar',
     name: 'user-edit-avatar',
-    component: resolve =>
-      require(['@/views/user/edit/userEditAvatar.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userEditAvatar.vue'], resolve),
     meta: {
       title: '修改头像'
     }
@@ -39,8 +37,7 @@ export default [
   {
     path: '/user/edit/userPortrait',
     name: 'userPortrait',
-    component: resolve =>
-      require(['@/views/user/edit/userPortrait.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userPortrait.vue'], resolve),
     meta: {
       title: '修改头像'
     }
@@ -48,8 +45,7 @@ export default [
   {
     path: '/user/edit/username',
     name: 'user-edit-username',
-    component: resolve =>
-      require(['@/views/user/edit/userEditUsername.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userEditUsername.vue'], resolve),
     meta: {
       title: '修改姓名'
     }
@@ -57,8 +53,7 @@ export default [
   {
     path: '/user/edit/phone',
     name: 'user-edit-phone',
-    component: resolve =>
-      require(['@/views/user/edit/userEditPhone.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userEditPhone.vue'], resolve),
     meta: {
       title: '修改手机号'
     }
@@ -66,8 +61,7 @@ export default [
   {
     path: '/user/edit/userWechat',
     name: 'user-edit-userWechat',
-    component: resolve =>
-      require(['@/views/user/edit/userWechat.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userWechat.vue'], resolve),
     meta: {
       title: '修改微信号'
     }
@@ -75,8 +69,7 @@ export default [
   {
     path: '/user/edit/userMechanism',
     name: 'userMechanism',
-    component: resolve =>
-      require(['@/views/user/edit/userMechanism.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userMechanism.vue'], resolve),
     meta: {
       title: '修改机构'
     }
@@ -92,8 +85,7 @@ export default [
   {
     path: '/user/edit/userIntroduction',
     name: 'userIntroduction',
-    component: resolve =>
-      require(['@/views/user/edit/userIntroduction.vue'], resolve),
+    component: resolve => require(['@/views/user/edit/userIntroduction.vue'], resolve),
     meta: {
       title: '修改个人介绍'
     }
@@ -102,8 +94,7 @@ export default [
   {
     path: '/user/articles/historicalArticles',
     name: 'historicalArticles',
-    component: resolve =>
-      require(['@/views/user/articles/historicalArticles.vue'], resolve),
+    component: resolve => require(['@/views/user/articles/historicalArticles.vue'], resolve),
     meta: {
       title: '历史文章'
     }
@@ -111,8 +102,7 @@ export default [
   {
     path: '/user/articles/updateArticles',
     name: 'updateArticles',
-    component: resolve =>
-      require(['@/views/user/articles/updateArticles.vue'], resolve),
+    component: resolve => require(['@/views/user/articles/updateArticles.vue'], resolve),
     meta: {
       title: '历史文章'
     }
@@ -120,8 +110,7 @@ export default [
   {
     path: '/user/collection/myCollection',
     name: 'myCollection',
-    component: resolve =>
-      require(['@/views/user/collection/myCollection.vue'], resolve),
+    component: resolve => require(['@/views/user/collection/myCollection.vue'], resolve),
     meta: {
       title: '我的收藏'
     }
@@ -129,8 +118,7 @@ export default [
   {
     path: '/user/consumption/consumptionBill',
     name: 'consumptionBill',
-    component: resolve =>
-      require(['@/views/user/consumption/consumptionBill.vue'], resolve),
+    component: resolve => require(['@/views/user/consumption/consumptionBill.vue'], resolve),
     meta: {
       title: '消费账单'
     }
@@ -138,8 +126,7 @@ export default [
   {
     path: '/user/myReport',
     name: 'myreport',
-    component: resolve =>
-      require(['@/views/user/myReport/index.vue'], resolve),
+    component: resolve => require(['@/views/user/myReport/index.vue'], resolve),
     meta: {
       title: '我的报备'
     }
@@ -147,8 +134,7 @@ export default [
   {
     path: '/user/myReport/reportInfo',
     name: 'reportInfo',
-    component: resolve =>
-      require(['@/views/user/myReport/reportInfo.vue'], resolve),
+    component: resolve => require(['@/views/user/myReport/reportInfo.vue'], resolve),
     meta: {
       title: '我的报备'
     }
@@ -156,8 +142,7 @@ export default [
   {
     path: '/user/myReport/addReport',
     name: 'addReport',
-    component: resolve =>
-      require(['@/views/user/myReport/addReport.vue'], resolve),
+    component: resolve => require(['@/views/user/myReport/addReport.vue'], resolve),
     meta: {
       title: '我的报备'
     }
@@ -165,8 +150,7 @@ export default [
   {
     path: '/user/myReport/addReport/reportMarket',
     name: 'reportMarket',
-    component: resolve =>
-      require(['@/views/user/myReport/addReport/reportMarket/index.vue'], resolve),
+    component: resolve => require(['@/views/user/myReport/addReport/reportMarket/index.vue'], resolve),
     meta: {
       title: '报备楼盘'
     }
@@ -174,8 +158,7 @@ export default [
   {
     path: '/user/myReport/reportPhone',
     name: 'reportPhone',
-    component: resolve =>
-      require(['@/views/user/myReport/reportPhone.vue'], resolve),
+    component: resolve => require(['@/views/user/myReport/reportPhone.vue'], resolve),
     meta: {
       title: '我的报备'
     }
@@ -183,8 +166,7 @@ export default [
   {
     path: '/user/myReport/reportCustomer',
     name: 'reportCustomer',
-    component: resolve =>
-      require(['@/views/user/myReport/reportCustomer.vue'], resolve),
+    component: resolve => require(['@/views/user/myReport/reportCustomer.vue'], resolve),
     meta: {
       title: '我的报备'
     }

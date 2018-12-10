@@ -45,36 +45,35 @@ class DynamicsService {
    */
   getAllDynamicCount() {
     return xhr({
-      url: '/dataDynamic/getAllDynamicCount',
+      url: '/dataDynamic/getAllDynamicCount'
     })
   }
   /**
    * 【企业微信】全部数据动态列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getAllDynamicList(current, size = 10) {
     return xhr({
       url: '/dataDynamic/getAllDynamicList',
       body: {
         current,
-        size,
-        
+        size
       }
     })
   }
-/**
- * 【企业微信】文章数据动态统计
- */
+  /**
+   * 【企业微信】文章数据动态统计
+   */
   getArticleDynamicCount() {
     return xhr({
-      url: '/dataDynamic/getArticleDynamicCount',
+      url: '/dataDynamic/getArticleDynamicCount'
     })
   }
   /**
    * 【企业微信】文章数据动态列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getArticleDynamicList(current, size = 10) {
     return xhr({
@@ -85,19 +84,18 @@ class DynamicsService {
       }
     })
   }
-/**
- * 【企业微信】名片数据动态统计
- */
+  /**
+   * 【企业微信】名片数据动态统计
+   */
   getCardDynamicCount() {
     return xhr({
-      url: '/dataDynamic/getCardDynamicCount',
-     
+      url: '/dataDynamic/getCardDynamicCount'
     })
   }
   /**
    * 【企业微信】名片数据动态列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getCardDynamicList(current, size = 10) {
     return xhr({
@@ -113,14 +111,13 @@ class DynamicsService {
    */
   getHouseDynamicCount() {
     return xhr({
-      url: '/dataDynamic/getHouseDynamicCount',
-    
+      url: '/dataDynamic/getHouseDynamicCount'
     })
   }
   /**
    * 【企业微信】楼盘动态列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getHouseDynamicList(current, size = 10) {
     return xhr({
@@ -144,10 +141,10 @@ class DynamicsService {
   }
   /**
    * 【企业微信】查询单个文章客户访问数据动态列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
-  getSingleArticleList(current, size = 10,articleId) {
+  getSingleArticleList(current, size = 10, articleId) {
     return xhr({
       url: '/dataDynamic/getSingleArticleDynamicList',
       body: {
@@ -157,10 +154,10 @@ class DynamicsService {
       }
     })
   }
-/**
- * 【企业微信】单个楼盘数据动态统计
- */
-getSingleHouseDynamicCount(linkerId) {
+  /**
+   * 【企业微信】单个楼盘数据动态统计
+   */
+  getSingleHouseDynamicCount(linkerId) {
     return xhr({
       url: '/dataDynamic/getSingleHouseDynamicCount',
       body: {
@@ -170,10 +167,10 @@ getSingleHouseDynamicCount(linkerId) {
   }
   /**
    * 【企业微信】查询单个楼盘数据动态列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
-  getSingleHouseDynamicList(current, size = 10,linkerId) {
+  getSingleHouseDynamicList(current, size = 10, linkerId) {
     return xhr({
       url: '/dataDynamic/getSingleHouseDynamicList',
       body: {
@@ -185,12 +182,12 @@ getSingleHouseDynamicCount(linkerId) {
   }
   /**
    * 关注
-   * @param {*} clientId 
-   * @param {*} isFollow 
+   * @param {*} clientId
+   * @param {*} isFollow
    */
   getupdateCustomerInfo(clientId, isFollow) {
     return xhr({
-      method:'POST',
+      method: 'POST',
       url: '/customerInfo/updateCustomerInfo',
       body: {
         clientId,

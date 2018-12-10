@@ -17,9 +17,9 @@ export default {
       type: Number
     }
   },
-  methods:{
-    myMarket(){
-      this.$emit('returnMyMarket',1)
+  methods: {
+    myMarket() {
+      this.$emit('returnMyMarket', 1)
     }
   }
 }
@@ -32,8 +32,7 @@ export default {
     width: 311px;
     height: 54px;
     background: rgba(255, 255, 255, 1);
-    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07),
-      0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -46,8 +45,8 @@ export default {
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 22px;
-      span{
-        color:#007AE6;
+      span {
+        color: #007ae6;
       }
     }
     li:nth-child(2) {

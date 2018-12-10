@@ -98,13 +98,13 @@ export default {
     Tips
   },
 
-  data () {
+  data() {
     return {
-      all:{
+      all: {
         totalTitle: '总浏览数',
         cardTitle: '名片浏览',
         propertiesTitle: '楼盘浏览',
-        articleTitle: '文章浏览',
+        articleTitle: '文章浏览'
       },
 
       item: [],
@@ -122,30 +122,30 @@ export default {
       houseDynamicCount: [],
       houseDynamicList: [],
       articleDynamicCount: [],
-      articleDynamicList: [],
+      articleDynamicList: []
     }
   },
-  created () {
+  created() {
     this.getAllDynamicCount()
   },
   methods: {
-    goList (index, title) {
+    goList(index, title) {
       switch (index) {
         case 0:
           this.getAllDynamicCount()
-          break;
+          break
         case 1:
           this.getCardDynamicCount()
-          break;
+          break
         case 2:
           this.getHouseDynamicCount()
-          break;
+          break
         case 3:
           this.getArticleDynamicCount()
-          break;
+          break
       }
     },
-    async getAllDynamicCount () {
+    async getAllDynamicCount() {
       // 全部数据动态统计
       const res = await dynamicsService.getAllDynamicCount()
       this.allDynamicCount = res
@@ -153,45 +153,43 @@ export default {
       // Promise.all([this.getAllDynamicList,this.getArticleDynamicCount,this.getArticleDynamicList,this.getCardDynamicCount,this.getCardDynamicList])
     },
     //全部数据动态列表
-    async getAllDynamicList () {
+    async getAllDynamicList() {
       const res = await dynamicsService.getAllDynamicList()
       this.allDynamicList = res.records
-
     },
     //名片数据动态统计
-    async getCardDynamicCount () {
+    async getCardDynamicCount() {
       const res = await dynamicsService.getCardDynamicCount()
       this.cardDynamicCount = res
       this.getCardDynamicList()
     },
 
     //名片数据动态列表
-    async getCardDynamicList () {
+    async getCardDynamicList() {
       const res = await dynamicsService.getCardDynamicList()
       this.cardDynamicList = res.records
-
     },
 
     //楼盘数据动态统计
-    async getHouseDynamicCount () {
+    async getHouseDynamicCount() {
       const res = await dynamicsService.getHouseDynamicCount()
       this.houseDynamicCount = res
       this.getHouseDynamicList()
     },
     //楼盘动态列表
-    async getHouseDynamicList () {
+    async getHouseDynamicList() {
       const res = await dynamicsService.getHouseDynamicList()
       this.houseDynamicList = res.records
     },
 
     //文章数据动态统计
-    async getArticleDynamicCount () {
+    async getArticleDynamicCount() {
       const res = await dynamicsService.getArticleDynamicCount()
       this.articleDynamicCount = res
       this.getArticleDynamicList()
     },
     //文章数据动态列表
-    async getArticleDynamicList () {
+    async getArticleDynamicList() {
       const res = await dynamicsService.getArticleDynamicList(1)
       this.articleDynamicList = res.records
     },
@@ -229,7 +227,7 @@ export default {
           })
       } else {
         //跳转到动态详情item
-        this.$router.push({path:'/Dynamics/dynamicsInfo',query: {itemDynamiclist:val.itemDynamiclist}})
+        this.$router.push({ path: '/Dynamics/dynamicsInfo', query: { itemDynamiclist: val.itemDynamiclist } })
       }
     },
    
@@ -240,8 +238,8 @@ export default {
 .allDynamics-page {
   background: #ffffff;
   margin: 0 0 20px 0;
-  .data-container{
-        margin-top: 60px;
+  .data-container {
+    margin-top: 60px;
   }
   > .tab-container {
     // position: fixed;
@@ -254,7 +252,7 @@ export default {
     padding-top: 1.17333rem;
     position: fixed;
     top: 0;
-}
+  }
   .van-tabs--line .van-tabs__wrap {
     height: 1.17333rem;
     position: fixed;

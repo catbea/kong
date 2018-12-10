@@ -6,27 +6,28 @@
       <p class="desc">请仔细填写信息，一旦提交，无法更改</p>
       <div class="from-container">
         <div class="phone-cell">
-          <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile"></material-input>
-          <div class="send-btn" :disabled="disabled" @click="sendCodeHandler">获取验证码</div>
+          <div class="phone-tip" v-if="phoneFocus">请使用当前微信绑定号码进行注册</div>
+          <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler"></material-input>
         </div>
         <div class="code-cell">
-          <material-input placeholder="请输入验证码"></material-input>
+          <material-input placeholder="请输入验证码" :type="'number'" :maxlength="6" v-model="code"></material-input>
+          <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
         </div>
         <div class="van-hairline--bottom form-cell" @click="popAreaHandler">
           <p class="title">主营区域</p>
-          <p class="value">广东/深圳
+          <p class="value">{{majorRegion}}
             <van-icon name="arrow" />
           </p>
         </div>
         <div class="van-hairline--bottom form-cell" @click="seachCompanyHandler">
           <p class="title">所属公司</p>
-          <p class="value">广东/深圳
+          <p class="value">{{userRegistInfo.distributorName}}
             <van-icon name="arrow" />
           </p>
         </div>
         <div class="van-hairline--bottom form-cell" @click="selectInstitutionHandler">
           <p class="title">所属机构</p>
-          <p class="value">广东/深圳
+          <p class="value">{{userRegistInfo.institutionName}}
             <van-icon name="arrow" />
           </p>
         </div>
@@ -35,13 +36,14 @@
       <p class="protocol">注册代表您同意 <router-link to="/">AW大师用户协议</router-link>
       </p>
     </div>
-    <area-select :show.sync="areaShow" :code.sync="areaCode" @confirm="confirmHandler"></area-select>
+    <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler"></area-select>
   </div>
 </template>
 <script>
 import RegStep from 'COMP/Register/RegStep'
 import MaterialInput from 'COMP/MaterialInput'
 import AreaSelect from 'COMP/AreaSelect'
+import { mapGetters } from 'vuex'
 
 import RegisterService from 'SERVICE/registService'
 export default {
@@ -51,59 +53,126 @@ export default {
     AreaSelect
   },
   data: () => ({
-    form: {
-      phone: '18612341234',
-      code: '1234'
-    },
+    query: null,
     mobile: '',
+    code: '',
+    sendCodeText: '获取验证码',
+    codeTime: 60,
     disabled: false,
+    phoneFocus: false,
     areaShow: false,
-    areaCode: '120104'
+    areaTitle: '请选择区域',
+    areaCode: '440305',
+    registerType: '',
+    enterpriseId: '',
+    majorRegion: '广东省/深圳市/南山区',
+    distributorName: 'AW大师',
+    institutionName: 'AW大师'
   }),
-  created () {
-
+  created() {
+    console.log(this.$route.query)
+    this.query = this.$route.query
+    this.registerType = this.query.registerType
+    this.enterpriseId = this.query.enterpriseId
+    // registerType 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
+    console.log(this.userRegistInfo)
   },
   computed: {
-
+    ...mapGetters(['userRegistInfo'])
   },
   methods: {
     /**
      * 发送验证码
      */
-    sendCodeHandler () {
-      // const result = RegisterService.sendMsgRegister(this.mobile)
-      debugger
-      this.disabled = true;
+    sendCodeHandler() {
+      if (this.disabled == false) {
+        this.disabled = !this.disabled
+        const result = RegisterService.sendMsgRegister(this.mobile)
+        this.countDown()
+      }
+    },
+    countDown() {
+      this.sendCodeText = '重新发送(' + this.codeTime + 's)'
+      let timer = setInterval(() => {
+        this.codeTime--
+        this.sendCodeText = '重新发送(' + this.codeTime + 's)'
+        if (this.codeTime < 0) {
+          clearInterval(timer)
+          this.sendCodeText = '重新发送'
+          this.codeTime = 60
+          this.disabled = false
+        }
+      }, 1000)
+    },
+    focusHandler(focus) {
+      console.log(focus)
+      this.phoneFocus = focus
+    },
+    blurHandler(focus) {
+      console.log(focus)
+      this.phoneFocus = focus
     },
     /**
      * 弹出主营区域选择框
      */
-    popAreaHandler () {
+    popAreaHandler() {
       this.areaShow = !this.areaShow
     },
     /**
      * 搜索公司
      */
-    seachCompanyHandler () {
+    seachCompanyHandler() {
       this.$router.push('/register/searchCompany')
     },
     /**
      * 选择机构
      */
-    selectInstitutionHandler () {
+    selectInstitutionHandler() {
       this.$router.push('/user/edit/userMechanism')
     },
-    nextHandler () {
-      this.$router.push('/register/step2')
+    nextHandler() {
+      let params = {
+        enterpriseId: this.enterpriseId
+      }
+      this.$router.push({ path: '/register/step2', query: params })
+      // this.register()
+    },
+    async register() {
+      let vo = {
+        mobile: this.mobile,
+        code: this.code,
+        registerType: this.registerType,
+        enterpriseId: this.enterpriseId,
+        majorRegion: this.majorRegion,
+        distributorId: this.userRegistInfo.distributorId,
+        institutionId: this.userRegistInfo.institutionId
+      }
+      const result = await RegisterService.register(vo)
+      if (JSON.stringify(data) != '{}') {
+        let params = {
+          enterpriseId: this.enterpriseId
+        }
+        this.$router.push({ path: '/register/step2', query: params })
+        // location.href = '/?cropId=ww8f6801ba5fd2a112'
+      }
+    },
+    cancelHandler(val) {
+      this.areaShow = false
+      console.log(val)
     },
     confirmHandler(val) {
-      console.log(val);
-      
+      this.areaShow = false
+      console.log(val)
+      this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
+      console.log(this.majorRegion)
     }
   }
 }
 </script>
 <style lang="less">
+.material-input__component {
+  margin-top: 0;
+}
 .register-step1-page {
   .reg-container {
     margin: 30px 15px 0;
@@ -122,6 +191,15 @@ export default {
     > .from-container {
       margin: 45px 15px 15px;
       .phone-cell {
+        margin: 30px 15px;
+        > .phone-tip {
+          color: #969ea8;
+          font-size: 12pt;
+          text-align: left;
+          margin-left: 5px;
+        }
+      }
+      .code-cell {
         position: relative;
         margin: 10px 15px;
         > .send-btn {
@@ -141,9 +219,6 @@ export default {
             opacity: 0.5;
           }
         }
-      }
-      .code-cell {
-        margin: 10px 15px;
       }
       .form-cell {
         display: flex;
@@ -183,4 +258,3 @@ export default {
   }
 }
 </style>
-

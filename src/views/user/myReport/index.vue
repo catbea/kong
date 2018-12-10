@@ -72,12 +72,10 @@ export default {
       },
       loading: false,
       finished: false,
-      current: 1,
+      current: 1
     }
   },
-  created() {
-    
-  },
+  created() {},
   methods: {
     /**
      * 上拉加载更多
@@ -85,27 +83,25 @@ export default {
     onLoad() {
       this.getReportList(this.current)
       this.loading = false
-      
     },
     async getReportList(current) {
       const res = await reportService.reportList(current)
       this.reportList = res.records
       var current = this.current + 1
       if (current >= res.pages) {
-        this.finished = true;
+        this.finished = true
         this.current = current - 1
-      }else {
+      } else {
         this.finished = false
         this.current = current
       }
-      
     },
     /**
      * 进入报备详情
      */
     reportInfo(item) {
       // this.$router.push(`/user/myReport/reportInfo/${id}`)
-      this.$router.push({path: '/user/myReport/reportInfo', query: item})
+      this.$router.push({ path: '/user/myReport/reportInfo', query: item })
     },
     /**
      * 创建报备
@@ -220,5 +216,3 @@ export default {
   }
 }
 </style>
-
-

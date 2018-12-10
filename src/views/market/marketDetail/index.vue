@@ -90,10 +90,11 @@ export default {
     this.getHouseAroundType(this.linkerId)
   },
   data: () => ({
+    a:1111,
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
-    openStatus: '', // 0未开通 1已开通已过期 2已开通未过期 
+    openStatus: '', // 0未开通 1已开通已过期 2已开通未过期
     hintShow: true,
     show: false,
     boxShow: false,
@@ -118,7 +119,7 @@ export default {
     confElse: {
       title: '其他楼盘',
       linkText: '全部楼盘',
-      link: '/market'
+      link: "/market"
     },
     info: [],
     buttonInfo: {
@@ -134,22 +135,11 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
-    /**
-     * 楼盘详情内展开更多信息
-     */
-    titleBarHandle(){
-      // this.confElse.link=this.confElse.link+this.linkerId
-      this.confDynamic.link=this.confDynamic.link+this.linkerId
-
-    },
     hintHandle() {
       this.hintShow = false
     },
     handleScroll() {
-      let scrollTop =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        document.body.scrollTop
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       console.log(scrollTop)
       if (scrollTop >= 200) {
         this.boxShow = true
@@ -161,13 +151,13 @@ export default {
       this.show = true
     },
     moreInfoHandle() {
-      this.$router.push({path: '/marketDetail/info', query: this.linkerInfo})
+      this.$router.push({ path: '/marketDetail/info', query: this.linkerInfo })
     },
-    skipMarketDetail(val){
-      this.$router.push({name:'marketDetail', params:{id: val.linkerId}})
+    skipMarketDetail(val) {
+      this.$router.push({ name: 'marketDetail', params: { id: val.linkerId } })
     },
-    marketOpenHandle(){
-      this.$router.push({name:'marketDetail-open', params:{id:this.linkerId}})
+    marketOpenHandle() {
+      this.$router.push({ name: 'marketDetail-open', params: { id: this.linkerId } })
     },
     /**
      * 楼盘详情信息
@@ -182,19 +172,24 @@ export default {
       this.info = houseUseList
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.openStatus = result.openStatus
+      
       this.titleBarHandle()
     },
-
+      //跳转更多内容
+      skipMoreContent(){
+        this.confType.link=this.confType.link+this.linkerId
+        this.confDynamic.link=this.confDynamic.link+this.linkerId
+      },
     /**
      * 楼盘详情-位置周边
      */
     async getHouseAroundType(id) {
       const result = await MarketService.getHouseAroundType(id)
-    },
+    }
   },
-  computed:{
-    avatarCompute(){
-      return this.linkerInfo&&this.linkerInfo.customerList.length>0&&this.linkerInfo.customerList[0].clientImg || ''
+  computed: {
+    avatarCompute() {
+      return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
     }
   },
   destroyed() {
@@ -205,7 +200,7 @@ export default {
 </script>
 <style lang="less">
 .marketDetail-page {
-  overflow:auto;
+  overflow: auto;
   background: #ffffff;
   .van-tabs__wrap--scrollable .van-tab {
     flex: 1;
@@ -213,17 +208,17 @@ export default {
   .van-popup {
     border-radius: 12px;
   }
-  .title-bar{
-    width:339px;
-   > .link-text{
-     align-items: center;
-   }
+  .title-bar {
+    width: 339px;
+    > .link-text {
+      align-items: center;
+    }
   }
   .marketDetail-page-bottom {
     padding: 20px 0 0 0;
-   > div{
-     margin-left:20px;
-   }
+    > div {
+      margin-left: 20px;
+    }
     .marketDetail-box {
       margin-bottom: 11px;
       .marketDetail-box-top {
@@ -290,15 +285,15 @@ export default {
         background-size: 100%;
       }
     }
-    .all-market-type-box{
-      margin-bottom:40px;
+    .all-market-type-box {
+      margin-bottom: 40px;
     }
-    .site-nearby-box{
-      margin-top:13px;
-      margin-bottom:32px;
+    .site-nearby-box {
+      margin-top: 13px;
+      margin-bottom: 32px;
     }
     .market-state-box {
-      margin-bottom:41px;
+      margin-bottom: 41px;
       margin-left: 16px;
       margin-right: 16px;
       .market-state-box-top {

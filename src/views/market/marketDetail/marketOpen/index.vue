@@ -6,12 +6,13 @@
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
     </div>
-   <open-payment class="pay-submit-info" :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
+   <open-payment class="pay-submit-info" :isPayLoading="isPayLoading" :payInfo="submitPayInfo" @paySubmit="paySubmit"></open-payment>
   </div>
 </template>
 <script>
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'
+import mycoupons from 'SERVICE/mycoupons'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import MarketPriceSurface from 'COMP/MarketPriceSurface/'
 import OpenPayment from 'COMP/OpenPayment/'
@@ -26,12 +27,15 @@ export default {
     this.linkerId = this.$route.params.id
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
+
+    console.log(this.currSelectedCoupon, 'currSelectedCoupon=====')
   },
   data: () => ({
+    isPayLoading: false,
     linkerId: '',
     projectInfo: {},
     priceList: [],
-    priceSurfacePayInfo: {balanceAmount: 0, balancePay: 0, coupon: 0},
+    priceSurfacePayInfo: { balanceAmount: 0, balancePay: 0, coupon: 0, isShowCoupon: false },
     currPriceListIndex: 0,
     submitPayInfo: { value: 0, coupon: 0 },
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
@@ -40,7 +44,12 @@ export default {
     borderBottom: false
   }),
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo', 'currSelectedCoupon'])
+  },
+  watch: {
+    '$store.state.currSelectedCoupon': function(v) {
+      console.log('currSelectedCoupon==================')
+    }
   },
   methods: {
     skipAgreement() {
@@ -49,14 +58,43 @@ export default {
     priceItemClickHandle(index) {
       this.currPriceListIndex = index
       let priceItem = this.priceList[this.currPriceListIndex]
+
+      let submitPrice = priceItem.subscribeAmount - this.userInfo.price
+      if (submitPrice < 0) submitPrice = 0
+      let balancePay = this.userInfo.price - priceItem.subscribeAmount
+      if (priceItem.subscribeAmount > this.userInfo.price) balancePay = this.userInfo.price
+
       this.submitPayInfo = {
-        value: priceItem.subscribeAmount,
+        value: submitPrice,
         coupon: 0
       }
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balancePay: balancePay })
+      this.getCoupan()
     },
 
     couponClickHandle() {
-      console.log('couponClickHandle========')
+      this.$router.push('/market/couponSelect')
+    },
+
+    async getCoupan() {
+      let priceItem = this.priceList[this.currPriceListIndex]
+      // console.log(priceItem)
+      let res = await mycoupons.getMyCoupons(this.linkerId, priceItem.subscribeAmount, 1, 1000)
+      let couponStr = res.canUseNum + '张可用'
+      if(this.currSelectedCoupon) {
+        if(this.currSelectedCoupon.type == 20) {
+          let couponValue = (Number(priceItem.subscribeAmount)) * Number(1 - this.currSelectedCoupon.discountsLimit/10)
+
+          this.priceSurfacePayInfo.balancePay = this.priceSurfacePayInfo.balancePay>couponValue ? (this.priceSurfacePayInfo.balancePay - couponValue) : this.priceSurfacePayInfo.balancePay
+
+          couponStr = '-¥ ' + (couponValue/100)
+        } else {
+          couponStr = '-¥ ' + this.currSelectedCoupon.discountsLimit
+        }
+      }
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: couponStr, isShowCoupon: res.canUseNum > 0 ? true : false })
+      this.$store.dispatch('setProjectCoupons', res.page.records)
+      // this.couponList = res.records
     },
 
     async paySubmit() {
@@ -69,8 +107,10 @@ export default {
         amountId: priceItem.id,
         payOpenid: this.userInfo.payOpenId
       }
+      this.isPayLoading = true
       const res = await commonService.payForProject(param)
       console.log(res, '支付接口返回')
+      this.isPayLoading = false
       if (res.isPay) {
         // alert('appid:'+res.appId);
         wx.chooseWXPay({
@@ -80,15 +120,15 @@ export default {
           package: res.packageId,
           signType: 'MD5',
           paySign: res.signature,
-          success: (res)=> {
+          success: res => {
             console.log('支付suss')
           },
-          cancel: (res)=> {
+          cancel: res => {
             //用户付钱失败。没钱，密码错误，取消付款
-            console.log(res,'支付取消')
+            console.log(res, '支付取消')
           },
-          fail: (res)=> {
-            console.log(res,'支付失败')
+          fail: res => {
+            console.log(res, '支付失败')
           }
         })
       }
@@ -111,7 +151,7 @@ export default {
     async getLinkerAmountList() {
       const res = await marketService.getLinkerAmountList()
       this.priceList = res
-      this.priceSurfacePayInfo = {balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0}
+      this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
       this.priceItemClickHandle(0)
     }
   }

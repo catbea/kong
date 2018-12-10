@@ -15,13 +15,11 @@
 </template>
 <script>
 export default {
-  props:{
-    data: { type: Array },
+  props: {
+    data: { type: Array }
   },
   data() {
-    return {
-      
-    }
+    return {}
   },
   methods: {
     GOheadline() {

@@ -13,8 +13,7 @@ export default [
   {
     path: '/market/marketDetail/:id',
     name: 'marketDetail',
-    component: resolve =>
-      require(['@/views/market/marketDetail/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/index.vue'], resolve),
     meta: {
       title: '楼盘详情',
       tabbar: {
@@ -25,8 +24,7 @@ export default [
   {
     path: '/marketDetail/perfect',
     name: 'marketDetailPerfect',
-    component: resolve =>
-      require(['@/views/market/marketDetail/Perfect/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/Perfect/index.vue'], resolve),
     meta: {
       title: '用户完善资料',
       tabbar: {
@@ -37,8 +35,7 @@ export default [
   {
     path: '/marketDetail/correction',
     name: 'marketDetailCorrection',
-    component: resolve =>
-      require(['@/views/market/marketDetail/correction/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/correction/index.vue'], resolve),
     meta: {
       title: '楼盘详情纠错',
       tabbar: {
@@ -47,10 +44,9 @@ export default [
     }
   },
   {
-    path: '/marketDetail/FamilyList',
+    path: '/marketDetail/FamilyList/:id',
     name: 'FamilyList',
-    component: resolve =>
-      require(['@/views/market/marketDetail/familyList/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/familyList/index.vue'], resolve),
     meta: {
       title: '户型列表',
       tabbar: {
@@ -61,10 +57,7 @@ export default [
   {
     path: '/marketDetail/marketAllDynamic/:id',
     name: 'marketAllDynamic',
-    component: resolve =>
-      require([
-        '@/views/market/marketDetail/marketAllDynamic/index.vue'
-      ], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketAllDynamic/index.vue'], resolve),
     meta: {
       title: '全部楼盘动态',
       tabbar: {
@@ -75,8 +68,7 @@ export default [
   {
     path: '/marketDetail/marketDetail/allNear',
     name: 'marketAllNear',
-    component: resolve =>
-      require(['@/views/market/marketDetail/marketAllNear/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketAllNear/index.vue'], resolve),
     meta: {
       title: '楼盘全部周边',
       tabbar: {
@@ -88,8 +80,7 @@ export default [
   {
     path: '/marketDetail/commission/:id',
     name: 'marketDetail-commission',
-    component: resolve =>
-      require(['@/views/market/marketDetail/commission/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/commission/index.vue'], resolve),
     meta: {
       title: '楼盘佣金'
     }
@@ -97,10 +88,7 @@ export default [
   {
     path: '/marketDetail/info',
     name: 'marketDetail-info',
-    component: resolve =>
-      require([
-        '@/views/market/marketDetail/marketDetailInfo/index.vue'
-      ], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketDetailInfo/index.vue'], resolve),
     meta: {
       title: '楼盘详细信息'
     }
@@ -108,8 +96,7 @@ export default [
   {
     path: '/marketDetail/open/:id',
     name: 'marketDetail-open',
-    component: resolve =>
-      require(['@/views/market/marketDetail/marketOpen/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketOpen/index.vue'], resolve),
     meta: {
       title: '开通楼盘'
     }
@@ -117,8 +104,7 @@ export default [
   {
     path: '/marketDetail/open/agreement',
     name: 'marketDetail-open-agreement',
-    component: resolve =>
-      require(['@/views/market/marketDetail/marketOpen/BuyAgreement/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketOpen/BuyAgreement/index.vue'], resolve),
     meta: {
       title: '付费协议'
     }
@@ -126,8 +112,7 @@ export default [
   {
     path: '/marketDetail/share',
     name: 'marketDetail-share',
-    component: resolve =>
-      require(['@/views/market/marketDetail/marketShare/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketShare/index.vue'], resolve),
     meta: {
       title: '楼盘分享'
     }
@@ -135,10 +120,7 @@ export default [
   {
     path: '/marketDetail/share/save',
     name: 'save-poster',
-    component: resolve =>
-      require([
-        '@/views/market/marketDetail/marketShare/savePoster/index.vue'
-      ], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketShare/savePoster/index.vue'], resolve),
     meta: {
       title: '生成海报'
     }
@@ -146,10 +128,7 @@ export default [
   {
     path: '/marketDetail/share/compile',
     name: 'save-poster',
-    component: resolve =>
-      require([
-        '@/views/market/marketDetail/marketShare/compilePoster/index.vue'
-      ], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketShare/compilePoster/index.vue'], resolve),
     meta: {
       title: '编辑海报'
     }
@@ -157,8 +136,7 @@ export default [
   {
     path: '/market/inputSearch',
     name: 'searchMarket',
-    component: resolve =>
-      require(['@/views/market/marketSearch/inputSearch/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketSearch/inputSearch/index.vue'], resolve),
     meta: {
       title: '搜索楼盘'
     }
@@ -166,10 +144,20 @@ export default [
   {
     path: '/marketDetail/photo',
     name: 'photoList',
-    component: resolve =>
-      require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
+    component: resolve => require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
     meta: {
       title: '楼盘相册',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/market/couponSelect',
+    name: 'couponSelect',
+    component: resolve => require(['@/views/market/couponSelect.vue'], resolve),
+    meta: {
+      title: '优惠券选择',
       tabbar: {
         show: false
       }

@@ -6,9 +6,14 @@ export const TABBAR = 'TABBAR'
 export const USER_INFO = 'USER_INFO'
 export const USER_VIP_INFO = 'USER_VIP_INFO'
 export const USER_AREA = 'USER_AREA'
-export const REPORT_INFO = 'REPORT_INFO' 
-export const USER_AVATAR = 'USER_AVATAR' 
+export const REPORT_INFO = 'REPORT_INFO'
+export const TREE_INFO = 'TREE_INFO'
+export const USER_REGIST_INFO = 'USER_REGIST_INFO'
 
 // city
 export const CITY_LIST = 'CITY_LIST'
-export const WX_JSSDK = 'WX_JSSDK' 
+export const WX_JSSDK = 'WX_JSSDK'
+
+// market
+export const PROJECT_COUPONS = 'PROJECT_COUPONS'
+export const CURR_SELECTED_COUPON = 'CURR_SELECTED_COUPON'

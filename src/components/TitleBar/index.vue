@@ -11,7 +11,7 @@ export default {
   props: {
     conf: {
       type: Object,
-      default: function () {
+      default: function() {
         return {
           title: '',
           linkText: '',
@@ -19,13 +19,13 @@ export default {
         }
       }
     },
-    isShow: { 
+    isShow: {
       type: Boolean,
       default: true
-     },
+    }
   },
   computed: {
-    linkComputed () {
+    linkComputed() {
       return this.conf.link || '#'
     }
   }

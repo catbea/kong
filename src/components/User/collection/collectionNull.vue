@@ -13,9 +13,9 @@ export default {
     collectionIcon: { type: String, default: '' },
     collectionTips: { type: String, default: '' },
     collectionRemar: { type: String, default: '' },
-    collectionLike: { type: String, default: '' },
+    collectionLike: { type: String, default: '' }
   },
-  data () {
+  data() {
     return {
       // groupIcon: require('IMG/user/collection/Group@2x.png'),
     }

@@ -3,8 +3,8 @@
     <div class="business-card-box">
       <div class="bg_img info-box">
         <div class="info-box-left">
-          <img :src="leftIcon" class="box-left-leftIcon">
-          <span class="box-right-fx">
+          <img :src="leftIcon" class="box-left-leftIcon" @click="showQrCode">
+          <span class="box-right-fx" @click="shareUserCard">
             <img :src="rightIcon" class="right-fx-rightIcon">
             <p class="right-fx-title">分享</p>
           </span>
@@ -22,7 +22,7 @@
                 class="left-labe-css"
                 v-for="(item,index) in userInfo.labelList"
                 :key="index"
-              >{{item.itemName}}</a>
+              >{{item.labelName}}</a>
             </p>
             <p class="content-left-remar">{{userInfo.signature}}</p>
           </span>
@@ -40,7 +40,7 @@
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
       </router-link>
-      <router-link tag="div" to="/user/mypreference" class="status-info-right">
+      <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
         <img :src="discountIcon">
         <p class="info-title welfare-status">特惠套餐</p>
         <p class="info-desc welfare-desc">{{vipPackage}}</p>
@@ -68,12 +68,19 @@ export default {
     editIcon: require('IMG/user/editInfo@2x.png')
   }),
 
-  onCreated: {
-  },
+  onCreated: {},
 
   methods: {
     editCLickHandler() {
       this.$router.push('/user/edit')
+    },
+
+    showQrCode() {
+      this.$emit('showPopup', '')
+    },
+
+    shareUserCard() {
+      this.$emit('shareUserCard', '')
     }
   },
   computed: {
@@ -192,9 +199,9 @@ export default {
         }
         > .box-content-right {
           position: relative;
-              right: 10px;
-          width:80px;
-height:80px;
+          right: 10px;
+          width: 80px;
+          height: 80px;
           > .personIcon {
             width: 80px;
             height: 80px;

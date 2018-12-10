@@ -26,7 +26,7 @@ export default {
     this.destoried()
   },
 
-   computed: {
+  computed: {
     ...mapGetters(['userInfo'])
   },
 

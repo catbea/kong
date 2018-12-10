@@ -61,6 +61,11 @@ export default {
     },
     handleFocus(focused) {
       this.focus = focused
+      if (focused == true) {
+        this.$emit('focus', focused)
+      } else {
+        this.$emit('blur', focused)
+      }
     },
     handleValidation() {
       this.valid = this.$el ? this.$el.querySelector('.material-input').validity.valid : this.valid

@@ -27,9 +27,9 @@ export default {
   components: {
     TagGroup
   },
-  methods:{
-    godynamicsInfo(){
-      this.$emit('click',this.info)
+  methods: {
+    godynamicsInfo() {
+      this.$emit('click', this.info)
     }
   }
 }

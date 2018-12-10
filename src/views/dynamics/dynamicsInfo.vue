@@ -140,20 +140,20 @@ export default {
   created() {
     this.getSingleHouseDynamicList()
   },
-  methods:{
+  methods: {
     //单个楼盘数据动态统计
-      async getSingleHouseDynamicCount () {
+    async getSingleHouseDynamicCount() {
       const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist.linkerId)
       this.dynamicCount = res
     },
     //查询单个楼盘数据动态列表
-      async getSingleHouseDynamicList () {
-      const res = await dynamicsService.getSingleHouseDynamicList(1,10,this.itemDynamiclist.linkerId)
+    async getSingleHouseDynamicList() {
+      const res = await dynamicsService.getSingleHouseDynamicList(1, 10, this.itemDynamiclist.linkerId)
       this.SingleHouseDynamicList = res.records
       this.getSingleHouseDynamicCount()
     },
     //楼盘详情
-    godynamicsInfo(){
+    godynamicsInfo() {
       this.$router.push('/market/marketDetail')
     },
     //联系
@@ -168,27 +168,26 @@ export default {
   background: #ffffff;
   margin: 16px 0;
   .dynaData-container {
-  background: #ffffff;
-  display: flex;
-  padding: 20px 0 20px 20px;
+    background: #ffffff;
+    display: flex;
+    padding: 20px 0 20px 20px;
 
-  span {
-    width: 80.7px;
+    span {
+      width: 80.7px;
+    }
+    .container-title {
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
+      line-height: 18px;
+    }
+    .card-num {
+      font-size: 24px;
+      font-weight: 500;
+      color: rgba(51, 51, 51, 1);
+      line-height: 36px;
+    }
   }
-  .container-title {
-    font-size: 12px;
-    font-weight: 400;
-    color: rgba(153, 153, 153, 1);
-    line-height: 18px;
-  }
-  .card-num {
-    font-size: 24px;
-    font-weight: 500;
-    color: rgba(51, 51, 51, 1);
-    line-height: 36px;
-  }
-  
-}
   .dynamicsInfo-list {
     margin: 0 15px;
 
@@ -329,136 +328,136 @@ export default {
       }
     }
   }
-    .dynamics-container {
-  background: #ffffff;
-  margin-top: 15px;
- .dynamics-time {
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(41, 46, 51, 1);
-    line-height: 20px;
-    padding: 12px 0;
-    margin: 0 0.42667rem;
+  .dynamics-container {
+    background: #ffffff;
+    margin-top: 15px;
+    .dynamics-time {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(41, 46, 51, 1);
+      line-height: 20px;
+      padding: 12px 0;
+      margin: 0 0.42667rem;
+    }
   }
-}
-.dynamics-container-list {
-  margin-bottom: 20px;
-  .dynamics-list {
-    padding: 20px 16px;
-    > .dynamics-list-agent {
-      display: flex;
-      > .list-agent-left {
+  .dynamics-container-list {
+    margin-bottom: 20px;
+    .dynamics-list {
+      padding: 20px 16px;
+      > .dynamics-list-agent {
         display: flex;
-        > .agent-left-left {
-          > .agent-userImg {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        > .list-agent-left {
+          display: flex;
+          > .agent-left-left {
+            > .agent-userImg {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
+          }
+          > .agent-left-right {
+            padding-left: 12px;
+            > .left-right-name {
+              font-size: 15px;
+              font-weight: 600;
+              color: rgba(41, 46, 51, 1);
+              line-height: 21px;
+            }
+            > .left-right-time {
+              font-size: 13px;
+              font-weight: 400;
+              color: rgba(153, 153, 153, 1);
+              line-height: 28px;
+            }
           }
         }
-        > .agent-left-right {
-          padding-left: 12px;
-          > .left-right-name {
-            font-size: 15px;
-            font-weight: 600;
-            color: rgba(41, 46, 51, 1);
-            line-height: 21px;
+        > .list-agent-right {
+          position: absolute;
+          right: 16px;
+          margin-top: -6px;
+          padding-right: 16px;
+          > .agent-right-num {
+            font-size: 20px;
+            font-weight: 500;
+            color: rgba(0, 122, 230, 1);
+            line-height: 30px;
           }
-          > .left-right-time {
-            font-size: 13px;
+          > .agent-right-nums {
+            font-size: 20px;
+            font-weight: 500;
+            color: rgba(102, 102, 102, 1);
+            line-height: 30px;
+          }
+          > .agent-right-title {
+            font-size: 11px;
             font-weight: 400;
             color: rgba(153, 153, 153, 1);
-            line-height: 28px;
+            line-height: 16px;
+            text-align: center;
           }
         }
       }
-      > .list-agent-right {
-        position: absolute;
-        right: 16px;
-        margin-top: -6px;
-        padding-right: 16px;
-        > .agent-right-num {
-          font-size: 20px;
-          font-weight: 500;
+      > .dynamics-list-content {
+        font-size: 14px;
+        font-family: PingFang-SC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+        line-height: 21px;
+        > p span {
           color: rgba(0, 122, 230, 1);
-          line-height: 30px;
-        }
-        > .agent-right-nums {
-          font-size: 20px;
-          font-weight: 500;
-          color: rgba(102, 102, 102, 1);
-          line-height: 30px;
-        }
-        > .agent-right-title {
-          font-size: 11px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          line-height: 16px;
-          text-align: center;
         }
       }
-    }
-    > .dynamics-list-content {
-      font-size: 14px;
-      font-family: PingFang-SC-Regular;
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-      line-height: 21px;
-      > p span {
-        color: rgba(0, 122, 230, 1);
-      }
-    }
-    > .dynamics-list-btn {
-      height: 40px;
-      > .list-btn-right {
-        position: absolute;
-        right: 32px;
-        // margin-top: 15px;
-        > .list-btn-follow {
-          width: 64px;
-          height: 24px;
-          border-radius: 16px;
-          border: 1px solid;
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(0, 122, 230, 1);
-          line-height: 17px;
-          background: #ffffff;
-          > .agent-gzImg {
-            width: 11px;
-            height: 11px;
+      > .dynamics-list-btn {
+        height: 40px;
+        > .list-btn-right {
+          position: absolute;
+          right: 32px;
+          // margin-top: 15px;
+          > .list-btn-follow {
+            width: 64px;
+            height: 24px;
+            border-radius: 16px;
+            border: 1px solid;
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(0, 122, 230, 1);
+            line-height: 17px;
+            background: #ffffff;
+            > .agent-gzImg {
+              width: 11px;
+              height: 11px;
+            }
           }
-        }
-        > .list-btn-followOK {
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          line-height: 17px;
-          width: 64px;
-          height: 24px;
-          border-radius: 16px;
-          border: 1px solid #999999;
-          background: #ffffff;
-        }
-        > .list-btn-contact {
-          width: 64px;
-          height: 24px;
-          background: rgba(0, 122, 230, 1);
-          border-radius: 16px;
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(255, 255, 255, 1);
-          line-height: 17px;
-          border: 0;
-          margin-left: 24px;
-          > .btn-contact-userImg {
-            width: 11px;
-            height: 11px;
+          > .list-btn-followOK {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: 17px;
+            width: 64px;
+            height: 24px;
+            border-radius: 16px;
+            border: 1px solid #999999;
+            background: #ffffff;
+          }
+          > .list-btn-contact {
+            width: 64px;
+            height: 24px;
+            background: rgba(0, 122, 230, 1);
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 17px;
+            border: 0;
+            margin-left: 24px;
+            > .btn-contact-userImg {
+              width: 11px;
+              height: 11px;
+            }
           }
         }
       }
     }
   }
-}
 }
 </style>

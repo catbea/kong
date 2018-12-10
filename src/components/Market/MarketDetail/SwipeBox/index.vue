@@ -34,12 +34,12 @@ export default {
   },
   props: {
     bannerList: { type: Array },
-    collectionStatus: { type: String }, // 0-未收藏 1-已收藏 
-    ifPanorama: { type: Number }, // 是否有全景
+    collectionStatus: { type: String }, // 0-未收藏 1-已收藏
+    ifPanorama: { type: Number } // 是否有全景
   },
   data: () => ({
     current: 0,
-    enjoyImg:require('IMG/marketDetail/enjoy@2x.png'),
+    enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
     imgPlay: require('IMG/marketDetail/Oval@2x.png'),
     collectImg: require('IMG/marketDetail/xx1@2x.png'),
     collectImgA: require('IMG/marketDetail/xx 9@2x.png'),
@@ -63,8 +63,8 @@ export default {
       console.log(this.collectionStatus)
     },
     share() {
-      // this.$router.push("/marketDetail/share")
-      this.show = !this.show
+      this.$router.push("/marketDetail/share")
+      // this.show = !this.show
     },
     play() {
       this.playShow = !this.playShow
@@ -81,9 +81,9 @@ export default {
   .market-img-page-box {
     width: 100%;
     height: 100%;
-    .loopBox{
-      width:100%;
-      height:100%;
+    .loopBox {
+      width: 100%;
+      height: 100%;
     }
   }
   .market-img-page-play {
@@ -153,7 +153,7 @@ export default {
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     .collect {
       width: 20px;
       height: 20px;
@@ -168,7 +168,7 @@ export default {
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     .share {
       width: 20px;
       height: 20px;

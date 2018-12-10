@@ -6,7 +6,8 @@
       <li>已优惠 {{payInfo.coupon | priceFormart}}</li>
     </ul>
     <ol>
-      <li @click="payClickHandler">立即支付</li>
+      <li v-show="!isPayLoading" @click="payClickHandler">立即支付</li>
+      <li v-show="isPayLoading" class="pay-loading">支付中...</li>
     </ol>
     </div>
   </div>
@@ -17,9 +18,10 @@ export default {
     show: false
   }),
   props: {
-    payInfo:{
+    isPayLoading: false,
+    payInfo: {
       type: Object,
-      default: function(){
+      default: function() {
         return {
           value: 0,
           coupon: 0
@@ -70,6 +72,19 @@ export default {
       width: 125px;
       height: 44px;
       background: rgba(0, 122, 230, 1);
+      border-radius: 22px;
+      font-size: 15px;
+      font-family: PingFang-SC-Semibold;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 1);
+      line-height: 44px;
+      text-align: center;
+    }
+    .pay-loading {
+      margin-right: 16px;
+      width: 125px;
+      height: 44px;
+      background:#ddd;
       border-radius: 22px;
       font-size: 15px;
       font-family: PingFang-SC-Semibold;

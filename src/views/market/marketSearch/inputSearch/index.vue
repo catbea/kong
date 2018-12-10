@@ -53,7 +53,7 @@ export default {
     value: '',
     list: [1, 2, 3, 4, 5, 6, 7],
     resInfo: null,
-    bucketImg:require('IMG/marketDetail/bucket@2x.png')
+    bucketImg: require('IMG/marketDetail/bucket@2x.png')
   }),
   methods: {
     onCancel() {
