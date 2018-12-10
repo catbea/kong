@@ -104,6 +104,9 @@ const state = {
   },
 
   userRegistInfo: {
+    majorRegion: '广东省/深圳市/南山区',
+    city: '深圳市',
+    araa: '南山区',
     distributorId: '124', // 公司ID
     distributorName: 'AW大师',
     institutionId: '190', // 机构ID
