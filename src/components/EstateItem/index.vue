@@ -1,15 +1,15 @@
 <template>
   <div class="van-hairline--bottom estate-item" v-if="info">
     <div class="main-container" @click="godynamicsInfo">
-      <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.linkerHeadUrl + ')'}">
+      <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.headImgUrl + ')'}">
         <!-- TODO 720标示 -->
       </div>
       <div class="right-container">
         <h5 class="estate-name">{{info.linkerName}}</h5>
         <p class="estate-location">{{`${info.city} ${info.county}`}}</p>
-        <tag-group :arr="info.linkerTags"></tag-group>
+        <tag-group :arr="info.projectTagArr"></tag-group>
         <div class="estate-info">
-          <p class="estate-price">{{info.price | avgPrice}}</p>
+          <p class="estate-price">{{info.averagePrice  | averagePrice }}</p>
           <p class="estate-area">{{info.priceUnit}}</p>
         </div>
       </div>

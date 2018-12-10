@@ -54,7 +54,7 @@ const state = {
     // payCorpId: "ww5e4d879ddc307ea1",
     // cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
-    payOpenId: 'o_iHQ0j9FdSX9B7-1jhI9-0-4d7Y',
+    payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
     position: '',
     price: 2000,
     qrCode: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/cardQrcode/4149/Timef021faa6-738d-4f03-8b5f-c8840b555494.jpg',

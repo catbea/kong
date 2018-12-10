@@ -36,7 +36,7 @@
             </div>
           </shadow-box>
           <dynamics-list
-            @click="goallDynamics"
+            @click="getupdateCustomerInfo"
             :allDynamicList="allDynamicList"
             :item="item"
             
@@ -194,12 +194,24 @@ export default {
       this.articleDynamicList = res.records
     },
     //关注
-    async getupdateCustomerInfo(item) {
-      debugger
-      const res = await dynamicsService.getupdateCustomerInfo()
+ async getupdateCustomerInfo (item) {
+    debugger
+    // /关注状态 0：已关注 1：未关注
+    let attentionStatus
+    if(item.attentionStatus == 1){
+      attentionStatus = 0
+    }else if(item.attentionStatus == 0){
+      attentionStatus = 1
+    }
+    // clientId, isFollow
+      const res = await dynamicsService.getupdateCustomerInfo(item.clientId,attentionStatus)
+      
     },
-
-    itemProperties(val) {
+   //客户详情
+    // goallDynamics (item) {
+    //   this.$router.push('/custom/detail')
+    // },
+    itemProperties (val) {
       if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog
           .confirm({
@@ -218,10 +230,7 @@ export default {
         this.$router.push({ path: '/Dynamics/dynamicsInfo', query: { itemDynamiclist: val.itemDynamiclist } })
       }
     },
-    //客户详情
-    goallDynamics(item) {
-      this.$router.push('/custom/detail')
-    }
+   
   }
 }
 </script>
