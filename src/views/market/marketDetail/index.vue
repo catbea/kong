@@ -104,6 +104,7 @@ export default {
   created() {
     this.linkerId = this.$route.params.id
     this.getLinkerDetail(this.linkerId)
+    this.skipMoreContent()
     this.getHouseAroundType(this.linkerId)
   },
   data: () => ({
@@ -185,7 +186,7 @@ export default {
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
       this.linkerInfo = result
-      console.log(result)
+      console.log(result,'该楼盘信息')
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
       houseUseList.unshift(result.saleStatus)
@@ -201,6 +202,12 @@ export default {
       this.confType.link = this.confType.link + this.linkerId
       this.confDynamic.link = this.confDynamic.link + this.linkerId
     },
+      //跳转更多内容
+      skipMoreContent(){
+        this.confType.link='/marketDetail/FamilyList/'+this.linkerId
+        this.confDynamic.link='/marketDetail/marketAllDynamic/'+this.linkerId
+        this.confLocation.link='/public/map-Search?latitude='+this.info.longitude+"&"+this.info.latitude
+      },
     /**
      * 楼盘详情-位置周边
      */

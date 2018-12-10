@@ -86,7 +86,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/info',
+    path: '/inDetail/info/:id',
     name: 'marketDetail-info',
     component: resolve => require(['@/views/market/marketDetail/marketDetailInfo/index.vue'], resolve),
     meta: {
