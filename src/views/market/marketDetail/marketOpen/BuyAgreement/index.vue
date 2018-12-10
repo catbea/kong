@@ -119,13 +119,19 @@
           <p>详细个人信息政策请阅《AW大师用户服务协议》 。如您不同意请不要开通或停止使用本服务。</p>
         </div>
     </div>
+    <div class="button" @click="returnTop">确定</div>
   </div>
 </template>
 <script>
 export default {
   data: () => ({
     content: []
-  })
+  }),
+  methods:{
+    returnTop(){
+      this.$router.go(-1);//返回上一层
+    }
+  }
 }
 </script>
 
@@ -133,8 +139,22 @@ export default {
 .open-agreement-page {
   height: auto !important;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  .button{
+    width: 300px;
+    height:44px;
+    background: #007ae6;
+    border-radius:5px;
+    font-size:15px;
+    font-family: PingFang-SC-Semibold;
+    font-weight: 600;
+    color: #ffffff;
+    line-height:44px;
+    text-align: center;
+    margin-bottom:10px;
+  }
   .agreement-box {
     width: 343px;
     background: #ffffff;
