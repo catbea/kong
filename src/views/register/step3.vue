@@ -21,7 +21,7 @@
     <div class="register-bottom">
       <div class="next-step" @click="registerHandler">注册</div>
       <p class="protocol">注册代表您同意
-        <router-link to="/">AW大师用户协议</router-link>
+        <router-link :to="route">{{registerAgreementName}}注册协议</router-link>
       </p>
     </div>
   </div>
@@ -47,7 +47,9 @@ export default {
     registerType: '',
     enterpriseId: '',
     parentUserId: '',
-    parentUserName: ''
+    parentUserName: '',
+    registerAgreementName: '',
+    route: ''
   }),
   created() {
     console.log(this.$route.query)
@@ -55,8 +57,8 @@ export default {
     this.registerType = this.query.registerType
     this.enterpriseId = this.query.enterpriseId
     this.parentUserId = this.query.parentUserId
-    this.queryReferrerInfo(this.parentUserId)
-    // document.getElementsByClassName('next-step')[0].addEventListener('click', function(){console.log(3333)},true)
+    this.queryByRegister(this.enterpriseId)
+    this.queryRegisterRecommendInfo(this.enterpriseId, this.registerType, this.parentUserId)
   },
   methods: {
     /**
@@ -65,7 +67,7 @@ export default {
     sendCodeHandler() {
       if (this.disabled == false) {
         this.disabled = !this.disabled
-        // const result = RegisterService.sendMsgRegister(this.mobile)
+        const result = RegisterService.sendMsgRegister(this.mobile)
         this.countDown()
       }
     },
@@ -89,17 +91,22 @@ export default {
       this.phoneFocus = focus
     },
     registerHandler() {
-      let params = {
-        enterpriseId: this.enterpriseId
-      }
-      this.$router.push({path: '/register/step2', query: params})
-      // this.register()
+      // let params = {
+      //   enterpriseId: this.enterpriseId
+      // }
+      // this.$router.push({path: '/register/step2', query: params})
+      this.register()
+    },
+    async queryByRegister(enterpriseId) {
+      const result = await RegisterService.queryByRegister(enterpriseId)
+      this.registerAgreementName = result.registerAgreementName
+      this.route = '/register/agreement?name=' + this.registerAgreementName
     },
     /**
-     * 查询推荐人信息
+     * 查询注册推荐人信息
      */
-    async queryReferrerInfo(parentUserId) {
-      const result = await RegisterService.queryReferrerInfo(1)
+    async queryRegisterRecommendInfo(enterpriseId, registerType, parentUserId) {
+      const result = await RegisterService.queryRegisterRecommendInfo(enterpriseId, registerType, parentUserId)
       this.parentUserName = result.name
     },
     /**
@@ -114,7 +121,7 @@ export default {
         parentUserId: this.parentUserId
       }
       const result = await RegisterService.register(vo)
-      if (JSON.stringify(data) != '{}') {
+      if (JSON.stringify(result) != '{}') {
         let params = {
           enterpriseId: this.enterpriseId
         }

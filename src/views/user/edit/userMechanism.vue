@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       organizationList: [],
-      organizationInfo: []
+      organizationInfo: [],
+      model: null
     }
   },
 
@@ -36,7 +37,15 @@ export default {
 
   methods: {
     //提交更新信息
-    commitChangeInfo() {},
+    commitChangeInfo() {
+      let _userRegistInfo = {
+        institutionId: this.model.id,
+        institutionName: this.model.name
+      }
+
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+      this.$router.back(-1)
+    },
 
     async upDateInfo(id) {
       let obj = {}
@@ -48,13 +57,7 @@ export default {
     //刷新列表
     refreshList(val) {
       console.log('bbbbbb',val)
-      let _userRegistInfo = {
-        institutionId: val.id,
-        institutionName: val.name
-      }
-
-      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
-      this.$router.back(-1)
+      this.model = val
       // for (let i = 0; i < this.organizationInfo.length; i++) {
       //   this.organizationInfo[i].checked = false
       //   if (this.organizationInfo[i].id == val) {

@@ -7,28 +7,35 @@
       <screen></screen>
     </div>
     <div class="market-box">
-      <meal-market
-          v-for="(item,index) in dataArr"
-          :key="index"
-          :dataArr="item"
-          :indexData="index"
-          :showData="showArr.indexOf(index) >-1"
-          @click.native="selectHandle(index)" ></meal-market>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        :finished-text="'没有更多了'"
+        @load="vipLinkerList">
+        <meal-market
+            v-for="(item,index) in projectList"
+            :key="index"
+            :dataArr="item"
+            :indexData="index"
+            :showData="showArr.indexOf(index) >-1"
+            @click.native="selectHandle(item)" ></meal-market>
+      </van-list>
     </div>
     <div class="check-all-box">
       <div class="img-box">
       <span
       class="icon-check bg_img"
-      :style="{backgroundImage:'url('+(checkShow?checkColorImg:checkImg)+')'}"
+      :style="{backgroundImage:'url('+(checkAllShow ? checkColorImg : checkImg)+')'}"
       @click="allSelectHandle"
       ></span>
       全选
       </div>
-      <router-link tag="p" to="/user/mypreference/openPreference" class="check-all-button">开通</router-link>
+      <span @click="vipProjectOpenHandle" class="check-all-button">开通</span>
     </div>
   </div>
 </template>
 <script>
+import { Dialog } from 'vant'
 import marketService from 'SERVICE/marketService'
 import VanSearch from 'COMP/VanSearch/'
 import Screen from 'COMP/Screen/'
@@ -40,11 +47,9 @@ export default {
     MealMarket
   },
   created() {
-    this.arrLength()
-    this.vipLinkerList()
+    // this.vipLinkerList()
   },
   data: () => ({
-    dataArrLength: null,
     showArr: [],
     searchInfo: {
       siteText: '全国',
@@ -52,62 +57,82 @@ export default {
     },
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
-    checkShow: false,
-
-    dataArr: [
-      {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
-      },
-      {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
-      }
-    ]
+    page: 1,
+    pageSize: 8,
+    checkAllShow: false,
+    loading: false,
+    finished: false,
+    projectList: []
   }),
   methods: {
     async vipLinkerList() {
-      let param = {}
+      this.checkAllShow = false
+      let param = {current: this.page, size: this.pageSize}
       const res = await marketService.vipLinkerList(param)
-      console.log(res, 'vipLinkerList')
+      let _list = []
+      for(let item of res.records) {
+        let obj = {
+          linkerId: item.linkerId,
+          linkerUrl: item.linkerUrl,
+          sale: item.sale,
+          linkerName: item.linkerName,
+          site: `${item.city} ${item.county} ${item.price} ${item.priceUnit}`, //'深圳 南山 120000元/㎡',
+          condition: item.linkerTags,
+          open: `${item.openTimes}次开通`,
+          isChecked: false,
+          price: `${item.price} ${item.priceUnit}`
+        }
+        _list.push(obj)
+      }
+      this.projectList = this.projectList.concat(_list)
+      if (res.pages === 0 || this.page === res.pages) {
+        this.finished = true
+      }
+      this.page++
+      this.loading = false
     },
 
-    selectHandle(index) {
-      console.log(12)
-      this.checkIndex = index
-      if (this.showArr.indexOf(index) == -1) {
-        this.showArr.push(index)
-      } else {
-        console.log(index)
-        this.showArr = this.showArr.filter(item => {
-          return item != index
-        })
+    async vipProjectOpenHandle() {
+      if(this.showArr.length == 0) {
+        this.$toast('请先选择楼盘')
+        return
       }
-      if (this.checkShow === true) {
-        this.checkShow = false
+      let isCheckLinkerArr = []
+      for(let item of this.showArr){
+        isCheckLinkerArr.push(item.linkerId)
       }
+      console.log(isCheckLinkerArr.join(), 'isCheckLinkerArr.join()')
+      let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
+      this.$toast('添加到我的楼盘成功');
+      // this.$router.replace({path: "/user"});
     },
-    allSelectHandle() {
-      this.checkShow = !this.checkShow
-      if (this.showArr.length >= this.dataArrLength) {
-        this.showArr = []
-      } else {
-        this.showArr = []
-        for (let index = 0; index < this.dataArr.length; index++) {
-          this.showArr.push(index)
+
+    selectHandle(project) {
+      project.isChecked = !project.isChecked
+      for(let item of this.showArr) {
+        if(project.linkerId == item.linkerId){
+          this.showArr = this.showArr.filter(obj => {
+            return obj != item
+          })
+          return
         }
       }
-      console.log(this.showArr.length)
-      console.log(this.showArr)
+      this.showArr.push(project)
     },
-    arrLength() {
-      this.dataArrLength = this.dataArr.length
+
+    allSelectHandle() {
+      this.checkAllShow = !this.checkAllShow
+      if(this.checkAllShow){
+        this.showArr = this.projectList
+        for(let item of this.projectList){
+          item.isChecked = true
+        }
+      } else {
+        this.showArr = []
+        for(let item of this.projectList){
+          item.isChecked = false
+        }
+      }
     }
   }
 }
@@ -115,6 +140,7 @@ export default {
 <style lang="less">
 .my-member-page {
   .market-box {
+    padding-bottom: 80px;
     .meal-market-page {
       .meal-market-page-box {
         margin: 16px 0 0 16px;

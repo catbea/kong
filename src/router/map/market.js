@@ -127,7 +127,7 @@ export default [
   },
   {
     path: '/marketDetail/share/compile',
-    name: 'save-poster',
+    name: 'compile-poster',
     component: resolve => require(['@/views/market/marketDetail/marketShare/compilePoster/index.vue'], resolve),
     meta: {
       title: '编辑海报'

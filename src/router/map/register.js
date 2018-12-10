@@ -38,5 +38,13 @@ export default [
     meta: {
       title: '搜索公司'
     }
+  },
+  {
+    path: '/register/agreement',
+    name: 'register-agreement',
+    component: resolve => require(['@/views/register/agreement.vue'], resolve),
+    meta: {
+      title: '注册协议'
+    }
   }
 ]

@@ -219,22 +219,11 @@ class CustomService {
    * @param {*} buyBuildingPurpose
    * @param {*} isFollow  0：已关注 1：未关注
    */
-  updateCustomerInfo(clientId, remarkName, sex, age, position, phone, income, industry, buyBuildingPurpose, isFollow) {
+  updateCustomerInfo(customerInfoRequestVO) {
     return xhr({
-      method: 'put',
+      method: 'post',
       url: '/customerInfo/updateCustomerInfo',
-      body: {
-        clientId,
-        remarkName,
-        sex,
-        age,
-        position,
-        phone,
-        income,
-        industry,
-        buyBuildingPurpose,
-        isFollow
-      }
+      body: customerInfoRequestVO
     })
   }
 }

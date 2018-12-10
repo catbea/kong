@@ -1,40 +1,50 @@
 <template>
   <div class="custom-operation-page">
-    <div class="attention-box" @click="attentionHandle">
-      <span class="bg_img icon-attention" :style="{backgroundImage:'url('+(flag?attentionImg:attentionColorImg)+')'}"></span>
+    <div class="attention-box" @click="attentionHandler">
+      <span class="bg_img icon-attention" :style="{backgroundImage:'url('+(attentionFlag?attentionColorImg:attentionImg)+')'}"></span>
       关注
     </div>
-    <div class="report-box" @click="reportHandle"> 
+    <div class="report-box" @click="reportHandler"> 
       <span class="bg_img icon-report" :style="{backgroundImage:'url('+reportImg+')'}"></span>
       报备
     </div>
-    <div class="phone-button" @click="phoneHandle">
+    <div class="phone-button" @click="phoneHandler" v-if="clientMobile">
       <span class="bg_img icon-phone" :style="{backgroundImage:'url('+phoneImg+')'}"></span>
       电话
     </div>
-    <div class="consult-button" @click="consultHandle">
+    <div class="consult-button" :class="clientMobile.length==0&&'button'" @click="consultHandler">
       <span class="bg_img icon-consult" :style="{backgroundImage:'url('+consultImg+')'}"></span>
-      报备
+      咨询
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    attentionFlag: {type: Boolean, default: false},
+    clientMobile: {type: String, default: ''}
+  },
   data: () => ({
     attentionImg: require('IMG/custom/attention@2x.png'),
     attentionColorImg: require('IMG/custom/attentionColor@2x.png'),
     reportImg: require('IMG/custom/report@2x.png'),
     phoneImg: require('IMG/custom/phone@2x.png'),
     consultImg: require('IMG/custom/consult@2x.png'),
-    flag: true
   }),
   methods: {
-    attentionHandle() {
-      this.flag = !this.flag
+    attentionHandler() {
+      // this.flag = !this.flag
+      this.$emit('onattention', this.attentionFlag)
     },
-    reportHandle() {},
-    phoneHandle() {},
-    consultHandle() {}
+    reportHandler() {
+      this.$emit('onreport')
+    },
+    phoneHandler() {
+      this.$emit('onphone')
+    },
+    consultHandler() {
+      this.$emit('onconsult')
+    }
   }
 }
 </script>
@@ -89,6 +99,10 @@ export default {
   .consult-button {
     background: rgba(0, 122, 230, 1);
     margin-left: 16px;
+  }
+  .button {
+    width: 212px;
+    margin-left: 35px;
   }
 }
 </style>
