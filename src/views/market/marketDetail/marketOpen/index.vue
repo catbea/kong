@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     skipAgreement() {
-      this.$router.push('/marketDetail/open/agreement')
+      this.$router.push('/open/agreement')
     },
     priceItemClickHandle(index) {
       this.currPriceListIndex = index
