@@ -21,7 +21,7 @@
               <div
                 :class="{dim:item.masterRecommand==1}"
                 class="bg_img master-item"
-                :style="{backgroundImage:'url(https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2868602830,597618051&fm=27&gp=0.jpg)'}"
+                :style="{backgroundImage:'url('+item.linkerUrl+')'}"
               >
               </div>
               <ol>

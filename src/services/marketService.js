@@ -48,6 +48,17 @@ class MarketService {
       }
     })
   }
+  /** 
+   * 楼盘详情-该楼盘相册
+  */
+  getMarketDetailPhoto(linkerId){
+    return xhr({
+      url:'/linkerDetail/getHouseBannerTypeList',
+      body:{
+        linkerId
+      }
+    })
+  }
 
   /**
    * 楼盘-楼盘信息-楼盘开通调用
