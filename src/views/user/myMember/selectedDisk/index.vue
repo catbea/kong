@@ -35,6 +35,7 @@
   </div>
 </template>
 <script>
+import { Dialog } from 'vant'
 import marketService from 'SERVICE/marketService'
 import VanSearch from 'COMP/VanSearch/'
 import Screen from 'COMP/Screen/'
@@ -65,6 +66,7 @@ export default {
   }),
   methods: {
     async vipLinkerList() {
+      this.checkAllShow = false
       let param = {current: this.page, size: this.pageSize}
       const res = await marketService.vipLinkerList(param)
       let _list = []
@@ -90,11 +92,19 @@ export default {
       this.loading = false
     },
 
-    vipProjectOpenHandle() {
+    async vipProjectOpenHandle() {
       if(this.showArr.length == 0) {
         this.$toast('请先选择楼盘')
         return
       }
+      let isCheckLinkerArr = []
+      for(let item of this.showArr){
+        isCheckLinkerArr.push(item.linkerId)
+      }
+      console.log(isCheckLinkerArr.join(), 'isCheckLinkerArr.join()')
+      let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
+      this.$toast('添加到我的楼盘成功');
+      // this.$router.replace({path: "/user"});
     },
 
     selectHandle(project) {

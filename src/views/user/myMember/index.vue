@@ -136,13 +136,11 @@ export default {
         message: this.content,
         cancelButtonText: '其他城市',
         className: 'unselect'
-      })
-        .then(() => {
+      }).then(() => {
           // on confirm
-        })
-        .catch(() => {
+      }).catch(() => {
           // on cancel
-        })
+      })
     },
     affirmPopup() {}
   }
