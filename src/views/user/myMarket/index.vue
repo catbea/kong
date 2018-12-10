@@ -3,8 +3,7 @@
     <div style="margin-left:16px">
       <master-market
         v-if="closeSwipe"
-        :marster="masterList"
-        :common="commonList"
+        :swipeList="swipeList"
         @returnCloseHandle='returnCloseHandle'
       ></master-market>
     </div>
@@ -24,7 +23,7 @@
       <div class="market-left" v-if="myMarketShow">
       <user-market
         @usmarIconReturn="skipShareHandle"
-        v-for="(item,index) in myMarketShowList"
+        v-for="(item,index) in marketList"
         :key="index"
         :marketIndex="index"
         :dataArr="item"
@@ -36,7 +35,7 @@
       </div>
       <div class="market-right" v-if="!myMarketShow">
       <close-market
-        v-for="(item,index) in myMarketNotShowList"
+        v-for="(item,index) in marketList"
         :key="index"
         :dataArr="item"
         :marketIndex="index"
@@ -70,9 +69,11 @@ export default {
     closeSwipe: true,
     agentId:705,
     displayFlag: 0,
-    recommendList: 987,
-    masterList: [],
-    commonList: [],
+    recommendList: null,
+    swipeList:[],
+    masterList:[],
+    commonList:[],
+    marketList:[],
     myMarketShowList:[],
     myMarketNotShowList:[],
     myMarketShow: true,
@@ -110,34 +111,49 @@ export default {
       this.recommendList = res
       this.master()
       this.common()
+     this.swipeList = this.masterList.concat(this.commonList)
+     console.log(this.swipeList,'大师和推荐')
     },
     master () {
       this.masterList = this.recommendList.filter((item) => {
-        return item.masterRecommand === 1
+        return item.masterRecommand == "1"
       })
+      console.log(this.masterList,'大师')
     },
     common () {
-      this.commonList = this.commonList.filter((item) => {
-        return item.masterRecommand === 2
+      this.commonList = this.recommendList.filter((item) => {
+        return item.masterRecommand == "2"
       })
+      console.log(this.commonList,'普通')
     },
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
-      const show = await userService.getMyMarket(this.agentId,0)
-      console.log(show.records, '展示')
-      this.myMarketShowList = show.records
-      const notShow = await userService.getMyMarket(this.agentId,1)
-      console.log(notShow.records, "不展示")
-      this.myMarketNotShowList = notShow.records
+      const resShow = await userService.getMyMarket(this.agentId,0)
+      this.marketList=resShow.records
+      console.log(this.marketList,'展示')
+      const resNotShow = await userService.getMyMarket(this.agentId,1)
+      this.marketList=this.marketList.concat(resNotShow.records)
+      console.log(resNotShow,'不展示')
+      // const show = await userService.getMyMarket(this.agentId,0)
+      // console.log(show.records, '展示')
+      // this.myMarketShowList = show.records
+      // const notShow = await userService.getMyMarket(this.agentId,1)
+      // console.log(notShow.records, "不展示")
+      // this.myMarketNotShowList = notShow.records
     },
     returnHandle () {//切换展示与否
       this.myMarketShow = !this.myMarketShow
+      if(this.myMarketShow){
+        this.titleInfo.linkText= "切换关闭展示楼盘"
+      }else{
+         this.titleInfo.linkText= "切换开启展示楼盘"
+      }
     },
     skipShareHandle () {
       this.$router.push('/marketDetail/share')
     },
     closeCut(n){
-      this.myMarketList[n].displayFlag='1'
-     console.log(this.myMarketList[n])
+      // this.myMarketList[n].displayFlag='1'
+    //  console.log(this.myMarketList[n])
     },
     returnMasterHandle(n){
       this.masterList.push(this.myMarketList[n])
@@ -147,7 +163,7 @@ export default {
       console.log(this.commonList,7777777777777)
     },
     openCut(n){
-      this.myMarketList[n].displayFlag='0'
+      // this.myMarketList[n].displayFlag='0'
     }
   }
 }
