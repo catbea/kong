@@ -10,6 +10,8 @@
 <script>
 import userService from 'SERVICE/userService'
 import collapseList from 'COMP/Collapse/index'
+import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     collapseList
@@ -26,6 +28,10 @@ export default {
     let distributorId = this.$route.query.distributorId
     let enterpriseId = this.$route.query.enterpriseId
     this.queryOrganizationList(distributorId, enterpriseId)
+    console.log(this.userRegistInfo)
+  },
+  computed: {
+    ...mapGetters(['userRegistInfo'])
   },
 
   methods: {
@@ -41,7 +47,14 @@ export default {
 
     //刷新列表
     refreshList(val) {
-      console.log(val)
+      console.log('bbbbbb',val)
+      let _userRegistInfo = {
+        institutionId: val.id,
+        institutionName: val.name
+      }
+
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+      this.$router.back(-1)
       // for (let i = 0; i < this.organizationInfo.length; i++) {
       //   this.organizationInfo[i].checked = false
       //   if (this.organizationInfo[i].id == val) {

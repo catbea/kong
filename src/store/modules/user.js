@@ -103,7 +103,7 @@ const state = {
   },
 
   userRegistInfo: {
-    distributorId: '190', // 公司ID
+    distributorId: '124', // 公司ID
     distributorName: 'AW大师',
     institutionId: '190', // 机构ID
     institutionName: 'AW大师'
@@ -169,7 +169,7 @@ const mutations = {
     state.jssdkConfig = jssdkConfig
   },
   [types.USER_REGIST_INFO](state, data) {
-    state.userRegistInfo = data
+    state.userRegistInfo = Object.assign(state.userRegistInfo, data)
   }
 }
 
