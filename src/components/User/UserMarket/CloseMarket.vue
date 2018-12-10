@@ -46,8 +46,8 @@
       >
         <ul>
           <li>续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
-          <li @click="masterHandle">大师推荐</li>
-          <li @click="commonHandle">普通推荐</li>
+          <!-- <li @click="masterHandle">大师推荐</li>
+          <li @click="commonHandle">普通推荐</li> -->
           <li @click="stickHandle">
             <span v-show="stickShow">置顶</span>
             <span v-show="!stickShow">取消置顶</span>
@@ -304,7 +304,6 @@ export default {
  }
  //弹窗
  .van-popup--bottom {
-    height: 316px;
     background: rgba(255, 255, 255, 1);
     ul {
       li {
