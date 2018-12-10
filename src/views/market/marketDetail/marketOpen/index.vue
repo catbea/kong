@@ -46,14 +46,9 @@ export default {
   computed: {
     ...mapGetters(['userInfo', 'currSelectedCoupon'])
   },
-  watch: {
-    '$store.state.currSelectedCoupon': function(v) {
-      console.log('currSelectedCoupon==================')
-    }
-  },
   methods: {
     skipAgreement() {
-      this.$router.push('/marketDetail/open/agreement')
+      this.$router.push('/open/agreement')
     },
     priceItemClickHandle(index) {
       this.currPriceListIndex = index

@@ -7,21 +7,21 @@
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
-        <li>AW大师VIP: 2018年10月09日</li>
+        <li>AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
         <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
-      <router-link tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
+      <router-link v-show="isVip === 0" tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
       </div>
     </div>
-    <set-meal></set-meal>
+    <set-meal :vipList="vipList" :info="setMealInfo" @priceClick="priceClickHandle"></set-meal>
     <member-privilege></member-privilege>
     <privilege-describe></privilege-describe>
     <agreement></agreement>
      <div class="open-and-renew">
       <div class="open-and-renew-left">
-        合计：<p>158.00元</p>
+        合计：<p>{{payValue | priceFormart}}元</p>
       </div>
-      <div class="open-and-renew-right">
+      <div class="open-and-renew-right" @click="paySubmit">
         立即支付
       </div>
     </div>
@@ -29,6 +29,7 @@
 </template>
 <script>
 import { Dialog } from 'vant'
+import commonService from 'SERVICE/commonService'
 import SetMeal from 'COMP/myMember/SetMeal.vue'
 import MemberPrivilege from 'COMP/myMember/MemberPrivilege.vue'
 import PrivilegeDescribe from 'COMP/myMember/PrivilegeDescribe.vue'
@@ -47,6 +48,13 @@ export default {
     this.getVipInfo()
   },
   data: () => ({
+    isVip: false,
+    currPriceIndex: 0,
+    isPayLoading: false,
+    payValue: 0,
+    setMealInfo: {openCount: 0},
+    vipList: [],
+    expireTimestamp: 0,
     backImg: require('IMG/myMember/person_card_bg@2x.png'),
     headImgA: require('IMG/myMember/ShapeColor@2x.png'),
     headImgB: require('IMG/myMember/Shape@2x.png'),
@@ -71,10 +79,57 @@ export default {
     }
   },
   methods: {
+    async paySubmit() {
+      let param = {
+        // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
+        amountId: this.vipList[this.currPriceIndex].id,
+        subscribeNum: this.payValue,
+        payOpenid: this.userInfo.payOpenId
+      }
+      this.isPayLoading = true
+      const res = await commonService.payForVip(param)
+      if (res.isPay) {
+        wx.chooseWXPay({
+          //弹出支付
+          timestamp: res.timestamp,
+          nonceStr: res.nonceStr,
+          package: res.packageId,
+          signType: 'MD5',
+          paySign: res.signature,
+          success: res => {
+            console.log('支付suss')
+          },
+          cancel: res => {
+            console.log(res, '支付取消')
+          },
+          fail: res => {
+            console.log(res, '支付失败')
+          }
+        })
+      }
+    },
+
     async getVipInfo() {
       let res = await marketService.vipInfo()
-      console.log(res)
+      this.vipList = res.vipSettingList
+      this.setMealInfo = {openCount: res.count}
+      this.isVip = parseInt(this.userInfo.isVip)
+      this.expireTimestamp = res.expireTimestamp
+      if(this.vipList.length > 0){
+        this.currPriceIndex = 0
+        this.priceClickHandle(0)
+      }
+      
+      // console.log(this.vipList, 'this.vipList')
     },
+
+    priceClickHandle(index) {
+      this.currPriceIndex = index
+      // this.payValue = this.vipList[this.currPriceIndex].subscribeAmount - this.userInfo.price
+      // if(this.payValue < 0) this.payValue = 0
+      this.payValue = this.vipList[this.currPriceIndex].subscribeAmount
+    },
+
     unselectedPopup() {
       Dialog.confirm({
         title: this.title,

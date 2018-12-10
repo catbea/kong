@@ -1,9 +1,9 @@
 <template>
-  <div class="user-market-page">
+  <div class="user-market-page" v-if="dataArr.displayFlag==0">
     <div class="user-market-page-box" @click="skipMarketDetail(dataArr.linkerId)">
       <div class="user-market-page-box-top">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
-          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
+          <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" 
           :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <div class="user-market-page-box-bottom" v-if="dataArr.price">
+      <div class="user-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
         {{dataArr.divisionRules}}
       </div>
@@ -49,8 +49,8 @@
           <li @click="masterHandle">大师推荐</li>
           <li @click="commonHandle">普通推荐</li>
           <li @click="stickHandle">
-            <span v-show="stickShow">置顶</span>
-            <span v-show="!stickShow">取消置顶</span>
+            <span v-show="dataArr.recommand==0">置顶</span>
+            <span v-show="dataArr.recommand==10">取消置顶</span>
           </li>
           <li @click="exhibitionHandle">
             <span v-show="exhibitionMarketShow">关闭楼盘展示</span> 
@@ -74,8 +74,8 @@ export default {
     linkerId:null,
     discountImg:require('IMG/marketDetail/discount@2x.png'),
     show: false,
-    stickSwitch:null,
     stickShow:true,
+    stickSwitch:null,
     exhibitionMarketShow:true,
     imgShare:require('IMG/user/rectangle.png'),
     imgPlay:require('IMG/user/Oval@2x.png'),
@@ -92,6 +92,7 @@ export default {
   },
   created() {
    this.linkerId=this.dataArr.linkerId
+   this.cancelFirstStick()
   },
   methods:{
     async changeUserStatus(linkerId,operationType,status){
@@ -104,14 +105,19 @@ export default {
     popupHandle () {//更多
       this.show = !this.show
     },
+    cancelFirstStick(){//第一个不显示置顶
+    if(this.marketIndex==0){
+      this.changeUserStatus(this.linkerId,40,0)//改不置顶状态
+    }
+    },
     stickHandle () {
-      this.stickShow=!this.stickShow
-      if(this.stickShow===true){
-        this.stickSwitch=0
-      }else{
+      if(this.dataArr.recommand==0){
         this.stickSwitch=10
+      }else if(this.dataArr.recommand==10){
+        this.stickSwitch=0
       }
       this.changeUserStatus(this.linkerId,40,this.stickSwitch)//改置顶状态
+      this.show = !this.show
     },
     closeHandle () {
       this.show = !this.show
@@ -119,11 +125,13 @@ export default {
     masterHandle(){
       // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
+      this.show = !this.show
       console.log('已改为大师推荐')
     },
     commonHandle(){
       // this.$emit('returncommonHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,2)//改为普通推荐
+      this.show = !this.show
       console.log('已改为普通推荐')
     },
     exhibitionHandle () {
@@ -135,8 +143,7 @@ export default {
         this.stickShow=false
         this.exhibitionMarketShow=false
         this.changeUserStatus(this.linkerId,30,1)//改为不展示
-        console.log(this.dataArr,111111111111)
-        this.getMyMarketInfo()
+        this.dataArr.displayFlag=1
         // this.dataArr.displayFlag='1'
         // this.$emit('closeCut',this.marketIndex)
       }).catch(() => {
