@@ -16,7 +16,7 @@
     </div>
     <div class="search-content">
       <div class="search-tips">
-        <div class="search-tips-icon bg_img" :style="{backgroundImage:'url(' + searchIcon + ')'}"></div>
+        <div class="bg_img search-tips-icon" :style="{backgroundImage:'url(' + searchIcon + ')'}"></div>
         <div class="search-tips-cnt">请输入主营区域下所属公司</div>
       </div>
       <div class="search-list" v-for="(item, index) in regLists" :key="index">

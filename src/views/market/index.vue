@@ -103,9 +103,6 @@ export default {
     position: relative;
     width: 375px;
     height: 44px;
-    > div {
-      display: inline-block;
-    }
     > .search-comp {
       width: 305px;
       height: 30px;
@@ -117,7 +114,7 @@ export default {
       height: 24px;
       transform: translate(-50%, -50%);
       right: 8px;
-      top: 22px;
+      top: 15px;
     }
   }
 }

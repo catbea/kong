@@ -39,6 +39,7 @@ export default {
   height: 100%;
   position: fixed;
   background: rgba(247, 249, 250, 1);
+  touch-action: none;
   .full-screen-page-box {
     position: relative;
     width: 100%;

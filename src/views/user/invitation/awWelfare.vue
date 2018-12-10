@@ -4,7 +4,7 @@
       <div class="awWelfare-botton">
         <div class="awWelfare-botton-item">
           <!-- <router-link to="/me/teammateList"> -->
-           <img :src="awtipsIcon">
+           <img :src="awtipsIcon" @click="goteammateList">
           <!-- </router-link> -->
         </div>
         <yd-button @click.native="show1 = true" class="awWelfare-botton-item">
@@ -47,11 +47,11 @@
 export default {
   data() {
     return {
-      bgCombinedShapeIcon: require('IMG/user/bgCombinedShape@2x.png'),
-      awtipsIcon: require('IMG/user/aw-tips@2x.png'),
-      awtips1Icon: require('IMG/user/aw-tips1@2x.png'),
-      awbocloseIcon: require('IMG/user/aw-box-close.png'),
-      awbgcardIcon: require('IMG/user/aw-bgcard@2x.png'),
+      bgCombinedShapeIcon: require('IMG/user/invitation/bgCombinedShape@2x.png'),
+      awtipsIcon: require('IMG/user/invitation/aw-tips@2x.png'),
+      awtips1Icon: require('IMG/user/invitation/aw-tips1@2x.png'),
+      awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
+      awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
       // ovalIcon: require('IMG/edit/Oval@2x.png'),
       // ovalIcon: require('IMG/edit/Oval@2x.png'),
       // ovalIcon: require('IMG/edit/Oval@2x.png'),
@@ -59,7 +59,11 @@ export default {
     }
   },
   mounted() {},
-  methods: {}
+  methods: {
+    goteammateList(){
+       this.$router.push({name:'teammateList'})
+    }
+  }
 }
 </script>
 

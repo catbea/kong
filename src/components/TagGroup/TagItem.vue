@@ -5,12 +5,6 @@
 import conf from './conf'
 export default {
   props: {
-    // info: {
-    //   type:Object,
-    //   default:function () {
-    //     return {}
-    //   }
-    // }
     info: {
       type: String
     }
@@ -36,9 +30,7 @@ export default {
   margin: 0 -5px;
   transform: scale(0.85);
   margin: 1px 4px 1px -6px;
-  padding: 1px 5px;
+  padding: 3px 8px;
   border-radius: 3px;
-  height: 15px;
-  line-height: 15px;
 }
 </style>

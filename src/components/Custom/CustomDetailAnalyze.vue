@@ -18,21 +18,34 @@
     <div class="shadow_box purchase-intention">
       <h5 class="purchase-title">买房意向</h5>
       <div class="purchase-info-box">
-        <p><span>区域:</span>{{baseInfo.intentionArea}}</p>
-        <p><span>户型:</span>{{baseInfo.intentionHouseType}}</p>
-        <p><span>总价:</span>{{baseInfo.intentionPrice}}</p>
-        <p><span>关注:</span>{{baseInfo.intentionDemand}}</p>
-        <div class="preferences"><span>偏好:</span>
+        <p>
+          <span>区域:</span>
+          {{baseInfo.intentionArea}}
+        </p>
+        <p>
+          <span>户型:</span>
+          {{baseInfo.intentionHouseType}}
+        </p>
+        <p>
+          <span>总价:</span>
+          {{baseInfo.intentionPrice}}
+        </p>
+        <p>
+          <span>关注:</span>
+          {{baseInfo.intentionDemand}}
+        </p>
+        <div class="preferences">
+          <span>偏好:</span>
           <tag-group :arr="tempTagData"></tag-group>
         </div>
       </div>
     </div>
-    <div>
+    <div class="list">
       <estate-item v-for="(item,index) in analysisListData" :key="index" :info="item">
         <p class="interest-desc" slot="desc">1312312312</p>
       </estate-item>
     </div>
-    <custom-operation></custom-operation>
+    <custom-operation :attentionFlag="attentionFlag" :clientMobile="clientMobile" @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"></custom-operation>
   </div>
 </template>
 <script>
@@ -52,41 +65,29 @@ export default {
     lineData: { type: Array },
     barChartHidden: { type: Boolean },
     barData: { type: Array },
-    analysisListData: { type: Array }
+    analysisListData: { type: Array },
+    attentionFlag: {type: Boolean, default: false},
+    clientMobile: {type: String, default: ''}
   },
 
   created() {},
   data: () => ({
-    tempEstateData: [
-      {
-        linkerName: '我是测试',
-        city: '广东',
-        county: '深圳',
-        linkerTags: ['活好', '乖巧', 'but poor'],
-        price: 10000,
-        priceUnit: 2000,
-        linkerUrl: 'http://dummyimage.com/250x250'
-      },
-      {
-        linkerName: '我是测试',
-        city: '广东',
-        county: '深圳',
-        linkerTags: ['活好', '乖巧', 'but poor'],
-        price: 10000,
-        priceUnit: 2000,
-        linkerUrl: 'http://dummyimage.com/250x250'
-      },
-      {
-        linkerName: '我是测试',
-        city: '广东',
-        county: '深圳',
-        linkerTags: ['活好', '乖巧', 'but poor'],
-        price: 10000,
-        priceUnit: 2000,
-        linkerUrl: 'http://dummyimage.com/250x250'
-      }
-    ]
+    
   }),
+  methods: {
+    attentionHandler() {
+      this.$emit('onattention', this.attentionFlag)
+    },
+    reportHandler() {
+      this.$emit('onreport')
+    },
+    phoneHandler() {
+      this.$emit('onphone')
+    },
+    consultHandler() {
+      this.$emit('onconsult')
+    }
+  },
   components: {
     PieChart,
     LineChart,
@@ -157,6 +158,9 @@ export default {
         }
       }
     }
+  }
+  .list {
+    margin-bottom: 80px;
   }
   .interest-desc {
     margin: 0 15px;

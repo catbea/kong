@@ -5,6 +5,7 @@
       :bannerList="bannerList"
       :collectionStatus="linkerInfo&&linkerInfo.collectionStatus"
       :ifPanorama="linkerInfo&&linkerInfo.ifPanorama"
+      :linkerId='linkerInfo&&linkerInfo.linkerId'
       @shareBuilding="shareBuildingPage"
     ></swipe-box>
     <div class="marketDetail-page-bottom">
@@ -175,7 +176,7 @@ export default {
       this.$router.push({ path: '/marketDetail/info', query: this.linkerInfo })
     },
     skipMarketDetail(val) {
-      this.$router.push({ name: 'marketDetail', params: { id: val.linkerId } })
+      this.$router.push({ name: 'marketDetail', params: { id:val} })
     },
     marketOpenHandle() {
       this.$router.push({ name: 'marketDetail-open', params: { id: this.linkerId } })
