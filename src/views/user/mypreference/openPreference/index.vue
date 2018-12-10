@@ -3,31 +3,37 @@
     <div class="bg_img background" :style="{backgroundImage:'url('+backImg+')'}">
       <div class="background-content">
       <div class="headImg" :style="borderStyle">
-        <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag?headImgB:headImgA)+')'}"></span>
+        <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag ? headImgB : headImgA)+')'}"></span>
       </div>
       <ul class="head-describe">
-        <li>刘新博</li>
-        <li>已购买套餐，将于2018年10月15日到期。</li>
-        <li>余额：23元</li>
+        <li>{{userInfo.nickName}}</li>
+        <li>已购套餐，{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
       </div>
     </div>
-    <already-buy></already-buy>
-    <binding-meal></binding-meal>
-    <meal-privilege></meal-privilege>
+    <already-buy v-for="(item, index) in bugList" :key="index" :packageItem="item" @selectProject="selectProjectHandle"></already-buy>
+    <binding-meal :itemInfo="packageInfo"></binding-meal>
+    <meal-privilege :itemInfo="packageInfo"></meal-privilege>
     <privilege></privilege>
     <agreement></agreement>
     <div class="open-and-renew">
       <div class="open-and-renew-left">
-        合计：<p>158.00元</p>
+        合计：<p>{{payValue | priceFormart}}元</p>
       </div>
-      <div class="open-and-renew-right">
+      <div v-show="!isPayLoading" class="open-and-renew-right" @click="payClickHandle">
         立即支付
+      </div>
+      <div v-show="isPayLoading" class="pay-loadding">
+        支付中...
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+import marketService from 'SERVICE/marketService'
+import commonService from 'SERVICE/commonService'
 import AlreadyBuy from 'COMP/User/mypreference/openPreference/AlreadyBuy.vue'
 import BindingMeal from 'COMP/User/mypreference/openPreference/BindingMeal.vue'
 import MealPrivilege from 'COMP/User/mypreference/openPreference/MealPrivilege.vue'
@@ -42,6 +48,13 @@ export default {
     Agreement
   },
   data: () => ({
+    currPackage: null,
+    expireDate: 0,
+    isPayLoading: false,
+    packageInfo: {},
+    bugList: [],
+    flag: false,
+    payValue: 0,
     backImg: require('IMG/myMember/person_card_bg@2x.png'),
     headImgA: require('IMG/myMember/ShapeColor@2x.png'),
     headImgB: require('IMG/myMember/Shape@2x.png'),
@@ -50,7 +63,11 @@ export default {
       border: 'none'
     }
   }),
+  created() {
+    this.getPackageInfo()
+  },
   computed: {
+    ...mapGetters(['userInfo']),
     borderStyle() {
       if (this.bdr == 1) {
         this.borderColor.border = '1px solid #C6C6C6'
@@ -58,6 +75,73 @@ export default {
       } else if (this.bdr == 2) {
         this.borderColor.border = '1px solid #EEC597'
         return this.borderColor
+      }
+    }
+  },
+  methods: {
+    async payClickHandle() {
+      this.isPayLoading = true
+      let param = {
+        packageId: this.currPackage.id,
+        subscribeAmount: this.payValue,
+        payOpenid: this.userInfo.payOpenId
+      }
+      const res = await commonService.packagePayment(param)
+      this.isPayLoading = false
+      if (res.isPay) {
+        wx.chooseWXPay({
+          //弹出支付
+          timestamp: res.timestamp,
+          nonceStr: res.nonceStr,
+          package: res.packageId,
+          signType: 'MD5',
+          paySign: res.signature,
+          success: res => {
+            console.log('支付suss')
+          },
+          cancel: res => {
+            console.log(res, '支付取消')
+          },
+          fail: res => {
+            console.log(res, '支付失败')
+          }
+        })
+      }
+    },
+
+    async selectProjectHandle(item) {
+      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: item.packageId, type:'package'}})
+    },
+
+    async getPackageInfo() {
+      const res = await marketService.userPackageSituation()
+      this.expireDate = parseInt(res.expireDate)
+      if(res.packagePurchageList.length > 0) {
+        for(let i=0; i<res.packagePurchageList.length; i++) {
+          let item = res.packagePurchageList[i]
+          let obj = {
+            packageId: item.packageId,
+            title: '已购套餐'+(i+1),
+            projectSelected: item.limitResidue,
+            projectCount: item.giveNum + item.limitTotal,
+            expireDate: item.expireDate
+          }
+          this.bugList.push(obj)
+        }
+      }
+
+      if(res.packageList.length > 0) {
+        this.currPackage = res.packageList[0]
+        this.packageInfo = {
+          price: this.currPackage.price,
+          timeNum: this.currPackage.timeNum,
+          limitTotal: this.currPackage.limitTotal,
+          timeUnit: this.currPackage.timeUnit
+        }
+        this.payValue = this.packageInfo.price - this.userInfo.price
+        if(this.payValue < 0) this.payValue = 0
+      } else {
+        this.$toast('陶盘信息返回错误')
       }
     }
   }
@@ -143,6 +227,16 @@ export default {
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
       }
+    }
+    .pay-loadding {
+      line-height: 56px;
+      width: 125px;
+      text-align: center;
+      font-size: 18px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      background: #ccc;
     }
     .open-and-renew-right {
       line-height: 56px;

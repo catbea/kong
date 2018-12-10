@@ -36,6 +36,7 @@ export default {
   background: rgba(255, 255, 255, 1);
   .privilege {
     margin-bottom: 14px;
+    font-size: 20px;
   }
   ol {
     width: 343px;

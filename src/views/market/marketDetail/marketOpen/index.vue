@@ -27,8 +27,6 @@ export default {
     this.linkerId = this.$route.params.id
     this.getMarketDescribeInfo()
     this.getLinkerAmountList()
-
-    console.log(this.currSelectedCoupon, 'currSelectedCoupon=====')
   },
   data: () => ({
     isPayLoading: false,

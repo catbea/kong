@@ -48,23 +48,8 @@ export default {
     imgCommission: require('IMG/user/collection/Rectangle@2x.png')
   }),
   props: {
-    value: '',
     dataArr: {
       type: Object
-    },
-    indexData: {
-      type: Number
-    },
-    showData: {
-      type: Boolean
-    }
-  },
-  watch: {
-    value(val) {
-      this.val = val
-    },
-    val(val) {
-      this.$emit('update:value', val)
     }
   }
 }

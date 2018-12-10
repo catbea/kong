@@ -167,7 +167,7 @@ class MarketService {
     })
   }
 
-    /**
+  /**
    * vip楼盘开通
    *
    */
@@ -178,6 +178,18 @@ class MarketService {
       body: {
         isCheckLinkerIds: isCheckLinkerIds,
         isCheckAll:isCheckAll
+      }
+    })
+  }
+
+  /**
+   * 楼盘套餐信息
+   *
+   */
+  userPackageSituation() {
+    return xhr({
+      url: '/userPackage/userPackageSituation',
+      body: {
       }
     })
   }

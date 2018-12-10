@@ -67,6 +67,17 @@ class CommonService {
     })
   }
 
+    /**
+   * 陶盘支付
+   */
+  packagePayment(param) {
+    return xhr({
+      url: '/weixinPay/packagePayment',
+      method: 'post',
+      body: param
+    })
+  }
+
   /**
    * 获取所有城市列表
    */
@@ -84,5 +95,6 @@ class CommonService {
       url: '/common/getCityHot'
     })
   }
+
 }
 export default new CommonService()
