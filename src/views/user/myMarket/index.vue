@@ -125,12 +125,6 @@ export default {
       console.log(this.commonList,'普通')
     },
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
-<<<<<<< HEAD
-      const show = await userService.getMyMarket(this.agentId,0)
-      this.myMarketShowList = show.records
-      const notShow = await userService.getMyMarket(this.agentId,1)
-      this.myMarketNotShowList = notShow.records
-=======
       const resShow = await userService.getMyMarket(this.agentId,0)
       this.marketList=resShow.records
       console.log(this.marketList,'展示')
@@ -143,7 +137,6 @@ export default {
       // const notShow = await userService.getMyMarket(this.agentId,1)
       // console.log(notShow.records, "不展示")
       // this.myMarketNotShowList = notShow.records
->>>>>>> 6d24dc7d927a1490e90213fec29a97b698994581
     },
     returnHandle () {//切换展示与否
       this.myMarketShow = !this.myMarketShow
@@ -157,12 +150,8 @@ export default {
       this.$router.push('/marketDetail/share')
     },
     closeCut(n){
-<<<<<<< HEAD
-      this.myMarketList[n].displayFlag='1'
-=======
       // this.myMarketList[n].displayFlag='1'
     //  console.log(this.myMarketList[n])
->>>>>>> 6d24dc7d927a1490e90213fec29a97b698994581
     },
     returnMasterHandle(n){
       this.masterList.push(this.myMarketList[n])
