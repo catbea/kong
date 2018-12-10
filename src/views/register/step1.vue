@@ -128,7 +128,11 @@ export default {
      * 选择机构
      */
     selectInstitutionHandler() {
-      this.$router.push('/user/edit/userMechanism')
+      let params = {
+        enterpriseId: this.enterpriseId,
+        distributorId: this.userRegistInfo.distributorId
+      }
+      this.$router.push({path: '/user/edit/userMechanism', query: params})
     },
     nextHandler() {
       let params = {

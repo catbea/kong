@@ -15,11 +15,19 @@ export default {
   components: {
     Navbar,
     Tabbar
+  },
+  mounted() {
+    document.addEventListener('touchstart', handler, false)
+  },
+  methods:{
+    handler(e){
+      e.preventDefault()
+    }
   }
 }
 </script>
 <style lang="less">
-@import '~normalize.css';
+@import '~normalize.css/normalize.css';
 @import './assets/css/reset.less';
 @import './assets/css/common.less';
 
