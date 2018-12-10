@@ -1,5 +1,5 @@
 <template>
-  <div class="marquee" :style="{height: height + 'px'}">
+  <div class="marquee" :style="{height: height}">
     <ul class="marquee-box" ref="box" :style="{transform: `translate3d(0,${currenTranslateY}px,0)`, transition: `transform ${noAnimate ? 0 : duration}ms`}">
       <slot></slot>
     </ul>
@@ -22,7 +22,7 @@ export default {
       type: String,
       default: 'up'
     },
-    itemHeight: Number
+    itemHeight: String
   },
   beforeDestroy() {
     this.destroy()

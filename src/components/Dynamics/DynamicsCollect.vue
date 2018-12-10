@@ -37,7 +37,7 @@
       <div class="bottom-line"></div>
       <div class="carousel-container">
         <div class="marquee-box">
-          <marquee :itemHeight="50">
+          <marquee :itemHeight="`${50/37.5}rem`">
             <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
               <avatar :avatar="item.avatarUrl"></avatar>
               {{item.clientName | textOver(4)}}
