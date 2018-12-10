@@ -3,18 +3,17 @@
     <div style="margin-left:16px;margin-top:7px">
     <van-search :obj="searchInfo"></van-search>
     </div>
-    <div style="margin-left:16px">
-    <screen></screen>
+    <div>
+      <screen></screen>
     </div>
     <div class="market-box">
-    <meal-market
-        v-for="(item,index) in dataArr"
-        :key="index"
-        :dataArr="item"
-        :indexData="index"
-        :showData="showArr.indexOf(index) >-1"
-        @click.native="selectHandle(index)"
-      ></meal-market>
+      <meal-market
+          v-for="(item,index) in dataArr"
+          :key="index"
+          :dataArr="item"
+          :indexData="index"
+          :showData="showArr.indexOf(index) >-1"
+          @click.native="selectHandle(index)" ></meal-market>
     </div>
     <div class="check-all-box">
       <div class="img-box">
@@ -30,6 +29,7 @@
   </div>
 </template>
 <script>
+import marketService from 'SERVICE/marketService'
 import VanSearch from 'COMP/VanSearch/'
 import Screen from 'COMP/Screen/'
 import MealMarket from './MealMarket.vue'
@@ -41,6 +41,7 @@ export default {
   },
   created() {
     this.arrLength()
+    this.vipLinkerList()
   },
   data: () => ({
     dataArrLength: null,
@@ -67,24 +68,16 @@ export default {
         condition: ['热销中', '地铁房', '低密度'],
         open: '125次开通',
         price: '1%+5万元/套'
-      },
-      {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
-      },
-      {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
       }
     ]
   }),
   methods: {
+    async vipLinkerList() {
+      let param = {}
+      const res = await marketService.vipLinkerList(param)
+      console.log(res, 'vipLinkerList')
+    },
+
     selectHandle(index) {
       console.log(12)
       this.checkIndex = index

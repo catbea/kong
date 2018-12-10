@@ -10,7 +10,7 @@
         <li>AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
         <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
-      <router-link tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
+      <router-link v-show="isVip === 0" tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
       </div>
     </div>
     <set-meal :vipList="vipList" :info="setMealInfo" @priceClick="priceClickHandle"></set-meal>
@@ -19,7 +19,7 @@
     <agreement></agreement>
      <div class="open-and-renew">
       <div class="open-and-renew-left">
-        合计：<p>{{payValue}}元</p>
+        合计：<p>{{payValue | priceFormart}}元</p>
       </div>
       <div class="open-and-renew-right" @click="paySubmit">
         立即支付
@@ -48,6 +48,7 @@ export default {
     this.getVipInfo()
   },
   data: () => ({
+    isVip: false,
     currPriceIndex: 0,
     isPayLoading: false,
     payValue: 0,
@@ -82,7 +83,7 @@ export default {
       let param = {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
         amountId: this.vipList[this.currPriceIndex].id,
-        subscribeNum: (this.vipList && this.vipList.length>0) ? this.vipList[this.currPriceIndex].subscribeAmount : 0,
+        subscribeNum: this.payValue,
         payOpenid: this.userInfo.payOpenId
       }
       this.isPayLoading = true
@@ -112,6 +113,7 @@ export default {
       let res = await marketService.vipInfo()
       this.vipList = res.vipSettingList
       this.setMealInfo = {openCount: res.count}
+      this.isVip = parseInt(this.userInfo.isVip)
       this.expireTimestamp = res.expireTimestamp
       if(this.vipList.length > 0){
         this.currPriceIndex = 0
@@ -123,7 +125,9 @@ export default {
 
     priceClickHandle(index) {
       this.currPriceIndex = index
-      this.payValue = this.vipList[this.currPriceIndex].subscribeAmount / 100
+      // this.payValue = this.vipList[this.currPriceIndex].subscribeAmount - this.userInfo.price
+      // if(this.payValue < 0) this.payValue = 0
+      this.payValue = this.vipList[this.currPriceIndex].subscribeAmount
     },
 
     unselectedPopup() {

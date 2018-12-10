@@ -132,5 +132,16 @@ class MarketService {
       body: {}
     })
   }
+
+  /**
+   * 获取vip楼盘
+   *
+   */
+  vipLinkerList(parm) {
+    return xhr({
+      url: '/brokerVip/vipLinkerList',
+      body: parm
+    })
+  }
 }
 export default new MarketService()
