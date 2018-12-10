@@ -145,7 +145,19 @@ class MarketService {
   }
 
   /**
-   * 获取vip楼盘
+   * 分享我的楼盘信息
+   */
+  shareBuildingCard(linkerId){
+    return xhr({
+      url:'/linkerDetail/share',
+      body:{
+        linkerId
+      }
+    })
+  }
+
+
+   /* 获取vip楼盘
    *
    */
   vipLinkerList(parm) {
@@ -154,5 +166,21 @@ class MarketService {
       body: parm
     })
   }
+
+    /**
+   * vip楼盘开通
+   *
+   */
+  addHouseByVip(isCheckLinkerIds, isCheckAll=false) {
+    return xhr({
+      url: '/brokerVip/addHouseByVip',
+      method: 'post',
+      body: {
+        isCheckLinkerIds: isCheckLinkerIds,
+        isCheckAll:isCheckAll
+      }
+    })
+  }
+
 }
 export default new MarketService()

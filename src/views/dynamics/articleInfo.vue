@@ -41,7 +41,7 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent">
+            <div class="dynamics-list-agent" @click="godynamicsInfo">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="item.avatarUrl" class="agent-userImg">
@@ -56,7 +56,7 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content">
+            <div class="dynamics-list-content" @click="godynamicsInfo">
               <p>浏览了文章 <span>{{item.articleName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}</span></p>
@@ -66,10 +66,10 @@
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-               <button class="list-btn-follow" v-show="item.attentionStatus   == 1">
+               <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
-                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0">已关注</button>
+                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
@@ -122,6 +122,21 @@ export default {
       const res = await dynamicsService.getSingleArticleCount(this.itemlist.articleId)
       this.articleDynamicCount = res
     },
+    //關注
+    getupdateCustomerInfo(item){
+      if (item.attentionStatus == 1) {
+        item.attentionStatus = 0;
+         dynamicsService.getupdateCustomerInfo(item.clientId,0)
+      } else {
+       item.attentionStatus = 1;
+         dynamicsService.getupdateCustomerInfo(item.clientId,1)
+      }
+    },
+     //楼盘详情
+    godynamicsInfo() {
+      this.$router.push('/market/marketDetail')
+    },
+
     //联系
     goalldynamics () {
       this.$router.push('/dynamics/message/messageList')
