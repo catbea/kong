@@ -108,7 +108,10 @@ const state = {
     distributorName: 'AW大师',
     institutionId: '190', // 机构ID
     institutionName: 'AW大师'
-  }
+  },
+
+  //点击选中的楼盘id
+  buildId: ''
 }
 
 const getters = {
@@ -120,7 +123,8 @@ const getters = {
   jssdkConfig: state => {
     return state.jssdkConfig
   },
-  userRegistInfo: state => state.userRegistInfo
+  userRegistInfo: state => state.userRegistInfo,
+  buildId: state => state.buildId
 }
 
 const actions = {
@@ -147,6 +151,9 @@ const actions = {
   },
   getUserRegistInfo({ commit }, data) {
     commit(types.USER_REGIST_INFO, data)
+  },
+  getUserbuildInfo({ commit }, data) {
+    commit(types.USER_BUILD_INFO, data)
   }
 }
 
@@ -171,6 +178,9 @@ const mutations = {
   },
   [types.USER_REGIST_INFO](state, data) {
     state.userRegistInfo = Object.assign(state.userRegistInfo, data)
+  },
+  [types.USER_BUILD_INFO](state, data) {
+    state.buildId = data
   }
 }
 

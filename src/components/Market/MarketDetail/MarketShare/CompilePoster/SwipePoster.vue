@@ -1,42 +1,45 @@
 <template>
   <div class="swipe-poster-page">
-    <div class="swipe-poster-item bg_img" :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}">
-      <div
-        class="content-box bg_img"
-        :style="{backgroundImage:'url('+backImg+')'}"
-      >
+    <div
+      class="swipe-poster-item bg_img"
+      :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}"
+    >
+      <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}">
         <div class="box-top">
           <ul>
-            <li>境墅高层</li>
-            <li>碧桂园·十里银滩</li>
-            <li>价格：58888元/㎡</li>
+            <!-- <li>境墅高层</li> -->
+            <li>{{model.linkerName}}</li>
+            <li>价格：{{model.linkerPrice}}{{model.priceUnit}}</li>
           </ul>
           <div class="QRcode">
-            <span></span>
+            <img class="qrcode-view" :src="model.qrCode">
             <p>长按识别更多</p>
           </div>
         </div>
         <div class="box-bottom">
           <div class="message">
-            <span></span>
+            <img class='header-view' :src="model.avatarMediaid">
             <div class="name">
-              <p>张杰柯</p>
-              <p>18776586534</p>
+              <p>{{model.agentName}}</p>
+              <p>{{model.agentMobile}}</p>
             </div>
           </div>
-          <p class="company">
-            授权开发商：深圳万科地产集团有限公司
-          </p>
+          <p class="company">授权开发商：{{model.developer}}</p>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data: () => ({
-    backImg: require('IMG/marketDetail/back@2x.png')
-  })
+    backImg: require('IMG/marketDetail/back@2x.png'),
+  }),
+
+ props: {
+    model: Object
+  },
 }
 </script>
 <style lang="less">
@@ -66,14 +69,14 @@ export default {
           margin-left: 19px;
           margin-top: 49px;
           li:nth-child(1) {
-            font-size: 23px;
+            font-size: 20px;
             font-family: STSongti-SC-Bold;
             font-weight: bold;
             color: rgba(229, 179, 123, 1);
             line-height: 33px;
           }
           li:nth-child(2) {
-            font-size: 16px;
+            font-size: 11px;
             font-family: STSongti-SC-Regular;
             font-weight: 400;
             color: rgba(229, 179, 123, 1);
@@ -93,10 +96,11 @@ export default {
           flex-direction: column;
           margin-top: 19px;
           margin-left: 19px;
-          span {
+          .qrcode-view {
             margin-bottom: 7px;
             width: 58px;
             height: 58px;
+            border-radius: 50%;
           }
           p {
             font-size: 7px;
@@ -113,7 +117,7 @@ export default {
         .message {
           margin: 21px 0 11px 19px;
           display: flex;
-          span {
+          .header-view {
             width: 29px;
             height: 29px;
             border-radius: 50%;

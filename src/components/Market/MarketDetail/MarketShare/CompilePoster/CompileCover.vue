@@ -4,40 +4,52 @@
     <ol class="compile-cover-bottom">
       <li
         class="bg_img"
-        v-for="(item,index) in list"
+        v-for="(item,index) in model"
         :key="index"
-        @click="active(index)"
-        :style="{backgroundImage:'url(https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1629847645,2171518544&fm=27&gp=0.jpg)'}"
+        :style="{backgroundImage:'url('+item.imgUrl+')'}"
+        @click="selectIcon(index)"
       >
-        <span
-          class="bg_img"
-          :style="{backgroundImage:'url('+(num==index?icon:icon)+')'}"
-          v-show="listSeletct.indexOf(index)!=-1"
-        ></span>
+        <span class="bg_img" :style="{backgroundImage:'url('+item.checked=='1'?icon:''+')'}"></span>
       </li>
     </ol>
   </div>
 </template>
 <script>
 export default {
+  props: ['model'],
+
   data: () => ({
     icon: require('IMG/correction/color.png'),
     list: [1, 2, 3, 4, 5],
     listSeletct: [],
     liIndex: 0,
-    num: null
+    num: null,
+    bannerList: []
   }),
   computed: {},
+
+  created() {
+   
+  },
+
   methods: {
-    active(index) {
-      if (this.listSeletct.indexOf(index) == -1) {
-        this.listSeletct.push(index)
+    // active(index) {
+    //   if (this.listSeletct.indexOf(index) == -1) {
+    //     this.listSeletct.push(index)
+    //   } else {
+    //     this.listSeletct = this.listSeletct.filter(item => {
+    //       return item != index
+    //     })
+    //   }
+    // },
+    selectIcon(index) {
+      if (this.model[index].checked == '0') {
+        this.model[index].checked = '1'
       } else {
-        this.listSeletct = this.listSeletct.filter(item => {
-          return item != index
-        })
+        this.model[index].checked = '0'
       }
-    }
+    },
+
   }
 }
 </script>

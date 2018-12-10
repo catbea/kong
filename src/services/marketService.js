@@ -167,5 +167,18 @@ class MarketService {
     })
   }
 
+  /**
+   * 分享楼盘需要的楼盘图片列表
+   * @param {*} linkerId 
+   */
+  getBannerList(linkerId){
+    return xhr({
+      url:'/linkerDetail/getLinkerBannerList',
+      body:{
+        linkerId
+      }
+    })
+  }
+
 }
 export default new MarketService()

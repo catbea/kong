@@ -9,6 +9,7 @@ export const USER_AREA = 'USER_AREA'
 export const REPORT_INFO = 'REPORT_INFO'
 export const TREE_INFO = 'TREE_INFO'
 export const USER_REGIST_INFO = 'USER_REGIST_INFO'
+export const USER_BUILD_INFO = 'USER_BUILD_INFO'
 
 // city
 export const CITY_LIST = 'CITY_LIST'
