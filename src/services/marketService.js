@@ -48,6 +48,17 @@ class MarketService {
       }
     })
   }
+  /** 
+   * 楼盘详情-该楼盘相册
+  */
+  getMarketDetailPhoto(linkerId){
+    return xhr({
+      url:'/linkerDetail/getHouseBannerTypeList',
+      body:{
+        linkerId
+      }
+    })
+  }
 
   /**
    * 楼盘-楼盘信息-楼盘开通调用
@@ -134,7 +145,19 @@ class MarketService {
   }
 
   /**
-   * 获取vip楼盘
+   * 分享我的楼盘信息
+   */
+  shareBuildingCard(linkerId){
+    return xhr({
+      url:'/linkerDetail/share',
+      body:{
+        linkerId
+      }
+    })
+  }
+
+
+   /* 获取vip楼盘
    *
    */
   vipLinkerList(parm) {
@@ -143,5 +166,6 @@ class MarketService {
       body: parm
     })
   }
+
 }
 export default new MarketService()

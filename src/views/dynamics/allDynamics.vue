@@ -122,7 +122,8 @@ export default {
       houseDynamicCount: [],
       houseDynamicList: [],
       articleDynamicCount: [],
-      articleDynamicList: []
+      articleDynamicList: [],
+      attentionStatus: 0,
     }
   },
   created() {
@@ -193,24 +194,45 @@ export default {
       const res = await dynamicsService.getArticleDynamicList(1)
       this.articleDynamicList = res.records
     },
-    //关注
- async getupdateCustomerInfo (item) {
-    debugger
-    // /关注状态 0：已关注 1：未关注
-    let attentionStatus
-    if(item.attentionStatus == 1){
-      attentionStatus = 0
-    }else if(item.attentionStatus == 0){
-      attentionStatus = 1
+    //全部按鈕
+ async getupdateCustomerInfo (cons) {
+    let index = cons.index
+    if(cons.type='update'){
+// /关注状态 0：已关注 1：未关注关注
+     console.log("========allDynamicList=====================",this.allDynamicList[index].attentionStatus)
+     if (cons.item.attentionStatus == 1) {
+        cons.item.attentionStatus = 0
+        await dynamicsService.getupdateCustomerInfo(cons.item.clientId,0)
+      } else {
+        cons.item.attentionStatus = 1
+        await dynamicsService.getupdateCustomerInfo(cons.item.clientId,1)
+      }
+    }else if(cons.type = 'messageList'){
+      //聯繫
+       this.$router.push('/dynamics/message/messageList')
+    }else if(cons.type='detail'){
+      //詳情
+       this.$router.push('/custom/detail')
     }
-    // clientId, isFollow
-      const res = await dynamicsService.getupdateCustomerInfo(item.clientId,attentionStatus)
+    },
+   //文章跳轉
+    goallDynamics (pram) {
+      debugger
+      if(pram.type == 'guanz'){
+        if (pram.item.attentionStatus == 1) {
+        pram.item.attentionStatus = 0
+         dynamicsService.getupdateCustomerInfo(pram.item.clientId,0)
+      } else {
+        pram.item.attentionStatus = 1
+         dynamicsService.getupdateCustomerInfo(pram.item.clientId,1)
+      }
+      }else if(pram.type == 'detail'){
+        this.$router.push('/custom/detail')
+      }else if(parm.type='messageList'){
+         this.$router.push('/dynamics/message/messageList')
+      }
       
     },
-   //客户详情
-    // goallDynamics (item) {
-    //   this.$router.push('/custom/detail')
-    // },
     itemProperties (val) {
       if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog

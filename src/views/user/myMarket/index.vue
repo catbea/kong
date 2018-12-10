@@ -106,6 +106,7 @@ export default {
     },
     async getRecommendInfo () {//推荐楼盘的数据
       const res = await userService.getRecommend()
+      console.log(res, 78787878)
       this.recommendList = res
       this.master()
       this.common()
@@ -125,10 +126,10 @@ export default {
       console.log(this.commonList,'普通')
     },
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
-      const resShow = await userService.getMyMarket(this.agentId,0)
+      const resShow = await userService.getMyMarket(0)
       this.marketList=resShow.records
       console.log(this.marketList,'展示')
-      const resNotShow = await userService.getMyMarket(this.agentId,1)
+      const resNotShow = await userService.getMyMarket(1)
       this.marketList=this.marketList.concat(resNotShow.records)
       console.log(resNotShow,'不展示')
       // const show = await userService.getMyMarket(this.agentId,0)

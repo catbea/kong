@@ -1,7 +1,12 @@
 <template>
   <div class="marketDetail-page">
     <hint-tire v-if="hintShow" @hintClose="hintHandle"></hint-tire>
-    <swipe-box :bannerList="bannerList" :collectionStatus="linkerInfo&&linkerInfo.collectionStatus" :ifPanorama="linkerInfo&&linkerInfo.ifPanorama"></swipe-box>
+    <swipe-box
+      :bannerList="bannerList"
+      :collectionStatus="linkerInfo&&linkerInfo.collectionStatus"
+      :ifPanorama="linkerInfo&&linkerInfo.ifPanorama"
+      @shareBuilding="shareBuildingPage"
+    ></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
         <div class="marketDetail-box-top">
@@ -9,11 +14,15 @@
             <tag-group :arr="info"></tag-group>
           </div>
           <div class="house-owner">
-            <div class="browse" @click="supplement">{{linkerInfo&&linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
+            <div
+              class="browse"
+              @click="supplement"
+            >{{linkerInfo&&linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
             <!-- <div v-if="linkerInfo&&linkerInfo.customerList"
               class="head-portrait bg_img"
               :style="{backgroundImage:'url('+linkerInfo.customerList[0].clientImg+')'}"
-            ></div> -->
+            ></div>-->
+
             <avatar class="head-portrait" :avatar="avatarCompute"></avatar>
           </div>
         </div>
@@ -24,16 +33,23 @@
       <all-marketType :houseTypeList="linkerInfo&&linkerInfo.houseTypeList"></all-marketType>
       <title-bar :conf="confDynamic" :isShow="linkerInfo&&linkerInfo.houseDynamicList.length>0"></title-bar>
       <ul class="market-state-box" v-if="linkerInfo&&linkerInfo.houseDynamicList.length>0">
-        <li class="market-state-box-top">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].title:''}}</li>
+        <li
+          class="market-state-box-top"
+        >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].title:''}}</li>
         <li
           class="market-state-box-middle"
         >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].content:''}}</li>
-        <li class="market-state-box-bottom">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].dynamicTime:''}}</li>
+        <li
+          class="market-state-box-bottom"
+        >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].dynamicTime:''}}</li>
       </ul>
       <title-bar :conf="confLocation" :isShow="linkerInfo&&linkerInfo.aroundList.length>0"></title-bar>
       <site-nearby :aroundList="linkerInfo&&linkerInfo.aroundList"></site-nearby>
       <title-bar :conf="confElse" :isShow="linkerInfo&&linkerInfo.linkerOtherList.length>0"></title-bar>
-      <all-elseMarket :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList" @itemClick="skipMarketDetail"></all-elseMarket>
+      <all-elseMarket
+        :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList"
+        @itemClick="skipMarketDetail"
+      ></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link to="/marketDetail/correction" class="feedback">反馈纠错</router-link>
@@ -42,6 +58,7 @@
     </div>
     <open-marketButton v-if="openStatus=='0' || openStatus==''" @click.native="marketOpenHandle"></open-marketButton>
     <!-- v-if="openFlag" -->
+
     <market-renew v-if="openStatus=='1' || openStatus=='2'"></market-renew>
     <van-popup v-model="show">
       <popup-box></popup-box>
@@ -90,7 +107,7 @@ export default {
     this.getHouseAroundType(this.linkerId)
   },
   data: () => ({
-    a:1111,
+    a: 1111,
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
@@ -119,7 +136,7 @@ export default {
     confElse: {
       title: '其他楼盘',
       linkText: '全部楼盘',
-      link: "/market"
+      link: '/market'
     },
     info: [],
     buttonInfo: {
@@ -135,6 +152,9 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
+    shareBuildingPage() {
+      this.$router.push({name: 'marketDetail-share', params: {buildInfo: this.linkerInfo}})
+    },
     hintHandle() {
       this.hintShow = false
     },
@@ -172,14 +192,15 @@ export default {
       this.info = houseUseList
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.openStatus = result.openStatus
-      
-      this.titleBarHandle()
+
+      //this.titleBarHandle()
+
     },
-      //跳转更多内容
-      skipMoreContent(){
-        this.confType.link=this.confType.link+this.linkerId
-        this.confDynamic.link=this.confDynamic.link+this.linkerId
-      },
+    //跳转更多内容
+    skipMoreContent() {
+      this.confType.link = this.confType.link + this.linkerId
+      this.confDynamic.link = this.confDynamic.link + this.linkerId
+    },
     /**
      * 楼盘详情-位置周边
      */

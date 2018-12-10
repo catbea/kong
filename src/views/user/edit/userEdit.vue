@@ -59,7 +59,7 @@
     <cell-group class="user-advance-info">
       <cell class="cell-item tag-edit" title="标签展示" is-link :to="'/user/edit/userLabel'">
         <div slot="extra" class="tag-show-container">
-          <div class="tag-item" v-for="item in userInfo.labelList" :key="item.id">{{item.itemName}}</div>
+          <div class="tag-item" v-for="item in userInfo.labelList" :key="item.labelId">{{item.labelName}}</div>
         </div>
       </cell>
       <cell

@@ -1,36 +1,38 @@
 <template>
-<div class="perfect-page">
-  <ul class="perfect-page-top">
-    <router-link tag="li" to="/user/edit/username">名字
-      <div>
-        Bela
-        <span></span>
-      </div>
-    </router-link>
-    <router-link tag="li" to="">主营区域
-      <div>
-        深圳市 南山区
-        <span></span>
-      </div>
-    </router-link>
-    <router-link tag="li" to="">所属公司
-      <div>
-        尊豪科技
-      </div>
-    </router-link>
-    <router-link tag="li" to="/user/edit/userMechanism">我的机构
-      <div>
-        AW大师一号店
-        <span></span>
-      </div>
-    </router-link>
-  </ul>
-  <div class="perfect-page-button">保存</div>
+  <div class="perfect-page">
+    <ul class="perfect-page-top">
+      <router-link tag="li" to="/user/edit/username">名字
+        <div>
+          Bela
+          <span></span>
+        </div>
+      </router-link>
+      <router-link tag="li" to>主营区域
+        <div>
+          深圳市 南山区
+          <span></span>
+        </div>
+      </router-link>
+      <router-link tag="li" to>所属公司
+        <div>尊豪科技</div>
+      </router-link>
+      <router-link tag="li" to="/user/edit/userMechanism">我的机构
+        <div>
+          AW大师一号店
+          <span></span>
+        </div>
+      </router-link>
+    </ul>
+    <div class="perfect-page-button">保存</div>
   </div>
 </template>
 <script>
 export default {
-  data: () => ({})
+  data: () => ({}),
+
+  created() {
+    
+  }
 }
 </script>
 <style lang="less">

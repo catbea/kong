@@ -2,7 +2,6 @@
   <div class="my-estate-list">
     <title-bar class="title-container" :conf="titleBarConf"></title-bar>
     <estate-item v-for="(item,index) in list" :key="index" :info="item" @click="godynamicsInfo"></estate-item>
-
   </div>
 </template>
 <script>
@@ -21,7 +20,8 @@ export default {
   data: () => ({
     titleBarConf: {
       title: '我的楼盘',
-      linkText: '更多楼盘'
+      linkText: '更多楼盘',
+      link: '/user/myMarket'
     }
   }),
   methods: {

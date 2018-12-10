@@ -89,12 +89,10 @@ export default {
       this.phoneFocus = focus
     },
     registerHandler() {
-      console.log('11111')
-      // let params = {
-      // enterpriseId: this.enterpriseId
-      // }
-      // debugger
-      // this.$router.push({path: '/register/step2', query: params})
+      let params = {
+        enterpriseId: this.enterpriseId
+      }
+      this.$router.push({path: '/register/step2', query: params})
       // this.register()
     },
     /**
