@@ -142,7 +142,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/photo',
+    path: '/marketDetail/photo/:id',
     name: 'photoList',
     component: resolve => require(['@/views/market/marketDetail/marketPhoto/index.vue'], resolve),
     meta: {

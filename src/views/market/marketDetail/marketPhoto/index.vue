@@ -1,58 +1,111 @@
 <template>
   <div class="detail-photo-page">
-    <full-screen :info="info"></full-screen>
+    <!-- <full-screen :info="info"></full-screen> -->
+    <!-- <full-screen :info="communityList"></full-screen>
+    <full-screen :info="effectList"></full-screen> -->
     <ul>
-      <p>样板间 ({{templateList.length}})</p>
+      <p>{{templateData.groupName}} ({{templateData.listBannerVO.length}})</p>
       <div class="template-box">
-        <li tag="li" to="/" class="bg_img" :style="{backgroundImage:'url('+item.a+')'}" 
-         v-for="(item,index) in templateList" :key="index" @click="showClick()"></li>
+        <li tag="li" to="/" class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
+         v-for="(item,index) in templateData.listBannerVO" :key="index" @click="templateClick()"></li>
       </div>   
     </ul>
     <ol>
-      <p>效果图 ({{effectList.length}})</p>
+      <p>{{effectData.groupName}} ({{effectData.listBannerVO.length}})</p>
       <div class="effect-box">
-        <li class="bg_img" :style="{backgroundImage:'url('+item.a+')'}" 
-        v-for="(item,index) in effectList" :key="index" @click="showClick()"></li>
+        <li class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
+        v-for="(item,index) in effectData.listBannerVO" :key="index" @click="effectClick()"></li>
       </div> 
     </ol>
     <div class="community-box">
-      <p>小区配置 ({{communityList.length}})</p>
+      <p>{{communityData.groupName}} ({{communityData.listBannerVO.length}})</p>
       <div class="community-box-content">
-        <span class="bg_img" :style="{backgroundImage:'url('+item.a+')'}" 
-        v-for="(item,index) in communityList" :key="index" @click="showClick()"></span>
+        <span class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
+        v-for="(item,index) in communityData.listBannerVO" :key="index" @click="communityClick()"></span>
       </div> 
     </div>
   </div>
 </template>
 <script>
+import { ImagePreview } from 'vant'
 import FullScreen from './FullScreen'
+import MarketService from 'SERVICE/marketService'
 export default {
+  created() {
+    this.linkerId=this.$route.params.id
+    console.log(this.linkerId,'路由参数')
+    this.getMarketDetailPhotoInfo()
+  },
   data: () => ({
-    templateList: [{ a: require('IMG/dev/timg.jpg') }],
-    effectList: [{ a: require('IMG/dev/timg.jpg') }],
-    communityList: [{ a: require('IMG/dev/timg.jpg') }],
-    show: false,
-    info: {
-      domShow: false,
-      arr: [
-        'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
-        'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
-        'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg',
-        'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/e05b52f4539e43c4867ae74bc852a271.jpg'
-      ]
-    }
+    linkerId:null,
+    templateData:null,
+    templateList:[],
+    templateArr:[],
+    effectData: null,
+    effectList:[],
+    effectArr:[],
+    communityData:null,
+    communityList:[],
+    communityArr:[],
+    show: false
   }),
   components: {
-    FullScreen
+    // FullScreen
   },
   methods: {
-    showClick() {
-      ;(this.show = true), (this.info.domShow = true)
+    templateClick() {
+      ImagePreview({
+  images:this.templateArr,
+  startPosition: 0,
+  onClose() {
+    // do something
+  }
+});
+    },
+    effectClick() {
+      ImagePreview({
+  images:this.effectArr,
+  startPosition: 0,
+  onClose() {
+    // do something
+  }
+});
+    },
+    communityClick() {
+      ImagePreview({
+  images:this.communityArr,
+  startPosition: 0,
+  onClose() {
+    // do something
+  }
+});
+    },
+    aPhotoList(n,arr){
+      for (let index = 0; index < n.length; index++) {
+        const element = n[index];
+        arr.push(element.imgUrl) 
+      }
+    },
+    async getMarketDetailPhotoInfo(){
+      const res = await MarketService.getMarketDetailPhoto('66712c6be08c4491ab7a1e1a95275896')
+      console.log(res,"相册数据")
+      this.templateData=res[0]
+      this.templateList=this.templateData.listBannerVO 
+      this.aPhotoList(this.templateList,this.templateArr)
+      this.effectData=res[1]
+      this.effectList=this.effectData.listBannerVO
+      this.aPhotoList(this.effectList,this.effectArr)
+      this.communityData=res[2]
+      this.communityList=this.communityData.listBannerVO
+      this.aPhotoList(this.communityList,this.communityArr)
     }
   }
 }
 </script>
 <style lang="less">
+.van-swipe-item{
+    background:#ffffff;
+  }
 .detail-photo-page {
   width: 375px;
   height: 100%;

@@ -35,7 +35,8 @@ export default {
   props: {
     bannerList: { type: Array },
     collectionStatus: { type: String }, // 0-未收藏 1-已收藏
-    ifPanorama: { type: Number } // 是否有全景
+    ifPanorama: { type: Number }, // 是否有全景,
+    linkerId:{type: String}
   },
   data: () => ({
     current: 0,
@@ -52,7 +53,7 @@ export default {
     },
     photo() {
       // console.log(0)
-      this.$router.push('/marketDetail/photo')
+      this.$router.push({ name: 'photoList', params: {id: this.linkerId }})
     },
     onChange(index) {
       console.log(index)
