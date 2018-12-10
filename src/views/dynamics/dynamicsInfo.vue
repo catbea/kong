@@ -94,10 +94,10 @@
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
-               <button class="list-btn-follow" v-show="item.attentionStatus   == 1">
+               <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
-                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0">已关注</button>
+                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
@@ -151,6 +151,16 @@ export default {
       const res = await dynamicsService.getSingleHouseDynamicList(1, 10, this.itemDynamiclist.linkerId)
       this.SingleHouseDynamicList = res.records
       this.getSingleHouseDynamicCount()
+    },
+    //關注
+    getupdateCustomerInfo(item){
+       if (item.attentionStatus == 1) {
+        item.attentionStatus = 0;
+         dynamicsService.getupdateCustomerInfo(item.clientId,0)
+      } else {
+       item.attentionStatus = 1;
+         dynamicsService.getupdateCustomerInfo(item.clientId,1)
+      }
     },
     //楼盘详情
     godynamicsInfo() {
