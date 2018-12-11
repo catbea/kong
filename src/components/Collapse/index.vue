@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li style="list-style-type:none">
     <div class="parent-view">
       <div class="parent-view-left" @dblclick="changeType" @click="toggle">
         <img class="parent-img" :src="model.logo?model.logo:this.tempImgs">
@@ -47,7 +47,6 @@ export default {
 
   methods: {
     selectOrganiz(model) {
-      console.log(model)
       this.$emit('clickListener', model)
     },
 

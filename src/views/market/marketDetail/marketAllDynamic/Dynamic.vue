@@ -29,7 +29,6 @@ export default {
     async getAllDynamicListInfo(id) {
       let res = await MarketService.getAllDynamicList(id)
       this.list = res
-      console.log(res)
     }
   }
 }

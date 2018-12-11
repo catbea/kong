@@ -234,12 +234,10 @@ export default {
     onStartConfirm(N) {
       this.startTime = N
       this.startShow = !this.startShow
-      console.log(this.startShow)
       this.upDateSetting('1')
     },
     onStartCancel() {
       this.startShow = !this.startShow
-      console.log(this.startShow)
     },
     endHandle() {
       this.endShow = !this.endShow
@@ -252,7 +250,6 @@ export default {
         this.upDateSetting('1')
       } else {
         this.greater = false
-        console.log(this.greater)
         this.upDateSetting('1')
       }
     },

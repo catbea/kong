@@ -80,22 +80,8 @@ export default {
   },
   methods: {
     selectHandle(index) {
-      console.log(11888)
       this.checkData = index
     },
-    // allSelectHandle() {
-    //   this.checkShow = !this.checkShow
-    //   if (this.showArr.length >= this.dataArrLength) {
-    //     this.showArr = this.showArr.splice(0, 0)
-    //   } else {
-    //     this.showArr = this.showArr.splice(0, 0)
-    //     for (let index = 0; index < this.dataArr.length; index++) {
-    //       this.showArr.push(index)
-    //     }
-    //   }
-    //   console.log(this.showArr.length)
-    //   console.log(this.showArr)
-    // },
     /**
      * 报备选择楼盘确定
      */

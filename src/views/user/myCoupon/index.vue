@@ -60,18 +60,10 @@ export default {
     // 请求数据事件
     async onLoad() {
       let current = this.getCurrentType()
-
       const result = await mycoupons.couponsStatusList(current.index, current.page)
-      console.log(result)
-      //  if(current.index == 0&& current.page ==1){
       this.nameList[0].num = result.total
-      // }
       current.list = current.list.concat(result.records)
-
-      console.log(current.list)
-
       this.$nextTick(() => {
-        console.log(current.page)
         if (result.pages === 0 || current.page === result.pages) {
           current.finished = true
         }

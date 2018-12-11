@@ -52,7 +52,6 @@ export default {
     route: ''
   }),
   created() {
-    console.log(this.$route.query)
     this.query = this.$route.query
     this.registerType = this.query.registerType
     this.enterpriseId = this.query.enterpriseId

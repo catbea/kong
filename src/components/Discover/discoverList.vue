@@ -23,7 +23,6 @@ export default {
   },
   methods: {
     GOheadline() {
-      console.log(1)
       //跳转到房产头条
       this.$router.push('/discover/headline')
     }

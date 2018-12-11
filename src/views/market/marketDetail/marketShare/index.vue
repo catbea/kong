@@ -1,7 +1,7 @@
 <template>
   <div class="market-share-page">
-    <div class="box">
-      <div class="share-top">
+    <div class="box" v-show="status === 1">
+      <div class="share-top" id='share-top'>
         <img class="avatar-img" :src="buildingInfo.avatarMediaid" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="buildingInfo.qrCode">
@@ -14,23 +14,25 @@
         <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
       </div>
       <div class="share-bottom">
-        <p>长按保存图片 可分享好友或朋友圈</p>
+        <!-- <p>长按保存图片 可分享好友或朋友圈</p> -->
         <ul>
           <router-link
             tag="li"
             :to="{path:'/marketDetail/share/compile',query:{name:this.buildingInfo}}"
             class="compile"
           >编辑海报</router-link>
-          <li class="save" @click>保存海报</li>
+          <li class="save" @click="savaReport">保存海报</li>
         </ul>
         <router-view></router-view>
       </div>
     </div>
+    <div class="result" id="card-result" v-show="status === 2"></div>
   </div>
 </template>
 <script>
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
+import h2c from 'html2canvas'
 import marketService from 'SERVICE/marketService'
 export default {
   computed: {
@@ -47,7 +49,8 @@ export default {
       avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg',
       coverBg: require('IMG/dev/page1/cover2@2x.png'),
       logoImg: require('IMG/dev/page1/logo@2x.png'),
-      buildingInfo: {}
+      buildingInfo: {},
+      status: 1
     }
   },
 
@@ -57,6 +60,18 @@ export default {
       if (result) {
         this.buildingInfo = result
       }
+    },
+
+    async savaReport() {
+      this.status = 2
+      const dpr = window.devicePixelRatio
+      const canvas = await h2c(document.querySelector('#share-top'), {
+        logging: false,
+        useCORS: true
+      })
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
+      document.getElementById('card-result').appendChild(canvas)
     }
   }
 }
@@ -105,7 +120,6 @@ export default {
       top: 236px;
       right: 20px;
       z-index: 2;
-
     }
 
     > .distinguish-span {

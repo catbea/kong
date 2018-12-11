@@ -1,6 +1,6 @@
 <template>
   <div class="custom-detail">
-    <div class="custom-info-box">
+    <div class="custom-info-box" v-if="customBaseInfo">
       <avatar class="custom-avatar" v-if="customBaseInfo.avatarUrl!=''" :avatar="customBaseInfo.avatarUrl"></avatar>
       <div class="custom-info">
         <div class="custom-name-box">
@@ -259,7 +259,6 @@ export default {
           llzuxq.color = colors[i]
           pieData.push(llzuxq)
         }
-        console.log(pieData)
         this.pieData = pieData
       }
       this.isPieDataReqOk = true
@@ -281,7 +280,6 @@ export default {
           item.a = '1'
           lineData.push(item)
         }
-        console.log(lineData)
         this.lineData = lineData
       }
     },
@@ -301,7 +299,6 @@ export default {
           item.shadow = 100
           barData.push(item)
         }
-        console.log(barData)
         this.barData = barData
       }
     },

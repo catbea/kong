@@ -7,7 +7,7 @@
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
-        <li>已购套餐，{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li v-show="expireDate">已购套餐，{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
         <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
       </div>
@@ -31,6 +31,7 @@
   </div>
 </template>
 <script>
+import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'
@@ -79,6 +80,11 @@ export default {
     }
   },
   methods: {
+    async addProjectHandle() {
+      const res = await marketService.queryLastInfoByAgentId()
+      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: res.id, type:'package'}})
+    },
+
     async payClickHandle() {
       this.isPayLoading = true
       let param = {
@@ -97,29 +103,38 @@ export default {
           signType: 'MD5',
           paySign: res.signature,
           success: res => {
-            console.log('支付suss')
+            Dialog.confirm({
+              title: '开通成功',
+              message: '成功开通套餐，海量楼盘等你添加~',
+              cancelButtonText: '取消'
+            }).then(() => {
+                this.addProjectHandle()
+            }).catch(() => {
+                
+            })
           },
           cancel: res => {
-            console.log(res, '支付取消')
+            this.$toast('支付取消')
           },
           fail: res => {
-            console.log(res, '支付失败')
+            this.$toast('支付失败')
           }
         })
       }
     },
 
     async selectProjectHandle(item) {
-      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: item.packageId, type:'package'}})
+      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: item.id, type:'package'}})
     },
 
     async getPackageInfo() {
       const res = await marketService.userPackageSituation()
-      this.expireDate = parseInt(res.expireDate)
+      this.expireDate = res.expireDate ? parseInt(res.expireDate) : 0
       if(res.packagePurchageList.length > 0) {
         for(let i=0; i<res.packagePurchageList.length; i++) {
           let item = res.packagePurchageList[i]
           let obj = {
+            id: item.id,
             packageId: item.packageId,
             title: '已购套餐'+(i+1),
             projectSelected: item.limitResidue,

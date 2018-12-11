@@ -2,21 +2,15 @@
   <div class="market-page">
     <div class="search-box van-hairline--bottom">
       <div class="search-comp">
-        <search :conf="searchContent"></search>
+        <search :conf="searchContent" @areaClick="areaClickHandler"></search>
       </div>
       <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
     <screen v-model="filter"></screen>
-    <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket">
-    </already-open>
+    <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        :finished-text="'没有更多了'"
-        @load="onLoad"
-      >
-      <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
+        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
   </div>
@@ -45,7 +39,7 @@ export default {
     filter: null,
     searchContent: {
       siteText: '深圳',
-      placeholderText: '请输入平台名称'
+      placeholder: '请输入平台名称'
     },
     value: '',
     locationIcon: require('IMG/market/juxing.png'),
@@ -61,14 +55,12 @@ export default {
     async onLoad() {
       //楼盘信息请求
       const res = await marketService.getMarketDescribe(705, this.page)
-      console.log(res)
       this.marketList = this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {
         this.finished = true
       }
       this.page++
       this.loading = false
-      console.log(99999)
     },
     openReturnHandle(item) {
       this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
@@ -86,6 +78,10 @@ export default {
     },
     skipDetail(item) {
       this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
+    },
+    // s搜索区域点击处理
+    areaClickHandler() {
+      this.$router.push({name:'area-select'})
     }
   }
 }
@@ -94,11 +90,6 @@ export default {
 .market-page {
   width: 100%;
   height: 100%;
-  // .already-open-page{
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items:center;
-  // }
   > .search-box {
     position: relative;
     width: 375px;

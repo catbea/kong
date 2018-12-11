@@ -71,7 +71,6 @@ export default {
 
     async getCoupan() {
       let priceItem = this.priceList[this.currPriceListIndex]
-      // console.log(priceItem)
       let res = await mycoupons.getMyCoupons(this.linkerId, priceItem.subscribeAmount, 1, 1000)
       let couponStr = res.canUseNum + '张可用'
       if(this.currSelectedCoupon) {
@@ -87,7 +86,6 @@ export default {
       }
       this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: couponStr, isShowCoupon: res.canUseNum > 0 ? true : false })
       this.$store.dispatch('setProjectCoupons', res.page.records)
-      // this.couponList = res.records
     },
 
     async paySubmit() {
@@ -102,10 +100,8 @@ export default {
       }
       this.isPayLoading = true
       const res = await commonService.payForProject(param)
-      console.log(res, '支付接口返回')
       this.isPayLoading = false
       if (res.isPay) {
-        // alert('appid:'+res.appId);
         wx.chooseWXPay({
           //弹出支付
           timestamp: res.timestamp,
@@ -117,11 +113,10 @@ export default {
             console.log('支付suss')
           },
           cancel: res => {
-            //用户付钱失败。没钱，密码错误，取消付款
-            console.log(res, '支付取消')
+            this.$toast('支付取消')
           },
           fail: res => {
-            console.log(res, '支付失败')
+            this.$toast('支付失败')
           }
         })
       }
@@ -129,7 +124,6 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
-      console.log(res, 'getMarketDescribeInfo')
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,

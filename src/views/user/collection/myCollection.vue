@@ -150,7 +150,6 @@ export default {
       if (tempDynamicsList[index].status == 1) {
         const result = await userService.getlinkerDynamics(item.linkerId, 0)
         this.dynamicsList[index].status = 0
-        console.log(this.dynamicsList)
       } else if (tempDynamicsList[index].status == 0) {
         this.dynamicsList[index].status = 1
         const result = await userService.getlinkerDynamics(item.linkerId, 1)
@@ -159,7 +158,6 @@ export default {
     //收藏文章
     async gocollection(cons) {
       let index = cons.index
-      console.log(this.collectionList[index].deleteType)
       if (this.collectionList[index].deleteType == 1) {
         this.collectionList[index].deleteType = 0
         await userService.getlinkerCollection(cons.infoId, 0)
@@ -167,44 +165,6 @@ export default {
         this.collectionList[index].deleteType = 1
         await userService.getlinkerCollection(cons.infoId, 1)
       }
-
-      // if (cons[index] ==0) {
-      //   this.collectionList[index].deleteFlag = 1
-      // } else {
-      //   this.collectionList[index].deleteFlag = 0
-      // }
-
-      // console.log(this.deleteFlag)
-      // console.log(cons.deleteType)
-      // if (this.deleteFlag != 0) {
-      //   //0已收藏 1未收藏
-      //   if (this.deleteFlag == 1) {
-      //     this.deleteFlag = 0
-      //   } else if (this.deleteFlag == 0) {
-      //     this.deleteFlag = 1
-      //   }
-      // } else {
-      //   if (cons.deleteType == 1) {
-      //     this.deleteFlag = 0
-      //   } else if (cons.deleteType == 0) {
-      //     this.deleteFlag = 1
-      //   }
-      // }
-      // // <!-- 收藏状态：1-取消收藏，0-收藏 -->
-
-      // let collok = cons.divIdOk
-      // let collno = cons.divIdNo
-      // collok = document.getElementById(collok)
-      // collno = document.getElementById(collno)
-
-      // if (this.deleteFlag == 1) {
-      //   collok.style.display = 'block'
-      //   collno.style.display = 'none'
-      // } else if (this.deleteFlag == 0) {
-      //   collok.style.display = 'none'
-      //   collno.style.display = 'block'
-      // }
-      //
     }
   }
 }

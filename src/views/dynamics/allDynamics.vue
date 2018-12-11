@@ -199,7 +199,6 @@ export default {
     let index = cons.index
     if(cons.type='update'){
 // /关注状态 0：已关注 1：未关注关注
-     console.log("========allDynamicList=====================",this.allDynamicList[index].attentionStatus)
      if (cons.item.attentionStatus == 1) {
         cons.item.attentionStatus = 0
         await dynamicsService.getupdateCustomerInfo(cons.item.clientId,0)
