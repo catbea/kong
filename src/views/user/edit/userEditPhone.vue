@@ -61,11 +61,12 @@ export default {
         let phoneType = strFormat.fmtNum(this.Cphone)
         if (phoneType == null) {
           this.Cphone = ''
-          Dialog.alert({
-            message: '请输入数字'
-          }).then(() => {
-            // on close
-          })
+          // Dialog.alert({
+          //   message: '请输入数字'
+          // }).then(() => {
+          //   // on close
+          // })
+          this.$toast('请输入数字');
         } else {
           let date = {
             tempPhone: this.Cphone

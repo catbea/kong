@@ -81,7 +81,7 @@ export default {
     ShadowBox
   },
   props: {
-    cardDynamicCount: { type: Object },
+    cardDynamicCount: { type: '' },
     cardDynamicList: { type: Array }
   },
   data() {

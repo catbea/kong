@@ -13,7 +13,7 @@
       </div>
       <div class="awWelfare-center" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
         <!-- v-if="invitationImg" -->
-        <div id="qrcode" ref="qrcode"></div>
+        <div class="qrcode" ref="qrCodeUrl"></div>
           <div class="awWelfare-info">
             <div class="awWelfare-info-left">
               <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import {QRCode} from 'qrcodejs2'
-import { Popup } from 'vant';
+import QRcode from 'qrcodejs2'
+import { Popup } from 'vant'
 import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 export default {
@@ -88,7 +88,7 @@ export default {
     userInfo(v) {}
   },
   mounted() {
-     this.goyInvitationUrlCode(this.invitationUrl)
+     this.goyInvitationUrlCode('http://jindo.dev.naver.com/collie')
     this.getrules()
    
   },
@@ -112,16 +112,27 @@ export default {
     },
      async goyInvitationUrlCode (url) {
       debugger
-        let qrcode = new QRCode('qrcode', {
-            width: 150, //图像宽度
-            height: 150, //图像高度
-            colorDark : "#000000", //前景色
-            colorLight : "#ffffff", //背景色
-            typeNumber:4, 
-            correctLevel : QRCode.CorrectLevel.H //容错级别 容错级别有：（1）QRCode.CorrectLevel.L （2）QRCode.CorrectLevel.M （3）QRCode.CorrectLevel.Q （4）QRCode.CorrectLevel.H
-        })
-        qrcode.clear() //清除二维码 
-        qrcode.makeCode(url) //生成另一个新的二维码
+        // let qrcode = new QRCode('qrcode', {
+        //     width: 150, //图像宽度
+        //     height: 150, //图像高度
+        //     colorDark : "#000000", //前景色
+        //     colorLight : "#ffffff", //背景色
+        //     typeNumber:4, 
+        //     correctLevel : QRCode.CorrectLevel.H //容错级别 容错级别有：（1）QRCode.CorrectLevel.L （2）QRCode.CorrectLevel.M （3）QRCode.CorrectLevel.Q （4）QRCode.CorrectLevel.H
+        // })
+        // qrcode.clear() //清除二维码 
+        // qrcode.makeCode(url) //生成另一个新的二维码
+
+        var qrcode = new QRCode(this.$refs.qrCodeUrl, {
+            text: 'http://jindo.dev.naver.com/collie',
+            width: 70,
+            height: 70,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H
+      })
+
+
     }
   }
 }
