@@ -87,7 +87,7 @@ export default {
       }
     },
     async getMarketDetailPhotoInfo(){
-      const res = await MarketService.getMarketDetailPhoto('66712c6be08c4491ab7a1e1a95275896')
+      const res = await MarketService.getMarketDetailPhoto(this.linkerId)
       console.log(res,"相册数据")
       this.templateData=res[0]
       this.templateList=this.templateData.listBannerVO 

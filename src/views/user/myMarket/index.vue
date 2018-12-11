@@ -172,6 +172,12 @@ export default {
   background: #ffffff;
   .user-market-box{
     display: flex;
+    .market-left{
+      width:100%;
+      .user-market-page-box{
+        // width:100%;
+      }
+    }
   }
   .title-bar,
   .van-search-page {
