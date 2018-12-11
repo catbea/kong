@@ -54,7 +54,7 @@ export default {
     // info: Object,
     item: Object,
     houseDynamicList: { type: Array },
-    houseDynamicCount: { type: Object }
+    houseDynamicCount: { type: '' }
   },
   data() {
     return {

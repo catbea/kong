@@ -51,7 +51,7 @@ export default {
     ShadowBox
   },
   props: {
-    articleDynamicCount: { type: Array },
+    articleDynamicCount: { type: '' },
     articleDynamicList: { type: Array }
   },
   data() {
