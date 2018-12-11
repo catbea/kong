@@ -6,7 +6,7 @@
       <p class="base-focus">{{focusInfo}}</p>
     </div>
     <div class="intention-box">
-      <p class="intention-value">90.8%</p>
+      <p class="intention-value">{{Number(this.info.intentionality)*100}}%</p>
       <p class="intention-title">意向度</p>
     </div>
   </div>
@@ -49,6 +49,7 @@ export default {
       font-size: 16px;
       font-weight: 600;
       color: #333333;
+      padding-bottom: 10px;
     }
     .base-focus {
       font-size: 13px;
@@ -63,6 +64,7 @@ export default {
       font-size: 20px;
       font-weight: 500;
       color: #007ae6;
+      padding: 3px 0;
     }
     .intention-title {
       font-size: 12px;

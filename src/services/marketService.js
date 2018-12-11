@@ -233,5 +233,19 @@ class MarketService {
     })
   }
 
+  /**
+   * 获取套餐信息-包括总共能添加多少楼盘、已添加的楼盘列表
+   */
+  userPackageAddHouse(linkerIds, purchaseId) {
+    return xhr({
+      url: '/userPackage/userPackageAddHouse',
+      method: 'post',
+      body: {
+        linkerIds,
+        purchaseId
+      }
+    })
+  }
+
 }
 export default new MarketService()
