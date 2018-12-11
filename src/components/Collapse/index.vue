@@ -10,6 +10,7 @@
         v-if="model"
         v-model="model.checked"
         @change="selectOrganiz(model)"
+        :id="`checkbox-${model.id}`"
       ></checkbox>
     </div>
     <ul class="ul-view" v-show="open" v-if="isFolder">
@@ -34,7 +35,8 @@ export default {
   data() {
     return {
       tempImgs: require('IMG/user/Group9@2x.png'),
-      open: false
+      open: false,
+      last: -1
     }
   },
   props: ['model'],
@@ -44,10 +46,32 @@ export default {
       return this.model.children && this.model.children.length
     }
   },
+  created() {
+    window.localStorage.setItem('tempLast', -1)
+  },
 
   methods: {
     selectOrganiz(model) {
-      this.$emit('clickListener', model)
+      let tempId = window.localStorage.getItem('tempLast')
+      if (tempId != -1) {
+        let dom = document.getElementById(`checkbox-${tempId}`)//this.$refs[`checkbox-${tempId}`]
+        console.log(dom.children[0].classList.remove('van-checkbox__icon--checked'));
+        // this.$refs[`checkbox-${tempId}`].checked = false
+      }
+      window.localStorage.setItem('tempLast', model.id)
+
+      // console.log(model.id)
+      // this.$ref[`checkbox-${this.last}`]
+
+      // console.log(this.$refs.checkbox)
+      // console.log('dom');
+      // let comp = this.$refs[`checkbox-${model.id}`]
+      // comp.checked = false
+      // console.log(this.$refs[`checkbox-${model.id}`])
+
+      // console.log(model)
+
+      // this.$emit('clickListener', model)
     },
 
     toggle: function() {

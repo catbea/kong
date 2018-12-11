@@ -124,23 +124,20 @@ export default {
         this.currPriceIndex = 0
         this.priceClickHandle(0)
       }
-      
-      // console.log(this.vipList, 'this.vipList')
     },
 
     priceClickHandle(index) {
       this.currPriceIndex = index
-      // this.payValue = this.vipList[this.currPriceIndex].subscribeAmount - this.userInfo.price
-      // if(this.payValue < 0) this.payValue = 0
-      this.payValue = this.vipList[this.currPriceIndex].subscribeAmount
+      this.payValue = this.vipList[this.currPriceIndex].subscribeAmount - this.userInfo.price
+      if(this.payValue < 0) this.payValue = 0
+      // this.payValue = this.vipList[this.currPriceIndex].subscribeAmount
     },
 
     unselectedPopup() {
       Dialog.confirm({
         title: this.title,
         message: this.content,
-        cancelButtonText: '其他城市',
-        className: 'unselect'
+        cancelButtonText: '其他城市'
       }).then(() => {
           // on confirm
       }).catch(() => {

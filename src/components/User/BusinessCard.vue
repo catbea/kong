@@ -150,7 +150,7 @@ export default {
           width: 200px;
           padding-top: 11px;
           > .content-left-name {
-            font-size: 26px;
+            font-size: 20px;
             font-weight: 600;
             line-height: 37px;
             color: rgba(255, 255, 255, 1);

@@ -11,24 +11,27 @@
         v-model="loading"
         :finished="finished"
         :finished-text="'没有更多了'"
-        @load="vipLinkerList">
+        @load="getLinkerList">
         <meal-market
             v-for="(item,index) in projectList"
             :key="index"
             :dataArr="item"
             :indexData="index"
-            :showData="showArr.indexOf(index) >-1"
+            :showData="checkedList.indexOf(index) > -1"
             @click.native="selectHandle(item)" ></meal-market>
       </van-list>
     </div>
     <div class="check-all-box">
-      <div class="img-box">
-      <span
-      class="icon-check bg_img"
-      :style="{backgroundImage:'url('+(checkAllShow ? checkColorImg : checkImg)+')'}"
-      @click="allSelectHandle"
-      ></span>
-      全选
+      <div class="img-box" v-show="type == 'vip'">
+        <span class="icon-check bg_img"
+        :style="{backgroundImage:'url('+(checkAllShow ? checkColorImg : checkImg)+')'}"
+        @click="allSelectHandle" ></span>
+        <span class="check-label">全选</span>
+      </div>
+      <div class="img-box" v-show="type == 'package'">
+        <span class="bg_img icon-project-select"
+          :style="{backgroundImage:'url('+(projectSelectIco)+')'}" ></span>
+        <span class="check-label">待选楼盘（{{checkedList.length}}/{{limitCount}}）</span>
       </div>
       <span @click="vipProjectOpenHandle" class="check-all-button">开通</span>
     </div>
@@ -47,14 +50,20 @@ export default {
     MealMarket
   },
   created() {
-    // this.vipLinkerList()
+    this.type = this.$route.query.type
+    if(this.type == 'package') { //套盘跳过来的，加载套盘内容
+      
+    }
   },
   data: () => ({
-    showArr: [],
+    type: 'vip',
+    checkedList: [],
+    limitCount: 5,
     searchInfo: {
       siteText: '全国',
       placeholderText: '请输入楼盘'
     },
+    projectSelectIco: require('IMG/myMember/project_select_ico.png'),
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     page: 1,
@@ -65,10 +74,14 @@ export default {
     projectList: []
   }),
   methods: {
-    async vipLinkerList() {
+    async getLinkerList() {
       this.checkAllShow = false
       let param = {current: this.page, size: this.pageSize}
-      const res = await marketService.vipLinkerList(param)
+      if(this.type == 'package') {
+        const res = await marketService.packageLinkerList(param)
+      } else {
+        const res = await marketService.vipLinkerList(param)
+      }
       let _list = []
       for(let item of res.records) {
         let obj = {
@@ -93,41 +106,52 @@ export default {
     },
 
     async vipProjectOpenHandle() {
-      if(this.showArr.length == 0) {
+      if(this.checkedList.length == 0) {
         this.$toast('请先选择楼盘')
         return
       }
       let isCheckLinkerArr = []
-      for(let item of this.showArr){
+      for(let item of this.checkedList){
         isCheckLinkerArr.push(item.linkerId)
       }
-      let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
-      this.$toast('添加到我的楼盘成功');
-      // this.$router.replace({path: "/user"});
+      
+      if(this.type == 'package') {
+        let res = await marketService.userPackageAddHouse(isCheckLinkerArr.join(), this.$route.query.packageId)
+        this.$toast('添加到套盘成功')
+        console.log(res, 'userPackageAddHouse')
+      } else {
+        let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
+        this.$toast('添加到我的楼盘成功')
+        this.$router.replace({path: "/user"})
+      }
     },
 
     selectHandle(project) {
+      if(this.type == 'package' && !project.isChecked && this.checkedList.length >= this.limitCount){
+        this.$toast('已达到楼盘添加上限')
+        return
+      }
       project.isChecked = !project.isChecked
-      for(let item of this.showArr) {
+      for(let item of this.checkedList) {
         if(project.linkerId == item.linkerId){
-          this.showArr = this.showArr.filter(obj => {
+          this.checkedList = this.checkedList.filter(obj => {
             return obj != item
           })
           return
         }
       }
-      this.showArr.push(project)
+      this.checkedList.push(project)
     },
 
     allSelectHandle() {
       this.checkAllShow = !this.checkAllShow
       if(this.checkAllShow){
-        this.showArr = this.projectList
+        this.checkedList = this.projectList
         for(let item of this.projectList){
           item.isChecked = true
         }
       } else {
-        this.showArr = []
+        this.checkedList = []
         for(let item of this.projectList){
           item.isChecked = false
         }
@@ -166,6 +190,14 @@ export default {
       width: 18px;
       height: 18px;
       margin: 0 16px;
+    }
+    .icon-project-select{
+      width: 20px;
+      height: 17px;
+      margin: 0px 8px 0 16px;
+    }
+    .check-label{
+      line-height: 20px;
     }
     .check-all-button {
       margin-right: 32px;

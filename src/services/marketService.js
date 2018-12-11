@@ -183,6 +183,16 @@ class MarketService {
     })
   }
 
+  /* 获取vip楼盘
+  *
+  */
+ packageLinkerList(parm) {
+  return xhr({
+    url: '/userPackage/packageLinkerList',
+    body: parm
+  })
+}
+
   /**
    * 分享楼盘需要的楼盘图片列表
    * @param {*} linkerId 
@@ -229,6 +239,20 @@ class MarketService {
     return xhr({
       url: '/userPackage/queryLastInfoByAgentId',
       body: {
+      }
+    })
+  }
+
+  /**
+   * 获取套餐信息-包括总共能添加多少楼盘、已添加的楼盘列表
+   */
+  userPackageAddHouse(linkerIds, purchaseId) {
+    return xhr({
+      url: '/userPackage/userPackageAddHouse',
+      method: 'post',
+      body: {
+        linkerIds,
+        purchaseId
       }
     })
   }
