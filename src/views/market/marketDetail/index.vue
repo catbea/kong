@@ -1,6 +1,6 @@
 <template>
   <div class="marketDetail-page">
-    <hint-tire v-if="theFirstTime" @hintClose="hintHandle"></hint-tire>
+    <hint-tire ></hint-tire>
     <swipe-box
       :bannerList="bannerList"
       :collectionStatus="linkerInfo&&linkerInfo.collectionStatus"
@@ -104,7 +104,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userInfo','theFirstTime']),
+    ...mapGetters(['userInfo']),
     avatarCompute() {
       return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
     }
@@ -170,9 +170,6 @@ export default {
   methods: {
     shareBuildingPage() {
       this.$router.push({ name: 'marketDetail-share' })
-    },
-    hintHandle() {
-      this.$store.commit(type.USER_FIRST_TIME,1)
     },
     handleScroll() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
