@@ -60,7 +60,7 @@
 <script>
 import CustomService from 'SERVICE/customService'
 import { mapGetters } from 'vuex'
-
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     CustomService
@@ -138,7 +138,7 @@ export default {
         clientId: this.radio.clientId,
         clientName: this.radio.clientName
       }
-      this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
+      this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.back(-1)
     }
   },

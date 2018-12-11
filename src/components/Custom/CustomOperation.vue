@@ -33,7 +33,6 @@ export default {
   }),
   methods: {
     attentionHandler() {
-      // this.flag = !this.flag
       this.$emit('onattention', this.attentionFlag)
     },
     reportHandler() {
