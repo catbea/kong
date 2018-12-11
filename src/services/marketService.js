@@ -123,7 +123,7 @@ class MarketService {
     })
   }
   /**
-   * 楼盘详情-楼盘详情纠错
+   * 楼盘详情-显示楼盘详情纠错
    *
    */
   getCorrection() {
@@ -132,7 +132,23 @@ class MarketService {
       body: {}
     })
   }
-
+   
+  /**
+   * 楼盘详情-提交楼盘详情纠错
+   *
+   */
+  submitCorrection(linkerId,errorType,content,appType) {
+    return xhr({
+      url: '/linkerDetail/houseErrorCorrection',
+      method:'post',
+      body: {
+        linkerId,
+        errorType,
+        content,
+        appType
+      }
+    })
+  }
   /**
    * 获取vip开通的信息
    *
@@ -201,6 +217,17 @@ class MarketService {
   userPackageSituation() {
     return xhr({
       url: '/userPackage/userPackageSituation',
+      body: {
+      }
+    })
+  }
+
+  /**
+   * 获取最后一次开通的套餐信息
+   */
+  queryLastInfoByAgentId() {
+    return xhr({
+      url: '/userPackage/queryLastInfoByAgentId',
       body: {
       }
     })

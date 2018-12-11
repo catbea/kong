@@ -46,13 +46,11 @@ export default {
       this.Surplus = 500 - textVal
     },
     onRead(file) {
-      console.log(file)
       //将原图片显示为选择的图片
       //  this.$refs.goodsImg.src = file.content;
       if (this.list.length < 3) {
         this.list.push(file.content)
         this.num = this.list.length
-        console.log(this.num)
       } else {
         this.$toast('最多上传三张图片')
         return

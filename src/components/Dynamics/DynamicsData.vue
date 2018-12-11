@@ -39,10 +39,6 @@ export default {
       total: ''
     }
   },
-  created() {
-    console.log('名片==========++++++++++')
-    console.log(this.allDynamicCount)
-  },
   methods: {}
 }
 </script>

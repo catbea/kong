@@ -29,7 +29,6 @@ export default {
     let distributorId = this.$route.query.distributorId
     let enterpriseId = this.$route.query.enterpriseId
     this.queryOrganizationList(distributorId, enterpriseId)
-    console.log(this.userRegistInfo)
   },
   computed: {
     ...mapGetters(['userRegistInfo'])
@@ -51,12 +50,10 @@ export default {
       let obj = {}
       obj.distributorId = id
       const result = await userService.upDateUserInfo(obj)
-      console.log(result)
     },
 
     //刷新列表
     refreshList(val) {
-      console.log('bbbbbb',val)
       this.model = val
       // for (let i = 0; i < this.organizationInfo.length; i++) {
       //   this.organizationInfo[i].checked = false

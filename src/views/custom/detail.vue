@@ -1,11 +1,10 @@
 <template>
   <div class="custom-detail">
-    <div class="custom-info-box">
+    <div class="custom-info-box" v-if="customBaseInfo">
       <avatar class="custom-avatar" v-if="customBaseInfo.avatarUrl!=''" :avatar="customBaseInfo.avatarUrl"></avatar>
       <div class="custom-info">
         <div class="custom-name-box">
           <h5 class="custom-name">{{customBaseInfo.clientName}}</h5>
-          <van-icon name="edit" size="24px"/>
         </div>
         <p class="custom-browsed">最近浏览：{{customBaseInfo.lastViewTime}}</p>
       </div>
@@ -103,7 +102,6 @@ export default {
      * 切换tab
      */
     onClick() {
-      console.log(this.activeIndex)
       if (this.activeIndex == 1 && this.isSecondReq == false) {
         this.getCustomerDynamicCount(this.clientId)
         this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
@@ -170,7 +168,6 @@ export default {
           llzuxq.color = colors[i]
           pieData.push(llzuxq)
         }
-        console.log(pieData)
         this.pieData = pieData
       }
       this.isPieDataReqOk = true
@@ -192,7 +189,6 @@ export default {
           item.a = '1'
           lineData.push(item)
         }
-        console.log(lineData)
         this.lineData = lineData
       }
     },
@@ -212,7 +208,6 @@ export default {
           item.shadow = 100
           barData.push(item)
         }
-        console.log(barData)
         this.barData = barData
       }
     },
@@ -287,7 +282,6 @@ export default {
         item.value = result[key]
         customerInfo.push(item)
       }
-      console.log(customerInfo)
       this.customerInfo = customerInfo
     },
 

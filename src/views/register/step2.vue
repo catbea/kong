@@ -24,7 +24,6 @@ export default {
     enterpriseId: ''
   }),
   created() {
-    console.log(this.$route.query)
     this.enterpriseId = this.$route.query.enterpriseId
     this.queryByRegister(this.enterpriseId)
   },

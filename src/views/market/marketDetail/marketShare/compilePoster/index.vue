@@ -1,19 +1,22 @@
 <template>
-  <div class="compile-poster-page">
-    <swipe-poster :model="buildingInfo"></swipe-poster>
-    <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
-    <poster-describe :model="buildingInfo"></poster-describe>
-    <div class="compile-tagline">
-      <div class="compile-tagline-top">宣传语</div>
-      <div class="compile-tagline-bottom">
-        <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
+  <div v-show="status === 1">
+    <div class="compile-poster-page">
+      <swipe-poster :model="buildingInfo" id="share-top"  :modelBgImg='changeBgImg'></swipe-poster>
+      <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
+      <poster-describe :model="buildingInfo"></poster-describe>
+      <div class="compile-tagline">
+        <div class="compile-tagline-top">宣传语</div>
+        <div class="compile-tagline-bottom">
+          <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
+        </div>
+      </div>
+      <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
+      <div class="compile-button">
+        <p>重置海报</p>
+        <p @click="savaReport">生成海报</p>
       </div>
     </div>
-    <compile-cover :model="bannerList"></compile-cover>
-    <div class="compile-button">
-      <p>重置海报</p>
-      <router-link to="/marketDetail/share/save" tag="p">生成海报</router-link>
-    </div>
+    <div class="result" id="card-result" v-show="status === 2"></div>
   </div>
 </template>
 <script>
@@ -22,6 +25,7 @@ import PosterDescribe from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/P
 import CompileCover from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/CompileCover'
 import marketService from 'SERVICE/marketService'
 import { mapGetters } from 'vuex'
+import h2c from 'html2canvas'
 export default {
   computed: {
     ...mapGetters(['buildId'])
@@ -35,7 +39,9 @@ export default {
     list: [1, 2, 3, 4],
     show: false,
     buildingInfo: {},
-    bannerList: []
+    bannerList: [],
+    status: 1,
+    changeBgImg:''
     // topList:[
     //   {
     //    top:[
@@ -60,6 +66,10 @@ export default {
     // ],
   }),
   methods: {
+    changeBg(val) {
+       this.changeBgImg=val;
+    },
+
     async getPosterInfo(buildId) {
       const result = await marketService.shareBuildingCard(buildId)
       if (result) {
@@ -75,6 +85,18 @@ export default {
         }
         this.bannerList = bannerResult
       }
+    },
+
+    async savaReport() {
+      this.status = 2
+      const dpr = window.devicePixelRatio
+      const canvas = await h2c(document.querySelector('#share-top'), {
+        logging: false,
+        useCORS: true
+      })
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
+      document.getElementById('card-result').appendChild(canvas)
     }
   },
 

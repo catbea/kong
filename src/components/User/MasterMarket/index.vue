@@ -53,10 +53,6 @@
 </template>
 <script>
 export default {
-  created () {
-    // this.dataLength()
-    console.log(this.swipeList,'推荐图片')
-  },
   props: {
     swipeList: {
       type: Array
@@ -71,21 +67,6 @@ export default {
       this.$emit('returnCloseHandle',1)
       
     },
-    
-    // dataLength() {
-    //   let arrLength = this.marster.length+this.common.length
-    //   if(arrLength>5){
-    //     // console.log('大于5')
-    //     // console.log(this.marster.length,this.common.length)
-    //     if(this.common.length>0){
-    //       const commonLength = arrLength-5
-    //         this.common.splice(0,commonLength)
-    //     }else{
-    //      const spliceLength=arrLength-5
-    //       this.marster.splice(0,spliceLength)
-    //     }
-    //   }
-    //   }
   },
   computed:{
     limitList(){
@@ -96,28 +77,6 @@ export default {
       }
     }
   }
-  // watch: {
-  //   marster: {
-  //     handler (val) {     
-  //       for (let i = 0; i < val.length; i++) {
-  //         let temp = val[i]
-  //         temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
-  //       }
-  //       // this.masterSave = val
-  //     },
-  //     deep: true
-  //   },
-  //   common: {
-  //     handler (val) {     
-  //      for (let i = 0; i < val.length; i++) {
-  //         let temp = val[i]
-  //         temp.linkerTags = temp.linkerTags === '' ? false : temp.linkerTags.join('、')
-  //       }
-  //       // this.masterSave = val
-  //     },
-  //     deep: true
-  //   }
-  // }
 }
 </script>
 <style lang="less">

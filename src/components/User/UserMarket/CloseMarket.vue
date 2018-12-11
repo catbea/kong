@@ -122,13 +122,11 @@ export default {
       // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
       this.show = !this.show
-      console.log('已改为大师推荐')
     },
     commonHandle(){
       // this.$emit('returncommonHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,2)//改为普通推荐
       this.show = !this.show
-      console.log('已改为普通推荐')
     },
     exhibitionHandle () {
       Dialog.confirm({
@@ -166,7 +164,7 @@ export default {
    background: rgba(143, 159, 177, 0.15);
    margin-top:16px;
    padding: 16px 16px 0 16px;
-  width:311px;
+  width:343px;
   box-shadow:0px 3px 6px 0px rgba(58,76,130,0.07),0px 2px 17px 0px rgba(34,47,85,0.05);
   border-radius:10px;
   display: flex;

@@ -9,7 +9,7 @@
       </van-swipe>
       <span class="bg_img market-img-page-play" :style="{'backgroundImage':'url('+imgPlay+')'}" v-if="ifPanorama"></span>
       <div class="market-img-page-panorama">720全景</div>
-      <div class="market-img-page-photo" @click.stop="photo">图片</div>
+      <div class="market-img-page-photo" @click.stop="photo" v-show="photoButton">图片</div>
       <div class="num">
         {{ current + 1 }}/{{bannerList&&bannerList.length}}
       </div>
@@ -36,7 +36,8 @@ export default {
     bannerList: { type: Array },
     collectionStatus: { type: String }, // 0-未收藏 1-已收藏
     ifPanorama: { type: Number }, // 是否有全景,
-    linkerId:{type: String}
+    linkerId:{type: String},
+    photoButton:{type:Boolean}//该楼盘是否存在相册
   },
   data: () => ({
     current: 0,
@@ -52,16 +53,13 @@ export default {
       this.show = n
     },
     photo() {
-      // console.log(0)
       this.$router.push({ name: 'photoList', params: {id: this.linkerId }})
     },
     onChange(index) {
-      console.log(index)
       this.current = index
     },
     collect() {
       this.collectionStatus = !this.collectionStatus
-      console.log(this.collectionStatus)
     },
     share() {
       // this.$router.push("/marketDetail/share")

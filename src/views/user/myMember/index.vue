@@ -21,8 +21,11 @@
       <div class="open-and-renew-left">
         合计：<p>{{payValue | priceFormart}}元</p>
       </div>
-      <div class="open-and-renew-right" @click="paySubmit">
+      <div v-show="!isPayLoading" class="open-and-renew-right" @click="paySubmit">
         立即支付
+      </div>
+      <div v-show="isPayLoading" class="pay-loadding">
+        支付中...
       </div>
     </div>
   </div>
@@ -48,6 +51,7 @@ export default {
     this.getVipInfo()
   },
   data: () => ({
+    isPayLoading: false,
     isVip: false,
     currPriceIndex: 0,
     isPayLoading: false,
@@ -88,6 +92,7 @@ export default {
       }
       this.isPayLoading = true
       const res = await commonService.payForVip(param)
+      this.isPayLoading = false
       if (res.isPay) {
         wx.chooseWXPay({
           //弹出支付
@@ -100,10 +105,10 @@ export default {
             console.log('支付suss')
           },
           cancel: res => {
-            console.log(res, '支付取消')
+            this.$toast('支付取消')
           },
           fail: res => {
-            console.log(res, '支付失败')
+            this.$toast('支付失败')
           }
         })
       }
@@ -264,6 +269,16 @@ export default {
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
       }
+    }
+    .pay-loadding {
+      line-height: 56px;
+      width: 125px;
+      text-align: center;
+      font-size: 18px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      background: #ccc;
     }
     .open-and-renew-right {
       line-height: 56px;
