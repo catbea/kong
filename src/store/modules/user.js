@@ -48,7 +48,7 @@ const state = {
     mobile: '18676652795',
     mpOpenid: '',
     myLinkerGuide: 0,
-    name: '嗨是的你的益达呀',
+    name: '嗨我是你的益达吗',
     nameGuide: 0,
     nickName: '离园则',
     parentUserId: '',
