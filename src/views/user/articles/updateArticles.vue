@@ -110,7 +110,6 @@ export default {
     //删除操作
     toDeleArticle(selectStr) {
       const res = userService.deleHistoryArticle(selectStr)
-      console.log(res)
     },
 
     //删除文章

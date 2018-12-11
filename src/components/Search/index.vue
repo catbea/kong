@@ -26,7 +26,8 @@ export default {
   }),
   methods: {
     siteClickHandler() {
-      this.$router.push('/public/AreaSelection')
+      this.$emit('areaClick')
+      // this.$router.push('/public/AreaSelection')
     }
   }
 }

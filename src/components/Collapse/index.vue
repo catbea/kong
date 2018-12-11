@@ -47,7 +47,6 @@ export default {
 
   methods: {
     selectOrganiz(model) {
-      console.log(model)
       this.$emit('clickListener', model)
     },
 

@@ -21,14 +21,12 @@ export default {
     }
   },
   created() {
-    console.log(this.reportAddInfo)
   },
   computed: {
     ...mapGetters(['reportAddInfo'])
   },
   methods: {
     godSub() {
-      console.log(this.Cphone)
       if (this.Cphone == '') {
         Dialog.alert({
           message: '名片展示手机号不可为空'

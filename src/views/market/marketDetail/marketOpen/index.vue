@@ -71,7 +71,6 @@ export default {
 
     async getCoupan() {
       let priceItem = this.priceList[this.currPriceListIndex]
-      // console.log(priceItem)
       let res = await mycoupons.getMyCoupons(this.linkerId, priceItem.subscribeAmount, 1, 1000)
       let couponStr = res.canUseNum + '张可用'
       if(this.currSelectedCoupon) {
@@ -102,7 +101,6 @@ export default {
       }
       this.isPayLoading = true
       const res = await commonService.payForProject(param)
-      console.log(res, '支付接口返回')
       this.isPayLoading = false
       if (res.isPay) {
         // alert('appid:'+res.appId);
@@ -129,7 +127,6 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
-      console.log(res, 'getMarketDescribeInfo')
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,

@@ -88,7 +88,6 @@ export default {
       this.onLoad()
     },
     onFocusHandler() {
-      console.log('fffff')
     },
     /**
      * 切换tab方法
@@ -99,7 +98,6 @@ export default {
     async onLoad() {
       this.loading = true
       const result = await CustomService[this.getServeceFunc()](this.searchVal, this.currentData.page, this.pageSize, this.sort)
-      console.log(result)
       if (this.currentData.page > 1) {
         this.currentData.list = this.currentData.list.concat(result.records)
       } else {
@@ -130,14 +128,12 @@ export default {
     },
 
     onRadioChangeHandler(val) {
-      console.log('onChangeHandler')
-      console.log(val)
+
     },
     /**
      * 确定
      */
     sureHandler() {
-      console.log(this.radio)
       let _reportAddInfo = {
         clientId: this.radio.clientId,
         clientName: this.radio.clientName
@@ -148,7 +144,6 @@ export default {
   },
   computed: {
     currentData() {
-      console.log(this.activeIndex)
       return this.data[this.activeIndex]
     },
     ...mapGetters(['reportAddInfo'])

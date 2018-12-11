@@ -101,7 +101,6 @@ export default {
       for(let item of this.showArr){
         isCheckLinkerArr.push(item.linkerId)
       }
-      console.log(isCheckLinkerArr.join(), 'isCheckLinkerArr.join()')
       let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
       this.$toast('添加到我的楼盘成功');
       // this.$router.replace({path: "/user"});

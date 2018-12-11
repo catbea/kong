@@ -70,12 +70,10 @@ export default {
     area: '',
   }),
   created() {
-    console.log(this.$route.query)
     this.query = this.$route.query
     this.registerType = this.query.registerType
     this.enterpriseId = this.query.enterpriseId
     // registerType 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
-    console.log(this.userRegistInfo)
     this.majorRegion = this.userRegistInfo.majorRegion
     this.city = this.userRegistInfo.city
     this.area = this.userRegistInfo.area
@@ -108,11 +106,9 @@ export default {
       }, 1000)
     },
     focusHandler(focus) {
-      console.log(focus)
       this.phoneFocus = focus
     },
     blurHandler(focus) {
-      console.log(focus)
       this.phoneFocus = focus
     },
     /**
@@ -170,11 +166,9 @@ export default {
     },
     cancelHandler(val) {
       this.areaShow = false
-      console.log(val)
     },
     confirmHandler(val) {
       this.areaShow = false
-      console.log(val)
       this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
       this.city = val[1].name
       this.area = val[2].name
@@ -184,7 +178,6 @@ export default {
         area: this.area
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
-      console.log(this.majorRegion)
     }
   }
 }

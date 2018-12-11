@@ -60,7 +60,6 @@ export default {
       this.list.ps.yetPast = false
       this.list.ps.flag = 1
       this.list.info = this.notArr.records
-      console.log(11111111111111111)
       return Promise.resolve()
     },
     async yetUseHandle() {
@@ -87,7 +86,6 @@ export default {
       })
     },
     async couponsList(agentId, status) {
-      console.log(status)
       const res = await mycoupons.couponsStatusList(agentId, status)
       if (status == 1) {
         this.notArr = res
@@ -96,7 +94,6 @@ export default {
       } else {
         this.pastArr = res
       }
-      console.log(this.notArr, this.recordArr, this.pastArr)
     },
     async promiseHandle() {
       // let notHandle =  this.couponsList(this.req.agentId,this.req.status.not)

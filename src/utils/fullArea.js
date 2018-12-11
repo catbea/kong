@@ -6,7 +6,6 @@ const getAreaCode = name => {
   name = name.replace(/\s+/g, '')
   if (!name) return
   for (let key1 of Object.keys(fullArea)) {
-    console.log(key1)
     for (let key2 of Object.keys(fullArea[key1])) {
       if (fullArea[key1][key2] === name) return key2
     }
