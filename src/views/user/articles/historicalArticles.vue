@@ -9,7 +9,7 @@
       </div>
       <discover-list :data="historyList"></discover-list>
     </div>
-    <div class="historicalArticles-null" v-show="articles == ''">
+    <div class="historicalArticles-null" v-show="historyList.length == '' ">
       <null-articles :nullIcon="nullIcon" :nullcontent="nullcontent"></null-articles>
     </div>
   </div>

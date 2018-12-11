@@ -355,5 +355,45 @@ class UserService {
       url: '/cpShare/nameCardShare'
     })
   }
+/**
+ * 邀请开通列表 -【企业微信
+ * @param {*} current 
+ * @param {*} size 
+ */
+  getopenRewards(current,size=10) {
+    return xhr({
+      url: '/invitation/openRewards',
+      body:{
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 邀请注册列表
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getregisterRewards(current,size=10) {
+    return xhr({
+      url: '/invitation/registerRewards',
+      body:{
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 查询活动规则 -
+   * @param {*} type 
+   */
+  getrules(type) {
+    return xhr({
+      url: '/invitation/rules',
+      body:type
+    })
+  }
+
+
 }
 export default new UserService()
