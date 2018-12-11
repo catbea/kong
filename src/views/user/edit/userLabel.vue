@@ -5,14 +5,14 @@
       <p class="edit-label-conter">
         <span v-for="(item,key) in agentLabel" :key="key">
           <input
-            :id="item.labelId"
+            :id="item.id"
             type="checkbox"
             data-type="welfare"
             name="reason"
-            :value="item.labelName"
+            :value="item.itemName"
             @click="selectLabel(key)"
           >
-          <label :for="item.labelId">{{item.labelName}}</label>
+          <label :for="item.id">{{item.itemName}}</label>
         </span>
       </p>
       <div class="edit-label-div">
@@ -55,6 +55,7 @@ export default {
       let obj = this.agentLabel[index]
 
       let isExist = this.isExistElement(this.selectLabelList, obj)
+
       if (isExist) {
         //存在
         let index = this.selectLabelList.indexOf(obj)
@@ -70,6 +71,11 @@ export default {
     async getAgentLabelList() {
       const res = await userService.getAgentLabelList(1)
       this.agentLabel = res
+
+      for (let i = 0; i < this.agentLabel.length; i++) {
+        this.agentLabel[i].labelName = this.agentLabel[i].itemName
+        this.agentLabel[i].labelId = this.agentLabel[i].id
+      }
     },
 
     async SubLabel() {
@@ -83,6 +89,7 @@ export default {
           selectidlist = selectidlist + check[i].id + ','
         }
       }
+      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' + selectidlist)
       if (selectidlist.length <= 0) {
         Dialog.alert({
           message: '请选择个性标签'
@@ -90,13 +97,21 @@ export default {
           // on close
         })
       } else {
-        let userList = {
-          lableList: selectidlist
-        }
-        const res = await userService.upDateUserInfo(userList)
-        if (res) {
-          this.$store.dispatch('userInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
-          this.$router.go(-1)
+        if (selectidlist > 3) {
+          Dialog.alert({
+            message: '标签个数不得多于3个'
+          }).then(() => {
+            // on close
+          })
+        } else {
+          let userList = {
+            lableList: selectidlist
+          }
+          const res = await userService.upDateUserInfo(userList)
+          if (res) {
+            this.$store.dispatch('userInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
+            this.$router.go(-1)
+          }
         }
       }
     },
