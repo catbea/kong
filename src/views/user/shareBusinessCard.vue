@@ -25,7 +25,7 @@
       </div>
       <div class="edit-container">
         <!-- <div @click="changeBgHandler">修改背景</div> -->
-        <!-- <div @click="buildCardHandler">确认</div> -->
+        <div class="mark-sure" @click="buildCardHandler">确认</div>
       </div>
     </div>
     <div class="result" id="card-result" v-show="status === 2"></div>
@@ -209,9 +209,19 @@ export default {
   .edit-container {
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
+
     > div {
       flex: 1;
       text-align: center;
+      background: #007AE6;
+      height: 44px;
+      border-radius: 5px;
+      margin-left: 30px;
+      margin-right: 30px;
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 44px;
     }
   }
 }
