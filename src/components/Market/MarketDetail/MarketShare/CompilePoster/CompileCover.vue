@@ -9,7 +9,8 @@
         :style="{backgroundImage:'url('+item.imgUrl+')'}"
         @click="selectIcon(index)"
       >
-        <span class="bg_img" :style="{backgroundImage:'url('+item.checked=='1'?icon:''+')'}"></span>
+        <!-- <span class="bg_img" :style="{backgroundImage:'url('+item.checked=='1'?icon:''+')'}"></span> -->
+        <img  class="bg_img" :src="item.checked=='1'?icon:noIcon">
       </li>
     </ol>
   </div>
@@ -20,6 +21,7 @@ export default {
 
   data: () => ({
     icon: require('IMG/correction/color.png'),
+    noIcon: require('IMG/user/mealMarket/check@2x.png'),
     list: [1, 2, 3, 4, 5],
     listSeletct: [],
     liIndex: 0,
@@ -45,6 +47,7 @@ export default {
     selectIcon(index) {
       if (this.model[index].checked == '0') {
         this.model[index].checked = '1'
+         this.$emit('changeBackground',this.model[index].imgUrl);
       } else {
         this.model[index].checked = '0'
       }
@@ -77,12 +80,13 @@ export default {
       margin-right: 15px;
       position: relative;
       display: flex;
-      span {
+      .bg_img {
         width: 22px;
         height: 22px;
         position: absolute;
         right: 4px;
         top: 4px;
+        border-radius: 50%;
       }
     }
   }

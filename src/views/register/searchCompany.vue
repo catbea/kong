@@ -46,7 +46,6 @@ export default {
     area: ''
   }),
   created() {
-    console.log(this.userRegistInfo)
     this.enterpriseId = this.$route.query.enterpriseId
     this.city = this.$route.query.city
     this.area = this.$route.query.area
@@ -61,7 +60,6 @@ export default {
       this.searchLists = result
     },
     onSearch(val) {
-      console.log(val)
       if (val.length >= 4) {
         let len = this.searchLists.length
         let arr = []
@@ -76,11 +74,9 @@ export default {
       }
     },
     onCancel() {
-      console.log('cancel')
        this.$router.back(-1)
     },
     onInput(val) {
-      console.log(val)
       if (val.length >= 4) {
         let len = this.searchLists.length
         let arr = []

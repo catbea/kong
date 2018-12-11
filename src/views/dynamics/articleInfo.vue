@@ -112,7 +112,6 @@ export default {
   methods: {
     //查询单个文章客户访问数据动态列表
     async getSingleArticleDynamicList() {
-      console.log(this.itemlist)
       const res = await dynamicsService.getSingleArticleList(1, 10, this.itemlist.articleId)
       this.articleDynamicList = res.records
       this.getSingleArticleDynamicCount()

@@ -33,7 +33,6 @@ import MarketService from 'SERVICE/marketService'
 export default {
   created() {
     this.linkerId=this.$route.params.id
-    console.log(this.linkerId,'路由参数')
     this.getMarketDetailPhotoInfo()
   },
   data: () => ({
@@ -88,7 +87,6 @@ export default {
     },
     async getMarketDetailPhotoInfo(){
       const res = await MarketService.getMarketDetailPhoto(this.linkerId)
-      console.log(res,"相册数据")
       this.templateData=res[0]
       this.templateList=this.templateData.listBannerVO 
       this.aPhotoList(this.templateList,this.templateArr)

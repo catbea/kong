@@ -38,7 +38,6 @@ export default {
     },
     //楼盘详情
     async goRecommendInfo(val) {
-      console.log(val)
       this.$router.push('/market/marketDetail')
     },
     async getCollectInfo() {
@@ -64,6 +63,9 @@ export default {
     async getEstateList() {
       const res = await dynamicsService.getEstateInfo()
       this.estateListData = res.myLinkerVOs
+      for(let temp of this.estateListData) {
+        temp.headImgUrl = temp.linkerHeadUrl
+      }
       this.recommendData = res.aiLinkerVO
     }
   }

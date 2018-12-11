@@ -53,16 +53,13 @@ export default {
       this.show = n
     },
     photo() {
-      // console.log(0)
       this.$router.push({ name: 'photoList', params: {id: this.linkerId }})
     },
     onChange(index) {
-      console.log(index)
       this.current = index
     },
     collect() {
       this.collectionStatus = !this.collectionStatus
-      console.log(this.collectionStatus)
     },
     share() {
       // this.$router.push("/marketDetail/share")

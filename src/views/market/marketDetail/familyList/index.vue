@@ -72,8 +72,6 @@ export default {
     async getHouseTypeInfo(n) {
       const res = await marketService.getHouseType(n)
       this.tabs=res
-      // this.cpHouseTypeDetail=
-      console.log(res)
     }
   }
 }

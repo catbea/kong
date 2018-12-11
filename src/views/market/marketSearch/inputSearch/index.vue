@@ -67,7 +67,6 @@ export default {
     },
     async getMarketDescribeInfo() {
       const res = await marketService.getMarketDescribe()
-      console.log(res.records)
       this.resInfo = res.records
     }
   }

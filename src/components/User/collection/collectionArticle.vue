@@ -39,7 +39,6 @@ export default {
   },
   methods: {
     gocollection(deleteType, infoId, key) {
-      console.log('here')
       let parm = {
         info: this.info,
         divIdOk: 'collectiontabok',
@@ -50,11 +49,6 @@ export default {
       }
       this.$emit('myclick', parm)
     }
-    // GOheadline () {
-    //   console.log(1)
-    //   //跳转到房产头条
-    //   this.$router.push('/discover/headline')
-    // }
   }
 }
 </script>

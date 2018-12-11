@@ -222,5 +222,16 @@ class MarketService {
     })
   }
 
+  /**
+   * 获取最后一次开通的套餐信息
+   */
+  queryLastInfoByAgentId() {
+    return xhr({
+      url: '/userPackage/queryLastInfoByAgentId',
+      body: {
+      }
+    })
+  }
+
 }
 export default new MarketService()

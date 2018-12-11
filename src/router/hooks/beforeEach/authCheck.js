@@ -30,21 +30,16 @@ export default async (to, from, next) => {
       '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
     window.location.href = wxurl
   } else {
-    console.log(store.getters.userInfo, 'store.getters.userInfo')
     if (parm.code) {
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
       if (payCorpId) {
         // 通过payopenid返回的code
-        // console.log(payCorpId, 'payCorpId')
         // 获取jssdk授权
-        console.log(store.getters.jssdkConfig, '_jssdkConfig====')
         if (!store.getters.jssdkConfig) {
-          console.log('wx jssdk init ')
           wechatApi.init()
         }
-        console.log(userInfo.payOpenId, 'userInfo.payOpenId')
         if (userInfo.payOpenId) {
           next()
           return
@@ -54,7 +49,6 @@ export default async (to, from, next) => {
         const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)
         userInfo.payOpenId = payopenIdObject.payOpenId
         store.dispatch('getUserInfo', userInfo)
-        console.log(payopenIdObject.payOpenId, 'payOpenId===')
         next()
       } else {
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
@@ -66,7 +60,6 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         if (!userInfo.payOpenId) {
           //返回的payopenid为空，则从新授权获取
-          console.log(wxAuthObject, '跳转获取payopenid=====')
           await localStorage.setItem('payCorpId', payCorpId)
           let wxurl =
             'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
@@ -78,7 +71,6 @@ export default async (to, from, next) => {
           return
         }
 
-        // console.log(store.getters.jssdkConfig ,'_jssdkConfig----')
         // if(!store.getters.jssdkConfig){
         //     await wechatApi.init()
         // }

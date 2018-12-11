@@ -29,7 +29,6 @@ export default {
   created() {
     this.$store.commit(types.TABBAR, false)
     this.info = this.$route.query
-    console.log(this.info, 999999999999999)
   },
   computed: {
     topList() {

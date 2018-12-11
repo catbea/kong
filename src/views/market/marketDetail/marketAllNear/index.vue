@@ -63,7 +63,7 @@ export default {
   }),
   methods: {
     active(index) {
-      ;(this.num = index), console.log(index)
+      this.num = index
     }
   }
 }

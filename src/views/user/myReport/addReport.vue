@@ -40,9 +40,6 @@ export default {
   data() {
     return {}
   },
-  created() {
-    console.log(this.reportAddInfo)
-  },
   computed: {
     ...mapGetters(['reportAddInfo'])
   },
