@@ -107,6 +107,8 @@ export default {
     copy() {
       var clipboard = new Clipboard('.container-list-botton')
       clipboard.on('success', e => {
+
+        this.$toast('复制成功')
         // 释放内存
         clipboard.destroy()
       })
