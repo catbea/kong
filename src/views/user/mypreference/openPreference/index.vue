@@ -3,6 +3,7 @@
     <div class="bg_img background" :style="{backgroundImage:'url('+backImg+')'}">
       <div class="background-content">
       <div class="headImg" :style="borderStyle">
+        <avatar class="avatar" :avatar="userInfo.avatarUrl"></avatar>
         <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag ? headImgB : headImgA)+')'}"></span>
       </div>
       <ul class="head-describe">
@@ -40,13 +41,15 @@ import BindingMeal from 'COMP/User/mypreference/openPreference/BindingMeal.vue'
 import MealPrivilege from 'COMP/User/mypreference/openPreference/MealPrivilege.vue'
 import Privilege from 'COMP/User/mypreference/openPreference/Privilege.vue'
 import Agreement from 'COMP/User/mypreference/openPreference/Agreement.vue'
+import Avatar from 'COMP/Avatar'
 export default {
   components: {
     AlreadyBuy,
     BindingMeal,
     MealPrivilege,
     Privilege,
-    Agreement
+    Agreement,
+    Avatar
   },
   data: () => ({
     currPackage: null,
@@ -153,8 +156,7 @@ export default {
           limitTotal: this.currPackage.limitTotal,
           timeUnit: this.currPackage.timeUnit
         }
-        this.payValue = this.packageInfo.price - this.userInfo.price
-        if(this.payValue < 0) this.payValue = 0
+        this.payValue = this.packageInfo.price
       } else {
         this.$toast('陶盘信息返回错误')
       }
@@ -191,6 +193,10 @@ export default {
           position: absolute;
           top: -1px;
           right: 0;
+        }
+        .avatar{
+          width: 60px;
+          height: 58px;
         }
       }
       .head-describe {
