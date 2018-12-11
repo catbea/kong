@@ -2,9 +2,7 @@
   <div class="user-mymarket-page">
     <div style="margin-left:16px">
       <master-market
-        v-if="closeSwipe"
         :swipeList="swipeList"
-        @returnCloseHandle='returnCloseHandle'
       ></master-market>
     </div>
     <div style="margin-left:16px">
@@ -66,7 +64,6 @@ export default {
     CloseMarket
   },
   data: () => ({
-    closeSwipe: true,
     agentId:705,
     displayFlag: 0,
     recommendList: null,
@@ -100,9 +97,6 @@ export default {
   methods: {
     async getChangeMarketData(){
       const res = await userService.changeMarketData()
-    },
-    returnCloseHandle () {
-      this.closeSwipe = !this.closeSwipe
     },
     async getRecommendInfo () {//推荐楼盘的数据
       const res = await userService.getRecommend()

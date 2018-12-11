@@ -55,6 +55,7 @@ const state = {
     // payCorpId: "ww5e4d879ddc307ea1",
     // cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
+    theFirstTime:0,
     payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
     position: '',
     price: 2000,
