@@ -48,6 +48,5 @@ export default {
 }
 </script>
 <style lang="less">
-.area-select {
-}
+
 </style>

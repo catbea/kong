@@ -173,7 +173,7 @@ const mutations = {
     state.userArea = Object.assign(state.userArea, data)
   },
   [types.REPORT_INFO](state, data) {
-    state.reportAddInfo = data
+    state.reportAddInfo = Object.assign(state.reportAddInfo, data)
   },
   [types.TREE_INFO](state, data) {
     state.treeInfo = data
