@@ -1,11 +1,10 @@
 <template>
   <div class="custom-detail">
-    <div class="custom-info-box">
+    <div class="custom-info-box" v-if="customBaseInfo">
       <avatar class="custom-avatar" v-if="customBaseInfo.avatarUrl!=''" :avatar="customBaseInfo.avatarUrl"></avatar>
       <div class="custom-info">
         <div class="custom-name-box">
           <h5 class="custom-name">{{customBaseInfo.clientName}}</h5>
-          <van-icon name="edit" size="24px"/>
         </div>
         <p class="custom-browsed">最近浏览：{{customBaseInfo.lastViewTime}}</p>
       </div>

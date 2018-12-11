@@ -64,6 +64,9 @@ export default {
     async getEstateList() {
       const res = await dynamicsService.getEstateInfo()
       this.estateListData = res.myLinkerVOs
+      for(let temp of this.estateListData) {
+        temp.headImgUrl = temp.linkerHeadUrl
+      }
       this.recommendData = res.aiLinkerVO
     }
   }
