@@ -67,6 +67,7 @@ export default {
 .specific-market-detail-box {
   width: 339px;
   .specific-market-detail-name {
+    line-height:37px;
     font-size: 26px;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
@@ -76,8 +77,9 @@ export default {
     .specific-market-detail-condition-left,
     .specific-market-detail-condition-right {
       font-size: 14px;
-      font-weight: 400;
+      font-weight: 500;
       color: rgba(51, 51, 51, 1);
+      line-height:20px;
     }
     .specific-market-detail-condition-line {
       width: 1px;

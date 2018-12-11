@@ -33,7 +33,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/correction',
+    path: '/marketDetail/correction/:id',
     name: 'marketDetailCorrection',
     component: resolve => require(['@/views/market/marketDetail/correction/index.vue'], resolve),
     meta: {

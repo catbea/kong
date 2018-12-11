@@ -101,9 +101,9 @@ export default {
 }
 </script>
 <style lang="less">
-.van-swipe-item{
-    background:#ffffff;
-  }
+// .van-swipe-item{
+    // background:#ffffff;
+  // }
 .detail-photo-page {
   width: 375px;
   height: 100%;

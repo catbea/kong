@@ -7,24 +7,32 @@
            <img :src="awtipsIcon" @click="goteammateList">
           <!-- </router-link> -->
         </div>
-        <yd-button @click.native="show1 = true" class="awWelfare-botton-item">
+        <button @click="show1 = true" class="awWelfare-botton-item">
           <img :src="awtips1Icon">
-        </yd-button>
+        </button>
       </div>
-      <div class="awWelfare-center">
+      <div class="awWelfare-center" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
         <!-- v-if="invitationImg" -->
-          <img  :src="awbgcardIcon">
+          <div class="awWelfare-info">
+            <div class="awWelfare-info-left"></div>
+             <div class="awWelfare-info-right">
+              <p class="awWelfare-info-right-name"></p>
+              <p class="awWelfare-info-right-remak"></p>
+            </div>
+          </div>
       </div>
+      
       <div class="awWelfare-text">
         请长按保存邀请图片
       </div>
     </div>
-    <!-- <yd-popup v-model="show1" position="center"  masker-opacity="0.6" close-on-masker>
-      <div class="register-rule-box" >
+   
+    <popup v-model="show1" position="center"  masker-opacity="0.6" :close-on-click-overlay="false">
+      <div class="register-rule-box" :style="{'backgroundImage':'url('+teammatBack+')'}">
         <div class="register-rule-box-name">活动规则</div>
         <div class="register-rule-box-content">
 
-          <div style="padding-top: 0.45rem" class="register-rule-box-title">邀请注册</div>
+          <div  class="register-rule-box-title">邀请注册</div>
           <div class="register-rule-box-text">
             <div class="register-rule-box-text-item" v-if="item" v-for="(item,key) in registrationRules" :key="key"><div class="div-dian">•</div><div>{{item}}</div></div>
           </div>
@@ -32,19 +40,26 @@
           <div class="register-rule-box-text">
             <div class="register-rule-box-text-item"  v-if="item" v-for="(item,key) in openRules" :key="key"><div class="div-dian">•</div><div>{{item}}</div></div>
           </div>
-          <div style="padding-top: 0.36rem" class="register-rule-box-footer">本活动最终解释权归</div>
-          <div style="padding-bottom: 0.74rem"  class="register-rule-box-footer">深圳尊豪网络科技股份有限公司所有</div>
+          <div  class="register-rule-box-footer">
+            <p>本活动最终解释权归</p>
+            <p>深圳尊豪网络科技股份有限公司所有</p>
+          </div>
         </div>
       </div>
-      <yd-button class="register-rule-box-close" @click.native="show1 = false">
+      <button class="register-rule-box-close" @click="show1 = false">
         <img :src="awbocloseIcon">
-      </yd-button>
-    </yd-popup> -->
+      </button>
+    </popup>
   </div>
 </template>
 
 <script>
+import { Popup } from 'vant';
+import userService from 'SERVICE/userService'
 export default {
+  components:{
+    Popup,
+  },
   data() {
     return {
       bgCombinedShapeIcon: require('IMG/user/invitation/bgCombinedShape@2x.png'),
@@ -52,22 +67,50 @@ export default {
       awtips1Icon: require('IMG/user/invitation/aw-tips1@2x.png'),
       awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
       awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
+      teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
       // ovalIcon: require('IMG/edit/Oval@2x.png'),
       // ovalIcon: require('IMG/edit/Oval@2x.png'),
-      // ovalIcon: require('IMG/edit/Oval@2x.png'),
-      show1: false
+      show1: false,
+      registrationRules:'',
+      openRules:'',
     }
   },
-  mounted() {},
+  mounted() {
+    this.getrules()
+  },
   methods: {
     goteammateList(){
        this.$router.push({name:'teammateList'})
-    }
+    },
+    async getrules(){
+      const res = await userService.getrules(1);
+      this.registrationRules = res.rule.split("#");
+      console.log(this.registrationRules)
+
+      const rest = await userService.getrules(2);
+        this.openRules = rest.rule.split("#");
+    } 
+    
+   
   }
 }
 </script>
 
 <style scoped lang="less">
+.van-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    max-height: 100%;
+    overflow-y: auto;
+    -webkit-transition: .3s ease-out;
+    transition: .3s ease-out;
+    -webkit-overflow-scrolling: touch;
+    -webkit-transform: translate3d(-50%,-50%,0);
+    transform: translate3d(-50%,-50%,0);
+    background-color: rgba(0,0,0,0);
+     text-align: center;
+}
 .radius-border {
   position: relative;
 }
@@ -84,96 +127,116 @@ export default {
   .awWelfare-botton {
     display: flex;
     justify-content: flex-end;
-    margin-right: 0.14rem;
+    margin-right: 15px;
     .awWelfare-botton-item {
-      width: 0.92rem;
-      height: 1.2rem;
-      margin-right: 0.08rem;
+      width: 46px;
+      height: 60px;
+      margin-right: 8px;
       padding: 0px;
       background-color: transparent;
+      border: 0;
       img {
-        width: 0.92rem;
-        height: 1.2rem;
+        width: 46px;
+        height: 60px;
       }
     }
   }
   .awWelfare-center {
-    width: 5.68rem;
-    height: 9.32rem;
+    width: 284px;
+      height: 466px;
     margin: 0 auto;
-    img {
-      width: 5.68rem;
-      height: 9.32rem;
+    background-size: 284px 466px;
+        position: relative;
+    .awWelfare-info{
+      padding: 34px 68px;
+      position: absolute;
+      bottom: 34px;
+      .awWelfare-info-left{
+        
+      }
+      .awWelfare-info-right{
+        .awWelfare-info-right-name{
+
+        }
+        .awWelfare-info-right-remak{
+
+        }
+      }
     }
+    // img {
+    //   width: 284px;
+    //   height: 466px;
+    // }
   }
   .awWelfare-text {
     text-align: center;
-    font-size: 0.28rem;
-    font-family: 'PingFangSC-Regular';
+    font-size: 14px;
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
-    line-height: 0.4rem;
+    line-height: 20px;
   }
 }
+//弹出层
 .register-rule-box {
   // background:url("../../../assets/images/aw-box-bg@2x.png");
-  width: 5.6rem;
-  height: 7.74rem;
-  background-size: 5.6rem 7.74rem;
+  width: 280px;
+  height: 387px;
+  background-size: 280px 387px;
   color: rgba(161, 100, 78, 1);
   .register-rule-box-name {
-    font-size: 0.36rem;
-    font-family: 'PingFangSC-Semibold';
-    font-weight: 600;
-    color: rgba(244, 226, 191, 1);
-    line-height: 0.7rem;
+    font-size: 18px;
+    font-weight:600;
+    color:rgba(244,226,191,1);
+    line-height:39px;
     text-align: center;
   }
   .register-rule-box-content {
     overflow: scroll;
-    height: 7rem;
+    // height: 7rem;
   }
   .register-rule-box-title {
-    font-size: 0.32rem;
-    font-family: 'PingFangSC-Semibold';
-    font-weight: 600;
-    line-height: 0.44rem;
+    font-size:16px;
+    font-weight:600;
+    color:rgba(161,100,78,1);
+    line-height:22px;
     text-align: left;
-    padding-top: 0.28rem;
-    padding-left: 0.5rem;
+    padding-top: 14px;
+    padding-left: 20px;
   }
   .register-rule-box-text {
     text-align: left;
-    font-size: 0.24rem;
-    font-family: 'PingFangSC-Semibold';
-    font-weight: 600;
-    line-height: 0.34rem;
-    padding: 0rem 0.5rem;
-    margin-top: 0.08rem;
+    font-size:12px;
+    font-weight:600;
+    color:rgba(161,100,78,1);
+    line-height:17px;
+    padding: 0 25px;
+    margin-top: 4px;
     .register-rule-box-text-item {
       display: flex;
-      margin-bottom: 0.05rem;
+      margin-bottom: 5px;
       .div-dian {
-        margin-right: 0.3rem;
+        margin-right: 15px;
       }
     }
   }
 }
 .register-rule-box-footer {
-  font-size: 0.2rem;
-  font-family: 'PingFangSC-Regular';
-  font-weight: 400;
-  color: rgba(161, 100, 78, 1);
-  line-height: 0.28rem;
+    font-size:10px;
+    font-weight:400;
+    color:rgba(161,100,78,1);
+    line-height:16px;
+    position: absolute;
+    left: 15%;
+    bottom: 107px;
 }
 .register-rule-box-close {
-  background-color: transparent;
-  width: 0.42rem;
-  height: 0.42rem;
-  margin-top: 0.8rem;
+     background-color: transparent;
+    border-radius: 0 0 0.16rem 0.16rem;
+    margin-top: 40px;
+    border: 0;
   img {
-    width: 0.42rem;
-    height: 0.42rem;
+    width: 21px;
+    height: 21px;
   }
 }
 .register-rule-box-close:active,

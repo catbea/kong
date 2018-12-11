@@ -1,7 +1,7 @@
 <template>
-  <div  v-show="status === 1">
+  <div v-show="status === 1">
     <div class="compile-poster-page">
-      <swipe-poster :model="buildingInfo" id="share-top"></swipe-poster>
+      <swipe-poster :model="buildingInfo" id="share-top"  :modelBgImg='changeBgImg'></swipe-poster>
       <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
       <poster-describe :model="buildingInfo"></poster-describe>
       <div class="compile-tagline">
@@ -10,10 +10,10 @@
           <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
         </div>
       </div>
-      <compile-cover :model="bannerList"></compile-cover>
+      <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
       <div class="compile-button">
         <p>重置海报</p>
-        <p  @click="savaReport">生成海报</p>
+        <p @click="savaReport">生成海报</p>
       </div>
     </div>
     <div class="result" id="card-result" v-show="status === 2"></div>
@@ -40,7 +40,8 @@ export default {
     show: false,
     buildingInfo: {},
     bannerList: [],
-    status: 1
+    status: 1,
+    changeBgImg:''
     // topList:[
     //   {
     //    top:[
@@ -65,6 +66,10 @@ export default {
     // ],
   }),
   methods: {
+    changeBg(val) {
+       this.changeBgImg=val;
+    },
+
     async getPosterInfo(buildId) {
       const result = await marketService.shareBuildingCard(buildId)
       if (result) {

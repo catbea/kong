@@ -47,6 +47,7 @@ export default {
     selectIcon(index) {
       if (this.model[index].checked == '0') {
         this.model[index].checked = '1'
+         this.$emit('changeBackground',this.model[index].imgUrl);
       } else {
         this.model[index].checked = '0'
       }

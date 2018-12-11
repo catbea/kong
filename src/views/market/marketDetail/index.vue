@@ -7,6 +7,7 @@
       :ifPanorama="linkerInfo&&linkerInfo.ifPanorama"
       :linkerId='linkerInfo&&linkerInfo.linkerId'
       @shareBuilding="shareBuildingPage"
+      :photoButton='photoButton'
     ></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
@@ -44,7 +45,9 @@
           class="market-state-box-bottom"
         >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].dynamicTime:''}}</li>
       </ul>
-      <title-bar :conf="confLocation" :isShow="linkerInfo&&linkerInfo.aroundList.length>0"></title-bar>
+      <title-bar :conf="confLocation" :isShow="linkerInfo&&linkerInfo.aroundList.length>0"> 
+        
+      </title-bar>
       <site-nearby :aroundList="linkerInfo&&linkerInfo.aroundList"></site-nearby>
       <title-bar :conf="confElse" :isShow="linkerInfo&&linkerInfo.linkerOtherList.length>0"></title-bar>
       <all-elseMarket
@@ -53,7 +56,7 @@
       ></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-        <router-link to="/marketDetail/correction" class="feedback">反馈纠错</router-link>
+        <router-link :to="'/marketDetail/correction/'+linkerId" class="feedback">反馈纠错</router-link>
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
       </div>
     </div>
@@ -109,7 +112,7 @@ export default {
   },
   created() {
     this.linkerId = this.$route.params.id
-
+    this.getMarketDetailPhotoInfo()
     this.$store.commit(types.USER_BUILD_INFO, this.linkerId)
 
     this.getLinkerDetail(this.linkerId)
@@ -117,7 +120,7 @@ export default {
     this.getHouseAroundType(this.linkerId)
   },
   data: () => ({
-    a: 1111,
+    photoButton:true,
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
@@ -203,10 +206,14 @@ export default {
 
       //this.titleBarHandle()
     },
-    //跳转更多内容
-    skipMoreContent() {
-      this.confType.link = this.confType.link + this.linkerId
-      this.confDynamic.link = this.confDynamic.link + this.linkerId
+    //判断该楼盘有无图片列表
+    async getMarketDetailPhotoInfo(){
+      const res = await MarketService.getMarketDetailPhoto(this.linkerId)
+      if(res.length>0){
+        this.photoButton=true
+      }else if(res.length<=0){
+        this.photoButton=false
+      }
     },
       //跳转更多内容
       skipMoreContent(){
@@ -218,7 +225,7 @@ export default {
      * 楼盘详情-位置周边
      */
     async getHouseAroundType(id) {
-      const result = await MarketService.getHouseAroundType(id)
+      const result = await MarketService.getHouseAroundType(id)//获取附近公交等公共场所数据的数组
     }
   },
   computed: {

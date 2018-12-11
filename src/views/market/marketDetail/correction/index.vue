@@ -3,8 +3,8 @@
     <p>请选择错误类型</p>
     <div class="market-detail-correction-page-top">
     <ul>
-      <li v-for="(item,index) in list" :key="index" @click="taget(index)">
-        {{item.text}} <span :class="{active:item.check}"></span>
+      <li v-for="(item,index) in optionList" :key="index" @click="taget(index,item.item_code)">
+        {{item.item_name}} <span :class="{active:activeIndex==index}"></span>
       </li>
     </ul>
     </div>
@@ -14,7 +14,7 @@
   
    </form>
    <p class="num-desc">{{Surplus}}/50</p>
-   <div class="submit-button">确定提交</div>
+   <div class="submit-button" @click="submitCorrectionInfo">确定提交</div>
   </div>
 </template>
 <script>
@@ -22,26 +22,39 @@ import marketService from 'SERVICE/marketService'
 export default {
   created() {
     this.getCorrectionInfo()
+    this.linkerId=this.$route.params.id
+    console.log(this.linkerId)
   },
   data: () => ({
+    activeIndex:null,
     Surplus: 50,
     introduct: '',
     backImg: require('IMG/correction/color.png'),
-    list: [{ text: '价格错误', check: false }, { text: '位置错误', check: false }, { text: '', check: false }, { text: '预计交房错误', check: false }, { text: '其他错误', check: false }]
+    optionList:['价格错误','位置错误','开盘错误','预计交房错误','其他错误'],
+    linkerId:null,
+    errorType:null,
+    content:null,
+    appType:'2'
   }),
   methods: {
-    taget(index) {
-      this.list[index].check = !this.list[index].check
+    taget(index,code) {
+      this.activeIndex =index
+      this.errorType=code
     },
     descArea() {
       var textVal = this.introduct.length
       this.Surplus = 50 - textVal
     },
-    async getCorrectionInfo() {
+    async getCorrectionInfo() {//渲染显示的选项
+    
       let res = await marketService.getCorrection()
-      for (let index = 0; index < this.list.length; index++) {
-        this.list[index].text = res[index].item_name
-      }
+      this.optionList=res
+      console.log(res,'纠错类型')
+    },
+    async submitCorrectionInfo() {//提交纠错内容
+    console.log(this.linkerId,this.errorType,this.introduct,this.appType,2222222)
+     let res= await marketService.submitCorrection(this.linkerId,this.errorType,this.introduct,this.appType)
+      console.log(res,'提交数据')
     }
   }
 }
@@ -70,7 +83,7 @@ export default {
         justify-content: space-between;
         margin-left: 15px;
         width: 345px;
-        height: 22px;
+        height: 56px;
         padding: 17px 0;
         font-size: 16px;
         font-family: PingFangSC-Regular;
