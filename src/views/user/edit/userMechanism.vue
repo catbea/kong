@@ -74,6 +74,7 @@ export default {
       let obj = {}
       const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
 
+
       if (result.length > 0) {
         let organizationInfo = result
         // this.organizationList

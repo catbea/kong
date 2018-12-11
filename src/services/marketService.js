@@ -183,6 +183,16 @@ class MarketService {
     })
   }
 
+  /* 获取vip楼盘
+  *
+  */
+ packageLinkerList(parm) {
+  return xhr({
+    url: '/userPackage/packageLinkerList',
+    body: parm
+  })
+}
+
   /**
    * 分享楼盘需要的楼盘图片列表
    * @param {*} linkerId 

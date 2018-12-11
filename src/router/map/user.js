@@ -231,7 +231,7 @@ export default [
     name: 'open-preference',
     component: resolve => require(['@/views/user/mypreference/openPreference/index.vue'], resolve),
     meta: {
-      title: '开通套餐',
+      title: '套餐支付',
       tabbar: {
         show: false
       }

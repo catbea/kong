@@ -48,7 +48,7 @@ const state = {
     mobile: '18676652795',
     mpOpenid: '',
     myLinkerGuide: 0,
-    name: '离园则90',
+    name: '嗨我是你的益达吗',
     nameGuide: 0,
     nickName: '离园则',
     parentUserId: '',
@@ -70,7 +70,7 @@ const state = {
     switchTime: '',
     tempPhone: '18676652795',
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJmYmFqYXoiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDQ1MjQ2MDcsImlhdCI6MTU0MzkxOTgwN30.U-QkrUG6M00Q4z3SbRdoJ1QEJtepaJgOxebXhx3ucVFo_fobIvF_3KNtmNOuRme6isTNux7BSKJGfENlIgYlRQ',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI2NWdzcHQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDUxMzI5ODIsImlhdCI6MTU0NDUyODE4Mn0.sQ6ai7lpC_gg_U2SEYGfTHXYh6r1sL1IrU94Uey8BVk-eAN5Yqyeck5eN3kG0sCz_RR3i4kUIwSW5XE2v-QfYg',
     updateTime: '2018-10-19 17:37:47',
     viewNum: 101,
     wechatAccount: '112110',

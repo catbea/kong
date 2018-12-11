@@ -8,7 +8,7 @@
           <div class="teammateList-top" :style="{'backgroundImage':'url('+teammateListBackIcon+')'}">
             <img :src="couponIcon" class="teammateList-top-icon">
             <div class="teammateList-top-center">
-              <p class="teammateList-top-price"><span class="teammateList-top-price-num">0</span>元</p>
+              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{registerRewardsPrice}}</span>元</p>
               <p class="teammateList-top-num">已邀请：{{ registerRewardsTotal == 0 ? 0 : registerRewardsTotal}}人</p>
             </div>
           </div>
@@ -21,22 +21,13 @@
                 <p class="teammateList-center-right-time">{{registerItem.rewardsTime | dateTimeFormatter(2,'/')}}</p>
               </div>
           </div>
-           <!-- <div class="teammateList-center">
-              <div class="teammateList-center-left">
-                <p class="teammateList-center-left-text">成功邀请用户</p>
-                <p class="teammateList-center-left-tell">1365451212</p>
-              </div>
-              <div class="teammateList-center-right">
-                <p class="teammateList-center-right-time">收获¥20元代金券</p>
-              </div>
-          </div> -->
           
       </div>
       <div v-if="active === 1 ">
           <div class="teammateList-top" :style="{'backgroundImage':'url('+kaitBackIcon+')'}">
              <img :src="redenvelopesIcon" class="teammateList-top-redenvelopesIcon">
             <div class="teammateList-top-center">
-              <p class="teammateList-top-price"><span class="teammateList-top-price-num">0</span>元</p>
+              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{openRewardsPrice}}</span>元</p>
               <p class="teammateList-top-num">已开通：{{ openRewardsTotal == 0 ? 0 : openRewardsTotal}}个</p>
             </div>
           </div>
@@ -55,7 +46,6 @@
 
 <script>
 import userService from 'SERVICE/userService'
-  // import {invitationUsers,openRewards,registerRewards ,agentCoupons} from '../../../service/me'
   export default {
     data(){
       return{
@@ -78,15 +68,16 @@ import userService from 'SERVICE/userService'
       //邀请开通列表
      async getopenRewards(){
       const res = await userService.getopenRewards()
-      this.openRewardsTotal = res.total
-     
-      this.openRewards = res.records
+      this.openRewardsPrice = res.price
+      this.openRewardsTotal = res.count
+      this.openRewards = res.list.records
     },
       //邀请注册列表
       async getregisterRewards(){
         const res = await userService.getregisterRewards()
-        this.registerRewardsTotal = res.total
-        this.registerRewards = res.records
+        this.registerRewardsPrice = res.price
+        this.registerRewardsTotal = res.count
+        this.registerRewards = res.list.records
       }
     },
   }
