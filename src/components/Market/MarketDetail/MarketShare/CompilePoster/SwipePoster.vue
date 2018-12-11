@@ -2,7 +2,7 @@
   <div class="swipe-poster-page">
     <div
       class="swipe-poster-item bg_img"
-      :style="{backgroundImage:'url('+model.avatarMediaid+')'}"
+      :style="{backgroundImage:'url('+modelBgImg+')'}"
     >
       <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}">
         <div class="box-top">
@@ -38,7 +38,8 @@ export default {
   }),
 
   props: {
-    model: Object
+    model: Object,
+    modelBgImg:''
   }
 }
 </script>
