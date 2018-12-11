@@ -11,7 +11,7 @@
           class="edit-phone-input"
           placeholder="Bela"
           disabled="disabled"
-          value="13590200739"
+          :value="mobile"
         >
       </p>
       <p class="edit-phone-card">名片展示手机号</p>
@@ -34,13 +34,15 @@ export default {
   },
   data() {
     return {
-      Cphone: ''
+      Cphone: '',
+      mobile:''
     }
   },
 
   created() {
     let mobileNum = this.$route.query.phoneNum
     this.Cphone = mobileNum
+    this.mobile=this.userInfo.mobile
   },
 
   computed: {

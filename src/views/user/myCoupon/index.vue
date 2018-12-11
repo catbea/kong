@@ -1,12 +1,12 @@
 <template>
   <div class="user-myCoupon-page">
     
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated @click="onClick">
           <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num">
             <keep-alive>
               <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
                 <!-- <div class="coupon-content"> -->
-                <coupon-item v-for="(item1,index) in item.list" :key="index" :info="item1"></coupon-item>
+                <coupon-item v-for="(itemA,indexA) in item.list" :key="indexA" :info="itemA"></coupon-item>
                 <!-- </div> -->
                  </van-list>
             </keep-alive>
@@ -27,14 +27,13 @@ export default {
     loading: false,
     finished: false,
     nameList: [
-      { title: '未使用', num: 0, list: [], index: 0, agentId: 705, page: 1, finished: false },
-      { title: '使用记录', num: 0, list: [], index: 1, agentId: 705, page: 1, finished: false },
-      { title: '已过期', num: 0, list: [], index: 2, agentId: 705, page: 1, finished: false }
+      { title: '未使用', num: 0, list: [], index: 0, page: 1, finished: false },
+      { title: '使用记录', num: 0, list: [], index: 1, page: 1, finished: false },
+      { title: '已过期', num: 0, list: [], index: 2, page: 1, finished: false }
     ],
     activeIndex: 0,
     index: null,
     req: {
-      agentId: 705,
       status: { not: 1, recor: 2, past: 3 }
     },
     list: {
@@ -49,56 +48,69 @@ export default {
   computed: {},
   created() {
     const _this = this
-    this.b().then(res => {
-      _this.nameList[1].num = res.total
+    this.notUse().then(res => {
+      _this.nameList[0].num = res.total
+      console.log(res,'已使用的数据')
     })
-    this.c().then(res => {
+    this.useRecord().then(res => {
+      _this.nameList[1].num = res.total
+      console.log(res,'使用记录的数据')
+    })
+    this.alreadyPast().then(res => {
       _this.nameList[2].num = res.total
+      console.log(res,'已过期的数据')
     })
   },
   methods: {
-    // 请求数据事件
-    async onLoad() {
+    onClick(){//重置滚动条
+    window.scrollTop=0
+    },
+    async onLoad() {// 初始tab请求数据事件
       let current = this.getCurrentType()
       const result = await mycoupons.couponsStatusList(current.index, current.page)
-      this.nameList[0].num = result.total
+      console.log(result.records,'目前显示的数据')
       current.list = current.list.concat(result.records)
-      this.$nextTick(() => {
+      // this.$nextTick(() => {
         if (result.pages === 0 || current.page === result.pages) {
           current.finished = true
         }
+        console.log(current.page,'当前页数')
         current.page++
         this.loading = false
-      })
+      // })
+      console.log(this.nameList[0],this.nameList[1],this.nameList[2])
     },
-    getCurrentType() {
+    getCurrentType() {//选中的是哪个tab
       for (let temp of this.nameList) {
         if (this.activeIndex === temp.index) {
           return temp
         }
       }
     },
-    async a() {
+    async notUse() {//已使用
       const _this = this
       let p1 = new Promise(function(resolve, reject) {
         let res = mycoupons.couponsStatusList(0, 1)
         resolve(res)
+        
       })
       return p1
     },
-    async b() {
+    async useRecord() {//使用记录
       const _this = this
       let p2 = new Promise(function(resolve, reject) {
         let res = mycoupons.couponsStatusList(1, 1)
         resolve(res)
+        
       })
       return p2
     },
-    async c() {
+    async alreadyPast() {//已过期
       const _this = this
       let p3 = new Promise(function(resolve, reject) {
         let res = mycoupons.couponsStatusList(2, 1)
         resolve(res)
+        
       })
       return p3
     },
