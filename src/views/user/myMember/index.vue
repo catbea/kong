@@ -21,7 +21,7 @@
       <div class="open-and-renew-left">
         合计：<p>{{payValue | priceFormart}}元</p>
       </div>
-      <div class="open-and-renew-right" @click="paySubmit">
+      <div v-show="!isPayLoading" class="open-and-renew-right" @click="paySubmit">
         立即支付
       </div>
       <div v-show="isPayLoading" class="pay-loadding">
@@ -105,10 +105,10 @@ export default {
             console.log('支付suss')
           },
           cancel: res => {
-            console.log(res, '支付取消')
+            this.$toast('支付取消')
           },
           fail: res => {
-            console.log(res, '支付失败')
+            this.$toast('支付失败')
           }
         })
       }
