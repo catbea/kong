@@ -42,7 +42,6 @@ export default {
       for (let index = 0; index < this.list.length; index++) {
         this.list[index].text = res[index].item_name
       }
-      console.log(res)
     }
   }
 }

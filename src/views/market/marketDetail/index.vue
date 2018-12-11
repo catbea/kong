@@ -170,7 +170,6 @@ export default {
     },
     handleScroll() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      console.log(scrollTop)
       if (scrollTop >= 200) {
         this.boxShow = true
       } else {
@@ -195,7 +194,6 @@ export default {
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
       this.linkerInfo = result
-      console.log(result,'该楼盘信息')
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
       houseUseList.unshift(result.saleStatus)

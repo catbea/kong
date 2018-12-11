@@ -30,7 +30,6 @@ export default {
   created() {},
   methods: {
     GOheadline() {
-      console.log(1)
       //跳转
       this.$emit('click', this.info)
       // this.$router.push('/discover/headline')

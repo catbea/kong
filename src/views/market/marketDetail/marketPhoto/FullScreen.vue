@@ -24,7 +24,6 @@ export default {
   },
   methods: {
     onChange(index) {
-      console.log(index)
       this.current = index
     },
     close() {

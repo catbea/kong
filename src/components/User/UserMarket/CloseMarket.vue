@@ -122,13 +122,11 @@ export default {
       // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
       this.show = !this.show
-      console.log('已改为大师推荐')
     },
     commonHandle(){
       // this.$emit('returncommonHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,2)//改为普通推荐
       this.show = !this.show
-      console.log('已改为普通推荐')
     },
     exhibitionHandle () {
       Dialog.confirm({

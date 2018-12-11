@@ -110,7 +110,6 @@ export default {
     copy() {
       var clipboard = new Clipboard('.container-list-botton')
       clipboard.on('success', e => {
-        console.log(e)
         // 释放内存
         clipboard.destroy()
       })
@@ -126,7 +125,6 @@ export default {
       const res = await userService.getMyBillList(current)
       this.billItem = res.records
       this.current = res.current + 1
-      console.log(this.current)
     },
 
     async onLoad() {

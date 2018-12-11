@@ -102,7 +102,6 @@ export default {
      * 切换tab
      */
     onClick() {
-      console.log(this.activeIndex)
       if (this.activeIndex == 1 && this.isSecondReq == false) {
         this.getCustomerDynamicCount(this.clientId)
         this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
@@ -169,7 +168,6 @@ export default {
           llzuxq.color = colors[i]
           pieData.push(llzuxq)
         }
-        console.log(pieData)
         this.pieData = pieData
       }
       this.isPieDataReqOk = true
@@ -191,7 +189,6 @@ export default {
           item.a = '1'
           lineData.push(item)
         }
-        console.log(lineData)
         this.lineData = lineData
       }
     },
@@ -211,7 +208,6 @@ export default {
           item.shadow = 100
           barData.push(item)
         }
-        console.log(barData)
         this.barData = barData
       }
     },
@@ -286,7 +282,6 @@ export default {
         item.value = result[key]
         customerInfo.push(item)
       }
-      console.log(customerInfo)
       this.customerInfo = customerInfo
     },
 
