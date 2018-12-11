@@ -11,7 +11,7 @@
         v-model="loading"
         :finished="finished"
         :finished-text="'没有更多了'"
-        @load="vipLinkerList">
+        @load="getLinkerList">
         <meal-market
             v-for="(item,index) in projectList"
             :key="index"
@@ -74,10 +74,14 @@ export default {
     projectList: []
   }),
   methods: {
-    async vipLinkerList() {
+    async getLinkerList() {
       this.checkAllShow = false
       let param = {current: this.page, size: this.pageSize}
-      const res = await marketService.vipLinkerList(param)
+      if(this.type == 'package') {
+        const res = await marketService.packageLinkerList(param)
+      } else {
+        const res = await marketService.vipLinkerList(param)
+      }
       let _list = []
       for(let item of res.records) {
         let obj = {
