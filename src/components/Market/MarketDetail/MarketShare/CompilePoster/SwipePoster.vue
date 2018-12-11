@@ -2,7 +2,7 @@
   <div class="swipe-poster-page">
     <div
       class="swipe-poster-item bg_img"
-      :style="{backgroundImage:'url(http://t1.27270.com/uploads/tu/201811/907/84695947e4.jpg)'}"
+      :style="{backgroundImage:'url('+model.avatarMediaid+')'}"
     >
       <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}">
         <div class="box-top">
@@ -13,12 +13,12 @@
           </ul>
           <div class="QRcode">
             <img class="qrcode-view" :src="model.qrCode">
-            <p>长按识别更多</p>
+            <span>长按识别更多</span>
           </div>
         </div>
         <div class="box-bottom">
           <div class="message">
-            <img class='header-view' :src="model.avatarMediaid">
+            <img class="header-view" :src="model.avatarMediaid">
             <div class="name">
               <p>{{model.agentName}}</p>
               <p>{{model.agentMobile}}</p>
@@ -34,12 +34,12 @@
 import { mapGetters } from 'vuex'
 export default {
   data: () => ({
-    backImg: require('IMG/marketDetail/back@2x.png'),
+    backImg: require('IMG/marketDetail/back@2x.png')
   }),
 
- props: {
+  props: {
     model: Object
-  },
+  }
 }
 </script>
 <style lang="less">
@@ -95,17 +95,17 @@ export default {
           display: flex;
           flex-direction: column;
           margin-top: 19px;
-          margin-left: 19px;
+          margin-left: 22px;
+          align-content: center;
+          
           .qrcode-view {
             margin-bottom: 7px;
             width: 58px;
             height: 58px;
             border-radius: 50%;
           }
-          p {
+          span {
             font-size: 7px;
-            font-family: PingFangSC-Regular;
-            font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 10px;
           }
