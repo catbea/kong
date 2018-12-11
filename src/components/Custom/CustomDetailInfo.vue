@@ -2,44 +2,92 @@
   <div class="custom-detail-info">
     <!-- <cell-group> -->
     <cell
-        v-for="(item,index) in list"
+        v-for="(item,index) in customerInfoList"
         :key="index"
         class="cell-item"
         :title="item.title"
-        is-link
-        :to="'/user/edit/username'"  
+        is-link 
         :value="item.content"
+        @click="onClick(item, index)"
       />
+      <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler"></area-select>
+      <picker-select :show.sync="pickerShow" :title="areaTitle" :columns="columns" @cancel="cancelHandler" @confirm="confirmHandler"></picker-select>
       <!-- </cell-group> -->
     <custom-operation></custom-operation>
   </div>
 </template>
 <script>
 import { Cell } from 'vant'
+import AreaSelect from 'COMP/AreaSelect'
+import PickerSelect from 'COMP/PickerSelect'
 import CustomOperation from './CustomOperation.vue'
 export default {
-  props: {},
+  props: {
+    customerInfoList: {
+      type: Array,
+      default: [
+      { title: '备注名称', content: '暂无' },
+      { title: '性别', content: '暂无' },
+      { title: '年龄', content: '暂无' },
+      { title: '位置', content: '暂无' },
+      { title: '手机号', content: '暂无' },
+      { title: '来源', content: '暂无' },
+      { title: '收入', content: '暂无' },
+      { title: '行业', content: '暂无' },
+      { title: '购房目的', content: '暂无' }
+    ]},
+    areaShow: {type: Boolean, default: false},
+    areaCode: {type: String, default: '440305'},
+    areaTitle: {type: String, default: '位置'},
+    pickerShow: {type: Boolean, default: false},
+    columns: { type: Array },
+  },
   data: () => ({
-    list: [
-      { title: '备注名称', content: '备注名称' },
-      { title: '性别', content: '备注名称' },
-      { title: '年龄', content: '备注名称' },
-      { title: '位置', content: '备注名称' },
-      { title: '手机号', content: '备注名称' },
-      { title: '来源', content: '备注名称' },
-      { title: '收入', content: '备注名称' },
-      { title: '行业', content: '备注名称' },
-      { title: '购房目的', content: '备注名称' }
-    ]
+
   }),
+  watch: {
+    areaShow(val) {
+       this.$emit('update:show', val)
+    },
+    show(val) {
+      this.areaShow = val
+    },
+    pickerShow(val) {
+       this.$emit('update:isPickerShow', val)
+    },
+    isPickerShow(val) {
+      this.pickerShow = val
+    },
+  },
+  methods: {
+    onClick(item, index) {
+      let pram ={
+        item: item,
+        index: index
+      }
+      this.$emit('onClick', pram)
+    },
+    cancelHandler(val) {
+      this.$emit('cancel', val)
+    },
+    confirmHandler(val) {
+      this.$emit('confirm', val)
+    },
+    closeHandler(val) {
+      this.$emit('cancel', val)
+    }
+  },
   components: {
     CustomOperation,
-    Cell
+    Cell,
+    AreaSelect,
+    PickerSelect
   }
 }
 </script>
 <style lang="less">
 .custom-detail-info {
+  margin-bottom: 80px;
   .cell-item {
     height: 56px;
     align-items: center;

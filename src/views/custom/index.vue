@@ -86,6 +86,7 @@ export default {
     },
     itemClickHandler(e) {
       this.$router.push(`/custom/${e.clientId}`)
+      // this.$router.push({path: '/custom/detail', query: {'clientId': e.clientId}})
     }
   },
   computed: {

@@ -3,11 +3,6 @@
     <div class="master-market-box">
       <p class="master-recommend">大师推荐</p>
       <div class="vanSWipe-box">
-        <p
-          class="bg_img icon-cancel"
-          :style="{backgroundImage:'url('+img+')'}"
-          @click="closeHandle"
-        ></p>
         <van-swipe
           :touchable="true"
           :loop="true"
@@ -16,8 +11,14 @@
           <van-swipe-item
             v-for="(item,index) in limitList"
             :key="index"
+            v-show="item.masterRecommand!=0"
           >
             <div class="master-box">
+              <p
+                class="bg_img icon-cancel"
+                :style="{backgroundImage:'url('+img+')'}"
+                @click.stop="closeHandle(item.linkerId)"
+              ></p>
               <div
                 :class="{dim:item.masterRecommand==1}"
                 class="bg_img master-item"
@@ -31,28 +32,17 @@
               </ol>
             </div>
           </van-swipe-item>
-          <!-- <van-swipe-item
-            v-for="(itemCommon,indexCommon) in common"
-            :key="indexCommon"
-          >
-            <div
-              class="img-item"
-              :style="{backgroundImage:'url(https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2868602830,597618051&fm=27&gp=0.jpg)'}"
-            >
-              <ul>
-                <li>{{itemCommon.linkerName}}</li>
-                <li>{{itemCommon.linkerTags}}</li>
-                <li>{{itemCommon.city}}{{itemCommon.county}} {{itemCommon.openTimes}} 人开通 <span>{{itemCommon.price}}{{itemCommon.priceUnit}}</span></li>
-              </ul>
-            </div>
-          </van-swipe-item> -->
         </van-swipe>
       </div>
     </div>
   </div>
 </template>
 <script>
+import userService from 'SERVICE/userService'
 export default {
+  created() {
+    
+  },
   props: {
     swipeList: {
       type: Array
@@ -63,9 +53,10 @@ export default {
     img: require('IMG/user/Combined Shape@2x.png')
   }),
   methods: {
-    closeHandle(){
-      this.$emit('returnCloseHandle',1)
+    async closeHandle(linkerId){
+      console.log('改为未推荐');
       
+     await userService.changeMarketData(linkerId,20,0)
     },
   },
   computed:{
@@ -87,7 +78,6 @@ export default {
     width: 343px;
     height: 274px;
     .vanSWipe-box {
-      position: relative;
       .dim{
         filter: blur(6px);
       }

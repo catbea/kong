@@ -1,20 +1,14 @@
 <template>
   <van-popup v-model="isShow" position="bottom" @click-overlay="closeHandler">
-    <van-area :area-list="areaList" :value="code" :title="title" @cancel="cancelHandler" @confirm="confirmHandler" />
+    <van-picker show-toolbar :title="title" :columns="columns" @cancel="cancelHandler" @confirm="confirmHandler" />
   </van-popup>
 </template>
 <script>
-import { fullArea } from '@/utils/fullArea'
+
 export default {
   props: {
     show: { type: Boolean, default: false },
-    areaList: {
-      type: Object,
-      default: function() {
-        return fullArea
-      }
-    },
-    code: { type: String },
+    columns: { type: Array },
     title: { type: String },
   },
   data: () => ({

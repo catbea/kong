@@ -82,7 +82,7 @@ export default {
   methods: {
     async addProjectHandle() {
       const res = await marketService.queryLastInfoByAgentId()
-      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: res.packageId, type:'package'}})
+      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: res.id, type:'package'}})
     },
 
     async payClickHandle() {
@@ -124,7 +124,7 @@ export default {
     },
 
     async selectProjectHandle(item) {
-      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: item.packageId, type:'package'}})
+      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: item.id, type:'package'}})
     },
 
     async getPackageInfo() {
@@ -134,6 +134,7 @@ export default {
         for(let i=0; i<res.packagePurchageList.length; i++) {
           let item = res.packagePurchageList[i]
           let obj = {
+            id: item.id,
             packageId: item.packageId,
             title: '已购套餐'+(i+1),
             projectSelected: item.limitResidue,
