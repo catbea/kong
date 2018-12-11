@@ -115,7 +115,7 @@ export default {
 
     async getPackageInfo() {
       const res = await marketService.userPackageSituation()
-      this.expireDate = parseInt(res.expireDate)
+      this.expireDate = res.expireDate ? parseInt(res.expireDate) : 0
       if(res.packagePurchageList.length > 0) {
         for(let i=0; i<res.packagePurchageList.length; i++) {
           let item = res.packagePurchageList[i]
