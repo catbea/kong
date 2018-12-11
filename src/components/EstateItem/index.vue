@@ -9,7 +9,7 @@
         <p class="estate-location">{{`${info.city} ${info.county?info.county:''}`}}</p>
         <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
         <div class="estate-info">
-          <p class="estate-price">{{info.averagePrice | priceFormart }} {{info.priceUnit}}</p>
+          <p class="estate-price">{{info.price | priceFormart }} {{info.priceUnit}}</p>
           <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
         </div>
       </div>
