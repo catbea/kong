@@ -5,7 +5,7 @@
       <div class="custom-info">
         <div class="custom-name-box">
           <h5 class="custom-name">{{customBaseInfo.clientName}}</h5>
-          <van-icon name="edit" size="24px"/>
+          <!-- <van-icon name="edit" size="24px"/> -->
         </div>
         <p class="custom-browsed">最近浏览：{{customBaseInfo.lastViewTime}}</p>
       </div>
@@ -39,7 +39,13 @@
             :trackInfo="trackInfo" :trackList="trackList" />
         </van-tab>
         <van-tab title="资料">
-          <custom-detail-info/>
+          <custom-detail-info @onClick="onClickHandler"
+          :customerInfoList="customerInfoList"
+          :areaShow="areaShow" 
+          :areaTitle="areaTitle"
+          :pickerShow="pickerShow"
+          :columns="pickerList"
+          @cancel="cancelHandler" @confirm="confirmHandler" />
         </van-tab>
       </van-tabs>
     </div>
@@ -50,7 +56,6 @@ import Avatar from 'COMP/Avatar'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
 import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
 import CustomDetailInfo from 'COMP/Custom/CustomDetailInfo'
-import { mapGetters } from 'vuex'
 import CustomService from 'SERVICE/customService'
 
 export default {
@@ -66,7 +71,7 @@ export default {
     isSecondReq: false, // 足迹页签是否请求成功
     isThirdReq: false, // 资料页签是否请求成功
     customBaseInfo: null,
-    intentionProjectTag: [],
+    intentionProjectTag: [], 
     isPieDataReqOk: false,
     pieChartHidden: false,
     pieData: [],
@@ -80,23 +85,38 @@ export default {
     finished: false,
     current: 1,
     size: 10,
-    trackInfo: [],
+    trackInfo: [], // 足迹头部数量
     trackCurrent: 1,
-    trackList: [],
-    customerInfo: [],
+    trackList: [], // 足迹列表
+    customerInfoList: [],
     attentionFlag: false,
-    clientMobile: ''
+    clientMobile: '',
+    selectItem: null, // 资料tab选择的是哪一项资料
+    selectIndex: null, // 资料tab选择的是哪一项资料index
+    areaShow: false, // 省市区是否显示
+    areaCode: '440305', // 默认显示省市区位置code
+    areaTitle: '',
+    pickerShow: false,
+    pickerList: null
   }),
   computed: {
-    ...mapGetters(['reportAddInfo'])
+    
+  },
+  watch: {
+    areaShow(val) {
+       this.$emit('update:show', val)
+    },
+    show(val) {
+      this.areaShow = val
+    },
   },
   created() {
     this.clientId = this.$route.params.id
     this.getCustomBaseInfo(this.clientId)
-    this.getCustomPieChart(this.clientId)
-    this.getCustomerSevenDayTrendChart(this.clientId)
-    this.getCustomerBarChart(this.clientId)
-    this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
+    this.activeIndex = window.localStorage.getItem('activeIndex') == 2 ? 2 : 0
+    window.localStorage.setItem('activeIndex', 0)
+    this.onClick()
+    window.localStorage.removeItem('activeIndex')
   },
   methods: {
     /**
@@ -104,7 +124,12 @@ export default {
      */
     onClick() {
       console.log(this.activeIndex)
-      if (this.activeIndex == 1 && this.isSecondReq == false) {
+      if (this.activeIndex == 0) {
+        this.getCustomPieChart(this.clientId)
+        this.getCustomerSevenDayTrendChart(this.clientId)
+        this.getCustomerBarChart(this.clientId)
+        this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
+      }else if (this.activeIndex == 1 && this.isSecondReq == false) {
         this.getCustomerDynamicCount(this.clientId)
         this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
         this.isSecondReq = true
@@ -137,8 +162,72 @@ export default {
       
     },
     consultHandler() {
-      
+      window.location.href = "tel:" + this.clientMobile
     },
+    /**
+     * 资料tab 点击事件
+     */
+    onClickHandler(object) {
+      let item = object.item
+      this.selectItem = object.item
+      this.selectIndex = object.index
+      this.areaTitle = object.item.title
+      if (item.title == '备注名称') {
+        let params = {
+          clientId: this.clientId,
+          remarkName: this.customerInfoList[0].content == '暂无' ? '' : this.customerInfoList[0].content
+        }
+        window.localStorage.setItem('activeIndex', 2)
+        this.$router.push({path: '/custom/edit/remarkName', query: params})
+      }else if (item.title == '手机号') {
+        let params = {
+          clientId: this.clientId,
+          phone: this.customerInfoList[4].content == '暂无' ? '' : this.customerInfoList[4].content
+        }
+        window.localStorage.setItem('activeIndex', 2)
+        this.$router.push({path: '/custom/edit/phone', query: params})
+      }else if (item.title == '位置') {
+        this.areaShow = !this.areaShow
+      }else {
+        this.pickerShow = !this.pickerShow
+        if (item.title == '性别') {
+          this.pickerList = ['男', '女']
+        }else if (item.title == '年龄') {
+          this.pickerList = ['65以上', '50-65岁', '41-50岁', '31-40岁', '19-30岁', '18以下']
+        }else if (item.title == '收入') {
+          this.pickerList = ['未知', '月薪3000以下', '月薪3000-5000', '月薪5000-8000', '月薪8000-12000', '月薪12000-15000', '月薪15000-30000', '月薪3W以上']
+        }else if (item.title == '行业') {
+          this.pickerList = ['未知', 'IT/通信/互联网', '学生', '文化/艺术', '影视/娱乐', '金融', '医药/健康', '工业/制造业', '媒体/公关', '零售', '教育/科研', '其它']
+        }else if (item.title == '购房目的') {
+          this.pickerList = ['未知', '学区房', '婚房', '工作换房', '改善型换房']
+        }
+      }
+    },
+    cancelHandler(val) {
+      this.areaShow = false
+      this.pickerShow = false
+    },
+    confirmHandler(val) {
+      console.log(val, this.selectItem, this.selectIndex)
+      this.areaShow = false
+      this.pickerShow = false
+      if (this.selectItem.title == '位置') {
+        this.customerInfoList[3].content = val[0].name + '/' + val[1].name + '/' + val[2].name
+      }else {
+        this.customerInfoList[this.selectIndex].content = val
+      }
+      let params = {
+          clientId: this.clientId,
+          sex: this.customerInfoList[1].content == '男' ? 1 : this.customerInfoList[1].content == '女' ? 2: '', //  1：男 2：女
+          age: this.customerInfoList[2].content == '暂无' ? '' : this.customerInfoList[2].content,
+          position: this.customerInfoList[3].content == '暂无' ? '' : this.customerInfoList[3].content,
+          income: this.customerInfoList[6].content == '暂无' ? '' : this.customerInfoList[6].content,
+          industry: this.customerInfoList[7].content == '暂无' ? '' : this.customerInfoList[7].content,
+          buyBuildingPurpose: this.customerInfoList[8].content == '暂无' ? '' : this.customerInfoList[8].content
+        }
+        this.updateCustomerInfo(params)
+    },
+
     /**
      * 客户基本信息以及购房意向度
      */
@@ -280,15 +369,22 @@ export default {
         industry: '行业',
         buyBuildingPurpose: '购房目的'
       }
-      let customerInfo = []
+      let customerInfoList = []
       for (var key in info) {
         var item = {}
-        item.key = info[key]
-        item.value = result[key]
-        customerInfo.push(item)
+        item.title = info[key]
+        item.content = result[key]
+        if (item.title == '性别') {
+          item.content = result[key].length == 0 ? '暂无' : result[key] == 2 ? '女' : '男'
+        }else if (item.title == '来源') {
+          item.content = result[key].length == 0 ? '暂无' : result[key] == 1 ? '分享' : '扫二维码'
+        }else {
+          item.content = result[key].length == 0 ? '暂无' : result[key]
+        }
+        customerInfoList.push(item)
       }
-      console.log(customerInfo)
-      this.customerInfo = customerInfo
+      console.log(customerInfoList)
+      this.customerInfoList = customerInfoList
     },
 
     /**
@@ -326,6 +422,7 @@ export default {
         font-size: 13px;
         font-weight: 400;
         color: #999999;
+        margin-top: 8px;
       }
     }
   }
