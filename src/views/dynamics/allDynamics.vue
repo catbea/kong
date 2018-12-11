@@ -108,7 +108,7 @@ export default {
       },
 
       item: [],
-      active: [],
+      active: '',
       tabs: [
         { index: 0, type: '', typeName: '全部', page: 0, finished: false, list: [] },
         { index: 1, type: '', typeName: '名片', page: 0, finished: false, list: [] },

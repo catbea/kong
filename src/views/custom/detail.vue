@@ -1,7 +1,11 @@
 <template>
   <div class="custom-detail">
     <div class="custom-info-box" v-if="customBaseInfo">
-      <avatar class="custom-avatar" v-if="customBaseInfo.avatarUrl!=''" :avatar="customBaseInfo.avatarUrl"></avatar>
+      <avatar
+        class="custom-avatar"
+        v-if="customBaseInfo.avatarUrl!=''"
+        :avatar="customBaseInfo.avatarUrl"
+      ></avatar>
       <div class="custom-info">
         <div class="custom-name-box">
           <h5 class="custom-name">{{customBaseInfo.clientName}}</h5>
@@ -30,32 +34,42 @@
             :barChartHidden="barChartHidden"
             :barData="barData"
             :analysisListData="analysisListData"
-            :attentionFlag="attentionFlag" :clientMobile="clientMobile"
-            @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"
           />
         </van-tab>
         <van-tab title="足迹">
-          <custom-detail-track 
-            :trackInfo="trackInfo" :trackList="trackList" />
+          <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
         </van-tab>
         <van-tab title="资料">
-          <custom-detail-info @onClick="onClickHandler"
-          :customerInfoList="customerInfoList"
-          :areaShow="areaShow" 
-          :areaTitle="areaTitle"
-          :pickerShow="pickerShow"
-          :columns="pickerList"
-          @cancel="cancelHandler" @confirm="confirmHandler" />
+          <custom-detail-info
+            @onClick="onClickHandler"
+            :customerInfoList="customerInfoList"
+            :areaShow="areaShow"
+            :areaTitle="areaTitle"
+            :pickerShow="pickerShow"
+            :columns="pickerList"
+            @cancel="cancelHandler"
+            @confirm="confirmHandler"
+          />
         </van-tab>
       </van-tabs>
+      <custom-operation
+        :attentionFlag="attentionFlag"
+        :clientMobile="clientMobile"
+        @onattention="attentionHandler"
+        @onreport="reportHandler"
+        @onphone="phoneHandler"
+        @onconsult="consultHandler"
+      ></custom-operation>
     </div>
   </div>
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
+import * as types from '@/store/mutation-types'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
 import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
 import CustomDetailInfo from 'COMP/Custom/CustomDetailInfo'
+import CustomOperation from 'COMP/Custom/CustomOperation.vue'
 import CustomService from 'SERVICE/customService'
 
 export default {
@@ -63,7 +77,8 @@ export default {
     Avatar,
     CustomDetailAnalyze,
     CustomDetailTrack,
-    CustomDetailInfo
+    CustomDetailInfo,
+    CustomOperation
   },
   data: () => ({
     clientId: -1,
@@ -71,7 +86,7 @@ export default {
     isSecondReq: false, // 足迹页签是否请求成功
     isThirdReq: false, // 资料页签是否请求成功
     customBaseInfo: null,
-    intentionProjectTag: [], 
+    intentionProjectTag: [],
     isPieDataReqOk: false,
     pieChartHidden: false,
     pieData: [],
@@ -104,11 +119,11 @@ export default {
   },
   watch: {
     areaShow(val) {
-       this.$emit('update:show', val)
+      this.$emit('update:show', val)
     },
     show(val) {
       this.areaShow = val
-    },
+    }
   },
   created() {
     this.clientId = this.$route.params.id
@@ -129,41 +144,39 @@ export default {
         this.getCustomerSevenDayTrendChart(this.clientId)
         this.getCustomerBarChart(this.clientId)
         this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
-      }else if (this.activeIndex == 1 && this.isSecondReq == false) {
+      } else if (this.activeIndex == 1 && this.isSecondReq == false) {
         this.getCustomerDynamicCount(this.clientId)
         this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
         this.isSecondReq = true
-      }else if (this.activeIndex == 2 && this.isThirdReq == false) {
+      } else if (this.activeIndex == 2 && this.isThirdReq == false) {
         this.getCustomerInfo(this.clientId)
         this.isThirdReq = true
       }
     },
-    attentionHandler() {
+    attentionHandler(flag) {
       this.attentionFlag = !this.attentionFlag
       let params = {
         clientId: this.clientId,
         isFollow: this.attentionFlag ? 0 : 1
       }
       this.updateCustomerInfo(params)
-      
     },
     reportHandler() {
       let _reportAddInfo = {
-          clientId: this.clientId,
-          clientName: this.customBaseInfo.clientName,
-          clientPhone: this.clientMobile,
-          distributorId: this.customBaseInfo.distributorId,
-          institutionId: this.customBaseInfo.institutionId
-        }
-      this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
+        clientId: this.clientId,
+        clientName: this.customBaseInfo.clientName,
+        clientPhone: this.clientMobile,
+        distributorId: this.customBaseInfo.distributorId,
+        institutionId: this.customBaseInfo.institutionId
+      }
+
+      this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.push('/user/myReport/addReport')
     },
     phoneHandler() {
-      
+      window.location.href = 'tel:' + this.clientMobile
     },
-    consultHandler() {
-      window.location.href = "tel:" + this.clientMobile
-    },
+    consultHandler() {},
     /**
      * 资料tab 点击事件
      */
@@ -178,27 +191,27 @@ export default {
           remarkName: this.customerInfoList[0].content == '暂无' ? '' : this.customerInfoList[0].content
         }
         window.localStorage.setItem('activeIndex', 2)
-        this.$router.push({path: '/custom/edit/remarkName', query: params})
-      }else if (item.title == '手机号') {
+        this.$router.push({ path: '/custom/edit/remarkName', query: params })
+      } else if (item.title == '手机号') {
         let params = {
           clientId: this.clientId,
           phone: this.customerInfoList[4].content == '暂无' ? '' : this.customerInfoList[4].content
         }
         window.localStorage.setItem('activeIndex', 2)
-        this.$router.push({path: '/custom/edit/phone', query: params})
-      }else if (item.title == '位置') {
+        this.$router.push({ path: '/custom/edit/phone', query: params })
+      } else if (item.title == '位置') {
         this.areaShow = !this.areaShow
-      }else {
+      } else {
         this.pickerShow = !this.pickerShow
         if (item.title == '性别') {
           this.pickerList = ['男', '女']
-        }else if (item.title == '年龄') {
+        } else if (item.title == '年龄') {
           this.pickerList = ['65以上', '50-65岁', '41-50岁', '31-40岁', '19-30岁', '18以下']
-        }else if (item.title == '收入') {
+        } else if (item.title == '收入') {
           this.pickerList = ['未知', '月薪3000以下', '月薪3000-5000', '月薪5000-8000', '月薪8000-12000', '月薪12000-15000', '月薪15000-30000', '月薪3W以上']
-        }else if (item.title == '行业') {
+        } else if (item.title == '行业') {
           this.pickerList = ['未知', 'IT/通信/互联网', '学生', '文化/艺术', '影视/娱乐', '金融', '医药/健康', '工业/制造业', '媒体/公关', '零售', '教育/科研', '其它']
-        }else if (item.title == '购房目的') {
+        } else if (item.title == '购房目的') {
           this.pickerList = ['未知', '学区房', '婚房', '工作换房', '改善型换房']
         }
       }
@@ -213,19 +226,19 @@ export default {
       this.pickerShow = false
       if (this.selectItem.title == '位置') {
         this.customerInfoList[3].content = val[0].name + '/' + val[1].name + '/' + val[2].name
-      }else {
+      } else {
         this.customerInfoList[this.selectIndex].content = val
       }
       let params = {
-          clientId: this.clientId,
-          sex: this.customerInfoList[1].content == '男' ? 1 : this.customerInfoList[1].content == '女' ? 2: '', //  1：男 2：女
-          age: this.customerInfoList[2].content == '暂无' ? '' : this.customerInfoList[2].content,
-          position: this.customerInfoList[3].content == '暂无' ? '' : this.customerInfoList[3].content,
-          income: this.customerInfoList[6].content == '暂无' ? '' : this.customerInfoList[6].content,
-          industry: this.customerInfoList[7].content == '暂无' ? '' : this.customerInfoList[7].content,
-          buyBuildingPurpose: this.customerInfoList[8].content == '暂无' ? '' : this.customerInfoList[8].content
-        }
-        this.updateCustomerInfo(params)
+        clientId: this.clientId,
+        sex: this.customerInfoList[1].content == '男' ? 1 : this.customerInfoList[1].content == '女' ? 2 : '', //  1：男 2：女
+        age: this.customerInfoList[2].content == '暂无' ? '' : this.customerInfoList[2].content,
+        position: this.customerInfoList[3].content == '暂无' ? '' : this.customerInfoList[3].content,
+        income: this.customerInfoList[6].content == '暂无' ? '' : this.customerInfoList[6].content,
+        industry: this.customerInfoList[7].content == '暂无' ? '' : this.customerInfoList[7].content,
+        buyBuildingPurpose: this.customerInfoList[8].content == '暂无' ? '' : this.customerInfoList[8].content
+      }
+      this.updateCustomerInfo(params)
     },
 
     /**
@@ -373,9 +386,9 @@ export default {
         item.content = result[key]
         if (item.title == '性别') {
           item.content = result[key].length == 0 ? '暂无' : result[key] == 2 ? '女' : '男'
-        }else if (item.title == '来源') {
+        } else if (item.title == '来源') {
           item.content = result[key].length == 0 ? '暂无' : result[key] == 1 ? '分享' : '扫二维码'
-        }else {
+        } else {
           item.content = result[key].length == 0 ? '暂无' : result[key]
         }
         customerInfoList.push(item)

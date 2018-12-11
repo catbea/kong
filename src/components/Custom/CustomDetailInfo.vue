@@ -13,7 +13,7 @@
       <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler"></area-select>
       <picker-select :show.sync="pickerShow" :title="areaTitle" :columns="columns" @cancel="cancelHandler" @confirm="confirmHandler"></picker-select>
       <!-- </cell-group> -->
-    <custom-operation></custom-operation>
+    <!-- <custom-operation></custom-operation> -->
   </div>
 </template>
 <script>

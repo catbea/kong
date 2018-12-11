@@ -11,6 +11,7 @@
 <script>
 import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     Dialog
@@ -21,6 +22,7 @@ export default {
     }
   },
   created() {
+    this.Cphone = this.reportAddInfo.clientPhone
   },
   computed: {
     ...mapGetters(['reportAddInfo'])
@@ -46,7 +48,7 @@ export default {
       let _reportAddInfo = {
         clientPhone: this.Cphone
       }
-      this.$store.dispatch('reportAddInfo', Object.assign(this.reportAddInfo, _reportAddInfo))
+      this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.back(-1)
     }
   }

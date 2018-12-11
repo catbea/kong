@@ -55,7 +55,7 @@ const state = {
     // payCorpId: "ww5e4d879ddc307ea1",
     // cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
-    theFirstTime:0,
+    theFirstTime:true,//新手引导
     payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
     position: '',
     price: 2000,
@@ -128,7 +128,8 @@ const getters = {
     return state.jssdkConfig
   },
   userRegistInfo: state => state.userRegistInfo,
-  buildId: state => state.buildId
+  buildId: state => state.buildId,
+  theFirstTime:state => state.userInfo.theFirstTime
 }
 
 const actions = {
@@ -172,7 +173,7 @@ const mutations = {
     state.userArea = Object.assign(state.userArea, data)
   },
   [types.REPORT_INFO](state, data) {
-    state.reportAddInfo = data
+    state.reportAddInfo = Object.assign(state.reportAddInfo, data)
   },
   [types.TREE_INFO](state, data) {
     state.treeInfo = data
@@ -185,7 +186,11 @@ const mutations = {
   },
   [types.USER_BUILD_INFO](state, data) {
     state.buildId = data
+  },
+  [types.USER_FIRST_TIME](state, data) {
+    state.userInfo.theFirstTime = data
   }
+  
 }
 
 export default {

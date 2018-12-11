@@ -32,7 +32,7 @@ export default {
     propertiesNum: { type: String, default: '' },
     articleTitle: { type: String, default: '' },
     articleNum: { type: String, default: '' },
-    allDynamicCount: { type: Object }
+    allDynamicCount: { type: '' }
   },
   data() {
     return {

@@ -20,19 +20,19 @@
       <div class="purchase-info-box">
         <p>
           <span>区域:</span>
-          {{baseInfo.intentionArea}}
+          {{baseInfo&&baseInfo.intentionArea}}
         </p>
         <p>
           <span>户型:</span>
-          {{baseInfo.intentionHouseType}}
+          {{baseInfo&&baseInfo.intentionHouseType}}
         </p>
         <p>
           <span>总价:</span>
-          {{baseInfo.intentionPrice}}
+          {{baseInfo&&baseInfo.intentionPrice}}
         </p>
         <p>
           <span>关注:</span>
-          {{baseInfo.intentionDemand}}
+          {{baseInfo&&baseInfo.intentionDemand}}
         </p>
         <div class="preferences">
           <span>偏好:</span>
@@ -45,7 +45,7 @@
         <p class="interest-desc" slot="desc">1312312312</p>
       </estate-item>
     </div>
-    <custom-operation :attentionFlag="attentionFlag" :clientMobile="clientMobile" @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"></custom-operation>
+    <!-- <custom-operation :attentionFlag="attentionFlag" :clientMobile="clientMobile" @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"></custom-operation> -->
   </div>
 </template>
 <script>
