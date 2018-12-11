@@ -393,7 +393,14 @@ class UserService {
       body:type
     })
   }
-
+  /**
+   * 邀请有礼二维码
+   */
+  getqueryInvitationUrl() {
+    return xhr({
+      url: '/user/queryInvitationUrl',
+    })
+  }
 
 }
 export default new UserService()

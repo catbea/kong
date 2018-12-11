@@ -13,11 +13,14 @@
       </div>
       <div class="awWelfare-center" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
         <!-- v-if="invitationImg" -->
+        <div id="qrcode" ref="qrcode"></div>
           <div class="awWelfare-info">
-            <div class="awWelfare-info-left"></div>
+            <div class="awWelfare-info-left">
+              <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
+            </div>
              <div class="awWelfare-info-right">
-              <p class="awWelfare-info-right-name"></p>
-              <p class="awWelfare-info-right-remak"></p>
+              <p class="awWelfare-info-right-name">{{userInfo.name}}</p>
+              <p class="awWelfare-info-right-remak">邀请你加入AW大师</p>
             </div>
           </div>
       </div>
@@ -54,8 +57,10 @@
 </template>
 
 <script>
+import {QRCode} from 'qrcodejs2'
 import { Popup } from 'vant';
 import userService from 'SERVICE/userService'
+import { mapGetters } from 'vuex'
 export default {
   components:{
     Popup,
@@ -73,15 +78,25 @@ export default {
       show1: false,
       registrationRules:'',
       openRules:'',
+      invitationUrl:'',
     }
   },
+   computed: {
+    ...mapGetters(['userInfo'])
+  },
+  watch: {
+    userInfo(v) {}
+  },
   mounted() {
+     this.goyInvitationUrlCode(this.invitationUrl)
     this.getrules()
+   
   },
   methods: {
     goteammateList(){
        this.$router.push({name:'teammateList'})
     },
+   
     async getrules(){
       const res = await userService.getrules(1);
       this.registrationRules = res.rule.split("#");
@@ -89,9 +104,25 @@ export default {
 
       const rest = await userService.getrules(2);
         this.openRules = rest.rule.split("#");
-    } 
-    
-   
+    },
+
+    async getqueryInvitationUrl(){
+    const res = await userService.getqueryInvitationUrl()
+    this.invitationUrl = res.invitationUrl
+    },
+     async goyInvitationUrlCode (url) {
+      debugger
+        let qrcode = new QRCode('qrcode', {
+            width: 150, //图像宽度
+            height: 150, //图像高度
+            colorDark : "#000000", //前景色
+            colorLight : "#ffffff", //背景色
+            typeNumber:4, 
+            correctLevel : QRCode.CorrectLevel.H //容错级别 容错级别有：（1）QRCode.CorrectLevel.L （2）QRCode.CorrectLevel.M （3）QRCode.CorrectLevel.Q （4）QRCode.CorrectLevel.H
+        })
+        qrcode.clear() //清除二维码 
+        qrcode.makeCode(url) //生成另一个新的二维码
+    }
   }
 }
 </script>
@@ -148,18 +179,30 @@ export default {
     background-size: 284px 466px;
         position: relative;
     .awWelfare-info{
-      padding: 34px 68px;
+      padding: 34px 62px;
       position: absolute;
       bottom: 34px;
+      display: flex;
       .awWelfare-info-left{
-        
+        .info-left-icon{
+          width:40px;
+          height:40px;
+          border-radius: 50%;
+        }
       }
       .awWelfare-info-right{
+        margin-left: 12px;
         .awWelfare-info-right-name{
-
+            font-size:14px;
+            font-weight:300;
+            color:rgba(251,199,172,1);
+            line-height:19px;
         }
         .awWelfare-info-right-remak{
-
+            font-size:11px;
+            font-weight:300;
+            color:rgba(251,199,172,1);
+            line-height:15px;
         }
       }
     }
