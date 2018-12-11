@@ -5,10 +5,11 @@
       <p class="edit-wechat-conter">
         <textarea
           v-model="signature"
-          maxlength="50"
-          placeholder="十年房产置业生涯专业为您服务"
+          maxlength="24"
+          placeholder="别问我是谁,请叫我AW大师"
           class="edit-wechat-input"
           v-on:input="inputListener()"
+           disabled="disabled"
         ></textarea>
         <!-- <input type="text" class="edit-wechat-input" placeholder="十年房产置业生涯专业为您服务">{{signature.length}}/24 -->
       </p>

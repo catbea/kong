@@ -21,7 +21,7 @@
       <cell
         class="cell-item"
         title="手机号"
-        :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.mobile}}"
+        :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}"
         is-link
         :value="userInfo.tempPhone"
       />
@@ -42,7 +42,6 @@
       <cell
         class="cell-item"
         title="平台公司"
-        is-link
         :value="userInfo.organizationName"
         @click="godistributorName"
       />
@@ -62,10 +61,12 @@
           <div class="tag-item" v-for="item in userInfo.labelList" :key="item.labelId">{{item.labelName}}</div>
         </div>
       </cell>
+
+
+      <!-- :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}"  -->
       <cell
         class="cell-item user-signature"
         title="个人介绍"
-        :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}"
         is-link
         :value="userInfo.signature"
       />
@@ -239,7 +240,7 @@ export default {
         display: flex;
         .tag-item {
           height: 20px;
-          line-height: 20px;
+          line-height: 10px;
           display: inline-block;
           font-size: 12px;
           color: #666666;

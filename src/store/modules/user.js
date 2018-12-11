@@ -48,13 +48,14 @@ const state = {
     mobile: '18676652795',
     mpOpenid: '',
     myLinkerGuide: 0,
-    name: '离园则90',
+    name: '嗨我是你的益达吗',
     nameGuide: 0,
     nickName: '离园则',
     parentUserId: '',
     // payCorpId: "ww5e4d879ddc307ea1",
     // cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
+    theFirstTime:0,//新手引导
     payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
     position: '',
     price: 2000,
@@ -127,7 +128,8 @@ const getters = {
     return state.jssdkConfig
   },
   userRegistInfo: state => state.userRegistInfo,
-  buildId: state => state.buildId
+  buildId: state => state.buildId,
+  theFirstTime:state => state.theFirstTime
 }
 
 const actions = {
@@ -184,7 +186,11 @@ const mutations = {
   },
   [types.USER_BUILD_INFO](state, data) {
     state.buildId = data
+  },
+  [types.USER_FIRST_TIME](state, data) {
+    state.theFirstTime = data
   }
+  
 }
 
 export default {

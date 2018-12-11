@@ -1,6 +1,6 @@
 <template>
   <div class="marketDetail-page">
-    <hint-tire v-if="hintShow" @hintClose="hintHandle"></hint-tire>
+    <hint-tire v-if="theFirstTime" @hintClose="hintHandle"></hint-tire>
     <swipe-box
       :bannerList="bannerList"
       :collectionStatus="linkerInfo&&linkerInfo.collectionStatus"
@@ -104,7 +104,10 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo','theFirstTime']),
+    avatarCompute() {
+      return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
+    }
   },
 
   mounted() {
@@ -169,7 +172,7 @@ export default {
       this.$router.push({ name: 'marketDetail-share' })
     },
     hintHandle() {
-      this.hintShow = false
+      this.$store.commit(type.USER_FIRST_TIME,1)
     },
     handleScroll() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -226,11 +229,6 @@ export default {
      */
     async getHouseAroundType(id) {
       const result = await MarketService.getHouseAroundType(id)//获取附近公交等公共场所数据的数组
-    }
-  },
-  computed: {
-    avatarCompute() {
-      return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
     }
   },
   destroyed() {
