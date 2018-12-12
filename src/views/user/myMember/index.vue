@@ -11,10 +11,10 @@
         <li>AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
         <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip === 1" tag="p" to="/user/myMember/selectedDisk">VIP选盘</router-link>
+      <router-link v-show="isVip" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘</router-link>
       </div>
     </div>
-    <set-meal :vipList="vipList" :info="setMealInfo" @priceClick="priceClickHandle"></set-meal>
+    <set-meal :vipList="vipList" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>
     <member-privilege></member-privilege>
     <privilege-describe></privilege-describe>
     <agreement></agreement>
@@ -50,7 +50,6 @@ export default {
     Avatar
   },
   created() {
-    this.unselectedPopup()
     this.getVipInfo()
   },
   data: () => ({
@@ -59,7 +58,7 @@ export default {
     currPriceIndex: 0,
     isPayLoading: false,
     payValue: 0,
-    setMealInfo: {openCount: 0},
+    setMealInfo: {openCount: 0, vipCity: ''},
     vipList: [],
     expireTimestamp: 0,
     backImg: require('IMG/myMember/person_card_bg@2x.png'),
@@ -120,9 +119,12 @@ export default {
     async getVipInfo() {
       let res = await marketService.vipInfo()
       this.vipList = res.vipSettingList
-      this.setMealInfo = {openCount: res.count}
-      this.isVip = parseInt(this.userInfo.isVip)
+      this.setMealInfo = {openCount: res.count, vipCity: res.city}
+      this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
+      if(this.setMealInfo.vipCity){
+        this.unselectedPopup()
+      }
       if(this.vipList.length > 0){
         this.currPriceIndex = 0
         this.priceClickHandle(0)
@@ -131,9 +133,9 @@ export default {
 
     priceClickHandle(index) {
       this.currPriceIndex = index
-      this.payValue = this.vipList[this.currPriceIndex].subscribeAmount - this.userInfo.price
-      if(this.payValue < 0) this.payValue = 0
-      // this.payValue = this.vipList[this.currPriceIndex].subscribeAmount
+      // this.payValue = this.vipList[this.currPriceIndex].subscribeAmount - this.userInfo.price
+      // if(this.payValue < 0) this.payValue = 0
+      this.payValue = this.vipList[this.currPriceIndex].subscribeAmount
     },
 
     unselectedPopup() {
@@ -142,12 +144,16 @@ export default {
         message: this.content,
         cancelButtonText: '其他城市'
       }).then(() => {
-          // on confirm
+        this.updateCity()
       }).catch(() => {
           // on cancel
       })
     },
-    affirmPopup() {}
+
+    async updateCity() {
+      let res = await marketService.updateCityByAgentId(this.setMealInfo.vipCity)
+      this.$toast('vip城市添加成功')
+    }
   }
 }
 </script>

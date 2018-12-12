@@ -58,7 +58,7 @@ export default {
     checkedList: [],
     limitCount: 10,
     searchInfo: {
-      siteText: '全国',
+      siteText: '深圳',
       placeholderText: '请输入楼盘'
     },
     projectSelectIco: require('IMG/myMember/project_select_ico.png'),

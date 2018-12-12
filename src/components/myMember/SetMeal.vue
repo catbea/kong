@@ -1,12 +1,12 @@
 <template>
   <div class="mymember-set-meal-page">
     <div class="mymember-set-meal-page-content">
-      <div class="mymember-set-meal-page-content-top">
-      <p class="forestall-open">{{setMealInfo.openCount}}人已经抢先开通VIP套餐</p>
-      <div class="meal-site">
-        <p>选择城市我我额人发他个</p>
-        <span class="site-icon bg_img" :style="{backgroundImage:'url('+siteImg+')'}"></span>
-      </div>
+      <div class="mymember-set-meal-page-content-top" v-show="!setMealInfo.vipCity">
+        <p class="forestall-open">{{setMealInfo.openCount}}人已经抢先开通VIP套餐</p>
+        <div class="meal-site">
+          <p>选择城市</p>
+          <span class="site-icon bg_img" :style="{backgroundImage:'url('+siteImg+')'}"></span>
+        </div>
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
         <li :class="{active:num==index}" v-for="(item,index) in vipList" :key="index" @click="taget(index)">
