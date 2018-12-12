@@ -87,7 +87,7 @@ export default {
       .hint{
         width:100%;
         height:100%;
-        font-size:14px;
+        font-size:15px;
       position: relative;
       opacity:0.5;
       span{
