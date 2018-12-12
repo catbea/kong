@@ -25,7 +25,7 @@ class WechatApi {
       type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
       success: (res)=> {
         console.log('wx getLocation')
-        this.getLocation()
+        this.getLocation(res.longitude, res.latitude)
       },
       fail: ()=> {
         console.log('wx location fail')
@@ -36,9 +36,9 @@ class WechatApi {
     })
   }
 
-  async getLocation() {
+  async getLocation(log, lat) {
     console.log('getLocation===')
-    const userArea = await commonService.getLocation(res.longitude, res.latitude)
+    const userArea = await commonService.getLocation(log, lat)
     // store.dispatch('setJssdkConfig', ticket)
     console.log(userArea, 'userArea')
   }
