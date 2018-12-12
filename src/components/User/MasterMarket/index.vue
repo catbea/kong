@@ -3,10 +3,14 @@
     <div class="master-market-box">
       <p class="master-recommend">大师推荐</p>
       <div class="vanSWipe-box">
+       <div class="bg_img hint" v-if="!swipeShow" :style="{backgroundImage:'url('+hintImg+')'}">
+        <span>您还没有任何推荐楼盘</span> 
+        </div>
         <van-swipe
           :touchable="true"
           :loop="true"
           :autoplay="3000"
+          v-if="swipeShow"
         >
           <van-swipe-item
             v-for="(item,index) in limitList"
@@ -49,7 +53,9 @@ export default {
   },
   data: () => ({
     masterSave: null,
-    img: require('IMG/user/Combined Shape@2x.png')
+    img: require('IMG/user/Combined Shape@2x.png'),
+    swipeShow:false,
+    hintImg:require('IMG/dev/timg.jpg')
   }),
   methods: {
     async closeHandle(linkerId,index){
@@ -76,6 +82,22 @@ export default {
     width: 343px;
     height: 274px;
     .vanSWipe-box {
+      width: 343px;
+    height: 194px;
+      .hint{
+        width:100%;
+        height:100%;
+        font-size:14px;
+      position: relative;
+      opacity:0.5;
+      span{
+        position:absolute;
+        color:#FFFFFF;
+        top:50%;
+        left:50%;
+        margin-left:-70px;
+      }
+      }
       .dim{
         filter: blur(6px);
       }

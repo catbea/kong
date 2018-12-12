@@ -2,6 +2,7 @@
   <div class="marketDetail-page">
     <hint-tire ></hint-tire>
     <swipe-box
+      :linkerInfo="linkerInfo"
       :bannerList="bannerList"
       :collectionStatus="linkerInfo&&linkerInfo.collectionStatus"
       :ifPanorama="linkerInfo&&linkerInfo.ifPanorama"
@@ -197,6 +198,7 @@ export default {
      */
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
+      console.log(result,'楼盘详情数据')
       this.linkerInfo = result
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
