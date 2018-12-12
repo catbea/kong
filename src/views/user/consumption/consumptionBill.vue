@@ -57,7 +57,7 @@
         </div>
       </van-list>
     </div>
-    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-else></null>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
 </template>
 <script>
@@ -129,12 +129,17 @@ export default {
       const res = await userService.getMyBillList(current)
 
       if (res.records.length > 0) {
-        this.haveData = true
         for (let i = 0; i < res.records.length; i++) {
           let payTime = timeUtils.fmtDate(res.records[i].purchaseTime)
           res.records[i].purchaseTime = payTime
         }
         this.billItem = this.billItem.concat(res.records)
+
+        if (this.billItem.length > 0) {
+          this.haveData = true
+        } else {
+          this.haveData = false
+        }
 
         if (res.pages === 0 || this.page === res.pages) {
           this.finished = true
@@ -142,7 +147,6 @@ export default {
         this.current++
         this.loading = false
       } else {
-        this.haveData = false
         this.loading = false
         this.finished = true
       }
