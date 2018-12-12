@@ -9,8 +9,9 @@
         </div>
         <ul>
           <li>
-           <div style="display:flex;">{{dataArr.linkerName}} 
-             <span class="stick" v-if="dataArr.recommand==10">置顶</span>
+           <div style="display:flex;"> 
+             {{dataArr.linkerName}}
+             <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
              </div>
            <span class="bg_img icon-share" @click.stop="usmarIconReturn" :style="{backgroundImage:'url('+imgShare+')'}"></span>
           </li>
@@ -212,12 +213,12 @@ export default {
         display: flex;
         justify-content: space-between;
         .stick{
-          width:30px;
-          height:13px;
+          width:38px;
+          height:18px;
           border-radius:2px;
           border:1px solid;
-          font-size:10px;
-          // transform:scale(0.84);
+          font-size:12px;
+          transform:scale(0.84);
           font-family:PingFangSC-Regular;
           font-weight:400;
           color:rgba(0,122,230,1);
