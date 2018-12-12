@@ -173,6 +173,7 @@ export default {
     display: flex;
     margin-bottom:16px;
     .close-market-page-box-top-left{
+      border-radius:4px;
       width:120px;
       height:90px;
       margin-right:10px;
