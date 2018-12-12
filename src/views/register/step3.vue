@@ -138,14 +138,14 @@ export default {
   // margin-left: 16px;
   .register-title {
     color: #333333;
-    font-size: 24pt;
+    font-size: 24px;
     // font-weight: 'Semibold';
     text-align: center;
     margin-top: 32px;
   }
   .register-subtitle {
     color: #666666;
-    font-size: 12pt;
+    font-size: 12px;
     // font-weight: 'Regular';
     text-align: center;
   }
@@ -158,7 +158,7 @@ export default {
   .register-desc {
     margin-top: 12px;
     color: #969ea8;
-    font-size: 12pt;
+    font-size: 12px;
     // font-weight: 'Regular';
     text-align: center;
   }
@@ -169,7 +169,7 @@ export default {
       margin: 10px 15px;
       > .phone-tip {
         color: #969ea8;
-        font-size: 12pt;
+        font-size: 12px;
         text-align: left;
         margin-left: 5px;
       }
@@ -200,7 +200,7 @@ export default {
       margin: 26px 15px;
       > .invite-name {
         color: #333333;
-        font-size: 16pt;
+        font-size: 16px;
         font-weight: Semibold;
       }
     }

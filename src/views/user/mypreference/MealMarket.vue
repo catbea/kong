@@ -45,7 +45,7 @@ export default {
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     imgShare: require('IMG/user/rectangle.png'),
     imgPlay: require('IMG/user/Oval@2x.png'),
-    imgCommission: require('IMG/user/collection/Rectangle@2x.png')
+    imgCommission: require('IMG/user/collection/icon_commission@2x.png')
   }),
   props: {
     value: '',

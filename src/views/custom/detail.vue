@@ -112,7 +112,7 @@ export default {
     areaCode: '440305', // 默认显示省市区位置code
     areaTitle: '',
     pickerShow: false,
-    pickerList: null
+    pickerList: null,
   }),
   computed: {
     
@@ -185,6 +185,9 @@ export default {
       this.selectItem = object.item
       this.selectIndex = object.index
       this.areaTitle = object.item.title
+      if (item.title == '来源') {
+        return;
+      }
       if (item.title == '备注名称') {
         let params = {
           clientId: this.clientId,
@@ -201,6 +204,8 @@ export default {
         this.$router.push({ path: '/custom/edit/phone', query: params })
       } else if (item.title == '位置') {
         this.areaShow = !this.areaShow
+      } else if (item.title == '来源') {
+
       } else {
         this.pickerShow = !this.pickerShow
         if (item.title == '性别') {
@@ -324,6 +329,18 @@ export default {
         this.analysisListData = this.analysisListData.concat(result.records)
       } else {
         this.analysisListData = result.records
+      }
+      for (var i in this.analysisListData) {
+        var item = this.analysisListData[i]
+        item.progress = Number(item.intentionality)
+        let color;
+        if (item.progress >= Number(70)) {
+          color = '#007AE6'
+        }else {
+          color = '#cccccc'
+        }
+        item.color = color
+        item.textColor = color
       }
       if (result.pages <= this.current) {
         this.finished = true
