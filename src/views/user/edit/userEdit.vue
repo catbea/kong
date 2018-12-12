@@ -66,7 +66,7 @@
         </div>
       </cell>
       <!-- :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}"  -->
-      <cell class="cell-item user-signature" title="个人介绍" is-link :value="userInfo.signature"/>
+      <cell class="cell-item user-signature" title="个人介绍"  :value="userInfo.signature"/>
     </cell-group>
     <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"></area-select>
   </div>
