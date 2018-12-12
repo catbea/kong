@@ -134,7 +134,6 @@ export default {
           res.records[i].purchaseTime = payTime
         }
         this.billItem = this.billItem.concat(res.records)
-
         if (this.billItem.length > 0) {
           this.haveData = true
         } else {
@@ -147,6 +146,10 @@ export default {
         this.current++
         this.loading = false
       } else {
+        if (current == 1) {
+          this.haveData = false
+        }
+
         this.loading = false
         this.finished = true
       }
