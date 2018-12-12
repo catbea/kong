@@ -11,7 +11,7 @@
           class="edit-phone-input"
           placeholder=""
           disabled="disabled"
-          :value="userInfo.mobile"
+          :value="userInfo.registerMobile"
         >
       </p>
       <p class="edit-phone-card">名片展示手机号</p>
