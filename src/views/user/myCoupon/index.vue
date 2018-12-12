@@ -1,14 +1,14 @@
 <template>
   <div class="user-myCoupon-page">
     
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated @click="onClick">
-          <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num">
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+          <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num" class="list-wrap">
             <keep-alive>
-              <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
-                <!-- <div class="coupon-content"> -->
-                <coupon-item v-for="(itemA,indexA) in item.list" :key="indexA" :info="itemA"></coupon-item>
-                <!-- </div> -->
-                 </van-list>
+                <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
+                  <!-- <div class="coupon-content"> -->
+                  <coupon-item v-for="(itemA,indexA) in item.list" :key="indexA" :info="itemA"></coupon-item>
+                  <!-- </div> -->
+                </van-list>
             </keep-alive>
           </van-tab>
       </van-tabs>
@@ -19,6 +19,7 @@
 <script>
 import mycoupons from 'SERVICE/mycoupons'
 import CouponItem from 'COMP/User/myCoupon/CouponItem.vue'
+import {mapState} from 'vuex'
 export default {
   components: {
     CouponItem
@@ -45,8 +46,13 @@ export default {
     arrInfo: [],
     availableImg: require('IMG/user/Groupa@2x.png')
   }),
-  computed: {},
+  computed:{...mapState({
+      isVip:state=>state.user.userInfo.isVip
+    })
+  }
+  ,
   created() {
+    console.log(this.isVip,2222222)
     const _this = this
     this.notUse().then(res => {
       _this.nameList[0].num = res.total
@@ -62,14 +68,12 @@ export default {
     })
   },
   methods: {
-    onClick(){//重置滚动条
-    window.scrollTop=0
-    },
     async onLoad() {// 初始tab请求数据事件
+    console.log(this.activeIndex,"activeIndex")
       let current = this.getCurrentType()
       const result = await mycoupons.couponsStatusList(current.index, current.page)
       console.log(result.records,'目前显示的数据')
-      current.list = current.list.concat(result.records)
+      this.nameList[current.index].list = current.list.concat(result.records)
       // this.$nextTick(() => {
         if (result.pages === 0 || current.page === result.pages) {
           current.finished = true
@@ -124,6 +128,11 @@ export default {
 
 <style lang="less">
 .user-myCoupon-page {
+  .list-wrap{
+    width:100%;
+    height: 623px;
+    overflow: auto;
+  }
   .user-myCoupon-page-top {
     position: fixed;
     top: 0;

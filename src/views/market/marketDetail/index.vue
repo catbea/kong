@@ -186,6 +186,7 @@ export default {
       this.$router.push({ path: '/marketDetail/info', query: this.linkerInfo })
     },
     skipMarketDetail(val) {
+      this.linkerId=val
       this.$router.push({ name: 'marketDetail', params: { id:val} })
     },
     marketOpenHandle() {
@@ -226,6 +227,12 @@ export default {
      */
     async getHouseAroundType(id) {
       const result = await MarketService.getHouseAroundType(id)//获取附近公交等公共场所数据的数组
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      // 对路由变化作出响应...
+      this.getLinkerDetail(this.linkerId)
     }
   },
   destroyed() {
