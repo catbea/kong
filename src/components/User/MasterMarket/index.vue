@@ -11,13 +11,12 @@
           <van-swipe-item
             v-for="(item,index) in limitList"
             :key="index"
-            v-show="item.masterRecommand!=0"
           >
             <div class="master-box">
               <p
                 class="bg_img icon-cancel"
                 :style="{backgroundImage:'url('+img+')'}"
-                @click.stop="closeHandle(item.linkerId)"
+                @click.stop="closeHandle(item.linkerId,index)"
               ></p>
               <div
                 :class="{dim:item.masterRecommand==1}"
@@ -53,10 +52,9 @@ export default {
     img: require('IMG/user/Combined Shape@2x.png')
   }),
   methods: {
-    async closeHandle(linkerId){
-      console.log('改为未推荐');
-      
+    async closeHandle(linkerId,index){
      await userService.changeMarketData(linkerId,20,0)
+     this.swipeList.splice(index,1)
     },
   },
   computed:{

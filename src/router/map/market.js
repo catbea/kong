@@ -11,6 +11,14 @@ export default [
     }
   },
   {
+    path: '/market/search',
+    name: 'market-search',
+    component: resolve => require(['@/views/market/search.vue'], resolve),
+    meta: {
+      title: '楼盘搜索'
+    }
+  },
+  {
     path: '/market/marketDetail/:id',
     name: 'marketDetail',
     component: resolve => require(['@/views/market/marketDetail/index.vue'], resolve),

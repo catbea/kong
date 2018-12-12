@@ -122,12 +122,12 @@ export default {
     closeHandle () {
       this.show = !this.show
     },
-    masterHandle(){
+    masterHandle(n){
       // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
       this.show = !this.show
     },
-    commonHandle(){
+    commonHandle(n){
       // this.$emit('returncommonHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,2)//改为普通推荐
       this.show = !this.show
