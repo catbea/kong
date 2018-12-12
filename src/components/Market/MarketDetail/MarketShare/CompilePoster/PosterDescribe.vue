@@ -46,10 +46,9 @@ export default {
       }
       > div:nth-child(2) {
         width: 235px;
-        font-size: 16px;
-        font-family: PingFang-SC-Regular;
+        font-size: 14px;
         font-weight: 600;
-        color: rgba(51, 51, 51, 1);
+        color: #666666;
       }
     }
   }

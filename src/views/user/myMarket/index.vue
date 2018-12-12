@@ -93,6 +93,7 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
+    
   },
   methods: {
     async getChangeMarketData(){

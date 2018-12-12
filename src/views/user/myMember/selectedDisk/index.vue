@@ -1,7 +1,7 @@
 <template>
   <div class="my-member-page">
-    <div style="margin-left:16px;margin-top:7px">
-    <van-search :obj="searchInfo"></van-search>
+    <div class="search-box">
+      <search :conf="searchInfo"></search>
     </div>
     <div>
       <screen></screen>
@@ -40,17 +40,24 @@
 <script>
 import { Dialog } from 'vant'
 import marketService from 'SERVICE/marketService'
-import VanSearch from 'COMP/VanSearch/'
+import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'
 import MealMarket from './MealMarket.vue'
+import { mapGetters } from 'vuex'
 export default {
   components: {
-    VanSearch,
+    Search,
     Screen,
     MealMarket
   },
   created() {
     this.type = this.$route.query.type
+    if(this.type == 'vip') {
+      this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
+    }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   data: () => ({
     type: 'vip',
@@ -58,7 +65,7 @@ export default {
     checkedList: [],
     limitCount: 10,
     searchInfo: {
-      siteText: '全国',
+      siteText: '',
       placeholderText: '请输入楼盘'
     },
     projectSelectIco: require('IMG/myMember/project_select_ico.png'),
@@ -188,6 +195,9 @@ export default {
 </script>
 <style lang="less">
 .my-member-page {
+  .search-box{
+    padding: 8px;
+  }
   .market-box {
     padding-bottom: 80px;
     .meal-market-page {
