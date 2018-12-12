@@ -120,7 +120,6 @@ export default {
     linkerId: null,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     show: false,
-<<<<<<< HEAD
     stickShow:true,
     stickSwitch:null,
     exhibitionMarketShow:true,
@@ -128,15 +127,6 @@ export default {
     imgPlay:require('IMG/user/Oval@2x.png'),
     imgCommission:require('IMG/user/collection/icon_commission@2x.png'),
     status:["热销中","即将发售","售罄"]
-=======
-    stickShow: true,
-    stickSwitch: null,
-    exhibitionMarketShow: true,
-    imgShare: require('IMG/user/rectangle.png'),
-    imgPlay: require('IMG/user/Oval@2x.png'),
-    imgCommission: require('IMG/user/collection/Rectangle@2x.png'),
-    status: ["热销中", "即将发售", "售罄"]
->>>>>>> 694137e3578779a86373dc40d4877f8cfd0f6798
   }),
   props: {
     dataArr: {
