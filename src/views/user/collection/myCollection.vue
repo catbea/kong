@@ -30,7 +30,7 @@
                 >{{item.city}} {{item.county}} &nbsp; {{item.price}}{{item.priceUnit}}</p>
                 <p class="list-right-label">
                   <!-- 销售状态（楼盘）: 0热销中、1即将发售、3售罄 -->
-                  <span class="right-label right-label-red">{{saleStatus[item.saleStatus]}}</span>
+                  <span class="right-label right-label-red" v-show="item.saleStatus !='' ">{{saleStatus[item.saleStatus]}}</span>
                   <button
                     class="right-label right-label-gray"
                     v-for="(its,key) in item.linkerTags"
@@ -142,6 +142,7 @@ export default {
     async getcollectionList() {
       const res = await userService.getqueryInfoList()
       this.collectionList = res.list.records
+      this.articleEmpty = res.listEmpty
     },
     //收藏樓盤
     async godynamics(item, index) {
