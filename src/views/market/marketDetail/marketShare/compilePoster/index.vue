@@ -1,7 +1,7 @@
 <template>
   <div v-show="status === 1">
     <div class="compile-poster-page">
-      <swipe-poster :model="buildingInfo" id="share-top"  :modelBgImg='changeBgImg'></swipe-poster>
+      <swipe-poster :model="buildingInfo" id="share-top" :modelBgImg="changeBgImg"></swipe-poster>
       <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
       <poster-describe :model="buildingInfo"></poster-describe>
       <div class="compile-tagline">
@@ -12,7 +12,7 @@
       </div>
       <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
       <div class="compile-button">
-        <p>重置海报</p>
+        <p @click="setReport">重置海报</p>
         <p @click="savaReport">生成海报</p>
       </div>
     </div>
@@ -41,7 +41,7 @@ export default {
     buildingInfo: {},
     bannerList: [],
     status: 1,
-    changeBgImg:''
+    changeBgImg: ''
     // topList:[
     //   {
     //    top:[
@@ -67,7 +67,7 @@ export default {
   }),
   methods: {
     changeBg(val) {
-       this.changeBgImg=val;
+      this.changeBgImg = val
     },
 
     async getPosterInfo(buildId) {
@@ -97,6 +97,10 @@ export default {
       canvas.style.width = '100%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
+    },
+
+    setReport() {
+      this.changeBgImg = ''
     }
   },
 
