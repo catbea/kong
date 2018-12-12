@@ -1,6 +1,6 @@
 <template>
   <div class="marketDetail-page">
-    <hint-tire v-if="theFirstTime" @hintClose="hintHandle"></hint-tire>
+    <hint-tire ></hint-tire>
     <swipe-box
       :bannerList="bannerList"
       :collectionStatus="linkerInfo&&linkerInfo.collectionStatus"
@@ -104,7 +104,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userInfo','theFirstTime']),
+    ...mapGetters(['userInfo']),
     avatarCompute() {
       return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
     }
@@ -171,9 +171,6 @@ export default {
     shareBuildingPage() {
       this.$router.push({ name: 'marketDetail-share' })
     },
-    hintHandle() {
-      this.$store.commit(type.USER_FIRST_TIME,1)
-    },
     handleScroll() {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       if (scrollTop >= 200) {
@@ -189,6 +186,7 @@ export default {
       this.$router.push({ path: '/marketDetail/info', query: this.linkerInfo })
     },
     skipMarketDetail(val) {
+      this.linkerId=val
       this.$router.push({ name: 'marketDetail', params: { id:val} })
     },
     marketOpenHandle() {
@@ -229,6 +227,12 @@ export default {
      */
     async getHouseAroundType(id) {
       const result = await MarketService.getHouseAroundType(id)//获取附近公交等公共场所数据的数组
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      // 对路由变化作出响应...
+      this.getLinkerDetail(this.linkerId)
     }
   },
   destroyed() {

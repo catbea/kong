@@ -1,5 +1,5 @@
 <template>
-  <div class="hint-tire-page">
+  <div class="hint-tire-page" v-if="flag">
     <div class="enjoy">
       <span class="icon-enjoy bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></span>
       <p>分享</p>
@@ -17,13 +17,33 @@
   </div>
 </template>
 <script>
+import * as types from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
+  created() {
+    console.log(this.$store.getters.theFirstTime,"新手引导")
+    if(!localStorage.first){
+      this.flag= this.$store.getters.theFirstTime
+    let newObj = JSON.stringify(this.$store.getters.theFirstTime)
+    localStorage.setItem("first",newObj)
+    let oldObj = localStorage.getItem("first")
+         this.flag = JSON.parse(oldObj)
+    }
+  },
   data: () => ({
-    enjoyImg: require('IMG/marketDetail/enjoy@2x.png')
+    enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
+    flag:null
   }),
+  computed:{
+    ...mapGetters(['theFirstTime']),
+  },
   methods: {
     knowHandle() {
-      this.$emit('hintClose')
+      this.$store.commit(types.USER_FIRST_TIME,false)
+      console.log(this.$store.getters.theFirstTime,'已改')
+      localStorage.first=false
+     let oldObj = localStorage.getItem("first")
+        this.flag = JSON.parse(oldObj)
     }
   }
 }

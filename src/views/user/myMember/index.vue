@@ -3,6 +3,7 @@
     <div class="bg_img background" :style="{backgroundImage:'url('+backImg+')'}">
       <div class="background-content">
       <div class="headImg" :style="borderStyle">
+        <avatar class="avatar" :avatar="userInfo.avatarUrl"></avatar>
         <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag?headImgB:headImgA)+')'}"></span>
       </div>
       <ul class="head-describe">
@@ -39,12 +40,14 @@ import PrivilegeDescribe from 'COMP/myMember/PrivilegeDescribe.vue'
 import Agreement from 'COMP/myMember/Agreement.vue'
 import marketService from 'SERVICE/marketService'
 import { mapGetters } from 'vuex'
+import Avatar from 'COMP/Avatar'
 export default {
   components: {
     SetMeal,
     MemberPrivilege,
     PrivilegeDescribe,
-    Agreement
+    Agreement,
+    Avatar
   },
   created() {
     this.unselectedPopup()
@@ -208,6 +211,10 @@ export default {
           position: absolute;
           top: -1px;
           right: 0;
+        }
+        .avatar{
+          width: 60px;
+          height: 58px;
         }
       }
       .head-describe {

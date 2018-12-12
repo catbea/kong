@@ -50,7 +50,7 @@
                     @click="godynamics(item,key)"
                     id="rightno"
                     v-bind:style="{'color':item.status==1?'#AFB2C3':'#007AE6'}"
-                  >{{item.isCollection}}</button>
+                  >{{item.status == 1 ? '取消收藏':'收藏'}}</button>
                   <!-- <button
                     class="right-price-lab"
                     
@@ -131,13 +131,13 @@ export default {
       this.dynamicsList = res.list.records
       this.listEmpty = res.listEmpty
       //status (integer, optional): 收藏状态：0-未收藏；1-已收藏 ,
-      for (let i = 0; i < res.list.records.length; i++) {
-        if (res.list.records[i].status == 0) {
-          this.dynamicsList[i].isCollection = '收藏'
-        } else {
-          this.dynamicsList[i].isCollection = '取消收藏'
-        }
-      }
+      // for (let i = 0; i < res.list.records.length; i++) {
+      //   if (res.list.records[i].status == 0) {
+      //     this.dynamicsList[i].isCollection = '收藏'
+      //   } else {
+      //     this.dynamicsList[i].isCollection = '取消收藏'
+      //   }
+      // }
     },
     async getcollectionList() {
       const res = await userService.getqueryInfoList()

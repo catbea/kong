@@ -13,7 +13,7 @@
       </div>
       <div class="awWelfare-center" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
         <!-- v-if="invitationImg" -->
-        <div id="qrcode" ref="qrcode"></div>
+        <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
           <div class="awWelfare-info">
             <div class="awWelfare-info-left">
               <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import {QRCode} from 'qrcodejs2'
-import { Popup } from 'vant';
+import QRCode from 'qrcodejs2'
+import { Popup } from 'vant'
 import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 export default {
@@ -88,7 +88,7 @@ export default {
     userInfo(v) {}
   },
   mounted() {
-     this.goyInvitationUrlCode(this.invitationUrl)
+     this.getqueryInvitationUrl()
     this.getrules()
    
   },
@@ -109,19 +109,20 @@ export default {
     async getqueryInvitationUrl(){
     const res = await userService.getqueryInvitationUrl()
     this.invitationUrl = res.invitationUrl
+    this.goyInvitationUrlCode(this.invitationUrl)
     },
      async goyInvitationUrlCode (url) {
-      debugger
-        let qrcode = new QRCode('qrcode', {
-            width: 150, //图像宽度
-            height: 150, //图像高度
-            colorDark : "#000000", //前景色
-            colorLight : "#ffffff", //背景色
-            typeNumber:4, 
-            correctLevel : QRCode.CorrectLevel.H //容错级别 容错级别有：（1）QRCode.CorrectLevel.L （2）QRCode.CorrectLevel.M （3）QRCode.CorrectLevel.Q （4）QRCode.CorrectLevel.H
-        })
-        qrcode.clear() //清除二维码 
-        qrcode.makeCode(url) //生成另一个新的二维码
+        let qrcode = new QRCode('qrcode', {  
+         width: 100,  
+         height: 100, // 高度  
+         text: this.invitationUrl, // 二维码内容
+         image: '',
+         render: 'table'
+         // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）  
+         // background: '#f0f'  
+         // foreground: '#ff0'  
+     })  
+       console.log(qrcode) 
     }
   }
 }
@@ -145,14 +146,10 @@ export default {
 .radius-border {
   position: relative;
 }
-// .radius-border:before{
-//   .setBottomLine(#E6E6E6);
-// }
+
 .awWelfare-bg {
   width: 100%;
-  /*height: auto;*/
   background-size: 100% 100%;
-  /*min-height: 12.24rem;*/
   height: 100%;
   position: absolute;
   .awWelfare-botton {
@@ -178,8 +175,15 @@ export default {
     margin: 0 auto;
     background-size: 284px 466px;
         position: relative;
+        .qrcode{
+          width:80px;
+          height:80px;
+          position: absolute;
+          bottom: 31%;
+          left: 35%;
+        }
     .awWelfare-info{
-      padding: 34px 62px;
+      padding: 34px 50px 34px 62px;
       position: absolute;
       bottom: 34px;
       display: flex;
@@ -206,10 +210,7 @@ export default {
         }
       }
     }
-    // img {
-    //   width: 284px;
-    //   height: 466px;
-    // }
+   
   }
   .awWelfare-text {
     text-align: center;
@@ -221,7 +222,6 @@ export default {
 }
 //弹出层
 .register-rule-box {
-  // background:url("../../../assets/images/aw-box-bg@2x.png");
   width: 280px;
   height: 387px;
   background-size: 280px 387px;
@@ -235,7 +235,6 @@ export default {
   }
   .register-rule-box-content {
     overflow: scroll;
-    // height: 7rem;
   }
   .register-rule-box-title {
     font-size:16px;

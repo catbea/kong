@@ -58,18 +58,15 @@
     <cell-group class="user-advance-info">
       <cell class="cell-item tag-edit" title="标签展示" is-link :to="'/user/edit/userLabel'">
         <div slot="extra" class="tag-show-container">
-          <div class="tag-item" v-for="item in userInfo.labelList" :key="item.labelId">{{item.labelName}}</div>
+          <div
+            class="tag-item"
+            v-for="item in userInfo.labelList"
+            :key="item.labelId"
+          >{{item.labelName}}</div>
         </div>
       </cell>
-
-
       <!-- :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}"  -->
-      <cell
-        class="cell-item user-signature"
-        title="个人介绍"
-        is-link
-        :value="userInfo.signature"
-      />
+      <cell class="cell-item user-signature" title="个人介绍"  :value="userInfo.signature"/>
     </cell-group>
     <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"></area-select>
   </div>
@@ -265,6 +262,11 @@ export default {
           overflow: auto;
           font-size: 14px;
           text-align: left;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
         }
       }
     }

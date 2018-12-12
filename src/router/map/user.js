@@ -209,7 +209,7 @@ export default [
     name: 'selected-disk',
     component: resolve => require(['@/views/user/myMember/selectedDisk/index.vue'], resolve),
     meta: {
-      title: 'vip选盘',
+      title: '添加楼盘',
       tabbar: {
         show: false
       }

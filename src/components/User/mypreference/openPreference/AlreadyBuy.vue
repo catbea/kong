@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="already-buy-page-right" @click="selectProjectHandle">
-      待选楼盘 ({{packageItem.projectSelected}}/{{packageItem.projectCount}})
+      {{packageItem.projectSelected==packageItem.projectCount ? '无待选楼盘' : '待选楼盘（'+packageItem.projectSelected+'/'+packageItem.projectCount+'）' }}
       <span
         class="icon-detail bg_img"
         :style="{backgroundImage:'url('+detailImg+')'}"

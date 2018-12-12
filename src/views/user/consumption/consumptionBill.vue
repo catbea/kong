@@ -1,62 +1,62 @@
 <template>
   <div>
-    <van-list
-      class="bill-page"
-      :style="{background:show==null?'#ffffff':'#F7F9FA'}"
-      v-model="loading"
-      :finished="finished"
-      :finished-text="'没有更多了'"
-      :offset="100"
-      @load="onLoad"
-      v-if="billItem.length>0"
-    >
-      <!-- <Tips></Tips>#F7F9FA; -->
-      <!-- v-for="(item, index) in billItem" :key="index" -->
-      <div class="bill-container" v-for="(item,index) in billItem" :key="index">
-        <shadow-box>
-          <div slot="container" class="bill-container-css">
-            <div class="bill-title">
-              {{item.costTypeDesc}}
-              <span class="bill-title-price">
-                ¥
-                <span class="bill-title-num">{{item.payPrice}}</span>
-              </span>
+    <div v-if="haveData">
+      <van-list
+        class="bill-page"
+        :style="{background:show==null?'#ffffff':'#F7F9FA'}"
+        v-model="loading"
+        :finished="finished"
+        :finished-text="'没有更多了'"
+        @load="onLoad"
+      >
+        <!-- <Tips></Tips>#F7F9FA; -->
+        <!-- v-for="(item, index) in billItem" :key="index" -->
+        <div class="bill-container" v-for="(item,index) in billItem" :key="index">
+          <shadow-box>
+            <div slot="container" class="bill-container-css">
+              <div class="bill-title">
+                {{item.costTypeDesc}}
+                <span class="bill-title-price">
+                  ¥
+                  <span class="bill-title-num">{{item.payPrice}}</span>
+                </span>
+              </div>
+              <p class="container-list bill-container-name">
+                购买楼盘
+                <span class="container-list-title container-name">{{item.linkerName}}</span>
+              </p>
+              <p class="container-list bill-container-spec">
+                购买规格
+                <span class="container-list-title container-spec">{{item.buyRule}}</span>
+              </p>
+              <p class="container-list bill-container-time">
+                下单时间
+                <span class="container-list-title container-time">{{item.purchaseTime}}</span>
+              </p>
+              <p class="container-list bill-container-num">
+                <span class="container-list">
+                  交易单号
+                  <span class="container-list-title">{{item.purchaseCode}}</span>
+                </span>
+                <Button
+                  class="container-list-botton"
+                  :data-clipboard-text="item.purchaseCode"
+                  @click="copy"
+                >复制</Button>
+              </p>
+              <p class="container-list container-list-left bill-container-price">
+                总价
+                <span class="container-list-title container-price">¥{{item.purchasePrice}}</span>
+              </p>
+              <p class="container-list container-list-left bill-container-discount">
+                优惠
+                <span class="container-list-title container-discount">¥{{item.preferenPrice}}</span>
+              </p>
             </div>
-            <p class="container-list bill-container-name">
-              购买楼盘
-              <span class="container-list-title container-name">{{item.linkerName}}</span>
-            </p>
-            <p class="container-list bill-container-spec">
-              购买规格
-              <span class="container-list-title container-spec">{{item.buyRule}}</span>
-            </p>
-            <p class="container-list bill-container-time">
-              下单时间
-              <span class="container-list-title container-time">{{item.purchaseTime}}</span>
-            </p>
-            <p class="container-list bill-container-num">
-              <span class="container-list">
-                交易单号
-                <span class="container-list-title">{{item.purchaseCode}}</span>
-              </span>
-              <Button
-                class="container-list-botton"
-                :data-clipboard-text="item.purchaseCode"
-                @click="copy"
-              >复制</Button>
-            </p>
-            <p class="container-list container-list-left bill-container-price">
-              总价
-              <span class="container-list-title container-price">¥{{item.purchasePrice}}</span>
-            </p>
-            <p class="container-list container-list-left bill-container-discount">
-              优惠
-              <span class="container-list-title container-discount">¥{{item.preferenPrice }}</span>
-            </p>
-          </div>
-        </shadow-box>
-      </div>
-    </van-list>
+          </shadow-box>
+        </div>
+      </van-list>
+    </div>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-else></null>
   </div>
 </template>
@@ -80,13 +80,12 @@ export default {
       nullcontent: '暂还没有消费记录',
       loading: false,
       finished: false,
-      current: 1
+      current: 1,
+      haveData: true
     }
   },
 
-  created() {
-    // this.getBillList(this.current)
-  },
+  created() {},
 
   methods: {
     itemProperties() {
@@ -110,6 +109,7 @@ export default {
     copy() {
       var clipboard = new Clipboard('.container-list-botton')
       clipboard.on('success', e => {
+        this.$toast('复制成功')
         // 释放内存
         clipboard.destroy()
       })
@@ -121,30 +121,29 @@ export default {
       })
     },
 
-    async getBillList(current) {
-      const res = await userService.getMyBillList(current)
-      this.billItem = res.records
-      this.current = res.current + 1
+    onLoad() {
+      this.queryBillList(this.current)
     },
 
-    async onLoad() {
-      let tempCurrent = this.current
-      const res = await userService.getMyBillList(tempCurrent)
-      let tempBillItem = res.records
-      if (tempBillItem.length !== 0) {
-        for (let i = 0; i < tempBillItem.length; i++) {
-          let payTime = timeUtils.fmtDate(tempBillItem[i].purchaseTime)
-          tempBillItem[i].purchaseTime = payTime
-        }
+    async queryBillList(current) {
+      const res = await userService.getMyBillList(current)
 
-        this.billItem = this.billItem.concat(tempBillItem)
-        this.current = tempCurrent + 1
+      if (res.records.length > 0) {
+        this.haveData = true
+        for (let i = 0; i < res.records.length; i++) {
+          let payTime = timeUtils.fmtDate(res.records[i].purchaseTime)
+          res.records[i].purchaseTime = payTime
+        }
+        this.billItem = this.billItem.concat(res.records)
+
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.current++
         this.loading = false
       } else {
-        this.finished = true
-      }
-
-      if (res.pages == 0 || this.current > res.pages) {
+        this.haveData = false
+        this.loading = false
         this.finished = true
       }
     }

@@ -9,9 +9,9 @@
         <input
           type="text"
           class="edit-phone-input"
-          placeholder="Bela"
+          placeholder=""
           disabled="disabled"
-          :value="mobile"
+          :value="userInfo.mobile"
         >
       </p>
       <p class="edit-phone-card">名片展示手机号</p>
@@ -35,14 +35,13 @@ export default {
   data() {
     return {
       Cphone: '',
-      mobile:''
+      mobile: ''
     }
   },
 
   created() {
     let mobileNum = this.$route.query.phoneNum
     this.Cphone = mobileNum
-    this.mobile=this.userInfo.mobile
   },
 
   computed: {
@@ -52,20 +51,14 @@ export default {
   methods: {
     godSub() {
       if (this.Cphone == '') {
-        Dialog.alert({
-          message: '名片展示手机号不可为空'
-        }).then(() => {
-          // on close
-        })
+        this.$toast('名片展示手机号不可为空')
       } else {
         let phoneType = strFormat.fmtNum(this.Cphone)
         if (phoneType == null) {
           this.Cphone = ''
-          Dialog.alert({
-            message: '请输入数字'
-          }).then(() => {
-            // on close
-          })
+          this.$toast('请输入数字')
+        } else if (this.Cphone.length != 11) {
+          this.$toast('手机号长度有误')
         } else {
           let date = {
             tempPhone: this.Cphone

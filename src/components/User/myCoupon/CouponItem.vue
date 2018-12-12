@@ -5,31 +5,31 @@
         <div class="olItem-content">
           <div class="cover-left"></div>
         <div class="coupon-item-page-left">
-         <div :class="{textColorA:info.status==0,textColorB:info.status==1,margin:true}">¥<h3>
-           {{info.satisfyLimit | numberFormatter}}
+         <div :class="{textColorA:status!=0,textColorB:status!=0,margin:true}">¥<h3>
+           {{info.discountsLimit | numberFormatter}}
            </h3></div>
           <p>
-            {{info.title}}
+           满{{info.satisfyLimit | numberFormatter}}元可用
             </p> 
         </div>
         <ul class="coupon-item-page-center">
           <li>
-            {{ticketType}}
+            {{info.couponsName}}
             </li>
           <li>
             {{info.couponsStart}}-{{info.couponsEnd}}
             </li>
-          <li>详细信息 <span class="bg_img" :style="{backgroundImage:'url('+detailImg+')'}"></span></li>
+          <li @click="unfoldMore">详细信息 <span class="bg_img" :style="{backgroundImage:'url('+(unfoldShow?downImg:upImg)+')'}"></span></li>
         </ul>
         <div class="coupon-item-page-right">
-         <p v-if="info.canUse" class="mayUse" @click="useHandle">立即使用</p>
-          <span v-if="info.status==1" class="yetUse bg_img" :style="{backgroundImage:'url('+yetUseImg+')'}"></span>
-          <span v-if="!info.status==2" class="yetPast bg_img" :style="{backgroundImage:'url('+yetPastImg+')'}"></span>
+         <p v-if="info.canUse" class="mayUse" @click="useHandle(info.couponsId)">立即使用</p>
+          <span v-if="status==1" class="yetUse bg_img" :style="{backgroundImage:'url('+yetUseImg+')'}"></span>
+          <span v-if="status==2" class="yetPast bg_img" :style="{backgroundImage:'url('+yetPastImg+')'}"></span>
           </div>
           <div class="cover-right"></div>
         </div>
-        <div class="coupon-item-page-bottom">
-          {{info.couponsContent}}
+        <div class="coupon-item-page-bottom" v-show="unfoldShow">
+          {{info.useRule}}
           </div>
       </li>
     </ol>
@@ -38,18 +38,24 @@
 <script>
 export default {
   data: () => ({
-    detailImg: require('IMG/user/Rectangle 38 Copy@2x.png'),
+    downImg: require('IMG/user/Rectangle 38 Copy@2x.png'),
+    upImg:require('IMG/user/uptop@2x.png'),
     yetUseImg: require('IMG/user/Shape@2x.png'),
-    yetPastImg: require('IMG/user/guoq@2x.png')
+    yetPastImg: require('IMG/user/guoq@2x.png'),
+    unfoldShow:false
   }),
   props: {
     info: {
       type: Object
-    }
+    },
+    status:{type:Number}
   },
   methods: {
-    useHandle() {
-      this.$emit('skipHandle', 1)
+    useHandle(n) {
+      this.$emit('skipHandle',n)
+    },
+    unfoldMore(){
+      this.unfoldShow=!this.unfoldShow
     }
   },
   computed: {

@@ -4,7 +4,7 @@
         <span class="label">不使用优惠券</span>
         <span class="icon-check bg_img" @click="unUseCoupanhandle" :style="{backgroundImage:'url('+unCheckImg+')'}"></span>
     </div>
-    <coupon-item v-for="(item,index) in couponList" @skipHandle="couponItemClickHandle(item)" :key="index" :info="item"></coupon-item>
+    <coupon-item v-for="(item,index) in couponList" :status='status' @skipHandle="couponItemClickHandle(item)" :key="index" :info="item"></coupon-item>
   </div>
 </template>
 <script>
@@ -20,6 +20,7 @@ export default {
   },
   data: () => ({
     couponList: [],
+    status:0,
     unCheckImg: require('IMG/user/mealMarket/check@2x.png'),
     checkEndImg: require('IMG/user/mealMarket/checkColor@2x.png')
   }),
