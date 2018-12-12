@@ -36,7 +36,7 @@ class WechatApi {
     })
   }
 
-  async getLocation() {
+  async getLocation(log, lat) {
     console.log('getLocation===')
     const userArea = await commonService.getLocation(log, lat)
     // store.dispatch('setJssdkConfig', ticket)
