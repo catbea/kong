@@ -6,9 +6,8 @@
       v-model="loading"
       :finished="finished"
       :finished-text="'没有更多了'"
-      :offset="100"
       @load="onLoad"
-      v-if="billItem.length>0"
+      v-if="billItem"
     >
       <!-- <Tips></Tips>#F7F9FA; -->
       <!-- v-for="(item, index) in billItem" :key="index" -->
@@ -51,7 +50,7 @@
             </p>
             <p class="container-list container-list-left bill-container-discount">
               优惠
-              <span class="container-list-title container-discount">¥{{item.preferenPrice }}</span>
+              <span class="container-list-title container-discount">¥{{item.preferenPrice}}</span>
             </p>
           </div>
         </shadow-box>
@@ -84,9 +83,7 @@ export default {
     }
   },
 
-  created() {
-    // this.getBillList(this.current)
-  },
+  created() {},
 
   methods: {
     itemProperties() {
@@ -110,6 +107,8 @@ export default {
     copy() {
       var clipboard = new Clipboard('.container-list-botton')
       clipboard.on('success', e => {
+
+        this.$toast('复制成功')
         // 释放内存
         clipboard.destroy()
       })
@@ -121,30 +120,26 @@ export default {
       })
     },
 
-    async getBillList(current) {
-      const res = await userService.getMyBillList(current)
-      this.billItem = res.records
-      this.current = res.current + 1
+    onLoad() {
+      this.queryBillList(this.current)
     },
 
-    async onLoad() {
-      let tempCurrent = this.current
-      const res = await userService.getMyBillList(tempCurrent)
-      let tempBillItem = res.records
-      if (tempBillItem.length !== 0) {
-        for (let i = 0; i < tempBillItem.length; i++) {
-          let payTime = timeUtils.fmtDate(tempBillItem[i].purchaseTime)
-          tempBillItem[i].purchaseTime = payTime
-        }
+    async queryBillList(current) {
+      const res = await userService.getMyBillList(current)
 
-        this.billItem = this.billItem.concat(tempBillItem)
-        this.current = tempCurrent + 1
+      if (res.records.length > 0) {
+        for (let i = 0; i < res.records.length; i++) {
+          let payTime = timeUtils.fmtDate(res.records[i].purchaseTime)
+           res.records[i].purchaseTime = payTime
+        }
+        this.billItem = this.billItem.concat(res.records)
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.current++
         this.loading = false
       } else {
-        this.finished = true
-      }
-
-      if (res.pages == 0 || this.current > res.pages) {
+        this.loading = false
         this.finished = true
       }
     }
