@@ -122,7 +122,7 @@ export default {
       this.setMealInfo = {openCount: res.count, vipCity: res.city}
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
-      if(this.setMealInfo.vipCity){
+      if(!this.setMealInfo.vipCity){
         this.unselectedPopup()
       }
       if(this.vipList.length > 0){
