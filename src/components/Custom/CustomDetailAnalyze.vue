@@ -44,7 +44,8 @@
       </div>
     </div>
     <div class="list">
-      <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item">
+      <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item"
+        :progress="analysisListData.progress" :color="analysisListData.color" :textColor="analysisListData.textColor">
       </analyze-item>
     </div>
   </div>
@@ -67,10 +68,12 @@ export default {
     barData: { type: Array },
     analysisListData: { type: Array },
     attentionFlag: { type: Boolean, default: false },
-    clientMobile: { type: String, default: '' }
+    clientMobile: { type: String, default: '' },
   },
 
-  created() {},
+  created() {
+    
+  },
   data: () => ({}),
   methods: {
     attentionHandler() {

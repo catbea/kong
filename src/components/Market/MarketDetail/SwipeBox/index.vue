@@ -7,7 +7,7 @@
           </div>
         </van-swipe-item>
       </van-swipe>
-      <span class="bg_img market-img-page-play" :style="{'backgroundImage':'url('+imgPlay+')'}" v-if="ifPanorama"></span>
+      <span class="bg_img market-img-page-play" :style="{'backgroundImage':'url('+imgPlay+')'}" v-if="ifPanorama" @click.stop="lookPanorama"></span>
       <div class="market-img-page-panorama">720全景</div>
       <div class="market-img-page-photo" @click.stop="photo" v-show="photoButton">图片</div>
       <div class="num">
@@ -15,12 +15,10 @@
       </div>
       <div class="collect-box" @click.stop="collect">
         <!-- <div class="collect" :class="{collectActive:flag}" :style="{'backgroundImage':'url('+flag?imgPlay： +')'}"></div>  -->
-        <div class="bg_img collect" :style="{backgroundImage:'url('+ (collectionStatus=='1'?collectImgA:collectImg)+')'}"></div>
-        收藏
+        <div class="bg_img collect" :style="{backgroundImage:'url('+ (collectionStatus=='1'?collectImgA:collectImg)+')'}"></div>收藏
       </div>
       <div class="share-box" @click.stop="share">
-        <div class="share bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></div> 
-        分享
+        <div class="share bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></div>分享
       </div>
     </div>
     <popup-box @close="closeDom" v-if="show"></popup-box>
@@ -33,6 +31,7 @@ export default {
     PopupBox
   },
   props: {
+    linkerInfo:{type:Object},
     bannerList: { type: Array },
     collectionStatus: { type: String }, // 0-未收藏 1-已收藏
     ifPanorama: { type: Number }, // 是否有全景,
@@ -48,6 +47,9 @@ export default {
     show: false
   }),
   methods: {
+    lookPanorama(){
+      window.location.href =this.linkerInfo.linkerUrl
+    },
     closeDom(n) {
       this.$router.push('/marketDetail/perfect')
       this.show = n
@@ -146,14 +148,13 @@ export default {
     height: 100%;
   }
   .collect-box {
-    width: 24px;
     position: absolute;
     top: 20px;
     right: 69px;
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: #ffffff;
+    color: #FFFFFF;
     .collect {
       width: 20px;
       height: 20px;
@@ -161,14 +162,13 @@ export default {
     }
   }
   .share-box {
-    width: 24px;
     position: absolute;
     top: 20px;
     right: 29px;
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: #ffffff;
+    color: #FFFFFF;
     .share {
       width: 20px;
       height: 20px;
