@@ -51,14 +51,12 @@ export default {
   },
   created() {
     this.type = this.$route.query.type
-    if(this.type == 'package') { //套盘跳过来的，加载套盘内容
-      
-    }
   },
   data: () => ({
     type: 'vip',
+    packageIscheckedIds:[],
     checkedList: [],
-    limitCount: 5,
+    limitCount: 10,
     searchInfo: {
       siteText: '全国',
       placeholderText: '请输入楼盘'
@@ -74,14 +72,22 @@ export default {
     projectList: []
   }),
   methods: {
+    async getPackageInfo() {
+      const res = await marketService.packPageHouseQuery(this.$route.query.packageId)
+      this.limitCount = res.limitTotal
+      this.packageIscheckedIds = res.linkerIdList
+    },
+
     async getLinkerList() {
       this.checkAllShow = false
       let param = {current: this.page, size: this.pageSize}
+      let res = []
       if(this.type == 'package') {
-        const res = await marketService.packageLinkerList(param)
+        res = await marketService.packageLinkerList(param)
       } else {
-        const res = await marketService.vipLinkerList(param)
+        res = await marketService.vipLinkerList(param)
       }
+      
       let _list = []
       for(let item of res.records) {
         let obj = {
@@ -101,8 +107,28 @@ export default {
       if (res.pages === 0 || this.page === res.pages) {
         this.finished = true
       }
+
+      if(this.type == 'package') { //套盘跳过来的，加载套盘内容
+        if(this.page == 1){
+          await this.getPackageInfo()
+        }
+        this.packageCheckedInit()
+      }
+
       this.page++
       this.loading = false
+    },
+
+    packageCheckedInit() {
+      this.checkedList = []
+      for(let i=0; i<this.packageIscheckedIds.length;i++) {
+        this.checkedList.push({linkerId: this.packageIscheckedIds[i]})
+        for(let item of this.projectList) {
+          if(this.packageIscheckedIds[i] == item.linkerId){
+            item.isChecked = true
+          }
+        }
+      }
     },
 
     async vipProjectOpenHandle() {
@@ -118,7 +144,6 @@ export default {
       if(this.type == 'package') {
         let res = await marketService.userPackageAddHouse(isCheckLinkerArr.join(), this.$route.query.packageId)
         this.$toast('添加到套盘成功')
-        console.log(res, 'userPackageAddHouse')
       } else {
         let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
         this.$toast('添加到我的楼盘成功')
@@ -141,6 +166,7 @@ export default {
         }
       }
       this.checkedList.push(project)
+      console.log(this.checkedList)
     },
 
     allSelectHandle() {
