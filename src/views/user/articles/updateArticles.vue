@@ -123,10 +123,12 @@ export default {
         const res = userService.deleHistoryArticle(selectStr)
         this.list = []
 
+        this.selectName = '全选'
+        this.checked = false
+
         if (res) {
           this.getHistoryList(1)
         }
-        
       } else {
         this.$toast('请先选择要删除的文章')
       }
