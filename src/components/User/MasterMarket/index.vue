@@ -44,7 +44,11 @@
 import userService from 'SERVICE/userService'
 export default {
   created() {
-    
+    if(this.swipeList.length==0){
+      this.swipeShow=false
+    }else{
+      this.swipeShow=true
+    }
   },
   props: {
     swipeList: {
