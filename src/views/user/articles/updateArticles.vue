@@ -66,10 +66,10 @@ export default {
       loading: false,
       finished: false,
       current: 1,
-      total:0,
+      total: 0
     }
   },
- created() {
+  created() {
     // this.getHistoryList(this.current)
     this.total = this.$route.params.total
   },
@@ -79,16 +79,26 @@ export default {
       const res = await userService.getBrowseHistoryList(current)
 
       let dataList = res.records
-      for (let i = 0; i < dataList.length; i++) {
-        dataList[i].isCheck = false
+      this.total = res.total
+
+      if (dataList.length > 0) {
+        for (let i = 0; i < dataList.length; i++) {
+          dataList[i].isCheck = false
+        }
+        this.list = this.list.concat(res.records)
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
+      } else {
+        this.loading = false
+        this.finished = true
       }
-      this.list = dataList
-      this.articleTotal = res.total
     },
 
     //勾选获取文章id
     getArticleId(checked, position) {
-      debugger
       if (!checked) {
         this.list[position].isCheck == true
       } else {
@@ -109,7 +119,27 @@ export default {
 
     //删除操作
     toDeleArticle(selectStr) {
-      const res = userService.deleHistoryArticle(selectStr)
+      if (selectStr.length > 0) {
+        const res = userService.deleHistoryArticle(selectStr)
+        this.list = []
+
+        this.selectName = '全选'
+        this.checked = false
+
+        if (res) {
+          this.getHistoryList(1)
+        }
+      } else {
+        this.$toast('请先选择要删除的文章')
+      }
+
+      // if (selectStr) {
+      //   const res = userService.deleHistoryArticle(selectStr)
+      //   this.list={}
+      //   this.getHistoryList(1)
+      // } else {
+      //   this.$toast('请先选择要删除的文章')
+      // }
     },
 
     //删除文章
@@ -125,7 +155,6 @@ export default {
 
     //全选按钮
     toSelectAll() {
-      debugger
       let temp = ''
       let tempList = this.list
       this.selectAll = !this.selectAll
@@ -154,14 +183,13 @@ export default {
 
     //删除文章
     deleArticles() {
-      debugger
       let temp = ''
       let selectArr = this.selectArr
       for (var i = 0; i < selectArr.length; i++) {
         temp += selectArr[i] + ','
       }
       this.selectStr = temp
-      this.toDeleArticle(temp)
+      this.toDeleArticle(this.selectStr)
     },
 
     //加载更多
@@ -169,6 +197,7 @@ export default {
       let tempCurrent = this.current
       const res = await userService.getBrowseHistoryList(tempCurrent)
       let dataList = res.records
+
       if (dataList.length !== 0) {
         for (let i = 0; i < dataList.length; i++) {
           let tempTime = timeUtils.getDateTimeBefor(dataList[i].createDate)
@@ -176,6 +205,7 @@ export default {
           dataList[i].isCheck = false
         }
         this.list = this.list.concat(dataList)
+
         this.current = tempCurrent + 1
         this.loading = false
       } else {
@@ -186,7 +216,7 @@ export default {
         this.finished = true
       }
     },
-    gohistory(){
+    gohistory() {
       this.$router.go(-1)
     }
   }
