@@ -49,6 +49,7 @@ const state = {
     masterRecommendTip: '',
     minOpenid: '',
     mobile: '18676652795',
+    registerMobile:'13100000000',
     mpOpenid: '',
     myLinkerGuide: 0,
     name: '嗨我是你的益达吗',
