@@ -2,8 +2,8 @@
   <div class="updateArticles-page">
     <div class="updateArticles-content">
       <div class="updateArticles-title">
-        共{{this.articleTotal}}文章
-        <span class="updateArticles-title-right">完成</span>
+        共{{total}}文章
+        <span class="updateArticles-title-right" @click="gohistory">完成</span>
       </div>
       <!-- <discover-list></discover-list> -->
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
@@ -51,11 +51,6 @@ export default {
     nullArticles,
     SubmitBar
   },
-
-  created() {
-    // this.getHistoryList(this.current)
-  },
-
   data() {
     return {
       // backIcon: require('IMG/user/usercard@2x.png'),
@@ -70,10 +65,14 @@ export default {
       checked: false,
       loading: false,
       finished: false,
-      current: 1
+      current: 1,
+      total:0,
     }
   },
-
+ created() {
+    // this.getHistoryList(this.current)
+    this.total = this.$route.params.total
+  },
   methods: {
     //获取文章列表
     async getHistoryList(current) {
@@ -89,6 +88,7 @@ export default {
 
     //勾选获取文章id
     getArticleId(checked, position) {
+      debugger
       if (!checked) {
         this.list[position].isCheck == true
       } else {
@@ -125,6 +125,7 @@ export default {
 
     //全选按钮
     toSelectAll() {
+      debugger
       let temp = ''
       let tempList = this.list
       this.selectAll = !this.selectAll
@@ -153,6 +154,7 @@ export default {
 
     //删除文章
     deleArticles() {
+      debugger
       let temp = ''
       let selectArr = this.selectArr
       for (var i = 0; i < selectArr.length; i++) {
@@ -183,6 +185,9 @@ export default {
       if (res.pages == 0 || this.current > res.pages) {
         this.finished = true
       }
+    },
+    gohistory(){
+      this.$router.go(-1)
     }
   }
 }

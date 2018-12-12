@@ -4,7 +4,7 @@
       <div class="historicalArticles-title">
         共{{total}}文章
         <span class="historicalArticles-title-right">
-          <router-link to="/user/articles/updateArticles">编辑</router-link>
+          <router-link :to="{name:'updateArticles',params: {total:total }}">编辑</router-link>
         </span>
       </div>
       <discover-list :data="historyList"></discover-list>
