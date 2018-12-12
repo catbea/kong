@@ -1,12 +1,12 @@
 <template>
   <div class="area-selection-page" ref="content">
     <div class="search-box van-hairline--bottom">
-      <search></search>
+      <search :conf="searchInfo"></search>
     </div>
     <div class="area-selection-box" >
       <div class="current-location" >
         <p class="location-str">
-          深圳
+          {{userArea.city}}
           <span>当前城市</span>
         </p>
       </div>
@@ -42,6 +42,7 @@ import Search from 'COMP/Search'
 import { fullArea } from '@/utils/fullArea'
 import letter from '@/utils/letter'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     Search
@@ -52,15 +53,22 @@ export default {
       timer: null,
       str: ''
     },
+    searchInfo: {
+      siteText: '',
+      placeholderText: ''
+    },
     navOffsetX: 0,
     moving: false
   }),
   created() {
     this.$store.dispatch('getAllCity')
+    this.searchInfo.siteText = this.userArea.city
   },
   methods: {
     itemClick(val) {
       console.log(val)
+      this.$store.commit(types['USER_AREA'], {selectedCity: val})
+      this.$router.go(-1)
     },
     keyTouchStartHandler(e) {
       // debugger
@@ -111,7 +119,7 @@ export default {
     // }
   },
   computed: {
-    ...mapGetters(['cityMap', 'hotCityMap']),
+    ...mapGetters(['cityMap', 'hotCityMap', 'userArea', 'userInfo']),
     indexList() {
       let result = ['热']
       for (let temp of this.cityMap) {

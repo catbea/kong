@@ -37,10 +37,12 @@ class WechatApi {
   }
 
   async getLocation(log, lat) {
-    console.log('getLocation===')
     const userArea = await commonService.getLocation(log, lat)
-    // store.dispatch('setJssdkConfig', ticket)
-    console.log(userArea, 'userArea')
+    store.dispatch('userArea', Object.assign(store.getters.userArea, {
+      longitude: log,
+      latitude: lat,
+      city: userArea
+    } ))
   }
 
   /**

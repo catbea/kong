@@ -1,7 +1,7 @@
 <template>
   <div class="my-member-page">
     <div class="search-box">
-      <search :conf="searchInfo"></search>
+      <search :conf="searchInfo" @areaClick="areaClickHandle"></search>
     </div>
     <div>
       <screen></screen>
@@ -54,10 +54,12 @@ export default {
     this.type = this.$route.query.type
     if(this.type == 'vip') {
       this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
+    } else {
+      this.searchInfo.siteText = this.userArea.selectedCity || this.userArea.city 
     }
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo', 'userArea'])
   },
   data: () => ({
     type: 'vip',
@@ -79,6 +81,10 @@ export default {
     projectList: []
   }),
   methods: {
+    areaClickHandle() {
+      this.$router.push({path: "/public/area-select"})
+    },
+
     async getPackageInfo() {
       const res = await marketService.packPageHouseQuery(this.$route.query.packageId)
       this.limitCount = res.limitTotal
@@ -90,6 +96,7 @@ export default {
       let param = {current: this.page, size: this.pageSize}
       let res = []
       if(this.type == 'package') {
+        param.city = this.searchInfo.siteText
         res = await marketService.packageLinkerList(param)
       } else {
         res = await marketService.vipLinkerList(param)
