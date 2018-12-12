@@ -16,7 +16,10 @@
       <p class="chart-desc">该客户默默关注你好久了，不去打声招呼吗~</p>
     </div>
     <div class="shadow_box purchase-intention">
-      <h5 class="purchase-title">买房意向</h5>
+      <div class="purchase-title-wrap">
+        <h5 class="purchase-title">买房意向</h5>
+        <span class="browse-count">{{baseInfo&&baseInfo.browseCount}}次查看</span>
+      </div>
       <div class="purchase-info-box">
         <p>
           <span>区域:</span>
@@ -41,11 +44,9 @@
       </div>
     </div>
     <div class="list">
-      <estate-item v-for="(item,index) in analysisListData" :key="index" :info="item">
-        <p class="interest-desc" slot="desc">1312312312</p>
-      </estate-item>
+      <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item">
+      </analyze-item>
     </div>
-    <!-- <custom-operation :attentionFlag="attentionFlag" :clientMobile="clientMobile" @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"></custom-operation> -->
   </div>
 </template>
 <script>
@@ -53,8 +54,7 @@ import PieChart from 'COMP/Custom/Charts/PieChart'
 import LineChart from 'COMP/Custom/Charts/LineChart'
 import BarChart from 'COMP/Custom/Charts/BarChart'
 import TagGroup from 'COMP/TagGroup'
-import EstateItem from 'COMP/EstateItem'
-import CustomOperation from './CustomOperation.vue'
+import AnalyzeItem from 'COMP/Custom/CustomDetailAnalyzeItem'
 export default {
   props: {
     baseInfo: { type: Object },
@@ -66,14 +66,12 @@ export default {
     barChartHidden: { type: Boolean },
     barData: { type: Array },
     analysisListData: { type: Array },
-    attentionFlag: {type: Boolean, default: false},
-    clientMobile: {type: String, default: ''}
+    attentionFlag: { type: Boolean, default: false },
+    clientMobile: { type: String, default: '' }
   },
 
   created() {},
-  data: () => ({
-    
-  }),
+  data: () => ({}),
   methods: {
     attentionHandler() {
       this.$emit('onattention', this.attentionFlag)
@@ -93,8 +91,7 @@ export default {
     LineChart,
     BarChart,
     TagGroup,
-    EstateItem,
-    CustomOperation
+    AnalyzeItem
   }
 }
 </script>
@@ -121,13 +118,22 @@ export default {
   }
   .purchase-intention {
     position: relative;
-    margin: 0 20px;
+    margin: 20px 20px 0 20px;
     padding: 15px;
-    .purchase-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #333333;
-      padding-bottom: 10px;
+    .purchase-title-wrap {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      .purchase-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333333;
+        padding-bottom: 10px;
+      }
+      .browse-count {
+        color: #999;
+        font-size: 12px;
+      }
     }
     .purchase-info-box {
       > p,

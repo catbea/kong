@@ -91,6 +91,9 @@ export default {
   .cell-item {
     height: 56px;
     align-items: center;
+    &:active{
+      background-color: #fff;
+    }
     .van-cell__title {
       font-size: 15px;
       font-family: PingFangSC-Regular;

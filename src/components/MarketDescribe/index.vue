@@ -45,7 +45,7 @@ export default {
   data: () => ({
     resInfo: null,
     style: null,
-    commissionImg: require('IMG/user/collection/Rectangle@2x.png'),
+    commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     labelImg: require('IMG/marketDetail/discount@2x.png')
   }),
   props: {

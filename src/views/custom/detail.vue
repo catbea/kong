@@ -185,6 +185,9 @@ export default {
       this.selectItem = object.item
       this.selectIndex = object.index
       this.areaTitle = object.item.title
+      if (item.title == '来源') {
+        return;
+      }
       if (item.title == '备注名称') {
         let params = {
           clientId: this.clientId,
@@ -201,6 +204,8 @@ export default {
         this.$router.push({ path: '/custom/edit/phone', query: params })
       } else if (item.title == '位置') {
         this.areaShow = !this.areaShow
+      } else if (item.title == '来源') {
+
       } else {
         this.pickerShow = !this.pickerShow
         if (item.title == '性别') {

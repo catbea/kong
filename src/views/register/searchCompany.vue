@@ -115,7 +115,7 @@ export default {
       }
       .search-tips-cnt {
         color: #999999;
-        font-size: 12pt;
+        font-size: 12px;
         margin-left: 8px;
       }
     }
@@ -126,7 +126,7 @@ export default {
       justify-content: center;
       .search-item {
         color: #333333;
-        font-size: 16pt;
+        font-size: 16px;
         margin-top: 12px;
       }
     }
