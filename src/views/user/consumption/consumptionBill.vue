@@ -7,7 +7,7 @@
       :finished="finished"
       :finished-text="'没有更多了'"
       @load="onLoad"
-      v-if="billItem"
+      v-if="billItem.length>0"
     >
       <!-- <Tips></Tips>#F7F9FA; -->
       <!-- v-for="(item, index) in billItem" :key="index" -->

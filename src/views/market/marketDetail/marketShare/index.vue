@@ -2,6 +2,7 @@
   <div class="market-share-page">
     <div class="box" v-show="status === 1">
       <div class="share-top" id='share-top'>
+        <!--  -->
         <img class="avatar-img" :src="buildingInfo.avatarMediaid" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="buildingInfo.qrCode">
