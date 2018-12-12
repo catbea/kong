@@ -82,6 +82,9 @@ export default {
   }),
   methods: {
     areaClickHandle() {
+      if(this.type == 'vip') {
+        return
+      }
       this.$router.push({path: "/public/area-select"})
     },
 
