@@ -79,7 +79,7 @@ export default {
       const res = await userService.getBrowseHistoryList(current)
 
       let dataList = res.records
-      this.articleTotal = res.total
+      this.total = res.total
 
       if (dataList.length > 0) {
         for (let i = 0; i < dataList.length; i++) {
@@ -197,6 +197,7 @@ export default {
       let tempCurrent = this.current
       const res = await userService.getBrowseHistoryList(tempCurrent)
       let dataList = res.records
+
       if (dataList.length !== 0) {
         for (let i = 0; i < dataList.length; i++) {
           let tempTime = timeUtils.getDateTimeBefor(dataList[i].createDate)
@@ -204,6 +205,7 @@ export default {
           dataList[i].isCheck = false
         }
         this.list = this.list.concat(dataList)
+
         this.current = tempCurrent + 1
         this.loading = false
       } else {
