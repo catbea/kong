@@ -119,13 +119,25 @@ export default {
 
     //删除操作
     toDeleArticle(selectStr) {
-      if (selectStr) {
+      if (selectStr.length > 0) {
         const res = userService.deleHistoryArticle(selectStr)
-        this.list={}
-        this.getHistoryList(1)
+        this.list = []
+
+        if (res) {
+          this.getHistoryList(1)
+        }
+        
       } else {
         this.$toast('请先选择要删除的文章')
       }
+
+      // if (selectStr) {
+      //   const res = userService.deleHistoryArticle(selectStr)
+      //   this.list={}
+      //   this.getHistoryList(1)
+      // } else {
+      //   this.$toast('请先选择要删除的文章')
+      // }
     },
 
     //删除文章
