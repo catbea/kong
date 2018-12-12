@@ -54,7 +54,7 @@ export default {
   methods: {
     async onLoad() {
       //楼盘信息请求
-      const res = await marketService.getMarketDescribe(705, this.page)
+      const res = await marketService.getMarketDescribe(this.page)
       this.marketList = this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {
         this.finished = true
@@ -69,11 +69,10 @@ export default {
       this.$router.push('/market/inputSearch')
     },
     returnMyMarket() {
-      this.$router.push({ name: 'mymarket', params: { id: this.broker } })
+      this.$router.push({ name: 'mymarket' })
     },
     async getBrokerInfo() {
-      //经纪人Id请求
-      const res = await marketService.getBrokerMarket(this.broker)
+      const res = await marketService.getBrokerMarket()
       this.agentIdInfo = res
     },
     skipDetail(item) {

@@ -3,11 +3,10 @@ class MarketService {
   /**
    * 楼盘数据
    */
-  getMarketDescribe(agentId, current, size = 10) {
+  getMarketDescribe(current, size = 10) {
     return xhr({
       url: '/linker/getLinkerList',
       body: {
-        agentId,
         current,
         size
       }
@@ -15,14 +14,22 @@ class MarketService {
   }
 
   /**
+   * 楼盘列表
+   * 由于参数过多,参数交由控制层组装
+   */
+  getHouseList(payload) {
+    return xhr({
+      url: '/linker/getLinkerList',
+      body: payload
+    })
+  }
+
+  /**
    * 首页请求经纪人id返已开通楼盘
    */
-  getBrokerMarket(num) {
+  getBrokerMarket() {
     return xhr({
-      url: '/linker/getAgentSubscribeCount',
-      body: {
-        agentId: num
-      }
+      url: '/linker/getAgentSubscribeCount'
     })
   }
 
@@ -132,15 +139,15 @@ class MarketService {
       body: {}
     })
   }
-   
+
   /**
    * 楼盘详情-提交楼盘详情纠错
    *
    */
-  submitCorrection(linkerId,errorType,content,appType) {
+  submitCorrection(linkerId, errorType, content, appType) {
     return xhr({
       url: '/linkerDetail/houseErrorCorrection',
-      method:'post',
+      method: 'post',
       body: {
         linkerId,
         errorType,
@@ -186,12 +193,12 @@ class MarketService {
   /* 获取vip楼盘
   *
   */
- packageLinkerList(parm) {
-  return xhr({
-    url: '/userPackage/packageLinkerList',
-    body: parm
-  })
-}
+  packageLinkerList(parm) {
+    return xhr({
+      url: '/userPackage/packageLinkerList',
+      body: parm
+    })
+  }
 
   /**
    * 分享楼盘需要的楼盘图片列表
@@ -226,9 +233,7 @@ class MarketService {
    */
   userPackageSituation() {
     return xhr({
-      url: '/userPackage/userPackageSituation',
-      body: {
-      }
+      url: '/userPackage/userPackageSituation'
     })
   }
 
@@ -237,9 +242,7 @@ class MarketService {
    */
   queryLastInfoByAgentId() {
     return xhr({
-      url: '/userPackage/queryLastInfoByAgentId',
-      body: {
-      }
+      url: '/userPackage/queryLastInfoByAgentId'
     })
   }
 

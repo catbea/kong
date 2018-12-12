@@ -49,6 +49,7 @@ export default {
       console.log('focus')
       var specialKey = "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'"
       var realkey = String.fromCharCode(this.remarkName)
+      debugger
       var flg = false
       flg = specialKey.indexOf(realkey) >= 0
       if (flg) {
