@@ -112,7 +112,7 @@ export default {
     areaCode: '440305', // 默认显示省市区位置code
     areaTitle: '',
     pickerShow: false,
-    pickerList: null
+    pickerList: null,
   }),
   computed: {
     
@@ -329,6 +329,18 @@ export default {
         this.analysisListData = this.analysisListData.concat(result.records)
       } else {
         this.analysisListData = result.records
+      }
+      for (var i in this.analysisListData) {
+        var item = this.analysisListData[i]
+        item.progress = Number(item.intentionality)
+        let color;
+        if (item.progress >= Number(70)) {
+          color = '#007AE6'
+        }else {
+          color = '#cccccc'
+        }
+        item.color = color
+        item.textColor = color
       }
       if (result.pages <= this.current) {
         this.finished = true
