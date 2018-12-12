@@ -272,5 +272,18 @@ class MarketService {
     })
   }
 
+  /**
+   * 更新vip城市
+   */
+  updateCityByAgentId(city) {
+    return xhr({
+      url: '/brokerVip/updateCityByAgentId',
+      method: 'post',
+      body: {
+        city
+      }
+    })
+  }
+
 }
 export default new MarketService()
