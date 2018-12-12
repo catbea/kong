@@ -46,15 +46,14 @@ export default {
       this.Surplus = 50 - textVal
     },
     async getCorrectionInfo() {//渲染显示的选项
-    
-      let res = await marketService.getCorrection()
+      const res = await marketService.getCorrection()
       this.optionList=res
-      console.log(res,'纠错类型')
     },
     async submitCorrectionInfo() {//提交纠错内容
     console.log(this.linkerId,this.errorType,this.introduct,this.appType,2222222)
      let res= await marketService.submitCorrection(this.linkerId,this.errorType,this.introduct,this.appType)
       console.log(res,'提交数据')
+      this.introduct=''
     }
   }
 }

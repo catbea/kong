@@ -6,14 +6,16 @@
             <keep-alive>
                 <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
                   <!-- <div class="coupon-content"> -->
-                  <coupon-item v-for="(itemA,indexA) in item.list" :key="indexA" :info="itemA"></coupon-item>
+                  <coupon-item v-for="(itemA,indexA) in item.list" 
+                  @skipHandle='returnSkipHandle'
+                   :key="indexA" :info="itemA" :status='item.status'></coupon-item>
                   <!-- </div> -->
                 </van-list>
             </keep-alive>
           </van-tab>
       </van-tabs>
-    <div v-if="false" class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
-    <p v-if="false" class="hint">暂无优惠券</p>
+    <div v-if="true" class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
+    <p v-if="true" class="hint">暂无优惠券</p>
   </div>
 </template>
 <script>
@@ -25,12 +27,13 @@ export default {
     CouponItem
   },
   data: () => ({
+    couponShow:false,
     loading: false,
     finished: false,
     nameList: [
-      { title: '未使用', num: 0, list: [], index: 0, page: 1, finished: false },
-      { title: '使用记录', num: 0, list: [], index: 1, page: 1, finished: false },
-      { title: '已过期', num: 0, list: [], index: 2, page: 1, finished: false }
+      { title: '未使用', num: 0, list: [], index: 0, page: 1, finished: false,status:0},
+      { title: '使用记录', num: 0, list: [], index: 1, page: 1, finished: false,status:1 },
+      { title: '已过期', num: 0, list: [], index: 2, page: 1, finished: false,status:2 }
     ],
     activeIndex: 0,
     index: null,
@@ -52,7 +55,7 @@ export default {
   }
   ,
   created() {
-    console.log(this.isVip,2222222)
+
     const _this = this
     this.notUse().then(res => {
       _this.nameList[0].num = res.total
@@ -119,7 +122,7 @@ export default {
       return p3
     },
     // 立即使用事件
-    skipMarketDetail() {
+    returnSkipHandle(n) {
       this.$router.push('/market')
     }
   }

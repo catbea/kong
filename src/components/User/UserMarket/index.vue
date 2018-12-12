@@ -122,12 +122,12 @@ export default {
     closeHandle () {
       this.show = !this.show
     },
-    masterHandle(){
+    masterHandle(n){
       // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
       this.show = !this.show
     },
-    commonHandle(){
+    commonHandle(n){
       // this.$emit('returncommonHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,2)//改为普通推荐
       this.show = !this.show
@@ -176,6 +176,7 @@ export default {
     display: flex;
     margin-bottom:16px;
     .user-market-page-box-top-left{
+      border-radius:4px;
       width:120px;
       height:90px;
       margin-right:10px;
