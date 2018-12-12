@@ -17,6 +17,23 @@ class WechatApi {
     const ticket = await this._getTicket()
     store.dispatch('setJssdkConfig', ticket)
     this.wx.config(ticket)
+    this.getUserArea()
+  }
+
+  async getUserArea() {
+    this.wx.getLocation({
+      type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+      success: (res)=> {
+        let parm = { log: res.longitude, lat: res.latitude }
+        console.log(parm, '[wx getlocation]')
+      },
+      fail: ()=> {
+        console.log('wx location fail')
+      },
+      cancel: (res)=> {
+        console.log(res, 'wx location cancel')
+      }
+    })
   }
 
   /**

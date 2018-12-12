@@ -5,6 +5,9 @@ const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     isVip: '1',
+    vipInfo:{
+      city: '广州市'
+    },
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
