@@ -96,5 +96,18 @@ class CommonService {
     })
   }
 
+  /**
+   * 根据经纬度获取城市
+   */
+  getLocation(log, lat) {
+    return xhr({
+      url: '/common/getCityByXY',
+      body: {
+        log,
+        lat
+      }
+    })
+  }
+
 }
 export default new CommonService()
