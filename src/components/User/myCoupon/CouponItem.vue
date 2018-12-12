@@ -22,7 +22,7 @@
           <li @click="unfoldMore">详细信息 <span class="bg_img" :style="{backgroundImage:'url('+(unfoldShow?downImg:upImg)+')'}"></span></li>
         </ul>
         <div class="coupon-item-page-right">
-         <p v-if="info.canUse" class="mayUse" @click="useHandle(info.couponsId)">立即使用</p>
+         <p v-if="info.canUse || status==0" class="mayUse" @click="useHandle(info.couponsId)">立即使用</p>
           <span v-if="status==1" class="yetUse bg_img" :style="{backgroundImage:'url('+yetUseImg+')'}"></span>
           <span v-if="status==2" class="yetPast bg_img" :style="{backgroundImage:'url('+yetPastImg+')'}"></span>
           </div>
