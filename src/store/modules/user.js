@@ -36,7 +36,7 @@ const state = {
     ifView: false,
     institutionId: '46',
     institutionLogo: '',
-    institutionName: '',
+    institutionName: '分销商小李',
     isOne: 0,
     is_update: false,
     likeNum: '0',
