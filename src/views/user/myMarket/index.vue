@@ -32,6 +32,7 @@
       >
       </user-market>
       </div>
+      <!-- <trans></trans> -->
       <p v-if="!marketShow" class="notMarket">暂未开通任何楼盘</p>
       <div class="market-right" v-show="!myMarketShow" v-if="marketShow">
       <close-market
@@ -49,6 +50,7 @@
   </div>
 </template>
 <script>
+import trans from './trans.vue'
 import MasterMarket from 'COMP/User/MasterMarket/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
 import VanSearch from 'COMP/VanSearch/'
@@ -63,9 +65,11 @@ export default {
     VanSearch,
     Screen,
     UserMarket,
-    CloseMarket
+    CloseMarket,
+    trans
   },
   data: () => ({
+    head:false,
     swipeShow:false,
     marketShow:true,
     displayFlag: 0,
@@ -96,7 +100,9 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
-
+  },
+  mounted() {
+    
   },
   methods: {
     async getChangeMarketData(){
@@ -166,6 +172,29 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 2s
+}
+.fade-enter, .fade-leave-to{
+    opacity: 0
+}
+  .trans{
+    position: relative;
+    display:flex;
+    margin-left:100px;
+    p{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      position:absolute;
+    }
+    p:nth-child(1){
+      background: black;
+    }
+    p:nth-child(2){
+      background: blue;
+    }
+  }
   .user-market-box{
     position: relative;
     display: flex;
