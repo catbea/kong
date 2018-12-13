@@ -390,10 +390,12 @@ export default {
         }else {
           tag = '下架'
         }
-        debugger
         if (item.projectTagArr && item.projectTagArr.length > 0) {
           item.projectTagArr.unshift(tag)
           tags = item.projectTagArr
+          if (tags.length > 3) {
+            tags.pop()
+          }
         }else {
           tags.push(tag)
         }

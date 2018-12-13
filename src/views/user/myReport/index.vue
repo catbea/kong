@@ -133,6 +133,9 @@ export default {
   > .report-container {
     width: 100%;
     margin: 16px 0;
+    height: 80%;
+    overflow: hidden;
+    margin-bottom: 70px;
     .report-container-css {
       padding: 20px 16px;
       margin-bottom: 16px;
@@ -197,10 +200,11 @@ export default {
     }
   }
   > .report-div-btn {
-    margin-left: 16px;
-    margin-right: 16px;
-    margin-top: 52px;
-
+    width: 343px;
+    position: fixed;
+    bottom: 0;
+    left: 16px;
+    background-color: #ffffff;
     > .report-btn {
       font-size: 16px;
       font-weight: 400;
