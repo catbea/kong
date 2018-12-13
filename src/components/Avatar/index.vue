@@ -13,7 +13,10 @@ export default {
   },
   data: () => ({
     defaultAvatar: require('IMG/system/defaultAvatar.png')
-  })
+  }),
+  methods: {
+    
+  }
 }
 </script>
 <style lang="less">

@@ -5,6 +5,9 @@ const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     isVip: '1',
+    vipInfo:{
+      city: '广州市'
+    },
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
@@ -46,6 +49,7 @@ const state = {
     masterRecommendTip: '',
     minOpenid: '',
     mobile: '18676652795',
+    registerMobile:'13100000000',
     mpOpenid: '',
     myLinkerGuide: 0,
     name: '嗨我是你的益达吗',
@@ -87,6 +91,7 @@ const state = {
     latitude: '', // 纬度
     province: '', // 省
     city: '深圳市', // 市
+    selectedCity: '深圳市',
     county: '' // 区
   },
   reportAddInfo: {

@@ -88,7 +88,7 @@ export default {
             box-sizing: border-box;
             .title {
                 color: #333333;
-                font-size: 20pt;
+                font-size: 20px;
                 font-weight: bold;
             }
             .spacing {

@@ -10,7 +10,7 @@
           :type="'text'"
           :maxlength="8"
           v-model="remarkName"
-          @focus="focusHandler"
+          @input="inputHandler"
         ></material-input>
       </p>
       <button class="edit-remarkname-query" @click="saveRemarkName">保存</button>
@@ -20,6 +20,7 @@
 <script>
 import MaterialInput from 'COMP/MaterialInput'
 import CustomService from 'SERVICE/customService'
+import strFormat from '@/filters/strFormat'
 import { Dialog } from 'vant'
 export default {
   components: {
@@ -45,19 +46,11 @@ export default {
   },
 
   methods: {
-    focusHandler(focus) {
-      console.log('focus')
-      var specialKey = "[`~!#$^&*()=|{}':;',\\[\\].<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]‘'"
-      var realkey = String.fromCharCode(this.remarkName)
-      var flg = false
-      flg = specialKey.indexOf(realkey) >= 0
-      if (flg) {
-        Dialog.alert({
-          message: '请勿输入特殊字符'
-        }).then(() => {
-          // on close
-        })
-      }
+    inputHandler(focus) {
+      let inputStr = strFormat.fmtWebCode(this.remarkName)
+      setTimeout(() => {
+        this.remarkName = inputStr
+      },1)
     },
     //更新用户名
     async updateRemarkName(params) {

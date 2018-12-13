@@ -10,7 +10,7 @@
         @click="selectIcon(index)"
       >
         <!-- <span class="bg_img" :style="{backgroundImage:'url('+item.checked=='1'?icon:''+')'}"></span> -->
-        <img  class="bg_img" :src="item.checked=='1'?icon:noIcon">
+        <img class="bg_img" :src="item.checked=='1'?icon:noIcon">
       </li>
     </ol>
   </div>
@@ -30,29 +30,16 @@ export default {
   }),
   computed: {},
 
-  created() {
-   
-  },
+  created() {},
 
   methods: {
-    // active(index) {
-    //   if (this.listSeletct.indexOf(index) == -1) {
-    //     this.listSeletct.push(index)
-    //   } else {
-    //     this.listSeletct = this.listSeletct.filter(item => {
-    //       return item != index
-    //     })
-    //   }
-    // },
     selectIcon(index) {
-      if (this.model[index].checked == '0') {
-        this.model[index].checked = '1'
-         this.$emit('changeBackground',this.model[index].imgUrl);
-      } else {
-        this.model[index].checked = '0'
+      for (let i in this.model) {
+        this.model[i].checked = '0'
       }
-    },
-
+      this.model[index].checked = '1'
+      this.$emit('changeBackground', this.model[index].imgUrl)
+    }
   }
 }
 </script>

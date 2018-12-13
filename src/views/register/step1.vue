@@ -207,7 +207,7 @@ export default {
         margin: 30px 15px;
         > .phone-tip {
           color: #969ea8;
-          font-size: 12pt;
+          font-size: 12px;
           text-align: left;
           margin-left: 5px;
         }

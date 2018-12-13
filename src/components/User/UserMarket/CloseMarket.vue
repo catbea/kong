@@ -9,8 +9,9 @@
         </div>
         <ul>
           <li>
-           <div style="display:flex;">{{dataArr.linkerName}} 
-             <span class="stick" v-if="dataArr.recommand==0">置顶</span>
+           <div style="display:flex;"> 
+             {{dataArr.linkerName}}
+             <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
              </div>
            <span class="bg_img icon-share" @click.stop="usmarIconReturn" :style="{backgroundImage:'url('+imgShare+')'}"></span>
           </li>
@@ -45,13 +46,13 @@
         overlay
       >
         <ul>
-          <li>续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+          <li @click="goRenew(dataArr.linkerId)">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
           <!-- <li @click="masterHandle">大师推荐</li>
           <li @click="commonHandle">普通推荐</li> -->
-          <li @click="stickHandle">
+          <!-- <li @click="stickHandle(marketIndex)">
             <span v-show="dataArr.recommand==0">置顶</span>
             <span v-show="dataArr.recommand==10">取消置顶</span>
-          </li>
+          </li> -->
           <li @click="exhibitionHandle">
             <span v-show="!exhibitionMarketShow">关闭楼盘展示</span> 
             <span v-show="exhibitionMarketShow">开启楼盘展示</span> 
@@ -79,7 +80,7 @@ export default {
     exhibitionMarketShow:true,
     imgShare:require('IMG/user/rectangle.png'),
     imgPlay:require('IMG/user/Oval@2x.png'),
-    imgCommission:require('IMG/user/collection/Rectangle@2x.png'),
+    imgCommission:require('IMG/user/collection/icon_commission@2x.png'),
     status:["热销中","即将发售","售罄"]
   }),
   props:{
@@ -92,7 +93,6 @@ export default {
   },
   created() {
    this.linkerId=this.dataArr.linkerId
-   his.cancelFirstStick()
   },
   methods:{
     async changeUserStatus(linkerId,operationType,status){
@@ -101,19 +101,20 @@ export default {
     popupHandle () {//更多
       this.show = !this.show
     },
-    cancelFirstStick(){//第一个不显示置顶
-    if(this.marketIndex==0){
-      this.changeUserStatus(this.linkerId,40,0)//改不置顶状态
-    }
-    },
-    stickHandle () {
+    stickHandle (index) {
       if(this.dataArr.recommand==0){
         this.stickSwitch=10
+        this.dataArr.recommand=10
       }else if(this.dataArr.recommand==10){
         this.stickSwitch=0
+        this.dataArr.recommand=0
       }
       this.changeUserStatus(this.linkerId,40,this.stickSwitch)//改置顶状态
       this.show = !this.show
+      //将当前点击的楼盘置顶
+      this.$parent.marketList.unshift(this.$parent.marketList[index])
+      this.$parent.marketList.splice(index+1,1)
+      console.log(this.$parent.marketList,'这是不展示的父组件的')
     },
     closeHandle () {
       this.show = !this.show
@@ -144,6 +145,9 @@ export default {
         // on cancel
       });
     },
+    goRenew(linkerId){//去续费
+    this.$router.push({name:'marketDetail-open',params:{id:linkerId}})
+    },
     apostropheReturn(){
       this.$emit("apostropheReturn",1)
     },
@@ -161,7 +165,7 @@ export default {
   margin-left:16px;
   display: flex;
  .close-market-page-box{
-   background: rgba(143, 159, 177, 0.15);
+  //  background: rgba(143, 159, 177, 0.15);
    margin-top:16px;
    padding: 16px 16px 0 16px;
   width:343px;
@@ -209,12 +213,12 @@ export default {
         display: flex;
         justify-content: space-between;
         .stick{
-          width:30px;
-          height:13px;
+          width:38px;
+          height:18px;
           border-radius:2px;
           border:1px solid;
-          font-size:10px;
-          // transform:scale(0.84);
+          font-size:12px;
+          transform:scale(0.84);
           font-family:PingFangSC-Regular;
           font-weight:400;
           color:rgba(0,122,230,1);

@@ -83,6 +83,7 @@ export default {
         for (let i = 0; i < bannerResult.length; i++) {
           bannerResult[i].checked = '0'
         }
+         bannerResult[0].checked = '0'
         this.bannerList = bannerResult
       }
     },
@@ -116,6 +117,7 @@ export default {
   background: #ffffff;
   height: auto !important;
   .compile-tagline {
+    display:none;
     margin-left: 15px;
     .compile-tagline-top {
       font-size: 16px;

@@ -47,7 +47,7 @@ export default {
 .member-privilege-page {
   padding: 16px 0 0 16px;
   // height:163px;
-  width: 359px;
+  width: 100%;
   background: rgba(255, 255, 255, 1);
   margin: 10px 0 18px 0;
   .VIPprivilege {

@@ -67,7 +67,7 @@ export default {
   },
   data: () => ({
     radio: {},
-    ovalImg: require('IMG/user/Oval 2@2x.png'),
+    ovalImg: require('IMG/user/icon_attention@2x.png'),
     activeIndex: 0,
     data: {
       0: { finished: false, list: [], page: 1 },

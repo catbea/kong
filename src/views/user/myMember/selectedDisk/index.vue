@@ -1,7 +1,7 @@
 <template>
   <div class="my-member-page">
-    <div style="margin-left:16px;margin-top:7px">
-    <van-search :obj="searchInfo"></van-search>
+    <div class="search-box">
+      <search :conf="searchInfo" @areaClick="areaClickHandle"></search>
     </div>
     <div>
       <screen></screen>
@@ -40,17 +40,26 @@
 <script>
 import { Dialog } from 'vant'
 import marketService from 'SERVICE/marketService'
-import VanSearch from 'COMP/VanSearch/'
+import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'
 import MealMarket from './MealMarket.vue'
+import { mapGetters } from 'vuex'
 export default {
   components: {
-    VanSearch,
+    Search,
     Screen,
     MealMarket
   },
   created() {
     this.type = this.$route.query.type
+    if(this.type == 'vip') {
+      this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
+    } else {
+      this.searchInfo.siteText = this.userArea.selectedCity || this.userArea.city 
+    }
+  },
+  computed: {
+    ...mapGetters(['userInfo', 'userArea'])
   },
   data: () => ({
     type: 'vip',
@@ -58,7 +67,7 @@ export default {
     checkedList: [],
     limitCount: 10,
     searchInfo: {
-      siteText: '全国',
+      siteText: '',
       placeholderText: '请输入楼盘'
     },
     projectSelectIco: require('IMG/myMember/project_select_ico.png'),
@@ -72,6 +81,13 @@ export default {
     projectList: []
   }),
   methods: {
+    areaClickHandle() {
+      if(this.type == 'vip') {
+        return
+      }
+      this.$router.push({path: "/public/area-select"})
+    },
+
     async getPackageInfo() {
       const res = await marketService.packPageHouseQuery(this.$route.query.packageId)
       this.limitCount = res.limitTotal
@@ -83,6 +99,7 @@ export default {
       let param = {current: this.page, size: this.pageSize}
       let res = []
       if(this.type == 'package') {
+        param.city = this.searchInfo.siteText
         res = await marketService.packageLinkerList(param)
       } else {
         res = await marketService.vipLinkerList(param)
@@ -188,6 +205,9 @@ export default {
 </script>
 <style lang="less">
 .my-member-page {
+  .search-box{
+    padding: 8px;
+  }
   .market-box {
     padding-bottom: 80px;
     .meal-market-page {
