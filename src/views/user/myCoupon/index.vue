@@ -4,7 +4,7 @@
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated >
           <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num" class="list-wrap">
             <keep-alive>
-                <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
+                <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad" v-if="!item.show">
                   <!-- <div class="coupon-content"> -->
                   <coupon-item v-for="(itemA,indexA) in item.list" 
                   @skipHandle='returnSkipHandle'
@@ -57,7 +57,7 @@ export default {
     const _this = this
     this.notUse().then(res => {
       _this.nameList[0].num = res.total
-      if(res.total==0){
+      if(_this.nameList[0].num==0){
         _this.nameList[0].show=true
       }else{
         _this.nameList[0].show=false
@@ -66,7 +66,7 @@ export default {
     })
     this.useRecord().then(res => {
       _this.nameList[1].num = res.total
-      if(res.total==0){
+      if(_this.nameList[1].num==0){
         _this.nameList[1].show=true
       }else{
         _this.nameList[1].show=false
@@ -75,7 +75,7 @@ export default {
     })
     this.alreadyPast().then(res => {
       _this.nameList[2].num = res.total
-      if(res.total==0){
+      if(_this.nameList[2].num==0){
         _this.nameList[2].show=true
       }else{
         _this.nameList[2].show=false
