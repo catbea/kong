@@ -264,7 +264,8 @@ export default {
           justify-content: space-between;
           // align-items: center;
           .stick {
-            padding:3px 5px;
+            padding:2px 4px 1px 4px;
+            border:1px solid white;
             display: inline-block;
             white-space: nowrap;
             border-radius: 2px;
