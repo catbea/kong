@@ -32,7 +32,7 @@ const state = {
     existNewCoupons: '',
     existNewProject: '',
     givePrice: 0,
-    id: '4149',
+    id: '705',
     ifView: false,
     institutionId: '46',
     institutionLogo: '',

@@ -9,8 +9,11 @@
   </div>
 </template>
 <script>
+import commonService from 'SERVICE/commonService'
 import Navbar from '@/components/Common/Navbar'
 import Tabbar from '@/components/Common/Tabbar'
+import { mapGetters } from 'vuex'
+import { webimLogin, callbackaddMsgCount } from "@/utils/im/receive_new_msg.js";
 export default {
   components: {
     Navbar,
@@ -18,11 +21,33 @@ export default {
   },
   mounted() {
     // document.addEventListener('touchstart', this.handler, false)
+    this.$nextTick(() => {
+      this.getUserSig();
+    })
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   methods:{
     // handler(e){
     //   e.preventDefault()
     // }
+    /**
+     * im获取凭证
+     */
+    async getUserSig () {
+      let _this = this
+      let userId = this.userInfo.id
+      let parm = {
+        "userType": 2,
+        "userId": userId
+      }
+      console.log(parm)
+      const res = await commonService.getUserSig(2, userId)
+      console.log(res)
+      webimLogin(res.skdAppid, "agent_" + userId, res.accountType, res.usersig, res.isLogOn);
+      // callbackaddMsgCount(this.getImMsgCount);
+    }
   }
 }
 </script>

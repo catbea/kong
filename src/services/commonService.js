@@ -109,5 +109,18 @@ class CommonService {
     })
   }
 
+  /**
+   * 获取聊天
+   */
+  getUserSig(userType, userId) {
+    return xhr({
+      url: '/cpIM/getUserSig',
+      body: {
+        userType,
+        userId
+      }
+    })
+  }
+
 }
 export default new CommonService()
