@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
+import { Dialog,Toast } from 'vant'
 import marketService from 'SERVICE/marketService'
 export default {
   created() {
@@ -54,7 +54,17 @@ export default {
     console.log(this.linkerId,this.errorType,this.introduct,this.appType,2222222)
      let res= await marketService.submitCorrection(this.linkerId,this.errorType,this.introduct,this.appType)
       console.log(res,'提交数据')
+      this.verify()
       this.introduct=''
+    },
+    verify(){//验证
+    if(this.introduct===''&&this.errorType===null){
+      Toast('请填写错误类型和内容')
+    }else if(this.introduct===''){
+      Toast('请填写内容')
+    }else if(this.errorType===null){
+      Toast('请填写错误类型')
+    }else{
       Dialog.alert({
         message: '提交成功，我们将尽快跟进处理反馈内容',
         className:'error-correction',
@@ -64,6 +74,7 @@ export default {
       });
     }
   }
+}
 }
 </script>
 <style lang="less">

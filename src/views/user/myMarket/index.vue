@@ -103,7 +103,7 @@ export default {
       const res = await userService.changeMarketData()
     },
     async getRecommendInfo () {//推荐楼盘的数据
-      const res = await userService.getRecommend(4493)
+      const res = await userService.getRecommend()
       this.recommendList = res
       this.master()
       this.common()
@@ -125,11 +125,11 @@ export default {
       })
     },
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
-      const resShow = await userService.getMyMarket(4493,0)
+      const resShow = await userService.getMyMarket(0)
       this.marketList=resShow.records
-      const resNotShow = await userService.getMyMarket(4493,1)
+      const resNotShow = await userService.getMyMarket(1)
       this.marketList=this.marketList.concat(resNotShow.records)
-      if(this.marketList.length<=0){
+      if(this.marketList.length==0){
         this.marketShow=false
       }else{
         this.marketShow=true
