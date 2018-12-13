@@ -3,7 +3,7 @@
     <div class="build" v-show="status === 1">
       <div id="show-container">
         <div class="card-img"></div>
-        <img class="avatar-img" :src="avatvrImg" alt="">
+        <img class="avatar-img" :src="userInfo.avatarUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="logoImg">
         <div class="user-base-info">
@@ -42,7 +42,6 @@ export default {
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     userInfo: {},
     status: 1,
-    avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg'
     // IMG_LIST: [
     //   'http://phga1f2sd.bkt.clouddn.com/0000.jpg',
     //   'http://phga1f2sd.bkt.clouddn.com/0001.jpg',
@@ -74,10 +73,11 @@ export default {
           qrcode: result.miniQrCode,
           phone: result.mobile,
           signature: result.signature,
-          address: '深圳南山区创业路门店',
-          nickname: 'JIaWei Zhang',
-          company: '国际人口贩卖股份有限公司',
-          name: result.agentName
+          address: result.enterpriseAddress,
+          nickname: result.pinyin,
+          company: result.enterpriseName,
+          name: result.agentName,
+          avatarUrl:result.avatarUrl
         }
       }
     },

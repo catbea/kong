@@ -44,7 +44,6 @@ export default {
     this.$store.commit(types.TABBAR, false)
     this.getPosterInfo(this.buildId)
   },
-
   data() {
     return {
       avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg',
@@ -100,8 +99,11 @@ export default {
     > .avatar-img {
       position: absolute;
       width: 300px;
-      height: 400px;
+      height: 300px;
       border-radius: 10px;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center top;
     }
 
     > .cover-img {

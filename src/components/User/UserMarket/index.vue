@@ -32,7 +32,7 @@
             </div>
             <span
               class="bg_img icon-share"
-              @click.stop="usmarIconReturn"
+              @click.stop="shareMarket"
               :style="{backgroundImage:'url('+imgShare+')'}"
             ></span>
           </li>
@@ -202,8 +202,8 @@ export default {
     apostropheReturn () {
       this.$emit("apostropheReturn", 1)
     },
-    usmarIconReturn () {
-      this.$emit('usmarIconReturn', 1)
+    shareMarket() {
+      this.$router.push('/marketDetail/share')
     },
     skipMarketRetuen () {
       this.$emit('skipMarketRetuen', 1)

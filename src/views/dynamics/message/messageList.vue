@@ -4,7 +4,7 @@
       <div class="messageInfo-sys" @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
-             <button  :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-num' :'messageInfo-sys-nums' "   v-if="sysMessage.unreadMsgCount != 0 " >
+             <button  :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "   v-if="sysMessage.unreadMsgCount != 0 " >
                <span v-if="sysMessage.unreadMsgCount > 99">99+</span>
                <span v-else>{{sysMessage.unreadMsgCount}}</span>
              </button>
@@ -13,7 +13,7 @@
           <span class="messageInfo-sys-right">
             <p class="sys-right-top">
               系统消息
-              <span class="sys-right-time">{{sysMessage.createTime | dateFormatterToHuman}}</span>
+              <span class="sys-right-time" v-show="sysMessage.createTime !='' ">{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
             <p class="sys-right-btn">{{sysMessage.content}}</p>
           </span>

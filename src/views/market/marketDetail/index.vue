@@ -25,8 +25,9 @@
               class="head-portrait bg_img"
               :style="{backgroundImage:'url('+linkerInfo.customerList[0].clientImg+')'}"
             ></div>-->
-
-            <avatar class="head-portrait" :avatar="avatarCompute"></avatar>
+            <transition name="fade">
+            <avatar class="head-portrait" :avatar="avatarCompute" v-if="head"></avatar>
+            </transition>
           </div>
         </div>
         <specific-marketDetail :info="linkerInfo&&linkerInfo"></specific-marketDetail>
@@ -113,17 +114,19 @@ export default {
 
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
+    // this.head=true
   },
   created() {
     this.linkerId = this.$route.params.id
     this.getMarketDetailPhotoInfo()
     this.$store.commit(types.USER_BUILD_INFO, this.linkerId)
-
+    
     this.getLinkerDetail(this.linkerId)
     this.skipMoreContent()
     this.getHouseAroundType(this.linkerId)
   },
   data: () => ({
+    head:false,
     photoButton:true,
     linkerId: '',
     linkerInfo: null,
@@ -247,6 +250,12 @@ export default {
 .marketDetail-page {
   overflow: auto;
   background: #ffffff;
+  .fade-enter-active, .fade-leave-active {
+  transition: opacity 5s;
+    }
+    .fade-enter, .fade-leave-to{
+      opacity: 0;
+    }
   .van-tabs__wrap--scrollable .van-tab {
     flex: 1;
   }

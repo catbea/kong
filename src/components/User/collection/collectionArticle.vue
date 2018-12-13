@@ -1,6 +1,6 @@
 <template>
   <div class="collection-container">
-    <div class="collection-list" v-if="data" v-for="(item,key) in data" :key="key">
+    <div class="collection-list" v-if="data" v-for="(item,key) in data" :key="key" @click="gocollectionInfo(item)">
       <span class="collection-list-left">
         <p class="list-left-title">{{item.title}}</p>
         <p class="list-left-conter" v-html="item.subTitle"></p>
@@ -45,9 +45,18 @@ export default {
         divIdNo: 'collectiontabno',
         deleteType: deleteType,
         infoId: infoId,
-        index: key
+        index: key,
+        type:'goCollection'
       }
       this.$emit('myclick', parm)
+    },
+    gocollectionInfo(item){
+      let parm = {
+        type:'goCollectionInfo',
+        id:item.id,
+        city:item.city
+      }
+      this.$emit("myclick",parm)
     }
   }
 }

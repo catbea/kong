@@ -51,27 +51,32 @@ export default {
   },
 
   methods: {
+    // selectOrganiz(model) {
+    //   let tempId = window.localStorage.getItem('tempLast')
+    //   if (tempId != -1) {
+    //     let dom = document.getElementById(`checkbox-${tempId}`) //this.$refs[`checkbox-${tempId}`]
+    //     console.log(dom.children[0].classList.remove('van-checkbox__icon--checked'))
+    //     // this.$refs[`checkbox-${tempId}`].checked = false
+    //     dom.children[0].classList.remove('van-checkbox__icon--checked')
+    //   }
+    //   window.localStorage.setItem('tempLast', model.id)
+
+    //   // console.log(model.id)
+    //   // this.$ref[`checkbox-${this.last}`]
+
+    //   // console.log(this.$refs.checkbox)
+    //   // console.log('dom');
+    //   // let comp = this.$refs[`checkbox-${model.id}`]
+    //   // comp.checked = false
+    //   // console.log(this.$refs[`checkbox-${model.id}`])
+
+    //   // console.log(model)
+
+    //   // this.$emit('clickListener', model)
+    // },
+
     selectOrganiz(model) {
-      let tempId = window.localStorage.getItem('tempLast')
-      if (tempId != -1) {
-        let dom = document.getElementById(`checkbox-${tempId}`)//this.$refs[`checkbox-${tempId}`]
-        console.log(dom.children[0].classList.remove('van-checkbox__icon--checked'));
-        // this.$refs[`checkbox-${tempId}`].checked = false
-      }
-      window.localStorage.setItem('tempLast', model.id)
-
-      // console.log(model.id)
-      // this.$ref[`checkbox-${this.last}`]
-
-      // console.log(this.$refs.checkbox)
-      // console.log('dom');
-      // let comp = this.$refs[`checkbox-${model.id}`]
-      // comp.checked = false
-      // console.log(this.$refs[`checkbox-${model.id}`])
-
-      // console.log(model)
-
-      // this.$emit('clickListener', model)
+       this.$emit('clickListener', model)
     },
 
     toggle: function() {

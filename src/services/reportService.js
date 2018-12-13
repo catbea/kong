@@ -40,6 +40,7 @@ class reportService {
    */
   addReportInfo(clientId, clientName, clientMobile, linkerId, linkerName, distributorId, institutionId) {
     return xhr({
+      method:'POST',
       url: '/customerFilling/addFilingInfo',
       body: {
         clientId,
