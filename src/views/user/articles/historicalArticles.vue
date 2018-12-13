@@ -7,7 +7,7 @@
           <router-link :to="{name:'updateArticles',params: {total:total }}">编辑</router-link>
         </span>
       </div>
-      <discover-list :data="historyList"></discover-list>
+      <discover-list :data="historyList" @click="GOheadline"></discover-list>
     </div>
     <div class="historicalArticles-null" v-show="historyList.length == '' ">
       <null-articles :nullIcon="nullIcon" :nullcontent="nullcontent"></null-articles>
@@ -52,6 +52,10 @@ export default {
       }
 
       this.total = res.total
+    },
+    GOheadline(discover){
+      //跳转到房产头条
+      this.$router.push({name: 'discover-detail', params: {id: discover.id, city: discover.city}})
     }
   }
 }

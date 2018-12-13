@@ -14,7 +14,8 @@
           <div class="estate-location">{{`${info.city} ${info.county?info.county:''}`}}</div>
           <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
           <div class="estate-info">
-            <p class="estate-price">{{info.price | priceFormart }} {{info.priceUnit}}</p>
+            <!-- <p class="estate-price">{{info.price | priceFormart }} {{info.priceUnit}}</p> -->
+            <p class="estate-price">{{info.averagePrice}}</p>
             <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
           </div>
         </div>
@@ -29,24 +30,33 @@
           <span class="sensitive-area">{{info.area}}</span> 比较敏感，主要关注
           <span class="sensitive-area">{{info.attentionTag}}</span> 等楼盘周边配套
         </div>
+        <intention-progress :progress="info.progress" :color="info.color" :textColor="info.textColor"></intention-progress>
+        <div class="commission">
+            <img :src="commissionImg" class="commission-img">
+            <span class="commission-text">{{info.commissionProgram}}</span>
+        </div>
       </div>
     </div>
-    <slot name="desc"></slot>
-    <div class="rebate"></div>
   </div>
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup'
+import IntentionProgress from 'COMP/IntentionProgress'
 export default {
   props: {
-    info: { type: Object }
+    info: { type: Object },
   },
   components: {
-    TagGroup
+    TagGroup,
+    IntentionProgress
   },
   data: () => ({
-    panoramaImg: require('IMG/system/icon_panorama@2x.png')
+    panoramaImg: require('IMG/system/icon_panorama@2x.png'),
+    commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
   }),
+  created() {
+      
+  },
   methods: {
     godynamicsInfo() {
       this.$emit('click', this.info)
@@ -60,8 +70,7 @@ export default {
   margin-top: 20px;
   .main-container {
     margin: 0 16px 30px 16px;
-    padding-left: 16px;
-    padding-bottom: 20px;
+    padding: 0 16px 20px 16px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -123,6 +132,7 @@ export default {
       .intention {
         color: #333333;
         font-size: 12px;
+        margin-bottom: 4px;
         .intention-house-type {
           color: #007ae6;
           font-size: 12px;
@@ -131,11 +141,30 @@ export default {
       .sensitive {
         color: #333333;
         font-size: 12px;
+        margin-bottom: 10px;
         .sensitive-area {
           color: #007ae6;
           font-size: 12px;
         }
       }
+      .commission {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          background-color: #F7F9FA;
+          padding: 5px 11px;
+          margin-top: 16px;
+          .commission-img {
+              width: 16px;
+              height: 16px;
+          }
+          .commission-text {
+              color: #333333;
+              font-size: 15px;
+              margin-left: 5px;
+            }
+      }
+      
     }
   }
 }

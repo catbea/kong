@@ -1,10 +1,10 @@
 <template>
   <div class="user-myCoupon-page">
     
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated >
           <van-tab v-for="(item,index) in nameList" :key="index" :title="item.title+item.num" class="list-wrap">
             <keep-alive>
-                <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'"   @load="onLoad">
+                <van-list :offset="100" v-model="loading" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad" v-if="!item.show">
                   <!-- <div class="coupon-content"> -->
                   <coupon-item v-for="(itemA,indexA) in item.list" 
                   @skipHandle='returnSkipHandle'
@@ -12,10 +12,10 @@
                   <!-- </div> -->
                 </van-list>
             </keep-alive>
+            <div v-if="item.show" class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
+            <p v-if="item.show" class="hint">暂无优惠券</p>
           </van-tab>
       </van-tabs>
-    <div v-if="true" class="not-available bg_img" :style="{backgroundImage:'url('+availableImg+')'}"></div>
-    <p v-if="true" class="hint">暂无优惠券</p>
   </div>
 </template>
 <script>
@@ -31,9 +31,9 @@ export default {
     loading: false,
     finished: false,
     nameList: [
-      { title: '未使用', num: 0, list: [], index: 0, page: 1, finished: false,status:0},
-      { title: '使用记录', num: 0, list: [], index: 1, page: 1, finished: false,status:1 },
-      { title: '已过期', num: 0, list: [], index: 2, page: 1, finished: false,status:2 }
+      { title: '未使用', num: 0, list: [], index: 0, page: 1, finished: false,status:0,show:false},
+      { title: '使用记录', num: 0, list: [], index: 1, page: 1, finished: false,status:1,show:false },
+      { title: '已过期', num: 0, list: [], index: 2, page: 1, finished: false,status:2,show:false }
     ],
     activeIndex: 0,
     index: null,
@@ -52,21 +52,34 @@ export default {
   computed:{...mapState({
       isVip:state=>state.user.userInfo.isVip
     })
-  }
-  ,
+  },
   created() {
-
     const _this = this
     this.notUse().then(res => {
       _this.nameList[0].num = res.total
+      if(_this.nameList[0].num==0){
+        _this.nameList[0].show=true
+      }else{
+        _this.nameList[0].show=false
+      }
       console.log(res,'已使用的数据')
     })
     this.useRecord().then(res => {
       _this.nameList[1].num = res.total
+      if(_this.nameList[1].num==0){
+        _this.nameList[1].show=true
+      }else{
+        _this.nameList[1].show=false
+      }
       console.log(res,'使用记录的数据')
     })
     this.alreadyPast().then(res => {
       _this.nameList[2].num = res.total
+      if(_this.nameList[2].num==0){
+        _this.nameList[2].show=true
+      }else{
+        _this.nameList[2].show=false
+      }
       console.log(res,'已过期的数据')
     })
   },
