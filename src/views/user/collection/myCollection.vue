@@ -152,7 +152,8 @@ export default {
     },
     //收藏文章
     async gocollection(cons) {
-      if(cons.type == 'goCollection'){
+      debugger
+      if(cons.type === 'goCollection'){
          let index = cons.index
       if (this.collectionList[index].deleteType == 1) {
         this.collectionList[index].deleteType = 0
@@ -161,7 +162,7 @@ export default {
         this.collectionList[index].deleteType = 1
         await userService.getlinkerCollection(cons.infoId, 1)
       }
-      }else if(cons.type == 'goCollectionInfo'){
+      }else if(cons.type === 'goCollectionInfo'){
          this.$router.push({name: 'discover-detail', params: {id: cons.id, city: cons.city}})
       }
      

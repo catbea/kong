@@ -1,6 +1,6 @@
 <template>
   <div class="collection-container">
-    <div class="collection-list" v-if="data" v-for="(item,key) in data" :key="key" @click="gocollectionInfo(item)">
+    <div class="collection-list" v-if="data" v-for="(item,key) in data" :key="key"  @click ="gocollectionInfo(item)">
       <span class="collection-list-left">
         <p class="list-left-title">{{item.title}}</p>
         <p class="list-left-conter" v-html="item.subTitle"></p>
@@ -8,7 +8,7 @@
         <span
           id="collectiontabok"
           class="list-left-tab-ok"
-          @click="gocollection(item.deleteType,item.id,key)"
+          @click.native="gocollection(item.deleteType,item.id,key)"
           v-show="item.deleteType == 1"
            style="color:#007AE6"
         >收藏</span>
@@ -16,7 +16,7 @@
           class="list-left-tab-no"
           v-show="item.deleteType == 0"
           id="collectiontabno"
-          @click="gocollection(item.deleteType,item.id,key)"
+          @click.native="gocollection(item.deleteType,item.id,key)"
           style="color:#AFB2C3"
         >取消收藏</span>
       </span>
@@ -36,6 +36,7 @@ export default {
   props: {
     data: { type: Array },
     info: { type: String }
+
   },
   methods: {
     gocollection(deleteType, infoId, key) {
