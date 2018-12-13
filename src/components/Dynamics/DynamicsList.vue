@@ -20,15 +20,17 @@
                 </span>
               </span>
               <span class="list-agent-right">
-                <p class="agent-right-num">{{item.intentionality}}</p>
+                <p class="agent-right-num"  v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}" >{{item.intentionality}}%</p>
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
             <div class="dynamics-list-content" @click="godynamicsList">
-              <p>查看浏览了楼盘  <span>{{item.objectName}}</span></p>
+              <p v-show="item.type == 2">查看浏览了楼盘  <span>{{item.objectName}}</span></p>
+              <p v-show="item.type == 1">浏览了 <span class="dynamics-list-card">你的名片</span></p>
+              <p v-show="item.type == 3">浏览了 <span class="dynamics-list-card">文章</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}</span></p>
-              <p>累计浏览<span>{{item.todayClickCount }}次</span>,名片，平均停留<span>{{item.totalTime}}s</span></p>
+              <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
+              <p>累计浏览<span>{{item.todayClickCount }}次</span>,名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
@@ -183,6 +185,14 @@ export default {
       > p span {
         color: rgba(0, 122, 230, 1);
       }
+    }
+    .dynamics-list-card{
+      font-size:14px;
+      font-family:PingFang-SC-Regular;
+      font-weight:400;
+      color:#007AE6;
+      line-height:21px;
+      
     }
     > .dynamics-list-btn {
       height: 40px;
