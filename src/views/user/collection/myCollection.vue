@@ -4,7 +4,7 @@
       <van-tabs color="#007AE6" :line-width="15" :swipe-threshold="6">
         <van-tab title="收藏楼盘">
           <collection-null
-            v-show="this.listEmpty == true"
+            v-show="listEmpty == true"
             :collectionTips="collectionTips"
             :collectionRemar="collectionRemar"
             :collectionLike="collectionLike"
@@ -68,7 +68,7 @@
         <van-tab title="收藏文章">
           <div class="collection-top">
             <collection-null
-              v-show="this.articleEmpty == true"
+              v-show="articleEmpty == true"
               :collectionTips="ArticleTips"
               :collectionRemar="ArticleRemar"
               :collectionLike="collectionLike"
@@ -130,16 +130,10 @@ export default {
       const res = await userService.getqueryLinkerList()
       this.dynamicsList = res.list.records
       this.listEmpty = res.listEmpty
-      //status (integer, optional): 收藏状态：0-未收藏；1-已收藏 ,
-      // for (let i = 0; i < res.list.records.length; i++) {
-      //   if (res.list.records[i].status == 0) {
-      //     this.dynamicsList[i].isCollection = '收藏'
-      //   } else {
-      //     this.dynamicsList[i].isCollection = '取消收藏'
-      //   }
-      // }
+     
     },
     async getcollectionList() {
+     
       const res = await userService.getqueryInfoList()
       this.collectionList = res.list.records
       this.articleEmpty = res.listEmpty
@@ -158,7 +152,8 @@ export default {
     },
     //收藏文章
     async gocollection(cons) {
-      let index = cons.index
+      if(cons.type == 'goCollection'){
+         let index = cons.index
       if (this.collectionList[index].deleteType == 1) {
         this.collectionList[index].deleteType = 0
         await userService.getlinkerCollection(cons.infoId, 0)
@@ -166,7 +161,12 @@ export default {
         this.collectionList[index].deleteType = 1
         await userService.getlinkerCollection(cons.infoId, 1)
       }
-    }
+      }else if(cons.type == 'goCollectionInfo'){
+         this.$router.push({name: 'discover-detail', params: {id: cons.id, city: cons.city}})
+      }
+     
+    },
+   
   }
 }
 </script>
