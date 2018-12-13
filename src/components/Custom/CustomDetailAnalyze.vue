@@ -3,7 +3,7 @@
     <div class="shadow_box pie-container" v-if="!pieChartHidden">
       <h5 class="chart-title">客户兴趣占比</h5>
       <pie-chart v-if="pieData.length" :pieData="pieData"></pie-chart>
-      <p class="chart-desc">该客户还未有感兴趣的楼盘，请再接再厉多多 推荐，掌握客户的购房意向吧~</p>
+      <p class="chart-desc">该客户还未有感兴趣的楼盘，请再接再厉多多推荐，掌握客户的购房意向吧~</p>
     </div>
     <div class="shadow_box line-container" v-if="!lineChartHidden">
       <h5 class="chart-title">近7日活跃度</h5>
@@ -45,7 +45,8 @@
     </div>
     <div class="list">
       <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item"
-        :progress="analysisListData.progress" :color="analysisListData.color" :textColor="analysisListData.textColor">
+        :progress="analysisListData.progress" :color="analysisListData.color" :textColor="analysisListData.textColor"
+        @renew="renewHandler(item)">
       </analyze-item>
     </div>
   </div>
@@ -87,6 +88,9 @@ export default {
     },
     consultHandler() {
       this.$emit('onconsult')
+    },
+    renewHandler(item) {
+      this.$emit('renew', item)
     }
   },
   components: {

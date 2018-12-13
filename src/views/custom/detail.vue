@@ -37,6 +37,7 @@
             :barChartHidden="barChartHidden"
             :barData="barData"
             :analysisListData="analysisListData"
+            @renew="renewHandler"
           />
         </van-tab>
         <van-tab title="足迹">
@@ -68,7 +69,7 @@
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
-import { ImagePreview } from 'vant'
+import { ImagePreview, Dialog } from 'vant'
 import * as types from '@/store/mutation-types'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
 import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
@@ -190,6 +191,22 @@ export default {
         })
       }
     },
+    // 立即续费
+    renewHandler(val) {
+      console.log('renew', val)
+      if (val.sameDistributor == '0') {
+        Dialog.alert({
+          title: '该楼盘不可续费',
+          message: '非当前所属公司下楼盘无法开通续费',
+          confirmButtonText: '知道啦'
+        }).then(() => {
+          // on close
+        })
+      }else {
+        // this.$router.push(`/marketDetail/open${val.linkerId}`)
+        this.$router.push({name: 'marketDetail-open', params: {id: val.linkerId} })
+      }
+    },
     /**
      * 资料tab 点击事件
      */
@@ -230,7 +247,7 @@ export default {
         } else if (item.title == '行业') {
           this.pickerList = ['未知', 'IT/通信/互联网', '学生', '文化/艺术', '影视/娱乐', '金融', '医药/健康', '工业/制造业', '媒体/公关', '零售', '教育/科研', '其它']
         } else if (item.title == '购房目的') {
-          this.pickerList = ['未知', '学区房', '婚房', '工作换房', '改善型换房']
+          this.pickerList = ['未知', '学区房', '婚房', '工作换房', '投资', '安置老人', '改善型换房']
         }
       }
     },
@@ -354,6 +371,33 @@ export default {
         }
         item.color = color
         item.textColor = color
+        if (item.saleStatus == 0) {
+          item.saleStr = '热销中'
+        }else if (item.saleStatus == 1) {
+          item.saleStr = '即将发售'
+        }else {
+          item.saleStr = '售罄'
+        }
+        if (item.shelfFlag == 0) {
+          item.shelfStr = '上架'
+        }else {
+          item.shelfStr = '下架'
+        }
+        let tags = []
+        let tag
+        if (item.shelfFlag == 0) {
+          tag = item.saleStr
+        }else {
+          tag = '下架'
+        }
+        debugger
+        if (item.projectTagArr && item.projectTagArr.length > 0) {
+          item.projectTagArr.unshift(tag)
+          tags = item.projectTagArr
+        }else {
+          tags.push(tag)
+        }
+        item.linkerTags = tags
       }
       if (result.pages <= this.current) {
         this.finished = true
