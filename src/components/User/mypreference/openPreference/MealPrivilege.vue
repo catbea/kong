@@ -43,7 +43,7 @@ export default {
 <style lang="less">
 .meal-privilege-page {
   padding: 16px 0 0 16px;
-  width: 359px;
+  width: 100%;
   background: rgba(255, 255, 255, 1);
   margin: 10px 0 18px 0;
   .privilege {

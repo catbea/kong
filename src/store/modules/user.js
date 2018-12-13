@@ -91,6 +91,7 @@ const state = {
     latitude: '', // 纬度
     province: '', // 省
     city: '深圳市', // 市
+    selectedCity: '深圳市',
     county: '' // 区
   },
   reportAddInfo: {
