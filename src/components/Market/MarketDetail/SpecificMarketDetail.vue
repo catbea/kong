@@ -44,7 +44,7 @@ export default {
     info: { type: Object }
   },
   data: () => ({
-    commissionImg: require('IMG/user/collection/Rectangle@2x.png'),
+    commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png')
   }),
   methods: {

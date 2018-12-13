@@ -3,6 +3,7 @@
     <div style="margin-left:16px">
       <master-market
         :swipeList="swipeList"
+        :swipeShow='swipeShow'
       ></master-market>
     </div>
     <div style="margin-left:16px">
@@ -18,7 +19,7 @@
       <screen></screen>
     </div>
     <div class="user-market-box">
-      <div class="market-left" v-if="myMarketShow">
+      <div class="market-left" v-show="myMarketShow" v-if="marketShow">
       <user-market
         @usmarIconReturn="skipShareHandle"
         v-for="(item,index) in marketList"
@@ -31,7 +32,8 @@
       >
       </user-market>
       </div>
-      <div class="market-right" v-if="!myMarketShow">
+      <p v-if="!marketShow" class="notMarket">暂未开通任何楼盘</p>
+      <div class="market-right" v-show="!myMarketShow" v-if="marketShow">
       <close-market
         v-for="(item,index) in marketList"
         :key="index"
@@ -64,7 +66,8 @@ export default {
     CloseMarket
   },
   data: () => ({
-    agentId:705,
+    swipeShow:false,
+    marketShow:true,
     displayFlag: 0,
     recommendList: null,
     swipeList:[],
@@ -93,17 +96,23 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
+
   },
   methods: {
     async getChangeMarketData(){
       const res = await userService.changeMarketData()
     },
     async getRecommendInfo () {//推荐楼盘的数据
-      const res = await userService.getRecommend()
+      const res = await userService.getRecommend(4493)
       this.recommendList = res
       this.master()
       this.common()
      this.swipeList = this.masterList.concat(this.commonList)
+     if(this.swipeList.length==0){
+      this.swipeShow=false
+    }else{
+      this.swipeShow=true
+    }
     },
     master () {
       this.masterList = this.recommendList.filter((item) => {
@@ -116,10 +125,15 @@ export default {
       })
     },
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
-      const resShow = await userService.getMyMarket(0)
+      const resShow = await userService.getMyMarket(4493,0)
       this.marketList=resShow.records
-      const resNotShow = await userService.getMyMarket(1)
+      const resNotShow = await userService.getMyMarket(4493,1)
       this.marketList=this.marketList.concat(resNotShow.records)
+      if(this.marketList.length<=0){
+        this.marketShow=false
+      }else{
+        this.marketShow=true
+      }
     },
     returnHandle () {//切换展示与否
       this.myMarketShow = !this.myMarketShow
@@ -153,7 +167,17 @@ export default {
   height: auto !important;
   background: #ffffff;
   .user-market-box{
+    position: relative;
     display: flex;
+  .notMarket{
+    position:absolute;
+    margin-left:-60px;
+    margin-top:100px;
+    color:#666666;
+    top:50%;
+    left:50%;
+    font-size:15px;
+  }
     .market-left{
       width:100%;
       .user-market-page-box{

@@ -41,14 +41,14 @@ export default {
   margin-top: 20px;
   .register-title {
     color: #333333;
-    font-size: 24pt;
+    font-size: 24px;
     font-weight: 'Semibold';
     text-align: center;
     margin-top: 32px;
   }
   .register-subtitle {
     color: #666666;
-    font-size: 12pt;
+    font-size: 12px;
     font-weight: 'Regular';
     text-align: center;
     margin-bottom: 40px;
@@ -62,7 +62,7 @@ export default {
   .register-desc {
     margin-top: 12px;
     color: #969ea8;
-    font-size: 12pt;
+    font-size: 12px;
     font-weight: 'Regular';
     text-align: center;
   }

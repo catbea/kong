@@ -4,7 +4,7 @@
       <div class="meal-market-page-box-top">
         <span class="icon-check bg_img" :style="{backgroundImage:'url('+ (dataArr.isChecked ? checkColorImg:checkImg)+')'}"></span>
         <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
-          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
+          <p class="icon-discount bg_img" v-show="dataArr.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
@@ -45,7 +45,7 @@ export default {
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     imgShare: require('IMG/user/rectangle.png'),
     imgPlay: require('IMG/user/Oval@2x.png'),
-    imgCommission: require('IMG/user/collection/Rectangle@2x.png')
+    imgCommission: require('IMG/user/collection/icon_commission@2x.png')
   }),
   props: {
     dataArr: {

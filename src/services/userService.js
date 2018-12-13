@@ -168,22 +168,23 @@ class UserService {
   /**
    * 首页查看我的楼盘
    */
-  getMyMarket(displayFlag) {
+  getMyMarket(agentId,displayFlag) {
     //展示楼盘的数据
     return xhr({
       url: '/myLinker/myProject',
       body: {
+        agentId,
         displayFlag
       }
     })
   }
 
-  getRecommend() {
+  getRecommend(agentId) {
     //推荐楼盘的数据
     return xhr({
       url: '/myLinker/displayRecommendLinker',
       body: {
-        
+        agentId
       }
     })
   }
