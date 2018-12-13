@@ -226,5 +226,44 @@ class CustomService {
       body: customerInfoRequestVO
     })
   }
+
+  /**
+   * 获取消息列表
+   * @param {*} params
+   */
+  appMsgDtlList(params) {
+    return xhr({
+      url: '/cpIM/appMsgDtlList',
+      body: params
+    })
+  }
+
+  /**
+   * 设置消息已读
+   * @param {*} clientId
+   */
+  setMsgRead(clientId) {
+    return xhr({
+      url: '/cpIM/setMsgRead',
+      body: {
+        clientId
+      }
+    })
+  }
+
+  /**
+   * 根据mediaid获取mp3地址
+   * @param {*} mediaId
+   * @param appId
+   */
+  mediaIdTransToMp3Url(mediaId, appId) {
+    return xhr({
+      url: '/cpIM/mediaIdTransToMp3Url',
+      body: {
+        mediaId,
+        appId
+      }
+    })
+  }
 }
 export default new CustomService()

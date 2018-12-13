@@ -57,7 +57,7 @@ const state = {
     nickName: '离园则',
     parentUserId: '',
     // payCorpId: "ww5e4d879ddc307ea1",
-    // cropId: "ww8f6801ba5fd2a112",
+    cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
     theFirstTime:true,//新手引导
     payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',

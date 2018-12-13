@@ -182,7 +182,13 @@ export default {
     phoneHandler() {
       window.location.href = 'tel:' + this.clientMobile
     },
-    consultHandler() {},
+    consultHandler() {
+      this.$router.push({path: '/custom/message/message', query: {
+        clientId: this.clientId,
+        customerRemarkName: this.customBaseInfo.clientName,
+        headImgUrl: this.customBaseInfo.avatarUrl
+      }})
+    },
     previewAvatarUrl() {
       if (this.customBaseInfo.avatarUrl != '') {
         ImagePreview({

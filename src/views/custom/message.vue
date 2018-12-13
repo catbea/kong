@@ -2,13 +2,13 @@
   <div class="massage-info-body">
     <div class="massage-info-list" 　>
       <!--消息-->
-      <div class=" " style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:20px;top:0px;left:0px; overflow-y: scroll">
+      <div class=" " style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
         <!-- <yd-pullrefresh :callback="getmsgListnext" ref="pullrefreshDemo"> -->
-        <van-list
+        <van-pull-refresh
             v-model="loading"
-            :finished="finished"
-            :finished-text="'没有更多了'"
-            @load="getmsgListnext">
+            pulling-text="下拉加载下一页"
+            loosing-text="释放加载下一页"
+            @refresh="getmsgListnext">
           <div style="height: auto">
             <div class="massage-info-msg" v-for="(items,index) in msgList" v-bind:key="index">
               <div class="massage-info-msg-time">
@@ -20,21 +20,16 @@
                   <img @click='goDetails' class="massage-info-msg-customer-img"
                        v-if="headImgUrl   !='' && headImgUrl !=null && headImgUrl !=undefined"
                        v-bind:src="headImgUrl"/>
-                  <span class="msg-left"></span>
                   <div class="msg-customer-con" v-if="item.msgType=='1'">
                     {{item.content}}
                   </div>
-                  <div class="msg-customer-con-voice" v-if="item.msgType=='2'"
-                       @click="playVoice(item.content,item.id)">
-                    <img v-if="isplay==item.id" class="left-voice-img"
-                         src="@/assets/img/message/left_voice.gif">
-                    <img v-else class="left-voice-img"
-                         src="@/assets/img/message/Rectangle@3x.png"/>
+                  <div class="msg-customer-con-voice" v-if="item.msgType=='2'" @click="playVoice(item.content,item.id)">
+                    <img v-if="isplay==item.id" class="left-voice-img" src="@/assets/img/message/left_voice.gif">
+                    <img v-else class="left-voice-img" src="@/assets/img/message/Rectangle@3x.png"/>
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                   </div>
 
-                  <div class="msg_house_info" v-if="item.msgType==3"
-                       @click="gomarket(item.content.linkerId,item.content.linkerName)">
+                  <div class="msg_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
                     <div class='info-img'><img v-bind:src="item.content.avatarMediaid"/></div>
                     <div>
                       <div class='info-name'>{{item.content.linkerName}}</div>
@@ -45,29 +40,18 @@
                       </div>
                     </div>
                   </div>
-
-
                 </div>
                 <div :id="item.id" class="massage-info-msg-me" v-if="item.fromType == 2">
-                  <img class="massage-info-msg-me-img"
-                       v-if="avatar !='' && avatar  !=null && avatar  !=undefined"
-                       v-bind:src="avatar "/>
-                  <!--<img class="massage-info-msg-me-img" v-else-->
-                  <!--src="../../../assets/images/customer/default-head.png"/>-->
-                  <span class="msg-right"></span>
+                  <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="avatar"/>
                   <div class="msg-customer-con-me" v-if="item.msgType=='1'">
                     {{item.content}}
                   </div>
-                  <div class="msg-customer-con-me-voice" v-if="item.msgType=='2'"
-                       @click="playVoice(item.content,item.id)">
+                  <div class="msg-customer-con-me-voice" v-if="item.msgType=='2'" @click="playVoice(item.content,item.id)">
                     <div class="left-voice-time">{{item.audioTime}}″</div>
-                    <img v-if="isplay==item.id" class="left-voice-img"
-                         src="@/assets/img/message/right_voice.gif">
-                    <img v-else class="left-voice-img"
-                         src="@/assets/img/message/Path@3x.png"/>
+                    <img v-if="isplay==item.id" class="left-voice-img" src="@/assets/img/message/right_voice.gif">
+                    <img v-else class="left-voice-img" src="@/assets/img/message/Path@3x.png"/>
                   </div>
-                  <div class="msg_house_info" v-if="item.msgType==3"
-                       @click="gomarket(item.content.linkerId,item.content.linkerName)">
+                  <div class="msg_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
                     <div class='info-img'><img v-bind:src="item.content.avatarMediaid"/></div>
                     <div>
                       <div class='info-name'>{{item.content.linkerName}}</div>
@@ -81,16 +65,16 @@
                   <div class="msg-customer-con-me-status">
                     <p v-if="item.msgStatus==1" style="color: #FF7878">未读</p>
                     <p v-else>已读</p>
-                  </div>
-                  <div style="clear: both"></div>
+                   </div>
                 </div>
+                
               </div>
             </div>
             <div v-if="is_emjie==false" id="pyzmao" style="height: 0.6rem"></div>
             <div v-else id="pyzmao" style="height: 4.6rem"></div>
           </div>
         <!-- </yd-pullrefresh> -->
-        </van-list>
+        </van-pull-refresh>
       </div>
       <div id="msg_end" style="height:0px; overflow:hidden"></div>
       <div class="list-lower"></div>
@@ -131,6 +115,9 @@
       </div>
     </div>
     <div class="msg-emjie" v-show="is_emjie">
+        <span v-for="(itemone,emojikeyone) in emojiFactory"
+                              @click="emojiSelect(itemone.key)" style="font-size:0.5rem;margin:0.15rem;float:left;"
+                              :key="emojikeyone">{{getEmoji(itemone.tag)}}</span>
       <!-- <yd-slider autoplay="1000000" :loop='false'>
         <yd-slider-item>
                         <span v-for="(itemone,emojikeyone) in emojiFactory.slice(0,32)"
@@ -170,10 +157,10 @@
 </template>
 <script>
   import emoji from "@/utils/emoji"
-//   import Vue from 'vue';
-//   import moment from "moment";
-//   import {agentMsgDtlList, setMsgRead, mediaIdTransToMp3Url} from "../../../service/message";
   import {onSendMsg, initMsg, setToAccount} from "@/utils/im/receive_new_msg.js";
+  import { mapGetters } from 'vuex'
+  import commonService from 'SERVICE/commonService'
+  import customService from 'SERVICE/customService'
 
   export default {
     name: 'customerdetails',
@@ -182,12 +169,12 @@
         loading: false,
         finished: false,
         emojiFactory: [],
-        clientId: this.$route.query.clientId || 4149,
+        clientId: this.$route.query.clientId || 567,
         nickName: this.$route.query.customerRemarkName,
         clientInfo: '',
-        // agentId: JSON.parse(sessionStorage.getItem("userInfo")).userId,
-        // avatar: JSON.parse(sessionStorage.getItem("userInfo")).avatar,
-        headImgUrl: this.$route.query.headImgUrl,
+        agentId: '',
+        avatar:'',
+        headImgUrl: this.$route.query.headImgUrl || 'https://720ljq2test-10037467.file.myqcloud.com/header/qrcode/8bbf60d0c71d4962b8466c914712452c.png',
         msgList: [],
         def_btvalue: '按住 说话',
         isvoice: 0,//1代表是正在发送语音,
@@ -220,6 +207,9 @@
         is_temp: false
       };
     },
+    computed: {
+        ...mapGetters(['userInfo'])
+    },
     mounted() {
       this.$nextTick(() => {
         if (this.nickName != null && this.nickName != '' && this.nickName != undefined) {
@@ -227,6 +217,8 @@
         } else {
           document.title = '聊天';
         }
+        this.agentId = this.userInfo.id
+        this.avatar = this.userInfo.avatarUrl
         //加载emoji表情库
         this.emojiFactory = emoji.emojiFactory
         this.$_init();
@@ -252,7 +244,7 @@
         }
       },
       $_init() {
-        this.getmsgList();
+        this.getmsgListnext();
         //初始化聊天
         initMsg("client_" + this.clientId, this.addmsgInfo);
         this.setMsgRead();
@@ -299,48 +291,32 @@
           document.getElementById("pyzmao").scrollIntoView(true);
         }, 500);
       },
-      mediaIdTransToMp3Url(mediaId) {
-        var that = this;
-        var appId = sessionStorage.getItem("signappId");
-        var params = {
-          mediaId: mediaId,
-          appId: appId,
-        }
-        mediaIdTransToMp3Url(params).then(res => {
-          console.log(res)
-          if (res.data) {
-            this.message = res.data.map3Url
-            that.sendMessage(2, that.audioTime);
-          }
-        });
+      async mediaIdTransToMp3Url(mediaId) {
+        let appId = this.userInfo.cropId;
+        let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
+        console.log(res, 'mediaIdTransToMp3Url')
+        this.message = res.map3Url
+        this.sendMessage(2, this.audioTime);
+        // mediaIdTransToMp3Url(params).then(res => {
+        //   console.log(res)
+        //   if (res.data) {
+        //     this.message = res.data.map3Url
+        //     that.sendMessage(2, that.audioTime);
+        //   }
+        // });
       },
-      setMsgRead() {
-        var that = this;
-        var params = {
-          agentId: this.agentId,
-          clientId: this.clientId,
-          type: 2//1：小程序端2：经纪人端
-        }
-        setMsgRead(params).then(res => {
-          console.log(res)
-        });
+      async setMsgRead() {
+        let res = await customService.setMsgRead(this.clientId)
       },
-      getmsgList() {
+      async getmsgList() {
         var params = {
           agentId: this.agentId,
           clientId: this.clientId,
           current: 1,
           size: 10
         }
-        agentMsgDtlList(params).then(res => {
-          this.current = this.current + 1;
-          if (res.data) {
-            this.setList(res.data);
-          }
-          this.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
-
-          this.pyzmaoviwe();
-        });
+        let res = await customService.appMsgDtlList(params)
+        console.log(res)
       },
       //设置聊天记录的值
       setList(res) {
@@ -392,28 +368,34 @@
           that.msgList = totalLists
         }
       },
-      getmsgListnext() {
-
+      async getmsgListnext() {
         var params = {
-          agentId: this.agentId,
+        //   agentId: this.agentId,
           clientId: this.clientId,
           current: this.current,
           size: 10
         }
-        agentMsgDtlList(params).then(res => {
-          if (res.data && res.data.records.length > 0) {
-            this.current = this.current + 1;
-            this.setList(res.data);
-          } else {
-            this.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
-            return;
-          }
+        let res = await customService.appMsgDtlList(params)
+        this.setList(res);
+        this.loading = false;
+        this.current++;
+        // agentMsgDtlList(params).then(res => {
+        //   if (res.data && res.data.records.length > 0) {
+        //     this.current = this.current + 1;
+        //     this.setList(res.data);
+        //   } else {
+        //     this.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
+        //     return;
+        //   }
+        //   this.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
+        // });
+      }, 
 
-          this.$refs.pullrefreshDemo.$emit('ydui.pullrefresh.finishLoad');
-        });
-      }, touchmoveDefault: function (e) {
+      touchmoveDefault: function (e) {
         e.preventDefault();
-      }, startRecord(event) {
+      }, 
+
+      startRecord(event) {
         let _this = this
         _this.isvoice = 1;
         _this.def_btvalue = "松开 发送";
@@ -557,7 +539,7 @@
 
         }
 
-        var data = moment().format("HH:mm");
+        // var data = moment().format("HH:mm");
         var dats = new Date().getTime();
         var lists = this.msgList;
         /*说明已经有记录*/
@@ -666,127 +648,136 @@
 <style lang="less" scoped>
 .massage-info-body {
   width: 100%;
+  font-size: 13px;
+  padding:0;
+  margin: 0;
 }
 
 /* 消息*/
 .massage-info-msg {
-  padding: 0 0.3rem;
+  padding: 0 15px;
   .massage-info-msg-time {
-    margin-top: 0.5rem;
-    margin-bottom: 0.38rem;
+    margin-top: 25px;
+    margin-bottom: 19px;
     text-align: center;
-    font-size: 0.24rem;
+    font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
-    line-height: 0.34rem;
+    line-height: 17px;
   }
   .massage-info-msg-time span {
-    width: 0.72rem;
-    height: 0.40rem;
+    width: 36px;
+    height: 20px;
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 0.04rem;
-    padding: 0.1rem 0.2rem;
+    border-radius: 2px;
+    padding: 5px 10px;
   }
   .massage-info-msg-customer {
     display: flex;
-    margin-top: 0.1rem;
+    margin-top: 20px;
     text-align: left;
   }
   .massage-info-msg-customer-img {
-    width: 0.80rem;
-    height: 0.80rem;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    margin-right: 0.2rem;
+    margin-right: 10px;
     //margin-left: 0.44rem;
-    margin-top: 0.2rem;
+    margin-top: 10px;
 
   }
   .msg-customer-con {
-    font-size: 0.30rem;
+    font-size: 15px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
-    line-height: 0.42rem;
-    margin-top: 0.2rem;
+    line-height: 21px;
+    margin-top: 10px;
     max-width: 60%;
     overflow: hidden;
     word-break: break-all;
     word-wrap: break-word;
     background: rgba(255, 255, 255, 1);
     position: relative;
-    border-radius: 0.08rem;
-    padding: 0.2rem;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background: #eee;
+    padding: 10px;
   }
   .msg-customer-con-status {
-    padding-top: 0.2rem;
+    padding-top: 12px;
     position: relative;
-    font-size: .24rem;
+    font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(187, 187, 187, 1);
-    line-height: .34rem;
+    line-height: 17px;
     width: 15%;
   }
   .msg-customer-con-status p {
     position: absolute;
     bottom: 0;
-    padding-left: 0.2rem;
+    padding-left: 10px;
 
   }
 
   .msg-customer-con-voice {
-    font-size: 0.30rem;
+    font-size: 15px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
-    line-height: 0.42rem;
-    margin-top: 0.2rem;
+    line-height: 21px;
+    margin-top: 10px;
     max-width: 60%;
     overflow: hidden;
     word-break: break-all;
     word-wrap: break-word;
-    background: rgba(255, 255, 255, 1);
+    background: #eee;
     position: relative;
-    border-radius: 0.08rem;
-    padding: 0.2rem;
-    padding-right: 0.5rem;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 10px;
+    padding-right: 25px;
     display: flex;
     .left-voice-img {
-      width: 0.48rem;
-      height: 0.48rem;
+      width: 24px;
+      height: 24px;
     }
     .left-voice-time {
-      margin-left: 0.1rem;
-      font-size: .28rem;
+      margin-left: 5px;
+      font-size: 14px;
       font-family: PingFang-SC-Regular;
       font-weight: 400;
       color: rgba(0, 0, 0, 1);
-      line-height: .45rem;
+      line-height: 23px;
     }
   }
 
   .msg-left {
     width: 0;
     height: 0;
-    border-top: 0.2rem solid transparent;
-    border-right: 0.3rem solid rgba(255, 255, 255, 1);
-    border-bottom: 0.2rem solid transparent;
-    margin-top: 0.4rem;
+    border-top: 10px solid transparent;
+    border-right: 15px solid rgba(255, 255, 255, 1);
+    border-bottom: 10px solid transparent;
+    margin-top: 20px;
   }
 
   .massage-info-msg-me {
-    margin-top: 0.32rem;
+    margin-top: 20px;
     display: flex;
     flex-direction: row-reverse;
   }
   .massage-info-msg-me-img {
-
-    width: 0.80rem;
-    height: 0.80rem;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     //margin-right: 0.44rem;
-    margin-left: 0.2rem;
+    margin-left: 10px;
   }
 
   .msg-customer-con-me {
@@ -794,32 +785,32 @@
     overflow: hidden;
     word-break: break-all;
     word-wrap: break-word;
-    font-size: 0.30rem;
+    font-size: 15px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(255,255,255,1);
-    line-height: 0.42rem;
-    //margin-top: 0.2rem;
+    line-height: 21px;
     position: relative;
-    border-radius: 0.08rem;
-    padding: 0.2rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    padding: 10px;
     background: #017FFF;
     text-align: left;
 
   }
   .msg-customer-con-me-status {
-    padding-top: 0.2rem;
+    padding-top: 10px;
     position: relative;
-    font-size: .24rem;
-    font-family: PingFangSC-Regular;
-    font-weight: 400;
+    font-size: 12px;
     color: rgba(187, 187, 187, 1);
-    width: 0.8rem;
+    width: 40px;
   }
   .msg-customer-con-me-status p {
     position: absolute;
     bottom: 0;
-    padding-right: 0.2rem;
+    padding-right: 10px;
   }
 
 
@@ -828,29 +819,29 @@
     overflow: hidden;
     word-break: break-all;
     word-wrap: break-word;
-    font-size: 0.30rem;
+    font-size: 15px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
-    line-height: 0.42rem;
+    line-height: 21px;
     //margin-top: 0.2rem;
     position: relative;
-    border-radius: 0.08rem;
-    padding: 0.2rem;
-    padding-left: 0.5rem;
+    border-radius: 4px;
+    padding: 10px;
+    padding-left: 25px;
     background: rgba(1,127,255,1);
     display: flex;
     .left-voice-img {
-      width: 0.48rem;
-      height: 0.48rem;
+      width: 24px;
+      height: 24px;
     }
     .left-voice-time {
-      margin-right: 0.1rem;
-      font-size: .28rem;
+      margin-right: 5px;
+      font-size: 14px;
       font-family: PingFang-SC-Regular;
       font-weight: 400;
       color: rgba(0, 0, 0, 1);
-      line-height: .45rem;
+      line-height: 23px;
     }
   }
 
@@ -858,11 +849,10 @@
     float: right;
     width: 0;
     height: 0;
-    border-top: 0.2rem solid transparent;
-    border-left: 0.3rem solid rgba(1,127,255,1);
-    border-bottom: 0.2rem solid transparent;
-    margin-top: 0.2rem;
-
+    border-top: 10px solid transparent;
+    border-left: 15px solid rgba(1,127,255,1);
+    border-bottom: 10px solid transparent;
+    margin-top: 10px;
   }
 
 }
@@ -871,52 +861,51 @@
 /* 底部*/
 .massage-info-lower-emjie {
   position: fixed;
-  bottom: 3.8rem;
-  height: 0.98rem;
+  bottom: 190px;
+  height: 49px;
   display: flex;
   text-align: center;
   width: 100%;
   background: rgba(250, 250, 250, 1);
-  padding: 0.16rem 0.2rem;
+  padding: 8px 10px;
 }
 
 .massage-info-lower {
   position: fixed;
   bottom: 0;
-  height: 0.98rem;
+  height: 49px;
   display: flex;
   text-align: center;
   width: 100%;
   background: rgba(250, 250, 250, 1);
-  padding: 0.16rem 0.2rem;
+  padding: 8px 10px;
 }
 
 .massage-info-lower-cen {
   display: flex;
   width: 60%;
-  margin-left: 0.3rem;
+  margin-left: 15px;
   border: none;
-  height: 0.72rem;
+  height: 36px;
 }
 
 .massage-info-lower-cen input {
   width: 100%;
-  padding-left: 0.2rem;
-  border-radius: 0.08rem;
+  padding-left: 12px;
+  border-radius: 4px;
   border: 1px solid rgba(221, 221, 221, 1);
-  height: 0.72rem;
-  font-size: 120%;
+  height: 36px;
 }
 
 .msgContentvoice {
   text-align: center;
   width: 100%;
-  font-size: .30rem;
+  font-size: 15px;
   font-family: PingFang-SC-Medium;
   font-weight: 500;
   color: rgba(51, 51, 51, 1);
-  line-height: .66rem;
-  border-radius: 0.08rem;
+  line-height: 33px;
+  border-radius: 4px;
   border: 1px solid rgba(221, 221, 221, 1);
 
   -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
@@ -932,8 +921,8 @@
 }
 
 .massage-info-lower-left img {
-  width: 0.64rem;
-  height: 0.64rem;
+  width: 32px;
+  height: 32px;
 }
 
 .massage-info-lower-right {
@@ -943,16 +932,16 @@
 
 .lower-right-bnt .send {
   width: 0.94rem;
-  height: 0.64rem;
+  height: 32px;
   margin-left: 0.1rem;
-  line-height: 0.64rem;
+  line-height: 32px;
   background: #017FFF;
   border-radius: 0.08rem;
   color: white;
 }
 .lower-right-bnt .selTempl {
-  width: 0.64rem;
-  height: 0.64rem;
+  width: 32px;
+  height: 32px;
 }
 
 .lower-right-bnt {
@@ -960,19 +949,19 @@
 }
 
 .lower-right-bnt .quick {
-  width: 0.64rem;
-  height: 0.64rem;
-  margin-left: 0.2rem;
+  width: 32px;
+  height: 32px;
+  margin-left: 10px;
 }
 
 .lower-right-bnt .face {
-  width: 0.64rem;
-  height: 0.64rem;
-  margin-left: 0.25rem;
+  width: 32px;
+  height: 32px;
+  margin-left: 13px;
 }
 
 .list-lower {
-  height: 1.1rem;
+  height: 55px;
 }
 
 /* 底部*/
@@ -986,24 +975,24 @@
 }
 
 .voiceInfo {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 120px;
+  height: 120px;
   margin: 0 auto;
   text-align: center;
   background-color: rgba(0, 0, 0, 1);
-  border-radius: 0.08rem;
+  border-radius: 4px;
   opacity: 0.6;
-  padding-top: 0.1rem;
+  padding-top: 5px;
 }
 
 .voiceInfo img {
   margin: 0 auto;
-  width: 2rem;
-  height: 1.8rem;
+  width: 100px;
+  height: 90px;
 }
 
 .voiceInfo div {
-  font-size: .24rem;
+  font-size: 12px;
   font-family: PingFang-SC-Regular;
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
@@ -1018,21 +1007,21 @@
 }
 
 .voiceInfo-cancel {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 120px;
+  height: 120px;
   margin: 0 auto;
   text-align: center;
   background-color: rgba(255, 120, 120, 1);
-  border-radius: 0.08rem;
+  border-radius: 4px;
   opacity: 0.6;
-  padding-top: 0.1rem;
+  padding-top: 5px;
 }
 
 .voiceInfo-cancel img {
   margin: 0 auto;
-  width: 0.98rem;
-  height: 1.36rem;
-  margin-top: 0.26rem;
+  width: 49px;
+  height: 68px;
+  margin-top: 13px;
 }
 
 .voiceInfo-cancel div {
@@ -1040,39 +1029,45 @@
   font-family: PingFang-SC-Regular;
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
-  line-height: .34rem;
-  margin-top: 0.20rem;
+  line-height: 17px;
+  margin-top: 10px;
 }
 
 //表情库
 .msg-emjie {
-  height: 3.8rem;
+  height: 190px;
+  overflow: scroll;
   position: fixed;
   bottom: 0;
   width: 100%;
-  margin-left: 0.3rem;
+  margin-left: 0;
+  padding-left: 8px;
   background-color: #f5f5f5;
 }
 
 .massage_temp_main{
-  height: 3.8rem;
+  height: 190px;
   position: fixed;
-  bottom: 0.98rem;
+  bottom: 49px;
   width: 100%;
-  padding: 0.3rem 0.2rem 0 0.2rem;
+  padding: 15px 10px 0 10px;
   background-color:#fafafa;
 }
 .tpl-item{
-  margin-bottom: 0.2rem;
-  line-height: 0.4rem;
-  font-size: 0.3rem;
+  margin-bottom: 10px;
+  line-height: 20px;
+  font-size: 15px;
 }
 
 //楼盘信息
 
 .msg_house_info{
-  padding:  0.24rem;
-  background-color:rgba(255, 255, 255, 1);
+  padding:  12px;
+  background: #eee;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 
