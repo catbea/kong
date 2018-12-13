@@ -48,7 +48,7 @@
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">{{item.clientName}}</p>
-                  <p class="left-right-time">2018/10/22 09:13</p>
+                  <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
                 </span>
               </span>
               <span class="list-agent-right">

@@ -104,7 +104,8 @@ export default {
   display: flex;
   width: 375px;
   height: 57px;
-  padding-top: 14px;
+  padding-top: 10px;
+  margin-bottom:5px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e6e6e6;
   .active {
