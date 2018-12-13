@@ -44,21 +44,21 @@
 import userService from 'SERVICE/userService'
 export default {
   created() {
-    if(this.swipeList.length==0){
-      this.swipeShow=false
-    }else{
-      this.swipeShow=true
-    }
+    console.log(this.swipeList,'111推荐数据')
+    
+  },
+  mounted() {
+    console.log(this.swipeList,'222推荐数据')
   },
   props: {
     swipeList: {
       type: Array
-    }
+    },
+    swipeShow:{type:Boolean}
   },
   data: () => ({
     masterSave: null,
     img: require('IMG/user/Combined Shape@2x.png'),
-    swipeShow:false,
     hintImg:require('IMG/dev/timg.jpg')
   }),
   methods: {

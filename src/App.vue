@@ -81,7 +81,7 @@ html {
       > div {
         position: absolute;
         width: 100%;
-        height: 100%;
+        min-height: 100%;
         top: 0;
       }
     }
