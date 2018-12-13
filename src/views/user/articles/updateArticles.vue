@@ -111,35 +111,34 @@ export default {
         let index = selectIdArr.indexOf(selectId)
         if (index > -1) {
           selectIdArr.splice(index, 1)
+
+          if (selectIdArr.length == 0) {
+            this.selectArr = []
+            this.checked = false
+            this.selectAll = false
+            this.selectName = '全选'
+            this.list = []
+          }
         }
       } else {
         selectIdArr.push(selectId)
       }
+      this.selectArr = selectIdArr
     },
 
     //删除操作
     toDeleArticle(selectStr) {
-      if (selectStr.length > 0) {
+      if (this.selectArr.length > 0) {
         const res = userService.deleHistoryArticle(selectStr)
         this.list = []
-
         this.selectName = '全选'
         this.checked = false
-
         if (res) {
           this.getHistoryList(1)
         }
       } else {
         this.$toast('请先选择要删除的文章')
       }
-
-      // if (selectStr) {
-      //   const res = userService.deleHistoryArticle(selectStr)
-      //   this.list={}
-      //   this.getHistoryList(1)
-      // } else {
-      //   this.$toast('请先选择要删除的文章')
-      // }
     },
 
     //删除文章
@@ -174,6 +173,7 @@ export default {
           this.result = []
           this.selectArr = []
           this.selectName = '全选'
+          this.list = []
           this.checked = false
         }
         this.list = tempList

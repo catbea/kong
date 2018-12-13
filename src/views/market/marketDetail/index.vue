@@ -21,13 +21,13 @@
               class="browse"
               @click="supplement"
             >{{linkerInfo&&linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
-            <!-- <div v-if="linkerInfo&&linkerInfo.customerList"
-              class="head-portrait bg_img"
-              :style="{backgroundImage:'url('+linkerInfo.customerList[0].clientImg+')'}"
-            ></div>-->
-            <transition name="fade">
-            <avatar class="head-portrait" :avatar="avatarCompute" v-if="head"></avatar>
+            <div class="head-portrait-box">
+            <transition name="show">
+              <div class="bg_img head-portrait" v-for="(item,index) in customerList" :key="index" v-if="headCount == index" :style="{backgroundImage:'url('+item.clientImg+')'}">
+                <!-- 头像滑动淡入淡出 -->
+              </div>
             </transition>
+            </div>
           </div>
         </div>
         <specific-marketDetail :info="linkerInfo&&linkerInfo"></specific-marketDetail>
@@ -62,10 +62,10 @@
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
       </div>
     </div>
-    <open-marketButton v-if="openStatus=='0' || openStatus==''" @click.native="marketOpenHandle"></open-marketButton>
+    <open-marketButton v-if="expireFlag==1" @click.native="marketOpenHandle"></open-marketButton>
     <!-- v-if="openFlag" -->
 
-    <market-renew v-if="openStatus=='1' || openStatus=='2'"></market-renew>
+    <market-renew v-if="expireFlag==0"></market-renew>
     <van-popup v-model="show">
       <popup-box></popup-box>
     </van-popup>
@@ -107,20 +107,19 @@ export default {
 
   computed: {
     ...mapGetters(['userInfo']),
-    avatarCompute() {
-      return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
-    }
+    // avatarCompute() {
+    //   return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
+    // }
   },
 
   mounted() {
-    window.addEventListener('scroll', this.handleScroll)
-    // this.head=true
+    
   },
   created() {
+    
     this.linkerId = this.$route.params.id
     this.getMarketDetailPhotoInfo()
     this.$store.commit(types.USER_BUILD_INFO, this.linkerId)
-    
     this.getLinkerDetail(this.linkerId)
     this.skipMoreContent()
     this.getHouseAroundType(this.linkerId)
@@ -131,7 +130,9 @@ export default {
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
-    openStatus: '', // 0未开通 1已开通已过期 2已开通未过期
+    customerList:[],
+    headCount:0,//当前显示的头像的下标
+    expireFlag:null, // 0过期 1已过期
     hintShow: true,
     show: false,
     boxShow: false,
@@ -172,16 +173,18 @@ export default {
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
   methods: {
+    headSlide(){
+      console.log(this.customerList,'头像数据')
+      setInterval(() => {
+        if (this.headCount < this.customerList.length - 1) {
+          this.headCount += 1;
+        } else {
+          this.headCount = 0;
+        }
+      },3000);
+    },
     shareBuildingPage() {
       this.$router.push({ name: 'marketDetail-share' })
-    },
-    handleScroll() {
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      if (scrollTop >= 200) {
-        this.boxShow = true
-      } else {
-        this.boxShow = false
-      }
     },
     supplement() {
       this.show = true
@@ -203,13 +206,15 @@ export default {
       const result = await MarketService.getLinkerDetail(id)
       console.log(result,'楼盘详情数据')
       this.linkerInfo = result
+      this.customerList=result.customerList
+      this.headSlide() 
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
       houseUseList.unshift(result.saleStatus)
       this.info = houseUseList
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
-      this.openStatus = result.openStatus
-
+      this.expireFlag = result.expireFlag
+      console.log(this.expireFlag,'是否已开通')
       //this.titleBarHandle()
     },
     //判断该楼盘有无图片列表
@@ -241,7 +246,6 @@ export default {
     }
   },
   destroyed() {
-    window.removeEventListener('scroll', this.handleScroll)
     this.hintShow = false
   }
 }
@@ -250,10 +254,33 @@ export default {
 .marketDetail-page {
   overflow: auto;
   background: #ffffff;
-  .fade-enter-active, .fade-leave-active {
-  transition: opacity 5s;
+  @keyframes show {
+      0% {
+        opacity: 0;
+        top: 0px;
+      }
+      100% {
+        opacity: 1;
+        top: 0;
+      }
     }
-    .fade-enter, .fade-leave-to{
+    @keyframes hide {
+      0% {
+        opacity: 1;
+        top: 0;
+      }
+      100% {
+        opacity: 0;
+        top: -32px;
+      }
+    }
+    .show-enter-active {
+      animation: show 1.2s;
+    }
+    .show-leave-active {
+      animation: hide 1.2s;
+    }
+    .show-enter, .show-leave-to {
       opacity: 0;
     }
   .van-tabs__wrap--scrollable .van-tab {
@@ -284,14 +311,21 @@ export default {
           font-weight: 600;
           display: flex;
           margin-right: 16px;
-          .browse {
-            color: rgba(0, 122, 230, 1);
-          }
-          .head-portrait {
+          align-items:center;
+          .head-portrait-box{
+            position: relative;
+            width:24px;
+            height:24px;
+            margin-left:4px;
+            .head-portrait {
+            position: absolute;
             width: 24px;
             height: 24px;
-            border-radius: 50%;
-            margin-left: 5px;
+            border-radius:50%;
+          }
+          }
+          .browse {
+            color: rgba(0, 122, 230, 1);
           }
         }
       }
