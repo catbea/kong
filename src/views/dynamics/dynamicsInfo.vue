@@ -4,8 +4,8 @@
       <div slot="container">
         <div class="dynamicsInfo-list">
 
-          <div class="dynamicsInfo-list-top" @click="godynamicsInfo">
-            <span class="dynamicsInfo-list-left">
+          <div class="dynamicsInfo-list-top" >
+            <span class="dynamicsInfo-list-left" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">
                <div
                   class="dynamicsInfo-left-bg_img"
                   v-show="dynamicCount.linkerVO.sale != '' "
@@ -16,8 +16,8 @@
             </span>
             <span class="dynamicsInfo-list-right">
               <p class="list-right-title">{{dynamicCount.linkerVO.linkerName}}
-                 <span class="left-title-right" v-if="dynamicCount.linkerVO.linkerOpenEndTime !=''">续费</span>
-                <span class="left-title-right-open" v-else>开通</span>
+                 <span class="left-title-right"  v-if="dynamicCount.linkerVO.linkerOpenEndTime !=''">续费</span>
+                 <span class="left-title-right-open" v-else>开通</span>
               </p>
               <p class="list-right-time">{{dynamicCount.linkerVO.city}}  {{dynamicCount.linkerVO.district}} | {{dynamicCount.linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
               <p class="list-right-label">
@@ -76,7 +76,7 @@
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">{{item.clientName}}</p>
-                  <p class="left-right-time">2018/10/22 09:13</p>
+                  <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
                 </span>
               </span>
               <span class="list-agent-right">
@@ -163,8 +163,9 @@ export default {
       }
     },
     //楼盘详情
-    godynamicsInfo() {
-      this.$router.push('/market/marketDetail')
+    godynamicsInfo(linkerId) {
+      debugger
+      this.$router.push({name:'marketDetail', params: { id: linkerId }})
     },
     //联系
     goalldynamics () {

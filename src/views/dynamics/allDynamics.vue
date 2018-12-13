@@ -196,8 +196,7 @@ export default {
     },
     //全部按鈕
  async getupdateCustomerInfo (cons) {
-    let index = cons.index
-    if(cons.type='update'){
+    if(cons.type === 'update'){
 // /关注状态 0：已关注 1：未关注关注
      if (cons.item.attentionStatus == 1) {
         cons.item.attentionStatus = 0
@@ -206,17 +205,17 @@ export default {
         cons.item.attentionStatus = 1
         await dynamicsService.getupdateCustomerInfo(cons.item.clientId,1)
       }
-    }else if(cons.type = 'messageList'){
+    }else if(cons.type === 'messageList'){
       //聯繫
        this.$router.push('/dynamics/message/messageList')
-    }else if(cons.type='detail'){
+    }else if(cons.type === 'detail'){
       //詳情
        this.$router.push('/custom/detail')
     }
     },
    //文章跳轉
     goallDynamics (pram) {
-      if(pram.type == 'guanz'){
+      if(pram.type === 'guanz'){
         if (pram.item.attentionStatus == 1) {
         pram.item.attentionStatus = 0
          dynamicsService.getupdateCustomerInfo(pram.item.clientId,0)
@@ -224,9 +223,9 @@ export default {
         pram.item.attentionStatus = 1
          dynamicsService.getupdateCustomerInfo(pram.item.clientId,1)
       }
-      }else if(pram.type == 'detail'){
+      }else if(pram.type === 'detail'){
         this.$router.push('/custom/detail')
-      }else if(pram.type='messageList'){
+      }else if(pram.type ==='messageList'){
          this.$router.push('/dynamics/message/messageList')
       }
       

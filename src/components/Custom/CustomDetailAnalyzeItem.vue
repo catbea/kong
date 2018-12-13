@@ -155,20 +155,25 @@ export default {
           font-size: 18px;
           font-weight: bold;
           color: #333333;
-          padding-bottom: 10px;
+          padding-bottom: 6px;
         }
         .analyze-location {
           font-size: 14px;
           color: #666666;
-          padding-bottom: 10px;
+          height: 20px;
         }
         .analyze-info {
-          white-space: nowrap;
+          // white-space: nowrap;
+          margin-top: 8px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
           > p {
             display: inline-block;
           }
           .analyze-price {
-            width: 130px;
+            // width: 130px;
             color: #ea4d2e;
             font-size: 15px;
             font-weight: 600;
