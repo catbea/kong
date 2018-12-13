@@ -3,7 +3,7 @@
     <div class="user-edit-username">
       <p class="edit-username-title">我的机构选择</p>
       <collapse-List :model="organizationList" @clickListener="refreshList"></collapse-List>
-      <button class="edit-username-query" @click="commitChangeInfo">确认修改</button>
+      <!-- <button class="edit-username-query"  @click="commitChangeInfo">确认修改</button> -->
     </div>
   </div>
 </template>
@@ -29,21 +29,21 @@ export default {
     let distributorId = this.$route.query.distributorId
     let enterpriseId = this.$route.query.enterpriseId
     this.queryOrganizationList(distributorId, enterpriseId)
+    //  console.log(JSON.stringify(this.parseList(this.jsonData)));
   },
   computed: {
-    ...mapGetters(['userRegistInfo'])
+    ...mapGetters(['userRegistInfo', 'userInfo'])
   },
 
   methods: {
     //提交更新信息
     commitChangeInfo() {
-      let _userRegistInfo = {
-        institutionId: this.model.id,
-        institutionName: this.model.name
-      }
-
-      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
-      this.$router.back(-1)
+      // let _userRegistInfo = {
+      //   institutionId: this.model.id,
+      //   institutionName: this.model.name
+      // }
+      // this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+      // this.$router.back(-1)
     },
 
     async upDateInfo(id) {
@@ -55,6 +55,21 @@ export default {
     //刷新列表
     refreshList(val) {
       this.model = val
+
+      let _userRegistInfo = {
+        institutionId: this.model.id,
+        institutionName: this.model.name
+      }
+
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+
+      this.$store.dispatch('userInfo', Object.assign(this.userInfo, { institutionName: val.name }))
+      this.$store.dispatch('userInfo', Object.assign(this.userInfo, { institutionId: val.id }))
+
+      this.saveInstitutionInfo();
+
+      this.$router.back(-1)
+
       // for (let i = 0; i < this.organizationInfo.length; i++) {
       //   this.organizationInfo[i].checked = false
       //   if (this.organizationInfo[i].id == val) {
@@ -74,11 +89,15 @@ export default {
       let obj = {}
       const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
 
+      //  console.log(JSON.stringify(this.parseList(result,result[0].pId)));
+      // console.log(JSON.stringify(result))
 
       if (result.length > 0) {
-        let organizationInfo = result
+        let tempResult = result
+        this.organizationInfo = tempResult
+
         // this.organizationList
-        let tempArr = this.formatData(result, result[0].pId)
+        let tempArr = this.parseList(result, result[0].pId)
         obj.children = tempArr
         obj.name = '选择机构'
         this.organizationList = obj
@@ -90,20 +109,48 @@ export default {
     },
 
     //递归遍历处理数据
-    formatData(data, pId) {
-      let result = []
-      let temp = []
-      for (let i in data) {
-        data[i].checked = false
-        if (data[i].pId == pId) {
-          result.push(data[i])
-          temp = this.formatData(data, data[i].id)
-          if (temp.length > 0) {
-            data[i].children = temp
-          }
+    // formatData(data, pid) {
+    //   let result = []
+    //   let temp = []
+    //   for (let i in data) {
+    //     data[i].checked = false
+    //     if (data[i].pid == pid) {
+    //       result.push(data[i])
+    //       temp = this.formatData(data, data[i].id)
+    //       if (temp.length > 0) {
+    //         data[i].children = temp
+    //       }
+    //     }
+    //   }
+    //   return result
+    // },
+
+    parseList(list, tempPid) {
+      var map = {}
+      list.forEach(function(item) {
+        item.checked = false
+        if (!map[item.id]) {
+          map[item.id] = item
         }
+      })
+      list.forEach(function(item) {
+        if (item.pId !== tempPid) {
+          map[item.pId].children ? map[item.pId].children.push(item) : (map[item.pId].children = [item])
+        }
+      })
+
+      return list.filter(function(item) {
+        return item.pId === tempPid
+      })
+    },
+
+    async saveInstitutionInfo() {
+      let obj = {
+        institutionName: this.model.name,
+        institutionId: this.model.id
       }
-      return result
+
+      const res = await userService.upDateUserInfo(obj)
     }
   }
 }
@@ -133,6 +180,7 @@ export default {
     }
 
     > .edit-username-query {
+      display: block;
       font-size: 16px;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
