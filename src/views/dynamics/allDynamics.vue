@@ -216,7 +216,6 @@ export default {
     },
    //文章跳轉
     goallDynamics (pram) {
-      debugger
       if(pram.type == 'guanz'){
         if (pram.item.attentionStatus == 1) {
         pram.item.attentionStatus = 0
@@ -227,7 +226,7 @@ export default {
       }
       }else if(pram.type == 'detail'){
         this.$router.push('/custom/detail')
-      }else if(parm.type='messageList'){
+      }else if(pram.type='messageList'){
          this.$router.push('/dynamics/message/messageList')
       }
       
