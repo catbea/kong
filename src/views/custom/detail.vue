@@ -5,10 +5,13 @@
         class="custom-avatar"
         v-if="customBaseInfo.avatarUrl!=''"
         :avatar="customBaseInfo.avatarUrl"
-      ></avatar>
+        @click.native="previewAvatarUrl">
+      </avatar>
+      <div class="bg_img custom-attention" :style="{backgroundImage:'url('+attentionImg+')'}" v-if="customBaseInfo.attentionStatus==0"></div>
       <div class="custom-info">
         <div class="custom-name-box">
-          <h5 class="custom-name">{{customBaseInfo.clientName}}</h5>
+          <h5 class="custom-name">{{customBaseInfo.clientRemarkName ? customBaseInfo.clientRemarkName : customBaseInfo.clientName}}</h5>
+          <div class="custome-realname" v-if="customBaseInfo.clientRemarkName">({{customBaseInfo.clientName}})</div>
           <!-- <van-icon name="edit" size="24px"/> -->
         </div>
         <p class="custom-browsed">最近浏览：{{customBaseInfo.lastViewTime}}</p>
@@ -65,6 +68,7 @@
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
+import { ImagePreview } from 'vant'
 import * as types from '@/store/mutation-types'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
 import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
@@ -81,6 +85,7 @@ export default {
     CustomOperation
   },
   data: () => ({
+    attentionImg: require('IMG/user/icon_attention@2x.png'),
     clientId: -1,
     activeIndex: 0,
     isSecondReq: false, // 足迹页签是否请求成功
@@ -177,6 +182,14 @@ export default {
       window.location.href = 'tel:' + this.clientMobile
     },
     consultHandler() {},
+    previewAvatarUrl() {
+      if (this.customBaseInfo.avatarUrl != '') {
+        ImagePreview({
+          images: [this.customBaseInfo.avatarUrl],
+          startPosition: 0
+        })
+      }
+    },
     /**
      * 资料tab 点击事件
      */
@@ -435,6 +448,13 @@ export default {
       height: 60px;
       margin: 15px;
     }
+    .custom-attention {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        left: 60px;
+        top: 60px;
+    }
     .custom-info {
       margin: 20px 15px 15px 0;
       .custom-name-box {
@@ -443,6 +463,10 @@ export default {
           font-size: 18px;
           font-weight: 500;
           color: #333333;
+        }
+        .custome-realname {
+          color: #999999;
+          font-size: 16px;
         }
       }
       .custom-browsed {
