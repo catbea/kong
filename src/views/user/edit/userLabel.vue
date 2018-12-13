@@ -89,7 +89,6 @@ export default {
           selectidlist = selectidlist + check[i].id + ','
         }
       }
-      console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' + selectidlist)
       if (selectidlist.length <= 0) {
         Dialog.alert({
           message: '请选择个性标签'

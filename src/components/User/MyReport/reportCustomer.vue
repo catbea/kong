@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       availableImg: require('IMG/user/usercard@2x.png'),
-      ovalImg: require('IMG/user/Oval 2@2x.png'),
+      ovalImg: require('IMG/user/icon_attention@2x.png'),
       list: [
         { id: '1', title: '李晓峰', conter: '累计浏览5次，平均停留5.5s' },
         { id: '2', title: '测试', conter: '累计浏览5次，平均停留5.5s' },

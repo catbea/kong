@@ -5,10 +5,13 @@
         class="custom-avatar"
         v-if="customBaseInfo.avatarUrl!=''"
         :avatar="customBaseInfo.avatarUrl"
-      ></avatar>
+        @click.native="previewAvatarUrl">
+      </avatar>
+      <div class="bg_img custom-attention" :style="{backgroundImage:'url('+attentionImg+')'}" v-if="customBaseInfo.attentionStatus==0"></div>
       <div class="custom-info">
         <div class="custom-name-box">
-          <h5 class="custom-name">{{customBaseInfo.clientName}}</h5>
+          <h5 class="custom-name">{{customBaseInfo.clientRemarkName ? customBaseInfo.clientRemarkName : customBaseInfo.clientName}}</h5>
+          <div class="custome-realname" v-if="customBaseInfo.clientRemarkName">({{customBaseInfo.clientName}})</div>
           <!-- <van-icon name="edit" size="24px"/> -->
         </div>
         <p class="custom-browsed">最近浏览：{{customBaseInfo.lastViewTime}}</p>
@@ -34,6 +37,7 @@
             :barChartHidden="barChartHidden"
             :barData="barData"
             :analysisListData="analysisListData"
+            @renew="renewHandler"
           />
         </van-tab>
         <van-tab title="足迹">
@@ -65,6 +69,7 @@
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
+import { ImagePreview, Dialog } from 'vant'
 import * as types from '@/store/mutation-types'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
 import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
@@ -81,6 +86,7 @@ export default {
     CustomOperation
   },
   data: () => ({
+    attentionImg: require('IMG/user/icon_attention@2x.png'),
     clientId: -1,
     activeIndex: 0,
     isSecondReq: false, // 足迹页签是否请求成功
@@ -177,6 +183,30 @@ export default {
       window.location.href = 'tel:' + this.clientMobile
     },
     consultHandler() {},
+    previewAvatarUrl() {
+      if (this.customBaseInfo.avatarUrl != '') {
+        ImagePreview({
+          images: [this.customBaseInfo.avatarUrl],
+          startPosition: 0
+        })
+      }
+    },
+    // 立即续费
+    renewHandler(val) {
+      console.log('renew', val)
+      if (val.sameDistributor == '0') {
+        Dialog.alert({
+          title: '该楼盘不可续费',
+          message: '非当前所属公司下楼盘无法开通续费',
+          confirmButtonText: '知道啦'
+        }).then(() => {
+          // on close
+        })
+      }else {
+        // this.$router.push(`/marketDetail/open${val.linkerId}`)
+        this.$router.push({name: 'marketDetail-open', params: {id: val.linkerId} })
+      }
+    },
     /**
      * 资料tab 点击事件
      */
@@ -217,7 +247,7 @@ export default {
         } else if (item.title == '行业') {
           this.pickerList = ['未知', 'IT/通信/互联网', '学生', '文化/艺术', '影视/娱乐', '金融', '医药/健康', '工业/制造业', '媒体/公关', '零售', '教育/科研', '其它']
         } else if (item.title == '购房目的') {
-          this.pickerList = ['未知', '学区房', '婚房', '工作换房', '改善型换房']
+          this.pickerList = ['未知', '学区房', '婚房', '工作换房', '投资', '安置老人', '改善型换房']
         }
       }
     },
@@ -341,6 +371,33 @@ export default {
         }
         item.color = color
         item.textColor = color
+        if (item.saleStatus == 0) {
+          item.saleStr = '热销中'
+        }else if (item.saleStatus == 1) {
+          item.saleStr = '即将发售'
+        }else {
+          item.saleStr = '售罄'
+        }
+        if (item.shelfFlag == 0) {
+          item.shelfStr = '上架'
+        }else {
+          item.shelfStr = '下架'
+        }
+        let tags = []
+        let tag
+        if (item.shelfFlag == 0) {
+          tag = item.saleStr
+        }else {
+          tag = '下架'
+        }
+        debugger
+        if (item.projectTagArr && item.projectTagArr.length > 0) {
+          item.projectTagArr.unshift(tag)
+          tags = item.projectTagArr
+        }else {
+          tags.push(tag)
+        }
+        item.linkerTags = tags
       }
       if (result.pages <= this.current) {
         this.finished = true
@@ -435,6 +492,13 @@ export default {
       height: 60px;
       margin: 15px;
     }
+    .custom-attention {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        left: 60px;
+        top: 60px;
+    }
     .custom-info {
       margin: 20px 15px 15px 0;
       .custom-name-box {
@@ -443,6 +507,10 @@ export default {
           font-size: 18px;
           font-weight: 500;
           color: #333333;
+        }
+        .custome-realname {
+          color: #999999;
+          font-size: 16px;
         }
       }
       .custom-browsed {
