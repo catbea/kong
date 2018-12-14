@@ -30,6 +30,7 @@ export default {
     border-radius: 100%;
     width: 24px;
     height: 24px;
+    line-height: 24px;
     font-size: 16px;
     color: #fff;
     text-align: center;

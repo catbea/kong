@@ -16,7 +16,6 @@ const xhr = ({url, body = {}, method = 'get', headers={},codeHandleList = null})
     Authorization: store.getters.userInfo.token
   },headers)
   if (window.localStorage.getItem('deviceId')) head.uniquecode = window.localStorage.getItem('deviceId')
-  console.log(window.localStorage.getItem('deviceId'),'deviceId')
   return new Promise((resolve, reject) => {
     let request = superAgent[method](host + url)//.withCredentials()
       .set(head)
