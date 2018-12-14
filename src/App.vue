@@ -49,6 +49,7 @@ export default {
 @import '~normalize.css/normalize.css';
 @import './assets/css/reset.less';
 @import './assets/css/common.less';
+@import './assets/icon/iconfont.css';
 
 html {
   -webkit-text-size-adjust: none;

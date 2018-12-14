@@ -1,90 +1,111 @@
 <template>
-  <!-- <div class="discover-detail">
-    
-  </div> -->
-
-  <div class="headline-page">
-    <div class="headline-title">
-      <div class="headline-with">
-        <h5>{{info.title}}</h5>
-        <div class="headline-title-agent">
-          <span class="title-agent-left">
-            <span class="agent-left-img">
-              <img :src="personIcon" class="left-img">
-            </span>
-            <span class="agent-left-introduce">
-              <p class="introduce-name">{{info.agentName}}</p>
-              <p class="introduce-company">{{info.city}}</p>
-            </span>
-          </span>
+  <div class="discover-detail-page">
+    <!-- 文章详情和经纪人信息 -->
+    <div class="discover-detail-container">
+      <h5 class="discover-title">{{info&&info.title}}</h5>
+      <div class="agent-top-info-box">
+        <div class="agent-box-left">
+          <avatar class="agent-avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
+          <div class="agent-info">
+            <p class="agent-name">{{agentInfo&&agentInfo.agentName}}</p>
+            <p class="agent-company">{{agentInfo&&agentInfo.enterpriseName}}</p>
+          </div>
         </div>
-        <div class="shadow discover-img" :style="{'backgroundImage':'url('+ info.image +')'}"></div>
-        <div class="headline-title-content" v-html="info.content"></div>
+        <div class="agent-box-right"></div>
       </div>
-      <agent-card :info="agentInfo"></agent-card>
-      <div class="headline-title-bar">
-        <span class="title-btn-left">浏览：{{info.scanNum}}</span>
-        <span class="title-btn-right">
-          <span class="btn-right-img"><img :src="fabulousIcon" class="title-img"></span>
-          <span class="btn-right-num">{{info.likeTimes}}</span>
-        </span>
+      <div class="bg_img van-hairline--surround discover-img" :style="{backgroundImage:'url('+ (info&&info.image) +')'}"></div>
+      <!-- <div class="discover-detail-content" v-html="info.content"></div> -->
+      <p class="discover-extra-info">
+        转载于
+        <span class="reprint-from">{{info&&info.publisher}}</span>
+        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
+        <span class="reprint-views">浏览：{{ info&&info.scanNum | currency('')}}</span>
+      </p>
+      <agent-card class="agent-card" :info="agentInfo"></agent-card>
+    </div>
+    <!-- 推荐房源 -->
+    <div class="recommend-houses" v-if="info&&info.projectRecommendList">
+      <title-bar :conf="titleProperties"/>
+      <div class="recommend-houses-content">
+        <!-- swiper -->
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="item in info.projectRecommendList" :key="item.linkerId">
+            <div class="house-item">
+              <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
+              <p class="house-name">{{item.linkerName}}</p>
+              <p class="house-localtion">{{item.city}}</p>
+              <p class="house-price">{{item.averagePrice}} {{item.priceUnit}}</p>
+            </div>
+          </swiper-slide>
+        </swiper>
       </div>
     </div>
-
-    <!-- <div class="headline-Fill"></div> -->
-    <title-bar :conf="titleProperties"></title-bar>
-    <manual-swipes></manual-swipes>
-    <!-- <div class="headline-Fill"></div> -->
-    <!-- <div class="headline-titlebar"> -->
-    <title-bar :conf="titleArticle"></title-bar>
-    <!-- </div> -->
-    <!-- <discover-list></discover-list> -->
-
-    <div>
-      <fixed-btn></fixed-btn>
+    <!-- 推荐文章 -->
+    <div class="recommend-discover" v-if="info&&info.recommendInformationList">
+      <title-bar :conf="titleArticle"/>
+      <div class="recommend-discover-content">
+        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
+      </div>
     </div>
-
-    <popup-frame :show.sync="a"></popup-frame>
-
+    <!-- 悬浮工具栏 -->
+    <div class="van-hairline--top tools-bar">
+      <div class="app-btn" @click="appCardHandler">
+        <i class="icon iconfont icon-article_program"></i>小程序名片
+      </div>
+      <div class="collect-btn" @click="collectHandler">
+        <i class="icon iconfont icon-package_Optimal"></i>收藏
+      </div>
+      <div class="share-btn" @click="shareHandler">
+        <i class="icon iconfont icon-Building_list_share"></i>分享
+      </div>
+    </div>
+    <!-- 小程序名片 -->
+    <div class="app-card"></div>
   </div>
-
 </template>
 <script>
-import FixedBtn from 'COMP/Discover/FixedBtn'
+import Avatar from 'COMP/Avatar'
 import AgentCard from 'COMP/AgentCard'
-import popupFrame from 'COMP/Discover/popupFrame'
-import ManualSwipes from 'COMP/Swipe/ManualSwipes'
 import TitleBar from 'COMP/TitleBar/'
+import DiscoverItem from 'COMP/DiscoverItem'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import discoverService from 'SERVICE/discoverService'
+import userService from 'SERVICE/userService'
 export default {
   components: {
+    Avatar,
     AgentCard,
-    popupFrame,
-    ManualSwipes,
     TitleBar,
-    FixedBtn
+    swiper,
+    swiperSlide,
+    DiscoverItem
   },
-  data() {
-    return {
-      id: -1,
-      city: '',
-      info: null,
-      agentInfo: null,
-      //
-      a: true,
-      personIcon: require('IMG/user/person_icon.png'),
-      fabulousIcon: require('IMG/discover/fabulous@2x.png'),
-      show: false,
-      titleProperties: {
-        title: '推荐房源',
-        linkText: '全部楼盘'
-      },
-      titleArticle: {
-        title: '推荐文章',
-        linkText: '查看全部'
+  data: () => ({
+    swiperOption: {
+      slidesPerView: 2,
+      spaceBetween: 12,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
       }
+    },
+    id: -1,
+    city: '',
+    info: null,
+    agentInfo: null,
+    show: false,
+    titleProperties: {
+      title: '推荐房源',
+      linkText: '全部楼盘',
+      link: '/market'
+    },
+    titleArticle: {
+      title: '推荐文章',
+      linkText: '查看全部',
+      link: '/discover'
     }
-  },
+  }),
   created() {
     this.id = this.$route.params.id
     this.city = this.$route.params.city
@@ -102,136 +123,156 @@ export default {
         enterpriseName: this.info.enterpriseName
       }
     },
-    gopopup() {
-      this.show = true
+    // 小程序名片
+    appCardHandler(){
+
+    },
+    // 收藏文章
+    async collectHandler(){
+      // const res = await userService.
+    },
+    // 分享
+    shareHandler(){
+
     }
   }
 }
 </script>
 <style lang="less">
-.headline-page {
-  background: #ffffff;
-  > .headline-title {
-    margin: 14px 0;
-    > .headline-with {
-      margin: 0 16px;
-      h5 {
-        font-size: 22px;
-        font-weight: 600;
-        color: rgba(51, 51, 51, 1);
-        line-height: 30px;
-      }
-      > .headline-title-agent {
+.discover-detail-page {
+  background-color: #f7f9fa;
+  > .discover-detail-container {
+    background-color: #fff;
+    padding-bottom: 10px;
+    > .discover-title {
+      padding: 10px 15px;
+      font-size: 22px;
+      color: #333333;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    > .agent-top-info-box {
+      padding: 0 10px;
+      > .agent-box-left {
         display: flex;
-
-        margin: 13px 0 10px;
-        > .title-agent-left {
-          display: flex;
-          > .agent-left-img {
-            > .left-img {
-              width: 36px;
-              height: 36px;
-            }
-          }
-          > .agent-left-introduce {
-            margin-left: 8px;
-            > .introduce-name {
-              font-size: 15px;
-              font-weight: 400;
-              color: rgba(51, 51, 51, 1);
-              line-height: 21px;
-            }
-            > .introduce-company {
-              font-size: 12px;
-              font-weight: 400;
-              color: rgba(138, 143, 153, 1);
-              line-height: 17px;
-            }
-          }
+        > .agent-avatar {
+          width: 40px;
+          height: 40px;
+          margin: 0 5px;
         }
-        > .title-agent-right {
-          position: absolute;
-          right: 90px;
-          > .agent-right {
-            width: 72px;
-            height: 32px;
-            background: rgba(0, 122, 230, 1);
-            border-radius: 16px;
+        > .agent-info {
+          font-weight: 400;
+          > .agent-name {
             font-size: 14px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 1);
-            line-height: 20px;
-            border: 0;
-            position: absolute;
+            color: #333333;
+            font-weight: 500;
+            margin: 2px 0 2px 3px;
+          }
+          > .agent-company {
+            font-size: 12px;
+            color: #8a8f99;
+            margin: 1px 0 0 3px;
           }
         }
       }
-      > .discover-img {
-        width: 100%;
-        height: 193px;
-        border-radius: 10px;
+      > .agent-box-right {
       }
-      > .headline-title-content {
-        font-size: 17px;
-        font-weight: 400;
-        color: rgba(51, 51, 51, 1);
-        line-height: 30px;
-        margin-bottom: 20px;
-        > .title-content-p2 {
-          padding: 20px 0;
+    }
+    > .discover-img {
+      margin: 15px;
+      height: 195px;
+      border-radius: 10px;
+      background-color: #999999;
+    }
+    > .discover-detail-content {
+      padding: 15px;
+      font-size: 16px !important;
+      color: #333333 !important;
+      font-weight: 400 !important;
+      line-height: 28px !important;
+    }
+    > .discover-extra-info {
+      position: relative;
+      color: #8a8f99;
+      font-size: 12px;
+      padding: 0 15px;
+      > .reprint-from {
+        padding-left: 5px;
+      }
+      > .reprint-time {
+        padding-left: 15px;
+      }
+      > .reprint-views {
+        position: absolute;
+        right: 15px;
+      }
+    }
+    > .agent-card {
+      margin-bottom: 10px;
+    }
+  }
+  > .recommend-houses {
+    background-color: #fff;
+    margin-top: 10px;
+    > .recommend-houses-content {
+      padding: 10px 15px;
+      .house-item {
+        > .house-img {
+          width: 166px;
+          height: 93px;
+          border-radius: 4px;
         }
-        > .title-content-time {
+        > .house-name {
+          font-size: 16px;
+          color: #333333;
+          font-weight: 500;
+          line-height: 1.5;
+        }
+        > .house-localtion {
           font-size: 12px;
           font-weight: 400;
-          color: rgba(138, 143, 153, 1);
-          line-height: 17px;
-          margin-top: 13px;
-          text-align: left;
+          color: #999999;
+          line-height: 1.5;
         }
-      }
-    }
-
-    > .headline-title-bar {
-      margin: 5px 16px 0 16px;
-      > .title-btn-left {
-        font-size: 13px;
-        font-weight: 400;
-        color: rgba(138, 143, 153, 1);
-        line-height: 18px;
-      }
-      > .title-btn-right {
-        float: right;
-        font-size: 13px;
-        font-weight: 400;
-        color: rgba(138, 143, 153, 1);
-        line-height: 18px;
-        display: flex;
-        vertical-align: middle;
-        text-align: center;
-        margin-top: 10px;
-        > .btn-right-img {
-          > .title-img {
-            width: 24px;
-            height: 24px;
-            display: -webkit-inline-box;
-          }
-        }
-        > .btn-right-num {
-          line-height: 30px;
-          margin-left: 4px;
+        > .house-price {
+          font-size: 15px;
+          font-weight: 500;
+          color: #ea4d2e;
         }
       }
     }
   }
-  > .headline-Fill {
-    height: 10px;
-    background: rgba(247, 249, 250, 1);
+  > .recommend-discover {
+    background-color: #fff;
+    margin: 10px 0 30px;
+    padding: 10px 0px;
+    .discover-item {
+      margin: 15px 0;
+    }
   }
-  .headline-titlebar {
-    margin: 0 16px;
-  }
-  > .manual-swipes {
-    margin: 0 16px;
+  > .tools-bar {
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 5px 15px;
+    > div {
+      border-radius: 100px;
+      border: 1px solid #aeb1c2;
+      margin: 5px;
+      padding: 8px 20px;
+      opacity: .7;
+    }
+    > .app-btn {
+    }
+    > .collect-btn {
+    }
+    > .share-btn {
+    }
   }
 }
 </style>
