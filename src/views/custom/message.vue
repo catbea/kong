@@ -580,7 +580,7 @@
 
         var msg = onSendMsg(this.message, true, msgType01, audioTime01);
         if (msg) {
-          this.$dialog.toast({mes: msg, timeout: 1000});
+          this.$toast(msg)
         }
 
       }, /*  切换语音输入*/
@@ -597,7 +597,6 @@
        * 播放语音
        */
       playVoice(mateId, id) {
-
         let _this = this;
         if (this.isplay == id) {
           this.nowVoiceUrl = '';
