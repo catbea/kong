@@ -16,7 +16,7 @@
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{articleDynamicCount.avgStayArticleTime /1000 }}</p>
+          <p class="card-num">{{avgStayArticleTime}}</p>
         </span>
       </div>
     </div>
@@ -56,17 +56,12 @@ export default {
   },
   data() {
     return {
-      totalTitle: '文章数量',
-      totalNum: '90',
-      cardTitle: '文章分享',
-      cardNum: '0',
-      propertiesTitle: '文章访客',
-      propertiesNum: '190',
-      articleTitle: '平均停留(S)',
-      articleNum: '124'
+      avgStayArticleTime:0
     }
   },
-  created() {},
+  created() {
+    this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime /1000)
+  },
   methods: {
     itemArticleInfo(item) {
       // /discover/headlinepath：'/Dynamics/articleInfo',query{}

@@ -28,7 +28,7 @@
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{articleDynamicCount.avgStayArticleTime }}</p>
+          <p class="card-num">{{avgStayArticleTime }}</p>
         </span>
       </div>
         <!-- <dynamics-data :totalTitle="totalTitle" :totalNum="totalNum" :cardTitle="cardTitle" :cardNum="cardNum" :propertiesTitle="propertiesTitle" :propertiesNum="propertiesNum" :articleTitle="articleTitle" :articleNum="articleNum"></dynamics-data> -->
@@ -59,7 +59,7 @@
             <div class="dynamics-list-content" @click="godynamicsInfo">
               <p>浏览了文章 <span>{{item.articleName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
+              <p>浏览时长大于<span>{{item.currentTime / 1000}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
               <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
@@ -103,7 +103,8 @@ export default {
       gzImg: require('IMG/dynamics/gz@2x.png'),
       articleDynamicCount: [],
       articleDynamicList: [],
-      itemlist: this.$route.query.itemlist
+      itemlist: this.$route.query.itemlist,
+      avgStayArticleTime:0,
     }
   },
   created() {
@@ -120,6 +121,7 @@ export default {
     async getSingleArticleDynamicCount() {
       const res = await dynamicsService.getSingleArticleCount(this.itemlist.articleId)
       this.articleDynamicCount = res
+      this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime / 1000)
     },
     //關注
     getupdateCustomerInfo(item){
