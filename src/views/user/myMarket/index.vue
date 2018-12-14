@@ -3,7 +3,7 @@
     <div style="margin-left:16px">
       <master-market
         :swipeList="swipeList"
-        :swipeShow='swipeShow'
+        :boxShow='boxShow'
       ></master-market>
     </div>
     <div style="margin-left:16px">
@@ -70,7 +70,7 @@ export default {
   },
   data: () => ({
     head:false,
-    swipeShow:false,
+    boxShow:false,
     marketShow:true,
     displayFlag: 0,
     recommendList: null,
@@ -100,6 +100,7 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
+    console.log(this.$center,'兄弟')
   },
   mounted() {
     
@@ -109,16 +110,21 @@ export default {
       const res = await userService.changeMarketData()
     },
     async getRecommendInfo () {//推荐楼盘的数据
+    
       const res = await userService.getRecommend()
       this.recommendList = res
       this.master()
       this.common()
      this.swipeList = this.masterList.concat(this.commonList)
+     console.log(this.swipeList,'211111111111');
+     
      if(this.swipeList.length==0){
-      this.swipeShow=false
+      this.boxShow=false
     }else{
-      this.swipeShow=true
+      this.boxShow=true
     }
+    
+    console.log(this.swipeList,'传过去的图片数')
     },
     master () {
       this.masterList = this.recommendList.filter((item) => {
@@ -135,6 +141,7 @@ export default {
       this.marketList=resShow.records
       const resNotShow = await userService.getMyMarket(1)
       this.marketList=this.marketList.concat(resNotShow.records)
+      console.log(this.marketList,'展示/不展示的楼盘数据')
       if(this.marketList.length==0){
         this.marketShow=false
       }else{

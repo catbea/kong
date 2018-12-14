@@ -62,10 +62,10 @@
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
       </div>
     </div>
-    <open-marketButton v-if="expireFlag==1" @click.native="marketOpenHandle"></open-marketButton>
+    <open-marketButton v-if="expireFlag==0" @click.native="marketOpenHandle"></open-marketButton>
     <!-- v-if="openFlag" -->
 
-    <market-renew v-if="expireFlag==0"></market-renew>
+    <market-renew v-if="expireFlag==1"></market-renew>
     <van-popup v-model="show">
       <popup-box></popup-box>
     </van-popup>
