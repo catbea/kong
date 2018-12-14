@@ -3,11 +3,11 @@
     <div class="shadow-box">
      <div class="dynaData-container" v-if="cardDynamicCount">
         <span class="container-total">
-          <p class="container-title">名片数量</p>
+          <p class="container-title">名片分享</p>
           <p class="card-num">{{cardDynamicCount.cardShareCount }}</p>
         </span>
         <span class="container-card">
-          <p class="container-title">名片分享</p>
+          <p class="container-title">名片浏览</p>
           <p class="card-num">{{cardDynamicCount.scanCardCount }}</p>
         </span>
         <span class="container-properties " >
@@ -16,7 +16,7 @@
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{cardDynamicCount.avgStayCardTime /1000}}</p>
+          <p class="card-num">{{cardDynamicListCount}}</p>
         </span>
       </div>
     </div>
@@ -44,10 +44,10 @@
             <div class="dynamics-list-content" @click="godynamicsList(item)">
               <p>浏览了 <span>你的名片</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
+              <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
               <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
-
+  
             <div class="dynamics-list-btn">
               <span></span>
               <span class="list-btn-right">
@@ -82,14 +82,19 @@ export default {
   },
   props: {
     cardDynamicCount: { type: '' },
-    cardDynamicList: { type: Array }
+    cardDynamicList: { type: Array },
+    cardDynamicListCount: {type:''}
   },
   data() {
     return {
       info: { type: Object },
       lxImg: require('IMG/dynamics/lx@2x.png'),
-      gzImg: require('IMG/dynamics/gz@2x.png')
+      gzImg: require('IMG/dynamics/gz@2x.png'),
+      cardDynamicListCount:0,
+
     }
+  },
+  methods() {
   },
   methods: {
     godynamicsList(item) {

@@ -22,7 +22,7 @@ export default {
 <style lang="less">
 .reg-step-container {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   margin: 15px;
   .step-box {
     position: relative;

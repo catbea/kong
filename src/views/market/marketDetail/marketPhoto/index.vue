@@ -7,21 +7,21 @@
       <p>{{templateData.groupName}} ({{templateData.listBannerVO.length}})</p>
       <div class="template-box">
         <li tag="li" to="/" class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
-         v-for="(item,index) in templateData.listBannerVO" :key="index" @click="templateClick()"></li>
+         v-for="(item,index) in templateData.listBannerVO" :key="index" @click="templateClick(index)"></li>
       </div>   
     </ul>
     <ol>
       <p>{{effectData.groupName}} ({{effectData.listBannerVO.length}})</p>
       <div class="effect-box">
         <li class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
-        v-for="(item,index) in effectData.listBannerVO" :key="index" @click="effectClick()"></li>
+        v-for="(item,index) in effectData.listBannerVO" :key="index" @click="effectClick(index)"></li>
       </div> 
     </ol>
     <div class="community-box">
       <p>{{communityData.groupName}} ({{communityData.listBannerVO.length}})</p>
       <div class="community-box-content">
         <span class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
-        v-for="(item,index) in communityData.listBannerVO" :key="index" @click="communityClick()"></span>
+        v-for="(item,index) in communityData.listBannerVO" :key="index" @click="communityClick(index)"></span>
       </div> 
     </div>
   </div>
@@ -52,28 +52,28 @@ export default {
     // FullScreen
   },
   methods: {
-    templateClick() {
+    templateClick(n) {
       ImagePreview({
   images:this.templateArr,
-  startPosition: 0,
+  startPosition:n,
   onClose() {
     // do something
   }
 });
     },
-    effectClick() {
+    effectClick(n) {
       ImagePreview({
   images:this.effectArr,
-  startPosition: 0,
+  startPosition:n,
   onClose() {
     // do something
   }
 });
     },
-    communityClick() {
+    communityClick(n) {
       ImagePreview({
   images:this.communityArr,
-  startPosition: 0,
+  startPosition:n,
   onClose() {
     // do something
   }

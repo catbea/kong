@@ -156,7 +156,6 @@ export default {
     },
     //收藏文章
     async gocollection(cons) {
-      debugger
       if(cons.type === 'goCollection'){
          let index = cons.index
       if (this.collectionList[index].deleteType == 1) {
