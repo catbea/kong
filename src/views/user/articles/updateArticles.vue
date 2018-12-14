@@ -131,6 +131,7 @@ export default {
       if (this.selectArr.length > 0) {
         const res = userService.deleHistoryArticle(selectStr)
         this.list = []
+        
         this.selectName = '全选'
         this.checked = false
         if (res) {
