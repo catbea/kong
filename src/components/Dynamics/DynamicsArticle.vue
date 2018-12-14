@@ -52,15 +52,17 @@ export default {
   },
   props: {
     articleDynamicCount: { type: '' },
-    articleDynamicList: { type: Array }
+    articleDynamicList: { type: Array },
+    avgStayArticleTime: { type: '' },
+    
   },
   data() {
     return {
-      avgStayArticleTime:0
     }
   },
-  created() {
-    this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime /1000)
+  methods() {
+   
+    
   },
   methods: {
     itemArticleInfo(item) {

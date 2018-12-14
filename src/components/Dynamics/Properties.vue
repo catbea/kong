@@ -54,7 +54,8 @@ export default {
     // info: Object,
     item: Object,
     houseDynamicList: { type: Array },
-    houseDynamicCount: { type: '' }
+    houseDynamicCount: { type: '' },
+    avgStayLinkerTime: { type: '' }
   },
  
   data() {
@@ -63,11 +64,10 @@ export default {
         { id: '1', propertiesName: '碧桂园凤凰国际', statue: '0', num: '14', address: '南山 深圳湾', price: '0' },
         { id: '2', propertiesName: '万科臻湾汇 ', statue: '1', num: '20', address: '南山 深圳湾', price: '119878' }
       ],
-      avgStayLinkerTime:0
     }
   },
-   created() {
-    this.avgStayLinkerTime = parseInt(this.houseDynamicCount.avgStayLinkerTime/1000) 
+   methods() {
+    
   },
   methods: {
     onClickConfirm(item) {

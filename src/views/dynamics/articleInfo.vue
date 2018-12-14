@@ -15,16 +15,16 @@
 
          <div class="dynaData-container">
         <span class="container-total">
-          <p class="container-title">文章数量</p>
-          <p class="card-num">{{articleDynamicCount.articleCount }}</p>
-        </span>
-        <span class="container-card">
-          <p class="container-title">文章分享</p>
+          <p class="container-title">分享次数</p>
           <p class="card-num">{{articleDynamicCount.articleShareCount }}</p>
         </span>
-        <span class="container-properties " >
-          <p class="container-title">文章访客</p>
+        <span class="container-card">
+          <p class="container-title">访客数量</p>
           <p class="card-num">{{articleDynamicCount.articleVisitorCount }}</p>
+        </span>
+        <span class="container-properties " >
+          <p class="container-title">浏览数量</p>
+          <p class="card-num">{{articleDynamicCount.scanArticleCount }}</p>
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
@@ -59,7 +59,7 @@
             <div class="dynamics-list-content" @click="godynamicsInfo">
               <p>浏览了文章 <span>{{item.articleName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime / 1000}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
+              <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
               <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
