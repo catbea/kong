@@ -210,7 +210,7 @@ export default {
        this.$router.push('/dynamics/message/messageList')
     }else if(cons.type === 'detail'){
       //詳情
-       this.$router.push('/custom/detail')
+       this.$router.push(`/custom/${cons.item.clientId}`)
     }
     },
    //文章跳轉
@@ -223,8 +223,9 @@ export default {
         pram.item.attentionStatus = 1
          dynamicsService.getupdateCustomerInfo(pram.item.clientId,1)
       }
+      //客户详情
       }else if(pram.type === 'detail'){
-        this.$router.push('/custom/detail')
+        this.$router.push(`/custom/${pram.item.clientId}`)
       }else if(pram.type ==='messageList'){
          this.$router.push('/dynamics/message/messageList')
       }
