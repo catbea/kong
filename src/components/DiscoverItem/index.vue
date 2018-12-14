@@ -5,7 +5,7 @@
         <p class="list-left-title">{{data.title}}</p>
         <p class="list-left-time">{{data.publisher}}&nbsp;&nbsp;{{data.createDate | dateFormatterToHuman}}&nbsp;&nbsp;{{data.scanNum | numberFormatter}}浏览</p>
       </div>
-      <div class="bg_img discover-list-right" :style="{'backgroundImage':'url('+ data.image +')'}">
+      <div class="bg_img van-hairline--surround discover-list-right" :style="{'backgroundImage':'url('+ data.image +')'}">
       </div>
     </div>
   </router-link>
@@ -25,25 +25,27 @@ export default {
   margin: 15px;
   display: flex;
   > .discover-list-left {
+    position: relative;
     width: 225px;
     height: 100px;
+    padding: 3px 15px;
     > .list-left-title {
       font-size: 16px;
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
-      padding-right: 10px;
     }
     > .list-left-time {
+      position: absolute;
+      left: 15px;
+      bottom: 15px;
       font-size: 12px;
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
-      padding-top: 28px;
     }
   }
   > .discover-list-right {
     width: 120px;
     height: 90px;
-    margin: 5px 0;
     border-radius: 6px;
     background-color: #999999;
   }

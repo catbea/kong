@@ -16,7 +16,7 @@
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{houseDynamicCount.avgStayLinkerTime }}</p>
+          <p class="card-num">{{avgStayLinkerTime}}</p>
         </span>
       </div>
     </div>
@@ -54,15 +54,20 @@ export default {
     // info: Object,
     item: Object,
     houseDynamicList: { type: Array },
-    houseDynamicCount: { type: '' }
+    houseDynamicCount: { type: '' },
+    avgStayLinkerTime: { type: '' }
   },
+ 
   data() {
     return {
       properties: [
         { id: '1', propertiesName: '碧桂园凤凰国际', statue: '0', num: '14', address: '南山 深圳湾', price: '0' },
         { id: '2', propertiesName: '万科臻湾汇 ', statue: '1', num: '20', address: '南山 深圳湾', price: '119878' }
-      ]
+      ],
     }
+  },
+   methods() {
+    
   },
   methods: {
     onClickConfirm(item) {

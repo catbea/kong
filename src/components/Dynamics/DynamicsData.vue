@@ -3,14 +3,14 @@
       <div class="dynaData-container" v-if="allDynamicCount">
         <span class="container-total">
           <p class="container-title">{{totalTitle}}</p>
-          <p class="card-num">{{allDynamicCount.scanCardCount}}</p>
+          <p class="card-num">{{allDynamicCount.scanAllCount}}</p>
         </span>
         <span class="container-card">
           <p class="container-title">{{cardTitle}}</p>
           <p class="card-num">{{allDynamicCount.scanCardCount}}</p>
         </span>
-        <span class="container-properties " >
-          <p class="container-title">{{propertiesTitle}}</p>
+        <span class="container-properties" >
+          <p class="container-title"> {{propertiesTitle}} </p>
           <p class="card-num">{{allDynamicCount.scanLinkerCount}}</p>
         </span>
         <span calss="container-article">

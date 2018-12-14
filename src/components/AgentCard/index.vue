@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow_box agent-card">
+  <div class="shadow_box agent-card" v-if="info">
     <div class="title-agent">
       <span class="title-agent-left">
         <span class="agent-left-img">
@@ -36,6 +36,7 @@ export default {
 <style lang="less">
 .agent-card {
   margin: 0 15px;
+  border-radius: 6px;
 }
 .title-agent {
   background: #ffffff;
@@ -57,16 +58,19 @@ export default {
         font-size: 18px;
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
+        padding: 2px 0 0 5px;
       }
       > .introduce-company {
         font-size: 12px;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
+        padding: 3px 0 1px 5px;
       }
       > .introduce-adder {
         font-size: 12px;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
+        padding: 3px 0 3px 5px;
       }
     }
   }

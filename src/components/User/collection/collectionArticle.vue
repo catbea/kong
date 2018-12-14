@@ -1,9 +1,9 @@
 <template>
   <div class="collection-container">
-    <div class="collection-list" v-if="data" v-for="(item,key) in data" :key="key" @click="gocollectionInfo(item)">
+    <div class="collection-list" v-if="data" v-for="(item,key) in data" :key="key" >
       <span class="collection-list-left">
-        <p class="list-left-title">{{item.title}}</p>
-        <p class="list-left-conter" v-html="item.subTitle"></p>
+        <p class="list-left-title" @click ="gocollectionInfo(item)">{{item.title}}</p>
+        <p class="list-left-conter"  @click ="gocollectionInfo(item)" v-html="item.subTitle"></p>
         <!-- 收藏状态：1-取消收藏，0-收藏 -->
         <span
           id="collectiontabok"
@@ -20,7 +20,7 @@
           style="color:#AFB2C3"
         >取消收藏</span>
       </span>
-      <span class="collection-list-right">
+      <span class="collection-list-right"  @click ="gocollectionInfo(item)">
         <img :src="item.image" class="mark-icon">
       </span>
     </div>
@@ -36,6 +36,7 @@ export default {
   props: {
     data: { type: Array },
     info: { type: String }
+
   },
   methods: {
     gocollection(deleteType, infoId, key) {
