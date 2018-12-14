@@ -112,12 +112,10 @@ class CommonService {
   /**
    * 获取聊天
    */
-  getUserSig(userType, userId) {
+  getUserSig() {
     return xhr({
       url: '/cpIM/getUserSig',
       body: {
-        userType,
-        userId
       }
     })
   }

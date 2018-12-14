@@ -49,6 +49,7 @@
             <dynamics-card
               @click="goallDynamics"
               :cardDynamicCount="cardDynamicCount"
+              :cardDynamicListCount="cardDynamicListCount"
               :cardDynamicList="cardDynamicList"
             ></dynamics-card>
           </div>
@@ -61,6 +62,7 @@
             @click="itemProperties"
             :houseDynamicList="houseDynamicList"
             :houseDynamicCount="houseDynamicCount"
+            :avgStayLinkerTime="avgStayLinkerTime"
           ></properties>
         </div>
         <div
@@ -70,6 +72,7 @@
           <dynamics-article
             :articleDynamicCount="articleDynamicCount"
             :articleDynamicList="articleDynamicList"
+            :avgStayArticleTime="avgStayArticleTime"
           ></dynamics-article>
         </div>
       </div>
@@ -124,6 +127,9 @@ export default {
       articleDynamicCount: [],
       articleDynamicList: [],
       attentionStatus: 0,
+      cardDynamicListCount:0,
+      avgStayArticleTime: 0,
+      avgStayLinkerTime: 0,
     }
   },
   created() {
@@ -162,6 +168,7 @@ export default {
     async getCardDynamicCount() {
       const res = await dynamicsService.getCardDynamicCount()
       this.cardDynamicCount = res
+        this.cardDynamicListCount = parseInt(this.cardDynamicCount.avgStayCardTime /1000)
       this.getCardDynamicList()
     },
 
@@ -175,6 +182,7 @@ export default {
     async getHouseDynamicCount() {
       const res = await dynamicsService.getHouseDynamicCount()
       this.houseDynamicCount = res
+      this.avgStayLinkerTime = parseInt(this.houseDynamicCount.avgStayLinkerTime/1000) 
       this.getHouseDynamicList()
     },
     //楼盘动态列表
@@ -187,6 +195,7 @@ export default {
     async getArticleDynamicCount() {
       const res = await dynamicsService.getArticleDynamicCount()
       this.articleDynamicCount = res
+      this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime /1000)
       this.getArticleDynamicList()
     },
     //文章数据动态列表
@@ -210,7 +219,7 @@ export default {
        this.$router.push('/dynamics/message/messageList')
     }else if(cons.type === 'detail'){
       //詳情
-       this.$router.push('/custom/detail')
+       this.$router.push(`/custom/${cons.item.clientId}`)
     }
     },
    //文章跳轉
@@ -223,8 +232,9 @@ export default {
         pram.item.attentionStatus = 1
          dynamicsService.getupdateCustomerInfo(pram.item.clientId,1)
       }
+      //客户详情
       }else if(pram.type === 'detail'){
-        this.$router.push('/custom/detail')
+        this.$router.push(`/custom/${pram.item.clientId}`)
       }else if(pram.type ==='messageList'){
          this.$router.push('/dynamics/message/messageList')
       }

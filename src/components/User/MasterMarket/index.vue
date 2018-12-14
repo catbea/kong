@@ -1,16 +1,15 @@
 <template>
-  <div class="mymarket-page">
+  <div class="mymarket-page" v-if="changeBoxShow">
     <div class="master-market-box">
       <p class="master-recommend">大师推荐</p>
       <div class="vanSWipe-box">
-       <div class="bg_img hint" v-if="!swipeShow" :style="{backgroundImage:'url('+hintImg+')'}">
+       <!-- <div class="bg_img hint" v-if="!swipeShow" :style="{backgroundImage:'url('+hintImg+')'}">
         <span>您还没有任何推荐楼盘</span> 
-        </div>
+        </div> -->
         <van-swipe
           :touchable="true"
           :loop="true"
           :autoplay="3000"
-          v-if="swipeShow"
         >
           <van-swipe-item
             v-for="(item,index) in limitList"
@@ -44,30 +43,68 @@
 import userService from 'SERVICE/userService'
 export default {
   created() {
-    console.log(this.swipeList,'111推荐数据')
-    
+    console.log(this.swipeList,'swipeList推荐数据')
+    // this.swipeJudge()
+    console.log(this.limitList.length,'limitList初始时图片数')
+    // console.log(this.changeBoxShow,'created推荐是否显示')
+    this.$center.$on('cs',(n)=>{
+      console.log(n)
+    })
   },
   mounted() {
-    console.log(this.swipeList,'222推荐数据')
+    console.log(this.swipeList,'mounted的swipeList推荐数据')
+    console.log(this.changeBoxShow,'mounted推荐是否显示 ')
   },
   props: {
     swipeList: {
       type: Array
     },
-    swipeShow:{type:Boolean}
+    boxShow:{type:Boolean}
   },
-  data: () => ({
-    masterSave: null,
+  data(){
+    return{
+      // changeBoxShow:true,
+      changeshow:false,
+      masterSave: null,
     img: require('IMG/user/Combined Shape@2x.png'),
     hintImg:require('IMG/dev/timg.jpg')
-  }),
+    }
+  },
   methods: {
     async closeHandle(linkerId,index){
      await userService.changeMarketData(linkerId,20,0)
-     this.swipeList.splice(index,1)
+     this.limitList.splice(index,1)
+     this.swipeJudge()
+     console.log(this.swipeList.length,'当前图片数')
     },
+    // swipeJudge(){
+    //   if(this.swipeList.length==0){
+    //    this.changeBoxShow=false
+    //  }else{
+    //    this.changeBoxShow=true
+    //  }
+    // }
+    swipeJudge(){
+      if(this.limitList.length==0){
+       this.changeBoxShow=false
+     }else{
+       this.changeBoxShow=true
+     }
+    }
   },
   computed:{
+    changeBoxShow:{
+      get:function () {
+        if(this.swipeList.length==0){
+        return false
+      }else{
+        return true
+      }
+      },
+      set:function () {
+        
+      }
+    },
     limitList(){
       if(this.swipeList.length>5){
        return this.swipeList.slice(0,5)

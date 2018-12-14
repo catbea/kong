@@ -36,16 +36,10 @@ export default {
      * im获取凭证
      */
     async getUserSig () {
-      let _this = this
-      let userId = this.userInfo.id
-      let parm = {
-        "userType": 2,
-        "userId": userId
-      }
-      console.log(parm)
-      const res = await commonService.getUserSig(2, userId)
+      let res = await commonService.getUserSig()
       console.log(res)
-      webimLogin(res.skdAppid, "agent_" + userId, res.accountType, res.usersig, res.isLogOn);
+      if(!res || !res.agentId) return
+      webimLogin(res.skdAppid, "agent_" + res.agentId, res.accountType, res.usersig, res.isLogOn);
       // callbackaddMsgCount(this.getImMsgCount);
     }
   }
@@ -55,6 +49,7 @@ export default {
 @import '~normalize.css/normalize.css';
 @import './assets/css/reset.less';
 @import './assets/css/common.less';
+@import './assets/icon/iconfont.css';
 
 html {
   -webkit-text-size-adjust: none;

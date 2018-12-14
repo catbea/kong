@@ -72,15 +72,12 @@ export default {
     },
     copyValue(value) {
       this.valueCopy = value
-      console.log('valueCopy',this.valueCopy);
-      
       this.handleValidation()
     }
   },
   watch: {
     value:{
       handler(newValue){
-        debugger
         // This watch works from the code side of the 2-way-binding:
       this.copyValue(newValue)
       },

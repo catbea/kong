@@ -185,6 +185,7 @@ export default {
     consultHandler() {
       this.$router.push({path: '/custom/message/message', query: {
         clientId: this.clientId,
+        clientMobile: this.clientMobile,
         customerRemarkName: this.customBaseInfo.clientName,
         headImgUrl: this.customBaseInfo.avatarUrl
       }})
@@ -301,13 +302,15 @@ export default {
       this.pieChartHidden = result.display == 'hide' ? true : false
       if (this.pieChartHidden == false) {
         let pieData = []
-        let titles = ['我', '楼盘', '文章']
+        let titles = ['名片', '楼盘', '文章']
+        let counts = [Number(result.vo.mpxqll), Number(result.vo.lpxqll), Number(result.vo.llzuxq)]
         let colors = ['#2f7bdf', '#5a9be0', '#7eace1']
         let total = result.vo.llzuxq + result.vo.lpxqll + result.vo.mpxqll
         let percents = [Number(Number(result.vo.mpxqll / total).toFixed(2)), Number(Number(result.vo.lpxqll / total).toFixed(2)), Number(Number(result.vo.llzuxq / total).toFixed(2))]
         for (let i = 0; i < 3; i++) {
           let llzuxq = {}
           llzuxq.name = titles[i]
+          llzuxq.count = counts[i]
           llzuxq.percent = percents[i]
           llzuxq.a = '1'
           llzuxq.color = colors[i]
