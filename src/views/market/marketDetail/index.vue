@@ -1,15 +1,8 @@
 <template>
   <div class="marketDetail-page">
+    <!-- 新手引导 -->
     <hint-tire ></hint-tire>
-    <swipe-box
-      :linkerInfo="linkerInfo"
-      :bannerList="bannerList"
-      :collectionStatus="linkerInfo&&linkerInfo.collectionStatus"
-      :ifPanorama="linkerInfo&&linkerInfo.ifPanorama"
-      :linkerId='linkerInfo&&linkerInfo.linkerId'
-      @shareBuilding="shareBuildingPage"
-      :photoButton='photoButton'
-    ></swipe-box>
+    <swipe-box :linkerInfo="linkerInfo" :bannerList="bannerList" :collectionStatus="linkerInfo&&linkerInfo.collectionStatus" :ifPanorama="linkerInfo&&linkerInfo.ifPanorama" :linkerId="linkerInfo&&linkerInfo.linkerId" @shareBuilding="shareBuildingPage" :photoButton="photoButton"></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
         <div class="marketDetail-box-top">
@@ -17,16 +10,9 @@
             <tag-group :arr="info"></tag-group>
           </div>
           <div class="house-owner">
-            <div
-              class="browse"
-              @click="supplement"
-            >{{linkerInfo&&linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
-            <!-- <div v-if="linkerInfo&&linkerInfo.customerList"
-              class="head-portrait bg_img"
-              :style="{backgroundImage:'url('+linkerInfo.customerList[0].clientImg+')'}"
-            ></div>-->
+            <div class="browse" @click="supplement">{{linkerInfo&&linkerInfo.browsCount?linkerInfo.browsCount:0}}</div>人浏览过
             <transition name="fade">
-            <avatar class="head-portrait" :avatar="avatarCompute" v-if="head"></avatar>
+              <avatar class="head-portrait" :avatar="avatarCompute" v-if="head"></avatar>
             </transition>
           </div>
         </div>
@@ -37,25 +23,14 @@
       <all-marketType :houseTypeList="linkerInfo&&linkerInfo.houseTypeList"></all-marketType>
       <title-bar :conf="confDynamic" :isShow="linkerInfo&&linkerInfo.houseDynamicList.length>0"></title-bar>
       <ul class="market-state-box" v-if="linkerInfo&&linkerInfo.houseDynamicList.length>0">
-        <li
-          class="market-state-box-top"
-        >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].title:''}}</li>
-        <li
-          class="market-state-box-middle"
-        >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].content:''}}</li>
-        <li
-          class="market-state-box-bottom"
-        >{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].dynamicTime:''}}</li>
+        <li class="market-state-box-top">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].title:''}}</li>
+        <li class="market-state-box-middle">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].content:''}}</li>
+        <li class="market-state-box-bottom">{{linkerInfo.houseDynamicList?linkerInfo.houseDynamicList[0].dynamicTime:''}}</li>
       </ul>
-      <title-bar :conf="confLocation" :isShow="linkerInfo&&linkerInfo.aroundList.length>0"> 
-        
-      </title-bar>
+      <title-bar :conf="confLocation" :isShow="linkerInfo&&linkerInfo.aroundList.length>0"></title-bar>
       <site-nearby :aroundList="linkerInfo&&linkerInfo.aroundList"></site-nearby>
       <title-bar :conf="confElse" :isShow="linkerInfo&&linkerInfo.linkerOtherList.length>0"></title-bar>
-      <all-elseMarket
-        :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList"
-        @itemClick="skipMarketDetail"
-      ></all-elseMarket>
+      <all-elseMarket :linkerOtherList="linkerInfo&&linkerInfo.linkerOtherList" @itemClick="skipMarketDetail"></all-elseMarket>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link :to="'/marketDetail/correction/'+linkerId" class="feedback">反馈纠错</router-link>
@@ -64,7 +39,6 @@
     </div>
     <open-marketButton v-if="openStatus=='0' || openStatus==''" @click.native="marketOpenHandle"></open-marketButton>
     <!-- v-if="openFlag" -->
-
     <market-renew v-if="openStatus=='1' || openStatus=='2'"></market-renew>
     <van-popup v-model="show">
       <popup-box></popup-box>
@@ -120,14 +94,14 @@ export default {
     this.linkerId = this.$route.params.id
     this.getMarketDetailPhotoInfo()
     this.$store.commit(types.USER_BUILD_INFO, this.linkerId)
-    
+
     this.getLinkerDetail(this.linkerId)
     this.skipMoreContent()
     this.getHouseAroundType(this.linkerId)
   },
   data: () => ({
-    head:false,
-    photoButton:true,
+    head: false,
+    photoButton: true,
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
@@ -190,8 +164,8 @@ export default {
       this.$router.push({ path: '/marketDetail/info', query: this.linkerInfo })
     },
     skipMarketDetail(val) {
-      this.linkerId=val
-      this.$router.push({ name: 'marketDetail', params: { id:val} })
+      this.linkerId = val
+      this.$router.push({ name: 'marketDetail', params: { id: val } })
     },
     marketOpenHandle() {
       this.$router.push({ name: 'marketDetail-open', params: { id: this.linkerId } })
@@ -201,7 +175,7 @@ export default {
      */
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
-      console.log(result,'楼盘详情数据')
+      console.log(result, '楼盘详情数据')
       this.linkerInfo = result
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
@@ -213,29 +187,29 @@ export default {
       //this.titleBarHandle()
     },
     //判断该楼盘有无图片列表
-    async getMarketDetailPhotoInfo(){
+    async getMarketDetailPhotoInfo() {
       const res = await MarketService.getMarketDetailPhoto(this.linkerId)
-      if(res.length>0){
-        this.photoButton=true
-      }else if(res.length<=0){
-        this.photoButton=false
+      if (res.length > 0) {
+        this.photoButton = true
+      } else if (res.length <= 0) {
+        this.photoButton = false
       }
     },
-      //跳转更多内容
-      skipMoreContent(){
-        this.confType.link='/marketDetail/FamilyList/'+this.linkerId
-        this.confDynamic.link='/marketDetail/marketAllDynamic/'+this.linkerId
-        this.confLocation.link='/public/map-Search?latitude='+this.info.longitude+"&"+this.info.latitude
-      },
+    //跳转更多内容
+    skipMoreContent() {
+      this.confType.link = '/marketDetail/FamilyList/' + this.linkerId
+      this.confDynamic.link = '/marketDetail/marketAllDynamic/' + this.linkerId
+      this.confLocation.link = '/public/map-Search?latitude=' + this.info.longitude + '&' + this.info.latitude
+    },
     /**
      * 楼盘详情-位置周边
      */
     async getHouseAroundType(id) {
-      const result = await MarketService.getHouseAroundType(id)//获取附近公交等公共场所数据的数组
+      const result = await MarketService.getHouseAroundType(id) //获取附近公交等公共场所数据的数组
     }
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       // 对路由变化作出响应...
       this.getLinkerDetail(this.linkerId)
     }
@@ -250,12 +224,14 @@ export default {
 .marketDetail-page {
   overflow: auto;
   background: #ffffff;
-  .fade-enter-active, .fade-leave-active {
-  transition: opacity 5s;
-    }
-    .fade-enter, .fade-leave-to{
-      opacity: 0;
-    }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 5s;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
   .van-tabs__wrap--scrollable .van-tab {
     flex: 1;
   }
