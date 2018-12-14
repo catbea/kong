@@ -36,7 +36,7 @@ export default {
      * im获取凭证
      */
     async getUserSig () {
-      const res = await commonService.getUserSig()
+      let res = await commonService.getUserSig()
       console.log(res)
       if(!res || !res.agentId) return
       webimLogin(res.skdAppid, "agent_" + res.agentId, res.accountType, res.usersig, res.isLogOn);
