@@ -15,18 +15,21 @@
               <img :src="ovalIcon" class="oval-icon" v-show="dynamicCount.linkerVO.ifPanorama == 1">
             </span>
             <span class="dynamicsInfo-list-right">
-              <p class="list-right-title">{{dynamicCount.linkerVO.linkerName}}
-                 <span class="left-title-right"  v-if="dynamicCount.linkerVO.linkerOpenEndTime !=''">续费</span>
-                 <span class="left-title-right-open" v-else>开通</span>
+              <div class="list-right-title" @click="gopay(dynamicCount.linkerVO)">
+                 <div class="list-right-title-div">{{dynamicCount.linkerVO.linkerName}}</div>
+                <div class="list-right-tab-div">
+                   <span class="left-title-right"  v-if="dynamicCount.linkerVO.linkerOpenEndTime !=''">续费</span>
+                   <span class="left-title-right-open" v-else>开通</span>
+                </div>
+              </div>
+              <p class="list-right-time" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">{{dynamicCount.linkerVO.city}}  {{dynamicCount.linkerVO.district}} | {{dynamicCount.linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
+              <p class="list-right-label" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">
+                <button class="right-label right-label-blur" v-show="dynamicCount.linkerVO.saleStatus == 0 ">热销中</button>
+                <button class="right-label right-label-red" v-show="dynamicCount.linkerVO.saleStatus == 1">即将发售</button>
+                <button class="right-label right-label-grey" v-show="dynamicCount.linkerVO.saleStatus == 2">售罄</button>
+                <button class="right-label right-label-gray" v-for="(linkerTags ,key) in dynamicCount.linkerVO.linkerTags " :key="key">{{linkerTags}}</button>
               </p>
-              <p class="list-right-time">{{dynamicCount.linkerVO.city}}  {{dynamicCount.linkerVO.district}} | {{dynamicCount.linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
-              <p class="list-right-label">
-                <span class="right-label right-label-red" v-show="dynamicCount.linkerVO.saleStatus == 0 ">热销中</span>
-                <span class="right-label right-label-red" v-show="dynamicCount.linkerVO.saleStatus == 1">即将发售</span>
-                <span class="right-label right-label-red" v-show="dynamicCount.linkerVO.saleStatus == 2">售罄</span>
-                <span class="right-label right-label-gray" v-for="(linkerTags ,key) in dynamicCount.linkerVO.linkerTags " :key="key">{{linkerTags}}</span>
-              </p>
-              <p class="dynamicsInfo-list-right-price">
+              <p class="dynamicsInfo-list-right-price" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">
                 {{dynamicCount.linkerVO.price }}{{dynamicCount.linkerVO.priceUnit }}
                 <span class="right-price-text">起</span>
                 <span class="right-price-open">{{dynamicCount.linkerVO.openTimes }}次开通</span>
@@ -56,7 +59,7 @@
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.avgStayLinkerTime }}</p>
+          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.avgStayLinkerTime /1000}}</p>
         </span>
       </div>
 
@@ -69,7 +72,7 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent">
+            <div class="dynamics-list-agent" @click="gocustomInfo(item)">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="item.avatarUrl" class="agent-userImg">
@@ -84,7 +87,7 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content">
+            <div class="dynamics-list-content" @click="gocustomInfo(item)">
               <p>浏览了文章 <span>{{item.articleName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
@@ -93,16 +96,15 @@
 
             <div class="dynamics-list-btn">
               <span></span>
-              <span class="list-btn-right">
+              <div class="list-btn-right">
                <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
-                   <img :src="gzImg" class="agent-gzImg">
-                   关注</button>
+                   <img :src="gzImg" class="agent-gzImg">关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                 <button class="list-btn-contact" @click="goalldynamics">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
-              </span>
+              </div>
             </div>
           </div>
 
@@ -115,6 +117,7 @@
   </div>
 </template>
 <script>
+import TagGroup from 'COMP/TagGroup'
 import ShadowBox from 'COMP/ShadowBox'
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import DynamicsList from 'COMP/Dynamics/DynamicsList'
@@ -123,7 +126,8 @@ export default {
   components: {
     ShadowBox,
     DynamicsData,
-    DynamicsList
+    DynamicsList,
+    TagGroup
   },
   data() {
     return {
@@ -164,13 +168,20 @@ export default {
     },
     //楼盘详情
     godynamicsInfo(linkerId) {
-      debugger
       this.$router.push({name:'marketDetail', params: { id: linkerId }})
     },
     //联系
     goalldynamics () {
       this.$router.push('/dynamics/message/messageList')
     },
+    //客服详情
+    gocustomInfo(item){
+      this.$router.push(`/custom/${item.clientId}`)
+    },
+    //续费开通
+    gopay(item){
+      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+    }
   }
 }
 </script>
@@ -248,33 +259,46 @@ export default {
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
-          > .left-title-right {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(0, 122, 230, 1);
-            line-height: 24px;
-            border-radius: 12px;
-            border: 1px solid;
-            width: 46px;
-            height: 24px;
-            right: 30px;
-            position: absolute;
-            text-align: center;
+          .list-right-title-div{
+            font-size: 16px;
+            overflow: hidden;/*内容超出后隐藏*/
+            text-overflow: ellipsis;/* 超出内容显示为省略号*/
+           white-space: nowrap;/*文本不进行换行*/
+           width: 70%;
           }
-          > .left-title-right-open {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 1);
-            line-height: 27px;
-            width: 46px;
-            height: 24px;
-            background: rgba(0, 122, 230, 1);
-            border-radius: 12px;
-            border: 1px solid;
-            right: 31px;
-            position: absolute;
-            text-align: center;
+          .list-right-tab-div{
+                position: absolute;
+            right: 0px;
+            top: 12px;
+            .left-title-right {
+              font-size: 12px;
+              font-weight: 400;
+              color: rgba(0, 122, 230, 1);
+              line-height: 24px;
+              border-radius: 12px;
+              border: 1px solid;
+              width: 46px;
+              height: 24px;
+              right: 30px;
+              position: absolute;
+              text-align: center;
+            }
+            .left-title-right-open {
+              font-size: 12px;
+              font-weight: 400;
+              color: rgba(255, 255, 255, 1);
+              line-height: 27px;
+              width: 46px;
+              height: 24px;
+              background: rgba(0, 122, 230, 1);
+              border-radius: 12px;
+              border: 1px solid;
+              right: 31px;
+              position: absolute;
+              text-align: center;
+            }
           }
+           
         }
         > .list-right-time {
           font-size: 12px;
@@ -282,19 +306,28 @@ export default {
           color: rgba(153, 153, 153, 1);
         }
         > .list-right-label {
-          line-height: 30px;
+          // line-height: 30px;
           > .right-label {
             font-size: 10px;
             font-weight: 400;
-
+              border: 0;
             line-height: 10px;
             padding: 2px 5px;
             border-radius: 3px;
             margin-right: 4px;
+            padding: 5px 5px;
           }
           > .right-label-red {
             background: rgba(234, 77, 46, 0.1);
             color: rgba(234, 77, 46, 1);
+          }
+          > .right-label-blur{
+            background:rgba(0,122,230,1);
+            color:rgba(255,255,255,1);
+          }
+           > .right-label-grey{
+            background:rgba(102,102,102,0.15);
+            color:rgba(255,255,255,1);
           }
           > .right-label-gray {
             background: rgba(143, 159, 177, 0.15);

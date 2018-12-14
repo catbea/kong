@@ -26,7 +26,7 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent" @click="godynamicsList">
+            <div class="dynamics-list-agent" @click="godynamicsList(item)">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="item.avatarUrl" class="agent-userImg">
@@ -41,7 +41,7 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content" @click="godynamicsList">
+            <div class="dynamics-list-content" @click="godynamicsList(item)">
               <p>浏览了 <span>你的名片</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
@@ -92,10 +92,11 @@ export default {
     }
   },
   methods: {
-    godynamicsList() {
+    godynamicsList(item) {
       let pram ={
         info: this.info,
-         type:'detail'
+         type:'detail',
+        item:item
       }
       this.$emit('click', pram)
     },
