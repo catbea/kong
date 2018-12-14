@@ -46,12 +46,8 @@
     </div>
     <open-marketButton v-if="expireFlag==1" @click.native="marketOpenHandle"></open-marketButton>
     <!-- v-if="openFlag" -->
-<<<<<<< HEAD
-    <market-renew v-if="openStatus=='1' || openStatus=='2'"></market-renew>
-=======
 
     <market-renew v-if="expireFlag==0"></market-renew>
->>>>>>> 049cbb65f661dcbe50673f33c5ede3a60bd2de84
     <van-popup v-model="show">
       <popup-box></popup-box>
     </van-popup>
