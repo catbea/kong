@@ -46,20 +46,20 @@
         
         <div class="dynaData-container" v-if="dynamicCount">
         <span class="container-total">
-          <p class="container-title">楼盘数量</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.linkerCount  }}</p>
+          <p class="container-title">分享次数</p>
+          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.linkerShareCount }}</p>
         </span>
         <span class="container-card">
-          <p class="container-title">楼盘分享</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.linkerShareCount  }}</p>
+          <p class="container-title">访客数量</p>
+          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.linkerVisitorCount }}</p>
         </span>
         <span class="container-properties " >
-          <p class="container-title">楼盘访客</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.linkerVisitorCount }}</p>
+          <p class="container-title">浏览数量</p>
+          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.scanLinkerCount }}</p>
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.avgStayLinkerTime /1000}}</p>
+          <p class="card-num"> {{avgStayLinkerTime}}</p>
         </span>
       </div>
 
@@ -90,7 +90,7 @@
             <div class="dynamics-list-content" @click="gocustomInfo(item)">
               <p>查看浏览了楼盘  <span>{{item.linkerName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
+              <p>浏览时长大于<span>{{item.currentTime / 1000}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
               <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
@@ -139,6 +139,7 @@ export default {
       itemDynamiclist:this.$route.query.itemDynamiclist,
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
+      avgStayLinkerTime:0
     }
   },
   created() {
@@ -149,6 +150,8 @@ export default {
     async getSingleHouseDynamicCount() {
       const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist.linkerId)
       this.dynamicCount = res
+      this.avgStayLinkerTime = parseInt(this.dynamicCount.houseDynamicCountReturnVO.avgStayLinkerTime /1000 )
+      
     },
     //查询单个楼盘数据动态列表
     async getSingleHouseDynamicList() {
