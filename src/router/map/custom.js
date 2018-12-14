@@ -33,5 +33,13 @@ export default [
     meta: {
       title: '我的客户'
     }
+  },
+  {
+    path: '/custom/message/message',
+    name: 'message',
+    component: resolve => require(['@/views/custom/message.vue'], resolve),
+    meta: {
+      title: '聊天'
+    }
   }
 ]

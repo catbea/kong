@@ -3,6 +3,15 @@
     <div class="shadow_box pie-container" v-if="!pieChartHidden">
       <h5 class="chart-title">客户兴趣占比</h5>
       <pie-chart v-if="pieData.length" :pieData="pieData"></pie-chart>
+      <div class="chart-bottom">
+        <div class="chart-list" v-for="(item, index) in pieData" :key="index">
+          <div class="chart-dot" :style="{backgroundColor:item.color}"></div>
+          <div class="chart-right">
+            <div class="chart-name">{{item.name}}</div>
+            <div class="chart-count">{{item.count}}</div>
+          </div>
+        </div>
+      </div>
       <p class="chart-desc">该客户还未有感兴趣的楼盘，请再接再厉多多推荐，掌握客户的购房意向吧~</p>
     </div>
     <div class="shadow_box line-container" v-if="!lineChartHidden">
@@ -115,6 +124,47 @@ export default {
       font-weight: 600;
       color: #333333;
       line-height: 22px;
+    }
+    .chart-bottom {
+      width: 80%;
+      margin: 16px auto 24px auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .chart-list {
+        width: 30%;
+        display: flex;
+        flex-direction: row;
+        .chart-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          margin-top: 2px;
+          margin-right: 4px;
+        }
+        .chart-right {
+          display: flex;
+          flex-direction: column;
+          .chart-name {
+            color: #333333;
+            font-size: 12px;
+            margin-bottom: 4px;
+          }
+          .chart-count {
+            color: #666666;
+            font-size: 12px;
+          }
+        }
+      }
+      .chart-list:first-child {
+        justify-content: flex-start;
+      }
+      .chart-list:last-child {
+        justify-content: flex-end;
+      }
+      .chart-list:nth-child(2) {
+        justify-content: center;
+      }
     }
     .chart-desc {
       padding: 0 15px 15px;

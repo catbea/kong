@@ -16,7 +16,7 @@
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{cardDynamicCount.avgStayCardTime}}</p>
+          <p class="card-num">{{cardDynamicCount.avgStayCardTime /1000}}</p>
         </span>
       </div>
     </div>
@@ -26,14 +26,14 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent" @click="godynamicsList">
+            <div class="dynamics-list-agent" @click="godynamicsList(item)">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="item.avatarUrl" class="agent-userImg">
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">{{item.clientName}}</p>
-                  <p class="left-right-time">2018/10/22 09:13</p>
+                  <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
                 </span>
               </span>
               <span class="list-agent-right">
@@ -41,11 +41,11 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content" @click="godynamicsList">
+            <div class="dynamics-list-content" @click="godynamicsList(item)">
               <p>浏览了 <span>你的名片</span></p>
-              <p>{{item.updateTime }} 日第<span>{{item.clickCount }}次</span>打开 </p>
+              <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
-              <p>累计浏览<span>{{item.todayClickCount}}次</span>,名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
+              <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
@@ -92,10 +92,11 @@ export default {
     }
   },
   methods: {
-    godynamicsList() {
+    godynamicsList(item) {
       let pram ={
         info: this.info,
-         type:'detail'
+         type:'detail',
+        item:item
       }
       this.$emit('click', pram)
     },

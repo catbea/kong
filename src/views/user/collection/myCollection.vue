@@ -13,9 +13,9 @@
           <div class="dynamicsInfo-list" v-for="(item,key) in dynamicsList" :key="key">
             <div class="dynamicsInfo-list-top">
               <!-- rectangIcon -->
-              <span class="dynamicsInfo-list-left">
+              <span class="dynamicsInfo-list-left"  @click="gomarketDetail(item)">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-                <div
+                <div  @click="gomarketDetail(item)"
                   class="dynamicsInfo-list-left-bg_img"
                   v-show="item.sale != '' "
                   :style="{backgroundImage:'url('+labelImg+')'}"
@@ -24,11 +24,11 @@
                 <img :src="ovalIcon" class="oval-icon">
               </span>
               <span class="dynamicsInfo-list-right">
-                <p class="list-right-title">{{item.linkerName}}</p>
-                <p
+                <p  @click="gomarketDetail(item)" class="list-right-title">{{item.linkerName}}</p>
+                <p @click="gomarketDetail(item)"
                   class="list-right-time"
                 >{{item.city}} {{item.county}} &nbsp; {{item.price}}{{item.priceUnit}}</p>
-                <p class="list-right-label">
+                <p class="list-right-label" @click="gomarketDetail(item)">
                   <!-- 销售状态（楼盘）: 0热销中、1即将发售、3售罄 -->
                   <span class="right-label right-label-red" v-show="item.saleStatus !='' ">{{saleStatus[item.saleStatus]}}</span>
                   <button
@@ -38,7 +38,7 @@
                   >{{its}}</button>
                 </p>
                 <p class="list-right-price">
-                  <span class="right-price right-price-open">
+                  <span class="right-price right-price-open" @click="gomarketDetail(item)">
                     {{item.openTimes}}次开通 &nbsp;
                     <span
                       v-show="item.subscribeInvalidTime !=''"
@@ -138,6 +138,10 @@ export default {
       this.collectionList = res.list.records
       this.articleEmpty = res.listEmpty
     },
+    //楼盘详情
+    gomarketDetail(item){
+      this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
+    },
     //收藏樓盤
     async godynamics(item, index) {
       //  收藏状态：0-未收藏；1-已收藏
@@ -152,7 +156,8 @@ export default {
     },
     //收藏文章
     async gocollection(cons) {
-      if(cons.type == 'goCollection'){
+      debugger
+      if(cons.type === 'goCollection'){
          let index = cons.index
       if (this.collectionList[index].deleteType == 1) {
         this.collectionList[index].deleteType = 0
@@ -161,7 +166,7 @@ export default {
         this.collectionList[index].deleteType = 1
         await userService.getlinkerCollection(cons.infoId, 1)
       }
-      }else if(cons.type == 'goCollectionInfo'){
+      }else if(cons.type === 'goCollectionInfo'){
          this.$router.push({name: 'discover-detail', params: {id: cons.id, city: cons.city}})
       }
      

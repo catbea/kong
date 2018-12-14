@@ -138,9 +138,9 @@ export default {
     width: 48px;
     height: 20px;
     text-align: center;
-    line-height: 20px;
+    line-height: 15px;
     opacity: 0.6;
-    background: rgba(0, 0, 0, 0.6);
+    background: #000000;
     border-radius: 10px;
   }
   .van-swipe {

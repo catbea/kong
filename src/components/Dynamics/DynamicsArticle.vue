@@ -16,7 +16,7 @@
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
-          <p class="card-num">{{articleDynamicCount.avgStayArticleTime }}</p>
+          <p class="card-num">{{articleDynamicCount.avgStayArticleTime /1000 }}</p>
         </span>
       </div>
     </div>

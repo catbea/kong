@@ -48,7 +48,7 @@
                 </span>
                 <span class="agent-left-right">
                   <p class="left-right-name">{{item.clientName}}</p>
-                  <p class="left-right-time">2018/10/22 09:13</p>
+                  <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
                 </span>
               </span>
               <span class="list-agent-right">
@@ -60,7 +60,7 @@
               <p>浏览了文章 <span>{{item.articleName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
-              <p>累计浏览<span>{{item.todayClickCount}}次</span>,名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
+              <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
