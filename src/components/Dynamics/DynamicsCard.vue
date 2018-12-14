@@ -83,6 +83,7 @@ export default {
   props: {
     cardDynamicCount: { type: '' },
     cardDynamicList: { type: Array },
+    cardDynamicListCount: {type:''}
   },
   data() {
     return {
@@ -94,7 +95,6 @@ export default {
     }
   },
   methods() {
-    this.cardDynamicListCount = parseInt(cardDynamicCount.avgStayCardTime /1000)
   },
   methods: {
     godynamicsList(item) {
