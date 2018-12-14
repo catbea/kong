@@ -166,7 +166,9 @@ export default {
       },3000);
     },
     shareBuildingPage() {
-      this.$router.push({ name: 'marketDetail-share' })
+      if(this.linkerInfo.expireFlag==1){
+        this.$router.push({ name: 'marketDetail-share' })
+      }
     },
     supplement() {
       this.show = true
