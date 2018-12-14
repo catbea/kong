@@ -38,6 +38,7 @@ export default {
     async getUserSig () {
       const res = await commonService.getUserSig()
       console.log(res)
+      if(!res || !res.agentId) return
       webimLogin(res.skdAppid, "agent_" + res.agentId, res.accountType, res.usersig, res.isLogOn);
       // callbackaddMsgCount(this.getImMsgCount);
     }
