@@ -29,7 +29,7 @@
               <p v-show="item.type == 1">浏览了 <span class="dynamics-list-card">你的名片</span></p>
               <p v-show="item.type == 3">浏览了文章 <span class="dynamics-list-card">{{item.objectName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime / 1000}}</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
+              <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
               <p>累计浏览<span>{{item.todayClickCount }}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
