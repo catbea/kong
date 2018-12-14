@@ -75,7 +75,7 @@ export default {
       element: ''
     }
   },
-  created() {
+  methods() {
     // this.golist()
   },
   methods: {

@@ -93,7 +93,7 @@ export default {
 
     }
   },
-  created() {
+  methods() {
     this.cardDynamicListCount = parseInt(cardDynamicCount.avgStayCardTime /1000)
   },
   methods: {

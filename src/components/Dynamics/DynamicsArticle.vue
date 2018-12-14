@@ -59,7 +59,7 @@ export default {
       avgStayArticleTime:0
     }
   },
-  created() {
+  methods() {
     this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime /1000)
   },
   methods: {

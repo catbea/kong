@@ -66,7 +66,7 @@ export default {
       avgStayLinkerTime:0
     }
   },
-   created() {
+   methods() {
     this.avgStayLinkerTime = parseInt(this.houseDynamicCount.avgStayLinkerTime/1000) 
   },
   methods: {
