@@ -3,10 +3,10 @@ import store from '@/store/'
 
 export default async (to, from, next) => {
     if(store.getters.imUserSig || !store.getters.userInfo.token) {
+        console.log('[getImUserSig skin]')
         next()
         return
     }
-    console.log('[getImUserSig]')
     await store.dispatch('getImUserSig')
     console.log(store.getters.imUserSig, '[getImUserSig]')
     if(store.getters.imUserSig && store.getters.imUserSig.agentId) {
