@@ -37,17 +37,21 @@
       <div class="bottom-line"></div>
       <div class="carousel-container">
         <div class="marquee-box">
-          <marquee :itemHeight="`${50/37.5}rem`">
+          <marquee :itemHeight="`${50/37.5}rem`" v-if="data.simpleDynamic.length>0">
             <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
               <avatar :avatar="item.avatarUrl"></avatar>
               <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
               <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(6)}}</p>
-              <p class="house-tips" v-if="item.dynamicType == 2">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览楼盘<span>{{item.markedWords | textOver(6)}}</span></p>
+              <p class="house-tips" v-if="item.dynamicType == 2">
+                {{item.clientName | textOver(4)}}{{item.timeStr}}浏览楼盘
+                <span>{{item.markedWords | textOver(6)}}</span>
+              </p>
               <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(6)}}</p>
             </marquee-item>
           </marquee>
         </div>
       </div>
+      <div v-if="data.simpleDynamic.length===0" class="no-carousel-tips">体验AI拓客新模式,连接客户更简单</div>
     </div>
   </div>
 </template>
@@ -91,17 +95,17 @@ export default {
   margin: 0 0 65px;
   height: 175px;
   position: relative;
-  .modify-img {
+  > .modify-img {
     width: 100%;
     position: absolute;
     top: 175px;
   }
-  .top-container {
+  > .top-container {
     position: relative;
     margin: 0 16px 0;
     color: #333333;
     font-size: 28px;
-    h5 {
+    > h5 {
       margin: 20px 0 15px;
       display: inline-block;
       font-size: 20px;
@@ -129,7 +133,7 @@ export default {
       }
     }
   }
-  .info-box {
+  > .info-box {
     background: #fff;
     position: relative;
     margin: 0 15px;
@@ -196,7 +200,8 @@ export default {
       border-radius: 1px;
       background: #eeeeee;
     }
-    .carousel-container {
+    > .carousel-container {
+      position: relative;
       margin: 10px 0 -20px;
       > .marquee-box {
         height: 30px;
@@ -210,13 +215,27 @@ export default {
           justify-content: center;
           font-size: 12px;
           line-height: 24px;
-          >.house-tips{
-            >span{
-              color: #007AE6;
+          > .house-tips {
+            > span {
+              color: #007ae6;
             }
           }
         }
       }
+    }
+    > .no-carousel-tips {
+      width: 100%;
+      background: rgba(0, 122, 230, 0.05);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 50px;
+      border-radius: 0px 0px 10px 10px;
+      font-size: 15px;
+      color: #007ae6;
+      font-weight: 400;
+      text-align: center;
+      line-height: 50px;
     }
   }
 }

@@ -8,7 +8,7 @@
         <p :class="item.subscribeNum == 3 || item.subscribeNum == 1 ? '':'through'">{{item.subscribeRemark}}</p>
       </li>
 
-      <li>
+      <li @click="vipClickHandle">
         <p>VIP会员</p>
         <p>¥300</p>
         <p>立即开通</p>
@@ -22,7 +22,7 @@
           <p :style="{'background':'url('+backImg+') no-repeat'}"></p>
         </div>
       </div>
-      <div class="balance-payment">
+      <div class="balance-payment" v-show="payInfo.balanceAmount">
         <div>
         <p>余额支付 （￥</p>
         <p>{{payInfo.balanceAmount | priceFormart}}</p>
@@ -65,6 +65,10 @@ export default {
     priceItemClickHandle(index) {
       this.itemActIndex = index
       this.$emit('priceItemClick', index)
+    },
+
+    vipClickHandle() {
+      this.$emit('onVipClick')
     },
 
     couponClickHandle() {
