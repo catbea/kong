@@ -37,7 +37,7 @@ export default [
       }
     }
   },
-  {
+  {  // TODO 准备移除
     path: '/marketDetail/perfect',
     name: 'marketDetailPerfect',
     component: resolve => require(['@/views/market/marketDetail/Perfect/index.vue'], resolve),
@@ -92,7 +92,6 @@ export default [
       }
     }
   },
-
   {
     path: '/marketDetail/commission/:id',
     name: 'marketDetail-commission',
@@ -126,6 +125,14 @@ export default [
     }
   },
   {
+    path: '/market/share/:id',
+    name: 'market-share',
+    component: resolve => require(['@/views/market/share/index.vue'], resolve),
+    meta: {
+      title: '楼盘分享'
+    }
+  },
+  {// TODO 准备移除
     path: '/marketDetail/share',
     name: 'marketDetail-share',
     component: resolve => require(['@/views/market/marketDetail/marketShare/index.vue'], resolve),
@@ -133,7 +140,7 @@ export default [
       title: '楼盘分享'
     }
   },
-  {
+  {// TODO 准备移除
     path: '/marketDetail/share/save',
     name: 'save-poster',
     component: resolve => require(['@/views/market/marketDetail/marketShare/savePoster/index.vue'], resolve),
