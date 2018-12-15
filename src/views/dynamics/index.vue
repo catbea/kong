@@ -49,7 +49,7 @@ export default {
       const res = await dynamicsService.getDynamicsCollect()
       // 数据中心部分 数据拼装
       this.collectData = {
-        newMsg: res.unreadCustomerCount,
+        newMsg: res.unreadMessageCount,
         customerCount: {
           val: res.customerCount,
           change: res.unreadCustomerCount
