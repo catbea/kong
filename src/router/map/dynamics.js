@@ -23,7 +23,7 @@
   },
   {
     path: '/dynamics/dynamicsInfo',
-    name: 'dynamicsInfo',
+    name: 'dynamics-info',
     component: resolve => require(['@/views/dynamics/dynamicsInfo.vue'], resolve),
     meta: {
       title: '动态详情',

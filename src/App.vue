@@ -21,9 +21,6 @@ export default {
   },
   mounted() {
     // document.addEventListener('touchstart', this.handler, false)
-    this.$nextTick(() => {
-      this.getUserSig();
-    })
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -35,14 +32,6 @@ export default {
     /**
      * im获取凭证
      */
-    async getUserSig () {
-      console.log(this.userInfo.token, 'getUserSig')
-      let res = await commonService.getUserSig()
-      console.log(res)
-      if(!res || !res.agentId) return
-      webimLogin(res.skdAppid, "agent_" + res.agentId, res.accountType, res.usersig, res.isLogOn);
-      // callbackaddMsgCount(this.getImMsgCount);
-    }
   }
 }
 </script>

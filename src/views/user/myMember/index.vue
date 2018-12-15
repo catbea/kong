@@ -50,10 +50,11 @@ export default {
     Avatar
   },
   created() {
+    this.selectCity = this.userArea.vipSelectedCity || '深圳市-'
+    console.log(this.selectCity, 'this.selectCity')
     this.getVipInfo()
   },
   data: () => ({
-    isShowSelectCity: false,
     isPayLoading: false,
     isVip: false,
     currPriceIndex: 0,
@@ -69,12 +70,12 @@ export default {
     borderColor: {
       border: 'none'
     },
+    selectCity: '深圳市',
     title: 'VIP生效城市待选',
-    content: '是否选择深圳作为VIP开通城市',
     flag: true
   }),
   computed: {
-    ...mapGetters(['userInfo']),
+    ...mapGetters(['userInfo', 'userArea']),
     borderStyle() {
       if (this.bdr == 1) {
         this.borderColor.border = '1px solid #C6C6C6'
@@ -123,9 +124,11 @@ export default {
       this.setMealInfo = {openCount: res.count, vipCity: res.city}
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
-      if(this.isShowSelectCity){
+
+      if(!this.setMealInfo.vipCity){
         this.unselectedPopup()
       }
+
       if(this.vipList.length > 0){
         this.currPriceIndex = 0
         this.priceClickHandle(0)
@@ -140,17 +143,19 @@ export default {
     unselectedPopup() {
       Dialog.confirm({
         title: this.title,
-        message: this.content,
+        message: '是否选择'+this.selectCity+'作为VIP开通城市',
         cancelButtonText: '其他城市'
       }).then(() => {
         this.updateCity()
       }).catch(() => {
-        this.$router.push('/public/area-select/')
+        this.$router.push({path: '/public/area-select/', query: {fromPage:'myMember'}})
       })
     },
 
     async updateCity() {
-      let res = await marketService.updateCityByAgentId(this.setMealInfo.vipCity)
+      let res = await marketService.updateCityByAgentId(this.selectCity)
+      let vipInfo = {city: this.selectCity}
+      this.$store.dispatch('userInfo', Object.assign(this.userInfo, { vipInfo: vipInfo}))
       this.$toast('vip城市添加成功')
     }
   }
