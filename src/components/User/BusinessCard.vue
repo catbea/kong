@@ -20,7 +20,7 @@
             <p class="content-left-labe">
               <a
                 class="left-labe-css"
-                v-for="(item,index) in userInfo.labelList"
+                v-for="(item,index) in newLabelList"
                 :key="index"
               >{{item.labelName}}</a>
             </p>
@@ -94,6 +94,9 @@ export default {
     },
     vipPackage() {
       return this.userVipInfo.isvip ? this.userVipInfo.package : '任选10个盘'
+    },
+    newLabelList() {
+      return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
     }
   }
 }

@@ -6,7 +6,7 @@ const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     isVip: '1',
-    vipInfo:{
+    vipInfo: {
       city: '广州市'
     },
     address: '',
@@ -50,7 +50,7 @@ const state = {
     masterRecommendTip: '',
     minOpenid: '',
     mobile: '18676652795',
-    registerMobile:'13100000000',
+    registerMobile: '13100000000',
     mpOpenid: '',
     myLinkerGuide: 0,
     name: '嗨我是你的益达吗',
@@ -60,7 +60,7 @@ const state = {
     // payCorpId: "ww5e4d879ddc307ea1",
     cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
-    theFirstTime:true,//新手引导
+    theFirstTime: true,//新手引导
     payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
     position: '',
     price: 2000,
@@ -83,6 +83,18 @@ const state = {
       {
         labelId: '001',
         labelName: '价格屠夫'
+      },
+      {
+        labelId: '002',
+        labelName: '喜欢睡觉'
+      },
+      {
+        labelId: '003',
+        labelName: '不愿加班'
+      },
+      {
+        labelId: '004',
+        labelName: '呵呵死你'
       }
     ]
   },
@@ -137,7 +149,7 @@ const getters = {
   },
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
-  theFirstTime:state => state.userInfo.theFirstTime,
+  theFirstTime: state => state.userInfo.theFirstTime,
   imUserSig: state => state.imUserSig,
 }
 
@@ -206,7 +218,7 @@ const mutations = {
   [types.USER_FIRST_TIME](state, data) {
     state.userInfo.theFirstTime = data
   }
-  
+
 }
 
 export default {
