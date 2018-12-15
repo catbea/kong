@@ -41,6 +41,7 @@ import Agreement from 'COMP/myMember/Agreement.vue'
 import marketService from 'SERVICE/marketService'
 import { mapGetters } from 'vuex'
 import Avatar from 'COMP/Avatar'
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     SetMeal,
@@ -50,7 +51,7 @@ export default {
     Avatar
   },
   created() {
-    this.selectCity = this.userArea.vipSelectedCity || '深圳市-'
+    this.selectCity = this.userArea.vipSelectedCity || '深圳市'
     console.log(this.selectCity, 'this.selectCity')
     this.getVipInfo()
   },
@@ -106,7 +107,7 @@ export default {
           signType: 'MD5',
           paySign: res.signature,
           success: res => {
-            console.log('支付suss')
+            this.$router.push('/market')
           },
           cancel: res => {
             this.$toast('支付取消')
@@ -124,6 +125,11 @@ export default {
       this.setMealInfo = {openCount: res.count, vipCity: res.city}
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
+
+      //更新vipInfo
+      let _vipInfo = {city: res.city}
+      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
+      // this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { vipInfo: _vipInfo}))
 
       if(!this.setMealInfo.vipCity){
         this.unselectedPopup()
@@ -154,8 +160,8 @@ export default {
 
     async updateCity() {
       let res = await marketService.updateCityByAgentId(this.selectCity)
-      let vipInfo = {city: this.selectCity}
-      this.$store.dispatch('userInfo', Object.assign(this.userInfo, { vipInfo: vipInfo}))
+      let _vipInfo = {city: this.selectCity}
+      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
       this.$toast('vip城市添加成功')
     }
   }
