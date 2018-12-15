@@ -247,7 +247,7 @@ export default {
       line-height: 20px;
     }
     .check-all-button {
-      margin-right: 32px;
+      margin-right: 16px;
       width: 72px;
       height: 30px;
       border-radius: 22px;

@@ -8,13 +8,13 @@
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
-        <li>AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
+        <li v-show="expireTimestamp">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
         <li>余额：{{userInfo.price | priceFormart}}元</li>
       </ul>
       <router-link v-show="isVip" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘</router-link>
       </div>
     </div>
-    <set-meal :vipList="vipList" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>
+    <set-meal :vipList="vipList" :onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>
     <member-privilege></member-privilege>
     <privilege-describe></privilege-describe>
     <agreement></agreement>
@@ -129,9 +129,8 @@ export default {
       //更新vipInfo
       let _vipInfo = {city: res.city}
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
-      // this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { vipInfo: _vipInfo}))
 
-      if(!this.setMealInfo.vipCity){
+      if(!res.vipFlag){
         this.unselectedPopup()
       }
 
@@ -163,6 +162,10 @@ export default {
       let _vipInfo = {city: this.selectCity}
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
       this.$toast('vip城市添加成功')
+    },
+
+    checkCityHandle() {
+      this.$router.push({path: '/public/area-select/', query: {fromPage:'myMember'}})
     }
   }
 }
