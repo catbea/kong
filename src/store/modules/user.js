@@ -140,14 +140,12 @@ const state = {
 }
 
 const getters = {
-  userInfo: state => state.userInfo,
+  userInfo: state => { return state.userInfo },
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   treeInfo: state => state.treeInfo,
-  jssdkConfig: state => {
-    return state.jssdkConfig
-  },
+  jssdkConfig: state => { return state.jssdkConfig },
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
   theFirstTime: state => state.userInfo.theFirstTime,
