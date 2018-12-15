@@ -4,7 +4,8 @@
       class="swipe-poster-item bg_img"
       :style="{backgroundImage:'url('+modelBgImg+')'}"
     >
-      <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}">
+      <!-- <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}"> -->
+         <div class="content-box bg_img" :style="{backgroundImage:'url('+model.postersUrl+')'}">
         <div class="box-top">
           <ul>
             <!-- <li>境墅高层</li> -->
