@@ -49,42 +49,7 @@ export default {
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     checkShow: false,
-    dataArr: [
-      {
-        buildArea: '',
-        city: '深圳市',
-        district: '宝安区',
-        divisionRules: '',
-        ifPanorama: 1,
-        linkerHeadUrl: 'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/f22e51091aab49518d6c83725a237690.jpg',
-        linkerId: '05a999c5fc1844919e084624ea382935',
-        linkerName: '前海铂寓',
-        linkerOpenEndTime: '',
-        linkerTags: ['教育地产', '生态宜居', '海景/水景地产'],
-        openTimes: '',
-        price: 500,
-        priceUnit: '万元/套起',
-        sale: '9.5折',
-        saleStatus: 0
-      },
-      {
-        buildArea: '',
-        city: '深圳市',
-        district: '龙华区',
-        divisionRules: '',
-        ifPanorama: 1,
-        linkerHeadUrl: 'https://720ljq2-10037467.file.myqcloud.com/linker/18820978052/image/f0901dc0a0214ecebad65cd0518de293.jpg',
-        linkerId: 'c12997581b0c4f96a37e9f95c3906082',
-        linkerName: '珑门',
-        linkerOpenEndTime: '',
-        linkerTags: ['品牌开发商', '豪华社区', '低总价'],
-        openTimes: '',
-        price: 43000,
-        priceUnit: '元/㎡',
-        sale: '',
-        saleStatus: 0
-      }
-    ]
+    dataArr: []
   }),
   computed: {
     ...mapGetters(['reportAddInfo'])
