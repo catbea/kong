@@ -41,7 +41,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapGetters(['reportAddInfo'])
+    ...mapGetters(['reportAddInfo','userInfo'])
   },
   methods: {
     async addReportInfo(current) {
@@ -51,8 +51,8 @@ export default {
         clientMobile: this.reportAddInfo.clientPhone,
         linkerId: this.reportAddInfo.linkerId,
         linkerName: this.reportAddInfo.linkerName,
-        distributorId: this.reportAddInfo.distributorId,
-        institutionId: this.reportAddInfo.institutionId
+        distributorId: this.userInfo.distributorId,
+        institutionId: this.userInfo.institutionId
       }
       const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId)
 

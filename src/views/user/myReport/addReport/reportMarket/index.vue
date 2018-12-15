@@ -2,7 +2,7 @@
   <div class="my-preference-page">
     <div class="my-preference-header">
       <van-search :obj="searchInfo"></van-search>
-      <screen></screen>
+      <screen @input="queryBuildingList"></screen>
     </div>
     <div class="market-box">
       <meal-market
@@ -14,7 +14,7 @@
         @click.native="selectHandle(index)"
       ></meal-market>
     </div>
-    <div class="report-confirm"  @click="onSureHandler">
+    <div class="report-confirm" @click="onSureHandler">
       <p>确定</p>
     </div>
   </div>
@@ -25,19 +25,23 @@ import Screen from 'COMP/Screen/'
 import MealMarket from './MealMarket.vue'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import reportServer from 'SERVICE/reportService'
 export default {
   components: {
     VanSearch,
     Screen,
     MealMarket
   },
-  created() {},
+  created() {
+    this.queryBuildingList({}, 1, '')
+  },
   data: () => ({
     type: null,
     checkIndex: -1,
     checkData: null,
     dataArrLength: null,
     showArr: [],
+    current: 1, //默认第一页
     searchInfo: {
       siteText: '全国',
       placeholderText: '请输入楼盘'
@@ -47,32 +51,38 @@ export default {
     checkShow: false,
     dataArr: [
       {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
+        buildArea: '',
+        city: '深圳市',
+        district: '宝安区',
+        divisionRules: '',
+        ifPanorama: 1,
+        linkerHeadUrl: 'https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/f22e51091aab49518d6c83725a237690.jpg',
+        linkerId: '05a999c5fc1844919e084624ea382935',
+        linkerName: '前海铂寓',
+        linkerOpenEndTime: '',
+        linkerTags: ['教育地产', '生态宜居', '海景/水景地产'],
+        openTimes: '',
+        price: 500,
+        priceUnit: '万元/套起',
+        sale: '9.5折',
+        saleStatus: 0
       },
       {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
-      },
-      {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
-      },
-      {
-        linkerName: '龙光·久钻',
-        site: '深圳 南山 120000元/㎡',
-        condition: ['热销中', '地铁房', '低密度'],
-        open: '125次开通',
-        price: '1%+5万元/套'
+        buildArea: '',
+        city: '深圳市',
+        district: '龙华区',
+        divisionRules: '',
+        ifPanorama: 1,
+        linkerHeadUrl: 'https://720ljq2-10037467.file.myqcloud.com/linker/18820978052/image/f0901dc0a0214ecebad65cd0518de293.jpg',
+        linkerId: 'c12997581b0c4f96a37e9f95c3906082',
+        linkerName: '珑门',
+        linkerOpenEndTime: '',
+        linkerTags: ['品牌开发商', '豪华社区', '低总价'],
+        openTimes: '',
+        price: 43000,
+        priceUnit: '元/㎡',
+        sale: '',
+        saleStatus: 0
       }
     ]
   }),
@@ -80,6 +90,81 @@ export default {
     ...mapGetters(['reportAddInfo'])
   },
   methods: {
+    async queryBuildingList(val, current, projectName) {
+      let obj = {}
+
+      if (val.baseFilters != null || val.moreFilters != null) {
+        obj = Object.assign(val.baseFilters, val.moreFilters)
+
+        obj.houseType = obj.type //几居室
+        obj.projectName = '' //搜索的楼盘名
+
+        if (obj.generalView) {
+          //全景
+          obj.generalView = '1'
+        } else {
+          obj.generalView = '0'
+        }
+
+        if (obj.discountHouse) {
+          //优惠
+          obj.discountHouse = '1'
+        } else {
+          obj.discountHouse = ''
+        }
+
+        if (obj.areaSize != null) {
+          let areaSize = obj.areaSize.split(',')
+          obj.areaStart = areaSize[0]
+          obj.areaEnd = areaSize[1]
+        } else {
+        }
+
+        if (obj.price != null) {
+          let price = obj.price.split(',')
+          if (obj.price == '-1,-1') {
+            obj.projectPriceAvgStart = ''
+            obj.projectPriceAvgEnd = ''
+          } else {
+            obj.projectPriceAvgStart = price[0]
+            obj.projectPriceAvgEnd = price[1]
+          }
+        }
+
+        if (obj.popularity != null) {
+          let popularity = obj.popularity.split(',')
+          if (obj.popularity == '-1,-1') {
+            obj.togetherNumStart = ''
+            obj.togetherNumEnd = ''
+          } else {
+            obj.togetherNumStart = popularity[0]
+            obj.togetherNumEnd = popularity[1]
+          }
+        }
+
+        if (obj.sort != null) {
+          obj.orderBy = obj.sort
+        }
+
+        obj.size = 10
+        obj.current = 1
+        obj.agentId = 705
+        obj.province = ''
+        obj.city = ''
+        obj.county = ''
+      } else {
+        obj.size = 10
+        obj.current = 1
+        obj.agentId = 705
+      }
+
+      const result = await reportServer.getReportBuildingList(obj)
+
+      // if (result.records.length > 0) {
+      //   this.dataArr = result.records
+      // }
+    },
+
     selectHandle(index) {
       this.checkData = index
     },
@@ -87,14 +172,17 @@ export default {
      * 报备选择楼盘确定
      */
     onSureHandler() {
+      let obj = this.dataArr[this.checkData]
+
+      let _reportAddInfo = {
+        linkerId: obj.linkerId,
+        linkerName: obj.linkerName
+      }
+      this.$store.commit(types.REPORT_INFO, _reportAddInfo)
+      this.$router.back(-1)
+
       if (this.checkIndex != -1) {
         var item = this.dataArr[this.checkIndex]
-        let _reportAddInfo = {
-          linkerId: item.linkerId,
-          linkerName: item.linkerName
-        }
-        this.$store.commit(types.REPORT_INFO, _reportAddInfo)
-        this.$router.back(-1)
       }
     }
   }

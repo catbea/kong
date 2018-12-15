@@ -7,8 +7,8 @@
         <div class="new-msg-num" v-if="data&&data.newMsg">{{data&&data.newMsg | countLimit}}</div>
       </div>
     </div>
-    <div class="shadow_box info-box" v-if="data" @click="goMessageInfo(data)">
-      <div class="data-container">
+    <div class="shadow_box info-box" v-if="data">
+      <div class="data-container" @click="goMessageInfo(data)">
         <div class="data-item main-data">
           <div class="data-value">
             {{data.customerCount.val}}
@@ -40,9 +40,10 @@
           <marquee :itemHeight="`${50/37.5}rem`">
             <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
               <avatar :avatar="item.avatarUrl"></avatar>
-              {{item.clientName | textOver(4)}}
-              <span>{{item.timeStr}}</span> 浏览楼盘
-              <span>{{item.markedWords | textOver(6)}}</span>
+              <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
+              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(6)}}</p>
+              <p class="house-tips" v-if="item.dynamicType == 2">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览楼盘<span>{{item.markedWords | textOver(6)}}</span></p>
+              <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(6)}}</p>
             </marquee-item>
           </marquee>
         </div>
@@ -209,6 +210,11 @@ export default {
           justify-content: center;
           font-size: 12px;
           line-height: 24px;
+          >.house-tips{
+            >span{
+              color: #007AE6;
+            }
+          }
         }
       }
     }

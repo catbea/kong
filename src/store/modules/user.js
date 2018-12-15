@@ -1,11 +1,12 @@
 import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
+import commonService from 'SERVICE/commonService'
 
 const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     isVip: '1',
-    vipInfo:{
+    vipInfo: {
       city: '广州市'
     },
     address: '',
@@ -49,7 +50,7 @@ const state = {
     masterRecommendTip: '',
     minOpenid: '',
     mobile: '18676652795',
-    registerMobile:'13100000000',
+    registerMobile: '13100000000',
     mpOpenid: '',
     myLinkerGuide: 0,
     name: '嗨我是你的益达吗',
@@ -59,7 +60,7 @@ const state = {
     // payCorpId: "ww5e4d879ddc307ea1",
     cropId: "ww8f6801ba5fd2a112",
     // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
-    theFirstTime:true,//新手引导
+    theFirstTime: true,//新手引导
     payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
     position: '',
     price: 2000,
@@ -82,6 +83,18 @@ const state = {
       {
         labelId: '001',
         labelName: '价格屠夫'
+      },
+      {
+        labelId: '002',
+        labelName: '喜欢睡觉'
+      },
+      {
+        labelId: '003',
+        labelName: '不愿加班'
+      },
+      {
+        labelId: '004',
+        labelName: '呵呵死你'
       }
     ]
   },
@@ -92,6 +105,7 @@ const state = {
     province: '', // 省
     city: '深圳市', // 市
     selectedCity: '深圳市',
+    vipSelectedCity: null,
     county: '' // 区
   },
   reportAddInfo: {
@@ -120,21 +134,22 @@ const state = {
   },
 
   //点击选中的楼盘id
-  buildId: ''
+  buildId: '',
+
+  imUserSig: null
 }
 
 const getters = {
-  userInfo: state => state.userInfo,
+  userInfo: state => { return state.userInfo },
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   treeInfo: state => state.treeInfo,
-  jssdkConfig: state => {
-    return state.jssdkConfig
-  },
+  jssdkConfig: state => { return state.jssdkConfig },
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
-  theFirstTime:state => state.userInfo.theFirstTime
+  theFirstTime: state => state.userInfo.theFirstTime,
+  imUserSig: state => state.imUserSig,
 }
 
 const actions = {
@@ -142,6 +157,10 @@ const actions = {
     let _userInfo = JSON.stringify(userInfo)
     await localStorage.setItem('awMasterUserInfo', _userInfo)
     commit(types.USER_INFO, userInfo)
+  },
+  async getImUserSig({ commit }) {//im签名
+    const res = await commonService.getUserSig()
+    commit(types.IM_USER_SIG, res)
   },
   setJssdkConfig({ commit }, jssdkConfig) {
     localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig))
@@ -171,6 +190,9 @@ const mutations = {
   [types.USER_INFO](state, data) {
     state.userInfo = data
   },
+  [types.IM_USER_SIG](state, data) {
+    state.imUserSig = data
+  },
   [types.USER_VIP_INFO](state, data) {
     state.userVipInfo = data
   },
@@ -195,7 +217,7 @@ const mutations = {
   [types.USER_FIRST_TIME](state, data) {
     state.userInfo.theFirstTime = data
   }
-  
+
 }
 
 export default {

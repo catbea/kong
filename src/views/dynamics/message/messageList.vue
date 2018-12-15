@@ -22,7 +22,7 @@
       </div>
       <div class="messageInfo-fill"></div>
 
-      <div class="messageInfo-sys" v-for="(item,key) in messageList" :key="key">
+      <div class="messageInfo-sys" v-for="(item,key) in messageList" :key="key" @click="msgClickHandle(item)">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
             <button :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' " v-show="item.unreadMsgCount !=0">
@@ -37,7 +37,7 @@
               <!-- >3分钟前 -->
               <span class="sys-right-time"> {{ item.msgTimeStamp | dateFormatterToHuman}} </span>
             </p>
-            <p class="sys-right-btn">{{item.msgShow}}</p>
+            <p class="sys-right-btn">{{formatMsg(item.msgShow, item.type)}}</p>
           </span>
         </div>
       </div>
@@ -68,12 +68,28 @@ export default {
       sysMessage: []
     }
   },
-  created() {
+  mounted() {
     this.getMsgList()
   },
   methods: {
+    msgClickHandle(item) {
+      let clientId = item.toAccount.split('_')[1]
+      this.$router.push({path: '/custom/message/message', query: {
+        clientId: clientId
+      }})
+    },
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
+    },
+    formatMsg(data, type) {
+      let item = JSON.parse(data)
+      if(type == 1) {
+        return '[楼盘消息]'
+      } else if(type == 2) {
+        return item.Text
+      } else if(type == 3) {
+        return '[语音消息]'
+      }
     },
     async getMsgList() {
       const res = await dynamicsService.getAgentMsgAndTotal()

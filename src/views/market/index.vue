@@ -2,7 +2,7 @@
   <div class="market-page">
     <div class="search-box van-hairline--bottom">
       <div class="search-comp">
-        <search :conf="searchContent" @areaClick="areaClickHandler"></search>
+        <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
       </div>
       <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
@@ -80,7 +80,10 @@ export default {
     },
     // s搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({name:'area-select'})
+      this.$router.push({ name: 'area-select' })
+    },
+    focusHandler() {
+      this.$router.push({ name: 'market-search' })
     }
   }
 }

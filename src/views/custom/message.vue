@@ -203,7 +203,6 @@ export default {
       msgList: [],
       def_btvalue: '按住 说话',
       isvoice: 0, //1代表是正在发送语音,
-      fromAccount: this.$route.query.fromAccount,
       toAccount: this.$route.query.toAccount,
       headers: {},
       timeoutObj: '',
@@ -225,7 +224,6 @@ export default {
       END: 0,
       msgid: 0, //接收消息的id
       msgTimeStamp: '',
-      flagtype: this.$route.query.flagtype,
       tempValue: [
         '您好，请问有什么需要帮助？',
         '您是准备用来投资还是自己住呢?',
@@ -273,6 +271,9 @@ export default {
     async getCustomBaseInfo(id) {
       const result = await customService.getClientInfo(id)
       this.customBaseInfo = result
+      this.clientMobile = this.customBaseInfo.clientMobile
+      this.nickName = this.customBaseInfo.clientRemarkName
+      this.headImgUrl = this.customBaseInfo.avatarUrl
     },
     defaultMsgClickHandle(info) {
       this.message = info
@@ -281,7 +282,7 @@ export default {
       this.isShowOption = false
     },
     gotoReport() {
-       let _reportAddInfo = {
+      let _reportAddInfo = {
         clientId: this.clientId,
         clientName: this.customBaseInfo.clientName,
         clientPhone: this.clientMobile,
@@ -325,7 +326,8 @@ export default {
     }, //input获取焦点事件
     hideface(event) {
       //关闭表情
-      this.is_emjie = false
+      this.isShowEmjie = false
+      document.body.scrollTop = document.body.scrollHeight
       this.pyzmaoviwe()
     },
 
@@ -361,7 +363,7 @@ export default {
     getEmoji(str) {
       return emoji.formartEmoji(str)
     },
-    pyzmaoviwe(id) {
+    pyzmaoviwe() {
       var msgList = this.msgList
       var count = 0
       setTimeout(function() {
@@ -446,6 +448,7 @@ export default {
       let res = await customService.appMsgDtlList(params)
       this.setList(res)
       this.loading = false
+      if(this.current == 1) this.pyzmaoviwe()
       this.current++
     },
 

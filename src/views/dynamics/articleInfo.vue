@@ -140,7 +140,7 @@ export default {
 
     //联系
     goalldynamics () {
-      this.$router.push('/dynamics/message/messageList')
+      this.$router.push({name:'messageList'})
     },
   }
 }
@@ -332,7 +332,9 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
-            margin-left: 24px;
+            position: absolute;
+          right: 0;
+          top: 0.32rem;
             > .btn-contact-userImg {
               width: 11px;
               height: 11px;

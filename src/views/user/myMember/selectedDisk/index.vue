@@ -53,6 +53,7 @@ export default {
   created() {
     this.type = this.$route.query.type
     if(this.type == 'vip') {
+      console.log(this.userInfo.vipInfo, 'this.userInfo.vipInfo')
       this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
     } else {
       this.searchInfo.siteText = this.userArea.selectedCity || this.userArea.city 

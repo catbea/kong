@@ -40,7 +40,7 @@ class reportService {
    */
   addReportInfo(clientId, clientName, clientMobile, linkerId, linkerName, distributorId, institutionId) {
     return xhr({
-      method:'POST',
+      method: 'POST',
       url: '/customerFilling/addFilingInfo',
       body: {
         clientId,
@@ -53,5 +53,17 @@ class reportService {
       }
     })
   }
+
+  /**
+   * 获取可报备的楼盘
+   * @param {*} obj 
+   */
+  getReportBuildingList(obj) {
+    return xhr({
+      url: '/customerFilling/getFilingHouseList',
+      body: obj
+    })
+  }
+
 }
 export default new reportService()

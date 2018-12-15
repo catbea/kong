@@ -2,31 +2,29 @@
   <div class="meal-market-page">
     <div class="meal-market-page-box">
       <div class="meal-market-page-box-top">
-        <span class="icon-check bg_img" :style="{backgroundImage:'url('+ (indexData==checkData ? checkColorImg:checkImg)+')'}"></span>
+        <span
+          class="icon-check bg_img"
+          :style="{backgroundImage:'url('+ (indexData==checkData ? checkColorImg:checkImg)+')'}"
+        ></span>
         <div class="meal-market-page-box-top-left">
-          <p class="icon-discount">9.9折</p>
+          <img class="building-img"  :src="dataArr.linkerHeadUrl">
+          <p class="icon-discount" :style="{'backgroundImage':'url(' + labelImg + ')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
           <li>
-           <div style="display:flex;">
-             {{dataArr.title}} 
-             </div>
+            <div style="display:flex;">{{dataArr.linkerName}}</div>
           </li>
+          <li>{{dataArr.city}} {{dataArr.district}} {{dataArr.price}} {{dataArr.priceUnit}}</li>
           <li>
-            {{dataArr.site}}
+            <tag-group :arr="dataArr.linkerTags"></tag-group>
           </li>
-          <li>
-            <tag-group :arr="dataArr.condition"></tag-group>
-          </li>
-          <li>
-            {{dataArr.open}}
-          </li>
+          <li>{{dataArr.openTimes}}次开通</li>
         </ul>
       </div>
-      <div class="meal-market-page-box-bottom" v-if="dataArr.price">
+      <div class="meal-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
-        {{dataArr.price}}
+        {{dataArr.divisionRules}}
       </div>
     </div>
   </div>
@@ -44,7 +42,8 @@ export default {
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     imgShare: require('IMG/user/rectangle.png'),
     imgPlay: require('IMG/user/Oval@2x.png'),
-    imgCommission: require('IMG/user/collection/icon_commission@2x.png')
+    imgCommission: require('IMG/user/collection/icon_commission@2x.png'),
+    labelImg: require('IMG/marketDetail/discount@2x.png')
   }),
   props: {
     value: '',
@@ -98,15 +97,22 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        .building-img {
+          width: 120px;
+          height: 70px;
+          border-radius: 4px;
+          margin-top: 16px;
+          // background:url(labelImg);
+        }
         .icon-discount {
-          width: 36px;
-          height: 20px;
+          width: 38px;
           position: absolute;
-          top: 4px;
+          top: 22px;
           left: -4px;
           font-size: 11px;
           font-family: PingFangSC-Medium;
           font-weight: 500;
+          padding-left: 3px;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
         }
@@ -131,7 +137,7 @@ export default {
           font-family: PingFangSC-Regular;
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
-          line-height: 15px;
+          line-height: 5px;
           margin: 10px 0 10px 0;
         }
         li:nth-of-type(3) {
