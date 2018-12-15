@@ -76,8 +76,6 @@ export default {
     },
     swipeItemClick(item){
       this.$router.push({name: 'discover-detail', params: {id: item.id, city: this.userArea.city}})
-      console.log(item);
-      
     }
   },
   computed: {
