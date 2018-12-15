@@ -2,7 +2,7 @@
   <div class="my-preference-page">
     <div class="my-preference-header">
       <van-search :obj="searchInfo"></van-search>
-      <screen @input="queryBuildingList"></screen>
+      <screen @input="queryBuildingList"  :cityValue='cityName'></screen>
     </div>
     <div class="market-box">
       <meal-market
@@ -49,7 +49,8 @@ export default {
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     checkShow: false,
-    dataArr: []
+    dataArr: [],
+    cityName:'深圳市'
   }),
   computed: {
     ...mapGetters(['reportAddInfo'])
