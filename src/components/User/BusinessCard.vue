@@ -153,6 +153,8 @@ export default {
       background: rgba(64, 68, 87, 1);
       display: flex;
       flex-direction: column;
+     
+
       > .info-top {
         width: 100%;
         display: flex;
@@ -267,6 +269,11 @@ export default {
         }
       }
     }
+
+     > .modify-img{
+       position: absolute;
+        margin-top: -40px;
+      }
   }
   > .business-status-box {
     background-color: #ffffff;
