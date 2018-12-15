@@ -42,7 +42,7 @@
             
           ></dynamics-list>
         </div>
-        <div
+        <div v-show="customerCount !=0"
             class="allDynamics-container"
             v-if="active === 1"
           >
@@ -53,7 +53,7 @@
               :cardDynamicList="cardDynamicList"
             ></dynamics-card>
           </div>
-        <div
+        <div v-show="businessCardViews !=0"
           class="allDynamics-container"
           v-if="active === 2"
         >
@@ -65,7 +65,7 @@
             :avgStayLinkerTime="avgStayLinkerTime"
           ></properties>
         </div>
-        <div
+        <div v-show="estateViews !=0"
           class="allDynamics-container"
           v-if="active === 3"
         >
@@ -130,6 +130,9 @@ export default {
       cardDynamicListCount:0,
       avgStayArticleTime: 0,
       avgStayLinkerTime: 0,
+      customerCount: this.$route.params.customerCount,
+      businessCardViews:this.$route.params.businessCardViews,
+      estateViews:this.$route.params.estateViews,
     }
   },
   created() {

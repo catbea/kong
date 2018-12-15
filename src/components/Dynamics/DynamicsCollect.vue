@@ -75,9 +75,9 @@ export default {
     goMessageInfo(data) {
       let parm = {
         info: this.info,
-        customerCount: data.customerCount,
-        businessCardViews: data.businessCardViews,
-        estateViews: data.estateViews
+        customerCount: data.customerCount.val,
+        businessCardViews: data.businessCardViews.val,
+        estateViews: data.estateViews.val
       }
       this.$emit('click', parm)
     }
