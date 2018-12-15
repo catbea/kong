@@ -1,11 +1,11 @@
 <template>
   <div class="dynamics-page">
     <div class="dynamics-top-container">
-      <dynamics-collect :data="collectData" @click="goMessageInfo"></dynamics-collect>
-      <estate-recommend :info="recommendData" @click="goRecommendInfo"></estate-recommend>
+      <dynamics-collect :data="collectData" @click="goMessageInfo"/>
+      <estate-recommend v-if="recommendData" :info="recommendData" @click="goRecommendInfo"/>
     </div>
     <div class="list-container">
-      <my-estate-list :list="estateListData" @click="goRecommendInfo"></my-estate-list>
+      <my-estate-list :list="estateListData" @click="goRecommendInfo"/>
     </div>
   </div>
 </template>
@@ -21,13 +21,18 @@ export default {
     MyEstateList
   },
   data: () => ({
-    collectData: null, // 数据中心数据
-    recommendData: null, // 推荐盘数据
-    estateListData: null // 我的楼盘数据
+    collectData: null,    // 数据中心数据
+    recommendData: null,  // 推荐盘数据
+    estateListData: null, // 我的楼盘数据
+    timer:null
   }),
   created() {
     this.getCollectInfo()
     this.getEstateList()
+    // 30s自动刷新数据
+    this.timer = setInterval(() => {
+      this.getCollectInfo()
+    },30000)
   },
   methods: {
     //动态详情
@@ -44,7 +49,7 @@ export default {
       const res = await dynamicsService.getDynamicsCollect()
       // 数据中心部分 数据拼装
       this.collectData = {
-        newMsg: res.unreadCustomerCount,
+        newMsg: res.unreadMessageCount,
         customerCount: {
           val: res.customerCount,
           change: res.unreadCustomerCount
@@ -68,6 +73,9 @@ export default {
       }
       this.recommendData = res.aiLinkerVO
     }
+  },
+  beforeDestroy(){
+    clearInterval(this.timer)
   }
 }
 </script>
@@ -78,7 +86,7 @@ export default {
   background: #f7f9fa;
   .dynamics-top-container {
     background: #fff;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
   }
   .list-container {
     background: #fff;

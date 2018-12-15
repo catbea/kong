@@ -43,10 +43,11 @@ export default {
 .open-Payment-page {
   background: #ffffff;
   border-top: 1px solid #e6e6e6;
+  width: 100%;
   .open-Payment-page-top {
     display: flex;
     justify-content: space-between;
-    width: 359px;
+    width: 100%;
     padding: 8px 0 8px 16px;
     ul {
       li:nth-child(1) {

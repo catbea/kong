@@ -43,17 +43,8 @@
 import userService from 'SERVICE/userService'
 export default {
   created() {
-    console.log(this.swipeList,'swipeList推荐数据')
-    // this.swipeJudge()
-    console.log(this.limitList.length,'limitList初始时图片数')
-    // console.log(this.changeBoxShow,'created推荐是否显示')
-    this.$center.$on('cs',(n)=>{
-      console.log(n)
-    })
   },
   mounted() {
-    console.log(this.swipeList,'mounted的swipeList推荐数据')
-    console.log(this.changeBoxShow,'mounted推荐是否显示 ')
   },
   props: {
     swipeList: {
@@ -75,7 +66,7 @@ export default {
      await userService.changeMarketData(linkerId,20,0)
      this.limitList.splice(index,1)
      this.swipeJudge()
-     console.log(this.swipeList.length,'当前图片数')
+     this.$emit('noRecommend',linkerId)
     },
     // swipeJudge(){
     //   if(this.swipeList.length==0){
