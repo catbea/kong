@@ -3,7 +3,6 @@ import store from '@/store/'
 
 export default async (to, from, next) => {
     if(store.getters.imUserSig || !store.getters.userInfo.token) {
-        console.log('[getImUserSig skin]')
         next()
         return
     }

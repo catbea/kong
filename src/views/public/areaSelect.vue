@@ -48,6 +48,7 @@ export default {
     Search
   },
   data: () => ({
+    fromPage: null,
     indicator: {
       show: false,
       timer: null,
@@ -63,11 +64,17 @@ export default {
   created() {
     this.$store.dispatch('getAllCity')
     this.searchInfo.siteText = this.userArea.city
+    this.fromPage = this.$route.query.fromPage
   },
   methods: {
     itemClick(val) {
       console.log(val)
-      this.$store.commit(types['USER_AREA'], {selectedCity: val})
+      if (this.fromPage == 'myMember') {
+        this.$store.commit(types['USER_AREA'], {vipSelectedCity: val})
+      } else {
+        this.$store.commit(types['USER_AREA'], {selectedCity: val})
+      }
+      
       this.$router.go(-1)
     },
     keyTouchStartHandler(e) {
