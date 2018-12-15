@@ -110,7 +110,7 @@ export default {
           signType: 'MD5',
           paySign: res.signature,
           success: res => {
-            console.log('支付suss')
+            this.$toast('支付成功')
           },
           cancel: res => {
             this.$toast('支付取消')

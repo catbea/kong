@@ -3,7 +3,6 @@
     <div class="massage-info-list" 　>
       <!--消息-->
       <div class=" " style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
-        <!-- <yd-pullrefresh :callback="getmsgListnext" ref="pullrefreshDemo"> -->
         <van-pull-refresh
             v-model="loading"
             pulling-text="下拉加载下一页"
@@ -14,7 +13,6 @@
               <div class="massage-info-msg-time">
                 <span>{{items.timeStr}}</span>
               </div>
-
               <div v-for="(item,index) in items.msgList" v-bind:key="index">
                 <div :id="item.id" class="massage-info-msg-customer" v-if="item.fromType == 1">
                   <img @click='goDetails' class="massage-info-msg-customer-img"
@@ -73,7 +71,6 @@
             <div v-if="isShowEmjie==false" id="pyzmao" style="height: 0.6rem"></div>
             <div v-else id="pyzmao" style="height: 4.6rem"></div>
           </div>
-        <!-- </yd-pullrefresh> -->
         </van-pull-refresh>
       </div>
       <div id="msg_end" style="height:0px; overflow:hidden"></div>
@@ -99,8 +96,7 @@
       </div>
       <div class="massage-info-lower-cen">
         <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage('','')" v-model="message" id='message'
-               v-if="msgType==1" v-on:focus="hideface()"
-               placeholder="说点什么吧？"/>
+               v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？"/>
         <button v-else :class="isvoice==1? 'msgContentvoice msgContentvoice-bg':'msgContentvoice'"
                 @touchstart="startRecord" @touchend="stopRecord" @touchmove='touchmoveRecord'>{{def_btvalue}}
         </button>
@@ -130,7 +126,7 @@
             <div class="im-option-lebal-item">常用语</div>
         </div>
 
-        <div class="im-option-item" v-show="false">
+        <div class="im-option-item">
             <div class="im-option-icon-item" @click="projectClick">
                 <img :src="iMTempProjectIcon" />
             </div>
@@ -341,11 +337,6 @@ export default {
       this.isShowEmjie = false
     },
 
-    // setTpl(val) {
-    //   this.message = val
-    //   this.is_temp = false
-    // },
-
     //是否显示表情
     displayface() {
       if (this.isShowEmjie == false && this.msgType == 1) {
@@ -372,6 +363,7 @@ export default {
     },
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
+      console.log(mediaId+' | '+appId, 'mediaIdTransToMp3Url')
       let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
       console.log(res, 'mediaIdTransToMp3Url')
       this.message = res.map3Url
@@ -547,9 +539,7 @@ export default {
         isShowProgressTips: 0, // 默认为1，显示进度提示
         success: function(res) {
           let serverId = res.serverId // 返回音频的服务器端ID
-          // _this.storageLocalId.set(serverId, nowLocalId);
           _this.messages_record = nowLocalId
-          // _this.message = serverId;
           _this.sourceType = 2
           _this.mediaIdTransToMp3Url(serverId)
           console.log(serverId, 'serverId')
@@ -644,7 +634,8 @@ export default {
         this.msgType = '1'
       }
       //关闭表情
-      this.is_emjie = false
+      this.isShowEmjie = false
+      this.isShowOption = false
     } /**
      * 播放语音
      */,
