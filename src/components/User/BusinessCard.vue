@@ -2,14 +2,44 @@
   <div class="business-card-container">
     <div class="business-card-box">
       <div class="bg_img info-box">
-        <div class="info-box-left">
+        <div class="info-top">
+          <div class="info-box-title">
+            <img class="info-box-left" :src="leftIcon" @click="showQrCode">
+            <div class="info-box-right" @click="shareUserCard">
+              <img class="share-img" :src="rightIcon">
+              <span class="share-view">分享</span>
+            </div>
+          </div>
+          <div class="info-box-center-p">
+            <div class="info-box-center">
+              <div class="username-box">
+                <span class="username-view">{{userInfo.name}}</span>
+                <img class="username-img" :src="updataIcon">
+              </div>
+              <span class="main-camp-view">主营：{{userInfo.majorRegion}}</span>
+              <span class="campany-view">{{userInfo.distributorName}}</span>
+            </div>
+            <img class="avatar-view" :src="userInfo.avatarUrl">
+          </div>
+        </div>
+        <div class="info-bottom">
+          <p class="content-left-labe">
+            <a
+              class="left-labe-css"
+              v-for="(item,index) in newLabelList"
+              :key="index"
+            >{{item.labelName}}</a>
+          </p>
+          <p class="content-left-remar">{{userInfo.signature}}</p>
+        </div>
+        <!-- <div class="info-box-left">
           <img :src="leftIcon" class="box-left-leftIcon" @click="showQrCode">
           <span class="box-right-fx" @click="shareUserCard">
             <img :src="rightIcon" class="right-fx-rightIcon">
             <p class="right-fx-title">分享</p>
           </span>
-        </div>
-        <div class="info-box-content" @click="editCLickHandler">
+        </div>-->
+        <!-- <div class="info-box-content" @click="editCLickHandler">
           <span class="box-content-left">
             <p class="content-left-name">
               {{userInfo.name}}
@@ -29,7 +59,7 @@
           <span class="box-content-right">
             <img :src="userInfo.avatarUrl" class="personIcon">
           </span>
-        </div>
+        </div>-->
       </div>
       <img class="modify-img" :src="modifyImg">
     </div>
@@ -111,8 +141,10 @@ export default {
     padding: 5px 16px 11px;
   }
   > .business-card-box {
-    position: relative;
+    width: 100%;
     height: 190px;
+    position: relative;
+
     > .info-box {
       position: relative;
       height: 177px;
@@ -120,161 +152,129 @@ export default {
       border-radius: 10px;
       background: rgba(64, 68, 87, 1);
       display: flex;
-      > .info-box-left {
+      flex-direction: column;
+     
+
+      > .info-top {
+        width: 100%;
         display: flex;
-        > .box-left-leftIcon {
-          width: 24px;
-          height: 24px;
-          padding: 7px;
-        }
-        > .box-right-fx {
-          position: absolute;
-          right: 8px;
-          top: 8px;
-          > .right-fx-rightIcon {
+        flex-direction: column;
+
+        > .info-box-title {
+          display: flex;
+          justify-content: space-between;
+
+          > .info-box-left {
             width: 24px;
             height: 24px;
+            border-top-left-radius: 10px;
+            margin-left: 7px;
+            margin-top: 7px;
           }
-          > .right-fx-title {
-            font-size: 10px;
-            font-weight: 400;
-            color: #aeb1c2;
-            line-height: 14px;
-          }
-        }
-      }
-      > .info-box-content {
-        display: flex;
-        margin-top: 28px;
-        position: relative;
-        margin-left: -10px;
-        > .box-content-left {
-          position: relative;
-          width: 200px;
-          padding-top: 11px;
-          > .content-left-name {
-            font-size: 20px;
-            font-weight: 600;
-            line-height: 37px;
-            color: rgba(255, 255, 255, 1);
+
+          > .info-box-right {
+            margin-right: 7px;
+            margin-top: 7px;
             display: flex;
-            > .updataIcon {
-              width: 17px;
-              height: 17px;
-              position: relative;
-              margin-left: 10px;
-              margin-top: 10px;
+            flex-direction: column;
+
+            > .share-img {
+              width: 24px;
+              height: 24px;
             }
-          }
-          > .content-left-addres {
-            font-size: 11px;
-            font-weight: 400;
-            color: rgba(174, 177, 194, 1);
-            line-height: 12px;
-          }
-          > .content-left-compay {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(174, 177, 194, 1);
-            line-height: 12px;
-            margin-top: 15px;
-          }
-          > .content-left-labe {
-            font-size: 10px;
-            font-weight: 400;
-            color: rgba(174, 177, 194, 1);
-            line-height: 30px;
-            > .left-labe-css {
-              padding: 2px 5px;
-              background: rgba(143, 159, 177, 0.15);
-              border-radius: 4px;
-              border: 0;
-              margin-right: 8px;
-              color: #aeb1c2;
+
+            > .share-view {
+              color: #ffffff;
+              font-size: 10px;
+              margin-top: 3px;
             }
-          }
-          > .content-left-remar {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(174, 177, 194, 1);
-            line-height: 12px;
           }
         }
-        > .box-content-right {
-          position: relative;
-          right: 10px;
-          width: 80px;
-          height: 80px;
-          > .personIcon {
+        > .info-box-center-p {
+          display: flex;
+          flex-direction: row;
+
+          > .info-box-center {
+            display: flex;
+            flex-direction: column;
+            margin-left: 28px;
+            margin-top: -50px;
+
+            > .username-box {
+              margin-top: 35px;
+
+              > .username-view {
+                color: #ffffff;
+                font-size: 20px;
+              }
+              > .username-img {
+                width: 14px;
+                height: 14px;
+                margin-left: 5px;
+              }
+            }
+
+            > .main-camp-view {
+              color: #aeb1c2;
+              font-size: 11px;
+              margin-top: 6px;
+            }
+
+            > .campany-view {
+              color: #aeb1c2;
+              font-size: 12px;
+              margin-top: 20px;
+            }
+          }
+
+          > .avatar-view {
             width: 80px;
             height: 80px;
             border-radius: 50%;
+            margin-left: 15px;
+            margin-top: -10px;
           }
         }
       }
-      // > .card-avatar {
-      //   margin: 20px;
-      // }
-      // > .user-info {
-      //   position: absolute;
-      //   top: 5px;
-      //   display: inline-block;
-      //   color: #ffffff;
-      //   &.member-status {
-      //     color: #e5b37b;
-      //   }
-      //   > .user-name {
-      //     display: inline-flex;
-      //     font-size: 18px;
-      //     line-height: 25px;
-      //     font-weight: 600;
-      //     > img {
-      //       width: 16px;
-      //       height: 16px;
-      //       padding: 4px;
-      //     }
-      //   }
-      //   > .user-company {
-      //     font-size: 12px;
-      //     font-weight: 400;
-      //     line-height: 17px;
-      //     margin-top: -5px;
-      //   }
-      //   > .user-area {
-      //     font-size: 12px;
-      //     font-weight: 400;
-      //     line-height: 17px;
-      //     margin-top: 5px;
-      //   }
-      // }
-      // > .tag-group-container {
-      //   position: absolute;
-      //   display: flex;
-      //   top: 115px;
-      //   left: 20px;
-      // }
-      // > .user-signature {
-      //   position: absolute;
-      //   bottom: 13px;
-      //   left: 20px;
-      //   font-size: 12px;
-      // }
-      // > .share-handler-icon {
-      //   position: absolute;
-      //   width: 16px;
-      //   height: 16px;
-      //   right: 20px;
-      //   top: 5px;
-      //   > img {
-      //     width: 100%;
-      //   }
-      // }
+
+      > .info-bottom {
+        display: flex;
+        width: 100%;
+        height: 49px;
+        margin-top: -5px;
+        flex-direction: column;
+
+        > .content-left-labe {
+          font-size: 10px;
+          font-weight: 400;
+          color: rgba(174, 177, 194, 1);
+          line-height: 30px;
+          margin-left: 27px;
+          > .left-labe-css {
+            padding: 2px 5px;
+            background: rgba(143, 159, 177, 0.15);
+            border-radius: 4px;
+            border: 0;
+            margin-right: 8px;
+            color: #aeb1c2;
+          }
+        }
+
+        > .content-left-remar {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(174, 177, 194, 1);
+          line-height: 12px;
+          margin-left: 28px;
+          margin-top: 5px;
+        }
+      }
     }
-    > .modify-img {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-    }
+
+     > .modify-img{
+       position: absolute;
+        margin-top: -40px;
+      }
   }
   > .business-status-box {
     background-color: #ffffff;
