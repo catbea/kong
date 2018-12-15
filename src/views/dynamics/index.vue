@@ -46,7 +46,7 @@ export default {
     },
     //楼盘详情
     async goRecommendInfo(val) {
-      this.$router.push('/market/marketDetail')
+      this.$router.push('/market/marketDetail/'+val.linkerId)
     },
     async getCollectInfo() {
       const res = await dynamicsService.getDynamicsCollect()
