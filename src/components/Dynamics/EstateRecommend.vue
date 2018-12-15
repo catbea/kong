@@ -1,5 +1,5 @@
 <template>
-  <div class="estate-recommend">
+  <div class="estate-recommend" >
     <title-bar :conf="titleBarConf"></title-bar>
     <div class="bg_img recommend-box" :style="{backgroundImage:'url(' + blurImg + ')'}"></div>
     <div class="recommend-info" v-if="info" @click="goRecommendInfo">

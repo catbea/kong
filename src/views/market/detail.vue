@@ -83,11 +83,12 @@
         font-weight: 600;
       }
       > .house-feature {
+        padding-top: 5px;
         font-size: 14px;
         line-height: 1.5;
       }
       > .house-info-form {
-        padding-top: 10px;
+        padding-top: 5px;
         line-height: 1.5;
         font-size: 16px;
         color: #333333;

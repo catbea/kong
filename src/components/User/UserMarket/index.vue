@@ -24,11 +24,14 @@
         </div>
         <ul>
           <li>
-            <div>
-              {{dataArr.linkerName}}<span
+            <div>{{dataArr.linkerName}}
+              <span
                 class="van-hairline--surround stick"
-                v-if="dataArr.recommand==10"
+                v-if="dataArr.recommand==10&&pastShow"
               >置顶</span>
+              <span class="van-hairline--surround past-tag" v-if="!pastShow">
+                已过期
+              </span>
             </div>
             <span
               class="bg_img icon-share"
@@ -92,7 +95,8 @@
       >
         <ul>
           <li @click="goRenew(dataArr.linkerId)">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
-          <li @click="masterHandle(marketIndex)">
+          <div v-if="pastShow">
+          <li class="borderDottom" @click="masterHandle(marketIndex)">
             <span v-show="!masterButtonShow">大师推荐</span> 
             <span v-show="masterButtonShow">取消大师推荐</span>
             </li>
@@ -100,7 +104,7 @@
             <span v-show="!commonButtonShow">普通推荐</span> 
             <span v-show="commonButtonShow">取消普通推荐</span>
           </li>
-          <li @click="stickHandle(marketIndex)">
+          <li class="color" @click="stickHandle(marketIndex)">
             <span v-show="dataArr.recommand==0">置顶</span>
             <span v-show="dataArr.recommand==10">取消置顶</span>
           </li>
@@ -108,7 +112,8 @@
             <span v-show="exhibitionMarketShow">关闭楼盘展示</span>
             <span v-show="!exhibitionMarketShow">开启楼盘展示</span>
           </li>
-          <li @click="closeHandle">取消</li>
+          </div>
+          <li class="cancel" @click="closeHandle">取消</li>
         </ul>
       </van-popup>
     </div>
@@ -132,7 +137,8 @@ export default {
     imgShare:require('IMG/user/rectangle.png'),
     imgPlay:require('IMG/user/Oval@2x.png'),
     imgCommission:require('IMG/user/collection/icon_commission@2x.png'),
-    status:["热销中","即将发售","售罄"]
+    status:["热销中","即将发售","售罄"],
+    pastShow:'是否过期'
   }),
   props: {
     dataArr: {
@@ -170,8 +176,18 @@ export default {
   },
   created () {
     this.linkerId = this.dataArr.linkerId
+    this.time()
   },
   methods: {
+    time(){//比较时间错判断是否过期
+   let timestamp=new Date().getTime()
+   console.log(timestamp,'时间错',this.dataArr.subscribeInvalidTime)
+    if(timestamp-this.dataArr.subscribeInvalidTime>0){
+      this.pastShow=false
+    }else{
+      this.pastShow=true
+    }  
+    },
     async changeUserStatus (linkerId, operationType, status) {
       await userService.changeMarketData(linkerId, operationType, status)
     },//修改楼盘状态
@@ -202,33 +218,36 @@ export default {
     closeHandle () {
       this.show = !this.show
     },
-    masterHandle (n) {
+    async masterHandle (n) {
       if(this.masterButtonShow===false){
-        this.changeUserStatus(this.linkerId, 20, 1)//改为大师推荐
+       await this.changeUserStatus(this.linkerId, 20, 1)//改为大师推荐
+       this.$emit('pushMaster',this.dataArr)
       }else{
-        this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
+        await this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
+        
       }
       this.show = !this.show
       this.masterButtonShow=!this.masterButtonShow
       console.log(this.masterButtonShow,'大师推荐')
-      this.$parent.getRecommendInfo()
-      // this.$center.$emit('cs',90999999999999999999999999999999999)
+      // this.$parent.getRecommendInfo()
     },
     commonHandle (n) {
       // this.$emit('returncommonHandle',this.marketIndex)
-      this.commonButtonShow=!this.commonButtonShow
       if(this.commonButtonShow===false){
         this.changeUserStatus(this.linkerId, 20, 2)//改为普通推荐
+        this.$emit('pushCommon',this.dataArr)
       }else{
         this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
       }
       this.show = !this.show
+      this.commonButtonShow=!this.commonButtonShow
       console.log(this.commonButtonShow,'普通推荐')
     },
     exhibitionHandle () {
       Dialog.confirm({
         title: '是否确定关闭该楼盘名片展示',
-        message: '关闭该楼盘展示将取消推荐和置顶状态'
+        message: '关闭该楼盘展示将取消推荐和置顶状态',
+        className:'show-Dialog'
       }).then(() => {
         // on confirm
         this.stickShow = false
@@ -325,6 +344,22 @@ export default {
             border-color:rgba(0, 122, 230, 1);
             }
           }
+          .past-tag{
+            padding:2px 5px 1px 5px;
+            border:1px solid white;
+            display: inline-block;
+            white-space: nowrap;
+            border-radius: 2px;
+            font-size: 12px;
+            transform: scale(0.84);
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color:#EA4D2E;
+            margin-left: 4px;
+            &::after{
+            border-color:#EA4D2E;
+            }
+          }
           .icon-share {
             display:inline-block;
             width: 16px;
@@ -416,7 +451,6 @@ export default {
   }
   //弹窗
   .van-popup--bottom {
-    height: 316px;
     background: rgba(255, 255, 255, 1);
     ul {
       li {
@@ -429,14 +463,12 @@ export default {
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }
-      li:nth-of-type(2) {
-        border-bottom: 1px solid #eeeeee;
-      }
-      li:nth-of-type(4) {
-        border-bottom: 1px solid #eeeeee;
+      .borderDottom{border-bottom: 1px solid #eeeeee;}
+      .color{
         color: rgba(234, 77, 46, 1);
+        border-bottom: 1px solid #eeeeee;
       }
-      li:last-of-type {
+      .cancel{
         border-top: 6px solid #e8e8e8;
       }
     }
@@ -445,7 +477,8 @@ export default {
     width: 100%;
   }
 }
-.van-dialog {
+//弹出确认框
+.show-Dialog {
   width: 280px;
   height: 168px;
   background: rgba(255, 255, 255, 1);

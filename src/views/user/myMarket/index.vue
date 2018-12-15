@@ -4,6 +4,7 @@
       <master-market
         :swipeList="swipeList"
         :boxShow='boxShow'
+        @noRecommend='noRecommendHandle'
       ></master-market>
     </div>
     <div style="margin-left:16px">
@@ -26,6 +27,8 @@
         :key="index"
         :marketIndex="index"
         :dataArr="item"
+        @pushMaster='pushMasterHandle'
+        @pushCommon='pushCommonHandle'
         @closeCut="closeCut"
         @returnMasterHandle='returnMasterHandle'
         @returncommonHandle='returncommonHandle'
@@ -100,12 +103,41 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
-    console.log(this.$center,'兄弟')
   },
   mounted() {
     
   },
   methods: {
+    pushMasterHandle(n){//点击实时更新大师推荐图片
+    for (let index = 0; index < this.commonList.length; index++) {
+      const element =this.commonList[index];
+      if(n.linkerId==element.linkerId){
+       this.commonList.splice(index,1)
+      }
+    }
+    n.masterRecommand='1'
+   this.masterList=this.masterList.concat(n)
+   this.swipeList = this.masterList.concat(this.commonList)
+    },
+    pushCommonHandle(n){//点击实时更新普通推荐图片
+    for (let index = 0; index < this.masterList.length; index++) {
+      const element =this.masterList[index];
+      if(n.linkerId===element.linkerId){
+       this.masterList.splice(index,1)
+      }
+    }
+    n.masterRecommand='2'
+   this.commonList=this.commonList.concat(n)
+   this.swipeList = this.masterList.concat(this.commonList)
+    },
+    noRecommendHandle(n){//图片列表删除某个，楼盘列表重置推荐
+    for (let index = 0; index < this.marketList.length; index++) {
+      const element = this.marketList[index];
+      if(n===element.linkerId){
+        element.masterRecommand='0'
+      }
+    }
+    },
     async getChangeMarketData(){
       const res = await userService.changeMarketData()
     },
@@ -116,15 +148,12 @@ export default {
       this.master()
       this.common()
      this.swipeList = this.masterList.concat(this.commonList)
-     console.log(this.swipeList,'211111111111');
-     
+     console.log(this.swipeList,'楼盘图片数据')
      if(this.swipeList.length==0){
       this.boxShow=false
     }else{
       this.boxShow=true
     }
-    
-    console.log(this.swipeList,'传过去的图片数')
     },
     master () {
       this.masterList = this.recommendList.filter((item) => {
@@ -216,9 +245,6 @@ export default {
   }
     .market-left{
       width:100%;
-      .user-market-page-box{
-        // width:100%;
-      }
     }
   }
   .title-bar,

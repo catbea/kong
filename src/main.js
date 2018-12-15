@@ -10,7 +10,7 @@ import vant from './vant'
 
 Vue.config.productionTip = false
 Vue.prototype.$devicePixelRatio = window.devicePixelRatio
-Vue.prototype.$center = new Vue()
+// Vue.prototype.$center = new Vue()
 // vant
 import { Toast, Icon, PullRefresh, List, Popup, Search } from 'vant'
 Vue.use(Toast)
