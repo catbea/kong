@@ -12,7 +12,7 @@
       <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
       <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
-    <div class="market-renew-box-button" @click="renewHandle(content.stick)">续费(07/11到期)</div>
+    <div class="market-renew-box-button" @click="renewHandle(renewInfo.linkerId)">续费(07/11到期)</div>
 </ul>
 </template>
 <script>
@@ -29,6 +29,9 @@ export default {
     stickA: require('IMG/marketDetail/zd copy 12@2x.png'),
     stick: require('IMG/marketDetail/zd2@2x.png')
   }),
+  props:{
+    renewInfo:{type:Object}
+  },
   methods: {
     dialogHandle(n) {
       Dialog.alert({
@@ -72,8 +75,8 @@ export default {
           break
       }
     },
-    renewHandle() {
-      this.$router.push('/marketDetail/open')
+    renewHandle(n) {
+      this.$router.push({name:'marketDetail-open', params: {id:n}} )
     }
   }
 }
