@@ -53,6 +53,7 @@ export default {
     this.getVipInfo()
   },
   data: () => ({
+    isShowSelectCity: false,
     isPayLoading: false,
     isVip: false,
     currPriceIndex: 0,
@@ -122,7 +123,7 @@ export default {
       this.setMealInfo = {openCount: res.count, vipCity: res.city}
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
-      if(!this.setMealInfo.vipCity){
+      if(this.isShowSelectCity){
         this.unselectedPopup()
       }
       if(this.vipList.length > 0){
@@ -133,8 +134,6 @@ export default {
 
     priceClickHandle(index) {
       this.currPriceIndex = index
-      // this.payValue = this.vipList[this.currPriceIndex].subscribeAmount - this.userInfo.price
-      // if(this.payValue < 0) this.payValue = 0
       this.payValue = this.vipList[this.currPriceIndex].subscribeAmount
     },
 
@@ -146,7 +145,7 @@ export default {
       }).then(() => {
         this.updateCity()
       }).catch(() => {
-          // on cancel
+        this.$router.push('/public/area-select/')
       })
     },
 
