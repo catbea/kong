@@ -6,7 +6,7 @@
       </div>
       <div class="right-container">
         <h5 class="estate-name">{{info.linkerName}}</h5>
-        <p class="estate-location">{{`${info.city} ${info.county?info.county:''}`}}</p>
+        <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
         <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
         <div class="estate-info">
           <p class="estate-price">{{info.price }} {{info.priceUnit}}</p>
