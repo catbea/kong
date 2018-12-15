@@ -326,7 +326,8 @@ export default {
     }, //input获取焦点事件
     hideface(event) {
       //关闭表情
-      this.is_emjie = false
+      this.isShowEmjie = false
+      document.body.scrollTop = document.body.scrollHeight
       this.pyzmaoviwe()
     },
 
@@ -362,7 +363,7 @@ export default {
     getEmoji(str) {
       return emoji.formartEmoji(str)
     },
-    pyzmaoviwe(id) {
+    pyzmaoviwe() {
       var msgList = this.msgList
       var count = 0
       setTimeout(function() {
@@ -447,6 +448,7 @@ export default {
       let res = await customService.appMsgDtlList(params)
       this.setList(res)
       this.loading = false
+      if(this.current == 1) this.pyzmaoviwe()
       this.current++
     },
 
