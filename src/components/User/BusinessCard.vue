@@ -223,7 +223,7 @@ export default {
             > .campany-view {
               color: #aeb1c2;
               font-size: 12px;
-              margin-top: 24px;
+              margin-top: 20px;
             }
           }
 
@@ -241,6 +241,7 @@ export default {
         display: flex;
         width: 100%;
         height: 49px;
+        margin-top: -5px;
         flex-direction: column;
 
         > .content-left-labe {
