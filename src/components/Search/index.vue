@@ -7,7 +7,7 @@
     </div>
     <div class="search-input-box">
       <i class="van-icon van-icon-search van-cell__left-icon"></i>
-      <input type="search" :placeholder="conf.placeholder">
+      <input type="search" :placeholder="conf.placeholder" @focus="focusHandler">
     </div>
   </div>
 </template>
@@ -27,7 +27,9 @@ export default {
   methods: {
     siteClickHandler() {
       this.$emit('areaClick')
-      // this.$router.push('/public/AreaSelection')
+    },
+    focusHandler(){
+      this.$emit('focus')
     }
   }
 }

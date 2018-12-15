@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="search-reminder">
-      <div class="search-reminder-item" v-for="info in searchBirefList">
+      <div class="search-reminder-item" v-for="info in searchBirefList" @click="reminderItemHandler(info)">
         <p class="house-name">{{info.linkerName}}</p>
         <p class="house-info">{{`${info.linkerAddress} ${info.linkerPrice}`}}</p>
       </div>
@@ -55,6 +55,12 @@ export default {
       }
       const res = await marketService.getHouseList(payload)
       this.searchBirefList = res.records
+    },
+    reminderItemHandler(val){
+      this.$router.push(`/market/${val.linkerId}`)
+      console.log(val);
+      
+
     },
     // searchMediator(payload){
 

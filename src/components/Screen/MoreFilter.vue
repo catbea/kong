@@ -3,7 +3,13 @@
     <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
       <h5 class="item-title">{{group.name}}</h5>
       <div class="item-list-container">
-        <div class="item" :class="activeCheck(mainKey, index)" v-for="(item,index) in group.node" :key="index" @click="itemClickHandler(mainKey,index)">{{item}}</div>
+        <div
+          class="item"
+          :class="activeCheck(mainKey, index)"
+          v-for="(item,index) in group.node"
+          :key="index"
+          @click="itemClickHandler(mainKey,index)"
+        >{{item}}</div>
       </div>
     </div>
   </div>
@@ -16,17 +22,17 @@ export default {
   },
   data: () => ({
     conf: {
-      size: {
+      areaSize: {
         name: '面积',
         node: {
-          '-1,50': '50㎡以下',
+          '0,50': '50㎡以下',
           '50,70': '50-70㎡',
           '70,90': '70-90㎡',
           '90,110': '90-110㎡',
           '110,130': '110-130㎡',
           '130,150': '130-150㎡',
           '150,200': '150-200㎡',
-          '200,-1': '200㎡以上'
+          '200,': '200㎡以上'
         }
       },
       type: {
@@ -37,7 +43,7 @@ export default {
           '3': '三室',
           '4': '四室',
           '5': '五室',
-          '-2': '五室以上'
+          '-1': '五室以上'
         }
       },
       feature: {
@@ -47,12 +53,12 @@ export default {
           '200': '优惠楼盘'
         }
       },
-      sellStatus: {
+      saleStatus: {
         name: '销售状态',
         node: {
           '0': '热销中',
           '1': '即将发售',
-          '2': '售罄'
+          '3': '售罄'
         }
       },
       openStatus: {
@@ -63,7 +69,7 @@ export default {
           '3': '未开通'
         }
       },
-      attentionStatus: {
+      focusStatus: {
         name: '关注状态',
         node: {
           '0': '已关注',
@@ -72,60 +78,60 @@ export default {
       }
     },
     currentValue: {
-      size: '-1,-1',
-      type: '-1',
-      featureFullView: false,
-      featureOnSell: false,
-      sellStatus: '-1',
+      areaSize: '-1,-1',
+      type: '-2',
+      generalView: false,
+      discountHouse: false,
+      saleStatus: '-1',
       openStatus: '-1',
-      attentionStatus: '-1'
+      focusStatus: '-1'
     }
   }),
   methods: {
     itemClickHandler(type, value) {
       switch (type) {
-        case 'size':
-          this.currentValue.size = this.currentValue.size === value ? '-1,-1' : value
+        case 'areaSize':
+          this.currentValue.areaSize = this.currentValue.areaSize === value ? '' : value
           break
         case 'type':
           this.currentValue.type = this.currentValue.value === value ? '-2' : value
           break
         case 'feature':
-          if (value === '100') this.currentValue.featureFullView = !this.currentValue.featureFullView
-          if (value === '200') this.currentValue.featureOnSell = !this.currentValue.featureOnSell
+          if (value === '100') this.currentValue.generalView = !this.currentValue.generalView
+          if (value === '200') this.currentValue.discountHouse = !this.currentValue.discountHouse
           break
-        case 'sellStatus':
-          this.currentValue.sellStatus = this.currentValue.sellStatus === value ? '-1' : value
+        case 'saleStatus':
+          this.currentValue.saleStatus = this.currentValue.saleStatus === value ? '-1' : value
           break
         case 'openStatus':
           this.currentValue.openStatus = this.currentValue.openStatus === value ? '-1' : value
           break
-        case 'attentionStatus':
-          this.currentValue.attentionStatus = this.currentValue.attentionStatus === value ? '-1' : value
+        case 'focusStatus':
+          this.currentValue.focusStatus = this.currentValue.focusStatus === value ? '-1' : value
           break
       }
     },
     activeCheck(mainKey, index) {
       let status = false
       switch (mainKey) {
-        case 'size':
-          if (index === this.currentValue.size) status = true
+        case 'areaSize':
+          if (index === this.currentValue.areaSize) status = true
           break
         case 'type':
           if (index === this.currentValue.type) status = true
           break
         case 'feature':
-          if (index === '100' && this.currentValue.featureFullView) status = true
-          if (index === '200' && this.currentValue.featureOnSell) status = true
+          if (index === '100' && this.currentValue.generalView) status = true
+          if (index === '200' && this.currentValue.discountHouse) status = true
           break
-        case 'sellStatus':
-          if (index === this.currentValue.sellStatus) status = true
+        case 'saleStatus':
+          if (index === this.currentValue.saleStatus) status = true
           break
         case 'openStatus':
           if (index === this.currentValue.openStatus) status = true
           break
-        case 'attentionStatus':
-          if (index === this.currentValue.attentionStatus) status = true
+        case 'focusStatus':
+          if (index === this.currentValue.focusStatus) status = true
           break
       }
       return status && 'active'
