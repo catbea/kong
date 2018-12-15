@@ -1,7 +1,10 @@
 <template>
   <div class="market-open-page">
    <market-describe class="project-info" :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
-   <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" @couponClick="couponClickHandle" @priceItemClick="priceItemClickHandle"></market-priceSurface>
+   <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo"
+    @onVipClick="vipClickHandle"
+    @couponClick="couponClickHandle"
+    @priceItemClick="priceItemClickHandle"></market-priceSurface>
    <div class="agreement-box" v-if="true">
       <span>点击立即支付，即表示已阅读并同意</span>
       <span class="agreement" @click="skipAgreement">《AW大师付费协议》</span>
@@ -47,6 +50,9 @@ export default {
   methods: {
     skipAgreement() {
       this.$router.push('/open/agreement')
+    },
+    vipClickHandle() {
+      this.$router.push('/user/myMember')
     },
     priceItemClickHandle(index) {
       this.currPriceListIndex = index
