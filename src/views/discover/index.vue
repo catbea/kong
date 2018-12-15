@@ -1,8 +1,8 @@
 <template>
   <div class="discover-page">
     <van-swipe class="shadow swipe-container" v-if="swipeList" :autoplay="3000">
-      <van-swipe-item v-for="(item, index) in swipeList" :key="index">
-        <div class="bg_img swipe-item-container" :style="{'backgroundImage':'url('+ item.image +')'}">
+      <van-swipe-item v-for="(item, index) in swipeList" :key="index" >
+        <div class="bg_img swipe-item-container" :style="{'backgroundImage':'url('+ item.image +')'}" @click="swipeItemClick(item)">
           <div class="cover-container">
             <p class="cover-title">{{item.title}}</p>
             <p class="cover-time">{{item.publisher}}&nbsp;&nbsp;{{item.createDate | dateFormatterToHuman}}&nbsp;&nbsp;{{item.scanNum | numberFormatter}}浏览</p>
@@ -11,8 +11,6 @@
       </van-swipe-item>
     </van-swipe>
     <div class="tab-container">
-
-
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
         <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName">
           <keep-alive>
@@ -75,6 +73,11 @@ export default {
       for (let temp of this.tabs) {
         if (temp.index === this.activeIndex) return temp
       }
+    },
+    swipeItemClick(item){
+      this.$router.push({name: 'discover-detail', params: {id: item.id, city: this.userArea.city}})
+      console.log(item);
+      
     }
   },
   computed: {
