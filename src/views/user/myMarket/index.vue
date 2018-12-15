@@ -245,9 +245,6 @@ export default {
   }
     .market-left{
       width:100%;
-      .user-market-page-box{
-        // width:100%;
-      }
     }
   }
   .title-bar,
