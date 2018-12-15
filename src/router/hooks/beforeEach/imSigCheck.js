@@ -6,6 +6,7 @@ export default async (to, from, next) => {
         next()
         return
     }
+    console.log('[getImUserSig]')
     await store.dispatch('getImUserSig')
     console.log(store.getters.imUserSig, '[getImUserSig]')
     if(store.getters.imUserSig && store.getters.imUserSig.agentId) {
