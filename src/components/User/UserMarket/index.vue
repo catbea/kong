@@ -202,33 +202,36 @@ export default {
     closeHandle () {
       this.show = !this.show
     },
-    masterHandle (n) {
+    async masterHandle (n) {
       if(this.masterButtonShow===false){
-        this.changeUserStatus(this.linkerId, 20, 1)//改为大师推荐
+       await this.changeUserStatus(this.linkerId, 20, 1)//改为大师推荐
+       this.$emit('pushMaster',this.dataArr)
       }else{
-        this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
+        await this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
+        
       }
       this.show = !this.show
       this.masterButtonShow=!this.masterButtonShow
       console.log(this.masterButtonShow,'大师推荐')
-      this.$parent.getRecommendInfo()
-      // this.$center.$emit('cs',90999999999999999999999999999999999)
+      // this.$parent.getRecommendInfo()
     },
     commonHandle (n) {
       // this.$emit('returncommonHandle',this.marketIndex)
-      this.commonButtonShow=!this.commonButtonShow
       if(this.commonButtonShow===false){
         this.changeUserStatus(this.linkerId, 20, 2)//改为普通推荐
+        this.$emit('pushCommon',this.dataArr)
       }else{
         this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
       }
       this.show = !this.show
+      this.commonButtonShow=!this.commonButtonShow
       console.log(this.commonButtonShow,'普通推荐')
     },
     exhibitionHandle () {
       Dialog.confirm({
         title: '是否确定关闭该楼盘名片展示',
-        message: '关闭该楼盘展示将取消推荐和置顶状态'
+        message: '关闭该楼盘展示将取消推荐和置顶状态',
+        className:'show-Dialog'
       }).then(() => {
         // on confirm
         this.stickShow = false
@@ -445,7 +448,8 @@ export default {
     width: 100%;
   }
 }
-.van-dialog {
+//弹出确认框
+.show-Dialog {
   width: 280px;
   height: 168px;
   background: rgba(255, 255, 255, 1);

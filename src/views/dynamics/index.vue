@@ -1,11 +1,11 @@
 <template>
   <div class="dynamics-page">
     <div class="dynamics-top-container">
-      <dynamics-collect :data="collectData" @click="goMessageInfo"></dynamics-collect>
-      <estate-recommend :info="recommendData" @click="goRecommendInfo"></estate-recommend>
+      <dynamics-collect :data="collectData" @click="goMessageInfo"/>
+      <estate-recommend v-if="recommendData" :info="recommendData" @click="goRecommendInfo"/>
     </div>
     <div class="list-container">
-      <my-estate-list :list="estateListData" @click="goRecommendInfo"></my-estate-list>
+      <my-estate-list :list="estateListData" @click="goRecommendInfo"/>
     </div>
   </div>
 </template>
@@ -78,7 +78,7 @@ export default {
   background: #f7f9fa;
   .dynamics-top-container {
     background: #fff;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
   }
   .list-container {
     background: #fff;
