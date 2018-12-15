@@ -132,7 +132,7 @@ export default {
     exhibitionHandle () {
       Dialog.confirm({
         title: '是否确定开启该楼盘名片展示',
-        message: '开启该楼盘展示将处于推荐和置顶状态'
+        className:'close-Dialog'
       }).then(() => {
         // on confirm
         this.stickShow=false
@@ -344,9 +344,9 @@ export default {
     width: 100%;
   }
 }
-.van-dialog {
+//弹出确认框
+.close-Dialog {
   width: 280px;
-  height: 168px;
   background: rgba(255, 255, 255, 1);
   border-radius: 12px;
   display: flex;
