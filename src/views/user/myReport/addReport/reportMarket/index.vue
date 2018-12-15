@@ -2,7 +2,7 @@
   <div class="my-preference-page">
     <div class="my-preference-header">
       <van-search :obj="searchInfo"></van-search>
-      <screen @input="queryBuildingList"  :cityValue='cityName'></screen>
+      <screen @input="queryBuildingList" :cityValue="cityName"></screen>
     </div>
     <div class="market-box">
       <meal-market
@@ -50,13 +50,15 @@ export default {
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     checkShow: false,
     dataArr: [],
-    cityName:'深圳市'
+    cityName: ''
   }),
   computed: {
-    ...mapGetters(['reportAddInfo'])
+    ...mapGetters(['reportAddInfo', 'userArea'])
   },
   methods: {
     async queryBuildingList(val, current, projectName) {
+      this.cityName = this.userArea.city
+      this.searchInfo.siteText = this.userArea.city
       let obj = {}
 
       if (val.baseFilters != null || val.moreFilters != null) {
