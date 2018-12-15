@@ -53,7 +53,6 @@ export default {
     this.getVipInfo()
   },
   data: () => ({
-    isShowSelectCity: false,
     isPayLoading: false,
     isVip: false,
     currPriceIndex: 0,
@@ -123,9 +122,11 @@ export default {
       this.setMealInfo = {openCount: res.count, vipCity: res.city}
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
-      if(this.isShowSelectCity){
+
+      if(this.setMealInfo.vipCity){
         this.unselectedPopup()
       }
+
       if(this.vipList.length > 0){
         this.currPriceIndex = 0
         this.priceClickHandle(0)

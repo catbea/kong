@@ -1,5 +1,6 @@
 import * as types from '@/store/mutation-types'
 import userService from '@/services/userService'
+import commonService from 'SERVICE/commonService'
 
 const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
@@ -120,7 +121,9 @@ const state = {
   },
 
   //点击选中的楼盘id
-  buildId: ''
+  buildId: '',
+
+  imUserSig: null
 }
 
 const getters = {
@@ -134,7 +137,8 @@ const getters = {
   },
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
-  theFirstTime:state => state.userInfo.theFirstTime
+  theFirstTime:state => state.userInfo.theFirstTime,
+  imUserSig: state => state.imUserSig,
 }
 
 const actions = {
@@ -142,6 +146,10 @@ const actions = {
     let _userInfo = JSON.stringify(userInfo)
     await localStorage.setItem('awMasterUserInfo', _userInfo)
     commit(types.USER_INFO, userInfo)
+  },
+  async getImUserSig({ commit }) {//im签名
+    const res = await commonService.getUserSig()
+    commit(types.IM_USER_SIG, res)
   },
   setJssdkConfig({ commit }, jssdkConfig) {
     localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig))
@@ -170,6 +178,9 @@ const actions = {
 const mutations = {
   [types.USER_INFO](state, data) {
     state.userInfo = data
+  },
+  [types.IM_USER_SIG](state, data) {
+    state.imUserSig = data
   },
   [types.USER_VIP_INFO](state, data) {
     state.userVipInfo = data
