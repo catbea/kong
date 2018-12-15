@@ -21,13 +21,18 @@ export default {
     MyEstateList
   },
   data: () => ({
-    collectData: null, // 数据中心数据
-    recommendData: null, // 推荐盘数据
-    estateListData: null // 我的楼盘数据
+    collectData: null,    // 数据中心数据
+    recommendData: null,  // 推荐盘数据
+    estateListData: null, // 我的楼盘数据
+    timer:null
   }),
   created() {
     this.getCollectInfo()
     this.getEstateList()
+    // 30s自动刷新数据
+    this.timer = setInterval(() => {
+      this.getCollectInfo()
+    },30000)
   },
   methods: {
     //动态详情
@@ -68,6 +73,9 @@ export default {
       }
       this.recommendData = res.aiLinkerVO
     }
+  },
+  beforeDestroy(){
+    clearInterval(this.timer)
   }
 }
 </script>
