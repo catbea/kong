@@ -68,7 +68,7 @@ export default {
       sysMessage: []
     }
   },
-  created() {
+  mounted() {
     this.getMsgList()
   },
   methods: {

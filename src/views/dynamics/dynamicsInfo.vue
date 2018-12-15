@@ -136,7 +136,7 @@ export default {
       gzImg: require('IMG/dynamics/gz@2x.png'),
       dynamicCount:[],
       SingleHouseDynamicList:[],
-      itemDynamiclist:this.$route.query.itemDynamiclist,
+      itemDynamiclist: this.$route.params.itemDynamiclist,
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
       avgStayLinkerTime:0
@@ -144,20 +144,22 @@ export default {
   },
   created() {
     this.getSingleHouseDynamicList()
+    this.$route.params.id
   },
   methods: {
-    //单个楼盘数据动态统计
+   
+    //查询单个楼盘数据动态列表
+    async getSingleHouseDynamicList() {
+      const res = await dynamicsService.getSingleHouseDynamicList(1, 10, this.itemDynamiclist)
+      this.SingleHouseDynamicList = res.records
+      this.getSingleHouseDynamicCount()
+    },
+     //单个楼盘数据动态统计
     async getSingleHouseDynamicCount() {
-      const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist.linkerId)
+      const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist)
       this.dynamicCount = res
       this.avgStayLinkerTime = parseInt(this.dynamicCount.houseDynamicCountReturnVO.avgStayLinkerTime /1000 )
       
-    },
-    //查询单个楼盘数据动态列表
-    async getSingleHouseDynamicList() {
-      const res = await dynamicsService.getSingleHouseDynamicList(1, 10, this.itemDynamiclist.linkerId)
-      this.SingleHouseDynamicList = res.records
-      this.getSingleHouseDynamicCount()
     },
     //關注
     getupdateCustomerInfo(item){
@@ -496,7 +498,9 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
-            margin-left: 24px;
+            position: absolute;
+          right: 0;
+          top: 0.32rem;
             > .btn-contact-userImg {
               width: 11px;
               height: 11px;

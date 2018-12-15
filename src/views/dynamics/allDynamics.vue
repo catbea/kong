@@ -216,7 +216,7 @@ export default {
       }
     }else if(cons.type === 'messageList'){
       //聯繫
-       this.$router.push('/dynamics/message/messageList')
+       this.$router.push({name:'messageList'})
     }else if(cons.type === 'detail'){
       //詳情
        this.$router.push(`/custom/${cons.item.clientId}`)
@@ -236,11 +236,12 @@ export default {
       }else if(pram.type === 'detail'){
         this.$router.push(`/custom/${pram.item.clientId}`)
       }else if(pram.type ==='messageList'){
-         this.$router.push('/dynamics/message/messageList')
+         this.$router.push({name:'messageList'})
       }
       
     },
     itemProperties (val) {
+      debugger
       if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog
           .confirm({
@@ -256,7 +257,8 @@ export default {
           })
       } else {
         //跳转到动态详情item
-        this.$router.push({ path: '/Dynamics/dynamicsInfo', query: { itemDynamiclist: val.itemDynamiclist } })
+        this.$router.push({ name: 'dynamics-info', params: { itemDynamiclist: val.itemDynamiclist.linkerId } })
+        
       }
     },
    
