@@ -105,6 +105,7 @@ const state = {
     province: '', // 省
     city: '深圳市', // 市
     selectedCity: '深圳市',
+    vipSelectedCity: null,
     county: '' // 区
   },
   reportAddInfo: {
