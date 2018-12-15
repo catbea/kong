@@ -14,7 +14,7 @@
         <div class="agent-box-right"></div>
       </div>
       <div class="bg_img van-hairline--surround discover-img" :style="{backgroundImage:'url('+ (info&&info.image) +')'}"></div>
-      <!-- <div class="discover-detail-content" v-html="info.content"></div> -->
+      <div class="discover-detail-content" v-html="info.content"></div>
       <p class="discover-extra-info">
         转载于
         <span class="reprint-from">{{info&&info.publisher}}</span>

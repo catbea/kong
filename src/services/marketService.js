@@ -67,6 +67,21 @@ class MarketService {
     })
   }
 
+  /** 
+   * 楼盘详情-经纪人楼盘收藏
+  */
+ changeLinkerCollect(linkerId,status,type) {
+  return xhr({
+    url: '/cpCollect/linkerCollection',
+    method: 'post',
+    body: {
+      linkerId,
+      status,
+      type
+    }
+  })
+}
+
   /**
    * 楼盘-楼盘信息-楼盘开通调用
    * @param {*} linkerId

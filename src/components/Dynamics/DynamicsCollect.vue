@@ -7,8 +7,8 @@
         <div class="new-msg-num" v-if="data&&data.newMsg">{{data&&data.newMsg | countLimit}}</div>
       </div>
     </div>
-    <div class="shadow_box info-box" v-if="data" @click="goMessageInfo(data)">
-      <div class="data-container">
+    <div class="shadow_box info-box" v-if="data" >
+      <div class="data-container" @click="goMessageInfo(data)">
         <div class="data-item main-data">
           <div class="data-value">
             {{data.customerCount.val}}
