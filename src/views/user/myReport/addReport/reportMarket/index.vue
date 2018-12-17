@@ -8,11 +8,13 @@
       <screen v-model="cityFilters"></screen>
     </div>
     <div class="market-box">
+      <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <meal-market v-for="(item,index) in dataArr" :key="index" :dataArr="item" :indexData="index" :checkData="checkData" @click.native="selectHandle(index)" v-if="haveData"></meal-market>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
+
     <div class="report-confirm" @click="onSureHandler">
       <p>确定</p>
     </div>
@@ -52,49 +54,61 @@ export default {
     nullcontent: '暂还没有可报备楼盘信息',
     checkShow: false,
     dataArr: [],
-    cityName: '',
     haveData: true,
     loading: false,
     finished: false,
     projectName: '',
-    projectFilters:null
+    parameterObj: {
+      area: '',
+      price: '-1,-1',
+      popularity: ' ,500',
+      sort: '',
+      generalView: 0,
+      discountHouse: '',
+      projectPriceAvgStart: '',
+      projectPriceAvgEnd: '',
+      togetherNumStart: '',
+      togetherNumEnd: 500,
+      orderBy: '',
+      size: 10,
+      current: 1,
+      province: '',
+      city: '',
+      county: '',
+      projectName: ''
+    }
   }),
   computed: {
-    ...mapGetters(['reportAddInfo', 'userArea'])
+    ...mapGetters(['reportAddInfo', 'userArea']),
+
+    cityName() {
+      return this.userArea.city ? this.userArea.city : '深圳市'
+    }
   },
   methods: {
     onLoad() {
-      // this.queryBuildingList(this.)
-      this.queryBuildingList({}, this.current, '')
+      this.queryBuildingList({}, this.current)
     },
 
     inpitBuildName(buildName) {
       this.projectName = buildName
-       this.queryBuildingList({}, this.current, buildName)
+
+      this.parameterObj.projectName = buildName
+
+      this.queryBuildingList(this.parameterObj, this.current)
     },
 
-
-  /**
-   * 查询楼盘结果
-   * @param {String} 项目名称
-   * @param {Object} 过滤条件
-   * @param {Number} 当前页
-   */
-    async queryBuildingList(projectName='', filters=null, page=1){
-
-    },
-
-
-    async queryBuildingList2(val, current, projectName) {
-      this.cityName = this.userArea.city
+    async queryBuildingList(val, current) {
       this.searchInfo.siteText = this.userArea.city
-      let obj = {}
+
+      let obj = this.parameterObj
 
       if (val.baseFilters != null || val.moreFilters != null) {
         obj = Object.assign(val.baseFilters, val.moreFilters)
 
         obj.houseType = obj.type //几居室
-        obj.projectName = projectName //搜索的楼盘名
+
+        obj.projectName = this.parameterObj.projectName
 
         if (obj.generalView) {
           //全景
@@ -145,14 +159,14 @@ export default {
 
         obj.size = 10
         obj.current = 1
-        obj.agentId = 705
         obj.province = ''
         obj.city = ''
         obj.county = ''
+        this.parameterObj = obj
       } else {
         obj.size = 10
         obj.current = 1
-        obj.agentId = 705
+        this.parameterObj = obj
       }
 
       const result = await reportServer.getReportBuildingList(obj)
@@ -222,8 +236,17 @@ export default {
       margin-left: 15px;
     }
   }
+
   .market-box {
     margin: 74px 0 60px 16px;
+
+    .notice-view{
+      font-size: 12px;
+      color: #999999;
+      text-align:center;
+      margin-top: 90px;
+      
+    }
   }
   .report-confirm {
     border-top: 1px solid #e6e6e6;

@@ -26,7 +26,9 @@
         :marketIndex="index"
         :dataArr="item"
         @pushMaster='pushMasterHandle'
+        @spliceMaster="spliceMasterHandle"
         @pushCommon='pushCommonHandle'
+        @spliceCommon='spliceCommonHandle'
         @closeCut="closeCut"
         @returnMasterHandle='returnMasterHandle'
         @returncommonHandle='returncommonHandle'
@@ -105,7 +107,7 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
-    
+    console.log(this.commonList,"加空记录")
   },
   mounted() {
     
@@ -119,15 +121,27 @@ export default {
     }
     },
     pushMasterHandle(n){//点击实时更新大师推荐图片
+    console.log(this.commonList,"此时的")
     for (let index = 0; index < this.commonList.length; index++) {
       const element =this.commonList[index];
-      if(n.linkerId==element.linkerId){
+      if(n.linkerId===element.linkerId){
        this.commonList.splice(index,1)
       }
     }
     n.masterRecommand='1'
    this.masterList=this.masterList.concat(n)
    this.swipeList = this.masterList.concat(this.commonList)
+   console.log(this.commonList,"之后的")
+    },
+    spliceMasterHandle(n){//点击实时改为取消大师改为未推荐
+    console.log(this.masterList,'现在的样子');
+    for (let index = 0; index < this.masterList.length; index++) {
+      const element = this.masterList[index];
+      if(n.linkerId===element.linkerId){
+       this.masterList.splice(index,1)
+       this.swipeList = this.masterList.concat(this.commonList)
+      }
+    }
     },
     pushCommonHandle(n){//点击实时更新普通推荐图片
     for (let index = 0; index < this.masterList.length; index++) {
@@ -139,6 +153,15 @@ export default {
     n.masterRecommand='2'
    this.commonList=this.commonList.concat(n)
    this.swipeList = this.masterList.concat(this.commonList)
+    },
+    spliceCommonHandle(n){//点击实时改为取消普通改为未推荐
+    for (let index = 0; index < this.commonList.length; index++) {
+      const element = this.commonList[index];
+      if(n.linkerId==element.linkerId){
+       this.commonList.splice(index,1)
+       this.swipeList = this.masterList.concat(this.commonList)
+      }
+    }
     },
     noRecommendHandle(n){//图片列表删除某个，楼盘列表重置推荐
     for (let index = 0; index < this.marketList.length; index++) {

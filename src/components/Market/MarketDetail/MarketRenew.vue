@@ -17,7 +17,11 @@
 </template>
 <script>
 import { Dialog } from 'vant'
+import userService from 'SERVICE/userService'
 export default {
+  created() {
+    
+  },
   data: () => ({
     flagTj: false,
     recommendA: require('IMG/marketDetail/tj copy 10@2x.png'),
@@ -42,11 +46,15 @@ export default {
         // on close
       })
     },
+   async changeRecommend(){
+      await userService.changeMarketData()
+    },
     recommendHandle(n) {
       this.flagTj = !this.flagTj
       switch (n) {
         case false:
           this.dialogHandle('已推荐该楼盘')
+          
           break
         case true:
           this.dialogHandle('已取消推荐该楼盘')
