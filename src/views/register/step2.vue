@@ -4,7 +4,7 @@
     <div class="register-content">
       <div class="register-title">长按识别二维码</div>
       <div class="register-subtitle">关注企业公众号后，点击经纪人端即可使用</div>
-      <div class="bg_img register-qrcode" :style="{'backgroundImage':'url('+ qrcodeImg +')'}"></div>
+      <img class="bg_img register-qrcode" :src="qrcodeImg"></img>
       <div class="register-desc">请使用注册手机号码绑定的微信扫描二维码</div>
     </div>
   </div>
@@ -39,6 +39,7 @@ export default {
 .register-content {
   border-top: 1px solid #dddddd;
   margin-top: 20px;
+  text-align: center;
   .register-title {
     color: #333333;
     font-size: 24px;
