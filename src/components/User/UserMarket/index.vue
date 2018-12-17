@@ -94,7 +94,8 @@
         overlay
       >
         <ul>
-          <li @click="goRenew(dataArr.linkerId)">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+          <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+          <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
           <div v-if="pastShow">
           <li class="borderDottom" @click="masterHandle(marketIndex)">
             <span v-show="!masterButtonShow">大师推荐</span> 
@@ -138,7 +139,8 @@ export default {
     imgPlay:require('IMG/user/Oval@2x.png'),
     imgCommission:require('IMG/user/collection/icon_commission@2x.png'),
     status:["热销中","即将发售","售罄"],
-    pastShow:'是否过期'
+    pastShow:'是否过期',
+    stride:true
   }),
   props: {
     dataArr: {
@@ -177,15 +179,25 @@ export default {
   created () {
     this.linkerId = this.dataArr.linkerId
     this.time()
+    this.strideYear()
   },
   methods: {
+    strideYear(){//判断是否跨年
+    let timestamp=new Date().getTime()
+    let usefulLife=this.dataArr.subscribeInvalidTime-0//到期时间错
+    if(new Date(usefulLife).getFullYear()-new Date(timestamp).getFullYear()>0){
+    this.stride=true
+    }else{
+    this.stride=false
+    } 
+    },
     time(){//比较时间错判断是否过期
    let timestamp=new Date().getTime()
     if(timestamp-this.dataArr.subscribeInvalidTime>0){
       this.pastShow=false
     }else{
       this.pastShow=true
-    }  
+    }
     },
     async changeUserStatus (linkerId, operationType, status) {
       await userService.changeMarketData(linkerId, operationType, status)
