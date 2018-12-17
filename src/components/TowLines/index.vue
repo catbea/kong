@@ -32,8 +32,6 @@ export default {
   .top-info-box {
     margin-top: 10px;
     padding: 19px 0 0 15px;
-
-    width: 360px;
     background: #ffffff;
     ul {
       width: 100%;

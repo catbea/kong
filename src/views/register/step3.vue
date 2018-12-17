@@ -1,9 +1,9 @@
 <template>
   <div class="register-step3-page">
     <reg-step :step="1" :stepTitle="stepTitle"></reg-step>
-    <div class="register-content van-hairline--top">
-      <div class="register-title">输入手机号注册</div>
-      <div class="register-subtitle">获取验证码输入即可完成注册</div>
+    <div class="register-step3-content van-hairline--top">
+      <div class="register-step3-title">输入手机号注册</div>
+      <div class="register-step3-subtitle">获取验证码输入即可完成注册</div>
       <div class="from-container">
         <div class="phone-cell">
           <div class="phone-tip" v-if="phoneFocus">请使用当前微信绑定号码进行注册</div>
@@ -132,34 +132,16 @@ export default {
 }
 </script>
 <style lang="less">
-.register-content {
-  // border-top: 1px solid #dddddd;
-  // margin-top: 20px;
-  // margin-left: 16px;
-  .register-title {
+.register-step3-content {
+  .register-step3-title {
     color: #333333;
     font-size: 24px;
-    // font-weight: 'Semibold';
     text-align: center;
     margin-top: 32px;
   }
-  .register-subtitle {
+  .register-step3-subtitle {
     color: #666666;
     font-size: 12px;
-    // font-weight: 'Regular';
-    text-align: center;
-  }
-  .register-qrcode {
-    margin-top: 40px;
-    text-align: center;
-    width: 200px;
-    height: 200px;
-  }
-  .register-desc {
-    margin-top: 12px;
-    color: #969ea8;
-    font-size: 12px;
-    // font-weight: 'Regular';
     text-align: center;
   }
 

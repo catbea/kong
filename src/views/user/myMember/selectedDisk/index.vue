@@ -240,7 +240,7 @@ export default {
     }
     .icon-project-select{
       width: 20px;
-      height: 17px;
+      height: 18px;
       margin: 0px 8px 0 16px;
     }
     .check-label{
