@@ -3,7 +3,7 @@
     <div class="box" v-show="status === 1">
       <div class="share-top" id='share-top'>
         <!--  -->
-        <img class="avatar-img" :src="buildingInfo.avatarMediaid" alt="">
+        <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="buildingInfo.qrCode">
         <span class="distinguish-span">长按识别更多</span>
@@ -57,6 +57,9 @@ export default {
   methods: {
     async getPosterInfo(buildId) {
       const result = await marketService.shareBuildingCard(buildId)
+
+      console.log(result)
+
       if (result) {
         this.buildingInfo = result
       }
