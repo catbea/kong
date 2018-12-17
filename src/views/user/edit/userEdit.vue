@@ -60,7 +60,7 @@
         <div slot="extra" class="tag-show-container">
           <div
             class="tag-item"
-            v-for="item in userInfo.labelList"
+            v-for="item in newLabelList"
             :key="item.labelId"
           >{{item.labelName}}</div>
         </div>
@@ -132,7 +132,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo']),
+
+     newLabelList() {
+      return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
+    }
   },
   watch: {
     userInfo(v) {}
