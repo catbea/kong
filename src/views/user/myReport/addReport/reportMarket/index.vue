@@ -8,6 +8,7 @@
       <screen @input="queryBuildingList" :cityValue="cityName"></screen>
     </div>
     <div class="market-box">
+      <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <meal-market
           v-for="(item,index) in dataArr"
@@ -21,6 +22,7 @@
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
+
     <div class="report-confirm" @click="onSureHandler">
       <p>确定</p>
     </div>
@@ -117,7 +119,7 @@ export default {
 
         obj.houseType = obj.type //几居室
 
-        obj.projectName=this.parameterObj.projectName
+        obj.projectName = this.parameterObj.projectName
 
         if (obj.generalView) {
           //全景
@@ -237,8 +239,17 @@ export default {
       margin-left: 15px;
     }
   }
+
   .market-box {
     margin: 74px 0 60px 16px;
+
+    .notice-view{
+      font-size: 12px;
+      color: #999999;
+      text-align:center;
+      margin-top: 90px;
+      
+    }
   }
   .report-confirm {
     border-top: 1px solid #e6e6e6;
