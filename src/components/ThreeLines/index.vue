@@ -28,7 +28,6 @@ export default {
   width: 375px;
   .middle-info-box {
     padding: 0 0 0 15px;
-    width: 360px;
     background: #ffffff;
     border-bottom: 1px solid #eeeeee;
     ol {
