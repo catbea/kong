@@ -96,8 +96,6 @@ export default {
           // on close
         })
       } else {
-         console.log(this.selectLabelList.length)
-
         if (this.selectLabelList.length> 3) {
           Dialog.alert({
             message: '标签个数不得多于3个'
