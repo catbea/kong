@@ -12,7 +12,9 @@
         :indexData="index"
         :checkData="checkData"
         @click.native="selectHandle(index)"
+        v-if="haveData"
       ></meal-market>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
     <div class="report-confirm" @click="onSureHandler">
       <p>确定</p>
@@ -26,11 +28,13 @@ import MealMarket from './MealMarket.vue'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import reportServer from 'SERVICE/reportService'
+import Null from 'COMP/Null'
 export default {
   components: {
     VanSearch,
     Screen,
-    MealMarket
+    MealMarket,
+    Null
   },
   created() {
     this.queryBuildingList({}, 1, '')
@@ -48,9 +52,12 @@ export default {
     },
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
+    nullIcon: require('IMG/user/bill-null.png'),
+    nullcontent: '暂还没有可报备楼盘信息',
     checkShow: false,
     dataArr: [],
-    cityName: ''
+    cityName: '',
+    haveData: true,
   }),
   computed: {
     ...mapGetters(['reportAddInfo', 'userArea'])
@@ -128,9 +135,12 @@ export default {
 
       const result = await reportServer.getReportBuildingList(obj)
 
-      // if (result.records.length > 0) {
-      //   this.dataArr = result.records
-      // }
+      if (result.records.length > 0) {
+        this.dataArr = result.records
+        this.haveData = true
+      } else {
+        this.haveData = false
+      }
     },
 
     selectHandle(index) {
