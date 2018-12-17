@@ -13,7 +13,7 @@
           <span class="messageInfo-sys-right">
             <p class="sys-right-top">
               系统消息
-              <span class="sys-right-time" v-show="sysMessage.createTime !='' ">{{sysMessage.createTime | dateFormatterToHuman}}</span>
+              <span class="sys-right-time" v-show="sysMessage !='' ">{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
             <p class="sys-right-btn">{{sysMessage.content}}</p>
           </span>

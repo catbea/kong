@@ -7,7 +7,13 @@
     </div>
     <div class="search-input-box">
       <i class="van-icon van-icon-search van-cell__left-icon"></i>
-      <input type="search" :placeholder="conf.placeholder" @focus="focusHandler">
+      <input
+        type="search"
+        :placeholder="conf.placeholder"
+        @focus="focusHandler"
+        v-on:input="inputContent"
+        v-model="inputCon"
+      >
     </div>
   </div>
 </template>
@@ -22,14 +28,18 @@ export default {
     }
   },
   data: () => ({
-    arrowIcon: require('IMG/market/list__arrow_@2x.png')
+    arrowIcon: require('IMG/market/list__arrow_@2x.png'),
+    inputCon: ''
   }),
   methods: {
     siteClickHandler() {
       this.$emit('areaClick')
     },
-    focusHandler(){
+    focusHandler() {
       this.$emit('focus')
+    },
+    inputContent() {
+      this.$emit('getContent', this.inputCon)
     }
   }
 }

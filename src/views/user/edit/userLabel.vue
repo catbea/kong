@@ -16,7 +16,7 @@
         </span>
       </p>
       <div class="edit-label-div">
-        <button class="edit-label-query" @click="SubLabel">确认修改</button>
+        <button class="edit-label-query" @click="SubLabel">确定修改</button>
       </div>
     </div>
   </div>
@@ -47,7 +47,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo']),
+
+    oldAgentLabel() {
+      return this.userInfo.labelList
+    }
   },
 
   methods: {
@@ -72,10 +76,14 @@ export default {
       const res = await userService.getAgentLabelList(1)
       this.agentLabel = res
 
+      console.log(this.oldAgentLabel)
+
       for (let i = 0; i < this.agentLabel.length; i++) {
         this.agentLabel[i].labelName = this.agentLabel[i].itemName
         this.agentLabel[i].labelId = this.agentLabel[i].id
       }
+
+      console.log(this.agentLabel)
     },
 
     async SubLabel() {
@@ -96,9 +104,7 @@ export default {
           // on close
         })
       } else {
-         console.log(this.selectLabelList.length)
-
-        if (this.selectLabelList.length> 3) {
+        if (this.selectLabelList.length > 3) {
           Dialog.alert({
             message: '标签个数不得多于3个'
           }).then(() => {

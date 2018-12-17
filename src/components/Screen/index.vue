@@ -8,7 +8,7 @@
       <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
     </ul>
     <div class="choose-container" @click="coverClickHandler">
-      <area-filter :show="currentIndex===0" :parent="local" v-model="filters.baseFilters.area"></area-filter>
+      <area-filter :show="currentIndex===0" :parent="cityValue" v-model="filters.baseFilters.area"></area-filter>
       <price-filter :show="currentIndex===1" v-model="filters.baseFilters.price"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters"></more-filter>
@@ -25,7 +25,7 @@ import SortWay from './SortWay'
 import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 export default {
   props: {
-    value: Object,
+    cityValue: String,
     height: { type: String, default: '14rem' }
   },
   components: {
@@ -46,7 +46,7 @@ export default {
       moreFilters: {}
     },
     conf: [{ index: 0, name: '区域', checked: false }, { index: 1, name: '均价', checked: false }, { index: 2, name: '人气', checked: false }, { index: 3, name: '更多', checked: false }],
-    local: '武汉市',
+    local: '深圳市',
     currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
     arrowDownIcon: require('IMG/market/listArrowDown.png')

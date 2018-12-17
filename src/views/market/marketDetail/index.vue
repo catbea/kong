@@ -174,7 +174,7 @@ export default {
       this.show = true
     },
     moreInfoHandle() {
-      this.$router.push({ path: '/marketDetail/info', query: this.linkerInfo })
+      this.$router.push({ name: 'marketDetail-info', query:{id:this.linkerInfo} })
     },
     skipMarketDetail(val) {
       this.linkerId = val

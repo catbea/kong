@@ -71,9 +71,17 @@ export default {
     },
 
     async getPosterInfo(buildId) {
+      let bannerList = []
+      let obj = {}
+
       const result = await marketService.shareBuildingCard(buildId)
       if (result) {
         this.buildingInfo = result
+        obj.imgUrl = result.postersUrl
+        obj.checked=true
+        bannerList.push(obj)
+
+        this.bannerList = bannerList
       }
     },
 
@@ -83,7 +91,7 @@ export default {
         for (let i = 0; i < bannerResult.length; i++) {
           bannerResult[i].checked = '0'
         }
-         bannerResult[0].checked = '0'
+        bannerResult[0].checked = '0'
         this.bannerList = bannerResult
       }
     },
@@ -101,13 +109,13 @@ export default {
     },
 
     setReport() {
-      this.changeBgImg = ''
+      // this.changeBgImg = ''
     }
   },
 
   created() {
     this.getPosterInfo(this.buildId)
-    this.getBuildingImg(this.buildId)
+    // this.getBuildingImg(this.buildId)
   }
 }
 </script>
@@ -117,7 +125,7 @@ export default {
   background: #ffffff;
   height: auto !important;
   .compile-tagline {
-    display:none;
+    display: none;
     margin-left: 15px;
     .compile-tagline-top {
       font-size: 16px;

@@ -28,7 +28,8 @@ export default {
   },
   created() {
     this.$store.commit(types.TABBAR, false)
-    this.info = this.$route.query
+    this.info = this.$route.query.id
+    console.log(this.info,'kljlkjlkjlkjlkjlkjlk')
   },
   computed: {
     topList() {
@@ -150,7 +151,6 @@ export default {
 .market-detail-info-page {
   width: 100%;
   background: #eeeeee;
-  padding-bottom: 102px;
   .title {
     background: #fff;
     height: 39px;
@@ -172,7 +172,7 @@ export default {
   }
   .info-bottom {
     display: flex;
-    margin: 13px 0 102px 15px;
+    margin: 13px 0 50px 15px;
     span {
       width: 12px;
       height: 12px;

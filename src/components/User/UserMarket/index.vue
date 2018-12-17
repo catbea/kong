@@ -181,7 +181,6 @@ export default {
   methods: {
     time(){//比较时间错判断是否过期
    let timestamp=new Date().getTime()
-   console.log(timestamp,'时间错',this.dataArr.subscribeInvalidTime)
     if(timestamp-this.dataArr.subscribeInvalidTime>0){
       this.pastShow=false
     }else{
@@ -309,8 +308,8 @@ export default {
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
-          display: flex;
-          align-items: center;
+          line-height:18px;
+          text-align: center;
         }
         .icon-play {
           width: 32px;

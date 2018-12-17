@@ -240,14 +240,14 @@ export default {
     }
     .icon-project-select{
       width: 20px;
-      height: 17px;
+      height: 18px;
       margin: 0px 8px 0 16px;
     }
     .check-label{
       line-height: 20px;
     }
     .check-all-button {
-      margin-right: 32px;
+      margin-right: 16px;
       width: 72px;
       height: 30px;
       border-radius: 22px;

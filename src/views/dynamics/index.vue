@@ -37,13 +37,16 @@ export default {
   methods: {
     //动态详情
     async goMessageInfo(num) {
-      if (num.customerCount.val != 0 && num.businessCardViews.val != 0 && num.estateViews.val != 0) {
-        this.$router.push({ name: 'allDynamics', params: { customerCount: num.customerCount.val, businessCardViews: num.businessCardViews.val, estateViews: num.estateViews.val } })
+      console.log("num.customerCount.val",num.customerCount)
+      console.log("num.businessCardViews.val",num.businessCardViews)
+      console.log("num.estateViews.val",num.estateViews)
+      if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
+        this.$router.push({ name: 'allDynamics', params: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
       }
     },
     //楼盘详情
     async goRecommendInfo(val) {
-      this.$router.push('/market/marketDetail')
+      this.$router.push('/market/marketDetail/'+val.linkerId)
     },
     async getCollectInfo() {
       const res = await dynamicsService.getDynamicsCollect()

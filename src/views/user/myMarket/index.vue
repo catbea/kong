@@ -13,10 +13,8 @@
         @return="returnHandle"
       ></title-bar>
     </div>
-    <div style="margin-left:16px">
-      <van-search :obj="searchInfo"></van-search>
-    </div>
-    <div style="margin-left:16px">
+    <div style="margin-left:16px" v-show="">
+      <search></search>
       <screen></screen>
     </div>
     <div class="user-market-box">
@@ -56,7 +54,7 @@
 import trans from './trans.vue'
 import MasterMarket from 'COMP/User/MasterMarket/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
-import VanSearch from 'COMP/VanSearch/'
+import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'
 import UserMarket from 'COMP/User/UserMarket/'
 import CloseMarket from 'COMP/User/UserMarket/CloseMarket.vue'
@@ -65,13 +63,17 @@ export default {
   components: {
     MasterMarket,
     TitleBar,
-    VanSearch,
+    Search,
     Screen,
     UserMarket,
     CloseMarket,
     trans
   },
   data: () => ({
+    searchShow:null,
+    searchNotShow:null,
+    searchShowNum:0,
+    searchNotShowNum:0,
     head:false,
     boxShow:false,
     marketShow:true,
@@ -89,10 +91,10 @@ export default {
       linkText: "切换开启展示楼盘",
       link: ""
     },
-    searchInfo: {
-      siteText: "全国",
-      placeholderText: "请输入楼盘"
-    },
+    // searchInfo: {
+    //   siteText: "全国",
+    //   placeholderText: "请输入楼盘"
+    // },
     dataArr: [
       { title: "龙光·久钻", site: "深圳 南山 120000元/㎡", condition: ["热销中", "地铁房", "低密度"], open: "125次开通 11/22到期", flag: true, price: "1%+5万元/套" },
       { title: "龙光·久钻", site: "深圳 南山 120000元/㎡", condition: ["热销中", "地铁房", "低密度"], open: "125次开通 11/22到期", flag: true, price: "1%+5万元/套" },
@@ -103,11 +105,19 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
+    
   },
   mounted() {
     
   },
   methods: {
+    operationSearch(){//根据展示/不展示楼盘数量来显示搜索
+    if(this.searchShowNum>20){
+      this.searchShow=true
+    }else{
+      this.searchShow=false
+    }
+    },
     pushMasterHandle(n){//点击实时更新大师推荐图片
     for (let index = 0; index < this.commonList.length; index++) {
       const element =this.commonList[index];
@@ -168,7 +178,9 @@ export default {
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
       const resShow = await userService.getMyMarket(0)
       this.marketList=resShow.records
+      this.searchShowNum=resShow.records.length
       const resNotShow = await userService.getMyMarket(1)
+      this.searchNotShowNum=resNotShow.records.length
       this.marketList=this.marketList.concat(resNotShow.records)
       console.log(this.marketList,'展示/不展示的楼盘数据')
       if(this.marketList.length==0){
@@ -248,7 +260,7 @@ export default {
     }
   }
   .title-bar,
-  .van-search-page {
+  .search-container {
     width: 343px;
   }
   
