@@ -1,19 +1,24 @@
 <template>
   <div class="my-preference-page">
     <div class="my-preference-header">
-      <van-search :obj="searchInfo"></van-search>
+      <!-- <van-search :obj="searchInfo"></van-search> -->
+      <div class="search-view">
+        <search :conf="searchInfo" @getContent="inpitBuildName"></search>
+      </div>
       <screen @input="queryBuildingList" :cityValue="cityName"></screen>
     </div>
     <div class="market-box">
-      <meal-market
-        v-for="(item,index) in dataArr"
-        :key="index"
-        :dataArr="item"
-        :indexData="index"
-        :checkData="checkData"
-        @click.native="selectHandle(index)"
-        v-if="haveData"
-      ></meal-market>
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <meal-market
+          v-for="(item,index) in dataArr"
+          :key="index"
+          :dataArr="item"
+          :indexData="index"
+          :checkData="checkData"
+          @click.native="selectHandle(index)"
+          v-if="haveData"
+        ></meal-market>
+      </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
     <div class="report-confirm" @click="onSureHandler">
@@ -29,15 +34,17 @@ import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import reportServer from 'SERVICE/reportService'
 import Null from 'COMP/Null'
+import Search from 'COMP/Search/'
 export default {
   components: {
     VanSearch,
     Screen,
     MealMarket,
-    Null
+    Null,
+    Search
   },
   created() {
-    this.queryBuildingList({}, 1, '')
+    // this.queryBuildingList({}, 1, '')
   },
   data: () => ({
     type: null,
@@ -56,23 +63,61 @@ export default {
     nullcontent: '暂还没有可报备楼盘信息',
     checkShow: false,
     dataArr: [],
-    cityName: '',
     haveData: true,
+    loading: false,
+    finished: false,
+    projectName: '',
+    parameterObj: {
+      area: '',
+      price: '-1,-1',
+      popularity: ' ,500',
+      sort: '',
+      generalView: 0,
+      discountHouse: '',
+      projectPriceAvgStart: '',
+      projectPriceAvgEnd: '',
+      togetherNumStart: '',
+      togetherNumEnd: 500,
+      orderBy: '',
+      size: 10,
+      current: 1,
+      province: '',
+      city: '',
+      county: '',
+      projectName: ''
+    }
   }),
   computed: {
-    ...mapGetters(['reportAddInfo', 'userArea'])
+    ...mapGetters(['reportAddInfo', 'userArea']),
+
+    cityName() {
+      return this.userArea.city ? this.userArea.city : '深圳市'
+    }
   },
   methods: {
-    async queryBuildingList(val, current, projectName) {
-      this.cityName = this.userArea.city
+    onLoad() {
+      this.queryBuildingList({}, this.current)
+    },
+
+    inpitBuildName(buildName) {
+      this.projectName = buildName
+
+      this.parameterObj.projectName = buildName
+
+      this.queryBuildingList(this.parameterObj, this.current)
+    },
+
+    async queryBuildingList(val, current) {
       this.searchInfo.siteText = this.userArea.city
-      let obj = {}
+
+      let obj = this.parameterObj
 
       if (val.baseFilters != null || val.moreFilters != null) {
         obj = Object.assign(val.baseFilters, val.moreFilters)
 
         obj.houseType = obj.type //几居室
-        obj.projectName = '' //搜索的楼盘名
+
+        obj.projectName=this.parameterObj.projectName
 
         if (obj.generalView) {
           //全景
@@ -123,14 +168,14 @@ export default {
 
         obj.size = 10
         obj.current = 1
-        obj.agentId = 705
         obj.province = ''
         obj.city = ''
         obj.county = ''
+        this.parameterObj = obj
       } else {
         obj.size = 10
         obj.current = 1
-        obj.agentId = 705
+        this.parameterObj = obj
       }
 
       const result = await reportServer.getReportBuildingList(obj)
@@ -138,8 +183,18 @@ export default {
       if (result.records.length > 0) {
         this.dataArr = result.records
         this.haveData = true
+
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.cuurent++
+        this.loading = false
       } else {
-        this.haveData = false
+        if (current == 1) {
+          this.haveData = false
+        }
+        this.loading = false
+        this.finished = true
       }
     },
 
@@ -174,6 +229,10 @@ export default {
     background: rgba(255, 255, 255, 1);
     z-index: 11;
     padding-top: 6px;
+    .search-view {
+      margin-left: 15px;
+      margin-right: 15px;
+    }
     .van-search-page {
       margin-left: 15px;
     }
