@@ -1,7 +1,7 @@
 <template>
   <div class="market-share-page">
     <div class="box" v-show="status === 1">
-      <div class="share-top" id='share-top'>
+      <div class="share-top" id="share-top">
         <!--  -->
         <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
         <img class="cover-img" :src="coverBg">
@@ -27,7 +27,9 @@
         <router-view></router-view>
       </div>
     </div>
-    <div class="result" id="card-result" v-show="status === 2"></div>
+    <div class="result" id="card-result" v-show="status === 2">
+      <!-- <van-loading class="loadding-view" type="spinner" color="white" style="{display:loading}"/> -->
+    </div>
   </div>
 </template>
 <script>
@@ -50,31 +52,31 @@ export default {
       coverBg: require('IMG/dev/page1/cover2@2x.png'),
       logoImg: require('IMG/dev/page1/logo@2x.png'),
       buildingInfo: {},
-      status: 1
+      status: 1,
+      loading: 'none'
     }
   },
 
   methods: {
     async getPosterInfo(buildId) {
       const result = await marketService.shareBuildingCard(buildId)
-
-      console.log(result)
-
       if (result) {
         this.buildingInfo = result
       }
     },
 
     async savaReport() {
+      this.loading = 'block'
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '100%'
+      canvas.style.width = '101%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
+      this.loading = 'none'
     }
   }
 }
@@ -88,6 +90,15 @@ export default {
   .box {
     margin-bottom: 5px;
   }
+  .result{
+    
+
+    .loadding-view{
+        text-align: center;
+        margin: 0 auto
+    }
+  }
+
   .share-top {
     position: relative;
     width: 300px;
