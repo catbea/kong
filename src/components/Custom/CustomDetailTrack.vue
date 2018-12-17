@@ -8,7 +8,7 @@
     </div>
     <ul>
       <li v-for="(times,key) in trackList" :key="key">
-        <p class="content-title">{{times.timeStr}}</p>
+        <p class="content-title">{{times.timeStr | dateTimeFormatter(3,'/')}}</p>
         <div class="content-box" v-for="(item,key) in times.msgList" :key="key">
           <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
           <p>{{item.markedWords}}</p>

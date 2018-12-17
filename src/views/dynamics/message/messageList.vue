@@ -1,7 +1,7 @@
 <template>
   <div class="messageInfo-page">
     <div class="messageInfo-back" >
-      <div class="messageInfo-sys" @click="gosysMessage">
+      <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
              <button  :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "   v-if="sysMessage.unreadMsgCount != 0 " >
