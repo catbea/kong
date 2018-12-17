@@ -73,6 +73,7 @@
             :articleDynamicCount="articleDynamicCount"
             :articleDynamicList="articleDynamicList"
             :avgStayArticleTime="avgStayArticleTime"
+            @click="itemArticleInfo"
           ></dynamics-article>
         </div>
       </div>
@@ -219,13 +220,15 @@ export default {
       }
     }else if(cons.type === 'messageList'){
       //聯繫
-       this.$router.push({name:'messageList'})
+        this.$router.push({path: '/custom/message/message', query: {
+            clientId: cons.item.clientId
+          }})
     }else if(cons.type === 'detail'){
       //詳情
        this.$router.push(`/custom/${cons.item.clientId}`)
     }
     },
-   //文章跳轉
+   //名片跳轉
     goallDynamics (pram) {
       if(pram.type === 'guanz'){
         if (pram.item.attentionStatus == 1) {
@@ -239,12 +242,14 @@ export default {
       }else if(pram.type === 'detail'){
         this.$router.push(`/custom/${pram.item.clientId}`)
       }else if(pram.type ==='messageList'){
-         this.$router.push({name:'messageList'})
+          this.$router.push({path: '/custom/message/message', query: {
+            clientId: pram.item.clientId
+          }})
       }
       
     },
+    //楼盘
     itemProperties (val) {
-      debugger
       if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog
           .confirm({
@@ -264,6 +269,11 @@ export default {
         
       }
     },
+    //文章跳转
+    itemArticleInfo(articlelist){
+      let articleInfo = articlelist.item
+       this.$router.push({path:'/Dynamics/articleInfo',query: {articleId:articleInfo.articleId,articleTitle:articleInfo.articleTitle,articleSource:articleInfo.articleSource,articleImgUrl:articleInfo.articleImgUrl}})
+    }
    
   }
 }

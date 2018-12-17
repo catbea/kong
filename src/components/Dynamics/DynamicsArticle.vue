@@ -26,7 +26,8 @@
     <div class="article-list" v-for="(item,key) in articleDynamicList" :key="key"  @click="itemArticleInfo(item)">
       <span class="article-list-left">
         <p class="article-left-title">{{item.articleTitle }}</p>
-        <p class="article-left-time">{{item.articleSource }}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}
+        <p class="article-left-time" >
+          <span class="article-left-times" v-show="item.articleSource">{{item.articleSource }}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}</span>
           <span class="left-time-nub"> {{item.dynamicCount}}条动态</span>
         </p>
       </span>
@@ -66,8 +67,10 @@ export default {
   },
   methods: {
     itemArticleInfo(item) {
-      // /discover/headlinepath：'/Dynamics/articleInfo',query{}
-      this.$router.push({path:'/Dynamics/articleInfo',query: {itemlist:item}})
+      let parm={
+        item:item
+      }
+      this.$emit('click',parm)
     },
     
   }
@@ -124,11 +127,14 @@ export default {
           padding-right: 70px;
         }
         > .article-left-time {
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
+         
           position: absolute;
           bottom: 0;
+          > .article-left-times{
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+          }
           > .left-time-nub {
             font-size: 12px;
             font-family: PingFangSC-Regular;

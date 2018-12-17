@@ -72,7 +72,7 @@ export default {
     this.getMsgList()
   },
   methods: {
-    msgClickHandle(item) {
+    msgClickHandle(item) { 
       let clientId = item.toAccount.split('_')[1]
       this.$router.push({path: '/custom/message/message', query: {
         clientId: clientId

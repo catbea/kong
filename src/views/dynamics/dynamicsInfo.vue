@@ -10,7 +10,7 @@
                   class="dynamicsInfo-left-bg_img"
                   v-show="linkerVO.sale != 0 "
                   :style="{backgroundImage:'url('+labelImg+')'}"
-                >{{linkerVO.sale}}折</div>
+                >{{linkerVO.sale}}</div>
               <img :src="linkerVO.linkerHeadUrl" class="mark-icon">
               <img :src="ovalIcon" class="oval-icon" v-show="linkerVO.ifPanorama == 1">
             </span>
@@ -100,7 +100,7 @@
                <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="list-btn-contact" @click="goalldynamics">
+                <button class="list-btn-contact" @click="goalldynamics(item)">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -178,8 +178,10 @@ export default {
       this.$router.push({name:'marketDetail', params: { id: linkerId }})
     },
     //联系
-    goalldynamics () {
-      this.$router.push('/dynamics/message/messageList')
+    goalldynamics (item) {
+      this.$router.push({path: '/custom/message/message', query: {
+        clientId: item.clientId
+      }})
     },
     //客服详情
     gocustomInfo(item){
