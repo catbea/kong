@@ -235,7 +235,7 @@ export default {
        this.$emit('pushMaster',this.dataArr)
       }else{
         await this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
-        
+        this.$emit('spliceMaster',this.dataArr)
       }
       this.show = !this.show
       this.masterButtonShow=!this.masterButtonShow
@@ -249,6 +249,7 @@ export default {
         this.$emit('pushCommon',this.dataArr)
       }else{
         this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
+        this.$emit('spliceCommon',this.dataArr)
       }
       this.show = !this.show
       this.commonButtonShow=!this.commonButtonShow
