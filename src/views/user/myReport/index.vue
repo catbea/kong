@@ -3,48 +3,54 @@
   <div class="report-page" :style="{background:show==null?'#F7F9FA':'#FFFFFF'}">
     <!-- <Tips></Tips>#F7F9FA; -->
     <div class="report-container">
-      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad" v-if="reportList">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        :finished-text="'没有更多了'"
+        @load="onLoad"
+        v-if="haveData"
+      >
         <shadow-box v-for="item in reportList" :key="item.id">
           <div slot="container" class="report-container-css">
             <div class="report-title">
               <p class="report-title-css">{{item.linkerName}} 报备单</p>
-              <p class="container-list">报备楼盘
+              <p class="container-list">
+                报备楼盘
                 <span class="container-list-title container-name">{{item.linkerName}}</span>
               </p>
-              <p class="container-list">报备客户
+              <p class="container-list">
+                报备客户
                 <span class="container-list-title container-spec">{{item.clientName}}</span>
               </p>
               <p class="container-list">
-                <span class="container-list container-list-left">代理商
+                <span class="container-list container-list-left">
+                  代理商
                   <span class="container-list-title">{{item.distributorName}}</span>
                 </span>
                 <span class="container-list-right">{{reportStatusInfo[item.fillingStatus]}}</span>
               </p>
               <p class="container-list">
-                <span class="container-list">报备时间
+                <span class="container-list">
+                  报备时间
                   <span class="container-list-title">{{item.fillingTime}}</span>
                 </span>
                 <button class="container-list-botton" @click="reportInfo(item)">查看详情</button>
               </p>
             </div>
-            <p class="container-list">报备确认
+            <p class="container-list">
+              报备确认
               <span class="container-list-title container-discount">{{item.waitingConfirmTime}}</span>
             </p>
           </div>
         </shadow-box>
       </van-list>
-      <div v-else>
-        <null
-      :nullIcon="nullIcon"
-      :nullcontent="nullcontent"
-    ></null>
+      <div v-if="!haveData">
+        <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
       </div>
     </div>
-
     <div class="report-div-btn">
       <button class="report-btn" @click="addReport">创建报备</button>
     </div>
-
   </div>
 </template>
 <script>
@@ -72,7 +78,8 @@ export default {
       },
       loading: false,
       finished: false,
-      current: 1
+      current: 1,
+      haveData: true
     }
   },
   created() {},
@@ -82,18 +89,30 @@ export default {
      */
     onLoad() {
       this.getReportList(this.current)
-      this.loading = false
     },
     async getReportList(current) {
       const res = await reportService.reportList(current)
-      this.reportList = res.records
-      var current = this.current + 1
-      if (current >= res.pages) {
-        this.finished = true
-        this.current = current - 1
+      if (res.records.length > 0) {
+
+        this.reportList = this.reportList.concat(res.records)
+
+        if (this.reportList.length > 0) {
+          this.haveData = true
+        } else {
+          this.haveData = false
+        }
+
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
       } else {
-        this.finished = false
-        this.current = current
+        if (current == 1) {
+          this.haveData = false
+        }
+        this.loading = false
+        this.finished = true
       }
     },
     /**
