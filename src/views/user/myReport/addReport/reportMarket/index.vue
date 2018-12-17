@@ -5,19 +5,11 @@
       <div class="search-view">
         <search :conf="searchInfo" @getContent="inpitBuildName"></search>
       </div>
-      <screen @input="queryBuildingList" :cityValue="cityName"></screen>
+      <screen v-model="cityFilters"></screen>
     </div>
     <div class="market-box">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <meal-market
-          v-for="(item,index) in dataArr"
-          :key="index"
-          :dataArr="item"
-          :indexData="index"
-          :checkData="checkData"
-          @click.native="selectHandle(index)"
-          v-if="haveData"
-        ></meal-market>
+        <meal-market v-for="(item,index) in dataArr" :key="index" :dataArr="item" :indexData="index" :checkData="checkData" @click.native="selectHandle(index)" v-if="haveData"></meal-market>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -43,9 +35,6 @@ export default {
     Null,
     Search
   },
-  created() {
-    // this.queryBuildingList({}, 1, '')
-  },
   data: () => ({
     type: null,
     checkIndex: -1,
@@ -67,13 +56,15 @@ export default {
     haveData: true,
     loading: false,
     finished: false,
-    projectName: ''
+    projectName: '',
+    projectFilters:null
   }),
   computed: {
     ...mapGetters(['reportAddInfo', 'userArea'])
   },
   methods: {
     onLoad() {
+      // this.queryBuildingList(this.)
       this.queryBuildingList({}, this.current, '')
     },
 
@@ -82,7 +73,19 @@ export default {
        this.queryBuildingList({}, this.current, buildName)
     },
 
-    async queryBuildingList(val, current, projectName) {
+
+  /**
+   * 查询楼盘结果
+   * @param {String} 项目名称
+   * @param {Object} 过滤条件
+   * @param {Number} 当前页
+   */
+    async queryBuildingList(projectName='', filters=null, page=1){
+
+    },
+
+
+    async queryBuildingList2(val, current, projectName) {
       this.cityName = this.userArea.city
       this.searchInfo.siteText = this.userArea.city
       let obj = {}
@@ -191,6 +194,14 @@ export default {
       if (this.checkIndex != -1) {
         var item = this.dataArr[this.checkIndex]
       }
+    }
+  },
+  watch:{
+    cityName:{
+      handler(){
+        // this.
+      },
+      deep:true
     }
   }
 }

@@ -25,7 +25,7 @@ import SortWay from './SortWay'
 import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 export default {
   props: {
-    cityValue: String,
+    value,
     height: { type: String, default: '14rem' }
   },
   components: {
@@ -60,6 +60,9 @@ export default {
     }
   },
   watch: {
+    value(val) {
+      this.filters = val
+    },
     filters: {
       handler(val) {
         this.$emit('input', val)
