@@ -260,7 +260,7 @@ export default {
           })
       } else {
         //跳转到动态详情item
-        this.$router.push({ name: 'dynamics-info', params: { itemDynamiclist: val.itemDynamiclist.linkerId } })
+        this.$router.push({ path: '/dynamics/dynamicsInfo', query: { itemDynamiclist: val.itemDynamiclist.linkerId } })
         
       }
     },
