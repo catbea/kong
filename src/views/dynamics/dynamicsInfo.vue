@@ -1,61 +1,61 @@
 <template>
   <div class="dynamicsInfo-page">
     <shadow-box>
-      <div slot="container">
+      <div slot="container" >
         <div class="dynamicsInfo-list">
 
           <div class="dynamicsInfo-list-top" >
-            <span class="dynamicsInfo-list-left" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">
+            <span class="dynamicsInfo-list-left" @click="godynamicsInfo(linkerVO.linkerId)">
                <div
                   class="dynamicsInfo-left-bg_img"
-                  v-show="dynamicCount.linkerVO.sale != '' "
+                  v-show="linkerVO.sale != 0 "
                   :style="{backgroundImage:'url('+labelImg+')'}"
-                >{{dynamicCount.linkerVO.sale}}</div>
-              <img :src="dynamicCount.linkerVO.linkerHeadUrl" class="mark-icon">
-              <img :src="ovalIcon" class="oval-icon" v-show="dynamicCount.linkerVO.ifPanorama == 1">
+                >{{linkerVO.sale}}</div>
+              <img :src="linkerVO.linkerHeadUrl" class="mark-icon">
+              <img :src="ovalIcon" class="oval-icon" v-show="linkerVO.ifPanorama == 1">
             </span>
             <span class="dynamicsInfo-list-right">
-              <div class="list-right-title" @click="gopay(dynamicCount.linkerVO)">
-                 <div class="list-right-title-div">{{dynamicCount.linkerVO.linkerName}}</div>
+              <div class="list-right-title" @click="gopay(linkerVO)">
+                 <div class="list-right-title-div">{{linkerVO.linkerName}}</div>
                 <div class="list-right-tab-div">
-                   <span class="left-title-right"  v-if="dynamicCount.linkerVO.linkerOpenEndTime !=''">续费</span>
+                   <span class="left-title-right"  v-if="linkerVO.linkerOpenEndTime !=''">续费</span>
                    <span class="left-title-right-open" v-else>开通</span>
                 </div>
               </div>
-              <p class="list-right-time" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">{{dynamicCount.linkerVO.city}}  {{dynamicCount.linkerVO.district}} | {{dynamicCount.linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
-              <p class="list-right-label" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">
-                <button class="right-label right-label-blur" v-show="dynamicCount.linkerVO.saleStatus == 0 ">热销中</button>
-                <button class="right-label right-label-red" v-show="dynamicCount.linkerVO.saleStatus == 1">即将发售</button>
-                <button class="right-label right-label-grey" v-show="dynamicCount.linkerVO.saleStatus == 2">售罄</button>
-                <button class="right-label right-label-gray" v-for="(linkerTags ,key) in dynamicCount.linkerVO.linkerTags " :key="key">{{linkerTags}}</button>
+              <p class="list-right-time" @click="godynamicsInfo(linkerVO.linkerId)">{{linkerVO.city}}  {{linkerVO.district}} | {{linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
+              <p class="list-right-label" @click="godynamicsInfo(linkerVO.linkerId)">
+                <button class="right-label right-label-blur" v-show="linkerVO.saleStatus == 0 ">热销中</button>
+                <button class="right-label right-label-red" v-show="linkerVO.saleStatus == 1">即将发售</button>
+                <button class="right-label right-label-grey" v-show="linkerVO.saleStatus == 2">售罄</button>
+                <button class="right-label right-label-gray" v-for="(linkerTags ,key) in linkerVO.linkerTags " :key="key">{{linkerTags}}</button>
               </p>
-              <p class="dynamicsInfo-list-right-price" @click="godynamicsInfo(dynamicCount.linkerVO.linkerId)">
-                {{dynamicCount.linkerVO.price }}{{dynamicCount.linkerVO.priceUnit }}
+              <p class="dynamicsInfo-list-right-price" @click="godynamicsInfo(linkerVO.linkerId)">
+                {{linkerVO.price }}{{linkerVO.priceUnit }}
                 <span class="right-price-text">起</span>
-                <span class="right-price-open">{{dynamicCount.linkerVO.openTimes }}次开通</span>
+                <span class="right-price-open">{{linkerVO.openTimes }}次开通</span>
               </p>
             </span>
           </div>
 
-          <div class="dynamicsInfo-list-commission" v-show="dynamicCount.linkerVO.divisionRules != ''">
+          <div class="dynamicsInfo-list-commission" v-show="linkerVO.divisionRules != ''">
             <span class="list-commission-word">佣</span>
-            <!-- 1.056%+50000元/套 -->{{dynamicCount.linkerVO.divisionRules}}
+            <!-- 1.056%+50000元/套 -->{{linkerVO.divisionRules}}
           </div>
 
         </div>
         
-        <div class="dynaData-container" v-if="dynamicCount">
+        <div class="dynaData-container" >
         <span class="container-total">
           <p class="container-title">分享次数</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.linkerShareCount }}</p>
+          <p class="card-num">{{dynamicCount.linkerShareCount }}</p>
         </span>
         <span class="container-card">
           <p class="container-title">访客数量</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.linkerVisitorCount }}</p>
+          <p class="card-num">{{dynamicCount.linkerVisitorCount }}</p>
         </span>
         <span class="container-properties " >
           <p class="container-title">浏览数量</p>
-          <p class="card-num">{{dynamicCount.houseDynamicCountReturnVO.scanLinkerCount }}</p>
+          <p class="card-num">{{dynamicCount.scanLinkerCount }}</p>
         </span>
         <span calss="container-article">
           <p class="container-title">平均停留(S)</p>
@@ -100,7 +100,7 @@
                <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="list-btn-contact" @click="goalldynamics">
+                <button class="list-btn-contact" @click="goalldynamics(item)">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -135,8 +135,9 @@ export default {
       lxImg: require('IMG/dynamics/lx@2x.png'),
       gzImg: require('IMG/dynamics/gz@2x.png'),
       dynamicCount:[],
+      linkerVO:[],
       SingleHouseDynamicList:[],
-      itemDynamiclist: this.$route.params.itemDynamiclist,
+      itemDynamiclist: this.$route.query.itemDynamiclist,
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
       avgStayLinkerTime:0
@@ -157,8 +158,9 @@ export default {
      //单个楼盘数据动态统计
     async getSingleHouseDynamicCount() {
       const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist)
-      this.dynamicCount = res
-      this.avgStayLinkerTime = parseInt(this.dynamicCount.houseDynamicCountReturnVO.avgStayLinkerTime /1000 )
+      this.dynamicCount = res.houseDynamicCountReturnVO
+      this.linkerVO = res.linkerVO
+      this.avgStayLinkerTime = parseInt(this.dynamicCount.avgStayLinkerTime /1000 )
       
     },
     //關注
@@ -176,8 +178,10 @@ export default {
       this.$router.push({name:'marketDetail', params: { id: linkerId }})
     },
     //联系
-    goalldynamics () {
-      this.$router.push('/dynamics/message/messageList')
+    goalldynamics (item) {
+      this.$router.push({path: '/custom/message/message', query: {
+        clientId: item.clientId
+      }})
     },
     //客服详情
     gocustomInfo(item){

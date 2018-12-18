@@ -14,7 +14,7 @@
       ></title-bar>
     </div>
     <div style="margin-left:16px" >
-      <search></search>
+      <search v-model="value"></search>
       <screen></screen>
     </div>
     <div class="user-market-box">
@@ -72,6 +72,7 @@ export default {
     trans
   },
   data: () => ({
+    value:'',
     searchShow:null,
     searchNotShow:null,
     searchShowNum:0,

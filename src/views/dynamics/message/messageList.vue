@@ -1,7 +1,7 @@
 <template>
   <div class="messageInfo-page">
     <div class="messageInfo-back" >
-      <div class="messageInfo-sys" @click="gosysMessage">
+      <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
              <button  :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "   v-if="sysMessage.unreadMsgCount != 0 " >
@@ -72,7 +72,7 @@ export default {
     this.getMsgList()
   },
   methods: {
-    msgClickHandle(item) {
+    msgClickHandle(item) { 
       let clientId = item.toAccount.split('_')[1]
       this.$router.push({path: '/custom/message/message', query: {
         clientId: clientId

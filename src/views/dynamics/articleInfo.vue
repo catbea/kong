@@ -4,11 +4,11 @@
       <div slot="container">
         <div class="articleInfo-list">
           <span class="articleInfo-list-left">
-            <p class="list-left-title">{{itemlist.articleTitle}}</p>
-            <p class="list-left-time">{{itemlist.articleSource }}&nbsp;&nbsp;{{itemlist.articleTime | dateFormatterToHuman}}</p>
+            <p class="list-left-title">{{articleTitle}}</p>
+            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTime | dateFormatterToHuman}}</p>
           </span>
           <span class="articleInfo-list-right">
-            <img :src="itemlist.articleImgUrl" class="mark-icon">
+            <img :src="articleImgUrl" class="mark-icon">
           </span>
 
         </div>
@@ -41,7 +41,7 @@
       <shadow-box>
         <div slot="container">
           <div class="dynamics-list">
-            <div class="dynamics-list-agent" @click="godynamicsInfo">
+            <div class="dynamics-list-agent" @click="godynamicsInfo(item)">
               <span class="list-agent-left">
                 <span class="agent-left-left">
                   <img :src="item.avatarUrl" class="agent-userImg">
@@ -56,7 +56,7 @@
                 <p class="agent-right-title">意向度</p>
               </span>
             </div>
-            <div class="dynamics-list-content" @click="godynamicsInfo">
+            <div class="dynamics-list-content" @click="godynamicsInfo(item)">
               <p>浏览了文章 <span>{{item.articleName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
@@ -70,7 +70,7 @@
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="list-btn-contact" @click="goalldynamics">
+                <button class="list-btn-contact" @click="goalldynamics(item)">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -103,7 +103,11 @@ export default {
       gzImg: require('IMG/dynamics/gz@2x.png'),
       articleDynamicCount: [],
       articleDynamicList: [],
-      itemlist: this.$route.query.itemlist,
+       itemlist: this.$route.query.itemlist,
+       articleTitle: this.$route.query.articleTitle,
+       articleSource: this.$route.query.articleSource,
+       articleImgUrl: this.$route.query.articleImgUrl,
+      articleId: this.$route.query.articleId,
       avgStayArticleTime:0,
     }
   },
@@ -113,13 +117,13 @@ export default {
   methods: {
     //查询单个文章客户访问数据动态列表
     async getSingleArticleDynamicList() {
-      const res = await dynamicsService.getSingleArticleList(1, 10, this.itemlist.articleId)
+      const res = await dynamicsService.getSingleArticleList(1, 10, this.articleId)
       this.articleDynamicList = res.records
       this.getSingleArticleDynamicCount()
     },
     //单个文章数据动态统计
     async getSingleArticleDynamicCount() {
-      const res = await dynamicsService.getSingleArticleCount(this.itemlist.articleId)
+      const res = await dynamicsService.getSingleArticleCount(this.articleId)
       this.articleDynamicCount = res
       this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime / 1000)
     },
@@ -133,14 +137,16 @@ export default {
          dynamicsService.getupdateCustomerInfo(item.clientId,1)
       }
     },
-     //楼盘详情
-    godynamicsInfo() {
-      this.$router.push('/market/marketDetail')
+     //客服详情
+    godynamicsInfo(item) {
+       this.$router.push(`/custom/${item.clientId}`)
     },
 
     //联系
-    goalldynamics () {
-      this.$router.push({name:'messageList'})
+    goalldynamics (item) {
+       this.$router.push({path: '/custom/message/message', query: {
+        clientId: item.clientId
+      }})
     },
   }
 }
