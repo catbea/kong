@@ -2,7 +2,7 @@
   <div class="meal-market-page">
     <div class="meal-market-page-box">
       <div class="meal-market-page-box-top">
-        <span class="icon-check bg_img" :style="{backgroundImage:'url('+ (dataArr.isChecked ? checkColorImg:checkImg)+')'}"></span>
+        <span class="icon-check bg_img" :style="{backgroundImage:'url('+ ( dataArr.isUnable ? checkColorUnAble : (dataArr.isChecked ? checkColorImg : checkImg) )+')'}"></span>
         <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p class="icon-discount bg_img" v-show="dataArr.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
@@ -10,7 +10,7 @@
         <ul>
           <li>
            <div style="display:flex;">
-             {{dataArr.title}} 
+             {{dataArr.linkerName}}
              </div>
           </li>
           <li>
@@ -43,6 +43,7 @@ export default {
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
+    checkColorUnAble: require('IMG/user/mealMarket/checkColor@2x.png'),
     imgShare: require('IMG/user/rectangle.png'),
     imgPlay: require('IMG/user/Oval@2x.png'),
     imgCommission: require('IMG/user/collection/icon_commission@2x.png')
@@ -66,6 +67,7 @@ export default {
     .meal-market-page-box-top {
       display: flex;
       align-items: center;
+      margin-top: 16px;
       margin-bottom: 16px;
       .icon-check {
         flex:0 0 18px;
@@ -80,6 +82,7 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        border-radius: 8px;
         .icon-discount {
           width: 36px;
           height: 20px;
