@@ -66,7 +66,7 @@ export default {
       this.$store.dispatch('userInfo', Object.assign(this.userInfo, { institutionName: val.name }))
       this.$store.dispatch('userInfo', Object.assign(this.userInfo, { institutionId: val.id }))
 
-      this.saveInstitutionInfo();
+      this.saveInstitutionInfo()
 
       this.$router.back(-1)
 
@@ -100,12 +100,16 @@ export default {
         let tempArr = this.parseList(result, result[0].pId)
         obj.children = tempArr
         obj.name = '选择机构'
+        obj.id = -1
         this.organizationList = obj
       } else {
         obj.name = '暂无可供选择的数据'
         obj.children = []
+        obj.id = -1
         this.organizationList = obj
       }
+
+      console.log(JSON.stringify(this.organizationList))
     },
 
     //递归遍历处理数据
