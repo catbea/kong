@@ -33,7 +33,7 @@
           <checkbox v-model="checked"></checkbox>
           <span class="fixed-btn-title">{{this.selectName}}</span>
         </div>
-        <div class="fixed-btn" @click="deleArticles()">删除</div>
+        <div class="fixed-btn" @click="deleArticles">删除</div>
       </div>
     </div>
   </div>
@@ -117,7 +117,6 @@ export default {
             this.checked = false
             this.selectAll = false
             this.selectName = '全选'
-            this.list = []
           }
         }
       } else {
@@ -127,19 +126,33 @@ export default {
     },
 
     //删除操作
-    toDeleArticle(selectStr) {
+    async toDeleArticle(selectStr) {
+
+      console.log(this.selectArr.length);
+      
       if (this.selectArr.length > 0) {
-        const res = userService.deleHistoryArticle(selectStr)
-        this.list = []
-        
+        const res = await userService.deleHistoryArticle(selectStr)
         this.selectName = '全选'
         this.checked = false
-        if (res) {
-          this.getHistoryList(1)
-        }
+        this.list = []
+        this.getHistoryList(1)
+        this.selectArr=[]
       } else {
         this.$toast('请先选择要删除的文章')
       }
+
+      // if (this.selectArr.length > 0) {
+      //   const res = userService.deleHistoryArticle(selectStr)
+      //   this.list = []
+
+      //   this.selectName = '全选'
+      //   this.checked = false
+      //   if (res) {
+      //     this.getHistoryList(1)
+      //   }
+      // } else {
+      //   this.$toast('请先选择要删除的文章')
+      // }
     },
 
     //删除文章
