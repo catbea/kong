@@ -6,7 +6,7 @@
         <input
           type="text"
           class="edit-wechat-input"
-          placeholder="Bela76123"
+          placeholder=""
           v-model="weChatNum"
           maxlength="20"
         >

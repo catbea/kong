@@ -2,9 +2,9 @@
   <div class="my-preference-page">
     <div class="my-preference-header">
       <div class="search-view">
-        <search :conf="searchInfo" v-model="projectName_zz"></search>
+        <search :conf="searchInfo" v-model="projectName" @areaClick="areaClickHandler"></search>
       </div>
-      <screen v-model="projectFilters_zz"></screen>
+      <screen v-model="projectFilters"></screen>
     </div>
     <div class="market-box">
       <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
@@ -38,8 +38,8 @@ export default {
     Search
   },
   data: () => ({
-    projectName_zz: '',
-    projectFilters_zz: {},
+    projectName: '',
+    projectFilters: {},
     page: 1,
     pageSize: 10,
     checkIndex: -1,
@@ -60,12 +60,18 @@ export default {
   computed: {
     ...mapGetters(['userArea'])
   },
+  created() {
+    this.searchInfo.siteText = this.userArea.city
+  },
   methods: {
     onLoad() {
-      this.queryBuildingList_zz(this.projectName_zz, this.projectFilters_zz, this.page)
+      this.queryBuildingList(this.projectName, this.projectFilters, this.page)
     },
-    // zzz
-    async queryBuildingList_zz(name = '', filters = {}, page = 1) {
+    // 搜索区域点击处理
+    areaClickHandler() {
+      this.$router.push({ name: 'area-select' })
+    },
+    async queryBuildingList(name = '', filters = {}, page = 1) {
       let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
       let params = screenFilterHelper(name, mergeFilters)
       params.current = page
@@ -107,18 +113,18 @@ export default {
     }
   },
   watch: {
-    projectName_zz(val) {
+    projectName(val) {
       clearTimeout(this.queryTimer)
       this.queryTimer = setTimeout(() => {
         this.page = 1
-        this.queryBuildingList_zz(val, this.projectFilters_zz, this.page)
+        this.queryBuildingList(val, this.projectFilters, this.page)
         clearTimeout(this.queryTimer)
       }, 500)
     },
-    projectFilters_zz: {
+    projectFilters: {
       handler(val) {
         this.page = 1
-        this.queryBuildingList_zz(this.projectName_zz, val, this.page)
+        this.queryBuildingList(this.projectName, val, this.page)
       },
       deep: true
     }

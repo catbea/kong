@@ -52,5 +52,5 @@ export default (name, filters, conf = {}) => {
   if (filters.openStatus && filters.openStatus !== '-1') result[conf.openStatus] = filters.openStatus
   // 关注状态
   if (filters.focusStatus && filters.focusStatus !== '-1') result[conf.focusStatus] = filters.focusStatus
-  return rsult
+  return result
 }
