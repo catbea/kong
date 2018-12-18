@@ -47,13 +47,14 @@ export default {
     Empty
   },
   created() {
-    this.getMarketDescribeInfo()
+    this.getMarketDescribeInfo(current)
   },
   data: () => ({
     value: '',
     list: [1, 2, 3, 4, 5, 6, 7],
     resInfo: null,
-    bucketImg: require('IMG/marketDetail/bucket@2x.png')
+    bucketImg: require('IMG/marketDetail/bucket@2x.png'),
+    current:1
   }),
   methods: {
     onCancel() {
@@ -65,8 +66,8 @@ export default {
     submit() {
       console.log(1111)
     },
-    async getMarketDescribeInfo() {
-      const res = await marketService.getMarketDescribe()
+    async getMarketDescribeInfo(current) {
+      const res = await marketService.getMarketDescribe(current)
       this.resInfo = res.records
     }
   }

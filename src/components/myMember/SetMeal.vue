@@ -3,7 +3,7 @@
     <div class="mymember-set-meal-page-content">
       <div class="mymember-set-meal-page-content-top" v-show="!setMealInfo.vipCity">
         <p class="forestall-open">{{setMealInfo.openCount}}人已经抢先开通VIP套餐</p>
-        <div class="meal-site">
+        <div class="meal-site" @click="checkCityhandle">
           <p>选择城市</p>
           <span class="site-icon bg_img" :style="{backgroundImage:'url('+siteImg+')'}"></span>
         </div>
@@ -43,6 +43,9 @@ export default {
     siteImg: require('IMG/myMember/location@2x.png')
   }),
   methods: {
+    checkCityhandle() {
+      this.$emit('onCheckCity')
+    },
     taget(index) {
       this.num = index
       this.$emit("priceClick",index)

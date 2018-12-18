@@ -1,8 +1,8 @@
 <template>
   <div class="title-bar-page" v-if="isShow">
     <h5 class="title-text">{{conf.title}}</h5>
-    <router-link :to="linkComputed">
-      <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}} </p>
+    <router-link :to="linkComputed" v-if="conf.linkText">
+      <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}}</p>
     </router-link>
   </div>
 </template>

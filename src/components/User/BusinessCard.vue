@@ -10,7 +10,7 @@
               <span class="share-view">分享</span>
             </div>
           </div>
-          <div class="info-box-center-p">
+          <div class="info-box-center-p" @click="editCLickHandler">
             <div class="info-box-center">
               <div class="username-box">
                 <span class="username-view">{{userInfo.name}}</span>
@@ -272,6 +272,7 @@ export default {
     }
 
      > .modify-img{
+       width: 100%;
        position: absolute;
         margin-top: -40px;
       }

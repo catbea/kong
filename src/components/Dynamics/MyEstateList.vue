@@ -1,7 +1,7 @@
 <template>
   <div class="my-estate-list">
     <title-bar class="title-container" :conf="titleBarConf"></title-bar>
-    <estate-item v-for="(item,index) in list" :key="index" :info="item" @click="godynamicsInfo"></estate-item>
+    <estate-item v-for="(item,index) in list" :key="index" :info="item" @click="godynamicsInfo(item)"></estate-item>
   </div>
 </template>
 <script>
@@ -25,8 +25,8 @@ export default {
     }
   }),
   methods: {
-    godynamicsInfo() {
-      this.$emit('click', this.info)
+    godynamicsInfo(item) {
+      this.$emit('click', item)
     }
   }
 }

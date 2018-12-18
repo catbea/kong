@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+// !!!!!!!!!!组件弃用!!!!!!!!!!使用COMP/Search
 export default {
   data: () => ({
     defaultAvatar: require('IMG/market/list__arrow_@2x.png')
