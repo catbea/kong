@@ -143,6 +143,7 @@ export default {
         this.checkedList.push({linkerId: this.packageIscheckedIds[i]})
         for(let item of this.projectList) {
           if(this.packageIscheckedIds[i] == item.linkerId){
+            item.isUnable = true,
             item.isChecked = true
           }
         }
@@ -161,15 +162,24 @@ export default {
       
       if(this.type == 'package') {
         let res = await marketService.userPackageAddHouse(isCheckLinkerArr.join(), this.$route.query.packageId)
-        this.$toast('添加到套盘成功')
       } else {
         let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
-        this.$toast('添加到我的楼盘成功')
-        this.$router.replace({path: "/user"})
       }
+      Dialog.confirm({
+        title: '开通成功',
+        message: '成功开通楼盘',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$router.replace({path: "/user/myMarket"})
+      }).catch(() => {
+        this.$router.replace({path: "/user/myMarket"})     
+      })
     },
 
     selectHandle(project) {
+      if(project.isUnable) {
+        return 
+      }
       if(this.type == 'package' && !project.isChecked && this.checkedList.length >= this.limitCount){
         this.$toast('已达到楼盘添加上限')
         return

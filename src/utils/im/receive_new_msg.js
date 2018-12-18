@@ -1,7 +1,11 @@
+import { Dialog } from 'vant';
+import store from '@/store/'
+import * as types from '@/store/mutation-types'
+import router from '@/router/'
 //监听新消息事件
-var msgList = [];
-var dateStart = null;
-var dateEnd = null;
+// var msgList = [];
+// var dateStart = null;
+// var dateEnd = null;
 var toAccount = '';
 var fromAccount = '';
 var selSess = '';
@@ -57,7 +61,7 @@ function callbackDynamics(fun) {
 //监听新消息事件
 //newMsgList 为新消息数组，结构为[Msg]
 function onMsgNotify(newMsgList) {
-
+  // console.log( newMsgList, '[newMsgList]-'+toAccount)
   var  newMsg;
   var msgList = []
   //获取所有聊天会话
@@ -65,29 +69,34 @@ function onMsgNotify(newMsgList) {
   for (var j in newMsgList) {//遍历新消息
     newMsg = newMsgList[j];
     var elems = newMsg.elems[0]
-   if (newMsg.getSession().id() == toAccount) {//为当前聊天对象的消息
+    console.log(newMsg.getSession() ,'newMsg.getSession()')
+    if (newMsg.getSession().id() == toAccount) {//为当前聊天对象的消息
       selSess = newMsg.getSession();
       //在聊天窗体中新增一条消息
-      console.log(newMsg);
       callbackaddMsgFunction && callbackaddMsgFunction(newMsg);
-      if(elems.content.desc!=4){
+      if(elems.content.desc != 4){
         //消息已读上报，以及设置会话自动已读标记
         webim.setAutoRead(selSess, true, true);
         //手动上报已读数据
         var msg = onSendMsg(newMsg.random, true, 4, "");
         console.log("上报消息已读结果:",msg);
       }
-    }else {
-     if(elems.content.desc!=4) {
-       if (elems.content.desc == 5) {
-         callbackaDynamicsFunction && callbackaDynamicsFunction(newMsg);
-       } else {
-         callbackaddMsgCountFunction && callbackaddMsgCountFunction(1, newMsg)
-       }
-     }
+    }else {// 不在聊天页面，弹出消息
+      // console.log(elems.content)
+      // console.log(newMsg.getSession().id())
+      let content = elems.content
+      // if(content.desc == 2) { //语音
+      //   let ext = content.ext
+      // } else {
+
+      // }
+      store.commit(types['NEW_MSG_CONTENT'], content)
+      store.commit(types['NEW_MSG_STATUS'], true)
+      setTimeout(() => {
+        store.commit(types['NEW_MSG_STATUS'], false)
+      }, 6000);
     }
   }
-
 }
 
 //初始化最近会话的消息未读数
@@ -111,8 +120,6 @@ function initUnreadMsgCount() {
 //audioTime语音时长 类型为语音的时候填写
 // isSend 是否为自己发送
 function onSendMsg(msgtosend, isSend, msgType, audioTime,) {
-
-
   //获取消息内容
   var msgLen = webim.Tool.getStrBytes(msgtosend);
   if (msgtosend.length < 1) {
@@ -200,22 +207,26 @@ function onConnNotify(resp) {
   switch (resp.ErrorCode) {
     case webim.CONNECTION_STATUS.ON:
       webim.Log.warn('建立连接成功: ' + resp.ErrorInfo);
+      console.log('建立连接成功: ' + resp.ErrorInfo)
       break;
     case webim.CONNECTION_STATUS.OFF:
       info = '连接已断开，无法收到新消息，请检查下你的网络是否正常: ' + resp.ErrorInfo;
       webim.Log.warn(info);
+      console.log(info)
       break;
     case webim.CONNECTION_STATUS.RECONNECT:
       info = '连接状态恢复正常: ' + resp.ErrorInfo;
       webim.Log.warn(info);
+      console.log(info)
       break;
     default:
       webim.Log.error('未知连接状态: =' + resp.ErrorInfo);
+      console.log('未知连接状态: =' + resp.ErrorInfo);
       break;
   }
 }
 
-function webimLogin(sdkAppID, identifier, accountType, userSig,isLog) {
+function webimLogin(sdkAppID, identifier, accountType, userSig, isLog) {
   //设置发送的账号
   fromAccount = identifier;
   if (isLog){
@@ -242,13 +253,9 @@ function webimLogin(sdkAppID, identifier, accountType, userSig,isLog) {
   };
   //监听事件
   var listeners = {
-    "onConnNotify": onConnNotify //监听连接状态回调变化事件,必填
-    ,
-    "onMsgNotify": onMsgNotify //监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件，必填
-    ,
-    "onC2cEventNotifys": onC2cEventNotifys //监听C2C系统消息通道
-    ,
-
+    "onConnNotify": onConnNotify, //监听连接状态回调变化事件,必填
+    "onMsgNotify": onMsgNotify, //监听新消息(私聊，普通群(非直播聊天室)消息，全员推送消息)事件，必填
+    "onC2cEventNotifys": onC2cEventNotifys, //监听C2C系统消息通道
   };
   webim.login(
     loginInfo, listeners, options,

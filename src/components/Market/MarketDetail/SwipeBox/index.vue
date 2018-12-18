@@ -15,7 +15,7 @@
       </div>
       <div class="collect-box" @click.stop="collect">
         <!-- <div class="collect" :class="{collectActive:flag}" :style="{'backgroundImage':'url('+flag?imgPlay： +')'}"></div>  -->
-        <div class="bg_img collect" :style="{backgroundImage:'url('+ (collectionStatusData==1?collectImgA:collectImg)+')'}"></div>收藏
+        <div class="bg_img collect" :style="{backgroundImage:'url('+ (status==1?collectImgA:collectImg)+')'}"></div>收藏
       </div>
       <div class="share-box" @click.stop="share">
         <div class="share bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></div>分享
@@ -32,7 +32,8 @@ export default {
     PopupBox
   },
   created() {
-
+    console.log(this.collectionStatus,'收藏状态');
+    
   },
   props: {
     linkerInfo:{type:Object},
@@ -44,14 +45,13 @@ export default {
   },
   data(){
     return {
-    collectionStatusData:this.collectionStatus,
+    status:this.collectionStatus,
     current: 0,
     enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
     imgPlay: require('IMG/marketDetail/Oval@2x.png'),
     collectImg: require('IMG/marketDetail/xx1@2x.png'),
     collectImgA: require('IMG/marketDetail/xx 9@2x.png'),
-    show: false,
-    status:null,
+    show: false
     }
   },
   methods: {
@@ -69,20 +69,17 @@ export default {
       this.current = index
     },
     collect() {
-      if(this.collectionStatus==1){
+      if(this.status==1){
         this.status=0
       }else{
         this.status=1
       }
       this.changeLinkerCollectInfo()
-      this.collectionStatusData = !this.collectionStatusData
     },
     async changeLinkerCollectInfo(){//修改收藏状态
-        await MarketService.changeLinkerCollect(this.linkerId,this.status,1)
+        await MarketService.changeLinkerCollect(this.linkerId,this.status,1)  
       },
     share() {
-      // this.$router.push("/marketDetail/share")
-      // this.show = !this.show
       this.$emit('shareBuilding','');
     },
     play() {

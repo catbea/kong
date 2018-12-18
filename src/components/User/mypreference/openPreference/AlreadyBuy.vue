@@ -40,6 +40,9 @@ export default {
   }),
   methods: {
     selectProjectHandle() {
+      if(this.packageItem.projectSelected == this.packageItem.projectCount){
+        return
+      } 
       this.$emit('selectProject', this.packageItem)
     }
   }

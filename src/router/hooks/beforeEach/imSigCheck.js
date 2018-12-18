@@ -9,7 +9,12 @@ export default async (to, from, next) => {
     await store.dispatch('getImUserSig')
     console.log(store.getters.imUserSig, '[getImUserSig]')
     if(store.getters.imUserSig && store.getters.imUserSig.agentId) {
-        webimLogin(store.getters.imUserSig.skdAppid, "agent_" + store.getters.imUserSig.agentId, store.getters.imUserSig.accountType, store.getters.imUserSig.usersig, store.getters.imUserSig.isLogOn);
+        webimLogin(store.getters.imUserSig.skdAppid, 
+            "agent_" + store.getters.imUserSig.agentId, 
+            store.getters.imUserSig.accountType, 
+            store.getters.imUserSig.usersig, 
+            store.getters.imUserSig.isLogOn
+        );
     }
     next()
 }
