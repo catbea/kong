@@ -42,7 +42,7 @@
       <cell
         class="cell-item"
         title="平台公司"
-        :value="userInfo.organizationName"
+        :value="userInfo.distributorName"
         @click="godistributorName"
       />
       <!-- <cell class="cell-item" title="中介门店" is-link :value="`${userInfo.institutionName}-${userInfo.storeName}`" /> -->

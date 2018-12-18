@@ -28,8 +28,20 @@ export default {
   created() {
     let distributorId = this.$route.query.distributorId
     let enterpriseId = this.$route.query.enterpriseId
+
+    if (distributorId) {
+      distributorId = this.$route.query.distributorId
+    } else {
+      distributorId = ''
+    }
+
+    if (enterpriseId) {
+      enterpriseId = this.$route.query.enterpriseId
+    } else {
+      enterpriseId = ''
+    }
+
     this.queryOrganizationList(distributorId, enterpriseId)
-    //  console.log(JSON.stringify(this.parseList(this.jsonData)));
   },
   computed: {
     ...mapGetters(['userRegistInfo', 'userInfo'])
