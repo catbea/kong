@@ -55,15 +55,15 @@ class registService {
    * 查询分销商列表
    * @param {*} enterpriseId 
    * @param {*} city 
-   * @param {*} area 
+   * @param {*} searchData 
    */
-  queryRegisterDistributor(enterpriseId, city, area) {
+  queryRegisterDistributor(enterpriseId, city, searchData) {
     return xhr({
       url: '/register/queryRegisterDistributor',
       body: {
         enterpriseId,
         city,
-        area
+        searchData
       }
     })
   }

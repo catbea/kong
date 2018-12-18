@@ -124,9 +124,11 @@ const state = {
   },
 
   userRegistInfo: {
+    registerMobile: '', // 注册手机号
+    registerCode: '', // 注册验证码
     majorRegion: '广东省/深圳市/南山区',
     city: '深圳市',
-    araa: '南山区',
+    area: '南山区',
     distributorId: '124', // 公司ID
     distributorName: 'AW大师',
     institutionId: '190', // 机构ID
