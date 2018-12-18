@@ -91,7 +91,7 @@ export default {
     itemClickHandler(type, value) {
       switch (type) {
         case 'areaSize':
-          this.currentValue.areaSize = this.currentValue.areaSize === value ? '' : value
+          this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
           break
         case 'type':
           this.currentValue.type = this.currentValue.value === value ? '-2' : value

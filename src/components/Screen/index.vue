@@ -8,8 +8,8 @@
       <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
     </ul>
     <div class="choose-container" @click="coverClickHandler">
-      <area-filter :show="currentIndex===0" :parent="cityValue" v-model="filters.baseFilters.area"></area-filter>
-      <price-filter :show="currentIndex===1" v-model="filters.baseFilters.price"></price-filter>
+      <area-filter :show="currentIndex===0"  v-model="filters.baseFilters.area"></area-filter>
+      <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters"></more-filter>
       <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort"></sort-way>
@@ -25,7 +25,7 @@ import SortWay from './SortWay'
 import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 export default {
   props: {
-    value: { default: {} },
+    value:{default:function(){return {}}},
     height: { type: String, default: '14rem' }
   },
   components: {
@@ -39,7 +39,7 @@ export default {
     filters: {
       baseFilters: {
         area: '',
-        price: '-1,-1',
+        aveprice: '-1,-1',
         popularity: '-1,-1',
         sort: ''
       },

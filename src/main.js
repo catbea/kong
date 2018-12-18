@@ -5,12 +5,9 @@ import router from '@/router/'
 import store from '@/store/'
 import '@/filters'
 import '@/directives'
-// import wechatApi from '@/utils/wechatApi'
-import vant from './vant'
 
 Vue.config.productionTip = false
 Vue.prototype.$devicePixelRatio = window.devicePixelRatio
-// Vue.prototype.$center = new Vue()
 // vant
 import { Toast, Icon, PullRefresh, List, Popup, Search } from 'vant'
 Vue.use(Toast)
