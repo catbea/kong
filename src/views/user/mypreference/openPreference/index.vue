@@ -123,6 +123,16 @@ export default {
             this.$toast('支付失败')
           }
         })
+      } else {
+        Dialog.confirm({
+          title: '开通成功',
+          message: '成功开通套餐，海量楼盘等你添加~',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.addProjectHandle()
+        }).catch(() => {
+                
+        })
       }
     },
 
@@ -140,7 +150,7 @@ export default {
             id: item.id,
             packageId: item.packageId,
             title: '已购套餐'+(i+1),
-            projectSelected: item.limitResidue,
+            projectSelected: item.giveNum + item.limitTotal - item.limitResidue,
             projectCount: item.giveNum + item.limitTotal,
             expireDate: item.expireDate
           }
