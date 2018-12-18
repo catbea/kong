@@ -41,12 +41,16 @@ const state = {
         info: 0
       }
     ]
-  }
+  },
+  newMsgStatus: false,
+  newMsgContent: null
 }
 
 const getters = {
   versions: state => state.versions,
-  tabbar: state => state.tabbar
+  tabbar: state => state.tabbar,
+  newMsgStatus: state => state.newMsgStatus,
+  newMsgContent: state => state.newMsgContent
 }
 
 const actions = {}
@@ -57,6 +61,12 @@ const mutations = {
   },
   [types.TABBAR](state, data) {
     state.tabbar = Object.assign(state.tabbar, data)
+  },
+  [types.NEW_MSG_STATUS](state, newMsgStatus) {
+    state.newMsgStatus = newMsgStatus
+  },
+  [types.NEW_MSG_CONTENT](state, newMsgContent) {
+    state.newMsgContent = newMsgContent
   }
 }
 

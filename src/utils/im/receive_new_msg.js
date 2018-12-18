@@ -1,4 +1,6 @@
 import { Dialog } from 'vant';
+import store from '@/store/'
+import * as types from '@/store/mutation-types'
 import router from '@/router/'
 //监听新消息事件
 // var msgList = [];
@@ -80,16 +82,21 @@ function onMsgNotify(newMsgList) {
         console.log("上报消息已读结果:",msg);
       }
     }else {// 不在聊天页面，弹出消息
-      Dialog.alert({
-        message: '有新消息'
-      }).then(() => {
-        // on close
-        console.log(newMsg.fromAccount.split('_')[1])
-        // router.replace({path: '/custom/message/message/', query:{clientId: newMsg.fromAccount.split('_')[1]}})
-      });
+      // console.log(elems.content)
+      // console.log(newMsg.getSession().id())
+      let content = elems.content
+      // if(content.desc == 2) { //语音
+      //   let ext = content.ext
+      // } else {
+
+      // }
+      store.commit(types['NEW_MSG_CONTENT'], content)
+      store.commit(types['NEW_MSG_STATUS'], true)
+      setTimeout(() => {
+        store.commit(types['NEW_MSG_STATUS'], false)
+      }, 6000);
     }
   }
-
 }
 
 //初始化最近会话的消息未读数
