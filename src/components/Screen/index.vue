@@ -25,7 +25,7 @@ import SortWay from './SortWay'
 import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 export default {
   props: {
-    value: { default: {} },
+    value: {type: String},
     height: { type: String, default: '14rem' }
   },
   components: {
