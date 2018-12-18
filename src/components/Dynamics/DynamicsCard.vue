@@ -55,7 +55,7 @@
                    <img :src="gzImg" class="agent-gzImg">
                    关注</button>
                 <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="list-btn-contact"  @click="goalldynamics">
+                <button class="list-btn-contact"  @click="goalldynamics(item)">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -113,9 +113,10 @@ export default {
       }
       this.$emit('click',pram)
     },
-    goalldynamics () {
+    goalldynamics (item) {
       let pram = {
-        type:'messageList'
+        type:'messageList',
+        item:item
       }
       this.$emit('click',pram)
     },

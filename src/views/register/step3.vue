@@ -10,7 +10,7 @@
           <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler"></material-input>
         </div>
         <div class="code-cell">
-          <material-input placeholder="请输入验证码" :type="'number'" :maxlength='6' v-model="code"></material-input>
+          <material-input placeholder="请输入验证码" :type="'number'" :maxlength='6' v-model="code" @blur="blurHandler"></material-input>
           <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
         </div>
         <div class="invite-cell">
@@ -29,7 +29,8 @@
 <script>
 import RegStep from 'COMP/Register/RegStep'
 import MaterialInput from 'COMP/MaterialInput'
-
+import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import RegisterService from 'SERVICE/registService'
 export default {
   components: {
@@ -48,14 +49,21 @@ export default {
     enterpriseId: '',
     parentUserId: '',
     parentUserName: '',
+    distributorId: '',
     registerAgreementName: '',
     route: ''
   }),
+  computed: {
+    ...mapGetters(['userRegistInfo'])
+  },
   created() {
     this.query = this.$route.query
     this.registerType = this.query.registerType
     this.enterpriseId = this.query.enterpriseId
     this.parentUserId = this.query.parentUserId
+    this.distributorId = this.query.distributorId
+    this.mobile = this.userRegistInfo.registerMobile
+    this.code = this.userRegistInfo.registerCode
     this.queryByRegister(this.enterpriseId)
     this.queryRegisterRecommendInfo(this.enterpriseId, this.registerType, this.parentUserId)
   },
@@ -88,6 +96,11 @@ export default {
     },
     blurHandler(focus) {
       this.phoneFocus = focus
+      let _userRegistInfo = {
+        registerMobile: this.mobile,
+        registerCode: this.code,
+      }
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
     registerHandler() {
       // let params = {
@@ -117,7 +130,8 @@ export default {
         code: this.code,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
-        parentUserId: this.parentUserId
+        parentUserId: this.parentUserId,
+        distributorId: this.distributorId
       }
       const result = await RegisterService.register(vo)
       if (JSON.stringify(result) != '{}') {

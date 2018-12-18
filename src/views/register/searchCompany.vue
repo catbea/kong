@@ -19,9 +19,9 @@
         <div class="bg_img search-tips-icon" :style="{backgroundImage:'url(' + searchIcon + ')'}"></div>
         <div class="search-tips-cnt">请输入主营区域下所属公司</div>
       </div>
-      <div class="search-list" v-for="(item, index) in regLists" :key="index">
+      <div class="search-list" v-for="(item, index) in searchLists" :key="index">
         <div class="search-item" @click="onSelectHandler(index)">
-          {{item.distributorName}}
+          {{item.childDistributorName}}
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@ export default {
     value: '',
     searchIcon: require('IMG/register/searchIcon@2x.png'),
     searchLists: null,
-    regLists: null,
+    // regLists: null,
     enterpriseId: '',
     city: '',
     area: ''
@@ -48,29 +48,29 @@ export default {
   created() {
     this.enterpriseId = this.$route.query.enterpriseId
     this.city = this.$route.query.city
-    this.area = this.$route.query.area
-    this.queryRegisterDistributor(this.enterpriseId, this.city, this.area)
+    // this.area = this.$route.query.area
   },
   computed: {
     ...mapGetters(['userRegistInfo'])
   },
   methods: {
-    async queryRegisterDistributor(enterpriseId, city, area) {
-      const result = await RegisterService.queryRegisterDistributor(enterpriseId, city, area)
+    async queryRegisterDistributor(enterpriseId, city, searchData) {
+      const result = await RegisterService.queryRegisterDistributor(enterpriseId, city, searchData)
       this.searchLists = result
     },
     onSearch(val) {
       if (val.length >= 4) {
-        let len = this.searchLists.length
-        let arr = []
-        for(let i=0; i<len; i++) {
-          val = val.toLocaleLowerCase()
-          let tempTarget = this.searchLists[i].distributorName.toLocaleLowerCase()
-          if (tempTarget.indexOf(val) !== -1) {
-            arr.push(this.searchLists[i])
-          }
-        }
-        this.regLists = arr
+        this.queryRegisterDistributor(this.enterpriseId, this.city, val)
+        // let len = this.searchLists.length
+        // let arr = []
+        // for(let i=0; i<len; i++) {
+        //   val = val.toLocaleLowerCase()
+        //   let tempTarget = this.searchLists[i].distributorName.toLocaleLowerCase()
+        //   if (tempTarget.indexOf(val) !== -1) {
+        //     arr.push(this.searchLists[i])
+        //   }
+        // }
+        // this.regLists = arr
       }
     },
     onCancel() {
@@ -78,22 +78,24 @@ export default {
     },
     onInput(val) {
       if (val.length >= 4) {
-        let len = this.searchLists.length
-        let arr = []
-        for(let i=0; i<len; i++) {
-          val = val.toLocaleLowerCase()
-          let tempTarget = this.searchLists[i].distributorName.toLocaleLowerCase()
-          if (tempTarget.indexOf(val) !== -1) {
-            arr.push(this.searchLists[i])
-          }
-        }
-        this.regLists = arr
+        this.queryRegisterDistributor(this.enterpriseId, this.city, val)
+        // let len = this.searchLists.length
+        // let arr = []
+        // debugger
+        // for(let i=0; i<len; i++) {
+        //   val = val.toLocaleLowerCase()
+        //   let tempTarget = this.searchLists[i].distributorName.toLocaleLowerCase()
+        //   if (tempTarget.indexOf(val) !== -1) {
+        //     arr.push(this.searchLists[i])
+        //   }
+        // }
+        // this.regLists = arr
       }
     },
     onSelectHandler(index) {
       let _userRegistInfo = {
-        distributorId: this.regLists[index].distributorId,
-        distributorName: this.regLists[index].distributorName
+        distributorId: this.searchLists[index].childDistributorId,
+        distributorName: this.searchLists[index].childDistributorName
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
       this.$router.back(-1)
