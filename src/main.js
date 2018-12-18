@@ -5,7 +5,7 @@ import router from '@/router/'
 import store from '@/store/'
 import '@/filters'
 import '@/directives'
-
+import '@/vant'
 Vue.config.productionTip = false
 Vue.prototype.$devicePixelRatio = window.devicePixelRatio
 // vant
