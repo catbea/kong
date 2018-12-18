@@ -127,16 +127,15 @@ export default {
 
     //删除操作
     async toDeleArticle(selectStr) {
+      console.log(this.selectArr.length)
 
-      console.log(this.selectArr.length);
-      
       if (this.selectArr.length > 0) {
         const res = await userService.deleHistoryArticle(selectStr)
         this.selectName = '全选'
         this.checked = false
         this.list = []
+        this.selectArr = []
         this.getHistoryList(1)
-        this.selectArr=[]
       } else {
         this.$toast('请先选择要删除的文章')
       }

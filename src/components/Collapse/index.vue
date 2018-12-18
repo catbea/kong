@@ -7,7 +7,7 @@
       </div>
       <checkbox
         class="parent-view-right"
-        v-if="model"
+        v-if="model.id!=-1"
         v-model="model.checked"
         @change="selectOrganiz(model)"
         :id="`checkbox-${model.id}`"
@@ -76,7 +76,7 @@ export default {
     // },
 
     selectOrganiz(model) {
-       this.$emit('clickListener', model)
+      this.$emit('clickListener', model)
     },
 
     toggle: function() {

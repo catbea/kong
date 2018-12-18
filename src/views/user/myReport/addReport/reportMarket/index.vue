@@ -1,11 +1,10 @@
 <template>
   <div class="my-preference-page">
     <div class="my-preference-header">
-      <!-- <van-search :obj="searchInfo"></van-search> -->
       <div class="search-view">
-        <search :conf="searchInfo" @getContent="inpitBuildName"></search>
+        <search :conf="searchInfo" v-model="projectName_zz"></search>
       </div>
-      <screen v-model="cityFilters"></screen>
+      <screen v-model="projectFilters_zz"></screen>
     </div>
     <div class="market-box">
       <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
@@ -22,7 +21,6 @@
 </template>
 <script>
 // TODO Vansearch 去掉  screen工具类提取
-import VanSearch from 'COMP/VanSearch/'
 import Screen from 'COMP/Screen/'
 import MealMarket from './MealMarket.vue'
 import { mapGetters } from 'vuex'
@@ -30,166 +28,63 @@ import * as types from '@/store/mutation-types'
 import reportServer from 'SERVICE/reportService'
 import Null from 'COMP/Null'
 import Search from 'COMP/Search/'
+import screenFilterHelper from '@/utils/screenFilterHelper'
+
 export default {
   components: {
-    VanSearch,
     Screen,
     MealMarket,
     Null,
     Search
   },
   data: () => ({
-    type: null,
+    projectName_zz: '',
+    projectFilters_zz: {},
+    page: 1,
+    pageSize: 10,
     checkIndex: -1,
     checkData: null,
-    dataArrLength: null,
-    showArr: [],
-    current: 1, //默认第一页
     searchInfo: {
       siteText: '全国',
       placeholderText: '请输入楼盘'
     },
-    checkImg: require('IMG/user/mealMarket/check@2x.png'),
-    checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
-    nullIcon: require('IMG/user/bill-null.png'),
     nullcontent: '暂还没有可报备楼盘信息',
-    checkShow: false,
     dataArr: [],
     haveData: true,
     loading: false,
     finished: false,
     projectName: '',
-    parameterObj: {
-      area: '',
-      price: '-1,-1',
-      popularity: ' ,500',
-      sort: '',
-      generalView: 0,
-      discountHouse: '',
-      projectPriceAvgStart: '',
-      projectPriceAvgEnd: '',
-      togetherNumStart: '',
-      togetherNumEnd: 500,
-      orderBy: '',
-      size: 10,
-      current: 1,
-      province: '',
-      city: '',
-      county: '',
-      projectName: ''
-    }
+    queryTimer: null,
+    nullIcon: require('IMG/user/bill-null.png')
   }),
   computed: {
-    ...mapGetters(['reportAddInfo', 'userArea']),
-
-    cityName() {
-      return this.userArea.city ? this.userArea.city : '深圳市'
-    }
+    ...mapGetters(['userArea'])
   },
   methods: {
     onLoad() {
-      this.queryBuildingList({}, this.current)
+      this.queryBuildingList_zz(this.projectName_zz, this.projectFilters_zz, this.page)
     },
-
-    inpitBuildName(buildName) {
-      this.projectName = buildName
-
-      this.parameterObj.projectName = buildName
-
-      this.queryBuildingList(this.parameterObj, this.current)
-    },
-
-    async queryBuildingList(val, current) {
-      this.searchInfo.siteText = this.userArea.city
-
-      let obj = this.parameterObj
-
-      if (val.baseFilters != null || val.moreFilters != null) {
-        obj = Object.assign(val.baseFilters, val.moreFilters)
-
-        obj.houseType = obj.type //几居室
-
-        obj.projectName = this.parameterObj.projectName
-
-        if (obj.generalView) {
-          //全景
-          obj.generalView = '1'
-        } else {
-          obj.generalView = '0'
-        }
-
-        if (obj.discountHouse) {
-          //优惠
-          obj.discountHouse = '1'
-        } else {
-          obj.discountHouse = ''
-        }
-
-        if (obj.areaSize != null) {
-          let areaSize = obj.areaSize.split(',')
-          obj.areaStart = areaSize[0]
-          obj.areaEnd = areaSize[1]
-        } else {
-        }
-
-        if (obj.price != null) {
-          let price = obj.price.split(',')
-          if (obj.price == '-1,-1') {
-            obj.projectPriceAvgStart = ''
-            obj.projectPriceAvgEnd = ''
-          } else {
-            obj.projectPriceAvgStart = price[0]
-            obj.projectPriceAvgEnd = price[1]
-          }
-        }
-
-        if (obj.popularity != null) {
-          let popularity = obj.popularity.split(',')
-          if (obj.popularity == '-1,-1') {
-            obj.togetherNumStart = ''
-            obj.togetherNumEnd = ''
-          } else {
-            obj.togetherNumStart = popularity[0]
-            obj.togetherNumEnd = popularity[1]
-          }
-        }
-
-        if (obj.sort != null) {
-          obj.orderBy = obj.sort
-        }
-
-        obj.size = 10
-        obj.current = 1
-        obj.province = ''
-        obj.city = ''
-        obj.county = ''
-        this.parameterObj = obj
-      } else {
-        obj.size = 10
-        obj.current = 1
-        this.parameterObj = obj
-      }
-
-      const result = await reportServer.getReportBuildingList(obj)
-
+    // zzz
+    async queryBuildingList_zz(name = '', filters = {}, page = 1) {
+      let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
+      let params = screenFilterHelper(name, mergeFilters)
+      params.current = page
+      params.size = this.pageSize
+      params = Object.assign(params, this.userArea)
+      const result = await reportServer.getReportBuildingList(params)
       if (result.records.length > 0) {
-        this.dataArr = result.records
+        this.dataArr = page === 1 ? result.records : this.dataArr.concat(result.records)
         this.haveData = true
-
-        if (res.pages === 0 || this.page === res.pages) {
+        if (page === result.pages) {
           this.finished = true
         }
-        this.cuurent++
-        this.loading = false
+        this.page++
       } else {
-        if (current == 1) {
-          this.haveData = false
-        }
-        this.loading = false
+        if (page == 1) this.haveData = false
         this.finished = true
       }
+      this.loading = false
     },
-
     selectHandle(index) {
       this.checkData = index
     },
@@ -211,13 +106,25 @@ export default {
       }
     }
   },
-  watch:{
-    cityName:{
-      handler(){
-        // this.
+  watch: {
+    projectName_zz(val) {
+      clearTimeout(this.queryTimer)
+      this.queryTimer = setTimeout(() => {
+        this.page = 1
+        this.queryBuildingList_zz(val, this.projectFilters_zz, this.page)
+        clearTimeout(this.queryTimer)
+      }, 500)
+    },
+    projectFilters_zz: {
+      handler(val) {
+        this.page = 1
+        this.queryBuildingList_zz(this.projectName_zz, val, this.page)
       },
-      deep:true
+      deep: true
     }
+  },
+  beforeDestroy() {
+    clearTimeout(this.queryTimer)
   }
 }
 </script>
@@ -241,12 +148,11 @@ export default {
   .market-box {
     margin: 74px 0 60px 16px;
 
-    .notice-view{
+    .notice-view {
       font-size: 12px;
       color: #999999;
-      text-align:center;
+      text-align: center;
       margin-top: 90px;
-      
     }
   }
   .report-confirm {
