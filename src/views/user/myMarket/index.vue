@@ -13,7 +13,7 @@
         @return="returnHandle"
       ></title-bar>
     </div>
-    <div style="margin-left:16px" v-show="">
+    <div style="margin-left:16px" >
       <search></search>
       <screen></screen>
     </div>
