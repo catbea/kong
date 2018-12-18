@@ -7,7 +7,7 @@
     </div>
     <div class="search-input-box">
       <i class="van-icon van-icon-search van-cell__left-icon"></i>
-      <input type="search" :placeholder="conf.placeholder" @focus="focusHandler">
+      <input type="search" :placeholder="conf.placeholder" @focus="focusHandler" v-on:input="inputContent" v-model="currentValue">
     </div>
   </div>
 </template>
@@ -19,17 +19,30 @@ export default {
       default: function() {
         return { siteText: '北京市', placeholder: '请输入平台名称' }
       }
-    }
+    },
+    value: String
   },
   data: () => ({
-    arrowIcon: require('IMG/market/list__arrow_@2x.png')
+    arrowIcon: require('IMG/market/list__arrow_@2x.png'),
+    currentValue: ''
   }),
   methods: {
     siteClickHandler() {
       this.$emit('areaClick')
     },
-    focusHandler(){
+    focusHandler() {
       this.$emit('focus')
+    },
+    inputContent() {
+      this.$emit('getContent', this.value)
+    }
+  },
+  watch: {
+    value(val) {
+      this.currentValue = val
+    },
+    currentValue(val) {
+      this.$emit('input', val)
     }
   }
 }

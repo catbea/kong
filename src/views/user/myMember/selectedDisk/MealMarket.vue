@@ -70,7 +70,7 @@ export default {
       margin-top: 16px;
       margin-bottom: 16px;
       .icon-check {
-        width: 19px;
+        flex:0 0 18px;
         height: 18px;
         margin: 0 16px;
       }
@@ -93,8 +93,8 @@ export default {
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
-          display: flex;
-          align-items:center;
+          line-height:18px;
+          text-align: center;
         }
         .icon-play {
           width: 32px;

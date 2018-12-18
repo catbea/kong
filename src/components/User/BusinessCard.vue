@@ -272,6 +272,7 @@ export default {
     }
 
      > .modify-img{
+       width: 100%;
        position: absolute;
         margin-top: -40px;
       }
