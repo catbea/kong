@@ -32,9 +32,11 @@ export default {
     },
     focusHandler() {
       this.$emit('focus')
+      
     },
     inputContent() {
       this.$emit('getContent', this.value)
+      
     }
   },
   watch: {

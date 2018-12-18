@@ -8,7 +8,7 @@
     </div>
     <ul>
       <li v-for="(times,key) in trackList" :key="key">
-        <p class="content-title">{{times.timeStr}}</p>
+        <p class="content-title">{{times.timeStr | dateTimeFormatter(3,'/')}}</p>
         <div class="content-box" v-for="(item,key) in times.msgList" :key="key">
           <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
           <p>{{item.markedWords}}</p>
@@ -79,6 +79,7 @@ export default {
       background: #e5e5e5;
       top: -13.5px;
       left: -4.5px;
+       margin-bottom: 80px;
     }
     .day {
       width: 10px;
@@ -90,7 +91,6 @@ export default {
     li {
       width: 322px;
       margin-left: 24px;
-          margin-bottom: 80px;
       .content-box {
         border-left: 1px solid #e5e5e5;
         padding-top: 12px;

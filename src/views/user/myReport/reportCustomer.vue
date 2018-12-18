@@ -8,7 +8,8 @@
       placeholder="请输入搜索关键词"
       show-action
       @search="onSearchHandler"
-      @click="onFocusHandler"
+      @click="onClickHandler"
+      @change="onChangeHandler"
     >
     </van-search>
     <div slot="sort" @click="onSearchHandler"></div>
@@ -87,7 +88,11 @@ export default {
       this.currentData.page = 1
       this.onLoad()
     },
-    onFocusHandler() {
+    onClickHandler() {
+    },
+    onChangeHandler() {
+      this.currentData.page = 1
+      this.onLoad()
     },
     /**
      * 切换tab方法
