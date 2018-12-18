@@ -108,8 +108,6 @@ export default {
         obj.id = -1
         this.organizationList = obj
       }
-
-      console.log(JSON.stringify(this.organizationList))
     },
 
     //递归遍历处理数据
