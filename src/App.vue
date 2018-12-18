@@ -19,19 +19,8 @@ export default {
     Navbar,
     Tabbar
   },
-  mounted() {
-    // document.addEventListener('touchstart', this.handler, false)
-  },
   computed: {
     ...mapGetters(['userInfo'])
-  },
-  methods:{
-    // handler(e){
-    //   e.preventDefault()
-    // }
-    /**
-     * im获取凭证
-     */
   }
 }
 </script>
