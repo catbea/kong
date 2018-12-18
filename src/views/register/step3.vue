@@ -48,6 +48,7 @@ export default {
     enterpriseId: '',
     parentUserId: '',
     parentUserName: '',
+    distributorId: '',
     registerAgreementName: '',
     route: ''
   }),
@@ -56,6 +57,7 @@ export default {
     this.registerType = this.query.registerType
     this.enterpriseId = this.query.enterpriseId
     this.parentUserId = this.query.parentUserId
+    this.distributorId = this.query.distributorId
     this.queryByRegister(this.enterpriseId)
     this.queryRegisterRecommendInfo(this.enterpriseId, this.registerType, this.parentUserId)
   },
@@ -117,7 +119,8 @@ export default {
         code: this.code,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
-        parentUserId: this.parentUserId
+        parentUserId: this.parentUserId,
+        distributorId: this.distributorId
       }
       const result = await RegisterService.register(vo)
       if (JSON.stringify(result) != '{}') {

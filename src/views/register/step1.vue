@@ -10,7 +10,7 @@
           <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler"></material-input>
         </div>
         <div class="code-cell">
-          <material-input placeholder="请输入验证码" :type="'number'" :maxlength="6" v-model="code"></material-input>
+          <material-input placeholder="请输入验证码" :type="'number'" :maxlength="6" v-model="code" @blur="blurHandler"></material-input>
           <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
         </div>
         <div class="van-hairline--bottom form-cell" @click="popAreaHandler">
@@ -77,6 +77,8 @@ export default {
     this.majorRegion = this.userRegistInfo.majorRegion
     this.city = this.userRegistInfo.city
     this.area = this.userRegistInfo.area
+    this.mobile = this.userRegistInfo.registerMobile
+    this.code = this.userRegistInfo.registerCode
   },
   computed: {
     ...mapGetters(['userRegistInfo'])
@@ -110,6 +112,11 @@ export default {
     },
     blurHandler(focus) {
       this.phoneFocus = focus
+      let _userRegistInfo = {
+        registerMobile: this.mobile,
+        registerCode: this.code,
+      }
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
     /**
      * 弹出主营区域选择框
