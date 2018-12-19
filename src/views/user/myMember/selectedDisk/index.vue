@@ -74,6 +74,7 @@ export default {
     projectSelectIco: require('IMG/myMember/project_select_ico.png'),
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
+    isCheckedImg: require('IMG/user/mealMarket/isChecked.png'),
     page: 1,
     pageSize: 8,
     checkAllShow: false,
@@ -151,7 +152,7 @@ export default {
     },
 
     async vipProjectOpenHandle() {
-      if(this.checkedList.length == 0) {
+      if(this.packageIscheckedIds.length == this.checkedList.length) {
         this.$toast('请先选择楼盘')
         return
       }
@@ -159,7 +160,6 @@ export default {
       for(let item of this.checkedList){
         isCheckLinkerArr.push(item.linkerId)
       }
-      
       if(this.type == 'package') {
         let res = await marketService.userPackageAddHouse(isCheckLinkerArr.join(), this.$route.query.packageId)
       } else {
@@ -172,7 +172,6 @@ export default {
       }).then(() => {
         this.$router.replace({path: "/user/myMarket"})
       }).catch(() => {
-        this.$router.replace({path: "/user/myMarket"})     
       })
     },
 
