@@ -1,6 +1,11 @@
 <template>
   <div class="van-hairline--bottom my-custom-item" @click="clickHandler">
     <avatar class="user-avatar" :avatar="info.avatarUrl"></avatar>
+    <div
+      class="bg_img user-attention"
+      :style="{backgroundImage:'url('+attentionImg+')'}"
+      v-if="info.attentionStatus==0"
+    ></div>
     <div class="baseinfo-box">
       <p class="username">{{info.clientName}}</p>
       <p class="base-focus">{{focusInfo}}</p>
@@ -20,6 +25,9 @@ export default {
   props: {
     info: Object
   },
+  data: () => ({
+    attentionImg: require('IMG/user/icon_attention@2x.png')
+  }),
   methods: {
     clickHandler() {
       this.$emit('click', this.info)
@@ -42,6 +50,13 @@ export default {
     margin: 15px;
     width: 50px;
     height: 50px;
+  }
+  .user-attention {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 70px;
+    top: 50px;
   }
   .baseinfo-box {
     margin: 15px 0 15px -25px;

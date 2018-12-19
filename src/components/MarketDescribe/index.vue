@@ -1,36 +1,47 @@
 <template>
-<div class="market-box-page">
-  <div class="market-box"  @click="itemClickHandler" :class="{line:borderBottom}">
-    
-    <div class="all-describe" >
-      <div class="market-box-page-top">
-        <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
-          <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">{{itemInfo.sale}}
-            {{itemInfo.labels}}
+  <div class="market-box-page">
+    <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
+      <div class="all-describe">
+        <div class="market-box-page-top">
+          <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
+            <!-- 720标示 -->
+            <img class="panorama-mark" :src="panoramaImg" v-if="itemInfo.ifPanorama">
+            <div
+              class="label bg_img"
+              v-show="itemInfo.sale"
+              :style="{backgroundImage:'url('+labelImg+')'}"
+            >
+              {{itemInfo.sale}}
+              {{itemInfo.labels}}
+            </div>
           </div>
+          <!-- <input type="text" v-model="val"> -->
+          <ul class="market-describe">
+            <li class="market-name">
+              <span>{{itemInfo.linkerName}}</span>
+              <span
+                class="dredge"
+                :style="style"
+                v-if="dredge"
+                @click.stop="openHandle"
+              >{{openStatus}}</span>
+            </li>
+            <li class="site">{{itemInfo.linkerAddress}}</li>
+            <tag-group :arr="itemInfo.linkerTags"></tag-group>
+            <li class="unit-price">
+              <span>{{itemInfo.linkerPrice}}</span>
+              <span>{{itemInfo.openTimes}}次开通</span>
+            </li>
+          </ul>
         </div>
-        <!-- <input type="text" v-model="val"> -->
-        <ul class="market-describe">
-          <li class="market-name">
-            <span> {{itemInfo.linkerName}}</span>
-            <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
-          </li>
-          <li class="site">{{itemInfo.linkerAddress}}</li>
-          <tag-group :arr="itemInfo.linkerTags"></tag-group>
-          <li class="unit-price">
-            <span>{{itemInfo.linkerPrice}}</span>
-            <span>{{itemInfo.openTimes}}次开通</span>
-          </li>
-        </ul>
-      </div>
-        
+
         <div class="market-box-page-bottom" v-show="itemInfo.commission">
           <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
           <span>{{itemInfo.commission}}</span>
         </div>
+      </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/'
@@ -45,6 +56,7 @@ export default {
   data: () => ({
     resInfo: null,
     style: null,
+    panoramaImg: require('IMG/system/icon_panorama@2x.png'),
     commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     labelImg: require('IMG/marketDetail/discount@2x.png')
   }),
@@ -101,7 +113,7 @@ export default {
   width: 375px;
   .market-box {
     width: 343px;
-    padding-top:13px;
+    padding-top: 13px;
     margin: 0 0px 0 16px;
     .all-describe {
       display: flex;
@@ -115,6 +127,14 @@ export default {
           border-radius: 6px;
           margin-right: 12px;
           position: relative;
+          text-align: center;
+          line-height: 90px;
+          .panorama-mark {
+            width: 32px;
+            height: 32px;
+            display: inline-block;
+            vertical-align: middle;
+          }
           .label {
             position: absolute;
             left: -4px;
@@ -207,7 +227,7 @@ export default {
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
-           white-space: nowrap;
+          white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           width: 130px;

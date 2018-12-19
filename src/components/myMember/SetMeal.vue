@@ -1,10 +1,11 @@
 <template>
   <div class="mymember-set-meal-page">
     <div class="mymember-set-meal-page-content">
-      <div class="mymember-set-meal-page-content-top" v-show="!setMealInfo.vipCity">
+      <div class="mymember-set-meal-page-content-top">
         <p class="forestall-open">{{setMealInfo.openCount}}人已经抢先开通VIP套餐</p>
         <div class="meal-site" @click="checkCityhandle">
-          <p>选择城市</p>
+          <p v-show="!setMealInfo.vipCity">选择城市</p>
+          <p v-show="setMealInfo.vipCity">{{setMealInfo.vipCity}}</p>
           <span class="site-icon bg_img" :style="{backgroundImage:'url('+siteImg+')'}"></span>
         </div>
       </div>
@@ -44,7 +45,7 @@ export default {
   }),
   methods: {
     checkCityhandle() {
-      this.$emit('onCheckCity')
+      if(!this.setMealInfo.vipCity) this.$emit('onCheckCity')
     },
     taget(index) {
       this.num = index

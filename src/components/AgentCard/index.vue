@@ -7,11 +7,12 @@
         </span>
         <span class="agent-left-introduce">
           <p class="introduce-name">{{info.agentName}}</p>
-          <p class="introduce-company">{{info.distributorName}}</p>
-          <p class="introduce-adder">{{info.enterpriseName}}</p>
+          <!-- {{info.distributorName}} -->
+          <p class="introduce-company">资深房产经纪人</p>    
+          <p class="introduce-adder">{{info.institutionName}}</p>
         </span>
       </span>
-      <span class="title-agent-right">
+      <span class="title-agent-right" @click="showQRCodeView">
         <button class="agent-right">咨询</button>
       </span>
     </div>
@@ -29,6 +30,12 @@ export default {
   data() {
     return {
       personIcon: require('IMG/user/person_icon.png')
+    }
+  },
+
+  methods:{
+    showQRCodeView(){
+      this.$emit('showQRCode','')
     }
   }
 }

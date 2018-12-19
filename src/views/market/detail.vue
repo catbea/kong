@@ -13,7 +13,7 @@
       <div class="operate-content">
         <!-- 收藏/分享 -->
         <div class="operate-1">
-          <div class="operate-collect" @collectHandler>
+          <div class="operate-collect" @click="collectHandler">
             <i class="icon iconfont icon-article_collection"></i>
             收藏
           </div>
@@ -93,8 +93,13 @@
     <!-- 位置周边 -->
     <div class="house-circum">
       <title-bar :conf="aroundTitleConf"/>
+      <div class="tab-box">
+        <van-tabs v-model="mapTab" swipeable>
+          <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
+        </van-tabs>
+      </div>
       <div class="map-box">
-        <t-map ></t-map>
+        <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
       </div>
     </div>
     <!-- 其他楼盘 -->
@@ -142,6 +147,7 @@ export default {
     swipeCurrent: 0,
     headCurrent: 0,
     tagGroupArr: [],
+    mapTab: 0,
     typeTitleConf: {
       title: '户型',
       linkText: '全部户型',
@@ -163,6 +169,11 @@ export default {
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12
+    },
+    mapConf: {
+      draggable: false,
+      scrollwheel: false,
+      disableDoubleClickZoom: false
     },
     rd: {
       headSlideTimer: null
@@ -192,6 +203,11 @@ export default {
     collectHandler() {},
     shareHandler() {
       this.$router.push({ name: 'market-share', params: { id: this.info.id } })
+    }
+  },
+  computed: {
+    mapData() {
+      return this.info.houseAroundType[this.mapTab]
     }
   },
   beforeDestroy() {
@@ -362,7 +378,7 @@ export default {
         font-size: 14px;
         font-weight: 400;
       }
-      >.news-time{
+      > .news-time {
         font-size: 12px;
         color: #999999;
       }
@@ -370,6 +386,15 @@ export default {
   }
   > .house-circum {
     margin-top: 15px;
+    .tab-box {
+    }
+    .map-box {
+      margin: 5px 15px;
+      width: 345px;
+      height: 190px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
   }
   > .house-recommend {
     margin-top: 15px;
