@@ -1,12 +1,12 @@
 <template>
   <div class="family-list-page">
     <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
-          <van-tab v-for="(item,index) in tabs" :key="index" :title="item.houseType">
+          <van-tab v-for="(item,index) in tabs" :key="index" :title="item.houseType" class="list-wrap">
            <keep-alive>
               <div class="family-list-page-box">
               <div class="content" v-for="(itemA,indexA) in item.cpHouseTypeDetail" :key="indexA">
               <div class="big-box">
-              <div class="family-list-page-box-left bg_img" :style="{backgroundImage:'url('+itemA.imgUrl+')'}">
+              <div class="bg_img family-list-page-box-left" :style="{backgroundImage:'url('+itemA.imgUrl+')'}">
                     
               </div>
               <ul class="family-list-page-box-center">
@@ -34,7 +34,7 @@ import marketService from 'SERVICE/marketService'
 export default {
   components: {},
   created() {
-    // this.linkerId=this.$route.params.id
+    this.linkerId=this.$route.params.id
     this.getHouseTypeInfo(this.linkerId)
   },
   data: () => ({
@@ -82,6 +82,11 @@ export default {
   height: 100%;
   flex-direction: column;
   background: #ffffff;
+  .list-wrap{
+    width:100%;
+    height:100%;
+    overflow: auto;
+  }
   .family-list-page-box {
     width: 375px;
     height: 100%;
