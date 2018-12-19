@@ -6,7 +6,7 @@
       <p class="base-focus">{{focusInfo}}</p>
     </div>
     <div class="intention-box">
-      <p class="intention-value">{{Number(this.info.intentionality)*100}}%</p>
+      <p class="intention-value">{{Number(this.info.intentionality*100).toFixed(1)}}%</p>
       <p class="intention-title">意向度</p>
     </div>
   </div>

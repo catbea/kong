@@ -207,6 +207,10 @@ export default {
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
+           white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 130px;
         }
       }
     }
