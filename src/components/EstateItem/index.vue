@@ -9,10 +9,11 @@
         <div class="estate-top">
           <h5 class="estate-name">{{info.linkerName}}</h5>
           <div
-            class="bg_img estate-share"
+            class="estate-share"
             @click.stop="shareHandler"
-            :style="{backgroundImage:'url('+imgShare+')'}"
-          ></div>
+          >
+            <img class="share-icon" :src="imgShare">
+          </div>
         </div>
         <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
         <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
@@ -80,6 +81,7 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
         .estate-name {
           font-size: 16px;
           font-weight: 600;
@@ -87,8 +89,15 @@ export default {
           padding-bottom: 10px;
         }
         .estate-share {
-          width: 16px;
-          height: 16px;
+          width: 30px;
+          height: 30px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          .share-icon {
+            width: 16px;
+            height: 16px;
+          }
         }
       }
       .estate-location {
