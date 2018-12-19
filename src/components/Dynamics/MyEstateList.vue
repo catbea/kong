@@ -1,7 +1,7 @@
 <template>
   <div class="my-estate-list">
-    <title-bar class="title-container" :conf="titleBarConf"></title-bar>
-    <estate-item v-for="(item,index) in list" :key="index" :info="item" @click="godynamicsInfo(item)"></estate-item>
+    <title-bar class="title-container" :conf="titleBarConf" v-if="list&&list.length>0"></title-bar>
+    <estate-item v-for="(item,index) in list" :key="index" :info="item" @click="godynamicsInfo(item)" @share="shareHandler(item)"></estate-item>
   </div>
 </template>
 <script>
@@ -27,6 +27,9 @@ export default {
   methods: {
     godynamicsInfo(item) {
       this.$emit('click', item)
+    },
+    shareHandler(item) {
+      this.$emit('share', item)
     }
   }
 }

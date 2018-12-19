@@ -2,10 +2,18 @@
   <div class="van-hairline--bottom estate-item" v-if="info">
     <div class="main-container" @click="godynamicsInfo">
       <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.headImgUrl + ')'}">
-        <!-- TODO 720标示 -->
+        <!-- 720标示 -->
+        <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">
       </div>
       <div class="right-container">
-        <h5 class="estate-name">{{info.linkerName}}</h5>
+        <div class="estate-top">
+          <h5 class="estate-name">{{info.linkerName}}</h5>
+          <div
+            class="bg_img estate-share"
+            @click.stop="shareHandler"
+            :style="{backgroundImage:'url('+imgShare+')'}"
+          ></div>
+        </div>
         <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
         <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
         <div class="estate-info">
@@ -27,9 +35,16 @@ export default {
   components: {
     TagGroup
   },
+  data: () => ({
+    imgShare: require('IMG/user/rectangle.png'),
+    panoramaImg: require('IMG/system/icon_panorama@2x.png')
+  }),
   methods: {
     godynamicsInfo() {
       this.$emit('click', this.info)
+    },
+    shareHandler() {
+      this.$emit('share', this.info)
     }
   }
 }
@@ -48,15 +63,33 @@ export default {
       margin: 16px;
       border-radius: 6px;
       flex-shrink: 0;
+      text-align: center;
+      line-height: 90px;
+      .panorama-mark {
+        width: 32px;
+        height: 32px;
+        display: inline-block;
+        vertical-align: middle;
+      }
     }
     .right-container {
       display: inline-block;
       margin: 16px 0;
-      .estate-name {
-        font-size: 16px;
-        font-weight: 600;
-        color: #333333;
-        padding-bottom: 10px;
+      flex-basis: 210px;
+      .estate-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .estate-name {
+          font-size: 16px;
+          font-weight: 600;
+          color: #333333;
+          padding-bottom: 10px;
+        }
+        .estate-share {
+          width: 16px;
+          height: 16px;
+        }
       }
       .estate-location {
         font-size: 12px;
