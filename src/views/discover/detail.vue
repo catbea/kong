@@ -13,7 +13,10 @@
         </div>
         <div class="agent-box-right"></div>
       </div>
-      <div class="bg_img van-hairline--surround discover-img" :style="{backgroundImage:'url('+ (info&&info.image) +')'}"></div>
+      <div
+        class="bg_img van-hairline--surround discover-img"
+        :style="{backgroundImage:'url('+ (info&&info.image) +')'}"
+      ></div>
       <div class="discover-detail-content" v-html="info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -52,7 +55,7 @@
       <div class="app-btn" @click="appCardHandler">
         <i class="icon iconfont icon-article_program"></i>小程序名片
       </div>
-      <div class="collect-btn" @click="collectHandler">
+      <div class="collect-btn" @click="collectHandler(info.id)">
         <i class="icon iconfont icon-package_Optimal"></i>收藏
       </div>
       <div class="share-btn" @click="shareHandler">
@@ -95,6 +98,8 @@ export default {
     info: null,
     agentInfo: null,
     show: false,
+    infoId: '', //文章的id
+    collectionStatus: '', //收藏状态
     titleProperties: {
       title: '推荐房源',
       linkText: '全部楼盘',
@@ -115,6 +120,10 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id, this.city)
       this.info = res
+
+      this.infoId = res.id
+      this.collectionStatus = res.collectType
+
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -124,17 +133,23 @@ export default {
       }
     },
     // 小程序名片
-    appCardHandler(){
-
-    },
+    appCardHandler() {},
     // 收藏文章
-    async collectHandler(){
-      // const res = await userService.
+    async collectHandler(infoId) {
+      let obj = {}
+      if (this.collectionStatus == '0') {
+        obj.deleteType = '1'
+      } else {
+        obj.deleteType = '0'
+      }
+      obj.infoId = infoId
+      const res = await userService.articleCollection(obj)
+
+      //添加UI的逻辑判断
+
     },
     // 分享
-    shareHandler(){
-
-    }
+    shareHandler() {}
   }
 }
 </script>
@@ -265,7 +280,7 @@ export default {
       border: 1px solid #aeb1c2;
       margin: 5px;
       padding: 8px 20px;
-      opacity: .7;
+      opacity: 0.7;
     }
     > .app-btn {
     }
