@@ -76,7 +76,7 @@ export default {
       this.agentIdInfo = res
     },
     skipDetail(item) {
-      this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
+      this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
     // s搜索区域点击处理
     areaClickHandler() {

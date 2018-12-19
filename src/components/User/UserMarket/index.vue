@@ -204,7 +204,7 @@ export default {
     },//修改楼盘状态
 
     skipMarketDetail (linkerId) {
-      this.$router.push('/market/marketDetail/' + linkerId)
+      this.$router.push('/market/' + linkerId)
     },
     popupHandle () {//更多
       this.show = !this.show

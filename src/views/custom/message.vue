@@ -679,7 +679,7 @@ export default {
         this.$router.push('/custom/' + this.clientId)
     },
     gomarket(linkerId, linkerName) {
-        this.$router.push('/market/marketDetail/' + linkerId)
+        this.$router.push('/market/' + linkerId)
     }
   }
 }

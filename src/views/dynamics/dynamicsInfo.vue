@@ -175,7 +175,7 @@ export default {
     },
     //楼盘详情
     godynamicsInfo(linkerId) {
-      this.$router.push({name:'marketDetail', params: { id: linkerId }})
+      this.$router.push({name:'market-detail', params: { id: linkerId }})
     },
     //联系
     goalldynamics (item) {
