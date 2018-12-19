@@ -5,13 +5,13 @@
         <span class="icon-check bg_img" :style="{backgroundImage:'url('+ ( dataArr.isUnable ? checkColorUnAble : (dataArr.isChecked ? checkColorImg : checkImg) )+')'}"></span>
         <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p class="icon-discount bg_img" v-show="dataArr.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
-          <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
+          <!-- <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span> -->
         </div>
         <ul>
           <li>
-           <div style="display:flex;">
+            <div>
              {{dataArr.linkerName}}
-             </div>
+            </div>
           </li>
           <li>
             {{dataArr.site}}
@@ -69,6 +69,9 @@ export default {
       align-items: center;
       margin-top: 16px;
       margin-bottom: 16px;
+      li {
+        width: 160px;
+      }
       .icon-check {
         flex:0 0 18px;
         height: 18px;
