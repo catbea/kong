@@ -13,27 +13,34 @@
       </van-tabs>
     </div>
     <div class="list-continer">
-      <van-list v-model="loading" :finished="currentData.finished" @load="onLoad">
+      <van-list v-model="loading" :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData">
         <my-custom-item v-for="(item,index) in currentData.list" :key="index" :info="item" @click="itemClickHandler"></my-custom-item>
       </van-list>
+      <div v-if="!currentData.haveData">
+        <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import MyCustomItem from 'COMP/Custom/MyCustomItem'
+import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
 export default {
   components: {
+    Null,
     MyCustomItem
   },
   data: () => ({
     activeIndex: 0,
+    nullIcon: require('IMG/user/empty_custom@2x.png'),
+    nullcontent: '暂无客户，快去分享你的名片吧！',
     data: {
-      0: { finished: false, list: [], page: 1 },
-      1: { finished: false, list: [], page: 1 },
-      2: { finished: false, list: [], page: 1 },
-      3: { finished: false, list: [], page: 1 },
-      4: { finished: false, list: [], page: 1 }
+      0: { finished: false, list: [], page: 1, haveData: true },
+      1: { finished: false, list: [], page: 1, haveData: true },
+      2: { finished: false, list: [], page: 1, haveData: true },
+      3: { finished: false, list: [], page: 1, haveData: true },
+      4: { finished: false, list: [], page: 1, haveData: true }
     },
     loading: false,
     pageSize: 10,
@@ -61,6 +68,11 @@ export default {
         this.currentData.list = this.currentData.list.concat(result.records)
       } else {
         this.currentData.list = result.records
+      }
+      if (this.currentData.list.length > 0) {
+        this.currentData.haveData = true
+      }else {
+        this.currentData.haveData = false
       }
       if (result.pages <= this.currentData.page) {
         this.currentData.finished = true
