@@ -1,56 +1,76 @@
 <template>
-  <div class="popup-page">
-    <div class="popup-page-top">
-      <p>===</p>
-      <p>---</p>
+  <div class="msg-popup-page" @click="clickHandle">
+    <div class="msg-popup-page-left">
+      <avatar class="avatar" :avatar="msg && msg.avatar ? msg.avatar : defaultAvatar"></avatar>
     </div>
-    <ul class="popup-page-bottom">
-      <li>进入</li>
-    </ul>
+    <div class="msg-popup-page-right">
+      有来自{{msg ? msg.name : ''}}的新消息
+    </div>
   </div>
 </template>
 <script>
-export default {}
-</script>
-<style lang="less">
-.popup-page {
-  width: 280px;
-  height: 146px;
-  background: rgba(255, 255, 255, 1);
-  .popup-page-top {
-    padding-top: 25px;
-    p:nth-child(1) {
-      font-size: 18px;
-      font-family: PingFangSC-Medium;
-      font-weight: 600;
-      color: rgba(51, 51, 51, 1);
-      line-height: 25px;
-      margin: 0 0 9px 0;
-      text-align: center;
+import { mapGetters } from 'vuex'
+import Avatar from 'COMP/Avatar'
+import * as types from '@/store/mutation-types'
+export default {
+  name: 'new-msg-popup',
+  components: {
+    Avatar
+  },
+  props: {
+    msg: { 
+      type: Object,
+      default: function() {
+        return {
+          data: '',
+          desc: 1,
+          avatar: '',
+          name: '系统',
+          clientId: null,
+          ext: {}
+        }
+      } 
     }
-    p:nth-child(2) {
-      font-size: 15px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(51, 51, 51, 1);
-      line-height: 21px;
-      margin-bottom: 15px;
-      text-align: center;
+  },
+  data() {
+    return {
+      defaultAvatar: 'https://720ljq2test-10037467.file.myqcloud.com/header/qrcode/8bbf60d0c71d4962b8466c914712452c.png'
+    }
+  },
+  created() {
+    
+  },
+  methods: {
+    clickHandle() {
+      this.$store.commit(types['NEW_MSG_STATUS'], false)
+      if(!this.msg.clientId) {
+        return
+      }
+      this.$router.push({path: '/custom/message/message', query: {
+        clientId: this.msg.clientId
+      }})
     }
   }
-  .popup-page-bottom {
-    border-top: 1px solid #e5e5e5;
-    display: flex;
-    li {
-      height: 49px;
-      line-height: 49px;
-      text-align: center;
-      font-size: 18px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(0, 122, 230, 1);
-      border-left: 1px solid #e5e5e5;
+}
+</script>
+<style lang="less">
+.msg-popup-page {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  line-height: 50px;
+  padding: 0px 12px;
+  color: #FFF;
+  font-size: 13px;
+  .msg-popup-page-left {
+    padding: 9px 0px;
+    .avatar{
+      width: 32px;
+      height: 32px;
     }
+  }
+  .msg-popup-page-right {
+    padding-left: 12px;
   }
 }
 </style>
