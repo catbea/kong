@@ -8,15 +8,18 @@
       <div class="right-container">
         <div class="estate-top">
           <h5 class="estate-name">{{info.linkerName}}</h5>
-          <div
-            class="estate-share"
-            @click.stop="shareHandler"
-          >
+          <div class="estate-share" @click.stop="shareHandler">
             <img class="share-icon" :src="imgShare">
           </div>
         </div>
         <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
-        <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
+        <div class="sale-lable">
+          <van-tag class="lable-first" color="#007AE6" text-color="#ffffff" v-if="info.saleStatus===0">热销中</van-tag>
+          <van-tag class="lable-second" color="#ffe1e1" text-color="#EA4D2E"  v-else-if="info.saleStatus===1">即将发售</van-tag>
+          <van-tag class="lable-third" color="#ffe1e1" text-color="#ad0000"  v-else-if="info.saleStatus===3">售罄</van-tag>
+          
+          <tag-group  :arr="info.linkerTags||info.projectTagArr"></tag-group>
+        </div>
         <div class="estate-info">
           <p class="estate-price">{{info.price }} {{info.priceUnit}}</p>
           <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
@@ -98,6 +101,27 @@ export default {
             width: 16px;
             height: 16px;
           }
+        }
+      }
+      .sale-lable {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        > .lable-first{
+          width: 48px;
+          height: 17px;
+          margin-right: 3px;
+        }
+        > .lable-second{
+          width: 50px;
+          height: 17px;
+          margin-right: 3px;
+        }
+        > .lable-third{
+          width: 40px;
+          height: 17px;
+          margin-right: 3px;
         }
       }
       .estate-location {
