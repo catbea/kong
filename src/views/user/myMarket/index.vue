@@ -14,7 +14,7 @@
       ></title-bar>
     </div>
     <div style="margin-left:16px" >
-      <search v-model="value"></search>
+      <search :conf="searchInfo" v-model="value" @areaClick="areaClickHandler"></search>
       <screen></screen>
     </div>
     <div class="user-market-box">
@@ -35,7 +35,6 @@
       >
       </user-market>
       </div>
-      <!-- <trans></trans> -->
       <p v-if="!marketShow" class="notMarket">暂未开通任何楼盘</p>
       <div class="market-right" v-show="!myMarketShow" v-if="marketShow">
       <close-market
@@ -53,7 +52,8 @@
   </div>
 </template>
 <script>
-import trans from './trans.vue'
+import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import MasterMarket from 'COMP/User/MasterMarket/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
 import Search from 'COMP/Search/'
@@ -68,8 +68,7 @@ export default {
     Search,
     Screen,
     UserMarket,
-    CloseMarket,
-    trans
+    CloseMarket
   },
   data: () => ({
     value:'',
@@ -94,10 +93,10 @@ export default {
       linkText: "切换开启展示楼盘",
       link: ""
     },
-    // searchInfo: {
-    //   siteText: "全国",
-    //   placeholderText: "请输入楼盘"
-    // },
+    searchInfo: {
+      siteText: "全国",
+      placeholderText: "请输入楼盘"
+    },
     dataArr: [
       { title: "龙光·久钻", site: "深圳 南山 120000元/㎡", condition: ["热销中", "地铁房", "低密度"], open: "125次开通 11/22到期", flag: true, price: "1%+5万元/套" },
       { title: "龙光·久钻", site: "深圳 南山 120000元/㎡", condition: ["热销中", "地铁房", "低密度"], open: "125次开通 11/22到期", flag: true, price: "1%+5万元/套" },
@@ -108,12 +107,16 @@ export default {
   created () {
     this.getMyMarketInfo()
     this.getRecommendInfo()
-    console.log(this.commonList,"加空记录")
+    this.searchInfo.siteText = this.userArea.city
   },
-  mounted() {
-    
+   computed: {
+    ...mapGetters(['userArea'])
   },
   methods: {
+    // 搜索区域点击处理
+    areaClickHandler() {
+      this.$router.push({ name: 'area-select' })
+    },
     operationSearch(){//根据展示/不展示楼盘数量来显示搜索
     if(this.searchShowNum>20){
       this.searchShow=true
