@@ -1,11 +1,8 @@
 <template>
   <div class="swipe-poster-page">
-    <div
-      class="swipe-poster-item bg_img"
-      :style="{backgroundImage:'url('+modelBgImg+')'}"
-    >
+    <div class="swipe-poster-item bg_img" :style="{backgroundImage:'url('+model.postersUrl+')'}">
       <!-- <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}"> -->
-         <div class="content-box bg_img" :style="{backgroundImage:'url('+model.postersUrl+')'}">
+      <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}">
         <div class="box-top">
           <ul>
             <!-- <li>境墅高层</li> -->
@@ -40,7 +37,7 @@ export default {
 
   props: {
     model: Object,
-    modelBgImg:''
+    modelBgImg: ''
   }
 }
 </script>
@@ -99,7 +96,7 @@ export default {
           margin-top: 19px;
           margin-left: 22px;
           align-content: center;
-          
+
           .qrcode-view {
             margin-bottom: 7px;
             width: 58px;

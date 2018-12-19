@@ -24,7 +24,7 @@
           >编辑海报</router-link>
           <li class="save" @click="savaReport">保存海报</li>
         </ul>
-        <router-view></router-view>
+        <!-- <router-view></router-view> -->
       </div>
     </div>
     <div class="result" id="card-result" v-show="status === 2">

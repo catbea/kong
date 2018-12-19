@@ -147,11 +147,12 @@ export default {
 </script>
 <style lang="less">
 .register-step3-content {
+  margin-top: 32px;
   .register-step3-title {
     color: #333333;
     font-size: 24px;
     text-align: center;
-    margin-top: 32px;
+    padding-top: 32px;
   }
   .register-step3-subtitle {
     color: #666666;

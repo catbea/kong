@@ -12,7 +12,7 @@
     </div>
     <div class="already-buy-page-right" @click="selectProjectHandle">
       {{packageItem.projectSelected==packageItem.projectCount ? '无待选楼盘' : '待选楼盘（'+packageItem.projectSelected+'/'+packageItem.projectCount+'）' }}
-      <span
+      <span v-show="packageItem.projectSelected != packageItem.projectCount"
         class="icon-detail bg_img"
         :style="{backgroundImage:'url('+detailImg+')'}"
       ></span>

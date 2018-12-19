@@ -1,10 +1,25 @@
 <template>
   <div class="custom-page">
-    <van-search class="search-container" v-model="searchVal" placeholder="请输入搜索关键词" show-action @search="onSearchHandler" @click="onFocusHandler" >
-      <div slot="action" @click="onSearchHandler">搜索</div>
-    </van-search>
+    <form action="/">
+      <van-search
+        class="search-container"
+        v-model="searchVal"
+        placeholder="请输入搜索关键词"
+        show-action
+        @search="onSearchHandler"
+        @click="onFocusHandler"
+      >
+        <div slot="action" @click="onSearchHandler">搜索</div>
+      </van-search>
+    </form>
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
+      <van-tabs
+        v-model="activeIndex"
+        color="#007AE6"
+        :line-width="15"
+        :swipe-threshold="6"
+        @click="onClick"
+      >
         <van-tab title="全部"></van-tab>
         <van-tab title="关注"></van-tab>
         <van-tab title="访客"></van-tab>
@@ -13,27 +28,44 @@
       </van-tabs>
     </div>
     <div class="list-continer">
-      <van-list v-model="loading" :finished="currentData.finished" @load="onLoad">
-        <my-custom-item v-for="(item,index) in currentData.list" :key="index" :info="item" @click="itemClickHandler"></my-custom-item>
+      <van-list
+        v-model="loading"
+        :finished="currentData.finished"
+        @load="onLoad"
+        v-if="currentData.haveData"
+      >
+        <my-custom-item
+          v-for="(item,index) in currentData.list"
+          :key="index"
+          :info="item"
+          @click="itemClickHandler"
+        ></my-custom-item>
       </van-list>
+      <div v-if="!currentData.haveData">
+        <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import MyCustomItem from 'COMP/Custom/MyCustomItem'
+import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
 export default {
   components: {
+    Null,
     MyCustomItem
   },
   data: () => ({
     activeIndex: 0,
+    nullIcon: require('IMG/user/empty_custom@2x.png'),
+    nullcontent: '暂无客户，快去分享你的名片吧！',
     data: {
-      0: { finished: false, list: [], page: 1 },
-      1: { finished: false, list: [], page: 1 },
-      2: { finished: false, list: [], page: 1 },
-      3: { finished: false, list: [], page: 1 },
-      4: { finished: false, list: [], page: 1 }
+      0: { finished: false, list: [], page: 1, haveData: true },
+      1: { finished: false, list: [], page: 1, haveData: true },
+      2: { finished: false, list: [], page: 1, haveData: true },
+      3: { finished: false, list: [], page: 1, haveData: true },
+      4: { finished: false, list: [], page: 1, haveData: true }
     },
     loading: false,
     pageSize: 10,
@@ -46,8 +78,7 @@ export default {
       this.currentData.page = 1
       this.onLoad()
     },
-    onFocusHandler() {
-    },
+    onFocusHandler() {},
     /**
      * 切换tab方法
      */
@@ -61,6 +92,11 @@ export default {
         this.currentData.list = this.currentData.list.concat(result.records)
       } else {
         this.currentData.list = result.records
+      }
+      if (this.currentData.list.length > 0) {
+        this.currentData.haveData = true
+      } else {
+        this.currentData.haveData = false
       }
       if (result.pages <= this.currentData.page) {
         this.currentData.finished = true

@@ -406,13 +406,13 @@ export default {
             if (MsgType == 'TIMTextElem') {
               list.msgType = 1
               list.content = MsgContent.Text
-
               msgLists.push(list)
             } else {
               if (MsgContent.Desc == 2) {
+                  let ext = JSON.parse(MsgContent.Ext)
                 list.content = MsgContent.Data
                 list.msgType = 2
-                list.audioTime = MsgContent.Ext
+                list.audioTime = ext.audioTime
                 msgLists.push(list)
               } else if (MsgContent.Desc == 3) {
                 list.content = JSON.parse(MsgContent.Data)
@@ -567,11 +567,20 @@ export default {
           }
           return
         } else {
+            let audioTime = ''
+            let content = ''
+            if(elems.content.desc == 2) {
+                let ext = JSON.parse(elems.content.ext) 
+                audioTime = ext.audioTime
+                content = elems.content.data
+            } else {
+                content = JSON.parse(elems.content.data)
+            }
           item = {
             msgStatus: 1, //未读
-            content: elems.content.desc == 2 ? elems.content.data : JSON.parse(elems.content.data),
+            content: content,
             msgType: elems.content.desc,
-            audioTime: elems.content.ext,
+            audioTime: audioTime,
             id: msg.random,
             fromType: msg.isSend == true ? 2 : 1
           }

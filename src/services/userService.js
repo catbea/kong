@@ -166,6 +166,19 @@ class UserService {
   }
 
   /**
+   * 收藏文章
+   * @param {*} info 
+   */
+  articleCollection(info) {
+    return xhr({
+      method: 'POST',
+      url: '/cpInformationCollect/insertInfo',
+      body: info
+    })
+  }
+
+
+  /**
    * 首页查看我的楼盘
    */
   getMyMarket(displayFlag) {
@@ -183,7 +196,7 @@ class UserService {
     return xhr({
       url: '/myLinker/displayRecommendLinker',
       body: {
-        
+
       }
     })
   }
@@ -194,7 +207,7 @@ class UserService {
    * @param {*}  大师推荐 0：未推荐 1：大师推荐，2：普通推荐
    * @param {*} operationType 展示状态：0-展示，1-不展示； 置顶状态：0-否,10-置顶
    */
-  changeMarketData(linkerId,operationType,status) {
+  changeMarketData(linkerId, operationType, status) {
     return xhr({
       method: 'POST',
       url: '/linkerDetail/updateLinkerStatus',
@@ -219,7 +232,7 @@ class UserService {
       }
     })
   }
-  
+
   /**
    * 我的账单
    * @param {*} agentId
@@ -355,15 +368,15 @@ class UserService {
       url: '/cpShare/nameCardShare'
     })
   }
-/**
- * 邀请开通列表 -【企业微信
- * @param {*} current 
- * @param {*} size 
- */
-  getopenRewards(current,size=10) {
+  /**
+   * 邀请开通列表 -【企业微信
+   * @param {*} current 
+   * @param {*} size 
+   */
+  getopenRewards(current, size = 10) {
     return xhr({
       url: '/invitation/openRewards',
-      body:{
+      body: {
         current,
         size
       }
@@ -374,10 +387,10 @@ class UserService {
    * @param {*} current 
    * @param {*} size 
    */
-  getregisterRewards(current,size=10) {
+  getregisterRewards(current, size = 10) {
     return xhr({
       url: '/invitation/registerRewards',
-      body:{
+      body: {
         current,
         size
       }
@@ -390,7 +403,7 @@ class UserService {
   getrules(type) {
     return xhr({
       url: '/invitation/rules',
-      body:type
+      body: type
     })
   }
   /**
