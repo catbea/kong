@@ -10,7 +10,7 @@ export const REPORT_INFO = 'REPORT_INFO'
 export const TREE_INFO = 'TREE_INFO'
 export const USER_REGIST_INFO = 'USER_REGIST_INFO'
 export const USER_BUILD_INFO = 'USER_BUILD_INFO'
-export const USER_FIRST_TIME = 'USER_FIRST_TIME'//判断是否显示新手引导
+export const IS_ONE = 'IS_ONE'//判断是否显示新手引导
 export const IM_USER_SIG = 'IM_USER_SIG' //im聊天签名
 
 // city

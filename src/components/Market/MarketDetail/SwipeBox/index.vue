@@ -21,15 +21,14 @@
         <div class="share bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></div>分享
       </div>
     </div>
-    <popup-box @close="closeDom" v-if="show"></popup-box>
   </div>
 </template>
 <script>
-import PopupBox from './PopupBox.vue'
+
 import MarketService from 'SERVICE/marketService'
 export default {
   components: {
-    PopupBox
+
   },
   created() {
     console.log(this.collectionStatus,'收藏状态');
@@ -80,7 +79,7 @@ export default {
         await MarketService.changeLinkerCollect(this.linkerId,this.status,1)  
       },
     share() {
-      this.$emit('shareBuilding','');
+      this.$emit('shareBuilding');
     },
     play() {
       this.playShow = !this.playShow

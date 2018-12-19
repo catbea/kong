@@ -19,7 +19,7 @@ export default {
   }),
   methods: {
     perfect() {
-      this.$router.push('/market/marketDetail/perfect'), this.$emit('close', false)
+      , this.$emit('close', false)
     },
     cancel() {
       this.$emit('close', false)
