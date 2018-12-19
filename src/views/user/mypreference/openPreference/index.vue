@@ -113,7 +113,7 @@ export default {
             }).then(() => {
                 this.addProjectHandle()
             }).catch(() => {
-                
+              
             })
           },
           cancel: res => {
@@ -131,7 +131,7 @@ export default {
         }).then(() => {
           this.addProjectHandle()
         }).catch(() => {
-                
+          
         })
       }
     },
