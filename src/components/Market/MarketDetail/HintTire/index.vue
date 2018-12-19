@@ -1,5 +1,5 @@
 <template>
-  <div class="hint-tire-page" v-if="flag">
+  <div class="hint-tire-page" v-if="hintShow">
     <div class="enjoy">
       <span class="icon-enjoy bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></span>
       <p>分享</p>
@@ -21,29 +21,30 @@ import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {
   created() {
-    console.log(this.$store.getters.theFirstTime,"新手引导")
-    if(!localStorage.first){
-      this.flag= this.$store.getters.theFirstTime
-    let newObj = JSON.stringify(this.$store.getters.theFirstTime)
-    localStorage.setItem("first",newObj)
-    let oldObj = localStorage.getItem("first")
-         this.flag = JSON.parse(oldObj)
-    }
+    this.guidanceHandle()
   },
   data: () => ({
     enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
-    flag:null
+    hintShow:true
   }),
   computed:{
-    ...mapGetters(['theFirstTime']),
+   ...mapGetters(['userInfo'])
   },
   methods: {
+    guidanceHandle(){//新手引导
+    if(this.userInfo.isOne==1){
+      this.hintShow=true
+    }else{
+      this.hintShow=false
+    }
+    },
     knowHandle() {
-      this.$store.commit(types.USER_FIRST_TIME,false)
-      console.log(this.$store.getters.theFirstTime,'已改')
-      localStorage.first=false
-     let oldObj = localStorage.getItem("first")
-        this.flag = JSON.parse(oldObj)
+      this.hintShow=false
+      this.$store.commit(types.IS_ONE,0)
+    //   console.log(this.$store.getters.theFirstTime,'已改')
+    //   localStorage.first=false
+    //  let oldObj = localStorage.getItem("first")
+    //     this.flag = JSON.parse(oldObj)
     }
   }
 }

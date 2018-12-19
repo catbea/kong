@@ -6,15 +6,19 @@
         <p class="info-value">{{item.value}}</p>
       </div>
     </div>
-    <ul>
-      <li v-for="(times,key) in trackList" :key="key">
+    <ul v-for="(times,key) in trackList" :key="key">
+      <!-- <li v-for="(times,key) in trackList" :key="key">
         <p class="content-title">{{times.timeStr | dateTimeFormatter(3,'/')}}</p>
         <div class="content-box" v-for="(item,key) in times.msgList" :key="key">
           <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
           <p>{{item.markedWords}}</p>
-        <!-- <p>当日第<span>3</span> 次浏览了楼盘 碧桂园凤凰国际</p>
-        <p>浏览市场<span>大于60s</span> 篇幅<span>小于50%</span></p>
-        <p>累计<span>浏览1次</span>该楼盘, 平均<span>停留5.5s</span></p> -->
+        </div>
+      </li> -->
+       <li v-for="(item,key) in times.msgList" :key="key">
+        <p class="content-title">{{item.timeStr | dateTimeFormatter(3,'/')}}</p>
+        <div class="content-box" >
+          <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
+          <p><span>{{item.clientName}}</span>{{item.markedWords}}</p>
         </div>
       </li>
       <!-- <li>
@@ -53,6 +57,7 @@ export default {
 </script>
 <style lang="less">
 .custom-detail-track {
+  margin-bottom: 60px;
   .info-container {
     margin: 20px;
     padding: 15px 15px 10px;
@@ -108,7 +113,6 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 22px;
-        display: flex;
         flex-wrap: wrap;
         span {
           color: #007ae6;

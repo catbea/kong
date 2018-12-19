@@ -13,7 +13,7 @@
         >
           <van-swipe-item
             v-for="(item,index) in masterList"
-            :key="index"
+            :key="item.linkerId"
           >
             <div class="master-box">
               <p
@@ -37,7 +37,7 @@
           <!-- 普通 -->
           <van-swipe-item 
             v-for="(item,index) in commonList"
-            :key="index"
+            :key="item.linkerId"
           >
             <div class="master-box">
               <p

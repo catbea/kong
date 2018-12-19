@@ -170,7 +170,7 @@ export default {
     .dynamics-list {
       padding: 20px 16px;
       > .dynamics-list-agent {
-        display: flex;
+       // display: flex;
         > .list-agent-left {
           display: flex;
           > .agent-left-left {
@@ -197,10 +197,13 @@ export default {
           }
         }
         > .list-agent-right {
-          position: absolute;
-          right: 16px;
-          margin-top: -6px;
-          padding-right: 16px;
+          // position: absolute;
+          // right: 16px;
+          // margin-top: -6px;
+           right: 0.42667rem;
+            margin-top: -55px;
+            padding-right: 0;
+            float: right;
           > .agent-right-num {
             font-size: 20px;
             font-weight: 500;
@@ -224,7 +227,6 @@ export default {
       }
       > .dynamics-list-content {
         font-size: 14px;
-        font-family: PingFang-SC-Regular;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 21px;
@@ -236,9 +238,11 @@ export default {
     > .dynamics-list-btn {
       height: 40px;
       > .list-btn-right {
-        position: absolute;
-        right: 32px;
-        line-height: 30px;
+       // position: absolute;
+          right: 32px;
+          line-height: 40px;
+          float: right;
+          margin-top: 8px;
         // margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
@@ -250,6 +254,7 @@ export default {
           color: rgba(0, 122, 230, 1);
           line-height: 17px;
           background: #ffffff;
+          margin-right: 10px;
           > .agent-gzImg {
             width: 11px;
             height: 11px;
@@ -264,6 +269,7 @@ export default {
             border-radius: 16px;
             border: 1px solid #999999;
             background: #ffffff;
+            margin-right: 10px;
           }
           > .list-btn-contact {
             width: 64px;
@@ -275,7 +281,7 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
-            position: absolute;
+           // position: absolute;
           right: 0;
           top: 0.32rem;
             > .btn-contact-userImg {
