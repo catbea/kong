@@ -94,7 +94,7 @@
     <div class="house-circum">
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
-        <van-tabs v-model="mapTab" swipeable>
+        <van-tabs v-model="mapTab" color="#007AE6" swipeable>
           <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
         </van-tabs>
       </div>
@@ -120,7 +120,11 @@
       </div>
     </div>
     <!-- 开通提示及开通状态 -->
-    <div class="van-hairline--top house-status"></div>
+    <div class="van-hairline--top house-status">
+      <div class="unopen-status-box">
+        <div class="open-btn">开通(0.4元/天起)</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -387,9 +391,22 @@ export default {
   > .house-circum {
     margin-top: 15px;
     .tab-box {
+      > .van-tabs {
+        .van-tabs__line{
+          display: none;
+        }
+        > .van-tabs__wrap {
+          &::after {
+            border: none;
+          }
+        }
+        .van-tab--active{
+          color: #007AE6;
+        }
+      }
     }
     .map-box {
-      margin: 5px 15px;
+      margin: 15px 15px;
       width: 345px;
       height: 190px;
       border-radius: 10px;
@@ -429,6 +446,13 @@ export default {
     height: 70px;
     left: 0;
     bottom: 0;
+    background-color: #fff;
+    z-index: 999;
+    >.unopen-status-box{
+      >.open-btn{
+        
+      }
+    }
   }
   @keyframes show {
     0% {
