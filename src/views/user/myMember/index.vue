@@ -4,17 +4,18 @@
       <div class="background-content">
       <div class="headImg" :style="borderStyle">
         <avatar class="avatar" :avatar="userInfo.avatarUrl"></avatar>
-        <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag?headImgB:headImgA)+')'}"></span>
+        <span class="head-icon bg_img" :style="{backgroundImage:'url('+(isExpire ? headImgB : headImgA)+')'}"></span>
       </div>
-      <ul class="head-describe">
+      <ul :class="isExpire ? 'head-describe expire' : 'head-describe'">
         <li>{{userInfo.nickName}}</li>
-        <li v-show="expireTimestamp">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
-        <li>余额：{{userInfo.price | priceFormart}}元</li>
+        <li v-show="!isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
+        <li v-show="isExpire">vip已到期，请继续充值续费</li>
+        <li>余额：{{balance | priceFormart}}元</li>
       </ul>
       <router-link v-show="isVip" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘</router-link>
       </div>
     </div>
-    <set-meal :vipList="vipList" :onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>
+    <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>
     <member-privilege></member-privilege>
     <privilege-describe></privilege-describe>
     <agreement></agreement>
@@ -58,11 +59,13 @@ export default {
   data: () => ({
     isPayLoading: false,
     isVip: false,
+    balance: 0,
     currPriceIndex: 0,
     isPayLoading: false,
     payValue: 0,
     setMealInfo: {openCount: 0, vipCity: ''},
     vipList: [],
+    isExpire: false,
     expireTimestamp: 0,
     backImg: require('IMG/myMember/person_card_bg@2x.png'),
     headImgA: require('IMG/myMember/ShapeColor@2x.png'),
@@ -92,7 +95,7 @@ export default {
       let param = {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
         amountId: this.vipList[this.currPriceIndex].id,
-        subscribeNum: this.payValue,
+        subscribeNum: this.vipList[this.currPriceIndex].subscribeRemark,
         payOpenid: this.userInfo.payOpenId
       }
       this.isPayLoading = true
@@ -107,7 +110,15 @@ export default {
           signType: 'MD5',
           paySign: res.signature,
           success: res => {
-            this.$router.push('/market')
+            Dialog.confirm({
+              title: 'vip开通成功',
+              message: 'vip开通成功，海量楼盘等你添加~',
+              cancelButtonText: '取消'
+            }).then(() => {
+              this.$router.replace({path:'/user/myMember/selectedDisk', query: {type: 'vip'}})
+            }).catch(() => {
+              this.getVipInfo()
+            })
           },
           cancel: res => {
             this.$toast('支付取消')
@@ -115,6 +126,16 @@ export default {
           fail: res => {
             this.$toast('支付失败')
           }
+        })
+      } else {
+        Dialog.confirm({
+          title: '开通成功',
+          message: '成功开通vip，海量楼盘等你添加~',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.$router.replace({path:'/user/myMember/selectedDisk', query: {type: 'vip'}})
+        }).catch(() => {
+          this.getVipInfo()
         })
       }
     },
@@ -125,12 +146,19 @@ export default {
       this.setMealInfo = {openCount: res.count, vipCity: res.city}
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
+      this.balance = res.balance
+
+      // 判断是否已过期
+      let now = new Date()
+      if(now.getTime() > parseInt(res.expireTimestamp)) {
+        this.isExpire = true
+      }
 
       //更新vipInfo
       let _vipInfo = {city: res.city}
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
 
-      if(!res.vipFlag){
+      if(res.vipFlag && !res.city){
         this.unselectedPopup()
       }
 
@@ -244,17 +272,19 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(229, 179, 123, 1);
-        line-height: 17px;
+        line-height: 24px;
         li:nth-child(1) {
           font-size: 18px;
           font-family: PingFangSC-Regular;
           font-weight: 400;
-          color: rgba(229, 179, 123, 1);
           line-height: 25px;
         }
         li:nth-child(2) {
           margin: 4px 0 3px 0;
         }
+      }
+      .expire {
+        color: #A4B8D5;
       }
       p {
         margin-top: 24px;
