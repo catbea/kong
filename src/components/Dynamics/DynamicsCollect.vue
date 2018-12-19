@@ -4,7 +4,7 @@
     <div class="top-container">
       <h5>数据中心</h5>
       <div class="bg_img msg-box" :style="{backgroundImage:'url(' + msgIcon + ')'}" @click="goMessage">
-        <div class="new-msg-num" v-if="data&&data.newMsg">{{data&&data.newMsg | countLimit}}</div>
+        <div class="new-msg-num" v-if="data&&data.newMsg>0">{{data&&data.newMsg | countLimit}}</div>
       </div>
     </div>
     <div class="shadow_box info-box" v-if="data">
