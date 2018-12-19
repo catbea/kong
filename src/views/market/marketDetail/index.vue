@@ -166,19 +166,22 @@ export default {
       },3000);
     },
     shareBuildingPage() {
-      if(this.linkerInfo.expireFlag==1){
-        this.$router.push({ name: 'marketDetail-share' })
-      }else{
-        Dialog.confirm({
-          className:'marketShareHint',
-          message: '该楼盘已过期，请续费后再次尝试',
-          confirmButtonText:'去续费'
-        }).then(() => {
-          this.$router.push({name:'marketDetail-open',params:{id:this.linkerId}})
-        }).catch(() => {
-          // on cancel
-        });
-      }
+      // if(this.linkerInfo.expireFlag==1){
+      //   this.$router.push({ name: 'marketDetail-share' })
+      // }else{
+      //   Dialog.confirm({
+      //     className:'marketShareHint',
+      //     message: '该楼盘已过期，请续费后再次尝试',
+      //     confirmButtonText:'去续费'
+      //   }).then(() => {
+      //     this.$router.push({name:'marketDetail-open',params:{id:this.linkerId}})
+      //   }).catch(() => {
+      //     // on cancel
+      //   });
+      // }
+
+      this.$router.push({ name: 'marketDetail-share' })
+      
    },
     supplement() {
       this.show = true
