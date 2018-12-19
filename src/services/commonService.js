@@ -120,5 +120,19 @@ class CommonService {
     })
   }
 
+  /**
+   * 版本更新查询
+   * @param {*} type 
+   * @param {*} timeStamp 
+   */
+  queryVersion(type, timeStamp) {
+    return xhr({
+      url: '/versionRecord/queryVersion',
+      body: {
+        type,
+        timeStamp
+      }
+    })
+  }
 }
 export default new CommonService()

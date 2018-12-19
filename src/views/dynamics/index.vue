@@ -13,6 +13,7 @@
 import DynamicsCollect from 'COMP/Dynamics/DynamicsCollect'
 import EstateRecommend from 'COMP/Dynamics/EstateRecommend'
 import MyEstateList from 'COMP/Dynamics/MyEstateList'
+import CommonService from 'SERVICE/commonService'
 import dynamicsService from 'SERVICE/dynamicsService'
 export default {
   components: {
@@ -27,6 +28,8 @@ export default {
     timer:null
   }),
   created() {
+    let timeStamp = window.localStorage.getItem('timeStamp') || ''
+    this.queryVersion('2', timeStamp)
     this.getCollectInfo()
     this.getEstateList()
     // 30s自动刷新数据
@@ -41,7 +44,8 @@ export default {
       console.log("num.businessCardViews.val",num.businessCardViews)
       console.log("num.estateViews.val",num.estateViews)
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
-        this.$router.push({ name: 'allDynamics', params: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
+        // this.$router.push({ name: 'allDynamics', params: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
+        this.$router.push({ path: '/dynamics/allDynamics', query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
       }
     },
     //楼盘详情
@@ -75,6 +79,13 @@ export default {
         temp.headImgUrl = temp.linkerHeadUrl
       }
       this.recommendData = res.aiLinkerVO
+    },
+    async queryVersion(type, timeStamp) {
+      const res = await CommonService.queryVersion(type, timeStamp)
+      if (res !== '') {
+        timeStamp = res.publishStamp
+        window.localStorage.setItem('timeStamp', timeStamp)
+      }
     },
     shareHandler(info) {
       this.$router.push({name: 'market-share', params: {id: info.linkerId}})

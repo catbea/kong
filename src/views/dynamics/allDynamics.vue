@@ -131,9 +131,9 @@ export default {
       cardDynamicListCount:0,
       avgStayArticleTime: 0,
       avgStayLinkerTime: 0,
-      customerCount: this.$route.params.customerCount,
-      businessCardViews:this.$route.params.businessCardViews,
-      estateViews:this.$route.params.estateViews,
+      customerCount: this.$route.query.customerCount,
+      businessCardViews:this.$route.query.businessCardViews,
+      estateViews:this.$route.query.estateViews,
     }
   },
   created() {
