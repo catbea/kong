@@ -12,10 +12,12 @@
             地铁房
           </div> -->
         </div>
-        <div class="specific-market-detail-commission" @click="commission" v-if="info&&info.divisionRules">
+        <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
             <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
            <span class="commission-text">{{info&&info.divisionRules}}</span>
-          </div>
+           <!-- <p  class="bg_img icon-commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></p> -->
+           <div class="commission-detail" @click="commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
+           </div>
         <div class="specific-market-detail">
           <ul class="specific-market-detail-left">
           <li class="average-price-left">平均价格:</li> 
@@ -99,9 +101,15 @@ export default {
     font-family: PingFang-SC-Regular;
     font-weight: 400;
     color: rgba(234, 77, 46, 1);
-    line-height: 24px;
     display: flex;
     align-items: center;
+    position: relative;
+    .commission-detail{
+      width:12px;
+      height:12px;
+      position: absolute;
+      right:5px;
+    }
     span:nth-child(1){
       width: 16px;
       height: 16px;

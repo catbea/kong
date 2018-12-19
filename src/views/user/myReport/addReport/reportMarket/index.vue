@@ -53,7 +53,6 @@ export default {
     haveData: true,
     loading: false,
     finished: false,
-    projectName: '',
     queryTimer: null,
     nullIcon: require('IMG/user/bill-null.png')
   }),

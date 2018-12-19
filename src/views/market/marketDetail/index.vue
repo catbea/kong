@@ -1,7 +1,7 @@
 <template>
   <div class="marketDetail-page">
     <!-- 新手引导 -->
-    <hint-tire ></hint-tire>
+    <hint-tire></hint-tire>
     <swipe-box :linkerInfo="linkerInfo" :bannerList="bannerList" :collectionStatus="linkerInfo&&linkerInfo.collectionStatus" :ifPanorama="linkerInfo&&linkerInfo.ifPanorama" :linkerId="linkerInfo&&linkerInfo.linkerId" @shareBuilding="shareBuildingPage" :photoButton="photoButton"></swipe-box>
     <div class="marketDetail-page-bottom">
       <div class="marketDetail-box">
@@ -55,7 +55,7 @@
 </template>
 <script>
 import * as types from '@/store/mutation-types'
-// import Classify from 'COMP/Classify/'
+import { mapGetters } from 'vuex'
 import Avatar from 'COMP/Avatar'
 import HintTire from 'COMP/Market/MarketDetail/HintTire/'
 import SpecificMarketDetail from 'COMP/Market/MarketDetail/SpecificMarketDetail'
@@ -69,7 +69,6 @@ import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
 import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
 import MarketService from 'SERVICE/marketService'
-import { mapGetters } from 'vuex'
 import { Dialog } from 'vant'
 export default {
   components: {
@@ -86,19 +85,7 @@ export default {
     TitleBar,
     SwipeBox
   },
-
-  computed: {
-    ...mapGetters(['userInfo']),
-    // avatarCompute() {
-    //   return (this.linkerInfo && this.linkerInfo.customerList.length > 0 && this.linkerInfo.customerList[0].clientImg) || ''
-    // }
-  },
-
-  mounted() {
-    
-  },
   created() {
-    
     this.linkerId = this.$route.params.id
     this.getMarketDetailPhotoInfo()
     this.$store.commit(types.USER_BUILD_INFO, this.linkerId)
@@ -115,7 +102,6 @@ export default {
     customerList:[],
     headCount:0,//当前显示的头像的下标
     expireFlag:null, // 0过期 1已过期
-    hintShow: true,
     show: false,
     boxShow: false,
     openFlag: true,
@@ -154,6 +140,9 @@ export default {
     buttonBoxTowRightIconIMG: require('IMG/marketDetail/icon1@2x.png'),
     siteNearbyBoxHintBoxIconIMG: require('IMG/marketDetail/Shape@2x.png')
   }),
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
   methods: {
     headSlide(){
       console.log(this.customerList,'头像数据')
@@ -166,22 +155,20 @@ export default {
       },3000);
     },
     shareBuildingPage() {
-      // if(this.linkerInfo.expireFlag==1){
-      //   this.$router.push({ name: 'marketDetail-share' })
-      // }else{
-      //   Dialog.confirm({
-      //     className:'marketShareHint',
-      //     message: '该楼盘已过期，请续费后再次尝试',
-      //     confirmButtonText:'去续费'
-      //   }).then(() => {
-      //     this.$router.push({name:'marketDetail-open',params:{id:this.linkerId}})
-      //   }).catch(() => {
-      //     // on cancel
-      //   });
-      // }
-
-      this.$router.push({ name: 'marketDetail-share' })
-      
+      if(this.userInfo.name!==''&&this.userInfo.distributorName!==''&&this.userInfo.majorRegion!==""&&this.userInfo.institutionName!==""){ 
+        this.$router.push({ name: 'marketDetail-share' })
+      }else{
+        Dialog.confirm({
+          title:'您有未完善的信息',
+          message: '信息不完整会影响传播效率哦',
+          confirmButtonText:'去完善',
+          className:'marketShareHint'
+        }).then(() => {
+          this.$router.push({name:'user-edit'})
+        }).catch(() => {
+          // on cancel
+        });
+      }
    },
     supplement() {
       this.show = true
@@ -243,7 +230,7 @@ export default {
     }
   },
   destroyed() {
-    this.hintShow = false
+    
   }
 }
 </script>
@@ -425,13 +412,21 @@ export default {
 }
 .marketShareHint{
   width:280px;
-  .van-dialog__message{
-    text-align:center;
+  border-radius:12px;
+  text-align:center;
+  .van-dialog__header{
     font-size:18px;
     font-family:PingFangSC-Semibold;
     font-weight:600;
     color:rgba(51,51,51,1);
     line-height:25px;
+  }
+  .van-dialog__message{
+    font-size:15px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:21px;
   }
   .van-dialog__footer{
     border-top:1px solid #E5E5E5;
