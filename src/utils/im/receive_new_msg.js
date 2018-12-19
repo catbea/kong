@@ -69,7 +69,7 @@ function onMsgNotify(newMsgList) {
   for (var j in newMsgList) {//遍历新消息
     newMsg = newMsgList[j];
     var elems = newMsg.elems[0]
-    console.log(newMsg.getSession() ,'newMsg.getSession()')
+    console.log(newMsg.getSession().id() +'  '+toAccount ,'newMsg.getSession()')
     if (newMsg.getSession().id() == toAccount) {//为当前聊天对象的消息
       selSess = newMsg.getSession();
       //在聊天窗体中新增一条消息
@@ -85,11 +85,7 @@ function onMsgNotify(newMsgList) {
       // console.log(elems.content)
       // console.log(newMsg.getSession().id())
       let content = elems.content
-      // if(content.desc == 2) { //语音
-      //   let ext = content.ext
-      // } else {
-
-      // }
+      content.clientId = newMsg.getSession().id()
       store.commit(types['NEW_MSG_CONTENT'], content)
       store.commit(types['NEW_MSG_STATUS'], true)
       setTimeout(() => {

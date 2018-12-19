@@ -11,13 +11,12 @@
         :overlay="false"
         position="top" 
         class="new-msg-popup">
-        <div class="new-msg-box">
-            游新消息
-        </div>
+        <new-msg-popup :msg="newMsgObject"></new-msg-popup>
     </van-popup>
   </div>
 </template>
 <script>
+import NewMsgPopup from 'COMP/Message/NewMsgPopup'
 import commonService from 'SERVICE/commonService'
 import Navbar from '@/components/Common/Navbar'
 import Tabbar from '@/components/Common/Tabbar'
@@ -26,16 +25,58 @@ import { webimLogin, callbackaddMsgCount } from "@/utils/im/receive_new_msg.js";
 export default {
   data() {
     return {
-      newMsgPop: false
+      newMsgPop: false,
+      newMsgObject: {}
     }
   },
   components: {
+    NewMsgPopup,
     Navbar,
     Tabbar
   },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
+      if(this.$route.path == '/custom/message/message') {//当前在聊天页
+        return
+      }
       this.newMsgPop = v
+      
+      let msgContent = this.$store.getters.newMsgContent
+      let data = ''
+      let desc = msgContent.desc
+      let avatar = ''
+      let name = ''
+      let clientId = msgContent.clientId.split('_')[1]
+
+      if(desc == 2) {//语音
+        let tmp = JSON.parse(msgContent.ext)
+        let userInfo = tmp.userInfo
+        avatar = userInfo.avatarUrl
+        name = userInfo.nickName
+        data = msgContent.data
+      } else if(desc == 5) {//动态
+        let tmp = JSON.parse(msgContent.data)
+        avatar = tmp.avatarUrl
+        name = tmp.clientName
+        clientId = tmp.clientId
+        data = tmp.content
+      } else {//文本消息 楼盘 消息已上报
+        console.log(msgContent, 'msgContent')
+        if(!msgContent.ext) {
+          return
+        }
+        let userInfo = JSON.parse(msgContent.ext)
+        avatar = userInfo.avatarUrl
+        name = userInfo.nickName
+        data = msgContent.data
+      }
+      this.newMsgObject = {
+        data: data,
+        desc: desc,
+        avatar: avatar,
+        name: name,
+        clientId: clientId
+      }
     }
   },
   mounted() {
@@ -62,14 +103,11 @@ html {
   height: 100%;
   .new-msg-popup {
     height: 50px;
-    background: #000;
-    opacity: .6;
-    .new-msg-box {
-      color: #FFF;
-      font-size: 14px;
-      line-height: 50px;
-      padding: 0 12px;
-    }
+    width: 80%;
+    margin: 32px 0;
+    border-radius: 25px;
+    background: rgb(81, 135, 218);
+    opacity: .92;
   }
   #view-box {
     height: 100%;

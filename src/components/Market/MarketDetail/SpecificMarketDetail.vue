@@ -13,7 +13,8 @@
           </div> -->
         </div>
         <div class="specific-market-detail-commission" @click="commission" v-if="info&&info.divisionRules">
-            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>{{info&&info.divisionRules}}
+            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
+           <span class="commission-text">{{info&&info.divisionRules}}</span>
           </div>
         <div class="specific-market-detail">
           <ul class="specific-market-detail-left">
@@ -101,10 +102,17 @@ export default {
     line-height: 24px;
     display: flex;
     align-items: center;
-    span {
+    span:nth-child(1){
       width: 16px;
       height: 16px;
       margin: 0 8px;
+    }
+    .commission-text{
+      white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin: 0;
+          width: 130px;
     }
   }
   .specific-market-detail {
