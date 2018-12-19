@@ -4,15 +4,15 @@
       <div class="background-content">
       <div class="headImg" :style="borderStyle">
         <avatar class="avatar" :avatar="userInfo.avatarUrl"></avatar>
-        <span class="head-icon bg_img" :style="{backgroundImage:'url('+(isExpire ? headImgB : headImgA)+')'}"></span>
+        <span class="head-icon bg_img" :style="{backgroundImage:'url('+(isVip && isExpire ? headImgB : headImgA)+')'}"></span>
       </div>
       <ul :class="isExpire ? 'head-describe expire' : 'head-describe'">
         <li>{{userInfo.nickName}}</li>
-        <li v-show="!isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
-        <li v-show="isExpire">vip已到期，请继续充值续费</li>
+        <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
+        <li v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘</router-link>
+      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘</router-link>
       </div>
     </div>
     <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>

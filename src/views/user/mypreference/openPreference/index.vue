@@ -53,6 +53,7 @@ export default {
   },
   data: () => ({
     currPackage: null,
+    packageCount: 0,
     balance: 0,
     expireDate: 0,
     isPayLoading: false,
@@ -90,6 +91,10 @@ export default {
     },
 
     async payClickHandle() {
+      if(this.packageCount >= 3) {
+        this.$toast('最多能开通3个套餐')
+        return
+      }
       this.isPayLoading = true
       let param = {
         packageId: this.currPackage.id,
@@ -147,6 +152,7 @@ export default {
       const res = await marketService.userPackageSituation()
       this.expireDate = res.expireDate ? parseInt(res.expireDate) : 0
       this.balance = res.price
+      this.packageCount = res.count
       if(res.packagePurchageList.length > 0) {
         for(let i=0; i<res.packagePurchageList.length; i++) {
           let item = res.packagePurchageList[i]

@@ -116,7 +116,15 @@ export default {
           signType: 'MD5',
           paySign: res.signature,
           success: res => {
-            this.$toast('支付成功')
+            Dialog.confirm({
+              title: '开通成功',
+              message: '你已经成功开通楼盘'+this.projectInfo.linkerName+'，快去推荐给身边的小伙伴',
+              cancelButtonText: '取消'
+            }).then(() => {
+              this.$router.replace("/market/share/"+this.linkerId)
+            }).catch(() => {
+
+            })
           },
           cancel: res => {
             this.$toast('支付取消')
