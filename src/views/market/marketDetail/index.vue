@@ -70,7 +70,7 @@ import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
 import MarketService from 'SERVICE/marketService'
 import { mapGetters } from 'vuex'
-
+import { Dialog } from 'vant'
 export default {
   components: {
     HintTire,
@@ -168,8 +168,18 @@ export default {
     shareBuildingPage() {
       if(this.linkerInfo.expireFlag==1){
         this.$router.push({ name: 'marketDetail-share' })
+      }else{
+        Dialog.confirm({
+          className:'marketShareHint',
+          message: '该楼盘已过期，请续费后再次尝试',
+          confirmButtonText:'去续费'
+        }).then(() => {
+          this.$router.push({name:'marketDetail-open',params:{id:this.linkerId}})
+        }).catch(() => {
+          // on cancel
+        });
       }
-    },
+   },
     supplement() {
       this.show = true
     },
@@ -408,6 +418,20 @@ export default {
     .feedback {
       color: #017fff;
     }
+  }
+}
+.marketShareHint{
+  width:280px;
+  .van-dialog__message{
+    text-align:center;
+    font-size:18px;
+    font-family:PingFangSC-Semibold;
+    font-weight:600;
+    color:rgba(51,51,51,1);
+    line-height:25px;
+  }
+  .van-dialog__footer{
+    border-top:1px solid #E5E5E5;
   }
 }
 </style>
