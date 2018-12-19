@@ -43,7 +43,7 @@ export default {
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
-    checkColorUnAble: require('IMG/user/mealMarket/checkColor@2x.png'),
+    checkColorUnAble: require('IMG/user/mealMarket/isChecked.png'),
     imgShare: require('IMG/user/rectangle.png'),
     imgPlay: require('IMG/user/Oval@2x.png'),
     imgCommission: require('IMG/user/collection/icon_commission@2x.png')

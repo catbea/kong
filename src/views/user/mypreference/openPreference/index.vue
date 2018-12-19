@@ -2,14 +2,14 @@
   <div class="open-preference-page">
     <div class="bg_img background" :style="{backgroundImage:'url('+backImg+')'}">
       <div class="background-content">
-      <div class="headImg" :style="borderStyle">
+      <div class="headImg">
         <avatar class="avatar" :avatar="userInfo.avatarUrl"></avatar>
-        <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag ? headImgB : headImgA)+')'}"></span>
+        <!-- <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag ? headImgB : headImgA)+')'}"></span> -->
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
         <li v-show="expireDate">已购套餐，{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
-        <li>余额：{{userInfo.price | priceFormart}}元</li>
+        <li>余额：{{balance | priceFormart}}元</li>
       </ul>
       </div>
     </div>
@@ -53,6 +53,7 @@ export default {
   },
   data: () => ({
     currPackage: null,
+    balance: 0,
     expireDate: 0,
     isPayLoading: false,
     packageInfo: {},
@@ -106,14 +107,15 @@ export default {
           signType: 'MD5',
           paySign: res.signature,
           success: res => {
+            this.getPackageInfo()
             Dialog.confirm({
               title: '开通成功',
               message: '成功开通套餐，海量楼盘等你添加~',
               cancelButtonText: '取消'
             }).then(() => {
-                this.addProjectHandle()
+              this.addProjectHandle()
             }).catch(() => {
-                
+
             })
           },
           cancel: res => {
@@ -124,6 +126,7 @@ export default {
           }
         })
       } else {
+        this.getPackageInfo()
         Dialog.confirm({
           title: '开通成功',
           message: '成功开通套餐，海量楼盘等你添加~',
@@ -131,7 +134,7 @@ export default {
         }).then(() => {
           this.addProjectHandle()
         }).catch(() => {
-                
+          
         })
       }
     },
@@ -143,6 +146,7 @@ export default {
     async getPackageInfo() {
       const res = await marketService.userPackageSituation()
       this.expireDate = res.expireDate ? parseInt(res.expireDate) : 0
+      this.balance = res.price
       if(res.packagePurchageList.length > 0) {
         for(let i=0; i<res.packagePurchageList.length; i++) {
           let item = res.packagePurchageList[i]
@@ -177,6 +181,7 @@ export default {
 <style lang="less">
 .open-preference-page {
   background: rgba(247, 249, 250, 1);
+  padding-bottom: 48px;
   .background {
     width: 375px;
     height: 123px;
@@ -223,7 +228,7 @@ export default {
           font-family: PingFangSC-Regular;
           font-weight: 400;
           color: rgba(164, 184, 213, 1);
-          line-height: 17px;
+          line-height: 25px;
         }
         li:nth-child(3) {
           margin: 4px 0 3px 0;

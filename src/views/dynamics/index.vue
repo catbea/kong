@@ -5,7 +5,7 @@
       <estate-recommend v-if="recommendData" :info="recommendData" @click="goRecommendInfo"/>
     </div>
     <div class="list-container">
-      <my-estate-list :list="estateListData" @click="goRecommendInfo"/>
+      <my-estate-list :list="estateListData" @click="goRecommendInfo" @share="shareHandler" />
     </div>
   </div>
 </template>
@@ -75,6 +75,9 @@ export default {
         temp.headImgUrl = temp.linkerHeadUrl
       }
       this.recommendData = res.aiLinkerVO
+    },
+    shareHandler(info) {
+      this.$router.push({name: 'market-share', params: {id: info.linkerId}})
     }
   },
   beforeDestroy(){
