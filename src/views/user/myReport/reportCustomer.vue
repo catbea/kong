@@ -2,16 +2,17 @@
 
 <template>
   <div class="report-page">
-    <van-search
-      class="search-container"
-      v-model="searchVal"
-      placeholder="请输入搜索关键词"
-      show-action
-      @search="onSearchHandler"
-      @click="onClickHandler"
-      @change="onChangeHandler"
-    >
-    </van-search>
+    <form action="/">
+      <van-search
+        class="search-container"
+        v-model="searchVal"
+        placeholder="请输入搜索关键词"
+        show-action
+        @search="onSearchHandler"
+        @click="onClickHandler"
+        @change="onChangeHandler"
+      ></van-search>
+    </form>
     <div slot="sort" @click="onSearchHandler"></div>
     <div class="tab-container">
       <van-tabs
@@ -31,13 +32,14 @@
     <div class="report-list-continer">
       <van-list v-model="loading" :finished="currentData.finished" @load="onLoad">
         <van-radio-group class="radio-container" v-model="radio" @change="onRadioChangeHandler">
-          <van-radio class="shadow_box radio-item-container"
+          <van-radio
+            class="shadow_box radio-item-container"
             :name="item"
             v-for="(item,index) in currentData.list"
             :key="index"
             :value="item"
           >
-            <div class="report-list ">
+            <div class="report-list">
               <span class="report-list-left">
                 <img class="report-list-img" :src="item.avatarUrl">
                 <img class="list-img-icon" :src="ovalImg" v-if="item.attentionStatus == 0">
@@ -88,8 +90,7 @@ export default {
       this.currentData.page = 1
       this.onLoad()
     },
-    onClickHandler() {
-    },
+    onClickHandler() {},
     onChangeHandler() {
       this.currentData.page = 1
       this.onLoad()
@@ -132,9 +133,7 @@ export default {
       }
     },
 
-    onRadioChangeHandler(val) {
-
-    },
+    onRadioChangeHandler(val) {},
     /**
      * 确定
      */
