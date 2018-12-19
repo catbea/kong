@@ -24,7 +24,7 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
         <span class="reprint-views">浏览：{{ info&&info.scanNum | currency('')}}</span>
       </p>
-      <agent-card class="agent-card" :info="agentInfo"></agent-card>
+      <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
     </div>
     <!-- 推荐房源 -->
     <div class="recommend-houses" v-if="info&&info.projectRecommendList">
@@ -43,6 +43,27 @@
         </swiper>
       </div>
     </div>
+    <van-popup
+      class="popup-view"
+      v-model="openPopup"
+      :overlay="true"
+      :lock-scroll="true"
+      :close-on-click-overlay="true"
+      :click-overlay="overlayClose"
+    >
+      <div class="close-titile">
+        <img class="closePopup" :src="this.closeImg" @click="overlayClose">
+      </div>
+      <span class="notice-view">扫描二维码关注</span>
+      <img class="qrcode-view" :src="qrcodeInfo.miniQrCode">
+      <div class="introduce-box">
+        <span class="username-view">{{qrcodeInfo.agentName}}</span>
+        <span class="introduce-view">资深房产经纪人</span>
+        <span class="phone-view">{{qrcodeInfo.mobile}}</span>
+        <span class="company-view">{{qrcodeInfo.enterpriseName}}</span>
+      </div>
+      <span class="info-view">开启买房新模式 及时获取一手房源信息</span>
+    </van-popup>
     <!-- 推荐文章 -->
     <div class="recommend-discover" v-if="info&&info.recommendInformationList">
       <title-bar :conf="titleArticle"/>
@@ -52,7 +73,7 @@
     </div>
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
-      <div class="app-btn" @click="appCardHandler">
+      <div class="app-btn" @click="showQRCode">
         <i class="icon iconfont icon-article_program"></i>小程序名片
       </div>
       <div class="collect-btn" @click="collectHandler(info.id)">
@@ -109,12 +130,16 @@ export default {
       title: '推荐文章',
       linkText: '查看全部',
       link: '/discover'
-    }
+    },
+    openPopup: false,
+    closeImg: require('IMG/user/close_popup.png'),
+    qrcodeInfo:{}
   }),
   created() {
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.getDetail()
+    this.getQrCode();
   },
   methods: {
     async getDetail() {
@@ -132,8 +157,23 @@ export default {
         enterpriseName: this.info.enterpriseName
       }
     },
+
+    async getQrCode() {
+      const result = await userService.getQrCode()
+      if (result) {
+        this.qrcodeInfo =result
+      }
+    },
+
+    overlayClose() {
+      this.openPopup = false
+    },
+
     // 小程序名片
-    appCardHandler() {},
+    showQRCode() {
+      this.openPopup = true
+    },
+
     // 收藏文章
     async collectHandler(infoId) {
       let obj = {}
@@ -146,7 +186,6 @@ export default {
       const res = await userService.articleCollection(obj)
 
       //添加UI的逻辑判断
-
     },
     // 分享
     shareHandler() {}
@@ -154,6 +193,76 @@ export default {
 }
 </script>
 <style lang="less">
+.popup-view {
+  width: 260px;
+  height: 371px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > .close-titile {
+    width: 100%;
+    height: 24px;
+    display: flex;
+    flex-direction: row-reverse;
+
+    > .closePopup {
+      width: 24px;
+      height: 24px;
+      margin-top: 16px;
+      margin-right: 16px;
+    }
+  }
+
+  > .qrcode-view {
+    width: 162px;
+    height: 162px;
+    text-align: center;
+    margin-top: 11px;
+  }
+
+  > .introduce-box {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-left: -45px;
+
+    > .notice-view {
+      color: #333333;
+      font-size: 20px;
+    }
+    > .username-view {
+      color: #333333;
+      font-size: 16px;
+      margin-top: 12px;
+      font-family:PingFangSC-Semibold;
+    }
+    > .introduce-view {
+      font-size: 14px;
+      color: #666666;
+    }
+
+    > .company-view {
+      margin-top: 7px;
+      color: #666666;
+      font-size: 12px;
+    }
+
+    > .phone-view {
+      margin-top: 12px;
+      color: #666666;
+      font-size: 12px;
+    }
+  }
+
+  > .info-view {
+    color: #666666;
+    font-size: 12px;
+    margin-top: 31px;
+  }
+}
+
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {
@@ -229,6 +338,7 @@ export default {
   > .recommend-houses {
     background-color: #fff;
     margin-top: 10px;
+
     > .recommend-houses-content {
       padding: 10px 15px;
       .house-item {
