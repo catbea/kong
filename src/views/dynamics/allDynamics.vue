@@ -232,7 +232,7 @@ export default {
     goallDynamics (pram) {
       if(pram.type === 'guanz'){
         if (pram.item.attentionStatus == 1) {
-        pram.item.attentionStatus = 0
+        pram.item.attentionStatus = 0                                
          dynamicsService.getupdateCustomerInfo(pram.item.clientId,0)
       } else {
         pram.item.attentionStatus = 1
