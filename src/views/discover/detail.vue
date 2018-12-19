@@ -79,7 +79,12 @@
         <i class="icon iconfont icon-article_program"></i>小程序名片
       </div>
       <div class="collect-btn" @click="collectHandler(info.id)">
-        <i class="icon iconfont icon-package_Optimal"></i>收藏
+        <div v-if="this.collectionStatus===1">
+          <i class="icon iconfont icon-Building_details_col"></i>收藏
+        </div>
+        <div v-else>
+          <i class="icon iconfont icon-package_Optimal"></i>收藏
+        </div>
       </div>
       <div class="share-btn" @click="shareHandler">
         <i class="icon iconfont icon-Building_list_share"></i>分享
@@ -122,7 +127,7 @@ export default {
     agentInfo: null,
     show: false,
     infoId: '', //文章的id
-    collectionStatus: '', //收藏状态
+    collectionStatus: -1, //收藏状态
     titleProperties: {
       title: '推荐房源',
       linkText: '全部楼盘',
@@ -183,16 +188,35 @@ export default {
 
     // 收藏文章
     async collectHandler(infoId) {
+
       let obj = {}
-      if (this.collectionStatus == '0') {
-        obj.deleteType = '1'
+      if (this.collectionStatus === 0) {
+        obj.deleteType = 0
       } else {
-        obj.deleteType = '0'
+        obj.deleteType = 1
       }
       obj.infoId = infoId
       const res = await userService.articleCollection(obj)
+      if (res) {
+        if (res.deleteType === 0) {
+          this.collectionStatus = 1
+        } else {
+          this.collectionStatus = 0
+        }
+      }
 
-      //添加UI的逻辑判断
+      // if (res) {
+      //   console.log('999999999999')
+      //   if (res.deleteType === 0) {
+      //     console.log(res.deleteType + '====')
+      //     this.collectionStatus = 1
+      //   } else {
+      //     console.log(res.deleteType + '!!!!!')
+      //     this.collectionStatus = 0
+      //   }
+      // } else {
+      //   console.log('00000000000000')
+      // }
     },
     // 分享
     shareHandler() {}
