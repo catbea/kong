@@ -140,7 +140,7 @@ export default {
     },
     //楼盘详情
     gomarketDetail(item){
-      this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
+      this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
     //收藏樓盤
     async godynamics(item, index) {

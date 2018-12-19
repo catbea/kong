@@ -122,7 +122,7 @@
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
       <div class="unopen-status-box">
-        <div class="open-btn">开通(0.4元/天起)</div>
+        <div class="open-btn" @click="openHandler">开通(0.4元/天起)</div>
       </div>
     </div>
   </div>
@@ -206,8 +206,12 @@ export default {
     },
     collectHandler() {},
     shareHandler() {
-      this.$router.push({ name: 'market-share', params: { id: this.info.id } })
-    }
+      this.$router.push({ name: 'market-share', params: { id: this.id } })
+    },
+     openHandler(){
+       this.$router.push(`/marketDetail/open/${this.id}`)
+
+    },
   },
   computed: {
     mapData() {
@@ -392,7 +396,7 @@ export default {
     margin-top: 15px;
     .tab-box {
       > .van-tabs {
-        .van-tabs__line{
+        .van-tabs__line {
           display: none;
         }
         > .van-tabs__wrap {
@@ -400,8 +404,8 @@ export default {
             border: none;
           }
         }
-        .van-tab--active{
-          color: #007AE6;
+        .van-tab--active {
+          color: #007ae6;
         }
       }
     }
@@ -448,9 +452,25 @@ export default {
     bottom: 0;
     background-color: #fff;
     z-index: 999;
-    >.unopen-status-box{
-      >.open-btn{
-        
+    > .unopen-status-box {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      > .open-btn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        display: inline-block;
+        width: 343px;
+        height: 44px;
+        background: #007ae6;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #ffffff;
+        line-height: 44px;
+        text-align: center;
       }
     }
   }

@@ -29,7 +29,7 @@
       <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
     </div>
     <!-- 推荐房源 -->
-    <div class="recommend-houses" v-if="info&&info.projectRecommendList">
+    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
       <div class="recommend-houses-content">
         <!-- swiper -->
@@ -167,7 +167,7 @@ export default {
 
     //进入详情
     enterDetail(item) {
-      this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
+      this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
 
     async getQrCode() {
