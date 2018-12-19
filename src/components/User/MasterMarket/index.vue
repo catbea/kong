@@ -12,7 +12,7 @@
           :autoplay="3000"
         >
           <van-swipe-item
-            v-for="(item,index) in limitList"
+            v-for="(item,index) in masterList"
             :key="index"
           >
             <div class="master-box">
@@ -28,9 +28,32 @@
               >
               </div>
               <ol>
+                <li>它</li>
+                <li>{{item.linkerTags | linkerTags}}</li>
+                <li>{{item.city}} <span>{{item.scanTimes}}</span> 人关注了它</li>
+              </ol>
+            </div>
+          </van-swipe-item>
+          <!-- 普通 -->
+          <van-swipe-item 
+            v-for="(item,index) in commonList"
+            :key="index"
+          >
+            <div class="master-box">
+              <p
+                class="bg_img icon-cancel"
+                :style="{backgroundImage:'url('+img+')'}"
+                @click.stop="closeHandle(item.linkerId,index)"
+              ></p>
+              <div
+                class="bg_img master-item"
+                :style="{backgroundImage:'url('+item.linkerUrl+')'}"
+              >
+              </div>
+              <ol>
                 <li>{{item.linkerName}}</li>
                 <li>{{item.linkerTags | linkerTags}}</li>
-                <li>{{item.city}}{{item.county}} <span>{{item.scanTimes}}</span> 人关注了它</li>
+                <li>{{item.city}}{{item.county}} {{item.openTimes}}人开通 <span>{{item.price}}{{item.priceUnit}}</span> </li>
               </ol>
             </div>
           </van-swipe-item>
@@ -43,6 +66,9 @@
 import userService from 'SERVICE/userService'
 export default {
   created() {
+    this.filterHandle()
+    console.log(this.masterList,'das')
+    console.log(this.commonList,'ptd')
   },
   mounted() {
   },
@@ -58,7 +84,9 @@ export default {
       changeshow:false,
       masterSave: null,
     img: require('IMG/user/Combined Shape@2x.png'),
-    hintImg:require('IMG/dev/timg.jpg')
+    hintImg:require('IMG/dev/timg.jpg'),
+    masterList:[],
+    commonList:[]
     }
   },
   methods: {
@@ -68,13 +96,14 @@ export default {
      this.swipeJudge()
      this.$emit('noRecommend',linkerId)
     },
-    // swipeJudge(){
-    //   if(this.swipeList.length==0){
-    //    this.changeBoxShow=false
-    //  }else{
-    //    this.changeBoxShow=true
-    //  }
-    // }
+    filterHandle(){
+     this.masterList=this.limitList.filter((item)=>{
+       return item.masterRecommand==1
+      })
+      this.commonList=this.limitList.filter((item)=>{
+       return item.masterRecommand==2
+      })
+    },
     swipeJudge(){
       if(this.limitList.length==0){
        this.changeBoxShow=false
@@ -186,6 +215,13 @@ export default {
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
+          span{
+            font-size:12px;
+            font-family:PingFangSC-Regular;
+            font-weight:400;
+            color:#FFFFFF;
+            line-height:15px;
+          }
         }
       }
     }
