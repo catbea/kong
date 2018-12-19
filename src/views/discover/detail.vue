@@ -11,7 +11,9 @@
             <p class="agent-company">{{agentInfo&&agentInfo.enterpriseName}}</p>
           </div>
         </div>
-        <div class="agent-box-right"></div>
+        <div class="agent-box-right" @click="showQRCode">
+          <button class="agent-right">+ 名片</button>
+        </div>
       </div>
       <div
         class="bg_img van-hairline--surround discover-img"
@@ -33,7 +35,7 @@
         <!-- swiper -->
         <swiper :options="swiperOption">
           <swiper-slide v-for="item in info.projectRecommendList" :key="item.linkerId">
-            <div class="house-item">
+            <div class="house-item" @click="enterDetail(item)">
               <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
               <p class="house-name">{{item.linkerName}}</p>
               <p class="house-localtion">{{item.city}}</p>
@@ -133,13 +135,13 @@ export default {
     },
     openPopup: false,
     closeImg: require('IMG/user/close_popup.png'),
-    qrcodeInfo:{}
+    qrcodeInfo: {}
   }),
   created() {
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.getDetail()
-    this.getQrCode();
+    this.getQrCode()
   },
   methods: {
     async getDetail() {
@@ -158,10 +160,15 @@ export default {
       }
     },
 
+    //进入详情
+    enterDetail(item) {
+      this.$router.push({ name: 'marketDetail', params: { id: item.linkerId } })
+    },
+
     async getQrCode() {
       const result = await userService.getQrCode()
       if (result) {
-        this.qrcodeInfo =result
+        this.qrcodeInfo = result
       }
     },
 
@@ -236,7 +243,7 @@ export default {
       color: #333333;
       font-size: 16px;
       margin-top: 12px;
-      font-family:PingFangSC-Semibold;
+      font-family: PingFangSC-Semibold;
     }
     > .introduce-view {
       font-size: 14px;
@@ -276,6 +283,8 @@ export default {
       line-height: 1.3;
     }
     > .agent-top-info-box {
+      display: flex;
+      justify-content: space-between;
       padding: 0 10px;
       > .agent-box-left {
         display: flex;
@@ -300,6 +309,16 @@ export default {
         }
       }
       > .agent-box-right {
+        > .agent-right {
+          width: 64px;
+          height: 32px;
+          background: rgba(0, 122, 230, 1);
+          border-radius: 16px;
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 1);
+          border: 0;
+        }
       }
     }
     > .discover-img {
