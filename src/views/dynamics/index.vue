@@ -108,7 +108,7 @@ export default {
   }
   .list-container {
     background: #fff;
-    margin-top: 15px;
+    margin-top: 10px;
   }
 }
 </style>
