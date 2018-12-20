@@ -137,6 +137,7 @@ export default {
     }
   },
   created() {
+    this.updateDynamicsCollect()
     this.getAllDynamicCount()
   },
   methods: {
@@ -155,6 +156,10 @@ export default {
           this.getArticleDynamicCount()
           break
       }
+    },
+    async updateDynamicsCollect() {
+      const res = await dynamicsService.updateDynamicsCollect()
+      
     },
     async getAllDynamicCount() {
       // 全部数据动态统计

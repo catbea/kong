@@ -1,5 +1,5 @@
 <template>
-  <div class="van-hairline--bottom  container-box">
+  <div class="van-hairline--bottom container-box">
     <div class="estate-item" v-if="info">
       <div class="main-container" @click="godynamicsInfo">
         <div
@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div class="share-icon">
+      <div class="share-icon" @click.stop="shareHandler">
         <i class="icon iconfont icon-article_share"></i>
       </div>
       <slot name="desc"></slot>

@@ -1,13 +1,13 @@
 <template>
-  <div v-show="status === 1">
-    <div class="compile-poster-page">
+  <div class="compile-poster-page">
+    <div class="box" v-show="status === 1">
       <swipe-poster :model="buildingInfo" id="share-top" :modelBgImg="changeBgImg"></swipe-poster>
       <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
       <poster-describe :model="buildingInfo"></poster-describe>
       <div class="compile-tagline">
         <div class="compile-tagline-top">宣传语</div>
         <div class="compile-tagline-bottom">
-          <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
+          <input type="text" name placeholder="请填写宣传语，小于12个字符">
         </div>
       </div>
       <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
@@ -78,7 +78,7 @@ export default {
       if (result) {
         this.buildingInfo = result
         obj.imgUrl = result.postersUrl
-        obj.checked=true
+        obj.checked = true
         bannerList.push(obj)
 
         this.bannerList = bannerList
@@ -103,7 +103,7 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '100%'
+      canvas.style.width = '101%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
     },
@@ -114,77 +114,83 @@ export default {
   },
 
   created() {
-    this.getPosterInfo(this.buildId)
+    let linkerId = this.$route.query.linkerId
+    this.getPosterInfo(linkerId)
     // this.getBuildingImg(this.buildId)
   }
 }
 </script>
 <style lang="less">
 .compile-poster-page {
-  line-height: 22px;
+  position: relative;
+  width: 100%;
   background: #ffffff;
-  height: auto !important;
-  .compile-tagline {
-    display: none;
-    margin-left: 15px;
-    .compile-tagline-top {
-      font-size: 16px;
-      font-family: PingFang-SC-Semibold;
-      font-weight: 600;
-      color: rgba(51, 51, 51, 1);
-      line-height: 22px;
-      margin-bottom: 12px;
-    }
-    .compile-tagline-bottom {
-      width: 325px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      padding: 0 0 0 16px;
-      border-radius: 4px;
-      border: 1px solid;
-      input::-webkit-input-placeholder {
-        color: rgba(221, 221, 221, 1);
+  .box {
+    line-height: 22px;
+    background: #ffffff;
+    height: auto !important;
+    .compile-tagline {
+      display: none;
+      margin-left: 15px;
+      .compile-tagline-top {
         font-size: 16px;
-        // text-align:left;
+        font-family: PingFang-SC-Semibold;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
+        line-height: 22px;
+        margin-bottom: 12px;
       }
-      input {
-        width: 320px;
-        height: 21px;
-        border: none;
-        padding-bottom: 3px;
-        font-size: 16px;
+      .compile-tagline-bottom {
+        width: 325px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        padding: 0 0 0 16px;
+        border-radius: 4px;
+        border: 1px solid;
+        input::-webkit-input-placeholder {
+          color: rgba(221, 221, 221, 1);
+          font-size: 16px;
+          // text-align:left;
+        }
+        input {
+          width: 320px;
+          height: 21px;
+          border: none;
+          padding-bottom: 3px;
+          font-size: 16px;
+        }
       }
     }
-  }
 
-  > .compile-button {
-    margin: 48px 0 24px 38px;
-    text-align: center;
-    line-height: 44px;
-    display: flex;
-    > p:nth-child(1) {
-      width: 144px;
-      height: 42px;
-      border-radius: 4px;
-      border: 1px solid;
-      margin-right: 12px;
-      font-size: 16px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(0, 122, 230, 1);
-      // line-height:22px;
-    }
-    > p:nth-child(2) {
-      width: 144px;
-      height: 44px;
-      background: rgba(0, 122, 230, 1);
-      border-radius: 4px;
-      font-size: 16px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 1);
-      // line-height:22px;
+    > .compile-button {
+      margin: 48px 0 24px 38px;
+      text-align: center;
+      line-height: 44px;
+      display: flex;
+      > p:nth-child(1) {
+        width: 144px;
+        height: 42px;
+        border-radius: 4px;
+        border: 1px solid;
+        margin-right: 12px;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(0, 122, 230, 1);
+        // line-height:22px;
+      }
+      > p:nth-child(2) {
+        width: 144px;
+        height: 44px;
+        background: rgba(0, 122, 230, 1);
+        border-radius: 4px;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
+        // line-height:22px;
+      }
     }
   }
 }

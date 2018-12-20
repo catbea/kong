@@ -13,13 +13,14 @@
         @return="returnHandle"
       ></title-bar>
     </div>
-    <div style="margin-left:16px" >
-      <search :conf="searchInfo" v-model="value" @areaClick="areaClickHandler"></search>
-      <screen></screen>
-    </div>
     <div class="user-market-box">
-      <div class="market-left" v-show="myMarketShow" v-if="marketShow">
+      <div class="market-left" v-show="myMarketShow">
+        <div style="margin-left:16px" >
+          <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler" ></search>
+          <screen v-model="showProjectFilters"></screen>
+        </div>
       <user-market
+        v-if="marketShow"
         @usmarIconReturn="skipShareHandle"
         v-for="(item,index) in marketList"
         :key="index"
@@ -36,8 +37,13 @@
       </user-market>
       </div>
       <p v-if="!marketShow" class="notMarket">暂未开通任何楼盘</p>
-      <div class="market-right" v-show="!myMarketShow" v-if="marketShow">
+      <div class="market-right" v-show="!myMarketShow">
+        <div style="margin-left:16px" >
+          <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler" ></search>
+          <screen v-model="notShowProjectFilters"></screen>
+        </div>
       <close-market
+        v-if="marketShow"
         v-for="(item,index) in marketList"
         :key="index"
         :dataArr="item"
@@ -71,7 +77,10 @@ export default {
     CloseMarket
   },
   data: () => ({
-    value:'',
+    showProjectName:'',
+    showProjectFilters:{},
+    notShowProjectName:'',
+    notShowProjectFilters:{},
     searchShow:null,
     searchNotShow:null,
     searchShowNum:0,
@@ -112,6 +121,38 @@ export default {
    computed: {
     ...mapGetters(['userArea'])
   },
+  watch:{
+    showProjectName(val){
+      clearTimeout(setShowName)
+      const setShowName = setTimeout(() => {
+        this.getMyMarketInfo()
+        console.log(this.showProjectName,'输入的搜索条件')
+        clearTimeout(setShowName)
+      }, 500)
+    },
+    showProjectFilters:{
+      handler(val) {
+        this.page = 1
+        this.queryBuildingList(this.projectName, val, this.page)
+      },
+      deep: true
+    },
+    notShowProjectName(val){
+      clearTimeout(setNotShowName)
+      const setNotShowName = setTimeout(() => {
+        this.getMyMarketInfo()
+        console.log(this.notShowprojectName,'输入的搜索条件')
+        clearTimeout(setNotShowName)
+      }, 500)
+    },
+    notShowProjectFilters:{
+      handler(val) {
+        
+        this.queryBuildingList(this.projectName, val, this.page)
+      },
+      deep: true
+    },
+      },
   methods: {
     // 搜索区域点击处理
     areaClickHandler() {
@@ -125,7 +166,6 @@ export default {
     }
     },
     pushMasterHandle(n){//点击实时更新大师推荐图片
-    console.log(this.commonList,"此时的")
     for (let index = 0; index < this.commonList.length; index++) {
       const element =this.commonList[index];
       if(n.linkerId===element.linkerId){
@@ -135,10 +175,8 @@ export default {
     n.masterRecommand='1'
    this.masterList=this.masterList.concat(n)
    this.swipeList = this.masterList.concat(this.commonList)
-   console.log(this.commonList,"之后的")
     },
     spliceMasterHandle(n){//点击实时改为取消大师改为未推荐
-    console.log(this.masterList,'现在的样子');
     for (let index = 0; index < this.masterList.length; index++) {
       const element = this.masterList[index];
       if(n.linkerId===element.linkerId){
@@ -178,8 +216,7 @@ export default {
     async getChangeMarketData(){
       const res = await userService.changeMarketData()
     },
-    async getRecommendInfo () {//推荐楼盘的数据
-    
+    async getRecommendInfo () {//推荐楼盘的数据  
       const res = await userService.getRecommend()
       this.recommendList = res
       this.master()
@@ -203,10 +240,10 @@ export default {
       })
     },
     async getMyMarketInfo () {//请求展示/不展示的楼盘数据
-      const resShow = await userService.getMyMarket(0)
+      const resShow = await userService.getMyMarket(0,this.showProjectName)
       this.marketList=resShow.records
       this.searchShowNum=resShow.records.length
-      const resNotShow = await userService.getMyMarket(1)
+      const resNotShow = await userService.getMyMarket(1,this.notShowProjectName)
       this.searchNotShowNum=resNotShow.records.length
       this.marketList=this.marketList.concat(resNotShow.records)
       console.log(this.marketList,'展示/不展示的楼盘数据')
