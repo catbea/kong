@@ -26,9 +26,9 @@
           </ul>
         </div>
 
-        <div class="market-box-page-bottom" v-show="itemInfo.commission">
+        <div class="market-box-page-bottom" v-show="itemInfo.commission||itemInfo.divisionRules">
           <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
-          <span>{{itemInfo.commission}}</span>
+          <span>{{itemInfo.commission?itemInfo.commission:itemInfo.divisionRules}}</span>
         </div>
       </div>
     </div>
