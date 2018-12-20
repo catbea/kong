@@ -36,8 +36,8 @@ export default {
     timer: null
   }),
   created() {
-    let timeStamp = window.localStorage.getItem('timeStamp') || ''
-    this.queryVersion('2', timeStamp)
+    // let timeStamp = window.localStorage.getItem('timeStamp') || ''
+    // this.queryVersion('2', timeStamp)
     this.getCollectInfo()
     this.getEstateList()
     // 30s自动刷新数据

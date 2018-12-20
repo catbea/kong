@@ -7,7 +7,7 @@
       <div class="from-container">
         <div class="phone-cell">
           <div class="phone-tip" v-if="phoneFocus">请使用当前微信绑定号码进行注册</div>
-          <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler"></material-input>
+          <material-input placeholder="请输入手机号" :type="'number'" :maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler" @input="inputHandler"></material-input>
         </div>
         <div class="code-cell">
           <material-input placeholder="请输入验证码" :type="'number'" :maxlength="6" v-model="code" @blur="blurHandler"></material-input>
@@ -58,7 +58,7 @@ export default {
     code: '',
     sendCodeText: '获取验证码',
     codeTime: 60,
-    disabled: false,
+    disabled: true,
     phoneFocus: false,
     areaShow: false,
     areaTitle: '请选择区域',
@@ -106,6 +106,13 @@ export default {
           this.disabled = false
         }
       }, 1000)
+    },
+    inputHandler() {
+      if (this.mobile.length == 11) {
+        this.disabled = false
+      }else {
+        this.disabled = true
+      }
     },
     focusHandler(focus) {
       this.phoneFocus = focus
@@ -202,6 +209,7 @@ export default {
       font-size: 24px;
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
+      margin-bottom: 3px;
     }
     > .desc {
       font-size: 12px;
@@ -211,7 +219,7 @@ export default {
     > .from-container {
       margin: 45px 15px 15px;
       .phone-cell {
-        margin: 30px 15px;
+        margin: 30px 15px 16px 15px;
         > .phone-tip {
           color: #969ea8;
           font-size: 12px;

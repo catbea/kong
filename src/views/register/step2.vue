@@ -52,6 +52,7 @@ export default {
     font-size: 12px;
     font-weight: 'Regular';
     text-align: center;
+    margin-top: 4px;
     margin-bottom: 40px;
   }
   .register-qrcode {

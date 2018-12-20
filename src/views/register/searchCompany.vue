@@ -9,6 +9,7 @@
           @search="onSearch"
           @cancel="onCancel"
           v-on:input="onInput"
+          background="#fff"
         >
           <!-- <div slot="action" @click="onSearch">搜索</div> -->
         </van-search>
@@ -104,12 +105,14 @@ export default {
 }
 </script>
 <style lang="less">
+  .van-field {
+    background-color: #f2f2f2;
+    align-items: center;
+  }
   .search-content {
     margin: 15px;
     .search-tips {
       display: flex;
-      flex-direction: row;
-      align-items: center;
       .search-tips-icon {
         width: 16px;
         height: 16px;
@@ -119,6 +122,8 @@ export default {
         color: #999999;
         font-size: 12px;
         margin-left: 8px;
+        height: 17px;
+        line-height: 17px;
       }
     }
     .search-list {
