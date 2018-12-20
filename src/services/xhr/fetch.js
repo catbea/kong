@@ -8,15 +8,11 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toUpperCase()
-
   url = process.env.VUE_APP_BASE_API_URL + url
-
   headers = Object.assign(
     { 'Content-Type': 'application/json; charset=UTF-8' },
-    {
-      Authorization: store.getters.userInfo.token
-    },
-    headers
+    { Authorization: store.getters.userInfo.token },
+    ...headers
   )
 
   const options = {
@@ -35,8 +31,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     try {
       // debugger
       const res = await response.json()
-      console.log('res',res);
-      const isOk = codeErrHandler(res,url)
+      const isOk = codeErrHandler(res, url)
       isOk ? resolve(res.data) : codeErrHandler(res, url)
     } catch (err) {
       console.error('Error: ', err)
