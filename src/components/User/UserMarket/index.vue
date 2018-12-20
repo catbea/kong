@@ -83,7 +83,7 @@
           alt=""
           srcset=""
         >
-        {{dataArr.divisionRules}}
+       <span>{{dataArr.divisionRules}}</span> 
       </div>
     </div>
     <div style="margin-left:16px">
@@ -458,6 +458,13 @@ export default {
         margin: 0 8px;
         width: 16px;
         height: 16px;
+      }
+      span{
+        white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin: 0;
+          width: 130px;
       }
     }
   }

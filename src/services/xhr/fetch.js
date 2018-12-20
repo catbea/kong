@@ -33,7 +33,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
       return errHandler(response)
     }
     try {
-      debugger
+      // debugger
       const res = await response.json()
       console.log('res',res);
       const isOk = codeErrHandler(res,url)

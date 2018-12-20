@@ -1,5 +1,5 @@
 export default (msg, url) => {
-  debugger
+  // debugger
   if (!msg) {
     return false
   }
