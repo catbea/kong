@@ -1,5 +1,5 @@
 <template>
-  <div class="van-hairline--bottom estate-item dev" v-if="info">
+  <div class="van-hairline--bottom estate-item" v-if="info">
     <div class="main-container" @click="godynamicsInfo">
       <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.headImgUrl + ')'}">
         <!-- 720标示 -->
