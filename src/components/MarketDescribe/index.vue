@@ -27,7 +27,7 @@
               >{{openStatus}}</span>
             </li>
             <li class="site">{{itemInfo.linkerAddress}}</li>
-            <tag-group :arr="itemInfo.linkerTags"></tag-group>
+            <tag-group :arr="tags"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>
@@ -52,14 +52,18 @@ export default {
   },
   created() {
     this.dredgeColor()
+    this.tags.unshift(this.saleStatus)
   },
-  data: () => ({
+  data(){
+    return{
+    tags:this.itemInfo.linkerTags,
     resInfo: null,
     style: null,
     panoramaImg: require('IMG/system/icon_panorama@2x.png'),
     commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     labelImg: require('IMG/marketDetail/discount@2x.png')
-  }),
+    }
+  },
   props: {
     // value:'',
     itemInfo: {
@@ -80,6 +84,15 @@ export default {
         return '开通'
       } else {
         return '续费'
+      }
+    },
+    saleStatus(){
+      if(this.itemInfo.saleStatus==0){
+        return '热销中'
+      }else if(this.itemInfo.saleStatus==1){
+        return '即将发售'
+      }else if(this.itemInfo.saleStatus==3){
+        return '售罄'
       }
     }
   },
