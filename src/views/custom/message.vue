@@ -364,7 +364,7 @@ export default {
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
       console.log(mediaId+' | '+appId, 'mediaIdTransToMp3Url')
-      onSendMsg(mediaId+' | '+appId, true, 1, audioTime01)
+      onSendMsg(mediaId+' | '+appId, true, '', 2)
     //   let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
     //   console.log(res, 'mediaIdTransToMp3Url')
     //   this.message = res.map3Url
