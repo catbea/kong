@@ -189,13 +189,17 @@ class UserService {
 
   /**
    * 首页查看我的楼盘
+   * @param {*} projectName 搜索的楼盘名称
+   * @param {*} displayFlag 展示开关：展示-0，1-不展示
+   * @param {*} projectName 搜索的楼盘名称
    */
-  getMyMarket(displayFlag) {
-    //展示楼盘的数据
+  getMyMarket(displayFlag,projectName) {
+    //我的楼盘列表的数据
     return xhr({
       url: '/myLinker/myProject',
       body: {
-        displayFlag
+        displayFlag,
+        projectName
       }
     })
   }
