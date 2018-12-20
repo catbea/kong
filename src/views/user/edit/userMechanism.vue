@@ -109,7 +109,7 @@ export default {
         this.organizationInfo = tempResult
 
         // this.organizationList
-        let tempArr = this.parseList(result, result[0].pId)
+        let tempArr = this.parseList(result, '0')
         obj.children = tempArr
         obj.name = '选择机构'
         obj.id = -1
