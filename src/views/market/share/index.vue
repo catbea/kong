@@ -1,5 +1,5 @@
 <template>
-  <div class="market-share-page">
+  <div class="market-share-page" id="market-share-page">
     <div class="box" v-show="status === 1">
       <div class="share-top" id="share-top">
         <!--  -->
@@ -27,9 +27,7 @@
         <!-- <router-view></router-view> -->
       </div>
     </div>
-    <div class="result" id="card-result" v-show="status === 2">
-      <!-- <van-loading class="loadding-view" type="spinner" color="white" style="{display:loading}"/> -->
-    </div>
+    <div class="result" id="card-result" v-show="status === 2"></div>
   </div>
 </template>
 <script>
@@ -67,8 +65,11 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '101%'
+      // canvas.style.width = document.getElementById('market-share-page').clientWidth
+      // canvas.style.height = document.getElementById('market-share-page').clientHeight
+       canvas.style.width = '100%'
       canvas.style.height = '100%'
+
       document.getElementById('card-result').appendChild(canvas)
     }
   },
@@ -79,8 +80,8 @@ export default {
 </script>
 <style lang="less">
 .market-share-page {
-  position: relative;
   width: 100%;
+  height: 100%;
   background: #ffffff;
   .box {
     margin-bottom: 5px;
