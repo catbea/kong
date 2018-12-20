@@ -29,7 +29,6 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
       return errHandler(response)
     }
     try {
-      // debugger
       const res = await response.json()
       const isOk = codeErrHandler(res, url)
       isOk ? resolve(res.data) : codeErrHandler(res, url)

@@ -24,7 +24,7 @@ export default {
     // ]
   }),
   mounted() {
-    this.width = document.getElementsByClassName('pie-chart-container')[0].offsetWidth
+    this.width = document.getElementsByClassName('bar-chart-container')[0].offsetWidth
   },
   methods: {
     renderBarChart({ chart }) {
@@ -39,6 +39,7 @@ export default {
       chart.axis('shadow', false)
       chart.axis('virtualCount', false)
       chart.legend(false)
+      chart.tooltip(false)
       chart
         .interval()
         .position('type*shadow')

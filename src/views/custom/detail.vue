@@ -332,7 +332,7 @@ export default {
         let counts = []
         for (let i = 0, len = result.vo.length; i < len; i++) {
           let item = {}
-          item.time = result.vo[i].day
+          item.time = Number(result.vo[i].day)
           item.count = result.vo[i].total
           item.a = '1'
           lineData.push(item)

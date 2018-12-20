@@ -38,17 +38,14 @@
     </div>
     
   </div>
-    <!-- <article-list :info="item" :HouseDynamicList="HouseDynamicList"></article-list> -->
   </div>
 </template>
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
-import ArticleList from 'COMP/Dynamics/ArticleList'
 import ShadowBox from 'COMP/ShadowBox'
 export default {
   components: {
     DynamicsData,
-    ArticleList,
     ShadowBox
   },
   props: {
