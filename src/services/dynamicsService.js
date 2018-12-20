@@ -10,6 +10,16 @@ class DynamicsService {
   }
 
   /**
+   * 更新首页数据中心的统计数据
+   */
+  updateDynamicsCollect() {
+    return xhr({
+      method: 'POST',
+      url: '/homepage/updateDataCenterInfo'
+    })
+  }
+
+  /**
    * 首页AI荐盘、我的楼房
    */
   getEstateInfo() {
