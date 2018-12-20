@@ -1,14 +1,15 @@
 <template>
   <div class="market-share-page">
     <div class="box" v-show="status === 1">
-      <div class="shadow_box share-top" id="share-top">
-        <img class="avatar-img" :src="buildingInfo.avatarMediaid" alt>
+      <div class="share-top" id="share-top">
+        <!--  -->
+        <img class="avatar-img" :src="buildingInfo.postersUrl" alt>
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="buildingInfo.qrCode">
         <span class="distinguish-span">长按识别更多</span>
         <span class="building-name">{{buildingInfo.linkerName}}</span>
         <span class="building-price">价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
-        <avatar class="avatar-view" :avatar="buildingInfo.avatarMediaid"></avatar>
+        <img class="avatar-view" :src="buildingInfo.avatarMediaid">
         <span class="username-view">{{buildingInfo.agentName}}</span>
         <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
         <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
@@ -16,13 +17,19 @@
       <div class="share-bottom">
         <!-- <p>长按保存图片 可分享好友或朋友圈</p> -->
         <ul>
-          <router-link tag="li" :to="{path:'/marketDetail/share/compile',query:{name:this.buildingInfo}}" class="compile">编辑海报</router-link>
+          <router-link
+            tag="li"
+            :to="{path:'/marketDetail/share/compile',query:{linkerId:this.buildingInfo.linkerId}}"
+            class="compile"
+          >编辑海报</router-link>
           <li class="save" @click="savaReport">保存海报</li>
         </ul>
-        <router-view></router-view>
+        <!-- <router-view></router-view> -->
       </div>
     </div>
-    <div class="result" id="card-result" v-show="status === 2"></div>
+    <div class="result" id="card-result" v-show="status === 2">
+      <!-- <van-loading class="loadding-view" type="spinner" color="white" style="{display:loading}"/> -->
+    </div>
   </div>
 </template>
 <script>
