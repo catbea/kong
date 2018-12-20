@@ -11,7 +11,7 @@
           <img :src="awtips1Icon">
         </button>
       </div>
-      <div class="awWelfare-center" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
+      <div class="awWelfare-center" id="share-top" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
         <!-- v-if="invitationImg" -->
         <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
           <div class="awWelfare-info">
@@ -61,6 +61,7 @@ import QRCode from 'qrcodejs2'
 import { Popup } from 'vant'
 import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
+import h2c from 'html2canvas'
 export default {
   components:{
     Popup,
@@ -79,6 +80,7 @@ export default {
       registrationRules:'',
       openRules:'',
       invitationUrl:'',
+      status: 1
     }
   },
    computed: {
@@ -87,13 +89,29 @@ export default {
   watch: {
     userInfo(v) {}
   },
+  created() {
+    
+  },
   mounted() {
      this.getqueryInvitationUrl()
     this.getrules()
+    this.savaReport()
    
   },
   methods: {
-    goteammateList(){
+    async savaReport(){
+      this.status = 2
+      const dpr = window.devicePixelRatio
+      const canvas = await h2c(document.querySelector('#share-top'), {
+        logging: false,
+        useCORS: true
+      })
+      canvas.style.width = '101%'
+      canvas.style.height = '100%'
+      document.getElementById('share-top').appendChild(canvas)
+     debugger
+    },
+    async goteammateList(){
        this.$router.push({name:'teammateList'})
     },
    

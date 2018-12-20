@@ -54,15 +54,18 @@ export default {
       }
     },
     async savaReport() {
+      debugger
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true
       })
+      debugger
       canvas.style.width = '101%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
+      debugger
     }
   },
   computed: {
