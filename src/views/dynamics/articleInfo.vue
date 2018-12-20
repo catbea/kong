@@ -5,7 +5,7 @@
         <div class="articleInfo-list">
           <span class="articleInfo-list-left">
             <p class="list-left-title">{{articleTitle}}</p>
-            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTime | dateFormatterToHuman}}</p>
+            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTitle | dateFormatterToHuman}}</p>
           </span>
           <span class="articleInfo-list-right">
             <img :src="articleImgUrl" class="mark-icon">
@@ -104,7 +104,7 @@ export default {
       articleDynamicCount: [],
       articleDynamicList: [],
        itemlist: this.$route.query.itemlist,
-       articleTitle: this.$route.query.articleTitle,
+       articleTitle: '',
        articleSource: this.$route.query.articleSource,
        articleImgUrl: this.$route.query.articleImgUrl,
       articleId: this.$route.query.articleId,
@@ -112,6 +112,7 @@ export default {
     }
   },
   created() {
+    this.articleTitle = this.$route.query.articleTitle,
     this.getSingleArticleDynamicList()
   },
   methods: {
@@ -234,7 +235,7 @@ export default {
     .dynamics-list {
       padding: 20px 16px;
       > .dynamics-list-agent {
-        display: flex;
+        //display: flex;
         > .list-agent-left {
           display: flex;
           > .agent-left-left {
@@ -261,10 +262,14 @@ export default {
           }
         }
         > .list-agent-right {
-          position: absolute;
-          right: 16px;
-          margin-top: -6px;
-          padding-right: 16px;
+          // position: absolute;
+          // right: 16px;
+          // margin-top: -6px;
+          // padding-right: 16px;
+           right: 0.42667rem;
+            margin-top: -55px;
+            padding-right: 0;
+            float: right;
           > .agent-right-num {
             font-size: 20px;
             font-weight: 500;
@@ -299,8 +304,11 @@ export default {
       > .dynamics-list-btn {
         height: 40px;
         > .list-btn-right {
-          position: absolute;
+         // position: absolute;
           right: 32px;
+           line-height: 40px;
+            float: right;
+          margin-top: 8px;
           // margin-top: 15px;
           > .list-btn-follow {
             width: 64px;
@@ -338,7 +346,7 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
-            position: absolute;
+           // position: absolute;
           right: 0;
           top: 0.32rem;
             > .btn-contact-userImg {

@@ -173,6 +173,7 @@ import { onSendMsg, initMsg, setToAccount } from '@/utils/im/receive_new_msg.js'
 import { mapGetters } from 'vuex'
 import commonService from 'SERVICE/commonService'
 import customService from 'SERVICE/customService'
+import userService from 'SERVICE/userService'
 import * as types from '@/store/mutation-types'
 
 export default {
@@ -241,6 +242,7 @@ export default {
         document.title = '聊天'
       }
       this.getCustomBaseInfo(this.clientId)
+
       this.agentId = this.userInfo.id
       this.avatar = this.userInfo.avatarUrl
       //加载emoji表情库
@@ -299,7 +301,14 @@ export default {
       window.location.href = 'tel:' + this.clientMobile
     },
 
+    // async getMyProjectList() {
+    //     const res = await userService.getMyMarket(0)
+    //     this.myProjectList = res.records
+    //     console.log(this.myProjectList, 'this.myProjectList')
+    // },
+
     projectClick() {
+      this.$router.push('/custom/message/messageProjects')
       console.log('projectClick =======')
     },
 
@@ -364,11 +373,10 @@ export default {
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
       console.log(mediaId+' | '+appId, 'mediaIdTransToMp3Url')
-      onSendMsg(mediaId+' | '+appId, true, '', 2)
-    //   let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
-    //   console.log(res, 'mediaIdTransToMp3Url')
-    //   this.message = res.map3Url
-    //   this.sendMessage(2, this.audioTime)
+      let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
+      console.log(res, 'mediaIdTransToMp3Url')
+      this.message = res.map3Url
+      this.sendMessage(2, this.audioTime)
     },
     async setMsgRead() {
       let res = await customService.setMsgRead(this.clientId)
@@ -694,6 +702,10 @@ export default {
   font-size: 13px;
   padding: 0;
   margin: 0;
+}
+
+.project-msg-popup {
+    height: 100%;
 }
 
 .default-msg-popup {
