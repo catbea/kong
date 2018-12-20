@@ -102,7 +102,14 @@ export default {
       this.isPayLoading = true
       const res = await commonService.payForVip(param)
       this.isPayLoading = false
-      if (res.isPay) {
+      if (res.prepayStatus && res.isPay) {
+          // "appId":"",
+          // "isPay":false,
+          // "packageId":"",
+          // "prepayResult":"获取预付订单id失败",
+          // "prepayStatus":false,
+          // "purchaseId":"4495",
+
         wx.chooseWXPay({
           //弹出支付
           timestamp: res.timestamp,
@@ -115,6 +122,7 @@ export default {
           },
           cancel: res => {
             this.$toast('支付取消')
+            commonService.cancelPayment(res.purchaseId)
           },
           fail: res => {
             this.$toast('支付失败')
