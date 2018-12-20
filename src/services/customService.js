@@ -26,7 +26,7 @@ class CustomService {
    * @param {*} size 每页条目数
    * @param {*} sortField 排序顺序 intention：意向度，createTime：客户新增时间
    */
-  getCustomerFollow(clientName, current, size = 10, sortField = 'intention') {
+  getCustomerFollow(clientName, current, size = 10, sortField = 'intention', attentionStatus = 1) {
     return xhr({
       url: '/customer/getCustomerFollow',
       body: {
