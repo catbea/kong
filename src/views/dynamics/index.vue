@@ -4,27 +4,34 @@
       <dynamics-collect :data="collectData" @click="goMessageInfo"/>
       <estate-recommend v-if="recommendData" :info="recommendData" @click="goRecommendInfo"/>
     </div>
-    <div class="list-container">
+    <div class="list-container" v-if="estateListData&&estateListData.length>0">
       <my-estate-list :list="estateListData" @click="goRecommendInfo" @share="shareHandler"/>
+    </div>
+    <div class="list-container" v-if="hotEstateListData&&hotEstateListData.length>0">
+      <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @share="shareHandler"/>
     </div>
   </div>
 </template>
+
 <script>
 import DynamicsCollect from 'COMP/Dynamics/DynamicsCollect'
 import EstateRecommend from 'COMP/Dynamics/EstateRecommend'
 import MyEstateList from 'COMP/Dynamics/MyEstateList'
+import HotEstateList from 'COMP/Dynamics/HotEstateList'
 import CommonService from 'SERVICE/commonService'
 import dynamicsService from 'SERVICE/dynamicsService'
 export default {
   components: {
     DynamicsCollect,
     EstateRecommend,
-    MyEstateList
+    MyEstateList,
+    HotEstateList
   },
   data: () => ({
     collectData: null, // 数据中心数据
     recommendData: null, // 推荐盘数据
     estateListData: null, // 我的楼盘数据
+    hotEstateListData: null,  // 热门楼盘数据
     timer: null
   }),
   created() {
@@ -44,7 +51,6 @@ export default {
       console.log('num.businessCardViews.val', num.businessCardViews)
       console.log('num.estateViews.val', num.estateViews)
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
-        // this.$router.push({ name: 'allDynamics', params: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
         this.$router.push({ path: '/dynamics/allDynamics', query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
       }
     },
@@ -88,6 +94,7 @@ export default {
         }
       }
 
+      this.hotEstateListData = res.hotLinkerVOs
       for (let temp of this.estateListData) {
         temp.headImgUrl = temp.linkerHeadUrl
       }
@@ -102,7 +109,6 @@ export default {
       }
     },
     shareHandler(info) {
-      // this.$router.push({name: 'market-share', params: {id: info.linkerId}})
       this.$router.push({ name: 'marketDetail-share' })
     }
   },
@@ -113,16 +119,14 @@ export default {
 </script>
 <style lang="less">
 .dynamics-page {
-  width: 100%;
-  height: 100%;
   background: #f7f9fa;
   .dynamics-top-container {
     background: #fff;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
   }
   .list-container {
     background: #fff;
-    margin-top: 15px;
+    margin-top: 10px;
   }
 }
 </style>

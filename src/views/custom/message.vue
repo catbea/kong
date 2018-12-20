@@ -541,7 +541,8 @@ export default {
           let serverId = res.serverId // 返回音频的服务器端ID
           _this.messages_record = nowLocalId
           _this.sourceType = 2
-          _this.mediaIdTransToMp3Url(serverId)
+        //   _this.mediaIdTransToMp3Url(serverId)
+          this.message = serverId
           console.log(serverId, 'serverId')
         }
       })
@@ -569,12 +570,15 @@ export default {
         } else {
             let audioTime = ''
             let content = ''
+            // console.log(elems.content ,'elems.content')
             if(elems.content.desc == 2) {
                 let ext = JSON.parse(elems.content.ext) 
                 audioTime = ext.audioTime
                 content = elems.content.data
-            } else {
+            } else if(elems.content.desc == 3) {
                 content = JSON.parse(elems.content.data)
+            } else {
+                content = elems.content.data
             }
           item = {
             msgStatus: 1, //未读

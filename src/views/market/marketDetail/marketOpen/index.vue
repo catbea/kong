@@ -72,7 +72,7 @@ export default {
     },
 
     couponClickHandle() {
-      this.$router.push('/market/couponSelect')
+      this.$router.push('/market/couponSelect/'+this.linkerId)
     },
 
     async getCoupan() {

@@ -24,9 +24,9 @@
           </li>
         </ul>
       </div>
-      <div class="meal-market-page-box-bottom" v-if="dataArr.commission">
+      <div class="meal-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
-        {{dataArr.commission}}
+        {{dataArr.divisionRules}}
       </div>
     </div>
   </div>
@@ -151,7 +151,7 @@ export default {
       color: rgba(102, 102, 102, 1);
       padding: 7px 0 0 0;
       margin-bottom: 16px;
-      margin-left: 8px;
+      margin-left: 16px;
       img {
         margin-right: 8px;
         width: 16px;

@@ -77,7 +77,7 @@ export default {
     },
     selectCity: '深圳市',
     title: 'VIP生效城市待选',
-    flag: true
+    showAddProjectDialogFlag: false
   }),
   computed: {
     ...mapGetters(['userInfo', 'userArea']),
@@ -111,15 +111,7 @@ export default {
           signType: 'MD5',
           paySign: res.signature,
           success: res => {
-            Dialog.confirm({
-              title: 'vip开通成功',
-              message: 'vip开通成功，海量楼盘等你添加~',
-              cancelButtonText: '取消'
-            }).then(() => {
-              this.$router.replace({path:'/user/myMember/selectedDisk', query: {type: 'vip'}})
-            }).catch(() => {
-              this.getVipInfo()
-            })
+            this.pyaSuss()
           },
           cancel: res => {
             this.$toast('支付取消')
@@ -129,16 +121,30 @@ export default {
           }
         })
       } else {
-        Dialog.confirm({
+        this.pyaSuss()
+      }
+    },
+
+    pyaSuss() {
+      this.getVipInfo()
+      if(!this.setMealInfo.vipCity) {//未绑定VIP城市先绑定
+        this.showAddProjectDialogFlag = true
+        this.unselectedPopup()
+      } else {
+        this.showAddProjectDialog()
+      }
+    },
+
+    showAddProjectDialog() {
+      Dialog.confirm({
           title: '开通成功',
           message: '成功开通vip，海量楼盘等你添加~',
           cancelButtonText: '取消'
-        }).then(() => {
-          this.$router.replace({path:'/user/myMember/selectedDisk', query: {type: 'vip'}})
-        }).catch(() => {
-          this.getVipInfo()
-        })
-      }
+      }).then(() => {
+        this.$router.replace({path:'/user/myMember/selectedDisk', query: {type: 'vip'}})
+      }).catch(() => {
+        
+      })
     },
 
     async getVipInfo() {
@@ -189,8 +195,13 @@ export default {
     async updateCity() {
       let res = await marketService.updateCityByAgentId(this.selectCity)
       let _vipInfo = {city: this.selectCity}
+      this.setMealInfo.vipCity = this.selectCity
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
-      this.$toast('vip城市添加成功')
+      if(this.showAddProjectDialogFlag) {
+        this.showAddProjectDialog()
+      } else {
+        this.$toast('vip城市添加成功')
+      }
     },
 
     checkCityHandle() {

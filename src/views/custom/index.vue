@@ -1,25 +1,12 @@
 <template>
   <div class="custom-page">
     <form action="/">
-      <van-search
-        class="search-container"
-        v-model="searchVal"
-        placeholder="请输入搜索关键词"
-        show-action
-        @search="onSearchHandler"
-        @click="onFocusHandler"
-      >
+      <van-search class="search-container" v-model="searchVal" placeholder="请输入搜索关键词" show-action @search="onSearchHandler" @click="onFocusHandler">
         <div slot="action" @click="onSearchHandler">搜索</div>
       </van-search>
     </form>
     <div class="tab-container">
-      <van-tabs
-        v-model="activeIndex"
-        color="#007AE6"
-        :line-width="15"
-        :swipe-threshold="6"
-        @click="onClick"
-      >
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
         <van-tab title="全部"></van-tab>
         <van-tab title="关注"></van-tab>
         <van-tab title="访客"></van-tab>
@@ -28,18 +15,8 @@
       </van-tabs>
     </div>
     <div class="list-continer">
-      <van-list
-        v-model="loading"
-        :finished="currentData.finished"
-        @load="onLoad"
-        v-if="currentData.haveData"
-      >
-        <my-custom-item
-          v-for="(item,index) in currentData.list"
-          :key="index"
-          :info="item"
-          @click="itemClickHandler"
-        ></my-custom-item>
+      <van-list v-model="loading" :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData">
+        <my-custom-item v-for="(item,index) in currentData.list" :key="index" :info="item" @click="itemClickHandler"></my-custom-item>
       </van-list>
       <div v-if="!currentData.haveData">
         <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
@@ -72,7 +49,6 @@ export default {
     searchVal: '',
     sort: 'intention' // intention：意向度（默认选项）， createTime：时间
   }),
-  created() {},
   methods: {
     onSearchHandler() {
       this.currentData.page = 1
@@ -122,7 +98,6 @@ export default {
     },
     itemClickHandler(e) {
       this.$router.push(`/custom/${e.clientId}`)
-      // this.$router.push({path: '/custom/detail', query: {'clientId': e.clientId}})
     }
   },
   computed: {
