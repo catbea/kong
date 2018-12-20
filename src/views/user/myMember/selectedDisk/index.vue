@@ -118,6 +118,7 @@ export default {
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           isChecked: false,
+          divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`
         }
         _list.push(obj)
