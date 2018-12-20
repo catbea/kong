@@ -41,7 +41,7 @@
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p class="house-feature">{{info.projectTagList.join("|")}}</p>
+        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
@@ -155,7 +155,7 @@ export default {
     typeTitleConf: {
       title: '户型',
       linkText: '全部户型',
-      link: '/'
+      // link: `/marketDetail/FamilyList/${this.id}`
     },
     newsTitleConf: {
       title: '楼盘动态',
@@ -186,6 +186,7 @@ export default {
   created() {
     this.id = this.$route.params.id
     this.getDetailInfo(this.id)
+    this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
   },
   methods: {
     // 获取楼盘详情

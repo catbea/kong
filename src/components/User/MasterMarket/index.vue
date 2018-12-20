@@ -12,7 +12,7 @@
           :autoplay="3000"
         >
           <van-swipe-item
-            v-for="(item,index) in masterList"
+            v-for="(item,index) in limitList"
             :key="item.linkerId"
           >
             <div class="master-box">
@@ -28,14 +28,14 @@
               >
               </div>
               <ol>
-                <li>它</li>
+                <li><span v-show="item.masterRecommand==1">它</span><span v-show="item.masterRecommand==2">{{item.linkerName}}</span></li>
                 <li>{{item.linkerTags | linkerTags}}</li>
-                <li>{{item.city}} <span>{{item.scanTimes}}</span> 人关注了它</li>
+                <li>{{item.city}} <span v-show="item.masterRecommand==2">{{item.county}}{{item.openTimes}}人开通{{item.price}}{{item.priceUnit}}</span> <span v-show="item.masterRecommand==1">{{item.scanTimes}} 人关注了它</span></li>
               </ol>
             </div>
           </van-swipe-item>
           <!-- 普通 -->
-          <van-swipe-item 
+          <!-- <van-swipe-item 
             v-for="(item,index) in commonList"
             :key="item.linkerId"
           >
@@ -56,7 +56,7 @@
                 <li>{{item.city}}{{item.county}} {{item.openTimes}}人开通 <span>{{item.price}}{{item.priceUnit}}</span> </li>
               </ol>
             </div>
-          </van-swipe-item>
+          </van-swipe-item> -->
         </van-swipe>
       </div>
     </div>
