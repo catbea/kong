@@ -102,35 +102,37 @@ export default {
       this.isPayLoading = true
       const res = await commonService.payForVip(param)
       this.isPayLoading = false
-      if (res.prepayStatus && res.isPay) {
-          // "appId":"",
-          // "isPay":false,
-          // "packageId":"",
-          // "prepayResult":"获取预付订单id失败",
-          // "prepayStatus":false,
-          // "purchaseId":"4495",
-
-        wx.chooseWXPay({
-          //弹出支付
-          timestamp: res.timestamp,
-          nonceStr: res.nonceStr,
-          package: res.packageId,
-          signType: 'MD5',
-          paySign: res.signature,
-          success: res => {
-            this.pyaSuss()
-          },
-          cancel: res => {
-            this.$toast('支付取消')
-            commonService.cancelPayment(res.purchaseId)
-          },
-          fail: res => {
-            this.$toast('支付失败')
-          }
-        })
+      if (res.prepayStatus) {
+        if(res.isPay) {
+          wx.chooseWXPay({
+            //弹出支付
+            timestamp: res.timestamp,
+            nonceStr: res.nonceStr,
+            package: res.packageId,
+            signType: 'MD5',
+            paySign: res.signature,
+            success: res => {
+              this.pyaSuss()
+            },
+            cancel: res => {
+              this.$toast('支付取消')
+              this.cancelPayment(res.purchaseId)
+            },
+            fail: res => {
+              this.$toast('支付失败')
+              this.cancelPayment(res.purchaseId)
+            }
+          })
+        } else {
+          this.pyaSuss()
+        }
       } else {
-        this.pyaSuss()
+        this.$toast('支付失败')
       }
+    },
+
+    cancelPayment(purchaseId) {
+      commonService.cancelPayment(purchaseId)
     },
 
     pyaSuss() {

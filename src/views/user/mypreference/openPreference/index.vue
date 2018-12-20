@@ -103,45 +103,46 @@ export default {
       }
       const res = await commonService.packagePayment(param)
       this.isPayLoading = false
-      if (res.isPay) {
-        wx.chooseWXPay({
-          //弹出支付
-          timestamp: res.timestamp,
-          nonceStr: res.nonceStr,
-          package: res.packageId,
-          signType: 'MD5',
-          paySign: res.signature,
-          success: res => {
-            this.getPackageInfo()
-            Dialog.confirm({
-              title: '开通成功',
-              message: '成功开通套餐，海量楼盘等你添加~',
-              cancelButtonText: '取消'
-            }).then(() => {
-              this.addProjectHandle()
-            }).catch(() => {
-
-            })
-          },
-          cancel: res => {
-            this.$toast('支付取消')
-          },
-          fail: res => {
-            this.$toast('支付失败')
-          }
-        })
+      if(res.prepayStatus){
+        if (res.isPay) {
+          wx.chooseWXPay({
+            //弹出支付
+            timestamp: res.timestamp,
+            nonceStr: res.nonceStr,
+            package: res.packageId,
+            signType: 'MD5',
+            paySign: res.signature,
+            success: res => {
+              this.paySuss()
+            },
+            cancel: res => {
+              this.$toast('支付取消')
+              this.cancelPayment(res.purchaseId)
+            },
+            fail: res => {
+              this.$toast('支付失败')
+              this.cancelPayment(res.purchaseId)
+            }
+          })
+        } else {
+          this.paySuss()
+        }
       } else {
-        this.getPackageInfo()
-        Dialog.confirm({
-          title: '开通成功',
-          message: '成功开通套餐，海量楼盘等你添加~',
-          cancelButtonText: '取消'
-        }).then(() => {
-          this.addProjectHandle()
-        }).catch(() => {
-          
-        })
+        this.$toast('支付失败')
       }
+    },
+
+    paySuss() {
+      this.getPackageInfo()
+      Dialog.confirm({
+        title: '开通成功',
+        message: '成功开通套餐，海量楼盘等你添加~',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.addProjectHandle()
+      }).catch(() => {
+          
+      })
     },
 
     async selectProjectHandle(item) {
