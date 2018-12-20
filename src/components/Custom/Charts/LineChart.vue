@@ -24,15 +24,17 @@ export default {
     //   { time: 1515283200000, count: 24, a: '1' }
     // ]
   }),
+  created() {
+  },
   mounted() {
-    this.width = document.getElementsByClassName('pie-chart-container')[0].offsetWidth
+    this.width = document.getElementsByClassName('line-chart-container')[0].offsetWidth
   },
   methods: {
     renderLineChart({ chart }) {
       chart.source(this.lineData, {
         time: {
           type: 'timeCat',
-          mask: 'YY/DD',
+          mask: 'MM/DD',
           nice: true
         }
       })
