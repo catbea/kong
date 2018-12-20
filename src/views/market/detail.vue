@@ -45,7 +45,7 @@
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
-            {{info.averagePrice}}起
+            {{info.averagePrice}}
           </p>
           <p>
             <span>开盘时间:</span>

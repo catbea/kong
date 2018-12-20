@@ -90,8 +90,6 @@ export default {
 </script>
 <style lang="less">
 .market-page {
-  width: 100%;
-  height: 100%;
   > .search-box {
     position: relative;
     width: 375px;

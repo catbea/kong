@@ -2,9 +2,24 @@
   <div class="custom-page">
     <form action="/">
       <van-search class="search-container" v-model="searchVal" placeholder="请输入搜索关键词" show-action @search="onSearchHandler" @click="onFocusHandler">
-        <div slot="action" @click="onSearchHandler">搜索</div>
+        <div slot="action" @click="onSortHandler">
+          <i class="icon iconfont icon-Clientlist_screenin"></i>
+        </div>
       </van-search>
     </form>
+    <!-- <div class="popup-container">
+
+    </div>-->
+    <div class="sort-container dev" v-show="sortShow">
+      <ul>
+        <li class="van-hairline-bottom" @click="sortClickHandler('intention')">意向度排序</li>
+        <li class="van-hairline-bottom" @click="sortClickHandler('createTime')">
+          时间排序
+          <span>(按客户新增时间)</span>
+        </li>
+      </ul>
+    </div>
+
     <div class="tab-container">
       <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
         <van-tab title="全部"></van-tab>
@@ -47,6 +62,7 @@ export default {
     loading: false,
     pageSize: 10,
     searchVal: '',
+    sortShow: false,
     sort: 'intention' // intention：意向度（默认选项）， createTime：时间
   }),
   methods: {
@@ -54,7 +70,21 @@ export default {
       this.currentData.page = 1
       this.onLoad()
     },
+    onSortHandler() {
+      this.sortShow = !this.sortShow
+    },
     onFocusHandler() {},
+    // 排序切换
+    sortClickHandler(val) {
+      this.sortShow = false
+      this.sort = val
+      this.cleanCurrentData()
+      this.onLoad()
+    },
+    cleanCurrentData(){
+      this.currentData.page = 1
+      this.currentData.list = []
+    },
     /**
      * 切换tab方法
      */
@@ -98,6 +128,21 @@ export default {
     },
     itemClickHandler(e) {
       this.$router.push(`/custom/${e.clientId}`)
+    },
+    touchHandler(e) {
+      return e.preventDefault()
+    }
+  },
+  watch: {
+    sortShow(val) {
+      console.log('sortShow',val);
+      if (val) {
+        document.removeEventListener('touchmove', this.touchHandler, false)
+        document.getElementsByClassName('router-view')[0].style.overflowY = 'hidden'  // 兼容pc测试
+      } else {
+        document.addEventListener('touchmove', this.touchHandler, false)
+        document.getElementsByClassName('router-view')[0].style.overflowY = 'auto'  // 兼容pc测试
+      }
     }
   },
   computed: {
@@ -109,12 +154,30 @@ export default {
 </script>
 <style lang="less">
 .custom-page {
-  .search-container {
+  position: relative;
+  > .search-container {
     .van-field__body {
       height: 100%;
     }
     .van-field__control {
       height: 100%;
+    }
+  }
+  > .sort-container {
+    min-height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 45px;
+    width: 100%;
+    // background: #fff;
+    // margin: 0 15px;
+    z-index: 100;
+    li {
+      padding: 0 15px;
+      background: #fff;
+      height: 50px;
+      line-height: 50px;
+      font-size: 15px;
     }
   }
 }

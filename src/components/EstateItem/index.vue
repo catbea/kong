@@ -8,9 +8,6 @@
       <div class="right-container">
         <div class="estate-top">
           <h5 class="estate-name">{{info.linkerName}}</h5>
-          <!-- <div class="estate-share" @click.stop="shareHandler">
-            <img class="share-icon" :src="imgShare">
-          </div>-->
         </div>
         <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
         <tag-group :arr="this.info.linkerTags||this.info.projectTagArr"></tag-group>
