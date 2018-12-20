@@ -2,7 +2,10 @@
   <div class="van-hairline--bottom container-box">
     <div class="estate-item" v-if="info">
       <div class="main-container" @click="godynamicsInfo">
-        <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.headImgUrl + ')'}">
+        <div
+          class="bg_img left-container"
+          :style="{backgroundImage:'url(' + info.headImgUrl + ')'}"
+        >
           <!-- 720标示 -->
           <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">
         </div>
