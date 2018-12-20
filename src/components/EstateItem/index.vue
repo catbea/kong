@@ -25,7 +25,7 @@
     </div>
     <div class="bottom-view" v-if="info.divisionRules">
       <img :src="commissionImg" class="bottom-view-img">
-      <span>{{info.divisionRules}}</span>
+      <span>{{info.divisionRules | textOver}}</span>
     </div>
   </div>
 </template>
