@@ -542,6 +542,7 @@ export default {
           _this.messages_record = nowLocalId
           _this.sourceType = 2
           _this.mediaIdTransToMp3Url(serverId)
+          this.message = serverId
           console.log(serverId, 'serverId')
         }
       })
@@ -569,8 +570,7 @@ export default {
         } else {
             let audioTime = ''
             let content = ''
-            console.log(elems.content ,'elems.content')
-
+            // console.log(elems.content ,'elems.content')
             if(elems.content.desc == 2) {
                 let ext = JSON.parse(elems.content.ext) 
                 audioTime = ext.audioTime
