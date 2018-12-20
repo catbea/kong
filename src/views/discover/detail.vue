@@ -29,7 +29,10 @@
       <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
     </div>
     <!-- 推荐房源 -->
-    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
+    <div
+      class="recommend-houses"
+      v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0"
+    >
       <title-bar :conf="titleProperties"/>
       <div class="recommend-houses-content">
         <!-- swiper -->
@@ -161,7 +164,8 @@ export default {
         agentName: this.info.agentName,
         avatarUrl: this.info.avatarUrl,
         distributorName: this.info.distributorName,
-        enterpriseName: this.info.enterpriseName
+        enterpriseName: this.info.enterpriseName,
+        institutionName:this.info.institutionName
       }
     },
 
@@ -188,7 +192,6 @@ export default {
 
     // 收藏文章
     async collectHandler(infoId) {
-
       let obj = {}
       if (this.collectionStatus === 0) {
         obj.deleteType = 0
