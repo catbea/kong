@@ -12,7 +12,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   headers = Object.assign(
     { 'Content-Type': 'application/json; charset=UTF-8' },
     { Authorization: store.getters.userInfo.token },
-    ...headers
+    headers
   )
 
   const options = {
