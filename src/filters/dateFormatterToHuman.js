@@ -35,7 +35,7 @@ export default (date, serverTimestamp) => {
     }
   } else if (_range < 172800000 && _rangeDay < 2) {
     // 判断为昨天，时间差小于2天的毫秒数且天数相差小于2
-    return `${_datumTimestamp > _targetTimestamp ? '佐' : '明'}天${_targetDateFormat.substring(6)}`
+    return `${_datumTimestamp > _targetTimestamp ? '昨' : '明'}天${_targetDateFormat.substring(6)}`
   } else {
     return _targetDateFormat
   }

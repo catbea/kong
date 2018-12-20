@@ -364,10 +364,11 @@ export default {
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
       console.log(mediaId+' | '+appId, 'mediaIdTransToMp3Url')
-      let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
-      console.log(res, 'mediaIdTransToMp3Url')
-      this.message = res.map3Url
-      this.sendMessage(2, this.audioTime)
+      onSendMsg(mediaId+' | '+appId, true, '', 2)
+    //   let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
+    //   console.log(res, 'mediaIdTransToMp3Url')
+    //   this.message = res.map3Url
+    //   this.sendMessage(2, this.audioTime)
     },
     async setMsgRead() {
       let res = await customService.setMsgRead(this.clientId)
@@ -569,12 +570,15 @@ export default {
         } else {
             let audioTime = ''
             let content = ''
+            // console.log(elems.content ,'elems.content')
             if(elems.content.desc == 2) {
                 let ext = JSON.parse(elems.content.ext) 
                 audioTime = ext.audioTime
                 content = elems.content.data
-            } else {
+            } else if(elems.content.desc == 3) {
                 content = JSON.parse(elems.content.data)
+            } else {
+                content = elems.content.data
             }
           item = {
             msgStatus: 1, //未读

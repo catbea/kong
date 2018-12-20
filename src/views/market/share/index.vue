@@ -1,14 +1,15 @@
 <template>
-  <div class="market-share-page">
+  <div class="market-share-page" id="market-share-page">
     <div class="box" v-show="status === 1">
-      <div class="shadow_box share-top" id="share-top">
-        <img class="avatar-img" :src="buildingInfo.avatarMediaid" alt>
+      <div class="share-top" id="share-top">
+        <!--  -->
+        <img class="avatar-img" :src="buildingInfo.postersUrl" alt>
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="buildingInfo.qrCode">
         <span class="distinguish-span">长按识别更多</span>
         <span class="building-name">{{buildingInfo.linkerName}}</span>
         <span class="building-price">价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
-        <avatar class="avatar-view" :avatar="buildingInfo.avatarMediaid"></avatar>
+        <img class="avatar-view" :src="buildingInfo.avatarMediaid">
         <span class="username-view">{{buildingInfo.agentName}}</span>
         <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
         <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
@@ -16,10 +17,14 @@
       <div class="share-bottom">
         <!-- <p>长按保存图片 可分享好友或朋友圈</p> -->
         <ul>
-          <router-link tag="li" :to="{path:'/marketDetail/share/compile',query:{name:this.buildingInfo}}" class="compile">编辑海报</router-link>
+          <router-link
+            tag="li"
+            :to="{path:'/marketDetail/share/compile',query:{linkerId:this.buildingInfo.linkerId}}"
+            class="compile"
+          >编辑海报</router-link>
           <li class="save" @click="savaReport">保存海报</li>
         </ul>
-        <router-view></router-view>
+        <!-- <router-view></router-view> -->
       </div>
     </div>
     <div class="result" id="card-result" v-show="status === 2"></div>
@@ -54,18 +59,16 @@ export default {
       }
     },
     async savaReport() {
-      debugger
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true
       })
-      debugger
       canvas.style.width = '101%'
       canvas.style.height = '100%'
+
       document.getElementById('card-result').appendChild(canvas)
-      debugger
     }
   },
   computed: {
@@ -75,8 +78,8 @@ export default {
 </script>
 <style lang="less">
 .market-share-page {
-  position: relative;
   width: 100%;
+  height: 100%;
   background: #ffffff;
   .box {
     margin-bottom: 5px;

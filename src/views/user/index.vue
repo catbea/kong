@@ -86,6 +86,7 @@ export default {
   created() {
     this.getUserInfo()
     this.getQrCode()
+    this.getVipAndPackage()
   },
   methods: {
     enterSharePage() {
@@ -111,6 +112,9 @@ export default {
     async getUserInfo() {
       // TODO jwt启用后应该不需再存userid
       // this.$store.dispatch('getUserVipInfo', userId)
+    },
+    async getVipAndPackage() {
+      await this.$store.dispatch('getUserVipInfo')
     },
 
     selectedHead(item, index) {

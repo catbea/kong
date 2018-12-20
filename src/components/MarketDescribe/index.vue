@@ -3,14 +3,10 @@
     <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
       <div class="all-describe">
         <div class="market-box-page-top">
-          <div class="img bg_img" :style="{backgroundImage:'url('+itemInfo.linkerImg+')'}">
+          <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
             <!-- 720标示 -->
             <img class="panorama-mark" :src="panoramaImg" v-if="itemInfo.ifPanorama">
-            <div
-              class="label bg_img"
-              v-show="itemInfo.sale"
-              :style="{backgroundImage:'url('+labelImg+')'}"
-            >
+            <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">
               {{itemInfo.sale}}
               {{itemInfo.labels}}
             </div>
@@ -19,25 +15,20 @@
           <ul class="market-describe">
             <li class="market-name">
               <span>{{itemInfo.linkerName}}</span>
-              <span
-                class="dredge"
-                :style="style"
-                v-if="dredge"
-                @click.stop="openHandle"
-              >{{openStatus}}</span>
+              <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
             <li class="site">{{itemInfo.linkerAddress}}</li>
-            <tag-group :arr="itemInfo.linkerTags"></tag-group>
+            <tag-group :arr="tags"></tag-group>
             <li class="unit-price">
-              <span>{{itemInfo.linkerPrice}}</span>
+              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>
             </li>
           </ul>
         </div>
 
-        <div class="market-box-page-bottom" v-show="itemInfo.commission">
+        <div class="market-box-page-bottom" v-show="itemInfo.commission||itemInfo.divisionRules">
           <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
-          <span>{{itemInfo.commission}}</span>
+          <span>{{itemInfo.commission?itemInfo.commission:itemInfo.divisionRules}}</span>
         </div>
       </div>
     </div>
@@ -52,14 +43,18 @@ export default {
   },
   created() {
     this.dredgeColor()
+    this.tags.unshift(this.saleStatus)
   },
-  data: () => ({
-    resInfo: null,
-    style: null,
-    panoramaImg: require('IMG/system/icon_panorama@2x.png'),
-    commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-    labelImg: require('IMG/marketDetail/discount@2x.png')
-  }),
+  data() {
+    return {
+      tags: this.itemInfo.linkerTags,
+      resInfo: null,
+      style: null,
+      panoramaImg: require('IMG/system/icon_panorama@2x.png'),
+      commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
+      labelImg: require('IMG/marketDetail/discount@2x.png')
+    }
+  },
   props: {
     // value:'',
     itemInfo: {
@@ -80,6 +75,15 @@ export default {
         return '开通'
       } else {
         return '续费'
+      }
+    },
+    saleStatus() {
+      if (this.itemInfo.saleStatus == 0) {
+        return '热销中'
+      } else if (this.itemInfo.saleStatus == 1) {
+        return '即将发售'
+      } else if (this.itemInfo.saleStatus == 3) {
+        return '售罄'
       }
     }
   },

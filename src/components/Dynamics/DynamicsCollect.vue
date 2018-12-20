@@ -12,21 +12,21 @@
         <div class="data-item main-data">
           <div class="data-value">
             {{data.customerCount.val}}
-            <span class="data-change" v-if="data.customerCount.change !== 0">+{{data.customerCount.change}}</span>
+            <span class="data-change" v-if="data.customerCount.change !== 0">{{`${parseInt(data.customerCount.change)>0 ? '+':''}${data.customerCount.change}`}}</span>
           </div>
           <span class="data-title">客户数量</span>
         </div>
         <div class="data-item">
           <div class="data-value">
             {{data.businessCardViews.val}}
-            <span class="data-change" v-if="data.businessCardViews.change !== 0">+{{data.businessCardViews.change}}</span>
+            <span class="data-change" v-if="data.businessCardViews.change !== 0">{{`${parseInt(data.businessCardViews.change)>0 ? '+':''}${data.businessCardViews.change}`}}</span>
           </div>
           <span class="data-title">名片浏览</span>
         </div>
         <div class="data-item">
           <div class="data-value">
             {{data.estateViews.val}}
-            <span class="data-change" v-if="data.estateViews.change !== 0">+{{data.estateViews.change}}</span>
+            <span class="data-change" v-if="data.estateViews.change !== 0">{{`${parseInt(data.estateViews.change)>0 ? '+':''}${data.estateViews.change}`}}</span>
           </div>
           <span class="data-title">楼盘浏览</span>
         </div>
@@ -41,7 +41,7 @@
             <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
               <avatar :avatar="item.avatarUrl"></avatar>
               <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
-              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(6)}}</p>
+              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了你的{{item.markedWords | textOver(6)}}</p>
               <p class="house-tips" v-if="item.dynamicType == 2">
                 {{item.clientName | textOver(4)}}{{item.timeStr}}浏览楼盘
                 <span>{{item.markedWords | textOver(6)}}</span>

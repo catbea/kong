@@ -166,11 +166,11 @@ const actions = {
     localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig))
     commit([types.WX_JSSDK], jssdkConfig)
   },
-  async getUserVipInfo({ commit }, payload) {
-    const res = await userService.getUserVipInfo(payload)
+  async getUserVipInfo({ commit }) {
+    const res = await userService.getVipAndPackage()
     // 后端坑爹,是vip时vipStatus为0,加入isvip区分
-    res.data.isvip = res.data.vipStatus === 0
-    commit(types.USER_VIP_INFO, res.data)
+    res.isvip = res.vipStatus === 0
+    commit(types.USER_VIP_INFO, res)
   },
   getReportAddInfo({ commit }, data) {
     commit(types.REPORT_INFO, data)
