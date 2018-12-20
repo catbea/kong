@@ -13,12 +13,7 @@
           </div>-->
         </div>
         <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
-        <div class="sale-lable">
-          <van-tag class="lable-first" color="#007AE6" text-color="#ffffff" v-if="info.saleStatus===0">热销中</van-tag>
-          <van-tag class="lable-second" color="#ffe1e1" text-color="#EA4D2E" v-else-if="info.saleStatus===1">即将发售</van-tag>
-          <van-tag class="lable-third" color="#ffe1e1" text-color="#ad0000" v-else-if="info.saleStatus===3">售罄</van-tag>
-          <tag-group :arr="info.linkerTags||info.projectTagArr"></tag-group>
-        </div>
+        <tag-group :arr="this.info.linkerTags||this.info.projectTagArr"></tag-group>
         <div class="estate-info">
           <p class="estate-price">{{info.price }} {{info.priceUnit}}</p>
           <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
@@ -37,6 +32,7 @@ export default {
   props: {
     info: { type: Object }
   },
+
   components: {
     TagGroup
   },
@@ -99,24 +95,6 @@ export default {
         font-weight: 400;
         color: #666666;
         padding-bottom: 10px;
-      }
-      > .sale-lable {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        > .lable-first {
-          width: 52px;
-          margin-right: 3px;
-        }
-        > .lable-second {
-          width: 60px;
-          margin-right: 3px;
-        }
-        > .lable-third {
-          width: 40px;
-          margin-right: 3px;
-        }
       }
       > .estate-info {
         white-space: nowrap;
