@@ -172,7 +172,7 @@ export default {
     async getCardDynamicCount() {
       const res = await dynamicsService.getCardDynamicCount()
       this.cardDynamicCount = res
-        this.cardDynamicListCount = parseInt(this.cardDynamicCount.avgStayCardTime /1000)
+        this.cardDynamicListCount = parseInt(this.cardDynamicCount.avgStayCardTime/1000)
       this.getCardDynamicList()
     },
 
