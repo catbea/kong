@@ -114,7 +114,6 @@ export default {
       // this.$store.dispatch('getUserVipInfo', userId)
     },
     async getVipAndPackage() {
-      const res = await userService.getVipAndPackage()
       await this.$store.dispatch('getUserVipInfo')
     },
 
