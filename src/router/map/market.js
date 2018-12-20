@@ -176,7 +176,7 @@ export default [
     }
   },
   {
-    path: '/market/couponSelect',
+    path: '/market/couponSelect/:id',
     name: 'couponSelect',
     component: resolve => require(['@/views/market/couponSelect.vue'], resolve),
     meta: {
