@@ -13,13 +13,11 @@
           </div>
         </div>
         <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
-        <div class="sale-lable">
-          <van-tag class="lable-first" color="#007AE6" text-color="#ffffff" v-if="info.saleStatus===0">热销中</van-tag>
-          <van-tag class="lable-second" color="#ffe1e1" text-color="#EA4D2E"  v-else-if="info.saleStatus===1">即将发售</van-tag>
-          <van-tag class="lable-third" color="#ffe1e1" text-color="#ad0000"  v-else-if="info.saleStatus===3">售罄</van-tag>
-          
-          <tag-group  :arr="info.linkerTags||info.projectTagArr"></tag-group>
-        </div>
+        <tag-group :arr="this.info.linkerTags||this.info.projectTagArr"></tag-group>
+        <!-- <div class="tag-item-statu blue" v-if="info.saleStatus===0">热销中</div>
+        <div class="tag-item-statu red" v-if="info.saleStatus===1">即将发售</div>
+        <div class="tag-item-statu gray" v-if="info.saleStatus===3">售罄</div>-->
+
         <div class="estate-info">
           <p class="estate-price">{{info.price }} {{info.priceUnit}}</p>
           <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
@@ -36,6 +34,7 @@ export default {
   props: {
     info: { type: Object }
   },
+
   components: {
     TagGroup
   },
@@ -108,17 +107,44 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        > .lable-first{
-          width: 52px;
-          margin-right: 3px;
-        }
-        > .lable-second{
-          width: 60px;
-          margin-right: 3px;
-        }
-        > .lable-third{
+        > .lable-first {
           width: 40px;
-          margin-right: 3px;
+          height: 15px;
+          background: rgba(0, 122, 230, 1);
+          border-radius: 2px;
+          margin: 0 auto;
+          text-align: center;
+          span {
+            color: #ffffff;
+            font-size: 8px;
+            line-height: 15px;
+          }
+        }
+        > .lable-second {
+          width: 49px;
+          height: 15px;
+          background: rgba(234, 77, 46, 0.1);
+          border-radius: 2px;
+          margin: 0 auto;
+          text-align: center;
+          span {
+            color: #ea4d2e;
+            font-size: 8px;
+            line-height: 15px;
+          }
+        }
+        > .lable-third {
+          width: 30px;
+          height: 15px;
+          background: rgba(102, 102, 102, 0.15);
+          border-radius: 2px;
+          margin: 0 auto;
+          text-align: center;
+          span {
+            color: #666666;
+            font-size: 8px;
+            line-height: 15px;
+          }
         }
       }
       .estate-location {
