@@ -36,10 +36,12 @@ class MarketService {
   /**
    * 获取楼盘价格列表
    */
-  getLinkerAmountList() {
+  getLinkerAmountList(linkerId) {
     return xhr({
       url: '/linkerAmount/getLinkerAmountList',
-      body: {}
+      body: {
+        linkerId
+      }
     })
   }
 
