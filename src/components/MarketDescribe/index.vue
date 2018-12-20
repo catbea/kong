@@ -11,7 +11,6 @@
               {{itemInfo.labels}}
             </div>
           </div>
-          <!-- <input type="text" v-model="val"> -->
           <ul class="market-describe">
             <li class="market-name">
               <span>{{itemInfo.linkerName}}</span>
@@ -25,7 +24,6 @@
             </li>
           </ul>
         </div>
-
         <div class="market-box-page-bottom" v-show="itemInfo.commission||itemInfo.divisionRules">
           <span :style="{backgroundImage:'url('+commissionImg+')'}" class="bg_img"></span>
           <span>{{itemInfo.commission?itemInfo.commission:itemInfo.divisionRules}}</span>
