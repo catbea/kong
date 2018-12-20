@@ -86,6 +86,7 @@ export default {
       margin-top: 25px;
     }
     .items-container {
+      margin-top: 40px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -103,6 +104,7 @@ export default {
           line-height: 1.5;
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
+          margin-bottom: 3px;
         }
         > p {
           width: 80%;
