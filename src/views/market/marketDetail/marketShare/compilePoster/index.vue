@@ -7,7 +7,7 @@
       <div class="compile-tagline">
         <div class="compile-tagline-top">宣传语</div>
         <div class="compile-tagline-bottom">
-          <input type="text" name placeholder="请填写宣传语，小于12个字符">
+          <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
         </div>
       </div>
       <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
@@ -125,6 +125,12 @@ export default {
   position: relative;
   width: 100%;
   background: #ffffff;
+
+  .result {
+    width: 100%;
+    height: 100%;
+  }
+
   .box {
     line-height: 22px;
     background: #ffffff;

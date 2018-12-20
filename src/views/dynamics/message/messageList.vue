@@ -73,7 +73,8 @@ export default {
   },
   methods: {
     msgClickHandle(item) { 
-      let clientId = item.toAccount.split('_')[1]
+      let CId = item.keyword.split('|')[0]
+      let clientId = CId.split('_')[1]
       this.$router.push({path: '/custom/message/message', query: {
         clientId: clientId
       }})

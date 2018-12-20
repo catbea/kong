@@ -2,7 +2,10 @@
   <div class="van-hairline--bottom container-box">
     <div class="estate-item" v-if="info">
       <div class="main-container" @click="godynamicsInfo">
-        <div class="bg_img left-container" :style="{backgroundImage:'url(' + info.headImgUrl + ')'}">
+        <div
+          class="bg_img left-container"
+          :style="{backgroundImage:'url(' + info.headImgUrl + ')'}"
+        >
           <!-- 720标示 -->
           <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">
         </div>
@@ -25,7 +28,7 @@
     </div>
     <div class="bottom-view" v-if="info.divisionRules">
       <img :src="commissionImg" class="bottom-view-img">
-      <span>{{info.divisionRules}}</span>
+      <span>{{info.divisionRules | textOver}}</span>
     </div>
   </div>
 </template>
@@ -33,7 +36,15 @@
 import TagGroup from 'COMP/TagGroup'
 export default {
   props: {
-    info: { type: Object }
+    info: { type: Object },
+    conf: {
+      type: Object,
+      default: () => {
+        return {
+          op: 'share' // 右上角操作按钮 share-分享 open-开通楼盘
+        }
+      }
+    }
   },
 
   components: {
