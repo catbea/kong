@@ -19,7 +19,7 @@
         <ul>
           <router-link
             tag="li"
-            :to="{path:'/marketDetail/share/compile',query:{name:this.buildingInfo}}"
+            :to="{path:'/marketDetail/share/compile',query:{linkerId:this.buildingInfo.linkerId}}"
             class="compile"
           >编辑海报</router-link>
           <li class="save" @click="savaReport">保存海报</li>
