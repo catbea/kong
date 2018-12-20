@@ -26,7 +26,7 @@ export default (date, serverTimestamp) => {
     }else if(_range < 3600000){ // 相差一小时内 -> xx分钟前
       return `${Math.floor(_range / 60000)}分钟${_datumTimestamp > _targetTimestamp ? '前' : '后'}`
     }else if(_range < 10800000){  //相差三小时内 -> x小时前
-      return `${Math.floor(_range / 360000)}小时${_datumTimestamp > _targetTimestamp ? '前' : '后'}`
+      return `${Math.floor(_range / 3600000)}小时${_datumTimestamp > _targetTimestamp ? '前' : '后'}`
     }else{  // 相差3小时以上 -> 今天 xx:xx:xx
       return `今天${_targetDateFormat.substring(6)}`
     }
