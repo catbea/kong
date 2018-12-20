@@ -109,7 +109,8 @@ export default {
       }
     },
     shareHandler(info) {
-      this.$router.push({ name: 'marketDetail-share' })
+      // this.$router.push({ name: 'marketDetail-share' })
+      this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
     }
   },
   beforeDestroy() {

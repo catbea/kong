@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="share-icon">
+    <div class="share-icon" @click.stop="shareHandler">
       <i class="icon iconfont icon-article_share"></i>
     </div>
     <slot name="desc"></slot>
