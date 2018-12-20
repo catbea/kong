@@ -189,7 +189,7 @@ export default {
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
       console.log(result, '楼盘详情数据')
-      this.linkerInfo = result
+      this.linkerInfo = result 
       this.customerList=result.customerList
       this.headSlide() 
       this.bannerList = result.bannerList
