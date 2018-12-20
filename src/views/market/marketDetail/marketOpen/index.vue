@@ -150,7 +150,7 @@ export default {
       }
     },
     async getLinkerAmountList() {
-      const res = await marketService.getLinkerAmountList()
+      const res = await marketService.getLinkerAmountList(this.linkerId)
       this.priceList = res
       this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
       this.priceItemClickHandle(0)

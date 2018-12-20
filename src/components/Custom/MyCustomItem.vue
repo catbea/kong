@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     focusInfo() {
-      return `累计浏览${this.info.browsCount}次，平均停留${Number(this.info.averageTime)}s`
+      return `累计浏览${this.info.browsCount || 0 }次，平均停留${Number(this.info.averageTime)}s`
     }
   }
 }

@@ -14,6 +14,15 @@ class UserService {
   }
 
   /**
+   * 获取经纪人套餐、VIP到期情况
+   */
+  getVipAndPackage() {
+    return xhr({
+      url: '/user/getVipAndPackage'
+    })
+  }
+
+  /**
    * 获取用户vip信息
    * @param {*} agentId
    */

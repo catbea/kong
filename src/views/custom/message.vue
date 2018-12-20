@@ -364,10 +364,11 @@ export default {
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
       console.log(mediaId+' | '+appId, 'mediaIdTransToMp3Url')
-      let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
-      console.log(res, 'mediaIdTransToMp3Url')
-      this.message = res.map3Url
-      this.sendMessage(2, this.audioTime)
+      onSendMsg(mediaId+' | '+appId, true, '', 2)
+    //   let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
+    //   console.log(res, 'mediaIdTransToMp3Url')
+    //   this.message = res.map3Url
+    //   this.sendMessage(2, this.audioTime)
     },
     async setMsgRead() {
       let res = await customService.setMsgRead(this.clientId)
@@ -541,8 +542,7 @@ export default {
           let serverId = res.serverId // 返回音频的服务器端ID
           _this.messages_record = nowLocalId
           _this.sourceType = 2
-        //   _this.mediaIdTransToMp3Url(serverId)
-          this.message = serverId
+          _this.mediaIdTransToMp3Url(serverId)
           console.log(serverId, 'serverId')
         }
       })
