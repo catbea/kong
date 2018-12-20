@@ -541,8 +541,7 @@ export default {
           let serverId = res.serverId // 返回音频的服务器端ID
           _this.messages_record = nowLocalId
           _this.sourceType = 2
-        //   _this.mediaIdTransToMp3Url(serverId)
-          this.message = serverId
+          _this.mediaIdTransToMp3Url(serverId)
           console.log(serverId, 'serverId')
         }
       })
