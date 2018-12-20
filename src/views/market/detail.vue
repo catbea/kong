@@ -60,7 +60,7 @@
             {{info.developer}}
           </p>
         </div>
-        <div class="more-info">更多信息</div>
+        <div class="more-info" @click="moreInfoHandler">更多信息</div>
       </div>
     </div>
     <!-- 户型 -->
@@ -213,6 +213,9 @@ export default {
        this.$router.push(`/marketDetail/open/${this.id}`)
 
     },
+    moreInfoHandler() {
+      this.$router.push({ name: 'marketDetail-info', params: {id: this.info.linkerId } })
+    }
   },
   computed: {
     mapData() {
