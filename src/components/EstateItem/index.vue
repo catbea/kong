@@ -109,18 +109,15 @@ export default {
         align-items: center;
         justify-content: center;
         > .lable-first{
-          width: 48px;
-          height: 17px;
+          width: 52px;
           margin-right: 3px;
         }
         > .lable-second{
-          width: 50px;
-          height: 17px;
+          width: 60px;
           margin-right: 3px;
         }
         > .lable-third{
           width: 40px;
-          height: 17px;
           margin-right: 3px;
         }
       }
