@@ -41,7 +41,7 @@
             <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
               <avatar :avatar="item.avatarUrl"></avatar>
               <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
-              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(6)}}</p>
+              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了你的{{item.markedWords | textOver(6)}}</p>
               <p class="house-tips" v-if="item.dynamicType == 2">
                 {{item.clientName | textOver(4)}}{{item.timeStr}}浏览楼盘
                 <span>{{item.markedWords | textOver(6)}}</span>
