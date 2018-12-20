@@ -34,7 +34,7 @@ function initMsg(toAcc, msgFunction) {
   selSess = new webim.Session(webim.SESSION_TYPE.C2C, toAccount, toAccount, '', Math.round(new Date().getTime() / 1000));
   webim.setAutoRead(selSess, true, true);
 
-  var msg = onSendMsg("11", true, 4, "");
+  // var msg = onSendMsg("11", true, 4, "");
 }
 
 //设置发送对象
@@ -155,15 +155,33 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime,) {
     subType = webim.GROUP_MSG_SUB_TYPE.COMMON;
   }
 
-  var msg = new webim.Msg(selSess, isSend, seq, random, msgTime, fromAccount, subType, fromAccount);
+  let msg = new webim.Msg(selSess, isSend, seq, random, msgTime, fromAccount, subType, fromAccount);
 
-  var text_obj;
+  let text_obj;
+  
   // //解析文本和表情debugger
-  if (msgType) {
-    var desc = msgType
-    var ext = audioTime
-    var custom_obj = new webim.Msg.Elem.Custom(msgtosend+'', desc+'', ext+'');
+  if (msgType == 1) {
+    let desc = msgType
+    let ext = {}
+    let custom_obj = new webim.Msg.Elem.Custom(msgtosend+'', desc+'', ext+'');
     msg.addCustom(custom_obj);
+  } else if(msgType == 2) {
+    let extObj = {
+      audioTime: audioTime,
+      userInfo: {}
+    }
+    let desc = msgType
+    let ext = audioTime
+    let custom_obj = new webim.Msg.Elem.Custom(msgtosend+'', desc+'', ext+'');
+    msg.addCustom(custom_obj);
+  } else if(msgType == 3) {
+    let desc = msgType
+    let contentObj = JSON.parse(msgtosend)
+    let data = contentObj.data;
+    let ext = contentObj.ext;
+    let custom_obj = new webim.Msg.Elem.Custom(JSON.stringify(data)+'', desc+'', JSON.stringify(ext)+'');
+    msg.addCustom(custom_obj);
+
   } else {
     text_obj = new webim.Msg.Elem.Text(msgtosend);
     msg.addText(text_obj);

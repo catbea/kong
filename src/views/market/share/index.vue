@@ -65,9 +65,7 @@ export default {
         logging: false,
         useCORS: true
       })
-      // canvas.style.width = document.getElementById('market-share-page').clientWidth
-      // canvas.style.height = document.getElementById('market-share-page').clientHeight
-       canvas.style.width = '100%'
+      canvas.style.width = '101%'
       canvas.style.height = '100%'
 
       document.getElementById('card-result').appendChild(canvas)

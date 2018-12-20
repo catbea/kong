@@ -139,7 +139,7 @@ export default {
       }
     }
     .meal-market-page-box-bottom {
-      width: 311px;
+      width: 318px;
       height: 32px;
       display: flex;
       align-items: center;
@@ -149,9 +149,10 @@ export default {
       font-family: PingFangSC-Medium;
       font-weight: 500;
       color: rgba(102, 102, 102, 1);
-      padding: 7px 0 0 0;
+      padding: 7px 7px;
       margin-bottom: 16px;
       margin-left: 16px;
+      overflow: hidden;
       img {
         margin-right: 8px;
         width: 16px;
