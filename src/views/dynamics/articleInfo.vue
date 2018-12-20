@@ -5,7 +5,7 @@
         <div class="articleInfo-list">
           <span class="articleInfo-list-left">
             <p class="list-left-title">{{articleTitle}}</p>
-            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTime | dateFormatterToHuman}}</p>
+            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTitle | dateFormatterToHuman}}</p>
           </span>
           <span class="articleInfo-list-right">
             <img :src="articleImgUrl" class="mark-icon">
@@ -104,7 +104,7 @@ export default {
       articleDynamicCount: [],
       articleDynamicList: [],
        itemlist: this.$route.query.itemlist,
-       articleTitle: this.$route.query.articleTitle,
+       articleTitle: '',
        articleSource: this.$route.query.articleSource,
        articleImgUrl: this.$route.query.articleImgUrl,
       articleId: this.$route.query.articleId,
@@ -112,6 +112,7 @@ export default {
     }
   },
   created() {
+    this.articleTitle = this.$route.query.articleTitle,
     this.getSingleArticleDynamicList()
   },
   methods: {
