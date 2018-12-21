@@ -3,6 +3,7 @@
     <div class="build" v-show="status === 1">
       <div id="show-container">
         <div class="card-img"></div>
+          <!-- userInfo.avatarUrl -->
         <img class="avatar-img" :src="userInfo.avatarUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="logoImg">
@@ -42,6 +43,7 @@ export default {
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     userInfo: {},
     status: 1,
+    // aa:'https://720ljq2test-10037467.file.myqcloud.com/1545358890837JRpeaKawJQcMFy6H.png'
     // IMG_LIST: [
     //   'http://phga1f2sd.bkt.clouddn.com/0000.jpg',
     //   'http://phga1f2sd.bkt.clouddn.com/0001.jpg',

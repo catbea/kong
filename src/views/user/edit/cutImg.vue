@@ -449,7 +449,7 @@ export default {
     uploadSuccess(result) {
       var res_data = result.data
       if (res_data) {
-        this.avatar = res_data.source_url
+        this.avatar = res_data.access_url
         let obj = {
           avatarUrl: this.avatar
         }
