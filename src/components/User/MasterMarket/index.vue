@@ -15,7 +15,7 @@
             v-for="(item,index) in limitList"
             :key="item.linkerId"
           >
-            <div class="master-box" v-show='!item.masterRecommand==0'>
+            <div class="master-box" v-show='!item.masterRecommand==0' @click='skipDetail(item.linkerId)'>
               <p
                 class="bg_img icon-cancel"
                 :style="{backgroundImage:'url('+img+')'}"
@@ -89,6 +89,9 @@ export default {
     }
   },
   methods: {
+    skipDetail(n){//点击图片跳转到改楼盘详情
+    this.$router.push({name:'market-detail',params:{id:n}})
+    },
     async closeHandle(linkerId,index){//图片列表删除某个，楼盘列表重置推荐
      await userService.changeMarketData(linkerId,20,0)
      this.limitList.splice(index,1)
