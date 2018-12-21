@@ -166,7 +166,6 @@ export default {
   margin-left:16px;
   display: flex;
  .close-market-page-box{
-  //  background: rgba(143, 159, 177, 0.15);
    margin-top:16px;
    padding: 16px 16px 0 16px;
   width:343px;
