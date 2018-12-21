@@ -8,7 +8,7 @@
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
-        <li v-show="expireDate">已购套餐，{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li v-show="expireDate">已购买{{packageCount>0 ? packageCount+'个' : '' }}套餐，最晚将于{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
       </div>
@@ -150,6 +150,7 @@ export default {
     },
 
     async getPackageInfo() {
+      this.bugList = []
       const res = await marketService.userPackageSituation()
       this.expireDate = res.expireDate ? parseInt(res.expireDate) : 0
       this.balance = res.price
@@ -222,7 +223,7 @@ export default {
         }
       }
       .head-describe {
-        width: 183px;
+        width: 253px;
         margin-left: 15px;
         margin-right: 6px;
         font-size: 18px;
