@@ -161,7 +161,7 @@ export default {
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId)
+      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.agentId, '2')
       this.info = res
 
       this.infoId = res.id
@@ -245,6 +245,10 @@ export default {
     },
     // 分享
     shareHandler() {
+      console.log(this.shareData)
+      if (this.shareData) {
+        alert(this.shareData)
+      }
       wechatApi.wechatShare(this.shareData).then(res => {
         this.articleShare()
       }).catch(e => {
