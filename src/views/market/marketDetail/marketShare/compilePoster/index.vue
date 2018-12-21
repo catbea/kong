@@ -1,5 +1,5 @@
 <template>
-  <div class="compile-poster-page" id="compile-poster-page"> 
+  <div class="compile-poster-page" id="compile-poster-page">
     <div class="box" v-show="status === 1">
       <swipe-poster :model="buildingInfo" id="share-top" :modelBgImg="changeBgImg"></swipe-poster>
       <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
@@ -7,7 +7,7 @@
       <div class="compile-tagline">
         <div class="compile-tagline-top">宣传语</div>
         <div class="compile-tagline-bottom">
-          <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
+          <input type="text" name placeholder="请填写宣传语，小于12个字符">
         </div>
       </div>
       <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
@@ -99,12 +99,17 @@ export default {
     async savaReport() {
       this.status = 2
       const dpr = window.devicePixelRatio
-      const canvas = await h2c(document.querySelector('#share-top'), {
+      const canvas = await h2c(document.querySelector('#share-top').children[0], {
         logging: false,
-        useCORS: true
+        useCORS: true,
+        dpr: 5
+        // width: document.getElementById('compile-poster-page').clientWidth * dpr,
+        // height: document.getElementById('compile-poster-page').clientHeight * dpr
       })
-      canvas.style.width = document.getElementById('compile-poster-page').clientWidth
-      canvas.style.height = document.getElementById('compile-poster-page').clientHeight
+      // canvas.style.width = document.getElementById('compile-poster-page').clientWidth * dpr
+      // canvas.style.height = document.getElementById('compile-poster-page').clientHeight * dpr
+      // canvas.style.width = document.body.offsetWidth * dpr + 'px'
+      // canvas.style.height = document.body.offsetHeight * dpr + 'px'
       document.getElementById('card-result').appendChild(canvas)
     },
 
