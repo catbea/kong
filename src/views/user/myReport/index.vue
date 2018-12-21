@@ -198,7 +198,7 @@ export default {
           color: rgba(0, 122, 230, 1);
           background-color: white;
           line-height: 20px;
-          width: 65px;
+          width: 70px;
           height: 20px;
           border-radius: 22px;
           border: 1px solid;

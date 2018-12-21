@@ -193,7 +193,9 @@ export default {
           font-weight: 400;
           color: rgba(0, 122, 230, 1);
           line-height: 20px;
-          width: 48px;
+          // margin-left: 10px;
+          // margin-right: 10px;
+          width: 60px;
           height: 20px;
           border-radius: 22px;
           border: 1px solid;
