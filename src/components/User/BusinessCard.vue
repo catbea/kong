@@ -123,7 +123,7 @@ export default {
       return this.userVipInfo.isvip ? this.userVipInfo.vipRemark.slice(2) : '楼盘不限量'
     },
     vipPackage() {
-      return this.userVipInfo.packageStatus == 0 ? '任选10个盘' : this.userVipInfo.vipRemark.substring(this.userVipInfo.vipRemark.length-8)
+      return this.userVipInfo.packageStatus == 0 ? '任选10个盘' : this.userVipInfo.vipRemark.slice(2)
         // return this.userVipInfo.packageStatus == 0 ? this.userVipInfo.packageRemark : (this.userVipInfo.vipRemark.substring(this.userVipInfo.vipRemark.length-8))
     },
     newLabelList() {
