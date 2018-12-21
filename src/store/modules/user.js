@@ -68,7 +68,7 @@ const state = {
     recommendTip: '',
     registerType: '10',
     shareNum: '0',
-    signature: '别问我是谁，请叫我大湿',
+    signature: '别问我是谁，请叫我大湿', 
     status: 1,
     storeId: '224',
     storeName: '',

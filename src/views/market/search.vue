@@ -151,7 +151,6 @@ export default {
         this.searchStatus = 2
       }, 1)
       this.resetSearch()
-      // this.searchMidator(val, this.filters, this.page)
     },
     // 取消搜索
     onCancelHandler() {
