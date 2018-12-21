@@ -57,7 +57,7 @@
         >{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
         <div class="commission-view" v-show="info.divisionRules">
           <img :src="commissionImg">
-          <span>{{info.divisionRules}}</span>
+          <span>{{info.divisionRules | textOver}}</span>
         </div>
         <div class="house-info-form">
           <p>
