@@ -33,7 +33,7 @@ const state = {
     existNewCoupons: '',
     existNewProject: '',
     givePrice: 0,
-    id: '705',
+    id: '4661',
     ifView: false,
     institutionId: '46',
     institutionLogo: '',
@@ -74,7 +74,7 @@ const state = {
     switchTime: '',
     tempPhone: '18676652795',
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJrYnlvN2giLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDgxNDA5NTYsImlhdCI6MTU0NTEzNjE1Nn0.C9AdO_CIUA6Da3ZpdCTWKL9zYjSiEz8xd7MmWc2Z5C0Fgnyfox7S3qD9I7pXRZQQLzDLTSmo515sDnLduwPCkw',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJkN2JibmgiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjYxIiwiZXhwIjoxNTQ4MjkzNzMyLCJpYXQiOjE1NDUyODg5MzJ9.LDeYg-BAd1Ff1H5k3aAcweikgVwk4NrNMGxYVNxdykZO8WPWWbWwmLDa_NASOZQtc5MKVZ9iIi-hvfKDiFhSag',
     updateTime: '2018-10-19 17:37:47',
     viewNum: 101,
     wechatAccount: '112110',

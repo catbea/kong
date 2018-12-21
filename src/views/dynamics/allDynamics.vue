@@ -114,10 +114,10 @@ export default {
       item: [],
       active: '',
       tabs: [
-        { index: 0, type: '', typeName: '全部', page: 0, finished: false, list: [] },
-        { index: 1, type: '', typeName: '名片', page: 0, finished: false, list: [] },
-        { index: 2, type: '', typeName: '楼盘', page: 0, finished: false, list: [] },
-        { index: 3, type: '', typeName: '文章', page: 0, finished: false, list: [] }
+        { index: 0, type: '', typeName: '全部', page: 1, finished: false, list: [] },
+        { index: 1, type: '', typeName: '名片', page: 1, finished: false, list: [] },
+        { index: 2, type: '', typeName: '楼盘', page: 1, finished: false, list: [] },
+        { index: 3, type: '', typeName: '文章', page: 1, finished: false, list: [] }
       ],
       allDynamicCount: [],
       allDynamicList: [],
@@ -134,13 +134,33 @@ export default {
       customerCount: this.$route.query.customerCount,
       businessCardViews:this.$route.query.businessCardViews,
       estateViews:this.$route.query.estateViews,
+      activeIndex:0,
     }
   },
   created() {
     this.updateDynamicsCollect()
     this.getAllDynamicCount()
+    this.payloadTabs(this.tabs)
+    this.getCurrentType()
+     
   },
   methods: {
+    async payloadTabs(tabs) {
+      this.tabs.push({ index: 0, type: '', typeName: '全部', page: 1, finished: false, list: [] })
+      for (let i = 1; i < tabs.length; i++) {
+        tabs[i].index = i
+        tabs[i].page = 1
+        tabs[i].finished = false
+        tabs[i].list = []
+        this.tabs.push(tabs[i])
+      }
+    },
+    async getCurrentType() {
+       debugger
+      for (let temp of this.tabs) {
+        if (temp.index === this.activeIndex) return temp
+      }
+     },
     goList(index, title) {
       switch (index) {
         case 0:
@@ -157,6 +177,7 @@ export default {
           break
       }
     },
+    
     async updateDynamicsCollect() {
       const res = await dynamicsService.updateDynamicsCollect()
       
