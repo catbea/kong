@@ -14,9 +14,10 @@
           <ul class="market-describe">
             <li class="market-name">
               <span>{{itemInfo.linkerName}}</span>
+              <!-- <p class="van-hairline--surround past" v-if="openStatus!=20">已过期</p> -->
               <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
-            <li class="site">{{itemInfo.linkerAddress}}</li>
+            <li class="site">{{itemInfo.linkerAddress}} <span v-if="openStatus==10">{{itemInfo.invalidTime | dateTimeFormatter(2)}}到期</span></li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
@@ -69,9 +70,9 @@ export default {
   },
   computed: {
     openStatus() {
-      if (this.itemInfo.openStatus == 20) {
+      if (!this.itemInfo.openStatus || this.itemInfo.openStatus == 20) {
         return '开通'
-      } else {
+      } else if(this.itemInfo.openStatus == 10){
         return '续费'
       }
     },
@@ -158,15 +159,27 @@ export default {
             justify-content: space-between;
             margin-bottom: 5px;
             span:nth-child(1) {
-              width: 160px;
+              
               font-size: 16px;
               font-family: PingFangSC-Semibold;
               font-weight: 600;
               color: rgba(51, 51, 51, 1);
               line-height: 16px;
             }
-            span:nth-child(2) {
-              width: 46px;
+            .past{
+              font-size:12px;
+              transform:scale(0.84);
+              font-family:PingFangSC-Regular;
+              font-weight:400;
+              line-height:15px;
+              color:rgba(234,77,46,1);
+              padding:1px 4px;
+              &::after{
+              border-color:rgba(0, 122, 230, 1);
+              }
+            }
+            span:nth-of-type(2) {
+              flex:0 0 46px;
               height: 24px;
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;

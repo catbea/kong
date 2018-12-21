@@ -90,12 +90,10 @@ export default {
   .box {
     margin-bottom: 5px;
   }
-  .result{
-    
-
-    .loadding-view{
-        text-align: center;
-        margin: 0 auto
+  .result {
+    .loadding-view {
+      text-align: center;
+      margin: 0 auto;
     }
   }
 
@@ -147,6 +145,7 @@ export default {
       top: 317px;
       z-index: 2;
     }
+
 
     > .building-name {
       position: absolute;
