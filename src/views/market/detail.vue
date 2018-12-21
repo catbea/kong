@@ -55,9 +55,9 @@
         <p
           class="house-feature"
         >{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
-        <div class="commission-view" v-show="info.divisionRules">
+        <div class="commission-view" v-show="info.divisionRules" @click="enterCommission">
           <img :src="commissionImg">
-          <span>{{info.divisionRules}}</span>
+          <span>{{info.divisionRules | textOver}}</span>
         </div>
         <div class="house-info-form">
           <p>
@@ -214,7 +214,7 @@ export default {
     othersTitleConf: {
       title: '其他楼盘',
       linkText: '全部楼盘',
-      link: '/'
+      link: '/market'
     },
     swiperOption: {
       slidesPerView: 2,
@@ -235,6 +235,10 @@ export default {
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
   },
   methods: {
+    //进入佣金详情
+    enterCommission() {
+      this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
+    },
     // 获取楼盘详情
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
