@@ -45,7 +45,7 @@ const state = {
     loginCount: 1,
     loginTime: '2018-11-10 02:28:16',
     logoUrl: '',
-    majorCity: '',
+    majorCity: '',    // 主营区域
     majorRegion: '111111',
     masterRecommendTip: '',
     minOpenid: '',
