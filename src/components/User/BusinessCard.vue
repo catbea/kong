@@ -120,10 +120,10 @@ export default {
       return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
     },
     vipTimeInfo() {
-      return this.userVipInfo.isvip ? this.userVipInfo.vipRemark.substring(this.userVipInfo.vipRemark.length-8) : '楼盘不限量'
+      return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
     },
     vipPackage() {
-      return this.userVipInfo.packageStatus == 0 ? '任选10个盘' : this.userVipInfo.vipRemark.substring(this.userVipInfo.vipRemark.length-8)
+      return this.userVipInfo.packageStatus == 2 ? '任选10个盘' : this.userVipInfo.packageRemark
     },
     newLabelList() {
       return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
