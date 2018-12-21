@@ -319,6 +319,10 @@ export default {
     }
     > .status-info-left {
       margin: 0 15px;
+      >.info-desc{
+        font-size: 10px;
+        white-space: nowrap;
+      }
     }
   }
 }
