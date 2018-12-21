@@ -37,14 +37,28 @@ class DiscoverService {
    *
    * @param {*} infoId
    * @param {*} city
+   * @param {*} enterpriseId
    */
-  getDiscoverDetail(infoId, city) {
+  getDiscoverDetail(infoId, city, enterpriseId) {
     return xhr({
       url: '/cpInformation/informationPreview',
       body: {
         infoId,
-        city
+        city,
+        enterpriseId
       }
+    })
+  }
+
+  /**
+   * 文章分享
+   * @param {*} param 
+   */
+  articleShare(param) {
+    return xhr({
+      method: 'POST',
+      url: '/cpInformationShare/insertInfo',
+      body: param
     })
   }
 }

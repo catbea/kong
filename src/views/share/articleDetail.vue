@@ -105,7 +105,6 @@ import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import wechatApi from '@/utils/wechatApi'
-import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
@@ -156,12 +155,9 @@ export default {
     this.getQrCode()
     this.shareHandler()
   },
-  computed: {
-    ...mapGetters(['userInfo'])
-  },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId)
+      const res = await discoverService.getDiscoverDetail(this.id, this.city)
       this.info = res
 
       this.infoId = res.id
@@ -175,12 +171,9 @@ export default {
         enterpriseName: this.info.enterpriseName,
         institutionName:this.info.institutionName
       }
-      let host = process.env.VUE_APP_BASE_API_URL
-      host = host + '#/article/' + this.id + '/' + this.city
       this.shareData = {
         title: this.info.title,
-        image: this.info.image,
-        link: host
+        image: this.info.image
       }
     },
 
@@ -236,20 +229,9 @@ export default {
       //   console.log('00000000000000')
       // }
     },
-    async articleShare() {
-      let params = {
-          deleteType: 0,
-          infoId: this.infoId
-        }
-      const result = await discoverService.articleShare(params)
-    },
     // 分享
     shareHandler() {
-      wechatApi.wechatShare(this.shareData).then(res => {
-        this.articleShare()
-      }).catch(e => {
-        
-      })
+      wechatApi.wechatShare(this.shareData)
     },
 
   },
