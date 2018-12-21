@@ -102,6 +102,7 @@ export default {
         payOpenid: this.userInfo.payOpenId
       }
       const res = await commonService.packagePayment(param)
+      const purchaseId = res.purchaseId
       this.isPayLoading = false
       if(res.prepayStatus){
         if (res.isPay) {
@@ -117,11 +118,11 @@ export default {
             },
             cancel: res => {
               this.$toast('支付取消')
-              this.cancelPayment(res.purchaseId)
+              this.cancelPayment(purchaseId)
             },
             fail: res => {
               this.$toast('支付失败')
-              this.cancelPayment(res.purchaseId)
+              this.cancelPayment(purchaseId)
             }
           })
         } else {
@@ -130,6 +131,10 @@ export default {
       } else {
         this.$toast('支付失败')
       }
+    },
+
+    cancelPayment(purchaseId) {
+      commonService.cancelPayment(purchaseId)
     },
 
     paySuss() {
