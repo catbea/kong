@@ -106,6 +106,7 @@ const state = {
     city: '深圳市', // 市
     selectedCity: '深圳市',
     vipSelectedCity: null,
+    myReportCity: '',   // 报备楼盘
     county: '' // 区
   },
   reportAddInfo: {
