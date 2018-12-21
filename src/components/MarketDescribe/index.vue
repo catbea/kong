@@ -69,7 +69,7 @@ export default {
   },
   computed: {
     openStatus() {
-      if (this.itemInfo.openStatus >= 0) {
+      if (this.itemInfo.openStatus == 20) {
         return '开通'
       } else {
         return '续费'
