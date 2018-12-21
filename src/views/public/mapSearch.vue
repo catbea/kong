@@ -1,6 +1,7 @@
 <template>
   <div class="map-search">
-    <div id="map-container"></div>
+    <!-- <div id="map-container"></div> -->
+    <t-map :latLng="{lat:this.userArea.latitude,lng:this.userArea.longitude}" :conf="mapConf"></t-map>
     <div class="bottom-bar dev">
       <div class="bar-item" v-for="item in list" :key="item.index" @click="itemClickHandler(item.index)">
         <div class="bg_img item-img" :style="{backgroundImage:'url('+ (item.index === current ? item.aIcon:item.dIcon) +')'}"></div>
@@ -10,13 +11,23 @@
   </div>
 </template>
 <script>
-import TMap from '@/utils/tMap'
+import TMap from 'COMP/TMap'
+import marketService from 'SERVICE/marketService'
+import { mapGetters } from 'vuex'
 export default {
+  components: {
+    TMap
+  },
   data: () => ({
     latitude: 39.916527,
     longitude: 116.397128,
     map: null,
     current: 0,
+    mapConf: {
+      draggable: false,
+      scrollwheel: false,
+      disableDoubleClickZoom: false
+    },
     // tabbar icon mIcon-地图标注图标 dIcon-bar未激活图标 aIcon-bar激活图标
     list: {
       bank: {
@@ -85,9 +96,10 @@ export default {
     }
   }),
   created() {
-    this.latitude = this.$route.query.latitude || 39.916527
-    this.longitude = this.$route.params.longitude || 116.397128
-    this.initMap()
+    // this.getAou
+    // this.latitude = this.$route.query.latitude || 39.916527
+    // this.longitude = this.$route.params.longitude || 116.397128
+    // this.initMap()
   },
   methods: {
     async initMap() {
@@ -123,6 +135,9 @@ export default {
       if (val === this.current) return
       this.current = val
     }
+  },
+  computed: {
+    ...mapGetters(['userArea'])
   }
 }
 </script>

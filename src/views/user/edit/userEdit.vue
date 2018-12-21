@@ -113,7 +113,7 @@ export default {
     },
 
     getCityName(data) {
-      this.majorRegion = data[0].name + '-' + data[1].name + '-' + data[2].name
+      this.majorRegion = data[0].name + '/' + data[1].name + '/' + data[2].name
       this.isOpen = false
       this.upDateUserName(this.majorRegion)
     },
