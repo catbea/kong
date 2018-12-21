@@ -20,7 +20,7 @@
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
-        <close-market v-if="notMarketShow" v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
+        <close-market v-if="marketShow" v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
       </div>
     </div>
   </div>
@@ -83,11 +83,12 @@ export default {
       { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通 11/22到期', flag: true, price: '1%+5万元/套' }
     ]
   }),
-  created() {
-    this.showGetMyMarketInfo()//请求展示楼盘
-    this.notShowGetMyMarketInfo()//请求不展示楼盘
-    this.getRecommendInfo()//请求轮播图数据
+ async created() {
+   await this.showGetMyMarketInfo()//请求展示楼盘
+   await this.notShowGetMyMarketInfo()//请求不展示楼盘
+   await this.getRecommendInfo()//请求轮播图数据
     this.searchInfo.siteText = this.userArea.city
+   await this.marketShowHandle()//展示/不展示都没数据时
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -134,6 +135,13 @@ export default {
         this.searchShow = true
       } else {
         this.searchShow = false
+      }
+    },
+    marketShowHandle(){//展示/不展示都没数据时
+      if (this.showMarketList.length == 0&&this.notShowMarketList.length==0) {
+        this.marketShow = false
+      } else {
+        this.marketShow = true
       }
     },
     pushMasterHandle(n) {
@@ -235,11 +243,7 @@ export default {
       console.log(this.showMarketList,'展示的楼盘');
       
       this.searchShowNum = resShow.records.length
-      if (this.showMarketList.length == 0) {
-        this.marketShow = false
-      } else {
-        this.marketShow = true
-      }
+      
     },
     async notShowGetMyMarketInfo(name = '', filters = {}, page = 1) {
       //请求不展示的楼盘数据
@@ -250,11 +254,6 @@ export default {
       this.searchNotShowNum = resNotShow.records.length
       this.notShowMarketList =resNotShow.records
       console.log(this.notShowMarketList,'不展示的楼盘');
-      if (this.notShowMarketList.length == 0) {
-        this.notMarketShow = false
-      } else {
-        this.notMarketShow = true
-      }
     },
     returnHandle() {
       //切换展示与否
