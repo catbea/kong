@@ -162,8 +162,7 @@ export default {
       this.historyController('reset')
     },
     opClickHandler(item) {
-      console.log(item);
-      this.$router.push(`/marketDetail/open/${item.id}`)
+      this.$router.push(`/marketDetail/open/${item.linkerId}`)
     },
     //
     /**
