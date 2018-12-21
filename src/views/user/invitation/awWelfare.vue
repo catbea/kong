@@ -40,10 +40,6 @@
           <div class="register-rule-box-text">
             <div class="register-rule-box-text-item" v-if="regisItem" v-for="(regisItem,key) in registrationRules" :key="key"><div class="div-dian">•</div><div>{{regisItem}}</div></div>
           </div>
-          <div class="register-rule-box-title">邀请开通</div>
-          <div class="register-rule-box-text">
-            <div class="register-rule-box-text-item"  v-if="openItem" v-for="(openItem,key) in openRules" :key="key"><div class="div-dian">•</div><div>{{openItem}}</div></div>
-          </div>
           <div  class="register-rule-box-footer">
             <p>本活动最终解释权归</p>
             <p>深圳尊豪网络科技股份有限公司所有</p>
@@ -75,11 +71,8 @@ export default {
       awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
       awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
       teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
-      // ovalIcon: require('IMG/edit/Oval@2x.png'),
-      // ovalIcon: require('IMG/edit/Oval@2x.png'),
       show1: false,
       registrationRules:'',
-      openRules:'',
       invitationUrl:'',
       status: 1,
     }
@@ -117,16 +110,9 @@ export default {
     async getregisrules(){
       const regis = await userService.getrules(1)
       this.registrationRules = regis.rule.split("#")
-      debugger
       console.log(this.registrationRules)
-     this.getopenRules()
     },
-    async getopenRules(){
-       const rest = await userService.getrules(2)
-        this.openRules = rest.rule.split("#")
-        debugger
-         console.log("===========openRules===================",this.openRules)
-    },
+    
 
     async getqueryInvitationUrl(){
     const res = await userService.getqueryInvitationUrl()

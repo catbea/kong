@@ -48,7 +48,6 @@ export default {
   methods: {
     //动态详情
     async goMessageInfo(num) {
-      debugger
       console.log('num.customerCount.val', num.customerCount)
       console.log('num.businessCardViews.val', num.businessCardViews)
       console.log('num.estateViews.val', num.estateViews)

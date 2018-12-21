@@ -1,80 +1,31 @@
 <template>
   <div class="allDynamics-page">
     <div class="tab-container">
-      <van-tabs
-        v-model="active"
-        color="#007AE6"
-        :line-width="15"
-        :swipe-threshold="6"
-        sticky
-        animated
-        @click="goList"
-      >
-        <van-tab
-          v-for="item in tabs"
-          :key="item.index"
-          :title="item.typeName"
-        >
+      <van-tabs v-model="active" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated @click="goList" >
+        <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName">
         </van-tab>
       </van-tabs>
       <div class="data-container">
         <!-- 动态全部-->
-        <div
-          class="allDynamics-container"
-          v-if="active === 0 "
-        >
+        <div class="allDynamics-container" v-if="active === 0 " >
           <shadow-box>
             <div slot="container">
               <!-- active === 0? allDynamicCount :CardDynamicCount -->
-              <dynamics-data
-                :totalTitle="all.totalTitle"
-                :cardTitle="all.cardTitle"
-                :propertiesTitle="all.propertiesTitle"
-                :articleTitle="all.articleTitle"
-                :allDynamicCount="allDynamicCount"
-              ></dynamics-data>
+              <dynamics-data :totalTitle="all.totalTitle" :cardTitle="all.cardTitle" :propertiesTitle="all.propertiesTitle" :articleTitle="all.articleTitle" :allDynamicCount="allDynamicCount" ></dynamics-data>
             </div>
           </shadow-box>
-          <dynamics-list
-            @click="getupdateCustomerInfo"
-            :allDynamicList="allDynamicList"
-            :item="item"
-            
-          ></dynamics-list>
+          <dynamics-list  @click="getupdateCustomerInfo" :allDynamicList="allDynamicList" :item="item" ></dynamics-list>
+          
         </div>
-        <div v-show="customerCount !=0"
-            class="allDynamics-container"
-            v-if="active === 1"
-          >
-            <dynamics-card
-              @click="goallDynamics"
-              :cardDynamicCount="cardDynamicCount"
-              :cardDynamicListCount="cardDynamicListCount"
-              :cardDynamicList="cardDynamicList"
-            ></dynamics-card>
-          </div>
-        <div v-show="businessCardViews !=0"
-          class="allDynamics-container"
-          v-if="active === 2"
-        >
-          <properties
-            :info="item"
-            @click="itemProperties"
-            :houseDynamicList="houseDynamicList"
-            :houseDynamicCount="houseDynamicCount"
-            :avgStayLinkerTime="avgStayLinkerTime"
-          ></properties>
+        <div class="allDynamics-container" v-if="active === 1" >
+            <dynamics-card  @click="goallDynamics" :cardDynamicCount="cardDynamicCount" :cardDynamicListCount="cardDynamicListCount" :cardDynamicList="cardDynamicList" ></dynamics-card>
+           
         </div>
-        <div v-show="estateViews !=0"
-          class="allDynamics-container"
-          v-if="active === 3"
-        >
-          <dynamics-article
-            :articleDynamicCount="articleDynamicCount"
-            :articleDynamicList="articleDynamicList"
-            :avgStayArticleTime="avgStayArticleTime"
-            @click="itemArticleInfo"
-          ></dynamics-article>
+        <div class="allDynamics-container" v-if="active === 2" >
+          <properties :info="item" @click="itemProperties" :houseDynamicList="houseDynamicList" :houseDynamicCount="houseDynamicCount" :avgStayLinkerTime="avgStayLinkerTime" ></properties>
+        </div>
+        <div class="allDynamics-container" v-if="active === 3" >
+          <dynamics-article  :articleDynamicCount="articleDynamicCount" :articleDynamicList="articleDynamicList" :avgStayArticleTime="avgStayArticleTime"  @click="itemArticleInfo" ></dynamics-article>
         </div>
       </div>
 
@@ -88,6 +39,7 @@ import ShadowBox from 'COMP/ShadowBox'
 import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import Properties from 'COMP/Dynamics/Properties'
 import DynamicsArticle from 'COMP/Dynamics/DynamicsArticle'
+
 import DynamicsCard from 'COMP/Dynamics/DynamicsCard'
 import Tips from 'COMP/Dynamics/Tips'
 import dynamicsService from 'SERVICE/dynamicsService'
@@ -112,12 +64,12 @@ export default {
       },
 
       item: [],
-      active: '',
+      active: 0,
       tabs: [
-        { index: 0, type: '', typeName: '全部', page: 1, finished: false, list: [] },
-        { index: 1, type: '', typeName: '名片', page: 1, finished: false, list: [] },
-        { index: 2, type: '', typeName: '楼盘', page: 1, finished: false, list: [] },
-        { index: 3, type: '', typeName: '文章', page: 1, finished: false, list: [] }
+        { index: 0, type: '', typeName: '全部', page: 0, finished: false, list: [] },
+        { index: 1, type: '', typeName: '名片', page: 0, finished: false, list: [] },
+        { index: 2, type: '', typeName: '楼盘', page: 0, finished: false, list: [] },
+        { index: 3, type: '', typeName: '文章', page: 0, finished: false, list: [] }
       ],
       allDynamicCount: [],
       allDynamicList: [],
@@ -132,35 +84,16 @@ export default {
       avgStayArticleTime: 0,
       avgStayLinkerTime: 0,
       customerCount: this.$route.query.customerCount,
-      businessCardViews: this.$route.query.businessCardViews,
-      estateViews: this.$route.query.estateViews,
+      businessCardViews:this.$route.query.businessCardViews,
+      estateViews:this.$route.query.estateViews,
       articleCount: this.$route.query.articleCount
     }
   },
   created() {
     this.updateDynamicsCollect()
     this.getAllDynamicCount()
-    this.payloadTabs(this.tabs)
-    this.getCurrentType()
-     
   },
   methods: {
-    async payloadTabs(tabs) {
-      this.tabs.push({ index: 0, type: '', typeName: '全部', page: 1, finished: false, list: [] })
-      for (let i = 1; i < tabs.length; i++) {
-        tabs[i].index = i
-        tabs[i].page = 1
-        tabs[i].finished = false
-        tabs[i].list = []
-        this.tabs.push(tabs[i])
-      }
-    },
-    async getCurrentType() {
-       debugger
-      for (let temp of this.tabs) {
-        if (temp.index === this.activeIndex) return temp
-      }
-     },
     goList(index, title) {
       switch (index) {
         case 0:
@@ -177,7 +110,6 @@ export default {
           break
       }
     },
-    
     async updateDynamicsCollect() {
       const res = await dynamicsService.updateDynamicsCollect()
       
@@ -230,6 +162,7 @@ export default {
     },
     //文章数据动态列表
     async getArticleDynamicList() {
+      
       const res = await dynamicsService.getArticleDynamicList(1)
       this.articleDynamicList = res.records
     },
