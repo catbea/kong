@@ -84,7 +84,7 @@ class CommonService {
   cancelPayment(purchaseId) {
     return xhr({
       url: '/weixinPay/cancelPayment',
-      method: 'DELETE',
+      method: 'post',
       body: {purchaseId}
     })
   }

@@ -4,7 +4,7 @@
       <search :conf="searchInfo" @areaClick="areaClickHandle"></search>
     </div>
     <div>
-      <screen></screen>
+      <screen v-model="projectFilters"></screen>
     </div>
     <div class="market-box">
       <van-list
@@ -56,7 +56,7 @@ export default {
       console.log(this.userInfo.vipInfo, 'this.userInfo.vipInfo')
       this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
     } else {
-      this.searchInfo.siteText = this.userArea.selectedCity || this.userArea.city 
+      this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city 
     }
   },
   computed: {
@@ -64,6 +64,7 @@ export default {
   },
   data: () => ({
     type: 'vip',
+    projectFilters: {},
     packageIscheckedIds:[],
     checkedList: [],
     limitCount: 10,
@@ -117,6 +118,7 @@ export default {
           site: `${item.city} ${item.county} ${item.price} ${item.priceUnit}`, //'深圳 南山 120000元/㎡',
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
+          saleStatus: item.saleStatus,
           isChecked: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`

@@ -21,6 +21,7 @@ export const WX_JSSDK = 'WX_JSSDK'
 // market
 export const PROJECT_COUPONS = 'PROJECT_COUPONS'
 export const CURR_SELECTED_COUPON = 'CURR_SELECTED_COUPON'
+export const SET_MARKET_OPEN_CACHE = 'SET_MARKET_OPEN_CACHE'
 
 //新消息监听
 export const NEW_MSG_STATUS = 'NEW_MSG_STATUS'

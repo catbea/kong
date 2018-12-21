@@ -11,12 +11,13 @@
 import mycoupons from 'SERVICE/mycoupons'
 import CouponItem from 'COMP/User/myCoupon/CouponItem.vue'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     CouponItem
   },
   computed: {
-    ...mapGetters(['projectCoupons'])
+    ...mapGetters(['marketOpenCache', 'projectCoupons'])
   },
   data: () => ({
     couponList: [],
@@ -45,7 +46,8 @@ export default {
     // },
 
     couponItemClickHandle(item) {
-      this.$store.dispatch('setCurrSelectedCoupon', item)
+      // this.$store.dispatch('setCurrSelectedCoupon', item)
+      this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, {currSelectedCoupon: item}) )
       this.$router.go('-1')
     }
   }

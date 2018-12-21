@@ -7,6 +7,7 @@
       <title-bar :conf="titleInfo" @return="returnHandle"></title-bar>
     </div>
     <div class="user-market-box">
+      <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
         <div style="margin-left:16px">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
@@ -15,12 +16,13 @@
         <user-market v-if="marketShow" @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></user-market>
       </div>
       <p v-if="!marketShow" class="notMarket">暂未开通任何楼盘</p>
+      <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
         <div style="margin-left:16px">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
-        <close-market v-if="notMarketShow" v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
+        <close-market v-if="marketShow" v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
       </div>
     </div>
   </div>
@@ -46,9 +48,13 @@ export default {
     CloseMarket
   },
   data: () => ({
+    page:1,
+    pageSize: 10,
     showProjectName: '',
+    setShowName:null,
     showProjectFilters: {},
     notShowProjectName: '',
+    setNotShowName:null,
     notShowProjectFilters: {},
     searchShow: null,
     searchNotShow: null,
@@ -69,7 +75,7 @@ export default {
     myMarketShow: true,
     titleInfo: {
       title: '我的楼盘',
-      linkText: '切换开启展示楼盘',
+      linkText: '切换关闭展示楼盘',
       link: ''
     },
     searchInfo: {
@@ -83,22 +89,24 @@ export default {
       { title: '龙光·久钻', site: '深圳 南山 120000元/㎡', condition: ['热销中', '地铁房', '低密度'], open: '125次开通 11/22到期', flag: true, price: '1%+5万元/套' }
     ]
   }),
-  created() {
-    this.showGetMyMarketInfo()//请求展示楼盘
-    this.notShowGetMyMarketInfo()//请求不展示楼盘
-    this.getRecommendInfo()//请求轮播图数据
+ async created() {
+   await this.showGetMyMarketInfo()//请求展示楼盘
+   await this.notShowGetMyMarketInfo()//请求不展示楼盘
+   await this.getRecommendInfo()//请求轮播图数据
     this.searchInfo.siteText = this.userArea.city
+   await this.marketShowHandle()//展示/不展示都没数据时
   },
   computed: {
     ...mapGetters(['userArea'])
   },
   watch: {
     showProjectName(val) {
-      clearTimeout(setShowName)
-      const setShowName = setTimeout(() => {
-        this.showGetMyMarketInfo()
+      clearTimeout(this.setShowName)
+       this.setShowName = setTimeout(() => {
+         this.page = 1
+        this.showGetMyMarketInfo(val, this.showProjectName, this.page)//根据搜索字请求展示的楼盘数据
         console.log(this.showProjectName, '输入的搜索条件')
-        clearTimeout(setShowName)
+        clearTimeout(this.setShowName)
       }, 500)
     },
     showProjectFilters: {
@@ -109,15 +117,17 @@ export default {
       deep: true
     },
     notShowProjectName(val) {
-      clearTimeout(setNotShowName)
-      const setNotShowName = setTimeout(() => {
-        this.notShowGetMyMarketInfo()
-        console.log(this.notShowprojectName, '输入的搜索条件')
-        clearTimeout(setNotShowName)
+      clearTimeout(this.setNotShowName)
+      this.setNotShowName = setTimeout(() => {
+        this.page = 1
+        this.notShowGetMyMarketInfo(val, this.notShowprojectName, this.page)//根据搜索字请求不展示的楼盘数据
+        console.log(this.notShowProjectName, '输入的搜索条件')
+        clearTimeout(this.setNotShowName)
       }, 500)
     },
     notShowProjectFilters: {
       handler(val) {
+        this.page = 1
         this.notShowGetMyMarketInfo(this.projectName, val, this.page)
       },
       deep: true
@@ -134,6 +144,13 @@ export default {
         this.searchShow = true
       } else {
         this.searchShow = false
+      }
+    },
+    marketShowHandle(){//展示/不展示都没数据时
+      if (this.showMarketList.length == 0&&this.notShowMarketList.length==0) {
+        this.marketShow = false
+      } else {
+        this.marketShow = true
       }
     },
     pushMasterHandle(n) {
@@ -235,11 +252,7 @@ export default {
       console.log(this.showMarketList,'展示的楼盘');
       
       this.searchShowNum = resShow.records.length
-      if (this.showMarketList.length == 0) {
-        this.marketShow = false
-      } else {
-        this.marketShow = true
-      }
+      
     },
     async notShowGetMyMarketInfo(name = '', filters = {}, page = 1) {
       //请求不展示的楼盘数据
@@ -250,11 +263,6 @@ export default {
       this.searchNotShowNum = resNotShow.records.length
       this.notShowMarketList =resNotShow.records
       console.log(this.notShowMarketList,'不展示的楼盘');
-      if (this.notShowMarketList.length == 0) {
-        this.notMarketShow = false
-      } else {
-        this.notMarketShow = true
-      }
     },
     returnHandle() {
       //切换展示与否
@@ -269,8 +277,14 @@ export default {
       this.$router.push('/marketDetail/share')
     },
     closeCut(n) {
-      // this.myMarketList[n].displayFlag='1'
-      //  console.log(this.myMarketList[n])
+      this.notShowMarketList.push(n)
+      console.log(this.notShowMarketList,'不展示的楼盘');
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        const element = this.showMarketList[index];
+        if(n.linkerId==element.linkerId){
+          this.showMarketList.splice(index,1)
+        }
+      }
     },
     returnMasterHandle(n) {
       this.masterList.push(this.myMarketList[n])
@@ -279,7 +293,14 @@ export default {
       this.commonList.push(this.myMarketList[n])
     },
     openCut(n) {
-      // this.myMarketList[n].displayFlag='0'
+      this.showMarketList.push(n)
+      console.log(this.showMarketList,'展示的楼盘');
+      for (let index = 0; index < this.notShowMarketList.length; index++) {
+        const element = this.notShowMarketList[index];
+        if(n.linkerId==element.linkerId){
+          this.notShowMarketList.splice(index,1)
+        }
+      }
     }
   }
 }

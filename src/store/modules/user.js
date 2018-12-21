@@ -9,6 +9,7 @@ const state = {
     vipInfo: {
       city: '广州市'
     },
+    majorCity: '南京市',
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
