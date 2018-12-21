@@ -4,7 +4,7 @@
       <search :conf="searchInfo" @areaClick="areaClickHandle"></search>
     </div>
     <div>
-      <screen v-model="projectFilters"></screen>
+      <screen v-model="projectFilters" :local="userArea.selectedCity"></screen>
     </div>
     <div class="market-box">
       <van-list

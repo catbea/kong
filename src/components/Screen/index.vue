@@ -8,7 +8,7 @@
       <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
     </ul>
     <div class="choose-container" @click="coverClickHandler">
-      <area-filter :show="currentIndex===0" v-model="filters.baseFilters.area"></area-filter>
+      <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area"></area-filter>
       <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters"></more-filter>
@@ -22,6 +22,7 @@ import PriceFilter from './PriceFilter'
 import PopularityFilter from './PopularityFilter'
 import MoreFilter from './MoreFilter'
 import SortWay from './SortWay'
+import { mapGetters } from 'vuex'
 import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 export default {
   props: {
@@ -30,6 +31,7 @@ export default {
         return {}
       }
     },
+    local: { type: String, default: '' },
     height: { type: String, default: '14rem' }
   },
   components: {
@@ -47,14 +49,21 @@ export default {
         popularity: '-1,-1',
         sort: ''
       },
+      localCity:'',
       moreFilters: {}
     },
     conf: [{ index: 0, name: '区域', checked: false }, { index: 1, name: '均价', checked: false }, { index: 2, name: '人气', checked: false }, { index: 3, name: '更多', checked: false }],
-    local: '深圳市',
     currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
     arrowDownIcon: require('IMG/market/listArrowDown.png')
   }),
+  created() {
+    if (this.local === '') {
+      this.localCity = this.userInfo.majorCity !== '' ? this.userInfo.majorCity : this.userArea.city
+    }else{
+      this.localCity = this.local
+    }
+  },
   methods: {
     itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
@@ -79,7 +88,13 @@ export default {
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
       }
+    },
+    local(val){
+      this.localCity = val
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo', 'userArea'])
   }
 }
 </script>
