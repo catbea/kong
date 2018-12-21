@@ -212,6 +212,8 @@ export default {
         element.masterRecommand='0'
       }
     }
+    this.commonList = this.masterList.filter(item=>item.masterRecommand==2);
+    this.masterList = this.masterList.filter(item=>item.masterRecommand==1);
     },
     async getChangeMarketData(){
       const res = await userService.changeMarketData()
