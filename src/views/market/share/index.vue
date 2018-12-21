@@ -3,10 +3,11 @@
     <div class="box" v-show="status === 1">
       <div class="share-top" id="share-top">
         <!--  -->
-        <img class="avatar-img" :src="buildingInfo.postersUrl" alt>
+        <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="buildingInfo.qrCode">
         <span class="distinguish-span">长按识别更多</span>
+        <span class="poster-describe">{{buildingInfo.posterDescribe}}</span>
         <span class="building-name">{{buildingInfo.linkerName}}</span>
         <span class="building-price">价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
         <img class="avatar-view" :src="buildingInfo.avatarMediaid">
@@ -128,6 +129,15 @@ export default {
       right: 20px;
       top: 317px;
       z-index: 2;
+    }
+
+    > .poster-describe {
+      position: absolute;
+      color: #e5b37b;
+      font-size: 29px;
+      z-index: 2;
+      left: 20px;
+      top: 260px;
     }
 
     > .building-name {
