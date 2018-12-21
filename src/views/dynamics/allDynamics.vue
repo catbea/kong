@@ -132,9 +132,9 @@ export default {
       avgStayArticleTime: 0,
       avgStayLinkerTime: 0,
       customerCount: this.$route.query.customerCount,
-      businessCardViews:this.$route.query.businessCardViews,
-      estateViews:this.$route.query.estateViews,
-      activeIndex:0,
+      businessCardViews: this.$route.query.businessCardViews,
+      estateViews: this.$route.query.estateViews,
+      articleCount: this.$route.query.articleCount
     }
   },
   created() {

@@ -1,8 +1,9 @@
 <template>
   <div class="family-list-page">
-    <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
-          <van-tab v-for="(item,index) in tabs" :key="index" :title="item.houseType" class="list-wrap">
-           <keep-alive>
+    <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated class='wrap'>
+          <van-tab v-for="(item,index) in tabs" :key="index" :title="item.houseType" >
+           <div class="list-wrap">
+             <keep-alive>
               <div class="family-list-page-box">
               <div class="content" v-for="(itemA,indexA) in item.cpHouseTypeDetail" :key="indexA">
               <div class="big-box">
@@ -25,6 +26,7 @@
               </div>
             </div>
           </keep-alive>
+           </div>
           </van-tab>
       </van-tabs>
   </div>
@@ -84,12 +86,12 @@ export default {
   background: #ffffff;
   .list-wrap{
     width:100%;
-    height:100%;
-    overflow: auto;
+    height:623px;
+    overflow-y: auto;
   }
   .family-list-page-box {
     width: 375px;
-    height: 100%;
+    // height: 100%;
     display: flex;
     flex-direction: column;
     .content {

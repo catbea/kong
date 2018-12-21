@@ -48,11 +48,13 @@ export default {
   methods: {
     //动态详情
     async goMessageInfo(num) {
+      debugger
       console.log('num.customerCount.val', num.customerCount)
       console.log('num.businessCardViews.val', num.businessCardViews)
       console.log('num.estateViews.val', num.estateViews)
+      console.log('num.articleCount.val', num.articleCount)
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
-        this.$router.push({ path: '/dynamics/allDynamics', query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
+        this.$router.push({ path: '/dynamics/allDynamics', query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount } })
       }else {
         Dialog.alert({
           title: '暂无任何动态',
@@ -80,6 +82,10 @@ export default {
         estateViews: {
           val: res.scanLinkerCount,
           change: res.unreadScanLinkerCount
+        },
+        articleCount: {
+          val: res.scanArticleCount ,
+          change: res.unreadScanArticleCount
         },
         simpleDynamic: res.simpleDynamicVOs
       }
