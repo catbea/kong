@@ -214,7 +214,7 @@ export default {
     othersTitleConf: {
       title: '其他楼盘',
       linkText: '全部楼盘',
-      link: '/'
+      link: '/market'
     },
     swiperOption: {
       slidesPerView: 2,
