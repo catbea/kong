@@ -33,7 +33,8 @@ class CustomService {
         clientName,
         current,
         size,
-        sortField
+        sortField,
+        attentionStatus
       }
     })
   }

@@ -17,7 +17,7 @@
               <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
             <li class="site">{{itemInfo.linkerAddress}}</li>
-            <tag-group :arr="tags.slice(0,3)"></tag-group>
+            <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>

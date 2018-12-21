@@ -293,11 +293,12 @@ class UserService {
 
   /**
    * 获取热门楼盘
+   * @param {Object} payload 组装参数 
    */
-  getHotLinker() {
+  getHotLinker(payload) {
     return xhr({
       url: '/linker/getLinkerHot',
-      body: {}
+      body: payload
     })
   }
 

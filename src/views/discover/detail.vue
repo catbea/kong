@@ -89,9 +89,9 @@
           <i class="icon iconfont icon-package_Optimal"></i>收藏
         </div>
       </div>
-      <div class="share-btn" @click="shareHandler">
+      <!-- <div class="share-btn" @click="shareHandler">
         <i class="icon iconfont icon-Building_list_share"></i>分享
-      </div>
+      </div> -->
     </div>
     <!-- 小程序名片 -->
     <div class="app-card"></div>
@@ -104,6 +104,7 @@ import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import wechatApi from '@/utils/wechatApi'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
@@ -143,13 +144,16 @@ export default {
     },
     openPopup: false,
     closeImg: require('IMG/user/close_popup.png'),
-    qrcodeInfo: {}
+    qrcodeInfo: {},
+    shareData: null
   }),
   created() {
+    // wechatApi.wx.showMenuItems()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.getDetail()
     this.getQrCode()
+    this.shareHandler()
   },
   methods: {
     async getDetail() {
@@ -166,6 +170,10 @@ export default {
         distributorName: this.info.distributorName,
         enterpriseName: this.info.enterpriseName,
         institutionName:this.info.institutionName
+      }
+      this.shareData = {
+        title: this.info.title,
+        image: this.info.image
       }
     },
 
@@ -222,7 +230,10 @@ export default {
       // }
     },
     // 分享
-    shareHandler() {}
+    shareHandler() {
+      wechatApi.wechatShare(this.shareData)
+    },
+
   },
   watch:{
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面

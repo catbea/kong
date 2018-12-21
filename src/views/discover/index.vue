@@ -46,7 +46,7 @@ export default {
   methods: {
     // 获取轮播和tabs配置
     async getInformationCarousel() {
-      const res = await discoverService.informationCarousel(this.userArea.city)
+      const res = await discoverService.informationCarousel(this.userInfo.majorCity)
       this.payloadTabs(res.infoSettingList)
       this.swipeList = res.infoCarouselList
     },
@@ -62,7 +62,7 @@ export default {
     },
     async onLoad() {
       let current = this.getCurrentType()
-      const result = await discoverService.getDiscoverList(this.userArea.city, current.type, current.page)
+      const result = await discoverService.getDiscoverList(this.userInfo.majorCity, current.type, current.page)
       current.list = current.list.concat(result.records)
       current.page++
       if (result.pages === 0 || current.page === result.pages + 1) current.finished = true
@@ -75,11 +75,11 @@ export default {
       }
     },
     swipeItemClick(item){
-      this.$router.push({name: 'discover-detail', params: {id: item.id, city: this.userArea.city}})
+      this.$router.push({name: 'discover-detail', params: {id: item.id, city: this.userInfo.majorCity}})
     }
   },
   computed: {
-    ...mapGetters(['userArea'])
+    ...mapGetters(['userInfo'])
   }
 }
 </script>
