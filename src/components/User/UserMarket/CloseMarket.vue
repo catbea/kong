@@ -1,5 +1,5 @@
 <template>
-  <div class="close-market-page" v-if="dataArr.displayFlag==1">
+  <div class="close-market-page">
     <div class="close-market-page-box" @click="skipMarketRetuen">
       <div class="close-market-page-box-top">
         <div class="close-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
