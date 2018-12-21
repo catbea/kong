@@ -34,7 +34,7 @@
                   报备时间
                   <span class="container-list-title">{{item.fillingTime}}</span>
                 </span>
-                <button class="container-list-botton" @click="reportInfo(item)">查看详情</button>
+                <span class="container-list-botton" @click="reportInfo(item)">查看详情</span>
               </p>
             </div>
             <p class="container-list">

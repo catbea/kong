@@ -38,11 +38,11 @@
                   交易单号
                   <span class="container-list-title">{{item.purchaseCode}}</span>
                 </span>
-                <Button
+                <span
                   class="container-list-botton"
                   :data-clipboard-text="item.purchaseCode"
                   @click="copy"
-                >复制</Button>
+                >复制</span>
               </p>
               <p class="container-list container-list-left bill-container-price">
                 总价
@@ -195,7 +195,7 @@ export default {
           line-height: 20px;
           // margin-left: 10px;
           // margin-right: 10px;
-          width: 60px;
+          width: 48px;
           height: 20px;
           border-radius: 22px;
           border: 1px solid;
