@@ -8,7 +8,7 @@
       <my-estate-list :list="estateListData" @click="goRecommendInfo" @share="shareHandler"/>
     </div>
     <div class="list-container" v-if="hotEstateListData&&hotEstateListData.length>0">
-      <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @share="shareHandler"/>
+      <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @open="openHandler"/>
     </div>
   </div>
 </template>
@@ -122,6 +122,9 @@ export default {
     },
     shareHandler(info) {
       this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
+    },
+    openHandler(info) {
+      this.$router.push({name: 'marketDetail-open', params: {id: info.linkerId} })
     }
   },
   beforeDestroy() {

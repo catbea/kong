@@ -1,7 +1,7 @@
 <template>
   <div class="hot-estate-list">
     <title-bar class="title-container" :conf="titleBarConf" v-if="list&&list.length>0"></title-bar>
-    <market-describe v-for="(item,index) in list" :key="index" :itemInfo="item" @click="godynamicsInfo(item)"></market-describe>
+    <market-describe v-for="(item,index) in list" :key="index" :itemInfo="item" @skipDetail="godynamicsInfo(item)" @openReturnHandle="openHandler(item)"></market-describe>
   </div>
 </template>
 <script>
@@ -28,7 +28,7 @@ export default {
     godynamicsInfo(item) {
       this.$emit('click', item)
     },
-    shareHandler(item) {
+    openHandler(item) {
       this.$emit('open', item)
     }
   },
