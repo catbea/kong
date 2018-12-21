@@ -2,6 +2,7 @@
 // import wx from 'http://res.wx.qq.com/open/js/jweixin-1.2.0.js'
 import store from '@/store/'
 import commonService from '@/services/commonService'
+
 class WechatApi {
   constructor() {
     this.wx = wx
@@ -46,31 +47,41 @@ class WechatApi {
   }
 
   async wechatShare(shareData) {
-    this.wx.ready(function () {
-      // 分享到好友
-      this.wx.onMenuShareWechat({
-        title: shareData.title, // 分享标题
-        link: `${window.location.href}`, // 分享链接
-        imgUrl: shareData.image, // 分享图标
-        success: function () {
-          // 用户确认分享后执行的回调函数
-        },
-        cancel: function () {
-          // 用户取消分享后执行的回调函数
-        }
-      })
-      // 分享到朋友圈
-      this.wx.onMenuShareTimeline({
-        title: shareData.title, // 分享标题
-        link: `${window.location.href}`, // 分享链接
-        imgUrl: shareData.image, // 分享图标
-        success: function () {
-          // 用户确认分享后执行的回调函数
-        },
-        cancel: function () {
-          // 用户取消分享后执行的回调函数
-        }
-      })
+    return new Promise((resolve, reject) => {
+      console.log(shareData)
+      if (shareData) {
+        alert(shareData)
+      }
+      // this.wx.ready(function () {
+        // 分享到好友
+        this.wx.onMenuShareWechat({
+          title: shareData.title, // 分享标题
+          link: shareData.link, // 分享链接
+          imgUrl: shareData.image, // 分享图标
+          success: function () {
+            // 用户确认分享后执行的回调函数
+            resolve()
+          },
+          cancel: function () {
+            // 用户取消分享后执行的回调函数
+            reject()
+          }
+        })
+        // 分享到朋友圈
+        this.wx.onMenuShareTimeline({
+          title: shareData.title, // 分享标题
+          link: shareData.link, // 分享链接
+          imgUrl: shareData.image, // 分享图标
+          success: function () {
+            // 用户确认分享后执行的回调函数
+            resolve()
+          },
+          cancel: function () {
+            // 用户取消分享后执行的回调函数
+            reject()
+          }
+        })
+      // })
     })
   }
 

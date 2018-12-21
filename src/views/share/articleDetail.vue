@@ -161,7 +161,7 @@ export default {
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.agentId, '2')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.agentId, '1')
       this.info = res
 
       this.infoId = res.id
@@ -175,12 +175,9 @@ export default {
         enterpriseName: this.info.enterpriseName,
         institutionName:this.info.institutionName
       }
-      let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + this.city
       this.shareData = {
         title: this.info.title,
-        image: this.info.image,
-        link: host
+        image: this.info.image
       }
     },
 

@@ -6,7 +6,7 @@
       </div>
       <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
-    <screen v-model="filter"></screen>
+    <screen v-model="projectFilters"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
@@ -36,7 +36,7 @@ export default {
     page: 1,
     loading: false,
     finished: false,
-    filter: null,
+    projectFilters: {},
     searchContent: {
       siteText: '深圳',
       placeholder: '请输入平台名称'
@@ -48,12 +48,23 @@ export default {
     borderBottom: true,
     containerHeight: '0'
   }),
+  watch: {
+    projectFilters: {
+      handler(val) {
+        this.page = 1
+        // this.queryBuildingList(this.projectName, val, this.page)
+      },
+      deep: true
+    }
+  },
   created() {
     this.getBrokerInfo()
   },
   methods: {
-    async onLoad() {
-      //楼盘信息请求
+    onLoad() {
+      this.getProjectList()
+    },
+    async getProjectList() {
       const res = await marketService.getMarketDescribe(this.page)
       this.marketList = this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {

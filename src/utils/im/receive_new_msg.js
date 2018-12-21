@@ -34,7 +34,7 @@ function initMsg(toAcc, msgFunction) {
   selSess = new webim.Session(webim.SESSION_TYPE.C2C, toAccount, toAccount, '', Math.round(new Date().getTime() / 1000));
   webim.setAutoRead(selSess, true, true);
 
-  // var msg = onSendMsg("11", true, 4, "");
+  var msg = onSendMsg("11", true, 4, "");
 }
 
 //设置发送对象
@@ -181,7 +181,12 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime,) {
     let ext = contentObj.ext;
     let custom_obj = new webim.Msg.Elem.Custom(JSON.stringify(data)+'', desc+'', JSON.stringify(ext)+'');
     msg.addCustom(custom_obj);
-
+  }  else if(msgType == 4) {
+    let desc = msgType
+    let data = '1';
+    let ext = {};
+    let custom_obj = new webim.Msg.Elem.Custom(JSON.stringify(data)+'', desc+'', JSON.stringify(ext)+'');
+    msg.addCustom(custom_obj);
   } else {
     text_obj = new webim.Msg.Elem.Text(msgtosend);
     msg.addText(text_obj);
