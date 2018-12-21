@@ -69,7 +69,7 @@ export default {
     myMarketShow: true,
     titleInfo: {
       title: '我的楼盘',
-      linkText: '切换开启展示楼盘',
+      linkText: '切换关闭展示楼盘',
       link: ''
     },
     searchInfo: {
@@ -269,8 +269,14 @@ export default {
       this.$router.push('/marketDetail/share')
     },
     closeCut(n) {
-      // this.myMarketList[n].displayFlag='1'
-      //  console.log(this.myMarketList[n])
+      this.notShowMarketList.push(n)
+      console.log(this.notShowMarketList,'不展示的楼盘');
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        const element = this.showMarketList[index];
+        if(n.linkerId==element.linkerId){
+          this.showMarketList.splice(index,1)
+        }
+      }
     },
     returnMasterHandle(n) {
       this.masterList.push(this.myMarketList[n])
@@ -279,7 +285,14 @@ export default {
       this.commonList.push(this.myMarketList[n])
     },
     openCut(n) {
-      // this.myMarketList[n].displayFlag='0'
+      this.showMarketList.push(n)
+      console.log(this.showMarketList,'展示的楼盘');
+      for (let index = 0; index < this.notShowMarketList.length; index++) {
+        const element = this.notShowMarketList[index];
+        if(n.linkerId==element.linkerId){
+          this.notShowMarketList.splice(index,1)
+        }
+      }
     }
   }
 }
