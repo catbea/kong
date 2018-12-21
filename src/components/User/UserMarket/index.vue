@@ -1,7 +1,6 @@
 <template>
   <div
     class="user-market-page"
-    v-if="dataArr.displayFlag==0"
   >
     <div
       class="user-market-page-box"
@@ -35,7 +34,7 @@
             </div>
             <span
               class="bg_img icon-share"
-              @click.stop="shareMarket"
+              @click.stop="skipShare"
               :style="{backgroundImage:'url('+imgShare+')'}"
             ></span>
           </li>
@@ -57,7 +56,7 @@
             >{{status[dataArr.saleStatus]}}</div>
             <div
               class="tag-item"
-              v-for="(item,index) in dataArr.linkerTags"
+              v-for="(item,index) in dataArr.linkerTags.slice(0,2)"
               :key="index"
             >{{item}}</div>
           </li>
@@ -214,14 +213,26 @@ export default {
         this.stickSwitch = 10
         this.dataArr.recommand = 10
         //将当前点击的楼盘置顶
-        this.$parent.marketList.unshift(this.$parent.marketList[index])
-        this.$parent.marketList.splice(index + 1, 1)
-        console.log(this.$parent.marketList, '这是展示的父组件的')
+        this.$parent.showMarketList.unshift(this.$parent.showMarketList[index])
+        this.$parent.showMarketList.splice(index + 1, 1)
+        Dialog.alert({
+          message: '楼盘置顶成功',
+          className:'hint-alert'
+        }).then(() => {
+          // on close
+        });
+        console.log(this.$parent.showMarketList, '这是展示的父组件的')
       } else if (this.dataArr.recommand == 10) {
         this.stickSwitch = 0
         this.dataArr.recommand = 0
         //将当前点击的楼盘取消置顶
-        console.log(this.$parent.marketList, '这是展示的父组件的')
+        Dialog.alert({
+          message: '楼盘取消置顶成功',
+          className:'hint-alert'
+        }).then(() => {
+          // on close
+        });
+        console.log(this.$parent.showMarketList, '这是展示的父组件的')
       }
       this.changeUserStatus(this.linkerId, 40, this.stickSwitch)//改置顶状态
       this.show = !this.show
@@ -232,9 +243,21 @@ export default {
     async masterHandle (n) {
       if(this.masterButtonShow===false){
        await this.changeUserStatus(this.linkerId, 20, 1)//改为大师推荐
+       Dialog.alert({
+          message: '大师推荐成功',
+          className:'hint-alert'
+        }).then(() => {
+          // on close
+        });
        this.$emit('pushMaster',this.dataArr)
       }else{
         await this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
+        Dialog.alert({
+          message: '取消大师推荐成功',
+          className:'hint-alert'
+        }).then(() => {
+          // on close
+        });
         this.$emit('spliceMaster',this.dataArr)
       }
       this.show = !this.show
@@ -246,9 +269,21 @@ export default {
       // this.$emit('returncommonHandle',this.marketIndex)
       if(this.commonButtonShow===false){
         this.changeUserStatus(this.linkerId, 20, 2)//改为普通推荐
+        Dialog.alert({
+          message: '普通推荐成功',
+          className:'hint-alert'
+        }).then(() => {
+          // on close
+        });
         this.$emit('pushCommon',this.dataArr)
       }else{
         this.changeUserStatus(this.linkerId, 20, 0)//改为未推荐
+        Dialog.alert({
+          message: '取消普通推荐成功',
+          className:'hint-alert'
+        }).then(() => {
+          // on close
+        });
         this.$emit('spliceCommon',this.dataArr)
       }
       this.show = !this.show
@@ -263,23 +298,24 @@ export default {
       }).then(() => {
         // on confirm
         this.stickShow = false
+        this.show= !this.show
         this.exhibitionMarketShow = false
         this.changeUserStatus(this.linkerId, 30, 1)//改为不展示
         this.dataArr.displayFlag = 1
         // this.dataArr.displayFlag='1'
-        // this.$emit('closeCut',this.marketIndex)
+        this.$emit('closeCut',this.dataArr)
       }).catch(() => {
         // on cancel
       });
     },
     goRenew (linkerId) {//去续费
-      this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
+      this.$router.push({ name: 'marketDetail-open', params: { id:linkerId } })
     },
     apostropheReturn () {
       this.$emit("apostropheReturn", 1)
     },
-    shareMarket() {
-      this.$router.push('/marketDetail/share')
+    skipShare() {
+      this.$router.push({name:'market-share',params:{id:this.linkerId}})
     },
     skipMarketRetuen () {
       this.$emit('skipMarketRetuen', 1)
@@ -497,6 +533,17 @@ export default {
   }
 }
 //弹出确认框
+ .hint-alert{
+   width: 280px;
+  // height: 168px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  .van-dialog__confirm{
+    border-top:1px solid #ebedf0;
+  }
+ }
 .show-Dialog {
   width: 280px;
   height: 168px;
