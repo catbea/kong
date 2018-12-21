@@ -13,7 +13,11 @@
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters"></screen>
         </div>
-        <user-market v-if="marketShow" @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></user-market>
+        <keep-alive>
+          <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showOnLoad">
+            <user-market v-if="marketShow" @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></user-market>
+          </van-list>
+        </keep-alive>
       </div>
       <p v-if="!marketShow" class="notMarket">暂未开通任何楼盘</p>
       <!-- 不展示的楼盘 -->
@@ -22,7 +26,11 @@
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
-        <close-market v-if="marketShow" v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
+        <keep-alive>
+          <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowOnLoad">
+            <close-market v-if="marketShow" v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
+          </van-list>
+        </keep-alive>
       </div>
     </div>
   </div>
@@ -48,14 +56,19 @@ export default {
     CloseMarket
   },
   data: () => ({
-    page:1,
-    pageSize: 10,
-    showProjectName: '',
+    showLoading:false,
+    showFinished:false,//展示
+    notShowLoading:false,
+    notShowFinished:false,//不展示
+    showPage:1,
+    notShowPage:1,
+    pageSize: 20,
+    showProjectName: '',//展示搜索名
     setShowName:null,
-    showProjectFilters: {},
-    notShowProjectName: '',
+    showProjectFilters: {},//展示的筛选类型
+    notShowProjectName: '',//不展示搜索名
     setNotShowName:null,
-    notShowProjectFilters: {},
+    notShowProjectFilters: {},//不展示的筛选类型
     searchShow: null,
     searchNotShow: null,
     searchShowNum: 0,
@@ -104,7 +117,7 @@ export default {
       clearTimeout(this.setShowName)
        this.setShowName = setTimeout(() => {
          this.page = 1
-        this.showGetMyMarketInfo(val, this.showProjectName, this.page)//根据搜索字请求展示的楼盘数据
+        this.showGetMyMarketInfo(val, this.showProjectFilters, this.showPage)//根据搜索字请求展示的楼盘数据
         console.log(this.showProjectName, '输入的搜索条件')
         clearTimeout(this.setShowName)
       }, 500)
@@ -112,7 +125,7 @@ export default {
     showProjectFilters: {
       handler(val) {
         this.page = 1
-        this.showGetMyMarketInfo(this.projectName, val, this.page)
+        this.showGetMyMarketInfo(this.showProjectName, val, this.showPage)
       },
       deep: true
     },
@@ -120,7 +133,7 @@ export default {
       clearTimeout(this.setNotShowName)
       this.setNotShowName = setTimeout(() => {
         this.page = 1
-        this.notShowGetMyMarketInfo(val, this.notShowprojectName, this.page)//根据搜索字请求不展示的楼盘数据
+        this.notShowGetMyMarketInfo(val, this.notShowProjectFilters, this.notShowPage)//根据搜索字请求不展示的楼盘数据
         console.log(this.notShowProjectName, '输入的搜索条件')
         clearTimeout(this.setNotShowName)
       }, 500)
@@ -128,12 +141,18 @@ export default {
     notShowProjectFilters: {
       handler(val) {
         this.page = 1
-        this.notShowGetMyMarketInfo(this.projectName, val, this.page)
+        this.notShowGetMyMarketInfo(this.notShowProjectName, val, this.notShowPage)
       },
       deep: true
     }
   },
   methods: {
+    showOnLoad(){//展示数据初始化
+      this.showGetMyMarketInfo(this.showProjectName,this.showProjectFilters, this.showPage)
+    },
+    notShowOnLoad(){//不展示数据初始化
+      this.notShowGetMyMarketInfo(this.notShowProjectName,this.notShowProjectFilters, this.notShowPage)
+    },
     // 搜索区域点击处理
     areaClickHandler() {
       this.$router.push({ name: 'area-select' })
@@ -244,25 +263,51 @@ export default {
     },
     async showGetMyMarketInfo(name = '', filters = {}, page = 1) {
       //请求展示的楼盘数据
-      let obj = {}
+      let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
+      let obj = screenFilterHelper(name, mergeFilters)
+      obj.current = page
+      obj.size = this.pageSize
       obj.displayFlag=0
-      obj.projectName=name
+      obj = Object.assign(obj, this.userArea)
+      // let obj = {}
+      // obj.projectName=name
+      // obj.displayFlag=0
       const resShow = await userService.getMyMarket(obj)
       this.showMarketList = resShow.records
       console.log(this.showMarketList,'展示的楼盘');
-      
-      this.searchShowNum = resShow.records.length
-      
+      this.searchShowNum = resShow.records.length//展示的楼盘个数
+      if(this.searchShowNum>20){
+        this.showMarketList=this.showMarketList.concat(resShow.records)
+        if (resShow.pages === 0 || this.showPage === resShow.pages) {
+          this.showFinished = true
+        }
+        this.showPage++
+        this.showLoading = false
+      }
     },
     async notShowGetMyMarketInfo(name = '', filters = {}, page = 1) {
       //请求不展示的楼盘数据
-      let obj = {}
+      let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
+      let obj = screenFilterHelper(name, mergeFilters)
+      obj.current = page
+      obj.size = this.pageSize
       obj.displayFlag=1
-      obj.projectName=name
+      obj = Object.assign(obj, this.userArea)
+      // let obj = {}
+      // obj.projectName=name
+      // obj.displayFlag=1
       const resNotShow = await userService.getMyMarket(obj)
-      this.searchNotShowNum = resNotShow.records.length
+      this.searchNotShowNum = resNotShow.records.length//不展示的楼盘个数
       this.notShowMarketList =resNotShow.records
       console.log(this.notShowMarketList,'不展示的楼盘');
+      if(this.searchNotShowNum>20){
+        this.notShowMarketList=this.notShowMarketList.concat(resNotShow.records)
+        if (resNotShow.pages === 0 || this.notShowPage === resNotShow.pages) {
+          this.notShowFinished = true
+        }
+        this.notShowPage++
+        this.notShowLoading = false
+      }
     },
     returnHandle() {
       //切换展示与否
