@@ -49,7 +49,10 @@ class WechatApi {
   async wechatShare(shareData) {
     return new Promise((resolve, reject) => {
       console.log(shareData)
-      this.wx.ready(function () {
+      if (shareData) {
+        alert(shareData)
+      }
+      // this.wx.ready(function () {
         // 分享到好友
         this.wx.onMenuShareWechat({
           title: shareData.title, // 分享标题
@@ -78,7 +81,7 @@ class WechatApi {
             reject()
           }
         })
-      })
+      // })
     })
   }
 

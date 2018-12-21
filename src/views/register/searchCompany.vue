@@ -96,7 +96,9 @@ export default {
     onSelectHandler(index) {
       let _userRegistInfo = {
         distributorId: this.searchLists[index].childDistributorId,
-        distributorName: this.searchLists[index].childDistributorName
+        distributorName: this.searchLists[index].childDistributorName,
+        institutionId: this.searchLists[index].childDistributorId,
+        institutionName: this.searchLists[index].childDistributorName
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
       this.$router.back(-1)
