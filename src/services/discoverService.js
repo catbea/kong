@@ -38,14 +38,18 @@ class DiscoverService {
    * @param {*} infoId
    * @param {*} city
    * @param {*} enterpriseId
+   * @param {*} agentId
+   * @param {*} type  1-游客 2-经纪人
    */
-  getDiscoverDetail(infoId, city, enterpriseId) {
+  getDiscoverDetail(infoId, city, enterpriseId, agentId, type) {
     return xhr({
       url: '/cpInformation/informationPreview',
       body: {
         infoId,
         city,
-        enterpriseId
+        enterpriseId,
+        agentId,
+        type
       }
     })
   }

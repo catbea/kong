@@ -4,7 +4,7 @@
       <div class="search-view">
         <search :conf="searchInfo" v-model="projectName" @areaClick="areaClickHandler"></search>
       </div>
-      <screen v-model="projectFilters"></screen>
+      <screen v-model="projectFilters" :local="userArea.myReportCity"></screen>
     </div>
     <div class="market-box">
       <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
@@ -60,7 +60,7 @@ export default {
     ...mapGetters(['userArea'])
   },
   created() {
-    this.searchInfo.siteText = this.userArea.city
+    this.searchInfo.siteText = this.userArea.myReportCity === '' ? this.userArea.city : this.userArea.myReportCity
   },
   methods: {
     onLoad() {
@@ -68,7 +68,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select' })
+      this.$router.push({path: '/public/area-select/', query: {fromPage:'myReport'}})
     },
     async queryBuildingList(name = '', filters = {}, page = 1) {
       let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
