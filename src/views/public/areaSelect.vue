@@ -3,14 +3,14 @@
     <div class="search-box van-hairline--bottom">
       <search :conf="searchInfo"></search>
     </div>
-    <div class="area-selection-box" >
-      <div class="current-location" >
+    <div class="area-selection-box">
+      <div class="current-location">
         <p class="location-str">
           {{userArea.city}}
           <span>当前城市</span>
         </p>
       </div>
-      <div class="selection-box" >
+      <div class="selection-box">
         <div class="hot-container">
           <p class="hot-title">热门城市</p>
           <div class="hot-item-content">
@@ -68,13 +68,24 @@ export default {
   },
   methods: {
     itemClick(val) {
-      console.log(val)
-      if (this.fromPage == 'myMember') {
-        this.$store.commit(types['USER_AREA'], {vipSelectedCity: val})
-      } else {
-        this.$store.commit(types['USER_AREA'], {selectedCity: val})
+      console.log(val,this.fromPage)
+      switch (this.fromPage) {
+        case 'myMember':
+          this.$store.commit(types['USER_AREA'], { vipSelectedCity: val })
+          break
+        case 'myReport':
+          this.$store.commit(types['USER_AREA'], { myReportCity: val })
+          break
+        default:
+          this.$store.commit(types['USER_AREA'], { selectedCity: val })
+          break
       }
-      
+      // if (this.fromPage == 'myMember') {
+      //   this.$store.commit(types['USER_AREA'], {vipSelectedCity: val})
+      // } else {
+      //   this.$store.commit(types['USER_AREA'], {selectedCity: val})
+      // }
+
       this.$router.go(-1)
     },
     keyTouchStartHandler(e) {
@@ -97,7 +108,7 @@ export default {
         this.indicator.str = ''
         clearTimeout(this.indicator.timer)
       }, 1000)
-    },
+    }
     // scrollList(y) {
     //   let currentItem = document.elementFromPoint(this.navOffsetX, y)
     //   if (!currentItem || !currentItem.classList.contains('mint-indexlist-navitem')) {
