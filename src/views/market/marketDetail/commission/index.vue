@@ -1,7 +1,7 @@
 <template>
   <div class="commission-page">
     <div class="commission-content">
-      <p>{{userInfo.institutionName}}</p>
+      <p>{{distributorName}}</p>
       <p>
         佣金提成：
         <span>{{commission | textOver }}</span>
@@ -30,6 +30,7 @@ export default {
       const result = await MarketService.getLinkerDetail(id)
 
       this.commission = result.commission
+      this.distributorName=result.distributorName
     }
   }
 }

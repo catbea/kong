@@ -3,7 +3,7 @@
     <div class="build" v-show="status === 1">
       <div id="show-container">
         <div class="card-img"></div>
-          <!-- userInfo.avatarUrl -->
+        <!-- userInfo.avatarUrl -->
         <img class="avatar-img" :src="userInfo.avatarUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="logoImg">
@@ -42,7 +42,7 @@ export default {
     coverBg: require('IMG/dev/page1/cover@2x.png'),
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     userInfo: {},
-    status: 1,
+    status: 1
     // aa:'https://720ljq2test-10037467.file.myqcloud.com/1545358890837JRpeaKawJQcMFy6H.png'
     // IMG_LIST: [
     //   'http://phga1f2sd.bkt.clouddn.com/0000.jpg',
@@ -79,7 +79,7 @@ export default {
           nickname: result.pinyin,
           company: result.enterpriseName,
           name: result.agentName,
-          avatarUrl:result.avatarUrl
+          avatarUrl: result.avatarUrl
         }
       }
     },
@@ -120,7 +120,9 @@ export default {
   #show-container {
     position: relative;
     margin: 15px;
-    height: 600px;
+    height: 480px;
+    width: 80%;
+    margin-left: 10%;
     border-radius: 5px;
     .avatar-img {
       width: 100%;
@@ -133,7 +135,7 @@ export default {
     .cover-img {
       position: absolute;
       width: 100%;
-      height: 470px;
+      height: 400px;
       left: 0;
       bottom: 0;
       object-fit: cover;
@@ -148,7 +150,7 @@ export default {
     }
     .user-base-info {
       position: absolute;
-      top: 220px;
+      top: 270px;
       left: 30px;
       color: #ffffff;
       border-bottom: 4px solid #0069ca;
@@ -167,12 +169,13 @@ export default {
     .user-more-info {
       position: absolute;
       color: #ffffff;
-      margin: 30px;
+      margin-left: 30px;
+      margin-right: 30px;
       font-weight: 400;
       .user-signature {
         font-size: 16px;
         opacity: 0.85;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
       .user-phone,
       .user-company,
@@ -216,7 +219,7 @@ export default {
     > div {
       flex: 1;
       text-align: center;
-      background: #007AE6;
+      background: #007ae6;
       height: 44px;
       border-radius: 5px;
       margin-left: 30px;
