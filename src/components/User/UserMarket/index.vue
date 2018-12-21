@@ -34,7 +34,7 @@
             </div>
             <span
               class="bg_img icon-share"
-              @click.stop="shareMarket"
+              @click.stop="skipShare"
               :style="{backgroundImage:'url('+imgShare+')'}"
             ></span>
           </li>
@@ -309,13 +309,13 @@ export default {
       });
     },
     goRenew (linkerId) {//去续费
-      this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
+      this.$router.push({ name: 'marketDetail-open', params: { id:linkerId } })
     },
     apostropheReturn () {
       this.$emit("apostropheReturn", 1)
     },
-    shareMarket() {
-      this.$router.push('/marketDetail/share')
+    skipShare() {
+      this.$router.push({name:'market-share',params:{id:this.linkerId}})
     },
     skipMarketRetuen () {
       this.$emit('skipMarketRetuen', 1)

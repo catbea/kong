@@ -13,7 +13,7 @@
              {{dataArr.linkerName}}
              <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
              </div>
-           <span class="bg_img icon-share" @click.stop="usmarIconReturn" :style="{backgroundImage:'url('+imgShare+')'}"></span>
+           <span class="bg_img icon-share" @click.stop="skipShare" :style="{backgroundImage:'url('+imgShare+')'}"></span>
           </li>
           <li>
             {{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}
@@ -152,8 +152,8 @@ export default {
     apostropheReturn(){
       this.$emit("apostropheReturn",1)
     },
-    usmarIconReturn(){
-      this.$emit("usmarIconReturn",1)
+    skipShare(){
+      this.$router.push({name:'market-share',params:{id:this.linkerId}})
     },
     skipMarketDetail (linkerId) {
       this.$router.push('/market/' + linkerId)
