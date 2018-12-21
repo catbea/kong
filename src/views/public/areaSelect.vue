@@ -71,6 +71,8 @@ export default {
       console.log(val)
       if (this.fromPage == 'myMember') {
         this.$store.commit(types['USER_AREA'], {vipSelectedCity: val})
+      } else if (this.fromPage == 'market'){
+        this.$store.commit(types['USER_AREA'], {marketSelectedCity: val})
       } else {
         this.$store.commit(types['USER_AREA'], {selectedCity: val})
       }
