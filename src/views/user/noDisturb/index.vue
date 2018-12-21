@@ -338,6 +338,14 @@ export default {
           selectArr.push('周日')
         }
 
+        if (monday == '1' && tuesday == '1' && wednesday == '1' && thursday == '1' && friday == '1' && saturday == '1' && sunday == '1') {
+          this.showDate = true
+          this.showBox = false
+        } else {
+          this.showDate = false
+          this.showBox = true
+        }
+
         //设置过勿扰模式
         if (result.status == '0') {
           this.checked = false

@@ -107,33 +107,50 @@ export default {
       this.isPayLoading = true
       const res = await commonService.payForProject(param)
       this.isPayLoading = false
-      if (res.isPay) {
-        wx.chooseWXPay({
-          //弹出支付
-          timestamp: res.timestamp,
-          nonceStr: res.nonceStr,
-          package: res.packageId,
-          signType: 'MD5',
-          paySign: res.signature,
-          success: res => {
-            Dialog.confirm({
-              title: '开通成功',
-              message: '你已经成功开通楼盘'+this.projectInfo.linkerName+'，快去推荐给身边的小伙伴',
-              cancelButtonText: '取消'
-            }).then(() => {
-              this.$router.replace("/market/share/"+this.linkerId)
-            }).catch(() => {
-
-            })
-          },
-          cancel: res => {
-            this.$toast('支付取消')
-          },
-          fail: res => {
-            this.$toast('支付失败')
-          }
-        })
+      if(res.prepayStatus){
+        if (res.isPay) {
+          wx.chooseWXPay({
+            //弹出支付
+            timestamp: res.timestamp,
+            nonceStr: res.nonceStr,
+            package: res.packageId,
+            signType: 'MD5',
+            paySign: res.signature,
+            success: res => {
+              this.paySuss()
+            },
+            cancel: res => {
+              this.$toast('支付取消')
+              this.cancelPayment(res.purchaseId)
+            },
+            fail: res => {
+              this.$toast('支付失败')
+              this.cancelPayment(res.purchaseId)
+            }
+          })
+        } else {
+          this.paySuss()
+        }
+      } else {
+        this.$toast('支付失败')
       }
+      
+    },
+
+    cancelPayment(purchaseId) {
+      commonService.cancelPayment(purchaseId)
+    },
+
+    paySuss() {
+      Dialog.confirm({
+        title: '开通成功',
+        message: '你已经成功开通楼盘'+this.projectInfo.linkerName+'，快去推荐给身边的小伙伴',
+        cancelButtonText: '取消'
+      }).then(() => {
+        this.$router.replace("/market/share/"+this.linkerId)
+      }).catch(() => {
+
+      })
     },
 
     async getMarketDescribeInfo() {

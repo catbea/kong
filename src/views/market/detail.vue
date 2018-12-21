@@ -45,7 +45,7 @@
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
-            {{info.averagePrice}}起
+            {{info.averagePrice}}
           </p>
           <p>
             <span>开盘时间:</span>
@@ -60,7 +60,7 @@
             {{info.developer}}
           </p>
         </div>
-        <div class="more-info">更多信息</div>
+        <div class="more-info" @click="moreInfoHandler">更多信息</div>
       </div>
     </div>
     <!-- 户型 -->
@@ -121,8 +121,28 @@
     </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box">
-        <div class="open-btn" @click="openHandler">开通(0.4元/天起)</div>
+      <div class="unopen-status-box" v-if="info.openStatus == 0">
+        <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
+      </div>
+      <div class="open-status-box">
+        <div class="icon-box">
+          <div>
+            <i class="icon iconfont icon-building_details_rec1"></i>
+            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+            推荐
+          </div>
+          <div>
+            <i class="icon iconfont icon-building_details_sho"></i>
+            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+            展示
+          </div>
+          <div>
+            <i class="icon iconfont icon-building_details_top"></i>
+            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+            置顶
+          </div>
+        </div>
+        <div class="btn-box">续费()</div>
       </div>
     </div>
   </div>
@@ -154,7 +174,7 @@ export default {
     mapTab: 0,
     typeTitleConf: {
       title: '户型',
-      linkText: '全部户型',
+      linkText: '全部户型'
       // link: `/marketDetail/FamilyList/${this.id}`
     },
     newsTitleConf: {
@@ -209,10 +229,12 @@ export default {
     shareHandler() {
       this.$router.push({ name: 'market-share', params: { id: this.id } })
     },
-     openHandler(){
-       this.$router.push(`/marketDetail/open/${this.id}`)
-
+    openHandler() {
+      this.$router.push(`/marketDetail/open/${this.id}`)
     },
+    moreInfoHandler() {
+      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId } })
+    }
   },
   computed: {
     mapData() {
@@ -461,7 +483,7 @@ export default {
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         display: inline-block;
         width: 343px;
         height: 44px;

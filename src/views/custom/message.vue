@@ -27,7 +27,7 @@
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                   </div>
 
-                  <div class="msg_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
+                  <div class="msg_custom_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
                     <div class='info-img'><img v-bind:src="item.content.avatarMediaid"/></div>
                     <div>
                       <div class='info-name'>{{item.content.linkerName}}</div>
@@ -173,6 +173,7 @@ import { onSendMsg, initMsg, setToAccount } from '@/utils/im/receive_new_msg.js'
 import { mapGetters } from 'vuex'
 import commonService from 'SERVICE/commonService'
 import customService from 'SERVICE/customService'
+import userService from 'SERVICE/userService'
 import * as types from '@/store/mutation-types'
 
 export default {
@@ -241,6 +242,7 @@ export default {
         document.title = '聊天'
       }
       this.getCustomBaseInfo(this.clientId)
+
       this.agentId = this.userInfo.id
       this.avatar = this.userInfo.avatarUrl
       //加载emoji表情库
@@ -299,7 +301,14 @@ export default {
       window.location.href = 'tel:' + this.clientMobile
     },
 
+    // async getMyProjectList() {
+    //     const res = await userService.getMyMarket(0)
+    //     this.myProjectList = res.records
+    //     console.log(this.myProjectList, 'this.myProjectList')
+    // },
+
     projectClick() {
+      this.$router.push('/custom/message/messageProjects')
       console.log('projectClick =======')
     },
 
@@ -364,11 +373,10 @@ export default {
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
       console.log(mediaId+' | '+appId, 'mediaIdTransToMp3Url')
-      onSendMsg(mediaId+' | '+appId, true, '', 2)
-    //   let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
-    //   console.log(res, 'mediaIdTransToMp3Url')
-    //   this.message = res.map3Url
-    //   this.sendMessage(2, this.audioTime)
+      let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
+      console.log(res, 'mediaIdTransToMp3Url')
+      this.message = res.map3Url
+      this.sendMessage(2, this.audioTime)
     },
     async setMsgRead() {
       let res = await customService.setMsgRead(this.clientId)
@@ -694,6 +702,10 @@ export default {
   font-size: 13px;
   padding: 0;
   margin: 0;
+}
+
+.project-msg-popup {
+    height: 100%;
 }
 
 .default-msg-popup {
@@ -1162,6 +1174,15 @@ export default {
 //楼盘信息
 
 .msg_house_info {
+  padding: 12px;
+  background: #eee;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.msg_custom_house_info {
   padding: 12px;
   background: #eee;
   border-top-left-radius: 0px;

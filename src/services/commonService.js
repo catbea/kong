@@ -67,7 +67,7 @@ class CommonService {
     })
   }
 
-    /**
+  /**
    * 陶盘支付
    */
   packagePayment(param) {
@@ -75,6 +75,17 @@ class CommonService {
       url: '/weixinPay/packagePayment',
       method: 'post',
       body: param
+    })
+  }
+
+  /**
+   * 取消支付
+   */
+  cancelPayment(purchaseId) {
+    return xhr({
+      url: '/weixinPay/cancelPayment',
+      method: 'DELETE',
+      body: {purchaseId}
     })
   }
 

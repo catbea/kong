@@ -20,6 +20,7 @@ import MyEstateList from 'COMP/Dynamics/MyEstateList'
 import HotEstateList from 'COMP/Dynamics/HotEstateList'
 import CommonService from 'SERVICE/commonService'
 import dynamicsService from 'SERVICE/dynamicsService'
+import { Dialog } from 'vant';
 export default {
   components: {
     DynamicsCollect,
@@ -35,8 +36,8 @@ export default {
     timer: null
   }),
   created() {
-    let timeStamp = window.localStorage.getItem('timeStamp') || ''
-    this.queryVersion('2', timeStamp)
+    // let timeStamp = window.localStorage.getItem('timeStamp') || ''
+    // this.queryVersion('2', timeStamp)
     this.getCollectInfo()
     this.getEstateList()
     // 30s自动刷新数据
@@ -52,6 +53,11 @@ export default {
       console.log('num.estateViews.val', num.estateViews)
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
         this.$router.push({ path: '/dynamics/allDynamics', query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews } })
+      }else {
+        Dialog.alert({
+          title: '暂无任何动态',
+          message: '您还没有任何动态信息，请开通楼盘分享后再次尝试'
+        })
       }
     },
     //楼盘详情
@@ -109,7 +115,7 @@ export default {
       }
     },
     shareHandler(info) {
-      this.$router.push({ name: 'marketDetail-share' })
+      this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
     }
   },
   beforeDestroy() {

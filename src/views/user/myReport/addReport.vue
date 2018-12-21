@@ -54,6 +54,7 @@ export default {
         distributorId: this.userInfo.distributorId,
         institutionId: this.userInfo.institutionId
       }
+
       const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId)
 
       if(res){
@@ -64,7 +65,8 @@ export default {
      * 修改所属机构
      */
     editInstitutionHandler() {
-      this.$router.push('/user/edit/userMechanism')
+      // this.$router.push('/user/edit/userMechanism')
+      this.$router.push({path:'/user/edit/userMechanism',query:{distributorId: this.userInfo.distributorId,enterpriseId: this.userInfo.enterpriseId}})
     },
     /**
      * 创建报备

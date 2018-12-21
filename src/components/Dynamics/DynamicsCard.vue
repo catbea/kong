@@ -90,8 +90,6 @@ export default {
       info: { type: Object },
       lxImg: require('IMG/dynamics/lx@2x.png'),
       gzImg: require('IMG/dynamics/gz@2x.png'),
-      cardDynamicListCount:0,
-
     }
   },
   methods() {

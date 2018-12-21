@@ -1,17 +1,17 @@
 <template>
   <div class="hot-estate-list">
     <title-bar class="title-container" :conf="titleBarConf" v-if="list&&list.length>0"></title-bar>
-    <estate-item v-for="(item,index) in list" :key="index" :info="item" @click="godynamicsInfo(item)" @share="shareHandler(item)"></estate-item>
+    <market-describe v-for="(item,index) in list" :key="index" :itemInfo="item" @click="godynamicsInfo(item)"></market-describe>
   </div>
 </template>
 <script>
-import EstateItem from 'COMP/EstateItem'
+import MarketDescribe from 'COMP/MarketDescribe'
 import TitleBar from 'COMP/TitleBar'
 
 export default {
   components: {
     TitleBar,
-    EstateItem
+    MarketDescribe
   },
   props: {
     list: Array,
@@ -29,7 +29,14 @@ export default {
       this.$emit('click', item)
     },
     shareHandler(item) {
-      this.$emit('share', item)
+      this.$emit('open', item)
+    }
+  },
+  watch:{
+    list(val){
+      for(let temp of val){
+        temp.linkerImg = temp.linkerHeadUrl
+      }
     }
   }
 }

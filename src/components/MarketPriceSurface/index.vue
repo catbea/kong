@@ -96,7 +96,7 @@ export default {
       margin-left: 16px;
       width: 104px;
       height: 98px;
-      padding-top: 16px;
+      padding-top: 8px;
       border-radius: 6px;
       border: 1px solid #dddddd;
       text-align: center;

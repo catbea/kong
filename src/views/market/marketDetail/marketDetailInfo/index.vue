@@ -1,7 +1,6 @@
 <template>
   <div class="market-detail-info-page">
-    <InfoTop v-for="(item,index) in topList" :key="index" :topInfo="item">
-    </InfoTop>
+    <InfoTop v-for="(item,index) in topList" :key="index" :topInfo="item"></InfoTop>
     <div class="title">
       <ul>
         <li>预售许可证</li>
@@ -9,8 +8,7 @@
         <li>绑定楼栋</li>
       </ul>
     </div>
-     <InfoMiddle v-for="(item,index) in middleList" :key="index" :middleInfo="item">
-     </InfoMiddle>
+    <InfoMiddle v-for="(item,index) in middleList" :key="index" :middleInfo="item"></InfoMiddle>
     <div class="info-bottom">
       <span :style="{backgroundImage:'url('+warnImg+')'}" class="bg_img"></span>
       <p>免责申明：楼盘信息来源于政府共事网站，开发商， 第三方公众平台最终以政府部门登记备案为准，请谨慎检查。</p>
@@ -21,6 +19,7 @@
 import * as types from '@/store/mutation-types'
 import InfoTop from 'COMP/TowLines/'
 import InfoMiddle from 'COMP/ThreeLines'
+import MarketService from 'SERVICE/marketService'
 export default {
   components: {
     InfoTop,
@@ -28,58 +27,66 @@ export default {
   },
   created() {
     this.$store.commit(types.TABBAR, false)
-    this.info = this.$route.query.id
-    console.log(this.info,'kljlkjlkjlkjlkjlkjlk')
+    this.linkerId = this.$route.params.id
+    this.getLinkerSimpleDetail(this.linkerId)
   },
   computed: {
     topList() {
       return [
         {
-          top: [{ left: '开发商', right: this.info.developer }]
+          top: [{ left: '开发商', right: this.info && this.info.developer }]
         },
         {
           top: [
-            { left: '楼盘状态', right: this.info.saleStatus },
-            { left: '参考均价', right: this.info.averagePrice },
-            { left: '开盘时间', right: this.info.openTime },
-            { left: '交房时间', right: this.info.expectedOthers }
+            { left: '楼盘状态', right: this.info && this.info.saleStatus },
+            { left: '参考均价', right: this.info && this.info.averagePrice },
+            { left: '开盘时间', right: this.info && this.info.openTime },
+            { left: '交房时间', right: this.info && this.info.expectedOthers }
           ]
         },
         {
           top: [
-            { left: '区域位置', right: this.info.district },
+            { left: '区域位置', right: this.info && this.info.district },
             {
               left: '楼盘地址',
-              right: this.info.detailAddress
+              right: this.info && this.info.detailAddress
             },
-            { left: '售楼处地址', right: this.info.saleAddress }
+            { left: '售楼处地址', right: this.info && this.info.saleAddress }
           ]
         },
         {
           top: [
-            { left: '建筑风格', right: this.buildStyle },
-            { left: '产权年限', right: this.info.propertyYears },
-            { left: '装修标准', right: this.decorateStatus },
-            { left: '占地面积', right: this.info.coverArea },
-            { left: '建筑面积', right: this.info.buildArea },
-            { left: '容积率', right: this.info.plotRate },
-            { left: '绿化率', right: this.info.greenRate },
-            { left: '规划户数', right: this.info.householdNum },
-            { left: '规划车位', right: this.info.carNum }
+            { left: '建筑风格', right: this.info && this.buildStyle },
+            { left: '产权年限', right: this.info && this.info.propertyYears },
+            { left: '装修标准', right: this.info && this.decorateStatus },
+            { left: '占地面积', right: this.info && this.info.coverArea },
+            { left: '建筑面积', right: this.info && this.info.buildArea },
+            { left: '容积率', right: this.info && this.info.plotRate },
+            { left: '绿化率', right: this.info && this.info.greenRate },
+            { left: '规划户数', right: this.info && this.info.householdNum },
+            { left: '规划车位', right: this.info && this.info.carNum }
           ]
         },
         {
-          top: [{ left: '物业类型  ', right: this.houseUse }, { left: '物业公司', right: this.info.management }, { left: '物业费', right: this.info.managementPrice }]
+          top: [
+            { left: '物业类型  ', right: this.info && this.info.houseUse },
+            { left: '物业公司', right: this.info && this.info.management },
+            { left: '物业费', right: this.info && this.info.managementPrice }
+          ]
         },
         {
-          top: [{ left: '供暖方式  ', right: this.info.heatingType }, { left: '供水类型', right: this.info.waterType }, { left: '供电类型', right: this.info.electricType }]
+          top: [
+            { left: '供暖方式  ', right: this.info && this.info.heatingType },
+            { left: '供水类型', right: this.info && this.info.waterType },
+            { left: '供电类型', right: this.info && this.info.electricType }
+          ]
         }
       ]
     },
     middleList() {
       return [
         {
-          middle: [{ left: this.info.licence, right: this.info.certificationTime, center: this.info.bindBuilding }]
+          middle: [{ left: this.info && this.info.licence, right: this.info && this.info.certificationTime, center: this.info && this.info.bindBuilding }]
         }
       ]
     },
@@ -141,10 +148,17 @@ export default {
     }
   },
   data: () => ({
+    linkerId: '',
     info: null,
     warnImg: require('IMG/marketDetail/warn.png')
   }),
-  methods: {}
+  methods: {
+    async getLinkerSimpleDetail(linkerId) {
+      const res = await MarketService.getLinkerSimpleDetail(linkerId)
+      this.info = res
+      console.log(this.info, 'kljlkjlkjlkjlkjlkjlk')
+    }
+  }
 }
 </script>
 <style lang="less">

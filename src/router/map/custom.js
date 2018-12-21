@@ -41,5 +41,13 @@ export default [
     meta: {
       title: '聊天'
     }
+  },
+  {
+    path: '/custom/message/messageProjects',
+    name: 'messageProjects',
+    component: resolve => require(['@/views/custom/messageProjects.vue'], resolve),
+    meta: {
+      title: '楼盘发送'
+    }
   }
 ]
