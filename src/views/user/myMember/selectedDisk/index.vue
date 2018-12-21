@@ -4,7 +4,7 @@
       <search :conf="searchInfo" @areaClick="areaClickHandle"></search>
     </div>
     <div>
-      <screen></screen>
+      <screen v-model="projectFilters"></screen>
     </div>
     <div class="market-box">
       <van-list
@@ -64,6 +64,7 @@ export default {
   },
   data: () => ({
     type: 'vip',
+    projectFilters: {},
     packageIscheckedIds:[],
     checkedList: [],
     limitCount: 10,
