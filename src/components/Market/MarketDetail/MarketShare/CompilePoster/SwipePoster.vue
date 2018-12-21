@@ -5,7 +5,7 @@
       <div class="content-box bg_img" :style="{backgroundImage:'url('+backImg+')'}">
         <div class="box-top">
           <ul>
-            <!-- <li>境墅高层</li> -->
+            <li>{{model.posterDescribe}}</li>
             <li>{{model.linkerName}}</li>
             <li>价格：{{model.linkerPrice}}{{model.priceUnit}}</li>
           </ul>
@@ -68,7 +68,7 @@ export default {
           margin-left: 19px;
           margin-top: 49px;
           li:nth-child(1) {
-            font-size: 20px;
+            font-size: 23px;
             font-family: STSongti-SC-Bold;
             font-weight: bold;
             color: rgba(229, 179, 123, 1);
@@ -79,7 +79,7 @@ export default {
             font-family: STSongti-SC-Regular;
             font-weight: 400;
             color: rgba(229, 179, 123, 1);
-            line-height: 22px;
+            line-height: 16px;
             margin: 3px 0 7px 0;
           }
           li:nth-child(3) {
