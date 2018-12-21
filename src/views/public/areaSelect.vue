@@ -76,16 +76,13 @@ export default {
         case 'myReport':
           this.$store.commit(types['USER_AREA'], { myReportCity: val })
           break
+        case 'market':
+          this.$store.commit(types['USER_AREA'], { marketSelectedCity: val })
+          break
         default:
           this.$store.commit(types['USER_AREA'], { selectedCity: val })
           break
       }
-      // if (this.fromPage == 'myMember') {
-      //   this.$store.commit(types['USER_AREA'], {vipSelectedCity: val})
-      // } else {
-      //   this.$store.commit(types['USER_AREA'], {selectedCity: val})
-      // }
-
       this.$router.go(-1)
     },
     keyTouchStartHandler(e) {

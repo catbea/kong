@@ -124,7 +124,6 @@ export default {
         param.projectName = this.projectName
       } else {
         //组装检索条件
-        let filters = this.projectFilters
         let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
         let _filters = screenFilterHelper(this.projectName, mergeFilters)
         param = Object.assign(param, _filters) 

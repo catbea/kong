@@ -105,6 +105,7 @@ const state = {
     province: '', // 省
     city: '深圳市', // 市
     selectedCity: '深圳市',
+    marketSelectedCity: null, //楼盘列表城市选择
     vipSelectedCity: null,
     myReportCity: '',   // 报备楼盘
     county: '' // 区
