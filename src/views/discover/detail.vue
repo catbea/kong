@@ -245,6 +245,10 @@ export default {
     },
     // 分享
     shareHandler() {
+      console.log(this.shareData)
+      if (this.shareData) {
+        alert(this.shareData)
+      }
       wechatApi.wechatShare(this.shareData).then(res => {
         this.articleShare()
       }).catch(e => {
