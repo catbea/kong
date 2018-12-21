@@ -5,7 +5,7 @@ export default (msg, url) => {
   }
   if (parseInt(msg.returnCode) !== 10000) {
     console.error(msg);
-    window.vue.$notify(msg.msg)
+    window.vue.$toast(msg.msg)
     return false
   }
   return true

@@ -27,7 +27,7 @@
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                   </div>
 
-                  <div class="msg_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
+                  <div class="msg_custom_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
                     <div class='info-img'><img v-bind:src="item.content.avatarMediaid"/></div>
                     <div>
                       <div class='info-name'>{{item.content.linkerName}}</div>
@@ -1174,6 +1174,15 @@ export default {
 //楼盘信息
 
 .msg_house_info {
+  padding: 12px;
+  background: #eee;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.msg_custom_house_info {
   padding: 12px;
   background: #eee;
   border-top-left-radius: 0px;

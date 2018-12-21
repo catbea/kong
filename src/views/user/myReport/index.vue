@@ -34,7 +34,7 @@
                   报备时间
                   <span class="container-list-title">{{item.fillingTime}}</span>
                 </span>
-                <button class="container-list-botton" @click="reportInfo(item)">查看详情</button>
+                <span class="container-list-botton" @click="reportInfo(item)">查看详情</span>
               </p>
             </div>
             <p class="container-list">
@@ -198,7 +198,7 @@ export default {
           color: rgba(0, 122, 230, 1);
           background-color: white;
           line-height: 20px;
-          width: 65px;
+          width: 70px;
           height: 20px;
           border-radius: 22px;
           border: 1px solid;
