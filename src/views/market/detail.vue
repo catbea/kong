@@ -5,9 +5,15 @@
       <div class="swipe-content">
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
-            <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
+            <div
+              class="bg_img swipe-item dev"
+              :style="{backgroundImage:'url(' + item.imgUrl + ')'}"
+            ></div>
           </van-swipe-item>
-          <div class="custom-indicator dev" slot="indicator">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+          <div
+            class="custom-indicator dev"
+            slot="indicator"
+          >{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
         </van-swipe>
       </div>
       <div class="operate-content">
@@ -34,14 +40,25 @@
           <span>{{info.browsCount}}</span>人浏览过
           <div class="head-portrait-box">
             <transition name="show">
-              <avatar :avatar="item.clientImg" v-for="(item,index) in info.customerList" :key="index" v-if="index===headCurrent"/>
+              <avatar
+                :avatar="item.clientImg"
+                v-for="(item,index) in info.customerList"
+                :key="index"
+                v-if="index===headCurrent"
+              />
             </transition>
           </div>
         </div>
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
+        <p
+          class="house-feature"
+        >{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
+        <div class="commission-view" v-show="info.divisionRules">
+          <img :src="commissionImg">
+          <span>{{info.divisionRules}}</span>
+        </div>
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
@@ -95,7 +112,12 @@
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
-          <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
+          <van-tab
+            v-for="item in info.houseAroundType"
+            :key="item.name"
+            :title="item.name"
+            :line-width="0"
+          />
         </van-tabs>
       </div>
       <div class="map-box">
@@ -109,7 +131,10 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index">
             <div class="recommend-house-item">
-              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}"></div>
+              <div
+                class="bg_img recommend-house-img"
+                :style="{backgroundImage:'url('+item.headImgUrl+')'}"
+              ></div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
                 <p class="house-location">{{item.district}}</p>
@@ -166,6 +191,7 @@ export default {
     TMap
   },
   data: () => ({
+    commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     id: -1,
     info: null,
     swipeCurrent: 0,
@@ -334,6 +360,27 @@ export default {
         padding-top: 5px;
         font-size: 14px;
         line-height: 1.5;
+      }
+      > .commission-view {
+        display: flex;
+        align-items: center;
+        height: 34px;
+        width: 95%;
+        margin-left: 2.5%;
+        background: rgba(247, 249, 250, 1);
+        border-radius: 4px;
+        margin-top: 5px;
+
+        img {
+          width: 16px;
+          height: 16px;
+        }
+
+        span {
+          color: #ea4d2e;
+          font-size: 15px;
+          margin-left: 8px;
+        }
       }
       > .house-info-form {
         padding-top: 5px;
