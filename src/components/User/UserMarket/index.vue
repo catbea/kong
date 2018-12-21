@@ -56,7 +56,7 @@
             >{{status[dataArr.saleStatus]}}</div>
             <div
               class="tag-item"
-              v-for="(item,index) in dataArr.linkerTags"
+              v-for="(item,index) in dataArr.linkerTags.slice(0,2)"
               :key="index"
             >{{item}}</div>
           </li>
