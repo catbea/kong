@@ -1,6 +1,6 @@
 <template>
   <div class="close-market-page">
-    <div class="close-market-page-box" @click="skipMarketRetuen">
+    <div class="close-market-page-box" @click="skipMarketDetail(dataArr.linkerId)">
       <div class="close-market-page-box-top">
         <div class="close-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
@@ -13,7 +13,7 @@
              {{dataArr.linkerName}}
              <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
              </div>
-           <span class="bg_img icon-share" @click.stop="usmarIconReturn" :style="{backgroundImage:'url('+imgShare+')'}"></span>
+           <span class="bg_img icon-share" @click.stop="skipShare" :style="{backgroundImage:'url('+imgShare+')'}"></span>
           </li>
           <li>
             {{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}
@@ -22,7 +22,7 @@
              <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
              <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
              <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags" :key="index">{{item}}</div>
+             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
           </li>
           <li>{{dataArr.openTimes}}次开通 {{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期
             <div class="apostrophe" @click.stop="popupHandle">
@@ -35,7 +35,7 @@
       </div>
       <div class="close-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
-        {{dataArr.divisionRules}}
+       <span>{{dataArr.divisionRules}}</span> 
       </div>
     </div>
     <div style="margin-left:16px">
@@ -136,11 +136,12 @@ export default {
       }).then(() => {
         // on confirm
         this.stickShow=false
+        this.show= !this.show
         this.exhibitionMarketShow=false
         this.changeUserStatus(this.linkerId,30,0)
         this.dataArr.displayFlag=0
         // this.dataArr.displayFlag='1'
-        // this.$emit('openCut',this.marketIndex)
+        this.$emit('openCut',this.dataArr)
       }).catch(() => {
         // on cancel
       });
@@ -151,12 +152,12 @@ export default {
     apostropheReturn(){
       this.$emit("apostropheReturn",1)
     },
-    usmarIconReturn(){
-      this.$emit("usmarIconReturn",1)
+    skipShare(){
+      this.$router.push({name:'market-share',params:{id:this.linkerId}})
     },
-    skipMarketRetuen(){
-      this.$emit("skipMarketRetuen",1)
-    }
+    skipMarketDetail (linkerId) {
+      this.$router.push('/market/' + linkerId)
+    },
   }
 }
 </script>
@@ -311,6 +312,13 @@ export default {
       margin:0 8px;
       width:16px;
       height:16px;
+    }
+    span{
+      white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin: 0;
+          width: 130px;
     }
   }
  }
