@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty'
 
 let defaultConf = {
   name: 'projectName',
-  area: ['areaStart', 'areaEnd'],
+  area: 'county',
   aveprice: ['projectPriceAvgStart', 'projectPriceAvgEnd'],
   popularity: ['togetherNumStart', 'togetherNumEnd'],
   areaSize: ['areaStart', 'areaEnd'],
