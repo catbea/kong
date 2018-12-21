@@ -2,7 +2,7 @@
   <div class="market-price-surface-page">
     <ul class="price-box">
       
-      <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:itemActIndex==index}">
+      <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:currAct==index}">
         <p>{{item.subscribeNum}} {{item.type==4 ? '天' : '个月'}}</p>
         <p>¥{{item.subscribeAmount | priceFormart}}</p>
         <p :class="item.subscribeNum == 3 || item.subscribeNum == 1 ? '':'through'">{{item.subscribeRemark}}</p>
@@ -39,7 +39,6 @@
 export default {
   data: () => ({
     backImg: require('IMG/discountCoupon/arrow.png'),
-    itemActIndex: 0,
     light: false
   }),
   props: {
@@ -49,6 +48,7 @@ export default {
         return []
       }
     },
+    currAct: 0,
     payInfo: {
       type: Object,
       default: function() {
@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     priceItemClickHandle(index) {
-      this.itemActIndex = index
       this.$emit('priceItemClick', index)
     },
 
