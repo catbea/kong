@@ -87,13 +87,13 @@ export default {
   },
   methods: {
     itemClickHandler() {
-      this.$emit('skipDetail', 1)
+      this.$emit('skipDetail', this.itemInfo)
     },
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
     openHandle() {
-      this.$emit('openReturnHandle', 1)
+      this.$emit('openReturnHandle', this.itemInfo)
     }
   },
   watch: {
