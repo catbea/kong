@@ -175,7 +175,7 @@ export default {
         enterpriseName: this.info.enterpriseName,
         institutionName:this.info.institutionName
       }
-      let host = process.env.VUE_APP_BASE_API_URL
+      let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + this.city
       this.shareData = {
         title: this.info.title,
@@ -248,7 +248,7 @@ export default {
       wechatApi.wechatShare(this.shareData).then(res => {
         this.articleShare()
       }).catch(e => {
-        
+
       })
     },
 
