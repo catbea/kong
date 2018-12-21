@@ -80,10 +80,10 @@ export default {
         if(currCunpon.type == 20) {
           let couponValue = (Number(priceItem.subscribeAmount)) * Number(1 - currCunpon.discountsLimit/10)
           submitPrice = submitPrice - couponValue
-          couponStr = '-¥ ' + (couponValue/100)
+          couponStr = '-¥ ' + parseInt(couponValue/100)
           coupon = couponValue
         } else {
-          couponStr = '-¥ ' + currCunpon.discountsLimit
+          couponStr = '-¥ ' + parseInt(currCunpon.discountsLimit)
           submitPrice = submitPrice - currCunpon.discountsLimit * 100
           coupon = currCunpon.discountsLimit * 100
         }
