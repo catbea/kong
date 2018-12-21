@@ -9,7 +9,7 @@
     <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
-      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
+      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getProjectList">
         <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
@@ -58,6 +58,7 @@ export default {
   watch: {
     projectFilters: {
       handler(val) {
+        console.log('----000000---')
         this.finished = false
         this.page = 1
         this.getProjectList()
@@ -72,6 +73,7 @@ export default {
   },
   methods: {
     onLoad() {
+      console.log('-------')
       this.getProjectList()
     },
 
@@ -82,7 +84,7 @@ export default {
       let _filters = screenFilterHelper(this.projectName, mergeFilters)
       param = Object.assign(param, _filters) 
       param.city = this.selectedCity
-      console.log(param)
+      // console.log(param)
 
       const res = await marketService.getHouseList(param)
       this.marketList = this.page <= 1 ? res.records :  this.marketList.concat(res.records)

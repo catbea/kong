@@ -193,9 +193,9 @@ export default {
         message: '你已经成功开通楼盘'+this.projectInfo.linkerName+'，快去推荐给身边的小伙伴',
         cancelButtonText: '取消'
       }).then(() => {
-        let _pirce = this.userInfo.price - priceSurfacePayInfo.balancePay
+        let _pirce = this.userInfo.price - this.priceSurfacePayInfo.balancePay
         this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, {price: _pirce} )) 
-        this.$router.replace("/market/share/"+this.linkerId)
+        this.$router.replace("/market/"+this.linkerId)
       }).catch(() => {
 
       })
