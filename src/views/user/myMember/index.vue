@@ -101,6 +101,7 @@ export default {
       }
       this.isPayLoading = true
       const res = await commonService.payForVip(param)
+      const purchaseId = res.purchaseId
       this.isPayLoading = false
       if (res.prepayStatus) {
         if(res.isPay) {
@@ -116,11 +117,11 @@ export default {
             },
             cancel: res => {
               this.$toast('支付取消')
-              this.cancelPayment(res.purchaseId)
+              this.cancelPayment(purchaseId)
             },
             fail: res => {
               this.$toast('支付失败')
-              this.cancelPayment(res.purchaseId)
+              this.cancelPayment(purchaseId)
             }
           })
         } else {
@@ -207,11 +208,12 @@ export default {
       let _vipInfo = {city: this.selectCity}
       this.setMealInfo.vipCity = this.selectCity
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
-      if(this.showAddProjectDialogFlag) {
-        this.showAddProjectDialog()
-      } else {
-        this.$toast('vip城市添加成功')
-      }
+      this.showAddProjectDialog()
+      // if(this.showAddProjectDialogFlag) {
+      //   this.showAddProjectDialog()
+      // } else {
+      //   this.$toast('vip城市添加成功')
+      // }
     },
 
     checkCityHandle() {

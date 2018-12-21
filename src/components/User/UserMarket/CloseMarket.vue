@@ -11,6 +11,9 @@
           <li>
            <div style="display:flex;"> 
              {{dataArr.linkerName}}
+             <span class="van-hairline--surround past-tag" v-if="!pastShow">
+                已过期
+              </span>
              <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
              </div>
            <span class="bg_img icon-share" @click.stop="skipShare" :style="{backgroundImage:'url('+imgShare+')'}"></span>
@@ -46,7 +49,8 @@
         overlay
       >
         <ul>
-          <li @click="goRenew(dataArr.linkerId)">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+          <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+          <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
           <!-- <li @click="masterHandle">大师推荐</li>
           <li @click="commonHandle">普通推荐</li> -->
           <!-- <li @click="stickHandle(marketIndex)">
@@ -72,6 +76,8 @@ export default {
     TagGroup
   },
   data:()=>({
+    pastShow:'是否过期',
+    stride:true,
     linkerId:null,
     discountImg:require('IMG/marketDetail/discount@2x.png'),
     show: false,
@@ -93,8 +99,27 @@ export default {
   },
   created() {
    this.linkerId=this.dataArr.linkerId
+   this.time()
+   this.strideYear()
   },
   methods:{
+    strideYear(){//判断是否跨年
+    let timestamp=new Date().getTime()
+    let usefulLife=this.dataArr.subscribeInvalidTime-0//到期时间错
+    if(new Date(usefulLife).getFullYear()-new Date(timestamp).getFullYear()>0){
+    this.stride=true
+    }else{
+    this.stride=false
+    } 
+    },
+    time(){//比较时间错判断是否过期
+   let timestamp=new Date().getTime()
+    if(timestamp-this.dataArr.subscribeInvalidTime>0){
+      this.pastShow=false
+    }else{
+      this.pastShow=true
+    }
+    },
     async changeUserStatus(linkerId,operationType,status){
        await userService.changeMarketData(linkerId,operationType,status)
     },//修改楼盘状态
