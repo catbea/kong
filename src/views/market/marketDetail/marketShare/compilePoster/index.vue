@@ -1,5 +1,5 @@
 <template>
-  <div class="compile-poster-page">
+  <div class="compile-poster-page" id="compile-poster-page"> 
     <div class="box" v-show="status === 1">
       <swipe-poster :model="buildingInfo" id="share-top" :modelBgImg="changeBgImg"></swipe-poster>
       <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
@@ -103,8 +103,8 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '101%'
-      canvas.style.height = '100%'
+      canvas.style.width = document.getElementById('compile-poster-page').clientWidth
+      canvas.style.height = document.getElementById('compile-poster-page').clientHeight
       document.getElementById('card-result').appendChild(canvas)
     },
 
@@ -122,8 +122,9 @@ export default {
 </script>
 <style lang="less">
 .compile-poster-page {
-  position: relative;
+  // position: relative;
   width: 100%;
+  height: 100%;
   background: #ffffff;
 
   .result {
