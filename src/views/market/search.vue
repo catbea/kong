@@ -5,48 +5,94 @@
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
     </div>
-    <div class="history-words-content" v-if="!searching">
+    <div class="history-words-content" v-if="searchStatus === 0">
       <div class="title-box">
         <p class="history-title">历史搜索</p>
-        <div class="bg_img clear-icon" :style="{backgroundImage:'url('+clearIcon+')'}"></div>
+        <div class="bg_img clear-icon" :style="{backgroundImage:'url('+clearIcon+')'}" @click="cleanHandler"></div>
       </div>
       <div class="history-content">
-        <div class="history-item"></div>
+        <div class="history-item" v-for="item in searchHistory" @click="historyItemClick(item)">{{item}}</div>
       </div>
     </div>
-    <div class="search-reminder">
+    <!-- 搜索建议 -->
+    <div class="search-reminder" v-if="searchStatus === 1">
       <div class="search-reminder-item" v-for="info in searchBirefList" @click="reminderItemHandler(info)">
         <p class="house-name">{{info.linkerName}}</p>
         <p class="house-info">{{`${info.linkerAddress} ${info.linkerPrice}`}}</p>
+      </div>
+    </div>
+    <!-- 搜索结果 -->
+    <div class="search-result-container" v-if="searchStatus === 2">
+      <screen v-model="filters"></screen>
+      <div class="search-result-content">
+        <van-list class="list-container" v-model="loading" :finished="finished" finished-text @load="onLoad">
+          <market-describe v-for="(item,index) in searchResult" :key="index" :itemInfo="item" @openReturnHandle="opClickHandler(item)"></market-describe>
+        </van-list>
+        <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
+        <div class="hot-recommend" v-if="!haveData">
+          <title-bar class="title-container" :conf="titleBarConf"/>
+          <market-describe v-for="(item,index) in hotResult" :key="index" :itemInfo="item" @openReturnHandle="opClickHandler(item)"></market-describe>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import Search from 'COMP/Search'
+import Screen from 'COMP/Screen/'
+import TitleBar from 'COMP/TitleBar'
+import MarketDescribe from 'COMP/MarketDescribe'
 import marketService from '@/services/marketService'
+import userService from '@/services/userService'
+import Null from 'COMP/Null'
+import isNull from 'lodash/isNull'
+import screenFilterHelper from '@/utils/screenFilterHelper'
+import { mapGetters } from 'vuex'
 export default {
   components: {
-    Search
+    Search,
+    Screen,
+    MarketDescribe,
+    Null,
+    TitleBar
   },
   data: () => ({
     searchValue: '',
     autoSearchTimer: null,
     searching: false,
+    searchStatus: 0, // 0-未输入状态 1-输入但是未确认状态 2-按下确认状态
     searchBirefList: [],
-    // search
+    searchHistory: [],
+    searchResult: [],
+    hotResult: [],
+    page: 1,
+    pageSize: 10,
+    filters: {},
+    loading: false,
+    finished: false,
+    nullcontent: '没有找到任何相关楼盘',
+    haveData: true,
+    titleBarConf: {
+      title: '热门楼盘'
+    },
+    nullIcon: require('IMG/market/search/empty.png'),
     clearIcon: require('IMG/market/search/clear.png')
   }),
+  created() {
+    this.historyController('init')
+  },
   methods: {
     onSearchHandler(val) {
-      console.log(val)
+      this.historyController('add', val)
+      this.resetSearch()
+      // this.searchMidator(val, this.filters, this.page)
     },
     onKeypressHandler(val) {
-      console.log()
+      // this.searchStatus = 1
     },
     // 输入时搜索
     async preSearch() {
-      this.searching = true
+      // this.searchStatus =  1
       let payload = {
         projectName: this.searchValue,
         orderBy: 1,
@@ -56,28 +102,116 @@ export default {
       const res = await marketService.getHouseList(payload)
       this.searchBirefList = res.records
     },
-    reminderItemHandler(val){
-      this.$router.push(`/market/${val.linkerId}`)
-      console.log(val);
-      
-
+    onLoad() {
+      this.searchMidator(this.searchValue, this.filters, this.page)
     },
-    // searchMediator(payload){
-
-    // },
+    reminderItemHandler(val) {
+      this.$router.push(`/market/${val.linkerId}`)
+    },
+    resetSearch() {
+      this.searchResult = []
+      this.page = 1
+      this.searchStatus = 2
+      this.loading = false
+      this.finished = false
+    },
+    // 搜索控制
+    async searchMidator(name, filters) {
+      let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
+      let params = screenFilterHelper(name, mergeFilters)
+      params.current = this.page
+      params.size = this.pageSize
+      params = Object.assign(params)
+      const result = await marketService.getHouseList(params)
+      if (result.records.length > 0) {
+        this.searchResult = this.searchResult.concat(result.records)
+        this.loading = false
+        if (result.pages === this.page) {
+          this.finished = true
+        } else {
+          this.page++
+        }
+      } else {
+        // 显而易见,进入这里表明无数据
+        this.finished = true
+        this.loading = false
+        this.haveData = false
+        let hotParams = {
+          city: this.userInfo.majorCity || '全国',
+          hotTotal: 5
+        }
+        const hotRes = await userService.getHotLinker(hotParams)
+        this.hotResult = hotRes
+      }
+    },
+    // 历史item点击
+    historyItemClick(val) {
+      this.searchValue = val
+      setTimeout(() => {
+        this.searchStatus = 2
+      }, 1)
+      this.resetSearch()
+      // this.searchMidator(val, this.filters, this.page)
+    },
     // 取消搜索
     onCancelHandler() {
       this.$router.back()
+    },
+    // 清空历史
+    cleanHandler() {
+      this.historyController('reset')
+    },
+    opClickHandler(item) {
+      this.$router.push(`/marketDetail/open/${item.linkerId}`)
+    },
+    //
+    /**
+     * 历史控制器
+     * @param {String} op 操作 init-初始化 add-添加 get-取 reset-清空
+     * @param {String} data 值 add时使用
+     */
+    historyController(op, data = '') {
+      switch (op) {
+        case 'init':
+          let tempHistory = window.localStorage.getItem('SEARCH_HISTORY')
+          if (!isNull(tempHistory)) this.searchHistory = tempHistory.split(',')
+          break
+        case 'add':
+          let valIndex = this.searchHistory.indexOf(data)
+          if (valIndex !== -1) this.searchHistory.splice(valIndex, 1)
+          if (this.searchHistory.length >= 8) this.searchHistory.shift()
+          this.searchHistory.push(data)
+          window.localStorage.setItem('SEARCH_HISTORY', this.searchHistory.join(','))
+          break
+        case 'reset':
+          this.searchHistory = []
+          window.localStorage.removeItem('SEARCH_HISTORY')
+          break
+      }
     }
   },
   watch: {
     searchValue(val) {
       clearTimeout(this.autoSearchTimer)
-      this.autoSearchTimer = setTimeout(() => {
-        this.preSearch()
-        clearTimeout(this.autoSearchTimer)
-      }, 500)
+      if (val === '') {
+        this.searchStatus = 0
+      } else {
+        this.searchStatus = 1
+        this.autoSearchTimer = setTimeout(() => {
+          this.preSearch()
+          clearTimeout(this.autoSearchTimer)
+        }, 500)
+      }
+    },
+    filters: {
+      handler(val) {
+        this.resetSearch()
+      },
+      deep: true
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   }
 }
 </script>
@@ -105,6 +239,15 @@ export default {
         height: 16px;
       }
     }
+    > .history-content {
+      margin: 15px;
+      > .history-item {
+        padding: 10px 20px;
+        font-size: 14px;
+        color: #666666;
+        display: inline-block;
+      }
+    }
   }
   > .search-reminder {
     > .search-reminder-item {
@@ -119,6 +262,18 @@ export default {
       > .house-info {
         font-size: 12px;
         color: #999999;
+      }
+    }
+  }
+  > .search-result-container {
+    > .search-result-content {
+      > .list-container {
+      }
+      > .null-container {
+        margin-top: 10%;
+      }
+      > .hot-recommend {
+        margin-top: 30px;
       }
     }
   }
