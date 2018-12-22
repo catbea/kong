@@ -74,6 +74,7 @@ export default {
       let submitPrice = priceItem.subscribeAmount
       let coupon = 0
 
+      // console.log(this.marketOpenCache, 'this.marketOpenCache======')
       if(this.marketOpenCache && this.marketOpenCache.currSelectedCoupon) {
         this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
         let currCunpon = this.marketOpenCache.currSelectedCoupon
@@ -88,10 +89,13 @@ export default {
           coupon = currCunpon.discountsLimit * 100
         }
         this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: couponStr, isShowCoupon: true })
-      }
-
-      if(this.marketOpenCache.projectCoupons) {
-        this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { isShowCoupon: true })
+      } else {
+        if(this.marketOpenCache.projectCoupons) {
+          let couponStr = this.marketOpenCache.projectCoupons.length + '张可用'
+          this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: couponStr, isShowCoupon: true })
+        } else {
+          this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { isShowCoupon: false })
+        }
       }
 
       submitPrice =  submitPrice - this.userInfo.price
@@ -107,8 +111,9 @@ export default {
         }
       }
       balancePay = balancePay < 0 ? balancePay =0  : balancePay
+      console.log(balancePay, 'submitPrice======')
       this.submitPayInfo = { value: submitPrice, coupon: coupon }
-      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balancePay: balancePay })
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balanceAmount: this.userInfo.price, balancePay: balancePay })
     },
     priceItemClickHandle(index) {
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, {currPriceListIndex: index}) )
@@ -121,7 +126,7 @@ export default {
       let balancePay = 0
       submitPrice =  submitPrice - this.userInfo.price
       balancePay = this.userInfo.price
-      console.log(submitPrice, 'balancePay')
+      // console.log(submitPrice, 'balancePay')
       if(submitPrice < 0) {
         submitPrice = 0
         balancePay = priceItem.subscribeAmount
@@ -197,13 +202,14 @@ export default {
     },
 
     paySuss() {
+      let _pirce = this.userInfo.price - this.priceSurfacePayInfo.balancePay
+      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, {price: _pirce} )) 
+      this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price }
       Dialog.confirm({
         title: '开通成功',
         message: '你已经成功开通楼盘'+this.projectInfo.linkerName+'，快去推荐给身边的小伙伴',
         cancelButtonText: '取消'
       }).then(() => {
-        let _pirce = this.userInfo.price - this.priceSurfacePayInfo.balancePay
-        this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, {price: _pirce} )) 
         this.$router.replace("/market/"+this.linkerId)
       }).catch(() => {
 

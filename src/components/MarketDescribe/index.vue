@@ -15,11 +15,11 @@
             <li class="market-name">
               <div class='box'>
                 <span class="title">{{itemInfo.linkerName}}</span>
-                <span class="past" v-if="itemInfo.openStatus==10">已过期</span>
+                <!-- <span class="past" v-if="itemInfo.openStatus==20">已过期</span> -->
               </div>
               <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
-            <li class="site">{{itemInfo.linkerAddress}} <span v-if="itemInfo.openStatus==10">{{itemInfo.invalidTime | dateTimeFormatter(2)}}到期</span></li>
+            <li class="site">{{itemInfo.linkerAddress}} <span v-if="itemInfo.openStatus==10">{{itemInfo.invalidTimeStr}}到期</span></li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>

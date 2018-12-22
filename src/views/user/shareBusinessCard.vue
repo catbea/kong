@@ -57,7 +57,9 @@ export default {
     ...mapGetters(['userInfo'])
   },
   created() {
-    this.getCardInfo(this.userInfo.id)
+    this.agentId = this.$route.query.agentId
+    debugger
+    this.getCardInfo(this.agentId)
   },
   methods: {
     async getCardInfo(agentId) {
