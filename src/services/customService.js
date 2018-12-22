@@ -244,12 +244,11 @@ class CustomService {
    * @param {*} clientId
    * @param type 1:小程序 2:经纪人
    */
-  setMsgRead(clientId, type=2) {
+  setMsgRead(clientId) {
     return xhr({
       url: '/cpIM/setMsgRead',
       body: {
-        clientId,
-        type
+        clientId
       }
     })
   }
