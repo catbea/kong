@@ -5,7 +5,7 @@
     <!-- 顶部swipe -->
     <div class="top-swipe-container">
       <div class="swipe-content">
-        <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">图片</div>
+        <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
             <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
@@ -347,7 +347,7 @@ export default {
      > .swipe-photo{
        position: absolute;
        z-index:1;
-      left: 196px;
+      left: 155px;
       bottom: 15px;
       text-align: center;
       width: 60px;
