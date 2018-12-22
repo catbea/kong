@@ -9,7 +9,7 @@
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div style="margin-left:16px">
+        <div style="margin-left:16px" v-show="showMarketListCount>=showFilterLimit">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters" :local="this.selectedCity"></screen>
         </div>
@@ -20,7 +20,7 @@
       <p v-show="isNoData" class="notMarket">暂未开通任何楼盘</p>
       <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
-        <div style="margin-left:16px">
+        <div style="margin-left:16px" v-show="unShowMarketListCount>=showFilterLimit">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
@@ -53,7 +53,7 @@ export default {
   },
   data: () => ({
     isNoData: false,
-    showFilterLimit: 10,
+    showFilterLimit: 20,
     showLoading:false,
     showFinished:false,//展示
     notShowLoading:false,
@@ -99,12 +99,14 @@ export default {
     dataArr: []
   }),
  async created() {
-   this.selectedCity = this.userArea.myMarketSelectedCity
-   this.searchInfo.siteText = this.selectedCity ? this.selectedCity:  '全国'
-   await this.showGetMyMarketInfo()//请求展示楼盘
-   await this.notShowGetMyMarketInfo()//请求不展示楼盘
-   await this.getRecommendInfo()//请求轮播图数据
-   await this.marketShowHandle()//展示/不展示都没数据时
+    this.selectedCity = this.userArea.myMarketSelectedCity
+    this.searchInfo.siteText = this.selectedCity ? this.selectedCity:  '全国'
+    await this.showGetMyMarketInfo()//请求展示楼盘
+    await this.notShowGetMyMarketInfo()//请求不展示楼盘
+    await this.getRecommendInfo()//请求轮播图数据
+    await this.marketShowHandle()//展示/不展示都没数据时
+    this.getShowProjectCount();
+    this.getUnShowProjectCount();
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -145,6 +147,14 @@ export default {
     }
   },
   methods: {
+    async getShowProjectCount() {
+      const res = await userService.queryMyLinkerCount(0)
+      this.showMarketListCount = res.count
+    },
+    async getUnShowProjectCount() {
+      const res = await userService.queryMyLinkerCount(1)
+      this.notShowMarketListCount = res.count
+    },
     showOnLoad(){//展示数据初始化
       this.showGetMyMarketInfo()
     },

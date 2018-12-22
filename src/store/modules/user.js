@@ -75,7 +75,7 @@ const state = {
     switchTime: '',
     tempPhone: '18676652795',
     token:
-    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI5bWZ4czgiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ4NDUzMTM1LCJpYXQiOjE1NDU0NDgzMzV9.EGInFZSRhtNgk99I3oY598mEVgrq5ew3RcDi4RFEk6TJ7g70hjtalQ4I038lS-SzJ9-tn91kOt-tiOT_hVYClg',
+    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJrYnlvN2giLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDgxNDA5NTYsImlhdCI6MTU0NTEzNjE1Nn0.C9AdO_CIUA6Da3ZpdCTWKL9zYjSiEz8xd7MmWc2Z5C0Fgnyfox7S3qD9I7pXRZQQLzDLTSmo515sDnLduwPCkw',
     updateTime: '2018-10-19 17:37:47',
     viewNum: 101,
     wechatAccount: '112110',

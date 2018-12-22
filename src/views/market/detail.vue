@@ -17,7 +17,9 @@
         <!-- 收藏/分享 -->
         <div class="operate-1">
           <div class="operate-collect" @click="collectHandler">
-            <i class="icon iconfont icon-article_collection"></i>
+
+            <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
+            <i v-else  class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
           <div class="operate-share" @click="shareHandler">
@@ -63,7 +65,7 @@
           </p>
           <p>
             <span>开盘时间:</span>
-            {{info.openTime | dateTimeFormatter(5)}}
+            {{info.openTime}}
           </p>
           <p>
             <span>楼盘地址:</span>
@@ -105,7 +107,7 @@
       </div>
     </div>
     <!-- 位置周边 -->
-    <div class="house-circum">
+    <div class="house-circum" v-if="info.houseAroundType&&info.houseAroundType.length>0">
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
@@ -243,8 +245,6 @@ export default {
     //判断该楼盘有无图片列表
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.id)
-      console.log(res,'相册数据');
-      
       if (res.length > 0) {
         this.photoButton = true
       } else if (res.length <= 0) {
@@ -266,8 +266,6 @@ export default {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
       this.status=this.info.collectionStatus
-      console.log(res,'该楼盘数据');
-      
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
       this.headSlide()
@@ -320,7 +318,7 @@ export default {
       this.$router.push(`/marketDetail/open/${this.id}`)
     },
     moreInfoHandler() {
-      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId } })
+      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId ,licenceList :this.info.licenceList} })
     },
     // 全景点击
     ifPanoramaClickHandler(){

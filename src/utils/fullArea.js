@@ -5,10 +5,18 @@
 const getAreaCode = name => {
   name = name.replace(/\s+/g, '')
   if (!name) return
-  for (let key1 of Object.keys(fullArea)) {
-    for (let key2 of Object.keys(fullArea[key1])) {
-      if (fullArea[key1][key2] === name) return key2
-    }
+  // 因为有直辖市的原因要优先,所以要把Object.keys().reverse() 但是从最底层查找效率过低,不如直接写
+  // for (let key1 of Object.keys(fullArea).reverse()) {
+  //   for (let key2 of Object.keys(fullArea[key1])) {
+  //     if (fullArea[key1][key2] === name) return key2
+  //   }
+  // }
+  // 因为有直辖市的原因要优先,所以要把Object.keys().reverse() 但是从最底层查找效率过低,不如直接写
+  for (let key of Object.keys(fullArea.city_list)) {
+    if (fullArea.city_list[key] === name) return key
+  }
+  for (let key of Object.keys(fullArea.province_list)) {
+    if (fullArea.province_list[key] === name) return key
   }
 }
 
@@ -19,8 +27,7 @@ const getAreaCode = name => {
  */
 const getChildren = (feature, type = 'name') => {
   const araeCode = type === 'name' ? getAreaCode(feature) : feature
-  let result = {},
-    count = 0
+  let result = {}
   if (araeCode.endsWith('0000')) {
     // 当前地区为省级
     for (let key of Object.keys(fullArea['city_list'])) {
