@@ -137,29 +137,30 @@
     </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="info.openStatus == 0">
+      <div class="unopen-status-box" v-if="info.expireFlag == 1">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <div class="open-status-box">
+      <market-renew v-if="info.expireFlag == 0" :renewInfo='info'></market-renew>
+       <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
         <div class="icon-box">
           <div>
             <i class="icon iconfont icon-building_details_rec1"></i>
-            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+            //<i class="icon iconfont icon-building_details_rec"></i> 
             推荐
           </div>
           <div>
             <i class="icon iconfont icon-building_details_sho"></i>
-            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+           //  <i class="icon iconfont icon-building_details_rec"></i> 
             展示
           </div>
           <div>
             <i class="icon iconfont icon-building_details_top"></i>
-            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+            // <i class="icon iconfont icon-building_details_rec"></i> 
             置顶
           </div>
         </div>
-        <div class="btn-box">续费()</div>
-      </div>
+        <div class="btn-box" @click="openHandler">续费()</div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -169,6 +170,7 @@ import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import HintTire from 'COMP/Market/MarketDetail/HintTire/'
+import MarketRenew from 'COMP/Market/MarketDetail/MarketRenew'
 import TagGroup from 'COMP/TagGroup'
 import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar'
@@ -183,7 +185,8 @@ export default {
     swiper,
     swiperSlide,
     TitleBar,
-    TMap
+    TMap,
+    MarketRenew,
   },
   data(){
     return {
