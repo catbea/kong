@@ -23,7 +23,7 @@
             :to="{path:'/marketDetail/share/compile',query:{linkerId:this.buildingInfo.linkerId}}"
             class="compile"
           >编辑海报</router-link>
-          <li class="save" @click="savaReport">保存海报</li>
+          <li class="save" @click="savaReport" :style="{'pointer-events':pointerEvents}">保存海报</li>
         </ul>
         <!-- <router-view></router-view> -->
       </div>
@@ -48,7 +48,8 @@ export default {
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     buildingInfo: {},
     status: 1,
-    showLoading:false
+    showLoading: false,
+    pointerEvents: ''
   }),
   created() {
     this.id = this.$route.params.id
@@ -62,7 +63,8 @@ export default {
       }
     },
     async savaReport() {
-      this.showLoading=true
+      this.showLoading = true
+      this.pointerEvents = 'none'
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
@@ -73,7 +75,8 @@ export default {
       canvas.style.height = '100%'
 
       document.getElementById('card-result').appendChild(canvas)
-      this.showLoading=false
+      this.showLoading = false
+      this.pointerEvents = ''
     }
   },
   computed: {
