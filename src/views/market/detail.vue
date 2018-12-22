@@ -315,7 +315,7 @@ export default {
       this.$router.push(`/marketDetail/open/${this.id}`)
     },
     moreInfoHandler() {
-      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId } })
+      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId ,licenceList :this.info.licenceList} })
     },
     // 全景点击
     ifPanoramaClickHandler(){
