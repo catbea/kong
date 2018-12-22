@@ -60,7 +60,8 @@ export default {
       handler(val) {
         this.finished = false
         this.page = 1
-        this.getProjectList()
+        this.marketList = []
+        // this.getProjectList()
       },
       deep: true
     }
@@ -85,7 +86,7 @@ export default {
       // console.log(param)
 
       const res = await marketService.getHouseList(param)
-      this.marketList = this.page <= 1 ? res.records :  this.marketList.concat(res.records)
+      this.marketList = this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {
         this.finished = true
       }
@@ -108,7 +109,7 @@ export default {
     skipDetail(item) {
       this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
-    // s搜索区域点击处理
+    // 搜索区域点击处理
     areaClickHandler() {
       this.$router.push({ name: 'area-select', query: {fromPage:'market'} })
     },

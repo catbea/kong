@@ -67,6 +67,8 @@ export default {
           open: `${item.openTimes}次开通`,
           isChecked: false,
           divisionRules: item.divisionRules,
+          saleStatus: item.saleStatus,
+          ifPanorama: item.ifPanorama,
           price: `${item.price} ${item.priceUnit}`
         }
         _list.push(obj)
