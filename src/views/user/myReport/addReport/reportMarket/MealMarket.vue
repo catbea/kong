@@ -7,8 +7,11 @@
           :style="{backgroundImage:'url('+ (indexData==checkData ? checkColorImg:checkImg)+')'}"
         ></span>
         <div class="meal-market-page-box-top-left">
-          <img class="building-img"  :src="dataArr.linkerHeadUrl">
-          <p class="icon-discount" :style="{'backgroundImage':'url(' + labelImg + ')'}">{{dataArr.sale}}</p>
+          <img class="building-img" :src="dataArr.linkerHeadUrl">
+          <p
+            class="icon-discount"
+            :style="{'backgroundImage':'url(' + labelImg + ')'}"
+          >{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
@@ -24,7 +27,7 @@
       </div>
       <div class="meal-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt="" srcset="">
-        {{dataArr.divisionRules}}
+        <span>{{dataArr.divisionRules | textOver}}</span>
       </div>
     </div>
   </div>
@@ -166,13 +169,17 @@ export default {
       font-family: PingFangSC-Medium;
       font-weight: 500;
       color: rgba(102, 102, 102, 1);
-      padding: 7px 0 0 0;
+      padding: 0 0 0 0;
       margin-bottom: 16px;
       margin-left: 8px;
       img {
-        margin-right: 8px;
+        margin-left: 8px;
         width: 16px;
         height: 16px;
+      }
+
+      span{
+        margin-left: 5px;
       }
     }
   }
