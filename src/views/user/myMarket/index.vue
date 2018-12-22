@@ -247,7 +247,6 @@ export default {
       this.master()
       this.common()
       this.swipeList = this.masterList.concat(this.commonList)
-      console.log(this.swipeList, '楼盘图片数据')
     },
     master() {
       this.masterList = this.recommendList.filter(item => {
@@ -270,12 +269,7 @@ export default {
       obj.size = this.pageSize
       obj.displayFlag = 0
       obj.city = this.selectedCity
-      console.log(obj ,'obj')
       const resShow = await userService.getMyMarket(obj)
-      // if(!this.selectedCity){
-      //   console.log('project count======'+resShow.total)
-      //   this.showMarketListCount = resShow.total
-      // }
       this.showMarketList = this.showPage <= 1 ? resShow.records : this.showMarketList.concat(resShow.records)
       if (resShow.pages === 0 || this.showPage === resShow.pages) {
         this.showFinished = true
@@ -323,7 +317,6 @@ export default {
     },
     closeCut(n) {
       this.notShowMarketList.push(n)
-      console.log(this.notShowMarketList,'不展示的楼盘');
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element = this.showMarketList[index];
         if(n.linkerId==element.linkerId){

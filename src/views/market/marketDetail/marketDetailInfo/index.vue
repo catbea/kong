@@ -56,9 +56,9 @@ export default {
         },
         {
           top: [
-            { left: '建筑风格', right: this.info && this.buildStyle },
+            { left: '建筑风格', right: this.info && this.info.buildStyle },
             { left: '产权年限', right: this.info && this.info.propertyYears },
-            { left: '装修标准', right: this.info && this.decorateStatus },
+            { left: '装修标准', right: this.info && this.info.decorateStatus },
             { left: '占地面积', right: this.info && this.info.coverArea },
             { left: '建筑面积', right: this.info && this.info.buildArea },
             { left: '容积率', right: this.info && this.info.plotRate },
@@ -69,7 +69,7 @@ export default {
         },
         {
           top: [
-            { left: '物业类型  ', right: this.info && this.info.houseUse },
+            { left: '物业类型  ', right: this.info && this.info.houseUseList.toString() },
             { left: '物业公司', right: this.info && this.info.management },
             { left: '物业费', right: this.info && this.info.managementPrice }
           ]

@@ -30,10 +30,7 @@ export default {
   components: {
 
   },
-  created() {
-    console.log(this.collectionStatus,'收藏状态');
-    
-  },
+
   props: {
     linkerInfo:{type:Object},
     bannerList: { type: Array },
