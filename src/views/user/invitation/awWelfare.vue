@@ -11,7 +11,9 @@
           <img :src="awtips1Icon">
         </button>
       </div>
-      <div v-show="status === 1" class="awWelfare-center" id="share-top" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
+      <!-- id="share-top" :style="{'backgroundImage':'url('+awbgcardIcon+')'}" -->
+      <div v-show="status === 1" id="share-top" class="awWelfare-center" >
+        <img :src="awbgcardIcon"  class="awWelfare-center-img">
         <!-- v-if="invitationImg" -->
         <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
           <div class="awWelfare-info">
@@ -24,7 +26,7 @@
             </div>
           </div>
       </div>
-      <div class="result" id="card-result" v-show="status === 2"></div>
+      <div class="awWelfare-center" id="card-result" v-show="status === 2"></div>
       
       <div class="awWelfare-text">
         请长按保存邀请图片
@@ -94,7 +96,7 @@ export default {
   },
   methods: {
     async savaReport(){
-      this.status = 2
+      
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
@@ -102,6 +104,8 @@ export default {
       })
       canvas.style.width = '101%'
       canvas.style.height = '100%'
+      this.status = 2
+      debugger;
       document.getElementById('card-result').appendChild(canvas)
     },
     async goteammateList(){
