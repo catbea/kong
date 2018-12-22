@@ -73,7 +73,7 @@ export default {
       awtipsIcon: require('IMG/user/invitation/aw-tips@2x.png'),
       awtips1Icon: require('IMG/user/invitation/aw-tips1@2x.png'),
       awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
-      awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
+      awbgcardIcon: require('IMG/user/invitation/aw-bgcard.png'),
       teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
       show1: false,
       registrationRules:'',
@@ -89,11 +89,12 @@ export default {
   },
   created() {
     this.getregisrules()
+    this.getqueryInvitationUrl()
   },
   mounted() {
      
-     this.getqueryInvitationUrl()
-   // this.savaReport()
+    
+    //this.savaReport()
    
   },
   methods: {
@@ -106,8 +107,7 @@ export default {
       })
       canvas.style.width = '101%'
       canvas.style.height = '100%'
-     // this.status = 2
-      debugger;
+      this.status = 2
       document.getElementById('card-result').appendChild(canvas)
     },
     async goteammateList(){
@@ -184,11 +184,15 @@ export default {
     }
   }
   .awWelfare-center {
-    width: 284px;
-      height: 466px;
-    margin: 0 auto;
-    background-size: 284px 466px;
-        position: relative;
+       width: 264px;
+      height: 446px;
+      margin: 10px auto;
+      background-size: 284px 466px;
+      position: relative;
+    .awWelfare-center-img{
+       width: 264px;
+      height: 446px;
+    }
         .background-qrcode{
               width:80px;
               height:80px;
@@ -206,7 +210,7 @@ export default {
         }
         
     .awWelfare-info{
-      padding: 34px 50px 34px 62px;
+      padding: 34px 50px 34px 52px;
       position: absolute;
       bottom: 34px;
       display: flex;
@@ -218,7 +222,7 @@ export default {
         }
       }
       .awWelfare-info-right{
-        margin-left: 12px;
+        margin-left: 8px;
         .awWelfare-info-right-name{
             font-size:14px;
             font-weight:300;
