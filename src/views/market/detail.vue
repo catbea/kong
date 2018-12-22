@@ -63,7 +63,7 @@
           </p>
           <p>
             <span>开盘时间:</span>
-            {{info.openTime | dateTimeFormatter(5)}}
+            {{info.openTime}}
           </p>
           <p>
             <span>楼盘地址:</span>
@@ -234,6 +234,7 @@ export default {
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
+    this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
   },
   methods: {
     //判断该楼盘有无图片列表
