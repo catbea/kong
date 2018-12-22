@@ -100,11 +100,13 @@ export default {
 
     //勾选获取文章id
     getArticleId(checked, position) {
-      if (!checked) {
-        this.list[position].isCheck == true
-      } else {
-        this.list[position].isCheck == false
-      }
+      // if (!checked) {
+      //   this.list[position].isCheck == true
+      // } else {
+      //   this.list[position].isCheck == false
+      // }
+
+      this.list[position].isCheck = !this.list[position].isCheck
 
       let selectIdArr = this.selectArr
       let selectId = this.list[position].id
@@ -204,11 +206,12 @@ export default {
     deleArticles() {
       let temp = ''
       let selectArr = this.selectArr
+      console.log(this.selectArr, 'this.selectArr')
       for (var i = 0; i < selectArr.length; i++) {
         temp += selectArr[i] + ','
       }
       this.selectStr = temp
-      this.toDeleArticle(this.selectStr)
+      // this.toDeleArticle(this.selectStr)
     },
 
     //加载更多
