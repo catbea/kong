@@ -40,7 +40,7 @@ export default {
     renewInfo:{type:Object}
   },
   methods: {
-   async changeMarketData(linkerId, operationType, status){//修改楼盘状态
+   async changeHandle(linkerId, operationType, status){//修改楼盘状态
     await userService.changeMarketData(linkerId, operationType, status)
     },
     dialogHandle(n) {
@@ -52,19 +52,18 @@ export default {
         // on close
       })
     },
-   async changeRecommend(){
-      await userService.changeMarketData()
-    },
     recommendHandle() {
       this.flagTj = !this.flagTj
       switch (this.flagTj) {
         case true:
           this.dialogHandle('已推荐该楼盘')
-          this.changeMarketData(this.renewInfo.linkerId,20,2)
+          this.changeHandle(this.renewInfo.linkerId,20,2)
+          console.log('改已普通推荐');
+          
           break
         case false:
           this.dialogHandle('已取消推荐该楼盘')
-          this.changeMarketData(this.renewInfo.linkerId,20,0)
+          this.changeHandle(this.renewInfo.linkerId,20,0)
           break
       }
     },
@@ -73,11 +72,11 @@ export default {
       switch (this.flagZs) {
         case true:
           this.dialogHandle('已开启该楼盘展示')
-          this.changeMarketData(this.renewInfo.linkerId,30,0)
+          this.changeHandle(this.renewInfo.linkerId,30,0)
           break
         case false:
           this.dialogHandle('已关闭该楼盘展示')
-          this.changeMarketData(this.renewInfo.linkerId,30,1)
+          this.changeHandle(this.renewInfo.linkerId,30,1)
           break
       }
     },
@@ -86,11 +85,11 @@ export default {
       switch (this.flagZd) {
         case true:
           this.dialogHandle('置顶成功')
-          this.changeMarketData(this.renewInfo.linkerId,40,10)
+          this.changeHandle(this.renewInfo.linkerId,40,10)
           break
         case false:
           this.dialogHandle('取消置顶成功')
-          this.changeMarketData(this.renewInfo.linkerId,40,0)
+          this.changeHandle(this.renewInfo.linkerId,40,0)
           break
       }
     },

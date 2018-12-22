@@ -26,7 +26,7 @@
       </div>
       <div class="edit-container">
         <!-- <div @click="changeBgHandler">修改背景</div> -->
-        <div class="mark-sure" @click="buildCardHandler" :style="{'pointer-events':pointerEvents}">确认</div>
+        <div class="mark-sure" @click="buildCardHandler" :style="{'pointer-events':this.pointerEvents}">确认</div>
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
@@ -95,7 +95,6 @@ export default {
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
-      this.pointerEvents=''
     }
   }
 }

@@ -23,7 +23,7 @@
             :to="{path:'/marketDetail/share/compile',query:{linkerId:this.buildingInfo.linkerId}}"
             class="compile"
           >编辑海报</router-link>
-          <li class="save" @click="savaReport" :style="{'pointer-events':pointerEvents}">保存海报</li>
+          <li class="save" @click="savaReport" :style="{'pointer-events':this.pointerEvents}">保存海报</li>
         </ul>
         <!-- <router-view></router-view> -->
       </div>
@@ -76,7 +76,6 @@ export default {
 
       document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
-      this.pointerEvents = ''
     }
   },
   computed: {

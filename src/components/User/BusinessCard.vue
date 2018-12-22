@@ -98,9 +98,6 @@ export default {
     shareIcon: require('IMG/user/share.png'),
     editIcon: require('IMG/user/editInfo@2x.png')
   }),
-
-  onCreated: {},
-
   methods: {
     editCLickHandler() {
       this.$router.push('/user/edit')
