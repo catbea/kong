@@ -17,7 +17,9 @@
         <!-- 收藏/分享 -->
         <div class="operate-1">
           <div class="operate-collect" @click="collectHandler">
-            <i class="icon iconfont icon-article_collection"></i>
+
+            <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
+            <i v-else  class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
           <div class="operate-share" @click="shareHandler">
@@ -240,8 +242,6 @@ export default {
     //判断该楼盘有无图片列表
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.id)
-      console.log(res,'相册数据');
-      
       if (res.length > 0) {
         this.photoButton = true
       } else if (res.length <= 0) {
@@ -263,8 +263,6 @@ export default {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
       this.status=this.info.collectionStatus
-      console.log(res,'该楼盘数据');
-      
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
       this.headSlide()
