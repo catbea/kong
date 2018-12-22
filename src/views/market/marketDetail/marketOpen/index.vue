@@ -31,7 +31,7 @@ export default {
   created() {
     this.linkerId = this.$route.params.id
     if(this.marketOpenCache && this.marketOpenCache.linkerId && this.marketOpenCache.linkerId == this.linkerId) {
-      console.log(this.marketOpenCache)
+      console.log(this.marketOpenCache, 'marketOpenCache')
       this.priceList = this.marketOpenCache.priceList
       this.projectInfo = this.marketOpenCache.projectInfo
       // this.priceItemClickHandle(this.marketOpenCache.currPriceListIndex)
@@ -90,6 +90,10 @@ export default {
         this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: couponStr, isShowCoupon: true })
       }
 
+      if(this.marketOpenCache.projectCoupons) {
+        this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { isShowCoupon: true })
+      }
+
       submitPrice =  submitPrice - this.userInfo.price
       balancePay = this.userInfo.price
       console.log(submitPrice, balancePay+'submitPrice======')
@@ -137,7 +141,8 @@ export default {
       let res = await mycoupons.getMyCoupons(this.linkerId, priceItem.subscribeAmount, 1, 1000)
       let couponStr = res.canUseNum + '张可用'
       this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: couponStr, isShowCoupon: res.canUseNum > 0 ? true : false })
-      this.$store.dispatch('setProjectCoupons', res.page.records)
+      // this.$store.dispatch('setProjectCoupons', res.page.records)
+      this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, {projectCoupons: res.page.records}) )
     },
 
     async paySubmit() {
@@ -149,6 +154,10 @@ export default {
         subscribeNum: priceItem.subscribeNum,
         amountId: priceItem.id,
         payOpenid: this.userInfo.payOpenId
+      }
+      
+      if(this.marketOpenCache.currSelectedCoupon) {
+        param.couponsCodes = this.marketOpenCache.currSelectedCoupon.couponsCode
       }
       this.isPayLoading = true
       const res = await commonService.payForProject(param)
