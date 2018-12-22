@@ -63,7 +63,7 @@
           </p>
           <p>
             <span>开盘时间:</span>
-            {{info.openTime | dateTimeFormatter(5)}}
+            {{info.openTime}}
           </p>
           <p>
             <span>楼盘地址:</span>
