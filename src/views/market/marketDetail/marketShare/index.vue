@@ -2,7 +2,6 @@
   <div class="market-share-page">
     <div class="box" v-show="status === 1">
       <div class="share-top" id="share-top">
-        <!--  -->
         <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="buildingInfo.qrCode">
@@ -27,9 +26,8 @@
         <!-- <router-view></router-view> -->
       </div>
     </div>
-    <div class="result" id="card-result" v-show="status === 2">
-      <!-- <van-loading class="loadding-view" type="spinner" color="white" style="{display:loading}"/> -->
-    </div>
+    <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
+    <!-- <div class="result" id="card-result" v-show="status === 2"></div> -->
   </div>
 </template>
 <script>
@@ -53,7 +51,7 @@ export default {
       logoImg: require('IMG/dev/page1/logo@2x.png'),
       buildingInfo: {},
       status: 1,
-      loading: 'none'
+      showLoading: true
     }
   },
 
@@ -66,7 +64,7 @@ export default {
     },
 
     async savaReport() {
-      this.loading = 'block'
+      this.showLoading = true
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
@@ -76,7 +74,7 @@ export default {
       canvas.style.width = '101%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
-      this.loading = 'none'
+      this.showLoading = false
     }
   }
 }
@@ -87,10 +85,23 @@ export default {
   width: 100%;
   height: 100%;
   background: #ffffff;
+
+  .van-loading {
+    display: inline-block;
+    position: absolute;
+    margin-left: 39%;
+    width: 84px;
+    height: 84px;
+    margin-top: 50%;
+    z-index: 10000;
+  }
+
   .box {
+    position: absolute;
     margin-bottom: 5px;
   }
   .result {
+    position: absolute;
     .loadding-view {
       text-align: center;
       margin: 0 auto;
@@ -145,7 +156,6 @@ export default {
       top: 317px;
       z-index: 2;
     }
-
 
     > .building-name {
       position: absolute;
