@@ -49,7 +49,8 @@ export default {
     buildingInfo: {},
     status: 1,
     showLoading: false,
-    pointerEvents: ''
+    pointerEvents: '',
+    lastOpTimer: 0
   }),
   created() {
     this.id = this.$route.params.id
@@ -62,7 +63,14 @@ export default {
         this.buildingInfo = result
       }
     },
-    async savaReport() {
+    savaReport() {
+      let dd = new Date().getTime()
+      if (dd - this.lastOpTimer < 3000) return
+      this.lastOpTimer = dd
+      this.handleDate()
+    },
+
+    async handleDate() {
       this.showLoading = true
       this.pointerEvents = 'none'
       this.status = 2

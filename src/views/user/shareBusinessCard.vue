@@ -26,7 +26,11 @@
       </div>
       <div class="edit-container">
         <!-- <div @click="changeBgHandler">修改背景</div> -->
-        <div class="mark-sure" @click="buildCardHandler" :style="{'pointer-events':this.pointerEvents}">确认</div>
+        <div
+          class="mark-sure"
+          @click="buildCardHandler"
+          :style="{'pointer-events':this.pointerEvents}"
+        >确认</div>
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
@@ -46,7 +50,8 @@ export default {
     shareInfo: {},
     status: 1,
     showLoading: false,
-    pointerEvents:''
+    pointerEvents: '',
+    lastOpTimer: 0
   }),
   computed: {
     ...mapGetters(['userInfo'])
@@ -83,10 +88,19 @@ export default {
       }
       this.currentImgIndex = r
     },
-    async buildCardHandler() {
-      this.showLoading = true
-      this.pointerEvents='none'
+
+    buildCardHandler() {
+      let dd = new Date().getTime()
+      if (dd - this.lastOpTimer < 3000) return
+      this.lastOpTimer = dd
+      this.handleDate()
+    },
+
+    async handleDate() {
       this.status = 2
+      this.showLoading = true
+      this.pointerEvents = 'none'
+
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#show-container'), {
         logging: false,
