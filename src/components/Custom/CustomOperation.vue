@@ -14,7 +14,7 @@
     </div>
     <div class="consult-button" :class="clientMobile.length==0&&'button'" @click="consultHandler">
       <span class="bg_img icon-consult" :style="{backgroundImage:'url('+consultImg+')'}"></span>
-      咨询
+      联系
     </div>
   </div>
 </template>

@@ -17,7 +17,9 @@
         <!-- 收藏/分享 -->
         <div class="operate-1">
           <div class="operate-collect" @click="collectHandler">
-            <i class="icon iconfont icon-article_collection"></i>
+
+            <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
+            <i v-else  class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
           <div class="operate-share" @click="shareHandler">
@@ -105,7 +107,7 @@
       </div>
     </div>
     <!-- 位置周边 -->
-    <div class="house-circum">
+    <div class="house-circum" v-if="info.houseAroundType&&info.houseAroundType.length>0">
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
@@ -135,29 +137,30 @@
     </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="info.openStatus == 0">
+      <div class="unopen-status-box" v-if="info.expireFlag == 1">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <div class="open-status-box">
+      <market-renew v-if="info.expireFlag == 0" :renewInfo='info'></market-renew>
+       <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
         <div class="icon-box">
           <div>
             <i class="icon iconfont icon-building_details_rec1"></i>
-            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+            //<i class="icon iconfont icon-building_details_rec"></i> 
             推荐
           </div>
           <div>
             <i class="icon iconfont icon-building_details_sho"></i>
-            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+           //  <i class="icon iconfont icon-building_details_rec"></i> 
             展示
           </div>
           <div>
             <i class="icon iconfont icon-building_details_top"></i>
-            <!-- <i class="icon iconfont icon-building_details_rec"></i> -->
+            // <i class="icon iconfont icon-building_details_rec"></i> 
             置顶
           </div>
         </div>
-        <div class="btn-box">续费()</div>
-      </div>
+        <div class="btn-box" @click="openHandler">续费()</div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -167,6 +170,7 @@ import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import HintTire from 'COMP/Market/MarketDetail/HintTire/'
+import MarketRenew from 'COMP/Market/MarketDetail/MarketRenew'
 import TagGroup from 'COMP/TagGroup'
 import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar'
@@ -181,7 +185,8 @@ export default {
     swiper,
     swiperSlide,
     TitleBar,
-    TMap
+    TMap,
+    MarketRenew,
   },
   data(){
     return {
@@ -240,8 +245,6 @@ export default {
     //判断该楼盘有无图片列表
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.id)
-      console.log(res,'相册数据');
-      
       if (res.length > 0) {
         this.photoButton = true
       } else if (res.length <= 0) {
@@ -263,8 +266,6 @@ export default {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
       this.status=this.info.collectionStatus
-      console.log(res,'该楼盘数据');
-      
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
       this.headSlide()
@@ -317,7 +318,7 @@ export default {
       this.$router.push(`/marketDetail/open/${this.id}`)
     },
     moreInfoHandler() {
-      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId } })
+      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId ,licenceList :this.info.licenceList} })
     },
     // 全景点击
     ifPanoramaClickHandler(){

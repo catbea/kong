@@ -9,7 +9,7 @@
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div style="margin-left:16px">
+        <div style="margin-left:16px" v-show="showMarketListCount>=showFilterLimit">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters" :local="this.selectedCity"></screen>
         </div>
@@ -20,7 +20,7 @@
       <p v-show="isNoData" class="notMarket">暂未开通任何楼盘</p>
       <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
-        <div style="margin-left:16px">
+        <div style="margin-left:16px" v-show="unShowMarketListCount>=showFilterLimit">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
@@ -53,7 +53,7 @@ export default {
   },
   data: () => ({
     isNoData: false,
-    showFilterLimit: 10,
+    showFilterLimit: 20,
     showLoading:false,
     showFinished:false,//展示
     notShowLoading:false,
@@ -99,12 +99,14 @@ export default {
     dataArr: []
   }),
  async created() {
-   this.selectedCity = this.userArea.myMarketSelectedCity
-   this.searchInfo.siteText = this.selectedCity ? this.selectedCity:  '全国'
-   await this.showGetMyMarketInfo()//请求展示楼盘
-   await this.notShowGetMyMarketInfo()//请求不展示楼盘
-   await this.getRecommendInfo()//请求轮播图数据
-   await this.marketShowHandle()//展示/不展示都没数据时
+    this.selectedCity = this.userArea.myMarketSelectedCity
+    this.searchInfo.siteText = this.selectedCity ? this.selectedCity:  '全国'
+    await this.showGetMyMarketInfo()//请求展示楼盘
+    await this.notShowGetMyMarketInfo()//请求不展示楼盘
+    await this.getRecommendInfo()//请求轮播图数据
+    await this.marketShowHandle()//展示/不展示都没数据时
+    this.getShowProjectCount();
+    this.getUnShowProjectCount();
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -123,7 +125,8 @@ export default {
     showProjectFilters: {
       handler(val) {
         this.showPage = 1
-        this.showGetMyMarketInfo()
+        this.showMarketList = []
+        // this.showGetMyMarketInfo()
       },
       deep: true
     },
@@ -132,7 +135,8 @@ export default {
       this.setNotShowName = setTimeout(() => {
         this.notShowPage = 1
         this.notShowProjectName = val
-        this.notShowGetMyMarketInfo()//根据搜索字请求不展示的楼盘数据
+        this.notShowMarketList = []
+        // this.notShowGetMyMarketInfo()//根据搜索字请求不展示的楼盘数据
         clearTimeout(this.setNotShowName)
       }, 500)
     },
@@ -145,6 +149,14 @@ export default {
     }
   },
   methods: {
+    async getShowProjectCount() {
+      const res = await userService.queryMyLinkerCount(0)
+      this.showMarketListCount = res.count
+    },
+    async getUnShowProjectCount() {
+      const res = await userService.queryMyLinkerCount(1)
+      this.notShowMarketListCount = res.count
+    },
     showOnLoad(){//展示数据初始化
       this.showGetMyMarketInfo()
     },
@@ -270,7 +282,7 @@ export default {
       obj.displayFlag = 0
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
-      this.showMarketList = this.showPage <= 1 ? resShow.records : this.showMarketList.concat(resShow.records)
+      this.showMarketList = this.showMarketList.concat(resShow.records)
       if (resShow.pages === 0 || this.showPage === resShow.pages) {
         this.showFinished = true
       }
@@ -296,7 +308,7 @@ export default {
       const resNotShow = await userService.getMyMarket(obj)
       // this.searchNotShowNum = resNotShow.records.length//不展示的楼盘个数
       // this.notShowMarketList =resNotShow.records
-      this.notShowMarketList = this.notShowPage==1 ? resNotShow.records : this.notShowMarketList.concat(resNotShow.records)
+      this.notShowMarketList = this.notShowMarketList.concat(resNotShow.records)
       if (resNotShow.pages === 0 || this.notShowPage === resNotShow.pages) {
         this.notShowFinished = true
       }

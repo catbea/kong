@@ -434,5 +434,19 @@ class UserService {
     })
   }
 
+  
+  /**
+   * 获取用户的楼盘总数
+   * @param displayFlag 0:展示的楼盘 1:不展示的楼盘
+   */
+  queryMyLinkerCount(displayFlag) {
+    return xhr({
+      url: '/myLinker/queryMyLinkerCount',
+      body: {
+        displayFlag
+      }
+    })
+  }
+
 }
 export default new UserService()
