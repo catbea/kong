@@ -29,6 +29,7 @@
         <div class="mark-sure" @click="buildCardHandler">确认</div>
       </div>
     </div>
+    <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2"></div>
   </div>
 </template>
@@ -42,7 +43,8 @@ export default {
     coverBg: require('IMG/dev/page1/cover@2x.png'),
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     userInfo: {},
-    status: 1
+    status: 1,
+    showLoading: false
     // aa:'https://720ljq2test-10037467.file.myqcloud.com/1545358890837JRpeaKawJQcMFy6H.png'
     // IMG_LIST: [
     //   'http://phga1f2sd.bkt.clouddn.com/0000.jpg',
@@ -95,6 +97,7 @@ export default {
       this.currentImgIndex = r
     },
     async buildCardHandler() {
+      this.showLoading = true
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#show-container'), {
@@ -104,6 +107,7 @@ export default {
       canvas.style.width = '101%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
+      this.showLoading = false
     }
   },
   computed: {
@@ -117,117 +121,134 @@ export default {
 .page-1 {
   width: 100%;
   height: 100%;
-  #show-container {
-    position: relative;
-    margin: 15px;
-    height: 480px;
-    width: 80%;
-    margin-left: 10%;
-    border-radius: 5px;
-    .avatar-img {
-      width: 100%;
-      height: 350px;
-      border-radius: 5px;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center top;
-    }
-    .cover-img {
-      position: absolute;
-      width: 100%;
-      height: 400px;
-      left: 0;
-      bottom: 0;
-      object-fit: cover;
-      border-radius: 5px;
-    }
-    .logo-img {
-      position: absolute;
-      width: 94px;
-      height: 23px;
-      top: 20px;
-      right: 20px;
-    }
-    .user-base-info {
-      position: absolute;
-      top: 270px;
-      left: 30px;
-      color: #ffffff;
-      border-bottom: 4px solid #0069ca;
-      border-radius: 3px;
-      width: 40px;
-      white-space: nowrap;
-      .user-name {
-        font-size: 32px;
-        line-height: 32px;
-      }
-      .user-nickname {
-        font-size: 12px;
-        line-height: 20px;
-      }
-    }
-    .user-more-info {
-      position: absolute;
-      color: #ffffff;
-      margin-left: 30px;
-      margin-right: 30px;
-      font-weight: 400;
-      .user-signature {
-        font-size: 16px;
-        opacity: 0.85;
-        margin-bottom: 10px;
-      }
-      .user-phone,
-      .user-company,
-      .user-address {
-        font-size: 14px;
-        opacity: 0.5;
-        line-height: 32px;
-      }
-    }
-    .scan-me {
-      position: absolute;
-      top: 225px;
-      right: 20px;
-      .qrcode-container {
-        width: 84px;
-        height: 84px;
-        border-radius: 100%;
-        background: #ffffff;
+  position: relative;
 
-        > .qrcode-view {
-          width: 84px;
-          height: 84px;
-          border-radius: 50%;
+  .build {
+    position: absolute;
+
+    #show-container {
+      position: relative;
+      margin: 15px;
+      height: 480px;
+      width: 80%;
+      margin-left: 10%;
+      border-radius: 5px;
+      .avatar-img {
+        width: 100%;
+        height: 350px;
+        border-radius: 5px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center top;
+      }
+      .cover-img {
+        position: absolute;
+        width: 100%;
+        height: 400px;
+        left: 0;
+        bottom: 0;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+      .logo-img {
+        position: absolute;
+        width: 94px;
+        height: 23px;
+        top: 20px;
+        right: 20px;
+      }
+      .user-base-info {
+        position: absolute;
+        top: 270px;
+        left: 30px;
+        color: #ffffff;
+        border-bottom: 4px solid #0069ca;
+        border-radius: 3px;
+        width: 40px;
+        white-space: nowrap;
+        .user-name {
+          font-size: 32px;
+          line-height: 32px;
+        }
+        .user-nickname {
+          font-size: 12px;
+          line-height: 20px;
         }
       }
-      > p {
-        margin: 5px 0;
-        font-size: 12px;
-        transform: scale(0.8);
-        text-align: center;
+      .user-more-info {
+        position: absolute;
         color: #ffffff;
-        opacity: 0.4;
+        margin-left: 30px;
+        margin-right: 30px;
+        font-weight: 400;
+        .user-signature {
+          font-size: 16px;
+          opacity: 0.85;
+          margin-bottom: 10px;
+        }
+        .user-phone,
+        .user-company,
+        .user-address {
+          font-size: 14px;
+          opacity: 0.5;
+          line-height: 32px;
+        }
+      }
+      .scan-me {
+        position: absolute;
+        top: 225px;
+        right: 20px;
+        .qrcode-container {
+          width: 84px;
+          height: 84px;
+          border-radius: 100%;
+          background: #ffffff;
+
+          > .qrcode-view {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+          }
+        }
+        > p {
+          margin: 5px 0;
+          font-size: 12px;
+          transform: scale(0.8);
+          text-align: center;
+          color: #ffffff;
+          opacity: 0.4;
+        }
+      }
+    }
+
+    .edit-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+
+      > div {
+        flex: 1;
+        text-align: center;
+        background: #007ae6;
+        height: 44px;
+        border-radius: 5px;
+        margin-left: 30px;
+        margin-right: 30px;
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 44px;
       }
     }
   }
-  .edit-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
 
-    > div {
-      flex: 1;
-      text-align: center;
-      background: #007ae6;
-      height: 44px;
-      border-radius: 5px;
-      margin-left: 30px;
-      margin-right: 30px;
-      color: #ffffff;
-      font-size: 16px;
-      line-height: 44px;
-    }
+  .van-loading {
+    display: inline-block;
+    position: absolute;
+    margin-left: 39%;
+    width: 84px;
+    height: 84px;
+    margin-top: 50%;
+    z-index: 10000;
   }
 }
 </style>

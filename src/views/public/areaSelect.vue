@@ -79,6 +79,9 @@ export default {
         case 'market':
           this.$store.commit(types['USER_AREA'], { marketSelectedCity: val })
           break
+        case 'myMarket':
+          this.$store.commit(types['USER_AREA'], { myMarketSelectedCity: val })
+          break  
         default:
           this.$store.commit(types['USER_AREA'], { selectedCity: val })
           break
