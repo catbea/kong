@@ -171,6 +171,7 @@ import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
+import { Dialog } from 'vant'
 export default {
   components: {
     HintTire,
@@ -181,7 +182,9 @@ export default {
     TitleBar,
     TMap
   },
-  data: () => ({
+  data(){
+    return {
+    status:null,// 0-未收藏 1-已收藏
     commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png'),
     id: -1,
@@ -221,7 +224,8 @@ export default {
       headSlideTimer: null
     },
     playIcon: require('IMG/market/view720.png')
-  }),
+  }
+  },
   created() {
     this.id = this.$route.params.id
     // this.$store.commit(types.USER_BUILD_INFO, this.id)
@@ -230,7 +234,7 @@ export default {
   },
   methods: {
     //进入佣金详情
-    commission() {
+    commission() { 
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
     // enterCommission() {
@@ -240,6 +244,9 @@ export default {
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      this.status=this.info.collectionStatus
+      console.log(res,'该楼盘数据');
+      
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
       this.headSlide()
@@ -252,9 +259,41 @@ export default {
         this.headCurrent = this.headCurrent < this.info.customerList.length - 1 ? this.headCurrent + 1 : 0
       }, 3000)
     },
-    collectHandler() {},
+   async collectHandler() {//修改收藏状态
+      if(this.status==1){
+        this.status=0
+      }else{
+        this.status=1
+      }
+      await marketService.changeLinkerCollect(this.id,this.status,1)
+      console.log(this.status,'收藏状态');
+    },
     shareHandler() {
-      this.$router.push({ name: 'market-share', params: { id: this.id } })
+      if(this.userInfo.name!==''&&this.userInfo.distributorName!==''&&this.userInfo.majorRegion!==""&&this.userInfo.institutionName!==""){
+        if(this.info.expireFlag==0){
+          Dialog.confirm({
+            title: '温馨提示',
+            message: '还未开通楼盘，请前往开通'
+          }).then(() => {
+            this.$router.push({name:'marketDetail-open',params:{id:this.id}})
+          }).catch(() => {
+            // on cancel
+          });
+        }else{
+          this.$router.push({ name: 'market-share', params: { id: this.id } })
+        }
+      }else{
+        Dialog.confirm({
+          title:'您有未完善的信息',
+          message: '信息不完整会影响传播效率哦',
+          confirmButtonText:'去完善',
+          className:'marketShareHint'
+        }).then(() => {
+          this.$router.push({name:'user-edit'})
+        }).catch(() => {
+          // on cancel
+        });
+      } 
     },
     openHandler() {
       this.$router.push(`/marketDetail/open/${this.id}`)
@@ -268,6 +307,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
     }
@@ -618,6 +658,28 @@ export default {
   .show-enter,
   .show-leave-to {
     opacity: 0;
+  }
+}
+.marketShareHint{//完善信息弹窗
+  width:280px;
+  border-radius:12px;
+  text-align:center;
+  .van-dialog__header{
+    font-size:18px;
+    font-family:PingFangSC-Semibold;
+    font-weight:600;
+    color:rgba(51,51,51,1);
+    line-height:25px;
+  }
+  .van-dialog__message{
+    font-size:15px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:21px;
+  }
+  .van-dialog__footer{
+    border-top:1px solid #E5E5E5;
   }
 }
 </style>

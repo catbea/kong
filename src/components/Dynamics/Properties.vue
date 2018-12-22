@@ -21,11 +21,12 @@
       </div>
     </div>
 
-    <div class="Properties-list" v-for="(item,index) in houseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
+    <div v-if="houseDynamicList.length !=''" class="Properties-list" v-for="(item,index) in houseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
  <!-- @click="onClickConfirm" 1未开通，2已开通{{item.linkerName }}-->
       <p class="list-left">{{item.linkerName }}{{item.openStatus == 1 ? "（未开通）":""}}<span class="list-right">{{item.dynamicCount }}条动态</span></p>
       <p class="list-left-btn">{{item.area}}  {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
     </div>
+    <dynamics-null v-else></dynamics-null>
     <!-- <div class="Properties-list">
 
       <p class="list-left"><span class="list-right" >条动态</span></p>
@@ -44,11 +45,13 @@
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import ShadowBox from 'COMP/ShadowBox'
 import { Dialog } from 'vant'
+import DynamicsNull from 'COMP/Dynamics/DynamicsNull'
 export default {
   components: {
     DynamicsData,
     ShadowBox,
-    Dialog
+    Dialog,
+    DynamicsNull
   },
   props: {
     // info: Object,
