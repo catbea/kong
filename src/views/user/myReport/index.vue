@@ -37,9 +37,9 @@
                 <span class="container-list-botton" @click="reportInfo(item)">查看详情</span>
               </p>
             </div>
-            <p class="container-list">
+            <p class="container-list" v-if="item.latestTime">
               报备确认
-              <span class="container-list-title container-discount">{{item.waitingConfirmTime}}</span>
+              <span class="container-list-title container-discount">{{item.latestTime}}</span>
             </p>
           </div>
         </shadow-box>
@@ -56,6 +56,7 @@
 <script>
 import ShadowBox from 'COMP/ShadowBox'
 import Null from 'COMP/Null'
+import timeUtils from '@/utils/timeUtils'
 import reportService from 'SERVICE/reportService'
 export default {
   components: {
@@ -93,13 +94,30 @@ export default {
     async getReportList(current) {
       const res = await reportService.reportList(current)
       if (res.records.length > 0) {
-
         this.reportList = this.reportList.concat(res.records)
-
         if (this.reportList.length > 0) {
           this.haveData = true
         } else {
           this.haveData = false
+        }
+        for (var i in this.reportList) {
+          let item = this.reportList[i]
+          let times = []
+          times.push(Number(item.arriveTime))
+          times.push(Number(item.confirmTime))
+          times.push(Number(item.contractTime))
+          times.push(Number(item.fillingAuditingTime))
+          times.push(Number(item.fillingFailTime))
+          times.push(Number(item.fillingTime))
+          times.push(Number(item.followingTime))
+          times.push(Number(item.giveUpTime))
+          times.push(Number(item.recognizeTime))
+          times.push(Number(item.settledCommissionTime))
+          times.push(Number(item.subscribedTime))
+          times.push(Number(item.waitingConfirmTime))
+          times = this.selectionSort(times)
+          console.log(times)
+          item.latestTime = timeUtils.fmtDate(times[times.length-1])
         }
 
         if (res.pages === 0 || this.page === res.pages) {
@@ -115,6 +133,25 @@ export default {
         this.finished = true
       }
     },
+    // 选择排序
+    selectionSort(times) {
+      var len = times.length
+      var minIndex, temp
+      for (var i = 0; i < len - 1; i++) {
+        minIndex = i
+        for (var j = i + 1; j < len; j++) {
+          if (times[j] < times[minIndex]) {
+            //寻找最小的数
+            minIndex = j //将最小数的索引保存
+          }
+        }
+        temp = times[i]
+        times[i] = times[minIndex]
+        times[minIndex] = temp
+      }
+      return times
+    },
+    
     /**
      * 进入报备详情
      */

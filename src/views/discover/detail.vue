@@ -15,10 +15,10 @@
           <button class="agent-right">+ 名片</button>
         </div>
       </div>
-      <div
+      <!-- <div
         class="bg_img van-hairline--surround discover-img"
         :style="{backgroundImage:'url('+ (info&&info.image) +')'}"
-      ></div>
+      ></div> -->
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -222,19 +222,6 @@ export default {
           this.collectionStatus = 0
         }
       }
-
-      // if (res) {
-      //   console.log('999999999999')
-      //   if (res.deleteType === 0) {
-      //     console.log(res.deleteType + '====')
-      //     this.collectionStatus = 1
-      //   } else {
-      //     console.log(res.deleteType + '!!!!!')
-      //     this.collectionStatus = 0
-      //   }
-      // } else {
-      //   console.log('00000000000000')
-      // }
     },
     async articleShare() {
       let params = {
@@ -394,6 +381,7 @@ export default {
       background-color: #999999;
     }
     > .discover-detail-content {
+      margin-top: 15px;
       padding: 15px;
       font-size: 16px !important;
       color: #333333 !important;
