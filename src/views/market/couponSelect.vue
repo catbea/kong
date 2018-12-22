@@ -27,9 +27,9 @@ export default {
   }),
 
   created() {
-    this.couponList = this.projectCoupons
+    this.couponList = this.marketOpenCache.projectCoupons
     let _list = []
-    for (let item of this.projectCoupons) {
+    for (let item of this.marketOpenCache.projectCoupons) {
       let obj = {}
     }
     // this.getCoupan()

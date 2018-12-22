@@ -26,7 +26,7 @@
       </div>
       <div class="edit-container">
         <!-- <div @click="changeBgHandler">修改背景</div> -->
-        <div class="mark-sure" @click="buildCardHandler">确认</div>
+        <div class="mark-sure" @click="buildCardHandler" :style="{'pointer-events':pointerEvents}">确认</div>
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
@@ -45,7 +45,8 @@ export default {
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     shareInfo: {},
     status: 1,
-    showLoading: false
+    showLoading: false,
+    pointerEvents:''
   }),
   computed: {
     ...mapGetters(['userInfo'])
@@ -82,6 +83,7 @@ export default {
     },
     async buildCardHandler() {
       this.showLoading = true
+      this.pointerEvents='none'
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#show-container'), {
@@ -92,8 +94,9 @@ export default {
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
+      this.pointerEvents=''
     }
-  },
+  }
 }
 </script>
 <style lang="less">
