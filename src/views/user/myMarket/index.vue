@@ -125,7 +125,8 @@ export default {
     showProjectFilters: {
       handler(val) {
         this.showPage = 1
-        this.showGetMyMarketInfo()
+        this.showMarketList = []
+        // this.showGetMyMarketInfo()
       },
       deep: true
     },
@@ -134,7 +135,8 @@ export default {
       this.setNotShowName = setTimeout(() => {
         this.notShowPage = 1
         this.notShowProjectName = val
-        this.notShowGetMyMarketInfo()//根据搜索字请求不展示的楼盘数据
+        this.notShowMarketList = []
+        // this.notShowGetMyMarketInfo()//根据搜索字请求不展示的楼盘数据
         clearTimeout(this.setNotShowName)
       }, 500)
     },
@@ -280,7 +282,7 @@ export default {
       obj.displayFlag = 0
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
-      this.showMarketList = this.showPage <= 1 ? resShow.records : this.showMarketList.concat(resShow.records)
+      this.showMarketList = this.showMarketList.concat(resShow.records)
       if (resShow.pages === 0 || this.showPage === resShow.pages) {
         this.showFinished = true
       }
@@ -306,7 +308,7 @@ export default {
       const resNotShow = await userService.getMyMarket(obj)
       // this.searchNotShowNum = resNotShow.records.length//不展示的楼盘个数
       // this.notShowMarketList =resNotShow.records
-      this.notShowMarketList = this.notShowPage==1 ? resNotShow.records : this.notShowMarketList.concat(resNotShow.records)
+      this.notShowMarketList = this.notShowMarketList.concat(resNotShow.records)
       if (resNotShow.pages === 0 || this.notShowPage === resNotShow.pages) {
         this.notShowFinished = true
       }
