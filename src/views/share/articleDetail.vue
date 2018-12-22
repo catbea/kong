@@ -152,8 +152,9 @@ export default {
     // wechatApi.wx.showMenuItems()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
+    this.agentId = this.$route.params.agentId
     this.getDetail()
-    this.getQrCode()
+    this.getQrCode(this.agentId)
     this.shareHandler()
   },
   computed: {
@@ -186,8 +187,8 @@ export default {
       this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
 
-    async getQrCode() {
-      const result = await userService.getQrCode()
+    async getQrCode(agentId) {
+      const result = await userService.getQrCode(agentId)
       if (result) {
         this.qrcodeInfo = result
       }

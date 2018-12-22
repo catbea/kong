@@ -149,11 +149,10 @@ export default {
     shareData: null
   }),
   created() {
-    // wechatApi.wx.showMenuItems()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.getDetail()
-    this.getQrCode()
+    this.getQrCode(this.userInfo.id)
     
   },
   computed: {
@@ -189,8 +188,8 @@ export default {
       this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
 
-    async getQrCode() {
-      const result = await userService.getQrCode()
+    async getQrCode(agentId) {
+      const result = await userService.getQrCode(agentId)
       if (result) {
         this.qrcodeInfo = result
       }
@@ -223,6 +222,7 @@ export default {
         }
       }
     },
+    // 分享成功之后
     async articleShare() {
       let params = {
           deleteType: 0,
@@ -233,14 +233,9 @@ export default {
     // 分享
     shareHandler() {
       console.log(this.shareData)
-      // if (this.shareData) {
-        alert(this.shareData)
-      // }
       wechatApi.wechatShare(this.shareData).then(res => {
-        alert('分享成功')
         this.articleShare()
       }).catch(e => {
-        alert('分享失败')
       })
     },
   },

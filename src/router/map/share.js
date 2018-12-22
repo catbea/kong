@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/article/:id/:city',
+    path: '/article/:id/:city/:agentId',
     name: 'article-detail',
     component: resolve => require(['@/views/share/articleDetail.vue'], resolve),
     meta: {
