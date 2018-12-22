@@ -160,7 +160,8 @@ export default {
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.id, '2')
+      // const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.id, '2')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city, '90', '705', '2')
       this.info = res
 
       this.infoId = res.id
