@@ -106,7 +106,7 @@ export default {
       }
       this.loading = false
       if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == '') {
-        if (result.total < 2) {
+        if (result.total < 20) {
           this.isShowHeader = false
         } else {
           this.isShowHeader = true

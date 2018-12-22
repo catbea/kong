@@ -106,7 +106,7 @@ export default {
         msg.linkerName = project.linkerName
         msg.linkerPrice = project.price
         msg.address = project.site
-        msg.agentId = this.userInfo.id
+        msg.agentId = this.userInfo.agentId
         //'{"avatarMediaid":"https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/b6df070d1fdb48bd8d085f40607aef7a.png","linkerId":"d604ecf5687642569614b65625418d62","linkerName":"QQQ-2","address":"广东省深圳市南山区","linkerPrice":"88888.00元/㎡","agentId":"4149","building":"建面暂无信息"}'
         content.data = msg
         content.ext = {}
