@@ -28,6 +28,7 @@
         <!-- <router-view></router-view> -->
       </div>
     </div>
+    <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2"></div>
   </div>
 </template>
@@ -46,7 +47,8 @@ export default {
     coverBg: require('IMG/dev/page1/cover2@2x.png'),
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     buildingInfo: {},
-    status: 1
+    status: 1,
+    showLoading:false
   }),
   created() {
     this.id = this.$route.params.id
@@ -60,6 +62,7 @@ export default {
       }
     },
     async savaReport() {
+      this.showLoading=true
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
@@ -70,6 +73,7 @@ export default {
       canvas.style.height = '100%'
 
       document.getElementById('card-result').appendChild(canvas)
+      this.showLoading=false
     }
   },
   computed: {
@@ -81,10 +85,23 @@ export default {
 .market-share-page {
   width: 100%;
   height: 100%;
+  position: relative;
   background: #ffffff;
   .box {
+    position: absolute;
     margin-bottom: 5px;
   }
+
+  .van-loading {
+    display: inline-block;
+    position: absolute;
+    margin-left: 39%;
+    width: 84px;
+    height: 84px;
+    margin-top: 50%;
+    z-index: 10000;
+  }
+
   .share-top {
     position: relative;
     width: 300px;
@@ -229,6 +246,7 @@ export default {
         color: rgba(0, 122, 230, 1);
         background: #ffffff;
         margin-left: 38px;
+        margin-right: 3px;
       }
       .save {
         width: 144px;
@@ -241,6 +259,7 @@ export default {
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
         margin-right: 38px;
+        margin-left: 3px;
       }
     }
   }

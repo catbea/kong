@@ -3,17 +3,26 @@
   <div class="report-page">
     <!-- <Tips></Tips>#F7F9FA; -->
     <div class="report-container">
-
       <div class="report-container-css">
         <div class="report-title">
           <p class="report-title-css">{{reportInfo.linkerName}} 报备单</p>
-          <p class="container-list"> 报备楼盘<span class="container-list-title container-name">{{reportInfo.linkerName}}</span> </p>
-          <p class="container-list"> 报备客户<span class="container-list-title container-spec">{{reportInfo.clientName}}</span> </p>
-          <p class="container-list container-list-left">代理商<span class="container-list-title ">{{reportInfo.distributorName}}</span> </p>
-          <p class="container-list "> 报备时间<span class="container-list-title ">{{reportInfo.fillingTime}}</span></p>
-
+          <p class="container-list">
+            报备楼盘
+            <span class="container-list-title container-name">{{reportInfo.linkerName}}</span>
+          </p>
+          <p class="container-list">
+            报备客户
+            <span class="container-list-title container-spec">{{reportInfo.clientName}}</span>
+          </p>
+          <p class="container-list container-list-left">
+            代理商
+            <span class="container-list-title">{{reportInfo.distributorName}}</span>
+          </p>
+          <p class="container-list">
+            报备时间
+            <span class="container-list-title">{{reportInfo.fillingTime}}</span>
+          </p>
         </div>
-
       </div>
       <div class="report-btn" v-for="(item, index) in auditList" :key="index">
         <div class="report-btn-left"></div>
@@ -23,9 +32,7 @@
           <p class="btn-right-time">{{item.createTime}}</p>
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 <script>
@@ -148,6 +155,12 @@ export default {
         padding-left: 13px;
       }
     }
+    // .report-btn:last-child {
+    //   > .report-btn-left-x {
+    //     width: 0;
+    //     height: 0;
+    //   }
+    // }
     > .report-btn {
       display: flex;
       padding: 0 16px;
@@ -157,6 +170,7 @@ export default {
         width: 13px;
         height: 13px;
         border-radius: 50%;
+        margin-top: 2px;
       }
 
       > .report-btn-left-x {
@@ -165,6 +179,7 @@ export default {
         background: #007ae6;
         position: absolute;
         margin-left: 5px;
+        margin-top: 2px;
       }
       > .report-btn-right {
         padding-left: 12px;

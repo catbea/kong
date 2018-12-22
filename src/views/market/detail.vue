@@ -5,6 +5,7 @@
     <!-- 顶部swipe -->
     <div class="top-swipe-container">
       <div class="swipe-content">
+        <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
             <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
@@ -185,6 +186,7 @@ export default {
   data(){
     return {
     status:null,// 0-未收藏 1-已收藏
+    photoButton:true,//是否存在相册
     commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png'),
     id: -1,
@@ -230,9 +232,24 @@ export default {
     this.id = this.$route.params.id
     // this.$store.commit(types.USER_BUILD_INFO, this.id)
     this.getDetailInfo(this.id)
+    this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
   },
   methods: {
+    //判断该楼盘有无图片列表
+    async getMarketDetailPhotoInfo() {
+      const res = await marketService.getMarketDetailPhoto(this.id)
+      console.log(res,'相册数据');
+      
+      if (res.length > 0) {
+        this.photoButton = true
+      } else if (res.length <= 0) {
+        this.photoButton = false
+      }
+    },
+    photoHandle() {//进入相册页面
+      this.$router.push({ name: 'photoList', params: {id: this.id }})
+    },
     //进入佣金详情
     commission() { 
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
@@ -327,6 +344,22 @@ export default {
       position: relative;
       width: 100%;
       height: 100%;
+     > .swipe-photo{
+       position: absolute;
+       z-index:1;
+      left: 155px;
+      bottom: 15px;
+      text-align: center;
+      width: 60px;
+      height: 24px;
+      background: rgba(255, 255, 255, 1);
+      border-radius: 12px;
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+      line-height: 24px;
+     }
       > .van-swipe {
         position: relative;
         width: 100;
