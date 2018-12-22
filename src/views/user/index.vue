@@ -85,7 +85,7 @@ export default {
   }),
   created() {
     this.getUserInfo()
-    this.getQrCode()
+    this.getQrCode(this.userInfo.id)
     this.getVipAndPackage()
   },
   methods: {
@@ -102,8 +102,8 @@ export default {
       this.openPopup = true
     },
     //点击获取二维码
-    async getQrCode() {
-      const result = await userService.getQrCode()
+    async getQrCode(agentId) {
+      const result = await userService.getQrCode(agentId)
       if (result) {
         this.qrcodeImg = result.miniQrCode
       }
