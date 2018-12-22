@@ -88,6 +88,7 @@
 import TagGroup from 'COMP/TagGroup/'
 import collectionArticle from 'COMP/User/collection/collectionArticle'
 import collectionNull from 'COMP/User/collection/collectionNull'
+import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 export default {
   components: {
@@ -130,6 +131,9 @@ export default {
   created() {
     this.getdynamicsInfo()
     this.getcollectionList()
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   methods: {
     async getdynamicsInfo() {
@@ -184,7 +188,8 @@ export default {
           await userService.getlinkerCollection(cons.infoId, 1)
         }
       } else if (cons.type === 'goCollectionInfo') {
-        this.$router.push({ name: 'discover-detail', params: { id: cons.id, city: cons.city } })
+        // this.$router.push({ name: 'discover-detail', params: { id: cons.id, city: cons.city } })
+        this.$router.push(`/discover/${cons.id}/${cons.city?cons.city:'全国'}?agentId=${this.userInfo.id}&enterpriseId=${this.userInfo.enterpriseId}`)
       }
     }
   }

@@ -17,6 +17,7 @@
 <script>
 import discoverList from 'COMP/Discover/discoverList'
 import nullArticles from 'COMP/Null'
+import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 import timeUtils from '@/utils/timeUtils'
 
@@ -33,6 +34,9 @@ export default {
       historyList: [],
       total: 0,
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   created() {
     this.gethistoryList()
@@ -54,7 +58,8 @@ export default {
     },
     GOheadline(discover) {
       //跳转到房产头条
-      this.$router.push({ name: 'discover-detail', params: { id: discover.id, city: discover.city } })
+      // this.$router.push({ name: 'discover-detail', params: { id: discover.id, city: discover.city } })
+      this.$router.push(`/discover/${discover.id}/${discover.city?discover.city:'全国'}?agentId=${this.userInfo.id}&enterpriseId=${this.userInfo.enterpriseId}`)
     }
   }
 }

@@ -151,8 +151,10 @@ export default {
   created() {
     this.id = this.$route.params.id
     this.city = this.$route.params.city
+    this.agentId = this.$route.query.agentId
+    this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
-    this.getQrCode(this.userInfo.id)
+    this.getQrCode(this.agentId)
     
   },
   computed: {
@@ -160,7 +162,7 @@ export default {
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.id, '2')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
       this.info = res
 
       this.infoId = res.id

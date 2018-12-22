@@ -9,7 +9,15 @@
     <div class="market-box" :style="{'margin-top':isShowHeader?'74px':'20px'}">
       <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <meal-market v-for="(item,index) in dataArr" :key="index" :dataArr="item" :indexData="index" :checkData="checkData" @click.native="selectHandle(index)" v-if="haveData"></meal-market>
+        <meal-market
+          v-for="(item,index) in dataArr"
+          :key="index"
+          :dataArr="item"
+          :indexData="index"
+          :checkData="checkData"
+          @click.native="selectHandle(index)"
+          v-if="haveData"
+        ></meal-market>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -54,12 +62,14 @@ export default {
     finished: false,
     queryTimer: null,
     nullIcon: require('IMG/user/bill-null.png'),
-    isShowHeader: false
+    isShowHeader: true,
+    
   }),
   computed: {
     ...mapGetters(['userArea'])
   },
   created() {
+    this.page = 1
     this.searchInfo.siteText = this.userArea.myReportCity === '' ? this.userArea.city : this.userArea.myReportCity
   },
   methods: {
@@ -68,7 +78,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({path: '/public/area-select/', query: {fromPage:'myReport'}})
+      this.$router.push({ path: '/public/area-select/', query: { fromPage: 'myReport' } })
     },
     async queryBuildingList(name = '', filters = {}, page = 1) {
       let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
@@ -76,6 +86,7 @@ export default {
       params.current = page
       params.size = this.pageSize
       params.city = this.userArea.myReportCity
+      console.log(params)
       const result = await reportServer.getReportBuildingList(params)
       if (result.records.length > 0) {
         this.dataArr = page === 1 ? result.records : this.dataArr.concat(result.records)
@@ -85,14 +96,21 @@ export default {
         }
         this.page++
       } else {
-        if (page == 1) this.haveData = false
-        this.finished = true
+        if (page == 1) {
+          this.haveData = false
+          this.finished = true
+        }else {
+          this.finished = false
+        }
+        
       }
       this.loading = false
-      if (result.total < 20) {
-        this.isShowHeader = false
-      }else {
-        this.isShowHeader = true
+      if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == '') {
+        if (result.total < 2) {
+          this.isShowHeader = false
+        } else {
+          this.isShowHeader = true
+        }
       }
     },
     selectHandle(index) {

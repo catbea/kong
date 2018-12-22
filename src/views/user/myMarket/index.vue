@@ -134,7 +134,6 @@ export default {
       clearTimeout(this.setNotShowName)
       this.setNotShowName = setTimeout(() => {
         this.notShowPage = 1
-        this.notShowProjectName = val
         this.notShowMarketList = []
         // this.notShowGetMyMarketInfo()//根据搜索字请求不展示的楼盘数据
         clearTimeout(this.setNotShowName)
@@ -143,7 +142,8 @@ export default {
     notShowProjectFilters: {
       handler(val) {
         this.notShowPage = 1
-        this.notShowGetMyMarketInfo()
+        this.notShowMarketList = []
+        // this.notShowGetMyMarketInfo()
       },
       deep: true
     }

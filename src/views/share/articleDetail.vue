@@ -105,7 +105,6 @@ import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import wechatApi from '@/utils/wechatApi'
-import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
@@ -152,17 +151,15 @@ export default {
     // wechatApi.wx.showMenuItems()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
-    this.agentId = this.$route.params.agentId
+    this.agentId = this.$route.query.agentId
+    this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
     this.getQrCode(this.agentId)
     this.shareHandler()
   },
-  computed: {
-    ...mapGetters(['userInfo'])
-  },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.id, '1')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '1')
       this.info = res
 
       this.infoId = res.id
