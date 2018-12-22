@@ -39,6 +39,9 @@ export default {
   props:{
     renewInfo:{type:Object}
   },
+  computed: {
+    
+  },
   methods: {
    async changeHandle(linkerId, operationType, status){//修改楼盘状态
     await userService.changeMarketData(linkerId, operationType, status)
