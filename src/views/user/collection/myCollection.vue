@@ -61,7 +61,7 @@
             </div>
             <div class="dynamicsInfo-list-commission" v-show="item.divisionRules != '' ">
               <span class="list-commission-word">佣</span>
-              {{item.divisionRules}}
+              {{item.divisionRules | textOver}}
             </div>
           </div>
         </van-tab>
