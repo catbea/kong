@@ -15,10 +15,10 @@
           <button class="agent-right">+ 名片</button>
         </div>
       </div>
-      <div
+      <!-- <div
         class="bg_img van-hairline--surround discover-img"
         :style="{backgroundImage:'url('+ (info&&info.image) +')'}"
-      ></div>
+      ></div> -->
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -394,6 +394,7 @@ export default {
       background-color: #999999;
     }
     > .discover-detail-content {
+      margin-top: 15px;
       padding: 15px;
       font-size: 16px !important;
       color: #333333 !important;
