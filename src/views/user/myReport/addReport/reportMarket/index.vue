@@ -75,7 +75,7 @@ export default {
       let params = screenFilterHelper(name, mergeFilters)
       params.current = page
       params.size = this.pageSize
-      params = Object.assign(params, this.userArea)
+      params.city = this.userArea.myReportCity
       const result = await reportServer.getReportBuildingList(params)
       if (result.records.length > 0) {
         this.dataArr = page === 1 ? result.records : this.dataArr.concat(result.records)
