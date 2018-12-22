@@ -13,9 +13,10 @@
           <div class="dynamicsInfo-list" v-for="(item,key) in dynamicsList" :key="key">
             <div class="dynamicsInfo-list-top">
               <!-- rectangIcon -->
-              <span class="dynamicsInfo-list-left"  @click="gomarketDetail(item)">
+              <span class="dynamicsInfo-list-left" @click="gomarketDetail(item)">
                 <!-- <div class="dynamicsInfo-back-img"  :style="url(' rectangIcon')"></div> -->
-                <div  @click="gomarketDetail(item)"
+                <div
+                  @click="gomarketDetail(item)"
                   class="dynamicsInfo-list-left-bg_img"
                   v-show="item.sale != '' "
                   :style="{backgroundImage:'url('+labelImg+')'}"
@@ -24,18 +25,20 @@
                 <img :src="ovalIcon" class="oval-icon">
               </span>
               <span class="dynamicsInfo-list-right">
-                <p  @click="gomarketDetail(item)" class="list-right-title">{{item.linkerName}}</p>
-                <p @click="gomarketDetail(item)"
+                <p @click="gomarketDetail(item)" class="list-right-title">{{item.linkerName}}</p>
+                <p
+                  @click="gomarketDetail(item)"
                   class="list-right-time"
                 >{{item.city}} {{item.county}} &nbsp; {{item.price}}{{item.priceUnit}}</p>
                 <p class="list-right-label" @click="gomarketDetail(item)">
                   <!-- 销售状态（楼盘）: 0热销中、1即将发售、3售罄 -->
-                  <span class="right-label right-label-red" v-show="item.saleStatus !='' ">{{saleStatus[item.saleStatus]}}</span>
+                  <!-- <span class="right-label right-label-red" v-show="item.saleStatus !='' ">{{saleStatus[item.saleStatus]}}</span>
                   <button
                     class="right-label right-label-gray"
                     v-for="(its,key) in item.linkerTags"
                     :key="key"
-                  >{{its}}</button>
+                  >{{its}}</button>-->
+                  <tag-group :arr="item.linkerTags ? item.linkerTags.slice(0,3) : []"></tag-group>
                 </p>
                 <p class="list-right-price">
                   <span class="right-price right-price-open" @click="gomarketDetail(item)">
@@ -61,7 +64,7 @@
             </div>
             <div class="dynamicsInfo-list-commission" v-show="item.divisionRules != '' ">
               <span class="list-commission-word">佣</span>
-              {{item.divisionRules}}
+              {{item.divisionRules | textOver}}
             </div>
           </div>
         </van-tab>
@@ -82,13 +85,15 @@
   </div>
 </template>
 <script>
+import TagGroup from 'COMP/TagGroup/'
 import collectionArticle from 'COMP/User/collection/collectionArticle'
 import collectionNull from 'COMP/User/collection/collectionNull'
 import userService from 'SERVICE/userService'
 export default {
   components: {
     collectionArticle,
-    collectionNull
+    collectionNull,
+    TagGroup
   },
   data() {
     return {
@@ -118,7 +123,8 @@ export default {
       deleteFlag: 0,
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       listEmpty: false,
-      articleEmpty: false
+      articleEmpty: false,
+      tags: []
     }
   },
   created() {
@@ -127,19 +133,31 @@ export default {
   },
   methods: {
     async getdynamicsInfo() {
+      let saleStatusStr = ''
       const res = await userService.getqueryLinkerList()
       this.dynamicsList = res.list.records
       this.listEmpty = res.listEmpty
-     
+
+      for (let i = 0; i < this.dynamicsList.length; i++) {
+        if (this.dynamicsList[i].saleStatus === 0) {
+          this.dynamicsList[i].linkerTags.unshift('热销中')
+        }
+        if (this.dynamicsList[i].saleStatus === 1) {
+          this.dynamicsList[i].linkerTags.unshift('即将发售')
+        }
+        if (this.dynamicsList[i].saleStatus === 3) {
+          this.dynamicsList[i].linkerTags.unshift('售罄')
+        }
+      }
+
     },
     async getcollectionList() {
-     
       const res = await userService.getqueryInfoList()
       this.collectionList = res.list.records
       this.articleEmpty = res.listEmpty
     },
     //楼盘详情
-    gomarketDetail(item){
+    gomarketDetail(item) {
       this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
     //收藏樓盤
@@ -156,21 +174,19 @@ export default {
     },
     //收藏文章
     async gocollection(cons) {
-      if(cons.type === 'goCollection'){
-         let index = cons.index
-      if (this.collectionList[index].deleteType == 1) {
-        this.collectionList[index].deleteType = 0
-        await userService.getlinkerCollection(cons.infoId, 0)
-      } else {
-        this.collectionList[index].deleteType = 1
-        await userService.getlinkerCollection(cons.infoId, 1)
+      if (cons.type === 'goCollection') {
+        let index = cons.index
+        if (this.collectionList[index].deleteType == 1) {
+          this.collectionList[index].deleteType = 0
+          await userService.getlinkerCollection(cons.infoId, 0)
+        } else {
+          this.collectionList[index].deleteType = 1
+          await userService.getlinkerCollection(cons.infoId, 1)
+        }
+      } else if (cons.type === 'goCollectionInfo') {
+        this.$router.push({ name: 'discover-detail', params: { id: cons.id, city: cons.city } })
       }
-      }else if(cons.type === 'goCollectionInfo'){
-         this.$router.push({name: 'discover-detail', params: {id: cons.id, city: cons.city}})
-      }
-     
-    },
-   
+    }
   }
 }
 </script>
@@ -252,7 +268,8 @@ export default {
         color: rgba(153, 153, 153, 1);
       }
       > .list-right-label {
-        line-height: 27px;
+        margin-top: 5px;
+        // line-height: 27px;
         > .right-label {
           font-size: 10px;
           font-weight: 400;
