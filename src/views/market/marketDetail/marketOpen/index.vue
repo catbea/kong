@@ -204,7 +204,9 @@ export default {
     paySuss() {
       let _pirce = this.userInfo.price - this.priceSurfacePayInfo.balancePay
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, {price: _pirce} )) 
-      this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price }
+      // this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price }
+      this.getMarketDescribeInfo()
+      this.getLinkerAmountList()
       Dialog.confirm({
         title: '开通成功',
         message: '你已经成功开通楼盘'+this.projectInfo.linkerName+'，快去推荐给身边的小伙伴',

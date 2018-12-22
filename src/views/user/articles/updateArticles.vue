@@ -105,9 +105,7 @@ export default {
       // } else {
       //   this.list[position].isCheck == false
       // }
-
       this.list[position].isCheck = !this.list[position].isCheck
-
       let selectIdArr = this.selectArr
       let selectId = this.list[position].id
       if (this.isExistElement(selectIdArr, selectId)) {
@@ -211,7 +209,7 @@ export default {
         temp += selectArr[i] + ','
       }
       this.selectStr = temp
-      // this.toDeleArticle(this.selectStr)
+      this.toDeleArticle(this.selectStr)
     },
 
     //加载更多
