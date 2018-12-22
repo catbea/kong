@@ -9,7 +9,7 @@
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div style="margin-left:16px">
+        <div style="margin-left:16px" v-show="showMarketList.length>showFilterLimit">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters"></screen>
         </div>
@@ -22,7 +22,7 @@
       <p v-if="!marketShow" class="notMarket">暂未开通任何楼盘</p>
       <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
-        <div style="margin-left:16px">
+        <div style="margin-left:16px" v-show="notShowMarketList.length>showFilterLimit">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
@@ -56,6 +56,7 @@ export default {
     CloseMarket
   },
   data: () => ({
+    showFilterLimit: 20,
     showLoading:false,
     showFinished:false,//展示
     notShowLoading:false,

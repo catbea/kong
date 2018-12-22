@@ -88,7 +88,7 @@ export default {
         if(msg.Desc == 2) {
           return '[语音消息]'
         } else if(msg.Desc == 3) {
-          return '[楼盘消息]'
+          return '【链接】' + JSON.parse(msg.Data).linkerName
         } else if(msg.Desc == 1) {
           return msg.Data
         }

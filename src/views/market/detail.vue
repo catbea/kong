@@ -7,15 +7,9 @@
       <div class="swipe-content">
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
-            <div
-              class="bg_img swipe-item dev"
-              :style="{backgroundImage:'url(' + item.imgUrl + ')'}"
-            ></div>
+            <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
           </van-swipe-item>
-          <div
-            class="custom-indicator dev"
-            slot="indicator"
-          >{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+          <div class="custom-indicator dev" slot="indicator">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
         </van-swipe>
       </div>
       <div class="operate-content">
@@ -31,8 +25,8 @@
           </div>
         </div>
         <!-- 存在全景时全景播放 -->
-        <div class="operate-2"></div>
       </div>
+      <div class="bg_img operate-2" v-if="info.ifPanorama" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
     </div>
     <!-- 楼盘基础信息 -->
     <div class="base-info-container">
@@ -42,12 +36,7 @@
           <span>{{info.browsCount}}</span>人浏览过
           <div class="head-portrait-box">
             <transition name="show">
-              <avatar
-                :avatar="item.clientImg"
-                v-for="(item,index) in info.customerList"
-                :key="index"
-                v-if="index===headCurrent"
-              />
+              <avatar :avatar="item.clientImg" v-for="(item,index) in info.customerList" :key="index" v-if="index===headCurrent"/>
             </transition>
           </div>
         </div>
@@ -119,12 +108,7 @@
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
-          <van-tab
-            v-for="item in info.houseAroundType"
-            :key="item.name"
-            :title="item.name"
-            :line-width="0"
-          />
+          <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
         </van-tabs>
       </div>
       <div class="map-box">
@@ -138,10 +122,7 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index">
             <div class="recommend-house-item">
-              <div
-                class="bg_img recommend-house-img"
-                :style="{backgroundImage:'url('+item.headImgUrl+')'}"
-              ></div>
+              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}"></div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
                 <p class="house-location">{{item.district}}</p>
@@ -238,7 +219,8 @@ export default {
     },
     rd: {
       headSlideTimer: null
-    }
+    },
+    playIcon: require('IMG/market/view720.png')
   }),
   created() {
     this.id = this.$route.params.id
@@ -279,6 +261,10 @@ export default {
     },
     moreInfoHandler() {
       this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId } })
+    },
+    // 全景点击
+    ifPanoramaClickHandler(){
+      window.location.href = this.info.linkerUrl
     }
   },
   computed: {
@@ -294,6 +280,7 @@ export default {
 <style lang="less">
 .market-detail-page {
   > .top-swipe-container {
+    position: relative;
     width: 100%;
     height: 281px;
     > .swipe-content {
@@ -338,6 +325,14 @@ export default {
           }
         }
       }
+    }
+    > .operate-2 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      width: 64px;
+      height: 64px;
     }
   }
   > .base-info-container {
