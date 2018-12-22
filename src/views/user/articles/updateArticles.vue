@@ -66,7 +66,7 @@ export default {
       loading: false,
       finished: false,
       current: 1,
-      total: 0
+      total: 0,
     }
   },
   created() {
@@ -76,24 +76,28 @@ export default {
   methods: {
     //获取文章列表
     async getHistoryList(current) {
+      this.isLoading == true
       const res = await userService.getBrowseHistoryList(current)
 
-      let dataList = res.records
-      this.total = res.total
+      if (res == '') {
+        let dataList = res.records
+        this.total = res.total
 
-      if (dataList.length > 0) {
-        for (let i = 0; i < dataList.length; i++) {
-          dataList[i].isCheck = false
-        }
-        this.list = this.list.concat(res.records)
-        if (res.pages === 0 || this.page === res.pages) {
+        if (dataList.length > 0) {
+          for (let i = 0; i < dataList.length; i++) {
+            dataList[i].isCheck = false
+          }
+          this.list = this.list.concat(res.records)
+          if (res.pages === 0 || this.page === res.pages) {
+            this.finished = true
+          }
+          this.current++
+          this.loading = false
+        } else {
+          this.loading = false
           this.finished = true
         }
-        this.current++
-        this.loading = false
       } else {
-        this.loading = false
-        this.finished = true
       }
     },
 
