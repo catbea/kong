@@ -44,29 +44,8 @@ export default {
     status: 1,
     changeBgImg: '',
     showLoading: false,
-    pointerEvents: ''
-    // topList:[
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   },
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   },
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   },
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   }
-    // ],
+    pointerEvents: '',
+    lastOpTimer: 0
   }),
   methods: {
     changeBg(val) {
@@ -99,7 +78,14 @@ export default {
       }
     },
 
-    async savaReport() {
+    savaReport() {
+      let dd = new Date().getTime()
+      if (dd - this.lastOpTimer < 3000) return
+      this.lastOpTimer = dd
+      this.handleDate()
+    },
+
+    async handleDate() {
       this.showLoading = true
       this.pointerEvents = 'none'
       this.status = 2
@@ -108,13 +94,7 @@ export default {
         logging: false,
         useCORS: true,
         dpr: 5
-        // width: document.getElementById('compile-poster-page').clientWidth * dpr,
-        // height: document.getElementById('compile-poster-page').clientHeight * dpr
       })
-      // canvas.style.width = document.getElementById('compile-poster-page').clientWidth * dpr
-      // canvas.style.height = document.getElementById('compile-poster-page').clientHeight * dpr
-      // canvas.style.width = document.body.offsetWidth * dpr + 'px'
-      // canvas.style.height = document.body.offsetHeight * dpr + 'px'
       canvas.style.width = '100%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
