@@ -31,7 +31,7 @@ export default {
       nullIcon: require('IMG/user/collection/Article@2x.png'),
       nullcontent: '暂无历史文章',
       historyList: [],
-      total: 0
+      total: 0,
     }
   },
   created() {
@@ -50,12 +50,11 @@ export default {
         this.historyList = res.records
       } else {
       }
-
       this.total = res.total
     },
-    GOheadline(discover){
+    GOheadline(discover) {
       //跳转到房产头条
-      this.$router.push({name: 'discover-detail', params: {id: discover.id, city: discover.city}})
+      this.$router.push({ name: 'discover-detail', params: { id: discover.id, city: discover.city } })
     }
   }
 }

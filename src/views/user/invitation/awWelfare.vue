@@ -11,7 +11,7 @@
           <img :src="awtips1Icon">
         </button>
       </div>
-      <div class="awWelfare-center" id="share-top" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
+      <div v-show="status === 1" class="awWelfare-center" id="share-top" :style="{'backgroundImage':'url('+awbgcardIcon+')'}">
         <!-- v-if="invitationImg" -->
         <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
           <div class="awWelfare-info">
@@ -24,6 +24,7 @@
             </div>
           </div>
       </div>
+      <div class="result" id="card-result" v-show="status === 2"></div>
       
       <div class="awWelfare-text">
         请长按保存邀请图片
@@ -37,11 +38,7 @@
 
           <div  class="register-rule-box-title">邀请注册</div>
           <div class="register-rule-box-text">
-            <div class="register-rule-box-text-item" v-if="item" v-for="(item,key) in registrationRules" :key="key"><div class="div-dian">•</div><div>{{item}}</div></div>
-          </div>
-          <div class="register-rule-box-title">邀请开通</div>
-          <div class="register-rule-box-text">
-            <div class="register-rule-box-text-item"  v-if="item" v-for="(item,key) in openRules" :key="key"><div class="div-dian">•</div><div>{{item}}</div></div>
+            <div class="register-rule-box-text-item" v-if="regisItem" v-for="(regisItem,key) in registrationRules" :key="key"><div class="div-dian">•</div><div>{{regisItem}}</div></div>
           </div>
           <div  class="register-rule-box-footer">
             <p>本活动最终解释权归</p>
@@ -74,13 +71,10 @@ export default {
       awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
       awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
       teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
-      // ovalIcon: require('IMG/edit/Oval@2x.png'),
-      // ovalIcon: require('IMG/edit/Oval@2x.png'),
       show1: false,
       registrationRules:'',
-      openRules:'',
       invitationUrl:'',
-      status: 1
+      status: 1,
     }
   },
    computed: {
@@ -90,11 +84,11 @@ export default {
     userInfo(v) {}
   },
   created() {
-    
+    this.getregisrules()
   },
   mounted() {
+     
      this.getqueryInvitationUrl()
-    this.getrules()
     this.savaReport()
    
   },
@@ -108,21 +102,17 @@ export default {
       })
       canvas.style.width = '101%'
       canvas.style.height = '100%'
-      document.getElementById('share-top').appendChild(canvas)
-     debugger
+      document.getElementById('card-result').appendChild(canvas)
     },
     async goteammateList(){
        this.$router.push({name:'teammateList'})
     },
-   
-    async getrules(){
-      const res = await userService.getrules(1);
-      this.registrationRules = res.rule.split("#");
+    async getregisrules(){
+      const regis = await userService.getrules(1)
+      this.registrationRules = regis.rule.split("#")
       console.log(this.registrationRules)
-
-      const rest = await userService.getrules(2);
-        this.openRules = rest.rule.split("#");
     },
+    
 
     async getqueryInvitationUrl(){
     const res = await userService.getqueryInvitationUrl()

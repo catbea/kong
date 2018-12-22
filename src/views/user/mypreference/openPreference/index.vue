@@ -8,7 +8,8 @@
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
-        <li v-show="expireDate">已购买{{packageCount>0 ? packageCount+'个' : '' }}套餐，最晚将于{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li v-show="packageCount>0">已购买{{packageCount>0 ? packageCount+'个' : '' }}套餐，最晚将于{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li v-show="packageCount==0">当前为开通套餐</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
       </div>

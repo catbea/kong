@@ -41,9 +41,13 @@
           />
         </van-tab>
         <van-tab title="足迹">
-          <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
+          <!-- :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData" :finished="currentData.finished"-->
+          <van-list v-model="loading"  @load="onLoad">
+              <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
+           </van-list>
         </van-tab>
         <van-tab title="资料">
+         
           <custom-detail-info
             @onClick="onClickHandler"
             :customerInfoList="customerInfoList"
@@ -54,6 +58,7 @@
             @cancel="cancelHandler"
             @confirm="confirmHandler"
           />
+         
         </van-tab>
       </van-tabs>
       <custom-operation
@@ -153,6 +158,7 @@ export default {
       } else if (this.activeIndex == 1 && this.isSecondReq == false) {
         this.getCustomerDynamicCount(this.clientId)
         this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
+        this.onLoad()
         this.isSecondReq = true
       } else if (this.activeIndex == 2 && this.isThirdReq == false) {
         this.getCustomerInfo(this.clientId)
@@ -437,17 +443,47 @@ export default {
       }
       this.trackInfo = trackInfo
     },
+    onLoad() {
+      this.getCustomerDynamicList(this.clientId, this.current)
+    },
     /**
      * 客户详情-足迹-足迹列表
      */
-    async getCustomerDynamicList(id, current, size) {
-      const result = await CustomService.getCustomerDynamicList(id, current, size)
-      if (this.trackCurrent > 1) {
-        this.trackList = this.trackList.concat(result.records)
+    async getCustomerDynamicList(id, current) {
+      const res = await CustomService.getCustomerDynamicList(id, current)
+      debugger
+      if (res.records.length > 0) {
+        // for (let i = 0; i < res.records.length; i++) {
+        //   let payTime = timeUtils.fmtDate(res.records[i].purchaseTime)
+        //   res.records[i].purchaseTime = payTime
+        // }
+        this.trackList = this.trackList.concat(res.records)
+        if (this.trackList.length > 0) {
+          this.haveData = true
+        } else {
+          this.haveData = false
+        }
+
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
       } else {
-        this.trackList = result.records
+        if (current == 1) {
+          this.haveData = false
+        }
+
+        this.loading = false
+        this.finished = true
       }
+      // if (this.trackCurrent > 1) {
+      //   this.trackList = this.trackList.concat(result.records)
+      // } else {
+      //   this.trackList = result.records
+      // }
     },
+
     /**
      * 客户详情-资料
      */

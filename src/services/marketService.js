@@ -12,7 +12,17 @@ class MarketService {
       }
     })
   }
-
+  
+  /**
+   * 楼盘详情新手引导
+   */
+  getMarketUpdateIsOne() {
+    return xhr({
+      url: '/user/updateIsOne',
+      body: {
+      }
+    })
+  }
   /**
    * 楼盘列表
    * 由于参数过多,参数交由控制层组装

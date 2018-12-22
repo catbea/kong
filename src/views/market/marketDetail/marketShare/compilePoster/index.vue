@@ -7,7 +7,7 @@
       <div class="compile-tagline">
         <div class="compile-tagline-top">宣传语</div>
         <div class="compile-tagline-bottom">
-          <input type="text" name placeholder="请填写宣传语，小于12个字符">
+          <input type="text" name="" placeholder="请填写宣传语，小于12个字符">
         </div>
       </div>
       <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
@@ -110,6 +110,8 @@ export default {
       // canvas.style.height = document.getElementById('compile-poster-page').clientHeight * dpr
       // canvas.style.width = document.body.offsetWidth * dpr + 'px'
       // canvas.style.height = document.body.offsetHeight * dpr + 'px'
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
     },
 
