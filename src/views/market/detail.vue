@@ -182,7 +182,9 @@ export default {
     TitleBar,
     TMap
   },
-  data: () => ({
+  data(){
+    return {
+    status:null,// 0-未收藏 1-已收藏
     commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
     siteDetailImg: require('IMG/marketDetail/arrow.png'),
     id: -1,
@@ -222,7 +224,8 @@ export default {
       headSlideTimer: null
     },
     playIcon: require('IMG/market/view720.png')
-  }),
+  }
+  },
   created() {
     this.id = this.$route.params.id
     // this.$store.commit(types.USER_BUILD_INFO, this.id)
@@ -241,6 +244,7 @@ export default {
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      this.status=this.info.collectionStatus
       console.log(res,'该楼盘数据');
       
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
@@ -255,7 +259,15 @@ export default {
         this.headCurrent = this.headCurrent < this.info.customerList.length - 1 ? this.headCurrent + 1 : 0
       }, 3000)
     },
-    collectHandler() {},
+   async collectHandler() {//修改收藏状态
+      if(this.status==1){
+        this.status=0
+      }else{
+        this.status=1
+      }
+      await marketService.changeLinkerCollect(this.id,this.status,1)
+      console.log(this.status,'收藏状态');
+    },
     shareHandler() {
       if(this.userInfo.name!==''&&this.userInfo.distributorName!==''&&this.userInfo.majorRegion!==""&&this.userInfo.institutionName!==""){
         if(this.info.expireFlag==0){
