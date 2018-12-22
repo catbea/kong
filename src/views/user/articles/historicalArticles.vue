@@ -59,7 +59,7 @@ export default {
     GOheadline(discover) {
       //跳转到房产头条
       // this.$router.push({ name: 'discover-detail', params: { id: discover.id, city: discover.city } })
-      this.$router.push(`/discover/${discover.id}/${discover.city?discover.city:'全国'}?agentId=${this.userInfo.id}&enterpriseId=${this.userInfo.enterpriseId}`)
+      this.$router.push(`/discover/${discover.id}/${discover.city?discover.city:'全国'}?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`)
     }
   }
 }

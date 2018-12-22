@@ -243,7 +243,7 @@ export default {
       }
       this.getCustomBaseInfo(this.clientId)
 
-      this.agentId = this.userInfo.id
+      this.agentId = this.userInfo.agentId
       this.avatar = this.userInfo.avatarUrl
       //加载emoji表情库
       this.emojiFactory = emoji.emojiFactory

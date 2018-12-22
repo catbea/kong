@@ -13,7 +13,7 @@ const state = {
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
-    agentid: '',
+    agentId: '705',
     attentAccount: '',
     avatarUrl: 'http://720ljq2test-10037467.cossh.myqcloud.com/ljqzs/shareImg/Time91438ec3-33e2-4024-9ab9-50393f28370e.png',
     avatarUrlTwo: 'http://720ljq2test-10037467.cossh.myqcloud.com/1536198363904JeBNbFsYAKSbAJYm.png',

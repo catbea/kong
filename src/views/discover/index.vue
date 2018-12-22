@@ -76,7 +76,7 @@ export default {
     },
     swipeItemClick(item){
       // this.$router.push({name: 'discover-detail', params: {id: item.id, city: this.userInfo.majorCity}})
-      this.$router.push(`/discover/${item.id}/${this.userInfo.majorCity?this.userInfo.majorCity:'全国'}?agentId=${this.userInfo.id}&enterpriseId=${this.userInfo.enterpriseId}`)
+      this.$router.push(`/discover/${item.id}/${this.userInfo.majorCity?this.userInfo.majorCity:'全国'}?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`)
     }
   },
   computed: {
