@@ -89,13 +89,11 @@ export default {
   },
   created() {
     this.getregisrules()
-    this.getqueryInvitationUrl()
+    
   },
   mounted() {
      
-    
-    this.savaReport()
-   
+    this.getqueryInvitationUrl()
   },
   methods: {
     async savaReport(){
@@ -105,7 +103,7 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '101%'
+      canvas.style.width = '100%'
       canvas.style.height = '100%'
       this.status = 2
       document.getElementById('card-result').appendChild(canvas)
@@ -124,11 +122,12 @@ export default {
     const res = await userService.getqueryInvitationUrl()
     this.invitationUrl = res.invitationUrl
     this.goyInvitationUrlCode(this.invitationUrl)
+    this.savaReport()
     },
      async goyInvitationUrlCode (url) {
         let qrcode = new QRCode('qrcode', {  
-         width: 100,  
-         height: 100, // 高度  
+         width: 70,  
+         height: 70, // 高度  
          text: this.invitationUrl, // 二维码内容
          image: '',
          render: 'table'
