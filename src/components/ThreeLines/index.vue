@@ -4,8 +4,8 @@
       <ol>
       <li v-for="(item,index) in middleInfo.middle" :key="index">
         <div>{{item.left}}</div>
-        <div>{{item.center}}</div>
         <div>{{item.right}}</div>
+        <div>{{item.center}}</div>
       </li>
     </ol>
     </div>

@@ -4,7 +4,7 @@
       <div class="search-comp">
         <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
       </div>
-      <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
+      <!-- <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link> -->
     </div>
     <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
@@ -58,7 +58,6 @@ export default {
   watch: {
     projectFilters: {
       handler(val) {
-        console.log('----000000---')
         this.finished = false
         this.page = 1
         this.getProjectList()
@@ -73,7 +72,6 @@ export default {
   },
   methods: {
     onLoad() {
-      console.log('-------')
       this.getProjectList()
     },
 
@@ -127,9 +125,9 @@ export default {
     width: 375px;
     height: 44px;
     > .search-comp {
-      width: 305px;
+      width: 345px;
       height: 30px;
-      margin: 7px 50px 7px 10px;
+      margin: 10px 50px 7px 10px;
     }
     > .location-icon {
       position: absolute;

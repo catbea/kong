@@ -54,7 +54,6 @@ export default {
   },
   created() {
     this.selectCity = this.userArea.vipSelectedCity || '深圳市'
-    console.log(this.selectCity, 'this.selectCity')
     this.getVipInfo()
   },
   data: () => ({
