@@ -94,6 +94,25 @@ class MarketService {
   })
 }
 
+/**
+   * 修改楼盘详情数据
+   * @param {*} linkerId 楼盘ID
+   * @param {*} status 关注状态：0：已关注 1：未关注 
+   * @param {*}  大师推荐 0：未推荐 1：大师推荐，2：普通推荐
+   *             展示状态：0-展示，1-不展示； 置顶状态：0-否,10-置顶
+   * @param {*} operationType  10-关注;  20-推荐;  30-展示;  40-置顶;
+   */
+  changeMarketData(linkerId, operationType, status) {
+    return xhr({
+      method: 'POST',
+      url: '/linkerDetail/updateLinkerStatus',
+      body: {
+        linkerId,
+        operationType,
+        status
+      }
+    })
+  }
   /**
    * 楼盘-楼盘信息-楼盘开通调用
    * @param {*} linkerId
