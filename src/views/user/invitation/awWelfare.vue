@@ -15,7 +15,9 @@
       <div v-show="status === 1" id="share-top" class="awWelfare-center" >
         <img :src="awbgcardIcon"  class="awWelfare-center-img">
         <!-- v-if="invitationImg" -->
-        <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
+        <div class="background-qrcode">
+          <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
+        </div>
           <div class="awWelfare-info">
             <div class="awWelfare-info-left">
               <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
@@ -91,7 +93,7 @@ export default {
   mounted() {
      
      this.getqueryInvitationUrl()
-    this.savaReport()
+   // this.savaReport()
    
   },
   methods: {
@@ -104,7 +106,7 @@ export default {
       })
       canvas.style.width = '101%'
       canvas.style.height = '100%'
-      this.status = 2
+     // this.status = 2
       debugger;
       document.getElementById('card-result').appendChild(canvas)
     },
@@ -187,13 +189,22 @@ export default {
     margin: 0 auto;
     background-size: 284px 466px;
         position: relative;
-        .qrcode{
-          width:80px;
-          height:80px;
-          position: absolute;
-          bottom: 31%;
-          left: 35%;
+        .background-qrcode{
+              width:80px;
+              height:80px;
+              background-color: #ffffff;
+              position: absolute;
+              bottom: 32%;
+              left: 35%;
+              padding: 5px;
+           .qrcode{
+              width:70px;
+              height:70px;
+              
+              
+            }
         }
+        
     .awWelfare-info{
       padding: 34px 50px 34px 62px;
       position: absolute;
