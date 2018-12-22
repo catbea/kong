@@ -16,6 +16,7 @@
         <p @click="savaReport">生成海报</p>
       </div>
     </div>
+    <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2"></div>
   </div>
 </template>
@@ -41,7 +42,8 @@ export default {
     buildingInfo: {},
     bannerList: [],
     status: 1,
-    changeBgImg: ''
+    changeBgImg: '',
+    showLoading: false
     // topList:[
     //   {
     //    top:[
@@ -97,6 +99,7 @@ export default {
     },
 
     async savaReport() {
+      this.showLoading = true
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top').children[0], {
@@ -113,6 +116,7 @@ export default {
       canvas.style.width = '100%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
+      this.showLoading = false
     },
 
     setReport() {
@@ -129,17 +133,29 @@ export default {
 </script>
 <style lang="less">
 .compile-poster-page {
-  // position: relative;
+  position: relative;
   width: 100%;
   height: 100%;
   background: #ffffff;
 
+  .van-loading {
+    display: inline-block;
+    position: absolute;
+    margin-left: 39%;
+    width: 84px;
+    height: 84px;
+    margin-top: 50%;
+    z-index: 10000;
+  }
+
   .result {
+    position: absolute;
     width: 100%;
     height: 100%;
   }
 
   .box {
+    position: absolute;
     line-height: 22px;
     background: #ffffff;
     height: auto !important;
