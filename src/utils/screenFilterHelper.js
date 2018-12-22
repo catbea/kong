@@ -24,7 +24,7 @@ export default (name, filters, conf = {}) => {
   // 项目名称
   result[conf.name] = name
   // 区域
-  result[conf.area] = filters.area
+  result[conf.area] = filters.area === '不限' ? '' : filters.area
   // 均价
   let avepriceTemp = filters.aveprice.split(',')
   if (avepriceTemp[0] !== '-1') result[conf.aveprice[0]] = avepriceTemp[0]
