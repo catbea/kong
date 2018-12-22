@@ -134,11 +134,11 @@
     </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="info.expireFlag == 1">
+      <div class="unopen-status-box" v-if="info.openStatus == 0">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="info.expireFlag == 0" :renewInfo="info"></market-renew>
-      <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
+      <market-renew v-if="info.openStatus!= 0" :renewInfo='info'></market-renew>
+       <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
         <div class="icon-box">
           <div>
             <i class="icon iconfont icon-building_details_rec1"></i>
