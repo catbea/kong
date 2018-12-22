@@ -107,7 +107,7 @@
       </div>
     </div>
     <!-- 位置周边 -->
-    <div class="house-circum">
+    <div class="house-circum" v-if="info.houseAroundType&&info.houseAroundType.length>0">
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
