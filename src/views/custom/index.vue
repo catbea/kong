@@ -140,7 +140,7 @@ export default {
         document.removeEventListener('touchmove', this.touchHandler, false)
         document.getElementsByClassName('router-view')[0].style.overflowY = 'hidden'  // 兼容pc测试
       } else {
-        document.addEventListener('touchmove', this.touchHandler, false)
+        document.addEventListener('touchmove',null)
         document.getElementsByClassName('router-view')[0].style.overflowY = 'auto'  // 兼容pc测试
       }
     }

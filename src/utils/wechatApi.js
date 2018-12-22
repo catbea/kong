@@ -2,6 +2,7 @@
 // import wx from 'http://res.wx.qq.com/open/js/jweixin-1.2.0.js'
 import store from '@/store/'
 import commonService from '@/services/commonService'
+
 class WechatApi {
   constructor() {
     this.wx = wx
@@ -23,14 +24,14 @@ class WechatApi {
   async getUserArea() {
     this.wx.getLocation({
       type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-      success: (res)=> {
+      success: (res) => {
         console.log('wx getLocation')
         this.getLocation(res.longitude, res.latitude)
       },
-      fail: ()=> {
+      fail: () => {
         console.log('wx location fail')
       },
-      cancel: (res)=> {
+      cancel: (res) => {
         console.log(res, 'wx location cancel')
       }
     })
@@ -42,7 +43,42 @@ class WechatApi {
       longitude: log,
       latitude: lat,
       city: userArea
-    } ))
+    }))
+  }
+
+  async wechatShare(shareData) {
+    return new Promise((resolve, reject) => {
+      // this.wx.ready(function () {
+        // 分享到好友
+        this.wx.onMenuShareWechat({
+          title: shareData.title, // 分享标题
+          link: shareData.link, // 分享链接
+          imgUrl: shareData.image, // 分享图标
+          success: function () {
+            // 用户确认分享后执行的回调函数
+            resolve()
+          },
+          cancel: function () {
+            // 用户取消分享后执行的回调函数
+            reject()
+          }
+        })
+        // 分享到朋友圈
+        this.wx.onMenuShareTimeline({
+          title: shareData.title, // 分享标题
+          link: shareData.link, // 分享链接
+          imgUrl: shareData.image, // 分享图标
+          success: function () {
+            // 用户确认分享后执行的回调函数
+            resolve()
+          },
+          cancel: function () {
+            // 用户取消分享后执行的回调函数
+            reject()
+          }
+        })
+      // })
+    })
   }
 
   /**
@@ -62,9 +98,12 @@ class WechatApi {
         'chooseWXPay',
         'hideOptionMenu',
         'showOptionMenu',
+        'hideMenuItems',
+        'showMenuItems',
         'getLocation',
         'getNetworkType',
         'onMenuShareAppMessage',
+        'onMenuShareWechat',
         'onMenuShareTimeline',
         'chooseImage',
         'getLocalImgData',

@@ -2,6 +2,7 @@ import * as types from '@/store/mutation-types'
 
 const state = {
   currSelectedCoupon: null,
+  marketOpenCache: {},
   projectCoupons: null
 }
 
@@ -11,6 +12,9 @@ const getters = {
   },
   currSelectedCoupon: state => {
     return state.currSelectedCoupon
+  },
+  marketOpenCache: state => {
+    return state.marketOpenCache
   }
 }
 
@@ -31,6 +35,10 @@ const mutations = {
 
   [types.CURR_SELECTED_COUPON](state, currSelectedCoupon) {
     state.currSelectedCoupon = currSelectedCoupon
+  },
+
+  [types.SET_MARKET_OPEN_CACHE](state, marketOpenCache) {
+    state.marketOpenCache = marketOpenCache
   }
 }
 

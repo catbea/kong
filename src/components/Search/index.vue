@@ -35,7 +35,7 @@ export default {
       
     },
     inputContent() {
-      this.$emit('getContent', this.value)
+      this.$emit('getContent', this.currentValue)
       
     }
   },

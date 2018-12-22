@@ -1,5 +1,5 @@
 <template>
-  <div class="compile-poster-page">
+  <div class="compile-poster-page" id="compile-poster-page">
     <div class="box" v-show="status === 1">
       <swipe-poster :model="buildingInfo" id="share-top" :modelBgImg="changeBgImg"></swipe-poster>
       <!-- <tow-lines v-for="(item,index) in topList" :key="index" :topInfo="item"></tow-lines> -->
@@ -99,11 +99,18 @@ export default {
     async savaReport() {
       this.status = 2
       const dpr = window.devicePixelRatio
-      const canvas = await h2c(document.querySelector('#share-top'), {
+      const canvas = await h2c(document.querySelector('#share-top').children[0], {
         logging: false,
-        useCORS: true
+        useCORS: true,
+        dpr: 5
+        // width: document.getElementById('compile-poster-page').clientWidth * dpr,
+        // height: document.getElementById('compile-poster-page').clientHeight * dpr
       })
-      canvas.style.width = '101%'
+      // canvas.style.width = document.getElementById('compile-poster-page').clientWidth * dpr
+      // canvas.style.height = document.getElementById('compile-poster-page').clientHeight * dpr
+      // canvas.style.width = document.body.offsetWidth * dpr + 'px'
+      // canvas.style.height = document.body.offsetHeight * dpr + 'px'
+      canvas.style.width = '100%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
     },
@@ -122,8 +129,9 @@ export default {
 </script>
 <style lang="less">
 .compile-poster-page {
-  position: relative;
+  // position: relative;
   width: 100%;
+  height: 100%;
   background: #ffffff;
 
   .result {

@@ -6,10 +6,10 @@
       </div>
       <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
-    <screen v-model="filter"></screen>
+    <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
-      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
+      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getProjectList">
         <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
@@ -22,6 +22,8 @@ import MarketDescribe from 'COMP/MarketDescribe/'
 import TitleBar from 'COMP/TitleBar/'
 import AlreadyOpen from 'COMP/Market/AlreadyOpen/'
 import marketService from 'SERVICE/marketService'
+import screenFilterHelper from '@/utils/screenFilterHelper'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Search,
@@ -30,13 +32,18 @@ export default {
     TitleBar,
     AlreadyOpen
   },
+  computed: {
+    ...mapGetters(['userArea'])
+  },
   data: () => ({
+    selectedCity: '',
     broker: 705,
     marketList: [],
     page: 1,
+    pageSize: 5,
     loading: false,
     finished: false,
-    filter: null,
+    projectFilters: {},
     searchContent: {
       siteText: '深圳',
       placeholder: '请输入平台名称'
@@ -48,14 +55,39 @@ export default {
     borderBottom: true,
     containerHeight: '0'
   }),
+  watch: {
+    projectFilters: {
+      handler(val) {
+        console.log('----000000---')
+        this.finished = false
+        this.page = 1
+        this.getProjectList()
+      },
+      deep: true
+    }
+  },
   created() {
+    this.selectedCity = this.userArea.marketSelectedCity || this.userArea.city 
+    this.searchContent.siteText = this.selectedCity
     this.getBrokerInfo()
   },
   methods: {
-    async onLoad() {
-      //楼盘信息请求
-      const res = await marketService.getMarketDescribe(this.page)
-      this.marketList = this.marketList.concat(res.records)
+    onLoad() {
+      console.log('-------')
+      this.getProjectList()
+    },
+
+    async getProjectList() {
+      let param = {current: this.page, size: this.pageSize}
+      //组装检索条件
+      let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
+      let _filters = screenFilterHelper(this.projectName, mergeFilters)
+      param = Object.assign(param, _filters) 
+      param.city = this.selectedCity
+      // console.log(param)
+
+      const res = await marketService.getHouseList(param)
+      this.marketList = this.page <= 1 ? res.records :  this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {
         this.finished = true
       }
@@ -80,7 +112,7 @@ export default {
     },
     // s搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select' })
+      this.$router.push({ name: 'area-select', query: {fromPage:'market'} })
     },
     focusHandler() {
       this.$router.push({ name: 'market-search' })

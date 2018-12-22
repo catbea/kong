@@ -37,7 +37,7 @@
               <!-- >3分钟前 -->
               <span class="sys-right-time"> {{ item.msgTimeStamp | dateFormatterToHuman}} </span>
             </p>
-            <p class="sys-right-btn">{{formatMsg(item.msgShow, item.type)}}</p>
+            <p class="sys-right-btn">{{formatMsg(item)}}</p>
           </span>
         </div>
       </div>
@@ -82,15 +82,20 @@ export default {
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
-    formatMsg(data, type) {
-      let item = JSON.parse(data)
-      if(type == 1) {
-        return '[楼盘消息]'
-      } else if(type == 2) {
-        return item.Text
-      } else if(type == 3) {
-        return '[语音消息]'
-      }
+    formatMsg(item) {
+      if(item.msgType == "TIMCustomElem") {
+        let msg = JSON.parse(item.msgShow)
+        if(msg.Desc == 2) {
+          return '[语音消息]'
+        } else if(msg.Desc == 3) {
+          return '【链接】' + JSON.parse(msg.Data).linkerName
+        } else if(msg.Desc == 1) {
+          return msg.Data
+        }
+      } else {
+        let msg = JSON.parse(item.msgShow)
+        return msg.Text
+      } 
     },
     async getMsgList() {
       const res = await dynamicsService.getAgentMsgAndTotal()

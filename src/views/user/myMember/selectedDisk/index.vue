@@ -1,10 +1,10 @@
 <template>
   <div class="my-member-page">
     <div class="search-box">
-      <search :conf="searchInfo" @areaClick="areaClickHandle"></search>
+      <search :conf="searchInfo" @getContent="searchChangeHandle" @areaClick="areaClickHandle"></search>
     </div>
     <div>
-      <screen></screen>
+      <screen v-model="projectFilters" :local="userArea.selectedCity"></screen>
     </div>
     <div class="market-box">
       <van-list
@@ -44,11 +44,23 @@ import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'
 import MealMarket from './MealMarket.vue'
 import { mapGetters } from 'vuex'
+import screenFilterHelper from '@/utils/screenFilterHelper'
 export default {
   components: {
     Search,
     Screen,
     MealMarket
+  },
+  watch: {
+    projectFilters: {
+      handler(val) {
+        // console.log(val)
+        this.finished = false
+        this.page = 1
+        this.getLinkerList()
+      },
+      deep: true
+    }
   },
   created() {
     this.type = this.$route.query.type
@@ -56,7 +68,7 @@ export default {
       console.log(this.userInfo.vipInfo, 'this.userInfo.vipInfo')
       this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
     } else {
-      this.searchInfo.siteText = this.userArea.selectedCity || this.userArea.city 
+      this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city 
     }
   },
   computed: {
@@ -64,6 +76,7 @@ export default {
   },
   data: () => ({
     type: 'vip',
+    projectFilters: {},
     packageIscheckedIds:[],
     checkedList: [],
     limitCount: 10,
@@ -71,12 +84,13 @@ export default {
       siteText: '',
       placeholderText: '请输入楼盘'
     },
+    projectName: '',
     projectSelectIco: require('IMG/myMember/project_select_ico.png'),
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
     isCheckedImg: require('IMG/user/mealMarket/isChecked.png'),
     page: 1,
-    pageSize: 8,
+    pageSize: 4,
     checkAllShow: false,
     loading: false,
     finished: false,
@@ -90,6 +104,13 @@ export default {
       this.$router.push({path: "/public/area-select"})
     },
 
+    searchChangeHandle(name) {
+      this.finished = false
+      this.page = 1
+      this.projectName = name
+      this.getLinkerList()
+    },
+
     async getPackageInfo() {
       const res = await marketService.packPageHouseQuery(this.$route.query.packageId)
       this.limitCount = res.limitTotal
@@ -99,6 +120,16 @@ export default {
     async getLinkerList() {
       this.checkAllShow = false
       let param = {current: this.page, size: this.pageSize}
+      if(this.projectName) {
+        param.projectName = this.projectName
+      } else {
+        //组装检索条件
+        let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
+        let _filters = screenFilterHelper(this.projectName, mergeFilters)
+        param = Object.assign(param, _filters) 
+        //
+      }
+      
       let res = []
       if(this.type == 'package') {
         param.city = this.searchInfo.siteText
@@ -117,14 +148,16 @@ export default {
           site: `${item.city} ${item.county} ${item.price} ${item.priceUnit}`, //'深圳 南山 120000元/㎡',
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
+          saleStatus: item.saleStatus,
           isChecked: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`
         }
         _list.push(obj)
       }
-      this.projectList = this.projectList.concat(_list)
-      if (res.pages === 0 || this.page === res.pages) {
+      this.projectList = this.page <= 1 ? _list : this.projectList.concat(_list)
+
+      if (res.pages === 0 || this.page >= res.pages) {
         this.finished = true
       }
 

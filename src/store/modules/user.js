@@ -9,6 +9,7 @@ const state = {
     vipInfo: {
       city: '广州市'
     },
+    majorCity: '南京市',
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
@@ -45,7 +46,7 @@ const state = {
     loginCount: 1,
     loginTime: '2018-11-10 02:28:16',
     logoUrl: '',
-    majorCity: '',
+    majorCity: '',    // 主营区域
     majorRegion: '111111',
     masterRecommendTip: '',
     minOpenid: '',
@@ -67,7 +68,7 @@ const state = {
     recommendTip: '',
     registerType: '10',
     shareNum: '0',
-    signature: '别问我是谁，请叫我大湿',
+    signature: '别问我是谁，请叫我大湿', 
     status: 1,
     storeId: '224',
     storeName: '',
@@ -104,7 +105,9 @@ const state = {
     province: '', // 省
     city: '深圳市', // 市
     selectedCity: '深圳市',
+    marketSelectedCity: null, //楼盘列表城市选择
     vipSelectedCity: null,
+    myReportCity: '',   // 报备楼盘
     county: '' // 区
   },
   reportAddInfo: {

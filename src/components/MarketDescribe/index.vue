@@ -13,11 +13,14 @@
           </div>
           <ul class="market-describe">
             <li class="market-name">
-              <span>{{itemInfo.linkerName}}</span>
+              <div class='box'>
+                <span class="title">{{itemInfo.linkerName}}</span>
+                <span class="past" v-if="itemInfo.openStatus==10">已过期</span>
+              </div>
               <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
-            <li class="site">{{itemInfo.linkerAddress}}</li>
-            <tag-group :arr="tags"></tag-group>
+            <li class="site">{{itemInfo.linkerAddress}} <span v-if="itemInfo.openStatus==10">{{itemInfo.invalidTime | dateTimeFormatter(2)}}到期</span></li>
+            <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>
@@ -69,9 +72,9 @@ export default {
   },
   computed: {
     openStatus() {
-      if (this.itemInfo.openStatus >= 0) {
+      if (!this.itemInfo.openStatus || this.itemInfo.openStatus == 20) {
         return '开通'
-      } else {
+      } else if(this.itemInfo.openStatus == 10){
         return '续费'
       }
     },
@@ -87,13 +90,13 @@ export default {
   },
   methods: {
     itemClickHandler() {
-      this.$emit('skipDetail', 1)
+      this.$emit('skipDetail', this.itemInfo)
     },
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
     openHandle() {
-      this.$emit('openReturnHandle', 1)
+      this.$emit('openReturnHandle', this.itemInfo)
     }
   },
   watch: {
@@ -157,16 +160,38 @@ export default {
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
-            span:nth-child(1) {
-              width: 160px;
+            .box{
+              display: flex;
+              align-items: center;
+              .title{
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              max-width:103px;
               font-size: 16px;
               font-family: PingFangSC-Semibold;
               font-weight: 600;
               color: rgba(51, 51, 51, 1);
-              line-height: 16px;
+              line-height:normal;
             }
-            span:nth-child(2) {
-              width: 46px;
+            .past{
+              font-size:12px;
+              transform:scale(0.84);
+              font-family:PingFangSC-Regular;
+              font-weight:400;
+              line-height:normal;
+              height:18px;
+              color:rgba(234,77,46,1);
+              padding:0 4px;
+              border-radius:3px;
+              // &::after{
+              //   border-color: rgba(234,77,46,1);
+              border:1px solid rgba(234,77,46,1);
+              // }
+            }
+            }
+            .dredge{
+              flex:0 0 46px;
               height: 24px;
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;

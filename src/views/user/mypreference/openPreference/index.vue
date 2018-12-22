@@ -8,7 +8,8 @@
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
-        <li v-show="expireDate">已购套餐，{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li v-show="packageCount>0">已购买{{packageCount>0 ? packageCount+'个' : '' }}套餐，最晚将于{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li v-show="packageCount==0">当前为开通套餐</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
       </div>
@@ -102,6 +103,7 @@ export default {
         payOpenid: this.userInfo.payOpenId
       }
       const res = await commonService.packagePayment(param)
+      const purchaseId = res.purchaseId
       this.isPayLoading = false
       if(res.prepayStatus){
         if (res.isPay) {
@@ -117,11 +119,11 @@ export default {
             },
             cancel: res => {
               this.$toast('支付取消')
-              this.cancelPayment(res.purchaseId)
+              this.cancelPayment(purchaseId)
             },
             fail: res => {
               this.$toast('支付失败')
-              this.cancelPayment(res.purchaseId)
+              this.cancelPayment(purchaseId)
             }
           })
         } else {
@@ -130,6 +132,10 @@ export default {
       } else {
         this.$toast('支付失败')
       }
+    },
+
+    cancelPayment(purchaseId) {
+      commonService.cancelPayment(purchaseId)
     },
 
     paySuss() {
@@ -150,6 +156,7 @@ export default {
     },
 
     async getPackageInfo() {
+      this.bugList = []
       const res = await marketService.userPackageSituation()
       this.expireDate = res.expireDate ? parseInt(res.expireDate) : 0
       this.balance = res.price
@@ -222,7 +229,7 @@ export default {
         }
       }
       .head-describe {
-        width: 183px;
+        width: 253px;
         margin-left: 15px;
         margin-right: 6px;
         font-size: 18px;

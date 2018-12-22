@@ -8,7 +8,7 @@
       <my-estate-list :list="estateListData" @click="goRecommendInfo" @share="shareHandler"/>
     </div>
     <div class="list-container" v-if="hotEstateListData&&hotEstateListData.length>0">
-      <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @share="shareHandler"/>
+      <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @open="openHandler"/>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ import MyEstateList from 'COMP/Dynamics/MyEstateList'
 import HotEstateList from 'COMP/Dynamics/HotEstateList'
 import CommonService from 'SERVICE/commonService'
 import dynamicsService from 'SERVICE/dynamicsService'
-import { Dialog } from 'vant';
+import { Dialog } from 'vant'
 export default {
   components: {
     DynamicsCollect,
@@ -32,7 +32,7 @@ export default {
     collectData: null, // 数据中心数据
     recommendData: null, // 推荐盘数据
     estateListData: null, // 我的楼盘数据
-    hotEstateListData: null,  // 热门楼盘数据
+    hotEstateListData: null, // 热门楼盘数据
     timer: null
   }),
   created() {
@@ -53,8 +53,11 @@ export default {
       console.log('num.estateViews.val', num.estateViews)
       console.log('num.articleCount.val', num.articleCount)
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
-        this.$router.push({ path: '/dynamics/allDynamics', query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount } })
-      }else {
+        this.$router.push({
+          path: '/dynamics/allDynamics',
+          query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount }
+        })
+      } else {
         Dialog.alert({
           title: '暂无任何动态',
           message: '您还没有任何动态信息，请开通楼盘分享后再次尝试'
@@ -83,7 +86,7 @@ export default {
           change: res.unreadScanLinkerCount
         },
         articleCount: {
-          val: res.scanArticleCount ,
+          val: res.scanArticleCount,
           change: res.unreadScanArticleCount
         },
         simpleDynamic: res.simpleDynamicVOs
@@ -94,14 +97,28 @@ export default {
       this.estateListData = res.myLinkerVOs
 
       for (let i = 0; i < this.estateListData.length; i++) {
-        if (this.estateListData.saleStatus === 0) {
-          this.estateListData[i].linkerTags.unshift('热销中')
-        }
-        if (this.estateListData.saleStatus === 1) {
-          this.estateListData[i].linkerTags.unshift('即将发售')
-        }
-        if (this.estateListData.saleStatus === 3) {
-          this.estateListData[i].linkerTags.unshift('售罄')
+        if (this.estateListData[i].linkerTags.length >= 3) {
+          this.estateListData[i].linkerTags.pop()
+
+          if (this.estateListData[i].saleStatus === 0) {
+            this.estateListData[i].linkerTags.unshift('热销中')
+          }
+          if (this.estateListData[i].saleStatus === 1) {
+            this.estateListData[i].linkerTags.unshift('即将发售')
+          }
+          if (this.estateListData[i].saleStatus === 3) {
+            this.estateListData[i].linkerTags.unshift('售罄')
+          }
+        } else {
+          if (this.estateListData[i].saleStatus === 0) {
+            this.estateListData[i].linkerTags.unshift('热销中')
+          }
+          if (this.estateListData[i].saleStatus === 1) {
+            this.estateListData[i].linkerTags.unshift('即将发售')
+          }
+          if (this.estateListData[i].saleStatus === 3) {
+            this.estateListData[i].linkerTags.unshift('售罄')
+          }
         }
       }
 
@@ -121,6 +138,9 @@ export default {
     },
     shareHandler(info) {
       this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
+    },
+    openHandler(info) {
+      this.$router.push({ name: 'marketDetail-open', params: { id: info.linkerId } })
     }
   },
   beforeDestroy() {

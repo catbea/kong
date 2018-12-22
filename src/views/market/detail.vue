@@ -1,5 +1,7 @@
 <template>
   <div class="market-detail-page" v-if="info">
+    <!-- 新手引导 -->
+    <hint-tire></hint-tire>
     <!-- 顶部swipe -->
     <div class="top-swipe-container">
       <div class="swipe-content">
@@ -23,8 +25,8 @@
           </div>
         </div>
         <!-- 存在全景时全景播放 -->
-        <div class="operate-2"></div>
       </div>
+      <div class="bg_img operate-2" v-if="info.ifPanorama" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
     </div>
     <!-- 楼盘基础信息 -->
     <div class="base-info-container">
@@ -41,7 +43,18 @@
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
+        <p
+          class="house-feature"
+        >{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
+        <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
+            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
+           <span class="commission-text">{{info&&info.divisionRules}}</span>
+           <div class="bg_img commission-detail" @click="commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
+           </div>
+        <!-- <div class="commission-view" v-show="info.divisionRules" @click="enterCommission">
+          <img :src="commissionImg">
+          <span>{{info.divisionRules | textOver}}</span>
+        </div> -->
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
@@ -149,15 +162,19 @@
 </template>
 <script>
 import 'swiper/dist/css/swiper.css'
+import * as types from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-
+import HintTire from 'COMP/Market/MarketDetail/HintTire/'
 import TagGroup from 'COMP/TagGroup'
 import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
+import { Dialog } from 'vant'
 export default {
   components: {
+    HintTire,
     TagGroup,
     Avatar,
     swiper,
@@ -166,6 +183,8 @@ export default {
     TMap
   },
   data: () => ({
+    commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
+    siteDetailImg: require('IMG/marketDetail/arrow.png'),
     id: -1,
     info: null,
     swipeCurrent: 0,
@@ -188,7 +207,7 @@ export default {
     othersTitleConf: {
       title: '其他楼盘',
       linkText: '全部楼盘',
-      link: '/'
+      link: '/market'
     },
     swiperOption: {
       slidesPerView: 2,
@@ -201,18 +220,29 @@ export default {
     },
     rd: {
       headSlideTimer: null
-    }
+    },
+    playIcon: require('IMG/market/view720.png')
   }),
   created() {
     this.id = this.$route.params.id
+    // this.$store.commit(types.USER_BUILD_INFO, this.id)
     this.getDetailInfo(this.id)
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
   },
   methods: {
+    //进入佣金详情
+    commission() { 
+      this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
+    },
+    // enterCommission() {
+    //   this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
+    // },
     // 获取楼盘详情
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      console.log(res,'该楼盘数据');
+      
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
       this.headSlide()
@@ -227,16 +257,45 @@ export default {
     },
     collectHandler() {},
     shareHandler() {
-      this.$router.push({ name: 'market-share', params: { id: this.id } })
+      if(this.userInfo.name!==''&&this.userInfo.distributorName!==''&&this.userInfo.majorRegion!==""&&this.userInfo.institutionName!==""){
+        if(this.info.expireFlag==0){
+          Dialog.confirm({
+            title: '温馨提示',
+            message: '还未开通楼盘，请前往开通'
+          }).then(() => {
+            this.$router.push({name:'marketDetail-open',params:{id:this.id}})
+          }).catch(() => {
+            // on cancel
+          });
+        }else{
+          this.$router.push({ name: 'market-share', params: { id: this.id } })
+        }
+      }else{
+        Dialog.confirm({
+          title:'您有未完善的信息',
+          message: '信息不完整会影响传播效率哦',
+          confirmButtonText:'去完善',
+          className:'marketShareHint'
+        }).then(() => {
+          this.$router.push({name:'user-edit'})
+        }).catch(() => {
+          // on cancel
+        });
+      } 
     },
     openHandler() {
       this.$router.push(`/marketDetail/open/${this.id}`)
     },
     moreInfoHandler() {
       this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId } })
+    },
+    // 全景点击
+    ifPanoramaClickHandler(){
+      window.location.href = this.info.linkerUrl
     }
   },
   computed: {
+    ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
     }
@@ -249,6 +308,7 @@ export default {
 <style lang="less">
 .market-detail-page {
   > .top-swipe-container {
+    position: relative;
     width: 100%;
     height: 281px;
     > .swipe-content {
@@ -294,6 +354,14 @@ export default {
         }
       }
     }
+    > .operate-2 {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      width: 64px;
+      height: 64px;
+    }
   }
   > .base-info-container {
     > .info-top-bar {
@@ -335,6 +403,58 @@ export default {
         font-size: 14px;
         line-height: 1.5;
       }
+      .specific-market-detail-commission {
+    width: 339px;
+    height: 34px;
+    background: rgba(247, 249, 250, 1);
+    border-radius: 4px;
+    font-size: 15px;
+    font-family: PingFang-SC-Regular;
+    font-weight: 400;
+    color: rgba(234, 77, 46, 1);
+    display: flex;
+    align-items: center;
+    position: relative;
+    .commission-detail{
+      width:12px;
+      height:12px;
+      position: absolute;
+      right:5px;
+    }
+    span:nth-child(1){
+      width: 16px;
+      height: 16px;
+      margin: 0 8px;
+    }
+    .commission-text{
+      white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin: 0;
+          width: 130px;
+    }
+  }
+      // > .commission-view {
+      //   display: flex;
+      //   align-items: center;
+      //   height: 34px;
+      //   width: 95%;
+      //   margin-left: 2.5%;
+      //   background: rgba(247, 249, 250, 1);
+      //   border-radius: 4px;
+      //   margin-top: 5px;
+
+      //   img {
+      //     width: 16px;
+      //     height: 16px;
+      //   }
+
+      //   span {
+      //     color: #ea4d2e;
+      //     font-size: 15px;
+      //     margin-left: 8px;
+      //   }
+      // }
       > .house-info-form {
         padding-top: 5px;
         line-height: 1.5;
@@ -526,6 +646,28 @@ export default {
   .show-enter,
   .show-leave-to {
     opacity: 0;
+  }
+}
+.marketShareHint{//完善信息弹窗
+  width:280px;
+  border-radius:12px;
+  text-align:center;
+  .van-dialog__header{
+    font-size:18px;
+    font-family:PingFangSC-Semibold;
+    font-weight:600;
+    color:rgba(51,51,51,1);
+    line-height:25px;
+  }
+  .van-dialog__message{
+    font-size:15px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:21px;
+  }
+  .van-dialog__footer{
+    border-top:1px solid #E5E5E5;
   }
 }
 </style>
