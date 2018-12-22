@@ -17,9 +17,8 @@
         <!-- 收藏/分享 -->
         <div class="operate-1">
           <div class="operate-collect" @click="collectHandler">
-
             <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
-            <i v-else  class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
+            <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
           <div class="operate-share" @click="shareHandler">
@@ -46,18 +45,16 @@
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p
-          class="house-feature"
-        >{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
+        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
         <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
-            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
-           <span class="commission-text">{{info&&info.divisionRules}}</span>
-           <div class="bg_img commission-detail" @click="commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
-           </div>
+          <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
+          <span class="commission-text">{{info&&info.divisionRules}}</span>
+          <div class="bg_img commission-detail" @click="commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
+        </div>
         <!-- <div class="commission-view" v-show="info.divisionRules" @click="enterCommission">
           <img :src="commissionImg">
           <span>{{info.divisionRules | textOver}}</span>
-        </div> -->
+        </div>-->
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
@@ -140,8 +137,8 @@
       <div class="unopen-status-box" v-if="info.expireFlag == 1">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="info.expireFlag == 0" :renewInfo='info'></market-renew>
-       <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
+      <market-renew v-if="info.expireFlag == 0" :renewInfo="info"></market-renew>
+      <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
         <div class="icon-box">
           <div>
             <i class="icon iconfont icon-building_details_rec1"></i>
@@ -160,7 +157,7 @@
           </div>
         </div>
         <div class="btn-box" @click="openHandler">续费()</div>
-      </div> -->
+      </div>-->
     </div>
   </div>
 </template>
@@ -186,52 +183,52 @@ export default {
     swiperSlide,
     TitleBar,
     TMap,
-    MarketRenew,
+    MarketRenew
   },
-  data(){
+  data() {
     return {
-    status:null,// 0-未收藏 1-已收藏
-    photoButton:true,//是否存在相册
-    commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-    siteDetailImg: require('IMG/marketDetail/arrow.png'),
-    id: -1,
-    info: null,
-    swipeCurrent: 0,
-    headCurrent: 0,
-    tagGroupArr: [],
-    mapTab: 0,
-    typeTitleConf: {
-      title: '户型',
-      linkText: '全部户型'
-      // link: `/marketDetail/FamilyList/${this.id}`
-    },
-    newsTitleConf: {
-      title: '楼盘动态',
-      linkText: '全部动态',
-      link: '/'
-    },
-    aroundTitleConf: {
-      title: '位置周边'
-    },
-    othersTitleConf: {
-      title: '其他楼盘',
-      linkText: '全部楼盘',
-      link: '/market'
-    },
-    swiperOption: {
-      slidesPerView: 2,
-      spaceBetween: 12
-    },
-    mapConf: {
-      draggable: false,
-      scrollwheel: false,
-      disableDoubleClickZoom: false
-    },
-    rd: {
-      headSlideTimer: null
-    },
-    playIcon: require('IMG/market/view720.png')
-  }
+      status: null, // 0-未收藏 1-已收藏
+      photoButton: true, //是否存在相册
+      commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
+      siteDetailImg: require('IMG/marketDetail/arrow.png'),
+      id: -1,
+      info: null,
+      swipeCurrent: 0,
+      headCurrent: 0,
+      tagGroupArr: [],
+      mapTab: 0,
+      typeTitleConf: {
+        title: '户型',
+        linkText: '全部户型'
+        // link: `/marketDetail/FamilyList/${this.id}`
+      },
+      newsTitleConf: {
+        title: '楼盘动态',
+        linkText: '全部动态',
+        link: '/'
+      },
+      aroundTitleConf: {
+        title: '位置周边'
+      },
+      othersTitleConf: {
+        title: '其他楼盘',
+        linkText: '全部楼盘',
+        link: '/market'
+      },
+      swiperOption: {
+        slidesPerView: 2,
+        spaceBetween: 12
+      },
+      mapConf: {
+        draggable: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: false
+      },
+      rd: {
+        headSlideTimer: null
+      },
+      playIcon: require('IMG/market/view720.png')
+    }
   },
   created() {
     this.id = this.$route.params.id
@@ -251,11 +248,12 @@ export default {
         this.photoButton = false
       }
     },
-    photoHandle() {//进入相册页面
-      this.$router.push({ name: 'photoList', params: {id: this.id }})
+    photoHandle() {
+      //进入相册页面
+      this.$router.push({ name: 'photoList', params: { id: this.id } })
     },
     //进入佣金详情
-    commission() { 
+    commission() {
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
     // enterCommission() {
@@ -265,7 +263,7 @@ export default {
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      this.status=this.info.collectionStatus
+      this.status = this.info.collectionStatus
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
       this.headSlide()
@@ -278,50 +276,47 @@ export default {
         this.headCurrent = this.headCurrent < this.info.customerList.length - 1 ? this.headCurrent + 1 : 0
       }, 3000)
     },
-   async collectHandler() {//修改收藏状态
-      if(this.status==1){
-        this.status=0
-      }else{
-        this.status=1
+    async collectHandler() {
+      //修改收藏状态
+      if (this.status == 1) {
+        this.status = 0
+      } else {
+        this.status = 1
       }
-      await marketService.changeLinkerCollect(this.id,this.status,1)
-      console.log(this.status,'收藏状态');
+      await marketService.changeLinkerCollect(this.id, this.status, 1)
+      console.log(this.status, '收藏状态')
     },
     shareHandler() {
-      if(this.userInfo.name!==''&&this.userInfo.distributorName!==''&&this.userInfo.majorRegion!==""&&this.userInfo.institutionName!==""){
-        if(this.info.expireFlag==0){
+      if (this.userInfo.name === '' || this.userInfo.distributorName === '' || (this.userInfo.majorRegion === '' && this.userInfo.institutionName === '')) {
+        Dialog.confirm({
+          title: '您有未完善的信息',
+          message: '信息不完整会影响传播效率哦',
+          confirmButtonText: '去完善',
+          className: 'marketShareHint'
+        }).then(() => {
+          this.$router.push({ name: 'user-edit' })
+        })
+      } else {
+        if (this.info.expireFlag == 0) {
           Dialog.confirm({
             title: '温馨提示',
             message: '还未开通楼盘，请前往开通'
           }).then(() => {
-            this.$router.push({name:'marketDetail-open',params:{id:this.id}})
-          }).catch(() => {
-            // on cancel
-          });
-        }else{
+            this.$router.push({ name: 'marketDetail-open', params: { id: this.id } })
+          })
+        } else {
           this.$router.push({ name: 'market-share', params: { id: this.id } })
         }
-      }else{
-        Dialog.confirm({
-          title:'您有未完善的信息',
-          message: '信息不完整会影响传播效率哦',
-          confirmButtonText:'去完善',
-          className:'marketShareHint'
-        }).then(() => {
-          this.$router.push({name:'user-edit'})
-        }).catch(() => {
-          // on cancel
-        });
-      } 
+      }
     },
     openHandler() {
       this.$router.push(`/marketDetail/open/${this.id}`)
     },
     moreInfoHandler() {
-      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId ,licenceList :this.info.licenceList} })
+      this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId, licenceList: this.info.licenceList } })
     },
     // 全景点击
-    ifPanoramaClickHandler(){
+    ifPanoramaClickHandler() {
       window.location.href = this.info.linkerUrl
     }
   },
@@ -346,22 +341,22 @@ export default {
       position: relative;
       width: 100%;
       height: 100%;
-     > .swipe-photo{
-       position: absolute;
-       z-index:1;
-      left: 155px;
-      bottom: 15px;
-      text-align: center;
-      width: 60px;
-      height: 24px;
-      background: rgba(255, 255, 255, 1);
-      border-radius: 12px;
-      font-size: 12px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(51, 51, 51, 1);
-      line-height: 24px;
-     }
+      > .swipe-photo {
+        position: absolute;
+        z-index: 1;
+        left: 155px;
+        bottom: 15px;
+        text-align: center;
+        width: 60px;
+        height: 24px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 12px;
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 24px;
+      }
       > .van-swipe {
         position: relative;
         width: 100;
@@ -405,7 +400,7 @@ export default {
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
       width: 64px;
       height: 64px;
     }
@@ -451,36 +446,36 @@ export default {
         line-height: 1.5;
       }
       .specific-market-detail-commission {
-    width: 339px;
-    height: 34px;
-    background: rgba(247, 249, 250, 1);
-    border-radius: 4px;
-    font-size: 15px;
-    font-family: PingFang-SC-Regular;
-    font-weight: 400;
-    color: rgba(234, 77, 46, 1);
-    display: flex;
-    align-items: center;
-    position: relative;
-    .commission-detail{
-      width:12px;
-      height:12px;
-      position: absolute;
-      right:5px;
-    }
-    span:nth-child(1){
-      width: 16px;
-      height: 16px;
-      margin: 0 8px;
-    }
-    .commission-text{
-      white-space: nowrap;
+        width: 339px;
+        height: 34px;
+        background: rgba(247, 249, 250, 1);
+        border-radius: 4px;
+        font-size: 15px;
+        font-family: PingFang-SC-Regular;
+        font-weight: 400;
+        color: rgba(234, 77, 46, 1);
+        display: flex;
+        align-items: center;
+        position: relative;
+        .commission-detail {
+          width: 12px;
+          height: 12px;
+          position: absolute;
+          right: 5px;
+        }
+        span:nth-child(1) {
+          width: 16px;
+          height: 16px;
+          margin: 0 8px;
+        }
+        .commission-text {
+          white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           margin: 0;
           width: 130px;
-    }
-  }
+        }
+      }
       // > .commission-view {
       //   display: flex;
       //   align-items: center;
@@ -695,26 +690,27 @@ export default {
     opacity: 0;
   }
 }
-.marketShareHint{//完善信息弹窗
-  width:280px;
-  border-radius:12px;
-  text-align:center;
-  .van-dialog__header{
-    font-size:18px;
-    font-family:PingFangSC-Semibold;
-    font-weight:600;
-    color:rgba(51,51,51,1);
-    line-height:25px;
+.marketShareHint {
+  //完善信息弹窗
+  width: 280px;
+  border-radius: 12px;
+  text-align: center;
+  .van-dialog__header {
+    font-size: 18px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 25px;
   }
-  .van-dialog__message{
-    font-size:15px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(51,51,51,1);
-    line-height:21px;
+  .van-dialog__message {
+    font-size: 15px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 21px;
   }
-  .van-dialog__footer{
-    border-top:1px solid #E5E5E5;
+  .van-dialog__footer {
+    border-top: 1px solid #e5e5e5;
   }
 }
 </style>
