@@ -6,7 +6,8 @@
           <div class="info-box-title">
             <img class="info-box-left" :src="leftIcon" @click="showQrCode">
             <div class="info-box-right" @click="shareUserCard">
-              <img class="share-img" :src="rightIcon">
+              <!-- <img class="share-img" :src="rightIcon"> -->
+              <i style="color:#afb0b6;font-size:24px;" class="icon iconfont icon-Building_list_share"></i>
               <span class="share-view">分享</span>
             </div>
           </div>
