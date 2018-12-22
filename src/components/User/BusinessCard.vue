@@ -294,14 +294,14 @@ export default {
       border-radius: 3px;
       margin-top: 15px;
       > img {
-        margin: 20px;
+        margin: 20px 10px;
         width: 24px;
         height: 24px;
       }
       .info-title {
         position: absolute;
         top: 15px;
-        left: 55px;
+        left: 40px;
         font-size: 16px;
         font-weight: 400;
         color: #87665a;
@@ -310,7 +310,7 @@ export default {
       .info-desc {
         position: absolute;
         top: 35px;
-        left: 55px;
+        left: 40px;
         font-size: 12px;
         font-weight: 400;
         color: #999999;
