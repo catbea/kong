@@ -154,7 +154,7 @@ export default {
     this.city = this.$route.params.city
     this.getDetail()
     this.getQrCode()
-    this.shareHandler()
+    
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -233,16 +233,19 @@ export default {
     // 分享
     shareHandler() {
       console.log(this.shareData)
-      if (this.shareData) {
+      // if (this.shareData) {
         alert(this.shareData)
-      }
+      // }
       wechatApi.wechatShare(this.shareData).then(res => {
+        alert('分享成功')
         this.articleShare()
       }).catch(e => {
-
+        alert('分享失败')
       })
     },
-
+  },
+  mounted() {
+    this.shareHandler()
   },
   watch:{
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
