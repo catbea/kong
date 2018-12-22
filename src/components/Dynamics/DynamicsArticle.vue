@@ -21,9 +21,9 @@
       </div>
     </div>
 
-    <div class="article-container" v-if="articleDynamicList">
+    <div class="article-container" v-if="articleDynamicList.length !=''">
 
-    <div class="article-list" v-for="(item,key) in articleDynamicList" :key="key"  @click="itemArticleInfo(item)">
+    <div class="article-list"  v-for="(item,key) in articleDynamicList" :key="key"  @click="itemArticleInfo(item)">
       <span class="article-list-left">
         <p class="article-left-title">{{item.articleTitle }}</p>
         <p class="article-left-time" >
@@ -38,15 +38,19 @@
     </div>
     
   </div>
+  <dynamics-null v-else></dynamics-null> 
+
   </div>
 </template>
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import ShadowBox from 'COMP/ShadowBox'
+import DynamicsNull from 'COMP/Dynamics/DynamicsNull'
 export default {
   components: {
     DynamicsData,
-    ShadowBox
+    ShadowBox,
+    DynamicsNull
   },
   props: {
     articleDynamicCount: { type: '' },
@@ -59,7 +63,6 @@ export default {
     }
   },
   methods() {
-   
     
   },
   methods: {

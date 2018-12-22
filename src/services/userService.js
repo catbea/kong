@@ -408,14 +408,17 @@ class UserService {
       }
     })
   }
+  
   /**
-   * 查询活动规则 -
+   * 查询活动规则
    * @param {*} type 
    */
   getrules(type) {
     return xhr({
       url: '/invitation/rules',
-      body: type
+      body: {
+        type
+      }
     })
   }
   /**

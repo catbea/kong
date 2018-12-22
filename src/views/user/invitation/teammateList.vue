@@ -1,10 +1,6 @@
 <template>
   <div class="teammateList-page">
-     <van-tabs color="#007AE6" :line-width="15" :swipe-threshold="6" v-model="active">
-        <van-tab title="邀请注册"></van-tab>
-        <van-tab title="邀请开通"></van-tab>
-     </van-tabs>
-      <div v-if="active === 0 ">
+      <div >
           <div class="teammateList-top" :style="{'backgroundImage':'url('+teammateListBackIcon+')'}">
             <img :src="couponIcon" class="teammateList-top-icon">
             <div class="teammateList-top-center">
@@ -23,24 +19,6 @@
           </div>
           
       </div>
-      <div v-if="active === 1 ">
-          <div class="teammateList-top" :style="{'backgroundImage':'url('+kaitBackIcon+')'}">
-             <img :src="redenvelopesIcon" class="teammateList-top-redenvelopesIcon">
-            <div class="teammateList-top-center">
-              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{openRewardsPrice}}</span>元</p>
-              <p class="teammateList-top-num">已开通：{{ openRewardsTotal == 0 ? 0 : openRewardsTotal}}个</p>
-            </div>
-          </div>
-          <div class="teammateList-center" v-for="(openItem,key) in openRewards" :key="key">
-              <div class="teammateList-center-left">
-                <p class="teammateList-center-left-open-text">用户{{ openItem.mobile}}</p>
-                <p class="teammateList-center-left-open-tell">成功开通</p>
-              </div>
-              <div class="teammateList-center-right">
-                <p class="teammateList-center-right-open-time">{{openItem.rewardsTime | dateTimeFormatter(2,'/')}}</p>
-              </div>
-          </div>
-      </div>
   </div>
 </template>
 
@@ -53,25 +31,16 @@ import userService from 'SERVICE/userService'
        teammateListBackIcon:require('IMG/user/invitation/aw-banner@2x.png'),
        kaitBackIcon:require('IMG/user/invitation/aw-banner1@2x.png'),
        couponIcon:require('IMG/user/invitation/aw-coupon@2x.png'),
-       redenvelopesIcon:require('IMG/user/invitation/redenvelopes@2x.png'),
-       openRewards:[],
        registerRewards:[],
        registerRewardsTotal:0,
        openRewardsTotal:0,
       }
     },
     mounted(){
-      this.getopenRewards()
     this.getregisterRewards()                                           
     },
     methods:{
-      //邀请开通列表
-     async getopenRewards(){
-      const res = await userService.getopenRewards()
-      this.openRewardsPrice = res.price
-      this.openRewardsTotal = res.count
-      this.openRewards = res.list.records
-    },
+    
       //邀请注册列表
       async getregisterRewards(){
         const res = await userService.getregisterRewards()

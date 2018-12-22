@@ -20,7 +20,7 @@
         </span>
       </div>
     </div>
-    <div class="dynamics-container">
+    <div class="dynamics-container"  v-if="cardDynamicList.length !=''"  >
     <div v-if="cardDynamicList" v-for="(item,key) in cardDynamicList" :key="key">
     <div class="dynamics-container-list" >
       <shadow-box>
@@ -67,23 +67,29 @@
       </shadow-box>
     </div>
 </div>
+
   </div>
+<dynamics-null v-else></dynamics-null>
+
+
   </div>
 </template>
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import ShadowBox from 'COMP/ShadowBox'
+import DynamicsNull from 'COMP/Dynamics/DynamicsNull'
 export default {
   components: {
     DynamicsData,
     DynamicsList,
-    ShadowBox
+    ShadowBox,
+    DynamicsNull
   },
   props: {
     cardDynamicCount: { type: '' },
     cardDynamicList: { type: Array },
-    cardDynamicListCount: {type:''}
+    cardDynamicListCount: {type:''},
   },
   data() {
     return {
