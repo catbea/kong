@@ -374,10 +374,14 @@ class UserService {
 
   /**
    * 获取分享二维码
+   * @param {*} agentId
    */
-  getQrCode() {
+  getQrCode(agentId) {
     return xhr({
-      url: '/cpShare/nameCardShare'
+      url: '/cpShare/nameCardShare',
+      body: {
+        agentId
+      }
     })
   }
   /**
