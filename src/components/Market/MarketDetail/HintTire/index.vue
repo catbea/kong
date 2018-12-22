@@ -1,9 +1,11 @@
 <template>
   <div class="hint-tire-page" v-if="hintShow">
-    <div class="enjoy">
-      <span class="icon-enjoy bg_img" :style="{backgroundImage:'url('+enjoyImg+')'}"></span>
-      <p>分享</p>
-    </div>
+     <div class="operate-1">
+          <div class="operate-share">
+            <i class="icon iconfont icon-article_share"></i>
+            分享
+          </div>
+        </div>
     <div class="hint-box">
       <p>快点击这里分享楼盘</p>
       <div class="line">
@@ -19,6 +21,7 @@
 <script>
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
+import marketService from 'SERVICE/marketService'
 export default {
   created() {
     this.guidanceHandle()
@@ -38,7 +41,9 @@ export default {
       this.hintShow=false
     }
     },
-    knowHandle() {
+   async knowHandle() {
+    const res = await marketService.getMarketUpdateIsOne()
+    // console.log(res,'新手引导信息',this.userInfo.isOne);
       this.hintShow=false
       this.$store.commit(types.IS_ONE,0)
     //   console.log(this.$store.getters.theFirstTime,'已改')
@@ -57,29 +62,27 @@ export default {
   background: rgba(0, 0, 0, 1);
   opacity: 0.65;
   z-index: 11;
-  .enjoy {
-    margin: 20px 0px 0 322px;
-    display: flex;
-    flex-direction: column;
-    .icon-enjoy {
-      width: 20px;
-      height: 20px;
-    }
-    p {
-      font-size: 12px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 1);
-      line-height: 17px;
-    }
-  }
+  .operate-1 {
+        margin:0 0 0 320px;
+        display: flex;
+        > div {
+          padding: 10px;
+          padding-bottom:0px;
+          font-size: 12px;
+          color: #fff;
+          > i {
+            font-size: 24px;
+            display: block;
+          }
+        }
+      }
   .hint-box {
     width: 225px;
-    height: 164px;
+    height: 194px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin: 5px 0 0 111px;
+    margin: 5px 0 0 119px;
     p {
       font-size: 17px;
       font-family: PingFangSC-Regular;
@@ -91,7 +94,7 @@ export default {
     .line {
       display: flex;
       width: 62px;
-      height: 159px;
+      height: 189px;
       border-right: dashed rgba(255, 255, 255, 1);
       border-bottom: dashed rgba(255, 255, 255, 1);
       // border-style: dotted;
@@ -117,7 +120,7 @@ export default {
     }
   }
   .know-button {
-    margin: 123px 0 0 140px;
+    margin: 113px 0 0 140px;
     width: 95px;
     height: 32px;
     line-height: 32px;
