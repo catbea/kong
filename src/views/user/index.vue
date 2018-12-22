@@ -85,12 +85,15 @@ export default {
   }),
   created() {
     this.getUserInfo()
-    this.getQrCode(this.userInfo.id)
+    this.getQrCode(this.userInfo.agentId)
     this.getVipAndPackage()
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   methods: {
     enterSharePage() {
-      this.$router.push({ path: '/user/share-business-card', query: {agentId: this.userInfo.id} })
+      this.$router.push({ path: '/user/share-business-card', query: { agentId: this.userInfo.agentId } })
     },
 
     overlayClose() {
@@ -155,9 +158,7 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapGetters(['userInfo'])
-  }
+  
 }
 </script>
 <style lang="less">

@@ -53,6 +53,7 @@ export default {
   },
   created() {
     this.agentId = this.$route.query.agentId
+    debugger
     this.getCardInfo(this.agentId)
   },
   methods: {

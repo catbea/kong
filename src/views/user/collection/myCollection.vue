@@ -189,7 +189,7 @@ export default {
         }
       } else if (cons.type === 'goCollectionInfo') {
         // this.$router.push({ name: 'discover-detail', params: { id: cons.id, city: cons.city } })
-        this.$router.push(`/discover/${cons.id}/${cons.city?cons.city:'全国'}?agentId=${this.userInfo.id}&enterpriseId=${this.userInfo.enterpriseId}`)
+        this.$router.push(`/discover/${cons.id}/${cons.city?cons.city:'全国'}?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`)
       }
     }
   }
