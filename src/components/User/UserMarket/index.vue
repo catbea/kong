@@ -213,15 +213,16 @@ export default {
         this.stickSwitch = 10
         this.dataArr.recommand = 10
         //将当前点击的楼盘置顶
-        this.$parent.showMarketList.unshift(this.$parent.showMarketList[index])
-        this.$parent.showMarketList.splice(index + 1, 1)
+        let parent = this.$parent.$parent
+        parent.showMarketList.unshift(parent.showMarketList[index])
+        parent.showMarketList.splice(index + 1, 1)
         Dialog.alert({
           message: '楼盘置顶成功',
           className:'hint-alert'
         }).then(() => {
           // on close
         });
-        console.log(this.$parent.showMarketList, '这是展示的父组件的')
+        // console.log(this.$parent.showMarketList, '这是展示的父组件的')
       } else if (this.dataArr.recommand == 10) {
         this.stickSwitch = 0
         this.dataArr.recommand = 0
@@ -232,7 +233,7 @@ export default {
         }).then(() => {
           // on close
         });
-        console.log(this.$parent.showMarketList, '这是展示的父组件的')
+        // console.log(this.$parent.showMarketList, '这是展示的父组件的')
       }
       this.changeUserStatus(this.linkerId, 40, this.stickSwitch)//改置顶状态
       this.show = !this.show

@@ -6,7 +6,8 @@
           <div class="info-box-title">
             <img class="info-box-left" :src="leftIcon" @click="showQrCode">
             <div class="info-box-right" @click="shareUserCard">
-              <img class="share-img" :src="rightIcon">
+              <!-- <img class="share-img" :src="rightIcon"> -->
+              <i style="color:#afb0b6;font-size:24px;" class="icon iconfont icon-Building_list_share"></i>
               <span class="share-view">分享</span>
             </div>
           </div>
@@ -294,14 +295,14 @@ export default {
       border-radius: 3px;
       margin-top: 15px;
       > img {
-        margin: 20px;
+        margin: 20px 10px;
         width: 24px;
         height: 24px;
       }
       .info-title {
         position: absolute;
         top: 15px;
-        left: 55px;
+        left: 40px;
         font-size: 16px;
         font-weight: 400;
         color: #87665a;
@@ -310,7 +311,7 @@ export default {
       .info-desc {
         position: absolute;
         top: 35px;
-        left: 55px;
+        left: 40px;
         font-size: 12px;
         font-weight: 400;
         color: #999999;

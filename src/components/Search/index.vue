@@ -17,7 +17,7 @@ export default {
     conf: {
       type: Object,
       default: function() {
-        return { siteText: '北京市', placeholder: '请输入平台名称' }
+        return { siteText: '北京市', placeholder: '请输入楼盘名称' }
       }
     },
     value: String

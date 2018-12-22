@@ -13,7 +13,7 @@
       <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
       <div class="compile-button">
         <p @click="setReport">重置海报</p>
-        <p @click="savaReport">生成海报</p>
+        <p @click="savaReport" :style="{'pointer-events':pointerEvents}">生成海报</p>
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
@@ -43,7 +43,8 @@ export default {
     bannerList: [],
     status: 1,
     changeBgImg: '',
-    showLoading: false
+    showLoading: false,
+    pointerEvents: ''
     // topList:[
     //   {
     //    top:[
@@ -100,6 +101,7 @@ export default {
 
     async savaReport() {
       this.showLoading = true
+      this.pointerEvents = 'none'
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top').children[0], {
@@ -117,6 +119,7 @@ export default {
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
+      this.pointerEvents = ''
     },
 
     setReport() {
