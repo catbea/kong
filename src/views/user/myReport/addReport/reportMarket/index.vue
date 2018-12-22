@@ -1,19 +1,18 @@
 <template>
   <div class="my-preference-page">
-    <div class="my-preference-header">
+    <div class="my-preference-header" v-if="isShowHeader">
       <div class="search-view">
         <search :conf="searchInfo" v-model="projectName" @areaClick="areaClickHandler"></search>
       </div>
       <screen v-model="projectFilters" :local="userArea.myReportCity"></screen>
     </div>
-    <div class="market-box">
+    <div class="market-box" :style="{'margin-top':isShowHeader?'74px':'20px'}">
       <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <meal-market v-for="(item,index) in dataArr" :key="index" :dataArr="item" :indexData="index" :checkData="checkData" @click.native="selectHandle(index)" v-if="haveData"></meal-market>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
-
     <div class="report-confirm" @click="onSureHandler">
       <p>确定</p>
     </div>
@@ -54,7 +53,8 @@ export default {
     loading: false,
     finished: false,
     queryTimer: null,
-    nullIcon: require('IMG/user/bill-null.png')
+    nullIcon: require('IMG/user/bill-null.png'),
+    isShowHeader: false
   }),
   computed: {
     ...mapGetters(['userArea'])
@@ -89,6 +89,11 @@ export default {
         this.finished = true
       }
       this.loading = false
+      if (result.total < 20) {
+        this.isShowHeader = false
+      }else {
+        this.isShowHeader = true
+      }
     },
     selectHandle(index) {
       this.checkData = index
@@ -152,12 +157,10 @@ export default {
 
   .market-box {
     margin: 74px 0 60px 16px;
-
     .notice-view {
       font-size: 12px;
       color: #999999;
       text-align: center;
-      margin-top: 90px;
     }
   }
   .report-confirm {
