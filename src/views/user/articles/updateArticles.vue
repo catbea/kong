@@ -66,7 +66,7 @@ export default {
       loading: false,
       finished: false,
       current: 1,
-      total: 0,
+      total: 0
     }
   },
   created() {
@@ -79,25 +79,22 @@ export default {
       this.isLoading == true
       const res = await userService.getBrowseHistoryList(current)
 
-      if (res == '') {
-        let dataList = res.records
-        this.total = res.total
+      let dataList = res.records
+      this.total = res.total
 
-        if (dataList.length > 0) {
-          for (let i = 0; i < dataList.length; i++) {
-            dataList[i].isCheck = false
-          }
-          this.list = this.list.concat(res.records)
-          if (res.pages === 0 || this.page === res.pages) {
-            this.finished = true
-          }
-          this.current++
-          this.loading = false
-        } else {
-          this.loading = false
+      if (dataList.length > 0) {
+        for (let i = 0; i < dataList.length; i++) {
+          dataList[i].isCheck = false
+        }
+        this.list = this.list.concat(res.records)
+        if (res.pages === 0 || this.page === res.pages) {
           this.finished = true
         }
+        this.current++
+        this.loading = false
       } else {
+        this.loading = false
+        this.finished = true
       }
     },
 
@@ -135,11 +132,16 @@ export default {
 
       if (this.selectArr.length > 0) {
         const res = await userService.deleHistoryArticle(selectStr)
-        this.selectName = '全选'
-        this.checked = false
-        this.list = []
-        this.selectArr = []
-        this.getHistoryList(1)
+
+        if (res == '') {
+          this.selectName = '全选'
+          this.checked = false
+          this.list = []
+          this.selectArr = []
+          this.getHistoryList(1)
+        }else{
+          
+        }
       } else {
         this.$toast('请先选择要删除的文章')
       }
