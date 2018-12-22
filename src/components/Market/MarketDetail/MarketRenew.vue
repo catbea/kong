@@ -1,18 +1,20 @@
 <template>
   <ul class="market-renew-box">
-      <li class="market-renew-box-recommend" @click="recommendHandle(flagTj)">
-      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagTj?recommendA:recommend)+')'}"></span>
-      <p :class="{recommend:true,active:flagTj}" >推荐</p>
+      <li class="market-renew-box-recommend" @click="recommendHandle">
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (renewInfo.masterRecommand!=0 || flagTj?recommendColor:recommend)+')'}"></span>
+      <p :class="{recommend:true,active:renewInfo.masterRecommand!=0 || flagTj}" >推荐</p>
       </li>
-    <li class="market-renew-box-show" @click="showHandle(flagZs)">
-      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZs?showA:show)+')'}"></span>
-      <p :class="{marketShow:true,active:flagZs}">展示</p>
+    <li class="market-renew-box-show" @click="showHandle">
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (renewInfo.displayFlag==1 || flagZs?showColor:show)+')'}"></span>
+      <p :class="{marketShow:true,active:renewInfo.displayFlag==1 || flagZs}">展示</p>
     </li>
-    <li class="market-renew-box-stick" @click="stickHandle(flagZd)">
-      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZd?stickA:stick)+')'}"></span>
-      <p :class="{stickText:true,active:flagZd}">置顶</p>
+    <li class="market-renew-box-stick" @click="stickHandle">
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (renewInfo.isRecommand==10 || flagZd?stickColor:stick)+')'}"></span>
+      <p :class="{stickText:true,active:renewInfo.isRecommand==10 || flagZd}">置顶</p>
     </li>
-    <div class="market-renew-box-button" @click="renewHandle(renewInfo.linkerId)">续费(07/11到期)</div>
+    <div :class="{marketRenewBoxButton:true,color:renewInfo.openStatus==1}" @click="renewHandle(renewInfo.linkerId)">
+      续费<span v-show="renewInfo.openStatus==2">({{renewInfo.expireTime | dateTimeFormatter(2)}}到期)</span><span v-show="renewInfo.openStatus==1">（楼盘已过期）</span>
+      </div>
 </ul>
 </template>
 <script>
@@ -20,23 +22,27 @@ import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   created() {
+    console.log(this.renewInfo,'续费jljl');
     
   },
   data: () => ({
     flagTj: false,
-    recommendA: require('IMG/marketDetail/tj copy 10@2x.png'),
+    recommendColor: require('IMG/marketDetail/tj copy 10@2x.png'),
     recommend: require('IMG/marketDetail/tj@2x.png'),
     flagZs: false,
-    showA: require('IMG/marketDetail/zs copy 11@2x.png'),
+    showColor: require('IMG/marketDetail/zs copy 11@2x.png'),
     show: require('IMG/marketDetail/zs1@2x.png'),
     flagZd: false,
-    stickA: require('IMG/marketDetail/zd copy 12@2x.png'),
+    stickColor: require('IMG/marketDetail/zd copy 12@2x.png'),
     stick: require('IMG/marketDetail/zd2@2x.png')
   }),
   props:{
     renewInfo:{type:Object}
   },
   methods: {
+   async changeMarketData(linkerId, operationType, status){//修改楼盘状态
+    await userService.changeMarketData(linkerId, operationType, status)
+    },
     dialogHandle(n) {
       Dialog.alert({
         message: n,
@@ -49,37 +55,42 @@ export default {
    async changeRecommend(){
       await userService.changeMarketData()
     },
-    recommendHandle(n) {
+    recommendHandle() {
       this.flagTj = !this.flagTj
-      switch (n) {
-        case false:
+      switch (this.flagTj) {
+        case true:
           this.dialogHandle('已推荐该楼盘')
-          
+          this.changeMarketData(this.renewInfo.linkerId,20,2)
           break
-        case true:
+        case false:
           this.dialogHandle('已取消推荐该楼盘')
+          this.changeMarketData(this.renewInfo.linkerId,20,0)
           break
       }
     },
-    showHandle(n) {
+    showHandle() {
       this.flagZs = !this.flagZs
-      switch (n) {
-        case false:
-          this.dialogHandle('已开启该楼盘展示')
-          break
+      switch (this.flagZs) {
         case true:
+          this.dialogHandle('已开启该楼盘展示')
+          this.changeMarketData(this.renewInfo.linkerId,30,0)
+          break
+        case false:
           this.dialogHandle('已关闭该楼盘展示')
+          this.changeMarketData(this.renewInfo.linkerId,30,1)
           break
       }
     },
-    stickHandle(n) {
+    stickHandle() {
       this.flagZd = !this.flagZd
-      switch (n) {
-        case false:
-          this.dialogHandle('置顶成功')
-          break
+      switch (this.flagZd) {
         case true:
+          this.dialogHandle('置顶成功')
+          this.changeMarketData(this.renewInfo.linkerId,40,10)
+          break
+        case false:
           this.dialogHandle('取消置顶成功')
+          this.changeMarketData(this.renewInfo.linkerId,40,0)
           break
       }
     },
@@ -164,7 +175,7 @@ export default {
       height: 16px;
     }
   }
-  .market-renew-box-button {
+  .marketRenewBoxButton{
     width: 156px;
     height: 44px;
     border-radius: 6px;
@@ -175,8 +186,11 @@ export default {
     font-size: 14px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: rgba(0, 122, 230, 1);
+    color:#007AE6;
     margin-left: 7px;
+  }
+  .color{
+    color:#EA4D2E;
   }
 }
 </style>
