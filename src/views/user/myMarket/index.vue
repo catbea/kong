@@ -119,7 +119,6 @@ export default {
        this.setShowName = setTimeout(() => {
          this.page = 1
         this.showGetMyMarketInfo(val, this.showProjectFilters, this.showPage)//根据搜索字请求展示的楼盘数据
-        console.log(this.showProjectName, '输入的搜索条件')
         clearTimeout(this.setShowName)
       }, 500)
     },
@@ -135,7 +134,6 @@ export default {
       this.setNotShowName = setTimeout(() => {
         this.page = 1
         this.notShowGetMyMarketInfo(val, this.notShowProjectFilters, this.notShowPage)//根据搜索字请求不展示的楼盘数据
-        console.log(this.notShowProjectName, '输入的搜索条件')
         clearTimeout(this.setNotShowName)
       }, 500)
     },
@@ -250,7 +248,6 @@ export default {
       this.master()
       this.common()
       this.swipeList = this.masterList.concat(this.commonList)
-      console.log(this.swipeList, '楼盘图片数据')
     },
     master() {
       this.masterList = this.recommendList.filter(item => {
@@ -270,12 +267,8 @@ export default {
       obj.size = this.pageSize
       obj.displayFlag=0
       obj = Object.assign(obj, this.userArea)
-      // let obj = {}
-      // obj.projectName=name
-      // obj.displayFlag=0
       const resShow = await userService.getMyMarket(obj)
       this.showMarketList = resShow.records
-      console.log(this.showMarketList,'展示的楼盘');
       this.searchShowNum = resShow.records.length//展示的楼盘个数
       if(this.searchShowNum>20){
         this.showMarketList=this.showMarketList.concat(resShow.records)
@@ -324,7 +317,6 @@ export default {
     },
     closeCut(n) {
       this.notShowMarketList.push(n)
-      console.log(this.notShowMarketList,'不展示的楼盘');
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element = this.showMarketList[index];
         if(n.linkerId==element.linkerId){
