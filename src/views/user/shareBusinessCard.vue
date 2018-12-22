@@ -4,29 +4,29 @@
       <div id="show-container">
         <div class="card-img"></div>
         <!-- userInfo.avatarUrl -->
-        <img class="avatar-img" :src="userInfo.avatarUrl" alt="">
+        <img class="avatar-img" :src="shareInfo.avatarUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <img class="logo-img" :src="logoImg">
         <div class="user-base-info">
-          <p class="user-name">{{userInfo.name}}</p>
-          <p class="user-nickname">{{userInfo.nickname}}</p>
+          <p class="user-name">{{shareInfo.name}}</p>
+          <p class="user-nickname">{{shareInfo.nickname}}</p>
         </div>
         <div class="user-more-info">
-          <p class="user-signature">- {{userInfo.signature}}</p>
-          <p class="user-phone">Tel: {{userInfo.phone}}</p>
-          <p class="user-company">Col: {{userInfo.company}}</p>
-          <p class="user-address">Add: {{userInfo.address}}</p>
+          <p class="user-signature">- {{shareInfo.signature}}</p>
+          <p class="user-phone">Tel: {{shareInfo.phone}}</p>
+          <p class="user-company">Col: {{shareInfo.company}}</p>
+          <p class="user-address">Add: {{shareInfo.address}}</p>
         </div>
         <div class="scan-me">
           <div class="qrcode-container">
-            <img class="qrcode-view" :src="userInfo.qrcode">
+            <img class="qrcode-view" :src="shareInfo.qrcode">
           </div>
           <p>长按识别更多</p>
         </div>
       </div>
       <div class="edit-container">
         <!-- <div @click="changeBgHandler">修改背景</div> -->
-        <div class="mark-sure" @click="buildCardHandler">确认</div>
+        <div class="mark-sure" @click="buildCardHandler" :style="{'pointer-events':pointerEvents}">确认</div>
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
@@ -36,44 +36,29 @@
 <script>
 import random from 'lodash/random'
 import h2c from 'html2canvas'
+import { mapGetters } from 'vuex'
 import userService from '@/services/userService'
 export default {
   data: () => ({
     currentImgIndex: 0,
     coverBg: require('IMG/dev/page1/cover@2x.png'),
     logoImg: require('IMG/dev/page1/logo@2x.png'),
-    userInfo: {},
+    shareInfo: {},
     status: 1,
-    showLoading: false
-    // aa:'https://720ljq2test-10037467.file.myqcloud.com/1545358890837JRpeaKawJQcMFy6H.png'
-    // IMG_LIST: [
-    //   'http://phga1f2sd.bkt.clouddn.com/0000.jpg',
-    //   'http://phga1f2sd.bkt.clouddn.com/0001.jpg',
-    //   'http://phga1f2sd.bkt.clouddn.com/0002.jpg',
-    //   'http://phga1f2sd.bkt.clouddn.com/0003.jpg',
-    //   'http://phga1f2sd.bkt.clouddn.com/0004.jpg',
-    //   'http://phga1f2sd.bkt.clouddn.com/0005.jpg',
-    //   'http://phga1f2sd.bkt.clouddn.com/0006.jpg',
-    //   'http://phga1f2sd.bkt.clouddn.com/0008.jpg'
-    // ]
+    showLoading: false,
+    pointerEvents:''
   }),
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
   created() {
-    this.getCardInfo()
-    // this.userInfo = {
-    //   name: '张佳玮',
-    //   nickname: 'JIaWei Zhang',
-    //   signature: '别问我是谁,请叫我大师啊.别问我是谁,我是大师呀',
-    //   phone: '180-9899-9257',
-    //   company: '中原地产股份有限公司',
-    //   address: '深圳南山区创业路门店',
-    //   qrcode: 'http://phga1f2sd.bkt.clouddn.com/0008.jpg'
-    // }
+    this.getCardInfo(this.userInfo.id)
   },
   methods: {
-    async getCardInfo() {
-      const result = await userService.getQrCode()
+    async getCardInfo(agentId) {
+      const result = await userService.getQrCode(agentId)
       if (result) {
-        this.userInfo = {
+        this.shareInfo = {
           qrcode: result.miniQrCode,
           phone: result.mobile,
           signature: result.signature,
@@ -98,6 +83,7 @@ export default {
     },
     async buildCardHandler() {
       this.showLoading = true
+      this.pointerEvents='none'
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#show-container'), {
@@ -108,12 +94,8 @@ export default {
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
+      this.pointerEvents=''
     }
-  },
-  computed: {
-    // backImg() {
-    //   return this.IMG_LIST[this.currentImgIndex]
-    // }
   }
 }
 </script>
