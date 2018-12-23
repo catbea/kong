@@ -116,7 +116,6 @@ export default {
           times.push(Number(item.subscribedTime))
           times.push(Number(item.waitingConfirmTime))
           times = this.selectionSort(times)
-          console.log(item.fillingTime)
           item.fillingTime = timeUtils.fmtDate(item.fillingTime)
           item.latestTime = timeUtils.fmtDate(times[times.length-1])
         }
