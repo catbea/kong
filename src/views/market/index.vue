@@ -4,7 +4,6 @@
       <div class="search-comp">
         <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
       </div>
-      <!-- <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link> -->
     </div>
     <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>

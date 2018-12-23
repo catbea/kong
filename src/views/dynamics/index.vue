@@ -10,7 +10,6 @@
     <div class="list-container" v-if="hotEstateListData&&hotEstateListData.length>0">
       <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @open="openHandler"/>
     </div>
-
   </div>
 </template>
 
@@ -21,7 +20,9 @@ import MyEstateList from 'COMP/Dynamics/MyEstateList'
 import HotEstateList from 'COMP/Dynamics/HotEstateList'
 import CommonService from 'SERVICE/commonService'
 import dynamicsService from 'SERVICE/dynamicsService'
+import isEmpty from 'lodash/isEmpty'
 import { Dialog } from 'vant'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     DynamicsCollect,
@@ -48,14 +49,14 @@ export default {
     }, 30000)
   },
   methods: {
-    shiftHandle(){
+    shiftHandle() {
       Dialog.alert({
         title: '您被移出原有分销平台',
         message: '请重新添加主营区域分销商及所属机构',
-        className:'shiftOut'
+        className: 'shiftOut'
       }).then(() => {
         this.$router.push({ name: 'user-edit' })
-      });
+      })
     },
     //动态详情
     async goMessageInfo(num) {
@@ -148,11 +149,25 @@ export default {
       }
     },
     shareHandler(info) {
-      this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
+      if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
+        Dialog.confirm({
+          title: '您有未完善的信息',
+          message: '信息不完整会影响传播效率哦',
+          confirmButtonText: '去完善',
+          className: 'marketShareHint'
+        }).then(() => {
+          this.$router.push({ name: 'user-edit' })
+        })
+      } else {
+        this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
+      }
     },
     openHandler(info) {
       this.$router.push({ name: 'marketDetail-open', params: { id: info.linkerId } })
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   beforeDestroy() {
     clearInterval(this.timer)
