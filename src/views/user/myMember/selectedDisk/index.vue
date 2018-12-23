@@ -209,6 +209,8 @@ export default {
       }).then(() => {
         this.$router.replace({path: "/user/myMarket"})
       }).catch(() => {
+        this.page = 1
+        this.projectList = []
         this.getLinkerList()
       })
     },

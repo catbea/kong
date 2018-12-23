@@ -82,15 +82,16 @@ function onMsgNotify(newMsgList) {
         console.log("上报消息已读结果:",msg);
       }
     }else {// 不在聊天页面，弹出消息
-      // console.log(elems.content)
-      // console.log(newMsg.getSession().id())
       let content = elems.content
-      content.clientId = newMsg.getSession().id()
-      store.commit(types['NEW_MSG_CONTENT'], content)
-      store.commit(types['NEW_MSG_STATUS'], true)
-      setTimeout(() => {
-        store.commit(types['NEW_MSG_STATUS'], false)
-      }, 6000);
+      console.log(content, 'content')
+      if(content.desc == 1 || content.desc == 2 || content.desc == 3) {
+        content.clientId = newMsg.getSession().id()
+        store.commit(types['NEW_MSG_CONTENT'], content)
+        store.commit(types['NEW_MSG_STATUS'], true)
+        setTimeout(() => {
+          store.commit(types['NEW_MSG_STATUS'], false)
+        }, 6000);
+      }
     }
   }
 }
