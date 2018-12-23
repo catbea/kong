@@ -1,16 +1,16 @@
 <template>
   <ul class="market-renew-box">
       <li class="market-renew-box-recommend" @click="recommendHandle">
-      <span class="bg_img" :style="{'backgroundImage':'url('+ (renewInfo.masterRecommand!=0 || flagTj?recommendColor:recommend)+')'}"></span>
-      <p :class="{recommend:true,active:renewInfo.masterRecommand!=0 || flagTj}" >推荐</p>
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagTj?recommendColor:recommend)+')'}"></span>
+      <p :class="{recommend:true,active:flagTj}" >推荐</p>
       </li>
     <li class="market-renew-box-show" @click="showHandle">
-      <span class="bg_img" :style="{'backgroundImage':'url('+ (renewInfo.displayFlag==1 || flagZs?showColor:show)+')'}"></span>
-      <p :class="{marketShow:true,active:renewInfo.displayFlag==1 || flagZs}">展示</p>
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZs?showColor:show)+')'}"></span>
+      <p :class="{marketShow:true,active:flagZs}">展示</p>
     </li>
     <li class="market-renew-box-stick" @click="stickHandle">
-      <span class="bg_img" :style="{'backgroundImage':'url('+ (renewInfo.isRecommand==10 || flagZd?stickColor:stick)+')'}"></span>
-      <p :class="{stickText:true,active:renewInfo.isRecommand==10 || flagZd}">置顶</p>
+      <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZd?stickColor:stick)+')'}"></span>
+      <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
     <div :class="{marketRenewBoxButton:true,color:renewInfo.openStatus==1}" @click="renewHandle(renewInfo.linkerId)">
       续费<span v-show="renewInfo.openStatus==2">({{renewInfo.expireTime | dateTimeFormatter(2)}}到期)</span><span v-show="renewInfo.openStatus==1">（楼盘已过期）</span>
@@ -23,26 +23,85 @@ import userService from 'SERVICE/userService'
 export default {
   created() {
     console.log(this.renewInfo,'续费jljl');
-    
+    this.flagTjHandle()
+    this.flagZsHandle()
+    this.flagZdHandle()
+    console.log(this.flagTj,this.flagZs,this.flagZd);
   },
   data: () => ({
-    flagTj: false,
     recommendColor: require('IMG/marketDetail/tj copy 10@2x.png'),
     recommend: require('IMG/marketDetail/tj@2x.png'),
-    flagZs: false,
     showColor: require('IMG/marketDetail/zs copy 11@2x.png'),
     show: require('IMG/marketDetail/zs1@2x.png'),
-    flagZd: false,
     stickColor: require('IMG/marketDetail/zd copy 12@2x.png'),
-    stick: require('IMG/marketDetail/zd2@2x.png')
+    stick: require('IMG/marketDetail/zd2@2x.png'),
+    flagTj:false,
+    flagZs:false,
+    flagZd:false
   }),
   props:{
     renewInfo:{type:Object}
   },
-  computed: {
-    
-  },
+  // computed: {
+  //   flagTj:{
+  //     get:function() {
+  //       if (this.renewInfo.masterRecommand==0) {
+  //       return false
+  //     }else{
+  //       return true
+  //     }
+  //     },
+  //     set:function (newValue) {
+        
+  //     } 
+  //   },
+  //   flagZs:{
+  //     get:function() {
+  //       if (this.renewInfo.displayFlag==1) {
+  //       return false
+  //     }else{
+  //       return true
+  //     }
+  //     },
+  //     set:function (newValue) {
+        
+  //     } 
+  //   },
+  //   flagZd:{
+  //     get:function() {
+  //       if (this.renewInfo.isRecommand==0) {
+  //       return false
+  //     }else{
+  //       return true
+  //     }
+  //     },
+  //     set:function (newValue) {
+        
+  //     } 
+  //   }
+  // },
   methods: {
+    flagTjHandle(){
+      if (this.renewInfo.masterRecommand==0) {
+        this.flagTj= false
+      }else{
+        this.flagTj= true
+      }
+    },
+    flagZsHandle(){
+      if (this.renewInfo.displayFlag==1) {
+        this.flagZs= false
+      }else{
+        this.flagZs= true
+      }
+    },
+    flagZdHandle(){
+      if (this.renewInfo.isRecommand==0) {
+        this.flagZd= false
+      }else{
+        this.flagZd= true
+      }
+    },
    async changeHandle(linkerId, operationType, status){//修改楼盘状态
     await userService.changeMarketData(linkerId, operationType, status)
     },
@@ -56,7 +115,7 @@ export default {
       })
     },
     recommendHandle() {
-      this.flagTj = !this.flagTj
+      this.flagTj =!this.flagTj
       switch (this.flagTj) {
         case true:
           this.dialogHandle('已推荐该楼盘')
