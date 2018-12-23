@@ -174,6 +174,7 @@ import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import { Dialog } from 'vant'
+import isEmpty from 'lodash/isEmpty'
 export default {
   components: {
     HintTire,
@@ -287,8 +288,7 @@ export default {
       console.log(this.status, '收藏状态')
     },
     shareHandler() {
-      debugger
-      if (this.userInfo.name === '' || this.userInfo.distributorName === '' || (this.userInfo.majorCity === '' && this.userInfo.institutionName === '')) {
+       if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
         Dialog.confirm({
           title: '您有未完善的信息',
           message: '信息不完整会影响传播效率哦',
