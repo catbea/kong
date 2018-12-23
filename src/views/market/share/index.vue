@@ -84,14 +84,8 @@ export default {
       // canvas.style.width = '100%'
       // canvas.style.height = '100%'
 
-      // var ctx = canvas.getContext("2d");
-      // var imgData = ctx.getImageData(10,10,50,50);
-      // console.log(imgData)
-      // document.getElementById('imgcard').src(imgData)
-
-      var image = document.getElementById('imgcard');
+      let image = document.getElementById('imgcard');
       image.src = canvas.toDataURL("image/png");
-
       // document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
     }
