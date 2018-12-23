@@ -39,10 +39,11 @@ import ShadowBox from 'COMP/ShadowBox'
 import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import Properties from 'COMP/Dynamics/Properties'
 import DynamicsArticle from 'COMP/Dynamics/DynamicsArticle'
-
 import DynamicsCard from 'COMP/Dynamics/DynamicsCard'
 import Tips from 'COMP/Dynamics/Tips'
 import dynamicsService from 'SERVICE/dynamicsService'
+import * as types from '@/store/mutation-types'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     DynamicsData,
@@ -53,7 +54,14 @@ export default {
     DynamicsCard,
     Tips
   },
-
+  computed: {
+    ...mapGetters(['currDataDynamicsTab'])
+  },
+  watch: {
+    active(v){
+      this.$store.commit(types.CURR_DATA_DYNAMICS_TAB, v)
+    }
+  },
   data() {
     return {
       all: {
@@ -64,7 +72,7 @@ export default {
       },
 
       item: [],
-      active: 0,
+      active: this.currDataDynamicsTab,
       tabs: [
         { index: 0, type: '', typeName: '全部', page: 0, finished: false, list: [] },
         { index: 1, type: '', typeName: '名片', page: 0, finished: false, list: [] },
@@ -90,8 +98,10 @@ export default {
     }
   },
   created() {
+    this.active = this.currDataDynamicsTab
     this.updateDynamicsCollect()
-    this.getAllDynamicCount()
+    // this.getAllDynamicCount()
+    this.goList(this.active)
   },
   methods: {
     goList(index, title) {

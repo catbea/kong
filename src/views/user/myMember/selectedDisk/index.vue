@@ -69,6 +69,7 @@ export default {
       console.log(this.userInfo.vipInfo, 'this.userInfo.vipInfo')
       this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
     } else {
+      console.log(this.userInfo.majorCity, 'this.userArea.selectedCity')
       this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city 
     }
   },
