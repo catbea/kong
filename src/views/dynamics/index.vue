@@ -110,26 +110,26 @@ export default {
 
       for (let i = 0; i < this.estateListData.length; i++) {
         if (this.estateListData[i].linkerTags.length >= 3) {
-          this.estateListData[i].linkerTags.pop()
+          if(this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.pop()
 
           if (this.estateListData[i].saleStatus === 0) {
-            this.estateListData[i].linkerTags.unshift('热销中')
+            if(this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
           }
           if (this.estateListData[i].saleStatus === 1) {
-            this.estateListData[i].linkerTags.unshift('即将发售')
+            if(this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
           }
           if (this.estateListData[i].saleStatus === 3) {
-            this.estateListData[i].linkerTags.unshift('售罄')
+            if(this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
           }
         } else {
           if (this.estateListData[i].saleStatus === 0) {
-            this.estateListData[i].linkerTags.unshift('热销中')
+            if(this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
           }
           if (this.estateListData[i].saleStatus === 1) {
-            this.estateListData[i].linkerTags.unshift('即将发售')
+            if(this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
           }
           if (this.estateListData[i].saleStatus === 3) {
-            this.estateListData[i].linkerTags.unshift('售罄')
+            if(this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
           }
         }
       }
