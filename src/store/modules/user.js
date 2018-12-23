@@ -9,7 +9,6 @@ const state = {
     vipInfo: {
       city: '广州市'
     },
-    majorCity: '南京市',
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
@@ -46,7 +45,7 @@ const state = {
     loginCount: 1,
     loginTime: '2018-11-10 02:28:16',
     logoUrl: '',
-    majorCity: '',    // 主营区域
+    majorCity: '南京市',    // 主营区域
     majorRegion: '111111',
     masterRecommendTip: '',
     minOpenid: '',
@@ -75,7 +74,7 @@ const state = {
     switchTime: '',
     tempPhone: '18676652795',
     token:
-    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI5ZW8yMHciLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ4NTUzMTYzLCJpYXQiOjE1NDU1NDgzNjN9.hZ8bkPccTV7gegTQYBVTtpZtSwdqx2i_Qg4hr27GpYE1HEl492uTFKGgu4Ecj9gomI3zMSwyycuuDsi0X5Vmvg',
+    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJrYnlvN2giLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDgxNDA5NTYsImlhdCI6MTU0NTEzNjE1Nn0.C9AdO_CIUA6Da3ZpdCTWKL9zYjSiEz8xd7MmWc2Z5C0Fgnyfox7S3qD9I7pXRZQQLzDLTSmo515sDnLduwPCkw',
     updateTime: '2018-10-19 17:37:47',
     viewNum: 101,
     wechatAccount: '112110',
@@ -104,7 +103,7 @@ const state = {
     latitude: '', // 纬度
     province: '', // 省
     city: '深圳市', // 市
-    selectedCity: '深圳市',
+    selectedCity: null,
     marketSelectedCity: null, //楼盘列表城市选择
     vipSelectedCity: null,
     myMarketSelectedCity: null, //我的楼盘城市选择
