@@ -29,7 +29,9 @@
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
-    <div class="result" id="card-result" v-show="status === 2"></div>
+    <div class="result" id="card-result" v-show="status === 2">
+      <img id="imgcard"  />
+    </div>
   </div>
 </template>
 <script>
@@ -49,7 +51,8 @@ export default {
     buildingInfo: {},
     status: 1,
     showLoading: false,
-    pointerEvents: ''
+    pointerEvents: '',
+    lastOpTimer: 0
   }),
   created() {
     this.id = this.$route.params.id
@@ -62,7 +65,14 @@ export default {
         this.buildingInfo = result
       }
     },
-    async savaReport() {
+    savaReport() {
+      let dd = new Date().getTime()
+      if (dd - this.lastOpTimer < 3000) return
+      this.lastOpTimer = dd
+      this.handleDate()
+    },
+
+    async handleDate() {
       this.showLoading = true
       this.pointerEvents = 'none'
       this.status = 2
@@ -71,10 +81,12 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '101%'
-      canvas.style.height = '100%'
+      // canvas.style.width = '100%'
+      // canvas.style.height = '100%'
 
-      document.getElementById('card-result').appendChild(canvas)
+      let image = document.getElementById('imgcard');
+      image.src = canvas.toDataURL("image/png");
+      // document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
     }
   },

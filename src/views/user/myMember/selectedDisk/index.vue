@@ -57,7 +57,8 @@ export default {
         // console.log(val)
         this.finished = false
         this.page = 1
-        this.getLinkerList()
+        this.projectList = []
+        // this.getLinkerList()
       },
       deep: true
     }
@@ -108,6 +109,7 @@ export default {
       this.finished = false
       this.page = 1
       this.projectName = name
+      this.projectList = []
       this.getLinkerList()
     },
 
@@ -206,6 +208,7 @@ export default {
       }).then(() => {
         this.$router.replace({path: "/user/myMarket"})
       }).catch(() => {
+        this.getLinkerList()
       })
     },
 

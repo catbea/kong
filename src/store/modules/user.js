@@ -13,7 +13,7 @@ const state = {
     address: '',
     agentMinOpenid: '',
     agentUpdateId: '',
-    agentid: '',
+    agentId: '705',
     attentAccount: '',
     avatarUrl: 'http://720ljq2test-10037467.cossh.myqcloud.com/ljqzs/shareImg/Time91438ec3-33e2-4024-9ab9-50393f28370e.png',
     avatarUrlTwo: 'http://720ljq2test-10037467.cossh.myqcloud.com/1536198363904JeBNbFsYAKSbAJYm.png',
@@ -75,7 +75,7 @@ const state = {
     switchTime: '',
     tempPhone: '18676652795',
     token:
-    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJrYnlvN2giLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDgxNDA5NTYsImlhdCI6MTU0NTEzNjE1Nn0.C9AdO_CIUA6Da3ZpdCTWKL9zYjSiEz8xd7MmWc2Z5C0Fgnyfox7S3qD9I7pXRZQQLzDLTSmo515sDnLduwPCkw',
+    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI5ZW8yMHciLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ4NTUzMTYzLCJpYXQiOjE1NDU1NDgzNjN9.hZ8bkPccTV7gegTQYBVTtpZtSwdqx2i_Qg4hr27GpYE1HEl492uTFKGgu4Ecj9gomI3zMSwyycuuDsi0X5Vmvg',
     updateTime: '2018-10-19 17:37:47',
     viewNum: 101,
     wechatAccount: '112110',
