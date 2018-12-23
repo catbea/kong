@@ -124,7 +124,6 @@ const state = {
     id: '',
     name: ''
   },
-
   userRegistInfo: {
     registerMobile: '', // 注册手机号
     registerCode: '', // 注册验证码
@@ -136,11 +135,12 @@ const state = {
     institutionId: '190', // 机构ID
     institutionName: 'AW大师'
   },
-
   //点击选中的楼盘id
   buildId: '',
-
-  imUserSig: null
+  imUserSig: null,
+  guidance:{
+    dynamics: false
+  }
 }
 
 const getters = {
@@ -153,6 +153,7 @@ const getters = {
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
   imUserSig: state => state.imUserSig,
+  userGuidance: state => state.guidance
 }
 
 const actions = {
@@ -218,7 +219,10 @@ const mutations = {
     state.buildId = data
   },
   [types.IS_ONE](state, data) {
-    state.isOne = data
+    state.userInfo.isOne = data
+  },
+  [types.GUIDANCE](state, data){
+    state.guidance = Object.assign(state.guidance, data)
   }
 }
 
