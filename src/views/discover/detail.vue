@@ -18,7 +18,7 @@
       <!-- <div
         class="bg_img van-hairline--surround discover-img"
         :style="{backgroundImage:'url('+ (info&&info.image) +')'}"
-      ></div> -->
+      ></div>-->
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -29,10 +29,7 @@
       <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
     </div>
     <!-- 推荐房源 -->
-    <div
-      class="recommend-houses"
-      v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0"
-    >
+    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
       <div class="recommend-houses-content">
         <!-- swiper -->
@@ -48,14 +45,7 @@
         </swiper>
       </div>
     </div>
-    <van-popup
-      class="popup-view"
-      v-model="openPopup"
-      :overlay="true"
-      :lock-scroll="true"
-      :close-on-click-overlay="true"
-      :click-overlay="overlayClose"
-    >
+    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
       </div>
@@ -91,7 +81,7 @@
       </div>
       <!-- <div class="share-btn" @click="shareHandler">
         <i class="icon iconfont icon-Building_list_share"></i>分享
-      </div> -->
+      </div>-->
     </div>
     <!-- 小程序名片 -->
     <div class="app-card"></div>
@@ -155,7 +145,6 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
     this.getQrCode(this.agentId)
-    
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -174,7 +163,7 @@ export default {
         avatarUrl: this.info.avatarUrl,
         distributorName: this.info.distributorName,
         enterpriseName: this.info.enterpriseName,
-        institutionName:this.info.institutionName
+        institutionName: this.info.institutionName
       }
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + this.city
@@ -227,26 +216,28 @@ export default {
     // 分享成功之后
     async articleShare() {
       let params = {
-          deleteType: 0,
-          infoId: this.infoId
-        }
+        deleteType: 0,
+        infoId: this.infoId
+      }
       const result = await discoverService.articleShare(params)
     },
     // 分享
     shareHandler() {
       console.log(this.shareData)
-      wechatApi.wechatShare(this.shareData).then(res => {
-        this.articleShare()
-      }).catch(e => {
-      })
-    },
+      wechatApi
+        .wechatShare(this.shareData)
+        .then(res => {
+          this.articleShare()
+        })
+        .catch(e => {})
+    }
   },
   mounted() {
     this.shareHandler()
   },
-  watch:{
+  watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
-    '$route'(){
+    $route() {
       this.$router.go(0)
     }
   }
