@@ -10,6 +10,7 @@
     <div class="list-container" v-if="hotEstateListData&&hotEstateListData.length>0">
       <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @open="openHandler"/>
     </div>
+
   </div>
 </template>
 
@@ -36,6 +37,7 @@ export default {
     timer: null
   }),
   created() {
+    // this.shiftHandle()//提示被移出分销商弹窗
     // let timeStamp = window.localStorage.getItem('timeStamp') || ''
     // this.queryVersion('2', timeStamp)
     this.getCollectInfo()
@@ -46,6 +48,15 @@ export default {
     }, 30000)
   },
   methods: {
+    shiftHandle(){
+      Dialog.alert({
+        title: '您被移出原有分销平台',
+        message: '请重新添加主营区域分销商及所属机构',
+        className:'shiftOut'
+      }).then(() => {
+        this.$router.push({ name: 'user-edit' })
+      });
+    },
     //动态详情
     async goMessageInfo(num) {
       console.log('num.customerCount.val', num.customerCount)
