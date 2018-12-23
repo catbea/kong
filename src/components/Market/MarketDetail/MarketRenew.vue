@@ -13,7 +13,7 @@
       <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
     <div :class="{marketRenewBoxButton:true,color:renewInfo.openStatus==1}" @click="renewHandle(renewInfo.linkerId)">
-      续费<span v-show="renewInfo.openStatus==2">({{renewInfo.expireTime | dateTimeFormatter(2)}}到期)</span><span v-show="renewInfo.openStatus==1">（楼盘已过期）</span>
+      续费<span v-show="renewInfo.openStatus==2">({{renewInfo.expireTime}}到期)</span><span v-show="renewInfo.openStatus==1">（楼盘已过期）</span>
       </div>
 </ul>
 </template>
