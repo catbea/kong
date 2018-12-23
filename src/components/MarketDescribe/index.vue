@@ -15,7 +15,7 @@
             <li class="market-name">
               <div class='box'>
                 <span class="title">{{itemInfo.linkerName}}</span>
-                <!-- <span class="past" v-if="itemInfo.openStatus==20">已过期</span> -->
+                <span class="past" v-if="detailOpenStatus==1">已过期</span>
               </div>
               <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
@@ -38,6 +38,7 @@
 <script>
 import TagGroup from 'COMP/TagGroup/'
 import conf from './conf'
+import marketService from 'SERVICE/marketService'
 export default {
   components: {
     TagGroup
@@ -46,9 +47,11 @@ export default {
     this.dredgeColor()
     if(this.tags) this.tags.unshift(this.saleStatus)
     console.log(this.itemInfo,'该列表的楼盘数据');
+    this.getDetailInfo(this.itemInfo.linkerId)
   },
   data() {
     return {
+      detailOpenStatus:null,//0未开通1已开通已过期2已开通未过期 
       tags: this.itemInfo.linkerTags,
       resInfo: null,
       style: null,
@@ -90,6 +93,10 @@ export default {
     }
   },
   methods: {
+    async getDetailInfo(id) {// 获取该楼盘详情
+      const res = await marketService.getLinkerDetail(id)
+      this.detailOpenStatus=res.openStatus
+    },
     itemClickHandler() {
       this.$emit('skipDetail', this.itemInfo)
     },
