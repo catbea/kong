@@ -124,12 +124,12 @@ export default {
           isCheckedArr.push(item.id)
         }
         console.log(isCheckedArr.join())
-        // const res = await userService.deleHistoryArticle(isCheckedArr.join())
-        // this.selectName = '全选'
-        // this.checked = false
-        // this.list = []
-        // this.selectArr = []
-        // this.getHistoryList(1)
+        const res = await userService.deleHistoryArticle(isCheckedArr.join())
+        this.selectName = '全选'
+        this.checked = false
+        this.list = []
+        this.selectArr = []
+        this.getHistoryList(1)
       } else {
         this.$toast('请先选择要删除的文章')
       }
