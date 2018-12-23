@@ -8,7 +8,11 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toUpperCase()
+  if(url == '/undefined') {
+    return
+  }
   url = process.env.VUE_APP_BASE_API_URL + url
+  
   headers = Object.assign(
     { 'Content-Type': 'application/json; charset=UTF-8' },
     { Authorization: store.getters.userInfo.token },
