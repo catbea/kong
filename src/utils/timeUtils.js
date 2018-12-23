@@ -1,7 +1,10 @@
 export default class timeUtils {
   static fmtDate(obj) {
+    if(isNaN(Number(obj))) {
+      return obj
+    }
     var date = new Date()
-    date.setTime(obj)
+    date.setTime(Number(obj))
     var y = date.getFullYear()
     var m = date.getMonth() + 1
     m = m < 10 ? '0' + m : m

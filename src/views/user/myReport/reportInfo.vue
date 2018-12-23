@@ -20,7 +20,7 @@
           </p>
           <p class="container-list">
             报备时间
-            <span class="container-list-title">{{reportInfo.fillingTime}}</span>
+            <span class="container-list-title">{{reportInfo.fillingTime | dateTimeFormatter}}</span>
           </p>
         </div>
       </div>
@@ -29,7 +29,7 @@
         <div class="report-btn-left-x"></div>
         <div class="report-btn-right">
           <p class="btn-right-title">{{transferInfo[item.transferSts]}}</p>
-          <p class="btn-right-time">{{item.createTime}}</p>
+          <p class="btn-right-time">{{item.createTime | dateTimeFormatter}}</p>
         </div>
       </div>
     </div>
