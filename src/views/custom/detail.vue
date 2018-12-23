@@ -42,7 +42,7 @@
         </van-tab>
         <van-tab title="足迹">
           <!-- :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData" :finished="currentData.finished"-->
-          <van-list v-model="loading"  @load="onLoad">
+          <van-list v-model="loading" :finished="finished" @load="onLoad">
               <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
            </van-list>
         </van-tab>
