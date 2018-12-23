@@ -1,15 +1,15 @@
 <template>
   <div class="user-mymarket-page">
-    <div style="margin-left:16px">
+    <div style>
       <master-market :swipeList="swipeList"  @noRecommend="noRecommendHandle"></master-market>
     </div>
-    <div style="margin-left:16px">
+    <div style>
       <title-bar :conf="titleInfo" @return="returnHandle"></title-bar>
     </div>
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div style="margin-left:16px" v-show="showMarketListCount>=showFilterLimit">
+        <div v-show="showMarketListCount>=showFilterLimit">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters" :local="this.selectedCity"></screen>
         </div>
@@ -20,7 +20,7 @@
       <p v-show="isNoData" class="notMarket">暂未开通任何楼盘</p>
       <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
-        <div style="margin-left:16px" v-show="notShowMarketListCount>=showFilterLimit">
+        <div v-show="notShowMarketListCount>=showFilterLimit">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
@@ -402,6 +402,8 @@ export default {
   }
   .title-bar,
   .search-container {
+    justify-content: space-between;
+    margin-left: 16px;
     width: 343px;
   }
 

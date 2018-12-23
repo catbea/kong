@@ -116,14 +116,13 @@ export default {
 
     //删除操作
     async toDeleArticle() {
-      console.log(this.selectArr)
-
+      // console.log(this.selectArr)
       if (this.selectArr.length > 0) {
         let isCheckedArr = []
         for(let item of this.selectArr){
           isCheckedArr.push(item.id)
         }
-        console.log(isCheckedArr.join())
+        console.log(isCheckedArr.join(), '[delete ids]')
         const res = await userService.deleHistoryArticle(isCheckedArr.join())
         this.selectName = '全选'
         this.checked = false
@@ -169,29 +168,6 @@ export default {
           item.isCheck = false
         }
       }
-
-      // if (this.selectAll) {
-      //   this.selectArr = []
-      //   this.selectArr = this.list
-      //   for (let i = 0; i < tempList.length; i++) {
-      //     // this.selectArr.push(tempList)
-      //     tempList[i].isCheck = true
-      //     this.result.push(tempList[i].id)
-      //     this.selectName = '取消全选'
-      //     this.checked = true
-      //   }
-      // } else {
-      //   this.selectArr = []
-      //   for (let i = 0; i < tempList.length; i++) {
-      //     tempList[i].isCheck = false
-      //     this.result = []
-      //     this.selectName = '全选'
-      //     this.list = []
-      //     this.checked = false
-      //   }
-      //   this.list = tempList
-      //   this.selectStr = ''
-      // }
     },
 
     //删除文章
