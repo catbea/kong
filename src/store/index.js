@@ -4,7 +4,7 @@ import system from './modules/system'
 import user from './modules/user'
 import city from './modules/city'
 import matket from './modules/market'
-
+import dynamics from './modules/dynamics'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,7 +14,8 @@ export default new Vuex.Store({
     system,
     user,
     city,
-    matket
+    matket,
+    dynamics
   },
   strict: true
 })
