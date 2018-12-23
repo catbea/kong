@@ -101,8 +101,8 @@ export default {
  async created() {
     this.selectedCity = this.userArea.myMarketSelectedCity
     this.searchInfo.siteText = this.selectedCity ? this.selectedCity:  '全国'
-    await this.showGetMyMarketInfo()//请求展示楼盘
-    await this.notShowGetMyMarketInfo()//请求不展示楼盘
+    // await this.showGetMyMarketInfo()//请求展示楼盘
+    // await this.notShowGetMyMarketInfo()//请求不展示楼盘
     await this.getRecommendInfo()//请求轮播图数据
     await this.marketShowHandle()//展示/不展示都没数据时
     this.getShowProjectCount();
