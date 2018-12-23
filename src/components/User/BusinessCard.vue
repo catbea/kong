@@ -69,7 +69,7 @@
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
-        <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
+        <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
       </router-link>
       <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
         <img :src="discountIcon">
@@ -312,7 +312,7 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: #999999;
-        line-height: 1.5;
+        line-height: 22px;
       }
     }
     > .status-info-left {

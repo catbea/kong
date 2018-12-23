@@ -7,13 +7,13 @@
       </div>
       <!-- <discover-list></discover-list> -->
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
-        <checkbox-group v-model="result">
+        <!-- <checkbox-group v-model="result"> -->
           <!-- v-for="(item, index) in list" :key="index" :name="item" -->
-          <checkbox v-for="(item, index) in list" :key="index" :name="item.id">
+          <checkbox v-model="item.isCheck" v-for="(item, index) in list" :key="index" :name="item.id">
             <div
               class="updateArticles-list"
               :id="item.id"
-              @click="getArticleId(item.isCheck,index)"
+              @click="getArticleId(item)"
             >
               <span class="updateArticles-list-left">
                 <p class="list-left-title">{{item.title}}</p>
@@ -26,7 +26,7 @@
               </span>
             </div>
           </checkbox>
-        </checkbox-group>
+        <!-- </checkbox-group> -->
       </van-list>
       <div class="updateArticles-fixed-btn">
         <div class="fixed-btn-check" @click="toSelectAll">
@@ -99,65 +99,40 @@ export default {
     },
 
     //勾选获取文章id
-    getArticleId(checked, position) {
-      // if (!checked) {
-      //   this.list[position].isCheck == true
-      // } else {
-      //   this.list[position].isCheck == false
-      // }
-      this.list[position].isCheck = !this.list[position].isCheck
-      let selectIdArr = this.selectArr
-      let selectId = this.list[position].id
-      if (this.isExistElement(selectIdArr, selectId)) {
-        let index = selectIdArr.indexOf(selectId)
-        if (index > -1) {
-          selectIdArr.splice(index, 1)
-
-          if (selectIdArr.length == 0) {
-            this.selectArr = []
-            this.checked = false
-            this.selectAll = false
+    getArticleId(artcle) {
+      artcle.isCheck = !artcle.isCheck
+      for(let item of this.selectArr) {
+        if(item.id == artcle.id) {
+          this.selectArr = this.selectArr.filter(obj => {
             this.selectName = '全选'
-          }
+            this.checked = false
+            return obj != item 
+          })
+          return
         }
-      } else {
-        selectIdArr.push(selectId)
       }
-      this.selectArr = selectIdArr
+      this.selectArr.push(artcle)
     },
 
     //删除操作
-    async toDeleArticle(selectStr) {
-      console.log(this.selectArr.length)
+    async toDeleArticle() {
+      console.log(this.selectArr)
 
       if (this.selectArr.length > 0) {
-        const res = await userService.deleHistoryArticle(selectStr)
-
-        if (res == '') {
-          this.selectName = '全选'
-          this.checked = false
-          this.list = []
-          this.selectArr = []
-          this.getHistoryList(1)
-        }else{
-          
+        let isCheckedArr = []
+        for(let item of this.selectArr){
+          isCheckedArr.push(item.id)
         }
+        console.log(isCheckedArr.join())
+        // const res = await userService.deleHistoryArticle(isCheckedArr.join())
+        // this.selectName = '全选'
+        // this.checked = false
+        // this.list = []
+        // this.selectArr = []
+        // this.getHistoryList(1)
       } else {
         this.$toast('请先选择要删除的文章')
       }
-
-      // if (this.selectArr.length > 0) {
-      //   const res = userService.deleHistoryArticle(selectStr)
-      //   this.list = []
-
-      //   this.selectName = '全选'
-      //   this.checked = false
-      //   if (res) {
-      //     this.getHistoryList(1)
-      //   }
-      // } else {
-      //   this.$toast('请先选择要删除的文章')
-      // }
     },
 
     //删除文章
@@ -178,38 +153,50 @@ export default {
       this.selectAll = !this.selectAll
 
       if (this.selectAll) {
+        this.selectArr = this.list
+        this.selectName = '取消全选'
+        this.checked = true
+        for(let item of this.list){
+          item.isCheck = true
+          this.result.push(item.id)
+        }
+      }else {
+        this.selectName = '全选'
+        this.checked = false
         this.selectArr = []
-        for (let i = 0; i < tempList.length; i++) {
-          this.selectArr.push(tempList[i].id)
-          tempList[i].isCheck = true
-          this.result.push(tempList[i].id)
-          this.selectName = '取消全选'
-          this.checked = true
+        this.result = []
+        for(let item of this.list){
+          item.isCheck = false
         }
-      } else {
-        for (let i = 0; i < tempList.length; i++) {
-          tempList[i].isCheck = false
-          this.result = []
-          this.selectArr = []
-          this.selectName = '全选'
-          this.list = []
-          this.checked = false
-        }
-        this.list = tempList
-        this.selectStr = ''
       }
+
+      // if (this.selectAll) {
+      //   this.selectArr = []
+      //   this.selectArr = this.list
+      //   for (let i = 0; i < tempList.length; i++) {
+      //     // this.selectArr.push(tempList)
+      //     tempList[i].isCheck = true
+      //     this.result.push(tempList[i].id)
+      //     this.selectName = '取消全选'
+      //     this.checked = true
+      //   }
+      // } else {
+      //   this.selectArr = []
+      //   for (let i = 0; i < tempList.length; i++) {
+      //     tempList[i].isCheck = false
+      //     this.result = []
+      //     this.selectName = '全选'
+      //     this.list = []
+      //     this.checked = false
+      //   }
+      //   this.list = tempList
+      //   this.selectStr = ''
+      // }
     },
 
     //删除文章
     deleArticles() {
-      let temp = ''
-      let selectArr = this.selectArr
-      console.log(this.selectArr, 'this.selectArr')
-      for (var i = 0; i < selectArr.length; i++) {
-        temp += selectArr[i] + ','
-      }
-      this.selectStr = temp
-      this.toDeleArticle(this.selectStr)
+      this.toDeleArticle()
     },
 
     //加载更多
