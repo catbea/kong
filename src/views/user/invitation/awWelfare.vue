@@ -84,8 +84,8 @@ export default {
   created() {
     this.getregisrules()
   },
-  mounted() {
-    this.getqueryInvitationUrl()
+  async mounted() {
+    await this.getqueryInvitationUrl()
     this.savaReport()
   },
   methods: {
