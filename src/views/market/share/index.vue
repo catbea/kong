@@ -79,7 +79,7 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '101%'
+      canvas.style.width = '100%'
       canvas.style.height = '100%'
 
       document.getElementById('card-result').appendChild(canvas)
