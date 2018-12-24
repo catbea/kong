@@ -309,7 +309,6 @@ export default {
 
     projectClick() {
       this.$router.push('/custom/message/messageProjects')
-      console.log('projectClick =======')
     },
 
     getTime() {
@@ -698,10 +697,22 @@ export default {
 </script>
 <style lang="less" scoped>
 .massage-info-body {
-  width: 100%;
-  font-size: 13px;
-  padding: 0;
-  margin: 0;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+}
+.massage-info-list{
+    width: 100%;
+    height: 100%;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
 }
 
 .project-msg-popup {
@@ -954,8 +965,8 @@ export default {
 }
 
 .massage-info-lower {
-  position: fixed;
-  bottom: 0;
+//   position: fixed;
+//   bottom: 0;
   height: 49px;
   display: flex;
   text-align: center;
