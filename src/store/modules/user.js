@@ -42,6 +42,7 @@ const state = {
     ],
     token:
       'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJhZmV6OXMiLCJzdWIiOiJhZ2VudElkOnd3NWVlYjcyNDBiY2JhZDI4YTo4MDk5IiwiZXhwIjoxNTQ2MjQxMzkzLCJpYXQiOjE1NDU2MzY1OTN9.lZttqokHzY2wAxUiZtq0hq6sF75mXDfORaIZ9XK7l8KgYmU7IY1Cj36_wSKiBPSYLPGUmyvvLSKemuY2rg968A',
+    majorCity: '长治市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
     nickName: '',
