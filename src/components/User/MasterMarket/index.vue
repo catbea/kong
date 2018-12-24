@@ -141,7 +141,6 @@ export default {
     display: flex;
     flex-direction: column;
     width: 343px;
-    height: 274px;
     margin-left: 16px;
     .vanSWipe-box {
       width: 343px;
@@ -177,7 +176,7 @@ export default {
       border-radius: 10px;
     }
     .master-recommend {
-      margin: 18px 0 15px 0;
+      margin: 20px 0 20px 0;
       font-size: 20px;
       font-family: PingFangSC-Semibold;
       font-weight: 600;

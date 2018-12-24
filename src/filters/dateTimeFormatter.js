@@ -16,7 +16,7 @@ let zerofill = val => (val >= 10 ? val : '0' + val)
  * @param  {Number} type 格式化类型
  * @return {String}
  */
-export default (time, type, separate = '-') => {
+export default (time, type, separate = '/') => {
   let checkTime = parseInt(time)
   if (isNaN(checkTime)) return time
   let date = new Date(parseInt(time))
