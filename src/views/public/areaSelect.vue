@@ -97,6 +97,15 @@ export default {
       wechatApi.getUserArea()
     },
     keyTouchStartHandler(e) {
+      if (e.target.tagName !== 'LI') return
+
+      this.scrollHander(e.target.innerText)
+      window.addEventListener('touchmove', this.handleTouchMove, false)
+      window.addEventListener('touchend', this.handleTouchEnd)
+
+      // console.log(e.target.tagName)
+      // return
+
       // debugger
       //  this.$refs.content.scrollTop = 1000
       // if (e.target.tagName !== 'LI') return
@@ -108,7 +117,8 @@ export default {
       // window.addEventListener('touchend', this.handleTouchEnd)
       // console.log(e.target.tagName, this.navOffsetX)
       // return
-
+    },
+    scrollHander(val) {
       this.indicator.str = val
       this.indicator.show = true
       this.indicator.timer = setTimeout(() => {
@@ -116,33 +126,41 @@ export default {
         this.indicator.str = ''
         clearTimeout(this.indicator.timer)
       }, 1000)
-    }
-    // scrollList(y) {
-    //   let currentItem = document.elementFromPoint(this.navOffsetX, y)
-    //   if (!currentItem || !currentItem.classList.contains('mint-indexlist-navitem')) {
-    //     return
-    //   }
-    //   this.currentIndicator = currentItem.innerText
-    //   let targets = this.sections.filter(section => section.index === currentItem.innerText)
-    //   let targetDOM
-    //   if (targets.length > 0) {
-    //     targetDOM = targets[0].$el
-    //     this.$refs.content.scrollTop = targetDOM.getBoundingClientRect().top - this.firstSection.getBoundingClientRect().top
-    //   }
-    // },
-    // handleTouchMove(e) {
-    //   e.preventDefault()
-    //   this.scrollList(e.changedTouches[0].clientY)
-    // },
+    },
+    scrollList(y) {
+      let currentItem = document.elementFromPoint(this.navOffsetX, y)
+      if (!currentItem || !currentItem.classList.contains('mint-indexlist-navitem')) {
+        return
+      }
+      this.currentIndicator = currentItem.innerText
+      let targets = this.sections.filter(section => section.index === currentItem.innerText)
+      let targetDOM
+      if (targets.length > 0) {
+        targetDOM = targets[0].$el
+        this.$refs.content.scrollTop = targetDOM.getBoundingClientRect().top - this.firstSection.getBoundingClientRect().top
+      }
+    },
+    handleTouchMove(e) {
+      // e.preventDefault()
+      // this.scrollList(e.changedTouches[0].clientY)
+      // console.log(e)
+      if (e.target.tagName !== 'LI') return
 
-    // handleTouchEnd() {
-    //   this.indicatorTime = setTimeout(() => {
-    //     this.moving = false
-    //     this.currentIndicator = ''
-    //   }, 500)
-    //   window.removeEventListener('touchmove', this.handleTouchMove)
-    //   window.removeEventListener('touchend', this.handleTouchEnd)
-    // }
+      this.scrollHander(e.target.innerText)
+    },
+
+    handleTouchEnd(e) {
+      if (e.target.tagName !== 'LI') return
+
+      this.scrollHander(e.target.innerText)
+
+      // this.indicatorTime = setTimeout(() => {
+      //   this.moving = false
+      //   this.currentIndicator = ''
+      // }, 500)
+      // window.removeEventListener('touchmove', this.handleTouchMove)
+      // window.removeEventListener('touchend', this.handleTouchEnd)
+    }
   },
   computed: {
     ...mapGetters(['cityMap', 'hotCityMap', 'userArea', 'userInfo']),
