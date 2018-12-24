@@ -95,7 +95,7 @@ export default {
       let param = {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
         amountId: this.vipList[this.currPriceIndex].id,
-        subscribeNum: this.vipList[this.currPriceIndex].subscribeRemark,
+        subscribeNum: this.vipList[this.currPriceIndex].subscribeNum,
         payOpenid: this.userInfo.payOpenId
       }
       this.isPayLoading = true

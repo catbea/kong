@@ -46,6 +46,8 @@ export default {
   created() {
     this.dredgeColor()
     if (this.tags) this.tags.unshift(this.saleStatus)
+    console.log(this.itemInfo,'楼盘列表');
+    
   },
   data() {
     return {
@@ -74,6 +76,7 @@ export default {
   },
   computed: {
     openStatus() {
+      if(!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
       if (this.itemInfo.openStatus == 0) {
         return '开通'
       } else {

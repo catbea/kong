@@ -448,7 +448,6 @@ export default {
      */
     async getCustomerDynamicList(id, current) {
       const res = await CustomService.getCustomerDynamicList(id, current)
-      debugger
       if (res.records.length > 0) {
         // for (let i = 0; i < res.records.length; i++) {
         //   let payTime = timeUtils.fmtDate(res.records[i].purchaseTime)
