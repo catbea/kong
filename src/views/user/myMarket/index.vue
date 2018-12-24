@@ -1,11 +1,7 @@
 <template>
   <div class="user-mymarket-page">
-    <div style>
       <master-market :swipeList="swipeList"  @noRecommend="noRecommendHandle"></master-market>
-    </div>
-    <div style>
       <title-bar :conf="titleInfo" @return="returnHandle"></title-bar>
-    </div>
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
@@ -403,10 +399,9 @@ export default {
       width: 100%;
     }
   }
-  .title-bar,
-  .search-container {
+  .title-bar{
     justify-content: space-between;
-    margin-left: 16px;
+    margin:24px 0 0 16px;
     width: 343px;
   }
 
