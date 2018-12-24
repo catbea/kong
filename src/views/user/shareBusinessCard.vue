@@ -58,7 +58,6 @@ export default {
   },
   created() {
     this.agentId = this.$route.query.agentId
-    debugger
     this.getCardInfo(this.agentId)
   },
   methods: {
@@ -137,6 +136,7 @@ export default {
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center top;
+        background-attachment: fixed;
       }
       .cover-img {
         position: absolute;
