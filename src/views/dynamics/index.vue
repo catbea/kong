@@ -111,37 +111,38 @@ export default {
       const res = await dynamicsService.getEstateInfo()
       this.estateListData = res.myLinkerVOs
 
-      for (let i = 0; i < this.estateListData.length; i++) {
-        if (this.estateListData[i].linkerTags.length >= 3) {
-          if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.pop()
+      if(this.estateListData) {
+        for (let i = 0; i < this.estateListData.length; i++) {
+          if (this.estateListData[i].linkerTags.length >= 3) {
+            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.pop()
 
-          if (this.estateListData[i].saleStatus === 0) {
-            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
+            if (this.estateListData[i].saleStatus === 0) {
+              if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
+            }
+            if (this.estateListData[i].saleStatus === 1) {
+              if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
+            }
+            if (this.estateListData[i].saleStatus === 3) {
+              if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
+            }
+          } else {
+            if (this.estateListData[i].saleStatus === 0) {
+              if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
+            }
+            if (this.estateListData[i].saleStatus === 1) {
+              if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
+            }
+            if (this.estateListData[i].saleStatus === 3) {
+              if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
+            }
           }
-          if (this.estateListData[i].saleStatus === 1) {
-            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
-          }
-          if (this.estateListData[i].saleStatus === 3) {
-            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
-          }
-        } else {
-          if (this.estateListData[i].saleStatus === 0) {
-            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
-          }
-          if (this.estateListData[i].saleStatus === 1) {
-            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
-          }
-          if (this.estateListData[i].saleStatus === 3) {
-            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
-          }
+        }
+        for (let temp of this.estateListData) {
+          temp.headImgUrl = temp.linkerHeadUrl
         }
       }
 
       this.hotEstateListData = res.hotLinkerVOs
-      for (let temp of this.estateListData) {
-        temp.headImgUrl = temp.linkerHeadUrl
-      }
-
       this.recommendData = res.aiLinkerVO
       if (this.userInfo.isOne && !this.userGuidance.dynamics) {
         this.guidanceConf = res.aiLinkerVO
