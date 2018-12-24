@@ -138,7 +138,7 @@ export default {
             font-weight: 400;
             color: rgba(0, 122, 230, 1);
             line-height: 17px;
-            padding-left: 50px;
+            padding-left: 25px;
           }
         }
       }
