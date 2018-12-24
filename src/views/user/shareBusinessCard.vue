@@ -58,7 +58,6 @@ export default {
   },
   created() {
     this.agentId = this.$route.query.agentId
-    debugger
     this.getCardInfo(this.agentId)
   },
   methods: {
@@ -132,11 +131,12 @@ export default {
       border-radius: 5px;
       .avatar-img {
         width: 100%;
-        height: 350px;
         border-radius: 5px;
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
         background-position: center top;
+        background-attachment: fixed;
       }
       .cover-img {
         position: absolute;
@@ -178,6 +178,8 @@ export default {
         margin-left: 30px;
         margin-right: 30px;
         font-weight: 400;
+        bottom: 0;
+        margin-bottom: 10px;
         .user-signature {
           font-size: 16px;
           opacity: 0.85;

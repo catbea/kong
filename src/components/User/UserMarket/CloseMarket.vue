@@ -10,7 +10,7 @@
         <ul>
           <li>
            <div style="display:flex;"> 
-             {{dataArr.linkerName}}
+            <span class="text">{{dataArr.linkerName}}</span> 
              <span class="van-hairline--surround past-tag" v-if="!pastShow">
                 已过期
               </span>
@@ -240,6 +240,12 @@ export default {
           line-height: 16px;
           display: flex;
           justify-content: space-between;
+          .text{
+            white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 103px;
+          }
           .stick {
             width: 38px;
             height: 18px;

@@ -1,37 +1,94 @@
 <template>
   <div class="allDynamics-page">
     <div class="tab-container">
-      <van-tabs v-model="active" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated @click="goList" >
-        <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName">
-        </van-tab>
+      <van-tabs
+        v-model="active"
+        color="#007AE6"
+        :line-width="15"
+        :swipe-threshold="6"
+        sticky
+        animated
+        @click="goList"
+      >
+        <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName"></van-tab>
       </van-tabs>
       <div class="data-container">
         <!-- 动态全部-->
-        <div class="allDynamics-container" v-if="active === 0 " >
+        <div class="allDynamics-container" v-if="active === 0 ">
           <shadow-box>
             <div slot="container">
               <!-- active === 0? allDynamicCount :CardDynamicCount -->
-              <dynamics-data :totalTitle="all.totalTitle" :cardTitle="all.cardTitle" :propertiesTitle="all.propertiesTitle" :articleTitle="all.articleTitle" :allDynamicCount="allDynamicCount" ></dynamics-data>
+              <dynamics-data
+                :totalTitle="all.totalTitle"
+                :cardTitle="all.cardTitle"
+                :propertiesTitle="all.propertiesTitle"
+                :articleTitle="all.articleTitle"
+                :allDynamicCount="allDynamicCount"
+              ></dynamics-data>
             </div>
           </shadow-box>
-          <van-list v-model="loading"  @load="getAllDynamicList" :finished="finished" :finished-text="'没有更多了'">
-            <dynamics-list  @click="getupdateCustomerInfo" :allDynamicList="allDynamicList" :item="item" ></dynamics-list>
+          <van-list
+            v-model="loading"
+            @load="getAllDynamicList"
+            :finished="finished"
+            :finished-text="'没有更多了'"
+          >
+            <dynamics-list
+              @click="getupdateCustomerInfo"
+              :allDynamicList="allDynamicList"
+              :item="item"
+            ></dynamics-list>
           </van-list>
         </div>
-        <div class="allDynamics-container" v-if="active === 1" >
-            <dynamics-card  @click="goallDynamics" :cardDynamicCount="cardDynamicCount" :cardDynamicListCount="cardDynamicListCount" :cardDynamicList="cardDynamicList" ></dynamics-card>
-           
+        <div class="allDynamics-container" v-if="active === 1">
+          <!-- <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getCardDynamicList">
+            <dynamics-card
+              @click="goallDynamics"
+              :cardDynamicCount="cardDynamicCount"
+              :cardDynamicListCount="cardDynamicListCount"
+              :cardDynamicList="cardDynamicList"
+            ></dynamics-card>
+          </van-list>-->
+          <dynamics-card
+            @click="goallDynamics"
+            :cardDynamicCount="cardDynamicCount"
+            :cardDynamicListCount="cardDynamicListCount"
+            :cardDynamicList="cardDynamicList"
+          ></dynamics-card>
         </div>
-        <div class="allDynamics-container" v-if="active === 2" >
-          <properties :info="item" @click="itemProperties" :houseDynamicList="houseDynamicList" :houseDynamicCount="houseDynamicCount" :avgStayLinkerTime="avgStayLinkerTime" ></properties>
+        <div class="allDynamics-container" v-if="active === 2">
+          <van-list
+            v-model="loadingBuild"
+            @load="getHouseDynamicList"
+            :finished="finishedBuild"
+            :finished-text="'没有更多了'"
+          >
+            <properties
+              :info="item"
+              @click="itemProperties"
+              :houseDynamicList="houseDynamicList"
+              :houseDynamicCount="houseDynamicCount"
+              :avgStayLinkerTime="avgStayLinkerTime"
+            ></properties>
+          </van-list>
         </div>
-        <div class="allDynamics-container" v-if="active === 3" >
-          <dynamics-article  :articleDynamicCount="articleDynamicCount" :articleDynamicList="articleDynamicList" :avgStayArticleTime="avgStayArticleTime"  @click="itemArticleInfo" ></dynamics-article>
+        <div class="allDynamics-container" v-if="active === 3">
+          <van-list
+            v-model="loadingArticle"
+            @load="getArticleDynamicList"
+            :finished="finishedArticle"
+            :finished-text="'没有更多了'"
+          >
+            <dynamics-article
+              :articleDynamicCount="articleDynamicCount"
+              :articleDynamicList="articleDynamicList"
+              :avgStayArticleTime="avgStayArticleTime"
+              @click="itemArticleInfo"
+            ></dynamics-article>
+          </van-list>
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 <script>
@@ -95,44 +152,51 @@ export default {
       loading: false,
       finished: false,
       current: 1,
-      size:5,
+      size: 5,
       page: 1,
       pageSize: 5,
       allCurrent: 1,
       customerCount: this.$route.query.customerCount,
       businessCardViews: this.$route.query.businessCardViews,
       estateViews: this.$route.query.estateViews,
-      articleCount: this.$route.query.articleCount
+      articleCount: this.$route.query.articleCount,
+
+      loadingBuild: false,
+      finishedBuild: false,
+      buildCurrent: 1, //楼盘的current
+
+      loadingArticle: false,
+      finishedArticle: false,
+      ArticleCurrent: 1 //文章的current
     }
   },
   created() {
     this.active = this.currDataDynamicsTab
     this.updateDynamicsCollect()
-    // this.getAllDynamicCount()
     this.goList(this.active)
   },
   methods: {
     goList(index, title) {
       switch (index) {
         case 0:
-          this.getAllDynamicList()
+          this.getAllDynamicList(this.current)
           break
         case 1:
           this.getCardDynamicCount()
-         // this.onLoad1()
           break
         case 2:
+          this.houseDynamicList = []
+          this.buildCurrent = 1
           this.getHouseDynamicCount()
           break
         case 3:
+          this.articleDynamicList = []
+          this.ArticleCurrent = 1
           this.getArticleDynamicCount()
           break
       }
     },
-    
-    // onLoad1() {
-    //   this.getAllDynamicList( this.allCurrent)
-    // },
+
     async updateDynamicsCollect() {
       const res = await dynamicsService.updateDynamicsCollect()
     },
@@ -144,33 +208,20 @@ export default {
     },
     //全部数据动态列表
     async getAllDynamicList(current) {
+      const res = await dynamicsService.getAllDynamicList(current)
 
-      let parm ={
-        size:this.size,
-        current: this.current
-      }
-     
-      const res = await dynamicsService.getAllDynamicList(parm)
-     // this.allDynamicList = res.records
-      debugger
-      this.allDynamicList = this.page <= 1 ? res.records :  this.allDynamicList.concat(res.records)
-      if (res.pages === 0 || this.page === res.pages) {
+      if (res.records.length > 0) {
+        this.allDynamicList = this.allDynamicList.concat(res.records)
+
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
+      } else {
+        this.loading = false
         this.finished = true
       }
-      this.page++
-      this.loading = false
-      // if(res.records.length > 0){
-      //   this.allDynamicList = this.allDynamicList.concat(res.records)
-      //     if (res.pages === 0 || this.page === res.pages) {
-      //       this.finished = true
-      //     }
-      //     this.current++
-      //     this.loading = false
-      //   } else {
-      //     this.current = 1
-      //     this.loading = false
-      //     this.finished = true
-      //   }
     },
     //名片数据动态统计
     async getCardDynamicCount() {
@@ -186,17 +237,29 @@ export default {
       this.cardDynamicList = res.records
     },
 
-    //楼盘数据动态统计
+    //楼盘数据动态统计   --楼盘页面
     async getHouseDynamicCount() {
       const res = await dynamicsService.getHouseDynamicCount()
       this.houseDynamicCount = res
       this.avgStayLinkerTime = parseInt(this.houseDynamicCount.avgStayLinkerTime / 1000)
-      this.getHouseDynamicList()
+      this.getHouseDynamicList(this.buildCurrent)
     },
     //楼盘动态列表
-    async getHouseDynamicList() {
-      const res = await dynamicsService.getHouseDynamicList()
-      this.houseDynamicList = res.records
+    async getHouseDynamicList(buildCurrent) {
+      const res = await dynamicsService.getHouseDynamicList(buildCurrent)
+
+      if (res.records.length > 0) {
+        this.houseDynamicList = this.houseDynamicList.concat(res.records)
+
+        if (res.pages === 0 || this.buildCurrent === res.pages) {
+          this.finishedBuild = true
+        }
+        this.buildCurrent++
+        this.loadingBuild = false
+      } else {
+        this.loadingBuild = false
+        this.finishedBuild = true
+      }
     },
 
     //文章数据动态统计
@@ -204,12 +267,24 @@ export default {
       const res = await dynamicsService.getArticleDynamicCount()
       this.articleDynamicCount = res
       this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime / 1000)
-      this.getArticleDynamicList()
+      this.getArticleDynamicList(this.ArticleCurrent)
     },
     //文章数据动态列表
-    async getArticleDynamicList() {
-      const res = await dynamicsService.getArticleDynamicList(1)
-      this.articleDynamicList = res.records
+    async getArticleDynamicList(ArticleCurrent) {
+      const res = await dynamicsService.getArticleDynamicList(ArticleCurrent)
+
+      if (res.records.length > 0) {
+        this.articleDynamicList = this.articleDynamicList.concat(res.records)
+
+        if (res.pages === 0 || this.ArticleCurrent === res.pages) {
+          this.finishedArticle = true
+        }
+        this.ArticleCurrent++
+        this.loadingArticle = false
+      } else {
+        this.loadingArticle = false
+        this.finishedArticle = true
+      }
     },
     //全部按鈕
     async getupdateCustomerInfo(cons) {
@@ -280,7 +355,16 @@ export default {
     //文章跳转
     itemArticleInfo(articlelist) {
       let articleInfo = articlelist.item
-       this.$router.push({path:'/Dynamics/articleInfo',query: {articleTime:articleInfo.articleTime,articleId:articleInfo.articleId,articleTitle:articleInfo.articleTitle,articleSource:articleInfo.articleSource,articleImgUrl:articleInfo.articleImgUrl}})
+      this.$router.push({
+        path: '/Dynamics/articleInfo',
+        query: {
+          articleTime: articleInfo.articleTime,
+          articleId: articleInfo.articleId,
+          articleTitle: articleInfo.articleTitle,
+          articleSource: articleInfo.articleSource,
+          articleImgUrl: articleInfo.articleImgUrl
+        }
+      })
     }
   }
 }

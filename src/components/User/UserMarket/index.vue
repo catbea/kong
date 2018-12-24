@@ -8,8 +8,8 @@
         </div>
         <ul>
           <li>
-            <div>
-              {{dataArr.linkerName}}
+            <div style="display:flex;">
+             <span class="text">{{dataArr.linkerName}}</span>
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
@@ -23,7 +23,7 @@
             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
           </li>
           <li>
-            {{dataArr.openTimes}}次开通 {{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期
+            {{dataArr.openTimes}}次开通 {{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期
             <div class="apostrophe" @click.stop="popupHandle">
               <span></span>
               <span></span>
@@ -122,6 +122,8 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
+    console.log(this.dataArr,'展示的楼盘数据');
+    
   },
   methods: {
     strideYear() {
@@ -319,6 +321,12 @@ export default {
           line-height: 16px;
           display: flex;
           justify-content: space-between;
+          .text{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 103px;
+          }
           // align-items: center;
           .stick {
             padding: 2px 4px 1px 4px;
@@ -347,7 +355,7 @@ export default {
             font-family: PingFangSC-Regular;
             font-weight: 400;
             color: #ea4d2e;
-            margin-left: 4px;
+            margin-left:4px;
             &::after {
               border-color: #ea4d2e;
             }

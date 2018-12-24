@@ -38,8 +38,10 @@
               </p>
             </div>
             <p class="container-list" v-if="item.latestTime">
-              报备确认
-              <span class="container-list-title container-discount">{{item.latestTime}}</span>
+              {{reportTime[item.minIndex]}}
+              <span
+                class="container-list-title container-discount"
+              >{{item.latestTime}}</span>
             </p>
           </div>
         </shadow-box>
@@ -77,6 +79,21 @@ export default {
         '2': '报备失败',
         '3': '审核中 '
       },
+      reportTimeDict: {
+        arriveTime: '到访时间',
+        confirmTime: '报备确认时间',
+        contractTime: '签约时间',
+        fillingAuditingTime: '报备审核中时间',
+        fillingFailTime: '报备失败时间',
+        // fillingTime: '报备时间', // 报备申请提交时间不计入最新时间判断
+        followingTime: '待跟进时间',
+        giveUpTime: '放弃时间',
+        recognizeTime: '认筹时间',
+        settledCommissionTime: '结佣时间',
+        subscribedTime: '认购时间',
+        waitingConfirmTime: '报备待确认时间'
+      },
+      reportTime: null,
       loading: false,
       finished: false,
       current: 1,
@@ -100,26 +117,25 @@ export default {
         } else {
           this.haveData = false
         }
+        this.reportTime = this.getValues(this.reportTimeDict)
         for (var i in this.reportList) {
           let item = this.reportList[i]
           let times = []
-          times.push(Number(item.arriveTime))
-          times.push(Number(item.confirmTime))
-          times.push(Number(item.contractTime))
-          times.push(Number(item.fillingAuditingTime))
-          times.push(Number(item.fillingFailTime))
-          times.push(Number(item.fillingTime))
-          times.push(Number(item.followingTime))
-          times.push(Number(item.giveUpTime))
-          times.push(Number(item.recognizeTime))
-          times.push(Number(item.settledCommissionTime))
-          times.push(Number(item.subscribedTime))
-          times.push(Number(item.waitingConfirmTime))
-          times = this.selectionSort(times)
+          let selectTime = []
+          for (var key in this.reportTimeDict) {
+            times.push(Number(item[key]))
+          }
+          selectTime = this.copyArray(times)
+          this.selectionSort(times)
           item.fillingTime = timeUtils.fmtDate(item.fillingTime)
-          item.latestTime = timeUtils.fmtDate(times[times.length - 1])
+          if (times[times.length - 1] > 0) {
+            item.latestTime = timeUtils.fmtDate(times[times.length - 1])
+          }
+          item.minIndex = selectTime.indexOf(Math.max.apply(Math, selectTime))
+          // console.log('time==' + times + 'selectTime==' + selectTime)
+          // console.log(item.minIndex)
         }
-
+        
         if (res.pages === 0 || this.page === res.pages) {
           this.finished = true
         }
@@ -133,23 +149,38 @@ export default {
         this.finished = true
       }
     },
-    // 选择排序
-    selectionSort(times) {
-      var len = times.length
+    // 数组的浅拷贝
+    copyArray(arr) {
+      var result = []
+      result = arr.concat()
+      return result
+    },
+    // 获取values
+    getValues(obj) {
+      var values = []
+      for (var pro in obj) {
+        values.push(obj[pro])
+      }
+      return values
+    },
+
+    // 选择排序 从低到高
+    selectionSort(arr) {
+      var len = arr.length
       var minIndex, temp
       for (var i = 0; i < len - 1; i++) {
         minIndex = i
         for (var j = i + 1; j < len; j++) {
-          if (times[j] < times[minIndex]) {
+          if (arr[j] < arr[minIndex]) {
             //寻找最小的数
             minIndex = j //将最小数的索引保存
           }
         }
-        temp = times[i]
-        times[i] = times[minIndex]
-        times[minIndex] = temp
+        temp = arr[i]
+        arr[i] = arr[minIndex]
+        arr[minIndex] = temp
       }
-      return times
+      return arr
     },
 
     /**
