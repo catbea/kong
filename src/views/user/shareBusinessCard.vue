@@ -131,7 +131,7 @@ export default {
       border-radius: 5px;
       .avatar-img {
         width: 100%;
-        height: 350px;
+        height: 300px;
         border-radius: 5px;
         background-repeat: no-repeat;
         background-size: cover;
