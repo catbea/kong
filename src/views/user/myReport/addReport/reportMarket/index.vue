@@ -102,7 +102,7 @@ export default {
         }
       }
       this.loading = false
-      if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == '') {
+      if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == '深圳市') {
         if (result.total < 20) {
           this.isShowHeader = false
         } else {
