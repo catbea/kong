@@ -37,11 +37,11 @@ import { ImagePreview } from 'vant'
 export default {
   components: {},
   created() {
-    this.linkerId=this.$route.params.id
+    this.linkerId = this.$route.params.id
     this.getHouseTypeInfo(this.linkerId)
   },
   data: () => ({
-    photoList:[],
+    photoList: [],
     linkerId: '13f8c005b5c6440ea1ba2a0d9341e56c',
     num: null,
     tabs: [],
@@ -73,24 +73,25 @@ export default {
     }
   },
   methods: {
-    photoHandle(n){//查看户型相册
-    for (let index = 0; index < n.length; index++) {
-      const element = n[index];
-      this.photoList.push(element)
-    }
-    ImagePreview({
-      images:this.photoList,
-      startPosition:0,
-      onClose() {
-        // do something
+    photoHandle(n) {
+      //查看户型相册
+      for (let index = 0; index < n.length; index++) {
+        const element = n[index]
+        this.photoList.push(element)
       }
-    });
-    this.photoList=[]
+      ImagePreview({
+        images: this.photoList,
+        startPosition: 0,
+        onClose() {
+          // do something
+        }
+      })
+      this.photoList = []
     },
     async getHouseTypeInfo(n) {
       const res = await marketService.getHouseType(n)
-      console.log(res,'未显示的户型数据');
-      this.tabs=res
+      console.log(res, '未显示的户型数据')
+      this.tabs = res
     }
   }
 }
@@ -101,9 +102,9 @@ export default {
   height: 100%;
   flex-direction: column;
   background: #ffffff;
-  .list-wrap{
-    width:100%;
-    height:623px;
+  .list-wrap {
+    width: 100%;
+    height: 623px;
     overflow-y: auto;
   }
   .family-list-page-box {

@@ -13,35 +13,33 @@ export default {
   props: {
     progress: { type: Number },
     color: { type: String, default: '#cccccc' },
-    textColor: { type: String, default: '#999999' },
+    textColor: { type: String, default: '#999999' }
   },
   data: () => ({}),
-  methods: {
-    
-  },
+  methods: {}
 }
 </script>
 <style lang="less">
 .progress-container {
-    width: 100%;
-    .van-progress {
-        height: 8px;
-    }
+  width: 100%;
+  .van-progress {
+    height: 8px;
+  }
   .progress {
     width: 100%;
   }
   .progress-bottom {
-      margin-top: 4px;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
+    margin-top: 4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     .progress-text {
       color: #999999;
       font-size: 12px;
     }
     .progress-percent {
-        color: #999999;
+      color: #999999;
       font-size: 15px;
     }
   }

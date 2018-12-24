@@ -63,7 +63,7 @@ export default {
     currPriceIndex: 0,
     isPayLoading: false,
     payValue: 0,
-    setMealInfo: {openCount: 0, vipCity: ''},
+    setMealInfo: { openCount: 0, vipCity: '' },
     vipList: [],
     isExpire: false,
     expireTimestamp: 0,
@@ -103,7 +103,7 @@ export default {
       const purchaseId = res.purchaseId
       this.isPayLoading = false
       if (res.prepayStatus) {
-        if(res.isPay) {
+        if (res.isPay) {
           wx.chooseWXPay({
             //弹出支付
             timestamp: res.timestamp,
@@ -137,7 +137,8 @@ export default {
 
     pyaSuss() {
       this.getVipInfo()
-      if(!this.setMealInfo.vipCity) {//未绑定VIP城市先绑定
+      if (!this.setMealInfo.vipCity) {
+        //未绑定VIP城市先绑定
         this.showAddProjectDialogFlag = true
         this.unselectedPopup()
       } else {
@@ -147,39 +148,39 @@ export default {
 
     showAddProjectDialog() {
       Dialog.confirm({
-          title: '开通成功',
-          message: '成功开通vip，海量楼盘等你添加~',
-          cancelButtonText: '取消'
-      }).then(() => {
-        this.$router.replace({path:'/user/myMember/selectedDisk', query: {type: 'vip'}})
-      }).catch(() => {
-        
+        title: '开通成功',
+        message: '成功开通vip，海量楼盘等你添加~',
+        cancelButtonText: '取消'
       })
+        .then(() => {
+          this.$router.replace({ path: '/user/myMember/selectedDisk', query: { type: 'vip' } })
+        })
+        .catch(() => {})
     },
 
     async getVipInfo() {
       let res = await marketService.vipInfo()
       this.vipList = res.vipSettingList
-      this.setMealInfo = {openCount: res.count, vipCity: res.city}
+      this.setMealInfo = { openCount: res.count, vipCity: res.city }
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
 
       // 判断是否已过期
       let now = new Date()
-      if(now.getTime() > parseInt(res.expireTimestamp)) {
+      if (now.getTime() > parseInt(res.expireTimestamp)) {
         this.isExpire = true
       }
 
       //更新vipInfo
-      let _vipInfo = {city: res.city}
-      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
+      let _vipInfo = { city: res.city }
+      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo }))
 
-      if(res.vipFlag && !res.city){
+      if (res.vipFlag && !res.city) {
         this.unselectedPopup()
       }
 
-      if(this.vipList.length > 0){
+      if (this.vipList.length > 0) {
         this.currPriceIndex = 0
         this.priceClickHandle(0)
       }
@@ -193,20 +194,22 @@ export default {
     unselectedPopup() {
       Dialog.confirm({
         title: this.title,
-        message: '是否选择'+this.selectCity+'作为VIP开通城市',
+        message: '是否选择' + this.selectCity + '作为VIP开通城市',
         cancelButtonText: '其他城市'
-      }).then(() => {
-        this.updateCity()
-      }).catch(() => {
-        this.$router.push({path: '/public/area-select/', query: {fromPage:'myMember'}})
       })
+        .then(() => {
+          this.updateCity()
+        })
+        .catch(() => {
+          this.$router.push({ path: '/public/area-select/', query: { fromPage: 'myMember' } })
+        })
     },
 
     async updateCity() {
       let res = await marketService.updateCityByAgentId(this.selectCity)
-      let _vipInfo = {city: this.selectCity}
+      let _vipInfo = { city: this.selectCity }
       this.setMealInfo.vipCity = this.selectCity
-      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo}))
+      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo }))
       this.showAddProjectDialog()
       // if(this.showAddProjectDialogFlag) {
       //   this.showAddProjectDialog()
@@ -216,7 +219,7 @@ export default {
     },
 
     checkCityHandle() {
-      this.$router.push({path: '/public/area-select/', query: {fromPage:'myMember'}})
+      this.$router.push({ path: '/public/area-select/', query: { fromPage: 'myMember' } })
     }
   }
 }
@@ -282,7 +285,7 @@ export default {
           top: -1px;
           right: 0;
         }
-        .avatar{
+        .avatar {
           width: 60px;
           height: 58px;
         }
@@ -307,7 +310,7 @@ export default {
         }
       }
       .expire {
-        color: #A4B8D5;
+        color: #a4b8d5;
       }
       p {
         margin-top: 24px;

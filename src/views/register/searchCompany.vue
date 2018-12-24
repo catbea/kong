@@ -75,7 +75,7 @@ export default {
       }
     },
     onCancel() {
-       this.$router.back(-1)
+      this.$router.back(-1)
     },
     onInput(val) {
       if (val.length >= 4) {
@@ -107,37 +107,37 @@ export default {
 }
 </script>
 <style lang="less">
-  .van-field {
-    background-color: #f2f2f2;
-    align-items: center;
-  }
-  .search-content {
-    margin: 15px;
-    .search-tips {
-      display: flex;
-      .search-tips-icon {
-        width: 16px;
-        height: 16px;
-        margin-top: 2px;
-      }
-      .search-tips-cnt {
-        color: #999999;
-        font-size: 12px;
-        margin-left: 8px;
-        height: 17px;
-        line-height: 17px;
-      }
+.van-field {
+  background-color: #f2f2f2;
+  align-items: center;
+}
+.search-content {
+  margin: 15px;
+  .search-tips {
+    display: flex;
+    .search-tips-icon {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
     }
-    .search-list {
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      .search-item {
-        color: #333333;
-        font-size: 16px;
-        margin-top: 12px;
-      }
+    .search-tips-cnt {
+      color: #999999;
+      font-size: 12px;
+      margin-left: 8px;
+      height: 17px;
+      line-height: 17px;
     }
   }
+  .search-list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .search-item {
+      color: #333333;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+  }
+}
 </style>

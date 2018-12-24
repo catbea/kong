@@ -42,7 +42,7 @@ export default {
   },
   props: {
     trackInfo: { type: Array },
-    trackList: { type : Array }
+    trackList: { type: Array }
   },
   data: () => ({
     // info: [
@@ -84,7 +84,7 @@ export default {
       background: #e5e5e5;
       top: -13.5px;
       left: -4.5px;
-       margin-bottom: 80px;
+      margin-bottom: 80px;
     }
     .day {
       width: 10px;

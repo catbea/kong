@@ -49,7 +49,7 @@ export default {
         popularity: '-1,-1',
         sort: ''
       },
-      localCity:'',
+      localCity: '',
       moreFilters: {}
     },
     conf: [{ index: 0, name: '区域', checked: false }, { index: 1, name: '均价', checked: false }, { index: 2, name: '人气', checked: false }, { index: 3, name: '更多', checked: false }],
@@ -60,7 +60,7 @@ export default {
   created() {
     if (this.local === '') {
       this.localCity = this.userInfo.majorCity !== '' ? this.userInfo.majorCity : this.userArea.city
-    }else{
+    } else {
       this.localCity = this.local
     }
   },
@@ -89,7 +89,7 @@ export default {
         document.getElementsByClassName('choose-container')[0].style.height = 0
       }
     },
-    local(val){
+    local(val) {
       this.localCity = val
     }
   },

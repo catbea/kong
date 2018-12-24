@@ -13,76 +13,77 @@
 import { ImagePreview } from 'vant'
 import marketService from 'SERVICE/marketService'
 export default {
- async created() {
-    this.linkerId=this.$route.params.id
+  async created() {
+    this.linkerId = this.$route.params.id
     await this.getMarketDetailPhotoInfo()
     await this.pushHandle()
   },
   data: () => ({
-    linkerId:null,
-    photoData:null,
+    linkerId: null,
+    photoData: null,
     show: false,
-    templetList:[],
-    resultList:[],
-    deployList:[]
+    templetList: [],
+    resultList: [],
+    deployList: []
   }),
   components: {
     // FullScreen
   },
   methods: {
-    async getMarketDetailPhotoInfo(){
+    async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
-      console.log(res,'相册数据');
-      this.photoData=res
+      console.log(res, '相册数据')
+      this.photoData = res
     },
-    pushHandle(){
-      if(this.photoData[0]){
-      for (let index = 0; index < this.photoData[0].listBannerVO.length; index++) {
-        const element = this.photoData[0].listBannerVO[index].imgUrl;
-        this.templetList.push(element)
+    pushHandle() {
+      if (this.photoData[0]) {
+        for (let index = 0; index < this.photoData[0].listBannerVO.length; index++) {
+          const element = this.photoData[0].listBannerVO[index].imgUrl
+          this.templetList.push(element)
+        }
       }
+      if (this.photoData[1]) {
+        for (let index = 0; index < this.photoData[1].listBannerVO.length; index++) {
+          const element = this.photoData[1].listBannerVO[index].imgUrl
+          this.resultList.push(element)
+        }
       }
-      if(this.photoData[1]){
-      for (let index = 0; index < this.photoData[1].listBannerVO.length; index++) {
-        const element = this.photoData[1].listBannerVO[index].imgUrl;
-        this.resultList.push(element)
-      }
-      }
-      if(this.photoData[2]){
-      for (let index = 0; index < this.photoData[2].listBannerVO.length; index++) {
-        const element = this.photoData[2].listBannerVO[index].imgUrl;
-        this.deployList.push(element)
-      }
+      if (this.photoData[2]) {
+        for (let index = 0; index < this.photoData[2].listBannerVO.length; index++) {
+          const element = this.photoData[2].listBannerVO[index].imgUrl
+          this.deployList.push(element)
+        }
       }
     },
-    previewHandle(index,inde){//预览图片
-    if(index==0){
-      ImagePreview({
-      images:this.templetList,
-      startPosition:inde,
-      onClose() {
-        // do something
+    previewHandle(index, inde) {
+      //预览图片
+      if (index == 0) {
+        ImagePreview({
+          images: this.templetList,
+          startPosition: inde,
+          onClose() {
+            // do something
+          }
+        })
       }
-    });
-    }
-    if(index==1){
-      ImagePreview({
-      images:this.resultList,
-      startPosition:inde,
-      onClose() {
-        // do something
+      if (index == 1) {
+        ImagePreview({
+          images: this.resultList,
+          startPosition: inde,
+          onClose() {
+            // do something
+          }
+        })
       }
-    });
-    }
-    if(index==2){
-      ImagePreview({
-      images:this.deployList,
-      startPosition:inde,
-      onClose() {
-        // do something
+      if (index == 2) {
+        ImagePreview({
+          images: this.deployList,
+          startPosition: inde,
+          onClose() {
+            // do something
+          }
+        })
       }
-    });
-    }
     }
   }
 }
@@ -99,14 +100,14 @@ export default {
     color: rgba(51, 51, 51, 1);
     line-height: 28px;
   }
-  .template-box{
+  .template-box {
     display: flex;
     flex-wrap: wrap;
-    margin:15px 0 46px 0;
+    margin: 15px 0 46px 0;
   }
-  ul{
+  ul {
     margin: 19px 0 0 15px;
-    li{
+    li {
       margin: 0 4px 4px 0;
       width: 83px;
       height: 83px;

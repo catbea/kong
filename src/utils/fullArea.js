@@ -4,7 +4,7 @@
  */
 const getAreaCode = name => {
   name = name.replace(/\s+/g, '')
-  if (!name) return 
+  if (!name) return
   // 因为有直辖市的原因要优先,所以要把Object.keys().reverse() 但是从最底层查找效率过低,不如直接写
   // for (let key1 of Object.keys(fullArea).reverse()) {
   //   for (let key2 of Object.keys(fullArea[key1])) {

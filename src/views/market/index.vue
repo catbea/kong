@@ -66,7 +66,7 @@ export default {
     }
   },
   created() {
-    this.selectedCity = this.userArea.marketSelectedCity || this.userArea.city 
+    this.selectedCity = this.userArea.marketSelectedCity || this.userArea.city
     this.searchContent.siteText = this.selectedCity
     this.getBrokerInfo()
   },
@@ -76,11 +76,11 @@ export default {
     },
 
     async getProjectList() {
-      let param = {current: this.page, size: this.pageSize}
+      let param = { current: this.page, size: this.pageSize }
       //组装检索条件
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let _filters = screenFilterHelper(this.projectName, mergeFilters)
-      param = Object.assign(param, _filters) 
+      param = Object.assign(param, _filters)
       param.city = this.selectedCity
       // console.log(param)
 
@@ -110,7 +110,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select', query: {fromPage:'market'} })
+      this.$router.push({ name: 'area-select', query: { fromPage: 'market' } })
     },
     focusHandler() {
       this.$router.push({ name: 'market-search' })

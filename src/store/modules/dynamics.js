@@ -1,17 +1,15 @@
 import * as types from '@/store/mutation-types'
 const state = {
-    currDataDynamicsTab: 0
+  currDataDynamicsTab: 0
 }
 
 const getters = {
-    currDataDynamicsTab: state => {
-        return state.currDataDynamicsTab
-    },
+  currDataDynamicsTab: state => {
+    return state.currDataDynamicsTab
+  }
 }
 
-const actions = {
-
-}
+const actions = {}
 
 const mutations = {
   [types.CURR_DATA_DYNAMICS_TAB](state, currDataDynamicsTab) {

@@ -288,7 +288,7 @@ export default {
       console.log(this.status, '收藏状态')
     },
     shareHandler() {
-       if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
+      if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
         Dialog.confirm({
           title: '您有未完善的信息',
           message: '信息不完整会影响传播效率哦',

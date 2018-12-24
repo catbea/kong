@@ -20,7 +20,7 @@
           </p>
           <p class="container-list">
             报备时间
-            <span class="container-list-title">{{reportInfo.fillingTime | dateTimeFormatter}}</span>
+            <span class="container-list-title">{{reportInfo.fillingTime}}</span>
           </p>
         </div>
       </div>

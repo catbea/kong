@@ -4,12 +4,11 @@
   </van-popup>
 </template>
 <script>
-
 export default {
   props: {
     show: { type: Boolean, default: false },
     columns: { type: Array },
-    title: { type: String },
+    title: { type: String }
   },
   data: () => ({
     isShow: false
@@ -42,5 +41,4 @@ export default {
 }
 </script>
 <style lang="less">
-
 </style>

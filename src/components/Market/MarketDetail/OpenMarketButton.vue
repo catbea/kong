@@ -20,7 +20,7 @@ export default {
   height: 72px;
   border-top: 1px solid #e6e6e6;
   text-align: center;
-  padding-top:3px;
+  padding-top: 3px;
   .open-market-button {
     line-height: 44px;
     display: inline-block;

@@ -17,16 +17,13 @@
 export default {
   props: {
     data: { type: Array }
-
   },
   data() {
     return {}
   },
   methods: {
     GOheadline(item) {
-      
-      this.$emit('click',item)
-      
+      this.$emit('click', item)
     }
   }
 }

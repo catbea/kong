@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     itemClick(val) {
-      console.log(val,this.fromPage)
+      console.log(val, this.fromPage)
       switch (this.fromPage) {
         case 'myMember':
           this.$store.commit(types['USER_AREA'], { vipSelectedCity: val })
@@ -86,14 +86,14 @@ export default {
           break
         case 'myMarket':
           this.$store.commit(types['USER_AREA'], { myMarketSelectedCity: val })
-          break  
+          break
         default:
           this.$store.commit(types['USER_AREA'], { selectedCity: val })
           break
       }
       this.$router.go(-1)
     },
-    retryLocation (){
+    retryLocation() {
       wechatApi.getUserArea()
     },
     keyTouchStartHandler(e) {
@@ -181,17 +181,17 @@ export default {
           color: #999999;
         }
       }
-      > .location-fail{
+      > .location-fail {
         display: flex;
         justify-content: space-between;
-        >.fail-str{
+        > .fail-str {
           font-size: 16px;
           color: #333333;
           font-weight: 600;
         }
-        >.retry-text{
+        > .retry-text {
           font-size: 12px;
-          color: #007AE6;
+          color: #007ae6;
           font-weight: 400;
           line-height: 1.5;
         }

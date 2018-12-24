@@ -40,23 +40,23 @@
 export default {
   data: () => ({
     downImg: require('IMG/user/Rectangle 38 Copy@2x.png'),
-    upImg:require('IMG/user/uptop@2x.png'),
+    upImg: require('IMG/user/uptop@2x.png'),
     yetUseImg: require('IMG/user/Shape@2x.png'),
     yetPastImg: require('IMG/user/guoq@2x.png'),
-    unfoldShow:false
+    unfoldShow: false
   }),
   props: {
     info: {
       type: Object
     },
-    status:{type:Number}
+    status: { type: Number }
   },
   methods: {
     useHandle(n) {
-      this.$emit('skipHandle',n)
+      this.$emit('skipHandle', n)
     },
-    unfoldMore(){
-      this.unfoldShow=!this.unfoldShow
+    unfoldMore() {
+      this.unfoldShow = !this.unfoldShow
     }
   },
   computed: {

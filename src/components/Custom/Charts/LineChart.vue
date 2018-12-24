@@ -24,8 +24,7 @@ export default {
     //   { time: 1515283200000, count: 24, a: '1' }
     // ]
   }),
-  created() {
-  },
+  created() {},
   mounted() {
     this.width = document.getElementsByClassName('line-chart-container')[0].offsetWidth
   },

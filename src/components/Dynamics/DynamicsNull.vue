@@ -7,13 +7,12 @@
 </template>
 <script>
 export default {
-  props: {
-  },
+  props: {},
   data() {
     return {
-      nullIcon:require('IMG/dynamics/dynamicsNull.png'),
+      nullIcon: require('IMG/dynamics/dynamicsNull.png')
     }
-  },
+  }
 }
 </script>
 <style lang="less">

@@ -152,7 +152,7 @@ export default {
     linkerId: '',
     info: null,
     warnImg: require('IMG/marketDetail/warn.png'),
-    licenceList:[]
+    licenceList: []
   }),
   methods: {
     async getLinkerSimpleDetail(linkerId) {

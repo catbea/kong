@@ -53,9 +53,9 @@ class registService {
 
   /**
    * 查询分销商列表
-   * @param {*} enterpriseId 
-   * @param {*} city 
-   * @param {*} searchData 
+   * @param {*} enterpriseId
+   * @param {*} city
+   * @param {*} searchData
    */
   queryRegisterDistributor(enterpriseId, city, searchData) {
     return xhr({
@@ -70,9 +70,9 @@ class registService {
 
   /**
    * 查询注册推荐人信息
-   * @param {*} enterpriseId 
-   * @param {*} registerType 
-   * @param {*} parentUserId 
+   * @param {*} enterpriseId
+   * @param {*} registerType
+   * @param {*} parentUserId
    */
   queryRegisterRecommendInfo(enterpriseId, registerType, parentUserId) {
     return xhr({

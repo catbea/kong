@@ -56,7 +56,7 @@ class DiscoverService {
 
   /**
    * 文章分享
-   * @param {*} param 
+   * @param {*} param
    */
   articleShare(param) {
     return xhr({

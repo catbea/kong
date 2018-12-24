@@ -15,7 +15,7 @@ export default {
       }
     },
     code: { type: String },
-    title: { type: String },
+    title: { type: String }
   },
   data: () => ({
     isShow: false
@@ -48,5 +48,4 @@ export default {
 }
 </script>
 <style lang="less">
-
 </style>

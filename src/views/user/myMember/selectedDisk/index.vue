@@ -54,23 +54,19 @@ export default {
   watch: {
     projectFilters: {
       handler(val) {
-        // console.log(val)
         this.finished = false
         this.page = 1
         this.projectList = []
-        // this.getLinkerList()
       },
       deep: true
     }
   },
   created() {
     this.type = this.$route.query.type
-    if(this.type == 'vip') {
-      console.log(this.userInfo.vipInfo, 'this.userInfo.vipInfo')
-      this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
+    if (this.type == 'vip') {
+      this.searchInfo.siteText = this.userInfo.vipInfo && this.userInfo.vipInfo.city ? this.userInfo.vipInfo.city : ''
     } else {
-      console.log(this.userInfo.majorCity, 'this.userArea.selectedCity')
-      this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city 
+      this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city
     }
   },
   computed: {
@@ -79,7 +75,7 @@ export default {
   data: () => ({
     type: 'vip',
     projectFilters: {},
-    packageIscheckedIds:[],
+    packageIscheckedIds: [],
     checkedList: [],
     limitCount: 10,
     searchInfo: {
@@ -100,10 +96,10 @@ export default {
   }),
   methods: {
     areaClickHandle() {
-      if(this.type == 'vip') {
+      if (this.type == 'vip') {
         return
       }
-      this.$router.push({path: "/public/area-select"})
+      this.$router.push({ path: '/public/area-select' })
     },
 
     searchChangeHandle(name) {
@@ -122,27 +118,27 @@ export default {
 
     async getLinkerList() {
       this.checkAllShow = false
-      let param = {current: this.page, size: this.pageSize}
-      if(this.projectName) {
+      let param = { current: this.page, size: this.pageSize }
+      if (this.projectName) {
         param.projectName = this.projectName
       } else {
         //组装检索条件
         let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
         let _filters = screenFilterHelper(this.projectName, mergeFilters)
-        param = Object.assign(param, _filters) 
+        param = Object.assign(param, _filters)
         //
       }
-      
+
       let res = []
-      if(this.type == 'package') {
+      if (this.type == 'package') {
         param.city = this.searchInfo.siteText
         res = await marketService.packageLinkerList(param)
       } else {
         res = await marketService.vipLinkerList(param)
       }
-      
+
       let _list = []
-      for(let item of res.records) {
+      for (let item of res.records) {
         let obj = {
           linkerId: item.linkerId,
           linkerUrl: item.linkerUrl,
@@ -164,8 +160,9 @@ export default {
         this.finished = true
       }
 
-      if(this.type == 'package') { //套盘跳过来的，加载套盘内容
-        if(this.page == 1){
+      if (this.type == 'package') {
+        //套盘跳过来的，加载套盘内容
+        if (this.page == 1) {
           await this.getPackageInfo()
         }
         this.packageCheckedInit()
@@ -177,27 +174,26 @@ export default {
 
     packageCheckedInit() {
       this.checkedList = []
-      for(let i=0; i<this.packageIscheckedIds.length;i++) {
-        this.checkedList.push({linkerId: this.packageIscheckedIds[i]})
-        for(let item of this.projectList) {
-          if(this.packageIscheckedIds[i] == item.linkerId){
-            item.isUnable = true,
-            item.isChecked = true
+      for (let i = 0; i < this.packageIscheckedIds.length; i++) {
+        this.checkedList.push({ linkerId: this.packageIscheckedIds[i] })
+        for (let item of this.projectList) {
+          if (this.packageIscheckedIds[i] == item.linkerId) {
+            ;(item.isUnable = true), (item.isChecked = true)
           }
         }
       }
     },
 
     async vipProjectOpenHandle() {
-      if(this.packageIscheckedIds.length == this.checkedList.length) {
+      if (this.packageIscheckedIds.length == this.checkedList.length) {
         this.$toast('请先选择楼盘')
         return
       }
       let isCheckLinkerArr = []
-      for(let item of this.checkedList){
+      for (let item of this.checkedList) {
         isCheckLinkerArr.push(item.linkerId)
       }
-      if(this.type == 'package') {
+      if (this.type == 'package') {
         let res = await marketService.userPackageAddHouse(isCheckLinkerArr.join(), this.$route.query.packageId)
       } else {
         let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
@@ -206,26 +202,28 @@ export default {
         title: '开通成功',
         message: '成功开通楼盘',
         cancelButtonText: '取消'
-      }).then(() => {
-        this.$router.replace({path: "/user/myMarket"})
-      }).catch(() => {
-        this.page = 1
-        this.projectList = []
-        this.getLinkerList()
       })
+        .then(() => {
+          this.$router.replace({ path: '/user/myMarket' })
+        })
+        .catch(() => {
+          this.page = 1
+          this.projectList = []
+          this.getLinkerList()
+        })
     },
 
     selectHandle(project) {
-      if(project.isUnable) {
-        return 
+      if (project.isUnable) {
+        return
       }
-      if(this.type == 'package' && !project.isChecked && this.checkedList.length >= this.limitCount){
+      if (this.type == 'package' && !project.isChecked && this.checkedList.length >= this.limitCount) {
         this.$toast('已达到楼盘添加上限')
         return
       }
       project.isChecked = !project.isChecked
-      for(let item of this.checkedList) {
-        if(project.linkerId == item.linkerId){
+      for (let item of this.checkedList) {
+        if (project.linkerId == item.linkerId) {
           this.checkedList = this.checkedList.filter(obj => {
             return obj != item
           })
@@ -233,19 +231,18 @@ export default {
         }
       }
       this.checkedList.push(project)
-      console.log(this.checkedList)
     },
 
     allSelectHandle() {
       this.checkAllShow = !this.checkAllShow
-      if(this.checkAllShow){
+      if (this.checkAllShow) {
         this.checkedList = this.projectList
-        for(let item of this.projectList){
+        for (let item of this.projectList) {
           item.isChecked = true
         }
       } else {
         this.checkedList = []
-        for(let item of this.projectList){
+        for (let item of this.projectList) {
           item.isChecked = false
         }
       }
@@ -255,7 +252,7 @@ export default {
 </script>
 <style lang="less">
 .my-member-page {
-  .search-box{
+  .search-box {
     padding: 8px;
   }
   .market-box {
@@ -287,12 +284,12 @@ export default {
       height: 18px;
       margin: 0 16px;
     }
-    .icon-project-select{
+    .icon-project-select {
       width: 20px;
       height: 18px;
       margin: 0px 8px 0 16px;
     }
-    .check-label{
+    .check-label {
       line-height: 20px;
     }
     .check-all-button {

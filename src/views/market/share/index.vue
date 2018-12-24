@@ -84,8 +84,8 @@ export default {
       // canvas.style.width = '100%'
       // canvas.style.height = '100%'
 
-      let image = document.getElementById('imgcard');
-      image.src = canvas.toDataURL("image/png");
+      let image = document.getElementById('imgcard')
+      image.src = canvas.toDataURL('image/png')
       // document.getElementById('card-result').appendChild(canvas)
       this.showLoading = false
     }

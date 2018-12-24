@@ -134,13 +134,13 @@ export default {
       backIcon: require('IMG/user/usercard@2x.png'),
       lxImg: require('IMG/dynamics/lx@2x.png'),
       gzImg: require('IMG/dynamics/gz@2x.png'),
-      dynamicCount:[],
-      linkerVO:[],
-      SingleHouseDynamicList:[],
+      dynamicCount: [],
+      linkerVO: [],
+      SingleHouseDynamicList: [],
       itemDynamiclist: this.$route.query.itemDynamiclist,
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
-      avgStayLinkerTime:0
+      avgStayLinkerTime: 0
     }
   },
   created() {
@@ -148,47 +148,48 @@ export default {
     this.$route.params.id
   },
   methods: {
-   
     //查询单个楼盘数据动态列表
     async getSingleHouseDynamicList() {
       const res = await dynamicsService.getSingleHouseDynamicList(1, 10, this.itemDynamiclist)
       this.SingleHouseDynamicList = res.records
       this.getSingleHouseDynamicCount()
     },
-     //单个楼盘数据动态统计
+    //单个楼盘数据动态统计
     async getSingleHouseDynamicCount() {
       const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist)
       this.dynamicCount = res.houseDynamicCountReturnVO
       this.linkerVO = res.linkerVO
-      this.avgStayLinkerTime = parseInt(this.dynamicCount.avgStayLinkerTime /1000 )
-      
+      this.avgStayLinkerTime = parseInt(this.dynamicCount.avgStayLinkerTime / 1000)
     },
     //關注
-    getupdateCustomerInfo(item){
-       if (item.attentionStatus == 1) {
-        item.attentionStatus = 0;
-         dynamicsService.getupdateCustomerInfo(item.clientId,0)
+    getupdateCustomerInfo(item) {
+      if (item.attentionStatus == 1) {
+        item.attentionStatus = 0
+        dynamicsService.getupdateCustomerInfo(item.clientId, 0)
       } else {
-       item.attentionStatus = 1;
-         dynamicsService.getupdateCustomerInfo(item.clientId,1)
+        item.attentionStatus = 1
+        dynamicsService.getupdateCustomerInfo(item.clientId, 1)
       }
     },
     //楼盘详情
     godynamicsInfo(linkerId) {
-      this.$router.push({name:'market-detail', params: { id: linkerId }})
+      this.$router.push({ name: 'market-detail', params: { id: linkerId } })
     },
     //联系
-    goalldynamics (item) {
-      this.$router.push({path: '/custom/message/message', query: {
-        clientId: item.clientId
-      }})
+    goalldynamics(item) {
+      this.$router.push({
+        path: '/custom/message/message',
+        query: {
+          clientId: item.clientId
+        }
+      })
     },
     //客服详情
-    gocustomInfo(item){
+    gocustomInfo(item) {
       this.$router.push(`/custom/${item.clientId}`)
     },
     //续费开通
-    gopay(item){
+    gopay(item) {
       this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
     }
   }
@@ -232,32 +233,32 @@ export default {
         position: relative;
         border-radius: 6px;
         .dynamicsInfo-left-bg_img {
-        text-align: center;
-        width: 36px;
-        height: 22px;
-        font-size: 11px;
-        font-weight: 500;
-        color: rgba(255, 255, 255, 1);
-        line-height: 20px;
-        background-size: cover;
-        position: absolute;
-        top: 4px;
-        left: -4px;
-      }
+          text-align: center;
+          width: 36px;
+          height: 22px;
+          font-size: 11px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 1);
+          line-height: 20px;
+          background-size: cover;
+          position: absolute;
+          top: 4px;
+          left: -4px;
+        }
         > .mark-icon {
           width: 120px;
           height: 90px;
           background: rgba(255, 255, 255, 1);
           border-radius: 6px;
         }
-         > .oval-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        position: absolute;
-        left: 45px;
-        top: 30px;
-      }
+        > .oval-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          position: absolute;
+          left: 45px;
+          top: 30px;
+        }
       }
       > .dynamicsInfo-list-right {
         border-radius: 6px;
@@ -268,15 +269,15 @@ export default {
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
-          .list-right-title-div{
+          .list-right-title-div {
             font-size: 16px;
-            overflow: hidden;/*内容超出后隐藏*/
-            text-overflow: ellipsis;/* 超出内容显示为省略号*/
-           white-space: nowrap;/*文本不进行换行*/
-           width: 70%;
+            overflow: hidden; /*内容超出后隐藏*/
+            text-overflow: ellipsis; /* 超出内容显示为省略号*/
+            white-space: nowrap; /*文本不进行换行*/
+            width: 70%;
           }
-          .list-right-tab-div{
-                position: absolute;
+          .list-right-tab-div {
+            position: absolute;
             right: 0px;
             top: 12px;
             .left-title-right {
@@ -307,7 +308,6 @@ export default {
               text-align: center;
             }
           }
-           
         }
         > .list-right-time {
           font-size: 12px;
@@ -319,7 +319,7 @@ export default {
           > .right-label {
             font-size: 10px;
             font-weight: 400;
-              border: 0;
+            border: 0;
             line-height: 10px;
             padding: 2px 5px;
             border-radius: 3px;
@@ -330,13 +330,13 @@ export default {
             background: rgba(234, 77, 46, 0.1);
             color: rgba(234, 77, 46, 1);
           }
-          > .right-label-blur{
-            background:rgba(0,122,230,1);
-            color:rgba(255,255,255,1);
+          > .right-label-blur {
+            background: rgba(0, 122, 230, 1);
+            color: rgba(255, 255, 255, 1);
           }
-           > .right-label-grey{
-            background:rgba(102,102,102,0.15);
-            color:rgba(255,255,255,1);
+          > .right-label-grey {
+            background: rgba(102, 102, 102, 0.15);
+            color: rgba(255, 255, 255, 1);
           }
           > .right-label-gray {
             background: rgba(143, 159, 177, 0.15);
@@ -429,10 +429,10 @@ export default {
           // right: 16px;
           // margin-top: -6px;
           // padding-right: 16px;
-           right: 0.42667rem;
-            margin-top: -55px;
-            padding-right: 0;
-            float: right;
+          right: 0.42667rem;
+          margin-top: -55px;
+          padding-right: 0;
+          float: right;
           > .agent-right-num {
             font-size: 20px;
             font-weight: 500;
@@ -470,7 +470,7 @@ export default {
           // position: absolute;
           right: 32px;
           line-height: 40px;
-            float: right;
+          float: right;
           margin-top: 8px;
           // margin-top: 15px;
           > .list-btn-follow {
@@ -509,9 +509,9 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
-           // position: absolute;
-          right: 0;
-          top: 0.32rem;
+            // position: absolute;
+            right: 0;
+            top: 0.32rem;
             > .btn-contact-userImg {
               width: 11px;
               height: 11px;

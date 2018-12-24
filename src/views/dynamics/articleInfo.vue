@@ -103,17 +103,16 @@ export default {
       gzImg: require('IMG/dynamics/gz@2x.png'),
       articleDynamicCount: [],
       articleDynamicList: [],
-       itemlist: this.$route.query.itemlist,
-       articleTitle: '',
-       articleSource: this.$route.query.articleSource,
-       articleImgUrl: this.$route.query.articleImgUrl,
+      itemlist: this.$route.query.itemlist,
+      articleTitle: '',
+      articleSource: this.$route.query.articleSource,
+      articleImgUrl: this.$route.query.articleImgUrl,
       articleId: this.$route.query.articleId,
-      avgStayArticleTime:0,
+      avgStayArticleTime: 0
     }
   },
   created() {
-    this.articleTitle = this.$route.query.articleTitle,
-    this.getSingleArticleDynamicList()
+    ;(this.articleTitle = this.$route.query.articleTitle), this.getSingleArticleDynamicList()
   },
   methods: {
     //查询单个文章客户访问数据动态列表
@@ -129,26 +128,29 @@ export default {
       this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime / 1000)
     },
     //關注
-    getupdateCustomerInfo(item){
+    getupdateCustomerInfo(item) {
       if (item.attentionStatus == 1) {
-        item.attentionStatus = 0;
-         dynamicsService.getupdateCustomerInfo(item.clientId,0)
+        item.attentionStatus = 0
+        dynamicsService.getupdateCustomerInfo(item.clientId, 0)
       } else {
-       item.attentionStatus = 1;
-         dynamicsService.getupdateCustomerInfo(item.clientId,1)
+        item.attentionStatus = 1
+        dynamicsService.getupdateCustomerInfo(item.clientId, 1)
       }
     },
-     //客服详情
+    //客服详情
     godynamicsInfo(item) {
-       this.$router.push(`/custom/${item.clientId}`)
+      this.$router.push(`/custom/${item.clientId}`)
     },
 
     //联系
-    goalldynamics (item) {
-       this.$router.push({path: '/custom/message/message', query: {
-        clientId: item.clientId
-      }})
-    },
+    goalldynamics(item) {
+      this.$router.push({
+        path: '/custom/message/message',
+        query: {
+          clientId: item.clientId
+        }
+      })
+    }
   }
 }
 </script>
@@ -266,10 +268,10 @@ export default {
           // right: 16px;
           // margin-top: -6px;
           // padding-right: 16px;
-           right: 0.42667rem;
-            margin-top: -55px;
-            padding-right: 0;
-            float: right;
+          right: 0.42667rem;
+          margin-top: -55px;
+          padding-right: 0;
+          float: right;
           > .agent-right-num {
             font-size: 20px;
             font-weight: 500;
@@ -304,10 +306,10 @@ export default {
       > .dynamics-list-btn {
         height: 40px;
         > .list-btn-right {
-         // position: absolute;
+          // position: absolute;
           right: 32px;
-           line-height: 40px;
-            float: right;
+          line-height: 40px;
+          float: right;
           margin-top: 8px;
           // margin-top: 15px;
           > .list-btn-follow {
@@ -346,9 +348,9 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
-           // position: absolute;
-          right: 0;
-          top: 0.32rem;
+            // position: absolute;
+            right: 0;
+            top: 0.32rem;
             > .btn-contact-userImg {
               width: 11px;
               height: 11px;

@@ -117,7 +117,7 @@ export default {
           times.push(Number(item.waitingConfirmTime))
           times = this.selectionSort(times)
           item.fillingTime = timeUtils.fmtDate(item.fillingTime)
-          item.latestTime = timeUtils.fmtDate(times[times.length-1])
+          item.latestTime = timeUtils.fmtDate(times[times.length - 1])
         }
 
         if (res.pages === 0 || this.page === res.pages) {
@@ -151,7 +151,7 @@ export default {
       }
       return times
     },
-    
+
     /**
      * 进入报备详情
      */

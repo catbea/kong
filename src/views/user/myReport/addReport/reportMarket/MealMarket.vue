@@ -178,7 +178,7 @@ export default {
         height: 16px;
       }
 
-      span{
+      span {
         margin-left: 5px;
       }
     }

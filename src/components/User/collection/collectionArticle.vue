@@ -36,7 +36,6 @@ export default {
   props: {
     data: { type: Array },
     info: { type: String }
-
   },
   methods: {
     gocollection(deleteType, infoId, key) {
@@ -47,17 +46,17 @@ export default {
         deleteType: deleteType,
         infoId: infoId,
         index: key,
-        type:'goCollection'
+        type: 'goCollection'
       }
       this.$emit('myclick', parm)
     },
-    gocollectionInfo(item){
+    gocollectionInfo(item) {
       let parm = {
-        type:'goCollectionInfo',
-        id:item.id,
-        city:item.city
+        type: 'goCollectionInfo',
+        id: item.id,
+        city: item.city
       }
-      this.$emit("myclick",parm)
+      this.$emit('myclick', parm)
     }
   }
 }

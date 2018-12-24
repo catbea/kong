@@ -88,8 +88,8 @@ export default {
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
-          display:flex;
-          align-items:center;
+          display: flex;
+          align-items: center;
         }
         .icon-play {
           width: 32px;
