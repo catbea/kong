@@ -46,7 +46,6 @@ export default {
   created() {
     this.dredgeColor()
     if(this.tags) this.tags.unshift(this.saleStatus)
-    console.log(this.itemInfo,'楼盘列表数据')
   },
   data() {
     return {

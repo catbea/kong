@@ -22,11 +22,9 @@ import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   created() {
-    console.log(this.renewInfo,'续费jljl');
     this.flagTjHandle()
     this.flagZsHandle()
     this.flagZdHandle()
-    console.log(this.flagTj,this.flagZs,this.flagZd);
   },
   data: () => ({
     recommendColor: require('IMG/marketDetail/tj copy 10@2x.png'),
@@ -120,8 +118,6 @@ export default {
         case true:
           this.dialogHandle('已推荐该楼盘')
           this.changeHandle(this.renewInfo.linkerId,20,2)
-          console.log('改已普通推荐');
-          
           break
         case false:
           this.dialogHandle('已取消推荐该楼盘')

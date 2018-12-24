@@ -107,7 +107,6 @@ export default {
     async getregisrules() {
       const regis = await userService.getrules(1)
       this.registrationRules = regis.rule.split('#')
-      console.log(this.registrationRules)
     },
 
     async getqueryInvitationUrl() {
@@ -123,7 +122,6 @@ export default {
         image: '',
         render: 'table' // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas） // background: '#f0f' // foreground: '#ff0'
       })
-      console.log(qrcode)
     }
   }
 }

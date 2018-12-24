@@ -7,7 +7,6 @@ export default async (to, from, next) => {
         return
     }
     await store.dispatch('getImUserSig')
-    console.log(store.getters.imUserSig, '[getImUserSig]')
     if(store.getters.imUserSig && store.getters.imUserSig.agentId) {
         webimLogin(store.getters.imUserSig.skdAppid, 
             "agent_" + store.getters.imUserSig.agentId, 

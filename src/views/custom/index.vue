@@ -135,7 +135,6 @@ export default {
   },
   watch: {
     sortShow(val) {
-      console.log('sortShow',val);
       if (val) {
         document.removeEventListener('touchmove', this.touchHandler, false)
         document.getElementsByClassName('router-view')[0].style.overflowY = 'hidden'  // 兼容pc测试

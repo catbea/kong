@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     godSub() {
-      console.log(  )
       if (Number(this.Cphone).length == 0) {
         Dialog.alert({
           message: '名片展示手机号不可为空'

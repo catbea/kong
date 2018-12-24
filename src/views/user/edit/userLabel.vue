@@ -75,15 +75,10 @@ export default {
     async getAgentLabelList() {
       const res = await userService.getAgentLabelList(1)
       this.agentLabel = res
-
-      console.log(this.oldAgentLabel)
-
       for (let i = 0; i < this.agentLabel.length; i++) {
         this.agentLabel[i].labelName = this.agentLabel[i].itemName
         this.agentLabel[i].labelId = this.agentLabel[i].id
       }
-
-      console.log(this.agentLabel)
     },
 
     async SubLabel() {

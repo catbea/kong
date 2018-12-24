@@ -86,7 +86,6 @@ export default {
       params.current = page
       params.size = this.pageSize
       params.city = this.userArea.myReportCity
-      console.log(params)
       const result = await reportServer.getReportBuildingList(params)
       if (result.records.length > 0) {
         this.dataArr = page === 1 ? result.records : this.dataArr.concat(result.records)

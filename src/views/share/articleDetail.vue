@@ -217,19 +217,6 @@ export default {
           this.collectionStatus = 0
         }
       }
-
-      // if (res) {
-      //   console.log('999999999999')
-      //   if (res.deleteType === 0) {
-      //     console.log(res.deleteType + '====')
-      //     this.collectionStatus = 1
-      //   } else {
-      //     console.log(res.deleteType + '!!!!!')
-      //     this.collectionStatus = 0
-      //   }
-      // } else {
-      //   console.log('00000000000000')
-      // }
     },
     async articleShare() {
       let params = {

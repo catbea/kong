@@ -149,7 +149,6 @@ export default {
      * 切换tab
      */
     onClick() {
-      console.log(this.activeIndex)
       if (this.activeIndex == 0) {
         this.getCustomPieChart(this.clientId)
         this.getCustomerSevenDayTrendChart(this.clientId)
@@ -206,7 +205,6 @@ export default {
     },
     // 立即续费
     renewHandler(val) {
-      console.log('renew', val)
       if (val.sameDistributor == '0') {
         Dialog.alert({
           title: '该楼盘不可续费',
@@ -269,7 +267,6 @@ export default {
       this.pickerShow = false
     },
     confirmHandler(val) {
-      console.log(val, this.selectItem, this.selectIndex)
       this.areaShow = false
       this.pickerShow = false
       if (this.selectItem.title == '位置') {
@@ -514,7 +511,6 @@ export default {
         }
         customerInfoList.push(item)
       }
-      console.log(customerInfoList)
       this.customerInfoList = customerInfoList
     },
 

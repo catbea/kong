@@ -54,11 +54,9 @@ export default {
   watch: {
     projectFilters: {
       handler(val) {
-        // console.log(val)
         this.finished = false
         this.page = 1
         this.projectList = []
-        // this.getLinkerList()
       },
       deep: true
     }
@@ -66,10 +64,8 @@ export default {
   created() {
     this.type = this.$route.query.type
     if(this.type == 'vip') {
-      console.log(this.userInfo.vipInfo, 'this.userInfo.vipInfo')
       this.searchInfo.siteText = (this.userInfo.vipInfo && this.userInfo.vipInfo.city) ? this.userInfo.vipInfo.city : ''
     } else {
-      console.log(this.userInfo.majorCity, 'this.userArea.selectedCity')
       this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city 
     }
   },
@@ -233,7 +229,6 @@ export default {
         }
       }
       this.checkedList.push(project)
-      console.log(this.checkedList)
     },
 
     allSelectHandle() {

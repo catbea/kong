@@ -43,13 +43,9 @@ export default {
     },
    async knowHandle() {
     const res = await marketService.getMarketUpdateIsOne()
-    // console.log(res,'新手引导信息',this.userInfo.isOne);
       this.hintShow=false
+      // TODO 不是修改is_one
       this.$store.commit(types.IS_ONE,0)
-    //   console.log(this.$store.getters.theFirstTime,'已改')
-    //   localStorage.first=false
-    //  let oldObj = localStorage.getItem("first")
-    //     this.flag = JSON.parse(oldObj)
     }
   }
 }

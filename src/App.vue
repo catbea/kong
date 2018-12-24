@@ -61,7 +61,6 @@ export default {
         clientId = tmp.clientId
         data = tmp.content
       } else {//文本消息 楼盘 消息已上报
-        console.log(msgContent, 'msgContent')
         if(!msgContent.ext) {
           return
         }

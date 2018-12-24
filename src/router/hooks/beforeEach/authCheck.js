@@ -58,7 +58,6 @@ export default async (to, from, next) => {
         userInfo.cropId = cropId
         userInfo.token = wxAuthObject.token
         store.dispatch('getUserInfo', userInfo)
-        console.log(userInfo, '[userInfo]')
         if (!userInfo.payOpenId) {
           //返回的payopenid为空，则从新授权获取
           await localStorage.setItem('payCorpId', payCorpId)

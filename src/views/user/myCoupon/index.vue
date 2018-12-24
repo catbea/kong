@@ -62,7 +62,6 @@ export default {
       }else{
         _this.nameList[0].show=false
       }
-      console.log(res,'已使用的数据')
     })
     this.useRecord().then(res => {
       _this.nameList[1].num = res.total
@@ -71,7 +70,6 @@ export default {
       }else{
         _this.nameList[1].show=false
       }
-      console.log(res,'使用记录的数据')
     })
     this.alreadyPast().then(res => {
       _this.nameList[2].num = res.total
@@ -80,25 +78,18 @@ export default {
       }else{
         _this.nameList[2].show=false
       }
-      console.log(res,'已过期的数据')
     })
   },
   methods: {
     async onLoad() {// 初始tab请求数据事件
-    console.log(this.activeIndex,"activeIndex")
       let current = this.getCurrentType()
       const result = await mycoupons.couponsStatusList(current.index, current.page)
-      console.log(result.records,'目前显示的数据')
       this.nameList[current.index].list = current.list.concat(result.records)
-      // this.$nextTick(() => {
         if (result.pages === 0 || current.page === result.pages) {
           current.finished = true
         }
-        console.log(current.page,'当前页数')
         current.page++
         this.loading = false
-      // })
-      console.log(this.nameList[0],this.nameList[1],this.nameList[2])
     },
     getCurrentType() {//选中的是哪个tab
       for (let temp of this.nameList) {

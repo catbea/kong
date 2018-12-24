@@ -139,18 +139,15 @@ export default {
       //将当前点击的楼盘置顶
       this.$parent.marketList.unshift(this.$parent.marketList[index])
       this.$parent.marketList.splice(index+1,1)
-      console.log(this.$parent.marketList,'这是不展示的父组件的')
     },
     closeHandle () {
       this.show = !this.show
     },
      masterHandle(){
-      // this.$emit('returnMasterHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,1)//改为大师推荐
       this.show = !this.show
     },
     commonHandle(){
-      // this.$emit('returncommonHandle',this.marketIndex)
       this.changeUserStatus(this.linkerId,20,2)//改为普通推荐
       this.show = !this.show
     },

@@ -345,7 +345,6 @@ export default {
     },
     openCut(n) {
       this.showMarketList.push(n)
-      console.log(this.showMarketList,'展示的楼盘');
       for (let index = 0; index < this.notShowMarketList.length; index++) {
         const element = this.notShowMarketList[index];
         if(n.linkerId==element.linkerId){
