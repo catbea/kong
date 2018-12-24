@@ -100,7 +100,6 @@ export default {
       let recorHandle = this.getData(this.req.agentId, this.req.status.recor)
       let pastHandle = this.getData(this.req.agentId, this.req.status.past)
       Promise.all([notHandle, recorHandle, pastHandle])
-
     },
     // 初始时请求事件
     createdHandle() {

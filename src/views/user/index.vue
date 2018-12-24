@@ -157,8 +157,7 @@ export default {
           break
       }
     }
-  },
-  
+  }
 }
 </script>
 <style lang="less">

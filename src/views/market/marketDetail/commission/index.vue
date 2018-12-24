@@ -30,7 +30,7 @@ export default {
       const result = await MarketService.getLinkerDetail(id)
 
       this.commission = result.commission
-      this.distributorName=result.distributorName
+      this.distributorName = result.distributorName
     }
   }
 }

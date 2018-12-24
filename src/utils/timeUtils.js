@@ -1,6 +1,6 @@
 export default class timeUtils {
   static fmtDate(obj) {
-    if(isNaN(Number(obj))) {
+    if (isNaN(Number(obj))) {
       return obj
     }
     var date = new Date()

@@ -33,9 +33,9 @@ export default {
     }
   },
 
-  methods:{
-    showQRCodeView(){
-      this.$emit('showQRCode','')
+  methods: {
+    showQRCodeView() {
+      this.$emit('showQRCode', '')
     }
   }
 }

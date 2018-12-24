@@ -67,7 +67,7 @@ export default {
     enterpriseId: '',
     majorRegion: '',
     city: '',
-    area: '',
+    area: ''
   }),
   created() {
     this.query = this.$route.query
@@ -110,7 +110,7 @@ export default {
     inputHandler() {
       if (this.mobile.length == 11) {
         this.disabled = false
-      }else {
+      } else {
         this.disabled = true
       }
     },
@@ -121,7 +121,7 @@ export default {
       this.phoneFocus = focus
       let _userRegistInfo = {
         registerMobile: this.mobile,
-        registerCode: this.code,
+        registerCode: this.code
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
@@ -140,7 +140,7 @@ export default {
         city: this.city,
         area: this.area
       }
-      this.$router.push({path: '/register/searchCompany', query: params})
+      this.$router.push({ path: '/register/searchCompany', query: params })
     },
     /**
      * 选择机构
@@ -150,7 +150,7 @@ export default {
         enterpriseId: this.enterpriseId,
         distributorId: this.userRegistInfo.distributorId
       }
-      this.$router.push({path: '/user/edit/userMechanism', query: params})
+      this.$router.push({ path: '/user/edit/userMechanism', query: params })
     },
     nextHandler() {
       // let params = {

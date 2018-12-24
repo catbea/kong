@@ -173,7 +173,7 @@ export default {
     height: 466px;
     margin: 0 auto;
     position: relative;
-    >img{
+    > img {
       width: 100%;
       height: 100%;
     }

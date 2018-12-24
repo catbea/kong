@@ -12,7 +12,7 @@ let defaultConf = {
   saleStatus: 'saleStatus',
   openStatus: 'openStatus',
   focusStatus: 'focusStatus',
-  sort:'orderBy'
+  sort: 'orderBy'
 }
 
 export default (name, filters, conf = {}) => {
@@ -54,6 +54,6 @@ export default (name, filters, conf = {}) => {
   // 关注状态
   if (filters.focusStatus && filters.focusStatus !== '-1') result[conf.focusStatus] = filters.focusStatus
   //排序
-  if(filters.sort && filters.sort !== '-1') result[conf.sort] = filters.sort
+  if (filters.sort && filters.sort !== '-1') result[conf.sort] = filters.sort
   return result
 }

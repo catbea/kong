@@ -101,12 +101,12 @@ export default {
     //勾选获取文章id
     getArticleId(artcle) {
       artcle.isCheck = !artcle.isCheck
-      for(let item of this.selectArr) {
-        if(item.id == artcle.id) {
+      for (let item of this.selectArr) {
+        if (item.id == artcle.id) {
           this.selectArr = this.selectArr.filter(obj => {
             this.selectName = '全选'
             this.checked = false
-            return obj != item 
+            return obj != item
           })
           return
         }
@@ -119,7 +119,7 @@ export default {
       // console.log(this.selectArr)
       if (this.selectArr.length > 0) {
         let isCheckedArr = []
-        for(let item of this.selectArr){
+        for (let item of this.selectArr) {
           isCheckedArr.push(item.id)
         }
         console.log(isCheckedArr.join(), '[delete ids]')
@@ -155,16 +155,16 @@ export default {
         this.selectArr = this.list
         this.selectName = '取消全选'
         this.checked = true
-        for(let item of this.list){
+        for (let item of this.list) {
           item.isCheck = true
           this.result.push(item.id)
         }
-      }else {
+      } else {
         this.selectName = '全选'
         this.checked = false
         this.selectArr = []
         this.result = []
-        for(let item of this.list){
+        for (let item of this.list) {
           item.isCheck = false
         }
       }

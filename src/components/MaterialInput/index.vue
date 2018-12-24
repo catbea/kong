@@ -76,10 +76,10 @@ export default {
     }
   },
   watch: {
-    value:{
-      handler(newValue){
+    value: {
+      handler(newValue) {
         // This watch works from the code side of the 2-way-binding:
-      this.copyValue(newValue)
+        this.copyValue(newValue)
       },
       immediate: true
     }

@@ -45,11 +45,11 @@ export default {
   }),
   methods: {
     checkCityhandle() {
-      if(!this.setMealInfo.vipCity) this.$emit('onCheckCity')
+      if (!this.setMealInfo.vipCity) this.$emit('onCheckCity')
     },
     taget(index) {
       this.num = index
-      this.$emit("priceClick",index)
+      this.$emit('priceClick', index)
     }
   }
 }

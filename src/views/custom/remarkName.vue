@@ -41,16 +41,14 @@ export default {
     this.remarkName = remarkName
   },
 
-  computed: {
-    
-  },
+  computed: {},
 
   methods: {
     inputHandler(focus) {
       let inputStr = strFormat.fmtWebCode(this.remarkName)
       setTimeout(() => {
         this.remarkName = inputStr
-      },1)
+      }, 1)
     },
     //更新用户名
     async updateRemarkName(params) {

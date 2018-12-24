@@ -4,7 +4,7 @@ export default [
     name: 'article-detail',
     component: resolve => require(['@/views/share/articleDetail.vue'], resolve),
     meta: {
-      title: '文章',
+      title: '文章'
     }
   }
 ]

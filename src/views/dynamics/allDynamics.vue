@@ -58,7 +58,7 @@ export default {
     ...mapGetters(['currDataDynamicsTab'])
   },
   watch: {
-    active(v){
+    active(v) {
       this.$store.commit(types.CURR_DATA_DYNAMICS_TAB, v)
     }
   },
@@ -88,12 +88,12 @@ export default {
       articleDynamicCount: [],
       articleDynamicList: [],
       attentionStatus: 0,
-      cardDynamicListCount:0,
+      cardDynamicListCount: 0,
       avgStayArticleTime: 0,
       avgStayLinkerTime: 0,
       customerCount: this.$route.query.customerCount,
-      businessCardViews:this.$route.query.businessCardViews,
-      estateViews:this.$route.query.estateViews,
+      businessCardViews: this.$route.query.businessCardViews,
+      estateViews: this.$route.query.estateViews,
       articleCount: this.$route.query.articleCount
     }
   },
@@ -122,7 +122,6 @@ export default {
     },
     async updateDynamicsCollect() {
       const res = await dynamicsService.updateDynamicsCollect()
-      
     },
     async getAllDynamicCount() {
       // 全部数据动态统计
@@ -140,7 +139,7 @@ export default {
     async getCardDynamicCount() {
       const res = await dynamicsService.getCardDynamicCount()
       this.cardDynamicCount = res
-        this.cardDynamicListCount = parseInt(this.cardDynamicCount.avgStayCardTime/1000)
+      this.cardDynamicListCount = parseInt(this.cardDynamicCount.avgStayCardTime / 1000)
       this.getCardDynamicList()
     },
 
@@ -154,7 +153,7 @@ export default {
     async getHouseDynamicCount() {
       const res = await dynamicsService.getHouseDynamicCount()
       this.houseDynamicCount = res
-      this.avgStayLinkerTime = parseInt(this.houseDynamicCount.avgStayLinkerTime/1000) 
+      this.avgStayLinkerTime = parseInt(this.houseDynamicCount.avgStayLinkerTime / 1000)
       this.getHouseDynamicList()
     },
     //楼盘动态列表
@@ -167,58 +166,62 @@ export default {
     async getArticleDynamicCount() {
       const res = await dynamicsService.getArticleDynamicCount()
       this.articleDynamicCount = res
-      this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime /1000)
+      this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime / 1000)
       this.getArticleDynamicList()
     },
     //文章数据动态列表
     async getArticleDynamicList() {
-      
       const res = await dynamicsService.getArticleDynamicList(1)
       this.articleDynamicList = res.records
     },
     //全部按鈕
- async getupdateCustomerInfo (cons) {
-    if(cons.type === 'update'){
-// /关注状态 0：已关注 1：未关注关注
-     if (cons.item.attentionStatus == 1) {
-        cons.item.attentionStatus = 0
-        await dynamicsService.getupdateCustomerInfo(cons.item.clientId,0)
-      } else {
-        cons.item.attentionStatus = 1
-        await dynamicsService.getupdateCustomerInfo(cons.item.clientId,1)
-      }
-    }else if(cons.type === 'messageList'){
-      //聯繫
-        this.$router.push({path: '/custom/message/message', query: {
+    async getupdateCustomerInfo(cons) {
+      if (cons.type === 'update') {
+        // /关注状态 0：已关注 1：未关注关注
+        if (cons.item.attentionStatus == 1) {
+          cons.item.attentionStatus = 0
+          await dynamicsService.getupdateCustomerInfo(cons.item.clientId, 0)
+        } else {
+          cons.item.attentionStatus = 1
+          await dynamicsService.getupdateCustomerInfo(cons.item.clientId, 1)
+        }
+      } else if (cons.type === 'messageList') {
+        //聯繫
+        this.$router.push({
+          path: '/custom/message/message',
+          query: {
             clientId: cons.item.clientId
-          }})
-    }else if(cons.type === 'detail'){
-      //詳情
-       this.$router.push(`/custom/${cons.item.clientId}`)
-    }
+          }
+        })
+      } else if (cons.type === 'detail') {
+        //詳情
+        this.$router.push(`/custom/${cons.item.clientId}`)
+      }
     },
-   //名片跳轉
-    goallDynamics (pram) {
-      if(pram.type === 'guanz'){
+    //名片跳轉
+    goallDynamics(pram) {
+      if (pram.type === 'guanz') {
         if (pram.item.attentionStatus == 1) {
-        pram.item.attentionStatus = 0                                
-         dynamicsService.getupdateCustomerInfo(pram.item.clientId,0)
-      } else {
-        pram.item.attentionStatus = 1
-         dynamicsService.getupdateCustomerInfo(pram.item.clientId,1)
-      }
-      //客户详情
-      }else if(pram.type === 'detail'){
+          pram.item.attentionStatus = 0
+          dynamicsService.getupdateCustomerInfo(pram.item.clientId, 0)
+        } else {
+          pram.item.attentionStatus = 1
+          dynamicsService.getupdateCustomerInfo(pram.item.clientId, 1)
+        }
+        //客户详情
+      } else if (pram.type === 'detail') {
         this.$router.push(`/custom/${pram.item.clientId}`)
-      }else if(pram.type ==='messageList'){
-          this.$router.push({path: '/custom/message/message', query: {
+      } else if (pram.type === 'messageList') {
+        this.$router.push({
+          path: '/custom/message/message',
+          query: {
             clientId: pram.item.clientId
-          }})
+          }
+        })
       }
-      
     },
     //楼盘
-    itemProperties (val) {
+    itemProperties(val) {
       if (val.itemDynamiclist.openStatus == 1) {
         this.$dialog
           .confirm({
@@ -235,15 +238,16 @@ export default {
       } else {
         //跳转到动态详情item
         this.$router.push({ path: '/dynamics/dynamicsInfo', query: { itemDynamiclist: val.itemDynamiclist.linkerId } })
-        
       }
     },
     //文章跳转
-    itemArticleInfo(articlelist){
+    itemArticleInfo(articlelist) {
       let articleInfo = articlelist.item
-       this.$router.push({path:'/Dynamics/articleInfo',query: {articleId:articleInfo.articleId,articleTitle:articleInfo.articleTitle,articleSource:articleInfo.articleSource,articleImgUrl:articleInfo.articleImgUrl}})
+      this.$router.push({
+        path: '/Dynamics/articleInfo',
+        query: { articleId: articleInfo.articleId, articleTitle: articleInfo.articleTitle, articleSource: articleInfo.articleSource, articleImgUrl: articleInfo.articleImgUrl }
+      })
     }
-   
   }
 }
 </script>

@@ -18,71 +18,74 @@
   </div>
 </template>
 <script>
-import { Dialog,Toast } from 'vant'
+import { Dialog, Toast } from 'vant'
 import marketService from 'SERVICE/marketService'
 export default {
   created() {
     this.getCorrectionInfo()
-    this.linkerId=this.$route.params.id
+    this.linkerId = this.$route.params.id
     console.log(this.linkerId)
   },
   data: () => ({
-    activeIndex:null,
+    activeIndex: null,
     Surplus: 50,
     introduct: '',
     backImg: require('IMG/correction/color.png'),
-    optionList:['价格错误','位置错误','开盘错误','预计交房错误','其他错误'],
-    linkerId:null,
-    errorType:null,
-    content:null,
-    appType:'2'
+    optionList: ['价格错误', '位置错误', '开盘错误', '预计交房错误', '其他错误'],
+    linkerId: null,
+    errorType: null,
+    content: null,
+    appType: '2'
   }),
   methods: {
-    taget(index,code) {
-      this.activeIndex =index
-      this.errorType=code
+    taget(index, code) {
+      this.activeIndex = index
+      this.errorType = code
     },
     descArea() {
       var textVal = this.introduct.length
       this.Surplus = 50 - textVal
     },
-    async getCorrectionInfo() {//渲染显示的选项
+    async getCorrectionInfo() {
+      //渲染显示的选项
       const res = await marketService.getCorrection()
-      this.optionList=res
+      this.optionList = res
     },
-    async submitCorrectionInfo() {//提交纠错内容
-    console.log(this.linkerId,this.errorType,this.introduct,this.appType,2222222)
-    if(this.introduct===''&&this.errorType===null){//验证
-      Toast('请填写错误类型和内容')
-    }else if(this.introduct===''){
-      Toast('请填写内容')
-    }else if(this.errorType===null){
-      Toast('请填写错误类型')
-    }else{
-      let res= await marketService.submitCorrection(this.linkerId,this.errorType,this.introduct,this.appType)
-      console.log(res,'提交数据')
-      this.introduct=''
-      Dialog.alert({
-        message: '提交成功，我们将尽快跟进处理反馈内容',
-        className:'error-correction',
-        confirmButtonText:'知道了'
-      }).then(() => {
-        // on close
-      });
-    } 
+    async submitCorrectionInfo() {
+      //提交纠错内容
+      console.log(this.linkerId, this.errorType, this.introduct, this.appType, 2222222)
+      if (this.introduct === '' && this.errorType === null) {
+        //验证
+        Toast('请填写错误类型和内容')
+      } else if (this.introduct === '') {
+        Toast('请填写内容')
+      } else if (this.errorType === null) {
+        Toast('请填写错误类型')
+      } else {
+        let res = await marketService.submitCorrection(this.linkerId, this.errorType, this.introduct, this.appType)
+        console.log(res, '提交数据')
+        this.introduct = ''
+        Dialog.alert({
+          message: '提交成功，我们将尽快跟进处理反馈内容',
+          className: 'error-correction',
+          confirmButtonText: '知道了'
+        }).then(() => {
+          // on close
+        })
+      }
     }
-}
+  }
 }
 </script>
 <style lang="less">
-.error-correction{
+.error-correction {
   // height:auto;
-  width:270px;
-  .van-dialog__content{
+  width: 270px;
+  .van-dialog__content {
     text-align: center;
   }
-  .van-button--default{
-    border-top:1px solid #999999;
+  .van-button--default {
+    border-top: 1px solid #999999;
   }
 }
 .market-detail-correction-page {

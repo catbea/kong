@@ -55,24 +55,19 @@ export default {
   props: {
     articleDynamicCount: { type: '' },
     articleDynamicList: { type: Array },
-    avgStayArticleTime: { type: '' },
-    
+    avgStayArticleTime: { type: '' }
   },
   data() {
-    return {
-    }
+    return {}
   },
-  methods() {
-    
-  },
+  methods() {},
   methods: {
     itemArticleInfo(item) {
-      let parm={
-        item:item
+      let parm = {
+        item: item
       }
-      this.$emit('click',parm)
-    },
-    
+      this.$emit('click', parm)
+    }
   }
 }
 </script>
@@ -127,10 +122,9 @@ export default {
           padding-right: 70px;
         }
         > .article-left-time {
-         
           position: absolute;
           bottom: 0;
-          > .article-left-times{
+          > .article-left-times {
             font-size: 12px;
             font-weight: 400;
             color: rgba(153, 153, 153, 1);

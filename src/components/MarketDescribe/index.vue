@@ -45,11 +45,11 @@ export default {
   },
   created() {
     this.dredgeColor()
-    if(this.tags) this.tags.unshift(this.saleStatus)
+    if (this.tags) this.tags.unshift(this.saleStatus)
   },
   data() {
     return {
-      detailOpenStatus:null,//0未开通1已开通已过期2已开通未过期 
+      detailOpenStatus: null, //0未开通1已开通已过期2已开通未过期
       tags: this.itemInfo.linkerTags,
       resInfo: null,
       style: null,
@@ -76,7 +76,7 @@ export default {
     openStatus() {
       if (this.itemInfo.openStatus == 0) {
         return '开通'
-      } else{
+      } else {
         return '续费'
       }
     },
@@ -91,9 +91,10 @@ export default {
     }
   },
   methods: {
-    async getDetailInfo(id) {// 获取该楼盘详情
+    async getDetailInfo(id) {
+      // 获取该楼盘详情
       const res = await marketService.getLinkerDetail(id)
-      this.detailOpenStatus=res.openStatus
+      this.detailOpenStatus = res.openStatus
     },
     itemClickHandler() {
       this.$emit('skipDetail', this.itemInfo)
@@ -166,38 +167,38 @@ export default {
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
-            .box{
+            .box {
               display: flex;
               align-items: center;
-              .title{
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              max-width:103px;
-              font-size: 16px;
-              font-family: PingFangSC-Semibold;
-              font-weight: 600;
-              color: rgba(51, 51, 51, 1);
-              line-height:normal;
+              .title {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 103px;
+                font-size: 16px;
+                font-family: PingFangSC-Semibold;
+                font-weight: 600;
+                color: rgba(51, 51, 51, 1);
+                line-height: normal;
+              }
+              .past {
+                font-size: 12px;
+                transform: scale(0.84);
+                font-family: PingFangSC-Regular;
+                font-weight: 400;
+                line-height: normal;
+                height: 18px;
+                color: rgba(234, 77, 46, 1);
+                padding: 0 4px;
+                border-radius: 3px;
+                // &::after{
+                //   border-color: rgba(234,77,46,1);
+                border: 1px solid rgba(234, 77, 46, 1);
+                // }
+              }
             }
-            .past{
-              font-size:12px;
-              transform:scale(0.84);
-              font-family:PingFangSC-Regular;
-              font-weight:400;
-              line-height:normal;
-              height:18px;
-              color:rgba(234,77,46,1);
-              padding:0 4px;
-              border-radius:3px;
-              // &::after{
-              //   border-color: rgba(234,77,46,1);
-              border:1px solid rgba(234,77,46,1);
-              // }
-            }
-            }
-            .dredge{
-              flex:0 0 46px;
+            .dredge {
+              flex: 0 0 46px;
               height: 24px;
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;

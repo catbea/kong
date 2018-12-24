@@ -67,41 +67,40 @@
 </template>
 <script>
 export default {
-    data: () => ({
-        name: ''
-    }),
-    created() {
-        this.name = this.$route.query.name
-    }
+  data: () => ({
+    name: ''
+  }),
+  created() {
+    this.name = this.$route.query.name
+  }
 }
 </script>
 <style lang="less">
-    .container {
-        width: 100%;
-        height: 100%;
-        .content {
-            width: 100%;
-            padding-left: 22px;
-            padding-right: 30px;
-            margin-top: 34px;
-            font-family: PingFang-SC-Medium;
-            box-sizing: border-box;
-            .title {
-                color: #333333;
-                font-size: 20px;
-                font-weight: bold;
-            }
-            .spacing {
-                margin-top: 22px;
-            }
-            .paragraph {
-                color: #333333;
-                font-size: 15px;
-            }
-            .child-title {
-                font-weight: bold;
-            }
-        }
+.container {
+  width: 100%;
+  height: 100%;
+  .content {
+    width: 100%;
+    padding-left: 22px;
+    padding-right: 30px;
+    margin-top: 34px;
+    font-family: PingFang-SC-Medium;
+    box-sizing: border-box;
+    .title {
+      color: #333333;
+      font-size: 20px;
+      font-weight: bold;
     }
+    .spacing {
+      margin-top: 22px;
+    }
+    .paragraph {
+      color: #333333;
+      font-size: 15px;
+    }
+    .child-title {
+      font-weight: bold;
+    }
+  }
+}
 </style>
-

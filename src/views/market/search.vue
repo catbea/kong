@@ -278,4 +278,3 @@ export default {
   }
 }
 </style>
-

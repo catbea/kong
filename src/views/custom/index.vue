@@ -81,7 +81,7 @@ export default {
       this.cleanCurrentData()
       this.onLoad()
     },
-    cleanCurrentData(){
+    cleanCurrentData() {
       this.currentData.page = 1
       this.currentData.list = []
     },
@@ -137,10 +137,10 @@ export default {
     sortShow(val) {
       if (val) {
         document.removeEventListener('touchmove', this.touchHandler, false)
-        document.getElementsByClassName('router-view')[0].style.overflowY = 'hidden'  // 兼容pc测试
+        document.getElementsByClassName('router-view')[0].style.overflowY = 'hidden' // 兼容pc测试
       } else {
-        document.addEventListener('touchmove',null)
-        document.getElementsByClassName('router-view')[0].style.overflowY = 'auto'  // 兼容pc测试
+        document.addEventListener('touchmove', null)
+        document.getElementsByClassName('router-view')[0].style.overflowY = 'auto' // 兼容pc测试
       }
     }
   },

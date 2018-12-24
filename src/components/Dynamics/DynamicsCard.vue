@@ -89,41 +89,40 @@ export default {
   props: {
     cardDynamicCount: { type: '' },
     cardDynamicList: { type: Array },
-    cardDynamicListCount: {type:''},
+    cardDynamicListCount: { type: '' }
   },
   data() {
     return {
       info: { type: Object },
       lxImg: require('IMG/dynamics/lx@2x.png'),
-      gzImg: require('IMG/dynamics/gz@2x.png'),
+      gzImg: require('IMG/dynamics/gz@2x.png')
     }
   },
-  methods() {
-  },
+  methods() {},
   methods: {
     godynamicsList(item) {
-      let pram ={
+      let pram = {
         info: this.info,
-         type:'detail',
-        item:item
+        type: 'detail',
+        item: item
       }
       this.$emit('click', pram)
     },
-    getupdateCustomerInfo(item,key){
+    getupdateCustomerInfo(item, key) {
       let pram = {
-          item:item,
-          index:key,
-          type:'guanz'
+        item: item,
+        index: key,
+        type: 'guanz'
       }
-      this.$emit('click',pram)
+      this.$emit('click', pram)
     },
-    goalldynamics (item) {
+    goalldynamics(item) {
       let pram = {
-        type:'messageList',
-        item:item
+        type: 'messageList',
+        item: item
       }
-      this.$emit('click',pram)
-    },
+      this.$emit('click', pram)
+    }
   }
 }
 </script>
@@ -174,7 +173,7 @@ export default {
     .dynamics-list {
       padding: 20px 16px;
       > .dynamics-list-agent {
-       // display: flex;
+        // display: flex;
         > .list-agent-left {
           display: flex;
           > .agent-left-left {
@@ -204,10 +203,10 @@ export default {
           // position: absolute;
           // right: 16px;
           // margin-top: -6px;
-           right: 0.42667rem;
-            margin-top: -55px;
-            padding-right: 0;
-            float: right;
+          right: 0.42667rem;
+          margin-top: -55px;
+          padding-right: 0;
+          float: right;
           > .agent-right-num {
             font-size: 20px;
             font-weight: 500;
@@ -242,11 +241,11 @@ export default {
     > .dynamics-list-btn {
       height: 40px;
       > .list-btn-right {
-       // position: absolute;
-          right: 32px;
-          line-height: 40px;
-          float: right;
-          margin-top: 8px;
+        // position: absolute;
+        right: 32px;
+        line-height: 40px;
+        float: right;
+        margin-top: 8px;
         // margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
@@ -285,9 +284,9 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
-           // position: absolute;
-          right: 0;
-          top: 0.32rem;
+            // position: absolute;
+            right: 0;
+            top: 0.32rem;
             > .btn-contact-userImg {
               width: 11px;
               height: 11px;

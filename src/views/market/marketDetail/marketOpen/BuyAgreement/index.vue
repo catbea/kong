@@ -127,9 +127,9 @@ export default {
   data: () => ({
     content: []
   }),
-  methods:{
-    returnTop(){
-      this.$router.go(-1);//返回上一层
+  methods: {
+    returnTop() {
+      this.$router.go(-1) //返回上一层
     }
   }
 }
@@ -142,18 +142,18 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  .button{
+  .button {
     width: 300px;
-    height:44px;
+    height: 44px;
     background: #007ae6;
-    border-radius:5px;
-    font-size:15px;
+    border-radius: 5px;
+    font-size: 15px;
     font-family: PingFang-SC-Semibold;
     font-weight: 600;
     color: #ffffff;
-    line-height:44px;
+    line-height: 44px;
     text-align: center;
-    margin-bottom:10px;
+    margin-bottom: 10px;
   }
   .agreement-box {
     width: 343px;

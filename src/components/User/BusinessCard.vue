@@ -151,7 +151,6 @@ export default {
       background: rgba(64, 68, 87, 1);
       display: flex;
       flex-direction: column;
-     
 
       > .info-top {
         width: 100%;
@@ -269,11 +268,11 @@ export default {
       }
     }
 
-     > .modify-img{
-       width: 100%;
-       position: absolute;
-        margin-top: -40px;
-      }
+    > .modify-img {
+      width: 100%;
+      position: absolute;
+      margin-top: -40px;
+    }
   }
   > .business-status-box {
     background-color: #ffffff;
@@ -317,7 +316,7 @@ export default {
     }
     > .status-info-left {
       margin: 0 15px;
-      >.info-desc{
+      > .info-desc {
         font-size: 10px;
         white-space: nowrap;
       }

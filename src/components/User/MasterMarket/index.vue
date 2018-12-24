@@ -67,70 +67,68 @@ import userService from 'SERVICE/userService'
 export default {
   created() {
     this.filterHandle()
-    
   },
-  mounted() {
-  },
+  mounted() {},
   props: {
     swipeList: {
       type: Array
     },
-    boxShow:{type:Boolean}
+    boxShow: { type: Boolean }
   },
-  data(){
-    return{
+  data() {
+    return {
       // changeBoxShow:true,
-      changeshow:false,
+      changeshow: false,
       masterSave: null,
-    img: require('IMG/user/Combined Shape@2x.png'),
-    hintImg:require('IMG/dev/timg.jpg'),
-    masterList:[],
-    commonList:[]
+      img: require('IMG/user/Combined Shape@2x.png'),
+      hintImg: require('IMG/dev/timg.jpg'),
+      masterList: [],
+      commonList: []
     }
   },
   methods: {
-    skipDetail(n){//点击图片跳转到改楼盘详情
-    this.$router.push({name:'market-detail',params:{id:n}})
+    skipDetail(n) {
+      //点击图片跳转到改楼盘详情
+      this.$router.push({ name: 'market-detail', params: { id: n } })
     },
-    async closeHandle(linkerId,index){//图片列表删除某个，楼盘列表重置推荐
-     await userService.changeMarketData(linkerId,20,0)
-     this.limitList.splice(index,1)
-     this.swipeJudge()
-     this.$emit('noRecommend',linkerId)
+    async closeHandle(linkerId, index) {
+      //图片列表删除某个，楼盘列表重置推荐
+      await userService.changeMarketData(linkerId, 20, 0)
+      this.limitList.splice(index, 1)
+      this.swipeJudge()
+      this.$emit('noRecommend', linkerId)
     },
-    filterHandle(){
-     this.masterList=this.limitList.filter((item)=>{
-       return item.masterRecommand==1
+    filterHandle() {
+      this.masterList = this.limitList.filter(item => {
+        return item.masterRecommand == 1
       })
-      this.commonList=this.limitList.filter((item)=>{
-       return item.masterRecommand==2
+      this.commonList = this.limitList.filter(item => {
+        return item.masterRecommand == 2
       })
     },
-    swipeJudge(){
-      if(this.limitList.length==0){
-       this.changeBoxShow=false
-     }else{
-       this.changeBoxShow=true
-     }
+    swipeJudge() {
+      if (this.limitList.length == 0) {
+        this.changeBoxShow = false
+      } else {
+        this.changeBoxShow = true
+      }
     }
   },
-  computed:{
-    changeBoxShow:{
-      get:function () {
-        if(this.swipeList.length==0){
-        return false
-      }else{
-        return true
-      }
+  computed: {
+    changeBoxShow: {
+      get: function() {
+        if (this.swipeList.length == 0) {
+          return false
+        } else {
+          return true
+        }
       },
-      set:function () {
-        
-      }
+      set: function() {}
     },
-    limitList(){
-      if(this.swipeList.length>5){
-       return this.swipeList.slice(0,5)
-      }else{
+    limitList() {
+      if (this.swipeList.length > 5) {
+        return this.swipeList.slice(0, 5)
+      } else {
         return this.swipeList
       }
     }
@@ -144,25 +142,25 @@ export default {
     flex-direction: column;
     width: 343px;
     height: 274px;
-    margin-left:16px;
+    margin-left: 16px;
     .vanSWipe-box {
       width: 343px;
-    height: 194px;
-      .hint{
-        width:100%;
-        height:100%;
-        font-size:15px;
-      position: relative;
-      opacity:0.5;
-      span{
-        position:absolute;
-        color:#FFFFFF;
-        top:50%;
-        left:50%;
-        margin-left:-70px;
+      height: 194px;
+      .hint {
+        width: 100%;
+        height: 100%;
+        font-size: 15px;
+        position: relative;
+        opacity: 0.5;
+        span {
+          position: absolute;
+          color: #ffffff;
+          top: 50%;
+          left: 50%;
+          margin-left: -70px;
+        }
       }
-      }
-      .dim{
+      .dim {
         filter: blur(6px);
       }
       .icon-cancel {
@@ -218,12 +216,12 @@ export default {
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
-          span{
-            font-size:12px;
-            font-family:PingFangSC-Regular;
-            font-weight:400;
-            color:#FFFFFF;
-            line-height:15px;
+          span {
+            font-size: 12px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: #ffffff;
+            line-height: 15px;
           }
         }
       }

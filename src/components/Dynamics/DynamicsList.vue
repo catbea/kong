@@ -79,31 +79,30 @@ export default {
     // this.golist()
   },
   methods: {
-    getupdateCustomerInfo(item,key) {
-       let pram = {
-      statusOK: 'attentionStatusOK',
-      statusNO: 'attentionStatusNO',
-      item: item,
-      index: key,
-      type:'update'
-    }
+    getupdateCustomerInfo(item, key) {
+      let pram = {
+        statusOK: 'attentionStatusOK',
+        statusNO: 'attentionStatusNO',
+        item: item,
+        index: key,
+        type: 'update'
+      }
       this.$emit('click', pram)
     },
     goalldynamics(item) {
       let pram = {
-         type:'messageList',
-         item:item
-      }
-      this.$emit('click',pram)
-    },
-    godynamicsList(item){
-      let pram = {
-        info: this.info,
-        type:'detail',
-        item:item
+        type: 'messageList',
+        item: item
       }
       this.$emit('click', pram)
-     
+    },
+    godynamicsList(item) {
+      let pram = {
+        info: this.info,
+        type: 'detail',
+        item: item
+      }
+      this.$emit('click', pram)
     }
   }
 }
@@ -157,10 +156,10 @@ export default {
         // right: 16px;
         // margin-top: -6px;
         // padding-right: 16px;
-            right: 0.42667rem;
-            margin-top: -55px;
-            padding-right: 0;
-            float: right;
+        right: 0.42667rem;
+        margin-top: -55px;
+        padding-right: 0;
+        float: right;
         > .agent-right-num {
           font-size: 20px;
           font-weight: 500;
@@ -191,21 +190,20 @@ export default {
         color: rgba(0, 122, 230, 1);
       }
     }
-    .dynamics-list-card{
-      font-size:14px;
-      font-weight:400;
-      color:#007AE6;
-      line-height:21px;
-      
+    .dynamics-list-card {
+      font-size: 14px;
+      font-weight: 400;
+      color: #007ae6;
+      line-height: 21px;
     }
     > .dynamics-list-btn {
       height: 40px;
       > .list-btn-right {
         //position: absolute;
-          right: 32px;
-          line-height: 40px;
-            float: right;
-          margin-top: 8px;
+        right: 32px;
+        line-height: 40px;
+        float: right;
+        margin-top: 8px;
         //  margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
@@ -217,10 +215,10 @@ export default {
           color: rgba(0, 122, 230, 1);
           line-height: 17px;
           background: #ffffff;
-            //  position: absolute;
+          //  position: absolute;
           right: 80px;
-           top: 12px;
-           margin-right: 10px;
+          top: 12px;
+          margin-right: 10px;
           > .agent-gzImg {
             width: 11px;
             height: 11px;
@@ -237,9 +235,9 @@ export default {
           border: 1px solid #999999;
           background: #ffffff;
           margin-right: 10px;
-        //  position: absolute;
+          //  position: absolute;
           right: 80px;
-           top: 12px;
+          top: 12px;
         }
         > .list-btn-contact {
           width: 64px;
@@ -251,7 +249,7 @@ export default {
           color: rgba(255, 255, 255, 1);
           line-height: 17px;
           border: 0;
-         // position: absolute;
+          // position: absolute;
           right: 0;
           top: 0.32rem;
           > .btn-contact-userImg {

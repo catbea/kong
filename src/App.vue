@@ -21,7 +21,7 @@ import commonService from 'SERVICE/commonService'
 import Navbar from '@/components/Common/Navbar'
 import Tabbar from '@/components/Common/Tabbar'
 import { mapGetters } from 'vuex'
-import { webimLogin, callbackaddMsgCount } from "@/utils/im/receive_new_msg.js";
+import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 export default {
   data() {
     return {
@@ -36,11 +36,12 @@ export default {
   },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
-      if(this.$route.path == '/custom/message/message') {//当前在聊天页
+      if (this.$route.path == '/custom/message/message') {
+        //当前在聊天页
         return
       }
       this.newMsgPop = v
-      
+
       let msgContent = this.$store.getters.newMsgContent
       let data = ''
       let desc = msgContent.desc
@@ -48,20 +49,23 @@ export default {
       let name = ''
       let clientId = msgContent.clientId.split('_')[1]
 
-      if(desc == 2) {//语音
+      if (desc == 2) {
+        //语音
         let tmp = JSON.parse(msgContent.ext)
         let userInfo = tmp.userInfo
         avatar = userInfo.avatarUrl
         name = userInfo.nickName
         data = msgContent.data
-      } else if(desc == 5) {//动态
+      } else if (desc == 5) {
+        //动态
         let tmp = JSON.parse(msgContent.data)
         avatar = tmp.avatarUrl
         name = tmp.clientName
         clientId = tmp.clientId
         data = tmp.content
-      } else {//文本消息 楼盘 消息已上报
-        if(!msgContent.ext) {
+      } else {
+        //文本消息 楼盘 消息已上报
+        if (!msgContent.ext) {
           return
         }
         let userInfo = JSON.parse(msgContent.ext)
@@ -106,7 +110,7 @@ html {
     margin: 32px 0;
     border-radius: 25px;
     background: rgb(81, 135, 218);
-    opacity: .92;
+    opacity: 0.92;
   }
   #view-box {
     height: 100%;

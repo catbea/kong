@@ -5,55 +5,55 @@ import commonService from 'SERVICE/commonService'
 const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    agentId: "1063",
-    avatarUrl: "https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png",
-    distributorId: "124",
-    distributorName: "广佛分公司",
-    enterpriseId: "91",
-    institutionId: "82",
-    institutionName: "",
-    isOne: "",
-    isVip: "",
+    agentId: '1063',
+    avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
+    distributorId: '124',
+    distributorName: '广佛分公司',
+    enterpriseId: '91',
+    institutionId: '82',
+    institutionName: '',
+    isOne: '',
+    isVip: '',
     labelList: [
       {
-        id: "",
-        labelId: "116",
-        labelName: "小鲜肉",
-        userId: ""
+        id: '',
+        labelId: '116',
+        labelName: '小鲜肉',
+        userId: ''
       },
       {
-        id: "",
-        labelId: "122",
-        labelName: "豪宅专家",
-        userId: ""
+        id: '',
+        labelId: '122',
+        labelName: '豪宅专家',
+        userId: ''
       },
       {
-        id: "",
-        labelId: "121",
-        labelName: "佛系卖房",
-        userId: ""
+        id: '',
+        labelId: '121',
+        labelName: '佛系卖房',
+        userId: ''
       },
       {
-        id: "",
-        labelId: "124",
-        labelName: "高端盘专家",
-        userId: ""
+        id: '',
+        labelId: '124',
+        labelName: '高端盘专家',
+        userId: ''
       }
     ],
     token:
-    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJiNGlrMnAiLCJzdWIiOiJhZ2VudElkOnd3NWVlYjcyNDBiY2JhZDI4YToxMDYzIiwiZXhwIjoxNTQ2MjIxNDkwLCJpYXQiOjE1NDU2MTY2OTB9.6rqWpPea3DqQZJrmRr6SNK4dGdZQFEYJoEFJOsOH-LzABEWKtfIZc5HlylgvkQQ3zJUBvBO7OrZrZbKPcxoEbg',
-    majorCity: "长治市",
-    majorRegion: "山西省/长治市/襄垣县",
-    name: "周丹",
-    nickName: "",
-    payOpenId: "oeKML1Lx2W1E-uDyUJCOkTTJdKCY",
-    pcOpenid: "onXUy1sGkPMX-Z34buMYLs5q2IEc",
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJiNGlrMnAiLCJzdWIiOiJhZ2VudElkOnd3NWVlYjcyNDBiY2JhZDI4YToxMDYzIiwiZXhwIjoxNTQ2MjIxNDkwLCJpYXQiOjE1NDU2MTY2OTB9.6rqWpPea3DqQZJrmRr6SNK4dGdZQFEYJoEFJOsOH-LzABEWKtfIZc5HlylgvkQQ3zJUBvBO7OrZrZbKPcxoEbg',
+    majorCity: '长治市',
+    majorRegion: '山西省/长治市/襄垣县',
+    name: '周丹',
+    nickName: '',
+    payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
+    pcOpenid: 'onXUy1sGkPMX-Z34buMYLs5q2IEc',
     price: 874400,
-    registerMobile: "18603000246",
-    signature: "mwwwwwwwmm",
-    tempPhone: "18603000246",
-    vipInfo: "",
-    wechatAccount: ""
+    registerMobile: '18603000246',
+    signature: 'mwwwwwwwmm',
+    tempPhone: '18603000246',
+    vipInfo: '',
+    wechatAccount: ''
   },
   userVipInfo: {},
   userArea: {
@@ -65,7 +65,7 @@ const state = {
     marketSelectedCity: null, //楼盘列表城市选择
     vipSelectedCity: null,
     myMarketSelectedCity: null, //我的楼盘城市选择
-    myReportCity: '',   // 报备楼盘
+    myReportCity: '', // 报备楼盘
     county: '' // 区
   },
   reportAddInfo: {
@@ -96,18 +96,22 @@ const state = {
   //点击选中的楼盘id
   buildId: '',
   imUserSig: null,
-  guidance:{
+  guidance: {
     dynamics: false
   }
 }
 
 const getters = {
-  userInfo: state => { return state.userInfo },
+  userInfo: state => {
+    return state.userInfo
+  },
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   treeInfo: state => state.treeInfo,
-  jssdkConfig: state => { return state.jssdkConfig },
+  jssdkConfig: state => {
+    return state.jssdkConfig
+  },
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
   imUserSig: state => state.imUserSig,
@@ -120,7 +124,8 @@ const actions = {
     await localStorage.setItem('awMasterUserInfo', _userInfo)
     commit(types.USER_INFO, userInfo)
   },
-  async getImUserSig({ commit }) {//im签名
+  async getImUserSig({ commit }) {
+    //im签名
     const res = await commonService.getUserSig()
     commit(types.IM_USER_SIG, res)
   },
@@ -179,7 +184,7 @@ const mutations = {
   [types.IS_ONE](state, data) {
     state.userInfo.isOne = data
   },
-  [types.GUIDANCE](state, data){
+  [types.GUIDANCE](state, data) {
     state.guidance = Object.assign(state.guidance, data)
   }
 }

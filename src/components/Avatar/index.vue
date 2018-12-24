@@ -14,9 +14,7 @@ export default {
   data: () => ({
     defaultAvatar: require('IMG/system/defaultAvatar.png')
   }),
-  methods: {
-    
-  }
+  methods: {}
 }
 </script>
 <style lang="less">

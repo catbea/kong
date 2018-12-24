@@ -62,8 +62,7 @@ export default {
     finished: false,
     queryTimer: null,
     nullIcon: require('IMG/user/bill-null.png'),
-    isShowHeader: true,
-    
+    isShowHeader: true
   }),
   computed: {
     ...mapGetters(['userArea'])
@@ -98,10 +97,9 @@ export default {
         if (page == 1) {
           this.haveData = false
           this.finished = true
-        }else {
+        } else {
           this.finished = false
         }
-        
       }
       this.loading = false
       if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == '') {

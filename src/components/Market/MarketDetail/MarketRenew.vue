@@ -33,12 +33,12 @@ export default {
     show: require('IMG/marketDetail/zs1@2x.png'),
     stickColor: require('IMG/marketDetail/zd copy 12@2x.png'),
     stick: require('IMG/marketDetail/zd2@2x.png'),
-    flagTj:false,
-    flagZs:false,
-    flagZd:false
+    flagTj: false,
+    flagZs: false,
+    flagZd: false
   }),
-  props:{
-    renewInfo:{type:Object}
+  props: {
+    renewInfo: { type: Object }
   },
   // computed: {
   //   flagTj:{
@@ -50,8 +50,8 @@ export default {
   //     }
   //     },
   //     set:function (newValue) {
-        
-  //     } 
+
+  //     }
   //   },
   //   flagZs:{
   //     get:function() {
@@ -62,8 +62,8 @@ export default {
   //     }
   //     },
   //     set:function (newValue) {
-        
-  //     } 
+
+  //     }
   //   },
   //   flagZd:{
   //     get:function() {
@@ -74,34 +74,35 @@ export default {
   //     }
   //     },
   //     set:function (newValue) {
-        
-  //     } 
+
+  //     }
   //   }
   // },
   methods: {
-    flagTjHandle(){
-      if (this.renewInfo.masterRecommand==0) {
-        this.flagTj= false
-      }else{
-        this.flagTj= true
+    flagTjHandle() {
+      if (this.renewInfo.masterRecommand == 0) {
+        this.flagTj = false
+      } else {
+        this.flagTj = true
       }
     },
-    flagZsHandle(){
-      if (this.renewInfo.displayFlag==1) {
-        this.flagZs= false
-      }else{
-        this.flagZs= true
+    flagZsHandle() {
+      if (this.renewInfo.displayFlag == 1) {
+        this.flagZs = false
+      } else {
+        this.flagZs = true
       }
     },
-    flagZdHandle(){
-      if (this.renewInfo.isRecommand==0) {
-        this.flagZd= false
-      }else{
-        this.flagZd= true
+    flagZdHandle() {
+      if (this.renewInfo.isRecommand == 0) {
+        this.flagZd = false
+      } else {
+        this.flagZd = true
       }
     },
-   async changeHandle(linkerId, operationType, status){//修改楼盘状态
-    await userService.changeMarketData(linkerId, operationType, status)
+    async changeHandle(linkerId, operationType, status) {
+      //修改楼盘状态
+      await userService.changeMarketData(linkerId, operationType, status)
     },
     dialogHandle(n) {
       Dialog.alert({
@@ -113,15 +114,15 @@ export default {
       })
     },
     recommendHandle() {
-      this.flagTj =!this.flagTj
+      this.flagTj = !this.flagTj
       switch (this.flagTj) {
         case true:
           this.dialogHandle('已推荐该楼盘')
-          this.changeHandle(this.renewInfo.linkerId,20,2)
+          this.changeHandle(this.renewInfo.linkerId, 20, 2)
           break
         case false:
           this.dialogHandle('已取消推荐该楼盘')
-          this.changeHandle(this.renewInfo.linkerId,20,0)
+          this.changeHandle(this.renewInfo.linkerId, 20, 0)
           break
       }
     },
@@ -130,11 +131,11 @@ export default {
       switch (this.flagZs) {
         case true:
           this.dialogHandle('已开启该楼盘展示')
-          this.changeHandle(this.renewInfo.linkerId,30,0)
+          this.changeHandle(this.renewInfo.linkerId, 30, 0)
           break
         case false:
           this.dialogHandle('已关闭该楼盘展示、推荐与置顶')
-          this.changeHandle(this.renewInfo.linkerId,30,1)
+          this.changeHandle(this.renewInfo.linkerId, 30, 1)
           break
       }
     },
@@ -143,16 +144,16 @@ export default {
       switch (this.flagZd) {
         case true:
           this.dialogHandle('置顶成功')
-          this.changeHandle(this.renewInfo.linkerId,40,10)
+          this.changeHandle(this.renewInfo.linkerId, 40, 10)
           break
         case false:
           this.dialogHandle('取消置顶成功')
-          this.changeHandle(this.renewInfo.linkerId,40,0)
+          this.changeHandle(this.renewInfo.linkerId, 40, 0)
           break
       }
     },
     renewHandle(n) {
-      this.$router.push({name:'marketDetail-open', params: {id:n}} )
+      this.$router.push({ name: 'marketDetail-open', params: { id: n } })
     }
   }
 }
@@ -184,7 +185,7 @@ export default {
   width: 375px;
   height: 57px;
   padding-top: 10px;
-  margin-bottom:5px;
+  margin-bottom: 5px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e6e6e6;
   .active {
@@ -232,7 +233,7 @@ export default {
       height: 16px;
     }
   }
-  .marketRenewBoxButton{
+  .marketRenewBoxButton {
     width: 156px;
     height: 44px;
     border-radius: 6px;
@@ -243,11 +244,11 @@ export default {
     font-size: 14px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color:#007AE6;
+    color: #007ae6;
     margin-left: 7px;
   }
-  .color{
-    color:#EA4D2E;
+  .color {
+    color: #ea4d2e;
   }
 }
 </style>

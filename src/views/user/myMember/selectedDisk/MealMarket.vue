@@ -54,7 +54,7 @@ export default {
     TagGroup
   },
   data: () => ({
-    status: ["热销中","即将发售","售罄"],
+    status: ['热销中', '即将发售', '售罄'],
     val: null,
     faag: false,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
@@ -90,7 +90,7 @@ export default {
         width: 160px;
       }
       .icon-check {
-        flex:0 0 18px;
+        flex: 0 0 18px;
         height: 18px;
         margin: 0 16px;
       }
@@ -113,7 +113,7 @@ export default {
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
-          line-height:18px;
+          line-height: 18px;
           text-align: center;
         }
         .icon-play {

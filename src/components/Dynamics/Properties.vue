@@ -60,18 +60,16 @@ export default {
     houseDynamicCount: { type: '' },
     avgStayLinkerTime: { type: '' }
   },
- 
+
   data() {
     return {
       properties: [
         { id: '1', propertiesName: '碧桂园凤凰国际', statue: '0', num: '14', address: '南山 深圳湾', price: '0' },
         { id: '2', propertiesName: '万科臻湾汇 ', statue: '1', num: '20', address: '南山 深圳湾', price: '119878' }
-      ],
+      ]
     }
   },
-   methods() {
-    
-  },
+  methods() {},
   methods: {
     onClickConfirm(item) {
       let parm = {

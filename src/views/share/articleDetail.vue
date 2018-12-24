@@ -171,7 +171,7 @@ export default {
         avatarUrl: this.info.avatarUrl,
         distributorName: this.info.distributorName,
         enterpriseName: this.info.enterpriseName,
-        institutionName:this.info.institutionName
+        institutionName: this.info.institutionName
       }
       this.shareData = {
         title: this.info.title,
@@ -220,24 +220,24 @@ export default {
     },
     async articleShare() {
       let params = {
-          deleteType: 0,
-          infoId: this.infoId
-        }
+        deleteType: 0,
+        infoId: this.infoId
+      }
       const result = await discoverService.articleShare(params)
     },
     // 分享
     shareHandler() {
-      wechatApi.wechatShare(this.shareData).then(res => {
-        this.articleShare()
-      }).catch(e => {
-
-      })
-    },
-
+      wechatApi
+        .wechatShare(this.shareData)
+        .then(res => {
+          this.articleShare()
+        })
+        .catch(e => {})
+    }
   },
-  watch:{
+  watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
-    '$route'(){
+    $route() {
       this.$router.go(0)
     }
   }

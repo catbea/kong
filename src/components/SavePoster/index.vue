@@ -61,7 +61,7 @@ export default {
       if (result) {
         this.buildingInfo = result
       }
-    },
+    }
   }
 }
 </script>

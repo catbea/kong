@@ -4,7 +4,7 @@
 export default value => {
   try {
     value = Number(value)
-    return isNaN(value) ? 0 :`${Number(value) / 100}`
+    return isNaN(value) ? 0 : `${Number(value) / 100}`
   } catch (error) {
     return '0'
   }
