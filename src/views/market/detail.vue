@@ -66,7 +66,7 @@
           </p>
           <p>
             <span>楼盘地址:</span>
-            {{info.detailAddress}}
+           {{info.detailAddress}}
           </p>
           <p>
             <span>开发商:</span>
@@ -372,11 +372,13 @@ export default {
           bottom: 15px;
           font-size: 12px;
           padding: 3px 15px;
+          border: none;
         }
         .swipe-item {
           width: 100%;
           height: 100%;
           background-color: #999999;
+          border: none;
         }
       }
     }
@@ -417,6 +419,8 @@ export default {
         line-height: 23px;
         color: #333333;
         font-weight: 600;
+        font-size:12px;
+        font-family:"SimHei";
         > span {
           color: #007ae6;
         }
@@ -442,7 +446,7 @@ export default {
         font-weight: 600;
       }
       > .house-feature {
-        padding-top: 5px;
+        padding-top:10px;
         font-size: 14px;
         line-height: 1.5;
       }
@@ -499,11 +503,16 @@ export default {
       //   }
       // }
       > .house-info-form {
-        padding-top: 5px;
+        padding-top:20px;
         line-height: 1.5;
         font-size: 16px;
         color: #333333;
         > p {
+          padding-bottom:12px;
+          white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width:343px;
           > span {
             display: inline-block;
             color: #8a8f99;
