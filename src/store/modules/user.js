@@ -88,9 +88,9 @@ const state = {
     majorRegion: '广东省/深圳市/南山区',
     city: '深圳市',
     area: '南山区',
-    distributorId: '124', // 公司ID
+    distributorId: '', // 公司ID
     distributorName: 'AW大师',
-    institutionId: '42', // 机构ID sit环境190 uat环境42/44 pro环境
+    institutionId: '', // 机构ID sit环境190 uat环境42/44 pro环境
     institutionName: 'AW大师'
   },
   //点击选中的楼盘id
