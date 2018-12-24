@@ -178,6 +178,8 @@ export default {
         margin-left: 30px;
         margin-right: 30px;
         font-weight: 400;
+        bottom: 0;
+        margin-bottom: 10px;
         .user-signature {
           font-size: 16px;
           opacity: 0.85;
