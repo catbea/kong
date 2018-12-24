@@ -151,7 +151,7 @@ export default {
     },
 
     async paySubmit() {
-      let priceItem = this.priceList[this.currPriceListIndex]
+      let priceItem = this.priceList[this.marketOpenCache.currPriceListIndex]
       let param = {
         linkerId: this.linkerId,
         linkerName: this.projectInfo.linkerName,
