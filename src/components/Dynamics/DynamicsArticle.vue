@@ -1,16 +1,16 @@
 <template>
-  <div class="article-container" >
-   <div class="shadow-box">
-     <div class="dynaData-container" v-if="articleDynamicCount">
+  <div class="article-container">
+    <div class="shadow-box">
+      <div class="dynaData-container" v-if="articleDynamicCount">
         <span class="container-total">
           <p class="container-title">文章数量</p>
-          <p class="card-num">{{articleDynamicCount.articleCount  }}</p>
+          <p class="card-num">{{articleDynamicCount.articleCount }}</p>
         </span>
         <span class="container-card">
           <p class="container-title">文章分享</p>
-          <p class="card-num">{{articleDynamicCount.articleShareCount  }}</p>
+          <p class="card-num">{{articleDynamicCount.articleShareCount }}</p>
         </span>
-        <span class="container-properties " >
+        <span class="container-properties">
           <p class="container-title">文章访客</p>
           <p class="card-num">{{articleDynamicCount.articleVisitorCount }}</p>
         </span>
@@ -20,26 +20,29 @@
         </span>
       </div>
     </div>
-
-    <div class="article-container" v-if="articleDynamicList.length !=''">
-
-    <div class="article-list"  v-for="(item,key) in articleDynamicList" :key="key"  @click="itemArticleInfo(item)">
-      <span class="article-list-left">
-        <p class="article-left-title">{{item.articleTitle }}</p>
-        <p class="article-left-time" >
-          <span class="article-left-times" v-show="item.articleSource">{{item.articleSource }}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}</span>
-          <span class="left-time-nub"> {{item.dynamicCount}}条动态</span>
-        </p>
-      </span>
-      <span class="article-list-right">
-        <img :src="item.articleImgUrl" class="mark-icon">
-      </span>
-
+    <div class="article-container" v-if="articleDynamicList.length>0">
+      <div
+        class="article-list"
+        v-for="(item,key) in articleDynamicList"
+        :key="key"
+        @click="itemArticleInfo(item)"
+      >
+        <span class="article-list-left">
+          <p class="article-left-title">{{item.articleTitle }}</p>
+          <p class="article-left-time">
+            <span
+              class="article-left-times"
+              v-show="item.articleSource"
+            >{{item.articleSource }}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}</span>
+            <span class="left-time-nub">{{item.dynamicCount}}条动态</span>
+          </p>
+        </span>
+        <span class="article-list-right">
+          <img :src="item.articleImgUrl" class="mark-icon">
+        </span>
+      </div>
     </div>
-    
-  </div>
-  <dynamics-null v-else></dynamics-null> 
-
+    <dynamics-null v-else></dynamics-null>
   </div>
 </template>
 <script>
@@ -55,24 +58,19 @@ export default {
   props: {
     articleDynamicCount: { type: '' },
     articleDynamicList: { type: Array },
-    avgStayArticleTime: { type: '' },
-    
+    avgStayArticleTime: { type: '' }
   },
   data() {
-    return {
-    }
+    return {}
   },
-  methods() {
-    
-  },
+  methods() {},
   methods: {
     itemArticleInfo(item) {
-      let parm={
-        item:item
+      let parm = {
+        item: item
       }
-      this.$emit('click',parm)
-    },
-    
+      this.$emit('click', parm)
+    }
   }
 }
 </script>
@@ -127,10 +125,9 @@ export default {
           padding-right: 70px;
         }
         > .article-left-time {
-         
           position: absolute;
           bottom: 0;
-          > .article-left-times{
+          > .article-left-times {
             font-size: 12px;
             font-weight: 400;
             color: rgba(153, 153, 153, 1);

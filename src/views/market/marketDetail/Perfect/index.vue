@@ -30,9 +30,7 @@
 export default {
   data: () => ({}),
 
-  created() {
-    
-  }
+  created() {}
 }
 </script>
 <style lang="less">

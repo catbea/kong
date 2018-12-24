@@ -21,19 +21,19 @@
 <script>
 import mycoupons from 'SERVICE/mycoupons'
 import CouponItem from 'COMP/User/myCoupon/CouponItem.vue'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
   components: {
     CouponItem
   },
   data: () => ({
-    couponShow:false,
+    couponShow: false,
     loading: false,
     finished: false,
     nameList: [
-      { title: '未使用', num: 0, list: [], index: 0, page: 1, finished: false,status:0,show:false},
-      { title: '使用记录', num: 0, list: [], index: 1, page: 1, finished: false,status:1,show:false },
-      { title: '已过期', num: 0, list: [], index: 2, page: 1, finished: false,status:2,show:false }
+      { title: '未使用', num: 0, list: [], index: 0, page: 1, finished: false, status: 0, show: false },
+      { title: '使用记录', num: 0, list: [], index: 1, page: 1, finished: false, status: 1, show: false },
+      { title: '已过期', num: 0, list: [], index: 2, page: 1, finished: false, status: 2, show: false }
     ],
     activeIndex: 0,
     index: null,
@@ -49,88 +49,82 @@ export default {
     arrInfo: [],
     availableImg: require('IMG/user/Groupa@2x.png')
   }),
-  computed:{...mapState({
-      isVip:state=>state.user.userInfo.isVip
+  computed: {
+    ...mapState({
+      isVip: state => state.user.userInfo.isVip
     })
   },
   created() {
     const _this = this
     this.notUse().then(res => {
       _this.nameList[0].num = res.total
-      if(_this.nameList[0].num==0){
-        _this.nameList[0].show=true
-      }else{
-        _this.nameList[0].show=false
+      if (_this.nameList[0].num == 0) {
+        _this.nameList[0].show = true
+      } else {
+        _this.nameList[0].show = false
       }
-      console.log(res,'已使用的数据')
     })
     this.useRecord().then(res => {
       _this.nameList[1].num = res.total
-      if(_this.nameList[1].num==0){
-        _this.nameList[1].show=true
-      }else{
-        _this.nameList[1].show=false
+      if (_this.nameList[1].num == 0) {
+        _this.nameList[1].show = true
+      } else {
+        _this.nameList[1].show = false
       }
-      console.log(res,'使用记录的数据')
     })
     this.alreadyPast().then(res => {
       _this.nameList[2].num = res.total
-      if(_this.nameList[2].num==0){
-        _this.nameList[2].show=true
-      }else{
-        _this.nameList[2].show=false
+      if (_this.nameList[2].num == 0) {
+        _this.nameList[2].show = true
+      } else {
+        _this.nameList[2].show = false
       }
-      console.log(res,'已过期的数据')
     })
   },
   methods: {
-    async onLoad() {// 初始tab请求数据事件
-    console.log(this.activeIndex,"activeIndex")
+    async onLoad() {
+      // 初始tab请求数据事件
       let current = this.getCurrentType()
       const result = await mycoupons.couponsStatusList(current.index, current.page)
-      console.log(result.records,'目前显示的数据')
       this.nameList[current.index].list = current.list.concat(result.records)
-      // this.$nextTick(() => {
-        if (result.pages === 0 || current.page === result.pages) {
-          current.finished = true
-        }
-        console.log(current.page,'当前页数')
-        current.page++
-        this.loading = false
-      // })
-      console.log(this.nameList[0],this.nameList[1],this.nameList[2])
+      if (result.pages === 0 || current.page === result.pages) {
+        current.finished = true
+      }
+      current.page++
+      this.loading = false
     },
-    getCurrentType() {//选中的是哪个tab
+    getCurrentType() {
+      //选中的是哪个tab
       for (let temp of this.nameList) {
         if (this.activeIndex === temp.index) {
           return temp
         }
       }
     },
-    async notUse() {//已使用
+    async notUse() {
+      //已使用
       const _this = this
       let p1 = new Promise(function(resolve, reject) {
         let res = mycoupons.couponsStatusList(0, 1)
         resolve(res)
-        
       })
       return p1
     },
-    async useRecord() {//使用记录
+    async useRecord() {
+      //使用记录
       const _this = this
       let p2 = new Promise(function(resolve, reject) {
         let res = mycoupons.couponsStatusList(1, 1)
         resolve(res)
-        
       })
       return p2
     },
-    async alreadyPast() {//已过期
+    async alreadyPast() {
+      //已过期
       const _this = this
       let p3 = new Promise(function(resolve, reject) {
         let res = mycoupons.couponsStatusList(2, 1)
         resolve(res)
-        
       })
       return p3
     },
@@ -144,8 +138,8 @@ export default {
 
 <style lang="less">
 .user-myCoupon-page {
-  .list-wrap{
-    width:100%;
+  .list-wrap {
+    width: 100%;
     height: 623px;
     overflow: auto;
   }

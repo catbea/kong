@@ -11,7 +11,8 @@ let defaultConf = {
   discountHouse: 'discountHouse',
   saleStatus: 'saleStatus',
   openStatus: 'openStatus',
-  focusStatus: 'focusStatus'
+  focusStatus: 'focusStatus',
+  sort: 'orderBy'
 }
 
 export default (name, filters, conf = {}) => {
@@ -24,7 +25,7 @@ export default (name, filters, conf = {}) => {
   // 项目名称
   result[conf.name] = name
   // 区域
-  result[conf.area] = filters.area
+  result[conf.area] = filters.area === '不限' ? '' : filters.area
   // 均价
   let avepriceTemp = filters.aveprice.split(',')
   if (avepriceTemp[0] !== '-1') result[conf.aveprice[0]] = avepriceTemp[0]
@@ -52,5 +53,7 @@ export default (name, filters, conf = {}) => {
   if (filters.openStatus && filters.openStatus !== '-1') result[conf.openStatus] = filters.openStatus
   // 关注状态
   if (filters.focusStatus && filters.focusStatus !== '-1') result[conf.focusStatus] = filters.focusStatus
+  //排序
+  if (filters.sort && filters.sort !== '-1') result[conf.sort] = filters.sort
   return result
 }

@@ -11,14 +11,17 @@ const xhr = ({ url, body = {}, method = 'get', headers = {}, codeHandleList = nu
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toLowerCase()
   const host = process.env.VUE_APP_BASE_API_URL
-  let head = Object.assign({
-    'Content-Type': 'application/json; charset=UTF-8',
-  }, headers)
+  let head = Object.assign(
+    {
+      'Content-Type': 'application/json; charset=UTF-8'
+    },
+    headers
+  )
   if (store.getters.userInfo && store.getters.userInfo.token) {
     head.Authorization = store.getters.userInfo.token
   }
   return new Promise((resolve, reject) => {
-    let request = superAgent[method](host + url)//.withCredentials()
+    let request = superAgent[method](host + url) //.withCredentials()
       .set(head)
       .accept('application/json, text/javascript, */*; q=0.01')
     method === 'get' ? request.query(body) : request.send(body)
@@ -30,7 +33,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {}, codeHandleList = nu
       try {
         let resultBody = res.body
         let isOk = codeErrHandler(resultBody, codeHandleList) === true // typeof body.code === 'undefined' || body.code === '0'
-        err ? errHandler(err) : (isOk ? resolve(resultBody.data) : codeErrHandler(resultBody, codeHandleList))
+        err ? errHandler(err) : isOk ? resolve(resultBody.data) : codeErrHandler(resultBody, codeHandleList)
       } catch (error) {
         console.error(error)
       }

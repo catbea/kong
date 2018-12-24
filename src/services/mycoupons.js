@@ -1,6 +1,5 @@
 import xhr from './xhr/'
 class mycoupons {
-  
   /**
    * 我的优惠劵
    * @param {*} status//优惠劵状态

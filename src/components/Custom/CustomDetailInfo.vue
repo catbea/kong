@@ -26,42 +26,41 @@ export default {
     customerInfoList: {
       type: Array,
       default: [
-      { title: '备注名称', content: '暂无' },
-      { title: '性别', content: '暂无' },
-      { title: '年龄', content: '暂无' },
-      { title: '位置', content: '暂无' },
-      { title: '手机号', content: '暂无' },
-      { title: '来源', content: '暂无' },
-      { title: '收入', content: '暂无' },
-      { title: '行业', content: '暂无' },
-      { title: '购房目的', content: '暂无' }
-    ]},
-    areaShow: {type: Boolean, default: false},
-    areaCode: {type: String, default: '440305'},
-    areaTitle: {type: String, default: '位置'},
-    pickerShow: {type: Boolean, default: false},
-    columns: { type: Array },
+        { title: '备注名称', content: '暂无' },
+        { title: '性别', content: '暂无' },
+        { title: '年龄', content: '暂无' },
+        { title: '位置', content: '暂无' },
+        { title: '手机号', content: '暂无' },
+        { title: '来源', content: '暂无' },
+        { title: '收入', content: '暂无' },
+        { title: '行业', content: '暂无' },
+        { title: '购房目的', content: '暂无' }
+      ]
+    },
+    areaShow: { type: Boolean, default: false },
+    areaCode: { type: String, default: '440305' },
+    areaTitle: { type: String, default: '位置' },
+    pickerShow: { type: Boolean, default: false },
+    columns: { type: Array }
   },
-  data: () => ({
-
-  }),
+  data: () => ({}),
   watch: {
     areaShow(val) {
-       this.$emit('update:show', val)
+      this.$emit('update:show', val)
     },
     show(val) {
       this.areaShow = val
     },
     pickerShow(val) {
-       this.$emit('update:isPickerShow', val)
+      this.$emit('update:isPickerShow', val)
     },
     isPickerShow(val) {
       this.pickerShow = val
-    },
+    }
   },
   methods: {
     onClick(item, index) {
-      let pram ={
+      let pram = {
         item: item,
         index: index
       }
@@ -91,7 +90,7 @@ export default {
   .cell-item {
     height: 56px;
     align-items: center;
-    &:active{
+    &:active {
       background-color: #fff;
     }
     .van-cell__title {

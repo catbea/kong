@@ -12,12 +12,10 @@
   </div>
 </template>
 <script>
-import EstateItem from 'COMP/EstateItem'
 import TitleBar from 'COMP/TitleBar'
 export default {
   components: {
-    TitleBar,
-    EstateItem
+    TitleBar
   },
   props: {
     info: {

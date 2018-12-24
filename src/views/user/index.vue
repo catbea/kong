@@ -85,12 +85,15 @@ export default {
   }),
   created() {
     this.getUserInfo()
-    this.getQrCode()
+    this.getQrCode(this.userInfo.agentId)
     this.getVipAndPackage()
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   methods: {
     enterSharePage() {
-      this.$router.push({ name: 'share-business-card' })
+      this.$router.push({ path: '/user/share-business-card', query: { agentId: this.userInfo.agentId } })
     },
 
     overlayClose() {
@@ -102,8 +105,8 @@ export default {
       this.openPopup = true
     },
     //点击获取二维码
-    async getQrCode() {
-      const result = await userService.getQrCode()
+    async getQrCode(agentId) {
+      const result = await userService.getQrCode(agentId)
       if (result) {
         this.qrcodeImg = result.miniQrCode
       }
@@ -154,9 +157,6 @@ export default {
           break
       }
     }
-  },
-  computed: {
-    ...mapGetters(['userInfo'])
   }
 }
 </script>

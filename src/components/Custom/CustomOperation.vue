@@ -14,22 +14,22 @@
     </div>
     <div class="consult-button" :class="clientMobile.length==0&&'button'" @click="consultHandler">
       <span class="bg_img icon-consult" :style="{backgroundImage:'url('+consultImg+')'}"></span>
-      咨询
+      联系
     </div>
   </div>
 </template>
 <script>
 export default {
   props: {
-    attentionFlag: {type: Boolean, default: false},
-    clientMobile: {type: String, default: ''}
+    attentionFlag: { type: Boolean, default: false },
+    clientMobile: { type: String, default: '' }
   },
   data: () => ({
     attentionImg: require('IMG/custom/attention@2x.png'),
     attentionColorImg: require('IMG/custom/attentionColor@2x.png'),
     reportImg: require('IMG/custom/report@2x.png'),
     phoneImg: require('IMG/custom/phone@2x.png'),
-    consultImg: require('IMG/custom/consult@2x.png'),
+    consultImg: require('IMG/custom/consult@2x.png')
   }),
   methods: {
     attentionHandler() {

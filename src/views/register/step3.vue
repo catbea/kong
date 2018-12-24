@@ -98,7 +98,7 @@ export default {
       this.phoneFocus = focus
       let _userRegistInfo = {
         registerMobile: this.mobile,
-        registerCode: this.code,
+        registerCode: this.code
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },

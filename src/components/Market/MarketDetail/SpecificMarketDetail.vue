@@ -56,12 +56,12 @@ export default {
     },
     siteHandle() {
       this.$router.push({
-    path:'/public/map-Search',
-    query:{
-        latitude:this.info.longitude,
-        longitude:this.info.latitude
-    }
-    })
+        path: '/public/map-Search',
+        query: {
+          latitude: this.info.longitude,
+          longitude: this.info.latitude
+        }
+      })
     }
   }
 }
@@ -70,7 +70,7 @@ export default {
 .specific-market-detail-box {
   width: 339px;
   .specific-market-detail-name {
-    line-height:37px;
+    line-height: 37px;
     font-size: 26px;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
@@ -82,7 +82,7 @@ export default {
       font-size: 14px;
       font-weight: 500;
       color: rgba(51, 51, 51, 1);
-      line-height:20px;
+      line-height: 20px;
     }
     .specific-market-detail-condition-line {
       width: 1px;
@@ -104,23 +104,23 @@ export default {
     display: flex;
     align-items: center;
     position: relative;
-    .commission-detail{
-      width:12px;
-      height:12px;
+    .commission-detail {
+      width: 12px;
+      height: 12px;
       position: absolute;
-      right:5px;
+      right: 5px;
     }
-    span:nth-child(1){
+    span:nth-child(1) {
       width: 16px;
       height: 16px;
       margin: 0 8px;
     }
-    .commission-text{
+    .commission-text {
       white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          margin: 0;
-          width: 130px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 0;
+      width: 130px;
     }
   }
   .specific-market-detail {

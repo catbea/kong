@@ -3,9 +3,7 @@
     <div class="bg_img awWelfare-bg" :style="{'backgroundImage':'url('+bgCombinedShapeIcon+')'}">
       <div class="awWelfare-botton">
         <div class="awWelfare-botton-item">
-          <!-- <router-link to="/me/teammateList"> -->
-           <img :src="awtipsIcon" @click="goteammateList">
-          <!-- </router-link> -->
+          <img :src="awtipsIcon" @click="goteammateList">
         </div>
         <button @click="show1 = true" class="awWelfare-botton-item">
           <img :src="awtips1Icon">
@@ -27,6 +25,7 @@
               <p class="awWelfare-info-right-remak">邀请你加入AW大师</p>
             </div>
           </div>
+        </div>
       </div>
       <div class="awWelfare-center" id="card-result" v-show="status === 2"></div>
       
@@ -34,17 +33,19 @@
         请长按保存邀请图片
       </div>
     </div>
-   
-    <popup v-model="show1" position="center"  masker-opacity="0.6" :close-on-click-overlay="false">
+
+    <popup v-model="show1" position="center" masker-opacity="0.6" :close-on-click-overlay="false">
       <div class="register-rule-box" :style="{'backgroundImage':'url('+teammatBack+')'}">
         <div class="register-rule-box-name">活动规则</div>
         <div class="register-rule-box-content">
-
-          <div  class="register-rule-box-title">邀请注册</div>
+          <div class="register-rule-box-title">邀请注册</div>
           <div class="register-rule-box-text">
-            <div class="register-rule-box-text-item" v-if="regisItem" v-for="(regisItem,key) in registrationRules" :key="key"><div class="div-dian">•</div><div>{{regisItem}}</div></div>
+            <div class="register-rule-box-text-item" v-if="regisItem" v-for="(regisItem,key) in registrationRules" :key="key">
+              <div class="div-dian">•</div>
+              <div>{{regisItem}}</div>
+            </div>
           </div>
-          <div  class="register-rule-box-footer">
+          <div class="register-rule-box-footer">
             <p>本活动最终解释权归</p>
             <p>深圳尊豪网络科技股份有限公司所有</p>
           </div>
@@ -64,8 +65,8 @@ import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 import h2c from 'html2canvas'
 export default {
-  components:{
-    Popup,
+  components: {
+    Popup
   },
   data() {
     return {
@@ -76,12 +77,12 @@ export default {
       awbgcardIcon: require('IMG/user/invitation/aw-bgcard.png'),
       teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
       show1: false,
-      registrationRules:'',
-      invitationUrl:'',
-      status: 1,
+      registrationRules: '',
+      invitationUrl: '',
+      status: 1
     }
   },
-   computed: {
+  computed: {
     ...mapGetters(['userInfo'])
   },
   watch: {
@@ -107,16 +108,15 @@ export default {
       canvas.style.height = '100%'
       this.status = 2
       document.getElementById('card-result').appendChild(canvas)
+      this.status = 2
     },
-    async goteammateList(){
-       this.$router.push({name:'teammateList'})
+    async goteammateList() {
+      this.$router.push({ name: 'teammateList' })
     },
-    async getregisrules(){
+    async getregisrules() {
       const regis = await userService.getrules(1)
-      this.registrationRules = regis.rule.split("#")
-      console.log(this.registrationRules)
+      this.registrationRules = regis.rule.split('#')
     },
-    
 
     async getqueryInvitationUrl(){
       
@@ -147,18 +147,18 @@ export default {
 
 <style scoped lang="less">
 .van-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    max-height: 100%;
-    overflow-y: auto;
-    -webkit-transition: .3s ease-out;
-    transition: .3s ease-out;
-    -webkit-overflow-scrolling: touch;
-    -webkit-transform: translate3d(-50%,-50%,0);
-    transform: translate3d(-50%,-50%,0);
-    background-color: rgba(0,0,0,0);
-     text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-height: 100%;
+  overflow-y: auto;
+  -webkit-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+  background-color: rgba(0, 0, 0, 0);
+  text-align: center;
 }
 .radius-border {
   position: relative;
@@ -217,10 +217,10 @@ export default {
       position: absolute;
       bottom: 34px;
       display: flex;
-      .awWelfare-info-left{
-        .info-left-icon{
-          width:40px;
-          height:40px;
+      .awWelfare-info-left {
+        .info-left-icon {
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
         }
       }
@@ -232,15 +232,14 @@ export default {
             color:rgba(251,199,172,1);
             line-height:19px;
         }
-        .awWelfare-info-right-remak{
-            font-size:11px;
-            font-weight:300;
-            color:rgba(251,199,172,1);
-            line-height:15px;
+        .awWelfare-info-right-remak {
+          font-size: 11px;
+          font-weight: 300;
+          color: rgba(251, 199, 172, 1);
+          line-height: 15px;
         }
       }
     }
-   
   }
   .awWelfare-text {
     text-align: center;
@@ -258,29 +257,29 @@ export default {
   color: rgba(161, 100, 78, 1);
   .register-rule-box-name {
     font-size: 18px;
-    font-weight:600;
-    color:rgba(244,226,191,1);
-    line-height:39px;
+    font-weight: 600;
+    color: rgba(244, 226, 191, 1);
+    line-height: 39px;
     text-align: center;
   }
   .register-rule-box-content {
     overflow: scroll;
   }
   .register-rule-box-title {
-    font-size:16px;
-    font-weight:600;
-    color:rgba(161,100,78,1);
-    line-height:22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(161, 100, 78, 1);
+    line-height: 22px;
     text-align: left;
     padding-top: 14px;
     padding-left: 20px;
   }
   .register-rule-box-text {
     text-align: left;
-    font-size:12px;
-    font-weight:600;
-    color:rgba(161,100,78,1);
-    line-height:17px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(161, 100, 78, 1);
+    line-height: 17px;
     padding: 0 25px;
     margin-top: 4px;
     .register-rule-box-text-item {
@@ -293,19 +292,19 @@ export default {
   }
 }
 .register-rule-box-footer {
-    font-size:10px;
-    font-weight:400;
-    color:rgba(161,100,78,1);
-    line-height:16px;
-    position: absolute;
-    left: 15%;
-    bottom: 107px;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(161, 100, 78, 1);
+  line-height: 16px;
+  position: absolute;
+  left: 15%;
+  bottom: 107px;
 }
 .register-rule-box-close {
-     background-color: transparent;
-    border-radius: 0 0 0.16rem 0.16rem;
-    margin-top: 40px;
-    border: 0;
+  background-color: transparent;
+  border-radius: 0 0 0.16rem 0.16rem;
+  margin-top: 40px;
+  border: 0;
   img {
     width: 21px;
     height: 21px;

@@ -99,9 +99,9 @@ export default {
     linkerId: '',
     linkerInfo: null,
     bannerList: null,
-    customerList:[],
-    headCount:0,//当前显示的头像的下标
-    expireFlag:null, // 0过期 1已过期
+    customerList: [],
+    headCount: 0, //当前显示的头像的下标
+    expireFlag: null, // 0过期 1已过期
     show: false,
     boxShow: false,
     openFlag: true,
@@ -144,37 +144,39 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
-    headSlide(){
-      console.log(this.customerList,'头像数据')
+    headSlide() {
+      console.log(this.customerList, '头像数据')
       setInterval(() => {
         if (this.headCount < this.customerList.length - 1) {
-          this.headCount += 1;
+          this.headCount += 1
         } else {
-          this.headCount = 0;
+          this.headCount = 0
         }
-      },3000);
+      }, 3000)
     },
     shareBuildingPage() {
-      if(this.userInfo.name!==''&&this.userInfo.distributorName!==''&&this.userInfo.majorRegion!==""&&this.userInfo.institutionName!==""){ 
+      if (this.userInfo.name !== '' && this.userInfo.distributorName !== '' && this.userInfo.majorRegion !== '' && this.userInfo.institutionName !== '') {
         this.$router.push({ name: 'marketDetail-share' })
-      }else{
+      } else {
         Dialog.confirm({
-          title:'您有未完善的信息',
+          title: '您有未完善的信息',
           message: '信息不完整会影响传播效率哦',
-          confirmButtonText:'去完善',
-          className:'marketShareHint'
-        }).then(() => {
-          this.$router.push({name:'user-edit'})
-        }).catch(() => {
-          // on cancel
-        });
+          confirmButtonText: '去完善',
+          className: 'marketShareHint'
+        })
+          .then(() => {
+            this.$router.push({ name: 'user-edit' })
+          })
+          .catch(() => {
+            // on cancel
+          })
       }
-   },
+    },
     supplement() {
       this.show = true
     },
     moreInfoHandle() {
-      this.$router.push({ name: 'marketDetail-info', query:{id:this.linkerInfo} })
+      this.$router.push({ name: 'marketDetail-info', query: { id: this.linkerInfo } })
     },
     skipMarketDetail(val) {
       this.linkerId = val
@@ -189,16 +191,16 @@ export default {
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
       console.log(result, '楼盘详情数据')
-      this.linkerInfo = result 
-      this.customerList=result.customerList
-      this.headSlide() 
+      this.linkerInfo = result
+      this.customerList = result.customerList
+      this.headSlide()
       this.bannerList = result.bannerList
       let houseUseList = result.houseUseList
       houseUseList.unshift(result.saleStatus)
       this.info = houseUseList
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.expireFlag = result.expireFlag
-      console.log(this.expireFlag,'是否已开通')
+      console.log(this.expireFlag, '是否已开通')
       //this.titleBarHandle()
     },
     //判断该楼盘有无图片列表
@@ -229,9 +231,7 @@ export default {
       this.getLinkerDetail(this.linkerId)
     }
   },
-  destroyed() {
-    
-  }
+  destroyed() {}
 }
 </script>
 <style lang="less">
@@ -239,34 +239,35 @@ export default {
   overflow: auto;
   background: #ffffff;
   @keyframes show {
-      0% {
-        opacity: 0;
-        top: 0px;
-      }
-      100% {
-        opacity: 1;
-        top: 0;
-      }
-    }
-    @keyframes hide {
-      0% {
-        opacity: 1;
-        top: 0;
-      }
-      100% {
-        opacity: 0;
-        top: -32px;
-      }
-    }
-    .show-enter-active {
-      animation: show 1.2s;
-    }
-    .show-leave-active {
-      animation: hide 1.2s;
-    }
-    .show-enter, .show-leave-to {
+    0% {
       opacity: 0;
+      top: 0px;
     }
+    100% {
+      opacity: 1;
+      top: 0;
+    }
+  }
+  @keyframes hide {
+    0% {
+      opacity: 1;
+      top: 0;
+    }
+    100% {
+      opacity: 0;
+      top: -32px;
+    }
+  }
+  .show-enter-active {
+    animation: show 1.2s;
+  }
+  .show-leave-active {
+    animation: hide 1.2s;
+  }
+  .show-enter,
+  .show-leave-to {
+    opacity: 0;
+  }
   .van-tabs__wrap--scrollable .van-tab {
     flex: 1;
   }
@@ -295,18 +296,18 @@ export default {
           font-weight: 600;
           display: flex;
           margin-right: 16px;
-          align-items:center;
-          .head-portrait-box{
+          align-items: center;
+          .head-portrait-box {
             position: relative;
-            width:24px;
-            height:24px;
-            margin-left:4px;
-            .head-portrait {
-            position: absolute;
             width: 24px;
             height: 24px;
-            border-radius:50%;
-          }
+            margin-left: 4px;
+            .head-portrait {
+              position: absolute;
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+            }
           }
           .browse {
             color: rgba(0, 122, 230, 1);
@@ -410,26 +411,26 @@ export default {
     }
   }
 }
-.marketShareHint{
-  width:280px;
-  border-radius:12px;
-  text-align:center;
-  .van-dialog__header{
-    font-size:18px;
-    font-family:PingFangSC-Semibold;
-    font-weight:600;
-    color:rgba(51,51,51,1);
-    line-height:25px;
+.marketShareHint {
+  width: 280px;
+  border-radius: 12px;
+  text-align: center;
+  .van-dialog__header {
+    font-size: 18px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    line-height: 25px;
   }
-  .van-dialog__message{
-    font-size:15px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(51,51,51,1);
-    line-height:21px;
+  .van-dialog__message {
+    font-size: 15px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 21px;
   }
-  .van-dialog__footer{
-    border-top:1px solid #E5E5E5;
+  .van-dialog__footer {
+    border-top: 1px solid #e5e5e5;
   }
 }
 </style>

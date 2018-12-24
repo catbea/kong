@@ -1,109 +1,94 @@
 <template>
   <div class="detail-photo-page">
-    <!-- <full-screen :info="info"></full-screen> -->
-    <!-- <full-screen :info="communityList"></full-screen>
-    <full-screen :info="effectList"></full-screen> -->
-    <ul>
-      <p>{{templateData.groupName}} ({{templateData.listBannerVO.length}})</p>
+    <ul v-for="(item,index) in photoData" :key="item.groupId">
+      <p>{{item.groupName}} ({{item.listBannerVO.length}})</p>
       <div class="template-box">
-        <li tag="li" to="/" class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
-         v-for="(item,index) in templateData.listBannerVO" :key="index" @click="templateClick(index)"></li>
+        <li class="bg_img" v-for="(ite,inde) in item.listBannerVO" :key="ite.id"
+        :style="{backgroundImage:'url('+ite.imgUrl+')'}" @click="previewHandle(index,inde)"></li>
       </div>   
     </ul>
-    <ol>
-      <p>{{effectData.groupName}} ({{effectData.listBannerVO.length}})</p>
-      <div class="effect-box">
-        <li class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
-        v-for="(item,index) in effectData.listBannerVO" :key="index" @click="effectClick(index)"></li>
-      </div> 
-    </ol>
-    <div class="community-box">
-      <p>{{communityData.groupName}} ({{communityData.listBannerVO.length}})</p>
-      <div class="community-box-content">
-        <span class="bg_img" :style="{backgroundImage:'url('+item.imgUrl+')'}" 
-        v-for="(item,index) in communityData.listBannerVO" :key="index" @click="communityClick(index)"></span>
-      </div> 
-    </div>
   </div>
 </template>
 <script>
 import { ImagePreview } from 'vant'
-import FullScreen from './FullScreen'
-import MarketService from 'SERVICE/marketService'
+import marketService from 'SERVICE/marketService'
 export default {
-  created() {
-    this.linkerId=this.$route.params.id
-    this.getMarketDetailPhotoInfo()
+  async created() {
+    this.linkerId = this.$route.params.id
+    await this.getMarketDetailPhotoInfo()
+    await this.pushHandle()
   },
   data: () => ({
-    linkerId:null,
-    templateData:null,
-    templateList:[],
-    templateArr:[],
-    effectData: null,
-    effectList:[],
-    effectArr:[],
-    communityData:null,
-    communityList:[],
-    communityArr:[],
-    show: false
+    linkerId: null,
+    photoData: null,
+    show: false,
+    templetList: [],
+    resultList: [],
+    deployList: []
   }),
   components: {
     // FullScreen
   },
   methods: {
-    templateClick(n) {
-      ImagePreview({
-  images:this.templateArr,
-  startPosition:n,
-  onClose() {
-    // do something
-  }
-});
+    async getMarketDetailPhotoInfo() {
+      const res = await marketService.getMarketDetailPhoto(this.linkerId)
+      console.log(res, '相册数据')
+      this.photoData = res
     },
-    effectClick(n) {
-      ImagePreview({
-  images:this.effectArr,
-  startPosition:n,
-  onClose() {
-    // do something
-  }
-});
-    },
-    communityClick(n) {
-      ImagePreview({
-  images:this.communityArr,
-  startPosition:n,
-  onClose() {
-    // do something
-  }
-});
-    },
-    aPhotoList(n,arr){
-      for (let index = 0; index < n.length; index++) {
-        const element = n[index];
-        arr.push(element.imgUrl) 
+    pushHandle() {
+      if (this.photoData[0]) {
+        for (let index = 0; index < this.photoData[0].listBannerVO.length; index++) {
+          const element = this.photoData[0].listBannerVO[index].imgUrl
+          this.templetList.push(element)
+        }
+      }
+      if (this.photoData[1]) {
+        for (let index = 0; index < this.photoData[1].listBannerVO.length; index++) {
+          const element = this.photoData[1].listBannerVO[index].imgUrl
+          this.resultList.push(element)
+        }
+      }
+      if (this.photoData[2]) {
+        for (let index = 0; index < this.photoData[2].listBannerVO.length; index++) {
+          const element = this.photoData[2].listBannerVO[index].imgUrl
+          this.deployList.push(element)
+        }
       }
     },
-    async getMarketDetailPhotoInfo(){
-      const res = await MarketService.getMarketDetailPhoto(this.linkerId)
-      this.templateData=res[0]
-      this.templateList=this.templateData.listBannerVO 
-      this.aPhotoList(this.templateList,this.templateArr)
-      this.effectData=res[1]
-      this.effectList=this.effectData.listBannerVO
-      this.aPhotoList(this.effectList,this.effectArr)
-      this.communityData=res[2]
-      this.communityList=this.communityData.listBannerVO
-      this.aPhotoList(this.communityList,this.communityArr)
+    previewHandle(index, inde) {
+      //预览图片
+      if (index == 0) {
+        ImagePreview({
+          images: this.templetList,
+          startPosition: inde,
+          onClose() {
+            // do something
+          }
+        })
+      }
+      if (index == 1) {
+        ImagePreview({
+          images: this.resultList,
+          startPosition: inde,
+          onClose() {
+            // do something
+          }
+        })
+      }
+      if (index == 2) {
+        ImagePreview({
+          images: this.deployList,
+          startPosition: inde,
+          onClose() {
+            // do something
+          }
+        })
+      }
     }
   }
 }
 </script>
 <style lang="less">
-// .van-swipe-item{
-    // background:#ffffff;
-  // }
 .detail-photo-page {
   width: 375px;
   height: 100%;
@@ -115,18 +100,14 @@ export default {
     color: rgba(51, 51, 51, 1);
     line-height: 28px;
   }
-  .community-box-content,
-  .template-box,
-  .effect-box {
+  .template-box {
     display: flex;
     flex-wrap: wrap;
+    margin: 15px 0 46px 0;
   }
-  ul,
-  ol,
-  .community-box {
+  ul {
     margin: 19px 0 0 15px;
-    li,
-    span {
+    li {
       margin: 0 4px 4px 0;
       width: 83px;
       height: 83px;

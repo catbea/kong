@@ -134,7 +134,7 @@ export default {
   computed: {
     ...mapGetters(['userInfo']),
 
-     newLabelList() {
+    newLabelList() {
       return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
     }
   },

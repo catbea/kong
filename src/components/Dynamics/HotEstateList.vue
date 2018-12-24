@@ -32,9 +32,9 @@ export default {
       this.$emit('open', item)
     }
   },
-  watch:{
-    list(val){
-      for(let temp of val){
+  watch: {
+    list(val) {
+      for (let temp of val) {
         temp.linkerImg = temp.linkerHeadUrl
       }
     }

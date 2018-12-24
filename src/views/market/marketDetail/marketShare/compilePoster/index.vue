@@ -13,9 +13,10 @@
       <compile-cover :model="bannerList" @changeBackground="changeBg"></compile-cover>
       <div class="compile-button">
         <p @click="setReport">重置海报</p>
-        <p @click="savaReport">生成海报</p>
+        <p @click="savaReport" :style="{'pointer-events':this.pointerEvents}">生成海报</p>
       </div>
     </div>
+    <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2"></div>
   </div>
 </template>
@@ -41,29 +42,10 @@ export default {
     buildingInfo: {},
     bannerList: [],
     status: 1,
-    changeBgImg: ''
-    // topList:[
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   },
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   },
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   },
-    //   {
-    //    top:[
-    //       {left:"开发商",right:"惠州市太东地产有限公司"}
-    //       ]
-    //   }
-    // ],
+    changeBgImg: '',
+    showLoading: false,
+    pointerEvents: '',
+    lastOpTimer: 0
   }),
   methods: {
     changeBg(val) {
@@ -96,23 +78,27 @@ export default {
       }
     },
 
-    async savaReport() {
+    savaReport() {
+      let dd = new Date().getTime()
+      if (dd - this.lastOpTimer < 3000) return
+      this.lastOpTimer = dd
+      this.handleDate()
+    },
+
+    async handleDate() {
+      this.showLoading = true
+      this.pointerEvents = 'none'
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top').children[0], {
         logging: false,
         useCORS: true,
         dpr: 5
-        // width: document.getElementById('compile-poster-page').clientWidth * dpr,
-        // height: document.getElementById('compile-poster-page').clientHeight * dpr
       })
-      // canvas.style.width = document.getElementById('compile-poster-page').clientWidth * dpr
-      // canvas.style.height = document.getElementById('compile-poster-page').clientHeight * dpr
-      // canvas.style.width = document.body.offsetWidth * dpr + 'px'
-      // canvas.style.height = document.body.offsetHeight * dpr + 'px'
       canvas.style.width = '100%'
       canvas.style.height = '100%'
       document.getElementById('card-result').appendChild(canvas)
+      this.showLoading = false
     },
 
     setReport() {
@@ -129,17 +115,29 @@ export default {
 </script>
 <style lang="less">
 .compile-poster-page {
-  // position: relative;
+  position: relative;
   width: 100%;
   height: 100%;
   background: #ffffff;
 
+  .van-loading {
+    display: inline-block;
+    position: absolute;
+    margin-left: 39%;
+    width: 84px;
+    height: 84px;
+    margin-top: 50%;
+    z-index: 10000;
+  }
+
   .result {
+    position: absolute;
     width: 100%;
     height: 100%;
   }
 
   .box {
+    position: absolute;
     line-height: 22px;
     background: #ffffff;
     height: auto !important;

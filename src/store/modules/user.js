@@ -5,98 +5,55 @@ import commonService from 'SERVICE/commonService'
 const state = {
   jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    isVip: '1',
-    vipInfo: {
-      city: '广州市'
-    },
-    majorCity: '南京市',
-    address: '',
-    agentMinOpenid: '',
-    agentUpdateId: '',
-    agentid: '',
-    attentAccount: '',
-    avatarUrl: 'http://720ljq2test-10037467.cossh.myqcloud.com/ljqzs/shareImg/Time91438ec3-33e2-4024-9ab9-50393f28370e.png',
-    avatarUrlTwo: 'http://720ljq2test-10037467.cossh.myqcloud.com/1536198363904JeBNbFsYAKSbAJYm.png',
-    cardFirstView: '',
-    cardProjectFirstView: '',
-    channelId: '',
-    companyLogo: '',
-    companyName: '',
-    createTime: '2018-09-01 10:06:48',
-    createType: 2,
-    customEnterpriseName: '',
-    deleteFlag: 0,
+    agentId: '1063',
+    avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
-    distributorName: '垃圾垃圾',
-    enterpriseId: '90',
-    enterpriseName: '尊豪科技SIT',
-    organizationName: '机构',
-    existNewCoupons: '',
-    existNewProject: '',
-    givePrice: 0,
-    id: '705',
-    ifView: false,
-    institutionId: '46',
-    institutionLogo: '',
-    institutionName: '分销商小李',
-    isOne: 0,
-    is_update: false,
-    likeNum: '0',
-    linkerGuide: 1,
-    loginCount: 1,
-    loginTime: '2018-11-10 02:28:16',
-    logoUrl: '',
-    majorCity: '',    // 主营区域
-    majorRegion: '111111',
-    masterRecommendTip: '',
-    minOpenid: '',
-    mobile: '18676652795',
-    registerMobile: '13100000000',
-    mpOpenid: '',
-    myLinkerGuide: 0,
-    name: '嗨我是你的益达吗',
-    nameGuide: 0,
-    nickName: '离园则',
-    parentUserId: '',
-    // payCorpId: "ww5e4d879ddc307ea1",
-    cropId: "ww8f6801ba5fd2a112",
-    // pcOpenid: "oPeLD1HXPuZsdwb1WdN9HB8eRIw4",
-    payOpenId: 'oeKML1F_vZxBRzcW_pKjGsLkiVgQ',
-    position: '',
-    price: 2000,
-    qrCode: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/cardQrcode/4149/Timef021faa6-738d-4f03-8b5f-c8840b555494.jpg',
-    recommendTip: '',
-    registerType: '10',
-    shareNum: '0',
-    signature: '别问我是谁，请叫我大湿', 
-    status: 1,
-    storeId: '224',
-    storeName: '',
-    switchTime: '',
-    tempPhone: '18676652795',
-    token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJrYnlvN2giLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDgxNDA5NTYsImlhdCI6MTU0NTEzNjE1Nn0.C9AdO_CIUA6Da3ZpdCTWKL9zYjSiEz8xd7MmWc2Z5C0Fgnyfox7S3qD9I7pXRZQQLzDLTSmo515sDnLduwPCkw',
-    updateTime: '2018-10-19 17:37:47',
-    viewNum: 101,
-    wechatAccount: '112110',
+    distributorName: '广佛分公司',
+    enterpriseId: '91',
+    institutionId: '82',
+    institutionName: '',
+    isOne: '',
+    isVip: '',
     labelList: [
       {
-        labelId: '001',
-        labelName: '价格屠夫'
+        id: '',
+        labelId: '116',
+        labelName: '小鲜肉',
+        userId: ''
       },
       {
-        labelId: '002',
-        labelName: '喜欢睡觉'
+        id: '',
+        labelId: '122',
+        labelName: '豪宅专家',
+        userId: ''
       },
       {
-        labelId: '003',
-        labelName: '不愿加班'
+        id: '',
+        labelId: '121',
+        labelName: '佛系卖房',
+        userId: ''
       },
       {
-        labelId: '004',
-        labelName: '呵呵死你'
+        id: '',
+        labelId: '124',
+        labelName: '高端盘专家',
+        userId: ''
       }
-    ]
+    ],
+    token:
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJvYTlhMTQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjgyIiwiZXhwIjoxNTQ4NjQxMDY3LCJpYXQiOjE1NDU2MzYyNjd9.ECcd4FffRZWRRJSIY3bVOIMIg4CQ6lH74crWo0_DT_Xhxmol5q0ltBvopa3LBjFoeFgA6uD_F7uKWKzOwjg4YA',
+    majorCity: '长治市',
+    majorRegion: '山西省/长治市/襄垣县',
+    name: '周丹',
+    nickName: '',
+    payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
+    pcOpenid: 'onXUy1sGkPMX-Z34buMYLs5q2IEc',
+    price: 874400,
+    registerMobile: '18603000246',
+    signature: 'mwwwwwwwmm',
+    tempPhone: '18603000246',
+    vipInfo: '',
+    wechatAccount: ''
   },
   userVipInfo: {},
   userArea: {
@@ -104,10 +61,11 @@ const state = {
     latitude: '', // 纬度
     province: '', // 省
     city: '深圳市', // 市
-    selectedCity: '深圳市',
+    selectedCity: null,
     marketSelectedCity: null, //楼盘列表城市选择
     vipSelectedCity: null,
-    myReportCity: '',   // 报备楼盘
+    myMarketSelectedCity: null, //我的楼盘城市选择
+    myReportCity: '', // 报备楼盘
     county: '' // 区
   },
   reportAddInfo: {
@@ -124,7 +82,6 @@ const state = {
     id: '',
     name: ''
   },
-
   userRegistInfo: {
     registerMobile: '', // 注册手机号
     registerCode: '', // 注册验证码
@@ -133,26 +90,32 @@ const state = {
     area: '南山区',
     distributorId: '124', // 公司ID
     distributorName: 'AW大师',
-    institutionId: '190', // 机构ID
+    institutionId: '42', // 机构ID sit环境190 uat环境42/44 pro环境
     institutionName: 'AW大师'
   },
-
   //点击选中的楼盘id
   buildId: '',
-
-  imUserSig: null
+  imUserSig: null,
+  guidance: {
+    dynamics: false
+  }
 }
 
 const getters = {
-  userInfo: state => { return state.userInfo },
+  userInfo: state => {
+    return state.userInfo
+  },
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   treeInfo: state => state.treeInfo,
-  jssdkConfig: state => { return state.jssdkConfig },
+  jssdkConfig: state => {
+    return state.jssdkConfig
+  },
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
   imUserSig: state => state.imUserSig,
+  userGuidance: state => state.guidance
 }
 
 const actions = {
@@ -161,7 +124,8 @@ const actions = {
     await localStorage.setItem('awMasterUserInfo', _userInfo)
     commit(types.USER_INFO, userInfo)
   },
-  async getImUserSig({ commit }) {//im签名
+  async getImUserSig({ commit }) {
+    //im签名
     const res = await commonService.getUserSig()
     commit(types.IM_USER_SIG, res)
   },
@@ -218,7 +182,10 @@ const mutations = {
     state.buildId = data
   },
   [types.IS_ONE](state, data) {
-    state.isOne = data
+    state.userInfo.isOne = data
+  },
+  [types.GUIDANCE](state, data) {
+    state.guidance = Object.assign(state.guidance, data)
   }
 }
 

@@ -14,20 +14,25 @@ const dayDiff = (timestamp1, timestamp2) => {
  * 4、非本年时间显示格式 yy-MM-dd HH:mm'
  */
 export default (date, serverTimestamp) => {
-  const _targetTimestamp = (typeof (date) === 'number' ? new Date(date).getTime() : ((isNaN(typeof (parseInt(date)))) ? date : new Date(parseInt(date)).getTime())) // 应该限制date传入类型,而不应该作如此多的判断
+  const _targetTimestamp = typeof date === 'number' ? new Date(date).getTime() : isNaN(typeof parseInt(date)) ? date : new Date(parseInt(date)).getTime() // 应该限制date传入类型,而不应该作如此多的判断
   const _datumTimestamp = serverTimestamp ? new Date(parseInt(serverTimestamp)).getTime() : new Date().getTime() // 基准时间
-  const _range = Math.abs(_targetTimestamp - _datumTimestamp)   // 相差毫秒数的绝对值
-  const _rangeDay = dayDiff(_targetTimestamp, _datumTimestamp)  // 相差的天数
+  const _range = Math.abs(_targetTimestamp - _datumTimestamp) // 相差毫秒数的绝对值
+  const _rangeDay = dayDiff(_targetTimestamp, _datumTimestamp) // 相差的天数
   const _targetDateFormat = dateTimeFormatter(_targetTimestamp, 4)
   // 先判断是不是同一天（时间差不超过(24 * 3600 * 1000毫秒）且getDate()相等
-  if (_range < 86400000 && _rangeDay === 0) {// 同一天
-    if(_range < 60000){ // 相差一分钟内 -> xx秒前
+  if (_range < 86400000 && _rangeDay === 0) {
+    // 同一天
+    if (_range < 60000) {
+      // 相差一分钟内 -> xx秒前
       return `${Math.floor(_range / 1000)}秒${_datumTimestamp > _targetTimestamp ? '前' : '后'}`
-    }else if(_range < 3600000){ // 相差一小时内 -> xx分钟前
+    } else if (_range < 3600000) {
+      // 相差一小时内 -> xx分钟前
       return `${Math.floor(_range / 60000)}分钟${_datumTimestamp > _targetTimestamp ? '前' : '后'}`
-    }else if(_range < 10800000){  //相差三小时内 -> x小时前
+    } else if (_range < 10800000) {
+      //相差三小时内 -> x小时前
       return `${Math.floor(_range / 3600000)}小时${_datumTimestamp > _targetTimestamp ? '前' : '后'}`
-    }else{  // 相差3小时以上 -> 今天 xx:xx:xx
+    } else {
+      // 相差3小时以上 -> 今天 xx:xx:xx
       return `今天${_targetDateFormat.substring(6)}`
     }
   } else if (_range < 172800000 && _rangeDay < 2) {

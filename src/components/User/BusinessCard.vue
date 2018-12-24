@@ -6,7 +6,8 @@
           <div class="info-box-title">
             <img class="info-box-left" :src="leftIcon" @click="showQrCode">
             <div class="info-box-right" @click="shareUserCard">
-              <img class="share-img" :src="rightIcon">
+              <!-- <img class="share-img" :src="rightIcon"> -->
+              <i style="color:#afb0b6;font-size:24px;" class="icon iconfont icon-Building_list_share"></i>
               <span class="share-view">分享</span>
             </div>
           </div>
@@ -68,7 +69,7 @@
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
-        <p class="info-desc vip-desc">{{vipTimeInfo}}</p>
+        <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
       </router-link>
       <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
         <img :src="discountIcon">
@@ -97,9 +98,6 @@ export default {
     shareIcon: require('IMG/user/share.png'),
     editIcon: require('IMG/user/editInfo@2x.png')
   }),
-
-  onCreated: {},
-
   methods: {
     editCLickHandler() {
       this.$router.push('/user/edit')
@@ -153,7 +151,6 @@ export default {
       background: rgba(64, 68, 87, 1);
       display: flex;
       flex-direction: column;
-     
 
       > .info-top {
         width: 100%;
@@ -271,11 +268,11 @@ export default {
       }
     }
 
-     > .modify-img{
-       width: 100%;
-       position: absolute;
-        margin-top: -40px;
-      }
+    > .modify-img {
+      width: 100%;
+      position: absolute;
+      margin-top: -40px;
+    }
   }
   > .business-status-box {
     background-color: #ffffff;
@@ -294,14 +291,14 @@ export default {
       border-radius: 3px;
       margin-top: 15px;
       > img {
-        margin: 20px;
+        margin: 20px 10px;
         width: 24px;
         height: 24px;
       }
       .info-title {
         position: absolute;
         top: 15px;
-        left: 55px;
+        left: 40px;
         font-size: 16px;
         font-weight: 400;
         color: #87665a;
@@ -310,16 +307,16 @@ export default {
       .info-desc {
         position: absolute;
         top: 35px;
-        left: 55px;
+        left: 40px;
         font-size: 12px;
         font-weight: 400;
         color: #999999;
-        line-height: 1.5;
+        line-height: 22px;
       }
     }
     > .status-info-left {
       margin: 0 15px;
-      >.info-desc{
+      > .info-desc {
         font-size: 10px;
         white-space: nowrap;
       }

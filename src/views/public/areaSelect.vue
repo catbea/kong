@@ -5,10 +5,14 @@
     </div>
     <div class="area-selection-box">
       <div class="current-location">
-        <p class="location-str">
+        <p class="location-str" v-if="userArea.city">
           {{userArea.city}}
           <span>当前城市</span>
         </p>
+        <div class="location-fail" v-else>
+          <p class="fail-str">定位失败,请检查</p>
+          <p class="retry-text" @click="retryLocation">重新定位</p>
+        </div>
       </div>
       <div class="selection-box">
         <div class="hot-container">
@@ -40,6 +44,7 @@
 <script>
 import Search from 'COMP/Search'
 import { fullArea } from '@/utils/fullArea'
+import wechatApi from '@/utils/wechatApi'
 import letter from '@/utils/letter'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
@@ -68,7 +73,7 @@ export default {
   },
   methods: {
     itemClick(val) {
-      console.log(val,this.fromPage)
+      console.log(val, this.fromPage)
       switch (this.fromPage) {
         case 'myMember':
           this.$store.commit(types['USER_AREA'], { vipSelectedCity: val })
@@ -79,11 +84,17 @@ export default {
         case 'market':
           this.$store.commit(types['USER_AREA'], { marketSelectedCity: val })
           break
+        case 'myMarket':
+          this.$store.commit(types['USER_AREA'], { myMarketSelectedCity: val })
+          break
         default:
           this.$store.commit(types['USER_AREA'], { selectedCity: val })
           break
       }
       this.$router.go(-1)
+    },
+    retryLocation() {
+      wechatApi.getUserArea()
     },
     keyTouchStartHandler(e) {
       // debugger
@@ -168,6 +179,21 @@ export default {
           font-size: 13px;
           font-weight: 400;
           color: #999999;
+        }
+      }
+      > .location-fail {
+        display: flex;
+        justify-content: space-between;
+        > .fail-str {
+          font-size: 16px;
+          color: #333333;
+          font-weight: 600;
+        }
+        > .retry-text {
+          font-size: 12px;
+          color: #007ae6;
+          font-weight: 400;
+          line-height: 1.5;
         }
       }
     }

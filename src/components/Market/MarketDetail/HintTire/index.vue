@@ -28,28 +28,25 @@ export default {
   },
   data: () => ({
     enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
-    hintShow:true
+    hintShow: true
   }),
-  computed:{
-   ...mapGetters(['userInfo'])
+  computed: {
+    ...mapGetters(['userInfo'])
   },
   methods: {
-    guidanceHandle(){//新手引导
-    if(this.userInfo.isOne==1){
-      this.hintShow=true
-    }else{
-      this.hintShow=false
-    }
+    guidanceHandle() {
+      //新手引导
+      if (this.userInfo.isOne == 1) {
+        this.hintShow = true
+      } else {
+        this.hintShow = false
+      }
     },
-   async knowHandle() {
-    const res = await marketService.getMarketUpdateIsOne()
-    // console.log(res,'新手引导信息',this.userInfo.isOne);
-      this.hintShow=false
-      this.$store.commit(types.IS_ONE,0)
-    //   console.log(this.$store.getters.theFirstTime,'已改')
-    //   localStorage.first=false
-    //  let oldObj = localStorage.getItem("first")
-    //     this.flag = JSON.parse(oldObj)
+    async knowHandle() {
+      const res = await marketService.getMarketUpdateIsOne()
+      this.hintShow = false
+      // TODO 不是修改is_one
+      this.$store.commit(types.IS_ONE, 0)
     }
   }
 }
@@ -63,19 +60,19 @@ export default {
   opacity: 0.65;
   z-index: 11;
   .operate-1 {
-        margin:0 0 0 320px;
-        display: flex;
-        > div {
-          padding: 10px;
-          padding-bottom:0px;
-          font-size: 12px;
-          color: #fff;
-          > i {
-            font-size: 24px;
-            display: block;
-          }
-        }
+    margin: 0 0 0 320px;
+    display: flex;
+    > div {
+      padding: 10px;
+      padding-bottom: 0px;
+      font-size: 12px;
+      color: #fff;
+      > i {
+        font-size: 24px;
+        display: block;
       }
+    }
+  }
   .hint-box {
     width: 225px;
     height: 194px;

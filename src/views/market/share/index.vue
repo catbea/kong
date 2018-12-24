@@ -23,12 +23,15 @@
             :to="{path:'/marketDetail/share/compile',query:{linkerId:this.buildingInfo.linkerId}}"
             class="compile"
           >编辑海报</router-link>
-          <li class="save" @click="savaReport">保存海报</li>
+          <li class="save" @click="savaReport" :style="{'pointer-events':this.pointerEvents}">保存海报</li>
         </ul>
         <!-- <router-view></router-view> -->
       </div>
     </div>
-    <div class="result" id="card-result" v-show="status === 2"></div>
+    <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
+    <div class="result" id="card-result" v-show="status === 2">
+      <img id="imgcard"  />
+    </div>
   </div>
 </template>
 <script>
@@ -46,7 +49,10 @@ export default {
     coverBg: require('IMG/dev/page1/cover2@2x.png'),
     logoImg: require('IMG/dev/page1/logo@2x.png'),
     buildingInfo: {},
-    status: 1
+    status: 1,
+    showLoading: false,
+    pointerEvents: '',
+    lastOpTimer: 0
   }),
   created() {
     this.id = this.$route.params.id
@@ -59,17 +65,29 @@ export default {
         this.buildingInfo = result
       }
     },
-    async savaReport() {
+    savaReport() {
+      let dd = new Date().getTime()
+      if (dd - this.lastOpTimer < 3000) return
+      this.lastOpTimer = dd
+      this.handleDate()
+    },
+
+    async handleDate() {
+      this.showLoading = true
+      this.pointerEvents = 'none'
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '101%'
-      canvas.style.height = '100%'
+      // canvas.style.width = '100%'
+      // canvas.style.height = '100%'
 
-      document.getElementById('card-result').appendChild(canvas)
+      let image = document.getElementById('imgcard')
+      image.src = canvas.toDataURL('image/png')
+      // document.getElementById('card-result').appendChild(canvas)
+      this.showLoading = false
     }
   },
   computed: {
@@ -81,10 +99,23 @@ export default {
 .market-share-page {
   width: 100%;
   height: 100%;
+  position: relative;
   background: #ffffff;
   .box {
+    position: absolute;
     margin-bottom: 5px;
   }
+
+  .van-loading {
+    display: inline-block;
+    position: absolute;
+    margin-left: 39%;
+    width: 84px;
+    height: 84px;
+    margin-top: 50%;
+    z-index: 10000;
+  }
+
   .share-top {
     position: relative;
     width: 300px;
@@ -229,6 +260,7 @@ export default {
         color: rgba(0, 122, 230, 1);
         background: #ffffff;
         margin-left: 38px;
+        margin-right: 3px;
       }
       .save {
         width: 144px;
@@ -241,6 +273,7 @@ export default {
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
         margin-right: 38px;
+        margin-left: 3px;
       }
     }
   }

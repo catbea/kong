@@ -72,30 +72,33 @@ export default {
     this.getMsgList()
   },
   methods: {
-    msgClickHandle(item) { 
+    msgClickHandle(item) {
       let CId = item.keyword.split('|')[0]
       let clientId = CId.split('_')[1]
-      this.$router.push({path: '/custom/message/message', query: {
-        clientId: clientId
-      }})
+      this.$router.push({
+        path: '/custom/message/message',
+        query: {
+          clientId: clientId
+        }
+      })
     },
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
     formatMsg(item) {
-      if(item.msgType == "TIMCustomElem") {
+      if (item.msgType == 'TIMCustomElem') {
         let msg = JSON.parse(item.msgShow)
-        if(msg.Desc == 2) {
+        if (msg.Desc == 2) {
           return '[语音消息]'
-        } else if(msg.Desc == 3) {
+        } else if (msg.Desc == 3) {
           return '【链接】' + JSON.parse(msg.Data).linkerName
-        } else if(msg.Desc == 1) {
+        } else if (msg.Desc == 1) {
           return msg.Data
         }
       } else {
         let msg = JSON.parse(item.msgShow)
         return msg.Text
-      } 
+      }
     },
     async getMsgList() {
       const res = await dynamicsService.getAgentMsgAndTotal()

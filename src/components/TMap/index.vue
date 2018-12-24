@@ -118,7 +118,6 @@ export default {
       this.cleanMark()
       let icon = this.getIcon()
       this.markMaker(icon)
-      console.log(icon)
     },
     cleanMark() {
       while (this.markList.length > 0) {

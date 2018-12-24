@@ -85,7 +85,7 @@ export default {
       margin-right: 16px;
       width: 125px;
       height: 44px;
-      background:#ddd;
+      background: #ddd;
       border-radius: 22px;
       font-size: 15px;
       font-family: PingFang-SC-Semibold;

@@ -105,7 +105,6 @@ import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import wechatApi from '@/utils/wechatApi'
-import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
@@ -152,16 +151,15 @@ export default {
     // wechatApi.wx.showMenuItems()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
+    this.agentId = this.$route.query.agentId
+    this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
-    this.getQrCode()
+    this.getQrCode(this.agentId)
     this.shareHandler()
-  },
-  computed: {
-    ...mapGetters(['userInfo'])
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.userInfo.enterpriseId, this.userInfo.id, '1')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '1')
       this.info = res
 
       this.infoId = res.id
@@ -173,7 +171,7 @@ export default {
         avatarUrl: this.info.avatarUrl,
         distributorName: this.info.distributorName,
         enterpriseName: this.info.enterpriseName,
-        institutionName:this.info.institutionName
+        institutionName: this.info.institutionName
       }
       this.shareData = {
         title: this.info.title,
@@ -186,8 +184,8 @@ export default {
       this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
 
-    async getQrCode() {
-      const result = await userService.getQrCode()
+    async getQrCode(agentId) {
+      const result = await userService.getQrCode(agentId)
       if (result) {
         this.qrcodeInfo = result
       }
@@ -219,40 +217,27 @@ export default {
           this.collectionStatus = 0
         }
       }
-
-      // if (res) {
-      //   console.log('999999999999')
-      //   if (res.deleteType === 0) {
-      //     console.log(res.deleteType + '====')
-      //     this.collectionStatus = 1
-      //   } else {
-      //     console.log(res.deleteType + '!!!!!')
-      //     this.collectionStatus = 0
-      //   }
-      // } else {
-      //   console.log('00000000000000')
-      // }
     },
     async articleShare() {
       let params = {
-          deleteType: 0,
-          infoId: this.infoId
-        }
+        deleteType: 0,
+        infoId: this.infoId
+      }
       const result = await discoverService.articleShare(params)
     },
     // 分享
     shareHandler() {
-      wechatApi.wechatShare(this.shareData).then(res => {
-        this.articleShare()
-      }).catch(e => {
-
-      })
-    },
-
+      wechatApi
+        .wechatShare(this.shareData)
+        .then(res => {
+          this.articleShare()
+        })
+        .catch(e => {})
+    }
   },
-  watch:{
+  watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
-    '$route'(){
+    $route() {
       this.$router.go(0)
     }
   }

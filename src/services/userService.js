@@ -176,7 +176,7 @@ class UserService {
 
   /**
    * 收藏文章
-   * @param {*} info 
+   * @param {*} info
    */
   articleCollection(info) {
     return xhr({
@@ -185,7 +185,6 @@ class UserService {
       body: info
     })
   }
-
 
   /**
    * 首页查看我的楼盘
@@ -205,15 +204,13 @@ class UserService {
     //推荐楼盘的数据
     return xhr({
       url: '/myLinker/displayRecommendLinker',
-      body: {
-
-      }
+      body: {}
     })
   }
   /**
    * 修改我的楼盘数据
    * @param {*} linkerId 楼盘ID
-   * @param {*} status 关注状态：0：已关注 1：未关注 
+   * @param {*} status 关注状态：0：已关注 1：未关注
    * @param {*}  大师推荐 0：未推荐 1：大师推荐，2：普通推荐
    *             展示状态：0-展示，1-不展示； 置顶状态：0-否,10-置顶
    * @param {*} operationType  10-关注;  20-推荐;  30-展示;  40-置顶;
@@ -293,7 +290,7 @@ class UserService {
 
   /**
    * 获取热门楼盘
-   * @param {Object} payload 组装参数 
+   * @param {Object} payload 组装参数
    */
   getHotLinker(payload) {
     return xhr({
@@ -374,16 +371,20 @@ class UserService {
 
   /**
    * 获取分享二维码
+   * @param {*} agentId
    */
-  getQrCode() {
+  getQrCode(agentId) {
     return xhr({
-      url: '/cpShare/nameCardShare'
+      url: '/cpShare/nameCardShare',
+      body: {
+        agentId
+      }
     })
   }
   /**
    * 邀请开通列表 -【企业微信
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getopenRewards(current, size = 10) {
     return xhr({
@@ -396,8 +397,8 @@ class UserService {
   }
   /**
    * 邀请注册列表
-   * @param {*} current 
-   * @param {*} size 
+   * @param {*} current
+   * @param {*} size
    */
   getregisterRewards(current, size = 10) {
     return xhr({
@@ -408,10 +409,10 @@ class UserService {
       }
     })
   }
-  
+
   /**
    * 查询活动规则
-   * @param {*} type 
+   * @param {*} type
    */
   getrules(type) {
     return xhr({
@@ -426,9 +427,21 @@ class UserService {
    */
   getqueryInvitationUrl() {
     return xhr({
-      url: '/user/queryInvitationUrl',
+      url: '/user/queryInvitationUrl'
     })
   }
 
+  /**
+   * 获取用户的楼盘总数
+   * @param displayFlag 0:展示的楼盘 1:不展示的楼盘
+   */
+  queryMyLinkerCount(displayFlag) {
+    return xhr({
+      url: '/myLinker/queryMyLinkerCount',
+      body: {
+        displayFlag
+      }
+    })
+  }
 }
 export default new UserService()

@@ -4,7 +4,6 @@
       <div class="search-comp">
         <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
       </div>
-      <router-link to="/public/map-Search/" class="bg_img location-icon" :style="{'backgroundImage':'url(' + locationIcon + ')'}"></router-link>
     </div>
     <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
@@ -58,36 +57,35 @@ export default {
   watch: {
     projectFilters: {
       handler(val) {
-        console.log('----000000---')
         this.finished = false
         this.page = 1
-        this.getProjectList()
+        this.marketList = []
+        // this.getProjectList()
       },
       deep: true
     }
   },
   created() {
-    this.selectedCity = this.userArea.marketSelectedCity || this.userArea.city 
+    this.selectedCity = this.userArea.marketSelectedCity || this.userArea.city
     this.searchContent.siteText = this.selectedCity
     this.getBrokerInfo()
   },
   methods: {
     onLoad() {
-      console.log('-------')
       this.getProjectList()
     },
 
     async getProjectList() {
-      let param = {current: this.page, size: this.pageSize}
+      let param = { current: this.page, size: this.pageSize }
       //组装检索条件
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let _filters = screenFilterHelper(this.projectName, mergeFilters)
-      param = Object.assign(param, _filters) 
+      param = Object.assign(param, _filters)
       param.city = this.selectedCity
       // console.log(param)
 
       const res = await marketService.getHouseList(param)
-      this.marketList = this.page <= 1 ? res.records :  this.marketList.concat(res.records)
+      this.marketList = this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {
         this.finished = true
       }
@@ -110,9 +108,9 @@ export default {
     skipDetail(item) {
       this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
-    // s搜索区域点击处理
+    // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select', query: {fromPage:'market'} })
+      this.$router.push({ name: 'area-select', query: { fromPage: 'market' } })
     },
     focusHandler() {
       this.$router.push({ name: 'market-search' })
@@ -127,9 +125,9 @@ export default {
     width: 375px;
     height: 44px;
     > .search-comp {
-      width: 305px;
+      width: 345px;
       height: 30px;
-      margin: 7px 50px 7px 10px;
+      margin: 10px 50px 7px 10px;
     }
     > .location-icon {
       position: absolute;

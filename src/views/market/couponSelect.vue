@@ -21,15 +21,15 @@ export default {
   },
   data: () => ({
     couponList: [],
-    status:0,
+    status: 0,
     unCheckImg: require('IMG/user/mealMarket/check@2x.png'),
     checkEndImg: require('IMG/user/mealMarket/checkColor@2x.png')
   }),
 
   created() {
-    this.couponList = this.projectCoupons
+    this.couponList = this.marketOpenCache.projectCoupons
     let _list = []
-    for (let item of this.projectCoupons) {
+    for (let item of this.marketOpenCache.projectCoupons) {
       let obj = {}
     }
     // this.getCoupan()
@@ -47,7 +47,7 @@ export default {
 
     couponItemClickHandle(item) {
       // this.$store.dispatch('setCurrSelectedCoupon', item)
-      this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, {currSelectedCoupon: item}) )
+      this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { currSelectedCoupon: item }))
       this.$router.go('-1')
     }
   }

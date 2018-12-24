@@ -8,8 +8,8 @@
       </div>
       <ul class="head-describe">
         <li>{{userInfo.nickName}}</li>
-        <li v-show="packageCount>0">已购买{{packageCount>0 ? packageCount+'个' : '' }}套餐，最晚将于{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
-        <li v-show="packageCount==0">当前为开通套餐</li>
+        <li v-if="packageCount>0">已购买{{packageCount>0 ? packageCount+'个' : '' }}套餐，最晚将于{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
+        <li v-if="packageCount==0">当前未开通套餐</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
       </div>
@@ -88,11 +88,11 @@ export default {
   methods: {
     async addProjectHandle() {
       const res = await marketService.queryLastInfoByAgentId()
-      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: res.id, type:'package'}})
+      this.$router.push({ path: '/user/myMember/selectedDisk', query: { packageId: res.id, type: 'package' } })
     },
 
     async payClickHandle() {
-      if(this.packageCount >= 3) {
+      if (this.packageCount >= 3) {
         this.$toast('最多能开通3个套餐')
         return
       }
@@ -105,7 +105,7 @@ export default {
       const res = await commonService.packagePayment(param)
       const purchaseId = res.purchaseId
       this.isPayLoading = false
-      if(res.prepayStatus){
+      if (res.prepayStatus) {
         if (res.isPay) {
           wx.chooseWXPay({
             //弹出支付
@@ -144,15 +144,15 @@ export default {
         title: '开通成功',
         message: '成功开通套餐，海量楼盘等你添加~',
         cancelButtonText: '取消'
-      }).then(() => {
-        this.addProjectHandle()
-      }).catch(() => {
-          
       })
+        .then(() => {
+          this.addProjectHandle()
+        })
+        .catch(() => {})
     },
 
     async selectProjectHandle(item) {
-      this.$router.push({path:'/user/myMember/selectedDisk', query:{packageId: item.id, type:'package'}})
+      this.$router.push({ path: '/user/myMember/selectedDisk', query: { packageId: item.id, type: 'package' } })
     },
 
     async getPackageInfo() {
@@ -161,13 +161,13 @@ export default {
       this.expireDate = res.expireDate ? parseInt(res.expireDate) : 0
       this.balance = res.price
       this.packageCount = res.count
-      if(res.packagePurchageList.length > 0) {
-        for(let i=0; i<res.packagePurchageList.length; i++) {
+      if (res.packagePurchageList.length > 0) {
+        for (let i = 0; i < res.packagePurchageList.length; i++) {
           let item = res.packagePurchageList[i]
           let obj = {
             id: item.id,
             packageId: item.packageId,
-            title: '已购套餐'+(i+1),
+            title: '已购套餐' + (i + 1),
             projectSelected: item.giveNum + item.limitTotal - item.limitResidue,
             projectCount: item.giveNum + item.limitTotal,
             expireDate: item.expireDate
@@ -176,7 +176,7 @@ export default {
         }
       }
 
-      if(res.packageList.length > 0) {
+      if (res.packageList.length > 0) {
         this.currPackage = res.packageList[0]
         this.packageInfo = {
           price: this.currPackage.price,
@@ -223,7 +223,7 @@ export default {
           top: -1px;
           right: 0;
         }
-        .avatar{
+        .avatar {
           width: 60px;
           height: 58px;
         }

@@ -42,7 +42,7 @@
         </van-tab>
         <van-tab title="足迹">
           <!-- :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData" :finished="currentData.finished"-->
-          <van-list v-model="loading"  @load="onLoad">
+          <van-list v-model="loading" :finished="finished" @load="onLoad">
               <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
            </van-list>
         </van-tab>
@@ -123,11 +123,9 @@ export default {
     areaCode: '440305', // 默认显示省市区位置code
     areaTitle: '',
     pickerShow: false,
-    pickerList: null,
+    pickerList: null
   }),
-  computed: {
-    
-  },
+  computed: {},
   watch: {
     areaShow(val) {
       this.$emit('update:show', val)
@@ -149,7 +147,6 @@ export default {
      * 切换tab
      */
     onClick() {
-      console.log(this.activeIndex)
       if (this.activeIndex == 0) {
         this.getCustomPieChart(this.clientId)
         this.getCustomerSevenDayTrendChart(this.clientId)
@@ -189,12 +186,15 @@ export default {
       window.location.href = 'tel:' + this.clientMobile
     },
     consultHandler() {
-      this.$router.push({path: '/custom/message/message', query: {
-        clientId: this.clientId,
-        clientMobile: this.clientMobile,
-        customerRemarkName: this.customBaseInfo.clientName,
-        headImgUrl: this.customBaseInfo.avatarUrl
-      }})
+      this.$router.push({
+        path: '/custom/message/message',
+        query: {
+          clientId: this.clientId,
+          clientMobile: this.clientMobile,
+          customerRemarkName: this.customBaseInfo.clientName,
+          headImgUrl: this.customBaseInfo.avatarUrl
+        }
+      })
     },
     previewAvatarUrl() {
       if (this.customBaseInfo.avatarUrl != '') {
@@ -206,7 +206,6 @@ export default {
     },
     // 立即续费
     renewHandler(val) {
-      console.log('renew', val)
       if (val.sameDistributor == '0') {
         Dialog.alert({
           title: '该楼盘不可续费',
@@ -215,9 +214,9 @@ export default {
         }).then(() => {
           // on close
         })
-      }else {
+      } else {
         // this.$router.push(`/marketDetail/open${val.linkerId}`)
-        this.$router.push({name: 'marketDetail-open', params: {id: val.linkerId} })
+        this.$router.push({ name: 'marketDetail-open', params: { id: val.linkerId } })
       }
     },
     /**
@@ -229,7 +228,7 @@ export default {
       this.selectIndex = object.index
       this.areaTitle = object.item.title
       if (item.title == '来源') {
-        return;
+        return
       }
       if (item.title == '备注名称') {
         let params = {
@@ -248,7 +247,6 @@ export default {
       } else if (item.title == '位置') {
         this.areaShow = !this.areaShow
       } else if (item.title == '来源') {
-
       } else {
         this.pickerShow = !this.pickerShow
         if (item.title == '性别') {
@@ -269,7 +267,6 @@ export default {
       this.pickerShow = false
     },
     confirmHandler(val) {
-      console.log(val, this.selectItem, this.selectIndex)
       this.areaShow = false
       this.pickerShow = false
       if (this.selectItem.title == '位置') {
@@ -378,31 +375,31 @@ export default {
       for (var i in this.analysisListData) {
         var item = this.analysisListData[i]
         item.progress = Number(item.intentionality)
-        let color;
+        let color
         if (item.progress >= Number(70)) {
           color = '#007AE6'
-        }else {
+        } else {
           color = '#cccccc'
         }
         item.color = color
         item.textColor = color
         if (item.saleStatus == 0) {
           item.saleStr = '热销中'
-        }else if (item.saleStatus == 1) {
+        } else if (item.saleStatus == 1) {
           item.saleStr = '即将发售'
-        }else {
+        } else {
           item.saleStr = '售罄'
         }
         if (item.shelfFlag == 0) {
           item.shelfStr = '上架'
-        }else {
+        } else {
           item.shelfStr = '下架'
         }
         let tags = []
         let tag
         if (item.shelfFlag == 0) {
           tag = item.saleStr
-        }else {
+        } else {
           tag = '下架'
         }
         if (item.projectTagArr && item.projectTagArr.length > 0) {
@@ -411,7 +408,7 @@ export default {
           if (tags.length > 3) {
             tags.pop()
           }
-        }else {
+        } else {
           tags.push(tag)
         }
         item.linkerTags = tags
@@ -513,7 +510,6 @@ export default {
         }
         customerInfoList.push(item)
       }
-      console.log(customerInfoList)
       this.customerInfoList = customerInfoList
     },
 
@@ -539,11 +535,11 @@ export default {
       margin: 15px;
     }
     .custom-attention {
-        width: 16px;
-        height: 16px;
-        position: absolute;
-        left: 60px;
-        top: 60px;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 60px;
+      top: 60px;
     }
     .custom-info {
       margin: 20px 15px 15px 0;

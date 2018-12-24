@@ -18,7 +18,7 @@ let zerofill = val => (val >= 10 ? val : '0' + val)
  */
 export default (time, type, separate = '-') => {
   let checkTime = parseInt(time)
-  if(isNaN(checkTime)) return time
+  if (isNaN(checkTime)) return time
   let date = new Date(parseInt(time))
   let year = date.getFullYear()
   let month = date.getMonth() + 1

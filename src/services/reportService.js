@@ -56,7 +56,7 @@ class reportService {
 
   /**
    * 获取可报备的楼盘
-   * @param {*} obj 
+   * @param {*} obj
    */
   getReportBuildingList(obj) {
     return xhr({
@@ -64,6 +64,5 @@ class reportService {
       body: obj
     })
   }
-
 }
 export default new reportService()

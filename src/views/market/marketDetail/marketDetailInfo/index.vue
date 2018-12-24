@@ -8,7 +8,7 @@
         <li>绑定楼栋</li>
       </ul>
     </div>
-    <InfoMiddle v-for="(item,index) in middleList" :key="index" :middleInfo="item"></InfoMiddle>
+    <InfoMiddle :middleInfo="this.licenceList"></InfoMiddle>
     <div class="info-bottom">
       <span :style="{backgroundImage:'url('+warnImg+')'}" class="bg_img"></span>
       <p>免责申明：楼盘信息来源于政府共事网站，开发商， 第三方公众平台最终以政府部门登记备案为准，请谨慎检查。</p>
@@ -28,6 +28,7 @@ export default {
   created() {
     this.$store.commit(types.TABBAR, false)
     this.linkerId = this.$route.params.id
+    this.licenceList = this.$route.params.licenceList
     this.getLinkerSimpleDetail(this.linkerId)
   },
   computed: {
@@ -56,9 +57,9 @@ export default {
         },
         {
           top: [
-            { left: '建筑风格', right: this.info && this.buildStyle },
+            { left: '建筑风格', right: this.info && this.info.buildStyle },
             { left: '产权年限', right: this.info && this.info.propertyYears },
-            { left: '装修标准', right: this.info && this.decorateStatus },
+            { left: '装修标准', right: this.info && this.info.decorateStatus },
             { left: '占地面积', right: this.info && this.info.coverArea },
             { left: '建筑面积', right: this.info && this.info.buildArea },
             { left: '容积率', right: this.info && this.info.plotRate },
@@ -69,7 +70,7 @@ export default {
         },
         {
           top: [
-            { left: '物业类型  ', right: this.info && this.info.houseUse },
+            { left: '物业类型  ', right: this.info && this.info.houseUseList.toString() },
             { left: '物业公司', right: this.info && this.info.management },
             { left: '物业费', right: this.info && this.info.managementPrice }
           ]
@@ -150,7 +151,8 @@ export default {
   data: () => ({
     linkerId: '',
     info: null,
-    warnImg: require('IMG/marketDetail/warn.png')
+    warnImg: require('IMG/marketDetail/warn.png'),
+    licenceList: []
   }),
   methods: {
     async getLinkerSimpleDetail(linkerId) {

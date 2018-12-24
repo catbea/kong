@@ -85,7 +85,7 @@ class CommonService {
     return xhr({
       url: '/weixinPay/cancelPayment',
       method: 'post',
-      body: {purchaseId}
+      body: { purchaseId }
     })
   }
 
@@ -126,15 +126,14 @@ class CommonService {
   getUserSig() {
     return xhr({
       url: '/cpIM/getUserSig',
-      body: {
-      }
+      body: {}
     })
   }
 
   /**
    * 版本更新查询
-   * @param {*} type 
-   * @param {*} timeStamp 
+   * @param {*} type
+   * @param {*} timeStamp
    */
   queryVersion(type, timeStamp) {
     return xhr({

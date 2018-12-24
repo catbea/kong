@@ -5,12 +5,13 @@
         <div class="olItem-content">
           <div class="cover-left"></div>
         <div class="coupon-item-page-left">
-         <div :class="{textColorA:status!=0,textColorB:status!=0,margin:true}">¥<h3>
-           {{info.discountsLimit | numberFormatter}}
-           </h3></div>
-          <p>
-           满{{info.satisfyLimit | numberFormatter}}元可用
-            </p> 
+          <div v-show="info.type==10" :class="{textColorA:status!=0,textColorB:status!=0,margin:true}">
+            ¥<h3>{{info.discountsLimit | numberFormatter}}</h3>
+          </div>
+          <div v-show="info.type==20" :class="{textColorA:status!=0,textColorB:status!=0,margin:true}">
+            <h3>{{info.discountsLimit | numberFormatter}}折</h3>
+          </div>
+          <p>满{{info.satisfyLimit | numberFormatter}}元可用</p>
         </div>
         <ul class="coupon-item-page-center">
           <li>
@@ -39,23 +40,23 @@
 export default {
   data: () => ({
     downImg: require('IMG/user/Rectangle 38 Copy@2x.png'),
-    upImg:require('IMG/user/uptop@2x.png'),
+    upImg: require('IMG/user/uptop@2x.png'),
     yetUseImg: require('IMG/user/Shape@2x.png'),
     yetPastImg: require('IMG/user/guoq@2x.png'),
-    unfoldShow:false
+    unfoldShow: false
   }),
   props: {
     info: {
       type: Object
     },
-    status:{type:Number}
+    status: { type: Number }
   },
   methods: {
     useHandle(n) {
-      this.$emit('skipHandle',n)
+      this.$emit('skipHandle', n)
     },
-    unfoldMore(){
-      this.unfoldShow=!this.unfoldShow
+    unfoldMore() {
+      this.unfoldShow = !this.unfoldShow
     }
   },
   computed: {

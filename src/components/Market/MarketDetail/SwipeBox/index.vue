@@ -24,62 +24,57 @@
   </div>
 </template>
 <script>
-
 import MarketService from 'SERVICE/marketService'
 export default {
-  components: {
+  components: {},
 
-  },
-  created() {
-    console.log(this.collectionStatus,'收藏状态');
-    
-  },
   props: {
-    linkerInfo:{type:Object},
+    linkerInfo: { type: Object },
     bannerList: { type: Array },
     collectionStatus: { type: String }, // 0-未收藏 1-已收藏
     ifPanorama: { type: Number }, // 是否有全景,
-    linkerId:{type: String},
-    photoButton:{type:Boolean}//该楼盘是否存在相册
+    linkerId: { type: String },
+    photoButton: { type: Boolean } //该楼盘是否存在相册
   },
-  data(){
+  data() {
     return {
-    status:this.collectionStatus,
-    current: 0,
-    enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
-    imgPlay: require('IMG/marketDetail/Oval@2x.png'),
-    collectImg: require('IMG/marketDetail/xx1@2x.png'),
-    collectImgA: require('IMG/marketDetail/xx 9@2x.png'),
-    show: false
+      status: this.collectionStatus,
+      current: 0,
+      enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
+      imgPlay: require('IMG/marketDetail/Oval@2x.png'),
+      collectImg: require('IMG/marketDetail/xx1@2x.png'),
+      collectImgA: require('IMG/marketDetail/xx 9@2x.png'),
+      show: false
     }
   },
   methods: {
-    lookPanorama(){
-      window.location.href =this.linkerInfo.linkerUrl
+    lookPanorama() {
+      window.location.href = this.linkerInfo.linkerUrl
     },
     closeDom(n) {
       this.$router.push('/marketDetail/perfect')
       this.show = n
     },
     photo() {
-      this.$router.push({ name: 'photoList', params: {id: this.linkerId }})
+      this.$router.push({ name: 'photoList', params: { id: this.linkerId } })
     },
     onChange(index) {
       this.current = index
     },
     collect() {
-      if(this.status==1){
-        this.status=0
-      }else{
-        this.status=1
+      if (this.status == 1) {
+        this.status = 0
+      } else {
+        this.status = 1
       }
       this.changeLinkerCollectInfo()
     },
-    async changeLinkerCollectInfo(){//修改收藏状态
-        await MarketService.changeLinkerCollect(this.linkerId,this.status,1)  
-      },
+    async changeLinkerCollectInfo() {
+      //修改收藏状态
+      await MarketService.changeLinkerCollect(this.linkerId, this.status, 1)
+    },
     share() {
-      this.$emit('shareBuilding');
+      this.$emit('shareBuilding')
     },
     play() {
       this.playShow = !this.playShow
@@ -167,7 +162,7 @@ export default {
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     .collect {
       width: 20px;
       height: 20px;
@@ -181,7 +176,7 @@ export default {
     font-size: 12px;
     font-family: PingFangSC-Regular;
     font-weight: 400;
-    color: #FFFFFF;
+    color: #ffffff;
     .share {
       width: 20px;
       height: 20px;

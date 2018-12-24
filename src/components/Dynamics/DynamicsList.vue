@@ -1,66 +1,107 @@
 <template>
-
   <div class="dynamics-container">
-    <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
-      <!-- {{times.dynamicDate}} -->
-    <div class="dynamics-time" >{{times.dynamicDate}}</div>
-    <!-- v-for="(item,key) in times.allDynamicInfoVOS" :key="key" -->
-    <div class="dynamics-container-list" v-for="(item,key) in times.allDynamicInfoVOS" :key="key">
-      <shadow-box>
-        <div slot="container">
-          <div class="dynamics-list">
-            <div class="dynamics-list-agent" @click="godynamicsList(item)">
-              <span class="list-agent-left">
-                <span class="agent-left-left">
-                  <img :src="item.avatarUrl" class="agent-userImg">
-                </span>
-                <span class="agent-left-right">
-                  <p class="left-right-name">{{item.clientName }}</p>
-                  <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
-                </span>
-              </span>
-              <span class="list-agent-right">
-                <p class="agent-right-num"  v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}" >{{item.intentionality}}%</p>
-                <p class="agent-right-title">意向度</p>
-              </span>
+    <div class="dynamics-list-body" v-if="allDynamicList.length>0">
+      <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
+        <!-- {{times.dynamicDate}} -->
+        <div class="dynamics-time">{{times.dynamicDate}}</div>
+        <!-- v-for="(item,key) in times.allDynamicInfoVOS" :key="key" -->
+        <div
+          class="dynamics-container-list"
+          v-for="(item,key) in times.allDynamicInfoVOS"
+          :key="key"
+          v-if="times.allDynamicInfoVOS"
+        >
+          <shadow-box>
+            <div slot="container">
+              <div class="dynamics-list">
+                <div class="dynamics-list-agent" @click="godynamicsList(item)">
+                  <span class="list-agent-left">
+                    <span class="agent-left-left">
+                      <img :src="item.avatarUrl" class="agent-userImg">
+                    </span>
+                    <span class="agent-left-right">
+                      <p class="left-right-name">{{item.clientName }}</p>
+                      <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
+                    </span>
+                  </span>
+                  <span class="list-agent-right">
+                    <p
+                      class="agent-right-num"
+                      v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
+                    >{{item.intentionality}}%</p>
+                    <p class="agent-right-title">意向度</p>
+                  </span>
+                </div>
+                <div class="dynamics-list-content" @click="godynamicsList(item)">
+                  <p v-show="item.type == 2">
+                    查看浏览了楼盘
+                    <span>{{item.objectName}}</span>
+                  </p>
+                  <p v-show="item.type == 1">
+                    浏览了
+                    <span class="dynamics-list-card">你的名片</span>
+                  </p>
+                  <p v-show="item.type == 3">
+                    浏览了文章
+                    <span class="dynamics-list-card">{{item.objectName}}</span>
+                  </p>
+                  <p>
+                    {{item.updateTime | dateTimeFormatter(2,'/')}} 日第
+                    <span>{{item.clickCount }}次</span>打开
+                  </p>
+                  <p>
+                    浏览时长大于
+                    <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于
+                    <span>{{item.currentArticleLength}}%</span>
+                  </p>
+                  <p>
+                    累计浏览
+                    <span>{{item.todayClickCount }}次</span>名片，平均停留
+                    <span>{{item.totalTime / 1000}}s</span>
+                  </p>
+                </div>
+                <div class="dynamics-list-btn">
+                  <span></span>
+                  <span class="list-btn-right">
+                    <button
+                      id="attentionStatusNO"
+                      class="list-btn-follow"
+                      v-show="item.attentionStatus  == 1"
+                      @click="getupdateCustomerInfo(item,key)"
+                    >
+                      <img :src="gzImg" class="agent-gzImg">
+                      关注
+                    </button>
+                    <button
+                      id="attentionStatusOK"
+                      class="list-btn-followOK"
+                      v-show="item.attentionStatus  == 0"
+                      @click="getupdateCustomerInfo(item,key)"
+                    >已关注</button>
+                    <button class="list-btn-contact" @click="goalldynamics(item)">
+                      <img :src="lxImg" class="btn-contact-userImg">
+                      联系
+                    </button>
+                  </span>
+                </div>
+              </div>
             </div>
-            <div class="dynamics-list-content" @click="godynamicsList(item)">
-              <p v-show="item.type == 2">查看浏览了楼盘  <span>{{item.objectName}}</span></p>
-              <p v-show="item.type == 1">浏览了 <span class="dynamics-list-card">你的名片</span></p>
-              <p v-show="item.type == 3">浏览了文章 <span class="dynamics-list-card">{{item.objectName}}</span></p>
-              <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
-              <p>累计浏览<span>{{item.todayClickCount }}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
-            </div>
-
-            <div class="dynamics-list-btn">
-              <span></span>
-              <span class="list-btn-right">
-                <button id="attentionStatusNO" class="list-btn-follow" v-show="item.attentionStatus  == 1" @click="getupdateCustomerInfo(item,key)">
-                   <img :src="gzImg" class="agent-gzImg">
-                   关注</button>
-                <button id="attentionStatusOK" class="list-btn-followOK" v-show="item.attentionStatus  == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="list-btn-contact" @click="goalldynamics(item)">
-                  <img :src="lxImg" class="btn-contact-userImg">
-                  联系
-                </button>
-              </span>
-            </div>
-          </div>
-
+          </shadow-box>
         </div>
-      </shadow-box>
+      </div>
     </div>
-</div>
+    <dynamics-null v-else></dynamics-null>
   </div>
-
 </template>
 <script>
 import { Row, Col } from 'vant'
 import ShadowBox from 'COMP/ShadowBox'
+import DynamicsNull from 'COMP/Dynamics/DynamicsNull'
+
 export default {
   components: {
-    ShadowBox
+    ShadowBox,
+    DynamicsNull
   },
   props: {
     info: { type: Object },
@@ -79,31 +120,30 @@ export default {
     // this.golist()
   },
   methods: {
-    getupdateCustomerInfo(item,key) {
-       let pram = {
-      statusOK: 'attentionStatusOK',
-      statusNO: 'attentionStatusNO',
-      item: item,
-      index: key,
-      type:'update'
-    }
+    getupdateCustomerInfo(item, key) {
+      let pram = {
+        statusOK: 'attentionStatusOK',
+        statusNO: 'attentionStatusNO',
+        item: item,
+        index: key,
+        type: 'update'
+      }
       this.$emit('click', pram)
     },
     goalldynamics(item) {
       let pram = {
-         type:'messageList',
-         item:item
-      }
-      this.$emit('click',pram)
-    },
-    godynamicsList(item){
-      let pram = {
-        info: this.info,
-        type:'detail',
-        item:item
+        type: 'messageList',
+        item: item
       }
       this.$emit('click', pram)
-     
+    },
+    godynamicsList(item) {
+      let pram = {
+        info: this.info,
+        type: 'detail',
+        item: item
+      }
+      this.$emit('click', pram)
     }
   }
 }
@@ -157,10 +197,10 @@ export default {
         // right: 16px;
         // margin-top: -6px;
         // padding-right: 16px;
-            right: 0.42667rem;
-            margin-top: -55px;
-            padding-right: 0;
-            float: right;
+        right: 0.42667rem;
+        margin-top: -55px;
+        padding-right: 0;
+        float: right;
         > .agent-right-num {
           font-size: 20px;
           font-weight: 500;
@@ -191,21 +231,20 @@ export default {
         color: rgba(0, 122, 230, 1);
       }
     }
-    .dynamics-list-card{
-      font-size:14px;
-      font-weight:400;
-      color:#007AE6;
-      line-height:21px;
-      
+    .dynamics-list-card {
+      font-size: 14px;
+      font-weight: 400;
+      color: #007ae6;
+      line-height: 21px;
     }
     > .dynamics-list-btn {
       height: 40px;
       > .list-btn-right {
         //position: absolute;
-          right: 32px;
-          line-height: 40px;
-            float: right;
-          margin-top: 8px;
+        right: 32px;
+        line-height: 40px;
+        float: right;
+        margin-top: 8px;
         //  margin-top: 15px;
         > .list-btn-follow {
           width: 64px;
@@ -217,10 +256,10 @@ export default {
           color: rgba(0, 122, 230, 1);
           line-height: 17px;
           background: #ffffff;
-            //  position: absolute;
+          //  position: absolute;
           right: 80px;
-           top: 12px;
-           margin-right: 10px;
+          top: 12px;
+          margin-right: 10px;
           > .agent-gzImg {
             width: 11px;
             height: 11px;
@@ -237,9 +276,9 @@ export default {
           border: 1px solid #999999;
           background: #ffffff;
           margin-right: 10px;
-        //  position: absolute;
+          //  position: absolute;
           right: 80px;
-           top: 12px;
+          top: 12px;
         }
         > .list-btn-contact {
           width: 64px;
@@ -251,7 +290,7 @@ export default {
           color: rgba(255, 255, 255, 1);
           line-height: 17px;
           border: 0;
-         // position: absolute;
+          // position: absolute;
           right: 0;
           top: 0.32rem;
           > .btn-contact-userImg {

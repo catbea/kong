@@ -1,6 +1,6 @@
 <template>
   <!-- <router-link :to="{name: 'discover-detail', params: {id: data.id, city:data.city}}"> -->
-    <router-link :to="`/discover/${data.id}/${data.city?data.city:'全国'}`">
+    <router-link :to="routeComputed">
     <div class="van-hairline--bottom discover-item">
       <div class="discover-list-left">
         <p class="list-left-title">{{data.title}}</p>
@@ -16,11 +16,18 @@
   </router-link>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: ['data'],
   data: () => ({
     backIcon: require('IMG/user/usercard@2x.png')
-  })
+  }),
+  computed: {
+    ...mapGetters(['userInfo']),
+    routeComputed() {
+      return `/discover/${this.data.id}/${this.data.city ? this.data.city : '全国'}?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
+    }
+  }
 }
 </script>
 <style lang="less">

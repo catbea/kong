@@ -17,7 +17,7 @@ export default {
     conf: {
       type: Object,
       default: function() {
-        return { siteText: '北京市', placeholder: '请输入平台名称' }
+        return { siteText: '北京市', placeholder: '请输入楼盘名称' }
       }
     },
     value: String
@@ -28,15 +28,23 @@ export default {
   }),
   methods: {
     siteClickHandler() {
-      this.$emit('areaClick')
+      if (this.$route.name === 'area-select') {
+        // 在地区选择页面,直接返回上个
+        this.$router.go(-1)
+      } else {
+        this.$emit('areaClick')
+      }
     },
     focusHandler() {
-      this.$emit('focus')
-      
+      if (this.$route.name === 'area-select') {
+        // 在地区选择页面,直接返回上个
+        this.$router.go(-1)
+      } else {
+        this.$emit('focus')
+      }
     },
     inputContent() {
       this.$emit('getContent', this.currentValue)
-      
     }
   },
   watch: {

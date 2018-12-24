@@ -2,10 +2,10 @@
   <div class="market-detail-info-middle-page">
     <div class="middle-info-box" >
       <ol>
-      <li v-for="(item,index) in middleInfo.middle" :key="index">
-        <div>{{item.left}}</div>
-        <div>{{item.center}}</div>
-        <div>{{item.right}}</div>
+      <li v-for="(item,index) in middleInfo" :key="index">
+        <div>{{item.licence}}</div>
+        <div>{{item.certificationTime}}</div>
+        <div>{{item.bindBuilding}}</div>
       </li>
     </ol>
     </div>
@@ -15,7 +15,7 @@
 export default {
   props: {
     middleInfo: {
-      type: Object,
+      type: Array,
       default: function() {
         return {}
       }

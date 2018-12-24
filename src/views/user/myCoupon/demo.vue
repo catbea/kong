@@ -96,16 +96,10 @@ export default {
       }
     },
     async promiseHandle() {
-      // let notHandle =  this.couponsList(this.req.agentId,this.req.status.not)
-      //  let recorHandle = this.couponsList(this.req.agentId,this.req.status.recor)
-      //  let pastHandle = this.couponsList(this.req.agentId,this.req.status.past)
       let notHandle = this.getData(this.req.agentId, this.req.status.not)
       let recorHandle = this.getData(this.req.agentId, this.req.status.recor)
       let pastHandle = this.getData(this.req.agentId, this.req.status.past)
       Promise.all([notHandle, recorHandle, pastHandle])
-      //  .then((result)=>{
-      //    console.log(result)
-      //  })
     },
     // 初始时请求事件
     createdHandle() {

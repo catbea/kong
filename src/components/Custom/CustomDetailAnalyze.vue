@@ -44,7 +44,7 @@
         </p>
         <p>
           <span>关注:</span>
-          {{baseInfo&&baseInfo.intentionDemand}}
+          {{baseInfo&&(baseInfo.intentionDemand ===''?'暂无数据':baseInfo.intentionDemand)}}
         </p>
         <div class="preferences">
           <span>偏好:</span>
@@ -53,10 +53,7 @@
       </div>
     </div>
     <div class="list">
-      <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item"
-        :progress="analysisListData.progress" :color="analysisListData.color" :textColor="analysisListData.textColor"
-        @renew="renewHandler(item)">
-      </analyze-item>
+      <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item" :progress="analysisListData.progress" :color="analysisListData.color" :textColor="analysisListData.textColor" @renew="renewHandler(item)"></analyze-item>
     </div>
   </div>
 </template>
@@ -78,12 +75,10 @@ export default {
     barData: { type: Array },
     analysisListData: { type: Array },
     attentionFlag: { type: Boolean, default: false },
-    clientMobile: { type: String, default: '' },
+    clientMobile: { type: String, default: '' }
   },
 
-  created() {
-    
-  },
+  created() {},
   data: () => ({}),
   methods: {
     attentionHandler() {

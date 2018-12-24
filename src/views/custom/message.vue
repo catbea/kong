@@ -243,7 +243,7 @@ export default {
       }
       this.getCustomBaseInfo(this.clientId)
 
-      this.agentId = this.userInfo.id
+      this.agentId = this.userInfo.agentId
       this.avatar = this.userInfo.avatarUrl
       //加载emoji表情库
       this.emojiFactory = emoji.emojiFactory
@@ -263,7 +263,7 @@ export default {
     setToAccount('')
   },
   methods: {
-      /**
+    /**
      * 客户基本信息以及购房意向度
      */
     async getCustomBaseInfo(id) {
@@ -372,7 +372,7 @@ export default {
     },
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
-      console.log(mediaId+' | '+appId, 'mediaIdTransToMp3Url')
+      console.log(mediaId + ' | ' + appId, 'mediaIdTransToMp3Url')
       let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
       console.log(res, 'mediaIdTransToMp3Url')
       this.message = res.map3Url
@@ -418,7 +418,7 @@ export default {
               msgLists.push(list)
             } else {
               if (MsgContent.Desc == 2) {
-                  let ext = JSON.parse(MsgContent.Ext)
+                let ext = JSON.parse(MsgContent.Ext)
                 list.content = MsgContent.Data
                 list.msgType = 2
                 list.audioTime = ext.audioTime
@@ -449,7 +449,7 @@ export default {
       let res = await customService.appMsgDtlList(params)
       this.setList(res)
       this.loading = false
-      if(this.current == 1) this.pyzmaoviwe()
+      if (this.current == 1) this.pyzmaoviwe()
       this.current++
     },
 
@@ -576,18 +576,18 @@ export default {
           }
           return
         } else {
-            let audioTime = ''
-            let content = ''
-            // console.log(elems.content ,'elems.content')
-            if(elems.content.desc == 2) {
-                let ext = JSON.parse(elems.content.ext) 
-                audioTime = ext.audioTime
-                content = elems.content.data
-            } else if(elems.content.desc == 3) {
-                content = JSON.parse(elems.content.data)
-            } else {
-                content = elems.content.data
-            }
+          let audioTime = ''
+          let content = ''
+          // console.log(elems.content ,'elems.content')
+          if (elems.content.desc == 2) {
+            let ext = JSON.parse(elems.content.ext)
+            audioTime = ext.audioTime
+            content = elems.content.data
+          } else if (elems.content.desc == 3) {
+            content = JSON.parse(elems.content.data)
+          } else {
+            content = elems.content.data
+          }
           item = {
             msgStatus: 1, //未读
             content: content,
@@ -657,10 +657,10 @@ export default {
       //关闭表情
       this.isShowEmjie = false
       this.isShowOption = false
-    } /**
+    },
+    /**
      * 播放语音
-     */,
-    playVoice(mateId, id) {
+     */ playVoice(mateId, id) {
       let _this = this
       if (this.isplay == id) {
         this.nowVoiceUrl = ''
@@ -675,10 +675,10 @@ export default {
         this.$refs.audio.src = this.nowVoiceUrl
         this.$refs.audio.play()
       }, 200)
-    } /**
+    },
+    /**
      * 停止播放语音
-     */,
-    stopVoice(localId) {
+     */ stopVoice(localId) {
       let _this = this
       wx.stopVoice({
         localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
@@ -688,10 +688,10 @@ export default {
     },
     //跳转客户详情
     goDetails() {
-        this.$router.push('/custom/' + this.clientId)
+      this.$router.push('/custom/' + this.clientId)
     },
     gomarket(linkerId, linkerName) {
-        this.$router.push('/market/' + linkerId)
+      this.$router.push('/market/' + linkerId)
     }
   }
 }
@@ -705,19 +705,19 @@ export default {
 }
 
 .project-msg-popup {
-    height: 100%;
+  height: 100%;
 }
 
 .default-msg-popup {
   height: 68%;
   background: #fff;
   .default-msg-box {
-      .default-msg-item {
-          margin: 0 15px;
-          font-size: 15px;
-          padding: 12px 0px;
-          line-height: 21px;
-      }
+    .default-msg-item {
+      margin: 0 15px;
+      font-size: 15px;
+      padding: 12px 0px;
+      line-height: 21px;
+    }
     .default-msg-title {
       height: 58px;
       display: flex;

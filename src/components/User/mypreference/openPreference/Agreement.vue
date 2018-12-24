@@ -8,8 +8,7 @@
 </template>
 <script>
 export default {
-  data: () => ({
-  }),
+  data: () => ({}),
   methods: {
     agreementHandle() {
       this.$router.push('/open/agreement')

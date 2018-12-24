@@ -18,7 +18,7 @@ export default {
     Avatar
   },
   props: {
-    msg: { 
+    msg: {
       type: Object,
       default: function() {
         return {
@@ -29,7 +29,7 @@ export default {
           clientId: null,
           ext: {}
         }
-      } 
+      }
     }
   },
   data() {
@@ -37,18 +37,19 @@ export default {
       defaultAvatar: 'https://720ljq2test-10037467.file.myqcloud.com/header/qrcode/8bbf60d0c71d4962b8466c914712452c.png'
     }
   },
-  created() {
-    
-  },
+  created() {},
   methods: {
     clickHandle() {
       this.$store.commit(types['NEW_MSG_STATUS'], false)
-      if(!this.msg.clientId) {
+      if (!this.msg.clientId) {
         return
       }
-      this.$router.push({path: '/custom/message/message', query: {
-        clientId: this.msg.clientId
-      }})
+      this.$router.push({
+        path: '/custom/message/message',
+        query: {
+          clientId: this.msg.clientId
+        }
+      })
     }
   }
 }
@@ -60,11 +61,11 @@ export default {
   display: flex;
   line-height: 50px;
   padding: 0px 12px;
-  color: #FFF;
+  color: #fff;
   font-size: 13px;
   .msg-popup-page-left {
     padding: 9px 0px;
-    .avatar{
+    .avatar {
       width: 32px;
       height: 32px;
     }

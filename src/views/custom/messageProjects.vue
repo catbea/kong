@@ -34,9 +34,7 @@ export default {
   components: {
     MealMarket
   },
-  created() {
-    
-  },
+  created() {},
   computed: {
     ...mapGetters(['userInfo'])
   },
@@ -49,14 +47,14 @@ export default {
     projectList: []
   }),
   methods: {
-      sendCancel() {
-        this.$router.go(-1)
-      },
+    sendCancel() {
+      this.$router.go(-1)
+    },
     async getLinkerList() {
       const res = await userService.getMyMarket(0)
-      
+
       let _list = []
-      for(let item of res.records) {
+      for (let item of res.records) {
         let obj = {
           linkerId: item.linkerId,
           linkerUrl: item.linkerUrl,
@@ -67,6 +65,8 @@ export default {
           open: `${item.openTimes}次开通`,
           isChecked: false,
           divisionRules: item.divisionRules,
+          saleStatus: item.saleStatus,
+          ifPanorama: item.ifPanorama,
           price: `${item.price} ${item.priceUnit}`
         }
         _list.push(obj)
@@ -81,37 +81,35 @@ export default {
     },
 
     selectHandle(project) {
-      for(let item of this.projectList) {
+      for (let item of this.projectList) {
         item.isChecked = false
       }
       project.isChecked = !project.isChecked
       this.checkedList = [project]
-      
     },
 
     sendProjectHandle() {
-        if(this.checkedList.length == 0) {
-            this.$toast('请先选择楼盘')
-            return
-        }
-        let project = this.checkedList[0]
-        // console.log(project)
-        this.$router.go(-1)
-        let content = {}
-        let msg = {}
-        msg.avatarMediaid = project.linkerUrl
-        msg.linkerId = project.linkerId
-        msg.linkerName = project.linkerName
-        msg.linkerPrice = project.price
-        msg.address = project.site
-        msg.agentId = this.userInfo.id
-        //'{"avatarMediaid":"https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/b6df070d1fdb48bd8d085f40607aef7a.png","linkerId":"d604ecf5687642569614b65625418d62","linkerName":"QQQ-2","address":"广东省深圳市南山区","linkerPrice":"88888.00元/㎡","agentId":"4149","building":"建面暂无信息"}'
-        content.data = msg
-        content.ext = {}
-        onSendMsg(JSON.stringify(content), true, 3, 0)
-        // console.log(this.checkedList)
+      if (this.checkedList.length == 0) {
+        this.$toast('请先选择楼盘')
+        return
+      }
+      let project = this.checkedList[0]
+      // console.log(project)
+      this.$router.go(-1)
+      let content = {}
+      let msg = {}
+      msg.avatarMediaid = project.linkerUrl
+      msg.linkerId = project.linkerId
+      msg.linkerName = project.linkerName
+      msg.linkerPrice = project.price
+      msg.address = project.site
+      msg.agentId = this.userInfo.agentId
+      //'{"avatarMediaid":"https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/b6df070d1fdb48bd8d085f40607aef7a.png","linkerId":"d604ecf5687642569614b65625418d62","linkerName":"QQQ-2","address":"广东省深圳市南山区","linkerPrice":"88888.00元/㎡","agentId":"4149","building":"建面暂无信息"}'
+      content.data = msg
+      content.ext = {}
+      onSendMsg(JSON.stringify(content), true, 3, 0)
+      // console.log(this.checkedList)
     }
-
   }
 }
 </script>
@@ -135,9 +133,9 @@ export default {
     position: fixed;
     bottom: 0;
     .cancel-box {
-        font-size: 16px;
-        line-height: 60px;
-        padding-left: 16px;
+      font-size: 16px;
+      line-height: 60px;
+      padding-left: 16px;
     }
     .send-button {
       margin-right: 16px;

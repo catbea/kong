@@ -10,6 +10,7 @@
     <div class="list-container" v-if="hotEstateListData&&hotEstateListData.length>0">
       <hot-estate-list :list="hotEstateListData" @click="goRecommendInfo" @open="openHandler"/>
     </div>
+    <open-market :show.sync="guidanceShow" :conf="guidanceConf"></open-market>
   </div>
 </template>
 
@@ -18,24 +19,31 @@ import DynamicsCollect from 'COMP/Dynamics/DynamicsCollect'
 import EstateRecommend from 'COMP/Dynamics/EstateRecommend'
 import MyEstateList from 'COMP/Dynamics/MyEstateList'
 import HotEstateList from 'COMP/Dynamics/HotEstateList'
+import OpenMarket from 'COMP//Guidance/OpenMarket'
 import CommonService from 'SERVICE/commonService'
 import dynamicsService from 'SERVICE/dynamicsService'
-import { Dialog } from 'vant'
+import isEmpty from 'lodash/isEmpty'
+import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     DynamicsCollect,
     EstateRecommend,
     MyEstateList,
-    HotEstateList
+    HotEstateList,
+    OpenMarket
   },
   data: () => ({
     collectData: null, // 数据中心数据
     recommendData: null, // 推荐盘数据
     estateListData: null, // 我的楼盘数据
     hotEstateListData: null, // 热门楼盘数据
-    timer: null
+    timer: null,
+    guidanceShow: false,
+    guidanceConf: null
   }),
   created() {
+    // this.shiftHandle()//提示被移出分销商弹窗
     // let timeStamp = window.localStorage.getItem('timeStamp') || ''
     // this.queryVersion('2', timeStamp)
     this.getCollectInfo()
@@ -46,19 +54,26 @@ export default {
     }, 30000)
   },
   methods: {
+    shiftHandle() {
+      this.$dialog
+        .alert({
+          title: '您被移出原有分销平台',
+          message: '请重新添加主营区域分销商及所属机构',
+          className: 'shiftOut'
+        })
+        .then(() => {
+          this.$router.push({ name: 'user-edit' })
+        })
+    },
     //动态详情
     async goMessageInfo(num) {
-      console.log('num.customerCount.val', num.customerCount)
-      console.log('num.businessCardViews.val', num.businessCardViews)
-      console.log('num.estateViews.val', num.estateViews)
-      console.log('num.articleCount.val', num.articleCount)
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
         this.$router.push({
           path: '/dynamics/allDynamics',
           query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount }
         })
       } else {
-        Dialog.alert({
+        this.$dialog.alert({
           title: '暂无任何动态',
           message: '您还没有任何动态信息，请开通楼盘分享后再次尝试'
         })
@@ -98,26 +113,26 @@ export default {
 
       for (let i = 0; i < this.estateListData.length; i++) {
         if (this.estateListData[i].linkerTags.length >= 3) {
-          this.estateListData[i].linkerTags.pop()
+          if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.pop()
 
           if (this.estateListData[i].saleStatus === 0) {
-            this.estateListData[i].linkerTags.unshift('热销中')
+            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
           }
           if (this.estateListData[i].saleStatus === 1) {
-            this.estateListData[i].linkerTags.unshift('即将发售')
+            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
           }
           if (this.estateListData[i].saleStatus === 3) {
-            this.estateListData[i].linkerTags.unshift('售罄')
+            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
           }
         } else {
           if (this.estateListData[i].saleStatus === 0) {
-            this.estateListData[i].linkerTags.unshift('热销中')
+            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('热销中')
           }
           if (this.estateListData[i].saleStatus === 1) {
-            this.estateListData[i].linkerTags.unshift('即将发售')
+            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('即将发售')
           }
           if (this.estateListData[i].saleStatus === 3) {
-            this.estateListData[i].linkerTags.unshift('售罄')
+            if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.unshift('售罄')
           }
         }
       }
@@ -128,6 +143,10 @@ export default {
       }
 
       this.recommendData = res.aiLinkerVO
+      if (this.userInfo.isOne && !this.userGuidance.dynamics) {
+        this.guidanceConf = res.aiLinkerVO
+        this.guidanceShow = true
+      }
     },
     async queryVersion(type, timeStamp) {
       const res = await CommonService.queryVersion(type, timeStamp)
@@ -137,11 +156,27 @@ export default {
       }
     },
     shareHandler(info) {
-      this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
+      if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
+        this.$dialog
+          .confirm({
+            title: '您有未完善的信息',
+            message: '信息不完整会影响传播效率哦',
+            confirmButtonText: '去完善',
+            className: 'marketShareHint'
+          })
+          .then(() => {
+            this.$router.push({ name: 'user-edit' })
+          })
+      } else {
+        this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
+      }
     },
     openHandler(info) {
       this.$router.push({ name: 'marketDetail-open', params: { id: info.linkerId } })
     }
+  },
+  computed: {
+    ...mapGetters(['userInfo', 'userGuidance'])
   },
   beforeDestroy() {
     clearInterval(this.timer)
