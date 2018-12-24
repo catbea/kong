@@ -4,7 +4,7 @@
       <div class="search-view">
         <search :conf="searchInfo" v-model="projectName" @areaClick="areaClickHandler"></search>
       </div>
-      <screen v-model="projectFilters" :local="userArea.myReportCity"></screen>
+      <screen v-model="projectFilters" :local="this.searchInfo.siteText"></screen>
     </div>
     <div class="market-box" :style="{'margin-top':isShowHeader?'74px':'20px'}">
       <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>

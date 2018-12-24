@@ -3,7 +3,7 @@
     <div class="mymember-set-meal-page-content">
       <div class="mymember-set-meal-page-content-top">
         <p class="forestall-open">{{setMealInfo.openCount}}人已经抢先开通VIP套餐</p>
-        <div class="meal-site" @click="checkCityhandle">
+        <div v-show="setMealInfo.isVip" class="meal-site" @click="checkCityhandle">
           <p v-show="!setMealInfo.vipCity">选择城市</p>
           <p v-show="setMealInfo.vipCity">{{setMealInfo.vipCity}}</p>
           <span class="site-icon bg_img" :style="{backgroundImage:'url('+siteImg+')'}"></span>
@@ -57,8 +57,9 @@ export default {
 <style lang="less">
 .mymember-set-meal-page {
   width: 100%;
-  height: 149px;
+  // height: 149px;
   display: flex;
+  padding-bottom: 12px;
   background: rgba(255, 255, 255, 1);
   .mymember-set-meal-page-content {
     margin: 17px 0 0 16px;
