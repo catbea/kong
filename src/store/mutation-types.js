@@ -17,7 +17,7 @@ export const GUIDANCE = 'GUIDANCE' //新手引导
 // city
 export const CITY_LIST = 'CITY_LIST'
 export const HOT_CITY_CITY = 'HOT_CITY_CITY'
-export const WX_JSSDK = 'WX_JSSDK'
+
 
 // market
 export const PROJECT_COUPONS = 'PROJECT_COUPONS'
@@ -30,3 +30,6 @@ export const NEW_MSG_CONTENT = 'NEW_MSG_CONTENT'
 
 //动态
 export const CURR_DATA_DYNAMICS_TAB = 'CURR_DATA_DYNAMICS_TAB'
+
+//wechat
+export const WX_JSSDK = 'WX_JSSDK'
