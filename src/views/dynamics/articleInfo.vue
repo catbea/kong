@@ -5,7 +5,7 @@
         <div class="articleInfo-list">
           <span class="articleInfo-list-left">
             <p class="list-left-title">{{articleTitle}}</p>
-            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTitle | dateFormatterToHuman}}</p>
+            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTime | dateFormatterToHuman}}</p>
           </span>
           <span class="articleInfo-list-right">
             <img :src="articleImgUrl" class="mark-icon">
@@ -107,6 +107,7 @@ export default {
        articleTitle: '',
        articleSource: this.$route.query.articleSource,
        articleImgUrl: this.$route.query.articleImgUrl,
+       articleTime: this.$route.query.articleTime,
       articleId: this.$route.query.articleId,
       avgStayArticleTime:0,
     }

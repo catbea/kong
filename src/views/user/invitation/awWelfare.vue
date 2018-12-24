@@ -119,10 +119,14 @@ export default {
     
 
     async getqueryInvitationUrl(){
+      
     const res = await userService.getqueryInvitationUrl()
     this.invitationUrl = res.invitationUrl
     this.goyInvitationUrlCode(this.invitationUrl)
-    this.savaReport()
+    setTimeout (() => {
+      this.savaReport()
+    },200)
+    
     },
      async goyInvitationUrlCode (url) {
         let qrcode = new QRCode('qrcode', {  
