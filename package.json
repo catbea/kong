@@ -10,6 +10,7 @@
     "build-prod": "vue-cli-service build --model production --modern",
     "serve-dev": "vue-cli-service serve --mode development",
     "serve-cs": "vue-cli-service serve --mode test",
+    "serve-uat": "vue-cli-service serve --mode uat",
     "serve-prod": "vue-cli-service serve --mode production"
   },
   "dependencies": {
