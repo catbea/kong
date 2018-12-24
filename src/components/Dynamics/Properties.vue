@@ -1,16 +1,16 @@
 <template>
-  <div class="Properties-container" >
+  <div class="Properties-container">
     <div class="shadow-box">
-     <div class="dynaData-container" v-if="houseDynamicCount">
+      <div class="dynaData-container" v-if="houseDynamicCount">
         <span class="container-total">
           <p class="container-title">楼盘数量</p>
-          <p class="card-num">{{houseDynamicCount.linkerCount  }}</p>
+          <p class="card-num">{{houseDynamicCount.linkerCount }}</p>
         </span>
         <span class="container-card">
           <p class="container-title">楼盘分享</p>
-          <p class="card-num">{{houseDynamicCount.linkerShareCount  }}</p>
+          <p class="card-num">{{houseDynamicCount.linkerShareCount }}</p>
         </span>
-        <span class="container-properties " >
+        <span class="container-properties">
           <p class="container-title">楼盘访客</p>
           <p class="card-num">{{houseDynamicCount.linkerVisitorCount }}</p>
         </span>
@@ -20,25 +20,36 @@
         </span>
       </div>
     </div>
-
-    <div v-if="houseDynamicList.length !=''" class="Properties-list" v-for="(item,index) in houseDynamicList" :key="index" plain  @click="onClickConfirm(item)">
- <!-- @click="onClickConfirm" 1未开通，2已开通{{item.linkerName }}-->
-      <p class="list-left">{{item.linkerName }}{{item.openStatus == 1 ? "（未开通）":""}}<span class="list-right">{{item.dynamicCount }}条动态</span></p>
-      <p class="list-left-btn">{{item.area}}  {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
+    <div class="list-body" v-if="houseDynamicList.length >0">
+      <div
+        class="Properties-list"
+        v-for="(item,index) in houseDynamicList"
+        :key="index"
+        plain
+        @click="onClickConfirm(item)"
+      >
+        <!-- @click="onClickConfirm" 1未开通，2已开通{{item.linkerName }}-->
+        <p class="list-left">
+          {{item.linkerName }}{{item.openStatus == 1 ? "（未开通）":""}}
+          <span
+            class="list-right"
+          >{{item.dynamicCount }}条动态</span>
+        </p>
+        <p
+          class="list-left-btn"
+        >{{item.area}} {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
+      </div>
     </div>
     <dynamics-null v-else></dynamics-null>
     <!-- <div class="Properties-list">
-
       <p class="list-left"><span class="list-right" >条动态</span></p>
       <p class="list-left-btn"> | 元/㎡</p>
-    </div> -->
-
+    </div>-->
     <!-- <dialog :title="$t('confirm')">
       <button type="primary" plain @click="onClickConfirm">
         {{ $t('confirm') }}
       </button>
-    </dialog> -->
-
+    </dialog>-->
   </div>
 </template>
 <script>
@@ -60,18 +71,16 @@ export default {
     houseDynamicCount: { type: '' },
     avgStayLinkerTime: { type: '' }
   },
- 
+
   data() {
     return {
       properties: [
         { id: '1', propertiesName: '碧桂园凤凰国际', statue: '0', num: '14', address: '南山 深圳湾', price: '0' },
         { id: '2', propertiesName: '万科臻湾汇 ', statue: '1', num: '20', address: '南山 深圳湾', price: '119878' }
-      ],
+      ]
     }
   },
-   methods() {
-    
-  },
+  methods() {},
   methods: {
     onClickConfirm(item) {
       let parm = {
@@ -125,6 +134,35 @@ export default {
 .Properties-container {
   background: #ffffff;
   // margin: 0 16px;
+  .list-body {
+    > .Properties-list {
+      border-bottom: 1px solid #e6e6e6;
+      margin: 0 16px;
+      padding: 16px 0;
+
+      > .list-left {
+        font-size: 16px;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
+        line-height: 22px;
+        height: 25px;
+        > .list-right {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(0, 122, 230, 1);
+          line-height: 17px;
+          float: right;
+        }
+      }
+      > .list-left-btn {
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 24px;
+      }
+    }
+  }
+
   .shadow-box {
     background: rgba(255, 255, 255, 1);
     box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
@@ -150,32 +188,6 @@ export default {
         color: rgba(51, 51, 51, 1);
         line-height: 36px;
       }
-    }
-  }
-  > .Properties-list {
-    border-bottom: 1px solid #e6e6e6;
-    margin: 0 16px;
-    padding: 16px 0;
-
-    > .list-left {
-      font-size: 16px;
-      font-weight: 600;
-      color: rgba(51, 51, 51, 1);
-      line-height: 22px;
-      height: 25px;
-      > .list-right {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(0, 122, 230, 1);
-        line-height: 17px;
-        float: right;
-      }
-    }
-    > .list-left-btn {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(51, 51, 51, 1);
-      line-height: 24px;
     }
   }
 }
