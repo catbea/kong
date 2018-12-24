@@ -144,6 +144,7 @@ export default {
     flex-direction: column;
     width: 343px;
     height: 274px;
+    margin-left:16px;
     .vanSWipe-box {
       width: 343px;
     height: 194px;
