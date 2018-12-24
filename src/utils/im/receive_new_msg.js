@@ -281,7 +281,7 @@ function webimLogin(sdkAppID, identifier, accountType, userSig, isLog) {
       loginInfo.headurl = resp.headurl //设置当前用户头像
     },
     function(err) {
-      alert(err.ErrorInfo)
+      // alert(err.ErrorInfo)
     }
   )
 }
