@@ -220,16 +220,19 @@ export default {
         margin-right: 60px;
         padding-right: 70px;
       }
+      > .list-left-time {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+          position: absolute;
+          bottom: 0;
+        }
       > .time-body {
         display: flex;
         flex-direction: row;
         position: absolute;
         bottom: 0;
-        > .list-left-time {
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-        }
+        
 
         > .list-span {
           font-size: 12px;
