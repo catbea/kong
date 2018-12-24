@@ -102,7 +102,7 @@ export default {
       canvas.style.width = '80%'
       canvas.style.marginLeft = '10%'
       canvas.style.height = '100%'
-      this.status = 2
+      canvas.style.zIndex = 99
       document.getElementById('card-result').appendChild(canvas)
       this.status = 2
     },
@@ -224,7 +224,13 @@ export default {
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 20px;
+    user-select: none;
   }
+  // #card-result{
+  //   >canvas{
+  //     z-index: 99;
+  //   }
+  // }
 }
 //弹出层
 .register-rule-box {
