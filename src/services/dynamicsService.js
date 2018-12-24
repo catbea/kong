@@ -63,7 +63,7 @@ class DynamicsService {
    * @param {*} current
    * @param {*} size
    */
-  getAllDynamicList(current, size = 10) {
+  getAllDynamicList(current, size = 4) {
     return xhr({
       url: '/dataDynamic/getAllDynamicList',
       body: {
