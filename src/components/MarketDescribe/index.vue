@@ -15,11 +15,11 @@
             <li class="market-name">
               <div class='box'>
                 <span class="title">{{itemInfo.linkerName}}</span>
-                <span class="past" v-if="detailOpenStatus==1">已过期</span>
+                <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
               <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
-            <li class="site">{{itemInfo.linkerAddress}} <span v-if="itemInfo.openStatus==10">{{itemInfo.invalidTimeStr}}到期</span></li>
+            <li class="site">{{itemInfo.linkerAddress}} <span v-if="itemInfo.openStatus!=0">{{itemInfo.invalidTimeStr}}到期</span></li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
@@ -46,7 +46,7 @@ export default {
   created() {
     this.dredgeColor()
     if(this.tags) this.tags.unshift(this.saleStatus)
-    this.getDetailInfo(this.itemInfo.linkerId)
+    console.log(this.itemInfo,'楼盘列表数据')
   },
   data() {
     return {
@@ -75,9 +75,9 @@ export default {
   },
   computed: {
     openStatus() {
-      if (this.itemInfo.openStatus == 20) {
+      if (this.itemInfo.openStatus == 0) {
         return '开通'
-      } else if(this.itemInfo.openStatus == 10){
+      } else{
         return '续费'
       }
     },

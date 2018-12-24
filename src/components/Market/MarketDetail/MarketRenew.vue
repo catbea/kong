@@ -137,7 +137,7 @@ export default {
           this.changeHandle(this.renewInfo.linkerId,30,0)
           break
         case false:
-          this.dialogHandle('已关闭该楼盘展示')
+          this.dialogHandle('已关闭该楼盘展示、推荐与置顶')
           this.changeHandle(this.renewInfo.linkerId,30,1)
           break
       }
