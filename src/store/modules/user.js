@@ -90,7 +90,7 @@ const state = {
     area: '南山区',
     distributorId: '124', // 公司ID
     distributorName: 'AW大师',
-    institutionId: '44', // 机构ID
+    institutionId: '42', // 机构ID
     institutionName: 'AW大师'
   },
   //点击选中的楼盘id
