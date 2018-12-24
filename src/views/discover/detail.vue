@@ -238,7 +238,7 @@ export default {
   watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
     $route() {
-      // this.$router.go(0)
+      // this.$router.go(0) // 该方法不兼容iOS
       // history.go(-1)
       location.reload()
     }

@@ -85,7 +85,7 @@ export default {
         contractTime: '签约时间',
         fillingAuditingTime: '报备审核中时间',
         fillingFailTime: '报备失败时间',
-        fillingTime: '报备时间',
+        // fillingTime: '报备时间', // 报备申请提交时间不计入最新时间判断
         followingTime: '待跟进时间',
         giveUpTime: '放弃时间',
         recognizeTime: '认筹时间',
@@ -128,8 +128,11 @@ export default {
           selectTime = this.copyArray(times)
           this.selectionSort(times)
           item.fillingTime = timeUtils.fmtDate(item.fillingTime)
-          item.latestTime = timeUtils.fmtDate(times[times.length - 1])
+          if (times[times.length - 1] > 0) {
+            item.latestTime = timeUtils.fmtDate(times[times.length - 1])
+          }
           item.minIndex = selectTime.indexOf(Math.max.apply(Math, selectTime))
+          // console.log('time==' + times + 'selectTime==' + selectTime)
           // console.log(item.minIndex)
         }
         
