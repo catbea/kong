@@ -9,22 +9,29 @@
           <img :src="awtips1Icon">
         </button>
       </div>
-      <div v-show="status === 1" class="bg_img awWelfare-center" id="share-top">
-        <img :src="awbgcardIcon" alt>
-        <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
-        <div class="awWelfare-info">
-          <div class="awWelfare-info-left">
-            <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
-          </div>
-          <div class="awWelfare-info-right">
-            <p class="awWelfare-info-right-name">{{userInfo.name}}</p>
-            <p class="awWelfare-info-right-remak">邀请你加入AW大师</p>
+      <!-- id="share-top" :style="{'backgroundImage':'url('+awbgcardIcon+')'}" -->
+      <div v-show="status === 1" id="share-top" class="awWelfare-center" >
+        <img :src="awbgcardIcon"  class="awWelfare-center-img">
+        <!-- v-if="invitationImg" -->
+        <div class="background-qrcode">
+          <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
+        </div>
+          <div class="awWelfare-info">
+            <div class="awWelfare-info-left">
+              <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
+            </div>
+             <div class="awWelfare-info-right">
+              <p class="awWelfare-info-right-name">{{userInfo.name}}</p>
+              <p class="awWelfare-info-right-remak">邀请你加入AW大师</p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="result" id="card-result" v-show="status === 2"></div>
-
-      <div class="awWelfare-text">请长按保存邀请图片</div>
+      <div class="awWelfare-center" id="card-result" v-show="status === 2"></div>
+      
+      <div class="awWelfare-text">
+        请长按保存邀请图片
+      </div>
     </div>
 
     <popup v-model="show1" position="center" masker-opacity="0.6" :close-on-click-overlay="false">
@@ -67,7 +74,7 @@ export default {
       awtipsIcon: require('IMG/user/invitation/aw-tips@2x.png'),
       awtips1Icon: require('IMG/user/invitation/aw-tips1@2x.png'),
       awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
-      awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
+      awbgcardIcon: require('IMG/user/invitation/aw-bgcard.png'),
       teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
       show1: false,
       registrationRules: '',
@@ -83,21 +90,23 @@ export default {
   },
   created() {
     this.getregisrules()
+    
   },
-  async mounted() {
-    await this.getqueryInvitationUrl()
-    this.savaReport()
+  mounted() {
+     
+    this.getqueryInvitationUrl()
   },
   methods: {
-    async savaReport() {
+    async savaReport(){
+      
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '80%'
-      canvas.style.marginLeft = '10%'
+      canvas.style.width = '100%'
       canvas.style.height = '100%'
+      this.status = 2
       document.getElementById('card-result').appendChild(canvas)
       this.status = 2
     },
@@ -109,19 +118,28 @@ export default {
       this.registrationRules = regis.rule.split('#')
     },
 
-    async getqueryInvitationUrl() {
-      const res = await userService.getqueryInvitationUrl()
-      this.invitationUrl = res.invitationUrl
-      this.goyInvitationUrlCode(this.invitationUrl)
+    async getqueryInvitationUrl(){
+      
+    const res = await userService.getqueryInvitationUrl()
+    this.invitationUrl = res.invitationUrl
+    this.goyInvitationUrlCode(this.invitationUrl)
+    setTimeout (() => {
+      this.savaReport()
+    },200)
+    
     },
-    async goyInvitationUrlCode(url) {
-      let qrcode = new QRCode('qrcode', {
-        width: 100,
-        height: 100, // 高度
-        text: this.invitationUrl, // 二维码内容
-        image: '',
-        render: 'table' // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas） // background: '#f0f' // foreground: '#ff0'
-      })
+     async goyInvitationUrlCode (url) {
+        let qrcode = new QRCode('qrcode', {  
+         width: 70,  
+         height: 70, // 高度  
+         text: this.invitationUrl, // 二维码内容
+         image: '',
+         render: 'table'
+         // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas）  
+         // background: '#f0f'  
+         // foreground: '#ff0'  
+     })  
+       console.log(qrcode) 
     }
   }
 }
@@ -169,23 +187,33 @@ export default {
     }
   }
   .awWelfare-center {
-    width: 284px;
-    height: 466px;
-    margin: 0 auto;
-    position: relative;
-    > img {
-      width: 100%;
-      height: 100%;
+       width: 264px;
+      height: 446px;
+      margin: 10px auto;
+      background-size: 284px 466px;
+      position: relative;
+    .awWelfare-center-img{
+       width: 264px;
+      height: 446px;
     }
-    .qrcode {
-      width: 80px;
-      height: 80px;
-      position: absolute;
-      bottom: 31%;
-      left: 35%;
-    }
-    .awWelfare-info {
-      padding: 34px 50px 34px 62px;
+        .background-qrcode{
+              width:80px;
+              height:80px;
+              background-color: #ffffff;
+              position: absolute;
+              bottom: 32%;
+              left: 35%;
+              padding: 5px;
+           .qrcode{
+              width:70px;
+              height:70px;
+              
+              
+            }
+        }
+        
+    .awWelfare-info{
+      padding: 34px 50px 34px 52px;
       position: absolute;
       bottom: 34px;
       display: flex;
@@ -196,13 +224,13 @@ export default {
           border-radius: 50%;
         }
       }
-      .awWelfare-info-right {
-        margin-left: 12px;
-        .awWelfare-info-right-name {
-          font-size: 14px;
-          font-weight: 300;
-          color: rgba(251, 199, 172, 1);
-          line-height: 19px;
+      .awWelfare-info-right{
+        margin-left: 8px;
+        .awWelfare-info-right-name{
+            font-size:14px;
+            font-weight:300;
+            color:rgba(251,199,172,1);
+            line-height:19px;
         }
         .awWelfare-info-right-remak {
           font-size: 11px;

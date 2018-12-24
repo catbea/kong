@@ -41,7 +41,7 @@ class DynamicsService {
    * @param {*} current
    * @param {*} size
    */
-  getSystemMessage(current, size = 10) {
+  getSystemMessage(current, size ) {
     return xhr({
       url: '/cpIM/getSystemMessageList',
       body: {
@@ -63,13 +63,10 @@ class DynamicsService {
    * @param {*} current
    * @param {*} size
    */
-  getAllDynamicList(current, size = 10) {
+  getAllDynamicList() {
     return xhr({
       url: '/dataDynamic/getAllDynamicList',
-      body: {
-        current,
-        size
-      }
+   
     })
   }
   /**
