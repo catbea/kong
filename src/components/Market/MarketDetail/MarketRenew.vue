@@ -25,6 +25,8 @@ export default {
     this.flagTjHandle()
     this.flagZsHandle()
     this.flagZdHandle()
+    console.log(this.renewInfo,'续费数据');
+    
   },
   data: () => ({
     recommendColor: require('IMG/marketDetail/tj copy 10@2x.png'),
@@ -153,13 +155,23 @@ export default {
       }
     },
     renewHandle(n) {
-      this.$router.push({ name: 'marketDetail-open', params: { id: n } })
+      if(this.renewInfo.thisDistributor===false){
+        Dialog.alert({
+        message: '该楼盘不可续费非当前所属公司下楼盘无法开通续费',
+        confirmButtonText:'知道啦',
+        className:'distributor'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        this.$router.push({ name: 'marketDetail-open', params: { id: n } })
+      }
     }
   }
 }
 </script>
 <style lang="less">
-.renewDialog {
+.renewDialog,.distributor{
   width: 280px;
   > .van-dialog__content {
     > .van-dialog__message {

@@ -76,6 +76,7 @@ export default {
   },
   computed: {
     openStatus() {
+      if(!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
       if (this.itemInfo.openStatus == 0) {
         return '开通'
       } else {
