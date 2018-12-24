@@ -67,7 +67,7 @@ export default {
       awtipsIcon: require('IMG/user/invitation/aw-tips@2x.png'),
       awtips1Icon: require('IMG/user/invitation/aw-tips1@2x.png'),
       awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
-      awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
+      awbgcardIcon: require('IMG/user/invitation/aw-bgcard.png'),
       teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
       show1: false,
       registrationRules: '',
@@ -83,10 +83,14 @@ export default {
   },
   created() {
     this.getregisrules()
+    
   },
   async mounted() {
     await this.getqueryInvitationUrl()
-    this.savaReport()
+    setTimeout(()=>{
+      this.savaReport()
+    },200)
+    
   },
   methods: {
     async savaReport() {
@@ -98,6 +102,7 @@ export default {
       canvas.style.width = '80%'
       canvas.style.marginLeft = '10%'
       canvas.style.height = '100%'
+      this.status = 2
       document.getElementById('card-result').appendChild(canvas)
       this.status = 2
     },

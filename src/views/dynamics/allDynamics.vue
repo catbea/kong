@@ -14,8 +14,9 @@
               <dynamics-data :totalTitle="all.totalTitle" :cardTitle="all.cardTitle" :propertiesTitle="all.propertiesTitle" :articleTitle="all.articleTitle" :allDynamicCount="allDynamicCount" ></dynamics-data>
             </div>
           </shadow-box>
-          <dynamics-list  @click="getupdateCustomerInfo" :allDynamicList="allDynamicList" :item="item" ></dynamics-list>
-          
+          <van-list v-model="loading"  @load="getAllDynamicList" :finished="finished" :finished-text="'没有更多了'">
+            <dynamics-list  @click="getupdateCustomerInfo" :allDynamicList="allDynamicList" :item="item" ></dynamics-list>
+          </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 1" >
             <dynamics-card  @click="goallDynamics" :cardDynamicCount="cardDynamicCount" :cardDynamicListCount="cardDynamicListCount" :cardDynamicList="cardDynamicList" ></dynamics-card>
@@ -91,6 +92,13 @@ export default {
       cardDynamicListCount: 0,
       avgStayArticleTime: 0,
       avgStayLinkerTime: 0,
+      loading: false,
+      finished: false,
+      current: 1,
+      size:5,
+      page: 1,
+      pageSize: 5,
+      allCurrent: 1,
       customerCount: this.$route.query.customerCount,
       businessCardViews: this.$route.query.businessCardViews,
       estateViews: this.$route.query.estateViews,
@@ -107,10 +115,11 @@ export default {
     goList(index, title) {
       switch (index) {
         case 0:
-          this.getAllDynamicCount()
+          this.getAllDynamicList()
           break
         case 1:
           this.getCardDynamicCount()
+         // this.onLoad1()
           break
         case 2:
           this.getHouseDynamicCount()
@@ -120,6 +129,10 @@ export default {
           break
       }
     },
+    
+    // onLoad1() {
+    //   this.getAllDynamicList( this.allCurrent)
+    // },
     async updateDynamicsCollect() {
       const res = await dynamicsService.updateDynamicsCollect()
     },
@@ -127,13 +140,37 @@ export default {
       // 全部数据动态统计
       const res = await dynamicsService.getAllDynamicCount()
       this.allDynamicCount = res
-      this.getAllDynamicList()
       // Promise.all([this.getAllDynamicList,this.getArticleDynamicCount,this.getArticleDynamicList,this.getCardDynamicCount,this.getCardDynamicList])
     },
     //全部数据动态列表
-    async getAllDynamicList() {
-      const res = await dynamicsService.getAllDynamicList()
-      this.allDynamicList = res.records
+    async getAllDynamicList(current) {
+
+      let parm ={
+        size:this.size,
+        current: this.current
+      }
+     
+      const res = await dynamicsService.getAllDynamicList(parm)
+     // this.allDynamicList = res.records
+      debugger
+      this.allDynamicList = this.page <= 1 ? res.records :  this.allDynamicList.concat(res.records)
+      if (res.pages === 0 || this.page === res.pages) {
+        this.finished = true
+      }
+      this.page++
+      this.loading = false
+      // if(res.records.length > 0){
+      //   this.allDynamicList = this.allDynamicList.concat(res.records)
+      //     if (res.pages === 0 || this.page === res.pages) {
+      //       this.finished = true
+      //     }
+      //     this.current++
+      //     this.loading = false
+      //   } else {
+      //     this.current = 1
+      //     this.loading = false
+      //     this.finished = true
+      //   }
     },
     //名片数据动态统计
     async getCardDynamicCount() {
@@ -243,10 +280,7 @@ export default {
     //文章跳转
     itemArticleInfo(articlelist) {
       let articleInfo = articlelist.item
-      this.$router.push({
-        path: '/Dynamics/articleInfo',
-        query: { articleId: articleInfo.articleId, articleTitle: articleInfo.articleTitle, articleSource: articleInfo.articleSource, articleImgUrl: articleInfo.articleImgUrl }
-      })
+       this.$router.push({path:'/Dynamics/articleInfo',query: {articleTime:articleInfo.articleTime,articleId:articleInfo.articleId,articleTitle:articleInfo.articleTitle,articleSource:articleInfo.articleSource,articleImgUrl:articleInfo.articleImgUrl}})
     }
   }
 }

@@ -41,7 +41,7 @@ const state = {
       }
     ],
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJiNGlrMnAiLCJzdWIiOiJhZ2VudElkOnd3NWVlYjcyNDBiY2JhZDI4YToxMDYzIiwiZXhwIjoxNTQ2MjIxNDkwLCJpYXQiOjE1NDU2MTY2OTB9.6rqWpPea3DqQZJrmRr6SNK4dGdZQFEYJoEFJOsOH-LzABEWKtfIZc5HlylgvkQQ3zJUBvBO7OrZrZbKPcxoEbg',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJvYTlhMTQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjgyIiwiZXhwIjoxNTQ4NjQxMDY3LCJpYXQiOjE1NDU2MzYyNjd9.ECcd4FffRZWRRJSIY3bVOIMIg4CQ6lH74crWo0_DT_Xhxmol5q0ltBvopa3LBjFoeFgA6uD_F7uKWKzOwjg4YA',
     majorCity: '长治市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
@@ -90,7 +90,7 @@ const state = {
     area: '南山区',
     distributorId: '124', // 公司ID
     distributorName: 'AW大师',
-    institutionId: '42', // 机构ID
+    institutionId: '42', // 机构ID sit环境190 uat环境42/44 pro环境
     institutionName: 'AW大师'
   },
   //点击选中的楼盘id

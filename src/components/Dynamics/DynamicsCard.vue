@@ -1,7 +1,7 @@
 <template>
   <div class="article-container">
     <div class="shadow-box">
-     <div class="dynaData-container" v-if="cardDynamicCount">
+      <div class="dynaData-container" v-if="cardDynamicCount">
         <span class="container-total">
           <p class="container-title">名片分享</p>
           <p class="card-num">{{cardDynamicCount.cardShareCount }}</p>
@@ -10,7 +10,7 @@
           <p class="container-title">名片浏览</p>
           <p class="card-num">{{cardDynamicCount.scanCardCount }}</p>
         </span>
-        <span class="container-properties " >
+        <span class="container-properties">
           <p class="container-title">名片访客</p>
           <p class="card-num">{{cardDynamicCount.cardVisitorCount}}</p>
         </span>
@@ -20,58 +20,79 @@
         </span>
       </div>
     </div>
-    <div class="dynamics-container"  v-if="cardDynamicList.length !=''"  >
-    <div v-if="cardDynamicList" v-for="(item,key) in cardDynamicList" :key="key">
-    <div class="dynamics-container-list" >
-      <shadow-box>
-        <div slot="container">
-          <div class="dynamics-list">
-            <div class="dynamics-list-agent" @click="godynamicsList(item)">
-              <span class="list-agent-left">
-                <span class="agent-left-left">
-                  <img :src="item.avatarUrl" class="agent-userImg">
-                </span>
-                <span class="agent-left-right">
-                  <p class="left-right-name">{{item.clientName}}</p>
-                  <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
-                </span>
-              </span>
-              <span class="list-agent-right">
-                <p class="agent-right-num" v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}">{{item.intentionality}}%</p>
-                <p class="agent-right-title">意向度</p>
-              </span>
+    <div class="dynamics-container" v-if="cardDynamicList.length >0">
+      <div v-if="cardDynamicList" v-for="(item,key) in cardDynamicList" :key="key">
+        <div class="dynamics-container-list">
+          <shadow-box>
+            <div slot="container">
+              <div class="dynamics-list">
+                <div class="dynamics-list-agent" @click="godynamicsList(item)">
+                  <span class="list-agent-left">
+                    <span class="agent-left-left">
+                      <img :src="item.avatarUrl" class="agent-userImg">
+                    </span>
+                    <span class="agent-left-right">
+                      <p class="left-right-name">{{item.clientName}}</p>
+                      <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
+                    </span>
+                  </span>
+                  <span class="list-agent-right">
+                    <p
+                      class="agent-right-num"
+                      v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
+                    >{{item.intentionality}}%</p>
+                    <p class="agent-right-title">意向度</p>
+                  </span>
+                </div>
+                <div class="dynamics-list-content" @click="godynamicsList(item)">
+                  <p>
+                    浏览了
+                    <span>你的名片</span>
+                  </p>
+                  <p>
+                    {{item.updateTime | dateTimeFormatter(2,'/')}} 日第
+                    <span>{{item.clickCount }}次</span>打开
+                  </p>
+                  <p>
+                    浏览时长大于
+                    <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于
+                    <span>{{item.currentArticleLength}}%</span>
+                  </p>
+                  <p>
+                    累计浏览
+                    <span>{{item.todayClickCount}}次</span>名片，平均停留
+                    <span>{{item.totalTime / 1000}}s</span>
+                  </p>
+                </div>
+                <div class="dynamics-list-btn">
+                  <span></span>
+                  <span class="list-btn-right">
+                    <button
+                      class="list-btn-follow"
+                      v-show="item.attentionStatus   == 1"
+                      @click="getupdateCustomerInfo(item,key)"
+                    >
+                      <img :src="gzImg" class="agent-gzImg">
+                      关注
+                    </button>
+                    <button
+                      class="list-btn-followOK"
+                      v-show="item.attentionStatus   == 0"
+                      @click="getupdateCustomerInfo(item,key)"
+                    >已关注</button>
+                    <button class="list-btn-contact" @click="goalldynamics(item)">
+                      <img :src="lxImg" class="btn-contact-userImg">
+                      联系
+                    </button>
+                  </span>
+                </div>
+              </div>
             </div>
-            <div class="dynamics-list-content" @click="godynamicsList(item)">
-              <p>浏览了 <span>你的名片</span></p>
-              <p>{{item.updateTime | dateTimeFormatter(2,'/')}} 日第<span>{{item.clickCount }}次</span>打开 </p>
-              <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于<span>{{item.currentArticleLength}}%</span></p>
-              <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
-            </div>
-  
-            <div class="dynamics-list-btn">
-              <span></span>
-              <span class="list-btn-right">
-               <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
-                   <img :src="gzImg" class="agent-gzImg">
-                   关注</button>
-                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="list-btn-contact"  @click="goalldynamics(item)">
-                  <img :src="lxImg" class="btn-contact-userImg">
-                  联系
-                </button>
-              </span>
-            </div>
-          </div>
-
+          </shadow-box>
         </div>
-      </shadow-box>
+      </div>
     </div>
-</div>
-
-  </div>
-<dynamics-null v-else></dynamics-null>
-
-
+    <dynamics-null v-else></dynamics-null>
   </div>
 </template>
 <script>
