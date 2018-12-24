@@ -967,12 +967,13 @@ export default {
 .massage-info-lower {
 //   position: fixed;
 //   bottom: 0;
-  height: 49px;
+  height: 50px;
   display: flex;
   text-align: center;
   width: 100%;
   background: rgba(250, 250, 250, 1);
   padding: 8px 10px;
+  z-index: 99;
 }
 
 .massage-info-lower-cen {
