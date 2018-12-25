@@ -10,7 +10,7 @@
         </button>
       </div>
       <div v-show="status === 1" class="bg_img awWelfare-center" id="share-top">
-        <img :src="awbgcardIcon" alt>
+        <img :src="awbgcardIcon" alt="">
         <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
         <div class="awWelfare-info">
           <div class="awWelfare-info-left">
@@ -22,18 +22,23 @@
           </div>
         </div>
       </div>
-      <div class="result" id="card-result" v-show="status === 2"></div>
-
+      <div class="imgcard" id="card-result" v-show="status === 2">
+        <img class="imgcard-img" id="imgcard">
+      </div>
       <div class="awWelfare-text">请长按保存邀请图片</div>
     </div>
-
     <popup v-model="show1" position="center" masker-opacity="0.6" :close-on-click-overlay="false">
       <div class="register-rule-box" :style="{'backgroundImage':'url('+teammatBack+')'}">
         <div class="register-rule-box-name">活动规则</div>
         <div class="register-rule-box-content">
           <div class="register-rule-box-title">邀请注册</div>
           <div class="register-rule-box-text">
-            <div class="register-rule-box-text-item" v-if="regisItem" v-for="(regisItem,key) in registrationRules" :key="key">
+            <div
+              class="register-rule-box-text-item"
+              v-if="regisItem"
+              v-for="(regisItem,key) in registrationRules"
+              :key="key"
+            >
               <div class="div-dian">•</div>
               <div>{{regisItem}}</div>
             </div>
@@ -83,14 +88,12 @@ export default {
   },
   created() {
     this.getregisrules()
-    
   },
   async mounted() {
     await this.getqueryInvitationUrl()
-    setTimeout(()=>{
+    setTimeout(() => {
       this.savaReport()
-    },200)
-    
+    }, 200)
   },
   methods: {
     async savaReport() {
@@ -101,9 +104,14 @@ export default {
       })
       canvas.style.width = '80%'
       canvas.style.marginLeft = '10%'
-      canvas.style.height = '100%'
+      canvas.style.height = '80%'
       canvas.style.zIndex = 99
-      document.getElementById('card-result').appendChild(canvas)
+
+      // document.getElementById('card-result').appendChild(canvas)
+
+      let image = document.getElementById('imgcard')
+      image.src = canvas.toDataURL('image/png')
+
       this.status = 2
     },
     async goteammateList() {
@@ -178,6 +186,7 @@ export default {
     height: 466px;
     margin: 0 auto;
     position: relative;
+
     > img {
       width: 100%;
       height: 100%;
@@ -218,6 +227,18 @@ export default {
       }
     }
   }
+
+  .imgcard {
+    width: 80%;
+    height: 70%;
+    margin-left: 10%;
+
+    > .imgcard-img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .awWelfare-text {
     text-align: center;
     font-size: 14px;
