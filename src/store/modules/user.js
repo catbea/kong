@@ -41,7 +41,7 @@ const state = {
       }
     ],
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJnNXRhZmoiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo3MDUiLCJleHAiOjE1NDg3MDczODksImlhdCI6MTU0NTcwMjU4OX0.oJZqCzNeUOd6xFxmmlfJZx1WNxhbY_dG31iKmoZb8-PaW2iZtDizJkgL_kZeYn_UKLIUqMBo849DZq0XxSwelQ',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI2MjhmNzMiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxIiwiZXhwIjoxNTQ4NjY0OTAzLCJpYXQiOjE1NDU2NjAxMDN9.xcbJva5ppitLayLUODSf03Ddm9_HjdjuqOoyAUr16yaw3wtVuY8c_CGOsZwJmI_kKmnF6iT3VoeVlmsW8vZ6bg',
     majorCity: '长治市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',

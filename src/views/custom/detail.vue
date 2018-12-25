@@ -25,6 +25,12 @@
         :swipe-threshold="6"
         @click="onClick"
       >
+         <van-tab title="足迹">
+          <!-- :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData" :finished="currentData.finished"-->
+          <van-list v-model="loading" :finished="finished" @load="onLoad">
+              <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
+           </van-list>
+        </van-tab>
         <van-tab title="分析">
           <custom-detail-analyze
             :baseInfo="customBaseInfo"
@@ -39,12 +45,6 @@
             :analysisListData="analysisListData"
             @renew="renewHandler"
           />
-        </van-tab>
-        <van-tab title="足迹">
-          <!-- :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData" :finished="currentData.finished"-->
-          <van-list v-model="loading" :finished="finished" @load="onLoad">
-              <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
-           </van-list>
         </van-tab>
         <van-tab title="资料">
          
@@ -147,17 +147,17 @@ export default {
      * 切换tab
      */
     onClick() {
-      if (this.activeIndex == 0) {
+      if (this.activeIndex == 0) { // 足迹
+        this.getCustomerDynamicCount(this.clientId)
+        this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
+        this.onLoad()
+      } else if (this.activeIndex == 1 && this.isSecondReq == false) { // 分析
         this.getCustomPieChart(this.clientId)
         this.getCustomerSevenDayTrendChart(this.clientId)
         this.getCustomerBarChart(this.clientId)
         this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
-      } else if (this.activeIndex == 1 && this.isSecondReq == false) {
-        this.getCustomerDynamicCount(this.clientId)
-        this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
-        this.onLoad()
         this.isSecondReq = true
-      } else if (this.activeIndex == 2 && this.isThirdReq == false) {
+      } else if (this.activeIndex == 2 && this.isThirdReq == false) { // 资料
         this.getCustomerInfo(this.clientId)
         this.isThirdReq = true
       }
@@ -167,6 +167,11 @@ export default {
       let params = {
         clientId: this.clientId,
         isFollow: this.attentionFlag ? 0 : 1
+      }
+      if (this.attentionFlag) {
+        this.$toast('关注成功');
+      }else {
+        this.$toast('取消关注成功');
       }
       this.updateCustomerInfo(params)
     },
