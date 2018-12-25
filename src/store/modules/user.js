@@ -12,7 +12,7 @@ const state = {
     enterpriseId: '91',
     institutionId: '82',
     institutionName: '',
-    isOne: '',
+    isOne: false, // true新用户 false老用户
     isVip: '',
     labelList: [
       {
