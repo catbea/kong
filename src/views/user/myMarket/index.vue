@@ -299,7 +299,7 @@ export default {
       let json = {}
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element =this.showMarketList[index];
-        if(!json[element[index]]){
+        if(!json[element[index].linkerId]){
           arr.push(element)
           json[element[index]]=1
         }
@@ -340,7 +340,7 @@ export default {
       let json = {}
       for (let index = 0; index < this.notShowMarketList.length; index++) {
         const element =this.notShowMarketList[index];
-        if(!json[element[index]]){
+        if(!json[element[index].linkerId]){
           arr.push(element)
           json[element[index]]=1
         }
