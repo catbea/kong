@@ -119,9 +119,10 @@ export default {
       padding-top: 16px;
       margin: 0 16px;
       margin-bottom: 0;
-      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid #eeeeee;
       > .messageInfo-sys-container {
         display: flex;
+         margin-bottom: 10px;
         > .messageInfo-sys-left {
           > .sys-left-img {
             width: 50px;
@@ -176,7 +177,7 @@ export default {
             font-size: 13px;
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
-            line-height: 32px;
+            line-height: 27px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
