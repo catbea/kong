@@ -16,6 +16,7 @@ class WechatApi {
 
   async init() {
     const ticket = await this._getTicket()
+    console.log('init ==========')
     store.dispatch('setJssdkConfig', ticket)
     this.wx.config(ticket)
     this.getUserArea()
