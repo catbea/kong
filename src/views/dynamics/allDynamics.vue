@@ -108,7 +108,7 @@ export default {
   created() {
     this.active = this.currDataDynamicsTab
     this.updateDynamicsCollect()
-    // this.getAllDynamicCount()
+     this.getAllDynamicCount()
     this.goList(this.active)
   },
   methods: {
@@ -145,20 +145,11 @@ export default {
     //全部数据动态列表
     async getAllDynamicList(current) {
 
-      let parm ={
-        size:this.size,
-        current: this.current
-      }
      
-      const res = await dynamicsService.getAllDynamicList(parm)
-     // this.allDynamicList = res.records
-      debugger
-      this.allDynamicList = this.page <= 1 ? res.records :  this.allDynamicList.concat(res.records)
-      if (res.pages === 0 || this.page === res.pages) {
-        this.finished = true
-      }
-      this.page++
-      this.loading = false
+     
+      const res = await dynamicsService.getAllDynamicList()
+      this.allDynamicList =res.records
+    
       // if(res.records.length > 0){
       //   this.allDynamicList = this.allDynamicList.concat(res.records)
       //     if (res.pages === 0 || this.page === res.pages) {
