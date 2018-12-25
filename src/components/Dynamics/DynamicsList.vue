@@ -51,7 +51,8 @@
                   </p>
                   <p>
                     浏览时长大于
-                    <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于
+                    <span>{{item.currentTime / 1000}}s</span>&nbsp;
+                    篇幅<samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
                     <span>{{item.currentArticleLength}}%</span>
                   </p>
                   <p>
