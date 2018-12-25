@@ -2,7 +2,7 @@ import store from '@/store/'
 import wx from 'weixin-js-sdk'
 
 const jsApiList = [
-  'chooseWXPay',
+  'chooseWXPay',        // 微信支付
   'hideOptionMenu',
   'showOptionMenu',
   'hideMenuItems',
@@ -67,10 +67,30 @@ class WechatHelper {
    * 设置分享设置
    * @param {*} conf 
    */
-  _setShare(conf) {
+  async setShare(conf) {
     const defaultConf = {
-      
+      title:'',
+      desc:'',
+      link:'',
+      imgUrl:'',
+      success: () =>{}
     }
+    this._universalShare(conf)
+    // return new Promise ((resolve, reject) => {
+    //   this._universalShare(conf)
+    //   // this.wx.updateAppMessageShareData({
+
+    //   // })
+    // })
+  }
+  /**
+   * 设置分享泛方法
+   * @param {*} conf 
+   */
+  _universalShare(conf){
+    this.wx.updateAppMessageShareData(conf)
+    this.wx.updateTimelineShareData(conf)
+    this.wx.showAllNonBaseMenuItem()
   }
 }
 export default new WechatHelper()
