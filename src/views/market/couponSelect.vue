@@ -59,7 +59,7 @@ export default {
   background: #fff;
   .un-use-coupon {
     display: flex;
-    height: 32px;
+    height: 38px;
     font-size: 14px;
     padding-left: 16px;
     padding-top: 12px;

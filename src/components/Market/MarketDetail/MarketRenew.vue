@@ -138,6 +138,8 @@ export default {
         case false:
           this.dialogHandle('已关闭该楼盘展示、推荐与置顶')
           this.changeHandle(this.renewInfo.linkerId, 30, 1)
+          this.flagTj=false
+          this.flagZd=false
           break
       }
     },

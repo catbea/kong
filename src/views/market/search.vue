@@ -5,8 +5,8 @@
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
     </div>
-    <div class="history-words-content" v-if="searchStatus === 0">
-      <div class="title-box">
+    <div class="history-words-content" v-if="searchStatus === 0 && searchHistory.length>0">
+      <div class="title-box" v-if="">
         <p class="history-title">历史搜索</p>
         <div class="bg_img clear-icon" :style="{backgroundImage:'url('+clearIcon+')'}" @click="cleanHandler"></div>
       </div>

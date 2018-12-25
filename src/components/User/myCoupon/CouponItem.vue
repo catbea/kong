@@ -11,6 +11,9 @@
           <div v-show="info.type==20" :class="{textColorA:status!=0,textColorB:status!=0,margin:true}">
             <h3>{{info.discountsLimit | numberFormatter}}折</h3>
           </div>
+          <div v-show="info.type==30" :class="{textColorA:status!=0,textColorB:status!=0,margin:true}">
+            <h3>{{info.discountsLimit | numberFormatter}}</h3>
+          </div>
           <p>满{{info.satisfyLimit | numberFormatter}}元可用</p>
         </div>
         <ul class="coupon-item-page-center">

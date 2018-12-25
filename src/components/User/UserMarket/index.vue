@@ -23,7 +23,9 @@
             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
           </li>
           <li>
-            {{dataArr.openTimes}}次开通 {{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期
+            {{dataArr.openTimes}}次开通 
+            <span v-show="!stride">{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
+            <span v-show="stride">{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
               <span></span>
               <span></span>
@@ -243,7 +245,7 @@ export default {
           // on confirm
           this.stickShow = false
           this.show = !this.show
-          this.exhibitionMarketShow = false
+          // this.exhibitionMarketShow = false
           this.changeUserStatus(this.linkerId, 30, 1) //改为不展示
           this.dataArr.displayFlag = 1
           // this.dataArr.displayFlag='1'
