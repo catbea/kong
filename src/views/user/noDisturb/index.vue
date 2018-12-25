@@ -132,6 +132,8 @@ export default {
       obj.sunday = this.sunday
       obj.status = selectStatus //status 0:关闭  1:开启
 
+      console.log(JSON.stringify(obj))
+
       const result = await userService.upDataDisturb(obj)
     },
 
@@ -275,6 +277,15 @@ export default {
         let sunday = result.sunday
         let beginTime = result.beginTime
         let endTime = result.endTime
+
+        this.monday = result.monday
+        this.friday = friday
+        this.tuesday = tuesday
+        this.wednesday = wednesday
+        this.thursday = thursday
+        this.friday = friday
+        this.saturday = saturday
+        this.sunday = sunday
 
         if (beginTime == '') {
           this.startTime = ''

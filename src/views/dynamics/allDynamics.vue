@@ -57,21 +57,35 @@
           ></dynamics-card>
         </div>
         <div class="allDynamics-container" v-if="active === 2">
-          <properties
-            :info="item"
-            @click="itemProperties"
-            :houseDynamicList="houseDynamicList"
-            :houseDynamicCount="houseDynamicCount"
-            :avgStayLinkerTime="avgStayLinkerTime"
-          ></properties>
+          <van-list
+            v-model="loadingBuild"
+            @load="getHouseDynamicList"
+            :finished="finishedBuild"
+            :finished-text="'没有更多了'"
+          >
+            <properties
+              :info="item"
+              @click="itemProperties"
+              :houseDynamicList="houseDynamicList"
+              :houseDynamicCount="houseDynamicCount"
+              :avgStayLinkerTime="avgStayLinkerTime"
+            ></properties>
+          </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 3">
-          <dynamics-article
-            :articleDynamicCount="articleDynamicCount"
-            :articleDynamicList="articleDynamicList"
-            :avgStayArticleTime="avgStayArticleTime"
-            @click="itemArticleInfo"
-          ></dynamics-article>
+          <van-list
+            v-model="loadingArticle"
+            @load="getArticleDynamicList"
+            :finished="finishedArticle"
+            :finished-text="'没有更多了'"
+          >
+            <dynamics-article
+              :articleDynamicCount="articleDynamicCount"
+              :articleDynamicList="articleDynamicList"
+              :avgStayArticleTime="avgStayArticleTime"
+              @click="itemArticleInfo"
+            ></dynamics-article>
+          </van-list>
         </div>
       </div>
     </div>
@@ -147,8 +161,13 @@ export default {
       estateViews: this.$route.query.estateViews,
       articleCount: this.$route.query.articleCount,
 
-      loading: false,
-      finished: false
+      loadingBuild: false,
+      finishedBuild: false,
+      buildCurrent: 1, //楼盘的current
+
+      loadingArticle: false,
+      finishedArticle: false,
+      ArticleCurrent: 1 //文章的current
     }
   },
   created() {
@@ -164,12 +183,15 @@ export default {
           break
         case 1:
           this.getCardDynamicCount()
-          // this.onLoad1()
           break
         case 2:
+          this.houseDynamicList = []
+          this.buildCurrent = 1
           this.getHouseDynamicCount()
           break
         case 3:
+          this.articleDynamicList = []
+          this.ArticleCurrent = 1
           this.getArticleDynamicCount()
           break
       }
@@ -215,17 +237,29 @@ export default {
       this.cardDynamicList = res.records
     },
 
-    //楼盘数据动态统计
+    //楼盘数据动态统计   --楼盘页面
     async getHouseDynamicCount() {
       const res = await dynamicsService.getHouseDynamicCount()
       this.houseDynamicCount = res
       this.avgStayLinkerTime = parseInt(this.houseDynamicCount.avgStayLinkerTime / 1000)
-      this.getHouseDynamicList()
+      this.getHouseDynamicList(this.buildCurrent)
     },
     //楼盘动态列表
-    async getHouseDynamicList() {
-      const res = await dynamicsService.getHouseDynamicList()
-      this.houseDynamicList = res.records
+    async getHouseDynamicList(buildCurrent) {
+      const res = await dynamicsService.getHouseDynamicList(buildCurrent)
+
+      if (res.records.length > 0) {
+        this.houseDynamicList = this.houseDynamicList.concat(res.records)
+
+        if (res.pages === 0 || this.buildCurrent === res.pages) {
+          this.finishedBuild = true
+        }
+        this.buildCurrent++
+        this.loadingBuild = false
+      } else {
+        this.loadingBuild = false
+        this.finishedBuild = true
+      }
     },
 
     //文章数据动态统计
@@ -233,12 +267,24 @@ export default {
       const res = await dynamicsService.getArticleDynamicCount()
       this.articleDynamicCount = res
       this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime / 1000)
-      this.getArticleDynamicList()
+      this.getArticleDynamicList(this.ArticleCurrent)
     },
     //文章数据动态列表
-    async getArticleDynamicList() {
-      const res = await dynamicsService.getArticleDynamicList(1)
-      this.articleDynamicList = res.records
+    async getArticleDynamicList(ArticleCurrent) {
+      const res = await dynamicsService.getArticleDynamicList(ArticleCurrent)
+
+      if (res.records.length > 0) {
+        this.articleDynamicList = this.articleDynamicList.concat(res.records)
+
+        if (res.pages === 0 || this.ArticleCurrent === res.pages) {
+          this.finishedArticle = true
+        }
+        this.ArticleCurrent++
+        this.loadingArticle = false
+      } else {
+        this.loadingArticle = false
+        this.finishedArticle = true
+      }
     },
     //全部按鈕
     async getupdateCustomerInfo(cons) {

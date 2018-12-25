@@ -63,7 +63,7 @@ export default {
     currPriceIndex: 0,
     isPayLoading: false,
     payValue: 0,
-    setMealInfo: { openCount: 0, vipCity: '' },
+    setMealInfo: { isVip:false, openCount: 0, vipCity: '' },
     vipList: [],
     isExpire: false,
     expireTimestamp: 0,
@@ -161,10 +161,10 @@ export default {
     async getVipInfo() {
       let res = await marketService.vipInfo()
       this.vipList = res.vipSettingList
-      this.setMealInfo = { openCount: res.count, vipCity: res.city }
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
+      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.city }
 
       // 判断是否已过期
       let now = new Date()
