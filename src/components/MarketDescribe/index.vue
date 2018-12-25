@@ -105,8 +105,12 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
-    openHandle() {
-      this.$emit('openReturnHandle', this.itemInfo)
+   async openHandle() {
+      this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      console.log(11111111111111);
+      if(this.item.city===this.userInfo.vipInfo.city){
+       await marketService.addHouseByVip(item.linkerId)
+      }//VIP用户选择城市与VIP开通楼盘同城市
     }
   },
   watch: {
