@@ -36,12 +36,11 @@ export default {
   },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
+      this.newMsgPop = v
       if (this.$route.path == '/custom/message/message') {
         //当前在聊天页
         return
       }
-      this.newMsgPop = v
-
       let msgContent = this.$store.getters.newMsgContent
       let data = ''
       let desc = msgContent.desc
