@@ -226,8 +226,8 @@ export default {
       const result = await discoverService.articleShare(params)
     },
     // 设置分享
-    shareHandler() {
-
+    async shareHandler() {
+      await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
       // wechatApi

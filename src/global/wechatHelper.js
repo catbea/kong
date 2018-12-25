@@ -48,7 +48,6 @@ class WechatHelper {
     console.log(store.state.wx.jssdkConfig)
 
     console.log(this.wx);
-    debugger
     this.wx.config(store.state.wx.jssdkConfig)
     console.log(store.state.wx.jssdkConfig)
     this.getUserArea()
