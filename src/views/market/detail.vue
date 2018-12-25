@@ -264,8 +264,6 @@ export default {
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(this.info,'该楼盘数据');
-      
       this.status = this.info.collectionStatus
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
