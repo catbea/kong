@@ -5,7 +5,7 @@
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div v-show="showMarketListCount>=showFilterLimit">
+        <div v-show="showMarketListCount>=showFilterLimit" style="width:343px;margin-left:16px;">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters" :local="this.selectedCity"></screen>
         </div>
@@ -14,22 +14,22 @@
         </van-list>
         <div v-show="yes" class="notMarket">
           <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
-          <p>暂未开通任何楼盘</p>
+          <p>暂无开启展示的楼盘</p>
         </div>
       </div>
       
       <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
-        <div v-show="notShowMarketListCount>=showFilterLimit">
+        <div v-show="notShowMarketListCount>=showFilterLimit" style="width:343px;margin-left:16px;">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
-        <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowGetMyMarketInfo" v-if="!no">
+        <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowGetMyMarketInfo" v-show="!no">
           <close-market v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
         </van-list>
         <div v-show="no" class="notMarket">
           <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
-          <p>暂未开通任何楼盘</p>
+          <p>暂无关闭展示的楼盘</p>
         </div>
       </div>
     </div>
@@ -58,7 +58,8 @@ export default {
   data: () => ({
     unShowImg:require('IMG/user/collection/Group@2x.png'),
     yes: false,
-    no:true,
+    no:false,
+    close:true,
     showFilterLimit: 20,
     showLoading: false,
     showFinished: false, //展示
@@ -105,8 +106,6 @@ export default {
     dataArr: []
   }),
   async created() {
-    console.log(2232222222222);
-    
     this.selectedCity = this.userArea.myMarketSelectedCity
     this.searchInfo.siteText = this.selectedCity ? this.selectedCity : '全国'
     // await this.showGetMyMarketInfo()//请求展示楼盘
@@ -167,8 +166,6 @@ export default {
       this.notShowMarketListCount = res.count
     },
     showOnLoad() {
-      console.log(6876756876);
-      
       //展示数据初始化
        this.showGetMyMarketInfo()
     },
@@ -297,11 +294,9 @@ export default {
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
       this.showMarketList = this.showMarketList.concat(resShow.records)
-      console.log(this.showMarketList.length,'长度');
       if(this.showMarketList.length==0){
       this.yes=true
     }
-      console.log(this.showMarketList,this.yes,'展示的楼盘数据1')
       if (resShow.pages === 0 || this.showPage === resShow.pages) {
         this.showFinished = true
       }
@@ -328,6 +323,8 @@ export default {
       // this.searchNotShowNum = resNotShow.records.length//不展示的楼盘个数
       // this.notShowMarketList =resNotShow.records
       this.notShowMarketList = this.notShowMarketList.concat(resNotShow.records)
+      console.log(this.notShowMarketList,'不展示的数据');
+      
       if(this.notShowMarketList.length==0){
       this.no=true
       }
@@ -344,6 +341,7 @@ export default {
         this.titleInfo.linkText = '切换关闭展示楼盘'
       } else {
         this.titleInfo.linkText = '切换开启展示楼盘'
+        this.notShowGetMyMarketInfo()
       }
     },
     skipShareHandle() {
@@ -356,6 +354,13 @@ export default {
         if (n.linkerId == element.linkerId) {
           this.showMarketList.splice(index, 1)
         }
+      }
+      if(this.showMarketList.length==0){
+        this.yes=true
+      }
+      if(this.notShowMarketList.length!=0){
+        this.no=false
+        this.close=true
       }
     },
     returnMasterHandle(n) {
@@ -371,6 +376,9 @@ export default {
         if (n.linkerId == element.linkerId) {
           this.notShowMarketList.splice(index, 1)
         }
+      }
+       if(this.notShowMarketList.length==0){
+        this.no=true
       }
     }
   }

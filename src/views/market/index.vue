@@ -32,7 +32,7 @@ export default {
     AlreadyOpen
   },
   computed: {
-    ...mapGetters(['userArea'])
+    ...mapGetters(['userArea','userInfo'])
   },
   data: () => ({
     selectedCity: '',
@@ -92,8 +92,11 @@ export default {
       this.page++
       this.loading = false
     },
-    openReturnHandle(item) {
+   async openReturnHandle(item) {
       this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+      if(this.item.city===this.userInfo.vipInfo.city){
+       await marketService.addHouseByVip(item.linkerId)
+      }//VIP用户选择城市与VIP开通楼盘同城市
     },
     onClickHandler() {
       this.$router.push('/market/inputSearch')

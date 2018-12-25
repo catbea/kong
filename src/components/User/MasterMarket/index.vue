@@ -64,6 +64,7 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
+import { Dialog } from 'vant'
 export default {
   created() {
     this.filterHandle()
@@ -97,6 +98,13 @@ export default {
       this.limitList.splice(index, 1)
       this.swipeJudge()
       this.$emit('noRecommend', linkerId)
+      Dialog.alert({
+        message: '取消该楼盘推荐成功',
+        confirmButtonText:'知道啦',
+        className:'distributor'
+      }).then(() => {
+        // on close
+      });
     },
     filterHandle() {
       this.masterList = this.limitList.filter(item => {
@@ -136,6 +144,27 @@ export default {
 }
 </script>
 <style lang="less">
+.distributor{
+  width: 280px;
+  > .van-dialog__content {
+    > .van-dialog__message {
+      text-align: center;
+    }
+  }
+  > .van-dialog__footer {
+    display: flex;
+    justify-content: center;
+    > .van-dialog__confirm {
+      border-radius: 5px;
+      height: 40px;
+      width: 142px;
+      line-height: 40px;
+      color: #ffffff;
+      background: #007ae6;
+      margin-bottom: 12px;
+    }
+  }
+}
 .mymarket-page {
   .master-market-box {
     display: flex;
