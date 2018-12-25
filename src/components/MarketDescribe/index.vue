@@ -33,9 +33,7 @@
             </li>
             <li class="site">
               {{itemInfo.linkerAddress}}
-              <span
-                v-if="itemInfo.openStatus!=0"
-              >{{itemInfo.invalidTimeStr}}到期</span>
+              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
             </li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
@@ -63,12 +61,16 @@ export default {
   },
   created() {
     this.dredgeColor()
-    if (this.tags) this.tags.unshift(this.saleStatus)
+    this.tags=this.itemInfo.linkerTags
+    if (this.tags){
+      this.tags.unshift(this.saleStatus)
+      }
+
   },
   data() {
     return {
       detailOpenStatus: null, //0未开通1已开通已过期2已开通未过期
-      tags: this.itemInfo.linkerTags,
+      tags:[],
       resInfo: null,
       style: null,
       panoramaImg: require('IMG/system/icon_panorama@2x.png'),
@@ -101,15 +103,13 @@ export default {
       }
     },
     saleStatus() {
-      if (this.itemInfo.saleStatus == 0 || this.itemInfo.saleStatus == 1 || this.itemInfo.saleStatus == 3) {
-        if (this.itemInfo.saleStatus == 0) {
-          return '热销中'
-        } else if (this.itemInfo.saleStatus == 1) {
-          return '即将发售'
-        } else if (this.itemInfo.saleStatus == 3) {
-          return '售罄'
-        }
-      } else {
+      if (this.itemInfo.saleStatus == 0) {
+        return '热销中'
+      } else if (this.itemInfo.saleStatus == 1) {
+        return '即将发售'
+      } else if (this.itemInfo.saleStatus == 3) {
+        return '售罄'
+      }else{
         return this.itemInfo.saleStatus
       }
     }

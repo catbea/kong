@@ -228,9 +228,8 @@ export default {
         linkerName: res.linkerName,
         openTimes: res.openTimes,
         sale: res.sale,
-        saleStatus: res.saleStatus,
         commission: res.commission,
-        openStatus: res.openStatus,
+        saleStatus:res.saleStatus
       }
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { linkerId: this.linkerId, projectInfo: this.projectInfo }))
     },
