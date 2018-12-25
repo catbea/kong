@@ -67,7 +67,7 @@ export default {
       height: 24px;
     }
     font-size: 11px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
     line-height: 16px;
@@ -81,7 +81,7 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 20px;

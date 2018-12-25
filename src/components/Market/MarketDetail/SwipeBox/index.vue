@@ -114,7 +114,7 @@ export default {
     background: rgba(0, 122, 230, 1);
     border-radius: 12px;
     font-size: 12px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 24px;
@@ -129,7 +129,7 @@ export default {
     background: rgba(255, 255, 255, 1);
     border-radius: 12px;
     font-size: 12px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 24px;
@@ -140,7 +140,7 @@ export default {
     bottom: 5px;
     padding: 2px 5px;
     font-size: 12px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     width: 48px;
@@ -160,7 +160,7 @@ export default {
     top: 20px;
     right: 69px;
     font-size: 12px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: #ffffff;
     .collect {
@@ -174,7 +174,7 @@ export default {
     top: 20px;
     right: 29px;
     font-size: 12px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: #ffffff;
     .share {

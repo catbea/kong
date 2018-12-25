@@ -646,7 +646,7 @@ export default {
       this.pyzmaoviwe()
     },
     sendMessage(msgType01, audioTime01) {
-      if (this.cardDelFlag == 0) {// 小程序端经纪人已经删除
+      if (this.cardDelFlag == 1) {// 小程序端经纪人已经删除
         let obj = {}
         obj.content = this.customBaseInfo.clientName+'删除了您的名片，您还不是他（她）的经纪人。需要对方添加您的名片后，才能聊天'
         obj.msgType = 1
@@ -757,7 +757,7 @@ export default {
         padding-left: 16px;
         text-align: left;
         font-size: 18px;
-        font-family: PingFang-SC-Semibold;
+        
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 25px;
@@ -779,7 +779,7 @@ export default {
     margin-bottom: 19px;
     text-align: center;
     font-size: 12px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 17px;
@@ -806,7 +806,7 @@ export default {
   }
   .msg-customer-con {
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
@@ -828,7 +828,7 @@ export default {
     padding-top: 12px;
     position: relative;
     font-size: 12px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(187, 187, 187, 1);
     line-height: 17px;
@@ -842,7 +842,7 @@ export default {
 
   .msg-customer-con-voice {
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
@@ -867,7 +867,7 @@ export default {
     .left-voice-time {
       margin-left: 5px;
       font-size: 14px;
-      font-family: PingFang-SC-Regular;
+      
       font-weight: 400;
       color: rgba(0, 0, 0, 1);
       line-height: 23px;
@@ -902,7 +902,7 @@ export default {
     word-break: break-all;
     word-wrap: break-word;
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 21px;
@@ -934,7 +934,7 @@ export default {
     word-break: break-all;
     word-wrap: break-word;
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
@@ -952,7 +952,7 @@ export default {
     .left-voice-time {
       margin-right: 5px;
       font-size: 14px;
-      font-family: PingFang-SC-Regular;
+      
       font-weight: 400;
       color: rgba(0, 0, 0, 1);
       line-height: 23px;
@@ -1015,7 +1015,6 @@ export default {
   text-align: center;
   width: 100%;
   font-size: 15px;
-  font-family: PingFang-SC-Medium;
   font-weight: 500;
   color: rgba(51, 51, 51, 1);
   line-height: 33px;
@@ -1107,7 +1106,7 @@ export default {
 
 .voiceInfo div {
   font-size: 12px;
-  font-family: PingFang-SC-Regular;
+  
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
   line-height: 0.34rem;
@@ -1140,7 +1139,7 @@ export default {
 
 .voiceInfo-cancel div {
   font-size: 0.24rem;
-  font-family: PingFang-SC-Regular;
+  
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
   line-height: 17px;
@@ -1177,7 +1176,7 @@ export default {
       padding-top: 5px;
       font-size: 12px;
       text-align: center;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       line-height: 17px;
@@ -1231,7 +1230,7 @@ export default {
 
 .info-name {
   font-size: 0.32rem;
-  font-family: PingFangSC-Semibold;
+  
   font-weight: 600;
   color: rgba(51, 51, 51, 1);
   line-height: 0.32rem;
@@ -1243,7 +1242,7 @@ export default {
 
 .info-address {
   font-size: 0.24rem;
-  font-family: PingFangSC-Regular;
+  
   font-weight: 400;
   color: rgba(102, 102, 102, 1);
   line-height: 0.24rem;
@@ -1257,7 +1256,7 @@ export default {
 
 .info-Price {
   font-size: 0.22rem;
-  font-family: PingFangSC-Regular;
+  
   font-weight: 400;
   color: #666;
   line-height: 0.22rem;
