@@ -33,6 +33,9 @@ export default async (to, from, next) => {
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
+      console.log(36,userInfo,userInfo.payCorpId);
+      
+      
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
