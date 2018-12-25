@@ -426,7 +426,6 @@ export default {
       }
       p:nth-child(2){
         font-size:12px;
-        font-family:PingFang-SC-Regular;
         font-weight:400;
         color:rgba(153,153,153,1);
         line-height:17px;

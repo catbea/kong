@@ -144,7 +144,7 @@ export default {
       li {
         width: 122px;
         font-size: 14px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(150, 158, 168, 1);
         line-height: normal;
@@ -163,7 +163,7 @@ export default {
       margin-left: 8px;
       width: 324px;
       font-size: 12px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(150, 158, 168, 1);
       line-height: normal;

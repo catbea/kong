@@ -244,7 +244,7 @@ export default {
       }
       > .grou1Icon-p {
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;

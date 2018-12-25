@@ -17,14 +17,14 @@ export default {}
   .top {
     p:nth-child(1) {
       font-size: 18px;
-      font-family: PingFangSC-Medium;
+      
       font-weight: 500;
       color: rgba(0, 0, 0, 1);
       line-height: 25px;
     }
     p:nth-child(2) {
       font-size: 15px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 25px;
