@@ -3,7 +3,7 @@
  */
 import xhr from './xhr'
 class CommonService {
-  wxTicket(url, agentId = '') {
+  wxTicket(url, agentId = 1) {
     return xhr({
       url: '/cp/oauth2/signature/corp',
       body: {
