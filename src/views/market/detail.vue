@@ -83,7 +83,7 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
             <div class="house-type">
-              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}"></div>
+              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}" @click.stop="photoHandle(item.imgUrl)"></div>
               <div class="house-type-info">
                 <p class="house-type-name">{{item.householdDesc}}</p>
                 <p class="house-type-area">{{`建面${item.area}${item.orientations}朝向`}}</p>
@@ -173,7 +173,7 @@ import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
-import { Dialog } from 'vant'
+import { Dialog,ImagePreview } from 'vant'
 import isEmpty from 'lodash/isEmpty'
 export default {
   components: {
@@ -264,6 +264,8 @@ export default {
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      console.log(this.info,'该楼盘数据');
+      
       this.status = this.info.collectionStatus
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
@@ -276,6 +278,19 @@ export default {
       this.rd.headSlideTimer = setInterval(() => {
         this.headCurrent = this.headCurrent < this.info.customerList.length - 1 ? this.headCurrent + 1 : 0
       }, 3000)
+    },
+    photoHandle(n) {
+      //查看户型图片预览
+      let arr = []
+      arr.push(n)
+      ImagePreview({
+        images:arr,
+        startPosition: 0,
+        onClose() {
+          // do something
+        }
+      })
+      this.photoList = []
     },
     async collectHandler() {
       //修改收藏状态
