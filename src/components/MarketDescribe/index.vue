@@ -39,6 +39,7 @@
 import TagGroup from 'COMP/TagGroup/'
 import conf from './conf'
 import marketService from 'SERVICE/marketService'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     TagGroup

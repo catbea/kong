@@ -1,11 +1,13 @@
 <template>
   <div class="market-page">
+    <div class="fixed">
     <div class="search-box van-hairline--bottom">
       <div class="search-comp">
         <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
       </div>
     </div>
     <screen v-model="projectFilters" :local="this.selectedCity"></screen>
+    </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getProjectList">
@@ -117,7 +119,16 @@ export default {
 </script>
 <style lang="less">
 .market-page {
-  > .search-box {
+  .fixed{
+    position:fixed;
+    width:100%;
+    background:#FFFFFF;
+    z-index:3;
+  }
+  .already-open-page{
+    margin-top:86px;
+  }
+   .search-box {
     position: relative;
     width: 375px;
     height: 44px;
