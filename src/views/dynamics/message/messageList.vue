@@ -1,41 +1,53 @@
 <template>
   <div class="messageInfo-page">
-    <div class="messageInfo-back" >
+    <div class="messageInfo-back" v-if="haveData">
       <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
-             <button  :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "   v-if="sysMessage.unreadMsgCount != 0 " >
-               <span v-if="sysMessage.unreadMsgCount > 99">99+</span>
-               <span v-else>{{sysMessage.unreadMsgCount}}</span>
-             </button>
+            <button
+              :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
+              v-if="sysMessage.unreadMsgCount != 0 "
+            >
+              <span v-if="sysMessage.unreadMsgCount > 99">99+</span>
+              <span v-else>{{sysMessage.unreadMsgCount}}</span>
+            </button>
             <img :src="backIcon" class="sys-left-img">
           </span>
           <span class="messageInfo-sys-right">
             <p class="sys-right-top">
               系统消息
-              <span class="sys-right-time" v-show="sysMessage !='' ">{{sysMessage.createTime | dateFormatterToHuman}}</span>
+              <span
+                class="sys-right-time"
+                v-show="sysMessage !='' "
+              >{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
             <p class="sys-right-btn">{{sysMessage.content}}</p>
           </span>
         </div>
-
       </div>
       <div class="messageInfo-fill"></div>
-
-      <div class="messageInfo-sys" v-for="(item,key) in messageList" :key="key" @click="msgClickHandle(item)">
+      <div
+        class="messageInfo-sys"
+        v-for="(item,key) in messageList"
+        :key="key"
+        @click="msgClickHandle(item)"
+      >
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
-            <button :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' " v-show="item.unreadMsgCount !=0">
-              <span v-if="item.unreadMsgCount > 99 ">99+</span><span v-else>{{item.unreadMsgCount}}</span>
+            <button
+              :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
+              v-show="item.unreadMsgCount !=0"
+            >
+              <span v-if="item.unreadMsgCount > 99 ">99+</span>
+              <span v-else>{{item.unreadMsgCount}}</span>
             </button>
             <img :src="item.c2cImage" class="sys-left-img">
-            
           </span>
           <span class="messageInfo-sys-right">
             <p class="sys-right-top">
               {{item.c2cNick}}
               <!-- >3分钟前 -->
-              <span class="sys-right-time"> {{ item.msgTimeStamp | dateFormatterToHuman}} </span>
+              <span class="sys-right-time">{{ item.msgTimeStamp | dateFormatterToHuman}}</span>
             </p>
             <p class="sys-right-btn">{{formatMsg(item)}}</p>
           </span>
@@ -54,18 +66,26 @@
             <p class="sys-right-btn">涂先生，下午有时间一起去看看吗</p>
           </span>
         </div>
-      </div> -->
+      </div>-->
     </div>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
 </template>
 <script>
 import dynamicsService from 'SERVICE/dynamicsService'
+import Null from 'COMP/Null'
 export default {
+  components: {
+    Null
+  },
   data() {
     return {
       backIcon: require('IMG/dynamics/top-img.png'),
       messageList: [],
-      sysMessage: []
+      sysMessage: [],
+      nullIcon: require('IMG/user/bill-null.png'),
+      nullcontent: '暂无信息',
+      haveData:true
     }
   },
   mounted() {
@@ -104,6 +124,12 @@ export default {
       const res = await dynamicsService.getAgentMsgAndTotal()
       this.messageList = res.msgList
       this.sysMessage = res.systemMessage
+
+      if (res.msgList.length > 0 && res.systemMessage) {
+        this.haveData = true
+      } else {
+        this.haveData = false
+      }
     }
   }
 }
@@ -119,9 +145,10 @@ export default {
       padding-top: 16px;
       margin: 0 16px;
       margin-bottom: 0;
-      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid #eeeeee;
       > .messageInfo-sys-container {
         display: flex;
+        margin-bottom: 10px;
         > .messageInfo-sys-left {
           > .sys-left-img {
             width: 50px;
@@ -176,7 +203,7 @@ export default {
             font-size: 13px;
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
-            line-height: 32px;
+            line-height: 27px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;

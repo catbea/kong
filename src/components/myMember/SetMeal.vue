@@ -69,7 +69,7 @@ export default {
       justify-content: space-between;
       .forestall-open {
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(113, 73, 59, 1);
         line-height: 17px;
@@ -78,7 +78,6 @@ export default {
         display: flex;
         p {
           font-size: 12px;
-          font-family: ArialUnicodeMS;
           color: rgba(102, 102, 102, 1);
           line-height: 16px;
           width: 50px;
@@ -112,7 +111,7 @@ export default {
         align-items: center;
         p:nth-child(1) {
           font-size: 16px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 22px;
@@ -121,14 +120,13 @@ export default {
           display: flex;
           p {
             font-size: 26px;
-            font-family: PingFangSC-Semibold;
+            
             font-weight: 600;
             color: rgba(135, 102, 90, 1);
           }
           span {
             margin-top: 15px;
             font-size: 11px;
-            font-family: ArialUnicodeMS;
             color: rgba(135, 102, 90, 1);
           }
         }

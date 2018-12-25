@@ -1,22 +1,40 @@
 <template>
   <div class="market-search-page">
     <div class="search-box">
-      <van-search v-model="searchValue" placeholder="请输入搜索关键词" show-action @keypress="onKeypressHandler" @search="onSearchHandler">
+      <van-search
+        v-model="searchValue"
+        placeholder="请输入搜索关键词"
+        show-action
+        @keypress="onKeypressHandler"
+        @search="onSearchHandler"
+      >
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
     </div>
     <div class="history-words-content" v-if="searchStatus === 0 && searchHistory.length>0">
-      <div class="title-box" v-if="">
+      <div class="title-box" v-if>
         <p class="history-title">历史搜索</p>
-        <div class="bg_img clear-icon" :style="{backgroundImage:'url('+clearIcon+')'}" @click="cleanHandler"></div>
+        <div
+          class="bg_img clear-icon"
+          :style="{backgroundImage:'url('+clearIcon+')'}"
+          @click="cleanHandler"
+        ></div>
       </div>
       <div class="history-content">
-        <div class="history-item" v-for="item in searchHistory" @click="historyItemClick(item)">{{item}}</div>
+        <div
+          class="history-item"
+          v-for="item in searchHistory"
+          @click="historyItemClick(item)"
+        >{{item}}</div>
       </div>
     </div>
     <!-- 搜索建议 -->
     <div class="search-reminder" v-if="searchStatus === 1">
-      <div class="search-reminder-item" v-for="info in searchBirefList" @click="reminderItemHandler(info)">
+      <div
+        class="search-reminder-item"
+        v-for="info in searchBirefList"
+        @click="reminderItemHandler(info)"
+      >
         <p class="house-name">{{info.linkerName}}</p>
         <p class="house-info">{{`${info.linkerAddress} ${info.linkerPrice}`}}</p>
       </div>
@@ -25,13 +43,29 @@
     <div class="search-result-container" v-if="searchStatus === 2">
       <screen v-model="filters"></screen>
       <div class="search-result-content">
-        <van-list class="list-container" v-model="loading" :finished="finished" finished-text @load="onLoad">
-          <market-describe v-for="(item,index) in searchResult" :key="index" :itemInfo="item" @openReturnHandle="opClickHandler(item)"></market-describe>
+        <van-list
+          class="list-container"
+          v-model="loading"
+          :finished="finished"
+          finished-text
+          @load="onLoad"
+        >
+          <market-describe
+            v-for="(item,index) in searchResult"
+            :key="index"
+            :itemInfo="item"
+            @openReturnHandle="opClickHandler(item)"
+          ></market-describe>
         </van-list>
-        <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
+        <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="showNull"></null>
         <div class="hot-recommend" v-if="!haveData">
           <title-bar class="title-container" :conf="titleBarConf"/>
-          <market-describe v-for="(item,index) in hotResult" :key="index" :itemInfo="item" @openReturnHandle="opClickHandler(item)"></market-describe>
+          <market-describe
+            v-for="(item,index) in hotResult"
+            :key="index"
+            :itemInfo="item"
+            @openReturnHandle="opClickHandler(item)"
+          ></market-describe>
         </div>
       </div>
     </div>
@@ -72,6 +106,7 @@ export default {
     finished: false,
     nullcontent: '没有找到任何相关楼盘',
     haveData: true,
+    showNull:false,
     titleBarConf: {
       title: '热门楼盘'
     },
@@ -126,16 +161,32 @@ export default {
       if (result.records.length > 0) {
         this.searchResult = this.searchResult.concat(result.records)
         this.loading = false
+        this.haveData = true
+        this.showNull=false
         if (result.pages === this.page) {
           this.finished = true
         } else {
           this.page++
+        }
+
+        if (result.records.length <= 5) {
+          this.finished = true
+          this.loading = false
+          this.haveData = false
+          this.showNull=false
+          let hotParams = {
+            city: this.userInfo.majorCity || '全国',
+            hotTotal: 5
+          }
+          const hotRes = await userService.getHotLinker(hotParams)
+          this.hotResult = hotRes
         }
       } else {
         // 显而易见,进入这里表明无数据
         this.finished = true
         this.loading = false
         this.haveData = false
+        this.showNull=true
         let hotParams = {
           city: this.userInfo.majorCity || '全国',
           hotTotal: 5

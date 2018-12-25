@@ -295,6 +295,16 @@ export default {
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
       this.showMarketList = this.showMarketList.concat(resShow.records)
+      let arr = []
+      let json = {}
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        const element =this.showMarketList[index];
+        if(!json[element.linkerId]){
+          arr.push(element)
+          json[element]=1
+        }
+      }
+      this.showMarketList=arr
       if(this.showMarketList.length==0){
       this.yes=true
     }
@@ -326,6 +336,17 @@ export default {
       // this.searchNotShowNum = resNotShow.records.length//不展示的楼盘个数
       // this.notShowMarketList =resNotShow.records
       this.notShowMarketList = this.notShowMarketList.concat(resNotShow.records)
+      let arr = []
+      let json = {}
+      for (let index = 0; index < this.notShowMarketList.length; index++) {
+        const element =this.notShowMarketList[index];
+        if(!json[element.linkerId]){
+          arr.push(element)
+          json[element]=1
+        }
+      }
+      this.notShowMarketList=arr
+
       console.log(this.notShowMarketList,'不展示的数据');
       
       if(this.notShowMarketList.length==0){
@@ -426,7 +447,6 @@ export default {
       }
       p:nth-child(2){
         font-size:12px;
-        font-family:PingFang-SC-Regular;
         font-weight:400;
         color:rgba(153,153,153,1);
         line-height:17px;

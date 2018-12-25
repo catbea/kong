@@ -120,7 +120,7 @@ export default {
     > .article-list {
       // margin: 0 15px;
      // display: flex;
-      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid #eeeeee;
       margin: 0 16px;
       padding: 16px 0 16px 0;
       height: 3.4rem;

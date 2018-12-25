@@ -234,7 +234,7 @@ export default {
   .articleInfo-list {
     margin: 0 15px;
     display: flex;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #eeeeee;
     padding: 15px 0 16px 0;
     > .articleInfo-list-left {
       height: 90px;
@@ -359,7 +359,7 @@ export default {
       }
       > .dynamics-list-content {
         font-size: 14px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 21px;

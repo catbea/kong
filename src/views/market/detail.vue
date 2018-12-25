@@ -366,7 +366,7 @@ export default {
         background: rgba(255, 255, 255, 1);
         border-radius: 12px;
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 24px;
@@ -433,7 +433,6 @@ export default {
         color: #333333;
         font-weight: 600;
         font-size:12px;
-        font-family:"SimHei";
         > span {
           color: #007ae6;
         }
@@ -469,7 +468,7 @@ export default {
         background: rgba(247, 249, 250, 1);
         border-radius: 4px;
         font-size: 15px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(234, 77, 46, 1);
         display: flex;
@@ -720,14 +719,14 @@ export default {
   text-align: center;
   .van-dialog__header {
     font-size: 18px;
-    font-family: PingFangSC-Semibold;
+    
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
   }
   .van-dialog__message {
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;

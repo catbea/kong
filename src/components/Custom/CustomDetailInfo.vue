@@ -95,14 +95,12 @@ export default {
     }
     .van-cell__title {
       font-size: 15px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 22px;
     }
     .van-cell__value {
       font-size: 13px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       color: #666666;
       line-height: 22px;

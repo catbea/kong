@@ -33,11 +33,14 @@ export default async (to, from, next) => {
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
+      console.log(36,userInfo,userInfo.payCorpId);
+      
+      
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
         if (!store.getters.jssdkConfig) {
-          window.vue.$wechatHelper.init()
+          // window.vue.$wechatHelper.init()
         }
         if (userInfo.payOpenId) {
           next()
@@ -50,7 +53,10 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         next()
       } else {
+        console.log('wxAuthObject');
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
+        console.log('wxAuthObject',wxAuthObject);
+        
         payCorpId = wxAuthObject.payCorpId
         let userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId

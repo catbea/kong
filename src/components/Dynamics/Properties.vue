@@ -136,7 +136,7 @@ export default {
   // margin: 0 16px;
   .list-body {
     > .Properties-list {
-      border-bottom: 1px solid #e6e6e6;
+      border-bottom: 1px solid #eeeeee;
       margin: 0 16px;
       padding: 16px 0;
 

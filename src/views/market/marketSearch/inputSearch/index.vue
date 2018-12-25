@@ -114,7 +114,7 @@ export default {
       align-items: center;
       > .history-search {
         font-size: 18px;
-        font-family: PingFangSC-Semibold;
+        
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 27px;
@@ -134,7 +134,7 @@ export default {
     li {
       margin: 16px 30px 16px 0;
       font-size: 14px;
-      font-family: PingFang-SC-Regular;
+      
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       line-height: 21px;
@@ -149,7 +149,7 @@ export default {
         border-bottom: 1px solid #eeeeee;
         p:nth-child(1) {
           font-size: 16px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 22px;
@@ -157,7 +157,7 @@ export default {
         }
         p:nth-child(2) {
           font-size: 12px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 17px;
