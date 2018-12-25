@@ -60,7 +60,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="msg-customer-con-me-status">
+                  <div class="msg-customer-con-me-status" v-show="!item.cardDelFlag">
                     <p v-if="item.msgStatus==1" style="color: #FF7878">未读</p>
                     <p v-else>已读</p>
                    </div>
@@ -179,6 +179,7 @@ export default {
   name: 'customerdetails',
   data() {
     return {
+      cardDelFlag: 0,
       customBaseInfo: null,
       defaultMsgPopShow: false,
       clientMobile: this.$route.query.clientMobile,
@@ -373,7 +374,7 @@ export default {
       console.log(mediaId + ' | ' + appId, 'mediaIdTransToMp3Url')
       let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
       console.log(res, 'mediaIdTransToMp3Url')
-      this.message = res.map3Url
+    //   this.message = res.map3Url
       this.sendMessage(2, this.audioTime)
     },
     async setMsgRead() {
@@ -391,6 +392,7 @@ export default {
     },
     //设置聊天记录的值
     setList(res) {
+      this.cardDelFlag = res.cardDelFlag
       var that = this
       if (res && res.records.length > 0) {
         let lists = []
@@ -644,7 +646,21 @@ export default {
       this.pyzmaoviwe()
     },
     sendMessage(msgType01, audioTime01) {
-      var msg = onSendMsg(this.message, true, msgType01, audioTime01)
+      if (this.cardDelFlag == 0) {// 小程序端经纪人已经删除
+        let obj = {}
+        obj.content = this.customBaseInfo.clientName+'删除了您的名片，您还不是他（她）的经纪人。需要对方添加您的名片后，才能聊天'
+        obj.msgType = 1
+        obj.fromType = 2
+        obj.msgStatus = 2
+        obj.cardDelFlag = true
+        obj.id = this.msgList[this.msgList.length-1].msgList[0].id
+        this.msgList[this.msgList.length-1].msgList = this.msgList[this.msgList.length-1].msgList.concat([obj])
+        this.message = ''
+        this.pyzmaoviwe()
+        return
+      }
+      
+      let msg = onSendMsg(this.message, true, msgType01, audioTime01)
       if (msg) {
         this.$toast(msg)
       }
