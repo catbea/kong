@@ -370,7 +370,7 @@ export default {
       font-weight: 400;
       color: rgba(255, 85, 51, 1);
       line-height: 14px;
-      padding: 0 3px;
+      padding: 0 1px;
     }
   }
 }
