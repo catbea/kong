@@ -234,7 +234,7 @@ export default {
   .articleInfo-list {
     margin: 0 15px;
     display: flex;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #eeeeee;
     padding: 15px 0 16px 0;
     > .articleInfo-list-left {
       height: 90px;

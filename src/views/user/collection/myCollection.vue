@@ -206,8 +206,8 @@ export default {
 .dynamicsInfo-list {
   margin: 5px 15px;
 
-  border-bottom: 1px solid #e6e6e6;
-  padding: 15px 0 16px 0;
+  border-bottom: 1px solid #eeeeee;
+  padding: 11px 0 12px 0;
   > .dynamicsInfo-list-top {
     display: flex;
     margin-bottom: 4px;
@@ -270,9 +270,10 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
+        padding-top: 4px;
       }
       > .list-right-label {
-        margin-top: 5px;
+        margin-top: 10px;
         // line-height: 27px;
         > .right-label {
           font-size: 10px;
@@ -296,7 +297,8 @@ export default {
         font-size: 15px;
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
-        margin-bottom: 16px;
+        padding-top: 4px;
+      //  margin-bottom: 16px;
         > .right-price-lab-ok {
           color: rgba(0, 122, 230, 1);
           font-size: 10px;
@@ -324,7 +326,7 @@ export default {
           right: 0;
           position: absolute;
           text-align: center;
-          margin-top: 5px;
+          // margin-top: 5px;
           > .bor {
             color: rgba(0, 122, 230, 1);
             border-radius: 16px;
@@ -359,6 +361,8 @@ export default {
     color: rgba(51, 51, 51, 1);
     line-height: 30px;
     padding-left: 11px;
+    margin-bottom: 6px;
+    margin-top:14px;
     > .list-commission-word {
       border-radius: 2px;
       border: 1px solid;
