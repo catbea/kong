@@ -13,13 +13,16 @@
           </div>
           <ul class="market-describe">
             <li class="market-name">
-              <div class='box'>
+              <div class="box">
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
               <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
-            <li class="site">{{itemInfo.linkerAddress}} <span v-if="itemInfo.openStatus!=0">{{itemInfo.invalidTimeStr}}到期</span></li>
+            <li class="site">
+              {{itemInfo.linkerAddress}}
+              <span v-if="itemInfo.openStatus!=0">{{itemInfo.invalidTimeStr}}到期</span>
+            </li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
@@ -47,8 +50,6 @@ export default {
   created() {
     this.dredgeColor()
     if (this.tags) this.tags.unshift(this.saleStatus)
-    console.log(this.itemInfo,'楼盘列表');
-    
   },
   data() {
     return {
@@ -78,7 +79,7 @@ export default {
   computed: {
     ...mapGetters(['userArea','userInfo']),
     openStatus() {
-      if(!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
+      if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
       if (this.itemInfo.openStatus == 0) {
         return '开通'
       } else {

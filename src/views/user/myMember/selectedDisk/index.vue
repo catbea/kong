@@ -57,6 +57,7 @@ export default {
         this.finished = false
         this.page = 1
         this.projectList = []
+        this.getLinkerList()
       },
       deep: true
     }
@@ -154,6 +155,7 @@ export default {
         }
         _list.push(obj)
       }
+      
       this.projectList = this.page <= 1 ? _list : this.projectList.concat(_list)
 
       if (res.pages === 0 || this.page >= res.pages) {
