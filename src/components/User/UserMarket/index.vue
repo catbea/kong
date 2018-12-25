@@ -24,8 +24,8 @@
           </li>
           <li>
             {{dataArr.openTimes}}次开通 
-            <span v-show="!stride">{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
-            <span v-show="stride">{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
+            <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
+            <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
               <span></span>
               <span></span>
@@ -302,7 +302,7 @@ export default {
           top: 4px;
           left: -4px;
           font-size: 11px;
-          font-family: PingFangSC-Medium;
+          
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
           line-height: 18px;
@@ -317,7 +317,7 @@ export default {
         width: 181px;
         li:nth-of-type(1) {
           font-size: 16px;
-          font-family: PingFangSC-Semibold;
+          
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           line-height: 16px;
@@ -338,7 +338,7 @@ export default {
             border-radius: 2px;
             font-size: 12px;
             transform: scale(0.84);
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: rgba(0, 122, 230, 1);
             margin-left: 4px;
@@ -354,7 +354,7 @@ export default {
             border-radius: 2px;
             font-size: 12px;
             transform: scale(0.84);
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: #ea4d2e;
             margin-left:4px;
@@ -370,7 +370,7 @@ export default {
         }
         li:nth-of-type(2) {
           font-size: 12px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 15px;
@@ -410,22 +410,27 @@ export default {
         }
         li:nth-of-type(4) {
           font-size: 12px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 13px;
           margin-top: 12px;
           display: flex;
-          justify-content: space-between;
+          position: relative;
           align-items: center;
           .apostrophe {
-            width: 20px;
+            position:absolute;
+            right:-5px;
+            width: 40px;
+            height:40px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            justify-content:center;
             span {
               width: 4px;
               height: 4px;
               border-radius: 50%;
+              margin-right:4px;
               background: rgba(158, 158, 158, 1);
             }
           }
@@ -440,7 +445,7 @@ export default {
       background: rgba(247, 249, 250, 1);
       border-radius: 4px;
       font-size: 13px;
-      font-family: PingFangSC-Medium;
+      
       font-weight: 500;
       color: rgba(102, 102, 102, 1);
       margin-bottom: 16px;
@@ -468,7 +473,7 @@ export default {
         line-height: 50px;
         text-align: center;
         font-size: 16px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }
@@ -509,14 +514,14 @@ export default {
   flex-direction: column;
   .van-dialog__header {
     font-size: 18px;
-    font-family: PingFangSC-Medium;
+    
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     padding-top: 26px;
   }
   .van-dialog__message--has-title {
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     text-align: center;

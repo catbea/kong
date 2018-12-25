@@ -34,7 +34,9 @@
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
-    <div class="result" id="card-result" v-show="status === 2"></div>
+    <div class="result" id="card-result" v-show="status === 2">
+       <img id="cardimg"/>
+    </div>
   </div>
 </template>
 <script>
@@ -107,7 +109,11 @@ export default {
       })
       canvas.style.width = '101%'
       canvas.style.height = '100%'
-      document.getElementById('card-result').appendChild(canvas)
+      // document.getElementById('card-result').appendChild(canvas)
+
+      let image = document.getElementById('cardimg')
+      image.src = canvas.toDataURL('image/png')
+
       this.showLoading = false
     }
   }

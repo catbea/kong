@@ -39,7 +39,9 @@
               <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
               <p class="house-name">{{item.linkerName}}</p>
               <p class="house-localtion">{{item.city}}</p>
-              <p class="house-price">{{item.averagePrice}} {{item.priceUnit}}</p>
+              <p class="house-price" v-if="item.averagePrice=='0'">价格待定</p>
+              <p class="house-price" v-else>{{item.averagePrice}} {{item.priceUnit}}</p>
+              <!--  -->
             </div>
           </swiper-slide>
         </swiper>
@@ -94,7 +96,7 @@ import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import wechatApi from '@/utils/wechatApi'
+// import wechatApi from '@/utils/wechatApi'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
@@ -145,6 +147,7 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
     this.getQrCode(this.agentId)
+    this.shareHandler()
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -221,20 +224,21 @@ export default {
       }
       const result = await discoverService.articleShare(params)
     },
-    // 分享
+    // 设置分享
     shareHandler() {
-      console.log(this.shareData)
-      wechatApi
-        .wechatShare(this.shareData)
-        .then(res => {
-          this.articleShare()
-        })
-        .catch(e => {})
+      this.shareData.success = this.articleShare
+      this.$wechatHelper.setShare(this.shareData)
+      // wechatApi
+      //   .wechatShare(this.shareData)
+      //   .then(res => {
+      //     this.articleShare()
+      //   })
+      //   .catch(e => {})
     }
   },
-  mounted() {
-    this.shareHandler()
-  },
+  // mounted() {
+  //   this.shareHandler()
+  // },
   watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
     $route() {
@@ -289,7 +293,7 @@ export default {
       color: #333333;
       font-size: 16px;
       margin-top: 12px;
-      font-family: PingFangSC-Semibold;
+      
     }
     > .introduce-view {
       font-size: 14px;

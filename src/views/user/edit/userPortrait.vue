@@ -152,7 +152,7 @@ export default {
 
   .modify-main-title {
     font-size: 20px;
-    font-family: PingFangSC-Semibold;
+    
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 28px;

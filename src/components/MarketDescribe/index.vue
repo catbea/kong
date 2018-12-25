@@ -109,11 +109,11 @@ export default {
       this.style = conf(this.openStatus)
     },
    async openHandle() {
-      this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
-      console.log(11111111111111);
-      if(this.item.city===this.userInfo.vipInfo.city){
-       await marketService.addHouseByVip(item.linkerId)
-      }//VIP用户选择城市与VIP开通楼盘同城市
+      if(this.itemInfo.city===this.userInfo.vipInfo.city){//VIP用户选择城市与VIP开通楼盘同城市
+       await marketService.addHouseByVip(this.itemInfo.linkerId)
+      }else{
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      }
     }
   },
   watch: {
@@ -166,7 +166,7 @@ export default {
             text-align: center;
             line-height: 20px;
             font-size: 11px;
-            font-family: PingFangSC-Medium;
+            
             font-weight: 500;
             color: rgba(255, 255, 255, 1);
           }
@@ -186,7 +186,7 @@ export default {
                 text-overflow: ellipsis;
                 max-width: 103px;
                 font-size: 16px;
-                font-family: PingFangSC-Semibold;
+                
                 font-weight: 600;
                 color: rgba(51, 51, 51, 1);
                 line-height: normal;
@@ -194,7 +194,7 @@ export default {
               .past {
                 font-size: 12px;
                 transform: scale(0.84);
-                font-family: PingFangSC-Regular;
+                
                 font-weight: 400;
                 line-height: normal;
                 height: 18px;
@@ -213,7 +213,7 @@ export default {
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;
               font-size: 12px;
-              font-family: PingFang-SC-Regular;
+              
               font-weight: 400;
               color: rgba(255, 255, 255, 1);
               line-height: 24px;
@@ -222,7 +222,7 @@ export default {
           }
           .site {
             font-size: 12px;
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
@@ -236,14 +236,14 @@ export default {
             span:nth-child(1) {
               line-height: 15px;
               font-size: 15px;
-              font-family: PingFangSC-Semibold;
+              
               font-weight: 600;
               color: rgba(234, 77, 46, 1);
             }
             span:nth-child(2) {
               line-height: 15px;
               font-size: 12px;
-              font-family: PingFangSC-Regular;
+              
               font-weight: 400;
               color: rgba(153, 153, 153, 1);
             }
@@ -267,7 +267,7 @@ export default {
         span:nth-child(2) {
           margin: 0 0 0 4px;
           font-size: 15px;
-          font-family: PingFang-SC-Regular;
+          
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;

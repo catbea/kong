@@ -57,7 +57,7 @@ export default {
       border-bottom: 1px solid #e5e5e5;
       li:nth-child(1) {
         font-size: 18px;
-        font-family: PingFangSC-Medium;
+        
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         line-height: 25px;
@@ -65,7 +65,7 @@ export default {
       li:nth-child(2) {
         margin-top: 9px;
         font-size: 15px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
@@ -80,7 +80,7 @@ export default {
         width: 140px;
         height: 50px;
         font-size: 18px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 50px;
@@ -91,7 +91,7 @@ export default {
         width: 139px;
         height: 50px;
         font-size: 18px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(0, 122, 230, 1);
         line-height: 50px;

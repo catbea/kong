@@ -110,7 +110,7 @@ export default {
         top: -7.5px;
         background: rgba(234, 77, 46, 1);
         font-size: 11px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
         line-height: 16px;
@@ -118,14 +118,13 @@ export default {
       }
       p:nth-child(1) {
         font-size: 15px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
       }
       p:nth-child(2) {
         font-size: 24px;
-        font-family: DIN-Medium;
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         line-height: 36px;
@@ -136,7 +135,7 @@ export default {
         height: 18px;
         overflow: hidden;
         font-size: 12px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         line-height: 17px;
@@ -152,7 +151,7 @@ export default {
       padding: 14px 0 16px 0;
       div:nth-child(1) {
         font-size: 15px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 22px;
@@ -161,7 +160,7 @@ export default {
         display: flex;
         p:nth-child(1) {
           font-size: 15px;
-          font-family: PingFang-SC-Semibold;
+          
           font-weight: 600;
           color: rgba(234, 77, 46, 1);
         }
@@ -184,7 +183,7 @@ export default {
         display: flex;
         p {
           font-size: 15px;
-          font-family: PingFang-SC-Regular;
+          
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
         }
@@ -192,7 +191,7 @@ export default {
       div:nth-of-type(2) {
         p {
           font-size: 15px;
-          font-family: PingFang-SC-Semibold;
+          
           font-weight: 600;
           color: rgba(234, 77, 46, 1);
           margin-right: 35px;

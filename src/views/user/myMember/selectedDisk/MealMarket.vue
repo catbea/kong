@@ -110,7 +110,6 @@ export default {
           top: 4px;
           left: -4px;
           font-size: 11px;
-          font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
           line-height: 18px;
@@ -125,7 +124,6 @@ export default {
         width: 181px;
         li:nth-of-type(1) {
           font-size: 16px;
-          font-family: PingFangSC-Semibold;
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           line-height: 16px;
@@ -134,7 +132,6 @@ export default {
         }
         li:nth-of-type(2) {
           font-size: 12px;
-          font-family: PingFangSC-Regular;
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 15px;
@@ -175,7 +172,6 @@ export default {
         }
         li:nth-of-type(4) {
           font-size: 12px;
-          font-family: PingFangSC-Regular;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 11px;
@@ -193,7 +189,6 @@ export default {
       background: rgba(247, 249, 250, 1);
       border-radius: 4px;
       font-size: 13px;
-      font-family: PingFangSC-Medium;
       font-weight: 500;
       color: rgba(102, 102, 102, 1);
       padding: 7px 7px;

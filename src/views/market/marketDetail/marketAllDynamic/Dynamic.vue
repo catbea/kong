@@ -44,7 +44,7 @@ export default {
         display: flex;
         align-items: center;
         font-size: 14px;
-        font-family: PingFangSC-Medium;
+        
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         line-height: 20px;
@@ -63,7 +63,7 @@ export default {
         border-left: 1px solid rgba(229, 229, 229, 1);
         h1 {
           font-size: 18px;
-          font-family: PingFangSC-Medium;
+          
           font-weight: 500;
           color: rgba(51, 51, 51, 1);
           line-height: 25px;
@@ -71,7 +71,7 @@ export default {
         }
         h2 {
           font-size: 14px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 20px;

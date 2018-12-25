@@ -277,7 +277,6 @@ export default {
     .img-box {
       display: flex;
       font-size: 12px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
     }
@@ -301,7 +300,6 @@ export default {
       border-radius: 22px;
       border: 1px solid;
       font-size: 14px;
-      font-family: PingFangSC-Regular;
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
       line-height: 30px;
