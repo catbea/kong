@@ -57,11 +57,21 @@ export default {
   },
   props: {
     articleDynamicCount: { type: '' },
-    articleDynamicList: { type: Array },
+     articleDynamicList: { type: Array },
     avgStayArticleTime: { type: '' }
   },
   data() {
-    return {}
+    return {
+      // articleDynamicList:[
+      //   { id: '4', articleTitle: '碧桂园凤凰国际', articleTime: '', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //   { id: '5', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //   { id: '6', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //   { id: '7', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //   { id: '8', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //    { id: '1', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //     { id: '2', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      // ]
+    }
   },
   methods() {},
   methods: {
@@ -109,13 +119,14 @@ export default {
     }
     > .article-list {
       // margin: 0 15px;
-      display: flex;
+     // display: flex;
       border-bottom: 1px solid #e6e6e6;
       margin: 0 16px;
       padding: 16px 0 16px 0;
+      height: 3.4rem;
       > .article-list-left {
-        height: 90px;
-        position: relative;
+       // height: 90px;
+       // position: absolute;
         > .article-left-title {
           font-size: 16px;
           font-weight: 400;
@@ -125,8 +136,9 @@ export default {
           padding-right: 70px;
         }
         > .article-left-time {
-          position: absolute;
-          bottom: 0;
+         // position: absolute;
+          // bottom: 0;
+          margin-top: 40px;
           > .article-left-times {
             font-size: 12px;
             font-weight: 400;
@@ -134,7 +146,6 @@ export default {
           }
           > .left-time-nub {
             font-size: 12px;
-            font-family: PingFangSC-Regular;
             font-weight: 400;
             color: rgba(0, 122, 230, 1);
             line-height: 17px;
@@ -146,10 +157,12 @@ export default {
         width: 120px;
         height: 90px;
         border-radius: 6px;
-        position: absolute;
-        margin-right: 0;
-        padding-right: 0;
-        right: 16px;
+       // position: absolute;
+        //margin-right: 0;
+       // padding-right: 0;
+        //right: 16px;
+        float: right;
+        margin-top: -90px;
         > .mark-icon {
           width: 120px;
           height: 90px;

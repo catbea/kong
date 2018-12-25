@@ -108,7 +108,7 @@ export default {
   created() {
     this.active = this.currDataDynamicsTab
     this.updateDynamicsCollect()
-    // this.getAllDynamicCount()
+     this.getAllDynamicCount()
     this.goList(this.active)
   },
   methods: {
