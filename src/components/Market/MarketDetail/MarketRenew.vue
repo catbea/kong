@@ -18,7 +18,6 @@
 </ul>
 </template>
 <script>
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   created() {
@@ -119,11 +118,26 @@ export default {
       this.flagTj = !this.flagTj
       switch (this.flagTj) {
         case true:
-          this.dialogHandle('已推荐该楼盘')
+          if(this.flagZs===false){
+            this.$toast({
+            duration:800,
+            message:'已推荐与展示',
+          })
+          }else{
+            this.$toast({
+            duration:800,
+            message:'已推荐',
+          })
+          }
+          this.flagZs =true
+          this.changeHandle(this.renewInfo.linkerId, 30, 0)
           this.changeHandle(this.renewInfo.linkerId, 20, 2)
           break
         case false:
-          this.dialogHandle('已取消推荐该楼盘')
+          this.$toast({
+            duration:800,
+            message:'已取消推荐',
+          })
           this.changeHandle(this.renewInfo.linkerId, 20, 0)
           break
       }
@@ -132,11 +146,17 @@ export default {
       this.flagZs = !this.flagZs
       switch (this.flagZs) {
         case true:
-          this.dialogHandle('已开启该楼盘展示')
+         this.$toast({
+            duration:800,
+            message:'已开启展示',
+          })
           this.changeHandle(this.renewInfo.linkerId, 30, 0)
           break
         case false:
-          this.dialogHandle('已关闭该楼盘展示、推荐与置顶')
+          this.$toast({
+            duration:800,
+            message:'已关闭展示、推荐与置顶',
+          })
           this.changeHandle(this.renewInfo.linkerId, 30, 1)
           this.flagTj=false
           this.flagZd=false
@@ -147,11 +167,26 @@ export default {
       this.flagZd = !this.flagZd
       switch (this.flagZd) {
         case true:
-          this.dialogHandle('置顶成功')
+          if(this.flagZs===false){
+            this.$toast({
+            duration:800,
+            message:'已置顶与展示',
+          })
+          }else{
+            this.$toast({
+            duration:800,
+            message:'已置顶',
+          })
+          }
+          this.flagZs =true
+          this.changeHandle(this.renewInfo.linkerId, 30, 0)
           this.changeHandle(this.renewInfo.linkerId, 40, 10)
           break
         case false:
-          this.dialogHandle('取消置顶成功')
+          this.$toast({
+            duration:800,
+            message:'已取消置顶',
+          })
           this.changeHandle(this.renewInfo.linkerId, 40, 0)
           break
       }

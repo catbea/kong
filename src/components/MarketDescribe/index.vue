@@ -109,11 +109,11 @@ export default {
       this.style = conf(this.openStatus)
     },
    async openHandle() {
-      this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
-      console.log(11111111111111);
-      if(this.item.city===this.userInfo.vipInfo.city){
-       await marketService.addHouseByVip(item.linkerId)
-      }//VIP用户选择城市与VIP开通楼盘同城市
+      if(this.itemInfo.city===this.userInfo.vipInfo.city){//VIP用户选择城市与VIP开通楼盘同城市
+       await marketService.addHouseByVip(this.itemInfo.linkerId)
+      }else{
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      }
     }
   },
   watch: {
