@@ -40,6 +40,7 @@ export default {
   created() {},
   methods: {
     clickHandle() {
+      console.log('NEW_MSG_STATUS c--')
       this.$store.commit(types['NEW_MSG_STATUS'], false)
       if (!this.msg.clientId) {
         return

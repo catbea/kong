@@ -65,7 +65,6 @@
                     <p v-else>已读</p>
                    </div>
                 </div>
-                
               </div>
             </div>
             <div v-if="isShowEmjie==false" id="pyzmao" style="height: 0.6rem"></div>
@@ -425,6 +424,10 @@ export default {
               } else if (MsgContent.Desc == 3) {
                 list.content = JSON.parse(MsgContent.Data)
                 list.msgType = 3
+                msgLists.push(list)
+              } else if(MsgContent.Desc == 1) {
+                list.content = MsgContent.Data
+                list.msgType = 1
                 msgLists.push(list)
               }
             }
