@@ -3,10 +3,17 @@
     <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
       <div class="all-describe">
         <div class="market-box-page-top">
-          <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
+          <div
+            class="img bg_img"
+            :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}"
+          >
             <!-- 720标示 -->
             <img class="panorama-mark" :src="panoramaImg" v-if="itemInfo.ifPanorama">
-            <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">
+            <div
+              class="label bg_img"
+              v-show="itemInfo.sale"
+              :style="{backgroundImage:'url('+labelImg+')'}"
+            >
               {{itemInfo.sale}}
               {{itemInfo.labels}}
             </div>
@@ -17,7 +24,12 @@
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
-              <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
+              <span
+                class="dredge"
+                :style="style"
+                v-if="dredge"
+                @click.stop="openHandle"
+              >{{openStatus}}</span>
             </li>
             <li class="site">
               {{itemInfo.linkerAddress}}
@@ -81,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userArea','userInfo']),
+    ...mapGetters(['userArea', 'userInfo']),
     openStatus() {
       if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
       if (this.itemInfo.openStatus == 0) {
@@ -114,10 +126,11 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
-   async openHandle() {
-      if(this.itemInfo.city===this.userInfo.vipInfo.city){//VIP用户选择城市与VIP开通楼盘同城市
-       await marketService.addHouseByVip(this.itemInfo.linkerId)
-      }else{
+    async openHandle() {
+      if (this.itemInfo.city === this.userInfo.vipInfo.city) {
+        //VIP用户选择城市与VIP开通楼盘同城市
+        await marketService.addHouseByVip(this.itemInfo.linkerId)
+      } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
     }

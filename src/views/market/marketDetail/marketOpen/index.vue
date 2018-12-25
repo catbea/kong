@@ -220,8 +220,6 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
-      console.log(res,'11111111111111111');
-      
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,
