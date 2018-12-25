@@ -159,7 +159,6 @@ export default {
     .all-describe {
       display: flex;
       flex-direction: column;
-      padding-bottom: 16px;
       .market-box-page-top {
         display: flex;
         .img {
