@@ -105,7 +105,6 @@ export default {
       canvas.style.width = '284px';
       canvas.style.height = '466px'
       // canvas.style.zIndex = 99
-
       // document.getElementById('card-result').appendChild(canvas)
 
       let image = document.getElementById('imgcard')
