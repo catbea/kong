@@ -102,10 +102,9 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '80%'
-      canvas.style.marginLeft = '10%'
-      canvas.style.height = '80%'
-      canvas.style.zIndex = 99
+      canvas.style.width = '284px';
+      canvas.style.height = '466px'
+      // canvas.style.zIndex = 99
 
       // document.getElementById('card-result').appendChild(canvas)
 
@@ -246,6 +245,7 @@ export default {
     color: rgba(255, 255, 255, 1);
     line-height: 20px;
     user-select: none;
+    margin-top: 10px;
   }
   // #card-result{
   //   >canvas{
