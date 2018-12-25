@@ -220,6 +220,8 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
+      console.log(res,'11111111111111111');
+      
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,
@@ -228,7 +230,8 @@ export default {
         linkerName: res.linkerName,
         openTimes: res.openTimes,
         sale: res.sale,
-        commission: res.commission
+        commission: res.commission,
+        saleStatus:res.saleStatus
       }
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { linkerId: this.linkerId, projectInfo: this.projectInfo }))
     },
