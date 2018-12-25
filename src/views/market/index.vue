@@ -9,7 +9,7 @@
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getProjectList">
-        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
   </div>
@@ -45,7 +45,7 @@ export default {
     projectFilters: {},
     searchContent: {
       siteText: '深圳',
-      placeholder: '请输入平台名称'
+      placeholder: '请输入楼盘名称'
     },
     value: '',
     locationIcon: require('IMG/market/juxing.png'),
@@ -91,12 +91,6 @@ export default {
       }
       this.page++
       this.loading = false
-    },
-   async openReturnHandle(item) {
-      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
-      if(this.item.city===this.userInfo.vipInfo.city){
-       await marketService.addHouseByVip(item.linkerId)
-      }//VIP用户选择城市与VIP开通楼盘同城市
     },
     onClickHandler() {
       this.$router.push('/market/inputSearch')

@@ -4,7 +4,8 @@
     <div class="bg_img recommend-box" :style="{backgroundImage:'url(' + blurImg + ')'}"></div>
     <div class="recommend-info" v-if="info" @click="goRecommendInfo">
       <div class="desc-box">
-        <p class="title">{{`${info.district}·${info.linkerName}`}}</p>
+        <!-- <p class="title">{{`${info.district}·${info.linkerName}`}}</p> -->
+        <p class="title">{{`${info.linkerTags.join('·')}`}}</p>
         <p class="desc">{{`${info.city}${info.openTimes}位经纪人都已开通`}}</p>
       </div>
       <div class="open-btn">立即开通</div>
