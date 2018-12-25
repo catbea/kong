@@ -280,7 +280,7 @@ export default {
       }, 3000)
     },
     photoHandle(n) {
-      //查看户型相册
+      //查看户型图片预览
       let arr = []
       arr.push(n)
       ImagePreview({
