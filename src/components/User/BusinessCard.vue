@@ -7,7 +7,10 @@
             <img class="info-box-left" :src="leftIcon" @click="showQrCode">
             <div class="info-box-right" @click="shareUserCard">
               <!-- <img class="share-img" :src="rightIcon"> -->
-              <i style="color:#afb0b6;font-size:24px;" class="icon iconfont icon-Building_list_share"></i>
+              <i
+                style="color:#afb0b6;font-size:24px;"
+                class="icon iconfont icon-Building_list_share"
+              ></i>
               <span class="share-view">分享</span>
             </div>
           </div>
@@ -137,6 +140,7 @@ export default {
     color: rgba(51, 51, 51, 1);
     line-height: 28px;
     padding: 5px 16px 11px;
+    margin-top: -12px;
   }
   > .business-card-box {
     width: 100%;
@@ -164,7 +168,6 @@ export default {
           > .info-box-left {
             width: 24px;
             height: 24px;
-            border-top-left-radius: 10px;
             margin-left: 7px;
             margin-top: 7px;
           }
@@ -195,7 +198,7 @@ export default {
             display: flex;
             flex-direction: column;
             margin-left: 28px;
-            margin-top: -50px;
+            margin-top: -45px;
 
             > .username-box {
               margin-top: 35px;
@@ -220,7 +223,7 @@ export default {
             > .campany-view {
               color: #aeb1c2;
               font-size: 12px;
-              margin-top: 20px;
+              margin-top: 16px;
             }
           }
 
@@ -229,7 +232,7 @@ export default {
             height: 80px;
             border-radius: 50%;
             margin-left: 15px;
-            margin-top: -10px;
+            margin-top: -15px;
           }
         }
       }
@@ -247,6 +250,7 @@ export default {
           color: rgba(174, 177, 194, 1);
           line-height: 30px;
           margin-left: 27px;
+          margin-top: 7px;
           > .left-labe-css {
             padding: 2px 5px;
             background: rgba(143, 159, 177, 0.15);
@@ -263,7 +267,6 @@ export default {
           color: rgba(174, 177, 194, 1);
           line-height: 12px;
           margin-left: 28px;
-          margin-top: 5px;
         }
       }
     }
@@ -281,7 +284,7 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
-    margin: -10px 0 0;
+    margin: -17px 0 0;
     > div {
       position: relative;
       display: inline-block;
@@ -306,7 +309,7 @@ export default {
       }
       .info-desc {
         position: absolute;
-        top: 35px;
+        top: 37px;
         left: 40px;
         font-size: 12px;
         font-weight: 400;

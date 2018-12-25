@@ -5,14 +5,14 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    agentId: '1063',
+    agentId: '1',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',
     enterpriseId: '91',
     institutionId: '82',
     institutionName: '',
-    isOne: '',
+    isOne: false, // true新用户 false老用户
     isVip: '',
     labelList: [
       {
@@ -41,7 +41,7 @@ const state = {
       }
     ],
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI5Mjlvb3giLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ4NjQ5Nzc0LCJpYXQiOjE1NDU2NDQ5NzR9.U4CjAbPfS_JhCHo-vzI_s-VyJjzilHTUOLlXPWYRFqkG56rfyDVmVEXtH7EkNnPzLw2Rg7HMxwfQ4yi0delZ4Q',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI2MjhmNzMiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxIiwiZXhwIjoxNTQ4NjY0OTAzLCJpYXQiOjE1NDU2NjAxMDN9.xcbJva5ppitLayLUODSf03Ddm9_HjdjuqOoyAUr16yaw3wtVuY8c_CGOsZwJmI_kKmnF6iT3VoeVlmsW8vZ6bg',
     majorCity: '长治市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',

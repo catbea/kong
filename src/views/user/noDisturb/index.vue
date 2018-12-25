@@ -397,7 +397,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 13px;
+      margin-bottom: 13px;
       font-size: 15px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
@@ -406,7 +406,7 @@ export default {
     }
     .disturb-describe {
       font-size: 13px;
-      padding: 7px 16px 22px 15px;
+      padding: 11px 16px 22px 15px;
       background: rgba(247, 249, 250, 1);
       font-family: PingFangSC-Regular;
       font-weight: 400;
@@ -444,6 +444,7 @@ export default {
         i {
           margin-right: 2px;
           font-style: normal;
+           margin-top: 3px;
         }
         .icon {
           margin-top: 6px;
