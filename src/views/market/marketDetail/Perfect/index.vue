@@ -48,13 +48,11 @@ export default {
       justify-content: space-between;
       align-items: center;
       font-size: 15px;
-      font-family: PingFang-SC-Medium;
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       border-bottom: 1px solid #e6e6e6;
       div {
         font-size: 15px;
-        font-family: PingFang-SC-Medium;
         font-weight: 500;
         color: rgba(153, 153, 153, 1);
         display: flex;
@@ -83,7 +81,7 @@ export default {
     border-radius: 6px;
     margin: 24px 0 0 16px;
     font-size: 16px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 44px;

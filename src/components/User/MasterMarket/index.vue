@@ -207,7 +207,7 @@ export default {
     .master-recommend {
       margin: 20px 0 20px 0;
       font-size: 20px;
-      font-family: PingFangSC-Semibold;
+      
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       line-height: 28px;
@@ -224,7 +224,7 @@ export default {
         bottom: 29px;
         li:nth-child(1) {
           font-size: 16px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 22px;
@@ -233,20 +233,20 @@ export default {
           width: 300px;
           margin: 3px 0 4px 0;
           font-size: 24px;
-          font-family: PingFangSC-Semibold;
+          
           font-weight: 600;
           color: rgba(255, 255, 255, 1);
           line-height: 33px;
         }
         li:nth-child(3) {
           font-size: 14px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
           span {
             font-size: 12px;
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: #ffffff;
             line-height: 15px;
@@ -264,7 +264,7 @@ export default {
         bottom: 29px;
         li:nth-child(1) {
           font-size: 16px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 22px;
@@ -272,7 +272,7 @@ export default {
         li:nth-child(2) {
           width: 300px;
           font-size: 24px;
-          font-family: PingFangSC-Semibold;
+          
           font-weight: 600;
           color: rgba(255, 255, 255, 1);
           line-height: 33px;
@@ -280,13 +280,13 @@ export default {
         }
         li:nth-child(3) {
           font-size: 14px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
           span {
             font-size: 12px;
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 15px;

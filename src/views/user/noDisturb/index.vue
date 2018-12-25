@@ -399,7 +399,7 @@ export default {
       align-items: center;
       margin-bottom: 13px;
       font-size: 15px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 21px;
@@ -408,7 +408,7 @@ export default {
       font-size: 13px;
       padding: 11px 16px 22px 15px;
       background: rgba(247, 249, 250, 1);
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
     }
@@ -427,7 +427,7 @@ export default {
       align-items: center;
       p {
         font-size: 16px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }
@@ -435,7 +435,7 @@ export default {
       .right {
         display: flex;
         font-size: 16px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         .show-box {
@@ -463,7 +463,7 @@ export default {
           display: flex;
           justify-content: space-between;
           font-size: 15px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           span {
@@ -478,7 +478,7 @@ export default {
         text-align: center;
         line-height: 50px;
         font-size: 16px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }

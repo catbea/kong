@@ -194,7 +194,7 @@ export default {
       border-radius: 22px;
       border: 1px solid rgba(0, 122, 230, 1);
       font-size: 14px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
       text-align: center;

@@ -146,7 +146,7 @@ export default {
       margin-left: 15px;
       .compile-tagline-top {
         font-size: 16px;
-        font-family: PingFang-SC-Semibold;
+        
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 22px;
@@ -187,7 +187,7 @@ export default {
         border: 1px solid;
         margin-right: 12px;
         font-size: 16px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(0, 122, 230, 1);
         // line-height:22px;
@@ -198,7 +198,7 @@ export default {
         background: rgba(0, 122, 230, 1);
         border-radius: 4px;
         font-size: 16px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
         // line-height:22px;

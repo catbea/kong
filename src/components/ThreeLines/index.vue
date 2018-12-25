@@ -36,7 +36,7 @@ export default {
       margin-right: 15px;
       li {
         font-size: 14px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: normal;

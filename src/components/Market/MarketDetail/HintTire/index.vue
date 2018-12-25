@@ -82,7 +82,7 @@ export default {
     margin: 5px 0 0 119px;
     p {
       font-size: 17px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       line-height: 24px;
@@ -126,7 +126,7 @@ export default {
     opacity: 0.6163000000000001;
     border: 1px solid rgba(255, 255, 255, 1);
     font-size: 17px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
   }
