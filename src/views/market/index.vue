@@ -45,7 +45,7 @@ export default {
     projectFilters: {},
     searchContent: {
       siteText: '深圳',
-      placeholder: '请输入平台名称'
+      placeholder: '请输入楼盘名称'
     },
     value: '',
     locationIcon: require('IMG/market/juxing.png'),
