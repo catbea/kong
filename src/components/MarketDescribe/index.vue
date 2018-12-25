@@ -1,7 +1,7 @@
 <template>
   <div class="market-box-page">
     <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
-      <div class="all-describe">
+      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
           <div
             class="img bg_img"
@@ -69,7 +69,7 @@ export default {
   },
   data() {
     return {
-      detailOpenStatus: null, //0未开通1已开通已过期2已开通未过期
+      status:this.itemInfo.openStatus,
       tags:[],
       resInfo: null,
       style: null,
@@ -94,13 +94,16 @@ export default {
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
-    openStatus() {
-      if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
-      if (this.itemInfo.openStatus == 0) {
+    openStatus:{
+      get:function(){
+        if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
+      if (status == 0) {
         return '开通'
       } else {
         return '续费'
       }
+      },
+       set: function() {}
     },
     saleStatus() {
       if (this.itemInfo.saleStatus == 0) {
@@ -130,6 +133,10 @@ export default {
       if (this.itemInfo.city === this.userInfo.vipInfo.city) {
         //VIP用户选择城市与VIP开通楼盘同城市
         await marketService.addHouseByVip(this.itemInfo.linkerId)
+        this.$toast({
+            duration:1000,
+            message:'已开通成功',
+          })
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
@@ -156,7 +163,10 @@ export default {
     width: 343px;
     padding-top: 13px;
     margin: 0 0px 0 16px;
-    .all-describe {
+    .padding{
+        padding-bottom:16px;
+      }
+    .allDescribe {
       display: flex;
       flex-direction: column;
       .market-box-page-top {
