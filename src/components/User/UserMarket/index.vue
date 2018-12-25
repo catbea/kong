@@ -430,7 +430,7 @@ export default {
               width: 4px;
               height: 4px;
               border-radius: 50%;
-              margin-right:3px;
+              margin-right:4px;
               background: rgba(158, 158, 158, 1);
             }
           }
