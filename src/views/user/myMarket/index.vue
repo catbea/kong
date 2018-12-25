@@ -299,9 +299,9 @@ export default {
       let json = {}
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element =this.showMarketList[index];
-        if(!json[element[index].linkerId]){
+        if(!json[element.linkerId]){
           arr.push(element)
-          json[element[index]]=1
+          json[element]=1
         }
       }
       this.showMarketList=arr
@@ -340,9 +340,9 @@ export default {
       let json = {}
       for (let index = 0; index < this.notShowMarketList.length; index++) {
         const element =this.notShowMarketList[index];
-        if(!json[element[index].linkerId]){
+        if(!json[element.linkerId]){
           arr.push(element)
-          json[element[index]]=1
+          json[element]=1
         }
       }
       this.notShowMarketList=arr
