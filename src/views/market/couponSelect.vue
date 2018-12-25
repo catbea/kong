@@ -37,6 +37,7 @@ export default {
 
   methods: {
     unUseCoupanhandle() {
+      this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { currSelectedCoupon: null }))
       this.$router.go('-1')
     },
 
