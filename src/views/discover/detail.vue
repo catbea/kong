@@ -227,7 +227,7 @@ export default {
     // 设置分享
     shareHandler() {
       this.shareData.success = this.articleShare
-      this.$wechatHelper.setShare(this.shareData)
+      window.awHelper.wechatHelper.setShare(this.shareData)
       // wechatApi
       //   .wechatShare(this.shareData)
       //   .then(res => {
