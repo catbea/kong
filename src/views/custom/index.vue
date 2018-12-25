@@ -1,7 +1,14 @@
 <template>
   <div class="custom-page">
     <form action="/">
-      <van-search class="search-container" v-model="searchVal" placeholder="请输入搜索关键词" show-action @search="onSearchHandler" @click="onFocusHandler">
+      <van-search
+        class="search-container"
+        v-model="searchVal"
+        placeholder="请输入搜索关键词"
+        show-action
+        @search="onSearchHandler"
+        @click="onFocusHandler"
+      >
         <div slot="action" @click="onSortHandler">
           <i class="icon iconfont icon-Clientlist_screenin"></i>
         </div>
@@ -21,7 +28,13 @@
     </div>
 
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
+      <van-tabs
+        v-model="activeIndex"
+        color="#007AE6"
+        :line-width="15"
+        :swipe-threshold="6"
+        @click="onClick"
+      >
         <van-tab title="全部"></van-tab>
         <van-tab title="关注"></van-tab>
         <van-tab title="访客"></van-tab>
@@ -30,8 +43,18 @@
       </van-tabs>
     </div>
     <div class="list-continer">
-      <van-list v-model="loading" :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData">
-        <my-custom-item v-for="(item,index) in currentData.list" :key="index" :info="item" @click="itemClickHandler"></my-custom-item>
+      <van-list
+        v-model="loading"
+        :finished="currentData.finished"
+        @load="onLoad"
+        v-if="currentData.haveData"
+      >
+        <my-custom-item
+          v-for="(item,index) in currentData.list"
+          :key="index"
+          :info="item"
+          @click="itemClickHandler"
+        ></my-custom-item>
       </van-list>
       <div v-if="!currentData.haveData">
         <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
@@ -152,6 +175,13 @@ export default {
 }
 </script>
 <style lang="less">
+.van-field__body {
+  height: 100%;
+}
+.van-field__control {
+  // height: 100%;
+  line-height: 24px !important;
+}
 .custom-page {
   position: relative;
   > .search-container {
@@ -159,7 +189,17 @@ export default {
       height: 100%;
     }
     .van-field__control {
-      height: 100%;
+      // height: 100%;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      resize: none;
+      display: block;
+      color: #323233;
+      box-sizing: border-box;
+      background-color: transparent;
+      line-height: 24px !important;
     }
   }
   > .sort-container {

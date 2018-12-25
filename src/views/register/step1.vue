@@ -79,7 +79,9 @@ export default {
     this.area = this.userRegistInfo.area
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
-    this.queryByRegister(this.enterpriseId)
+    if (!this.userRegistInfo.distributorId) {
+      this.queryByRegister(this.enterpriseId)
+    }
   },
   computed: {
     ...mapGetters(['userRegistInfo'])
