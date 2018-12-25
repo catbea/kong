@@ -129,6 +129,7 @@ export default {
       } else {
         this.$toast('支付失败')
       }
+      
     },
 
     cancelPayment(purchaseId) {

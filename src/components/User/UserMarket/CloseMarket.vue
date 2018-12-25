@@ -163,8 +163,10 @@ export default {
           // on confirm
           this.stickShow = false
           this.show = !this.show
-          this.exhibitionMarketShow = false
+          // this.exhibitionMarketShow = false
           this.changeUserStatus(this.linkerId, 30, 0)
+          console.log(this.linkerId);
+          
           this.dataArr.displayFlag = 0
           // this.dataArr.displayFlag='1'
           this.$emit('openCut', this.dataArr)
