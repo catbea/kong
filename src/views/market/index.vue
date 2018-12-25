@@ -1,15 +1,17 @@
 <template>
   <div class="market-page">
+    <div class="fixed">
     <div class="search-box van-hairline--bottom">
       <div class="search-comp">
         <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
       </div>
     </div>
     <screen v-model="projectFilters" :local="this.selectedCity"></screen>
+    </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getProjectList">
-        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
   </div>
@@ -92,12 +94,6 @@ export default {
       this.page++
       this.loading = false
     },
-   async openReturnHandle(item) {
-      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
-      if(this.item.city===this.userInfo.vipInfo.city){
-       await marketService.addHouseByVip(item.linkerId)
-      }//VIP用户选择城市与VIP开通楼盘同城市
-    },
     onClickHandler() {
       this.$router.push('/market/inputSearch')
     },
@@ -123,7 +119,16 @@ export default {
 </script>
 <style lang="less">
 .market-page {
-  > .search-box {
+  .fixed{
+    position:fixed;
+    width:100%;
+    background:#FFFFFF;
+    z-index:3;
+  }
+  .already-open-page{
+    margin-top:86px;
+  }
+   .search-box {
     position: relative;
     width: 375px;
     height: 44px;

@@ -1,7 +1,6 @@
 <template>
   <div class="market-price-surface-page">
     <ul class="price-box">
-      
       <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:currAct==index}">
         <p>{{item.subscribeNum}} {{item.type==4 ? '天' : '个月'}}</p>
         <p>¥{{item.subscribeAmount | priceFormart}}</p>
@@ -133,6 +132,9 @@ export default {
         margin: 4px 0 4px 0;
       }
       p:nth-child(3) {
+        width: 104px;
+        height: 18px;
+        overflow: hidden;
         font-size: 12px;
         font-family: PingFang-SC-Regular;
         font-weight: 400;
