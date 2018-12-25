@@ -646,7 +646,7 @@ export default {
       this.pyzmaoviwe()
     },
     sendMessage(msgType01, audioTime01) {
-      if (this.cardDelFlag == 0) {// 小程序端经纪人已经删除
+      if (this.cardDelFlag == 1) {// 小程序端经纪人已经删除
         let obj = {}
         obj.content = this.customBaseInfo.clientName+'删除了您的名片，您还不是他（她）的经纪人。需要对方添加您的名片后，才能聊天'
         obj.msgType = 1
