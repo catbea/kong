@@ -57,7 +57,7 @@
             @openReturnHandle="opClickHandler(item)"
           ></market-describe>
         </van-list>
-        <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
+        <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="showNull"></null>
         <div class="hot-recommend" v-if="!haveData">
           <title-bar class="title-container" :conf="titleBarConf"/>
           <market-describe
@@ -106,6 +106,7 @@ export default {
     finished: false,
     nullcontent: '没有找到任何相关楼盘',
     haveData: true,
+    showNull:false,
     titleBarConf: {
       title: '热门楼盘'
     },
@@ -151,7 +152,6 @@ export default {
     },
     // 搜索控制
     async searchMidator(name, filters) {
-      console.log('111111111')
       let mergeFilters = filters.baseFilters ? Object.assign(filters.baseFilters, filters.moreFilters) : {}
       let params = screenFilterHelper(name, mergeFilters)
       params.current = this.page
@@ -161,6 +161,8 @@ export default {
       if (result.records.length > 0) {
         this.searchResult = this.searchResult.concat(result.records)
         this.loading = false
+        this.haveData = true
+        this.showNull=false
         if (result.pages === this.page) {
           this.finished = true
         } else {
@@ -171,6 +173,7 @@ export default {
           this.finished = true
           this.loading = false
           this.haveData = false
+          this.showNull=false
           let hotParams = {
             city: this.userInfo.majorCity || '全国',
             hotTotal: 5
@@ -183,6 +186,7 @@ export default {
         this.finished = true
         this.loading = false
         this.haveData = false
+        this.showNull=true
         let hotParams = {
           city: this.userInfo.majorCity || '全国',
           hotTotal: 5
