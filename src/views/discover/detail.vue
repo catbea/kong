@@ -147,7 +147,7 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
     this.getQrCode(this.agentId)
-    this.shareHandler()
+   
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -175,6 +175,7 @@ export default {
         image: this.info.image,
         link: host
       }
+       this.shareHandler()
     },
 
     //进入楼盘详情
@@ -226,6 +227,7 @@ export default {
     },
     // 设置分享
     shareHandler() {
+
       this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
       // wechatApi
