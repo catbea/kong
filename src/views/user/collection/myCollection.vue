@@ -199,7 +199,7 @@ export default {
   background: #ffffff;
   .tab-container {
     .collection-top {
-      margin-top: 16px;
+      margin-top: 6px;
     }
   }
 }
