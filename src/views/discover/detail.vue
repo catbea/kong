@@ -39,7 +39,9 @@
               <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
               <p class="house-name">{{item.linkerName}}</p>
               <p class="house-localtion">{{item.city}}</p>
-              <p class="house-price">{{item.averagePrice}} {{item.priceUnit}}</p>
+              <p class="house-price" v-if="item.averagePrice=='0'">价格待定</p>
+              <p class="house-price" v-else>{{item.averagePrice}} {{item.priceUnit}}</p>
+              <!--  -->
             </div>
           </swiper-slide>
         </swiper>
