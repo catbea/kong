@@ -64,7 +64,6 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
-import { Dialog } from 'vant'
 export default {
   created() {
     this.filterHandle()
@@ -98,13 +97,10 @@ export default {
       this.limitList.splice(index, 1)
       this.swipeJudge()
       this.$emit('noRecommend', linkerId)
-      Dialog.alert({
-        message: '取消该楼盘推荐成功',
-        confirmButtonText:'知道啦',
-        className:'distributor'
-      }).then(() => {
-        // on close
-      });
+      this.$toast({
+            duration:800,
+            message:'已取消推荐',
+          })
     },
     filterHandle() {
       this.masterList = this.limitList.filter(item => {
