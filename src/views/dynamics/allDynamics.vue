@@ -188,7 +188,7 @@ export default {
             this.finished = true
           }
           this.current++
-          // this.loading = false
+          this.loading = false
         } else {
           this.loading = false
           this.finished = true
@@ -201,7 +201,7 @@ export default {
             this.finished = true
           }
           this.current++
-          // this.loading = false
+          this.loading = false
         } else {
           this.loading = false
           this.finished = true
@@ -214,7 +214,7 @@ export default {
             this.finished = true
           }
           this.current++
-          // this.loading = false
+          this.loading = false
         } else {
           this.loading = false
           this.finished = true
@@ -227,7 +227,7 @@ export default {
             this.finished = true
           }
           this.current++
-          // this.loading = false
+          this.loading = false
         } else {
           this.loading = false
           this.finished = true
