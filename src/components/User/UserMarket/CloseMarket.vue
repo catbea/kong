@@ -27,7 +27,9 @@
              <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
              <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
           </li>
-          <li>{{dataArr.openTimes}}次开通 {{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期
+          <li>{{dataArr.openTimes}}次开通 
+            <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
+            <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
               <span></span>
               <span></span>
@@ -316,16 +318,21 @@ export default {
           line-height: 13px;
           margin-top: 12px;
           display: flex;
-          justify-content: space-between;
+          position: relative;
           align-items: center;
           .apostrophe {
-            width: 20px;
+            position:absolute;
+            right:-5px;
+            width: 40px;
+            height:40px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            justify-content:center;
             span {
               width: 4px;
               height: 4px;
               border-radius: 50%;
+              margin-right:3px;
               background: rgba(158, 158, 158, 1);
             }
           }

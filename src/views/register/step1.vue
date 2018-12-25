@@ -200,9 +200,16 @@ export default {
     },
     confirmHandler(val) {
       this.areaShow = false
-      this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
-      this.city = val[1].name
-      this.area = val[2].name
+      if (val[2]) {
+        this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
+        this.city = val[1].name
+        this.area = val[2].name
+      }else {
+        this.majorRegion = val[0].name + '/' + val[1].name
+        this.city = val[1].name
+        this.area =  ''
+      }
+       
       let _userRegistInfo = {
         majorRegion: this.majorRegion,
         city: this.city,

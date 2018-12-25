@@ -50,7 +50,10 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         next()
       } else {
+        console.log('wxAuthObject');
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
+        console.log('wxAuthObject',wxAuthObject);
+        
         payCorpId = wxAuthObject.payCorpId
         let userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId
