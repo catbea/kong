@@ -198,7 +198,7 @@ export default {
             display: flex;
             flex-direction: column;
             margin-left: 28px;
-            margin-top: -45px;
+            margin-top: -50px;
 
             > .username-box {
               margin-top: 35px;
@@ -223,7 +223,7 @@ export default {
             > .campany-view {
               color: #aeb1c2;
               font-size: 12px;
-              margin-top: 16px;
+              margin-top: 18px;
             }
           }
 
