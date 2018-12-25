@@ -223,7 +223,7 @@ export default {
             > .campany-view {
               color: #aeb1c2;
               font-size: 12px;
-              margin-top: 18px;
+              margin-top: 16px;
             }
           }
 
