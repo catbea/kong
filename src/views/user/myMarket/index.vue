@@ -114,6 +114,7 @@ export default {
     await this.marketShowHandle() //展示/不展示都没数据时
     this.getShowProjectCount()
     this.getUnShowProjectCount()
+    this.notShowGetMyMarketInfo()
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -305,6 +306,8 @@ export default {
     },
     async notShowGetMyMarketInfo() {
       // this.notShowProjectName,this.notShowProjectFilters, this.notShowPage
+      console.log(1111111111111);
+      
       let name = this.notShowProjectName
       let filters = this.notShowProjectFilters
       let page = this.notShowPage
@@ -341,7 +344,6 @@ export default {
         this.titleInfo.linkText = '切换关闭展示楼盘'
       } else {
         this.titleInfo.linkText = '切换开启展示楼盘'
-        this.notShowGetMyMarketInfo()
       }
     },
     skipShareHandle() {
@@ -428,6 +430,7 @@ export default {
         font-weight:400;
         color:rgba(153,153,153,1);
         line-height:17px;
+        margin-left:-12px;
       }
     }
     .market-left {
