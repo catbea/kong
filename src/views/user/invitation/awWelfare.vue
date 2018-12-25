@@ -230,7 +230,7 @@ export default {
 
   .imgcard {
     width: 80%;
-    height: 70%;
+    height: 75%;
     margin-left: 10%;
 
     > .imgcard-img{
