@@ -292,7 +292,7 @@ export default {
         justify-content: space-between;
         .house-owner {
           font-size: 13px;
-          font-family: PingFangSC-Semibold;
+          
           font-weight: 600;
           display: flex;
           margin-right: 16px;
@@ -321,7 +321,7 @@ export default {
       background: rgba(0, 122, 230, 0.05);
       border-radius: 4px;
       font-size: 16px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       text-align: center;
       line-height: 44px;
@@ -375,7 +375,7 @@ export default {
         text-overflow: ellipsis;
         width: 291px;
         font-size: 16px;
-        font-family: PingFangSC-Medium;
+        
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         margin-bottom: 6px;
@@ -388,14 +388,14 @@ export default {
         -webkit-line-clamp: 2;
         width: 323px;
         font-size: 14px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         margin-bottom: 10px;
       }
       .market-state-box-bottom {
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
       }
@@ -417,14 +417,14 @@ export default {
   text-align: center;
   .van-dialog__header {
     font-size: 18px;
-    font-family: PingFangSC-Semibold;
+    
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
   }
   .van-dialog__message {
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;

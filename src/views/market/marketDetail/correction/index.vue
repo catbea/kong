@@ -96,7 +96,7 @@ export default {
   p:nth-of-type(2) {
     height: 45px;
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(102, 102, 102, 1);
     line-height: 45px;
@@ -114,7 +114,7 @@ export default {
         height: 56px;
         padding: 17px 0;
         font-size: 16px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 22px;
@@ -143,19 +143,19 @@ export default {
   }
   textarea::-webkit-input-placeholder {
     font-size: 14px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(150, 158, 168, 1);
   }
   textarea:-moz-placeholder {
     font-size: 14px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(150, 158, 168, 1);
   }
   textarea:-ms-input-placeholder {
     font-size: 14px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(150, 158, 168, 1);
   }
@@ -174,7 +174,7 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 16px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: #ffffff;
   }

@@ -41,7 +41,7 @@ export default {
     padding: 0 16px 0 16px;
     li:nth-child(1) {
       font-size: 15px;
-      font-family: PingFang-SC-Regular;
+      
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 22px;
@@ -51,7 +51,7 @@ export default {
     }
     li:nth-child(2) {
       font-size: 12px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
       line-height: 24px;

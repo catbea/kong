@@ -163,7 +163,7 @@ export default {
       width: 80px;
       height: 44px;
       font-size: 14px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       .backActive {
@@ -187,7 +187,7 @@ export default {
   }
   .hint {
     font-size: 12px;
-    font-family: PingFang-SC-Regular;
+    
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
     line-height: 17px;

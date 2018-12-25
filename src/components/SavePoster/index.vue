@@ -95,14 +95,12 @@ export default {
           margin-top: 49px;
           li:nth-child(1) {
             font-size: 23px;
-            font-family: STSongti-SC-Bold;
             font-weight: bold;
             color: rgba(229, 179, 123, 1);
             line-height: 33px;
           }
           li:nth-child(2) {
             font-size: 16px;
-            font-family: STSongti-SC-Regular;
             font-weight: 400;
             color: rgba(229, 179, 123, 1);
             line-height: 22px;
@@ -110,7 +108,7 @@ export default {
           }
           li:nth-child(3) {
             font-size: 9px;
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: rgba(229, 179, 123, 1);
             line-height: 13px;
@@ -129,7 +127,7 @@ export default {
           }
           p {
             font-size: 7px;
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 10px;
@@ -151,7 +149,7 @@ export default {
             p {
               transform: scale(0.84);
               font-size: 12px;
-              font-family: PingFangSC-Semibold;
+              
               font-weight: 600;
               color: rgba(164, 184, 213, 1);
               line-height: 13px;
@@ -161,7 +159,7 @@ export default {
         .company {
           font-size: 12px;
           transform: scale(0.67);
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(164, 184, 213, 1);
           line-height: 11px;

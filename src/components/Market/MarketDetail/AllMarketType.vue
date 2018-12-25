@@ -44,7 +44,7 @@ export default {
       height: 18px;
       font-size: 16px;
       font-weight: 500;
-      font-family: PingFangSC-Medium;
+      
       color: rgba(51, 51, 51, 1);
       margin-top: 7px;
     }
@@ -58,7 +58,7 @@ export default {
     .market-type-box-bottom {
       height: 17px;
       font-size: 12px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       margin-top: 7px;

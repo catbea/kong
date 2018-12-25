@@ -256,7 +256,7 @@ export default {
     margin: 0 34px 0 25px;
     .recommend {
       font-size: 11px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       height: 16px;
@@ -266,7 +266,7 @@ export default {
     margin-right: 34px;
     .marketShow {
       font-size: 11px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       height: 16px;
@@ -276,7 +276,7 @@ export default {
     margin-right: 34px;
     .stickText {
       font-size: 11px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       height: 16px;
@@ -291,7 +291,7 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: #007ae6;
     margin-left: 7px;

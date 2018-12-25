@@ -47,7 +47,7 @@ export default {
     background: #ffffff;
     p {
       font-size: 18px;
-      font-family: PingFang-SC-Semibold;
+      
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       line-height: 25px;

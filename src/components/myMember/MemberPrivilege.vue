@@ -70,7 +70,6 @@ export default {
       .market-describe {
         p:nth-child(1) {
           font-size: 15px;
-          font-family: PingFang-SC-Medium;
           font-weight: 500;
           color: rgba(51, 51, 51, 1);
           line-height: 21px;
@@ -78,7 +77,7 @@ export default {
         p:nth-child(2) {
           width: 103px;
           font-size: 12px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 17px;

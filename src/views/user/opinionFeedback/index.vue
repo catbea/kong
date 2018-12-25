@@ -47,12 +47,12 @@ export default {
       flex-direction: column;
       margin-bottom: 50px;
       font-size: 20px;
-      font-family: PingFangSC-Semibold;
+      
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       p {
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
       }
