@@ -47,11 +47,11 @@ class WechatHelper {
     await store.dispatch('setJssdkConfig', jsApiList)
     console.log(store.state.wx.jssdkConfig)
 
-    console.log(this.wx);
+    // console.log(this.wx);
     await this.wx.config(store.state.wx.jssdkConfig)
     console.log(store.state.wx.jssdkConfig)
     await this.getUserArea()
-    this._apiCheck()
+    // this._apiCheck()
   }
 
   /**
