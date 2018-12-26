@@ -3,7 +3,7 @@
     <div class="dynamics-list-body" v-if="allDynamicList.length>0">
       <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
         <!-- {{times.dynamicDate}} -->
-        <div class="dynamics-time">{{times.dynamicDate}}</div>
+        <div class="dynamics-time">{{times.dynamicDate | dateTimeFormatter(2,'/')}}</div>
         <!-- v-for="(item,key) in times.allDynamicInfoVOS" :key="key" -->
         <div
           class="dynamics-container-list"
