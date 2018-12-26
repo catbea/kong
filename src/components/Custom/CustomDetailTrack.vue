@@ -58,8 +58,8 @@ export default {
 .custom-detail-track {
   margin-bottom: 60px;
   .info-container {
-    margin: 20px;
-    padding: 15px 15px 10px;
+    margin: 20px 20px 25px;
+    padding: 25px 0 ;
     display: flex;
     justify-content: space-around;
     .info-item {
@@ -77,6 +77,7 @@ export default {
     }
   }
   ul {
+    margin-top: 5px;
     .dayIn {
       width: 7px;
       height: 7px;
@@ -97,7 +98,7 @@ export default {
       margin-left: 24px;
       .content-box {
         border-left: 1px solid #e5e5e5;
-        padding-top: 12px;
+        padding-top: 10px;
         position: relative;
         padding-left: 16px;
         padding-bottom: 32px;
