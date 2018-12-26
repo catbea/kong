@@ -13,7 +13,7 @@
           <p class="container-title"> {{propertiesTitle}} </p>
           <p class="card-num">{{allDynamicCount.scanLinkerCount}}</p>
         </span>
-        <span calss="container-article">
+        <span calss="dynaData-container-article">
           <p class="container-title">{{articleTitle}}</p>
           <p class="card-num">{{allDynamicCount.scanArticleCount}}</p>
         </span>
@@ -47,10 +47,15 @@ export default {
   background: #ffffff;
   display: flex;
   padding: 20px 0 20px 20px;
-
+  border-radius: 10px;
+  .dynaData-container-article{
+      margin-left: 20px;
+    }
   span {
-    width: 80.7px;
+    width: 90px; 
+   
   }
+   
   .container-title {
     font-size: 12px;
     font-weight: 400;

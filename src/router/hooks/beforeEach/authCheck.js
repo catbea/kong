@@ -40,7 +40,13 @@ export default async (to, from, next) => {
         // 通过payopenid返回的code
         // 获取jssdk授权
         if (!store.getters.jssdkConfig) {
-          window.awHelper.wechatHelper.init()
+          try{
+            window.awHelper.wechatHelper.init()
+          }catch(e){
+            console.log(e, '[error]')
+            alert('000-'+userInfo.pcOpenid)
+          }
+          
         }
         if (userInfo.payOpenId) {
           next()
