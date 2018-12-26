@@ -219,6 +219,7 @@ export default {
     },
     // 分享成功之后
     async articleShare() {
+      console.log('[article share suss]')
       let params = {
         deleteType: 0,
         infoId: this.infoId

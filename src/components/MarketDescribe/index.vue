@@ -1,6 +1,6 @@
 <template>
   <div class="market-box-page">
-    <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
+    <div class="van-hairline--bottom market-box" @click="itemClickHandler" :class="{line:borderBottom}">
       <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
           <div
@@ -79,7 +79,7 @@ export default {
     }
   },
   props: {
-    // value:'',
+    value:'',
     itemInfo: {
       type: Object
     },
@@ -97,7 +97,7 @@ export default {
     openStatus:{
       get:function(){
         if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
-      if (status == 0) {
+      if (this.status == 0) {
         return '开通'
       } else {
         return '续费'
@@ -129,14 +129,10 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
-    async openHandle() {
+    async openHandle() {//VIP用户选择城市与VIP开通楼盘同城市
       if (this.itemInfo.city === this.userInfo.vipInfo.city) {
-        //VIP用户选择城市与VIP开通楼盘同城市
         await marketService.addHouseByVip(this.itemInfo.linkerId)
-        this.$toast({
-            duration:1000,
-            message:'已开通成功',
-          })
+        this.status=2
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
@@ -153,9 +149,6 @@ export default {
 }
 </script>
 <style lang="less">
-.line {
-  border-bottom: 1px solid #e6e6e6;
-}
 .market-box-page {
   background: #ffffff;
   width: 375px;
