@@ -118,7 +118,8 @@ export default {
     ...mapGetters(['userInfo', 'userVipInfo']),
 
     isVipInfo() {
-      return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
+      return '我的vip会员'
+      // return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
     },
     vipTimeInfo() {
       return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
