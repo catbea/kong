@@ -172,7 +172,7 @@ export default {
       host = host + '#/article/' + this.id + '/' + this.city
       this.shareData = {
         title: this.info.title,
-        image: this.info.image,
+        imgUrl: this.info.image,
         link: host
       }
        this.shareHandler()
@@ -219,6 +219,7 @@ export default {
     },
     // 分享成功之后
     async articleShare() {
+      console.log('[article share suss]')
       let params = {
         deleteType: 0,
         infoId: this.infoId

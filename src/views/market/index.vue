@@ -46,7 +46,7 @@ export default {
     finished: false,
     projectFilters: {},
     searchContent: {
-      siteText: '深圳',
+      siteText: '深圳市',
       placeholder: '请输入楼盘名称'
     },
     value: '',
@@ -68,8 +68,8 @@ export default {
     }
   },
   created() {
-    this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity
-    this.searchContent.siteText = this.selectedCity
+    this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
+    this.searchContent.siteText = this.selectedCity || '全国'
     this.getBrokerInfo()
   },
   methods: {
