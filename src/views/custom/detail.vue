@@ -464,7 +464,7 @@ export default {
         if (res.pages === 0 || this.page === res.pages) {
           this.finished = true
         }
-        this.current++
+        this.trackCurrent++
         this.loading = false
       } else {
         if (current == 1) {
