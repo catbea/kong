@@ -44,7 +44,7 @@ export default async (to, from, next) => {
             window.awHelper.wechatHelper.init()
           }catch(e){
             console.log(e, '[error]')
-            alert('000-'+userInfo.pcOpenid)
+            alert(e)
           }
           
         }
