@@ -86,8 +86,22 @@ export default {
       params.size = this.pageSize
       params.city = this.userArea.myReportCity
       const result = await reportServer.getReportBuildingList(params)
+
       if (result.records.length > 0) {
         this.dataArr = page === 1 ? result.records : this.dataArr.concat(result.records)
+        for (let i = 0; i < this.dataArr.length; i++) {
+          if (this.dataArr[i].saleStatus === 0) {
+            this.dataArr[i].linkerTags.unshift('热销中')
+          } else if (this.dataArr[i].saleStatus === 1) {
+            this.dataArr[i].linkerTags.unshift('即将发售')
+          } else if (this.dataArr[i].saleStatus === 3) {
+            this.dataArr[i].linkerTags.unshift('售罄')
+          }
+        }
+
+        console.log(JSON.stringify(this.dataArr));
+        
+
         this.haveData = true
         if (page === result.pages) {
           this.finished = true
@@ -194,7 +208,7 @@ export default {
       border-radius: 22px;
       border: 1px solid rgba(0, 122, 230, 1);
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
       text-align: center;

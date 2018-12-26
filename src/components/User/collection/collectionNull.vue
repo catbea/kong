@@ -2,7 +2,7 @@
   <div class="collection-null">
     <img :src="collectionIcon" class="collection-null-icon">
     <p class="collection-null-tips">{{collectionTips}}</p>
-    <p class="collection-null-tips">{{collectionRemar}}</p>
+    <p class="collection-null-tips-s">{{collectionRemar}}</p>
     <div class="collection-null-like">{{collectionLike}}</div>
   </div>
 
@@ -33,7 +33,13 @@ export default {
   > .collection-null-tips {
     font-size: 12px;
     font-weight: 400;
-    color: rgba(221, 221, 221, 1);
+    color: #999999;
+    line-height: 17px;
+  }
+   > .collection-null-tips-s {
+    font-size: 12px;
+    font-weight: 400;
+    color: #dddddd;
     line-height: 17px;
   }
   > .collection-null-remar {

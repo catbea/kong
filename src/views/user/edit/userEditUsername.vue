@@ -51,7 +51,7 @@ export default {
     toUpDateName() {
       let userName = this.userName
       if (userName.length == 0) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '用户名不可为空'
         }).then(() => {
           // on close
@@ -65,7 +65,7 @@ export default {
         if (this.userName.length > 0) {
           this.upDateUserName(date)
         } else {
-          Dialog.alert({
+          this.$dialog.alert({
             message: '用户名不可为空'
           }).then(() => {
             // on close

@@ -93,14 +93,14 @@ export default {
         }
       }
       if (selectidlist.length <= 0) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '请选择个性标签'
         }).then(() => {
           // on close
         })
       } else {
         if (this.selectLabelList.length > 3) {
-          Dialog.alert({
+          this.$dialog.alert({
             message: '标签个数不得多于3个'
           }).then(() => {
             // on close
