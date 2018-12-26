@@ -10,14 +10,14 @@
         @click="onFocusHandler"
       >
         <div slot="action" @click="onSortHandler">
-          <i class="icon iconfont icon-Clientlist_screenin"></i>
+          <i class="icon iconfont icon-Clientlist_screenin" :style="{color: activeIcon ? '#1989fa' : ''}"></i>
         </div>
       </van-search>
     </form>
     <!-- <div class="popup-container">
 
     </div>-->
-    <div class="sort-container dev" v-show="sortShow">
+    <div class="sort-container" v-show="sortShow">
       <ul>
         <li class="van-hairline-bottom" @click="sortClickHandler('intention')">意向度排序</li>
         <li class="van-hairline-bottom" @click="sortClickHandler('createTime')">
@@ -86,7 +86,8 @@ export default {
     pageSize: 10,
     searchVal: '',
     sortShow: false,
-    sort: 'intention' // intention：意向度（默认选项）， createTime：时间
+    sort: 'intention', // intention：意向度（默认选项）， createTime：时间
+    activeIcon: false
   }),
   methods: {
     onSearchHandler() {
@@ -99,6 +100,7 @@ export default {
     onFocusHandler() {},
     // 排序切换
     sortClickHandler(val) {
+      this.activeIcon = true
       this.sortShow = false
       this.sort = val
       this.cleanCurrentData()
@@ -212,11 +214,13 @@ export default {
     // margin: 0 15px;
     z-index: 100;
     li {
+      color: #333;
       padding: 0 15px;
       background: #fff;
       height: 50px;
       line-height: 50px;
       font-size: 15px;
+      box-shadow: inset 0px -1px 1px -1px #c8c7cc;
     }
   }
 }
