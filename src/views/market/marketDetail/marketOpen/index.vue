@@ -1,6 +1,6 @@
 <template>
   <div class="market-open-page">
-   <market-describe class="project-info" :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
+   <market-describe class="project-info" v-if="projectInfo" :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
    <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" :currAct='currPriceAct'
     @onVipClick="vipClickHandle"
     @couponClick="couponClickHandle"
@@ -46,7 +46,7 @@ export default {
     costType: 2, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
     isPayLoading: false,
     linkerId: '',
-    projectInfo: {},
+    projectInfo: null,
     priceList: [],
     priceSurfacePayInfo: { balanceAmount: 0, balancePay: 0, coupon: 0, isShowCoupon: false },
     currPriceListIndex: 0,
