@@ -1,6 +1,6 @@
 <template>
   <div class="market-box-page">
-    <div class="van-hairline--bottom market-box" @click="itemClickHandler" :class="{line:borderBottom}">
+    <div :class="borderBottom ? 'van-hairline--bottom market-box' :'market-box'" @click="itemClickHandler">
       <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
           <div
@@ -33,7 +33,7 @@
             </li>
             <li class="site">
               {{itemInfo.linkerAddress}}
-              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{time}}到期</span>
+              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
             </li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
@@ -90,18 +90,18 @@ export default {
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
-    time:{
-      get:function(){
-       let arr = this.itemInfo.invalidTime.split('-')
-       let timestamp = new Date().getTime()
-        if(arr[0]-0>new Date(timestamp).getFullYear()){
-          return this.itemInfo.invalidTime
-        }else{
-          return this.itemInfo.invalidTimeStr
-        }
-      },
-      set:function(){}
-    },
+    // time:{
+    //   get:function(){
+    //    let arr = this.itemInfo.invalidTime.split('-')
+    //    let timestamp = new Date().getTime()
+    //     if(arr[0]-0>new Date(timestamp).getFullYear()){
+    //       return this.itemInfo.invalidTimeStr
+    //     }else{
+    //       return this.itemInfo.invalidTime
+    //     }
+    //   },
+    //   set:function(){}
+    // },
     openStatus:{
       get:function(){
         if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
@@ -143,6 +143,10 @@ export default {
         await marketService.addHouseByVip(this.itemInfo.linkerId)
         this.status=2
         this.dredgeColor()
+        this.$toast({
+            duration:1000,
+            message:'已开通成功，请到我的楼盘查看',
+          })
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
