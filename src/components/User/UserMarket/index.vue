@@ -182,14 +182,16 @@ export default {
         let parent = this.$parent.$parent
         parent.showMarketList.unshift(parent.showMarketList[index])
         parent.showMarketList.splice(index + 1, 1)
-        parent.showMarketList[1].recommand=0
-        parent.showMarketList[4]=parent.showMarketList[1]
+        parent.showMarketList[3].recommand=0
+        // parent.showMarketList.splice(1,1)
         this.$dialog.alert({
           message: '楼盘置顶成功',
           className: 'hint-alert'
         }).then(() => {
-          parent.showMarketList.splice(1,1)
+
         })
+        this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+      this.show = !this.show
           }).catch(() => {
             // on cancel
           });
@@ -206,6 +208,8 @@ export default {
         }).then(() => {
           // on close
         })
+        this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+      this.show = !this.show
           }
       } else if (this.dataArr.recommand == 10) {
         this.stickSwitch = 0
@@ -217,9 +221,11 @@ export default {
         }).then(() => {
           // on close
         })
-      }
-      this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+        this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
       this.show = !this.show
+      }
+      // this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+      // this.show = !this.show
     },
     closeHandle() {
       this.show = !this.show
