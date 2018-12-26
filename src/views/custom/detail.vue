@@ -537,14 +537,15 @@ export default {
     .custom-avatar {
       width: 60px;
       height: 60px;
-      margin: 15px;
+      margin: 20px 16px 33px;
+
     }
     .custom-attention {
       width: 16px;
       height: 16px;
       position: absolute;
       left: 60px;
-      top: 60px;
+      top: 64px; 
     }
     .custom-info {
       margin: 20px 15px 15px 0;
