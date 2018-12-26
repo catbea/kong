@@ -46,7 +46,7 @@ export default {
     upDataWeChat() {
       let tempWeChat = this.weChatNum
       if (tempWeChat.length == 0) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '微信号不可为空'
         }).then(() => {
           // on close

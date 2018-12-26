@@ -207,7 +207,7 @@ export default {
       // this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price }
       this.getMarketDescribeInfo()
       this.getLinkerAmountList()
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '开通成功',
         message: '你已经成功开通楼盘' + this.projectInfo.linkerName + '，快去推荐给身边的小伙伴',
         cancelButtonText: '取消'
@@ -250,13 +250,6 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
-  .project-info {
-    padding-top: 16px;
-    padding-bottom: 0px;
-    margin-top: -13px;
-    padding-bottom: 48px;
-    margin-bottom: 10px;
-  }
   .pay-submit-info {
     position: fixed;
     bottom: 0px;

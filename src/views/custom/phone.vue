@@ -52,7 +52,7 @@ export default {
     savePhone() {
       let phone = this.phone
       if (phone.length == 0) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '手机号不可为空'
         }).then(() => {
           // on close
@@ -60,7 +60,7 @@ export default {
         return
       }
       if (phone.length < 11) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '请输入正确手机号'
         }).then(() => {
           // on close

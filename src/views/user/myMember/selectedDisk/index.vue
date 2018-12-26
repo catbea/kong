@@ -200,7 +200,7 @@ export default {
       } else {
         let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
       }
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '开通成功',
         message: '成功开通楼盘',
         cancelButtonText: '取消'
