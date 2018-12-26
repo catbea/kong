@@ -27,7 +27,7 @@
               ></dynamics-data>
             </div>
           </shadow-box>
-          <van-list v-model="loading" @load="onLoad" :finished="finished" @check="checkPosition" :immediate-check='false' :finished-text="'没有更多了'">
+          <van-list v-model="loading" @load="onLoad" :finished="finished" :finished-text="'没有更多了'">
             <dynamics-list
               @click="getupdateCustomerInfo"
               :allDynamicList="allDynamicList"
@@ -36,7 +36,7 @@
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 1">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" @check="checkPosition" :immediate-check='false'>
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
             <dynamics-card
               @click="goallDynamics"
               :cardDynamicCount="cardDynamicCount"
@@ -46,7 +46,7 @@
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 2">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" @check="checkPosition" :immediate-check='false'>
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
             <properties
               :info="item"
               @click="itemProperties"
@@ -57,7 +57,7 @@
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 3">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" @check="checkPosition" :immediate-check='false'>
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
             <dynamics-article
               :articleDynamicCount="articleDynamicCount"
               :articleDynamicList="articleDynamicList"
