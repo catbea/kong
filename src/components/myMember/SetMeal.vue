@@ -98,6 +98,7 @@ export default {
       flex-wrap: wrap;
       .active {
         background: rgba(194, 161, 113, 0.17);
+        border-color: #A07E72;
       }
       li {
         width: 105px;
@@ -109,6 +110,7 @@ export default {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border-color: #999;
         p:nth-child(1) {
           font-size: 16px;
           
