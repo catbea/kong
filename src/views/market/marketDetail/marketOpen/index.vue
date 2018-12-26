@@ -250,13 +250,6 @@ export default {
 .market-open-page {
   width: 100%;
   background: #f7f9fa;
-  .project-info {
-    padding-top: 16px;
-    padding-bottom: 0px;
-    margin-top: -13px;
-    padding-bottom: 48px;
-    margin-bottom: 10px;
-  }
   .pay-submit-info {
     position: fixed;
     bottom: 0px;
