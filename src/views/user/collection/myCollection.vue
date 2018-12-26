@@ -199,7 +199,7 @@ export default {
   background: #ffffff;
   .tab-container {
     .collection-top {
-      margin-top: 16px;
+      margin-top: 6px;
     }
   }
 }
@@ -252,6 +252,7 @@ export default {
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 24px;
+         margin-top: -4px;
         > .left-title-right {
           font-size: 12px;
           font-weight: 400;
@@ -270,7 +271,7 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
-        padding-top: 4px;
+        padding-top: 6px;
       }
       > .list-right-label {
         margin-top: 10px;
@@ -370,7 +371,7 @@ export default {
       font-weight: 400;
       color: rgba(255, 85, 51, 1);
       line-height: 14px;
-      padding: 0 3px;
+      padding: 0 1px;
     }
   }
 }
