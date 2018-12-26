@@ -45,12 +45,29 @@ export default (name, filters, conf = {}) => {
     result[conf.type] = filters.type
   }
   // 特色
-  if (filters.generalView) result[conf.generalView] = filters.generalView
-  if (filters.discountHouse) result[conf.discountHouse] = filters.discountHouse
+  if (filters.generalView) {
+    result[conf.generalView] = '1'
+  } else {
+    result[conf.generalView] = '0'
+  }
+
+  if (filters.discountHouse) {
+    result[conf.discountHouse] = '1'
+  } else {
+    result[conf.discountHouse] = '0'
+  }
   // 销售状态
   if (filters.saleStatus && filters.saleStatus !== '-1') result[conf.saleStatus] = filters.saleStatus
   // 开通状态
   if (filters.openStatus && filters.openStatus !== '-1') result[conf.openStatus] = filters.openStatus
+
+  console.log('111111111111');
+  
+  console.log(result[conf.openStatus] = filters.openStatus);
+
+  console.log('111111111111');
+  
+
   // 关注状态
   if (filters.focusStatus && filters.focusStatus !== '-1') result[conf.focusStatus] = filters.focusStatus
   //排序
