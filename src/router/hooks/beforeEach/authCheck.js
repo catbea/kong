@@ -40,7 +40,7 @@ export default async (to, from, next) => {
         // 获取jssdk授权
         if (!store.getters.jssdkConfig) {
           console.log(window.awHelper, '[window.awHelper]')
-          // window.awHelper.wechatHelper.init()
+          window.awHelper.wechatHelper.init()
         }
         if (userInfo.payOpenId) {
           next()
