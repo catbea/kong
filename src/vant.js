@@ -23,7 +23,8 @@ import {
   Loading,
   Dialog,
   Notify,
-  Tag
+  Tag,
+  TreeSelect
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -47,3 +48,5 @@ Vue.use(Loading)
 Vue.use(Dialog)
 Vue.use(Notify)
 Vue.use(Tag)
+Vue.use(TreeSelect)
+

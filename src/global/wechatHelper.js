@@ -30,7 +30,7 @@ class WechatHelper {
   constructor() {
     console.log('axb');
     console.log(wx);
-    
+
     this.wx = wx
     // this.queue = new Map()  
     // this.counter = 0
@@ -77,11 +77,11 @@ class WechatHelper {
    */
   async setShare(conf) {
     const defaultConf = {
-      title:'',
-      desc:'',
-      link:'',
-      imgUrl:'',
-      success: () =>{}
+      title: '',
+      desc: '',
+      link: '',
+      imgUrl: '',
+      success: () => { }
     }
     this._universalShare(conf)
     // return new Promise ((resolve, reject) => {
@@ -95,11 +95,14 @@ class WechatHelper {
    * 设置分享泛方法
    * @param {*} conf 
    */
-  _universalShare(conf){
-    console.log('_universalShare',conf);
+  _universalShare(conf) {
+    setTimeout(() => {
+      console.log('_universalShare', conf);
 
-    this.wx.onMenuShareAppMessage(conf)
-    this.wx.onMenuShareTimeline(conf)
+      this.wx.onMenuShareAppMessage(conf)
+      this.wx.onMenuShareTimeline(conf)
+    }, 300)
+
 
     // this.wx.updateAppMessageShareData(conf)
     // this.wx.updateTimelineShareData(conf)
