@@ -108,7 +108,7 @@ export default {
     .icon-wait {
       width: 20px;
       height: 17px;
-      // margin: 0 5px 0 16px;
+      margin: 0 5px 0 16px;
     }
     .check-all-button {
       margin-right: 32px;
