@@ -449,7 +449,7 @@ export default {
         i {
           margin-right: 2px;
           font-style: normal;
-          margin-top: 4px;
+          margin-top: 5px;
         }
         .icon {
           margin-top: 6px;
