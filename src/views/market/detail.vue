@@ -302,7 +302,7 @@ export default {
     },
     shareHandler() {
        if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
-        this.$dialog.confirm({
+        Dialog.confirm({
           title: '您有未完善的信息',
           message: '信息不完整会影响传播效率哦',
           confirmButtonText: '去完善',
@@ -312,7 +312,7 @@ export default {
         })
       } else {
         if (this.info.expireFlag == 0) {
-          this.$dialog.confirm({
+          Dialog.confirm({
             title: '温馨提示',
             message: '还未开通楼盘，请前往开通'
           }).then(() => {
