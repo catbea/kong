@@ -231,6 +231,7 @@ export default {
     height: 75%;
     margin-left: 10%;
     border: none;
+    padding: 0px 5x 2px 0px;
     border-color: transparent;
 
     > .imgcard-img{

@@ -250,6 +250,7 @@ export default {
     padding-top: 16px;
     padding-bottom: 0px;
     margin-top: -13px;
+    padding-bottom: 48px;
     margin-bottom: 10px;
   }
   .pay-submit-info {
@@ -258,10 +259,10 @@ export default {
     z-index: 9;
   }
   .agreement-box {
-    height: 65px;
-    line-height: 65px;
+    height: 17px;
+    line-height: 17px;
     text-align: center;
-    margin: 0px 0 66px 0;
+    margin: 24px 0 86px 0;
     span:nth-child(1) {
       font-size: 10px;
       

@@ -1,6 +1,6 @@
 <template>
   <div class="market-box-page">
-    <div class="van-hairline--bottom market-box" @click="itemClickHandler" :class="{line:borderBottom}">
+    <div :class="borderBottom ? 'van-hairline--bottom market-box' :'market-box'" @click="itemClickHandler">
       <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
           <div
