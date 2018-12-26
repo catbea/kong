@@ -97,8 +97,9 @@ class WechatHelper {
    */
   _universalShare(conf){
     console.log('_universalShare',conf);
-    
-    this.wx.updateAppMessageShareData(conf)
+
+    this.wx.onMenuShareAppMessage(conf)
+    // this.wx.updateAppMessageShareData(conf)
     this.wx.updateTimelineShareData(conf)
     this.wx.showAllNonBaseMenuItem()
   }
