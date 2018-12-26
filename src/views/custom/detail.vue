@@ -210,7 +210,7 @@ export default {
     // 立即续费
     renewHandler(val) {
       if (val.sameDistributor == '0') {
-        Dialog.alert({
+        this.$dialog.alert({
           title: '该楼盘不可续费',
           message: '非当前所属公司下楼盘无法开通续费',
           confirmButtonText: '知道啦'

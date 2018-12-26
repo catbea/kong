@@ -1,19 +1,12 @@
 <template>
-  <div class="market-box-page">
+  <div class="market-box-page" v-if="itemInfo">
     <div :class="borderBottom ? 'van-hairline--bottom market-box' :'market-box'" @click="itemClickHandler">
       <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
-          <div
-            class="img bg_img"
-            :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}"
-          >
+          <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
             <!-- 720标示 -->
             <img class="panorama-mark" :src="panoramaImg" v-if="itemInfo.ifPanorama">
-            <div
-              class="label bg_img"
-              v-show="itemInfo.sale"
-              :style="{backgroundImage:'url('+labelImg+')'}"
-            >
+            <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">
               {{itemInfo.sale}}
               {{itemInfo.labels}}
             </div>
@@ -24,15 +17,10 @@
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
-              <span
-                class="dredge"
-                :style="style"
-                v-if="dredge"
-                @click.stop="openHandle"
-              >{{openStatus}}</span>
+              <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
             </li>
             <li class="site">
-              {{itemInfo.linkerAddress}}
+              {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
               <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
             </li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
@@ -59,23 +47,8 @@ export default {
   components: {
     TagGroup
   },
-  created() {
-    this.dredgeColor()
-    this.tags.unshift(this.saleStatus)
-  },
-  data() {
-    return {
-      status:this.itemInfo.openStatus,
-      tags:this.itemInfo.linkerTags,
-      resInfo: null,
-      style: null,
-      panoramaImg: require('IMG/system/icon_panorama@2x.png'),
-      commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-      labelImg: require('IMG/marketDetail/discount@2x.png')
-    }
-  },
   props: {
-    value:'',
+    value: '',
     itemInfo: {
       type: Object
     },
@@ -88,30 +61,33 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+      status: this.itemInfo.openStatus,
+      tags: this.itemInfo.linkerTags,
+      resInfo: null,
+      style: null,
+      panoramaImg: require('IMG/system/icon_panorama@2x.png'),
+      commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
+      labelImg: require('IMG/marketDetail/discount@2x.png')
+    }
+  },
+  created() {
+    this.dredgeColor()
+    this.tags.unshift(this.saleStatus)
+  },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
-    // time:{
-    //   get:function(){
-    //    let arr = this.itemInfo.invalidTime.split('-')
-    //    let timestamp = new Date().getTime()
-    //     if(arr[0]-0>new Date(timestamp).getFullYear()){
-    //       return this.itemInfo.invalidTimeStr
-    //     }else{
-    //       return this.itemInfo.invalidTime
-    //     }
-    //   },
-    //   set:function(){}
-    // },
-    openStatus:{
-      get:function(){
+    openStatus: {
+      get: function() {
         if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
-      if (this.status == 0) {
-        return '开通'
-      } else {
-        return '续费'
-      }
+        if (this.status == 0) {
+          return '开通'
+        } else {
+          return '续费'
+        }
       },
-       set: function() {}
+      set: function() {}
     },
     saleStatus() {
       if (this.itemInfo.saleStatus == 0) {
@@ -120,7 +96,7 @@ export default {
         return '即将发售'
       } else if (this.itemInfo.saleStatus == 3) {
         return '售罄'
-      }else{
+      } else {
         return this.itemInfo.saleStatus
       }
     }
@@ -137,22 +113,23 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
-    async openHandle() {//VIP用户选择城市与VIP开通楼盘同城市
-    if(this.status !=0){
-      if (this.itemInfo.city === this.userInfo.vipInfo.city) {
-        await marketService.addHouseByVip(this.itemInfo.linkerId)
-        this.status=2
-        this.dredgeColor()
-        this.$toast({
-            duration:1000,
-            message:'已开通成功，请到我的楼盘查看',
+    async openHandle() {
+      //VIP用户选择城市与VIP开通楼盘同城市
+      if (this.status != 0) {
+        if (this.itemInfo.city === this.userInfo.vipInfo.city) {
+          await marketService.addHouseByVip(this.itemInfo.linkerId)
+          this.status = 2
+          this.dredgeColor()
+          this.$toast({
+            duration: 1000,
+            message: '已开通成功，请到我的楼盘查看'
           })
+        } else {
+          this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+        }
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
-    }else{
-       this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
-    }
     }
   },
   watch: {
@@ -173,9 +150,9 @@ export default {
     width: 343px;
     padding-top: 13px;
     margin: 0 0px 0 16px;
-    .padding{
-        padding-bottom:16px;
-      }
+    .padding {
+      padding-bottom: 16px;
+    }
     .allDescribe {
       display: flex;
       flex-direction: column;
@@ -204,7 +181,7 @@ export default {
             text-align: center;
             line-height: 20px;
             font-size: 11px;
-            
+
             font-weight: 500;
             color: rgba(255, 255, 255, 1);
           }
@@ -224,7 +201,7 @@ export default {
                 text-overflow: ellipsis;
                 max-width: 103px;
                 font-size: 16px;
-                
+
                 font-weight: 600;
                 color: rgba(51, 51, 51, 1);
                 line-height: normal;
@@ -232,7 +209,7 @@ export default {
               .past {
                 font-size: 12px;
                 transform: scale(0.84);
-                
+
                 font-weight: 400;
                 line-height: normal;
                 height: 18px;
@@ -251,7 +228,7 @@ export default {
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;
               font-size: 12px;
-              
+
               font-weight: 400;
               color: rgba(255, 255, 255, 1);
               line-height: 24px;
@@ -260,7 +237,7 @@ export default {
           }
           .site {
             font-size: 12px;
-            
+
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
@@ -274,14 +251,14 @@ export default {
             span:nth-child(1) {
               line-height: 15px;
               font-size: 15px;
-              
+
               font-weight: 600;
               color: rgba(234, 77, 46, 1);
             }
             span:nth-child(2) {
               line-height: 15px;
               font-size: 12px;
-              
+
               font-weight: 400;
               color: rgba(153, 153, 153, 1);
             }
@@ -305,7 +282,7 @@ export default {
         span:nth-child(2) {
           margin: 0 0 0 4px;
           font-size: 15px;
-          
+
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;

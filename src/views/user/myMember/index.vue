@@ -148,7 +148,7 @@ export default {
     },
 
     showAddProjectDialog() {
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '开通成功',
         message: '成功开通vip，海量楼盘等你添加~',
         cancelButtonText: '取消'
@@ -193,7 +193,7 @@ export default {
     },
 
     unselectedPopup() {
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: this.title,
         message: '是否选择' + this.selectCity + '作为VIP开通城市',
         cancelButtonText: '其他城市'

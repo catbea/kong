@@ -59,7 +59,7 @@ export default {
     saveRemarkName() {
       let remarkName = this.remarkName
       if (remarkName.length == 0) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '备注名称不可为空'
         }).then(() => {
           // on close
