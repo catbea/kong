@@ -4,8 +4,10 @@
       <div class="disturb-box">勿扰模式
         <van-switch v-model="checked" @change="onSwitch"/>
       </div>
-      <div class="disturb-describe">启用勿扰模式后，在设定时间内将收不到任何推送提醒，请谨慎开启避免影响正常工作</div>
     </div>
+
+    <div class="disturb-describe">启用勿扰模式后，在设定时间内将收不到任何推送提醒，请谨慎开启避免影响正常工作</div>
+
     <ul class="no-disturb-page-bottom" v-if="checked">
       <li @click="setHandle" class="cycle-set">
         <p>周期设置</p>
@@ -392,6 +394,7 @@ export default {
   .no-disturb-page-top {
     margin-top: 10px;
     padding: 18px 15px 7px 14px;
+
     background: rgba(255, 255, 255, 1);
     .disturb-box {
       display: flex;
@@ -399,20 +402,22 @@ export default {
       align-items: center;
       margin-bottom: 13px;
       font-size: 15px;
-      
+
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 21px;
     }
-    .disturb-describe {
+   
+  }
+
+   .disturb-describe {
       font-size: 13px;
       padding: 11px 16px 22px 15px;
       background: rgba(247, 249, 250, 1);
-      
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
     }
-  }
+
   .no-disturb-page-bottom {
     background: rgba(255, 255, 255, 1);
     .cycle-set,
@@ -427,7 +432,7 @@ export default {
       align-items: center;
       p {
         font-size: 16px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }
@@ -435,7 +440,7 @@ export default {
       .right {
         display: flex;
         font-size: 16px;
-        
+
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         .show-box {
@@ -444,7 +449,7 @@ export default {
         i {
           margin-right: 2px;
           font-style: normal;
-           margin-top: 3px;
+          margin-top: 4px;
         }
         .icon {
           margin-top: 6px;
@@ -463,7 +468,7 @@ export default {
           display: flex;
           justify-content: space-between;
           font-size: 15px;
-          
+
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           span {
@@ -478,7 +483,7 @@ export default {
         text-align: center;
         line-height: 50px;
         font-size: 16px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }

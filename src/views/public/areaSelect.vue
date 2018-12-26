@@ -99,8 +99,12 @@ export default {
       if (e.target.tagName !== 'LI') return
 
       this.scrollHander(e.target.innerText)
+
       window.addEventListener('touchmove', this.handleTouchMove, false)
       window.addEventListener('touchend', this.handleTouchEnd)
+      console.log(e.changedTouches[0].clientY);
+
+      // this.scrollList(e.changedTouches[0].clientY)
 
       // console.log(e.target.tagName)
       // return

@@ -138,18 +138,19 @@ export default {
     font-size: 20px;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
-    line-height: 28px;
+    // line-height: 28px;
     padding: 5px 16px 11px;
     margin-top: -12px;
   }
   > .business-card-box {
     width: 100%;
     height: 190px;
+    min-height: 190px;
     position: relative;
 
     > .info-box {
       position: relative;
-      height: 177px;
+      height: 190px;
       margin: 12px 16px;
       border-radius: 10px;
       background: rgba(64, 68, 87, 1);
@@ -168,6 +169,7 @@ export default {
           > .info-box-left {
             width: 24px;
             height: 24px;
+            // border-top-left-radius: 10px;
             margin-left: 7px;
             margin-top: 7px;
           }
@@ -193,15 +195,14 @@ export default {
         > .info-box-center-p {
           display: flex;
           flex-direction: row;
-
           > .info-box-center {
             display: flex;
             flex-direction: column;
             margin-left: 28px;
             margin-top: -50px;
-
+            flex: 1;
             > .username-box {
-              margin-top: 35px;
+              margin-top: 44px;
 
               > .username-view {
                 color: #ffffff;
@@ -223,7 +224,7 @@ export default {
             > .campany-view {
               color: #aeb1c2;
               font-size: 12px;
-              margin-top: 18px;
+              margin-top: 25px;
             }
           }
 
@@ -231,28 +232,24 @@ export default {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            margin-left: 15px;
+            margin-right: 40px;
             margin-top: -15px;
           }
         }
       }
 
       > .info-bottom {
-        display: flex;
-        width: 100%;
-        height: 49px;
-        margin-top: -5px;
-        flex-direction: column;
+        padding-top: 5px;
 
         > .content-left-labe {
           font-size: 10px;
           font-weight: 400;
           color: rgba(174, 177, 194, 1);
-          line-height: 30px;
           margin-left: 27px;
-          margin-top: 7px;
+          margin-top: 5px;
           > .left-labe-css {
             padding: 2px 5px;
+            font-size: 10px;
             background: rgba(143, 159, 177, 0.15);
             border-radius: 4px;
             border: 0;
@@ -265,8 +262,12 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(174, 177, 194, 1);
-          line-height: 12px;
+          // line-height: 12px;
           margin-left: 28px;
+          margin-top: 8px;
+          overflow:hidden;
+          text-overflow:ellipsis;
+          white-space:nowrap;
         }
       }
     }
@@ -280,7 +281,7 @@ export default {
   > .business-status-box {
     background-color: #ffffff;
     width: 100%;
-    height: 100px;
+    padding-bottom: 20px;
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
@@ -292,7 +293,7 @@ export default {
       height: 65px;
       background: #f8f8f8;
       border-radius: 3px;
-      margin-top: 15px;
+      margin-top: 5px;
       > img {
         margin: 20px 10px;
         width: 24px;
@@ -300,7 +301,7 @@ export default {
       }
       .info-title {
         position: absolute;
-        top: 15px;
+        top: 10px;
         left: 40px;
         font-size: 16px;
         font-weight: 400;
@@ -309,7 +310,7 @@ export default {
       }
       .info-desc {
         position: absolute;
-        top: 37px;
+        top: 33px;
         left: 40px;
         font-size: 12px;
         font-weight: 400;

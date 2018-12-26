@@ -114,6 +114,7 @@ export default {
 
     getCityName(data) {
       this.majorRegion = data[0].name + '/' + data[1].name + '/' + data[2].name
+      this.majorCity = data[1].name
       this.isOpen = false
       this.upDateUserName(this.majorRegion)
     },
@@ -126,8 +127,10 @@ export default {
         majorRegion: obj
       }
       const result = await userService.upDateUserInfo(nameObj)
+      this.userInfo.majorRegion = this.majorRegion
+      this.userInfo.majorCity = this.majorCity
       if (result) {
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { majorRegion: this.majorRegion }))
+        this.$store.commit(types.USER_INFO, this.userInfo)
       }
     }
   },
