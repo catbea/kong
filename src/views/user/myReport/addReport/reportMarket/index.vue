@@ -55,13 +55,13 @@ export default {
       siteText: '全国',
       placeholderText: '请输入楼盘'
     },
-    nullcontent: '暂还没有可报备楼盘信息',
+    nullcontent: '您还没有任何报备信息',
     dataArr: [],
     haveData: true,
     loading: false,
     finished: false,
     queryTimer: null,
-    nullIcon: require('IMG/user/bill-null.png'),
+    nullIcon: require('IMG/user/no_report.png'),
     isShowHeader: true
   }),
   computed: {
