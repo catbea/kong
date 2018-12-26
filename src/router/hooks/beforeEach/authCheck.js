@@ -41,14 +41,10 @@ export default async (to, from, next) => {
         // 获取jssdk授权
         if (!store.getters.jssdkConfig) {
           try{
-            setTimeout(() => {
-              window.awHelper.wechatHelper.init()
-            }, 1);
+            window.awHelper.wechatHelper.init()
           }catch(e){
-            console.log(e, '[error]')
-            alert(e)
+            next()
           }
-          
         }
         if (userInfo.payOpenId) {
           next()
