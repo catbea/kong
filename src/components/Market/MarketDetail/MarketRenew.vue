@@ -106,7 +106,7 @@ export default {
       await userService.changeMarketData(linkerId, operationType, status)
     },
     dialogHandle(n) {
-      Dialog.alert({
+      this.$dialog.alert({
         message: n,
         confirmButtonText: '知道啦',
         className: 'renewDialog'
@@ -193,7 +193,7 @@ export default {
     },
     renewHandle(n) {
       if(this.renewInfo.thisDistributor===false){
-        Dialog.alert({
+        this.$dialog.alert({
         message: '该楼盘不可续费非当前所属公司下楼盘无法开通续费',
         confirmButtonText:'知道啦',
         className:'distributor'

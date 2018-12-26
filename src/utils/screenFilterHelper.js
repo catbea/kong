@@ -61,13 +61,6 @@ export default (name, filters, conf = {}) => {
   // 开通状态
   if (filters.openStatus && filters.openStatus !== '-1') result[conf.openStatus] = filters.openStatus
 
-  console.log('111111111111');
-  
-  console.log(result[conf.openStatus] = filters.openStatus);
-
-  console.log('111111111111');
-  
-
   // 关注状态
   if (filters.focusStatus && filters.focusStatus !== '-1') result[conf.focusStatus] = filters.focusStatus
   //排序

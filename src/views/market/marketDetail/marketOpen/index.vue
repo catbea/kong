@@ -220,9 +220,13 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
+      console.log(res,'开通数据',res.city,res.district);
+      
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,
+        city:res.city,
+        district:res.district,
         linkerTags: res.projectTagList,
         linkerPrice: res.averagePrice,
         linkerName: res.linkerName,
@@ -250,6 +254,7 @@ export default {
     padding-top: 16px;
     padding-bottom: 0px;
     margin-top: -13px;
+    padding-bottom: 48px;
     margin-bottom: 10px;
   }
   .pay-submit-info {
@@ -258,10 +263,10 @@ export default {
     z-index: 9;
   }
   .agreement-box {
-    height: 65px;
-    line-height: 65px;
+    height: 17px;
+    line-height: 17px;
     text-align: center;
-    margin: 0px 0 66px 0;
+    margin: 24px 0 86px 0;
     span:nth-child(1) {
       font-size: 10px;
       
