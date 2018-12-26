@@ -287,7 +287,7 @@ export default {
     }
     .icon-project-select {
       width: 20px;
-      height: 18px;
+      height: 17px;
       margin: 0px 8px 0 16px;
     }
     .check-label {
