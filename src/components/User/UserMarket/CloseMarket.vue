@@ -157,7 +157,7 @@ export default {
       this.show = !this.show
     },
     exhibitionHandle() {
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '是否确定开启该楼盘名片展示',
         className: 'close-Dialog'
       })
