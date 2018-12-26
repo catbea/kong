@@ -70,7 +70,7 @@ export default {
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
         this.$router.push({
           path: '/dynamics/allDynamics',
-          query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount }
+          query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount ,allDynamicsNum:num.allDynamicsNum }
         })
       } else {
         this.$dialog.alert({

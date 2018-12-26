@@ -6,7 +6,8 @@
       <div class="border-right"></div>
     </div>
     <div class="search-input-box">
-      <i class="van-icon van-icon-search van-cell__left-icon"></i>
+      <!-- <i class="van-icon van-icon-search van-cell__left-icon"></i> -->
+      <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" />
       <input type="search" :placeholder="conf.placeholder" @focus="focusHandler" v-on:input="inputContent" v-model="currentValue">
     </div>
   </div>
@@ -69,7 +70,7 @@ export default {
     font-size: 12px;
     color: #666666;
     line-height: 30px;
-    width: 70px;
+    width: 80px;
     height: 100%;
     padding: 0 0 0 10px;
     overflow: hidden;
@@ -99,8 +100,14 @@ export default {
     width: 100%;
     display: flex;
     font-size: 12px;
+    align-items: center;
+    justify-content: center;
     > i {
       padding: 3px 4px 3px 8px;
+    }
+    > .search-icon{
+      width: 24px;
+      height: 24px;
     }
     > input {
       width: 100%;

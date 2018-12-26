@@ -20,7 +20,7 @@
         </span>
       </div>
     </div>
-    <div class="list-body" v-if="houseDynamicList.length >0">
+    <div class="Properties-list-body" v-if="houseDynamicList.length >0">
       <div
         class="Properties-list"
         v-for="(item,index) in houseDynamicList"
@@ -134,11 +134,12 @@ export default {
 .Properties-container {
   background: #ffffff;
   // margin: 0 16px;
-  .list-body {
+  .Properties-list-body {
+    margin-top: 30px;
     > .Properties-list {
       border-bottom: 1px solid #eeeeee;
       margin: 0 16px;
-      padding: 16px 0;
+      padding: 13px 0;
 
       > .list-left {
         font-size: 16px;
@@ -171,7 +172,7 @@ export default {
     .dynaData-container {
       background: #ffffff;
       display: flex;
-      padding: 20px 0 20px 20px;
+      padding: 25px 0 20px 20px;
 
       span {
         width: 80.7px;

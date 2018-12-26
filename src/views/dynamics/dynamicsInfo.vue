@@ -7,38 +7,39 @@
           <div class="dynamicsInfo-list-top" >
             <span class="dynamicsInfo-list-left" @click="godynamicsInfo(linkerVO.linkerId)">
                <div
+                  v-show="linkerVO.sale !== '' "
                   class="dynamicsInfo-left-bg_img"
-                  v-show="linkerVO.sale != 0 "
                   :style="{backgroundImage:'url('+labelImg+')'}"
                 >{{linkerVO.sale}}</div>
               <img :src="linkerVO.linkerHeadUrl" class="mark-icon">
               <img :src="ovalIcon" class="oval-icon" v-show="linkerVO.ifPanorama == 1">
             </span>
             <span class="dynamicsInfo-list-right">
-              <div class="list-right-title" @click="gopay(linkerVO)">
-                 <div class="list-right-title-div">{{linkerVO.linkerName}}</div>
-                <div class="list-right-tab-div">
+              <div class="dynamicsInfo-list-right-title" @click="gopay(linkerVO)">
+                 <div class="dynamicsInfo-list-right-title-div">{{linkerVO.linkerName}}</div>
+                <div class="dynamicsInfo-list-right-tab-div">
                    <span class="left-title-right"  v-if="linkerVO.linkerOpenEndTime !=''">续费</span>
                    <span class="left-title-right-open" v-else>开通</span>
                 </div>
               </div>
-              <p class="list-right-time" @click="godynamicsInfo(linkerVO.linkerId)">{{linkerVO.city}}  {{linkerVO.district}} | {{linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
-              <p class="list-right-label" @click="godynamicsInfo(linkerVO.linkerId)">
+              <p class="dynamicsInfo-list-right-time" @click="godynamicsInfo(linkerVO.linkerId)">{{linkerVO.city}}  {{linkerVO.district}} | {{linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
+              <p class="dynamicsInfo-list-right-label" @click="godynamicsInfo(linkerVO.linkerId)">
                 <button class="right-label right-label-blur" v-show="linkerVO.saleStatus == 0 ">热销中</button>
                 <button class="right-label right-label-red" v-show="linkerVO.saleStatus == 1">即将发售</button>
                 <button class="right-label right-label-grey" v-show="linkerVO.saleStatus == 2">售罄</button>
-                <button class="right-label right-label-gray" v-for="(linkerTags ,key) in linkerVO.linkerTags " :key="key">{{linkerTags}}</button>
+                <button class="right-label right-label-gray" >{{linkerVO.linkerTags[0]}}</button>
+                <button class="right-label right-label-gray" >{{linkerVO.linkerTags[1]}}</button>
               </p>
               <p class="dynamicsInfo-list-right-price" @click="godynamicsInfo(linkerVO.linkerId)">
                 {{linkerVO.price }}{{linkerVO.priceUnit }}
-                <span class="right-price-text">起</span>
+                <!-- <span class="right-price-text"></span> -->
                 <span class="right-price-open">{{linkerVO.openTimes }}次开通</span>
               </p>
             </span>
           </div>
 
           <div class="dynamicsInfo-list-commission" v-show="linkerVO.divisionRules != ''">
-            <span class="list-commission-word">佣</span>
+            <span class="dynamicsInfo-list-commission-word">佣</span>
             <!-- 1.056%+50000元/套 -->{{linkerVO.divisionRules}}
           </div>
 
@@ -73,7 +74,7 @@
         <div slot="container">
           <div class="dynamics-list">
             <div class="dynamics-list-agent" @click="gocustomInfo(item)">
-              <span class="list-agent-left">
+              <span class="dynamicsInfo-list-agent-left">
                 <span class="agent-left-left">
                   <img :src="item.avatarUrl" class="agent-userImg">
                 </span>
@@ -82,7 +83,7 @@
                   <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
                 </span>
               </span>
-              <span class="list-agent-right">
+              <span class="dynamicsInfo-list-agent-right">
                 <p class="agent-right-num" v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}">{{item.intentionality}}%</p>
                 <p class="agent-right-title">意向度</p>
               </span>
@@ -98,11 +99,11 @@
 
             <div class="dynamics-list-btn">
               <span></span>
-              <div class="list-btn-right">
-               <button class="list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
+              <div class="dynamicsInfo-list-btn-right">
+               <button class="dynamicsInfo-list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">关注</button>
-                <button class="list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="list-btn-contact" @click="goalldynamics(item)">
+                <button class="dynamicsInfo-list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
+                <button class="dynamicsInfo-list-btn-contact" @click="goalldynamics(item)">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -200,11 +201,11 @@ export default {
 <style lang="less">
 .dynamicsInfo-page {
   background: #ffffff;
-  margin: 16px 0;
+  margin: 20px 0;
   .dynaData-container {
     background: #ffffff;
     display: flex;
-    padding: 20px 0 20px 20px;
+    padding: 25px 0 20px 20px;
 
     span {
       width: 80.7px;
@@ -224,9 +225,8 @@ export default {
   }
   .dynamicsInfo-list {
     margin: 0 15px;
-
     border-bottom: 1px solid #e6e6e6;
-    padding: 15px 0 16px 0;
+    padding: 15px 0 10px 0;
     > .dynamicsInfo-list-top {
       display: flex;
       margin-bottom: 7px;
@@ -266,22 +266,26 @@ export default {
         border-radius: 6px;
         margin-left: 12px;
 
-        > .list-right-title {
+        > .dynamicsInfo-list-right-title {
           font-size: 16px;
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
-          .list-right-title-div {
+          .dynamicsInfo-list-right-title-div {
             font-size: 16px;
             overflow: hidden; /*内容超出后隐藏*/
             text-overflow: ellipsis; /* 超出内容显示为省略号*/
             white-space: nowrap; /*文本不进行换行*/
             width: 70%;
+            margin-top: -5px;
           }
-          .list-right-tab-div {
-            position: absolute;
-            right: 0px;
-            top: 12px;
+          .dynamicsInfo-list-right-tab-div {
+            // position: absolute;
+            // right: 0px;
+            // top: 0;
+                float: right;
+              margin-top: -20px;
+             
             .left-title-right {
               font-size: 12px;
               font-weight: 400;
@@ -291,7 +295,7 @@ export default {
               border: 1px solid;
               width: 46px;
               height: 24px;
-              right: 30px;
+              right: 25px;
               position: absolute;
               text-align: center;
             }
@@ -311,12 +315,14 @@ export default {
             }
           }
         }
-        > .list-right-time {
+        > .dynamicsInfo-list-right-time {
           font-size: 12px;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
+          margin-top: 9px;
         }
-        > .list-right-label {
+        > .dynamicsInfo-list-right-label {
+          margin-right: -15px;
           // line-height: 30px;
           > .right-label {
             font-size: 10px;
@@ -326,7 +332,7 @@ export default {
             padding: 2px 5px;
             border-radius: 3px;
             margin-right: 4px;
-            padding: 5px 5px;
+            padding: 3px 6px;
           }
           > .right-label-red {
             background: rgba(234, 77, 46, 0.1);
@@ -348,7 +354,7 @@ export default {
           font-size: 15px;
           font-weight: 600;
           color: rgba(234, 77, 46, 1);
-          line-height: 25px;
+         margin-top: 7px;
           > .right-price-text {
             font-size: 12px;
           }
@@ -372,20 +378,22 @@ export default {
       color: rgba(51, 51, 51, 1);
       line-height: 30px;
       padding-left: 11px;
-      > .list-commission-word {
-        padding: 0 3px;
+      margin: 15px 0 9px 0;
+      
+      > .dynamicsInfo-list-commission-word {
+        padding: 0 2px;
         border-radius: 2px;
         border: 1px solid;
         font-size: 10px;
         font-weight: 400;
         color: rgba(255, 85, 51, 1);
-        line-height: 14px;
+        margin-right: 10px;
       }
     }
   }
   .dynamics-container {
     background: #ffffff;
-    margin-top: 15px;
+    margin-top: 37px;
     .dynamics-time {
       font-size: 14px;
       font-weight: 500;
@@ -401,7 +409,7 @@ export default {
       padding: 20px 16px;
       > .dynamics-list-agent {
         // display: flex;
-        > .list-agent-left {
+        > .dynamicsInfo-list-agent-left {
           display: flex;
           > .agent-left-left {
             > .agent-userImg {
@@ -426,7 +434,7 @@ export default {
             }
           }
         }
-        > .list-agent-right {
+        > .dynamicsInfo-list-agent-right {
           // position: absolute;
           // right: 16px;
           // margin-top: -6px;
@@ -468,14 +476,14 @@ export default {
       }
       > .dynamics-list-btn {
         height: 40px;
-        > .list-btn-right {
+        > .dynamicsInfo-list-btn-right {
           // position: absolute;
           right: 32px;
           line-height: 40px;
           float: right;
           margin-top: 8px;
           // margin-top: 15px;
-          > .list-btn-follow {
+          > .dynamicsInfo-list-btn-follow {
             width: 64px;
             height: 24px;
             border-radius: 16px;
@@ -490,7 +498,7 @@ export default {
               height: 11px;
             }
           }
-          > .list-btn-followOK {
+          > .dynamicsInfo-list-btn-followOK {
             font-size: 12px;
             font-weight: 400;
             color: rgba(153, 153, 153, 1);
@@ -501,7 +509,7 @@ export default {
             border: 1px solid #999999;
             background: #ffffff;
           }
-          > .list-btn-contact {
+          > .dynamicsInfo-list-btn-contact {
             width: 64px;
             height: 24px;
             background: rgba(0, 122, 230, 1);
@@ -511,6 +519,7 @@ export default {
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
             border: 0;
+            margin-left: 24px;
             // position: absolute;
             right: 0;
             top: 0.32rem;

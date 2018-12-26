@@ -134,6 +134,7 @@ export default {
         width: 120px;
         height: 90px;
         background: rgba(255, 255, 255, 1);
+        border-radius: 6px;
       }
     }
   }

@@ -135,7 +135,7 @@ export default {
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 15px;
-          margin: 10px 0 10px 0;
+          margin: 10px 0 7px 0;
         }
         li:nth-of-type(3) {
           height: 15px;

@@ -30,7 +30,7 @@ class WechatHelper {
   constructor() {
     console.log('axb');
     console.log(wx);
-    
+
     this.wx = wx
     // this.queue = new Map()  
     // this.counter = 0
@@ -48,9 +48,10 @@ class WechatHelper {
     console.log(store.state.wx.jssdkConfig)
 
     console.log(this.wx);
-    this.wx.config(store.state.wx.jssdkConfig)
+    await this.wx.config(store.state.wx.jssdkConfig)
     console.log(store.state.wx.jssdkConfig)
-    this.getUserArea()
+    await this.getUserArea()
+    this._apiCheck()
   }
 
   /**
@@ -77,11 +78,11 @@ class WechatHelper {
    */
   async setShare(conf) {
     const defaultConf = {
-      title:'',
-      desc:'',
-      link:'',
-      imgUrl:'',
-      success: () =>{}
+      title: '',
+      desc: '',
+      link: '',
+      imgUrl: '',
+      success: () => { }
     }
     this._universalShare(conf)
     // return new Promise ((resolve, reject) => {
@@ -95,15 +96,30 @@ class WechatHelper {
    * 设置分享泛方法
    * @param {*} conf 
    */
-  _universalShare(conf){
-    console.log('_universalShare',conf);
+  _universalShare(conf) {
+    console.log('_universalShare', conf);
 
     this.wx.onMenuShareAppMessage(conf)
     this.wx.onMenuShareTimeline(conf)
 
+
     // this.wx.updateAppMessageShareData(conf)
     // this.wx.updateTimelineShareData(conf)
     // this.wx.showAllNonBaseMenuItem()
+  }
+
+  _apiCheck() {
+    this.wx.checkJsApi({
+      jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+      success: function (res) {
+        console.log('api可用情况');
+        console.log(res);
+        
+        
+        // 以键值对的形式返回，可用的api值true，不可用为false
+        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+      }
+    })
   }
 }
 export default new WechatHelper()

@@ -14,7 +14,9 @@
       </ul>
       </div>
     </div>
-    <already-buy v-for="(item, index) in bugList" :key="index" :packageItem="item" @selectProject="selectProjectHandle"></already-buy>
+    <div class="already-buy">
+      <already-buy v-for="(item, index) in bugList" :key="index" :packageItem="item" @selectProject="selectProjectHandle"></already-buy>
+    </div>
     <binding-meal :itemInfo="packageInfo"></binding-meal>
     <meal-privilege :itemInfo="packageInfo"></meal-privilege>
     <privilege></privilege>
@@ -196,6 +198,9 @@ export default {
 .open-preference-page {
   background: rgba(247, 249, 250, 1);
   padding-bottom: 48px;
+  .already-buy{
+    margin-bottom: 10px;
+  }
   .background {
     width: 375px;
     height: 123px;

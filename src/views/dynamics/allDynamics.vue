@@ -15,8 +15,12 @@
       <div class="data-container">
         <!-- 动态全部-->
         <div class="allDynamics-container" v-if="active === 0 ">
+          
           <shadow-box>
             <div slot="container">
+              <div class="allDynamics-container-titps" @click="govallDynamicsNum" v-show="showDynamics">
+              新增 {{allDynamicsNum}} 浏览
+              </div>
               <!-- active === 0? allDynamicCount :CardDynamicCount -->
               <dynamics-data
                 :totalTitle="all.totalTitle"
@@ -138,16 +142,37 @@ export default {
       customerCount: this.$route.query.customerCount,
       businessCardViews: this.$route.query.businessCardViews,
       estateViews: this.$route.query.estateViews,
-      articleCount: this.$route.query.articleCount
+      articleCount: this.$route.query.articleCount,
+      allDynamicsNum: this.$route.query.allDynamicsNum,
+      showDynamics: false
     }
   },
   created() {
     this.active = this.currDataDynamicsTab
+    this.allDynamicsNum = this.$route.query.allDynamicsNum
     this.updateDynamicsCollect()
     this.getAllDynamicCount()
     this.goList(this.active)
+    this.govallDynamicsNum()
   },
   methods: {
+    
+    
+    govallDynamicsNum(){
+      
+      let second = 3;
+      const timer = setInterval(() => {
+        second--;
+        if (second) {
+          // if(this.allDynamicsNum !== 0 ){
+            this.showDynamics = true;
+          // }
+        } else {
+          clearInterval(timer);
+          this.showDynamics = false;
+        }
+      }, 1000)
+    },
     checkPosition(val){
       console.log(val);
     },
@@ -411,9 +436,26 @@ export default {
     // position: fixed;
     width: 100%;
     .allDynamics-container {
-      margin-top: 20px;
+      padding-top: 8px;
+      
     }
   }
+  .allDynamics-container-titps{
+        width:133px;
+        height:30px;
+        background:rgba(0,122,230,1);
+        border-radius:16px;
+        opacity:0.9;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+        text-align: center;
+        line-height: 30px;
+        position: absolute;
+        margin-top: -9px;
+        left: 30%;
+
+      }
   .van-tabs--line {
     padding-top: 1.17333rem;
     position: fixed;

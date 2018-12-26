@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="haveData">
+    <div v-if="!haveData">
       <van-list
         class="bill-page"
         :style="{background:show==null?'#ffffff':'#F7F9FA'}"
@@ -57,7 +57,7 @@
         </div>
       </van-list>
     </div>
-    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="haveData"></null>
   </div>
 </template>
 <script>
@@ -168,18 +168,22 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
-        line-height: 22px;
+        line-height: 30px;
+        height: 47px;
         border-bottom: 1px solid #eeeeee;
         padding-bottom: 13px;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         > .bill-title-price {
-          float: right;
           font-size: 14px;
           font-weight: 600;
           color: rgba(234, 77, 46, 1);
           line-height: 20px;
           > .bill-title-num {
             font-size: 20px;
+            font-family:PingFangSC-Semibold;
           }
         }
       }
@@ -192,16 +196,18 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(0, 122, 230, 1);
-          line-height: 20px;
+          height: 20px;
           // margin-left: 10px;
           // margin-right: 10px;
           width: 48px;
           height: 20px;
+          line-height: 20px;
           border-radius: 22px;
           border: 1px solid;
           float: right;
           text-align: center;
           background-color: white;
+          margin-top: 4px;
         }
         .container-list-title {
           font-size: 14px;
