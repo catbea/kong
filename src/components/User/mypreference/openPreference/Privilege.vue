@@ -31,7 +31,7 @@ export default {
 </script>
 <style lang="less">
 .Privilege-describe-page-pt {
-  padding: 16px 0 0 16px;
+  padding: 16px 0 24px 16px;
   width: 100%;
   background: rgba(255, 255, 255, 1);
   .privilege {
