@@ -32,7 +32,7 @@
               >{{openStatus}}</span>
             </li>
             <li class="site">
-              {{itemInfo.linkerAddress}}
+              {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
               <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
             </li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
