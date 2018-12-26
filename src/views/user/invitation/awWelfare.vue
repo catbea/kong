@@ -230,10 +230,14 @@ export default {
     width: 80%;
     height: 75%;
     margin-left: 10%;
+    border: none;
+    border-color: transparent;
 
     > .imgcard-img{
       width: 100%;
       height: 100%;
+      border:none;
+      border-color: transparent
     }
   }
 

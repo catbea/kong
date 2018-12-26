@@ -327,6 +327,10 @@ export default {
       if (this.info.city === this.userInfo.vipInfo.city) {
         await marketService.addHouseByVip(this.info.linkerId)
         this.openStatus=false
+        this.$toast({
+            duration:1000,
+            message:'已开通成功，请到我的楼盘查看',
+          })
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
       }

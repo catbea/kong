@@ -7,7 +7,7 @@
           :style="{backgroundImage:'url(' + info.headImgUrl + ')'}"
         >
           <!-- 720标示 -->
-          <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">11
+          <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">
         </div>
         <div class="right-container">
           <div class="estate-top">

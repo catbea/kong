@@ -61,16 +61,12 @@ export default {
   },
   created() {
     this.dredgeColor()
-    this.tags=this.itemInfo.linkerTags
-    if (this.tags){
-      this.tags.unshift(this.saleStatus)
-      }
-
+    this.tags.unshift(this.saleStatus)
   },
   data() {
     return {
       status:this.itemInfo.openStatus,
-      tags:[],
+      tags:this.itemInfo.linkerTags,
       resInfo: null,
       style: null,
       panoramaImg: require('IMG/system/icon_panorama@2x.png'),
@@ -94,6 +90,18 @@ export default {
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
+    // time:{
+    //   get:function(){
+    //    let arr = this.itemInfo.invalidTime.split('-')
+    //    let timestamp = new Date().getTime()
+    //     if(arr[0]-0>new Date(timestamp).getFullYear()){
+    //       return this.itemInfo.invalidTimeStr
+    //     }else{
+    //       return this.itemInfo.invalidTime
+    //     }
+    //   },
+    //   set:function(){}
+    // },
     openStatus:{
       get:function(){
         if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
@@ -130,12 +138,21 @@ export default {
       this.style = conf(this.openStatus)
     },
     async openHandle() {//VIP用户选择城市与VIP开通楼盘同城市
+    if(this.status !=0){
       if (this.itemInfo.city === this.userInfo.vipInfo.city) {
         await marketService.addHouseByVip(this.itemInfo.linkerId)
         this.status=2
+        this.dredgeColor()
+        this.$toast({
+            duration:1000,
+            message:'已开通成功，请到我的楼盘查看',
+          })
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
+    }else{
+       this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+    }
     }
   },
   watch: {
