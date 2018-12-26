@@ -174,7 +174,8 @@ export default {
       if (this.dataArr.recommand == 0) {
         if(this.stickNum>2){
          this.$dialog.confirm({
-            message: '最多可置顶3个'
+           title: '当前置顶楼盘数量达到上限',
+            message: '继续置顶将取消最初置顶楼盘置顶状态是否确定置顶当前楼盘'
           }).then(() => {
             this.stickSwitch = 10
         this.dataArr.recommand = 10
@@ -541,6 +542,7 @@ export default {
   border-radius: 12px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   .van-dialog__confirm {
     border-top: 1px solid #ebedf0;
   }
