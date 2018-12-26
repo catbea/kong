@@ -1,6 +1,6 @@
 <template>
   <div class="market-box-page">
-    <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
+    <div class="van-hairline--bottom market-box" @click="itemClickHandler" :class="{line:borderBottom}">
       <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
           <div
@@ -153,9 +153,6 @@ export default {
 }
 </script>
 <style lang="less">
-.line {
-  border-bottom: 1px solid #e6e6e6;
-}
 .market-box-page {
   background: #ffffff;
   width: 375px;
