@@ -172,7 +172,7 @@ export default {
       host = host + '#/article/' + this.id + '/' + this.city
       this.shareData = {
         title: this.info.title,
-        image: this.info.image,
+        imgUrl: this.info.image,
         link: host
       }
        this.shareHandler()

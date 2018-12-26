@@ -21,7 +21,7 @@ export default {
     this.list = {
       '0': '不限'
     }
-    this.list = Object.assign(this.list, getChildren(this.parent))
+    if(this.parent) this.list = Object.assign(this.list, getChildren(this.parent))
   },
   watch: {
     checked(val) {
