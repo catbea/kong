@@ -34,3 +34,8 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.my-estate-list{
+  margin-bottom:50px;
+}
+</style>
