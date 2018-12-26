@@ -83,7 +83,8 @@ export default {
         customerCount: data.customerCount.val,
         businessCardViews: data.businessCardViews.val,
         estateViews: data.estateViews.val,
-        articleCount: data.articleCount.val
+        articleCount: data.articleCount.val,
+        allDynamicsNum: data.customerCount.change+data.businessCardViews.change+data.estateViews.change
       }
       this.$emit('click', parm)
     }
