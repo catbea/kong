@@ -136,7 +136,7 @@ export default {
         }
         this.upHeaderImg(obj)
       } else {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '请先选择头像'
         }).then(() => {
           // on close

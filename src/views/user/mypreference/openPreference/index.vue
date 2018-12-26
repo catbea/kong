@@ -140,7 +140,7 @@ export default {
 
     paySuss() {
       this.getPackageInfo()
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '开通成功',
         message: '成功开通套餐，海量楼盘等你添加~',
         cancelButtonText: '取消'
