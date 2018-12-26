@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-import { Cell, CellGroup } from 'vant'
+import { Cell, CellGroup, Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 import reportService from 'SERVICE/reportService'
 export default {
@@ -73,6 +73,12 @@ export default {
      * 创建报备
      */
     submitReportHandler() {
+      if (!this.reportAddInfo.linkerId) {
+        Dialog.alert({
+          title: '请选择报备楼盘'
+        })
+        return
+      }
       this.addReportInfo()
     }
   }
