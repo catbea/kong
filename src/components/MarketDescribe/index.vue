@@ -61,7 +61,7 @@ export default {
   },
   created() {
     this.dredgeColor()
-    this.tags.unshift(this.saleStatus)
+     this.tags.unshift(this.saleStatus)
   },
   data() {
     return {

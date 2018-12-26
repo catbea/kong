@@ -220,9 +220,13 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
+      console.log(res,'开通数据',res.city,res.district);
+      
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,
+        city:res.city,
+        district:res.district,
         linkerTags: res.projectTagList,
         linkerPrice: res.averagePrice,
         linkerName: res.linkerName,
