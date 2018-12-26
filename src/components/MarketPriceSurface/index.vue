@@ -156,9 +156,9 @@ export default {
       display: flex;
       justify-content: space-between;
       line-height: 56px;
+      align-items: center;
       div:nth-child(1) {
         font-size: 15px;
-        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 22px;
@@ -174,7 +174,7 @@ export default {
         p:nth-child(2) {
           width: 16px;
           height: 16px;
-          margin: 3px 15px 0 4px;
+          margin: 20px 15px 0 4px;
         }
       }
     }
