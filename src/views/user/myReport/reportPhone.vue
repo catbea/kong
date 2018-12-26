@@ -30,7 +30,7 @@ export default {
   methods: {
     godSub() {
       if (Number(this.Cphone).length == 0) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '名片展示手机号不可为空'
         }).then(() => {
           // on close
@@ -38,7 +38,7 @@ export default {
         return
       }
       if (this.Cphone.length != 11) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '请输入正确手机号'
         }).then(() => {
           // on close

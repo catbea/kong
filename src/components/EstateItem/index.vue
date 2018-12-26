@@ -7,7 +7,7 @@
           :style="{backgroundImage:'url(' + info.headImgUrl + ')'}"
         >
           <!-- 720标示 -->
-          <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">11
+          <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">
         </div>
         <div class="right-container">
           <div class="estate-top">
@@ -22,7 +22,8 @@
         </div>
       </div>
       <div class="share-icon" @click.stop="shareHandler">
-        <i class="icon iconfont icon-article_share"></i>
+        <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
+        <!-- <i class="icon iconfont icon-article_share"></i> -->
       </div>
       <slot name="desc"></slot>
     </div>
