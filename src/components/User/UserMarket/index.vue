@@ -182,9 +182,8 @@ export default {
         let parent = this.$parent.$parent
         parent.showMarketList.unshift(parent.showMarketList[index])
         parent.showMarketList.splice(index + 1, 1)
-        parent.showMarketList[1].recommand=0
-        parent.showMarketList[4]=parent.showMarketList[1]
-        parent.showMarketList.splice(1,1)
+        parent.showMarketList[3].recommand=0
+        // parent.showMarketList.splice(1,1)
         this.$dialog.alert({
           message: '楼盘置顶成功',
           className: 'hint-alert'
