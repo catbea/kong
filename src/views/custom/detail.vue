@@ -3,18 +3,17 @@
     <div class="custom-info-box" v-if="customBaseInfo">
       <avatar
         class="custom-avatar"
-        v-if="customBaseInfo.avatarUrl!=''"
-        :avatar="customBaseInfo.avatarUrl"
+        :avatar="customBaseInfo.clientAvatarUrl"
         @click.native="previewAvatarUrl">
       </avatar>
-      <div class="bg_img custom-attention" :style="{backgroundImage:'url('+attentionImg+')'}" v-if="customBaseInfo.attentionStatus==0"></div>
+      <div class="bg_img custom-attention" :style="{backgroundImage:'url('+attentionImg+')'}" v-if="attentionFlag"></div>
       <div class="custom-info">
         <div class="custom-name-box">
-          <h5 class="custom-name">{{customBaseInfo.clientRemarkName ? customBaseInfo.clientRemarkName : customBaseInfo.clientName}}</h5>
-          <div class="custome-realname" v-if="customBaseInfo.clientRemarkName">({{customBaseInfo.clientName}})</div>
+          <h5 class="custom-name">{{customBaseInfo.remarkName ? customBaseInfo.remarkName : customBaseInfo.clientName}}</h5>
+          <div class="custome-realname" v-if="customBaseInfo.remarkName">({{customBaseInfo.clientName}})</div>
           <!-- <van-icon name="edit" size="24px"/> -->
         </div>
-        <p class="custom-browsed">最近浏览：{{customBaseInfo.lastViewTime}}</p>
+        <p class="custom-browsed">最近浏览：{{customBaseInfo&&customBaseInfo.lastViewTime}}</p>
       </div>
     </div>
     <div class="custom-analyze-box">
@@ -33,7 +32,7 @@
         </van-tab>
         <van-tab title="分析">
           <custom-detail-analyze
-            :baseInfo="customBaseInfo"
+            :baseInfo="customAnalyzeInfo"
             :tempTagData="intentionProjectTag"
             v-if="isPieDataReqOk"
             :pieChartHidden="pieChartHidden"
@@ -75,6 +74,7 @@
 <script>
 import Avatar from 'COMP/Avatar'
 import { ImagePreview, Dialog } from 'vant'
+import timeUtils from '@/utils/timeUtils'
 import * as types from '@/store/mutation-types'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
 import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
@@ -96,8 +96,9 @@ export default {
     activeIndex: 0,
     isSecondReq: false, // 足迹页签是否请求成功
     isThirdReq: false, // 资料页签是否请求成功
-    customBaseInfo: null,
-    intentionProjectTag: [],
+    customBaseInfo: null, // 客户资料 头部尾部信息
+    customAnalyzeInfo: null, // 客户分析信息
+    intentionProjectTag: [], // 偏好
     isPieDataReqOk: false,
     pieChartHidden: false,
     pieData: [],
@@ -136,7 +137,7 @@ export default {
   },
   created() {
     this.clientId = this.$route.params.id
-    this.getCustomBaseInfo(this.clientId)
+    this.getCustomerInfo(this.clientId)
     this.activeIndex = window.localStorage.getItem('activeIndex') == 2 ? 2 : 0
     window.localStorage.setItem('activeIndex', 0)
     this.onClick()
@@ -149,16 +150,16 @@ export default {
     onClick() {
       if (this.activeIndex == 0) { // 足迹
         this.getCustomerDynamicCount(this.clientId)
-        this.getCustomerDynamicList(this.clientId, this.trackCurrent, this.size)
         this.onLoad()
       } else if (this.activeIndex == 1 && this.isSecondReq == false) { // 分析
+        this.getCustomAnalyzeInfo(this.clientId)
         this.getCustomPieChart(this.clientId)
         this.getCustomerSevenDayTrendChart(this.clientId)
         this.getCustomerBarChart(this.clientId)
         this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
         this.isSecondReq = true
       } else if (this.activeIndex == 2 && this.isThirdReq == false) { // 资料
-        this.getCustomerInfo(this.clientId)
+        // this.getCustomerInfo(this.clientId)
         this.isThirdReq = true
       }
     },
@@ -199,9 +200,9 @@ export default {
       })
     },
     previewAvatarUrl() {
-      if (this.customBaseInfo.avatarUrl != '') {
+      if (this.customBaseInfo.clientAvatarUrl != '') {
         ImagePreview({
-          images: [this.customBaseInfo.avatarUrl],
+          images: [this.customBaseInfo.clientAvatarUrl],
           startPosition: 0
         })
       }
@@ -209,7 +210,7 @@ export default {
     // 立即续费
     renewHandler(val) {
       if (val.sameDistributor == '0') {
-        Dialog.alert({
+        this.$dialog.alert({
           title: '该楼盘不可续费',
           message: '非当前所属公司下楼盘无法开通续费',
           confirmButtonText: '知道啦'
@@ -289,15 +290,13 @@ export default {
     },
 
     /**
-     * 客户基本信息以及购房意向度
+     * 客户详情分析以及购房意向度
      */
-    async getCustomBaseInfo(id) {
+    async getCustomAnalyzeInfo(id) {
       const result = await CustomService.getClientInfo(id)
-      this.customBaseInfo = result
       let tag = result.intentionProjectTag
       this.intentionProjectTag = tag.split('|')
-      this.attentionFlag = result.attentionStatus == 1 ? false : true
-      this.clientMobile = result.clientMobile
+      this.customAnalyzeInfo = result
     },
     /**
      * 客户详情报表饼图
@@ -443,7 +442,7 @@ export default {
       this.trackInfo = trackInfo
     },
     onLoad() {
-      this.getCustomerDynamicList(this.clientId, this.current)
+      this.getCustomerDynamicList(this.clientId, this.trackCurrent)
     },
     /**
      * 客户详情-足迹-足迹列表
@@ -487,6 +486,10 @@ export default {
      */
     async getCustomerInfo(id) {
       const result = await CustomService.getCustomerInfo(id)
+      this.customBaseInfo = result
+      this.attentionFlag = result.isFollow == 1 ? false : true
+      this.clientMobile = result.phone
+      
       let info = {
         remarkName: '备注名称',
         sex: '性别',

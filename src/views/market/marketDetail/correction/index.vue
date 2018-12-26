@@ -65,7 +65,7 @@ export default {
         let res = await marketService.submitCorrection(this.linkerId, this.errorType, this.introduct, this.appType)
         console.log(res, '提交数据')
         this.introduct = ''
-        Dialog.alert({
+        this.$dialog.alert({
           message: '提交成功，我们将尽快跟进处理反馈内容',
           className: 'error-correction',
           confirmButtonText: '知道了'

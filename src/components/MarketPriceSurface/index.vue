@@ -4,14 +4,14 @@
       <li v-for="(item,index) in priceList" :key="index" @click="priceItemClickHandle(index)" :class="{active:currAct==index}">
         <p>{{item.subscribeNum}} {{item.type==4 ? '天' : '个月'}}</p>
         <p>¥{{item.subscribeAmount | priceFormart}}</p>
-        <p :class="item.subscribeNum == 3 || item.subscribeNum == 1 ? '':'through'">{{item.subscribeRemark}}</p>
+        <p :class="item.subscribeNum == 3 || item.subscribeNum == 1 ? 'price-desc':'price-desc through'">{{item.subscribeRemark}}</p>
       </li>
 
       <li @click="vipClickHandle">
         <p>VIP会员</p>
         <p>¥300</p>
-        <p>立即开通</p>
-        <span>不限量</span>
+        <p class="open-btn">立即开通</p>
+        <span>不限量开通</span>
       </li>
 
       <div class="coupon-box" v-show="payInfo.isShowCoupon" @click="couponClickHandle">
@@ -93,8 +93,8 @@ export default {
     li {
       margin-left: 16px;
       width: 104px;
-      height: 98px;
-      padding-top: 8px;
+      height: 114px;
+      padding-top: 17px;
       border-radius: 6px;
       border: 1px solid #dddddd;
       text-align: center;
@@ -118,7 +118,7 @@ export default {
       }
       p:nth-child(1) {
         font-size: 15px;
-        
+        line-height: 22px;
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
@@ -126,18 +126,26 @@ export default {
       p:nth-child(2) {
         font-size: 24px;
         font-weight: 500;
+        line-height: 36px;
         color: rgba(51, 51, 51, 1);
         line-height: 36px;
         margin: 4px 0 4px 0;
       }
-      p:nth-child(3) {
+      .price-desc {
         width: 104px;
         height: 18px;
         overflow: hidden;
         font-size: 12px;
-        
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
+        line-height: 17px;
+      }
+      .open-btn {
+        width: 104px;
+        height: 18px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #EA4D2E;
         line-height: 17px;
       }
     }
@@ -147,8 +155,7 @@ export default {
       border-bottom: 1px solid #e6e6e6;
       display: flex;
       justify-content: space-between;
-      line-height: 22px;
-      padding: 14px 0 16px 0;
+      line-height: 56px;
       div:nth-child(1) {
         font-size: 15px;
         
@@ -175,10 +182,9 @@ export default {
       display: flex;
       width: 375px;
       justify-content: space-between;
-      line-height: 22px;
+      line-height: 56px;
       margin: 0 0 0 15px;
       border-bottom: 1px solid #e6e6e6;
-      padding: 18px 0 16px 0;
       div:nth-of-type(1) {
         display: flex;
         p {

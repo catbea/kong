@@ -158,7 +158,7 @@ export default {
       if (this.userInfo.name !== '' && this.userInfo.distributorName !== '' && this.userInfo.majorRegion !== '' && this.userInfo.institutionName !== '') {
         this.$router.push({ name: 'marketDetail-share' })
       } else {
-        Dialog.confirm({
+        this.$dialog.confirm({
           title: '您有未完善的信息',
           message: '信息不完整会影响传播效率哦',
           confirmButtonText: '去完善',

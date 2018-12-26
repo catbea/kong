@@ -20,7 +20,7 @@
           </li>
           <li>{{dataArr.city}} {{dataArr.district}} {{dataArr.price}} {{dataArr.priceUnit}}</li>
           <li>
-            <tag-group :arr="dataArr.linkerTags"></tag-group>
+            <tag-group :arr="dataArr.linkerTags.slice(0,3)"></tag-group>
           </li>
           <li>{{dataArr.openTimes}}次开通</li>
         </ul>
@@ -88,7 +88,7 @@ export default {
       align-items: center;
       margin-bottom: 16px;
       .icon-check {
-        width: 19px;
+        width: 18px;
         height: 18px;
         margin: 0 16px;
       }

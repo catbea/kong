@@ -134,10 +134,10 @@
     </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="info.openStatus == 0">
+      <div class="unopen-status-box" v-if="openStatus">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="info.openStatus!= 0" :renewInfo='info'></market-renew>
+      <market-renew v-if="!openStatus" :renewInfo='info'></market-renew>
        <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
         <div class="icon-box">
           <div>
@@ -302,7 +302,7 @@ export default {
     },
     shareHandler() {
        if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
-        Dialog.confirm({
+        this.$dialog.confirm({
           title: '您有未完善的信息',
           message: '信息不完整会影响传播效率哦',
           confirmButtonText: '去完善',
@@ -312,7 +312,7 @@ export default {
         })
       } else {
         if (this.info.expireFlag == 0) {
-          Dialog.confirm({
+          this.$dialog.confirm({
             title: '温馨提示',
             message: '还未开通楼盘，请前往开通'
           }).then(() => {
@@ -323,8 +323,17 @@ export default {
         }
       }
     },
-    openHandler() {
-      this.$router.push(`/marketDetail/open/${this.id}`)
+   async openHandler() {//VIP用户选择城市与VIP开通楼盘同城市
+      if (this.info.city === this.userInfo.vipInfo.city) {
+        await marketService.addHouseByVip(this.info.linkerId)
+        this.openStatus=false
+        this.$toast({
+            duration:1000,
+            message:'已开通成功，请到我的楼盘查看',
+          })
+      } else {
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
+      }
     },
     moreInfoHandler() {
       this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId, licenceList: this.info.licenceList } })
@@ -335,6 +344,16 @@ export default {
     }
   },
   computed: {
+    openStatus:{
+      get:function(){
+        if(this.info.openStatus == 0){
+          return true
+        }else{
+          return false
+        }
+      },
+      set:function(){}
+    },
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]

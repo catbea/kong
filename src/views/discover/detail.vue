@@ -172,7 +172,7 @@ export default {
       host = host + '#/article/' + this.id + '/' + this.city
       this.shareData = {
         title: this.info.title,
-        image: this.info.image,
+        imgUrl: this.info.image,
         link: host
       }
        this.shareHandler()
@@ -230,6 +230,8 @@ export default {
     async shareHandler() {
       await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
+      console.log('serShare',this.shareData);
+      
       window.awHelper.wechatHelper.setShare(this.shareData)
       // wechatApi
       //   .wechatShare(this.shareData)

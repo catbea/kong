@@ -30,7 +30,7 @@ export default {
   methods: {
     godSub() {
       if (Number(this.Cphone).length == 0) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '名片展示手机号不可为空'
         }).then(() => {
           // on close
@@ -38,7 +38,7 @@ export default {
         return
       }
       if (this.Cphone.length != 11) {
-        Dialog.alert({
+        this.$dialog.alert({
           message: '请输入正确手机号'
         }).then(() => {
           // on close
@@ -83,13 +83,18 @@ export default {
     > .edit-phone-conter {
       margin-bottom: 24px;
       > .edit-phone-input {
+        padding-left: 8px;
         font-size: 16px;
         font-weight: 500;
-        color: rgba(187, 187, 187, 1);
+        color: #333;
         line-height: 35px;
+        padding: 2px 8px;
         width: 99%;
         border: 0;
         border-bottom: 1px solid #eeeeee;
+        &::-webkit-input-placeholder{
+          color: rgba(187, 187, 187, 1);
+        }
       }
     }
 

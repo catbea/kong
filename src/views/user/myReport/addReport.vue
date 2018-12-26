@@ -73,6 +73,24 @@ export default {
      * 创建报备
      */
     submitReportHandler() {
+      if (!this.reportAddInfo.linkerId) {
+        this.$dialog.alert({
+          title: '请选择报备楼盘',
+        })
+        return
+      }
+      if (!this.reportAddInfo.clientId) {
+        this.$dialog.alert({
+          title: '请选择客户名字',
+        })
+        return
+      }
+      if (!this.reportAddInfo.clientPhone) {
+        this.$dialog.alert({
+          title: '请输入客户手机号',
+        })
+        return
+      }
       this.addReportInfo()
     }
   }

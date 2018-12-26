@@ -13,7 +13,7 @@
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
-            <span class="bg_img icon-share" @click.stop="skipShare" :style="{backgroundImage:'url('+imgShare+')'}"></span>
+            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share" @click.stop="skipShare"></span>
           </li>
           <li>{{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}</li>
           <li>
@@ -166,7 +166,7 @@ export default {
         let parent = this.$parent.$parent
         parent.showMarketList.unshift(parent.showMarketList[index])
         parent.showMarketList.splice(index + 1, 1)
-        Dialog.alert({
+        this.$dialog.alert({
           message: '楼盘置顶成功',
           className: 'hint-alert'
         }).then(() => {
@@ -176,7 +176,7 @@ export default {
         this.stickSwitch = 0
         this.dataArr.recommand = 0
         //将当前点击的楼盘取消置顶
-        Dialog.alert({
+        this.$dialog.alert({
           message: '楼盘取消置顶成功',
           className: 'hint-alert'
         }).then(() => {
@@ -192,7 +192,7 @@ export default {
     async masterHandle(n) {
       if (this.masterButtonShow === false) {
         await this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
-        Dialog.alert({
+        this.$dialog.alert({
           message: '大师推荐成功',
           className: 'hint-alert'
         }).then(() => {
@@ -201,7 +201,7 @@ export default {
         this.$emit('pushMaster', this.dataArr)
       } else {
         await this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        Dialog.alert({
+        this.$dialog.alert({
           message: '取消大师推荐成功',
           className: 'hint-alert'
         }).then(() => {
@@ -215,7 +215,7 @@ export default {
     commonHandle(n) {
       if (this.commonButtonShow === false) {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
-        Dialog.alert({
+        this.$dialog.alert({
           message: '普通推荐成功',
           className: 'hint-alert'
         }).then(() => {
@@ -224,7 +224,7 @@ export default {
         this.$emit('pushCommon', this.dataArr)
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        Dialog.alert({
+        this.$dialog.alert({
           message: '取消普通推荐成功',
           className: 'hint-alert'
         }).then(() => {
@@ -236,7 +236,7 @@ export default {
       this.commonButtonShow = !this.commonButtonShow
     },
     exhibitionHandle() {
-      Dialog.confirm({
+      this.$dialog.confirm({
         title: '是否确定关闭该楼盘名片展示',
         message: '关闭该楼盘展示将取消推荐和置顶状态',
         className: 'show-Dialog'
