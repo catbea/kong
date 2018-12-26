@@ -78,6 +78,7 @@ export default {
   },
   data: () => ({
     linkerId: null,
+    stickNum:0,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     show: false,
     stickShow: true,
@@ -125,9 +126,19 @@ export default {
     this.time()
     this.strideYear()
     console.log(this.dataArr,'展示的楼盘数据');
-    
   },
   methods: {
+    stickNumHandle(){//判断有没有超过3个置顶
+    let parent = this.$parent.$parent
+          for (let i = 0; i < parent.showMarketList.length; i++) {
+            const element = parent.showMarketList[i];
+            if(element.recommand == 10){
+              this.stickNum++
+            }
+          }
+          console.log(this.stickNum,'楼盘个数');
+          
+    },
     strideYear() {
       //判断是否跨年
       let timestamp = new Date().getTime()
@@ -159,8 +170,33 @@ export default {
       this.show = !this.show
     },
     stickHandle(index) {
+          this.stickNumHandle()
       if (this.dataArr.recommand == 0) {
-        this.stickSwitch = 10
+        if(this.stickNum>2){
+         this.$dialog.confirm({
+            message: '最多可置顶3个'
+          }).then(() => {
+            this.stickSwitch = 10
+        this.dataArr.recommand = 10
+        //将当前点击的楼盘置顶
+        let parent = this.$parent.$parent
+        parent.showMarketList.unshift(parent.showMarketList[index])
+        parent.showMarketList.splice(index + 1, 1)
+        parent.showMarketList[3].recommand=0
+        // parent.showMarketList.splice(1,1)
+        this.$dialog.alert({
+          message: '楼盘置顶成功',
+          className: 'hint-alert'
+        }).then(() => {
+
+        })
+        this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+      this.show = !this.show
+          }).catch(() => {
+            // on cancel
+          });
+          }else{
+            this.stickSwitch = 10
         this.dataArr.recommand = 10
         //将当前点击的楼盘置顶
         let parent = this.$parent.$parent
@@ -172,6 +208,9 @@ export default {
         }).then(() => {
           // on close
         })
+        this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+      this.show = !this.show
+          }
       } else if (this.dataArr.recommand == 10) {
         this.stickSwitch = 0
         this.dataArr.recommand = 0
@@ -182,9 +221,11 @@ export default {
         }).then(() => {
           // on close
         })
-      }
-      this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+        this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
       this.show = !this.show
+      }
+      // this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+      // this.show = !this.show
     },
     closeHandle() {
       this.show = !this.show
@@ -328,6 +369,7 @@ export default {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 103px;
+                line-height:21px;
           }
           // align-items: center;
           .stick {
@@ -335,15 +377,14 @@ export default {
             border: 1px solid white;
             display: inline-block;
             white-space: nowrap;
-            border-radius: 2px;
             font-size: 12px;
             transform: scale(0.84);
-            
             font-weight: 400;
             color: rgba(0, 122, 230, 1);
             margin-left: 4px;
             &::after {
               border-color: rgba(0, 122, 230, 1);
+              border-radius: 2px;
             }
           }
           .past-tag {
@@ -351,15 +392,14 @@ export default {
             border: 1px solid white;
             display: inline-block;
             white-space: nowrap;
-            border-radius: 2px;
             font-size: 12px;
             transform: scale(0.84);
-            
             font-weight: 400;
             color: #ea4d2e;
             margin-left:4px;
             &::after {
               border-color: #ea4d2e;
+              border-radius: 2px;
             }
           }
           .icon-share {

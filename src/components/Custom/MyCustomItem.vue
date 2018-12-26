@@ -55,8 +55,8 @@ export default {
     width: 16px;
     height: 16px;
     position: absolute;
-    left: 70px;
-    top: 50px;
+    left: 63px;
+    top: 49px;
   }
   .baseinfo-box {
     margin: 15px 0 15px -25px;

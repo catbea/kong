@@ -35,11 +35,11 @@ export default async (to, from, next) => {
       let payCorpId = userInfo.payCorpId
       console.log(36,userInfo,userInfo.payCorpId);
       
+      
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
         if (!store.getters.jssdkConfig) {
-          console.log(window.awHelper, '[window.awHelper]')
           window.awHelper.wechatHelper.init()
         }
         if (userInfo.payOpenId) {
