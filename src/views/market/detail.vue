@@ -198,6 +198,7 @@ export default {
       headCurrent: 0,
       tagGroupArr: [],
       mapTab: 0,
+      openStatus:false,
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -268,6 +269,7 @@ export default {
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
       this.headSlide()
+      this.competeOpenStatus()
     },
     swipeChange(val) {
       this.swipeCurrent = val
@@ -341,19 +343,22 @@ export default {
     // 全景点击
     ifPanoramaClickHandler() {
       window.location.href = this.info.linkerUrl
+    },
+    competeOpenStatus(){
+      this.openStatus = this.info.openStatus == 0
     }
   },
   computed: {
-    openStatus:{
-      get:function(){
-        if(this.info.openStatus == 0){
-          return true
-        }else{
-          return false
-        }
-      },
-      set:function(){}
-    },
+    // openStatus:{
+    //   get:function(){
+    //     if(this.info.openStatus == 0){
+    //       return true
+    //     }else{
+    //       return false
+    //     }
+    //   },
+    //   set:function(){}
+    // },
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
