@@ -4,13 +4,22 @@
       <avatar
         class="custom-avatar"
         :avatar="customBaseInfo.clientAvatarUrl"
-        @click.native="previewAvatarUrl">
-      </avatar>
-      <div class="bg_img custom-attention" :style="{backgroundImage:'url('+attentionImg+')'}" v-if="attentionFlag"></div>
+        @click.native="previewAvatarUrl"
+      ></avatar>
+      <div
+        class="bg_img custom-attention"
+        :style="{backgroundImage:'url('+attentionImg+')'}"
+        v-if="attentionFlag"
+      ></div>
       <div class="custom-info">
         <div class="custom-name-box">
-          <h5 class="custom-name">{{customBaseInfo.remarkName ? customBaseInfo.remarkName : customBaseInfo.clientName}}</h5>
-          <div class="custome-realname" v-if="customBaseInfo.remarkName">({{customBaseInfo.clientName}})</div>
+          <h5
+            class="custom-name"
+          >{{customBaseInfo.remarkName ? customBaseInfo.remarkName : customBaseInfo.clientName}}</h5>
+          <div
+            class="custome-realname"
+            v-if="customBaseInfo.remarkName"
+          >({{customBaseInfo.clientName}})</div>
           <!-- <van-icon name="edit" size="24px"/> -->
         </div>
         <p class="custom-browsed">最近浏览：{{customBaseInfo&&customBaseInfo.lastViewTime}}</p>
@@ -24,11 +33,11 @@
         :swipe-threshold="6"
         @click="onClick"
       >
-         <van-tab title="足迹">
+        <van-tab title="足迹">
           <!-- :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData" :finished="currentData.finished"-->
           <van-list v-model="loading" :finished="finished" @load="onLoad">
-              <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
-           </van-list>
+            <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
+          </van-list>
         </van-tab>
         <van-tab title="分析">
           <custom-detail-analyze
@@ -46,7 +55,6 @@
           />
         </van-tab>
         <van-tab title="资料">
-         
           <custom-detail-info
             @onClick="onClickHandler"
             :customerInfoList="customerInfoList"
@@ -57,7 +65,6 @@
             @cancel="cancelHandler"
             @confirm="confirmHandler"
           />
-         
         </van-tab>
       </van-tabs>
       <custom-operation
@@ -148,17 +155,22 @@ export default {
      * 切换tab
      */
     onClick() {
-      if (this.activeIndex == 0) { // 足迹
+      if (this.activeIndex == 0) {
+        // 足迹
+        this.trackCurrent = 1
         this.getCustomerDynamicCount(this.clientId)
         this.onLoad()
-      } else if (this.activeIndex == 1 && this.isSecondReq == false) { // 分析
+      } else if (this.activeIndex == 1 && this.isSecondReq == false) {
+        // 分析
+        this.current = 1
         this.getCustomAnalyzeInfo(this.clientId)
         this.getCustomPieChart(this.clientId)
         this.getCustomerSevenDayTrendChart(this.clientId)
         this.getCustomerBarChart(this.clientId)
         this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
         this.isSecondReq = true
-      } else if (this.activeIndex == 2 && this.isThirdReq == false) { // 资料
+      } else if (this.activeIndex == 2 && this.isThirdReq == false) {
+        // 资料
         // this.getCustomerInfo(this.clientId)
         this.isThirdReq = true
       }
@@ -170,9 +182,9 @@ export default {
         isFollow: this.attentionFlag ? 0 : 1
       }
       if (this.attentionFlag) {
-        this.$toast('关注成功');
-      }else {
-        this.$toast('取消关注成功');
+        this.$toast('关注成功')
+      } else {
+        this.$toast('取消关注成功')
       }
       this.updateCustomerInfo(params)
     },
@@ -210,13 +222,15 @@ export default {
     // 立即续费
     renewHandler(val) {
       if (val.sameDistributor == '0') {
-        this.$dialog.alert({
-          title: '该楼盘不可续费',
-          message: '非当前所属公司下楼盘无法开通续费',
-          confirmButtonText: '知道啦'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            title: '该楼盘不可续费',
+            message: '非当前所属公司下楼盘无法开通续费',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
       } else {
         // this.$router.push(`/marketDetail/open${val.linkerId}`)
         this.$router.push({ name: 'marketDetail-open', params: { id: val.linkerId } })
@@ -449,36 +463,28 @@ export default {
      */
     async getCustomerDynamicList(id, current) {
       const res = await CustomService.getCustomerDynamicList(id, current)
-      if (res.records.length > 0) {
-        // for (let i = 0; i < res.records.length; i++) {
-        //   let payTime = timeUtils.fmtDate(res.records[i].purchaseTime)
-        //   res.records[i].purchaseTime = payTime
-        // }
+      if (this.trackCurrent > 1) {
         this.trackList = this.trackList.concat(res.records)
-        if (this.trackList.length > 0) {
-          this.haveData = true
-        } else {
-          this.haveData = false
-        }
-
-        if (res.pages === 0 || this.page === res.pages) {
+      } else {
+        this.trackList = res.records
+      }
+      if (this.trackList.length > 0) {
+        this.haveData = true
+        if (res.pages === 0 || this.trackCurrent >= res.pages) {
           this.finished = true
+        }else {
+          this.trackCurrent++
         }
-        this.trackCurrent++
         this.loading = false
       } else {
         if (current == 1) {
           this.haveData = false
+        } else {
+          this.haveData = true
         }
-
         this.loading = false
-        this.finished = true
+        // this.finished = true
       }
-      // if (this.trackCurrent > 1) {
-      //   this.trackList = this.trackList.concat(result.records)
-      // } else {
-      //   this.trackList = result.records
-      // }
     },
 
     /**
@@ -489,7 +495,7 @@ export default {
       this.customBaseInfo = result
       this.attentionFlag = result.isFollow == 1 ? false : true
       this.clientMobile = result.phone
-      
+
       let info = {
         remarkName: '备注名称',
         sex: '性别',
