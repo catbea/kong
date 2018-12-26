@@ -34,7 +34,9 @@
       </div>
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
-    <div class="result" id="card-result" v-show="status === 2"></div>
+    <div class="result" id="card-result" v-show="status === 2">
+       <img id="cardimg"/>
+    </div>
   </div>
 </template>
 <script>
@@ -58,7 +60,6 @@ export default {
   },
   created() {
     this.agentId = this.$route.query.agentId
-    debugger
     this.getCardInfo(this.agentId)
   },
   methods: {
@@ -108,7 +109,11 @@ export default {
       })
       canvas.style.width = '101%'
       canvas.style.height = '100%'
-      document.getElementById('card-result').appendChild(canvas)
+      // document.getElementById('card-result').appendChild(canvas)
+
+      let image = document.getElementById('cardimg')
+      image.src = canvas.toDataURL('image/png')
+
       this.showLoading = false
     }
   }
@@ -132,11 +137,12 @@ export default {
       border-radius: 5px;
       .avatar-img {
         width: 100%;
-        height: 350px;
         border-radius: 5px;
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: 100% 100%;
+        -moz-background-size: 100% 100%;
         background-position: center top;
+        background-attachment: fixed;
       }
       .cover-img {
         position: absolute;
@@ -178,6 +184,8 @@ export default {
         margin-left: 30px;
         margin-right: 30px;
         font-weight: 400;
+        bottom: 0;
+        margin-bottom: 10px;
         .user-signature {
           font-size: 16px;
           opacity: 0.85;

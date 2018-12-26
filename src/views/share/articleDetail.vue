@@ -104,7 +104,7 @@ import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import wechatApi from '@/utils/wechatApi'
+// import wechatApi from '@/utils/wechatApi'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
@@ -227,12 +227,12 @@ export default {
     },
     // 分享
     shareHandler() {
-      wechatApi
-        .wechatShare(this.shareData)
-        .then(res => {
-          this.articleShare()
-        })
-        .catch(e => {})
+      // wechatApi
+      //   .wechatShare(this.shareData)
+      //   .then(res => {
+      //     this.articleShare()
+      //   })
+      //   .catch(e => {})
     }
   },
   watch: {
@@ -287,7 +287,7 @@ export default {
       color: #333333;
       font-size: 16px;
       margin-top: 12px;
-      font-family: PingFangSC-Semibold;
+      
     }
     > .introduce-view {
       font-size: 14px;

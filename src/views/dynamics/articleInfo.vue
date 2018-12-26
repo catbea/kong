@@ -34,6 +34,12 @@
     </shadow-box>
     <!-- <dynamics-list></dynamics-list> -->
     <div class="dynamics-container">
+       <van-list
+            v-model="loading"
+            @load="getSingleArticleDynamicList"
+            :finished="finished"
+            :finished-text="'没有更多了'"
+          >
       <div v-if="articleDynamicList" v-for="(item,key) in articleDynamicList" :key="key">
         <div class="dynamics-container-list">
           <shadow-box>
@@ -68,7 +74,8 @@
                   </p>
                   <p>
                     浏览时长大于
-                    <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅小于
+                    <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
+                    <samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
                     <span>{{item.currentArticleLength}}%</span>
                   </p>
                   <p>
@@ -104,6 +111,7 @@
           </shadow-box>
         </div>
       </div>
+       </van-list>
     </div>
   </div>
 </template>
@@ -131,7 +139,11 @@ export default {
        articleImgUrl: this.$route.query.articleImgUrl,
        articleTime: this.$route.query.articleTime,
       articleId: this.$route.query.articleId,
-      avgStayArticleTime: 0
+      avgStayArticleTime: 0,
+      loading: false,
+      finished: false,
+      current: 1,
+      size: 5,
     }
   },
   created() {
@@ -140,8 +152,23 @@ export default {
   methods: {
     //查询单个文章客户访问数据动态列表
     async getSingleArticleDynamicList() {
-      const res = await dynamicsService.getSingleArticleList(1, 10, this.articleId)
+      const res = await dynamicsService.getSingleArticleList(this.current, 2, this.articleId)
       this.articleDynamicList = res.records
+
+
+      if (res.records.length > 0) {
+        this.articleDynamicList = this.articleDynamicList.concat(res.records)
+
+        if (res.pages === 0 || this.current === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
+      } else {
+        this.loading = false
+        this.finished = true
+      }
+
       this.getSingleArticleDynamicCount()
     },
     //单个文章数据动态统计
@@ -207,7 +234,7 @@ export default {
   .articleInfo-list {
     margin: 0 15px;
     display: flex;
-    border-bottom: 1px solid #e6e6e6;
+    border-bottom: 1px solid #eeeeee;
     padding: 15px 0 16px 0;
     > .articleInfo-list-left {
       height: 90px;
@@ -332,7 +359,7 @@ export default {
       }
       > .dynamics-list-content {
         font-size: 14px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 21px;

@@ -7,7 +7,10 @@
             <img class="info-box-left" :src="leftIcon" @click="showQrCode">
             <div class="info-box-right" @click="shareUserCard">
               <!-- <img class="share-img" :src="rightIcon"> -->
-              <i style="color:#afb0b6;font-size:24px;" class="icon iconfont icon-Building_list_share"></i>
+              <i
+                style="color:#afb0b6;font-size:24px;"
+                class="icon iconfont icon-Building_list_share"
+              ></i>
               <span class="share-view">分享</span>
             </div>
           </div>
@@ -137,6 +140,7 @@ export default {
     color: rgba(51, 51, 51, 1);
     // line-height: 28px;
     padding: 5px 16px 11px;
+    margin-top: -12px;
   }
   > .business-card-box {
     width: 100%;
@@ -281,7 +285,7 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
-    margin: -10px 0 0;
+    margin: -17px 0 0;
     > div {
       position: relative;
       display: inline-block;

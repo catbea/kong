@@ -84,7 +84,6 @@ export default {
     padding-left: 22px;
     padding-right: 30px;
     margin-top: 34px;
-    font-family: PingFang-SC-Medium;
     box-sizing: border-box;
     .title {
       color: #333333;

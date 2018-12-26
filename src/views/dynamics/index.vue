@@ -111,7 +111,7 @@ export default {
       const res = await dynamicsService.getEstateInfo()
       this.estateListData = res.myLinkerVOs
 
-      if(this.estateListData) {
+      if (this.estateListData) {
         for (let i = 0; i < this.estateListData.length; i++) {
           if (this.estateListData[i].linkerTags.length >= 3) {
             if (this.estateListData[i].linkerTags) this.estateListData[i].linkerTags.pop()
@@ -141,8 +141,12 @@ export default {
           temp.headImgUrl = temp.linkerHeadUrl
         }
       }
-
       this.hotEstateListData = res.hotLinkerVOs
+      for (let i = 0; i < this.hotEstateListData.length; i++) {
+        let temp = this.hotEstateListData[i]
+        temp.linkerAddress = `${temp.city || ''}-${temp.district || ''}`
+        this.$set(this.hotEstateListData, i, temp)
+      }
       this.recommendData = res.aiLinkerVO
       if (this.userInfo.isOne && !this.userGuidance.dynamics) {
         this.guidanceConf = res.aiLinkerVO

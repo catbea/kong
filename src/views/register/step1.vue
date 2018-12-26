@@ -79,11 +79,28 @@ export default {
     this.area = this.userRegistInfo.area
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
+    if (!this.userRegistInfo.distributorId) {
+      this.queryByRegister(this.enterpriseId)
+    }
   },
   computed: {
     ...mapGetters(['userRegistInfo'])
   },
   methods: {
+    
+    /**
+     * 获取注册的默认信息
+     */
+    async queryByRegister(enterpriseId) {
+      const result = await RegisterService.queryByRegister(enterpriseId)
+      let _userRegistInfo = {
+        distributorId: result.defaultDistributorId, 
+        distributorName: result.defaultDistributorName,
+        institutionId: result.defaultInstitutionId, 
+        institutionName: result.defaultInstitutionName
+      }
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+    },
     /**
      * 发送验证码
      */
@@ -183,9 +200,16 @@ export default {
     },
     confirmHandler(val) {
       this.areaShow = false
-      this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
-      this.city = val[1].name
-      this.area = val[2].name
+      if (val[2]) {
+        this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
+        this.city = val[1].name
+        this.area = val[2].name
+      }else {
+        this.majorRegion = val[0].name + '/' + val[1].name
+        this.city = val[1].name
+        this.area =  ''
+      }
+       
       let _userRegistInfo = {
         majorRegion: this.majorRegion,
         city: this.city,

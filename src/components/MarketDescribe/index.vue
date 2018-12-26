@@ -1,25 +1,40 @@
 <template>
   <div class="market-box-page">
-    <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
-      <div class="all-describe">
+    <div class="van-hairline--bottom market-box" @click="itemClickHandler" :class="{line:borderBottom}">
+      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
-          <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
+          <div
+            class="img bg_img"
+            :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}"
+          >
             <!-- 720标示 -->
             <img class="panorama-mark" :src="panoramaImg" v-if="itemInfo.ifPanorama">
-            <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">
+            <div
+              class="label bg_img"
+              v-show="itemInfo.sale"
+              :style="{backgroundImage:'url('+labelImg+')'}"
+            >
               {{itemInfo.sale}}
               {{itemInfo.labels}}
             </div>
           </div>
           <ul class="market-describe">
             <li class="market-name">
-              <div class='box'>
+              <div class="box">
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
-              <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
+              <span
+                class="dredge"
+                :style="style"
+                v-if="dredge"
+                @click.stop="openHandle"
+              >{{openStatus}}</span>
             </li>
-            <li class="site">{{itemInfo.linkerAddress}} <span v-if="itemInfo.openStatus!=0">{{itemInfo.invalidTimeStr}}到期</span></li>
+            <li class="site">
+              {{itemInfo.linkerAddress}}
+              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
+            </li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
@@ -39,20 +54,23 @@
 import TagGroup from 'COMP/TagGroup/'
 import conf from './conf'
 import marketService from 'SERVICE/marketService'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     TagGroup
   },
   created() {
     this.dredgeColor()
-    if (this.tags) this.tags.unshift(this.saleStatus)
-    console.log(this.itemInfo,'楼盘列表');
-    
+    this.tags=this.itemInfo.linkerTags
+    if (this.tags){
+      this.tags.unshift(this.saleStatus)
+      }
+
   },
   data() {
     return {
-      detailOpenStatus: null, //0未开通1已开通已过期2已开通未过期
-      tags: this.itemInfo.linkerTags,
+      status:this.itemInfo.openStatus,
+      tags:[],
       resInfo: null,
       style: null,
       panoramaImg: require('IMG/system/icon_panorama@2x.png'),
@@ -61,7 +79,7 @@ export default {
     }
   },
   props: {
-    // value:'',
+    value:'',
     itemInfo: {
       type: Object
     },
@@ -75,13 +93,17 @@ export default {
     }
   },
   computed: {
-    openStatus() {
-      if(!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
-      if (this.itemInfo.openStatus == 0) {
+    ...mapGetters(['userArea', 'userInfo']),
+    openStatus:{
+      get:function(){
+        if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
+      if (this.status == 0) {
         return '开通'
       } else {
         return '续费'
       }
+      },
+       set: function() {}
     },
     saleStatus() {
       if (this.itemInfo.saleStatus == 0) {
@@ -90,6 +112,8 @@ export default {
         return '即将发售'
       } else if (this.itemInfo.saleStatus == 3) {
         return '售罄'
+      }else{
+        return this.itemInfo.saleStatus
       }
     }
   },
@@ -105,8 +129,13 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
-    openHandle() {
-      this.$emit('openReturnHandle', this.itemInfo)
+    async openHandle() {//VIP用户选择城市与VIP开通楼盘同城市
+      if (this.itemInfo.city === this.userInfo.vipInfo.city) {
+        await marketService.addHouseByVip(this.itemInfo.linkerId)
+        this.status=2
+      } else {
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      }
     }
   },
   watch: {
@@ -120,9 +149,6 @@ export default {
 }
 </script>
 <style lang="less">
-.line {
-  border-bottom: 1px solid #e6e6e6;
-}
 .market-box-page {
   background: #ffffff;
   width: 375px;
@@ -130,10 +156,12 @@ export default {
     width: 343px;
     padding-top: 13px;
     margin: 0 0px 0 16px;
-    .all-describe {
+    .padding{
+        padding-bottom:16px;
+      }
+    .allDescribe {
       display: flex;
       flex-direction: column;
-      padding-bottom: 16px;
       .market-box-page-top {
         display: flex;
         .img {
@@ -159,7 +187,7 @@ export default {
             text-align: center;
             line-height: 20px;
             font-size: 11px;
-            font-family: PingFangSC-Medium;
+            
             font-weight: 500;
             color: rgba(255, 255, 255, 1);
           }
@@ -179,7 +207,7 @@ export default {
                 text-overflow: ellipsis;
                 max-width: 103px;
                 font-size: 16px;
-                font-family: PingFangSC-Semibold;
+                
                 font-weight: 600;
                 color: rgba(51, 51, 51, 1);
                 line-height: normal;
@@ -187,7 +215,7 @@ export default {
               .past {
                 font-size: 12px;
                 transform: scale(0.84);
-                font-family: PingFangSC-Regular;
+                
                 font-weight: 400;
                 line-height: normal;
                 height: 18px;
@@ -206,7 +234,7 @@ export default {
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;
               font-size: 12px;
-              font-family: PingFang-SC-Regular;
+              
               font-weight: 400;
               color: rgba(255, 255, 255, 1);
               line-height: 24px;
@@ -215,7 +243,7 @@ export default {
           }
           .site {
             font-size: 12px;
-            font-family: PingFangSC-Regular;
+            
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
@@ -229,14 +257,14 @@ export default {
             span:nth-child(1) {
               line-height: 15px;
               font-size: 15px;
-              font-family: PingFangSC-Semibold;
+              
               font-weight: 600;
               color: rgba(234, 77, 46, 1);
             }
             span:nth-child(2) {
               line-height: 15px;
               font-size: 12px;
-              font-family: PingFangSC-Regular;
+              
               font-weight: 400;
               color: rgba(153, 153, 153, 1);
             }
@@ -260,7 +288,7 @@ export default {
         span:nth-child(2) {
           margin: 0 0 0 4px;
           font-size: 15px;
-          font-family: PingFang-SC-Regular;
+          
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;

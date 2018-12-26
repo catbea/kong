@@ -1,15 +1,17 @@
 <template>
   <div class="market-page">
+    <div class="fixed">
     <div class="search-box van-hairline--bottom">
       <div class="search-comp">
         <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
       </div>
     </div>
     <screen v-model="projectFilters" :local="this.selectedCity"></screen>
+    </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getProjectList">
-        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @openReturnHandle="openReturnHandle(item)" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
   </div>
@@ -32,7 +34,7 @@ export default {
     AlreadyOpen
   },
   computed: {
-    ...mapGetters(['userArea'])
+    ...mapGetters(['userArea','userInfo'])
   },
   data: () => ({
     selectedCity: '',
@@ -44,8 +46,8 @@ export default {
     finished: false,
     projectFilters: {},
     searchContent: {
-      siteText: '深圳',
-      placeholder: '请输入平台名称'
+      siteText: '深圳市',
+      placeholder: '请输入楼盘名称'
     },
     value: '',
     locationIcon: require('IMG/market/juxing.png'),
@@ -66,8 +68,8 @@ export default {
     }
   },
   created() {
-    this.selectedCity = this.userArea.marketSelectedCity || this.userArea.city
-    this.searchContent.siteText = this.selectedCity
+    this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
+    this.searchContent.siteText = this.selectedCity || '全国'
     this.getBrokerInfo()
   },
   methods: {
@@ -91,9 +93,6 @@ export default {
       }
       this.page++
       this.loading = false
-    },
-    openReturnHandle(item) {
-      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
     },
     onClickHandler() {
       this.$router.push('/market/inputSearch')
@@ -120,7 +119,16 @@ export default {
 </script>
 <style lang="less">
 .market-page {
-  > .search-box {
+  .fixed{
+    position:fixed;
+    width:100%;
+    background:#FFFFFF;
+    z-index:3;
+  }
+  .already-open-page{
+    margin-top:86px;
+  }
+   .search-box {
     position: relative;
     width: 375px;
     height: 44px;

@@ -5,24 +5,32 @@
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div v-show="showMarketListCount>=showFilterLimit">
+        <div v-show="showMarketListCount>=showFilterLimit" style="width:343px;margin-left:16px;">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters" :local="this.selectedCity"></screen>
         </div>
-        <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo">
+        <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo" v-if="!yes">
           <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></user-market>
         </van-list>
+        <div v-show="yes" class="notMarket">
+          <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
+          <p>暂无开启展示的楼盘</p>
+        </div>
       </div>
-      <p v-show="isNoData" class="notMarket">暂未开通任何楼盘</p>
+      
       <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
-        <div v-show="notShowMarketListCount>=showFilterLimit">
+        <div v-show="notShowMarketListCount>=showFilterLimit" style="width:343px;margin-left:16px;">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
-        <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowGetMyMarketInfo">
+        <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowGetMyMarketInfo" v-show="!no">
           <close-market v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
         </van-list>
+        <div v-show="no" class="notMarket">
+          <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
+          <p>暂无关闭展示的楼盘</p>
+        </div>
       </div>
     </div>
   </div>
@@ -48,7 +56,10 @@ export default {
     CloseMarket
   },
   data: () => ({
-    isNoData: false,
+    unShowImg:require('IMG/user/collection/Group@2x.png'),
+    yes: false,
+    no:false,
+    close:true,
     showFilterLimit: 20,
     showLoading: false,
     showFinished: false, //展示
@@ -103,6 +114,7 @@ export default {
     await this.marketShowHandle() //展示/不展示都没数据时
     this.getShowProjectCount()
     this.getUnShowProjectCount()
+    this.notShowGetMyMarketInfo()
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -156,7 +168,7 @@ export default {
     },
     showOnLoad() {
       //展示数据初始化
-      this.showGetMyMarketInfo()
+       this.showGetMyMarketInfo()
     },
     notShowOnLoad() {
       //不展示数据初始化
@@ -283,6 +295,19 @@ export default {
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
       this.showMarketList = this.showMarketList.concat(resShow.records)
+      let arr = []
+      let json = {}
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        const element =this.showMarketList[index];
+        if(!json[element.linkerId]){
+          arr.push(element)
+          json[element]=1
+        }
+      }
+      this.showMarketList=arr
+      if(this.showMarketList.length==0){
+      this.yes=true
+    }
       if (resShow.pages === 0 || this.showPage === resShow.pages) {
         this.showFinished = true
       }
@@ -291,6 +316,8 @@ export default {
     },
     async notShowGetMyMarketInfo() {
       // this.notShowProjectName,this.notShowProjectFilters, this.notShowPage
+      console.log(1111111111111);
+      
       let name = this.notShowProjectName
       let filters = this.notShowProjectFilters
       let page = this.notShowPage
@@ -309,6 +336,22 @@ export default {
       // this.searchNotShowNum = resNotShow.records.length//不展示的楼盘个数
       // this.notShowMarketList =resNotShow.records
       this.notShowMarketList = this.notShowMarketList.concat(resNotShow.records)
+      let arr = []
+      let json = {}
+      for (let index = 0; index < this.notShowMarketList.length; index++) {
+        const element =this.notShowMarketList[index];
+        if(!json[element.linkerId]){
+          arr.push(element)
+          json[element]=1
+        }
+      }
+      this.notShowMarketList=arr
+
+      console.log(this.notShowMarketList,'不展示的数据');
+      
+      if(this.notShowMarketList.length==0){
+      this.no=true
+      }
       if (resNotShow.pages === 0 || this.notShowPage === resNotShow.pages) {
         this.notShowFinished = true
       }
@@ -335,6 +378,13 @@ export default {
           this.showMarketList.splice(index, 1)
         }
       }
+      if(this.showMarketList.length==0){
+        this.yes=true
+      }
+      if(this.notShowMarketList.length!=0){
+        this.no=false
+        this.close=true
+      }
     },
     returnMasterHandle(n) {
       this.masterList.push(this.myMarketList[n])
@@ -349,6 +399,9 @@ export default {
         if (n.linkerId == element.linkerId) {
           this.notShowMarketList.splice(index, 1)
         }
+      }
+       if(this.notShowMarketList.length==0){
+        this.no=true
       }
     }
   }
@@ -387,13 +440,18 @@ export default {
     position: relative;
     display: flex;
     .notMarket {
-      position: absolute;
-      margin-left: -60px;
-      margin-top: 100px;
-      color: #666666;
-      top: 50%;
-      left: 50%;
-      font-size: 15px;
+      margin:56px 0 100px 144px;
+      p:nth-child(1){
+        width:88px;
+        height:88px;
+      }
+      p:nth-child(2){
+        font-size:12px;
+        font-weight:400;
+        color:rgba(153,153,153,1);
+        line-height:17px;
+        margin-left:-12px;
+      }
     }
     .market-left {
       width: 100%;

@@ -83,7 +83,7 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
             <div class="house-type">
-              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}"></div>
+              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}" @click.stop="photoHandle(item.imgUrl)"></div>
               <div class="house-type-info">
                 <p class="house-type-name">{{item.householdDesc}}</p>
                 <p class="house-type-area">{{`建面${item.area}${item.orientations}朝向`}}</p>
@@ -134,10 +134,10 @@
     </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="info.openStatus == 0">
+      <div class="unopen-status-box" v-if="openStatus">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="info.openStatus!= 0" :renewInfo='info'></market-renew>
+      <market-renew v-if="!openStatus" :renewInfo='info'></market-renew>
        <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
         <div class="icon-box">
           <div>
@@ -173,7 +173,7 @@ import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
-import { Dialog } from 'vant'
+import { Dialog,ImagePreview } from 'vant'
 import isEmpty from 'lodash/isEmpty'
 export default {
   components: {
@@ -277,6 +277,19 @@ export default {
         this.headCurrent = this.headCurrent < this.info.customerList.length - 1 ? this.headCurrent + 1 : 0
       }, 3000)
     },
+    photoHandle(n) {
+      //查看户型图片预览
+      let arr = []
+      arr.push(n)
+      ImagePreview({
+        images:arr,
+        startPosition: 0,
+        onClose() {
+          // do something
+        }
+      })
+      this.photoList = []
+    },
     async collectHandler() {
       //修改收藏状态
       if (this.status == 1) {
@@ -310,8 +323,13 @@ export default {
         }
       }
     },
-    openHandler() {
-      this.$router.push(`/marketDetail/open/${this.id}`)
+   async openHandler() {//VIP用户选择城市与VIP开通楼盘同城市
+      if (this.info.city === this.userInfo.vipInfo.city) {
+        await marketService.addHouseByVip(this.info.linkerId)
+        this.openStatus=false
+      } else {
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
+      }
     },
     moreInfoHandler() {
       this.$router.push({ name: 'marketDetail-info', params: { id: this.info.linkerId, licenceList: this.info.licenceList } })
@@ -322,6 +340,16 @@ export default {
     }
   },
   computed: {
+    openStatus:{
+      get:function(){
+        if(this.info.openStatus == 0){
+          return true
+        }else{
+          return false
+        }
+      },
+      set:function(){}
+    },
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
@@ -353,7 +381,7 @@ export default {
         background: rgba(255, 255, 255, 1);
         border-radius: 12px;
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 24px;
@@ -420,7 +448,6 @@ export default {
         color: #333333;
         font-weight: 600;
         font-size:12px;
-        font-family:"SimHei";
         > span {
           color: #007ae6;
         }
@@ -456,7 +483,7 @@ export default {
         background: rgba(247, 249, 250, 1);
         border-radius: 4px;
         font-size: 15px;
-        font-family: PingFang-SC-Regular;
+        
         font-weight: 400;
         color: rgba(234, 77, 46, 1);
         display: flex;
@@ -707,14 +734,14 @@ export default {
   text-align: center;
   .van-dialog__header {
     font-size: 18px;
-    font-family: PingFangSC-Semibold;
+    
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
   }
   .van-dialog__message {
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;

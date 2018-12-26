@@ -18,7 +18,7 @@
         <p class="content-title">{{item.timeStr | dateTimeFormatter(3,'/')}}</p>
         <div class="content-box" >
           <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
-          <p><span>{{item.clientName}}</span>{{item.markedWords}}</p>
+          <p><span>{{item.clientName}}</span>{{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}</p>
         </div>
       </li>
       <!-- <li>
@@ -109,7 +109,6 @@ export default {
       }
       p {
         font-size: 14px;
-        font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 22px;

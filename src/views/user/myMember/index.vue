@@ -129,6 +129,7 @@ export default {
       } else {
         this.$toast('支付失败')
       }
+      
     },
 
     cancelPayment(purchaseId) {
@@ -232,7 +233,7 @@ export default {
   border-radius: 12px;
   .van-dialog__header {
     font-size: 18px;
-    font-family: PingFangSC-Medium;
+    
     font-weight: 500;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
@@ -242,13 +243,13 @@ export default {
   }
   .van-dialog__cancel {
     font-size: 18px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
   }
   .van-dialog__content {
     font-size: 15px;
-    font-family: PingFangSC-Regular;
+    
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     text-align: center;
@@ -295,13 +296,13 @@ export default {
         margin-left: 15px;
         margin-right: 6px;
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(229, 179, 123, 1);
         line-height: 24px;
         li:nth-child(1) {
           font-size: 18px;
-          font-family: PingFangSC-Regular;
+          
           font-weight: 400;
           line-height: 25px;
         }
@@ -319,7 +320,6 @@ export default {
         border-radius: 12px;
         border: 1px solid;
         font-size: 11px;
-        font-family: ArialUnicodeMS;
         color: rgba(229, 179, 123, 1);
         line-height: 24px;
         text-align: center;
@@ -339,12 +339,12 @@ export default {
       padding-left: 24px;
       line-height: 56px;
       font-size: 14px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       p {
         font-size: 20px;
-        font-family: PingFangSC-Semibold;
+        
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
       }
@@ -354,7 +354,7 @@ export default {
       width: 125px;
       text-align: center;
       font-size: 18px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       background: #ccc;
@@ -364,7 +364,7 @@ export default {
       width: 125px;
       text-align: center;
       font-size: 18px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       background: rgba(195, 151, 101, 1);

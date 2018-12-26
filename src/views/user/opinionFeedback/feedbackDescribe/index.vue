@@ -75,14 +75,14 @@ export default {
       flex-direction: column;
       p:nth-child(1) {
         font-size: 20px;
-        font-family: PingFangSC-Semibold;
+        
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 28px;
       }
       p:nth-child(2) {
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
@@ -119,7 +119,7 @@ export default {
         right: 0;
         bottom: 0;
         font-size: 12px;
-        font-family: PingFangSC-Regular;
+        
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
       }

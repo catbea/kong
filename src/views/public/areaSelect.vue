@@ -44,7 +44,6 @@
 <script>
 import Search from 'COMP/Search'
 import { fullArea } from '@/utils/fullArea'
-import wechatApi from '@/utils/wechatApi'
 import letter from '@/utils/letter'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
@@ -94,14 +93,18 @@ export default {
       this.$router.go(-1)
     },
     retryLocation() {
-      wechatApi.getUserArea()
+      this.$wechatHelper.getUserArea()
     },
     keyTouchStartHandler(e) {
       if (e.target.tagName !== 'LI') return
 
       this.scrollHander(e.target.innerText)
+
       window.addEventListener('touchmove', this.handleTouchMove, false)
       window.addEventListener('touchend', this.handleTouchEnd)
+      console.log(e.changedTouches[0].clientY);
+
+      // this.scrollList(e.changedTouches[0].clientY)
 
       // console.log(e.target.tagName)
       // return

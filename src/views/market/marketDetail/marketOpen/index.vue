@@ -81,10 +81,10 @@ export default {
         if (currCunpon.type == 20) {
           let couponValue = Number(priceItem.subscribeAmount) * Number(1 - currCunpon.discountsLimit / 10)
           submitPrice = submitPrice - couponValue
-          couponStr = '-¥ ' + parseInt(couponValue / 100)
+          couponStr = '-¥ ' + parseFloat(couponValue / 100).toFixed(2)
           coupon = couponValue
         } else {
-          couponStr = '-¥ ' + parseInt(currCunpon.discountsLimit)
+          couponStr = '-¥ ' + parseFloat(currCunpon.discountsLimit).toFixed(2)
           submitPrice = submitPrice - currCunpon.discountsLimit * 100
           coupon = currCunpon.discountsLimit * 100
         }
@@ -228,7 +228,8 @@ export default {
         linkerName: res.linkerName,
         openTimes: res.openTimes,
         sale: res.sale,
-        commission: res.commission
+        commission: res.commission,
+        saleStatus:res.saleStatus
       }
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { linkerId: this.linkerId, projectInfo: this.projectInfo }))
     },
@@ -263,7 +264,7 @@ export default {
     margin: 0px 0 66px 0;
     span:nth-child(1) {
       font-size: 10px;
-      font-family: PingFang-SC-Regular;
+      
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       line-height: 14px;
@@ -272,7 +273,7 @@ export default {
       font-size: 12px;
       transform: scale(0.8);
       height: 14px;
-      font-family: PingFang-SC-Regular;
+      
       font-weight: 400;
       color: #007ae6;
     }

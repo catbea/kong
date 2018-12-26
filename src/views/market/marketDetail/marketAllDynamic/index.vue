@@ -45,7 +45,7 @@ export default {
     p:nth-of-type(1) {
       margin-left: 12px;
       font-size: 14px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: rgba(150, 158, 168, 1);
       line-height: 20px;
@@ -53,7 +53,7 @@ export default {
     p:nth-of-type(2) {
       margin-left: 8px;
       font-size: 14px;
-      font-family: PingFangSC-Regular;
+      
       font-weight: 400;
       color: #445166;
       line-height: 20px;
