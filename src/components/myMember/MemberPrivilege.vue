@@ -49,7 +49,7 @@ export default {
   // height:163px;
   width: 100%;
   background: rgba(255, 255, 255, 1);
-  margin: 10px 0 18px 0;
+  margin: 10px 0 12px 0;
   .VIPprivilege {
     margin-bottom: 14px;
     font-size: 20px;

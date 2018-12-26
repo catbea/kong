@@ -13,9 +13,18 @@
         </div>
         <div class="user-more-info">
           <p class="user-signature">- {{shareInfo.signature}}</p>
-          <p class="user-phone">Tel: {{shareInfo.phone}}</p>
-          <p class="user-company">Col: {{shareInfo.company}}</p>
-          <p class="user-address">Add: {{shareInfo.address}}</p>
+          <p class="user-phone">
+            <span>Tel:</span>
+            <span>{{shareInfo.phone}}</span>
+          </p>
+          <p class="user-company">
+            <span>Col:</span>
+            <span>{{shareInfo.company}}</span>
+          </p>
+          <p class="user-address">
+            <span>Add:</span>
+            <span>{{shareInfo.address}}</span>
+          </p>
         </div>
         <div class="scan-me">
           <div class="qrcode-container">
@@ -35,7 +44,7 @@
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2">
-       <img id="cardimg"/>
+      <img id="cardimg">
     </div>
   </div>
 </template>
@@ -193,7 +202,17 @@ export default {
         }
         .user-phone,
         .user-company,
-        .user-address {
+        .user-address:first-child {
+          font-size: 14px;
+          opacity: 0.5;
+          line-height: 32px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+        }
+
+        .user-phone,
+        .user-company,
+        .user-address:last-child {
           font-size: 14px;
           opacity: 0.5;
           line-height: 32px;
@@ -212,6 +231,7 @@ export default {
           > .qrcode-view {
             width: 84px;
             height: 84px;
+            padding: 8px;
             border-radius: 50%;
           }
         }

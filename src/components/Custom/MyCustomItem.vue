@@ -11,7 +11,7 @@
       <p class="base-focus">{{focusInfo}}</p>
     </div>
     <div class="intention-box">
-      <p class="intention-value">{{Number(this.info.intentionality*100).toFixed(1)}}%</p>
+      <p class="intention-value" v-bind:style="{'color':Number(this.info.intentionality*100) >70?'#007AE6':'#999999'}">{{Number(this.info.intentionality*100).toFixed(1)}}%</p>
       <p class="intention-title">意向度</p>
     </div>
   </div>

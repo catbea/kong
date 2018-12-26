@@ -11,7 +11,7 @@
       </div>
       <div v-show="status === 1" class="bg_img awWelfare-center" id="share-top">
         <img :src="awbgcardIcon" alt="">
-        <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
+        <div class="qrcode" id="qrcode" ref="qrCodeUrl" ></div>
         <div class="awWelfare-info">
           <div class="awWelfare-info-left">
             <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
@@ -195,7 +195,10 @@ export default {
       position: absolute;
       bottom: 31%;
       left: 35%;
+      background: #ffffff;
+      padding: 7px;
     }
+    
     .awWelfare-info {
       padding: 34px 50px 34px 62px;
       position: absolute;
