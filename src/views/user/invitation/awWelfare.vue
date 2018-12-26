@@ -102,13 +102,20 @@ export default {
         logging: false,
         useCORS: true
       })
-      canvas.style.width = '284px';
-      canvas.style.height = '466px'
+      // canvas.style.width = '284px';
+      // canvas.style.height = '466px'
       // canvas.style.zIndex = 99
       // document.getElementById('card-result').appendChild(canvas)
+      let box = document.getElementById('card-result')
+      box.style.overflow = 'hidden'
+      box.style.width = '320px'
+      box.style.height = '530px'
 
       let image = document.getElementById('imgcard')
       image.src = canvas.toDataURL('image/png')
+      image.style.width = '321px'
+      image.style.maxWidth = '321px'
+      image.style.height = '531px'
 
       this.status = 2
     },
@@ -232,7 +239,7 @@ export default {
   .imgcard {
     width: 80%;
     height: 75%;
-    margin-left: 10%;
+    margin: 0 auto;
     border: none;
     padding: 0px 5x 2px 0px;
     border-color: transparent;

@@ -3,7 +3,7 @@ import userService from '@/services/userService'
 import commonService from 'SERVICE/commonService'
 
 const state = {
-  jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     agentId: '1',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
@@ -41,7 +41,7 @@ const state = {
       }
     ],
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJjaHd2cnIiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ4ODM2MjQ2LCJpYXQiOjE1NDU4MzE0NDZ9.RvYEJyJeVPmLj58ABo3gsdEE3DOUVSgGkARixYlYlGgb2ofq3kgZ27xV2CoY5B_uCbFvWT2w2tdN-syyz_6hHQ',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI2MjhmNzMiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxIiwiZXhwIjoxNTQ4NjY0OTAzLCJpYXQiOjE1NDU2NjAxMDN9.xcbJva5ppitLayLUODSf03Ddm9_HjdjuqOoyAUr16yaw3wtVuY8c_CGOsZwJmI_kKmnF6iT3VoeVlmsW8vZ6bg',
     majorCity: '广州市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
@@ -109,9 +109,9 @@ const getters = {
   userArea: state => state.userArea,
   reportAddInfo: state => state.reportAddInfo,
   treeInfo: state => state.treeInfo,
-  jssdkConfig: state => {
-    return state.jssdkConfig
-  },
+  // jssdkConfig: state => {
+  //   return state.jssdkConfig
+  // },
   userRegistInfo: state => state.userRegistInfo,
   buildId: state => state.buildId,
   imUserSig: state => state.imUserSig,
@@ -129,10 +129,10 @@ const actions = {
     const res = await commonService.getUserSig()
     commit(types.IM_USER_SIG, res)
   },
-  setJssdkConfig({ commit }, jssdkConfig) {
-    localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig))
-    commit([types.WX_JSSDK], jssdkConfig)
-  },
+  // setJssdkConfig({ commit }, jssdkConfig) {
+  //   localStorage.setItem('awMasterJssdkConfig', JSON.stringify(jssdkConfig))
+  //   commit([types.WX_JSSDK], jssdkConfig)
+  // },
   async getUserVipInfo({ commit }) {
     const res = await userService.getVipAndPackage()
     // 后端坑爹,是vip时vipStatus为0,加入isvip区分
@@ -172,9 +172,9 @@ const mutations = {
   [types.TREE_INFO](state, data) {
     state.treeInfo = data
   },
-  [types.WX_JSSDK](state, jssdkConfig) {
-    state.jssdkConfig = jssdkConfig
-  },
+  // [types.WX_JSSDK](state, jssdkConfig) {
+  //   state.jssdkConfig = jssdkConfig
+  // },
   [types.USER_REGIST_INFO](state, data) {
     state.userRegistInfo = Object.assign(state.userRegistInfo, data)
   },
