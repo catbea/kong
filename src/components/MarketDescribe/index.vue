@@ -1,14 +1,13 @@
 <template>
   <div class="market-box-page">
     <div class="market-box" @click="itemClickHandler" :class="{line:borderBottom}">
-      <div class="all-describe">
+      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
           <div
             class="img bg_img"
             :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}"
           >
             <!-- 720标示 -->
-            <div class="gray-bg"></div>
             <img class="panorama-mark" :src="panoramaImg" v-if="itemInfo.ifPanorama">
             <div
               class="label bg_img"
@@ -34,9 +33,7 @@
             </li>
             <li class="site">
               {{itemInfo.linkerAddress}}
-              <span
-                v-if="itemInfo.openStatus!=0"
-              >{{itemInfo.invalidTimeStr}}到期</span>
+              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
             </li>
             <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             <li class="unit-price">
@@ -64,12 +61,16 @@ export default {
   },
   created() {
     this.dredgeColor()
-    if (this.tags) this.tags.unshift(this.saleStatus)
+    this.tags=this.itemInfo.linkerTags
+    if (this.tags){
+      this.tags.unshift(this.saleStatus)
+      }
+
   },
   data() {
     return {
-      detailOpenStatus: null, //0未开通1已开通已过期2已开通未过期
-      tags: this.itemInfo.linkerTags,
+      status:this.itemInfo.openStatus,
+      tags:[],
       resInfo: null,
       style: null,
       panoramaImg: require('IMG/system/icon_panorama@2x.png'),
@@ -93,13 +94,16 @@ export default {
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
-    openStatus() {
-      if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
-      if (this.itemInfo.openStatus == 0) {
+    openStatus:{
+      get:function(){
+        if (!this.itemInfo.hasOwnProperty('openStatus')) return '开通'
+      if (status == 0) {
         return '开通'
       } else {
         return '续费'
       }
+      },
+       set: function() {}
     },
     saleStatus() {
       if (this.itemInfo.saleStatus == 0) {
@@ -108,6 +112,8 @@ export default {
         return '即将发售'
       } else if (this.itemInfo.saleStatus == 3) {
         return '售罄'
+      }else{
+        return this.itemInfo.saleStatus
       }
     }
   },
@@ -127,6 +133,10 @@ export default {
       if (this.itemInfo.city === this.userInfo.vipInfo.city) {
         //VIP用户选择城市与VIP开通楼盘同城市
         await marketService.addHouseByVip(this.itemInfo.linkerId)
+        this.$toast({
+            duration:1000,
+            message:'已开通成功',
+          })
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
@@ -153,19 +163,14 @@ export default {
     width: 343px;
     padding-top: 13px;
     margin: 0 0px 0 16px;
-    .all-describe {
+    .padding{
+        padding-bottom:16px;
+      }
+    .allDescribe {
       display: flex;
       flex-direction: column;
-      padding-bottom: 16px;
       .market-box-page-top {
         display: flex;
-
-        .gray-bg {
-          width: 120px;
-          height: 90px;
-          background: rgba(0, 0, 0, 0.5);
-        }
-
         .img {
           width: 120px;
           height: 90px;
@@ -179,20 +184,7 @@ export default {
             height: 32px;
             display: inline-block;
             vertical-align: middle;
-            margin-top: 45%;
-            position: relative;
-            z-index: 3;
           }
-
-          .gray-bg {
-            border-radius: 6px;
-            position: relative;
-            width: 120px;
-            height: 90px;
-            background:rgba(0, 0, 0, 0.4) ;
-            z-index: 1;
-          }
-
           .label {
             position: absolute;
             left: -4px;
@@ -202,7 +194,7 @@ export default {
             text-align: center;
             line-height: 20px;
             font-size: 11px;
-            z-index: 2;
+            
             font-weight: 500;
             color: rgba(255, 255, 255, 1);
           }
@@ -222,7 +214,7 @@ export default {
                 text-overflow: ellipsis;
                 max-width: 103px;
                 font-size: 16px;
-
+                
                 font-weight: 600;
                 color: rgba(51, 51, 51, 1);
                 line-height: normal;
@@ -230,7 +222,7 @@ export default {
               .past {
                 font-size: 12px;
                 transform: scale(0.84);
-
+                
                 font-weight: 400;
                 line-height: normal;
                 height: 18px;
@@ -249,7 +241,7 @@ export default {
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;
               font-size: 12px;
-
+              
               font-weight: 400;
               color: rgba(255, 255, 255, 1);
               line-height: 24px;
@@ -258,7 +250,7 @@ export default {
           }
           .site {
             font-size: 12px;
-
+            
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
@@ -272,14 +264,14 @@ export default {
             span:nth-child(1) {
               line-height: 15px;
               font-size: 15px;
-
+              
               font-weight: 600;
               color: rgba(234, 77, 46, 1);
             }
             span:nth-child(2) {
               line-height: 15px;
               font-size: 12px;
-
+              
               font-weight: 400;
               color: rgba(153, 153, 153, 1);
             }
@@ -303,7 +295,7 @@ export default {
         span:nth-child(2) {
           margin: 0 0 0 4px;
           font-size: 15px;
-
+          
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 24px;
