@@ -126,6 +126,7 @@ export default {
         this.showPage = 1
         this.showProjectName = val
         // this.showProjectFilters = {}
+        this.showFinished = false
         this.showMarketList = []
         this.showGetMyMarketInfo() //根据搜索字请求展示的楼盘数据
         clearTimeout(this.setShowName)
@@ -135,6 +136,7 @@ export default {
       handler(val) {
         this.showPage = 1
         this.showMarketList = []
+        this.showFinished = false
         this.showGetMyMarketInfo()
       },
       deep: true
@@ -144,6 +146,7 @@ export default {
       this.setNotShowName = setTimeout(() => {
         this.notShowPage = 1
         this.notShowMarketList = []
+        this.notShowFinished = false
         // this.notShowGetMyMarketInfo()//根据搜索字请求不展示的楼盘数据
         clearTimeout(this.setNotShowName)
       }, 500)
@@ -152,6 +155,7 @@ export default {
       handler(val) {
         this.notShowPage = 1
         this.notShowMarketList = []
+        this.notShowFinished = false
         // this.notShowGetMyMarketInfo()
       },
       deep: true

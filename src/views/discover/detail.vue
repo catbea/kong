@@ -29,7 +29,10 @@
       <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
     </div>
     <!-- 推荐房源 -->
-    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
+    <div
+      class="recommend-houses"
+      v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0"
+    >
       <title-bar :conf="titleProperties"/>
       <div class="recommend-houses-content">
         <!-- swiper -->
@@ -47,11 +50,18 @@
         </swiper>
       </div>
     </div>
-    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
+    <van-popup
+      class="popup-view"
+      v-model="openPopup"
+      :overlay="true"
+      :lock-scroll="true"
+      :close-on-click-overlay="true"
+      :click-overlay="overlayClose"
+    >
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
       </div>
-      <span class="notice-view">扫描二维码关注</span>
+      <span class="notice-view">长按识别查看更多</span>
       <img class="qrcode-view" :src="qrcodeInfo.miniQrCode">
       <div class="introduce-box">
         <span class="username-view">{{qrcodeInfo.agentName}}</span>
@@ -59,7 +69,9 @@
         <span class="phone-view">{{qrcodeInfo.mobile}}</span>
         <span class="company-view">{{qrcodeInfo.enterpriseName}}</span>
       </div>
-      <span class="info-view">开启买房新模式 及时获取一手房源信息</span>
+      <div class="info-bottom">
+        <span class="info-view">开启买房新模式及时获取一手房源信息</span>
+      </div>
     </van-popup>
     <!-- 推荐文章 -->
     <div class="recommend-discover" v-if="info&&info.recommendInformationList">
@@ -147,7 +159,6 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
     this.getQrCode(this.agentId)
-   
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -175,7 +186,7 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-       this.shareHandler()
+      this.shareHandler()
     },
 
     //进入楼盘详情
@@ -230,8 +241,8 @@ export default {
     async shareHandler() {
       await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
-      console.log('serShare',this.shareData);
-      
+      console.log('serShare', this.shareData)
+
       window.awHelper.wechatHelper.setShare(this.shareData)
       // wechatApi
       //   .wechatShare(this.shareData)
@@ -272,9 +283,16 @@ export default {
     > .closePopup {
       width: 24px;
       height: 24px;
-      margin-top: 16px;
-      margin-right: 16px;
+      margin-top: 8px;
+      margin-right: 8px;
     }
+  }
+
+  > .notice-view {
+    color: #333333;
+    font-size: 18px;
+    font-family: PingFangSC-Semibold;
+    font-weight: 600;
   }
 
   > .qrcode-view {
@@ -282,6 +300,7 @@ export default {
     height: 162px;
     text-align: center;
     margin-top: 11px;
+    padding: 5px;
   }
 
   > .introduce-box {
@@ -290,19 +309,15 @@ export default {
     flex-direction: column;
     margin-left: -45px;
 
-    > .notice-view {
-      color: #333333;
-      font-size: 20px;
-    }
     > .username-view {
       color: #333333;
       font-size: 16px;
       margin-top: 12px;
-      
     }
     > .introduce-view {
       font-size: 14px;
       color: #666666;
+      margin-top: 3px;
     }
 
     > .company-view {
@@ -318,10 +333,20 @@ export default {
     }
   }
 
-  > .info-view {
-    color: #666666;
-    font-size: 12px;
-    margin-top: 31px;
+  > .info-bottom {
+    width: 100%;
+    height: 32px;
+    margin-bottom: 0;
+    background: #d8d8d8;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > .info-view {
+      color: #666666;
+      font-size: 12px;
+      background-color: #d8d8d8;
+    }
   }
 }
 
