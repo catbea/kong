@@ -369,6 +369,7 @@ export default {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 103px;
+                line-height:21px;
           }
           // align-items: center;
           .stick {
@@ -376,15 +377,14 @@ export default {
             border: 1px solid white;
             display: inline-block;
             white-space: nowrap;
-            border-radius: 2px;
             font-size: 12px;
             transform: scale(0.84);
-            
             font-weight: 400;
             color: rgba(0, 122, 230, 1);
             margin-left: 4px;
             &::after {
               border-color: rgba(0, 122, 230, 1);
+              border-radius: 2px;
             }
           }
           .past-tag {
@@ -392,15 +392,14 @@ export default {
             border: 1px solid white;
             display: inline-block;
             white-space: nowrap;
-            border-radius: 2px;
             font-size: 12px;
             transform: scale(0.84);
-            
             font-weight: 400;
             color: #ea4d2e;
             margin-left:4px;
             &::after {
               border-color: #ea4d2e;
+              border-radius: 2px;
             }
           }
           .icon-share {
