@@ -48,7 +48,6 @@ class WechatHelper {
     console.log(store.state.wx.jssdkConfig)
 
     console.log(this.wx);
-    debugger
     this.wx.config(store.state.wx.jssdkConfig)
     console.log(store.state.wx.jssdkConfig)
     this.getUserArea()
@@ -98,8 +97,9 @@ class WechatHelper {
    */
   _universalShare(conf){
     console.log('_universalShare',conf);
-    
-    this.wx.updateAppMessageShareData(conf)
+
+    this.wx.onMenuShareAppMessage(conf)
+    // this.wx.updateAppMessageShareData(conf)
     this.wx.updateTimelineShareData(conf)
     this.wx.showAllNonBaseMenuItem()
   }
