@@ -68,7 +68,7 @@ export default {
     }
   },
   created() {
-    this.selectedCity = this.userArea.marketSelectedCity || this.userArea.city
+    this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity
     this.searchContent.siteText = this.selectedCity
     this.getBrokerInfo()
   },

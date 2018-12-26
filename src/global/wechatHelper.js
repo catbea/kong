@@ -1,5 +1,4 @@
 import store from '@/store/'
-import wx from 'weixin-js-sdk'
 
 const jsApiList = [
   'chooseWXPay',        // 微信支付
@@ -22,11 +21,16 @@ const jsApiList = [
   'stopVoice', // 停止播放api
   'uploadVoice', // 上传语音api
   'onVoicePlayEnd', // 监听语音播放完毕api
-  'translateVoice'
+  'translateVoice',
+  'updateAppMessageShareData',
+  'updateTimelineShareData'
 ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 
 class WechatHelper {
   constructor() {
+    console.log('axb');
+    console.log(wx);
+    
     this.wx = wx
     // this.queue = new Map()  
     // this.counter = 0
@@ -41,7 +45,11 @@ class WechatHelper {
   async init() {
     console.log('init');
     await store.dispatch('setJssdkConfig', jsApiList)
+    console.log(store.state.wx.jssdkConfig)
+
+    console.log(this.wx);
     this.wx.config(store.state.wx.jssdkConfig)
+    console.log(store.state.wx.jssdkConfig)
     this.getUserArea()
   }
 
@@ -88,9 +96,14 @@ class WechatHelper {
    * @param {*} conf 
    */
   _universalShare(conf){
-    this.wx.updateAppMessageShareData(conf)
-    this.wx.updateTimelineShareData(conf)
-    this.wx.showAllNonBaseMenuItem()
+    console.log('_universalShare',conf);
+
+    this.wx.onMenuShareAppMessage(conf)
+    this.wx.onMenuShareTimeline(conf)
+
+    // this.wx.updateAppMessageShareData(conf)
+    // this.wx.updateTimelineShareData(conf)
+    // this.wx.showAllNonBaseMenuItem()
   }
 }
 export default new WechatHelper()
