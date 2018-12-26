@@ -41,7 +41,9 @@ export default async (to, from, next) => {
         // 获取jssdk授权
         if (!store.getters.jssdkConfig) {
           try{
-            window.awHelper.wechatHelper.init()
+            setTimeout(() => {
+              window.awHelper.wechatHelper.init()
+            }, 1);
           }catch(e){
             console.log(e, '[error]')
             alert(e)
