@@ -67,7 +67,7 @@
       </div>
       <img class="modify-img" :src="modifyImg">
     </div>
-    <div class="business-status-title">优惠服务</div>
+    <div class="business-status-title sub-title">优惠服务</div>
     <div class="business-status-box">
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
@@ -139,18 +139,20 @@ export default {
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     // line-height: 28px;
-    padding: 5px 16px 11px;
-    margin-top: -12px;
+    // padding: 5px 16px 11px;
+    // margin-top: -12px;
+  }
+  .sub-title{
+    padding: 10px 16px 8px!important;
   }
   > .business-card-box {
     width: 100%;
-    height: 190px;
     min-height: 190px;
     position: relative;
 
     > .info-box {
       position: relative;
-      height: 190px;
+      min-height: 190px;
       margin: 12px 16px;
       border-radius: 10px;
       background: rgba(64, 68, 87, 1);
@@ -240,7 +242,6 @@ export default {
 
       > .info-bottom {
         padding-top: 5px;
-
         > .content-left-labe {
           font-size: 10px;
           font-weight: 400;
@@ -262,12 +263,13 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(174, 177, 194, 1);
-          // line-height: 12px;
+          line-height: 1.5;
           margin-left: 28px;
           margin-top: 8px;
           overflow:hidden;
           text-overflow:ellipsis;
           white-space:nowrap;
+          padding-bottom: 10px;
         }
       }
     }
@@ -285,7 +287,7 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
-    margin: -17px 0 0;
+    // margin: -17px 0 0;
     > div {
       position: relative;
       display: inline-block;
@@ -312,7 +314,7 @@ export default {
         position: absolute;
         top: 33px;
         left: 40px;
-        font-size: 12px;
+        font-size: 10px;
         font-weight: 400;
         color: #999999;
         line-height: 22px;
@@ -322,7 +324,9 @@ export default {
       margin: 0 15px;
       > .info-desc {
         font-size: 10px;
-        white-space: nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
       }
     }
   }

@@ -48,9 +48,10 @@ class WechatHelper {
     console.log(store.state.wx.jssdkConfig)
 
     console.log(this.wx);
-    this.wx.config(store.state.wx.jssdkConfig)
+    await this.wx.config(store.state.wx.jssdkConfig)
     console.log(store.state.wx.jssdkConfig)
-    this.getUserArea()
+    await this.getUserArea()
+    this._apiCheck()
   }
 
   /**
@@ -96,17 +97,29 @@ class WechatHelper {
    * @param {*} conf 
    */
   _universalShare(conf) {
-    setTimeout(() => {
-      console.log('_universalShare', conf);
+    console.log('_universalShare', conf);
 
-      this.wx.onMenuShareAppMessage(conf)
-      this.wx.onMenuShareTimeline(conf)
-    }, 300)
+    this.wx.onMenuShareAppMessage(conf)
+    this.wx.onMenuShareTimeline(conf)
 
 
     // this.wx.updateAppMessageShareData(conf)
     // this.wx.updateTimelineShareData(conf)
     // this.wx.showAllNonBaseMenuItem()
+  }
+
+  _apiCheck() {
+    this.wx.checkJsApi({
+      jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+      success: function (res) {
+        console.log('api可用情况');
+        console.log(res);
+        
+        
+        // 以键值对的形式返回，可用的api值true，不可用为false
+        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+      }
+    })
   }
 }
 export default new WechatHelper()
