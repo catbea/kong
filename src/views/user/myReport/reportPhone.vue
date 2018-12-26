@@ -83,12 +83,10 @@ export default {
     > .edit-phone-conter {
       margin-bottom: 24px;
       > .edit-phone-input {
-        padding-left: 8px;
         font-size: 16px;
         font-weight: 500;
         color: #333;
         line-height: 35px;
-        padding: 2px 8px;
         width: 99%;
         border: 0;
         border-bottom: 1px solid #eeeeee;
