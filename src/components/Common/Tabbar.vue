@@ -45,7 +45,7 @@ export default {
 .tabbar {
   z-index: 999;
   width: 100%;
-  position: relative;
+  position: fixed;
   z-index: 100;
   display: flex;
   align-items: center;
