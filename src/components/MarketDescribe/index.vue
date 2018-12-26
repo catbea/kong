@@ -209,7 +209,6 @@ export default {
               .past {
                 font-size: 12px;
                 transform: scale(0.84);
-
                 font-weight: 400;
                 line-height: normal;
                 height: 18px;
