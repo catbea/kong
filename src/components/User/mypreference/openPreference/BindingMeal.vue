@@ -37,7 +37,7 @@ export default {
 </script>
 <style lang="less">
 .binding-meal-page {
-  margin: 10px 0;
+  // margin: 10px 0;
   display: flex;
   justify-content: center;
   align-items: center;
