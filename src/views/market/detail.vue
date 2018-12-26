@@ -324,7 +324,7 @@ export default {
       }
     },
    async openHandler() {//VIP用户选择城市与VIP开通楼盘同城市
-      if (this.itemInfo.city === this.userInfo.vipInfo.city) {
+      if (this.info.city === this.userInfo.vipInfo.city) {
         await marketService.addHouseByVip(this.info.linkerId)
         this.openStatus=false
       } else {
