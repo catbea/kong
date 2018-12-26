@@ -67,7 +67,7 @@
       </div>
       <img class="modify-img" :src="modifyImg">
     </div>
-    <div class="business-status-title">优惠服务</div>
+    <div class="business-status-title sub-title">优惠服务</div>
     <div class="business-status-box">
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
@@ -139,8 +139,11 @@ export default {
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     // line-height: 28px;
-    padding: 5px 16px 11px;
+    // padding: 5px 16px 11px;
     // margin-top: -12px;
+  }
+  .sub-title{
+    padding: 10px 16px 8px!important;
   }
   > .business-card-box {
     width: 100%;
