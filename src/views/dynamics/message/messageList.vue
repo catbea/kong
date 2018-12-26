@@ -168,7 +168,7 @@ export default {
             border: 0;
             position: absolute;
             margin-left: 35px;
-            padding: 1px 2px;
+            padding: 1px 3px;
           }
           .messageInfo-sys-nums {
             font-size: 12px;
