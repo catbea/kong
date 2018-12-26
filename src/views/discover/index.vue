@@ -1,7 +1,7 @@
 <template>
   <div class="discover-page">
     <van-swipe class="shadow swipe-container" v-if="swipeList" :autoplay="3000">
-      <van-swipe-item v-for="(item, index) in swipeList" :key="index" >
+      <van-swipe-item v-for="(item, index) in swipeList" :key="index">
         <div class="bg_img swipe-item-container" :style="{'backgroundImage':'url('+ item.image +')'}" @click="swipeItemClick(item)">
           <div class="cover-container">
             <p class="cover-title">{{item.title}}</p>
@@ -11,16 +11,15 @@
       </van-swipe-item>
     </van-swipe>
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated>
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @change="tabsChange" sticky animated>
         <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName">
           <keep-alive>
-            <van-list v-model="loading" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad">
+            <van-list v-model="loading" v-if="item.index === activeIndex" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad">
               <discover-item v-for="(item,index) in item.list" :key="index" :data="item"></discover-item>
             </van-list>
           </keep-alive>
         </van-tab>
       </van-tabs>
-
     </div>
   </div>
 </template>
@@ -43,6 +42,9 @@ export default {
   created() {
     this.getInformationCarousel()
   },
+  mounted() {
+    document.querySelector('.router-view').addEventListener('scroll', this.scrollHandler)
+  },
   methods: {
     // 获取轮播和tabs配置
     async getInformationCarousel() {
@@ -51,21 +53,28 @@ export default {
       this.swipeList = res.infoCarouselList
     },
     payloadTabs(tabs) {
-      this.tabs.push({ index: 0, type: '', typeName: '热门', page: 1, finished: false, list: [] })
+      this.tabs.push({ index: 0, type: '', typeName: '热门', page: 1, finished: false, list: [], offsetHeight: 0 })
       for (let i = 1; i < tabs.length; i++) {
         tabs[i].index = i
         tabs[i].page = 1
         tabs[i].finished = false
         tabs[i].list = []
+        tabs[i].offsetHeight = 0
         this.tabs.push(tabs[i])
       }
     },
     async onLoad() {
       let current = this.getCurrentType()
       const result = await discoverService.getDiscoverList(this.userInfo.majorCity, current.type, current.page)
-      current.list = current.list.concat(result.records)
-      current.page++
-      if (result.pages === 0 || current.page === result.pages + 1) current.finished = true
+      if (result.records.length > 0) {
+        current.list = current.list.concat(result.records)
+        if (current.page == result.page) {
+          current.finished = true
+        }
+        current.page++
+      } else {
+        current.finished = true
+      }
       this.loading = false
     },
     // 获取当前玄宗tab的typeid
@@ -75,8 +84,15 @@ export default {
       }
     },
     swipeItemClick(item) {
-      // this.$router.push({name: 'discover-detail', params: {id: item.id, city: this.userInfo.majorCity}})
       this.$router.push(`/discover/${item.id}/${this.userInfo.majorCity ? this.userInfo.majorCity : '全国'}?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`)
+    },
+    scrollHandler(e) {
+      let current = this.getCurrentType()
+      current.offsetHeight = e.target.scrollTop
+    },
+    tabsChange(e) {
+      let current = this.getCurrentType()
+      document.querySelector('.router-view').scrollTop = current.offsetHeight
     }
   },
   computed: {

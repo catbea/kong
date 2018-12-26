@@ -36,7 +36,7 @@
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 1">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
             <dynamics-card
               @click="goallDynamics"
               :cardDynamicCount="cardDynamicCount"
@@ -46,7 +46,7 @@
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 2">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
             <properties
               :info="item"
               @click="itemProperties"
@@ -57,7 +57,7 @@
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 3">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
             <dynamics-article
               :articleDynamicCount="articleDynamicCount"
               :articleDynamicList="articleDynamicList"
@@ -148,6 +148,9 @@ export default {
     this.goList(this.active)
   },
   methods: {
+    checkPosition(val){
+      console.log(val);
+    },
     goList(index, title) {
       switch (index) {
         case 0:

@@ -421,7 +421,7 @@ export default {
                 let ext = JSON.parse(MsgContent.Ext)
                 list.content = MsgContent.Data
                 list.msgType = 2
-                list.audioTime = ext.audioTime
+                list.audioTime = ext.audioTime || ext
                 msgLists.push(list)
               } else if (MsgContent.Desc == 3) {
                 list.content = JSON.parse(MsgContent.Data)

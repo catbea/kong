@@ -88,7 +88,7 @@ export default {
       align-items: center;
       margin-bottom: 16px;
       .icon-check {
-        width: 19px;
+        width: 18px;
         height: 18px;
         margin: 0 16px;
       }

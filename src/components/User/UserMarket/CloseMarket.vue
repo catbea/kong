@@ -16,7 +16,7 @@
               </span>
              <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
              </div>
-           <span class="bg_img icon-share" @click.stop="skipShare" :style="{backgroundImage:'url('+imgShare+')'}"></span>
+           <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share" @click.stop="skipShare"></span>
           </li>
           <li>
             {{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}
