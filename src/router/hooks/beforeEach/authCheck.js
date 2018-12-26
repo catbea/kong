@@ -1,5 +1,6 @@
 import store from '@/store/'
 import commonService from '@/services/commonService'
+import wechatApi from '@/utils/wechatApi'
 
 const getUrlQueryParams = url => {
   var params = {},
@@ -38,10 +39,16 @@ export default async (to, from, next) => {
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
-        if (!store.getters.jssdkConfig) {
-          console.log(window.awHelper, '[window.awHelper]')
-          window.awHelper.wechatHelper.init()
+        // if (!store.getters.jssdkConfig) {
+        //   console.log(window.awHelper, '[window.awHelper]')
+        //   window.awHelper.wechatHelper.init()
+        // }
+        console.log(store.getters.jssdkConfig ,'_jssdkConfig====')
+        if(!store.getters.jssdkConfig){
+          console.log('wx jssdk init ')
+          wechatApi.init()
         }
+
         if (userInfo.payOpenId) {
           next()
           return
