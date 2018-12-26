@@ -59,7 +59,7 @@ export default {
   }),
   created() {
     if (this.local === '') {
-      this.localCity = this.userInfo.majorCity !== '' ? this.userInfo.majorCity : this.userArea.city
+      this.localCity = this.userInfo.majorCity !== '' ? this.userInfo.majorCity : ''
     } else {
       this.localCity = this.local
     }
