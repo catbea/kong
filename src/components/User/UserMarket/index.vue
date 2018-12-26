@@ -78,6 +78,7 @@ export default {
   },
   data: () => ({
     linkerId: null,
+    stickNum:0,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     show: false,
     stickShow: true,
@@ -125,9 +126,19 @@ export default {
     this.time()
     this.strideYear()
     console.log(this.dataArr,'展示的楼盘数据');
-    
   },
   methods: {
+    stickNumHandle(){//判断有没有超过3个置顶
+    let parent = this.$parent.$parent
+          for (let i = 0; i < parent.showMarketList.length; i++) {
+            const element = parent.showMarketList[i];
+            if(element.recommand == 10){
+              this.stickNum++
+            }
+          }
+          console.log(this.stickNum,'楼盘个数');
+          
+    },
     strideYear() {
       //判断是否跨年
       let timestamp = new Date().getTime()
@@ -159,8 +170,31 @@ export default {
       this.show = !this.show
     },
     stickHandle(index) {
+          this.stickNumHandle()
       if (this.dataArr.recommand == 0) {
-        this.stickSwitch = 10
+        if(this.stickNum>2){
+         this.$dialog.confirm({
+            message: '最多可置顶3个'
+          }).then(() => {
+            this.stickSwitch = 10
+        this.dataArr.recommand = 10
+        //将当前点击的楼盘置顶
+        let parent = this.$parent.$parent
+        parent.showMarketList.unshift(parent.showMarketList[index])
+        parent.showMarketList.splice(index + 1, 1)
+        parent.showMarketList[1].recommand=0
+        parent.showMarketList[4]=parent.showMarketList[1]
+        this.$dialog.alert({
+          message: '楼盘置顶成功',
+          className: 'hint-alert'
+        }).then(() => {
+          parent.showMarketList.splice(1,1)
+        })
+          }).catch(() => {
+            // on cancel
+          });
+          }else{
+            this.stickSwitch = 10
         this.dataArr.recommand = 10
         //将当前点击的楼盘置顶
         let parent = this.$parent.$parent
@@ -172,6 +206,7 @@ export default {
         }).then(() => {
           // on close
         })
+          }
       } else if (this.dataArr.recommand == 10) {
         this.stickSwitch = 0
         this.dataArr.recommand = 0
