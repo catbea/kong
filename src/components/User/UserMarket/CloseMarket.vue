@@ -238,7 +238,6 @@ export default {
         width: 181px;
         li:nth-of-type(1) {
           font-size: 16px;
-          
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           line-height: 16px;
@@ -249,6 +248,22 @@ export default {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 max-width: 103px;
+                line-height:21px;
+          }
+          .past-tag {
+            padding: 2px 5px 1px 5px;
+            border: 1px solid white;
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 12px;
+            transform: scale(0.84);
+            font-weight: 400;
+            color: #ea4d2e;
+            margin-left:4px;
+            &::after {
+              border-color: #ea4d2e;
+              border-radius: 2px;
+            }
           }
           .stick {
             width: 38px;
