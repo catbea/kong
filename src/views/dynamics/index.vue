@@ -143,6 +143,12 @@ export default {
       }
       this.hotEstateListData = res.hotLinkerVOs
       for (let i = 0; i < this.hotEstateListData.length; i++) {
+        const element = this.hotEstateListData[i];
+        element.openStatus='0'
+      }
+      console.log(this.hotEstateListData,'热门楼盘数据');
+      
+      for (let i = 0; i < this.hotEstateListData.length; i++) {
         let temp = this.hotEstateListData[i]
         temp.linkerAddress = `${temp.city || ''}-${temp.district || ''}`
         this.$set(this.hotEstateListData, i, temp)
