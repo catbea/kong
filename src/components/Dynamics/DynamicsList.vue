@@ -152,7 +152,7 @@ export default {
 <style lang="less">
 .dynamics-container {
   background: #ffffff;
-  margin-top: 15px;
+  margin-top: 28px;
   .dynamics-time {
     font-size: 14px;
     font-weight: 500;
@@ -165,7 +165,7 @@ export default {
 .dynamics-container-list {
   margin-bottom: 20px;
   .dynamics-list {
-    padding: 20px 16px;
+    padding: 20px 16px 27px;
     > .dynamics-list-agent {
       // display: flex;
       > .list-agent-left {
@@ -228,6 +228,7 @@ export default {
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       line-height: 21px;
+      margin-top: 6px;
       > p span {
         color: rgba(0, 122, 230, 1);
       }
@@ -260,7 +261,6 @@ export default {
           //  position: absolute;
           right: 80px;
           top: 12px;
-          margin-right: 10px;
           > .agent-gzImg {
             width: 11px;
             height: 11px;
@@ -276,7 +276,6 @@ export default {
           border-radius: 16px;
           border: 1px solid #999999;
           background: #ffffff;
-          margin-right: 10px;
           //  position: absolute;
           right: 80px;
           top: 12px;
@@ -291,6 +290,7 @@ export default {
           color: rgba(255, 255, 255, 1);
           line-height: 17px;
           border: 0;
+          margin-left: 24px;
           // position: absolute;
           right: 0;
           top: 0.32rem;
