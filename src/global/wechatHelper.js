@@ -103,7 +103,7 @@ class WechatHelper {
 
     // this.wx.updateAppMessageShareData(conf)
     // this.wx.updateTimelineShareData(conf)
-    this.wx.showAllNonBaseMenuItem()
+    // this.wx.showAllNonBaseMenuItem()
   }
 }
 export default new WechatHelper()
