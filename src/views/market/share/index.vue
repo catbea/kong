@@ -9,7 +9,11 @@
         <span class="distinguish-span">长按识别更多</span>
         <span class="poster-describe">{{buildingInfo.posterDescribe}}</span>
         <span class="building-name">{{buildingInfo.linkerName}}</span>
-        <span class="building-price">价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
+        <span class="building-price" v-if="buildingInfo.linkerPrice=='0'">价格：价格待定</span>
+        <span
+          class="building-price"
+          v-else
+        >价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
         <img class="avatar-view" :src="buildingInfo.avatarMediaid">
         <span class="username-view">{{buildingInfo.agentName}}</span>
         <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
@@ -30,7 +34,7 @@
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2">
-      <img id="imgcard"  />
+      <img id="imgcard">
     </div>
   </div>
 </template>
