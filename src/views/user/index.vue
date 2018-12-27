@@ -1,11 +1,22 @@
 <template>
   <div class="me-page">
-    <business-card @showPopup="this.showPopp" @shareUserCard='this.enterSharePage'></business-card>
+    <business-card @showPopup="this.showPopp" @shareUserCard="this.enterSharePage"></business-card>
     <div class="top-null"></div>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
       <div class="modify-child">
         <div
+          v-if="showInvitation"
+          v-for="(item,index) in headIcons.slice(0,6)"
+          :key="index"
+          class="head-img"
+          @click="selectedHead(item,index)"
+        >
+          <img :src="item.Icon">
+          <p class="grou1Icon-p">{{item.title}}</p>
+        </div>
+        <div
+          v-if="!showInvitation"
           v-for="(item,index) in headIcons"
           :key="index"
           class="head-img"
@@ -89,7 +100,12 @@ export default {
     this.getVipAndPackage()
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo']),
+
+    showInvitation() {
+      //true 不展示  false  展示
+      return this.userInfo.ifView == '0' ? true : false
+    }
   },
   methods: {
     enterSharePage() {
@@ -198,7 +214,7 @@ export default {
     color: #333333;
     font-size: 18px;
     margin-top: 60px;
-    font-weight: bold
+    font-weight: bold;
   }
   > .company-view {
     margin-top: 7px;
@@ -246,7 +262,7 @@ export default {
       }
       > .grou1Icon-p {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;

@@ -40,6 +40,7 @@ const state = {
         userId: ''
       }
     ],
+    ifView:'0',
     token:
       'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ3ZWFpMmUiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTUzIiwiZXhwIjoxNTQ4ODk4NjQ3LCJpYXQiOjE1NDU4OTM4NDd9.3CtR-2yU1z5q1Fs0uU3Om0GaanAvRuDPP0Z55fKjLlDkRWYitGTn4QqOgCd3J_7VXxDlpYkYIEcD9KaGuQMD3w',
     majorCity: '广州市',
@@ -53,7 +54,8 @@ const state = {
     signature: 'mwwwwwwwmm',
     tempPhone: '18603000246',
     vipInfo: '',
-    wechatAccount: ''
+    wechatAccount: '',
+    ifView:'0'
   },
   userVipInfo: {},
   userArea: {
