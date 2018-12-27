@@ -115,7 +115,7 @@ export default {
     this.getShowProjectCount()
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
-    
+    console.log(this.masterList,'初始大师推荐数据');
     
   },
   computed: {
@@ -209,11 +209,8 @@ export default {
         }
       }
       n.masterRecommand = '1'
-      // this.masterList = this.masterList.concat(n)
-      console.log(this.masterList,'大师推荐数据1');
-      this.masterList.unshift(n)   
-      console.log(this.masterList,'大师推荐数据2');
-      
+      this.masterList = this.masterList.concat(n)
+      // this.masterList.unshift(n)   
       this.swipeList = this.masterList.concat(this.commonList)
     },
     spliceMasterHandle(n) {
