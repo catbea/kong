@@ -5,7 +5,7 @@
     <div class="recommend-info" v-if="info" @click="goRecommendInfo">
       <div class="desc-box">
         <!-- <p class="title">{{`${info.district}·${info.linkerName}`}}</p> -->
-        <p class="title">{{`${info.linkerTags.slice(0,2).join('·')}`}}</p>
+        <p class="title">{{`${info.linkerTags&&info.linkerTags.slice(0,2).join('·')}`}}</p>
         <p class="desc">{{`${info.city}${info.openTimes}位经纪人都已开通`}}</p>
       </div>
       <div class="open-btn">立即开通</div>
@@ -57,16 +57,18 @@ export default {
       .title {
         font-size: 24px;
         font-weight: 500;
+        height: 30px;
       }
       .desc {
         font-size: 13px;
         font-weight: 400;
+        margin-top: 4px;
       }
     }
     > .open-btn {
       position: absolute;
       right: 65px;
-      top: 25px;
+      top: 10px;
       display: inline-block;
       font-size: 13px;
       font-weight: 400;
@@ -74,6 +76,8 @@ export default {
       color: #fff;
       border-radius: 5px;
       padding: 5px 15px;
+      height: 32px;
+      line-height: 25px;
     }
   }
 }

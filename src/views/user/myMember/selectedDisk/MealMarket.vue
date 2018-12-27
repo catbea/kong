@@ -88,6 +88,9 @@ export default {
       margin-bottom: 16px;
       li {
         width: 160px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .icon-check {
         flex: 0 0 18px;
