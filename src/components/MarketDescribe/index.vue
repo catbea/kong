@@ -152,7 +152,7 @@ export default {
   width: 375px;
   .market-box {
     width: 343px;
-    padding-top: 13px;
+    padding-top: 16px;
     margin: 0 0px 0 16px;
     .padding {
       padding-bottom: 16px;
@@ -240,11 +240,11 @@ export default {
           }
           .site {
             font-size: 12px;
-
+            margin-top: 6px;
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
-            margin-bottom: 9px;
+            margin-bottom: 5px;
           }
           .unit-price {
             display: flex;

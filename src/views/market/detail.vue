@@ -375,6 +375,7 @@ export default {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.info.city === this.userInfo.vipInfo.city) {
         await marketService.addHouseByVip(this.info.linkerId)
+        await this.getDetailInfo(this.id)
         this.openStatus = false
         this.$toast({
           duration: 1000,

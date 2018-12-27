@@ -27,6 +27,7 @@
       </div>
       <div class="messageInfo-fill"></div>
       <div
+      v-show="messageList.length !=0"
         class="messageInfo-sys"
         v-for="(item,key) in messageList"
         :key="key"
@@ -53,20 +54,7 @@
           </span>
         </div>
       </div>
-      <!-- <div class="messageInfo-sys">
-        <div class="messageInfo-sys-container">
-          <span class="messageInfo-sys-left">
-            <img :src="backIcon" class="sys-left-img">
-          </span>
-          <span class="messageInfo-sys-right">
-            <p class="sys-right-top">
-              张佳玮
-              <span class="sys-right-time">5分钟前</span>
-            </p>
-            <p class="sys-right-btn">涂先生，下午有时间一起去看看吗</p>
-          </span>
-        </div>
-      </div>-->
+     
     </div>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
@@ -124,8 +112,8 @@ export default {
       const res = await dynamicsService.getAgentMsgAndTotal()
       this.messageList = res.msgList
       this.sysMessage = res.systemMessage
-
-      if (res.msgList.length > 0 && res.systemMessage) {
+      debugger
+      if (res.msgList.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
         this.haveData = false
