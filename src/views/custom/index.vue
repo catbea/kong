@@ -119,7 +119,7 @@ export default {
       this.onLoad()
     },
     async onLoad() {
-      this.loading = true
+      // this.loading = true
       const result = await CustomService[this.getServeceFunc()](this.searchVal, this.currentData.page, this.pageSize, this.sort)
       if (this.currentData.page > 1) {
         this.currentData.list = this.currentData.list.concat(result.records)
@@ -131,12 +131,13 @@ export default {
       } else {
         this.currentData.haveData = false
       }
+      this.loading = false
       if (result.pages <= this.currentData.page) {
         this.currentData.finished = true
       } else {
+        this.currentData.finished = false
         this.currentData.page++
       }
-      this.loading = false
     },
     // 获取当前serviec处理方法
     getServeceFunc() {
