@@ -17,7 +17,7 @@ export default {
     let userInfo = {
       token: this.$route.params.token
     }
-    store.dispatch('getUserInfo', userInfo)
+    this.$store.dispatch('getUserInfo', userInfo)
     // this.userId = this.$route.params.userId
     // window.localStorage.setItem('userId', this.userId)
     // this.getUserInfo()
