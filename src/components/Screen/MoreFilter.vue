@@ -13,6 +13,7 @@
   </div>
 </template>
 <script>
+import cloneDeep from 'lodash/cloneDeep'
 export default {
   props: {
     show: { type: Boolean, default: false },
@@ -87,12 +88,13 @@ export default {
   }),
   methods: {
     itemClickHandler(type, value) {
+      debugger
       switch (type) {
         case 'areaSize':
           this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
           break
         case 'type':
-          this.currentValue.type = this.currentValue.value === value ? '-2' : value
+          this.currentValue.type = this.currentValue.type === value ? '-2' : value
           break
         case 'feature':
           if (value === '100') this.currentValue.generalView = typeof this.currentValue.generalView === 'boolean' ? !this.currentValue.generalView : true
@@ -146,20 +148,22 @@ export default {
       }
     },
     confirmHandler() {
+      console.log('confirmHandler');
+      
       this.$emit('confirm', this.currentValue)
       this.$emit('input', this.currentValue)
     }
   },
   watch: {
     value(val) {
-      this.currentValue = val
+      this.currentValue = cloneDeep(val)
     },
-    currentValue: {
-      handler(val) {
-        // this.$emit('input', val)
-      },
-      deep: true
-    }
+    // currentValue: {
+    //   handler(val) {
+    //     // this.$emit('input', val)
+    //   },
+    //   deep: true
+    // }
   }
 }
 </script>
