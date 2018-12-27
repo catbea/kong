@@ -9,9 +9,8 @@
         <div class="meal-market-page-box-top-left">
           <img class="building-img" :src="dataArr.linkerHeadUrl">
           <p
-            class="icon-discount"
-            :style="{'backgroundImage':'url(' + labelImg + ')'}" v-if='dataArr.sale.length'
-          >{{dataArr.sale}}</p>
+            class="icon-discount"  v-show="dataArr.sale"
+            :style="{'backgroundImage':'url(' + labelImg + ')'}" v-if='dataArr.sale.length'>{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
@@ -20,7 +19,23 @@
           </li>
           <li>{{dataArr.city}} {{dataArr.district}} {{dataArr.price}} {{dataArr.priceUnit}}</li>
           <li>
-            <tag-group :arr="dataArr.linkerTags.slice(0,3)"></tag-group>
+            <div
+              class="tag-item-statu blue"
+              v-if="0===dataArr.saleStatus"
+            >{{status[dataArr.saleStatus]}}</div>
+            <div
+              class="tag-item-statu red"
+              v-if="1===dataArr.saleStatus"
+            >{{status[dataArr.saleStatus]}}</div>
+            <div
+              class="tag-item-statu gary"
+              v-if="3===dataArr.saleStatus"
+            >{{status[dataArr.saleStatus]}}</div>
+            <div
+              class="tag-item"
+              v-for="(item,index) in dataArr.linkerTags.slice(0,1)"
+              :key="index" >{{item}}</div>
+            <!-- <tag-group :arr="dataArr.linkerTags.slice(0,3)"></tag-group> -->
           </li>
           <li>{{dataArr.openTimes}}次开通</li>
         </ul>
@@ -39,6 +54,7 @@ export default {
     TagGroup
   },
   data: () => ({
+    status: ['热销中', '即将发售', '售罄'],
     val: null,
     faag: false,
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
@@ -143,6 +159,36 @@ export default {
         }
         li:nth-of-type(3) {
           height: 15px;
+          display: flex;
+          flex-wrap: wrap;
+          .blue {
+            background: rgba(0, 122, 230, 1);
+            color: #ffffff;
+          }
+          .red {
+            background: rgba(234, 77, 46, 0.1);
+            color: #ea4d2e;
+          }
+          .gary {
+            background: rgba(143, 159, 177, 0.15);
+            color: #5c5f66;
+          }
+          .tag-item-statu,
+          .tag-item {
+            display: inline-block;
+            white-space: nowrap;
+            font-size: 12px;
+            transform: scale(0.85);
+            margin: 2px 4px 0px -6px;
+            padding: 1px 5px;
+            border-radius: 3px;
+            height: 15px;
+            line-height: 15px;
+          }
+          .tag-item {
+            background: rgba(143, 159, 177, 0.15);
+            color: #5c5f66;
+          }
         }
         li:nth-of-type(4) {
           font-size: 12px;

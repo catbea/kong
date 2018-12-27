@@ -14,7 +14,7 @@ const state = {
     institutionName: '',
     isOne: false, // true新用户 false老用户
     isVip: '',
-    ifView: true, //是否展示邀请有礼
+    ifView: 0, //是否展示邀请有礼
     labelList: [
       {
         id: '',
@@ -43,7 +43,7 @@ const state = {
     ],
     ifView:'0',
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJnbXk5azQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ4OTExNTQ3LCJpYXQiOjE1NDU5MDY3NDd9.1arYDzt_DWGCH9fAGn9r2dLa1I2JMSO2Fcts-_X8k1W_xlzxodsvHEIwGABnsWvLwhkV0RrJGajw0ayyw8HcDQ',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI2aHhneHgiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ4OTE3NjA3LCJpYXQiOjE1NDU5MTI4MDd9.I10QrbUHlAE9DsikvWdX9rNMhhkRY3jsvxzd56ta-WWOZX9EqwxokUFPFxPBdxUH3TwiI1qT-RjHlzevqoIVgQ',
     majorCity: '广州市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
