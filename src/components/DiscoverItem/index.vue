@@ -35,11 +35,16 @@ export default {
   background: #ffffff;
   margin: 15px;
   display: flex;
+  height: 130px;
   > .discover-list-left {
     position: relative;
     flex: 1;
     height: 100px;
-    padding: 3px 15px;
+    padding-left: 0px;
+    padding-right: 15px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-top: 5px;
     > .list-left-title {
       font-size: 16px;
       font-weight: 400;
@@ -47,8 +52,7 @@ export default {
     }
     > .list-left-time {
       position: absolute;
-      left: 15px;
-      bottom: 7px;
+      bottom: 4px;
       font-size: 12px;
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
@@ -60,6 +64,7 @@ export default {
     border-radius: 6px;
     background-color: #999999;
     margin-right: 16px;
+    margin-top: 10px;
   }
 }
 </style>
