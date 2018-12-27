@@ -48,10 +48,17 @@ class WechatHelper {
     console.log(store.state.wx.jssdkConfig)
 
     // console.log(this.wx);
+
+    this.wx.success(() => {
+      console.log(success);
+      alert('wechat-success')
+    })
+
+    this.wx.fail((err) => {
+      alert('wechat-fail')
+    })
     await this.wx.config(store.state.wx.jssdkConfig)
-    console.log(store.state.wx.jssdkConfig)
     await this.getUserArea()
-    // this._apiCheck()
   }
 
   /**

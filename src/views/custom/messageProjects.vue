@@ -5,20 +5,20 @@
         v-model="loading"
         :finished="finished"
         :finished-text="'没有更多了'"
-        @load="getLinkerList">
+        @load="getLinkerList"
+      >
         <meal-market
-            v-for="(item,index) in projectList"
-            :key="index"
-            :dataArr="item"
-            :indexData="index"
-            :showData="checkedList.indexOf(index) > -1"
-            @click.native="selectHandle(item)" ></meal-market>
+          v-for="(item,index) in projectList"
+          :key="index"
+          :dataArr="item"
+          :indexData="index"
+          :showData="checkedList.indexOf(index) > -1"
+          @click.native="selectHandle(item)"
+        ></meal-market>
       </van-list>
     </div>
     <div class="send-box">
-      <div class="cancel-box" @click="sendCancel">
-        取消
-      </div>
+      <div class="cancel-box" @click="sendCancel">取消</div>
       <span @click="sendProjectHandle" class="send-button">发送</span>
     </div>
   </div>
@@ -55,12 +55,22 @@ export default {
 
       let _list = []
       for (let item of res.records) {
+        let buildPrice = ''
+        let priceUnit = ''
+        if (item.price === 0) {
+          buildPrice = '价格待定'
+          priceUnit = ''
+        } else {
+          buildPrice = item.price + ''
+          priceUnit = item.priceUnit
+        }
+
         let obj = {
           linkerId: item.linkerId,
           linkerUrl: item.linkerUrl,
           sale: item.sale,
           linkerName: item.linkerName,
-          site: `${item.city} ${item.county} ${item.price} ${item.priceUnit}`, //'深圳 南山 120000元/㎡',
+          site: `${item.city} ${item.county} ${buildPrice} ${priceUnit}`, //'深圳 南山 120000元/㎡',
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           isChecked: false,
@@ -144,7 +154,7 @@ export default {
       border-radius: 22px;
       border: 1px solid;
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
       line-height: 30px;
