@@ -43,7 +43,7 @@ export default {
 <style lang="less">
 .agent-card {
   margin: 0 15px;
-  border-radius: 6px;
+  border-radius: 10px;
 }
 .title-agent {
   background: #ffffff;
@@ -65,19 +65,19 @@ export default {
         font-size: 18px;
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
-        padding: 2px 0 0 5px;
+        padding: 0 0 0 5px;
       }
       > .introduce-company {
         font-size: 12px;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
-        padding: 3px 0 1px 5px;
+        padding: 8px 0 5px 5px;
       }
       > .introduce-adder {
         font-size: 12px;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
-        padding: 3px 0 3px 5px;
+        padding: 0 0 0 5px;
       }
     }
   }

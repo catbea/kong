@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="agent-box-right" @click="showQRCode">
-          <button class="agent-right">+ 名片</button>
+          <button class="agent-right"><b>+</b> 名片</button>
         </div>
       </div>
       <!-- <div
@@ -374,6 +374,7 @@ export default {
           margin: 0 5px;
         }
         > .agent-info {
+          padding-top: 3px;
           font-weight: 400;
           > .agent-name {
             font-size: 14px;
@@ -398,6 +399,10 @@ export default {
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           border: 0;
+          margin-right: 7px;
+          b{
+            font-size: 14px;
+          }
         }
       }
     }
@@ -432,6 +437,7 @@ export default {
       }
     }
     > .agent-card {
+      margin-top: 8px;
       margin-bottom: 10px;
     }
   }
