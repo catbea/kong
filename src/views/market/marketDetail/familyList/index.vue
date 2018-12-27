@@ -12,7 +12,8 @@
               </div>
               <ul class="family-list-page-box-center">
                 <li>{{itemA.householdDesc}}</li>
-                <li>建面 {{itemA.area}} {{itemA.orientations}}朝向</li>
+                <li v-if="itemA.orientations=='暂无信息'">建面 {{itemA.area}} 暂无朝向信息</li>
+                <li v-else>建面 {{itemA.area}} {{itemA.orientations}}朝向</li>
                 <li>
                   <div class="tag-item"  :class="styleColor[indexA]"  ref="text">{{saleStatus[itemA.saleStatus]}}</div>
                 </li>
@@ -20,7 +21,7 @@
               </ul>
               </div>
               <div class="family-list-page-box-right">
-                <a :href=itemA.linkerUrl><p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p></a>
+                <a v-if="itemA.linkerUrl" :href=itemA.linkerUrl><p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p></a>
                 <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
               </div>
               </div>

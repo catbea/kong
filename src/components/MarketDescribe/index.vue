@@ -74,7 +74,9 @@ export default {
   },
   created() {
     this.dredgeColor()
-    this.tags.unshift(this.saleStatus)
+    if(this.tags.indexOf(this.saleStatus)<0){
+      this.tags.unshift(this.saleStatus)
+    }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
@@ -116,6 +118,8 @@ export default {
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.status == 0) {
+        console.log(this.itemInfo.city,'------',this.userInfo.vipInfo.city);
+        
         if (this.itemInfo.city === this.userInfo.vipInfo.city) {
           await marketService.addHouseByVip(this.itemInfo.linkerId)
           this.status = 2
@@ -236,11 +240,11 @@ export default {
           }
           .site {
             font-size: 12px;
-
+            margin-top: 6px;
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
-            margin-bottom: 9px;
+            margin-bottom: 5px;
           }
           .unit-price {
             display: flex;

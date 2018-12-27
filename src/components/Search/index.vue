@@ -1,7 +1,7 @@
 <template>
   <div class="search-container">
     <div class="site-box" @click="siteClickHandler">
-      {{conf.siteText}}
+      <div class="keyword">{{conf.siteText}}</div>
       <div class="bg_img arrow-icon" :style="{'backgroundImage':'url(' + arrowIcon + ')'}"></div>
       <div class="border-right"></div>
     </div>
@@ -70,19 +70,25 @@ export default {
     font-size: 12px;
     color: #666666;
     line-height: 30px;
-    width: 80px;
     height: 100%;
     padding: 0 0 0 10px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     display: inline-block;
+    width: 90px;
+    > .keyword {
+      display: inline-block;
+      width: 50px;
+      text-align: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
     > .arrow-icon {
       position: absolute;
       display: inline-block;
       width: 16px;
       height: 16px;
       top: 7px;
+      left: 55px;
     }
     > .border-right {
       position: absolute;

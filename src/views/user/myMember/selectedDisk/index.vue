@@ -129,7 +129,6 @@ export default {
         param = Object.assign(param, _filters)
         //
       }
-
       let res = []
       if (this.type == 'package') {
         param.city = this.searchInfo.siteText
@@ -155,21 +154,18 @@ export default {
         }
         _list.push(obj)
       }
-      
       this.projectList = this.page <= 1 ? _list : this.projectList.concat(_list)
-
       if (res.pages === 0 || this.page >= res.pages) {
         this.finished = true
       }
-
       if (this.type == 'package') {
         //套盘跳过来的，加载套盘内容
         if (this.page == 1) {
           await this.getPackageInfo()
+          this.packageCheckedInit()
         }
-        this.packageCheckedInit()
+        
       }
-
       this.page++
       this.loading = false
     },
@@ -279,6 +275,7 @@ export default {
       font-size: 12px;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
+      box-shadow: inset 1px -0 -1px -0 #c8c7cc;
     }
     .icon-check {
       width: 18px;

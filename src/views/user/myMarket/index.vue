@@ -207,7 +207,8 @@ export default {
         }
       }
       n.masterRecommand = '1'
-      this.masterList = this.masterList.concat(n)
+      
+      this.masterList.unshift(n)   
       this.swipeList = this.masterList.concat(this.commonList)
     },
     spliceMasterHandle(n) {
@@ -298,7 +299,12 @@ export default {
       obj.displayFlag = 0
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
-      this.showMarketList = this.showMarketList.concat(resShow.records)
+      // 数据重复加载
+      if(resShow.records && resShow.records.length >= resShow.total) {
+        this.showMarketList = resShow.records
+      } else {
+        this.showMarketList = this.showMarketList.concat(resShow.records)
+      }
       let arr = []
       let json = {}
       for (let index = 0; index < this.showMarketList.length; index++) {
@@ -320,7 +326,6 @@ export default {
     },
     async notShowGetMyMarketInfo() {
       // this.notShowProjectName,this.notShowProjectFilters, this.notShowPage
-      console.log(1111111111111);
       
       let name = this.notShowProjectName
       let filters = this.notShowProjectFilters

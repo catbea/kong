@@ -188,6 +188,7 @@ export default {
     height: 200px;
     text-align: center;
     margin-top: 28px;
+    padding: 20px;
   }
   > .notice-view {
     color: #969ea8;
@@ -197,6 +198,7 @@ export default {
     color: #333333;
     font-size: 18px;
     margin-top: 60px;
+    font-weight: bold
   }
   > .company-view {
     margin-top: 7px;
