@@ -265,7 +265,7 @@ export default {
       > .dynamicsInfo-list-right {
         border-radius: 6px;
         margin-left: 12px;
-
+        margin-top: 2px;
         > .dynamicsInfo-list-right-title {
           font-size: 16px;
           font-weight: 400;
@@ -277,6 +277,7 @@ export default {
             text-overflow: ellipsis; /* 超出内容显示为省略号*/
             white-space: nowrap; /*文本不进行换行*/
             width: 70%;
+            font-weight:600;
             margin-top: -5px;
           }
           .dynamicsInfo-list-right-tab-div {

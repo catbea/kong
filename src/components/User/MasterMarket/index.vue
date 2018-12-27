@@ -131,6 +131,14 @@ export default {
     },
     limitList() {
       if (this.swipeList.length > 5) {
+        this.$dialog.confirm({
+          title: '当前推荐楼盘数量达到上限',
+          message: '继续推荐将取消最初推荐楼盘是否确定推荐当前楼盘'
+        }).then(() => {
+          // on confirm
+        }).catch(() => {
+          // on cancel
+        });
         return this.swipeList.slice(0, 5)
       } else {
         return this.swipeList
