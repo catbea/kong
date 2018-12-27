@@ -33,16 +33,19 @@ export default async (to, from, next) => {
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
-      console.log(36,userInfo,userInfo.payCorpId);
-      
-      
+      console.log(36, userInfo, userInfo.payCorpId);
+
+
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
         if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
-          try{
-            window.awHelper.wechatHelper.init()
-          }catch(e){
+          try {
+            setTimeout(() => {
+              window.awHelper.wechatHelper.init()
+            }, 3000)
+
+          } catch (e) {
             console.log('[error:window.awHelper.wechatHelper]')
             next()
           }
@@ -60,8 +63,8 @@ export default async (to, from, next) => {
       } else {
         console.log('wxAuthObject');
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
-        console.log('wxAuthObject',wxAuthObject);
-        
+        console.log('wxAuthObject', wxAuthObject);
+
         payCorpId = wxAuthObject.payCorpId
         let userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId
