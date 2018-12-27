@@ -275,6 +275,7 @@ export default {
       font-size: 12px;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
+      box-shadow: inset 1px -0 -1px -0 #c8c7cc;
     }
     .icon-check {
       width: 18px;
