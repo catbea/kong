@@ -40,11 +40,12 @@ export default {
     position: relative;
     flex: 1;
     height: 100px;
-    padding-left: 0px;
-    padding-right: 15px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-top: 5px;
+    padding: 6px 15px;
+    // padding-left: 0px;
+    // padding-right: 15px;
+    // padding-top: 0px;
+    // padding-bottom: 0px;
+    // margin-top: 5px;
     > .list-left-title {
       font-size: 16px;
       font-weight: 400;
