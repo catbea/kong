@@ -5,7 +5,7 @@
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div v-show="showMarketListCount>=showFilterLimit" style="width:343px;margin-left:16px;">
+        <div v-show="showMarketListCount>=showFilterLimit" style="margin-right:16px;margin-left:16px;">
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="showProjectFilters" :local="this.selectedCity"></screen>
         </div>
@@ -20,7 +20,7 @@
       
       <!-- 不展示的楼盘 -->
       <div class="market-right" v-show="!myMarketShow">
-        <div v-show="notShowMarketListCount>=showFilterLimit" style="width:343px;margin-left:16px;">
+        <div v-show="notShowMarketListCount>=showFilterLimit" style="margin-right:16px;margin-left:16px;">
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
@@ -115,7 +115,7 @@ export default {
     this.getShowProjectCount()
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
-    
+    console.log(this.masterList,'初始大师推荐数据');
     
   },
   computed: {
@@ -209,11 +209,8 @@ export default {
         }
       }
       n.masterRecommand = '1'
-      // this.masterList = this.masterList.concat(n)
-      console.log(this.masterList,'大师推荐数据1');
-      this.masterList.unshift(n)   
-      console.log(this.masterList,'大师推荐数据2');
-      
+      this.masterList = this.masterList.concat(n)
+      // this.masterList.unshift(n)   
       this.swipeList = this.masterList.concat(this.commonList)
     },
     spliceMasterHandle(n) {
@@ -306,7 +303,7 @@ export default {
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
       // 数据重复加载
-      if(resShow.records && resShow.records.length >= resShow.total) {
+      if(page==1) {
         this.showMarketList = resShow.records
       } else {
         this.showMarketList = this.showMarketList.concat(resShow.records)
