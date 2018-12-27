@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!haveData">
+    <div v-if="haveData">
       <van-list
         class="bill-page"
         :style="{background:show==null?'#ffffff':'#F7F9FA'}"
@@ -57,7 +57,7 @@
         </div>
       </van-list>
     </div>
-    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="haveData"></null>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
 </template>
 <script>
