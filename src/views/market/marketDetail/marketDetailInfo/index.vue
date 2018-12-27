@@ -170,7 +170,7 @@ export default {
   .title {
     background: #fff;
     height: 39px;
-    padding: 13px 0 0 15px;
+    padding: 3px 0 0 15px;
     border-bottom: 1px solid #eeeeee;
     ul {
       margin-right: 20px;
