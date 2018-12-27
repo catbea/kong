@@ -1,7 +1,7 @@
 <template>
   <div class="popularity-filter" v-if="show">
     <ul>
-      <li class="van-hairline--bottom" v-for="(item,index) in conf" :key="index" :class="checked===index&&'active'" @click="checked=index">{{item}}</li>
+      <li class="van-hairline--bottom" v-for="(item,index) in conf" :key="index" :class="checked===index&&'active'" @click="itemClick(item,index)">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -22,6 +22,12 @@ export default {
       '10000,-1': '10000以上'
     }
   }),
+  methods: {
+    itemClick(item, index) {
+      this.checked = index
+      this.$emit('checkedText', item)
+    }
+  },
   watch: {
     checked(val) {
       this.$emit('input', val)
