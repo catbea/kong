@@ -21,7 +21,7 @@
             @click.native="selectHandle(item)" ></meal-market>
       </van-list>
     </div>
-    <div class="check-all-box">
+    <div class="check-all-box scale-1px">
       <div class="img-box" v-show="type == 'vip'">
         <span class="icon-check bg_img"
         :style="{backgroundImage:'url('+(checkAllShow ? checkColorImg : checkImg)+')'}"
@@ -275,7 +275,6 @@ export default {
       font-size: 12px;
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
-      box-shadow: inset 1px -0 -1px -0 #c8c7cc;
     }
     .icon-check {
       width: 18px;

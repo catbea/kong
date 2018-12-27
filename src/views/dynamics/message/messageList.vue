@@ -27,6 +27,7 @@
       </div>
       <div class="messageInfo-fill"></div>
       <div
+      v-show="messageList.length !=0"
         class="messageInfo-sys"
         v-for="(item,key) in messageList"
         :key="key"

@@ -1,16 +1,16 @@
 <template>
   <div class="market-page">
     <div class="fixed">
-    <div class="search-box van-hairline--bottom">
-      <div class="search-comp">
-        <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
+      <div class="search-box van-hairline--bottom">
+        <div class="search-comp">
+          <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
+        </div>
       </div>
-    </div>
-    <screen v-model="projectFilters" :local="this.selectedCity"></screen>
+      <screen v-model="projectFilters" :local="this.selectedCity" ></screen>
     </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
-    <div class="all-market">
-      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getProjectList">
+    <div class="all-market" style="min-height:100px;">
+      <van-list v-model="loading" style="min-height:100px;" :finished="finished" :finished-text="'没有更多了'" :offset="1000" @load="getProjectList">
         <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
@@ -34,14 +34,14 @@ export default {
     AlreadyOpen
   },
   computed: {
-    ...mapGetters(['userArea','userInfo'])
+    ...mapGetters(['userArea', 'userInfo'])
   },
   data: () => ({
     selectedCity: '',
     broker: 705,
     marketList: [],
     page: 1,
-    pageSize: 5,
+    pageSize: 10,
     loading: false,
     finished: false,
     projectFilters: {},
@@ -59,10 +59,11 @@ export default {
   watch: {
     projectFilters: {
       handler(val) {
-        this.finished = false
         this.page = 1
         this.marketList = []
-        this.getProjectList()
+        this.finished = false
+        this.loading = false
+        
       },
       deep: true
     }
@@ -73,10 +74,6 @@ export default {
     this.getBrokerInfo()
   },
   methods: {
-    onLoad() {
-      this.getProjectList()
-    },
-
     async getProjectList() {
       let param = { current: this.page, size: this.pageSize }
       //组装检索条件
@@ -84,11 +81,10 @@ export default {
       let _filters = screenFilterHelper(this.projectName, mergeFilters)
       param = Object.assign(param, _filters)
       param.city = this.selectedCity
-      // console.log(param)
-
       const res = await marketService.getHouseList(param)
       this.marketList = this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {
+        
         this.finished = true
       }
       this.page++
@@ -119,16 +115,16 @@ export default {
 </script>
 <style lang="less">
 .market-page {
-  .fixed{
-    position:fixed;
-    width:100%;
-    background:#FFFFFF;
-    z-index:3;
+  .fixed {
+    position: fixed;
+    width: 100%;
+    background: #ffffff;
+    z-index: 3;
   }
-  .already-open-page{
-    margin-top:86px;
+  .already-open-page {
+    margin-top: 86px;
   }
-   .search-box {
+  .search-box {
     position: relative;
     width: 375px;
     height: 44px;
@@ -145,6 +141,9 @@ export default {
       right: 8px;
       top: 15px;
     }
+  }
+  .all-market{
+    margin-top:5px;
   }
 }
 </style>

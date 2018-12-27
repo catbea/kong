@@ -34,7 +34,7 @@
       <div class="arrow-icon">
         <van-icon name="arrow"/>
       </div>
-      <div class="bottom-line"></div>
+      <div class="van-hairline--bottom bottom-line"></div>
       <div class="carousel-container">
         <div class="marquee-box">
           <marquee :itemHeight="`${50/37.5}rem`" v-if="data.simpleDynamic.length>0">
@@ -201,7 +201,7 @@ export default {
       width: 94%;
       height: 1px;
       border-radius: 1px;
-      background: #eeeeee;
+      // background: #eeeeee;
     }
     > .carousel-container {
       position: relative;
