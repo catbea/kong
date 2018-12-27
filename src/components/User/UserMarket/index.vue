@@ -408,9 +408,14 @@ export default {
       }
       ul {
         width: 181px;
+        li{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
         li:nth-of-type(1) {
           font-size: 16px;
-
+          
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           line-height: 16px;
