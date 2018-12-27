@@ -132,6 +132,9 @@ export default {
         document.getElementsByClassName('router-view')[0].style.overflowY = 'auto' // 兼容pc测试
       }
     },
+    touchHandler(e) {
+      return e.preventDefault()
+    },
     showProjectName(val) {
       clearTimeout(this.setShowName)
       this.setShowName = setTimeout(() => {
@@ -402,6 +405,12 @@ export default {
         const element = this.showMarketList[index]
         if (n.linkerId == element.linkerId) {
           this.showMarketList.splice(index, 1)
+        }
+      }
+      for (let i = 0; i < this.swipeList.length; i++) {
+        const element = this.swipeList[i];
+        if(n.linkerId == element.linkerId){
+          this.swipeList.splice(i,1)
         }
       }
       if(this.showMarketList.length==0){
