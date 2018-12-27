@@ -14,7 +14,7 @@
           <p class="retry-text" @click="retryLocation">重新定位</p>
         </div>
       </div>
-      <div class="selection-box">
+      <div class="selection-box" id="hot-city-box">
         <div class="hot-container">
           <p class="hot-title">热门城市</p>
           <div class="hot-item-content">
@@ -24,7 +24,7 @@
         <div class="index-container">
           <ul class="index-content">
             <li class="indexlist-item" v-for="arr in cityMap">
-              <p class="index-item-title">{{arr.character}}</p>
+              <p class="index-item-title" :id="'city_'+arr.character">{{arr.character}}</p>
               <ul class="index-content-item">
                 <p class="van-hairline--bottom index-content-item-link" v-for="item in arr.city" @click="itemClick(item)">{{item}}</p>
               </ul>
@@ -103,6 +103,12 @@ export default {
       window.addEventListener('touchmove', this.handleTouchMove, false)
       window.addEventListener('touchend', this.handleTouchEnd)
       console.log(e.changedTouches[0].clientY);
+
+      if(e.target.innerText == '热'){
+        document.getElementById('hot-city-box').scrollIntoView();
+      } else {
+        document.getElementById('city_'+e.target.innerText).scrollIntoView();
+      }
 
       // this.scrollList(e.changedTouches[0].clientY)
 

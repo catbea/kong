@@ -32,5 +32,6 @@ export default {
   margin: 1px 4px 1px -6px;
   padding: 3px 8px;
   border-radius: 3px;
+  margin-left: 1px;
 }
 </style>

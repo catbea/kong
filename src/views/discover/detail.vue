@@ -337,15 +337,15 @@ export default {
     width: 100%;
     height: 32px;
     margin-bottom: 0;
-    background: #d8d8d8;
-    margin-top: 28px;
+    background: #eeeeee;
+    margin-top: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     > .info-view {
       color: #666666;
       font-size: 12px;
-      background-color: #d8d8d8;
+      background-color: #eeeeee;
     }
   }
 }

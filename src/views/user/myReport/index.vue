@@ -70,7 +70,7 @@ export default {
     return {
       show: 1,
       item: [],
-      nullIcon: require('IMG/user/empty_report@2x.png'),
+      nullIcon: require('IMG/user/no_report.png'),
       nullcontent: '您还没有任何报备信息',
       reportList: [],
       reportStatusInfo: {
