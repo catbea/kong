@@ -84,7 +84,8 @@ export default {
       let params = screenFilterHelper(name, mergeFilters)
       params.current = page
       params.size = this.pageSize
-      params.city = this.userArea.myReportCity
+      // params.city = this.userArea.myReportCity
+      params.city = this.searchInfo.siteText
       const result = await reportServer.getReportBuildingList(params)
 
       if (result.records.length > 0) {
@@ -116,7 +117,7 @@ export default {
         }
       }
       this.loading = false
-      if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == '深圳市') {
+      if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == this.searchInfo.siteText) {
         if (result.total < 20) {
           this.isShowHeader = false
         } else {
