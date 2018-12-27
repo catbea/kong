@@ -103,7 +103,8 @@ export default {
       siteText: '全国',
       placeholderText: '请输入楼盘'
     },
-    dataArr: []
+    dataArr: [],
+    sortShow: false
   }),
   async created() {
     this.selectedCity = this.userArea.myMarketSelectedCity
@@ -122,6 +123,15 @@ export default {
     ...mapGetters(['userArea'])
   },
   watch: {
+    sortShow(val) {
+      if (val) {
+        document.removeEventListener('touchmove', this.touchHandler, false)
+        document.getElementsByClassName('router-view')[0].style.overflowY = 'hidden' // 兼容pc测试
+      } else {
+        document.addEventListener('touchmove', null)
+        document.getElementsByClassName('router-view')[0].style.overflowY = 'auto' // 兼容pc测试
+      }
+    },
     showProjectName(val) {
       clearTimeout(this.setShowName)
       this.setShowName = setTimeout(() => {
