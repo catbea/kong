@@ -180,7 +180,10 @@ export default {
             position: absolute;
             left: -4px;
             top: 4px;
-            width: 36px;
+            white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 36px; 
             height: 24px;
             text-align: center;
             line-height: 20px;
