@@ -299,7 +299,12 @@ export default {
       obj.displayFlag = 0
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
-      this.showMarketList = this.showMarketList.concat(resShow.records)
+      // 数据重复加载
+      if(resShow.records && resShow.records.length >= resShow.total) {
+        this.showMarketList = resShow.records
+      } else {
+        this.showMarketList = this.showMarketList.concat(resShow.records)
+      }
       let arr = []
       let json = {}
       for (let index = 0; index < this.showMarketList.length; index++) {
