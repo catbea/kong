@@ -44,17 +44,24 @@ export default (name, filters, conf = {}) => {
   if (filters.type && filters.type !== '-2') {
     result[conf.type] = filters.type
   }
+
   // 特色
-  if (filters.generalView) {
-    result[conf.generalView] = '1'
-  } else {
-    result[conf.generalView] = '0'
+  // 全景
+  if (filters.hasOwnProperty('generalView') && typeof (filters.generalView) === 'boolean') {
+    if (filters.generalView) {
+      result[conf.generalView] = '1'
+    } else {
+      result[conf.generalView] = '0'
+    }
   }
 
-  if (filters.discountHouse) {
-    result[conf.discountHouse] = '1'
-  } else {
-    result[conf.discountHouse] = '0'
+  // 优惠
+  if (filters.hasOwnProperty('discountHouse') && typeof (filters.discountHouse) === 'boolean') {
+    if (filters.discountHouse) {
+      result[conf.discountHouse] = '1'
+    } else {
+      result[conf.discountHouse] = '0'
+    }
   }
   // 销售状态
   if (filters.saleStatus && filters.saleStatus !== '-1') result[conf.saleStatus] = filters.saleStatus
