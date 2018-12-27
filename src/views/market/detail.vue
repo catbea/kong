@@ -117,7 +117,7 @@
                   v-if="item.orientations=='暂无信息'"
                 >{{`建面${item.area} 暂无朝向信息`}}</p>
                 <p class="house-type-area" v-else>{{`建面${item.area}${item.orientations}朝向`}}</p>
-                <p class="house-type-price" v-if="item.price=='暂无信息'">{{item.price}}</p>
+                <p class="house-type-price" v-if="item.price=='价格待定'">{{item.price}}</p>
                 <p class="house-type-price" v-else>约{{item.price}}</p>
               </div>
             </div>
@@ -307,7 +307,7 @@ export default {
     // },
     // 获取楼盘详情
     async getDetailInfo(id) {
-      const res = await marketService.getLinkerDetail(id) 
+      const res = await marketService.getLinkerDetail(id)
       this.info = res
       console.log(res,'该楼盘详情');
       if(!this.info.linkerOtherList){this.othersTitleConf.title=''}
@@ -375,7 +375,6 @@ export default {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.info.city === this.userInfo.vipInfo.city) {
         await marketService.addHouseByVip(this.info.linkerId)
-        await this.getDetailInfo(this.id)
         this.openStatus = false
         this.$toast({
           duration: 1000,
