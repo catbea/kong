@@ -39,11 +39,11 @@ export default async (to, from, next) => {
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
-        console.log(store.getters.jssdkConfig, '[store.getters.jssdkConfig]')
         if (!store.getters.jssdkConfig) {
           try{
             window.awHelper.wechatHelper.init()
           }catch(e){
+            console.log('[error:window.awHelper.wechatHelper]')
             next()
           }
         }
