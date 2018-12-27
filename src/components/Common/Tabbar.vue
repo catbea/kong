@@ -49,6 +49,5 @@ export default {
   z-index: 100;
   display: flex;
   align-items: center;
-  // box-shadow: inset 1px -0 -1px -0 #c8c7cc;
 }
 </style>

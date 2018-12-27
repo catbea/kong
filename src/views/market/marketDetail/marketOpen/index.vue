@@ -259,7 +259,8 @@ export default {
     height: 17px;
     line-height: 17px;
     text-align: center;
-    margin-top: 18px;
+    margin: 18px 0 0 0;
+
     span:nth-child(1) {
       font-size: 10px;
       font-weight: 400;
