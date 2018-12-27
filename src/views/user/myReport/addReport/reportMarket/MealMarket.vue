@@ -10,7 +10,7 @@
           <img class="building-img" :src="dataArr.linkerHeadUrl">
           <p
             class="icon-discount"
-            :style="{'backgroundImage':'url(' + labelImg + ')'}"
+            :style="{'backgroundImage':'url(' + labelImg + ')'}" v-if='dataArr.sale.length'
           >{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
