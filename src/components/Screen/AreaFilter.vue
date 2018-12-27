@@ -26,6 +26,7 @@ export default {
   watch: {
     checked(val) {
       this.$emit('input', val)
+      this.$emit('checkedText',val)
     },
     value(val) {
       this.checked = val

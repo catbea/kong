@@ -2,16 +2,16 @@
   <div class="screen-container">
     <ul class="screen-ul">
       <li class="area" :class="item.index===currentIndex&&'selected'" v-for="item in conf" :key="item.index" @click="itemClickHandler(item)">
-        <span>{{item.name}}</span>
+        <span class="value-content">{{(item.value ===''||item.value ==='不限')?item.name:item.value}}</span>
         <span class="bg_img" :style="{'backgroundImage':'url(' + (item.index===currentIndex ? arrowUpIcon : arrowDownIcon )  + ')'}"></span>
       </li>
       <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
     </ul>
     <div class="choose-container" @click="coverClickHandler">
-      <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area"></area-filter>
-      <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice"></price-filter>
-      <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity"></popularity-filter>
-      <more-filter :show="currentIndex===3" v-model="filters.moreFilters"></more-filter>
+      <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @checkedText="areaStrChange"></area-filter>
+      <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice" @checkedText="priceStrChange"></price-filter>
+      <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @checkedText="popularityStrChange"></popularity-filter>
+      <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @confirm="confirmHandler"></more-filter>
       <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort"></sort-way>
     </div>
   </div>
@@ -45,14 +45,19 @@ export default {
     filters: {
       baseFilters: {
         area: '',
-        aveprice: '-1,-1',
+        aveprice: '-1,-1,-1',
         popularity: '-1,-1',
         sort: ''
       },
       localCity: '',
       moreFilters: {}
     },
-    conf: [{ index: 0, name: '区域', checked: false }, { index: 1, name: '均价', checked: false }, { index: 2, name: '人气', checked: false }, { index: 3, name: '更多', checked: false }],
+    conf: [
+      { index: 0, name: '区域', value: '', checked: false },
+      { index: 1, name: '均价', value: '', checked: false },
+      { index: 2, name: '人气', value: '', checked: false },
+      { index: 3, name: '更多', value: '', checked: false }
+    ],
     currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
     arrowDownIcon: require('IMG/market/listArrowDown.png')
@@ -69,7 +74,28 @@ export default {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
     },
     coverClickHandler() {
+      // this.currentIndex = -1
+    },
+    // 区域文字修改
+    areaStrChange(val) {
+      this.conf[0].value = val
       this.currentIndex = -1
+    },
+    // 价格文字修改
+    priceStrChange(val) {
+      this.conf[1].value = val
+      this.currentIndex = -1
+    },
+    // 人气文字修改
+    popularityStrChange(val) {
+      this.conf[2].value = val
+      this.currentIndex = -1
+    },
+    // 确认个数修改
+    confirmHandler(val) {
+      // this.filters.moreFilters = val
+      this.currentIndex = -1
+      // this.$emit('input', val)
     }
   },
   watch: {
@@ -111,8 +137,15 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     padding-left: 18px;
+    margin-bottom: 5px;
     li {
       display: flex;
+      > .value-content {
+        white-space: nowrap;
+        max-width: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       span {
         display: block;
         font-size: 14px;
