@@ -108,8 +108,8 @@ export default {
     dialogHandle(n) {
       this.$dialog.alert({
         message: n,
-        confirmButtonText: '知道啦',
-        className: 'renewDialog'
+        confirmButtonText: '知道啦'
+        
       }).then(() => {
         // on close
       })
@@ -192,11 +192,18 @@ export default {
       }
     },
     renewHandle(n) {
+      this.$dialog.alert({
+        message: '该楼盘不可续费非当前所属公司下楼盘无法开通续费',
+        confirmButtonText:'知道啦'
+        
+      }).then(() => {
+        // on close
+      });
       if(this.renewInfo.thisDistributor===false){
         this.$dialog.alert({
         message: '该楼盘不可续费非当前所属公司下楼盘无法开通续费',
-        confirmButtonText:'知道啦',
-        className:'distributor'
+        confirmButtonText:'知道啦'
+        
       }).then(() => {
         // on close
       });
