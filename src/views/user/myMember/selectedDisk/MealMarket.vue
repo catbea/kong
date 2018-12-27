@@ -2,20 +2,30 @@
   <div class="meal-market-page">
     <div class="meal-market-page-box">
       <div class="meal-market-page-box-top">
-        <span class="icon-check bg_img" :style="{backgroundImage:'url('+ ( dataArr.isUnable ? checkColorUnAble : (dataArr.isChecked ? checkColorImg : checkImg) )+')'}"></span>
-        <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
-          <p class="icon-discount bg_img" v-show="dataArr.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
-          <span class="bg_img icon-play" v-show="dataArr.ifPanorama==1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
+        <span
+          class="icon-check bg_img"
+          :style="{backgroundImage:'url('+ ( dataArr.isUnable ? checkColorUnAble : (dataArr.isChecked ? checkColorImg : checkImg) )+')'}"
+        ></span>
+        <div
+          class="meal-market-page-box-top-left bg_img"
+          :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}"
+        >
+          <p
+            class="icon-discount bg_img"
+            v-show="dataArr.sale"
+            :style="{backgroundImage:'url('+discountImg+')'}"
+          >{{dataArr.sale}}</p>
+          <span
+            class="bg_img icon-play"
+            v-show="dataArr.ifPanorama==1"
+            :style="{backgroundImage:'url('+imgPlay+')'}"
+          ></span>
         </div>
         <ul>
           <li>
-            <div>
-             {{dataArr.linkerName}}
-            </div>
+            <div>{{dataArr.linkerName}}</div>
           </li>
-          <li>
-            {{dataArr.site}}
-          </li>
+          <li>{{dataArr.site}}</li>
           <li>
             <div
               class="tag-item-statu blue"
@@ -32,12 +42,11 @@
             <div
               class="tag-item"
               v-for="(item,index) in dataArr.condition.slice(0,1)"
-              :key="index" >{{item}}</div>
+              :key="index"
+            >{{item}}</div>
             <!-- <tag-group :arr="dataArr.condition"></tag-group> -->
           </li>
-          <li>
-            {{dataArr.open}}
-          </li>
+          <li>{{dataArr.open}}</li>
         </ul>
       </div>
       <div class="meal-market-page-box-bottom" v-if="dataArr.divisionRules">
