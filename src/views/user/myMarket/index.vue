@@ -320,6 +320,8 @@ export default {
       this.showMarketList=arr
       if(this.showMarketList.length==0){
       this.yes=true
+    }else{
+      this.yes=false
     }
       if (resShow.pages === 0 || this.showPage === resShow.pages) {
         this.showFinished = true
@@ -363,6 +365,8 @@ export default {
       
       if(this.notShowMarketList.length==0){
       this.no=true
+      }else{
+        this.no=false
       }
       if (resNotShow.pages === 0 || this.notShowPage === resNotShow.pages) {
         this.notShowFinished = true
