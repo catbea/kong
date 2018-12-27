@@ -7,7 +7,9 @@
         show-action
         @keypress="onKeypressHandler"
         @search="onSearchHandler"
+        background="#fff"
       >
+        <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon"/>
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
     </div>
@@ -270,6 +272,17 @@ export default {
   > .search-box {
     .van-field__body {
       height: 100%;
+    }
+    .van-cell{
+      background-color: #F5F5F5;
+    }
+    .search-icon{
+      width: 24px;
+      height: 24px;
+    }
+    .van-field__control{
+      height: 24px;
+      line-height: 24px;
     }
   }
   > .history-words-content {

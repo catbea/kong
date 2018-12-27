@@ -36,12 +36,13 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
+  padding: 10px 15px 3px;
   h5 {
     display: inline-block;
     font-size: 20px;
     font-weight: 600;
     color: #333333;
+    padding-top: 10px;
   }
   .link-text {
     font-size: 13px;

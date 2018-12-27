@@ -7,7 +7,8 @@
           <ul>
             <li>{{model.posterDescribe}}</li>
             <li>{{model.linkerName}}</li>
-            <li>价格：{{model.linkerPrice}}{{model.priceUnit}}</li>
+            <li v-if="model.linkerPrice=='0'">价格: 价格待定</li>
+            <li v-else>价格：{{model.linkerPrice}}{{model.priceUnit}}</li>
           </ul>
           <div class="QRcode">
             <img class="qrcode-view" :src="model.qrCode">
@@ -82,7 +83,7 @@ export default {
           }
           li:nth-child(3) {
             font-size: 9px;
-            
+
             font-weight: 400;
             color: rgba(229, 179, 123, 1);
             line-height: 13px;
@@ -123,7 +124,7 @@ export default {
             p {
               transform: scale(0.84);
               font-size: 12px;
-              
+
               font-weight: 600;
               color: rgba(164, 184, 213, 1);
               line-height: 13px;
@@ -134,7 +135,7 @@ export default {
           margin-left: 19px;
           font-size: 12px;
           transform: scale(0.67);
-          
+
           font-weight: 400;
           color: rgba(164, 184, 213, 1);
           line-height: 11px;

@@ -38,7 +38,7 @@ export default {
   data: () => ({
     marketImg: require('IMG/myMember/icon1@2x.png'),
     welfareImg: require('IMG/myMember/welfare1@2x.png'),
-    exaltedImg: require('IMG/myMember/Oval 4 Copy.png'),
+    exaltedImg: require('IMG/myMember/Oval 4@2x.png'),
     serviceImg: require('IMG/myMember/Oval 4 Copy 3@2x.png')
   })
 }
