@@ -152,7 +152,7 @@ export default {
   width: 375px;
   .market-box {
     width: 343px;
-    padding-top: 13px;
+    padding-top: 16px;
     margin: 0 0px 0 16px;
     .padding {
       padding-bottom: 16px;
