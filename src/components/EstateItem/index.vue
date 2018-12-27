@@ -16,7 +16,8 @@
           <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
           <tag-group :arr="this.info.linkerTags||this.info.projectTagArr"></tag-group>
           <div class="estate-info">
-            <p class="estate-price">{{info.price }} {{info.priceUnit}}</p>
+            <p class="estate-price" v-if="info.price===0">价格待定</p>
+            <p class="estate-price" v-else>{{info.price }} {{info.priceUnit}}</p>
             <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
           </div>
         </div>
