@@ -27,7 +27,7 @@
     </div>
     <div class="custom-analyze-box">
       <van-tabs
-        v-model="activeIndex"
+        v-model="activeIndex" sticky
         color="#007AE6"
         :line-width="15"
         :swipe-threshold="6"
@@ -483,7 +483,7 @@ export default {
           this.haveData = true
         }
         this.loading = false
-        // this.finished = true
+        this.finished = true
       }
     },
 

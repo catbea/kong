@@ -83,7 +83,7 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
             <div class="house-type">
-              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}" @click.stop="photoHandle(item.imgUrl)"></div>
+              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}" @click.stop="houseTypeHandle(item.imgUrl)"></div>
               <div class="house-type-info">
                 <p class="house-type-name">{{item.householdDesc}}</p>
                 <p class="house-type-area" v-if="item.orientations=='暂无信息'">{{`建面${item.area}  暂无朝向信息`}}</p>
@@ -267,6 +267,8 @@ export default {
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      console.log(res,'该楼盘详情');
+      
       this.status = this.info.collectionStatus
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
@@ -281,7 +283,7 @@ export default {
         this.headCurrent = this.headCurrent < this.info.customerList.length - 1 ? this.headCurrent + 1 : 0
       }, 3000)
     },
-    photoHandle(n) {
+    houseTypeHandle(n) {
       //查看户型图片预览
       let arr = []
       arr.push(n)
