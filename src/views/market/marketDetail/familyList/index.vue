@@ -21,7 +21,7 @@
               </ul>
               </div>
               <div class="family-list-page-box-right">
-                <a :href=itemA.linkerUrl><p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p></a>
+                <a v-if="itemA.linkerUrl" :href=itemA.linkerUrl><p class="bg_img" :style="{backgroundImage:'url('+panorama+')'}"></p></a>
                 <span class="bg_img" :style="{backgroundImage:'url('+leave+')'}"></span>
               </div>
               </div>

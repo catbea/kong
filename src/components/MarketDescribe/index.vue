@@ -74,7 +74,9 @@ export default {
   },
   created() {
     this.dredgeColor()
-    this.tags.unshift(this.saleStatus)
+    if(this.tags.indexOf(this.saleStatus)<0){
+      this.tags.unshift(this.saleStatus)
+    }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),

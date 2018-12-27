@@ -57,16 +57,18 @@ export default {
       .title {
         font-size: 24px;
         font-weight: 500;
+        height: 30px;
       }
       .desc {
         font-size: 13px;
         font-weight: 400;
+        margin-top: 4px;
       }
     }
     > .open-btn {
       position: absolute;
       right: 65px;
-      top: 25px;
+      top: 10px;
       display: inline-block;
       font-size: 13px;
       font-weight: 400;
@@ -74,6 +76,8 @@ export default {
       color: #fff;
       border-radius: 5px;
       padding: 5px 15px;
+      height: 32px;
+      line-height: 25px;
     }
   }
 }
