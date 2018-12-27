@@ -82,7 +82,7 @@ export default {
     }
   },
   mounted() {
-    window.awHelper.wechatHelper.init()
+    // window.awHelper.wechatHelper.init()
     // this.$nextTick()
     // document.addEventListener('touchstart', this.handler, false)
   },

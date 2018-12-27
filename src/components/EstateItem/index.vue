@@ -22,9 +22,10 @@
           </div>
         </div>
       </div>
-      <div class="share-icon" @click.stop="shareHandler">
-        <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
-        <!-- <i class="icon iconfont icon-article_share"></i> -->
+      <div class="touch-view">
+        <div class="share-icon" @click.stop="shareHandler">
+          <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
+        </div>
       </div>
       <slot name="desc"></slot>
     </div>
@@ -160,17 +161,25 @@ export default {
       }
     }
 
-    > .share-icon {
+    > .touch-view {
+      width: 30px;
+      height: 30px;
       position: absolute;
       right: 10px;
       top: 10px;
-      width: 12px;
-      height: 12px;
-      padding: 10px;
-      > i {
-        color: #999999;
+
+      > .share-icon {
         position: absolute;
-        transform: translate(-50%, -50%);
+        right: 5px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        padding: 10px;
+        > i {
+          color: #999999;
+          position: absolute;
+          transform: translate(-50%, -50%);
+        }
       }
     }
   }

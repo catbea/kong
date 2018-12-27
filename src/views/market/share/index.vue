@@ -132,7 +132,7 @@ export default {
     > .avatar-img {
       position: absolute;
       width: 300px;
-      height: 300px;
+      height: 330px;
       border-radius: 10px;
       background-repeat: no-repeat;
       background-size: cover;
