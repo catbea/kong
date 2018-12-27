@@ -10,7 +10,7 @@ import userService from '@/services/userService'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {
-  data: _ => ({
+  data: () => ({
     userId: -1,
     result: ''
   }),

@@ -1,12 +1,11 @@
 <template>
   <div class="my-estate-list">
-    <title-bar :conf="titleBarConf"></title-bar>
-    <estate-item v-for="(item,index) in list" :key="index" :info="item"></estate-item>
-
+    <title-bar class="title-container" :conf="titleBarConf" v-if="list&&list.length>0"></title-bar>
+    <estate-item v-for="(item,index) in list" :key="index" :info="item" @click="godynamicsInfo(item)" @share="shareHandler(item)"></estate-item>
   </div>
 </template>
 <script>
-import EstateItem from 'COMP/Dynamics/EstateItem'
+import EstateItem from 'COMP/EstateItem'
 import TitleBar from 'COMP/TitleBar'
 
 export default {
@@ -15,20 +14,28 @@ export default {
     EstateItem
   },
   props: {
-    list: Array
+    list: Array,
+    info: { type: Object }
   },
-  data: _ => ({
+  data: () => ({
     titleBarConf: {
       title: '我的楼盘',
-      linkText: '更多楼盘'
+      linkText: '更多楼盘',
+      link: '/user/myMarket'
     }
   }),
   methods: {
-
+    godynamicsInfo(item) {
+      this.$emit('click', item)
+    },
+    shareHandler(item) {
+      this.$emit('share', item)
+    }
   }
 }
 </script>
 <style lang="less">
-.my-estate-list {
+.my-estate-list{
+  margin-bottom:50px;
 }
 </style>

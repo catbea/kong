@@ -9,8 +9,11 @@ export default {
   components: {
     TagItem
   },
+  data: () => ({
+    data: null
+  }),
   props: {
-    arr: { type: Array }
+    arr: [Array, String]
   }
 }
 </script>
@@ -18,6 +21,5 @@ export default {
 .tag-group {
   display: flex;
   overflow: hidden;
-  // flex-wrap: wrap;
 }
 </style>

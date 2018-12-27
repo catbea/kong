@@ -4,8 +4,7 @@ module.exports = {
   devServer: {
     host: '0.0.0.0',
     port: 80,
-    disableHostCheck: true,
-    // proxy:
+    disableHostCheck: true
   },
 
   chainWebpack: config => {

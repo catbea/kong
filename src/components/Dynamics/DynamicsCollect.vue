@@ -1,33 +1,57 @@
 <template>
-  <div class="dynamics-collect">
+  <div class="bg_img dynamics-collect">
+    <img class="modify-img" :src="bgImg">
     <div class="top-container">
       <h5>数据中心</h5>
-      <van-icon class="icon-right" name="chat" />
+      <div class="bg_img msg-box" :style="{backgroundImage:'url(' + msgIcon + ')'}" @click="goMessage">
+        <div class="new-msg-num" v-if="data&&data.newMsg>0">{{data&&data.newMsg | countLimit}}</div>
+      </div>
     </div>
     <div class="shadow_box info-box" v-if="data">
-      <div class="data-container">
+      <div class="data-container" @click="goMessageInfo(data)">
         <div class="data-item main-data">
+          <div class="data-value">
+            {{data.customerCount.val}}
+            <span class="data-change" v-if="data.customerCount.change !== 0">{{`${parseInt(data.customerCount.change)>0 ? '+':''}${data.customerCount.change}`}}</span>
+          </div>
           <span class="data-title">客户数量</span>
-          <div class="data-value">{{data.customerCount.val}}<span class="data-change">+{{data.customerCount.change}}</span></div>
         </div>
         <div class="data-item">
+          <div class="data-value">
+            {{data.businessCardViews.val}}
+            <span class="data-change" v-if="data.businessCardViews.change !== 0">{{`${parseInt(data.businessCardViews.change)>0 ? '+':''}${data.businessCardViews.change}`}}</span>
+          </div>
           <span class="data-title">名片浏览</span>
-          <div class="data-value">{{data.businessCardViews.val}}<span class="data-change">+{{data.businessCardViews.change}}</span></div>
         </div>
         <div class="data-item">
+          <div class="data-value">
+            {{data.estateViews.val}}
+            <span class="data-change" v-if="data.estateViews.change !== 0">{{`${parseInt(data.estateViews.change)>0 ? '+':''}${data.estateViews.change}`}}</span>
+          </div>
           <span class="data-title">楼盘浏览</span>
-          <div class="data-value">{{data.estateViews.val}}<span class="data-change">+{{data.estateViews.change}}</span></div>
         </div>
       </div>
-      <div class="bottom-line"></div>
-      <div class="carousel-container">
-        <marquee :itemHeight="30">
-          <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
-            <avatar :avatar="item.avatarUrl"></avatar>
-            李文忠 <span>3分钟前</span> 浏览了楼盘 <span>碧桂园凤凰</span>
-          </marquee-item>
-        </marquee>
+      <div class="arrow-icon">
+        <van-icon name="arrow"/>
       </div>
+      <div class="van-hairline--bottom bottom-line"></div>
+      <div class="carousel-container">
+        <div class="marquee-box">
+          <marquee :itemHeight="`${50/37.5}rem`" v-if="data.simpleDynamic.length>0">
+            <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
+              <avatar :avatar="item.avatarUrl"></avatar>
+              <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
+              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了你的{{item.markedWords | textOver(6)}}</p>
+              <p class="house-tips" v-if="item.dynamicType == 2">
+                {{item.clientName | textOver(4)}}{{item.timeStr}}浏览楼盘
+                <span>{{item.markedWords | textOver(6)}}</span>
+              </p>
+              <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName | textOver(4)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(6)}}</p>
+            </marquee-item>
+          </marquee>
+        </div>
+      </div>
+      <div v-if="data.simpleDynamic.length===0" class="no-carousel-tips">体验AI拓客新模式,连接客户更简单</div>
     </div>
   </div>
 </template>
@@ -42,84 +66,179 @@ export default {
     Avatar
   },
   props: {
-    data: { type: Object }
+    data: { type: Object },
+    info: { type: Object }
+  },
+  data: () => ({
+    bgImg: require('IMG/dynamics/collectBottom.png'),
+    msgIcon: require('IMG/dynamics/listArrowUp.png')
+  }),
+  methods: {
+    goMessage() {
+      this.$router.push('/dynamics/message/messageList')
+    },
+    goMessageInfo(data) {
+      console.log("====================",data)
+      let parm = {
+        info: this.info,
+        customerCount: data.customerCount.val,
+        businessCardViews: data.businessCardViews.val,
+        estateViews: data.estateViews.val,
+        articleCount: data.articleCount.val,
+        allDynamicsNum: data.customerCount.change+data.businessCardViews.change+data.estateViews.change+data.articleCount.change
+      }
+       this.$emit('click', parm)
+    }
   }
 }
 </script>
 <style lang="less">
 .dynamics-collect {
-  margin: 0;
-  .top-container {
+  background-color: #2360ad;
+  margin: 0 0 65px;
+  height: 175px;
+  position: relative;
+  > .modify-img {
+    width: 100%;
+    position: absolute;
+    top: 175px;
+  }
+  > .top-container {
     position: relative;
     margin: 0 16px 0;
     color: #333333;
     font-size: 28px;
-    h5 {
+    > h5 {
+      margin: 20px 0 15px;
       display: inline-block;
+      font-size: 20px;
+      color: #fff;
     }
-    .icon-right {
+    > .msg-box {
       position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      right: 10px;
+      top: 22px;
+      > .new-msg-num {
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translate(50%, -50%);
+        width: 22px;
+        height: 22px;
+        background-color: #ea4d2e;
+        border-radius: 100%;
+        color: #fff;
+        font-size: 12px;
+        text-align: center;
+        line-height: 22px;
+      }
     }
   }
-  .info-box {
+  > .info-box {
+    background: #fff;
     position: relative;
-    margin: 0 16px;
+    margin: 0 15px;
+    padding: 10px;
+    line-height: 1;
     > .data-container {
+      padding: 25px 5px;
+      margin-right: 20px;
       display: flex;
       justify-content: space-around;
       > .data-item {
-        height: 80px;
+        display: inline-block;
         position: relative;
+        width: 70px;
+        height: 50px;
         > .data-title {
+          position: absolute;
+          bottom: 0;
+          width: 200px;
           font-size: 12px;
           font-weight: 400;
           color: #999999;
         }
         > .data-value {
           position: absolute;
-          bottom: 0;
+          bottom: 16px;
           font-size: 20px;
           font-weight: 500;
           color: #333333;
           > .data-change {
             position: absolute;
-            font-size: 14px;
-            transform: scale(0.8);
+            font-size: 12px;
+            top: 0;
+            right: 0;
+            transform: translate(100%, -50%);
             font-weight: 500;
             color: #333333;
           }
         }
         &:first-child {
-          margin: 0 16px 0 0;
+          width: 90px;
           .data-value {
             font-size: 28px;
             .data-change {
-              font-size: 12px;
-              transform: scale(0.8);
+              font-size: 14px;
             }
           }
         }
       }
     }
+    > .arrow-icon {
+      position: absolute;
+      display: inline-block;
+      font-size: 16px;
+      color: #8b9198;
+      font-weight: bolder;
+      right: 15px;
+      top: 60px;
+    }
     > .bottom-line {
       margin: auto;
-      width: 80%;
+      width: 94%;
       height: 1px;
       border-radius: 1px;
-      background: #eeeeee;
+      // background: #eeeeee;
     }
-    .carousel-container {
-      text-align: center;
-      .carousel-item {
-        display: flex;
-        justify-content: center;
-        font-size: 12px;
+    > .carousel-container {
+      position: relative;
+      margin: 10px 0 -20px;
+      > .marquee-box {
         height: 30px;
-        line-height: 24px;
+        margin: 10px 0 20px 0;
+        padding-top: 5px;
+        overflow: hidden;
+        .carousel-item {
+          text-align: left;
+          display: flex;
+          height: 50px;
+          justify-content: center;
+          font-size: 12px;
+          line-height: 24px;
+          > .house-tips {
+            > span {
+              color: #007ae6;
+            }
+          }
+        }
       }
+    }
+    > .no-carousel-tips {
+      width: 100%;
+      background: rgba(0, 122, 230, 0.05);
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 50px;
+      border-radius: 0px 0px 10px 10px;
+      font-size: 15px;
+      color: #007ae6;
+      font-weight: 400;
+      text-align: center;
+      line-height: 50px;
     }
   }
 }

@@ -2,6 +2,7 @@
 <template>
   <div class="avatar">
     <img :src="avatar||defaultAvatar" alt="">
+    <slot name="extra"></slot>
   </div>
 </template>
 <script>
@@ -12,7 +13,8 @@ export default {
   },
   data: () => ({
     defaultAvatar: require('IMG/system/defaultAvatar.png')
-  })
+  }),
+  methods: {}
 }
 </script>
 <style lang="less">
@@ -29,4 +31,3 @@ export default {
   }
 }
 </style>
-

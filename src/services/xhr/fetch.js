@@ -3,26 +3,25 @@ import queryString from 'query-string'
 import errHandler from './errorHandler'
 import codeErrHandler from './codeErrHandler'
 import qs from 'qs'
+import store from '@/store/'
 const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toUpperCase()
-
+  if (url == '/undefined') {
+    return
+  }
   url = process.env.VUE_APP_BASE_API_URL + url
-  headers = Object.assign(
-    { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
-    headers
-  )
+
+  headers = Object.assign({ 'Content-Type': 'application/json; charset=UTF-8' }, { Authorization: store.getters.userInfo.token }, headers)
+
   const options = {
     method,
     headers,
     mode: 'cors'
   }
 
-  body.agentId = localStorage.getItem('userId')
-  const qsParams = qs.stringify(body)
-
-  method === 'GET' ? (url = url + '?' + qsParams) : (options.body = qsParams)
+  method === 'GET' ? (url = `${url}?${qs.stringify(body)}`) : (options.body = JSON.stringify(body))
   return new Promise(async (resolve, reject) => {
     let response = await fetch(url, options)
     // http错误
@@ -31,8 +30,8 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
     }
     try {
       const res = await response.json()
-      const isOk = res.result
-      isOk ? resolve(res.data) : codeErrHandler(res)
+      const isOk = codeErrHandler(res, url)
+      isOk ? resolve(res.data) : codeErrHandler(res, url)
     } catch (err) {
       console.error('Error: ', err)
     }

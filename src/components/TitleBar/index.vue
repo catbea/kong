@@ -1,8 +1,8 @@
 <template>
-  <div class="title-bar">
+  <div class="title-bar-page" v-if="isShow">
     <h5 class="title-text">{{conf.title}}</h5>
-    <router-link :to="linkComputed">
-      <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}} </p>
+    <router-link :to="linkComputed" v-if="conf.linkText">
+      <p class="link-text">{{`${conf.linkText} ${conf.link?'>':''}`}}</p>
     </router-link>
   </div>
 </template>
@@ -18,6 +18,10 @@ export default {
           link: ''
         }
       }
+    },
+    isShow: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -26,18 +30,19 @@ export default {
     }
   }
 }
-</script>
+</script> 
 <style lang="less">
-.title-bar {
+.title-bar-page {
   display: flex;
   justify-content: space-between;
-  margin: 16px;
-  line-height: 30px;
-  .title-text {
+  align-items: center;
+  padding: 10px 15px 3px;
+  h5 {
     display: inline-block;
     font-size: 20px;
     font-weight: 600;
     color: #333333;
+    padding-top: 10px;
   }
   .link-text {
     font-size: 13px;

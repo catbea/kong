@@ -40,5 +40,5 @@ const statusMap = {
   '505': '不支持的 HTTP 版本'
 }
 export default status => {
-  console.error(`http请求有误，原因: [${statusMap[status] || '未知'}]`)
+  console.error(`http请求有误，原因: [${statusMap[status] || 'status' + status}]`)
 }

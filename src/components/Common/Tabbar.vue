@@ -18,7 +18,7 @@ export default {
     active: 0
   }),
   methods: {
-    infoCount (val) {
+    infoCount(val) {
       val = parseInt(val)
       if (val < 1) {
         return null
@@ -33,10 +33,9 @@ export default {
     ...mapGetters(['tabbar'])
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       for (let i = 0; i < this.tabbar.items.length; i++) {
-        if (to.fullPath.indexOf(this.tabbar.items[i].path) !== -1)
-          return this.active = i
+        if (to.fullPath.indexOf(this.tabbar.items[i].path) !== -1) return (this.active = i)
       }
     }
   }
@@ -44,6 +43,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .tabbar {
+  z-index: 999;
   width: 100%;
   position: relative;
   z-index: 100;

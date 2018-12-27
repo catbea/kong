@@ -5,15 +5,13 @@ import router from '@/router/'
 import store from '@/store/'
 import '@/filters'
 import '@/directives'
-import wechatApi from '@/utils/wechatApi'
-import vant from './vant'
-
+import '@/vant' // vant
+import global from '@/global/'
 Vue.config.productionTip = false
+Vue.prototype.$devicePixelRatio = window.devicePixelRatio
+global()
 
-
-// globle
-wechatApi.init()
-
+// Vue.$wechatHelper()
 window.vue = new Vue({
   router,
   store,
