@@ -177,6 +177,7 @@ export default {
       console.log(val);
     },
     goList(index, title) {
+      console.log('list')
       switch (index) {
         case 0:
           this.allDynamicList = []
