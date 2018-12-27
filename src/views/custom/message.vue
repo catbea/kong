@@ -716,11 +716,11 @@ export default {
 </script>
 <style lang="less" scoped>
 .massage-info-body {
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    flex-direction: column;
+    // display: flex;
+    // -webkit-box-orient: vertical;
+    // -webkit-box-direction: normal;
+    // -webkit-flex-direction: column;
+    // flex-direction: column;
     width: 100%;
     font-size: 13px;
     padding: 0;
@@ -984,8 +984,8 @@ export default {
 }
 
 .massage-info-lower {
-//   position: fixed;
-//   bottom: 0;
+  position: fixed;
+  bottom: 0;
   height: 50px;
   display: flex;
   text-align: center;
