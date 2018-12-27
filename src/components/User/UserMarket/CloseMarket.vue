@@ -218,7 +218,10 @@ export default {
         justify-content: center;
         align-items: center;
         .icon-discount {
-          width: 36px;
+          white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 36px;
           height: 20px;
           position: absolute;
           top: 4px;

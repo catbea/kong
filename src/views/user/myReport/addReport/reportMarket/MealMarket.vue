@@ -153,7 +153,8 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
-          line-height: 5px;
+          height: 10px;
+          line-height: 10px;
           margin: 10px 0 10px 0;
         }
         li:nth-of-type(3) {
