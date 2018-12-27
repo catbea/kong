@@ -1,5 +1,6 @@
 import store from '@/store/'
 import commonService from '@/services/commonService'
+import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 
 const getUrlQueryParams = url => {
   var params = {},
@@ -35,16 +36,12 @@ export default async (to, from, next) => {
       let payCorpId = userInfo.payCorpId
       console.log(36, userInfo, userInfo.payCorpId);
 
-
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
         if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
           try {
-            setTimeout(() => {
-              window.awHelper.wechatHelper.init()
-            }, 3000)
-
+            window.awHelper.wechatHelper.init()
           } catch (e) {
             console.log('[error:window.awHelper.wechatHelper]')
             next()
