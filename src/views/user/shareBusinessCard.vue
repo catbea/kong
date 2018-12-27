@@ -79,9 +79,9 @@ export default {
           qrcode: result.miniQrCode,
           phone: result.mobile,
           signature: result.signature,
-          address: result.enterpriseAddress,
+          address: result.mojarRegion,
           nickname: result.pinyin,
-          company: result.enterpriseName,
+          company: result.institutionName,
           name: result.agentName,
           avatarUrl: result.avatarUrl
         }
