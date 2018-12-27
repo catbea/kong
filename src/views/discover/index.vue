@@ -2,19 +2,40 @@
   <div class="discover-page">
     <van-swipe class="shadow swipe-container" v-if="swipeList" :autoplay="3000">
       <van-swipe-item v-for="(item, index) in swipeList" :key="index">
-        <div class="bg_img swipe-item-container" :style="{'backgroundImage':'url('+ item.image +')'}" @click="swipeItemClick(item)">
+        <div
+          class="bg_img swipe-item-container"
+          :style="{'backgroundImage':'url('+ item.image +')'}"
+          @click="swipeItemClick(item)"
+        >
           <div class="cover-container">
             <p class="cover-title">{{item.title}}</p>
-            <p class="cover-time">{{item.publisher}}&nbsp;&nbsp;{{item.createDate | dateFormatterToHuman}}&nbsp;&nbsp;{{item.scanNum | numberFormatter}}浏览</p>
+            <p
+              class="cover-time"
+            >{{item.publisher}}&nbsp;&nbsp;{{item.createDate | dateFormatterToHuman}}&nbsp;&nbsp;{{item.scanNum | numberFormatter}}浏览</p>
           </div>
         </div>
       </van-swipe-item>
     </van-swipe>
+    <div class="fill-View"></div>
     <div class="tab-container">
-      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @change="tabsChange" sticky animated>
+      <van-tabs
+        v-model="activeIndex"
+        color="#007AE6"
+        :line-width="15"
+        :swipe-threshold="6"
+        @change="tabsChange"
+        sticky
+        animated
+      >
         <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName">
           <keep-alive>
-            <van-list v-model="loading" v-if="item.index === activeIndex" :finished="item.finished" :finished-text="'没有更多了'" @load="onLoad">
+            <van-list
+              v-model="loading"
+              v-if="item.index === activeIndex"
+              :finished="item.finished"
+              :finished-text="'没有更多了'"
+              @load="onLoad"
+            >
               <discover-item v-for="(item,index) in item.list" :key="index" :data="item"></discover-item>
             </van-list>
           </keep-alive>
@@ -104,6 +125,12 @@ export default {
 .discover-page {
   background: #ffffff;
   width: 100%;
+  > .fill-View{
+    width: 100%;
+    height: 16px;
+    background-color: #ffffff
+  }
+
   > .swipe-container {
     .swipe-item-container {
       width: 100%;

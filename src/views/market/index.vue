@@ -9,8 +9,8 @@
       <screen v-model="projectFilters" :local="this.selectedCity" ></screen>
     </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
-    <div class="all-market" style="min-height:100px;">
-      <van-list v-model="loading" style="min-height:100px;" :finished="finished" :finished-text="'没有更多了'" :offset="1000" @load="getProjectList">
+    <div class="all-market">
+      <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getProjectList">
         <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
@@ -63,7 +63,7 @@ export default {
         this.marketList = []
         this.finished = false
         this.loading = false
-        
+        this.$refs.list.check()
       },
       deep: true
     }

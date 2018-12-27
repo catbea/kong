@@ -3,7 +3,10 @@ import isEmpty from 'lodash/isEmpty'
 let defaultConf = {
   name: 'projectName',
   area: 'county',
-  aveprice: ['projectPriceAvgStart', 'projectPriceAvgEnd'],
+  aveprice: [
+    ['priceTotalStart', 'priceTotalEnd'],
+    ['projectPriceAvgStart', 'projectPriceAvgEnd']
+  ],
   popularity: ['togetherNumStart', 'togetherNumEnd'],
   areaSize: ['areaStart', 'areaEnd'],
   type: 'houseType',
@@ -28,8 +31,15 @@ export default (name, filters, conf = {}) => {
   result[conf.area] = filters.area === '不限' ? '' : filters.area
   // 均价
   let avepriceTemp = filters.aveprice.split(',')
-  if (avepriceTemp[0] !== '-1') result[conf.aveprice[0]] = avepriceTemp[0]
-  if (avepriceTemp[1] !== '-1') result[conf.aveprice[1]] = avepriceTemp[1]
+  if (avepriceTemp[0] !== '-1') {
+    if (avepriceTemp[0] === '1') {
+      if (avepriceTemp[1] !== '-1') result[conf.aveprice[0][0]] = avepriceTemp[1]
+      if (avepriceTemp[2] !== '-1') result[conf.aveprice[0][1]] = avepriceTemp[2]
+    } else if (avepriceTemp[0] === '2') {
+      if (avepriceTemp[1] !== '-1') result[conf.aveprice[1][0]] = avepriceTemp[1]
+      if (avepriceTemp[2] !== '-1') result[conf.aveprice[1][1]] = avepriceTemp[2]
+    }
+  }
   // 人气
   let popularityTemp = filters.popularity.split(',')
   if (popularityTemp[0] !== '-1') result[conf.popularity[0]] = popularityTemp[0]
