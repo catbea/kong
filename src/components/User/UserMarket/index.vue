@@ -113,6 +113,8 @@ export default {
   },
   data: () => ({
     linkerId: null,
+    masterButtonShow:false,//师推按钮
+    commonButtonShow:false,//普推按钮
     stickNum: 0,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     show: false,
@@ -135,34 +137,28 @@ export default {
     }
   },
   computed: {
-    masterButtonShow: {
-      get: function() {
-        if (this.dataArr.masterRecommand == 1) {
-          return true
-        } else {
-          return false
-        }
-      },
-      set: function() {}
-    },
-    commonButtonShow: {
-      get: function() {
-        if (this.dataArr.masterRecommand == 2) {
-          return true
-        } else {
-          return false
-        }
-      },
-      set: function() {}
-    }
+    
   },
   created() {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
+    this.buttonStatuShowHanlde()
     console.log(this.dataArr, '展示的楼盘数据')
   },
   methods: {
+    buttonStatuShowHanlde(){//判断推荐按钮师普状态
+      if (this.dataArr.masterRecommand == 1) {
+          this.masterButtonShow = true
+        } else {
+          this.masterButtonShow = false
+        }
+      if (this.dataArr.masterRecommand == 2) {
+          this.commonButtonShow = true
+        } else {
+          this.commonButtonShow = false
+        }
+    },
     stickNumHandle() {
       //判断有没有超过3个置顶
       let parent = this.$parent.$parent
