@@ -8,7 +8,9 @@
         show-action
         @search="onSearchHandler"
         @click="onFocusHandler"
+        background="#fff"
       >
+        <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon"/>
         <div slot="action" @click="onSortHandler">
           <i class="icon iconfont icon-Clientlist_screenin" :style="{color: activeIcon ? '#1989fa' : ''}"></i>
         </div>
@@ -177,13 +179,6 @@ export default {
 }
 </script>
 <style lang="less">
-.van-field__body {
-  height: 100%;
-}
-.van-field__control {
-  // height: 100%;
-  line-height: 24px !important;
-}
 .custom-page {
   position: relative;
   > .search-container {
@@ -204,6 +199,20 @@ export default {
       line-height: 24px !important;
     }
   }
+  .van-field__body {
+    height: 100%;
+  }
+  .van-field__control {
+    // height: 100%;
+    line-height: 24px !important;
+  }
+  .van-cell{
+      background-color: #F5F5F5;
+    }
+  .search-icon{
+    width: 24px;
+    height: 24px;
+  }
   > .sort-container {
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
@@ -221,6 +230,9 @@ export default {
       line-height: 50px;
       font-size: 15px;
       box-shadow: inset 0px -1px 1px -1px #c8c7cc;
+      span{
+        color: #999;
+      }
     }
   }
 }
