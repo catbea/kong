@@ -188,6 +188,7 @@ export default {
     height: 200px;
     text-align: center;
     margin-top: 28px;
+    padding: 20px;
   }
   > .notice-view {
     color: #969ea8;
