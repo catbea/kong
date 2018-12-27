@@ -9,7 +9,7 @@ import '@/vant' // vant
 import global from '@/global/'
 Vue.config.productionTip = false
 Vue.prototype.$devicePixelRatio = window.devicePixelRatio
-
+global()
 
 // Vue.$wechatHelper()
 window.vue = new Vue({
@@ -17,4 +17,3 @@ window.vue = new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-global(window.vue)
