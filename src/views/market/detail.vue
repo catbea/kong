@@ -8,9 +8,15 @@
         <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
-            <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
+            <div
+              class="bg_img swipe-item dev"
+              :style="{backgroundImage:'url(' + item.imgUrl + ')'}"
+            ></div>
           </van-swipe-item>
-          <div class="custom-indicator dev" slot="indicator">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+          <div
+            class="custom-indicator dev"
+            slot="indicator"
+          >{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
         </van-swipe>
       </div>
       <div class="operate-content">
@@ -28,7 +34,12 @@
         </div>
         <!-- 存在全景时全景播放 -->
       </div>
-      <div class="bg_img operate-2" v-if="info.ifPanorama" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
+      <div
+        class="bg_img operate-2"
+        v-if="info.ifPanorama"
+        :style="{backgroundImage:'url(' + playIcon + ')'}"
+        @click.stop="ifPanoramaClickHandler"
+      ></div>
     </div>
     <!-- 楼盘基础信息 -->
     <div class="base-info-container">
@@ -38,18 +49,29 @@
           <span>{{info.browsCount}}</span>人浏览过
           <div class="head-portrait-box">
             <transition name="show">
-              <avatar :avatar="item.clientImg" v-for="(item,index) in info.customerList" :key="index" v-if="index===headCurrent"/>
+              <avatar
+                :avatar="item.clientImg"
+                v-for="(item,index) in info.customerList"
+                :key="index"
+                v-if="index===headCurrent"
+              />
             </transition>
           </div>
         </div>
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
+        <p
+          class="house-feature"
+        >{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
         <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
           <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
           <span class="commission-text">{{info&&info.divisionRules}}</span>
-          <div class="bg_img commission-detail" @click="commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
+          <div
+            class="bg_img commission-detail"
+            @click="commission"
+            :style="{backgroundImage:'url('+siteDetailImg+')'}"
+          ></div>
         </div>
         <!-- <div class="commission-view" v-show="info.divisionRules" @click="enterCommission">
           <img :src="commissionImg">
@@ -66,7 +88,7 @@
           </p>
           <p>
             <span>楼盘地址:</span>
-           {{info.detailAddress}}
+            {{info.detailAddress}}
           </p>
           <p>
             <span>开发商:</span>
@@ -83,10 +105,17 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
             <div class="house-type">
-              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}" @click.stop="houseTypeHandle(item.imgUrl)"></div>
+              <div
+                class="bg_img house-type-img"
+                :style="{backgroundImage:'url('+item.imgUrl+')'}"
+                @click.stop="houseTypeHandle(item.imgUrl)"
+              ></div>
               <div class="house-type-info">
                 <p class="house-type-name">{{item.householdDesc}}</p>
-                <p class="house-type-area" v-if="item.orientations=='暂无信息'">{{`建面${item.area}  暂无朝向信息`}}</p>
+                <p
+                  class="house-type-area"
+                  v-if="item.orientations=='暂无信息'"
+                >{{`建面${item.area} 暂无朝向信息`}}</p>
                 <p class="house-type-area" v-else>{{`建面${item.area}${item.orientations}朝向`}}</p>
                 <p class="house-type-price" v-if="item.price=='暂无信息'">{{item.price}}</p>
                 <p class="house-type-price" v-else>约{{item.price}}</p>
@@ -110,7 +139,12 @@
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
-          <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
+          <van-tab
+            v-for="item in info.houseAroundType"
+            :key="item.name"
+            :title="item.name"
+            :line-width="0"
+          />
         </van-tabs>
       </div>
       <div class="map-box">
@@ -118,13 +152,16 @@
       </div>
     </div>
     <!-- 其他楼盘 -->
-    <div class="house-recommend">
+    <div class="house-recommend" v-if="info.linkerOtherList.length>0">
       <title-bar :conf="othersTitleConf"/>
       <div class="recommend-swipe-content">
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index">
             <div class="recommend-house-item">
-              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}"></div>
+              <div
+                class="bg_img recommend-house-img"
+                :style="{backgroundImage:'url('+item.headImgUrl+')'}"
+              ></div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
                 <p class="house-location">{{item.district}}</p>
@@ -134,7 +171,7 @@
         </swiper>
       </div>
     </div>
-    <div class="m-statement">
+    <div class="van-hairline--top m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
@@ -144,8 +181,8 @@
       <div class="unopen-status-box" v-if="openStatus">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="!openStatus" :renewInfo='info'></market-renew>
-       <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
+      <market-renew v-if="!openStatus" :renewInfo="info"></market-renew>
+      <!-- <div class="open-status-box" v-if="info.expireFlag == 0">
         <div class="icon-box">
           <div>
             <i class="icon iconfont icon-building_details_rec1"></i>
@@ -180,7 +217,7 @@ import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
-import { Dialog,ImagePreview } from 'vant'
+import { Dialog, ImagePreview } from 'vant'
 import isEmpty from 'lodash/isEmpty'
 export default {
   components: {
@@ -205,7 +242,7 @@ export default {
       headCurrent: 0,
       tagGroupArr: [],
       mapTab: 0,
-      openStatus:false,
+      openStatus: false,
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -273,7 +310,7 @@ export default {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
       console.log(res,'该楼盘详情');
-      
+      if(!this.info.linkerOtherList){this.othersTitleConf.title=''}
       this.status = this.info.collectionStatus
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
@@ -293,7 +330,7 @@ export default {
       let arr = []
       arr.push(n)
       ImagePreview({
-        images:arr,
+        images: arr,
         startPosition: 0,
         onClose() {
           // do something
@@ -312,7 +349,7 @@ export default {
       console.log(this.status, '收藏状态')
     },
     shareHandler() {
-       if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
+      if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
         Dialog.confirm({
           title: '您有未完善的信息',
           message: '信息不完整会影响传播效率哦',
@@ -334,14 +371,15 @@ export default {
         }
       }
     },
-   async openHandler() {//VIP用户选择城市与VIP开通楼盘同城市
+    async openHandler() {
+      //VIP用户选择城市与VIP开通楼盘同城市
       if (this.info.city === this.userInfo.vipInfo.city) {
         await marketService.addHouseByVip(this.info.linkerId)
-        this.openStatus=false
+        this.openStatus = false
         this.$toast({
-            duration:1000,
-            message:'已开通成功，请到我的楼盘查看',
-          })
+          duration: 1000,
+          message: '已开通成功，请到我的楼盘查看'
+        })
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
       }
@@ -353,7 +391,7 @@ export default {
     ifPanoramaClickHandler() {
       window.location.href = this.info.linkerUrl
     },
-    competeOpenStatus(){
+    competeOpenStatus() {
       this.openStatus = this.info.openStatus == 0
     }
   },
@@ -399,7 +437,7 @@ export default {
         background: rgba(255, 255, 255, 1);
         border-radius: 12px;
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 24px;
@@ -465,7 +503,7 @@ export default {
         line-height: 23px;
         color: #333333;
         font-weight: 600;
-        font-size:12px;
+        font-size: 12px;
         > span {
           color: #007ae6;
         }
@@ -491,7 +529,7 @@ export default {
         font-weight: 600;
       }
       > .house-feature {
-        padding-top:10px;
+        padding-top: 10px;
         font-size: 14px;
         line-height: 1.5;
       }
@@ -501,7 +539,7 @@ export default {
         background: rgba(247, 249, 250, 1);
         border-radius: 4px;
         font-size: 15px;
-        
+
         font-weight: 400;
         color: rgba(234, 77, 46, 1);
         display: flex;
@@ -548,16 +586,16 @@ export default {
       //   }
       // }
       > .house-info-form {
-        padding-top:20px;
+        padding-top: 20px;
         line-height: 1.5;
         font-size: 16px;
         color: #333333;
         > p {
-          padding-bottom:12px;
+          padding-bottom: 12px;
           white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width:343px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 343px;
           > span {
             display: inline-block;
             color: #8a8f99;
@@ -685,7 +723,9 @@ export default {
     }
   }
   .m-statement {
-    margin: 15px 0 70px 16px;
+    padding-top:10px;
+    margin: 0 0 77px 16px;
+    width:343px;
     color: rgba(153, 153, 153, 1);
     font-size: 12px;
     // line-height: 0.34rem;
@@ -761,14 +801,14 @@ export default {
   text-align: center;
   .van-dialog__header {
     font-size: 18px;
-    
+
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
   }
   .van-dialog__message {
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
