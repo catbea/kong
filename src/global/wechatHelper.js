@@ -40,9 +40,8 @@ class WechatHelper {
 
 
   async init() {
-    console.log('init--');
+    console.log('init');
     await store.dispatch('setJssdkConfig', jsApiList)
-    console.log(store.state.wx.jssdkConfig, 'store.state.wx.jssdkConfig---')
     await this.wx.config(store.state.wx.jssdkConfig)
     // this.wx.success(() => {
     //   console.log(success);
