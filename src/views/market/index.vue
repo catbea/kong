@@ -62,7 +62,7 @@ export default {
         this.finished = false
         this.page = 1
         this.marketList = []
-        // this.getProjectList()
+        this.getProjectList()
       },
       deep: true
     }
