@@ -2,6 +2,7 @@
   <van-popup class="popup-container" v-model="currentShow">
     <img class="close-btn" :src="closeImg" @click="closeHandler">
     <div class="bg_img img-content" :style="{backgroundImage:'url(' + bgImg + ')'}"></div>
+    <div class="bg_img img-ai" :style="{backgroundImage:'url(' + aiImg + ')'}"></div>
     <div class="tag-content">
       <div class="tag-item">地铁房</div>
       <div class="tag-item">商业潜力</div>
@@ -28,7 +29,8 @@ export default {
   },
   data: () => ({
     currentShow: false,
-    bgImg: require('IMG/guidance/marketGuidance.jpg'),
+    bgImg: require('IMG/guidance/marketGuidance.png'),
+    aiImg: require('IMG/guidance/guidance_ai.png'),
     closeImg: require('IMG/guidance/closeBtn.png')
   }),
   methods: {
@@ -71,6 +73,14 @@ export default {
     height: 200px;
     border-radius: 3px;
     margin: 15px;
+    position: relative;
+  }
+  > .img-ai {
+    width: 60px;
+    height: 24px;
+    position: absolute;
+    left: 30px;
+    top: 15px;
   }
   > .tag-content {
     height: 30px;
