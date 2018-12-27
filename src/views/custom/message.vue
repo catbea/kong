@@ -374,7 +374,7 @@ export default {
       console.log(mediaId + ' | ' + appId, 'mediaIdTransToMp3Url')
       let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
       console.log(res, 'mediaIdTransToMp3Url')
-      this.message = res.map3Url
+    //   this.message = res.map3Url
       this.sendMessage(2, this.audioTime)
     },
     async setMsgRead() {
@@ -418,11 +418,19 @@ export default {
               msgLists.push(list)
             } else {
               if (MsgContent.Desc == 2) {
-                let ext = JSON.parse(MsgContent.Ext)
-                list.content = MsgContent.Data
-                list.msgType = 2
-                list.audioTime = ext.audioTime || ext
-                msgLists.push(list)
+                try{//兼容以前老的消息格式
+                  let ext = JSON.parse(MsgContent.Ext)
+                  list.content = MsgContent.Data
+                  list.msgType = 2
+                  list.audioTime = ext.audioTime || ext
+                  msgLists.push(list)
+                }catch(e){
+                  let ext = MsgContent.Ext
+                  list.content = MsgContent.Data
+                  list.msgType = 2
+                  list.audioTime = ext
+                  msgLists.push(list)
+                }
               } else if (MsgContent.Desc == 3) {
                 list.content = JSON.parse(MsgContent.Data)
                 list.msgType = 3
