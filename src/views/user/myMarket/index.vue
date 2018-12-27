@@ -306,7 +306,7 @@ export default {
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
       // 数据重复加载
-      if(page==1 || resShow.records && resShow.records.length >= resShow.total) {
+      if(page==1) {
         this.showMarketList = resShow.records
       } else {
         this.showMarketList = this.showMarketList.concat(resShow.records)
