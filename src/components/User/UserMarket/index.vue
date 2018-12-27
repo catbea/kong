@@ -174,6 +174,17 @@ export default {
       }
       console.log(this.stickNum, '楼盘个数')
     },
+    recommendNumHandle() {
+      //判断有没有超过5个推荐
+      let parent = this.$parent.$parent
+      for (let i = 0; i < parent.showMarketList.length; i++) {
+        const element = parent.showMarketList[i]
+        if (element.recommand == 10) {
+          
+        }
+      }
+      
+    },
     strideYear() {
       //判断是否跨年
       let timestamp = new Date().getTime()

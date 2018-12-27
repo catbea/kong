@@ -207,7 +207,8 @@ export default {
         }
       }
       n.masterRecommand = '1'
-      this.masterList = this.masterList.concat(n)
+      
+      this.masterList.unshift(n)   
       this.swipeList = this.masterList.concat(this.commonList)
     },
     spliceMasterHandle(n) {
@@ -320,7 +321,6 @@ export default {
     },
     async notShowGetMyMarketInfo() {
       // this.notShowProjectName,this.notShowProjectFilters, this.notShowPage
-      console.log(1111111111111);
       
       let name = this.notShowProjectName
       let filters = this.notShowProjectFilters
