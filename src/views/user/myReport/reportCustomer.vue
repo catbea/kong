@@ -30,7 +30,7 @@
       </van-tabs>
     </div>
     <div class="report-list-continer">
-      <van-list v-model="loading" :finished="currentData.finished" @load="onLoad">
+      <van-list class="report-van-list" v-model="loading" :finished="currentData.finished" @load="onLoad">
         <van-radio-group class="radio-container" v-model="radio" @change="onRadioChangeHandler">
           <van-radio
             class="shadow_box radio-item-container"
@@ -174,6 +174,9 @@ export default {
   }
   .report-list-continer {
     margin-top: 16px;
+    .report-van-list {
+      margin-bottom: 70px;
+    }
     .radio-container {
       > .radio-item-container {
         margin: 10px 15px;
