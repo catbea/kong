@@ -68,7 +68,7 @@
         <span>{{dataArr.divisionRules}}</span>
       </div>
     </div>
-    <div style="margin-left:16px">
+    <div style="padding-left:16px">
       <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay>
         <ul>
           <li

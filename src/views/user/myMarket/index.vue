@@ -5,9 +5,9 @@
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
       <div class="market-left" v-show="myMarketShow">
-        <div v-show="showMarketListCount>=showFilterLimit" style="margin-right:16px;margin-left:16px;">
+        <div v-show="showMarketListCount>=showFilterLimit" >
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
-          <screen v-model="showProjectFilters" :local="this.selectedCity"></screen>
+          <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'16rem'"></screen>
         </div>
         <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo" v-if="!yes">
           <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></user-market>
@@ -427,6 +427,10 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
+  .search-container{
+    margin-left:18px;
+    width:343px;
+  }
   .fade-enter-active,
   .fade-leave-active {
     transition: opacity 2s;
