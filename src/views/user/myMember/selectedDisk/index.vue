@@ -162,8 +162,9 @@ export default {
         //套盘跳过来的，加载套盘内容
         if (this.page == 1) {
           await this.getPackageInfo()
+          this.packageCheckedInit()
         }
-        this.packageCheckedInit()
+        
       }
       this.page++
       this.loading = false
