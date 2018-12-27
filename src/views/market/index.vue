@@ -61,9 +61,12 @@ export default {
       handler(val) {
         this.page = 1
         this.marketList = []
-        this.finished = false
+        // this.finished = false
         this.loading = false
-        this.$refs.list.check()
+        setTimeout(() => {
+          this.$refs.list.check()
+        }, 100);
+        
       },
       deep: true
     }
