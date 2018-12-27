@@ -171,7 +171,7 @@
         </swiper>
       </div>
     </div>
-    <div class="m-statement">
+    <div class="van-hairline--top m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
         <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
@@ -309,8 +309,8 @@ export default {
     async getDetailInfo(id) {
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(res, '该楼盘详情')
-
+      console.log(res,'该楼盘详情');
+      if(!this.info.linkerOtherList){this.othersTitleConf.title=''}
       this.status = this.info.collectionStatus
       this.tagGroupArr = [this.info.saleStatus, ...this.info.houseUseList]
       // 浏览者头像动画
@@ -723,7 +723,9 @@ export default {
     }
   }
   .m-statement {
-    margin: 15px 0 70px 16px;
+    padding-top:10px;
+    margin: 0 0 77px 16px;
+    width:343px;
     color: rgba(153, 153, 153, 1);
     font-size: 12px;
     // line-height: 0.34rem;
