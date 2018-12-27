@@ -129,7 +129,6 @@ export default {
         param = Object.assign(param, _filters)
         //
       }
-
       let res = []
       if (this.type == 'package') {
         param.city = this.searchInfo.siteText
@@ -155,21 +154,18 @@ export default {
         }
         _list.push(obj)
       }
-      
       this.projectList = this.page <= 1 ? _list : this.projectList.concat(_list)
-
       if (res.pages === 0 || this.page >= res.pages) {
         this.finished = true
       }
-
       if (this.type == 'package') {
         //套盘跳过来的，加载套盘内容
         if (this.page == 1) {
           await this.getPackageInfo()
+          this.packageCheckedInit()
         }
-        this.packageCheckedInit()
+        
       }
-
       this.page++
       this.loading = false
     },

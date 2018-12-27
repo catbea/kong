@@ -106,16 +106,18 @@ export default {
       // canvas.style.height = '466px'
       // canvas.style.zIndex = 99
       // document.getElementById('card-result').appendChild(canvas)
+      let imgW = document.body.clientWidth * .8
+      let imgH = document.body.clientHeight * .75
       let box = document.getElementById('card-result')
       box.style.overflow = 'hidden'
-      box.style.width = '320px'
-      box.style.height = '530px'
+      box.style.width = imgW+'px'
+      box.style.height = imgH+'px'
 
       let image = document.getElementById('imgcard')
       image.src = canvas.toDataURL('image/png')
-      image.style.width = '321px'
-      image.style.maxWidth = '321px'
-      image.style.height = '531px'
+      image.style.width = (imgW+1)+'px'
+      image.style.maxWidth = (imgW+1)+'px'
+      image.style.height = (imgH)+'px'
 
       this.status = 2
     },
