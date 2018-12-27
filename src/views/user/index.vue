@@ -198,6 +198,7 @@ export default {
     color: #333333;
     font-size: 18px;
     margin-top: 60px;
+    font-weight: bold
   }
   > .company-view {
     margin-top: 7px;

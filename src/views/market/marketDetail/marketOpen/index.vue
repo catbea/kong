@@ -259,10 +259,10 @@ export default {
     height: 17px;
     line-height: 17px;
     text-align: center;
-    margin: 24px 0 86px 0;
+    margin: 18px 0 0 0;
+
     span:nth-child(1) {
       font-size: 10px;
-      
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       line-height: 14px;
@@ -271,7 +271,6 @@ export default {
       font-size: 12px;
       transform: scale(0.8);
       height: 14px;
-      
       font-weight: 400;
       color: #007ae6;
     }

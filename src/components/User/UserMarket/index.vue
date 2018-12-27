@@ -175,15 +175,15 @@ export default {
       console.log(this.stickNum, '楼盘个数')
     },
     recommendNumHandle() {
-      //判断有没有超过5个推荐
+      //判断有没有超过3个置顶
       let parent = this.$parent.$parent
       for (let i = 0; i < parent.showMarketList.length; i++) {
         const element = parent.showMarketList[i]
         if (element.recommand == 10) {
-          
+          this.stickNum++
         }
       }
-      
+      console.log(this.stickNum, '楼盘个数')
     },
     strideYear() {
       //判断是否跨年
@@ -419,14 +419,9 @@ export default {
       }
       ul {
         width: 181px;
-        li{
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
         li:nth-of-type(1) {
           font-size: 16px;
-          
+
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           line-height: 16px;
