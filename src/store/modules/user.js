@@ -14,6 +14,7 @@ const state = {
     institutionName: '',
     isOne: false, // true新用户 false老用户
     isVip: '',
+    ifView: true, //是否展示邀请有礼
     labelList: [
       {
         id: '',
