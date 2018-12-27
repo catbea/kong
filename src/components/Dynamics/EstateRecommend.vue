@@ -5,7 +5,7 @@
     <div class="recommend-info" v-if="info" @click="goRecommendInfo">
       <div class="desc-box">
         <!-- <p class="title">{{`${info.district}·${info.linkerName}`}}</p> -->
-        <p class="title">{{`${info.linkerTags.join('·')}`}}</p>
+        <p class="title">{{`${info.linkerTags.slice(0,2).join('·')}`}}</p>
         <p class="desc">{{`${info.city}${info.openTimes}位经纪人都已开通`}}</p>
       </div>
       <div class="open-btn">立即开通</div>
@@ -29,7 +29,7 @@ export default {
       linkText: '更多楼盘',
       link: '/market'
     },
-    blurImg: require('IMG/dynamics/blurImg.png')
+    blurImg: require('IMG/dynamics/blurImg.png'),
   }),
   methods: {
     goRecommendInfo() {
