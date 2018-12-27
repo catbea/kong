@@ -12,7 +12,7 @@
       <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice" @checkedText="priceStrChange"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @checkedText="popularityStrChange"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @confirm="confirmHandler"></more-filter>
-      <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort"></sort-way>
+      <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort" @input="sortChangeHandler"></sort-way>
     </div>
   </div>
 </template>
@@ -93,9 +93,10 @@ export default {
     },
     // 确认个数修改
     confirmHandler(val) {
-      // this.filters.moreFilters = val
       this.currentIndex = -1
-      // this.$emit('input', val)
+    },
+    sortChangeHandler(){
+      this.currentIndex = -1
     }
   },
   watch: {
