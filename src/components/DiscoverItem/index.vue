@@ -37,7 +37,7 @@ export default {
   display: flex;
   > .discover-list-left {
     position: relative;
-    width: 225px;
+    flex: 1;
     height: 100px;
     padding: 3px 15px;
     > .list-left-title {
@@ -48,7 +48,7 @@ export default {
     > .list-left-time {
       position: absolute;
       left: 15px;
-      bottom: 15px;
+      bottom: 7px;
       font-size: 12px;
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
@@ -59,6 +59,7 @@ export default {
     height: 90px;
     border-radius: 6px;
     background-color: #999999;
+    margin-right: 16px;
   }
 }
 </style>
