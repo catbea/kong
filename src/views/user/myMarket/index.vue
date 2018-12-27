@@ -115,6 +115,8 @@ export default {
     this.getShowProjectCount()
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
+    
+    
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -207,8 +209,11 @@ export default {
         }
       }
       n.masterRecommand = '1'
-      
+      // this.masterList = this.masterList.concat(n)
+      console.log(this.masterList,'大师推荐数据1');
       this.masterList.unshift(n)   
+      console.log(this.masterList,'大师推荐数据2');
+      
       this.swipeList = this.masterList.concat(this.commonList)
     },
     spliceMasterHandle(n) {
@@ -236,7 +241,8 @@ export default {
         }
       }
       n.masterRecommand = '2'
-      this.commonList = this.commonList.concat(n)
+      // this.commonList = this.commonList.concat(n)
+      this.commonList.unshift(n) 
       this.swipeList = this.masterList.concat(this.commonList)
     },
     spliceCommonHandle(n) {
