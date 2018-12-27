@@ -1,6 +1,6 @@
 export default [
   {
-    path: '/dev/mockLogin/:userId',
+    path: '/dev/mockLogin/:tokon',
     name: 'dev-mock-login',
     component: resolve => require(['@/views/dev/mockLogin.vue'], resolve)
   },

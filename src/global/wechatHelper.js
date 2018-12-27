@@ -28,9 +28,6 @@ const jsApiList = [
 
 class WechatHelper {
   constructor() {
-    console.log('axb');
-    console.log(wx);
-
     this.wx = wx
     // this.queue = new Map()  
     // this.counter = 0
@@ -46,8 +43,6 @@ class WechatHelper {
     console.log('init');
     await store.dispatch('setJssdkConfig', jsApiList)
     console.log(store.state.wx.jssdkConfig)
-
-    // console.log(this.wx);
 
     this.wx.success(() => {
       console.log(success);

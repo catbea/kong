@@ -3,7 +3,6 @@
     <p>{{result}}</p>
     <router-link to="/">返回首页</router-link>
   </div>
-
 </template>
 <script>
 import userService from '@/services/userService'
@@ -15,29 +14,33 @@ export default {
     result: ''
   }),
   created() {
-    this.userId = this.$route.params.userId
-    window.localStorage.setItem('userId', this.userId)
-    this.getUserInfo()
-  },
-  methods: {
-    async getUserInfo() {
-      this.$store.dispatch('getUserInfo', this.userId)
+    let userInfo = {
+      token: this.$route.params.token
     }
+    store.dispatch('getUserInfo', userInfo)
+    // this.userId = this.$route.params.userId
+    // window.localStorage.setItem('userId', this.userId)
+    // this.getUserInfo()
   },
-  computed: {
-    ...mapGetters({ userInfo: 'userInfo' })
-  },
-  watch: {
-    userInfo(val) {
-      try {
-        const userInfoStr = JSON.stringify(val)
-        window.localStorage.setItem('userInfo', userInfoStr)
-        this.result = `已登录账号:id:[${val.userId}] name:[${val.name}]`
-      } catch (error) {
-        this.result = error
-      }
-    }
-  }
+  // methods: {
+  //   async getUserInfo() {
+  //     this.$store.dispatch('getUserInfo', this.userId)
+  //   }
+  // },
+  // computed: {
+  //   ...mapGetters({ userInfo: 'userInfo' })
+  // },
+  // watch: {
+  //   userInfo(val) {
+  //     try {
+  //       const userInfoStr = JSON.stringify(val)
+  //       window.localStorage.setItem('userInfo', userInfoStr)
+  //       this.result = `已登录账号:id:[${val.userId}] name:[${val.name}]`
+  //     } catch (error) {
+  //       this.result = error
+  //     }
+  //   }
+  // }
 }
 </script>
 <style lang="less">
