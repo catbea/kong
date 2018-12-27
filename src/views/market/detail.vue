@@ -307,7 +307,7 @@ export default {
     // },
     // 获取楼盘详情
     async getDetailInfo(id) {
-      const res = await marketService.getLinkerDetail(id)
+      const res = await marketService.getLinkerDetail(id) 
       this.info = res
       console.log(res,'该楼盘详情');
       if(!this.info.linkerOtherList){this.othersTitleConf.title=''}
@@ -375,6 +375,7 @@ export default {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.info.city === this.userInfo.vipInfo.city) {
         await marketService.addHouseByVip(this.info.linkerId)
+        await this.getDetailInfo(this.id)
         this.openStatus = false
         this.$toast({
           duration: 1000,
