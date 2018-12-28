@@ -23,7 +23,9 @@ const jsApiList = [
   'onVoicePlayEnd', // 监听语音播放完毕api
   'translateVoice',
   'updateAppMessageShareData',
-  'updateTimelineShareData'
+  'updateTimelineShareData',
+  'hideAllNonBaseMenuItem',
+  'showAllNonBaseMenuItem'
 ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 
 class WechatHelper {
@@ -41,6 +43,7 @@ class WechatHelper {
 
   async init() {
     console.log('init');
+    this.wx.hideAllNonBaseMenuItem()
     await store.dispatch('setJssdkConfig', jsApiList)
     await this.wx.config(store.state.wx.jssdkConfig)
     // this.wx.success(() => {

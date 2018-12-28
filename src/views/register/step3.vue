@@ -43,7 +43,7 @@ export default {
     code: '',
     sendCodeText: '获取验证码',
     codeTime: 60,
-    disabled: false,
+    disabled: true,
     phoneFocus: false,
     registerType: '',
     enterpriseId: '',
@@ -66,6 +66,11 @@ export default {
     this.code = this.userRegistInfo.registerCode
     this.queryByRegister(this.enterpriseId)
     this.queryRegisterRecommendInfo(this.enterpriseId, this.registerType, this.parentUserId)
+  },
+  watch: {
+    mobile() {
+      this.disabled = !this.mobile
+    }
   },
   methods: {
     /**
@@ -155,9 +160,10 @@ export default {
     padding-top: 32px;
   }
   .register-step3-subtitle {
-    color: #666666;
+    color: #999;
     font-size: 12px;
     text-align: center;
+    padding-top: 6px;
   }
 
   .from-container {
@@ -191,6 +197,9 @@ export default {
         &.disabled {
           opacity: 0.5;
         }
+      }
+      .material-input__component{
+        margin-top: 15px;
       }
     }
     .invite-cell {

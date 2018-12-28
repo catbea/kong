@@ -148,7 +148,7 @@ export default {
     shareData: null
   }),
   created() {
-    // wechatApi.wx.showMenuItems()
+    window.awHelper.wechatHelper.wx.showAllNonBaseMenuItem()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
@@ -231,7 +231,7 @@ export default {
     },
     // 分享
     async shareHandler() {
-      // await window.awHelper.wechatHelper.init()
+      await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
       console.log('serShare', this.shareData)
 

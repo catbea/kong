@@ -238,7 +238,8 @@ export default {
     > .desc {
       font-size: 12px;
       font-weight: 400;
-      color: rgba(102, 102, 102, 1);
+      color: #999;
+      padding-top: 6px;
     }
     > .from-container {
       margin: 45px 15px 15px;
@@ -274,8 +275,9 @@ export default {
       }
       .form-cell {
         display: flex;
-        margin: 35px 15px;
+        margin: 30px 15px;
         justify-content: space-between;
+        padding-bottom: 12px;
         > .title {
           padding-left: 5px;
           font-size: 16px;
