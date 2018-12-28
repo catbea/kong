@@ -159,13 +159,13 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime) {
     let custom_obj = new webim.Msg.Elem.Custom(msgtosend + '', desc + '', JSON.stringify(ext) + '')
     msg.addCustom(custom_obj)
   } else if (msgType == 2) {
-    let ext = {
-      audioTime: audioTime,
-      userInfo: {}
-    }
+    // let ext = {
+    //   audioTime: audioTime,
+    //   userInfo: {}
+    // }
     let desc = msgType
-    // let ext = audioTime
-    let custom_obj = new webim.Msg.Elem.Custom(msgtosend + '', desc + '', JSON.stringify(ext) + '')
+    let ext = audioTime
+    let custom_obj = new webim.Msg.Elem.Custom(msgtosend + '', desc + '', ext + '')
     msg.addCustom(custom_obj)
   } else if (msgType == 3) {
     let desc = msgType
