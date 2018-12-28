@@ -257,13 +257,10 @@ export default {
         }
       }
       n.masterRecommand = '2'
-<<<<<<< HEAD
-=======
       this.$nextTick(()=>{
       //   let arr = []
       // arr.push(n)
       // this.commonList = arr.concat(this.commonList)
->>>>>>> a4ec50b2ad2f65871151c59f1b1663dcc9862245
       // this.commonList = this.commonList.concat(n)
       this.commonList.unshift(n) 
       this.swipeList = this.masterList.concat(this.commonList)
