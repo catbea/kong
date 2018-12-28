@@ -75,8 +75,8 @@ export default {
     },
     payloadTabs(tabs) {
       this.tabs.push({ index: 0, type: '', typeName: '热门', page: 1, finished: false, list: [], offsetHeight: 0 })
-      for (let i = 1; i < tabs.length; i++) {
-        tabs[i].index = i
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].index = i + 1
         tabs[i].page = 1
         tabs[i].finished = false
         tabs[i].list = []
