@@ -2,7 +2,7 @@
   <div id="app">
     <div id="view-box" ref="viewBox">
       <div class="router-view">
-        <router-view></router-view>
+        <router-view :key="$route.fullPath"></router-view>
       </div>
       <tabbar></tabbar>
     </div>

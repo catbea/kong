@@ -156,7 +156,7 @@
       <title-bar :conf="othersTitleConf"/>
       <div class="recommend-swipe-content">
         <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index">
+          <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index"  @click.native="itemClickHandler(item.linkerId)">
             <div class="recommend-house-item">
               <div
                 class="bg_img recommend-house-img"
@@ -394,6 +394,10 @@ export default {
     },
     competeOpenStatus() {
       this.openStatus = this.info.openStatus == 0
+    },
+    // 其他楼盘
+    itemClickHandler(id) {
+      this.$router.push(`/market/${id}`)
     }
   },
   computed: {
