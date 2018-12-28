@@ -20,29 +20,22 @@
         </span>
       </div>
     </div>
-    <div class="article-container" v-if="articleDynamicList.length>0">
-      <div
-        class="article-list"
-        v-for="(item,key) in articleDynamicList"
-        :key="key"
-        @click="itemArticleInfo(item)"
-      >
-        <span class="article-list-left">
-          <p class="article-left-title">{{item.articleTitle }}</p>
-          <p class="article-left-time">
-            <span
-              class="article-left-times"
-              v-show="item.articleSource"
-            >{{item.articleSource }}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}</span>
-            <span class="left-time-nub">{{item.dynamicCount}}条动态</span>
-          </p>
-        </span>
-        <span class="article-list-right">
-          <img :src="item.articleImgUrl" class="mark-icon">
-        </span>
+     <div class="article-containers" v-if="articleDynamicList.length>0">
+     
+    <div class="van-hairline--bottom discover-item" v-for="(item,key) in articleDynamicList"
+        :key="key" @click="itemArticleInfo(item)">
+      <div class="discover-list-left">
+        <p class="list-left-title">{{item.articleTitle}}</p>
+        <p
+          class="list-left-time"
+        >{{item.articleSource}}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}</p>
       </div>
+      <div
+        class="bg_img van-hairline--surround discover-list-right"
+        :style="{'backgroundImage':'url('+ item.articleImgUrl +')'}"
+      ></div>
     </div>
-    <dynamics-null v-else></dynamics-null>
+    </div>
   </div>
 </template>
 <script>
@@ -57,19 +50,19 @@ export default {
   },
   props: {
     articleDynamicCount: { type: '' },
-     articleDynamicList: { type: Array },
+    articleDynamicList: { type: Array },
     avgStayArticleTime: { type: '' }
   },
   data() {
     return {
       // articleDynamicList:[
-      //   { id: '4', articleTitle: '碧桂园凤凰国际', articleTime: '', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //   { id: '4', articleTitle: '治污染纳入考核 河长制延伸到村', articleTime: '', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
       //   { id: '5', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
-      //   { id: '6', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //   { id: '6', articleTitle: '治污染纳入考核 河长制延伸到村', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
       //   { id: '7', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
       //   { id: '8', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
-      //    { id: '1', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
-      //     { id: '2', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //    { id: '1', articleTitle: '从月球上能看到长城？这些关于月亮的谣言你信过几个', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
+      //     { id: '2', articleTitle: '从月球上能看到长城？这些关于月亮的谣言你信过几个', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
       // ]
     }
   },
@@ -87,89 +80,44 @@ export default {
 <style lang="less">
 .article-container {
   background: #ffffff;
-  .article-container {
-    background: #ffffff;
-    margin-top: 13px;
-    .shadow-box {
-      background: rgba(255, 255, 255, 1);
-      box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
-      border-radius: 6px;
-      margin: 0 16px;
-      .dynaData-container {
-        background: #ffffff;
-        display: flex;
-        padding: 20px 0 20px 20px;
 
-        span {
-          width: 80.7px;
-        }
-        .container-title {
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          line-height: 18px;
-        }
-        .card-num {
-          font-size: 24px;
-          font-weight: 500;
-          color: rgba(51, 51, 51, 1);
-          line-height: 36px;
-        }
-      }
+.article-containers{
+  margin-top: 30px;
+}
+.discover-item {
+  background: #ffffff;
+  margin: 15px;
+  display: flex;
+  height: 110px;
+  > .discover-list-left {
+    position: relative;
+    flex: 1;
+    height: 90px;
+   // padding: 6px 15px;
+    > .list-left-title {
+      font-size: 16px;
+      font-weight: 400;
+      color: rgba(51, 51, 51, 1);
+      width: 95%;
     }
-    > .article-list {
-      // margin: 0 15px;
-     // display: flex;
-      border-bottom: 1px solid #eeeeee;
-      margin: 0 16px;
-      padding: 16px 0 16px 0;
-      height: 3.4rem;
-      > .article-list-left {
-       // height: 90px;
-       // position: absolute;
-        > .article-left-title {
-          font-size: 16px;
-          font-weight: 400;
-          color: rgba(51, 51, 51, 1);
-          line-height: 24px;
-          margin-right: 60px;
-          padding-right: 70px;
-        }
-        > .article-left-time {
-         // position: absolute;
-          // bottom: 0;
-          margin-top: 40px;
-          > .article-left-times {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(153, 153, 153, 1);
-          }
-          > .left-time-nub {
-            font-size: 12px;
-            font-weight: 400;
-            color: rgba(0, 122, 230, 1);
-            line-height: 17px;
-            padding-left: 25px;
-          }
-        }
-      }
-      > .article-list-right {
-        width: 120px;
-        height: 90px;
-        border-radius: 6px;
-       // position: absolute;
-        //margin-right: 0;
-       // padding-right: 0;
-        //right: 16px;
-        float: right;
-        margin-top: -90px;
-        > .mark-icon {
-          width: 120px;
-          height: 90px;
-          background: rgba(255, 255, 255, 1);
-        }
-      }
+    > .list-left-time {
+      position: absolute;
+      bottom: 4px;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
     }
   }
+  > .discover-list-right {
+    width: 120px;
+    height: 90px;
+    border-radius: 6px;
+    background-color: #999999;
+    // margin-right: 16px;
+    // margin-top: 10px;
+  }
+}
+
+
 }
 </style>
