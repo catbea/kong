@@ -222,9 +222,15 @@ export default {
         }
       }
       n.masterRecommand = '1'
-      this.masterList = this.masterList.concat(n)
-      // this.masterList.unshift(n)   
+      this.$nextTick(()=>{
+      //   let arr = []
+      // arr.push(n)
+      // this.masterList = arr.concat(this.masterList)
+      // this.masterList = this.masterList.concat(n)
+      this.masterList.unshift(n)   
       this.swipeList = this.masterList.concat(this.commonList)
+      })
+      
     },
     spliceMasterHandle(n) {
       //点击实时改为取消大师改为未推荐
@@ -251,9 +257,14 @@ export default {
         }
       }
       n.masterRecommand = '2'
-      this.commonList = this.commonList.concat(n)
-      // this.commonList.unshift(n) 
+      this.$nextTick(()=>{
+      //   let arr = []
+      // arr.push(n)
+      // this.commonList = arr.concat(this.commonList)
+      // this.commonList = this.commonList.concat(n)
+      this.commonList.unshift(n) 
       this.swipeList = this.masterList.concat(this.commonList)
+      })
     },
     spliceCommonHandle(n) {
       //点击实时改为取消普通改为未推荐
@@ -401,13 +412,13 @@ export default {
     },
     closeCut(n) {
       this.notShowMarketList.push(n)
-      for (let index = 0; index < this.showMarketList.length; index++) {
+      for (let index = 0; index < this.showMarketList.length; index++) {//关闭展示
         const element = this.showMarketList[index]
         if (n.linkerId == element.linkerId) {
           this.showMarketList.splice(index, 1)
         }
       }
-      for (let i = 0; i < this.swipeList.length; i++) {
+      for (let i = 0; i < this.swipeList.length; i++) {//关闭展示轮播图取消
         const element = this.swipeList[i];
         if(n.linkerId == element.linkerId){
           this.swipeList.splice(i,1)
