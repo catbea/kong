@@ -164,7 +164,7 @@ export default {
       const timer = setInterval(() => {
         second--;
         if (second) {
-           if(this.allDynamicsNum ){
+           if(this.allDynamicsNum){
             this.showDynamics = true;
            }
            

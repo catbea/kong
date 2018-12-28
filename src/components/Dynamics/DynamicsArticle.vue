@@ -28,7 +28,9 @@
         <p class="list-left-title">{{item.articleTitle}}</p>
         <p
           class="list-left-time"
-        >{{item.articleSource}}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}</p>
+        >{{item.articleSource}}&nbsp;&nbsp;{{item.articleTime | dateFormatterToHuman}}
+        <span class="left-time-nub">{{item.dynamicCount}}条动态</span>
+        </p>
       </div>
       <div
         class="bg_img van-hairline--surround discover-list-right"
@@ -106,6 +108,14 @@ export default {
       font-size: 12px;
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
+      .left-time-nub{
+            font-size: 12px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(0, 122, 230, 1);
+            line-height: 17px;
+            padding-left: 25px;
+      }
     }
   }
   > .discover-list-right {
