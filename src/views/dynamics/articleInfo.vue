@@ -5,7 +5,10 @@
         <div class="articleInfo-list">
           <span class="articleInfo-list-left">
             <p class="list-left-title">{{articleTitle}}</p>
-            <p class="list-left-time" v-show="articleSource">{{articleSource }}&nbsp;&nbsp;{{articleTime | dateFormatterToHuman}}</p>
+            <p
+              class="list-left-time"
+              v-show="articleSource"
+            >{{articleSource }}&nbsp;&nbsp;{{articleTime | dateFormatterToHuman}}</p>
           </span>
           <span class="articleInfo-list-right">
             <img :src="articleImgUrl" class="mark-icon">
@@ -34,84 +37,85 @@
     </shadow-box>
     <!-- <dynamics-list></dynamics-list> -->
     <div class="dynamics-container">
-       <van-list
-            v-model="loading"
-            @load="getSingleArticleDynamicList"
-            :finished="finished"
-            :finished-text="'没有更多了'"
-          >
-      <div v-if="articleDynamicList" v-for="(item,key) in articleDynamicList" :key="key">
-        <div class="dynamics-container-list">
-          <shadow-box>
-            <div slot="container">
-              <div class="dynamics-list">
-                <div class="dynamics-list-agent" @click="godynamicsInfo(item)">
-                  <span class="list-agent-left">
-                    <span class="agent-left-left">
-                      <img :src="item.avatarUrl" class="agent-userImg">
+      <van-list
+        v-model="loading"
+        @load="getSingleArticleDynamicList"
+        :finished="finished"
+        :finished-text="'没有更多了'"
+      >
+        <div v-if="articleDynamicList" v-for="(item,key) in articleDynamicList" :key="key">
+          <div class="dynamics-container-list">
+            <shadow-box>
+              <div slot="container">
+                <div class="dynamics-list">
+                  <div class="dynamics-list-agent" @click="godynamicsInfo(item)">
+                    <span class="list-agent-left">
+                      <span class="agent-left-left">
+                        <img :src="item.avatarUrl" class="agent-userImg">
+                      </span>
+                      <span class="agent-left-right">
+                        <p class="left-right-name">{{item.clientName}}</p>
+                        <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
+                      </span>
                     </span>
-                    <span class="agent-left-right">
-                      <p class="left-right-name">{{item.clientName}}</p>
-                      <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
+                    <span class="list-agent-right">
+                      <p
+                        class="agent-right-num"
+                        v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
+                      >{{item.intentionality}}%</p>
+                      <p class="agent-right-title">意向度</p>
                     </span>
-                  </span>
-                  <span class="list-agent-right">
-                    <p
-                      class="agent-right-num"
-                      v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
-                    >{{item.intentionality}}%</p>
-                    <p class="agent-right-title">意向度</p>
-                  </span>
-                </div>
-                <div class="dynamics-list-content" @click="godynamicsInfo(item)">
-                  <p>
-                    浏览了文章
-                    <span>{{item.articleName}}</span>
-                  </p>
-                  <p>
-                    {{item.updateTime | dateTimeFormatter(2,"/")}} 日第
-                    <span>{{item.clickCount }}次</span>打开
-                  </p>
-                  <p>
-                    浏览时长大于
-                    <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
-                    <samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
-                    <span>{{item.currentArticleLength}}%</span>
-                  </p>
-                  <p>
-                    累计浏览
-                    <span>{{item.todayClickCount}}次</span>名片，平均停留
-                    <span>{{item.totalTime / 1000}}s</span>
-                  </p>
-                </div>
-                <div class="dynamics-list-btn">
-                  <span></span>
-                  <span class="list-btn-right">
-                    <button
-                      class="list-btn-follow"
-                      v-show="item.attentionStatus   == 1"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >
-                      <img :src="gzImg" class="agent-gzImg">
-                      关注
-                    </button>
-                    <button
-                      class="list-btn-followOK"
-                      v-show="item.attentionStatus   == 0"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >已关注</button>
-                    <button class="list-btn-contact" @click="goalldynamics(item)">
-                      <img :src="lxImg" class="btn-contact-userImg">
-                      联系
-                    </button>
-                  </span>
+                  </div>
+                  <div class="dynamics-list-content" @click="godynamicsInfo(item)">
+                    <p>
+                      浏览了文章
+                      <span>{{item.articleName}}</span>
+                    </p>
+                    <p>
+                      {{item.updateTime | dateTimeFormatter(2,"/")}} 日第
+                      <span>{{item.clickCount }}次</span>打开
+                    </p>
+                    <p>
+                      浏览时长大于
+                      <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
+                      <samp v-if="item.currentArticleLength >= '100' ">游览</samp>
+                      <samp v-else>小于</samp>
+                      <span>{{item.currentArticleLength}}%</span>
+                    </p>
+                    <p>
+                      累计浏览
+                      <span>{{item.todayClickCount}}次</span>名片，平均停留
+                      <span>{{item.totalTime / 1000}}s</span>
+                    </p>
+                  </div>
+                  <div class="dynamics-list-btn">
+                    <span></span>
+                    <span class="list-btn-right">
+                      <button
+                        class="list-btn-follow"
+                        v-show="item.attentionStatus   == 1"
+                        @click="getupdateCustomerInfo(item,key)"
+                      >
+                        <img :src="gzImg" class="agent-gzImg">
+                        关注
+                      </button>
+                      <button
+                        class="list-btn-followOK"
+                        v-show="item.attentionStatus   == 0"
+                        @click="getupdateCustomerInfo(item,key)"
+                      >已关注</button>
+                      <button class="list-btn-contact" @click="goalldynamics(item)">
+                        <img :src="lxImg" class="btn-contact-userImg">
+                        联系
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </shadow-box>
+            </shadow-box>
+          </div>
         </div>
-      </div>
-       </van-list>
+      </van-list>
     </div>
   </div>
 </template>
@@ -133,28 +137,27 @@ export default {
       gzImg: require('IMG/dynamics/gz@2x.png'),
       articleDynamicCount: [],
       articleDynamicList: [],
-       itemlist: this.$route.query.itemlist,
-       articleTitle: '',
-       articleSource: this.$route.query.articleSource,
-       articleImgUrl: this.$route.query.articleImgUrl,
-       articleTime: this.$route.query.articleTime,
+      itemlist: this.$route.query.itemlist,
+      articleTitle: '',
+      articleSource: this.$route.query.articleSource,
+      articleImgUrl: this.$route.query.articleImgUrl,
+      articleTime: this.$route.query.articleTime,
       articleId: this.$route.query.articleId,
       avgStayArticleTime: 0,
       loading: false,
       finished: false,
       current: 1,
-      size: 5,
+      size: 5
     }
   },
   created() {
-    ;(this.articleTitle = this.$route.query.articleTitle), this.getSingleArticleDynamicList()
+    this.articleTitle = this.$route.query.articleTitle
+    // this.getSingleArticleDynamicList()
   },
   methods: {
     //查询单个文章客户访问数据动态列表
     async getSingleArticleDynamicList() {
       const res = await dynamicsService.getSingleArticleList(this.current, 2, this.articleId)
-      this.articleDynamicList = res.records
-
 
       if (res.records.length > 0) {
         this.articleDynamicList = this.articleDynamicList.concat(res.records)
@@ -248,18 +251,17 @@ export default {
         padding-right: 70px;
       }
       > .list-left-time {
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
-          position: absolute;
-          bottom: 0;
-        }
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        position: absolute;
+        bottom: 0;
+      }
       > .time-body {
         display: flex;
         flex-direction: row;
         position: absolute;
         bottom: 0;
-        
 
         > .list-span {
           font-size: 12px;
@@ -359,7 +361,7 @@ export default {
       }
       > .dynamics-list-content {
         font-size: 14px;
-        
+
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 21px;

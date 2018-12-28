@@ -50,6 +50,7 @@ export default {
       background: #007ae6;
       line-height: 30px;
       margin: 0;
+      font-family: 'SimHei';
       > span {
         color: #007ae6;
         font-size: 14px;
