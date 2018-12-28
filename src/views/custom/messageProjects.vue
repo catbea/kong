@@ -70,14 +70,14 @@ export default {
           linkerUrl: item.linkerUrl,
           sale: item.sale,
           linkerName: item.linkerName,
-          site: `${item.city} ${item.county} ${buildPrice} ${priceUnit}`, //'深圳 南山 120000元/㎡',
+          site: `${item.city} ${item.county}`, //'深圳 南山 120000元/㎡',    ${buildPrice} ${priceUnit}
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           isChecked: false,
           divisionRules: item.divisionRules,
           saleStatus: item.saleStatus,
           ifPanorama: item.ifPanorama,
-          price: `${item.price} ${item.priceUnit}`
+          price: `${buildPrice} ${priceUnit}`
         }
         _list.push(obj)
       }
