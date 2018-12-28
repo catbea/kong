@@ -80,17 +80,6 @@ export default {
     onInput(val) {
       if (val.length >= 4) {
         this.queryRegisterDistributor(this.enterpriseId, this.city, val)
-        // let len = this.searchLists.length
-        // let arr = []
-        // debugger
-        // for(let i=0; i<len; i++) {
-        //   val = val.toLocaleLowerCase()
-        //   let tempTarget = this.searchLists[i].distributorName.toLocaleLowerCase()
-        //   if (tempTarget.indexOf(val) !== -1) {
-        //     arr.push(this.searchLists[i])
-        //   }
-        // }
-        // this.regLists = arr
       }
     },
     onSelectHandler(index) {
