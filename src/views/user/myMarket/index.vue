@@ -251,8 +251,8 @@ export default {
         }
       }
       n.masterRecommand = '2'
-      this.commonList = this.commonList.concat(n)
-      // this.commonList.unshift(n) 
+      // this.commonList = this.commonList.concat(n)
+      this.commonList.unshift(n) 
       this.swipeList = this.masterList.concat(this.commonList)
     },
     spliceCommonHandle(n) {
