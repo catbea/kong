@@ -36,8 +36,8 @@ export default (name, filters, conf = {}) => {
       if (avepriceTemp[1] !== '-1') result[conf.aveprice[0][0]] = avepriceTemp[1]
       if (avepriceTemp[2] !== '-1') result[conf.aveprice[0][1]] = avepriceTemp[2]
     } else if (avepriceTemp[0] === '2') {
-      if (avepriceTemp[1] !== '-1') result[conf.aveprice[1][0]] = avepriceTemp[1]
-      if (avepriceTemp[2] !== '-1') result[conf.aveprice[1][1]] = avepriceTemp[2]
+      if (avepriceTemp[1] !== '-1') result[conf.aveprice[1][0]] = avepriceTemp[1] * 10000
+      if (avepriceTemp[2] !== '-1') result[conf.aveprice[1][1]] = avepriceTemp[2] * 10000
     }
   }
   // 人气
