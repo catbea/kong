@@ -18,7 +18,7 @@
           
           <shadow-box>
             <div slot="container">
-              <div class="allDynamics-container-titps" @click="govallDynamicsNum" v-show="showDynamics">
+              <div class="allDynamics-container-titps"  @click="govallDynamicsNum" v-show="showDynamics">
               新增 {{allDynamicsNum}} 浏览
               </div>
               <!-- active === 0? allDynamicCount :CardDynamicCount -->
@@ -164,9 +164,10 @@ export default {
       const timer = setInterval(() => {
         second--;
         if (second) {
-           if(this.allDynamicsNum !== 0 ){
+           if(this.allDynamicsNum ){
             this.showDynamics = true;
            }
+           
         } else {
           clearInterval(timer);
           this.showDynamics = false;
