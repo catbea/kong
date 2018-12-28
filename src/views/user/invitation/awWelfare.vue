@@ -72,7 +72,7 @@ export default {
       awtipsIcon: require('IMG/user/invitation/aw-tips@2x.png'),
       awtips1Icon: require('IMG/user/invitation/aw-tips1@2x.png'),
       awbocloseIcon: require('IMG/user/invitation/aw-box-close.png'),
-      awbgcardIcon: require('IMG/user/invitation/aw-bgcard.png'),
+      awbgcardIcon: require('IMG/user/invitation/aw-bgcard@2x.png'),
       teammatBack: require('IMG/user/invitation/aw-box-bg@2x.png'),
       show1: false,
       registrationRules: '',
@@ -100,7 +100,8 @@ export default {
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
-        useCORS: true
+        useCORS: true,
+        backgroundColor: null
       })
       // canvas.style.width = '284px';
       // canvas.style.height = '466px'
