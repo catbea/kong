@@ -17,7 +17,7 @@ export default async (to, from, next) => {
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
-  alert(parm.cropId);
+  alert(parm.cropId+' | url'+location.href);
   if (parm.cropId) {
     alert(1);
     store.dispatch('getUserInfo', {})
@@ -43,6 +43,7 @@ export default async (to, from, next) => {
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
+        alert('payCorpId:'+payCorpId);
         if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
           alert(4);
           try {
