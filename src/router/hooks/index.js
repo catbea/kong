@@ -3,6 +3,7 @@ import routerMetaHandler from './afterEach/routerMetaHandler'
 import promptClear from './afterEach/promptClear'
 import routeConf from './afterEach/routeConf'
 import authCheck from './beforeEach/authCheck'
+import wechatSet from './afterEach/wechatSet'
 import imSigCheck from './beforeEach/imSigCheck'
 
 export default router => {
@@ -15,4 +16,5 @@ export default router => {
   router.afterEach(routerMetaHandler)
   router.afterEach(promptClear)
   router.afterEach(routeConf)
+  router.afterEach(wechatSet)
 }
