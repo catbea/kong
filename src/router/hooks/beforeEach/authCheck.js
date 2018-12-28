@@ -17,7 +17,10 @@ export default async (to, from, next) => {
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
+  // alert(parm.cropId+' | url'+location.href);
   if (parm.cropId) {
+    // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
+    // alert(1);
     store.dispatch('getUserInfo', {})
     store.dispatch('setJssdkConfig', null)
     let cropId = parm.cropId
@@ -30,7 +33,9 @@ export default async (to, from, next) => {
       '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
     window.location.href = wxurl
   } else {
+    // alert(2);
     if (parm.code) {
+      // alert(3);
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
@@ -39,15 +44,20 @@ export default async (to, from, next) => {
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
+        // alert('payCorpId:'+payCorpId);
         if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
+          // alert(4);
           try {
+            // alert(5);
             window.awHelper.wechatHelper.init()
           } catch (e) {
+            // alert(6);
             console.log('[error:window.awHelper.wechatHelper]')
             next()
           }
         }
         if (userInfo.payOpenId) {
+          // alert(7);
           next()
           return
         }
