@@ -41,6 +41,7 @@ class WechatHelper {
 
   async init() {
     console.log('init');
+    this.wx.hideMenuItems()
     await store.dispatch('setJssdkConfig', jsApiList)
     await this.wx.config(store.state.wx.jssdkConfig)
     // this.wx.success(() => {

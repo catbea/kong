@@ -148,7 +148,7 @@ export default {
     shareData: null
   }),
   created() {
-    // wechatApi.wx.showMenuItems()
+    window.awHelper.wechatHelper.wx.showMenuItems()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
