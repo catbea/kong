@@ -623,9 +623,9 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 15px;
+    margin-top: 38px;
     .type-swipe-content {
-      margin: 10px 15px;
+      margin: 13px 22px;
       .house-type {
         > .house-type-img {
           width: 160px;
@@ -633,7 +633,7 @@ export default {
           border-radius: 6px;
         }
         > .house-type-info {
-          margin-top: 5px;
+          margin-top: 8px;
           line-height: 1.5;
           > .house-type-name {
             font-size: 16px;
@@ -670,6 +670,7 @@ export default {
         font-weight: 400;
       }
       > .news-time {
+        margin-top:16px;
         font-size: 12px;
         color: #999999;
       }
