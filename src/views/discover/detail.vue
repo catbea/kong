@@ -180,7 +180,7 @@ export default {
         institutionName: this.info.institutionName
       }
       let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + this.city
+      host = host + '#/article/' + this.id + '/' + this.city + '/' + this.info.agentId
       this.shareData = {
         title: this.info.title,
         imgUrl: this.info.image,
