@@ -55,7 +55,7 @@
                       <div class='info-name'>{{item.content.linkerName}}</div>
                       <div class='info-address'>{{item.content.address}}</div>
                       <div class='info-Price'>
-                        <span>{{item.content.linkerPrice}}</span>
+                        <span >{{item.content.linkerPrice}}</span>
                         <span>{{item.content.building}}</span>
                       </div>
                     </div>
