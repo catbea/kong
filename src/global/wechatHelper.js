@@ -40,11 +40,15 @@ class WechatHelper {
     // this.init()
   }
 
+  hideItems() {
+    this.wx.hideOptionMenu()
+  }
+
 
   async init() {
     console.log('init');
     // this.wx.hideAllNonBaseMenuItem()
-    this.wx.hideOptionMenu()
+
     // wx.hideMenuItems({
     //   menuList: ['menuItem:share:appMessage', 'menuItem:share:wechat', 'menuItem:share:timeline', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
     // })
@@ -107,7 +111,7 @@ class WechatHelper {
 
     this.wx.onMenuShareAppMessage(conf)
     this.wx.onMenuShareTimeline(conf)
-
+    this.wx.showOptionMenu()
 
     // this.wx.updateAppMessageShareData(conf)
     // this.wx.updateTimelineShareData(conf)
@@ -120,8 +124,8 @@ class WechatHelper {
       success: function (res) {
         console.log('api可用情况');
         console.log(res);
-        
-        
+
+
         // 以键值对的形式返回，可用的api值true，不可用为false
         // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
       }
