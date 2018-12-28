@@ -173,10 +173,14 @@ export default {
         enterpriseName: this.info.enterpriseName,
         institutionName: this.info.institutionName
       }
+      let host = process.env.VUE_APP_APP_URL
+      host = host + '#/article/' + this.id + '/' + this.city + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
       this.shareData = {
         title: this.info.title,
-        image: this.info.image
+        imgUrl: this.info.image,
+        link: host
       }
+      this.shareHandler()
     },
 
     //进入楼盘详情
@@ -226,7 +230,12 @@ export default {
       const result = await discoverService.articleShare(params)
     },
     // 分享
-    shareHandler() {
+    async shareHandler() {
+      await window.awHelper.wechatHelper.init()
+      this.shareData.success = this.articleShare
+      console.log('serShare', this.shareData)
+
+      window.awHelper.wechatHelper.setShare(this.shareData)
       // wechatApi
       //   .wechatShare(this.shareData)
       //   .then(res => {
