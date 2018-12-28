@@ -226,8 +226,8 @@ export default {
       //   let arr = []
       // arr.push(n)
       // this.masterList = arr.concat(this.masterList)
-      // this.masterList = this.masterList.concat(n)
-      this.masterList.unshift(n)   
+      this.masterList = this.masterList.concat(n)
+      // this.masterList.unshift(n)   
       this.swipeList = this.masterList.concat(this.commonList)
       })
       
@@ -261,8 +261,8 @@ export default {
       //   let arr = []
       // arr.push(n)
       // this.commonList = arr.concat(this.commonList)
-      // this.commonList = this.commonList.concat(n)
-      this.commonList.unshift(n) 
+      this.commonList = this.commonList.concat(n)
+      // this.commonList.unshift(n) 
       this.swipeList = this.masterList.concat(this.commonList)
       })
     },
@@ -416,6 +416,8 @@ export default {
         const element = this.showMarketList[index]
         if (n.linkerId == element.linkerId) {
           this.showMarketList.splice(index, 1)
+          element.masterRecommand=0//变成未推荐
+          element.recommand=10//变成未置顶
         }
       }
       for (let i = 0; i < this.swipeList.length; i++) {//关闭展示轮播图取消
