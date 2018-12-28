@@ -5,9 +5,9 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    agentId: '1',
+    agentId: '4419',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
-    distributorId: '124',
+    distributorI9d: '124',
     distributorName: '广佛分公司',
     enterpriseId: '91',
     institutionId: '82',

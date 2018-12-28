@@ -180,7 +180,7 @@ export default {
         institutionName: this.info.institutionName
       }
       let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + this.city + '/' + this.info.agentId
+      host = host + '#/article/' + this.id + '/' + this.city + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
       this.shareData = {
         title: this.info.title,
         imgUrl: this.info.image,
@@ -239,7 +239,7 @@ export default {
     },
     // 设置分享
     async shareHandler() {
-      // await window.awHelper.wechatHelper.init()
+      await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
       console.log('serShare', this.shareData)
 
