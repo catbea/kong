@@ -11,7 +11,7 @@
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
         <li :class="{active:num==index}" v-for="(item,index) in vipList" :key="index" @click="taget(index)">
-          <p>{{item.subscribeRemark}}个月</p>
+          <p>{{item.subscribeNum}}个月</p>
           <div class="price">
             <span>¥</span>
             <p>{{item.subscribeAmount | priceFormart}}</p> 

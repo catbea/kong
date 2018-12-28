@@ -155,6 +155,8 @@ export default {
      * 切换tab
      */
     onClick() {
+      this.finished = false
+      document.querySelector('.router-view').scrollTop = '0px'
       if (this.activeIndex == 0) {
         // 足迹
         this.trackCurrent = 1

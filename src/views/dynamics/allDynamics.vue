@@ -177,6 +177,7 @@ export default {
       console.log(val);
     },
     goList(index, title) {
+      this.finished = false
       document.querySelector('.router-view').scrollTop = '0px'
       switch (index) {
         case 0:
