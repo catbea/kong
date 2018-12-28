@@ -17,7 +17,7 @@ export default async (to, from, next) => {
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
-  alert(parm.cropId+' | url'+location.href);
+  // alert(parm.cropId+' | url'+location.href);
   if (parm.cropId) {
     // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
     // alert(1);
