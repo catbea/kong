@@ -239,7 +239,7 @@ export default {
     },
     // 设置分享
     async shareHandler() {
-      await window.awHelper.wechatHelper.init()
+      // await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
       console.log('serShare', this.shareData)
 
