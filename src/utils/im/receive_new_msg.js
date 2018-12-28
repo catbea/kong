@@ -152,7 +152,7 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime) {
 
   let text_obj
 
-  // //解析文本和表情debugger
+  // //解析文本和表情
   if (msgType == 1) {
     let desc = msgType
     let ext = {}

@@ -88,7 +88,6 @@ export default {
   }),
   methods: {
     itemClickHandler(type, value) {
-      debugger
       switch (type) {
         case 'areaSize':
           this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
