@@ -109,23 +109,6 @@ export default {
       } else {
         document.getElementById('city_'+e.target.innerText).scrollIntoView();
       }
-
-      // this.scrollList(e.changedTouches[0].clientY)
-
-      // console.log(e.target.tagName)
-      // return
-
-      // debugger
-      //  this.$refs.content.scrollTop = 1000
-      // if (e.target.tagName !== 'LI') return
-      // this.navOffsetX = e.changedTouches[0].clientX
-      // this.scrollList(e.changedTouches[0].clientY)
-
-      // this.moving = true
-      // window.addEventListener('touchmove', this.handleTouchMove)
-      // window.addEventListener('touchend', this.handleTouchEnd)
-      // console.log(e.target.tagName, this.navOffsetX)
-      // return
     },
     scrollHander(val) {
       this.indicator.str = val

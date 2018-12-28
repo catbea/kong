@@ -112,7 +112,6 @@ export default {
       const res = await dynamicsService.getAgentMsgAndTotal()
       this.messageList = res.msgList
       this.sysMessage = res.systemMessage
-      debugger
       if (res.msgList.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
