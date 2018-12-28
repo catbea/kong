@@ -222,14 +222,14 @@ export default {
         }
       }
       n.masterRecommand = '1'
-      // this.$nextTick(()=>{
+      this.$nextTick(()=>{
       //   let arr = []
       // arr.push(n)
       // this.masterList = arr.concat(this.masterList)
       // this.masterList = this.masterList.concat(n)
       this.masterList.unshift(n)   
       this.swipeList = this.masterList.concat(this.commonList)
-      // })
+      })
       
     },
     spliceMasterHandle(n) {
