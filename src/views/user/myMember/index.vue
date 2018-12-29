@@ -7,7 +7,7 @@
         <span class="head-icon bg_img" v-show="isVip" :style="{backgroundImage:'url('+(isExpire ? headImgB : headImgA)+')'}"></span>
       </div>
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
-        <li>{{userInfo.nickName}}</li>
+        <li>{{userInfo.name}}</li>
         <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
         <li v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
         <li v-show="!isVip">暂未开通VIP功能</li>
@@ -74,7 +74,7 @@ export default {
     borderColor: {
       border: 'none'
     },
-    selectCity: '深圳市',
+    selectCity: this.userInfo.vipDefaultCity || this.userArea.city,
     title: 'VIP生效城市待选',
     showAddProjectDialogFlag: false
   }),
