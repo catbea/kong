@@ -47,7 +47,7 @@ export default {
   width: 100%;
   height: 80px;
   .user-avatar {
-    margin: 15px;
+    margin: 15px -15px;
     width: 50px;
     height: 50px;
   }
@@ -59,7 +59,7 @@ export default {
     top: 49px;
   }
   .baseinfo-box {
-    margin: 15px 0 15px -25px;
+    margin: 15px 0 15px -20px;
     .username {
       font-size: 16px;
       font-weight: 600;

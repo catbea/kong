@@ -1,73 +1,36 @@
 <template>
   <div class="allDynamics-page">
     <div class="tab-container">
-      <van-tabs
-        v-model="active"
-        color="#007AE6"
-        :line-width="15"
-        :swipe-threshold="6"
-        sticky
-        animated
-        @click="goList"
-      >
+      <van-tabs v-model="active" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated @click="goList">
         <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName"></van-tab>
       </van-tabs>
       <div class="data-container">
         <!-- 动态全部-->
         <div class="allDynamics-container" v-if="active === 0 ">
-          
           <shadow-box>
             <div slot="container">
-              <div class="allDynamics-container-titps" @click="govallDynamicsNum" v-show="showDynamics">
-              新增 {{allDynamicsNum}} 浏览
-              </div>
+              <div class="allDynamics-container-titps" @click="govallDynamicsNum" v-show="showDynamics">新增 {{allDynamicsNum}} 浏览</div>
               <!-- active === 0? allDynamicCount :CardDynamicCount -->
-              <dynamics-data
-                :totalTitle="all.totalTitle"
-                :cardTitle="all.cardTitle"
-                :propertiesTitle="all.propertiesTitle"
-                :articleTitle="all.articleTitle"
-                :allDynamicCount="allDynamicCount"
-              ></dynamics-data>
+              <dynamics-data :totalTitle="all.totalTitle" :cardTitle="all.cardTitle" :propertiesTitle="all.propertiesTitle" :articleTitle="all.articleTitle" :allDynamicCount="allDynamicCount"></dynamics-data>
             </div>
           </shadow-box>
           <van-list v-model="loading" @load="onLoad" :finished="finished" :finished-text="'没有更多了'">
-            <dynamics-list
-              @click="getupdateCustomerInfo"
-              :allDynamicList="allDynamicList"
-              :item="item"
-            ></dynamics-list>
+            <dynamics-list @click="getupdateCustomerInfo" :allDynamicList="allDynamicList" :item="item"></dynamics-list>
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 1">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
-            <dynamics-card
-              @click="goallDynamics"
-              :cardDynamicCount="cardDynamicCount"
-              :cardDynamicListCount="cardDynamicListCount"
-              :cardDynamicList="cardDynamicList"
-            ></dynamics-card>
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+            <dynamics-card @click="goallDynamics" :cardDynamicCount="cardDynamicCount" :cardDynamicListCount="cardDynamicListCount" :cardDynamicList="cardDynamicList"></dynamics-card>
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 2">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
-            <properties
-              :info="item"
-              @click="itemProperties"
-              :houseDynamicList="houseDynamicList"
-              :houseDynamicCount="houseDynamicCount"
-              :avgStayLinkerTime="avgStayLinkerTime"
-            ></properties>
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+            <properties :info="item" @click="itemProperties" :houseDynamicList="houseDynamicList" :houseDynamicCount="houseDynamicCount" :avgStayLinkerTime="avgStayLinkerTime"></properties>
           </van-list>
         </div>
         <div class="allDynamics-container" v-if="active === 3">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad" >
-            <dynamics-article
-              :articleDynamicCount="articleDynamicCount"
-              :articleDynamicList="articleDynamicList"
-              :avgStayArticleTime="avgStayArticleTime"
-              @click="itemArticleInfo"
-            ></dynamics-article>
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+            <dynamics-article :articleDynamicCount="articleDynamicCount" :articleDynamicList="articleDynamicList" :avgStayArticleTime="avgStayArticleTime" @click="itemArticleInfo"></dynamics-article>
           </van-list>
         </div>
       </div>
@@ -156,25 +119,23 @@ export default {
     this.govallDynamicsNum()
   },
   methods: {
-    
-    
-    govallDynamicsNum(){
-      
-      let second = 3;
+    govallDynamicsNum() {
+      let second = 3
       const timer = setInterval(() => {
-        second--;
+        second--
         if (second) {
-           if(this.allDynamicsNum !== 0 ){
+           if(this.allDynamicsNum){
             this.showDynamics = true;
            }
+           
         } else {
-          clearInterval(timer);
-          this.showDynamics = false;
+          clearInterval(timer)
+          this.showDynamics = false
         }
       }, 1000)
     },
-    checkPosition(val){
-      console.log(val);
+    checkPosition(val) {
+      console.log(val)
     },
     goList(index, title) {
       this.finished = false
@@ -435,29 +396,31 @@ export default {
     margin-top: 60px;
   }
   > .tab-container {
+    z-index: 99;
+    >.van-tabs{
+      z-index: 99;
+    }
     // position: fixed;
     width: 100%;
     .allDynamics-container {
       padding-top: 8px;
-      
     }
   }
-  .allDynamics-container-titps{
-        width:133px;
-        height:30px;
-        background:rgba(0,122,230,1);
-        border-radius:16px;
-        opacity:0.9;
-        font-size:14px;
-        font-weight:400;
-        color:rgba(255,255,255,1);
-        text-align: center;
-        line-height: 30px;
-        position: absolute;
-        margin-top: -9px;
-        left: 30%;
-
-      }
+  .allDynamics-container-titps {
+    width: 133px;
+    height: 30px;
+    background: rgba(0, 122, 230, 1);
+    border-radius: 16px;
+    opacity: 0.9;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    line-height: 30px;
+    position: absolute;
+    margin-top: -9px;
+    left: 30%;
+  }
   .van-tabs--line {
     padding-top: 1.17333rem;
     position: fixed;

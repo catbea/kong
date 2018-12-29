@@ -83,11 +83,6 @@ export default {
       },
       immediate: true
     }
-    // value(newValue) {
-    //   debugger
-    //   // This watch works from the code side of the 2-way-binding:
-    //   this.copyValue(newValue)
-    // }
   },
   props: {
     id: {
