@@ -442,8 +442,6 @@ export default {
         }
       }
       this.notShowMarketList=arr
-
-      console.log(this.notShowMarketList,'不展示的数据');
       
       if(this.notShowMarketList.length==0){
       this.no=true
@@ -549,6 +547,7 @@ export default {
   .user-market-box {
     position: relative;
     display: flex;
+    margin-top:19px;
     .notMarket {
       margin:56px 0 100px 144px;
       p:nth-child(1){
