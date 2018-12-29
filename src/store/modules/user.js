@@ -48,6 +48,7 @@ const state = {
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
     nickName: '',
+    // payCorpId: 'onXUy1sGkPMX-Z34buMYLs5q2',
     payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
     pcOpenid: 'onXUy1sGkPMX-Z34buMYLs5q2IEc',
     price: 874400,
