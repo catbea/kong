@@ -31,7 +31,7 @@ export default async (to, from, next) => {
   if (parm.cropId) {
     // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
     // alert(1);
-    store.dispatch('getUserInfo', {})
+    store.dispatch('getUserInfo', null)
     // store.dispatch('setJssdkConfig', null)
     store.commit(types.WX_JSSDK, null)
     let cropId = parm.cropId
@@ -112,14 +112,14 @@ export default async (to, from, next) => {
             try {
               if(isIOS()) {
                 if(to.path == '/'){
-                  alert('to.path / '+store.userInfo.token)
+                  alert('to.path / '+store.getters.userInfo.token)
                   window.awHelper.wechatHelper.init()
                 }
               } else {
                 window.awHelper.wechatHelper.init()
               }
             } catch (e) {
-              alert('to.path / '+store.userInfo)
+              alert('to.path / '+store.getters.userInfo)
               console.log('[error:window.awHelper.wechatHelper]')
               next()
             }
