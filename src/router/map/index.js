@@ -11,5 +11,5 @@ files.keys().forEach(key => {
     modules.push(temp)
   }
 })
-modules.push({ path: '*', redirect: '/dynamics' })
+// modules.push({ path: '*', redirect: '/dynamics' })
 export default modules

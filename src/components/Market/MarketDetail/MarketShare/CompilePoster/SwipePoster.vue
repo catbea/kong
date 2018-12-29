@@ -12,7 +12,7 @@
           </ul>
           <div class="QRcode">
             <img class="qrcode-view" :src="model.qrCode">
-            <span>长按识别更多</span>
+            <span class="qrcode-text">长按识别更多</span>
           </div>
         </div>
         <div class="box-bottom">
@@ -94,8 +94,8 @@ export default {
           flex-direction: column;
           margin-top: 19px;
           margin-left: 22px;
-          align-items:center;
-          margin-right: 20px;
+          align-items: center;
+          margin-right: 10px;
 
           .qrcode-view {
             margin-bottom: 7px;
@@ -103,12 +103,13 @@ export default {
             height: 58px;
             border-radius: 50%;
           }
-          span {
+          .qrcode-text {
+            width: 80px;
             font-size: 7px;
             color: rgba(255, 255, 255, 0.75);
             line-height: 10px;
-            font-size: 7px;
-            margin-top: 6px;
+            margin-top: 3px;
+            transform: scale(0.7);
           }
         }
       }

@@ -1,4 +1,5 @@
 import store from '@/store/'
+import * as types from '@/store/mutation-types'
 import commonService from '@/services/commonService'
 import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 
@@ -13,7 +14,15 @@ const getUrlQueryParams = url => {
   return params
 }
 
+const isIOS = ()=> {
+  var isIphone = navigator.userAgent.includes('iPhone')
+  var isIpad = navigator.userAgent.includes('iPad')
+  return isIphone || isIpad;
+};
+
+
 export default async (to, from, next) => {
+  console.log(to.path, 'to.path')
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
@@ -23,7 +32,8 @@ export default async (to, from, next) => {
     // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
     // alert(1);
     store.dispatch('getUserInfo', {})
-    store.dispatch('setJssdkConfig', null)
+    // store.dispatch('setJssdkConfig', null)
+    store.commit(types.WX_JSSDK, null)
     let cropId = parm.cropId
     await localStorage.setItem('cropId', cropId)
     let wxurl =
@@ -50,9 +60,15 @@ export default async (to, from, next) => {
           // alert(4);
           try {
             // alert(5);
+            // if(isIOS()) {
+            //   if(to.path == '/'){
+            //     window.awHelper.wechatHelper.init()
+            //   }
+            // } else {
+            //   window.awHelper.wechatHelper.init()
+            // }
             window.awHelper.wechatHelper.init()
           } catch (e) {
-            // alert(6);
             console.log('[error:window.awHelper.wechatHelper]')
             next()
           }
@@ -78,7 +94,7 @@ export default async (to, from, next) => {
         userInfo.payCorpId = payCorpId
         userInfo.cropId = cropId
         userInfo.token = wxAuthObject.token
-        store.dispatch('getUserInfo', userInfo)
+        await store.dispatch('getUserInfo', userInfo)
         console.log(userInfo, '[userInfo]')
         if (!userInfo.payOpenId) {
           //返回的payopenid为空，则从新授权获取
@@ -91,6 +107,22 @@ export default async (to, from, next) => {
             '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
           window.location.href = wxurl
           return
+        } else {
+          if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
+            try {
+              if(isIOS()) {
+                if(to.path == '/'){
+                  alert('to.path / '+store.userInfo.token)
+                  window.awHelper.wechatHelper.init()
+                }
+              } else {
+                window.awHelper.wechatHelper.init()
+              }
+            } catch (e) {
+              console.log('[error:window.awHelper.wechatHelper]')
+              next()
+            }
+          }
         }
         next()
       }
