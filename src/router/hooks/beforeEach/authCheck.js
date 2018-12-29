@@ -67,7 +67,7 @@ export default async (to, from, next) => {
             // } else {
             //   window.awHelper.wechatHelper.init()
             // }
-            window.awHelper.wechatHelper.init()
+            // window.awHelper.wechatHelper.init()
           } catch (e) {
             console.log('[error:window.awHelper.wechatHelper]')
             next()
