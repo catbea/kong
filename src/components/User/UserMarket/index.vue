@@ -423,7 +423,7 @@ export default {
             margin-left: 4px;
             &::after {
               border-color: rgba(0, 122, 230, 1);
-              border-radius: 2px;
+              border-radius: 5px;
             }
           }
           .past-tag {
@@ -475,12 +475,12 @@ export default {
             display: inline-block;
             white-space: nowrap;
             font-size: 12px;
-            transform: scale(0.85);
+            transform: scale(0.84);
             margin: 2px 4px 0px -6px;
             padding: 1px 5px;
             border-radius: 3px;
             height: 15px;
-            line-height: 15px;
+            line-height:14.5px;
           }
           .tag-item {
             background: rgba(143, 159, 177, 0.15);
