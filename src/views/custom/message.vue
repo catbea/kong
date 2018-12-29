@@ -29,7 +29,7 @@
 
                   <div class="msg_custom_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
                     <div class='info-img'><img v-bind:src="item.content.avatarMediaid"/></div>
-                    <div>
+                    <div class="info-data">
                       <div class='info-name'>{{item.content.linkerName}}</div>
                       <div class='info-address'>{{item.content.address}}</div>
                       <div class='info-Price'>
@@ -60,10 +60,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="msg-customer-con-me-status" v-show="!item.cardDelFlag">
-                    <p v-if="item.msgStatus==1" style="color: #FF7878">未读</p>
-                    <p v-else>已读</p>
-                   </div>
+                  
+                </div>
+                <div class="msg-customer-con-me-status" v-show="!item.cardDelFlag">
+                  <p v-if="item.msgStatus==1" style="color: #333">未读</p>
+                  <p v-else>已读</p>
                 </div>
               </div>
             </div>
@@ -783,27 +784,32 @@ export default {
 .massage-info-msg {
   padding: 0 15px;
   .massage-info-msg-time {
-    margin-top: 25px;
-    margin-bottom: 19px;
+    margin-top: 36px;
+    margin-bottom: 16px;
     text-align: center;
     font-size: 12px;
-    
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
-    line-height: 17px;
+    height: 26px;
   }
   .massage-info-msg-time span {
-    width: 36px;
-    height: 20px;
-    background: rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    height: 26x;
+    line-height: 26px;
+    color: #666;
     border-radius: 2px;
-    padding: 5px 10px;
+    padding: 0 10px;
   }
   .massage-info-msg-customer {
     display: flex;
     margin-top: 20px;
     text-align: left;
   }
+  .massage-info-msg-customer + .msg-customer-con-me-status p {
+      text-align: left;
+      padding-left: 50px;
+      color: #999;
+    }
   .massage-info-msg-customer-img {
     width: 40px;
     height: 40px;
@@ -927,13 +933,12 @@ export default {
     padding-top: 10px;
     position: relative;
     font-size: 12px;
-    color: rgba(187, 187, 187, 1);
-    width: 40px;
+    padding-right: 40px;
   }
   .msg-customer-con-me-status p {
-    position: absolute;
-    bottom: 0;
+    text-align: right;
     padding-right: 10px;
+    color: #999;
   }
 
   .msg-customer-con-me-voice {
@@ -1015,8 +1020,21 @@ export default {
   width: 100%;
   padding-left: 12px;
   border-radius: 4px;
-  border: 1px solid rgba(221, 221, 221, 1);
+  // border: 1px solid rgba(221, 221, 221, 1);
+  border: none;
   height: 36px;
+  position: relative;
+}
+.massage-info-lower-cen input:after{
+  content:"";
+  position: absolute;
+  top:0;
+  left:0;
+  border-bottom:1px solid #000;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
 }
 
 .msgContentvoice {
@@ -1027,7 +1045,10 @@ export default {
   color: rgba(51, 51, 51, 1);
   line-height: 33px;
   border-radius: 4px;
-  border: 1px solid rgba(221, 221, 221, 1);
+  border: none;
+  background-color: #fff;
+  position: relative;
+  box-shadow: 0 0 5px #eee;
 
   -webkit-touch-callout: none; /*系统默认菜单被禁用*/
   -webkit-user-select: none; /*webkit浏览器*/
@@ -1035,6 +1056,18 @@ export default {
   -moz-user-select: none; /*火狐*/
   -ms-user-select: none; /*IE10*/
   user-select: none;
+}
+
+.msgContentvoice:after{
+  content:"";
+  position: absolute;
+  top:0;
+  left:0;
+  border-bottom:1px solid #000;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
 }
 
 .msgContentvoice-bg {
@@ -1218,6 +1251,7 @@ export default {
   border-top-right-radius: 0px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+  display: flex;
 }
 
 .msg_custom_house_info {
@@ -1230,15 +1264,18 @@ export default {
 }
 
 .info-img img {
-  width: 4.42rem;
-  height: 2.5rem;
-  margin-bottom: 0.22rem;
-  border-radius: 0.08rem;
+  width: 80px;
+  height: 64px;
+  margin-right: 5px;
+  border-radius: 4px;
 }
 
+.info-data{
+  flex: 1;
+}
 .info-name {
+  padding-top: 8px;
   font-size: 0.32rem;
-  
   font-weight: 600;
   color: rgba(51, 51, 51, 1);
   line-height: 0.32rem;

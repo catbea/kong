@@ -131,7 +131,23 @@ export default {
     .meal-market-page {
       .meal-market-page-box {
         margin: 16px 0 0 16px;
+        box-shadow: none!important;
+        position: relative;
+        &:after{
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          background: #ebedf0;
+          width: 100%;
+          height: 1px;
+          -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+          -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+        }
       }
+
     }
   }
   .send-box {
@@ -157,7 +173,8 @@ export default {
       font-size: 14px;
 
       font-weight: 400;
-      color: rgba(0, 122, 230, 1);
+      background-color: rgba(0, 122, 230, 1);
+      color: #fff;
       line-height: 30px;
       text-align: center;
     }

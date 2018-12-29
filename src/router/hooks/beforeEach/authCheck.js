@@ -13,7 +13,15 @@ const getUrlQueryParams = url => {
   return params
 }
 
+const isIOS = ()=> {
+  var isIphone = navigator.userAgent.includes('iPhone')
+  var isIpad = navigator.userAgent.includes('iPad')
+  return isIphone || isIpad;
+};
+
+
 export default async (to, from, next) => {
+  console.log(to.path, 'to.path')
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
@@ -50,9 +58,15 @@ export default async (to, from, next) => {
           // alert(4);
           try {
             // alert(5);
-            window.awHelper.wechatHelper.init()
+            if(isIOS()) {
+              if(to.path == '/'){
+                window.awHelper.wechatHelper.init()
+              }
+            } else {
+              window.awHelper.wechatHelper.init()
+            }
+            
           } catch (e) {
-            // alert(6);
             console.log('[error:window.awHelper.wechatHelper]')
             next()
           }
@@ -91,6 +105,22 @@ export default async (to, from, next) => {
             '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
           window.location.href = wxurl
           return
+        } else {
+          if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
+            try {
+              if(isIOS()) {
+                if(to.path == '/'){
+                  window.awHelper.wechatHelper.init()
+                }
+              } else {
+                window.awHelper.wechatHelper.init()
+              }
+              
+            } catch (e) {
+              console.log('[error:window.awHelper.wechatHelper]')
+              next()
+            }
+          }
         }
         next()
       }
