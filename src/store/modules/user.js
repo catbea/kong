@@ -125,9 +125,9 @@ const getters = {
 const actions = {
   async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    alert('actions'+userInfo)
+    // alert('actions'+userInfo)
     localStorage.setItem('awMasterUserInfo', _userInfo)
-    alert('localStorage')
+    // alert('localStorage')
     commit(types.USER_INFO, userInfo)
   },
   async getImUserSig({ commit }) {
@@ -161,7 +161,7 @@ const actions = {
 
 const mutations = {
   [types.USER_INFO](state, data) {
-    alert('mutations'+data)
+    // alert('mutations'+data)
     state.userInfo = data
   },
   [types.IM_USER_SIG](state, data) {
