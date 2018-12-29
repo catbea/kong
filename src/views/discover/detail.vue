@@ -247,7 +247,7 @@ export default {
       // await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
       console.log('serShare', this.shareData)
-
+      alert(this.shareData)
       window.awHelper.wechatHelper.setShare(this.shareData)
       // wechatApi
       //   .wechatShare(this.shareData)
