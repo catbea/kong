@@ -58,7 +58,7 @@ export default async (to, from, next) => {
           // alert(4);
           try {
             // alert(5);
-            if(isIOS) {
+            if(isIOS()) {
               if(to.path == '/'){
                 window.awHelper.wechatHelper.init()
               }
@@ -108,9 +108,8 @@ export default async (to, from, next) => {
         } else {
           if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
             try {
-              if(isIOS) {
+              if(isIOS()) {
                 if(to.path == '/'){
-                  alert('wx init ios')
                   window.awHelper.wechatHelper.init()
                 }
               } else {
