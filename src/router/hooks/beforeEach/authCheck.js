@@ -21,6 +21,7 @@ const isIOS = ()=> {
 
 
 export default async (to, from, next) => {
+  store.commit(types.WX_JSSDK, null)
   console.log(to.path, 'to.path')
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)

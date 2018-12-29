@@ -78,6 +78,7 @@ class WechatHelper {
         store.dispatch('setWxLocation', res)
       },
       fail: () => {
+        alert('location fail')
         console.log('wx location fail')
       },
       cancel: res => {
