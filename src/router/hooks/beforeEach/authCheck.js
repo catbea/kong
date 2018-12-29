@@ -109,7 +109,7 @@ export default async (to, from, next) => {
             try {
               if(isIOS()) {
                 if(to.path == '/'){
-                  alert(window.awHelper)
+                  alert(window.awHelper.wechatHelper)
                   window.awHelper.wechatHelper.init()
                 }
               } else {
