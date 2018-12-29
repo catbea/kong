@@ -2,7 +2,7 @@
 import * as types from '@/store/mutation-types'
 import commonService from '@/services/commonService'
 const state = {
-  jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  jssdkConfig: null,
   wxLocaltion: {}
 }
 
@@ -13,7 +13,9 @@ const getters = {
 const actions = {
   async setJssdkConfig({ commit }, data) {
     const url = window.location.href.split('#')[0]
+    alert('wxTicket get url:'+url)
     const result = await commonService.wxTicket(url)
+    alert('wxTicket get done'+result.appId)
     const conf = {
       beta: true, // 必须这么写，否则wx.invoke调用形式的jsapi会有问题
       debug: false, // __DEV__ 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
