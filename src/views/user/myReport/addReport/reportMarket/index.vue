@@ -69,7 +69,7 @@ export default {
   },
   created() {
     this.page = 1
-    this.searchInfo.siteText = this.userArea.myReportCity === '' ? this.userArea.city : this.userArea.myReportCity
+    this.searchInfo.siteText = this.userArea.myReportCity === '' ? '全国' : this.userArea.myReportCity
   },
   methods: {
     onLoad() {
@@ -85,7 +85,7 @@ export default {
       params.current = page
       params.size = this.pageSize
       // params.city = this.userArea.myReportCity
-      params.city = this.searchInfo.siteText
+      params.city = this.searchInfo.siteText == '全国' ? '' : this.searchInfo.siteText
       const result = await reportServer.getReportBuildingList(params)
 
       if (result.records.length > 0) {
@@ -117,7 +117,7 @@ export default {
         }
       }
       this.loading = false
-      if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == this.searchInfo.siteText) {
+      if (params.projectName == '' && params.current == 1 && params.size == 10 && params.city == '') {
         if (result.total < 20) {
           this.isShowHeader = false
         } else {

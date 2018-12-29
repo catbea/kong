@@ -255,6 +255,7 @@ export default {
   }
   .share-bottom {
     margin-top: 12px;
+    margin-bottom: 20px;
     p {
       text-align: center;
       font-size: 13px;

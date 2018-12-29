@@ -81,20 +81,20 @@
           >续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
           <div v-if="pastShow">
             <li class="borderDottom" @click="masterHandle(marketIndex)">
-              <span v-show="!masterButtonShow">大师推荐</span>
-              <span v-show="masterButtonShow">取消大师推荐</span>
+              <span v-show="dataArr.masterRecommand != 1">大师推荐</span>
+              <span v-show="dataArr.masterRecommand == 1">取消大师推荐</span>
             </li>
             <li @click="commonHandle(marketIndex)">
-              <span v-show="!commonButtonShow">普通推荐</span>
-              <span v-show="commonButtonShow">取消普通推荐</span>
+              <span v-show="dataArr.masterRecommand != 2">普通推荐</span>
+              <span v-show="dataArr.masterRecommand == 2">取消普通推荐</span>
             </li>
             <li class="color" @click="stickHandle(marketIndex)">
               <span v-show="dataArr.recommand==0">置顶</span>
               <span v-show="dataArr.recommand==10">取消置顶</span>
             </li>
             <li @click="exhibitionHandle">
-              <span v-show="exhibitionMarketShow">关闭楼盘展示</span>
-              <span v-show="!exhibitionMarketShow">开启楼盘展示</span>
+              <span v-show="dataArr.displayFlag==0">关闭楼盘展示</span>
+              <span v-show="dataArr.displayFlag!=0">开启楼盘展示</span>
             </li>
           </div>
           <li class="cancel" @click="closeHandle">取消</li>
@@ -116,6 +116,7 @@ export default {
     masterButtonShow:false,//师推按钮
     commonButtonShow:false,//普推按钮
     stickNum: 0,
+    recommandNum:0,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     show: false,
     stickShow: true,
@@ -143,43 +144,18 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    this.buttonStatuShowHanlde()
     console.log(this.dataArr, '展示的楼盘数据')
   },
   methods: {
-    buttonStatuShowHanlde(){//判断推荐按钮师普状态
-      if (this.dataArr.masterRecommand == 1) {
-          this.masterButtonShow = true
-        } else {
-          this.masterButtonShow = false
-        }
-      if (this.dataArr.masterRecommand == 2) {
-          this.commonButtonShow = true
-        } else {
-          this.commonButtonShow = false
-        }
-    },
-    stickNumHandle() {
-      //判断有没有超过3个置顶
+    recommendNumHandle() {//判断有没有超过5个推荐
       let parent = this.$parent.$parent
       for (let i = 0; i < parent.showMarketList.length; i++) {
         const element = parent.showMarketList[i]
-        if (element.recommand == 10) {
-          this.stickNum++
+        if (element.masterRecommand != 0) {
+          this.recommandNum++
         }
       }
-      console.log(this.stickNum, '楼盘个数')
-    },
-    recommendNumHandle() {
-      //判断有没有超过3个置顶
-      let parent = this.$parent.$parent
-      for (let i = 0; i < parent.showMarketList.length; i++) {
-        const element = parent.showMarketList[i]
-        if (element.recommand == 10) {
-          this.stickNum++
-        }
-      }
-      console.log(this.stickNum, '楼盘个数')
+      console.log(this.recommandNum, '推荐个数')
     },
     strideYear() {
       //判断是否跨年
@@ -212,9 +188,8 @@ export default {
       this.show = !this.show
     },
     stickHandle(index) {
-      this.stickNumHandle()
       if (this.dataArr.recommand == 0) {
-        if (this.stickNum > 2) {
+        if (this.$parent.$parent.stickNum > 2) {
           this.$dialog
             .confirm({
               title: '当前置顶楼盘数量达到上限',
@@ -222,7 +197,7 @@ export default {
             })
             .then(() => {
               this.stickSwitch = 10
-              this.dataArr.recommand = 10
+              this.$emit('recommandTrueHandle',this.dataArr)
               //将当前点击的楼盘置顶
               let parent = this.$parent.$parent
               parent.showMarketList.unshift(parent.showMarketList[index])
@@ -236,14 +211,14 @@ export default {
                 })
                 .then(() => {})
               this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
-              this.show = !this.show
+              this.show = !this.show//关闭弹出层
             })
             .catch(() => {
               // on cancel
             })
         } else {
           this.stickSwitch = 10
-          this.dataArr.recommand = 10
+          this.$emit('recommandTrueHandle',this.dataArr)
           //将当前点击的楼盘置顶
           let parent = this.$parent.$parent
           parent.showMarketList.unshift(parent.showMarketList[index])
@@ -261,8 +236,10 @@ export default {
         }
       } else if (this.dataArr.recommand == 10) {
         this.stickSwitch = 0
-        this.dataArr.recommand = 0
+        this.$emit('recommandFalseHandle',this.dataArr)
         //将当前点击的楼盘取消置顶
+        
+        
         this.$dialog
           .alert({
             message: '楼盘取消置顶成功',
@@ -281,7 +258,7 @@ export default {
       this.show = !this.show
     },
     async masterHandle(n) {
-      if (this.masterButtonShow === false) {
+      if (this.dataArr.masterRecommand != 1) {
         await this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
         this.$dialog
           .alert({
@@ -308,7 +285,7 @@ export default {
       this.masterButtonShow = !this.masterButtonShow
     },
     commonHandle(n) {
-      if (this.commonButtonShow === false) {
+      if (this.dataArr.masterRecommand != 2) {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
         this.$dialog
           .alert({
@@ -347,7 +324,7 @@ export default {
           this.show = !this.show
           // this.exhibitionMarketShow = false
           this.changeUserStatus(this.linkerId, 30, 1) //改为不展示
-          this.dataArr.displayFlag = 1
+          
           // this.dataArr.displayFlag='1'
           this.$emit('closeCut', this.dataArr)
         })

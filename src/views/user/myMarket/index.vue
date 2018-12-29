@@ -10,7 +10,13 @@
           <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'16rem'"></screen>
         </div>
         <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo" v-if="!yes">
-          <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></user-market>
+          <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" 
+          @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" 
+          @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" 
+          @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" 
+          @returncommonHandle="returncommonHandle" 
+          @recommandTrueHandle="recommandTrueHandle" @recommandFalseHandle="recommandFalseHandle"
+          ></user-market>
         </van-list>
         <div v-show="yes" class="notMarket">
           <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
@@ -56,6 +62,7 @@ export default {
     CloseMarket
   },
   data: () => ({
+    stickNum:0,//置顶个数
     unShowImg:require('IMG/user/collection/Group@2x.png'),
     yes: false,
     no:false,
@@ -117,7 +124,6 @@ export default {
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
     console.log(this.masterList,'初始大师推荐数据');
-    
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -177,6 +183,16 @@ export default {
     }
   },
   methods: {
+    stickNumHandle() {//判断有没有超过3个置顶
+      for (let i = 0; i < this.showMarketList.length; i++) {
+        const element = this.showMarketList[i]
+        if (element.recommand == 10) {
+          this.stickNum++
+        }
+      }
+      console.log(this.stickNum, '初始置顶个数')
+    this.stickNumHandle=function(){}
+    },
     async getShowProjectCount() {
       const res = await userService.queryMyLinkerCount(0)
       this.showMarketListCount = res.count
@@ -213,6 +229,7 @@ export default {
         this.marketShow = true
       }
     },
+    //-----大师推荐操作
     pushMasterHandle(n) {
       //点击实时更新大师推荐图片
       for (let index = 0; index < this.commonList.length; index++) {
@@ -221,7 +238,13 @@ export default {
           this.commonList.splice(index, 1)
         }
       }
-      n.masterRecommand = '1'
+      for (let i = 0; i < this.showMarketList.length; i++) {
+        const element = this.showMarketList[i];//遍历未/普通推荐改大师
+        if (n.linkerId === element.linkerId) {
+          element.masterRecommand = '1'
+        }   
+      }
+      
       this.$nextTick(()=>{
       //   let arr = []
       // arr.push(n)
@@ -242,12 +265,13 @@ export default {
         }
       }
       for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index]
-        if (n === element.linkerId) {
+        const element = this.showMarketList[index]//遍历大师改成未推荐
+        if (n.linkerId === element.linkerId) {
           element.masterRecommand = '0'
         }
       }
     },
+    //-----普通推荐操作
     pushCommonHandle(n) {
       //点击实时更新普通推荐图片
       for (let index = 0; index < this.masterList.length; index++) {
@@ -256,7 +280,13 @@ export default {
           this.masterList.splice(index, 1)
         }
       }
-      n.masterRecommand = '2'
+      for (let i = 0; i < this.showMarketList.length; i++) {
+        const element = this.showMarketList[i];//遍历未/大师推荐改普通
+        if (n.linkerId === element.linkerId) {
+          element.masterRecommand = '2'
+        }   
+      }
+
       this.$nextTick(()=>{
       //   let arr = []
       // arr.push(n)
@@ -273,6 +303,33 @@ export default {
         if (n.linkerId == element.linkerId) {
           this.commonList.splice(index, 1)
           this.swipeList = this.masterList.concat(this.commonList)
+        }
+      }
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        const element = this.showMarketList[index]//遍历普通改成未推荐
+        if (n.linkerId === element.linkerId) {
+          element.masterRecommand = '0'
+        }
+      }
+    },
+    //-----置顶操作
+    recommandTrueHandle(n){
+      this.stickNum++
+      console.log(this.stickNum, '置顶后个数')
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        const element = this.showMarketList[index]//遍历未置顶改成置顶
+        if (n.linkerId === element.linkerId) {
+          element.recommand = '10'
+        }
+      }
+    },
+    recommandFalseHandle(n){
+      this.stickNum--
+      console.log(this.stickNum, '取消后置顶个数')
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        const element = this.showMarketList[index]//遍历置顶改成未置顶
+        if (n.linkerId === element.linkerId) {
+          element.recommand = '0'
         }
       }
     },
@@ -332,6 +389,7 @@ export default {
       } else {
         this.showMarketList = this.showMarketList.concat(resShow.records)
       }
+      this.stickNumHandle()//请求的初始置顶个数
       let arr = []
       let json = {}
       for (let index = 0; index < this.showMarketList.length; index++) {
@@ -417,7 +475,7 @@ export default {
         if (n.linkerId == element.linkerId) {
           this.showMarketList.splice(index, 1)
           element.masterRecommand=0//变成未推荐
-          element.recommand=10//变成未置顶
+          element.recommand=0//变成未置顶
         }
       }
       for (let i = 0; i < this.swipeList.length; i++) {//关闭展示轮播图取消
