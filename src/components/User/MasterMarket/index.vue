@@ -34,29 +34,7 @@
               </ol>
             </div>
           </van-swipe-item>
-          <!-- 普通 -->
-          <!-- <van-swipe-item 
-            v-for="(item,index) in commonList"
-            :key="item.linkerId"
-          >
-            <div class="master-box">
-              <p
-                class="bg_img icon-cancel"
-                :style="{backgroundImage:'url('+img+')'}"
-                @click.stop="closeHandle(item.linkerId,index)"
-              ></p>
-              <div
-                class="bg_img master-item"
-                :style="{backgroundImage:'url('+item.linkerUrl+')'}"
-              >
-              </div>
-              <ol>
-                <li>{{item.linkerName}}</li>
-                <li>{{item.linkerTags | linkerTags}}</li>
-                <li>{{item.city}}{{item.county}} {{item.openTimes}}人开通 <span>{{item.price}}{{item.priceUnit}}</span> </li>
-              </ol>
-            </div>
-          </van-swipe-item> -->
+        
         </van-swipe>
       </div>
     </div>

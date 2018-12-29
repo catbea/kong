@@ -113,7 +113,7 @@ class WechatHelper {
    */
   _universalShare(conf) {
     console.log('_universalShare', conf);
-
+    alert(conf)
     this.wx.onMenuShareAppMessage(conf)
     this.wx.onMenuShareTimeline(conf)
     this.wx.showOptionMenu()
