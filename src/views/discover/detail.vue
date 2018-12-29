@@ -272,7 +272,7 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .popup-view {
   width: 260px;
   height: 371px;
@@ -297,9 +297,7 @@ export default {
 
   > .notice-view {
     color: #333333;
-    font-size: 18px;
-    font-family: PingFangSC-Semibold;
-    font-weight: 600;
+    font-size: 16px;
   }
 
   > .qrcode-view {
