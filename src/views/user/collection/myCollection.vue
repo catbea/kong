@@ -143,6 +143,12 @@ export default {
       this.listEmpty = res.listEmpty
 
       for (let i = 0; i < this.dynamicsList.length; i++) {
+
+        if (this.dynamicsList[i].price === 0) {
+          this.dynamicsList[i].price = '价格待定'
+          this.dynamicsList[i].priceUnit = ''
+        }
+
         if (this.dynamicsList[i].saleStatus === 0) {
           this.dynamicsList[i].linkerTags.unshift('热销中')
         }
@@ -252,7 +258,7 @@ export default {
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 24px;
-         margin-top: -4px;
+        margin-top: -4px;
         > .left-title-right {
           font-size: 12px;
           font-weight: 400;
@@ -365,7 +371,7 @@ export default {
     line-height: 30px;
     padding-left: 11px;
     margin-bottom: 6px;
-    margin-top:14px;
+    margin-top: 14px;
     > .list-commission-word {
       border-radius: 2px;
       border: 1px solid;

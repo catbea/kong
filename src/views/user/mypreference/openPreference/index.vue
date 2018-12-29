@@ -7,7 +7,7 @@
         <!-- <span class="head-icon bg_img" :style="{backgroundImage:'url('+(flag ? headImgB : headImgA)+')'}"></span> -->
       </div>
       <ul class="head-describe">
-        <li>{{userInfo.nickName}}</li>
+        <li>{{userInfo.name}}</li>
         <li v-if="packageCount>0">已购买{{packageCount>0 ? packageCount+'个' : '' }}套餐，最晚将于{{expireDate | dateTimeFormatter(2,'-')}}到期。</li>
         <li v-if="packageCount==0">当前未开通套餐</li>
         <li>余额：{{balance | priceFormart}}元</li>

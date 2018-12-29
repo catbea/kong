@@ -14,6 +14,7 @@ const state = {
     institutionName: '',
     isOne: false, // true新用户 false老用户
     isVip: '',
+    vipDefaultCity: '深圳市',
     ifView: 0, //是否展示邀请有礼
     labelList: [
       {
@@ -42,11 +43,12 @@ const state = {
       }
     ],
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI4ZXV4YmwiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ4OTA4Nzc0LCJpYXQiOjE1NDU5MDM5NzR9.ZooERUQw6PEdarITefqyPAvNuHLv2rpwZ-QzZZguo3BT12ZKNW_tppj0HBlulMDh9T228Dwb66MtGHWurc78zw',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJvOTl4eHQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ5MDY5OTY5LCJpYXQiOjE1NDYwNjUxNjl9.byZthA7-AoGJrFY39A_1zTMZPvLxJ77PEiK9mqjlVF1cNu_tl_e12mf0VT9avRq6YTUA4uIN-vuANIM9sd2ecg',
     majorCity: '广州市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
     nickName: '',
+    // payCorpId: 'onXUy1sGkPMX-Z34buMYLs5q2',
     payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
     pcOpenid: 'onXUy1sGkPMX-Z34buMYLs5q2IEc',
     price: 874400,
