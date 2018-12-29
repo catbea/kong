@@ -272,7 +272,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .popup-view {
   width: 260px;
   height: 371px;
