@@ -53,7 +53,7 @@ export default {
     Avatar
   },
   created() {
-    this.selectCity = this.userArea.vipSelectedCity || '深圳市'
+    this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userArea.city
     this.getVipInfo()
   },
   data: () => ({
@@ -74,7 +74,7 @@ export default {
     borderColor: {
       border: 'none'
     },
-    selectCity: this.userInfo.vipDefaultCity || this.userArea.city,
+    selectCity: '',
     title: 'VIP生效城市待选',
     showAddProjectDialogFlag: false
   }),
