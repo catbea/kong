@@ -52,7 +52,7 @@ class WechatHelper {
     // wx.hideMenuItems({
     //   menuList: ['menuItem:share:appMessage', 'menuItem:share:wechat', 'menuItem:share:timeline', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
     // })
-    alert('init')
+    alert('init'+location.href)
     await store.dispatch('setJssdkConfig', jsApiList)
     alert('setJssdkConfig done')
     await this.wx.config(store.state.wx.jssdkConfig)
