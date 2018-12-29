@@ -119,6 +119,7 @@ export default async (to, from, next) => {
                 window.awHelper.wechatHelper.init()
               }
             } catch (e) {
+              alert('to.path / '+store.userInfo)
               console.log('[error:window.awHelper.wechatHelper]')
               next()
             }
