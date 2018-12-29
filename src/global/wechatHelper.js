@@ -52,8 +52,11 @@ class WechatHelper {
     // wx.hideMenuItems({
     //   menuList: ['menuItem:share:appMessage', 'menuItem:share:wechat', 'menuItem:share:timeline', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email'] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮，所有menu项见附录3
     // })
+    alert('init')
     await store.dispatch('setJssdkConfig', jsApiList)
+    alert('jsApiList')
     await this.wx.config(store.state.wx.jssdkConfig)
+    alert('wx.config')
     // this.wx.success(() => {
     //   console.log(success);
     //   alert('wechat-success')
@@ -71,6 +74,7 @@ class WechatHelper {
     this.wx.getLocation({
       type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
       success: res => {
+        alert('location')
         store.dispatch('setWxLocation', res)
       },
       fail: () => {

@@ -44,7 +44,7 @@
     <!-- 楼盘基础信息 -->
     <div class="base-info-container">
       <div class="info-top-bar">
-        <tag-group :arr="tagGroupArr"/>
+        <tag-group :arr="tagGroupArr&&tagGroupArr.slice(0,3)"/>
         <div class="browser-info">
           <span>{{info.browsCount}}</span>人浏览过
           <div class="head-portrait-box">
