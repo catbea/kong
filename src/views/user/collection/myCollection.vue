@@ -144,9 +144,6 @@ export default {
 
       for (let i = 0; i < this.dynamicsList.length; i++) {
 
-        console.log(this.dynamicsList[i].price);
-        
-
         if (this.dynamicsList[i].price === 0) {
           this.dynamicsList[i].price = '价格待定'
           this.dynamicsList[i].priceUnit = ''
