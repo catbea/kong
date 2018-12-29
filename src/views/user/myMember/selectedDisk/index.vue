@@ -2,8 +2,6 @@
   <div class="my-member-page">
     <div class="search-box">
       <search :conf="searchInfo" @getContent="searchChangeHandle" @areaClick="areaClickHandle"></search>
-    </div>
-    <div>
       <screen v-model="projectFilters" :local="this.searchInfo.siteText"></screen>
     </div>
     <div class="market-box">
@@ -251,9 +249,14 @@ export default {
 <style lang="less">
 .my-member-page {
   .search-box {
+    background: #FFF;
+    position: fixed;
+    top: 0px;
     padding: 8px;
+    z-index: 9;
   }
   .market-box {
+    padding-top: 80px;
     padding-bottom: 80px;
     .meal-market-page {
       .meal-market-page-box {
