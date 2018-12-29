@@ -251,7 +251,7 @@ export default {
   watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
     $route() {
-      this.$router.go(0)
+      location.reload()
     }
   }
 }
