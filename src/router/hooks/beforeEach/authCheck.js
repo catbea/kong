@@ -1,4 +1,5 @@
 import store from '@/store/'
+import * as types from '@/store/mutation-types'
 import commonService from '@/services/commonService'
 import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 
