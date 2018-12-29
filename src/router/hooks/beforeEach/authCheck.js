@@ -58,14 +58,14 @@ export default async (to, from, next) => {
           // alert(4);
           try {
             // alert(5);
-            if(isIOS()) {
-              if(to.path == '/'){
-                window.awHelper.wechatHelper.init()
-              }
-            } else {
-              window.awHelper.wechatHelper.init()
-            }
-            
+            // if(isIOS()) {
+            //   if(to.path == '/'){
+            //     window.awHelper.wechatHelper.init()
+            //   }
+            // } else {
+            //   window.awHelper.wechatHelper.init()
+            // }
+            window.awHelper.wechatHelper.init()
           } catch (e) {
             console.log('[error:window.awHelper.wechatHelper]')
             next()
