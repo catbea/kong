@@ -23,7 +23,9 @@
               {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
               <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
             </li>
-            <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
+            <li class="tag-group-left">
+              <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
+            </li>
             <li class="unit-price">
               <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice:`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>
@@ -248,6 +250,9 @@ export default {
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
             margin-bottom: 5px;
+          }
+          .tag-group-left{
+            margin-left: -3px;
           }
           .unit-price {
             display: flex;

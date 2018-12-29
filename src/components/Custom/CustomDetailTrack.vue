@@ -17,7 +17,7 @@
        <li v-for="(item,key) in times.msgList" :key="key">
         <p class="content-title">{{item.timeStr | dateTimeFormatter(3,'/')}}</p>
         <div class="content-box" >
-          <span class="icon-radius" :class="{day:backColor,dayIn:!backColor}"></span>
+          <span class="icon-radius day" :class="{day:backColor,dayIn:!backColor}"></span>
           <p><span>{{item.clientName}}</span>{{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}</p>
         </div>
       </li>
@@ -51,7 +51,12 @@ export default {
     //   { key: '文章浏览', value: 124 }
     // ]
     backColor: true
-  })
+  }),
+  created() {
+  },
+  methods: {
+   
+  },
 }
 </script>
 <style lang="less">

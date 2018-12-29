@@ -24,14 +24,13 @@ export default {
 </script>
 <style lang="less">
 .tag-item {
+  border-radius: 3px;
   display: inline-block;
   white-space: nowrap;
   font-size: 12px;
-  margin: 0 -5px;
   transform: scale(0.85);
-  margin: 1px 4px 1px -6px;
+  margin: 1px 0;
   padding: 3px 8px;
-  border-radius: 3px;
-  margin-left: 1px;
+  
 }
 </style>
