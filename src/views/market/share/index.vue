@@ -5,8 +5,12 @@
         <!--  -->
         <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
         <img class="cover-img" :src="coverBg">
-        <img class="logo-img" :src="buildingInfo.qrCode">
-        <span class="distinguish-span">长按识别更多</span>
+        <div class="logo-body">
+          <div class="logo-img">
+            <img :src="buildingInfo.qrCode">
+          </div>
+          <span class="distinguish-span">长按识别更多</span>
+        </div>
         <span class="poster-describe">{{buildingInfo.posterDescribe}}</span>
         <span class="building-name">{{buildingInfo.linkerName}}</span>
         <span class="building-price" v-if="buildingInfo.linkerPrice=='0'">价格：价格待定</span>
@@ -131,7 +135,7 @@ export default {
     background: rgba(255, 255, 255, 1);
     > .avatar-img {
       position: absolute;
-      width: 300px;
+      width: 299px;
       height: 330px;
       border-radius: 10px;
       background-repeat: no-repeat;
@@ -143,27 +147,37 @@ export default {
       width: 300px;
       height: 268px;
       z-index: 1;
-      border-radius: 10px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
       bottom: 0;
     }
 
-    > .logo-img {
+    > .logo-body {
       position: absolute;
       width: 73px;
-      height: 73px;
-      border-radius: 50%;
       top: 236px;
       right: 20px;
       z-index: 2;
-    }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-    > .distinguish-span {
-      position: absolute;
-      color: #ffffff;
-      font-size: 9px;
-      right: 20px;
-      top: 317px;
-      z-index: 2;
+      > .logo-img {
+        width: 73px;
+        height: 73px;
+
+        img {
+          width: 68px;
+          height: 68px;
+          border-radius: 50%;
+        }
+      }
+
+      > .distinguish-span {
+        color: rgba(255, 255, 255, 0.25);
+        font-size: 9px;
+        margin-top: 8px;
+      }
     }
 
     > .poster-describe {
@@ -172,7 +186,7 @@ export default {
       font-size: 29px;
       z-index: 2;
       left: 20px;
-      top: 260px;
+      top: 280px;
     }
 
     > .building-name {
@@ -181,7 +195,7 @@ export default {
       font-size: 20px;
       z-index: 2;
       left: 20px;
-      top: 300px;
+      top: 320px;
     }
 
     > .building-price {
@@ -190,7 +204,7 @@ export default {
       font-size: 11px;
       z-index: 2;
       left: 20px;
-      top: 340px;
+      top: 353px;
     }
 
     > .line-view {
@@ -208,7 +222,7 @@ export default {
       width: 36px;
       height: 36px;
       left: 20px;
-      bottom: 50px;
+      bottom: 43px;
       border-radius: 50%;
     }
 
@@ -218,7 +232,7 @@ export default {
       color: #a4b8d5;
       font-size: 12px;
       left: 65px;
-      bottom: 70px;
+      bottom: 63px;
     }
 
     > .mobile-view {
@@ -227,20 +241,21 @@ export default {
       color: #a4b8d5;
       font-size: 11px;
       left: 65px;
-      bottom: 50px;
+      bottom: 45px;
     }
 
     > .canpamy-view {
       position: absolute;
       z-index: 2;
-      color: #a4b8d5;
+      color: rgba(255, 255, 255, 0.25);
       font-size: 10px;
       left: 20px;
-      bottom: 10px;
+      bottom: 17px;
     }
   }
   .share-bottom {
     margin-top: 12px;
+    margin-bottom: 20px;
     p {
       text-align: center;
       font-size: 13px;
