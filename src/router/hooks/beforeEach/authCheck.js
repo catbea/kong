@@ -108,20 +108,20 @@ export default async (to, from, next) => {
           window.location.href = wxurl
           return
         } else {
-          // if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
-          //   try {
-          //     if(isIOS()) {
-          //       if(to.path == '/'){
-          //         window.awHelper.wechatHelper.init()
-          //       }
-          //     } else {
-          //       window.awHelper.wechatHelper.init()
-          //     }
-          //   } catch (e) {
-          //     console.log('[error:window.awHelper.wechatHelper]')
-          //     next()
-          //   }
-          // }
+          if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
+            try {
+              if(isIOS()) {
+                if(to.path == '/'){
+                  window.awHelper.wechatHelper.init()
+                }
+              } else {
+                window.awHelper.wechatHelper.init()
+              }
+            } catch (e) {
+              console.log('[error:window.awHelper.wechatHelper]')
+              next()
+            }
+          }
         }
         next()
       }
