@@ -6,7 +6,9 @@
         <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <div class="logo-body">
-          <img class="logo-img" :src="buildingInfo.qrCode">
+          <div class="logo-img">
+            <img :src="buildingInfo.qrCode">
+          </div>
           <span class="distinguish-span">长按识别更多</span>
         </div>
         <span class="poster-describe">{{buildingInfo.posterDescribe}}</span>
@@ -152,24 +154,29 @@ export default {
 
     > .logo-body {
       position: absolute;
+      width: 73px;
       top: 236px;
       right: 20px;
       z-index: 2;
       display: flex;
       flex-direction: column;
-      align-items:center;
+      align-items: center;
 
       > .logo-img {
         width: 73px;
         height: 73px;
-        border-radius: 50%;
-        padding: 5px;
+
+        img {
+          width: 68px;
+          height: 68px;
+          border-radius: 50%;
+        }
       }
 
       > .distinguish-span {
         color: rgba(255, 255, 255, 0.25);
         font-size: 9px;
-        margin-top: 8px
+        margin-top: 8px;
       }
     }
 
@@ -179,7 +186,7 @@ export default {
       font-size: 29px;
       z-index: 2;
       left: 20px;
-      top: 260px;
+      top: 280px;
     }
 
     > .building-name {
@@ -188,7 +195,7 @@ export default {
       font-size: 20px;
       z-index: 2;
       left: 20px;
-      top: 300px;
+      top: 320px;
     }
 
     > .building-price {
@@ -197,7 +204,7 @@ export default {
       font-size: 11px;
       z-index: 2;
       left: 20px;
-      top: 333px;
+      top: 353px;
     }
 
     > .line-view {
@@ -248,6 +255,7 @@ export default {
   }
   .share-bottom {
     margin-top: 12px;
+    margin-bottom: 20px;
     p {
       text-align: center;
       font-size: 13px;

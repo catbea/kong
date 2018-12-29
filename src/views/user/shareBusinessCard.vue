@@ -136,13 +136,15 @@ export default {
 
   .build {
     position: absolute;
+    width: 100%;
+    height: 100%;
 
     #show-container {
       position: relative;
       margin: 15px;
       height: 480px;
-      width: 80%;
       margin-left: 10%;
+      width: 300px;
       border-radius: 5px;
       .avatar-img {
         width: 100%;
