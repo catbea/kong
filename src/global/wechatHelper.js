@@ -54,7 +54,7 @@ class WechatHelper {
     // })
     alert('init')
     await store.dispatch('setJssdkConfig', jsApiList)
-    alert('jsApiList')
+    alert('setJssdkConfig done')
     await this.wx.config(store.state.wx.jssdkConfig)
     alert('wx.config')
     // this.wx.success(() => {
