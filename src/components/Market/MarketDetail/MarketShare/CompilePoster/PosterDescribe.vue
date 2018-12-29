@@ -31,7 +31,7 @@ export default {
 <style lang="less">
 .compile-poster-describe-page {
   display: flex;
-  margin: 51px 0 0 15px;
+  margin: 36px 0 0 15px;
   ul {
     > li {
       display: flex;
