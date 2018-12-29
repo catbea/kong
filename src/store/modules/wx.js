@@ -2,7 +2,7 @@
 import * as types from '@/store/mutation-types'
 import commonService from '@/services/commonService'
 const state = {
-  jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  jssdkConfig: null,
   wxLocaltion: {}
 }
 

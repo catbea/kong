@@ -22,7 +22,6 @@ const isIOS = ()=> {
 
 
 export default async (to, from, next) => {
-  store.commit(types.WX_JSSDK, null)
   console.log(to.path, 'to.path')
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
@@ -33,7 +32,8 @@ export default async (to, from, next) => {
     // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
     // alert(1);
     store.dispatch('getUserInfo', {})
-    store.dispatch('setJssdkConfig', null)
+    // store.dispatch('setJssdkConfig', null)
+    store.commit(types.WX_JSSDK, null)
     let cropId = parm.cropId
     await localStorage.setItem('cropId', cropId)
     let wxurl =
@@ -60,13 +60,14 @@ export default async (to, from, next) => {
           // alert(4);
           try {
             // alert(5);
-            if(isIOS()) {
-              if(to.path == '/'){
-                window.awHelper.wechatHelper.init()
-              }
-            } else {
-              window.awHelper.wechatHelper.init()
-            }
+            // if(isIOS()) {
+            //   if(to.path == '/'){
+            //     window.awHelper.wechatHelper.init()
+            //   }
+            // } else {
+            //   window.awHelper.wechatHelper.init()
+            // }
+            window.awHelper.wechatHelper.init()
           } catch (e) {
             console.log('[error:window.awHelper.wechatHelper]')
             next()
