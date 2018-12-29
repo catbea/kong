@@ -112,14 +112,14 @@ export default async (to, from, next) => {
             try {
               if(isIOS()) {
                 if(to.path == '/'){
-                  alert('to.path / '+store.getters.userInfo.token)
+                  // alert('to.path / '+store.getters.userInfo.token)
                   window.awHelper.wechatHelper.init()
                 }
               } else {
                 window.awHelper.wechatHelper.init()
               }
             } catch (e) {
-              alert('to.path / '+store.getters.userInfo)
+              // alert('to.path / '+store.getters.userInfo)
               console.log('[error:window.awHelper.wechatHelper]')
               next()
             }

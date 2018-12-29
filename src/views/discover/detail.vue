@@ -191,6 +191,8 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
+      alert(this.shareData.imgUrl)
+      alert(this.shareData.link)
       this.shareHandler()
     },
 
