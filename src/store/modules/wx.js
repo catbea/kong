@@ -13,7 +13,7 @@ const getters = {
 const actions = {
   async setJssdkConfig({ commit }, data) {
     const url = window.location.href.split('#')[0]
-    alert('wxTicket get url')
+    alert('wxTicket get url:'+url)
     const result = await commonService.wxTicket(url)
     alert('wxTicket get done')
     const conf = {
