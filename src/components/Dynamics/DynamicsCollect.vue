@@ -217,6 +217,9 @@ export default {
           justify-content: center;
           font-size: 12px;
           line-height: 24px;
+          .card-tips{
+            padding-left: 5px;
+          }
           > .house-tips {
             > span {
               color: #007ae6;

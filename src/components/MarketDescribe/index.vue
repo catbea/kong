@@ -149,7 +149,7 @@ export default {
   background: #ffffff;
   width: 375px;
   .market-box {
-    width: 343px;
+    // market-describewidth: 343px;
     padding-top: 16px;
     margin: 0 0px 0 16px;
     .padding {
@@ -192,7 +192,8 @@ export default {
           }
         }
         .market-describe {
-          width: 207px;
+          flex: 1;
+          padding-right: 12px;
           .market-name {
             display: flex;
             justify-content: space-between;

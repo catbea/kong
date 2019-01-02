@@ -1,8 +1,8 @@
 <template>
   <div class="custom-detail-info">
-    <van-cell v-for="(item,index) in customerInfoList" :key="index" class="cell-item" :title="item.title" is-link :value="item.content" @click="onClick(item, index)"/>
-    <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler"/>
-    <picker-select :show.sync="pickerShow" :title="areaTitle" :columns="columns" @cancel="cancelHandler" @confirm="confirmHandler"/>
+    <van-cell v-for="(item, index) in customerInfoList" :key="index" class="cell-item" :title="item.title" is-link :value="item.content" @click="onClick(item, index)" />
+    <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler" />
+    <picker-select :show.sync="pickerShow" :title="areaTitle" :columns="columns" @cancel="cancelHandler" @confirm="confirmHandler" />
   </div>
 </template>
 <script>
