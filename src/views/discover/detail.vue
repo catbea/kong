@@ -405,7 +405,7 @@ export default {
           color: rgba(255, 255, 255, 1);
           border: 0;
           margin-right: 7px;
-          b{
+          b {
             font-size: 14px;
           }
         }

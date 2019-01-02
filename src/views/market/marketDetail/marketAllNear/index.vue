@@ -100,7 +100,7 @@ export default {
       }
       p:nth-child(2) {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(150, 158, 168, 1);
         line-height: 17px;

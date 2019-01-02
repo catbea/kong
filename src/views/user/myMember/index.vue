@@ -62,7 +62,7 @@ export default {
     currPriceIndex: 0,
     isPayLoading: false,
     payValue: 0,
-    setMealInfo: { isVip:false, openCount: 0, vipCity: '' },
+    setMealInfo: { isVip: false, openCount: 0, vipCity: '' },
     vipList: [],
     isExpire: false,
     expireTimestamp: 0,
@@ -128,7 +128,6 @@ export default {
       } else {
         this.$toast('支付失败')
       }
-      
     },
 
     cancelPayment(purchaseId) {
@@ -147,11 +146,12 @@ export default {
     },
 
     showAddProjectDialog() {
-      this.$dialog.confirm({
-        title: '开通成功',
-        message: '成功开通vip，海量楼盘等你添加~',
-        cancelButtonText: '取消'
-      })
+      this.$dialog
+        .confirm({
+          title: '开通成功',
+          message: '成功开通vip，海量楼盘等你添加~',
+          cancelButtonText: '取消'
+        })
         .then(() => {
           this.$router.replace({ path: '/user/myMember/selectedDisk', query: { type: 'vip' } })
         })
@@ -160,7 +160,7 @@ export default {
 
     async getVipInfo() {
       let res = await marketService.vipInfo()
-      console.log(res,'vip信息')
+      console.log(res, 'vip信息')
       this.vipList = res.vipSettingList
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
@@ -176,8 +176,8 @@ export default {
       //更新vipInfo
       let _vipInfo = { city: res.city }
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo }))
-      console.log(this.userInfo,'用户信息');
-      
+      console.log(this.userInfo, '用户信息')
+
       if (res.vipFlag && !res.city) {
         this.unselectedPopup()
       }
@@ -194,11 +194,12 @@ export default {
     },
 
     unselectedPopup() {
-      this.$dialog.confirm({
-        title: this.title,
-        message: '是否选择' + this.selectCity + '作为VIP开通城市',
-        cancelButtonText: '其他城市'
-      })
+      this.$dialog
+        .confirm({
+          title: this.title,
+          message: '是否选择' + this.selectCity + '作为VIP开通城市',
+          cancelButtonText: '其他城市'
+        })
         .then(() => {
           this.updateCity()
         })
@@ -234,7 +235,7 @@ export default {
   border-radius: 12px;
   .van-dialog__header {
     font-size: 18px;
-    
+
     font-weight: 500;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
@@ -244,13 +245,13 @@ export default {
   }
   .van-dialog__cancel {
     font-size: 18px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
   }
   .van-dialog__content {
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     text-align: center;
@@ -297,13 +298,13 @@ export default {
         margin-left: 15px;
         margin-right: 6px;
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(229, 179, 123, 1);
         line-height: 24px;
         li:nth-child(1) {
           font-size: 18px;
-          
+
           font-weight: 400;
           line-height: 25px;
         }
@@ -340,12 +341,12 @@ export default {
       padding-left: 24px;
       line-height: 56px;
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       p {
         font-size: 20px;
-        
+
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
       }
@@ -355,7 +356,7 @@ export default {
       width: 125px;
       text-align: center;
       font-size: 18px;
-      
+
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       background: #ccc;
@@ -365,7 +366,7 @@ export default {
       width: 125px;
       text-align: center;
       font-size: 18px;
-      
+
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       background: rgba(195, 151, 101, 1);

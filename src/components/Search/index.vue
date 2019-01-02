@@ -111,7 +111,7 @@ export default {
     > i {
       padding: 3px 4px 3px 8px;
     }
-    > .search-icon{
+    > .search-icon {
       width: 24px;
       height: 24px;
     }

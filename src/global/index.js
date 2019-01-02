@@ -1,6 +1,6 @@
 import wechatHelper from './wechatHelper'
 
-export default (vue) => {
+export default vue => {
   window.awHelper = {
     wechatHelper
   }

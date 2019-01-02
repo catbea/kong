@@ -101,7 +101,7 @@ export default {
       let obj = {}
       const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
 
-      console.log(result);
+      console.log(result)
 
       if (result.length > 0) {
         let tempResult = result

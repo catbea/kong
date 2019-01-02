@@ -400,9 +400,9 @@ export default {
         align-items: center;
         .icon-discount {
           white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 36px; 
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 36px;
           height: 20px;
           position: absolute;
           top: 4px;

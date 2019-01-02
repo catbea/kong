@@ -156,12 +156,13 @@ export default {
       if (this.userInfo.name !== '' && this.userInfo.distributorName !== '' && this.userInfo.majorRegion !== '' && this.userInfo.institutionName !== '') {
         this.$router.push({ name: 'marketDetail-share' })
       } else {
-        this.$dialog.confirm({
-          title: '您有未完善的信息',
-          message: '信息不完整会影响传播效率哦',
-          confirmButtonText: '去完善',
-          className: 'marketShareHint'
-        })
+        this.$dialog
+          .confirm({
+            title: '您有未完善的信息',
+            message: '信息不完整会影响传播效率哦',
+            confirmButtonText: '去完善',
+            className: 'marketShareHint'
+          })
           .then(() => {
             this.$router.push({ name: 'user-edit' })
           })
@@ -290,7 +291,7 @@ export default {
         justify-content: space-between;
         .house-owner {
           font-size: 13px;
-          
+
           font-weight: 600;
           display: flex;
           margin-right: 16px;
@@ -319,7 +320,7 @@ export default {
       background: rgba(0, 122, 230, 0.05);
       border-radius: 4px;
       font-size: 16px;
-      
+
       font-weight: 400;
       text-align: center;
       line-height: 44px;
@@ -373,7 +374,7 @@ export default {
         text-overflow: ellipsis;
         width: 291px;
         font-size: 16px;
-        
+
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         margin-bottom: 6px;
@@ -386,14 +387,14 @@ export default {
         -webkit-line-clamp: 2;
         width: 323px;
         font-size: 14px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         margin-bottom: 10px;
       }
       .market-state-box-bottom {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
       }
@@ -415,14 +416,14 @@ export default {
   text-align: center;
   .van-dialog__header {
     font-size: 18px;
-    
+
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
   }
   .van-dialog__message {
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;

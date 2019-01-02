@@ -57,7 +57,7 @@ const state = {
     tempPhone: '18603000246',
     vipInfo: '',
     wechatAccount: '',
-    ifView:'1'
+    ifView: '1'
   },
   userVipInfo: {},
   userArea: {

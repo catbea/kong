@@ -125,10 +125,10 @@ export default {
 .discover-page {
   background: #ffffff;
   width: 100%;
-  > .fill-View{
+  > .fill-View {
     width: 100%;
     height: 16px;
-    background-color: #ffffff
+    background-color: #ffffff;
   }
 
   > .swipe-container {

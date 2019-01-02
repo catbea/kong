@@ -49,7 +49,7 @@ export default {
   margin: 32px 0 0 15px;
   > .compile-cover-top {
     font-size: 16px;
-    
+
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 22px;

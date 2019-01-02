@@ -300,7 +300,6 @@ export default {
       color: #333333;
       font-size: 16px;
       margin-top: 12px;
-      
     }
     > .introduce-view {
       font-size: 14px;

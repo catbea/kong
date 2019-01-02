@@ -98,7 +98,7 @@ export default {
     background: rgba(247, 249, 250, 1);
     border-radius: 4px;
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(234, 77, 46, 1);
     display: flex;

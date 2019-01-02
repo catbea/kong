@@ -95,7 +95,7 @@ export default {
   background: #ffffff;
   p {
     font-size: 20px;
-    
+
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 28px;

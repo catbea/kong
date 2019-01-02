@@ -135,7 +135,7 @@ export default {
           // console.log('time==' + times + 'selectTime==' + selectTime)
           // console.log(item.minIndex)
         }
-        
+
         if (res.pages === 0 || this.page === res.pages) {
           this.finished = true
         }

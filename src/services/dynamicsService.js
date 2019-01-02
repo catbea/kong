@@ -70,7 +70,6 @@ class DynamicsService {
         current,
         size
       }
-
     })
   }
   /**

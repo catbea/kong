@@ -57,11 +57,13 @@ export default {
     saveRemarkName() {
       let remarkName = this.remarkName
       if (remarkName.length == 0) {
-        this.$dialog.alert({
-          message: '备注名称不可为空'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            message: '备注名称不可为空'
+          })
+          .then(() => {
+            // on close
+          })
       } else {
         let params = {
           clientId: this.clientId,

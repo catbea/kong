@@ -407,16 +407,15 @@ export default {
       color: rgba(51, 51, 51, 1);
       line-height: 21px;
     }
-   
   }
 
-   .disturb-describe {
-      font-size: 13px;
-      padding: 11px 16px 22px 15px;
-      background: rgba(247, 249, 250, 1);
-      font-weight: 400;
-      color: rgba(102, 102, 102, 1);
-    }
+  .disturb-describe {
+    font-size: 13px;
+    padding: 11px 16px 22px 15px;
+    background: rgba(247, 249, 250, 1);
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+  }
 
   .no-disturb-page-bottom {
     background: rgba(255, 255, 255, 1);

@@ -74,7 +74,7 @@ export default {
           margin-top: 3px;
           width: 104px;
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 17px;

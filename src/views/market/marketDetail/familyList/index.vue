@@ -133,7 +133,7 @@ export default {
       li:nth-of-type(1) {
         margin-bottom: 11px;
         font-size: 16px;
-        
+
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 16px;
@@ -141,7 +141,7 @@ export default {
       li:nth-of-type(2) {
         margin-bottom: 9px;
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 12px;
@@ -176,7 +176,7 @@ export default {
       }
       li:nth-of-type(4) {
         font-size: 15px;
-        
+
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
         line-height: 15px;
