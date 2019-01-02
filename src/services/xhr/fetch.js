@@ -8,6 +8,8 @@ const xhr = ({ url, body = {}, method = 'get', headers = {} }) => {
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toUpperCase()
+  console.log('i want');
+  
   if (url == '/undefined') {
     return
   }
