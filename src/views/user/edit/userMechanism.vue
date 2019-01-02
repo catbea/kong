@@ -100,9 +100,6 @@ export default {
     async queryOrganizationList(distributorId, enterpriseId) {
       let obj = {}
       const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
-
-      console.log(result)
-
       if (result.length > 0) {
         let tempResult = result
         this.organizationInfo = tempResult

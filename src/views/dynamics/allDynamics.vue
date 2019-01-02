@@ -134,7 +134,6 @@ export default {
       }, 1000)
     },
     checkPosition(val) {
-      console.log(val)
     },
     goList(index, title) {
       this.finished = false

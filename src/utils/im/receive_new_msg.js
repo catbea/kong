@@ -48,7 +48,6 @@ function callbackDynamics(fun) {
 //监听新消息事件
 //newMsgList 为新消息数组，结构为[Msg]
 function onMsgNotify(newMsgList) {
-  // console.log( newMsgList, '[newMsgList]-'+toAccount)
   var newMsg
   var msgList = []
   //获取所有聊天会话
@@ -57,7 +56,6 @@ function onMsgNotify(newMsgList) {
     //遍历新消息
     newMsg = newMsgList[j]
     var elems = newMsg.elems[0]
-    console.log(newMsg.getSession().id() + '  ' + toAccount, 'newMsg.getSession()')
     if (newMsg.getSession().id() == toAccount) {
       //为当前聊天对象的消息
       selSess = newMsg.getSession()
@@ -68,12 +66,10 @@ function onMsgNotify(newMsgList) {
         webim.setAutoRead(selSess, true, true)
         //手动上报已读数据
         var msg = onSendMsg(newMsg.random, true, 4, '')
-        console.log('上报消息已读结果:', msg)
       }
     } else {
       // 不在聊天页面，弹出消息
       let content = elems.content
-      console.log(content, 'content')
       if (content.desc == 1 || content.desc == 2 || content.desc == 3) {
         content.clientId = newMsg.getSession().id()
         store.commit(types['NEW_MSG_CONTENT'], content)
@@ -93,8 +89,6 @@ function initUnreadMsgCount() {
 
   for (var i in sessMap) {
     sess = sessMap[i]
-    // console.log('toAccount', toAccount)
-    console.log(sess.id(), '=', sess.unread())
     if (toAccount != sess.id()) {
       //更新其他聊天对象的未读消息数
     }
@@ -194,7 +188,6 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime) {
       webim.Tool.setCookie('tmpmsg_' + toAccount, '', 0)
     },
     function(err) {
-      console.log(err.ErrorInfo)
     }
   )
 }
@@ -220,21 +213,17 @@ function onConnNotify(resp) {
   switch (resp.ErrorCode) {
     case webim.CONNECTION_STATUS.ON:
       webim.Log.warn('建立连接成功: ' + resp.ErrorInfo)
-      console.log('建立连接成功: ' + resp.ErrorInfo)
       break
     case webim.CONNECTION_STATUS.OFF:
       info = '连接已断开，无法收到新消息，请检查下你的网络是否正常: ' + resp.ErrorInfo
       webim.Log.warn(info)
-      console.log(info)
       break
     case webim.CONNECTION_STATUS.RECONNECT:
       info = '连接状态恢复正常: ' + resp.ErrorInfo
       webim.Log.warn(info)
-      console.log(info)
       break
     default:
       webim.Log.error('未知连接状态: =' + resp.ErrorInfo)
-      console.log('未知连接状态: =' + resp.ErrorInfo)
       break
   }
 }

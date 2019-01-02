@@ -281,7 +281,6 @@ export default {
         this.status = 1
       }
       await marketService.changeLinkerCollect(this.id, this.status, 1)
-      console.log(this.status, '收藏状态')
     },
     shareHandler() {
       if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {

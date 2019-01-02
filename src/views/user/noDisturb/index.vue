@@ -134,8 +134,6 @@ export default {
       obj.sunday = this.sunday
       obj.status = selectStatus //status 0:关闭  1:开启
 
-      console.log(JSON.stringify(obj))
-
       const result = await userService.upDataDisturb(obj)
     },
 

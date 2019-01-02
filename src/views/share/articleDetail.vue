@@ -15,10 +15,7 @@
           <button class="agent-right">+ 名片</button>
         </div>
       </div>
-      <div
-        class="bg_img van-hairline--surround discover-img"
-        :style="{backgroundImage:'url('+ (info&&info.image) +')'}"
-      ></div>
+      <div class="bg_img van-hairline--surround discover-img" :style="{backgroundImage:'url('+ (info&&info.image) +')'}"></div>
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -29,10 +26,7 @@
       <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
     </div>
     <!-- 推荐房源 -->
-    <div
-      class="recommend-houses"
-      v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0"
-    >
+    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
       <div class="recommend-houses-content">
         <!-- swiper -->
@@ -48,14 +42,7 @@
         </swiper>
       </div>
     </div>
-    <van-popup
-      class="popup-view"
-      v-model="openPopup"
-      :overlay="true"
-      :lock-scroll="true"
-      :close-on-click-overlay="true"
-      :click-overlay="overlayClose"
-    >
+    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
       </div>
@@ -91,7 +78,7 @@
       </div>
       <!-- <div class="share-btn" @click="shareHandler">
         <i class="icon iconfont icon-Building_list_share"></i>分享
-      </div> -->
+      </div>-->
     </div>
     <!-- 小程序名片 -->
     <div class="app-card"></div>
@@ -237,15 +224,8 @@ export default {
     async shareHandler() {
       await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
-      console.log('serShare', this.shareData)
 
       window.awHelper.wechatHelper.setShare(this.shareData)
-      // wechatApi
-      //   .wechatShare(this.shareData)
-      //   .then(res => {
-      //     this.articleShare()
-      //   })
-      //   .catch(e => {})
     }
   },
   watch: {
@@ -466,12 +446,6 @@ export default {
       margin: 5px;
       padding: 8px 20px;
       opacity: 0.7;
-    }
-    > .app-btn {
-    }
-    > .collect-btn {
-    }
-    > .share-btn {
     }
   }
 }

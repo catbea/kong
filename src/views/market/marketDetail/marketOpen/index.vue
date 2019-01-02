@@ -71,7 +71,6 @@ export default {
       let submitPrice = priceItem.subscribeAmount
       let coupon = 0
 
-      // console.log(this.marketOpenCache, 'this.marketOpenCache======')
       if (this.marketOpenCache && this.marketOpenCache.currSelectedCoupon) {
         this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
         let currCunpon = this.marketOpenCache.currSelectedCoupon
@@ -97,7 +96,6 @@ export default {
 
       submitPrice = submitPrice - this.userInfo.price
       balancePay = this.userInfo.price
-      console.log(submitPrice, balancePay + 'submitPrice======')
       if (submitPrice < 0) {
         balancePay = this.userInfo.price + submitPrice
         submitPrice = 0
@@ -108,7 +106,6 @@ export default {
         }
       }
       balancePay = balancePay < 0 ? (balancePay = 0) : balancePay
-      console.log(balancePay, 'submitPrice======')
       this.submitPayInfo = { value: submitPrice, coupon: coupon }
       this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balanceAmount: this.userInfo.price, balancePay: balancePay })
     },
@@ -123,7 +120,6 @@ export default {
       let balancePay = 0
       submitPrice = submitPrice - this.userInfo.price
       balancePay = this.userInfo.price
-      // console.log(submitPrice, 'balancePay')
       if (submitPrice < 0) {
         submitPrice = 0
         balancePay = priceItem.subscribeAmount

@@ -32,7 +32,6 @@ export default {
   methods: {
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
-      console.log(res, '相册数据')
       this.photoData = res
     },
     pushHandle() {

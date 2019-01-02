@@ -159,7 +159,6 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    console.log(this.dataArr, '展示的楼盘数据')
   },
   methods: {
     stickNumHandle() {
@@ -171,7 +170,6 @@ export default {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '楼盘个数')
     },
     recommendNumHandle() {
       //判断有没有超过3个置顶
@@ -182,7 +180,6 @@ export default {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '楼盘个数')
     },
     strideYear() {
       //判断是否跨年

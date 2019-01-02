@@ -60,7 +60,6 @@ export default {
         Toast('请填写错误类型')
       } else {
         let res = await marketService.submitCorrection(this.linkerId, this.errorType, this.introduct, this.appType)
-        console.log(res, '提交数据')
         this.introduct = ''
         this.$dialog
           .alert({

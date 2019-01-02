@@ -78,7 +78,6 @@ export default {
       this.$router.push('/dynamics/message/messageList')
     },
     goMessageInfo(data) {
-      console.log('====================', data)
       let parm = {
         info: this.info,
         customerCount: data.customerCount.val,

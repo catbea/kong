@@ -91,7 +91,6 @@ export default {
     },
     async getHouseTypeInfo(n) {
       const res = await marketService.getHouseType(n)
-      console.log(res, '未显示的户型数据')
       this.tabs = res
     }
   }

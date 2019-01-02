@@ -77,11 +77,9 @@ export default {
     //初始化一些函数绑定
     initFunction: function() {
       let self = this
-      //   document.title = '照片裁剪';
       this.clickBtn = document.getElementById('clip_button')
       this.cancelBtn = document.getElementById('cancel_clip')
       //确定事件
-      console.log(this.clickBtn)
       this.addEvent(this.clickBtn, 'click', function() {
         self.crop()
       })
@@ -90,41 +88,17 @@ export default {
         self.destoried()
         self.$router.go(-1)
       })
-      //清空input的值
-      // this.addEvent( this.fileObj , 'click' , function () {
-      //   this.value = '';
-      // })
     },
 
     pic() {
       let e = this.$route.query.originUrl
-      console.log(e)
       this.clip(e, {
-        // resultObj : image,
         aspectRatio: 1
       })
     },
     clip: function(e, opt) {
       let self = this
-      // console.log(self)
-      // console.log(e)
-      // this.fileObj = e.srcElement;
-
-      // let files = e.target.files || e.dataTransfer.files;
-
-      // if (!files.length) return false;  //不是图片直接返回
-
-      // //调用初始化方法
       this.initilize(opt)
-
-      // //获取图片文件资源
-      // this.picValue = files[0];
-
-      //去获取拍照时的信息，解决拍出来的照片旋转问题
-      // Exif.getData( files[0] , function(){
-      //   self.Orientation = Exif.getTag( files[0], 'Orientation');
-      //   console.log(self.Orientation)
-      // });
 
       //调用方法转成url格式
       this.originUrl = e
@@ -167,7 +141,6 @@ export default {
         mouseWheelZoom: false,
         toggleDragModeOnDblclick: false,
         ready: function() {
-          // console.log(self.cropper.rotate(90))
           if (opt.aspectRatio == 'Free') {
             let cropBox = self.cropper.cropBox
             cropBox.querySelector('span.cropper-view-box').style.outline = 'none'
@@ -212,18 +185,11 @@ export default {
 
         //判断图片是否大于100k,不大于直接上传，反之压缩
         if (imgData.length < 100 * 1024) {
-          // console.log(self)
-          // self.resultObj.src = imgData;
-          //图片上传
-          // console.log(imgData)
           self.postImg(imgData)
         } else {
           image.onload = function() {
             //压缩处理
             let data = self.compress(image, self.Orientation)
-            // console.log(data)
-            // self.resultObj.src = data;
-            //图片上传
             self.postImg(data)
           }
         }

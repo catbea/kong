@@ -189,7 +189,6 @@ export default {
      */
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
-      console.log(result, '楼盘详情数据')
       this.linkerInfo = result
       this.customerList = result.customerList
       this.headSlide()
@@ -199,8 +198,6 @@ export default {
       this.info = houseUseList
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.expireFlag = result.expireFlag
-      console.log(this.expireFlag, '是否已开通')
-      //this.titleBarHandle()
     },
     //判断该楼盘有无图片列表
     async getMarketDetailPhotoInfo() {

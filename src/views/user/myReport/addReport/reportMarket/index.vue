@@ -99,9 +99,6 @@ export default {
             this.dataArr[i].linkerTags.unshift('售罄')
           }
         }
-
-        console.log(JSON.stringify(this.dataArr))
-
         this.haveData = true
         if (page === result.pages) {
           this.finished = true

@@ -37,10 +37,8 @@ export default {
       defaultAvatar: 'https://720ljq2test-10037467.file.myqcloud.com/header/qrcode/8bbf60d0c71d4962b8466c914712452c.png'
     }
   },
-  created() {},
   methods: {
     clickHandle() {
-      console.log('NEW_MSG_STATUS c--')
       this.$store.commit(types['NEW_MSG_STATUS'], false)
       if (!this.msg.clientId) {
         return

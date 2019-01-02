@@ -158,7 +158,6 @@ export default {
     async getLinkerSimpleDetail(linkerId) {
       const res = await MarketService.getLinkerSimpleDetail(linkerId)
       this.info = res
-      console.log(this.info, 'kljlkjlkjlkjlkjlkjlk')
     }
   }
 }

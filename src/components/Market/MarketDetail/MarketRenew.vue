@@ -24,7 +24,6 @@ export default {
     this.flagTjHandle()
     this.flagZsHandle()
     this.flagZdHandle()
-    console.log(this.renewInfo, '续费数据')
   },
   data: () => ({
     recommendColor: require('IMG/marketDetail/tj copy 10@2x.png'),

@@ -160,7 +160,6 @@ export default {
 
     async getVipInfo() {
       let res = await marketService.vipInfo()
-      console.log(res, 'vip信息')
       this.vipList = res.vipSettingList
       this.isVip = res.vipFlag
       this.expireTimestamp = res.expireTimestamp
@@ -176,8 +175,6 @@ export default {
       //更新vipInfo
       let _vipInfo = { city: res.city }
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo }))
-      console.log(this.userInfo, '用户信息')
-
       if (res.vipFlag && !res.city) {
         this.unselectedPopup()
       }

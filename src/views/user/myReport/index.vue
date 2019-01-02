@@ -132,8 +132,6 @@ export default {
             item.latestTime = timeUtils.fmtDate(times[times.length - 1])
           }
           item.minIndex = selectTime.indexOf(Math.max.apply(Math, selectTime))
-          // console.log('time==' + times + 'selectTime==' + selectTime)
-          // console.log(item.minIndex)
         }
 
         if (res.pages === 0 || this.page === res.pages) {

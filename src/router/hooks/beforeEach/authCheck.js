@@ -21,7 +21,6 @@ const isIOS = () => {
 }
 
 export default async (to, from, next) => {
-  console.log(to.path, 'to.path')
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
@@ -45,8 +44,6 @@ export default async (to, from, next) => {
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
-      console.log(36, userInfo, userInfo.payCorpId)
-
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
@@ -69,9 +66,7 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         next()
       } else {
-        console.log('wxAuthObject')
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
-        console.log('wxAuthObject', wxAuthObject)
 
         payCorpId = wxAuthObject.payCorpId
         let userInfo = wxAuthObject.userInfo
@@ -79,7 +74,6 @@ export default async (to, from, next) => {
         userInfo.cropId = cropId
         userInfo.token = wxAuthObject.token
         await store.dispatch('getUserInfo', userInfo)
-        console.log(userInfo, '[userInfo]')
         if (!userInfo.payOpenId) {
           //返回的payopenid为空，则从新授权获取
           await localStorage.setItem('payCorpId', payCorpId)

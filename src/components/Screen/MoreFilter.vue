@@ -147,8 +147,6 @@ export default {
       }
     },
     confirmHandler() {
-      console.log('confirmHandler')
-
       this.$emit('confirm', this.currentValue)
       this.$emit('input', this.currentValue)
     }
@@ -157,12 +155,6 @@ export default {
     value(val) {
       this.currentValue = cloneDeep(val)
     }
-    // currentValue: {
-    //   handler(val) {
-    //     // this.$emit('input', val)
-    //   },
-    //   deep: true
-    // }
   }
 }
 </script>

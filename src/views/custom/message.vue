@@ -159,7 +159,7 @@
                 <span>常用语</span>
                 <img :src="closeIcon" @click="closeDefaultMsg"/>
             </div>
-            <div class="default-msg-item van-hairline--bottom" v-for="info in tempValue" @click="defaultMsgClickHandle(info)">
+            <div class="default-msg-item van-hairline--bottom" v-for="(info,index) in tempValue" :key="index" @click="defaultMsgClickHandle(info)">
                 {{info}}
             </div>
         </div>
@@ -253,7 +253,6 @@ export default {
       myAuto.addEventListener(
         'ended',
         () => {
-          console.log('play ended ====================')
           this.isplay = 0
         },
         false
@@ -301,13 +300,6 @@ export default {
     phoneCall() {
       window.location.href = 'tel:' + this.clientMobile
     },
-
-    // async getMyProjectList() {
-    //     const res = await userService.getMyMarket(0)
-    //     this.myProjectList = res.records
-    //     console.log(this.myProjectList, 'this.myProjectList')
-    // },
-
     projectClick() {
       this.$router.push('/custom/message/messageProjects')
     },
@@ -372,9 +364,7 @@ export default {
     },
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
-      console.log(mediaId + ' | ' + appId, 'mediaIdTransToMp3Url')
       let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
-      console.log(res, 'mediaIdTransToMp3Url')
       this.message = res.map3Url
       this.sendMessage(2, this.audioTime)
     },
@@ -389,7 +379,6 @@ export default {
         size: 10
       }
       let res = await customService.appMsgDtlList(params)
-      console.log(res)
     },
     //设置聊天记录的值
     setList(res) {
@@ -487,7 +476,6 @@ export default {
           wx.startRecord({
             success: () => {
               //  授权录音
-              console.log('第一次录音')
               localStorage.rainAllowRecord = 'true'
               wx.stopRecord()
               return false
@@ -505,7 +493,6 @@ export default {
         wx.startRecord({
           success: function() {
             _this.start_speaking = true
-            console.log('startRecord success')
             localStorage.rainAllowRecord = 'true'
           },
           cancel: function() {
@@ -549,13 +536,11 @@ export default {
           },
           fail: function(res) {
             _this.start_speaking = false
-            console.log(JSON.stringify(res))
           }
         })
       }
     },
     upRecord(nowLocalId) {
-      console.log(nowLocalId, 'nowLocalId')
       let _this = this
       wx.uploadVoice({
         localId: nowLocalId, // 需要上传的音频的本地ID，由stopRecord接口获得
@@ -565,7 +550,6 @@ export default {
           _this.messages_record = nowLocalId
           _this.sourceType = 2
           _this.mediaIdTransToMp3Url(serverId)
-          console.log(serverId, 'serverId')
         }
       })
     }, //接收消息
@@ -592,7 +576,6 @@ export default {
         } else {
           let audioTime = ''
           let content = ''
-          // console.log(elems.content ,'elems.content')
           if (elems.content.desc == 2) {
             let ext = JSON.parse(elems.content.ext)
             audioTime = ext.audioTime
@@ -699,7 +682,6 @@ export default {
         this.isplay = id
       }
       this.nowVoiceUrl = mateId
-      console.log('play start url：' + this.nowVoiceUrl)
       setTimeout(() => {
         this.$refs.audio.src = this.nowVoiceUrl
         this.$refs.audio.play()
@@ -713,7 +695,6 @@ export default {
         localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
       })
       this.isplay = 0
-      console.log('play ended click====================')
     },
     //跳转客户详情
     goDetails() {

@@ -123,7 +123,6 @@ export default {
     this.getShowProjectCount()
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
-    console.log(this.masterList, '初始大师推荐数据')
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -191,7 +190,6 @@ export default {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '初始置顶个数')
       this.stickNumHandle = function() {}
     },
     async getShowProjectCount() {
@@ -315,7 +313,6 @@ export default {
     //-----置顶操作
     recommandTrueHandle(n) {
       this.stickNum++
-      console.log(this.stickNum, '置顶后个数')
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element = this.showMarketList[index] //遍历未置顶改成置顶
         if (n.linkerId === element.linkerId) {
@@ -325,7 +322,6 @@ export default {
     },
     recommandFalseHandle(n) {
       this.stickNum--
-      console.log(this.stickNum, '取消后置顶个数')
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element = this.showMarketList[index] //遍历置顶改成未置顶
         if (n.linkerId === element.linkerId) {

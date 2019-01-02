@@ -103,13 +103,11 @@ export default {
 
     //删除操作
     async toDeleArticle() {
-      // console.log(this.selectArr)
       if (this.selectArr.length > 0) {
         let isCheckedArr = []
         for (let item of this.selectArr) {
           isCheckedArr.push(item.id)
         }
-        console.log(isCheckedArr.join(), '[delete ids]')
         const res = await userService.deleHistoryArticle(isCheckedArr.join())
         this.selectName = '全选'
         this.checked = false
