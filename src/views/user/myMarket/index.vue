@@ -13,8 +13,7 @@
           <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" 
           @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" 
           @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" 
-          @closeCut="closeCut" @returnMasterHandle="returnMasterHandle" 
-          @returncommonHandle="returncommonHandle" 
+          @closeCut="closeCut" 
           @recommandTrueHandle="recommandTrueHandle" @recommandFalseHandle="recommandFalseHandle"
           ></user-market>
         </van-list>
@@ -31,7 +30,7 @@
           <screen v-model="notShowProjectFilters"></screen>
         </div>
         <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowGetMyMarketInfo" v-show="!no">
-          <close-market v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut" @returnMasterHandle="returnMasterHandle" @returncommonHandle="returncommonHandle"></close-market>
+          <close-market v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut"></close-market>
         </van-list>
         <div v-show="no" class="notMarket">
           <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
@@ -489,12 +488,6 @@ export default {
         this.no=false
         this.close=true
       }
-    },
-    returnMasterHandle(n) {
-      this.masterList.push(this.myMarketList[n])
-    },
-    returncommonHandle(n) {
-      this.commonList.push(this.myMarketList[n])
     },
     openCut(n) {
       this.showMarketList.push(n)

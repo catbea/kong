@@ -330,8 +330,6 @@ export default {
   }
   > .search-result-container {
     > .search-result-content {
-      > .list-container {
-      }
       > .null-container {
         margin-top: 10%;
       }

@@ -174,7 +174,6 @@
     <div class="van-hairline--top m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
-        <!-- <router-link :to="{ path: './infoErrorCorrection', query: { linkerId:linkerId,agentId:agentId,linkerName:encodeURI(linkerName)}}"> -->
       </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
@@ -232,6 +231,7 @@ export default {
   },
   data() {
     return {
+      instance:0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: true, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
@@ -278,15 +278,29 @@ export default {
   },
   created() {
     this.id = this.$route.params.id
-    // this.$store.commit(types.USER_BUILD_INFO, this.id)
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
+    // window.addEventListener("popstate", this.fun, false);
   },
+  mounted(){
+   
+},
   methods: {
-    //判断该楼盘有无图片列表
-    async getMarketDetailPhotoInfo() {
+    fun(){//关闭图片预览
+      if(this.instance){
+        this.instance.close();
+      }
+    },
+    han(){//执行一次事件
+    if (window.history && window.history.pushState) {//监听浏览器的返回按钮事件
+   history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', this.fun, false);
+    this.han=null
+    }
+    },
+    async getMarketDetailPhotoInfo() {//判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
       if (res.length > 0) {
         this.photoButton = true
@@ -294,19 +308,13 @@ export default {
         this.photoButton = false
       }
     },
-    photoHandle() {
-      //进入相册页面
+    photoHandle() {//进入相册页面
       this.$router.push({ name: 'photoList', params: { id: this.id } })
     },
-    //进入佣金详情
-    commission() {
+    commission() {//进入佣金详情
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
-    // enterCommission() {
-    //   this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
-    // },
-    // 获取楼盘详情
-    async getDetailInfo(id) {
+    async getDetailInfo(id) {// 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
       console.log(res,'该楼盘详情');
@@ -329,15 +337,13 @@ export default {
       //查看户型图片预览
       let arr = []
       arr.push(n)
-      ImagePreview({
+    this.instance =  ImagePreview({
         images: arr,
-        startPosition: 0,
-        onClose() {
-          // do something
-        }
+        startPosition: 0
       })
       this.photoList = []
-    },
+      this.han()
+  },
     async collectHandler() {
       //修改收藏状态
       if (this.status == 1) {
@@ -401,16 +407,6 @@ export default {
     }
   },
   computed: {
-    // openStatus:{
-    //   get:function(){
-    //     if(this.info.openStatus == 0){
-    //       return true
-    //     }else{
-    //       return false
-    //     }
-    //   },
-    //   set:function(){}
-    // },
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
@@ -418,6 +414,7 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.rd.headSlideTimer)
+    window.removeEventListener('popstate', this.fun, false);
   }
 }
 </script>

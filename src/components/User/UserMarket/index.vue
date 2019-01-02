@@ -119,7 +119,6 @@ export default {
     recommandNum:0,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     show: false,
-    stickShow: true,
     stickSwitch: null,
     exhibitionMarketShow: true,
     imgShare: require('IMG/user/rectangle.png'),
@@ -179,16 +178,14 @@ export default {
     async changeUserStatus(linkerId, operationType, status) {
       await userService.changeMarketData(linkerId, operationType, status)
     }, //修改楼盘状态
-
     skipMarketDetail(linkerId) {
       this.$router.push('/market/' + linkerId)
     },
-    popupHandle() {
-      //更多
+    popupHandle() {//更多
       this.show = !this.show
     },
     stickHandle(index) {
-      if (this.dataArr.recommand == 0) {
+      if (this.dataArr.recommand == 0) {//将当前点击的楼盘置顶
         if (this.$parent.$parent.stickNum > 2) {
           this.$dialog
             .confirm({
@@ -196,30 +193,22 @@ export default {
               message: '继续置顶将取消最初置顶楼盘置顶状态是否确定置顶当前楼盘'
             })
             .then(() => {
-              this.stickSwitch = 10
               this.$emit('recommandTrueHandle',this.dataArr)
-              //将当前点击的楼盘置顶
               let parent = this.$parent.$parent
               parent.showMarketList.unshift(parent.showMarketList[index])
               parent.showMarketList.splice(index + 1, 1)
               parent.showMarketList[3].recommand = 0
               // parent.showMarketList.splice(1,1)
-              this.$dialog
-                .alert({
+              this.$dialog.alert({
                   message: '楼盘置顶成功',
                   className: 'hint-alert'
                 })
                 .then(() => {})
-              this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+              this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
               this.show = !this.show//关闭弹出层
             })
-            .catch(() => {
-              // on cancel
-            })
-        } else {
-          this.stickSwitch = 10
+        } else {//将当前点击的楼盘置顶
           this.$emit('recommandTrueHandle',this.dataArr)
-          //将当前点击的楼盘置顶
           let parent = this.$parent.$parent
           parent.showMarketList.unshift(parent.showMarketList[index])
           parent.showMarketList.splice(index + 1, 1)
@@ -231,15 +220,11 @@ export default {
             .then(() => {
               // on close
             })
-          this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+          this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
           this.show = !this.show
         }
-      } else if (this.dataArr.recommand == 10) {
-        this.stickSwitch = 0
+      } else if (this.dataArr.recommand == 10) {//将当前点击的楼盘取消置顶
         this.$emit('recommandFalseHandle',this.dataArr)
-        //将当前点击的楼盘取消置顶
-        
-        
         this.$dialog
           .alert({
             message: '楼盘取消置顶成功',
@@ -248,11 +233,9 @@ export default {
           .then(() => {
             // on close
           })
-        this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
+        this.changeUserStatus(this.linkerId, 40, 0) //改置顶状态
         this.show = !this.show
       }
-      // this.changeUserStatus(this.linkerId, 40, this.stickSwitch) //改置顶状态
-      // this.show = !this.show
     },
     closeHandle() {
       this.show = !this.show
@@ -311,7 +294,7 @@ export default {
       this.show = !this.show
       this.commonButtonShow = !this.commonButtonShow
     },
-    exhibitionHandle() {
+    exhibitionHandle() {//关闭楼盘展示
       this.$dialog
         .confirm({
           title: '是否确定关闭该楼盘名片展示',
@@ -320,30 +303,16 @@ export default {
         })
         .then(() => {
           // on confirm
-          this.stickShow = false
           this.show = !this.show
-          // this.exhibitionMarketShow = false
           this.changeUserStatus(this.linkerId, 30, 1) //改为不展示
-          
-          // this.dataArr.displayFlag='1'
           this.$emit('closeCut', this.dataArr)
         })
-        .catch(() => {
-          // on cancel
-        })
     },
-    goRenew(linkerId) {
-      //去续费
+    goRenew(linkerId) {//去续费
       this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
     },
-    apostropheReturn() {
-      this.$emit('apostropheReturn', 1)
-    },
-    skipShare() {
+    skipShare() {//去分享
       this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
-    },
-    skipMarketRetuen() {
-      this.$emit('skipMarketRetuen', 1)
     }
   }
 }

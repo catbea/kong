@@ -65,12 +65,10 @@ export default {
     }
   },
   methods: {
-    skipDetail(n) {
-      //点击图片跳转到改楼盘详情
+    skipDetail(n) {//点击图片跳转到改楼盘详情
       this.$router.push({ name: 'market-detail', params: { id: n } })
     },
-    async closeHandle(linkerId, index) {
-      //图片列表删除某个，楼盘列表重置推荐
+    async closeHandle(linkerId, index) {//图片列表删除某个，楼盘列表重置推荐
       await userService.changeMarketData(linkerId, 20, 0)
       this.limitList.splice(index, 1)
       this.swipeJudge()
