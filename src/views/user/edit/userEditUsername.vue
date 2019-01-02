@@ -3,7 +3,7 @@
     <div class="user-edit-username">
       <p class="edit-username-title">用户昵称</p>
       <p class="edit-username-conter">
-        <input type="text" class="edit-username-input" maxlength="8" v-model="userName">
+        <input type="text" class="edit-username-input" maxlength="8" v-model.trim="userName">
       </p>
       <button class="edit-username-query" @click="toUpDateName">确认修改</button>
     </div>
@@ -50,7 +50,7 @@ export default {
 
     toUpDateName() {
       let userName = this.userName
-      if (userName.length == 0) {
+      if (!userName) {
         this.$dialog
           .alert({
             message: '用户名不可为空'
