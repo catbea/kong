@@ -36,7 +36,6 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import marketService from 'SERVICE/marketService'
 import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'

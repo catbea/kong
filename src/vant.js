@@ -24,7 +24,14 @@ import {
   Dialog,
   Notify,
   Tag,
-  TreeSelect
+  TreeSelect,
+  Checkbox,
+  Tabbar,
+  TabbarItem,
+  Cell,
+  CellGroup,
+  CheckboxGroup,
+  SubmitBar
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -49,4 +56,9 @@ Vue.use(Dialog)
 Vue.use(Notify)
 Vue.use(Tag)
 Vue.use(TreeSelect)
+Vue.use(Checkbox)
+Vue.use(Tabbar).use(TabbarItem)
+Vue.use(Cell).use(CellGroup)
+Vue.use(CheckboxGroup)
 
+Vue.use(SubmitBar)

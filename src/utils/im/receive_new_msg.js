@@ -1,7 +1,5 @@
-import { Dialog } from 'vant'
 import store from '@/store/'
 import * as types from '@/store/mutation-types'
-import router from '@/router/'
 //监听新消息事件
 // var msgList = [];
 // var dateStart = null;

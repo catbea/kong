@@ -3,13 +3,7 @@
     <div class="user-edit-wechat">
       <p class="edit-wechat-title">微信号</p>
       <p class="edit-wechat-conter">
-        <input
-          type="text"
-          class="edit-wechat-input"
-          placeholder=""
-          v-model="weChatNum"
-          maxlength="20"
-        >
+        <input type="text" class="edit-wechat-input" placeholder v-model="weChatNum" maxlength="20">
       </p>
       <p class="edit-wechat-berak">该微信号仅作为客户添加使用</p>
       <button class="edit-wechat-query" @click="upDataWeChat">确认修改</button>
@@ -17,16 +11,11 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 import strFormat from '@/filters/strFormat'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Dialog
-  },
-
   data() {
     return {
       weChatNum: ''
@@ -46,11 +35,13 @@ export default {
     upDataWeChat() {
       let tempWeChat = this.weChatNum
       if (tempWeChat.length == 0) {
-        this.$dialog.alert({
-          message: '微信号不可为空'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            message: '微信号不可为空'
+          })
+          .then(() => {
+            // on close
+          })
       } else {
         let inputStr = strFormat.fmtWebCode(tempWeChat)
         this.weChatNum = inputStr

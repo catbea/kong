@@ -19,15 +19,10 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Dialog
-  },
-
   data() {
     return {
       signature: '',

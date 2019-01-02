@@ -1,36 +1,24 @@
 <template>
   <div class="list-continer">
-    <div class="list-continer-for" v-for="(item, index) in list" :key="index" >
+    <div class="list-continer-for" v-for="(item, index) in list" :key="index">
       <shadow-box>
-      <div
-        slot="container"
-        class="list-continer-padd"
-      >
-       <checkbox-group v-model="result">
-        <checkbox
-          v-model="checked"
-          :name="item.id"
-        >
-          <div class="report-list" >
-            <span class="report-list-left">
-              <img
-                :src="availableImg"
-                class="report-list-img"
-              >
-              <img
-                class="list-img-icon"
-                :src="ovalImg"
-              >
-            </span>
-            <span class="report-list-right">
-              <p class="list-right-name">{{item.title}}</p>
-              <p class="list-right-conter">{{item.conter}}</p>
-            </span>
-          </div>
-        </checkbox>
-         </checkbox-group>
-      </div>
-    </shadow-box>
+        <div slot="container" class="list-continer-padd">
+          <van-checkbox-group v-model="result">
+            <van-checkbox v-model="checked" :name="item.id">
+              <div class="report-list">
+                <span class="report-list-left">
+                  <img :src="availableImg" class="report-list-img">
+                  <img class="list-img-icon" :src="ovalImg">
+                </span>
+                <span class="report-list-right">
+                  <p class="list-right-name">{{item.title}}</p>
+                  <p class="list-right-conter">{{item.conter}}</p>
+                </span>
+              </div>
+            </van-checkbox>
+          </van-checkbox-group>
+        </div>
+      </shadow-box>
     </div>
     <div class="list-fixed">
       <button class="list-but">确定</button>
@@ -38,13 +26,10 @@
   </div>
 </template>
 <script>
-import { Checkbox, CheckboxGroup } from 'vant'
 import ShadowBox from 'COMP/ShadowBox'
 export default {
   components: {
-    ShadowBox,
-    Checkbox,
-    CheckboxGroup
+    ShadowBox
   },
   data() {
     return {

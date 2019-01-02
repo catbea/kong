@@ -5,32 +5,22 @@
         共{{total}}文章
         <span class="updateArticles-title-right" @click="gohistory">完成</span>
       </div>
-      <!-- <discover-list></discover-list> -->
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
-        <!-- <checkbox-group v-model="result"> -->
-          <!-- v-for="(item, index) in list" :key="index" :name="item" -->
-          <checkbox v-model="item.isCheck" v-for="(item, index) in list" :key="index" :name="item.id">
-            <div
-              class="updateArticles-list"
-              :id="item.id"
-              @click="getArticleId(item)"
-            >
-              <span class="updateArticles-list-left">
-                <p class="list-left-title">{{item.title}}</p>
-                <p
-                  class="list-left-time"
-                >{{item.publisher}}&nbsp;&nbsp;{{item.createDate}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
-              </span>
-              <span class="updateArticles-list-right">
-                <img :src="item.image" class="mark-icon">
-              </span>
-            </div>
-          </checkbox>
-        <!-- </checkbox-group> -->
+        <van-checkbox v-model="item.isCheck" v-for="(item, index) in list" :key="index" :name="item.id">
+          <div class="updateArticles-list" :id="item.id" @click="getArticleId(item)">
+            <span class="updateArticles-list-left">
+              <p class="list-left-title">{{item.title}}</p>
+              <p class="list-left-time">{{item.publisher}}&nbsp;&nbsp;{{item.createDate}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>
+            </span>
+            <span class="updateArticles-list-right">
+              <img :src="item.image" class="mark-icon">
+            </span>
+          </div>
+        </van-checkbox>
       </van-list>
       <div class="updateArticles-fixed-btn">
         <div class="fixed-btn-check" @click="toSelectAll">
-          <checkbox v-model="checked"></checkbox>
+          <van-checkbox v-model="checked"/>
           <span class="fixed-btn-title">{{this.selectName}}</span>
         </div>
         <div class="fixed-btn" @click="deleArticles">删除</div>
@@ -40,16 +30,13 @@
 </template>
 <script>
 import nullArticles from 'COMP/Null'
-import { Checkbox, CheckboxGroup } from 'vant'
-import { SubmitBar } from 'vant'
 import userService from 'SERVICE/userService'
 import timeUtils from '@/utils/timeUtils'
 export default {
   components: {
     Checkbox,
     CheckboxGroup,
-    nullArticles,
-    SubmitBar
+    nullArticles
   },
   data() {
     return {

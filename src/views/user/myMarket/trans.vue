@@ -105,7 +105,6 @@
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/'
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   components: {

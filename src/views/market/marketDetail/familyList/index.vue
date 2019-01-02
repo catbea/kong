@@ -33,8 +33,8 @@
   </div>
 </template>
 <script>
-import marketService from 'SERVICE/marketService'
 import { ImagePreview } from 'vant'
+import marketService from 'SERVICE/marketService'
 export default {
   components: {},
   created() {

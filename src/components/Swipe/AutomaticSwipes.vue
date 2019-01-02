@@ -1,22 +1,16 @@
 <template>
   <div class="discover-Broadcast">
-   <swipe :autoplay="3000">
-    <swipe-item v-for="(image, index) in images" :key="index" class="Broadcast-img">
+   <van-swipe :autoplay="3000">
+    <van-swipe-item v-for="(image, index) in images" :key="index" class="Broadcast-img">
       <img v-lazy="image" class="imgs" :src="image"/>
-    </swipe-item>
-  </swipe>
+    </van-swipe-item>
+  </van-swipe>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import { Swipe, SwipeItem, Lazyload } from 'vant'
 export default {
-  components: {
-    Swipe,
-    SwipeItem,
-    Lazyload
-  },
   data() {
     return {
       current: 0,

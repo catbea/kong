@@ -1,26 +1,10 @@
 <template>
   <div class="addReport-page">
-    <cell-group>
-      <cell
-        title="报备楼盘"
-        is-link
-        :value="reportAddInfo.linkerName"
-        :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"
-      />
-      <cell
-        title="客户名字"
-        is-link
-        :value="reportAddInfo.clientName"
-        to="reportCustomer"
-      />
-      <cell
-        title="手机号"
-        is-link
-        :value="reportAddInfo.clientPhone"
-        to="reportPhone"
-      />
-      <!-- <cell title="单元格"  is-link value="内容" label="描述信息" /> -->
-    </cell-group>
+    <van-cell-group>
+      <van-cell title="报备楼盘" is-link :value="reportAddInfo.linkerName" :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"/>
+      <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomer"/>
+      <van-cell title="手机号" is-link :value="reportAddInfo.clientPhone" to="reportPhone"/>
+    </van-cell-group>
     <p class="addReport-remarks">注：客户手机号只提供前三后四给分销商使用，请放心填写。</p>
     <div class="addReport-botton">
       <button class="addReport-btn addReport-btn-updata" @click="editInstitutionHandler">修改所属机构</button>
@@ -29,17 +13,9 @@
   </div>
 </template>
 <script>
-import { Cell, CellGroup } from 'vant'
 import { mapGetters } from 'vuex'
 import reportService from 'SERVICE/reportService'
 export default {
-  components: {
-    Cell,
-    CellGroup
-  },
-  data() {
-    return {}
-  },
   computed: {
     ...mapGetters(['reportAddInfo', 'userInfo'])
   },
@@ -75,19 +51,19 @@ export default {
     submitReportHandler() {
       if (!this.reportAddInfo.linkerId) {
         this.$dialog.alert({
-          title: '请选择报备楼盘',
+          title: '请选择报备楼盘'
         })
         return
       }
       if (!this.reportAddInfo.clientId) {
         this.$dialog.alert({
-          title: '请选择客户名字',
+          title: '请选择客户名字'
         })
         return
       }
       if (!this.reportAddInfo.clientPhone) {
         this.$dialog.alert({
-          title: '请输入客户手机号',
+          title: '请输入客户手机号'
         })
         return
       }

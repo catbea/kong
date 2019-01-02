@@ -18,13 +18,11 @@
   </div>
 </template>
 <script>
-import { Dialog, Toast } from 'vant'
 import marketService from 'SERVICE/marketService'
 export default {
   created() {
     this.getCorrectionInfo()
     this.linkerId = this.$route.params.id
-    console.log(this.linkerId)
   },
   data: () => ({
     activeIndex: null,
@@ -53,7 +51,6 @@ export default {
     },
     async submitCorrectionInfo() {
       //提交纠错内容
-      console.log(this.linkerId, this.errorType, this.introduct, this.appType, 2222222)
       if (this.introduct === '' && this.errorType === null) {
         //验证
         Toast('请填写错误类型和内容')

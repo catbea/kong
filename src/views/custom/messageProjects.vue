@@ -24,7 +24,6 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import marketService from 'SERVICE/marketService'
 import userService from 'SERVICE/userService'
 import MealMarket from '@/views/user/myMember/selectedDisk/MealMarket.vue'
@@ -52,7 +51,6 @@ export default {
     },
     async getLinkerList() {
       const res = await userService.getMyMarket(0)
-
       let _list = []
       for (let item of res.records) {
         let buildPrice = ''
@@ -105,7 +103,6 @@ export default {
         return
       }
       let project = this.checkedList[0]
-      // console.log(project)
       this.$router.go(-1)
       let content = {}
       let msg = {}
@@ -115,11 +112,9 @@ export default {
       msg.linkerPrice = project.price
       msg.address = project.address
       msg.agentId = this.userInfo.agentId
-      //'{"avatarMediaid":"https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/b6df070d1fdb48bd8d085f40607aef7a.png","linkerId":"d604ecf5687642569614b65625418d62","linkerName":"QQQ-2","address":"广东省深圳市南山区","linkerPrice":"88888.00元/㎡","agentId":"4149","building":"建面暂无信息"}'
       content.data = msg
       content.ext = {}
       onSendMsg(JSON.stringify(content), true, 3, 0)
-      // console.log(this.checkedList)
     }
   }
 }

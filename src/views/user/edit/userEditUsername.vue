@@ -11,15 +11,10 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
-import { Dialog } from 'vant'
 import strFormat from '@/filters/strFormat'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Dialog
-  },
-
   data() {
     return {
       userName: ''

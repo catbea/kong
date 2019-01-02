@@ -35,7 +35,6 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'

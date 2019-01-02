@@ -19,10 +19,8 @@
 <script>
 import MaterialInput from 'COMP/MaterialInput'
 import CustomService from 'SERVICE/customService'
-import { Dialog } from 'vant'
 export default {
   components: {
-    Dialog,
     MaterialInput
   },
 

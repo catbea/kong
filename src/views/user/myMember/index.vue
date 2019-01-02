@@ -34,7 +34,6 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import commonService from 'SERVICE/commonService'
 import SetMeal from 'COMP/myMember/SetMeal.vue'
 import MemberPrivilege from 'COMP/myMember/MemberPrivilege.vue'

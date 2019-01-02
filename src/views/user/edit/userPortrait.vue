@@ -35,12 +35,8 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
-import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 export default {
-  components: {
-    Dialog
-  },
   data() {
     return {
       userEditIcon: require('IMG/user/updata/select.png'),

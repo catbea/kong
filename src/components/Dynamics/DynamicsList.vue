@@ -2,9 +2,7 @@
   <div class="dynamics-container">
     <div class="dynamics-list-body" v-if="allDynamicList.length>0">
       <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
-        <!-- {{times.dynamicDate}} -->
         <div class="dynamics-time">{{times.dynamicDate | dateTimeFormatter(2,'/')}}</div>
-        <!-- v-for="(item,key) in times.allDynamicInfoVOS" :key="key" -->
         <div
           class="dynamics-container-list"
           v-for="(item,key) in times.allDynamicInfoVOS"
@@ -95,7 +93,6 @@
   </div>
 </template>
 <script>
-import { Row, Col } from 'vant'
 import ShadowBox from 'COMP/ShadowBox'
 import DynamicsNull from 'COMP/Dynamics/DynamicsNull'
 

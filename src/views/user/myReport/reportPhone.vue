@@ -9,13 +9,9 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 export default {
-  components: {
-    Dialog
-  },
   data() {
     return {
       Cphone: ''

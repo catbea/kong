@@ -9,7 +9,6 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import Dynamic from './Dynamic.vue'
 export default {
   components: {

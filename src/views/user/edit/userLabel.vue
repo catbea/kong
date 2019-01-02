@@ -4,14 +4,7 @@
       <p class="edit-label-title">选择标签</p>
       <p class="edit-label-conter">
         <span v-for="(item,key) in agentLabel" :key="key">
-          <input
-            :id="item.id"
-            type="checkbox"
-            data-type="welfare"
-            name="reason"
-            :value="item.itemName"
-            @click="selectLabel(key)"
-          >
+          <input :id="item.id" type="checkbox" data-type="welfare" name="reason" :value="item.itemName" @click="selectLabel(key)">
           <label :for="item.id">{{item.itemName}}</label>
         </span>
       </p>
@@ -23,15 +16,9 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
-import { Checkbox, CheckboxGroup, Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Checkbox,
-    CheckboxGroup,
-    Dialog
-  },
   data() {
     return {
       agentLabel: [],
@@ -93,18 +80,22 @@ export default {
         }
       }
       if (selectidlist.length <= 0) {
-        this.$dialog.alert({
-          message: '请选择个性标签'
-        }).then(() => {
-          // on close
-        })
-      } else {
-        if (this.selectLabelList.length > 3) {
-          this.$dialog.alert({
-            message: '标签个数不得多于3个'
-          }).then(() => {
+        this.$dialog
+          .alert({
+            message: '请选择个性标签'
+          })
+          .then(() => {
             // on close
           })
+      } else {
+        if (this.selectLabelList.length > 3) {
+          this.$dialog
+            .alert({
+              message: '标签个数不得多于3个'
+            })
+            .then(() => {
+              // on close
+            })
         } else {
           let userList = {
             lableList: selectidlist

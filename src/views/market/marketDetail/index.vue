@@ -69,7 +69,6 @@ import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
 import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
 import MarketService from 'SERVICE/marketService'
-import { Dialog } from 'vant'
 export default {
   components: {
     HintTire,
@@ -145,7 +144,6 @@ export default {
   },
   methods: {
     headSlide() {
-      console.log(this.customerList, '头像数据')
       setInterval(() => {
         if (this.headCount < this.customerList.length - 1) {
           this.headCount += 1

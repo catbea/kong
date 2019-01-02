@@ -21,7 +21,6 @@ import MarketPriceSurface from 'COMP/MarketPriceSurface/'
 import OpenPayment from 'COMP/OpenPayment/'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
-import { Dialog } from 'vant'
 export default {
   components: {
     MarketDescribe,
@@ -31,10 +30,8 @@ export default {
   created() {
     this.linkerId = this.$route.params.id
     if (this.marketOpenCache && this.marketOpenCache.linkerId && this.marketOpenCache.linkerId == this.linkerId) {
-      console.log(this.marketOpenCache, 'marketOpenCache')
       this.priceList = this.marketOpenCache.priceList
       this.projectInfo = this.marketOpenCache.projectInfo
-      // this.priceItemClickHandle(this.marketOpenCache.currPriceListIndex)
       this.initSelectedInfo()
       return
     }

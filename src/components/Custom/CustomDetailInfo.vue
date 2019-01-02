@@ -1,23 +1,11 @@
 <template>
   <div class="custom-detail-info">
-    <!-- <cell-group> -->
-    <cell
-        v-for="(item,index) in customerInfoList"
-        :key="index"
-        class="cell-item"
-        :title="item.title"
-        is-link 
-        :value="item.content"
-        @click="onClick(item, index)"
-      />
-      <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler"></area-select>
-      <picker-select :show.sync="pickerShow" :title="areaTitle" :columns="columns" @cancel="cancelHandler" @confirm="confirmHandler"></picker-select>
-      <!-- </cell-group> -->
-    <!-- <custom-operation></custom-operation> -->
+    <van-cell v-for="(item,index) in customerInfoList" :key="index" class="cell-item" :title="item.title" is-link :value="item.content" @click="onClick(item, index)"/>
+    <area-select :show.sync="areaShow" :code.sync="areaCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler"/>
+    <picker-select :show.sync="pickerShow" :title="areaTitle" :columns="columns" @cancel="cancelHandler" @confirm="confirmHandler"/>
   </div>
 </template>
 <script>
-import { Cell } from 'vant'
 import AreaSelect from 'COMP/AreaSelect'
 import PickerSelect from 'COMP/PickerSelect'
 import CustomOperation from './CustomOperation.vue'
@@ -43,7 +31,11 @@ export default {
     pickerShow: { type: Boolean, default: false },
     columns: { type: Array }
   },
-  data: () => ({}),
+  components: {
+    CustomOperation,
+    AreaSelect,
+    PickerSelect
+  },
   watch: {
     areaShow(val) {
       this.$emit('update:show', val)
@@ -75,12 +67,6 @@ export default {
     closeHandler(val) {
       this.$emit('cancel', val)
     }
-  },
-  components: {
-    CustomOperation,
-    Cell,
-    AreaSelect,
-    PickerSelect
   }
 }
 </script>
