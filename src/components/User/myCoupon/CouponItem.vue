@@ -126,7 +126,7 @@ export default {
         height: 66px;
         border-right: 1px solid#F1F1F1;
         font-size: 14px;
-        
+
         font-weight: 600;
         color: rgba(0, 122, 230, 1);
         line-height: 20px;
@@ -138,7 +138,7 @@ export default {
         }
         h3 {
           font-size: 22px;
-          
+
           font-weight: 600;
           line-height: 16px;
           padding-right: 20px;
@@ -147,7 +147,7 @@ export default {
           font-size: 12px;
           transform: scale(0.84);
           margin-left: -7px;
-          
+
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 14px;
@@ -161,7 +161,7 @@ export default {
         // margin-left:14px;
         li:nth-child(1) {
           font-size: 14px;
-          
+
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           line-height: 20px;
@@ -171,7 +171,7 @@ export default {
           transform: scale(0.84);
           width: 141px;
           margin-left: -12px;
-          
+
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 14px;
@@ -181,7 +181,7 @@ export default {
         li:nth-child(3) {
           display: flex;
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 17px;
@@ -202,7 +202,7 @@ export default {
           border-radius: 22px;
           border: 1px solid #007ae6;
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(0, 122, 230, 1);
           text-align: center;
@@ -222,7 +222,7 @@ export default {
         background: rgba(248, 246, 249, 1);
         border-radius: 4px;
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         line-height: 24px;

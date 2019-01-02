@@ -1,38 +1,30 @@
 <template>
   <div class="input-search-page">
     <div class="input-search-page-top">
-    <form action="/">
-  <van-search
-    v-model="value"
-    placeholder="碧桂园"
-    show-action
-    @search="onSearch"
-    @cancel="onCancel"
-  />
-</form>
-<screen></screen>
-</div>
-<div class="history-show-box" v-if="true">
-  <div class="input-search-page-middle">
-    <p class="history-search">历史搜索</p>
-    <span class="bg_img" :style="{backgroundImage:'url('+bucketImg+')'}"></span>
-  </div>
-  <ul class="input-search-page-bottom">
-  <li v-for="(item,index) in list" :key="index">
-    111111
-  </li>
-  </ul>
-</div>
-<empty></empty>
-<div class="input-search-content">
-   <ol>
-     <li v-for="(item,index) in list" :key="index">
-       <p>碧桂园·中央公馆</p>
-       <p>南山区-蛇口 120000元/㎡</p>
-     </li>
-   </ol>
-</div>
-  <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item"></market-describe>
+      <form action="/">
+        <van-search v-model="value" placeholder="碧桂园" show-action @search="onSearch" @cancel="onCancel"/>
+      </form>
+      <screen></screen>
+    </div>
+    <div class="history-show-box" v-if="true">
+      <div class="input-search-page-middle">
+        <p class="history-search">历史搜索</p>
+        <span class="bg_img" :style="{backgroundImage:'url('+bucketImg+')'}"></span>
+      </div>
+      <ul class="input-search-page-bottom">
+        <li v-for="(item,index) in list" :key="index">111111</li>
+      </ul>
+    </div>
+    <empty></empty>
+    <div class="input-search-content">
+      <ol>
+        <li v-for="(item,index) in list" :key="index">
+          <p>碧桂园·中央公馆</p>
+          <p>南山区-蛇口 120000元/㎡</p>
+        </li>
+      </ol>
+    </div>
+    <market-describe v-for="(item,index) in resInfo" :key="index" :itemInfo="item"></market-describe>
   </div>
 </template>
 <script>
@@ -60,12 +52,8 @@ export default {
     onCancel() {
       this.value = ''
     },
-    onSearch() {
-      console.log(1111)
-    },
-    submit() {
-      console.log(1111)
-    },
+    onSearch() {},
+    submit() {},
     async getMarketDescribeInfo(current) {
       const res = await marketService.getMarketDescribe(current)
       this.resInfo = res.records
@@ -96,8 +84,6 @@ export default {
             }
           }
         }
-        > .van-cell__left-icon {
-        }
       }
       > .van-search__action {
         background: #ffffff;
@@ -114,7 +100,7 @@ export default {
       align-items: center;
       > .history-search {
         font-size: 18px;
-        
+
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 27px;
@@ -134,7 +120,7 @@ export default {
     li {
       margin: 16px 30px 16px 0;
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       line-height: 21px;
@@ -149,7 +135,7 @@ export default {
         border-bottom: 1px solid #eeeeee;
         p:nth-child(1) {
           font-size: 16px;
-          
+
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: 22px;
@@ -157,7 +143,7 @@ export default {
         }
         p:nth-child(2) {
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 17px;

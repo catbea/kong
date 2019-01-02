@@ -1,5 +1,4 @@
 import 'whatwg-fetch'
-import queryString from 'query-string'
 import errHandler from './errorHandler'
 import codeErrHandler from './codeErrHandler'
 import qs from 'qs'

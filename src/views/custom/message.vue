@@ -159,7 +159,7 @@
                 <span>常用语</span>
                 <img :src="closeIcon" @click="closeDefaultMsg"/>
             </div>
-            <div class="default-msg-item van-hairline--bottom" v-for="info in tempValue" @click="defaultMsgClickHandle(info)">
+            <div class="default-msg-item van-hairline--bottom" v-for="(info,index) in tempValue" :key="index" @click="defaultMsgClickHandle(info)">
                 {{info}}
             </div>
         </div>
@@ -253,7 +253,6 @@ export default {
       myAuto.addEventListener(
         'ended',
         () => {
-          console.log('play ended ====================')
           this.isplay = 0
         },
         false
@@ -301,13 +300,6 @@ export default {
     phoneCall() {
       window.location.href = 'tel:' + this.clientMobile
     },
-
-    // async getMyProjectList() {
-    //     const res = await userService.getMyMarket(0)
-    //     this.myProjectList = res.records
-    //     console.log(this.myProjectList, 'this.myProjectList')
-    // },
-
     projectClick() {
       this.$router.push('/custom/message/messageProjects')
     },
@@ -372,9 +364,7 @@ export default {
     },
     async mediaIdTransToMp3Url(mediaId) {
       let appId = this.userInfo.cropId
-      console.log(mediaId + ' | ' + appId, 'mediaIdTransToMp3Url')
       let res = await customService.mediaIdTransToMp3Url(mediaId, appId)
-      console.log(res, 'mediaIdTransToMp3Url')
       this.message = res.map3Url
       this.sendMessage(2, this.audioTime)
     },
@@ -389,7 +379,6 @@ export default {
         size: 10
       }
       let res = await customService.appMsgDtlList(params)
-      console.log(res)
     },
     //设置聊天记录的值
     setList(res) {
@@ -419,13 +408,14 @@ export default {
               msgLists.push(list)
             } else {
               if (MsgContent.Desc == 2) {
-                try{//兼容以前老的消息格式
+                try {
+                  //兼容以前老的消息格式
                   let ext = JSON.parse(MsgContent.Ext)
                   list.content = MsgContent.Data
                   list.msgType = 2
                   list.audioTime = ext.audioTime || ext
                   msgLists.push(list)
-                }catch(e){
+                } catch (e) {
                   let ext = MsgContent.Ext
                   list.content = MsgContent.Data
                   list.msgType = 2
@@ -436,7 +426,7 @@ export default {
                 list.content = JSON.parse(MsgContent.Data)
                 list.msgType = 3
                 msgLists.push(list)
-              } else if(MsgContent.Desc == 1) {
+              } else if (MsgContent.Desc == 1) {
                 list.content = MsgContent.Data
                 list.msgType = 1
                 msgLists.push(list)
@@ -486,7 +476,6 @@ export default {
           wx.startRecord({
             success: () => {
               //  授权录音
-              console.log('第一次录音')
               localStorage.rainAllowRecord = 'true'
               wx.stopRecord()
               return false
@@ -504,7 +493,6 @@ export default {
         wx.startRecord({
           success: function() {
             _this.start_speaking = true
-            console.log('startRecord success')
             localStorage.rainAllowRecord = 'true'
           },
           cancel: function() {
@@ -548,13 +536,11 @@ export default {
           },
           fail: function(res) {
             _this.start_speaking = false
-            console.log(JSON.stringify(res))
           }
         })
       }
     },
     upRecord(nowLocalId) {
-      console.log(nowLocalId, 'nowLocalId')
       let _this = this
       wx.uploadVoice({
         localId: nowLocalId, // 需要上传的音频的本地ID，由stopRecord接口获得
@@ -564,7 +550,6 @@ export default {
           _this.messages_record = nowLocalId
           _this.sourceType = 2
           _this.mediaIdTransToMp3Url(serverId)
-          console.log(serverId, 'serverId')
         }
       })
     }, //接收消息
@@ -591,7 +576,6 @@ export default {
         } else {
           let audioTime = ''
           let content = ''
-          // console.log(elems.content ,'elems.content')
           if (elems.content.desc == 2) {
             let ext = JSON.parse(elems.content.ext)
             audioTime = ext.audioTime
@@ -655,20 +639,21 @@ export default {
       this.pyzmaoviwe()
     },
     sendMessage(msgType01, audioTime01) {
-      if (this.cardDelFlag == 1) {// 小程序端经纪人已经删除
+      if (this.cardDelFlag == 1) {
+        // 小程序端经纪人已经删除
         let obj = {}
-        obj.content = this.customBaseInfo.clientName+'删除了您的名片，您还不是他（她）的经纪人。需要对方添加您的名片后，才能聊天'
+        obj.content = this.customBaseInfo.clientName + '删除了您的名片，您还不是他（她）的经纪人。需要对方添加您的名片后，才能聊天'
         obj.msgType = 1
         obj.fromType = 2
         obj.msgStatus = 2
         obj.cardDelFlag = true
-        obj.id = this.msgList[this.msgList.length-1].msgList[0].id
-        this.msgList[this.msgList.length-1].msgList = this.msgList[this.msgList.length-1].msgList.concat([obj])
+        obj.id = this.msgList[this.msgList.length - 1].msgList[0].id
+        this.msgList[this.msgList.length - 1].msgList = this.msgList[this.msgList.length - 1].msgList.concat([obj])
         this.message = ''
         this.pyzmaoviwe()
         return
       }
-      
+
       let msg = onSendMsg(this.message, true, msgType01, audioTime01)
       if (msg) {
         this.$toast(msg)
@@ -697,7 +682,6 @@ export default {
         this.isplay = id
       }
       this.nowVoiceUrl = mateId
-      console.log('play start url：' + this.nowVoiceUrl)
       setTimeout(() => {
         this.$refs.audio.src = this.nowVoiceUrl
         this.$refs.audio.play()
@@ -711,7 +695,6 @@ export default {
         localId: localId // 需要播放的音频的本地ID，由stopRecord接口获得
       })
       this.isplay = 0
-      console.log('play ended click====================')
     },
     //跳转客户详情
     goDetails() {
@@ -725,22 +708,22 @@ export default {
 </script>
 <style lang="less" scoped>
 .massage-info-body {
-    // display: flex;
-    // -webkit-box-orient: vertical;
-    // -webkit-box-direction: normal;
-    // -webkit-flex-direction: column;
-    // flex-direction: column;
-    width: 100%;
-    font-size: 13px;
-    padding: 0;
-    margin: 0;
+  // display: flex;
+  // -webkit-box-orient: vertical;
+  // -webkit-box-direction: normal;
+  // -webkit-flex-direction: column;
+  // flex-direction: column;
+  width: 100%;
+  font-size: 13px;
+  padding: 0;
+  margin: 0;
 }
-.massage-info-list{
-    width: 100%;
-    height: 100%;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
+.massage-info-list {
+  width: 100%;
+  height: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
 }
 
 .project-msg-popup {
@@ -766,7 +749,7 @@ export default {
         padding-left: 16px;
         text-align: left;
         font-size: 18px;
-        
+
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 25px;
@@ -806,10 +789,10 @@ export default {
     text-align: left;
   }
   .massage-info-msg-customer + .msg-customer-con-me-status p {
-      text-align: left;
-      padding-left: 50px;
-      color: #999;
-    }
+    text-align: left;
+    padding-left: 50px;
+    color: #999;
+  }
   .massage-info-msg-customer-img {
     width: 40px;
     height: 40px;
@@ -820,7 +803,7 @@ export default {
   }
   .msg-customer-con {
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
@@ -842,7 +825,7 @@ export default {
     padding-top: 12px;
     position: relative;
     font-size: 12px;
-    
+
     font-weight: 400;
     color: rgba(187, 187, 187, 1);
     line-height: 17px;
@@ -856,7 +839,7 @@ export default {
 
   .msg-customer-con-voice {
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
@@ -881,7 +864,7 @@ export default {
     .left-voice-time {
       margin-left: 5px;
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(0, 0, 0, 1);
       line-height: 23px;
@@ -916,7 +899,7 @@ export default {
     word-break: break-all;
     word-wrap: break-word;
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 21px;
@@ -947,7 +930,7 @@ export default {
     word-break: break-all;
     word-wrap: break-word;
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
@@ -965,7 +948,7 @@ export default {
     .left-voice-time {
       margin-right: 5px;
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(0, 0, 0, 1);
       line-height: 23px;
@@ -1025,12 +1008,12 @@ export default {
   height: 36px;
   position: relative;
 }
-.massage-info-lower-cen input:after{
-  content:"";
+.massage-info-lower-cen input:after {
+  content: '';
   position: absolute;
-  top:0;
-  left:0;
-  border-bottom:1px solid #000;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid #000;
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 0;
@@ -1058,12 +1041,12 @@ export default {
   user-select: none;
 }
 
-.msgContentvoice:after{
-  content:"";
+.msgContentvoice:after {
+  content: '';
   position: absolute;
-  top:0;
-  left:0;
-  border-bottom:1px solid #000;
+  top: 0;
+  left: 0;
+  border-bottom: 1px solid #000;
   -webkit-transform: scaleY(0.5);
   transform: scaleY(0.5);
   -webkit-transform-origin: 0 0;
@@ -1147,7 +1130,7 @@ export default {
 
 .voiceInfo div {
   font-size: 12px;
-  
+
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
   line-height: 0.34rem;
@@ -1180,7 +1163,7 @@ export default {
 
 .voiceInfo-cancel div {
   font-size: 0.24rem;
-  
+
   font-weight: 400;
   color: rgba(255, 255, 255, 1);
   line-height: 17px;
@@ -1217,7 +1200,7 @@ export default {
       padding-top: 5px;
       font-size: 12px;
       text-align: center;
-      
+
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       line-height: 17px;
@@ -1270,7 +1253,7 @@ export default {
   border-radius: 4px;
 }
 
-.info-data{
+.info-data {
   flex: 1;
 }
 .info-name {
@@ -1287,7 +1270,7 @@ export default {
 
 .info-address {
   font-size: 0.24rem;
-  
+
   font-weight: 400;
   color: rgba(102, 102, 102, 1);
   line-height: 0.24rem;
@@ -1301,7 +1284,7 @@ export default {
 
 .info-Price {
   font-size: 0.22rem;
-  
+
   font-weight: 400;
   color: #666;
   line-height: 0.22rem;

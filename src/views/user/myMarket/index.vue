@@ -61,11 +61,11 @@ export default {
     CloseMarket
   },
   data: () => ({
-    stickNum:0,//置顶个数
-    unShowImg:require('IMG/user/collection/Group@2x.png'),
+    stickNum: 0, //置顶个数
+    unShowImg: require('IMG/user/collection/Group@2x.png'),
     yes: false,
-    no:false,
-    close:true,
+    no: false,
+    close: true,
     showFilterLimit: 20,
     showLoading: false,
     showFinished: false, //展示
@@ -122,7 +122,6 @@ export default {
     this.getShowProjectCount()
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
-    console.log(this.masterList,'初始大师推荐数据');
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -182,15 +181,15 @@ export default {
     }
   },
   methods: {
-    stickNumHandle() {//判断有没有超过3个置顶
+    stickNumHandle() {
+      //判断有没有超过3个置顶
       for (let i = 0; i < this.showMarketList.length; i++) {
         const element = this.showMarketList[i]
         if (element.recommand == 10) {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '初始置顶个数')
-    this.stickNumHandle=function(){}
+      this.stickNumHandle = function() {}
     },
     async getShowProjectCount() {
       const res = await userService.queryMyLinkerCount(0)
@@ -202,7 +201,7 @@ export default {
     },
     showOnLoad() {
       //展示数据初始化
-       this.showGetMyMarketInfo()
+      this.showGetMyMarketInfo()
     },
     notShowOnLoad() {
       //不展示数据初始化
@@ -238,21 +237,20 @@ export default {
         }
       }
       for (let i = 0; i < this.showMarketList.length; i++) {
-        const element = this.showMarketList[i];//遍历未/普通推荐改大师
+        const element = this.showMarketList[i] //遍历未/普通推荐改大师
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '1'
-        }   
+        }
       }
-      
-      this.$nextTick(()=>{
-      //   let arr = []
-      // arr.push(n)
-      // this.masterList = arr.concat(this.masterList)
-      this.masterList = this.masterList.concat(n)
-      // this.masterList.unshift(n)   
-      this.swipeList = this.masterList.concat(this.commonList)
+
+      this.$nextTick(() => {
+        //   let arr = []
+        // arr.push(n)
+        // this.masterList = arr.concat(this.masterList)
+        this.masterList = this.masterList.concat(n)
+        // this.masterList.unshift(n)
+        this.swipeList = this.masterList.concat(this.commonList)
       })
-      
     },
     spliceMasterHandle(n) {
       //点击实时改为取消大师改为未推荐
@@ -264,7 +262,7 @@ export default {
         }
       }
       for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index]//遍历大师改成未推荐
+        const element = this.showMarketList[index] //遍历大师改成未推荐
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '0'
         }
@@ -280,19 +278,19 @@ export default {
         }
       }
       for (let i = 0; i < this.showMarketList.length; i++) {
-        const element = this.showMarketList[i];//遍历未/大师推荐改普通
+        const element = this.showMarketList[i] //遍历未/大师推荐改普通
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '2'
-        }   
+        }
       }
 
-      this.$nextTick(()=>{
-      //   let arr = []
-      // arr.push(n)
-      // this.commonList = arr.concat(this.commonList)
-      this.commonList = this.commonList.concat(n)
-      // this.commonList.unshift(n) 
-      this.swipeList = this.masterList.concat(this.commonList)
+      this.$nextTick(() => {
+        //   let arr = []
+        // arr.push(n)
+        // this.commonList = arr.concat(this.commonList)
+        this.commonList = this.commonList.concat(n)
+        // this.commonList.unshift(n)
+        this.swipeList = this.masterList.concat(this.commonList)
       })
     },
     spliceCommonHandle(n) {
@@ -305,28 +303,26 @@ export default {
         }
       }
       for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index]//遍历普通改成未推荐
+        const element = this.showMarketList[index] //遍历普通改成未推荐
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '0'
         }
       }
     },
     //-----置顶操作
-    recommandTrueHandle(n){
+    recommandTrueHandle(n) {
       this.stickNum++
-      console.log(this.stickNum, '置顶后个数')
       for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index]//遍历未置顶改成置顶
+        const element = this.showMarketList[index] //遍历未置顶改成置顶
         if (n.linkerId === element.linkerId) {
           element.recommand = '10'
         }
       }
     },
-    recommandFalseHandle(n){
+    recommandFalseHandle(n) {
       this.stickNum--
-      console.log(this.stickNum, '取消后置顶个数')
       for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index]//遍历置顶改成未置顶
+        const element = this.showMarketList[index] //遍历置顶改成未置顶
         if (n.linkerId === element.linkerId) {
           element.recommand = '0'
         }
@@ -383,27 +379,27 @@ export default {
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
       // 数据重复加载
-      if(page==1) {
+      if (page == 1) {
         this.showMarketList = resShow.records
       } else {
         this.showMarketList = this.showMarketList.concat(resShow.records)
       }
-      this.stickNumHandle()//请求的初始置顶个数
+      this.stickNumHandle() //请求的初始置顶个数
       let arr = []
       let json = {}
       for (let index = 0; index < this.showMarketList.length; index++) {
-        const element =this.showMarketList[index];
-        if(!json[element.linkerId]){
+        const element = this.showMarketList[index]
+        if (!json[element.linkerId]) {
           arr.push(element)
-          json[element]=1
+          json[element] = 1
         }
       }
-      this.showMarketList=arr
-      if(this.showMarketList.length==0){
-      this.yes=true
-    }else{
-      this.yes=false
-    }
+      this.showMarketList = arr
+      if (this.showMarketList.length == 0) {
+        this.yes = true
+      } else {
+        this.yes = false
+      }
       if (resShow.pages === 0 || this.showPage === resShow.pages) {
         this.showFinished = true
       }
@@ -412,7 +408,7 @@ export default {
     },
     async notShowGetMyMarketInfo() {
       // this.notShowProjectName,this.notShowProjectFilters, this.notShowPage
-      
+
       let name = this.notShowProjectName
       let filters = this.notShowProjectFilters
       let page = this.notShowPage
@@ -434,18 +430,18 @@ export default {
       let arr = []
       let json = {}
       for (let index = 0; index < this.notShowMarketList.length; index++) {
-        const element =this.notShowMarketList[index];
-        if(!json[element.linkerId]){
+        const element = this.notShowMarketList[index]
+        if (!json[element.linkerId]) {
           arr.push(element)
-          json[element]=1
+          json[element] = 1
         }
       }
-      this.notShowMarketList=arr
-      
-      if(this.notShowMarketList.length==0){
-      this.no=true
-      }else{
-        this.no=false
+      this.notShowMarketList = arr
+
+      if (this.notShowMarketList.length == 0) {
+        this.no = true
+      } else {
+        this.no = false
       }
       if (resNotShow.pages === 0 || this.notShowPage === resNotShow.pages) {
         this.notShowFinished = true
@@ -467,26 +463,28 @@ export default {
     },
     closeCut(n) {
       this.notShowMarketList.push(n)
-      for (let index = 0; index < this.showMarketList.length; index++) {//关闭展示
+      for (let index = 0; index < this.showMarketList.length; index++) {
+        //关闭展示
         const element = this.showMarketList[index]
         if (n.linkerId == element.linkerId) {
           this.showMarketList.splice(index, 1)
-          element.masterRecommand=0//变成未推荐
-          element.recommand=0//变成未置顶
+          element.masterRecommand = 0 //变成未推荐
+          element.recommand = 0 //变成未置顶
         }
       }
-      for (let i = 0; i < this.swipeList.length; i++) {//关闭展示轮播图取消
-        const element = this.swipeList[i];
-        if(n.linkerId == element.linkerId){
-          this.swipeList.splice(i,1)
+      for (let i = 0; i < this.swipeList.length; i++) {
+        //关闭展示轮播图取消
+        const element = this.swipeList[i]
+        if (n.linkerId == element.linkerId) {
+          this.swipeList.splice(i, 1)
         }
       }
-      if(this.showMarketList.length==0){
-        this.yes=true
+      if (this.showMarketList.length == 0) {
+        this.yes = true
       }
-      if(this.notShowMarketList.length!=0){
-        this.no=false
-        this.close=true
+      if (this.notShowMarketList.length != 0) {
+        this.no = false
+        this.close = true
       }
     },
     openCut(n) {
@@ -497,8 +495,8 @@ export default {
           this.notShowMarketList.splice(index, 1)
         }
       }
-       if(this.notShowMarketList.length==0){
-        this.no=true
+      if (this.notShowMarketList.length == 0) {
+        this.no = true
       }
     }
   }
@@ -508,9 +506,9 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
-  .search-container{
-    margin-left:18px;
-    width:343px;
+  .search-container {
+    margin-left: 18px;
+    width: 343px;
   }
   .fade-enter-active,
   .fade-leave-active {
@@ -540,28 +538,28 @@ export default {
   .user-market-box {
     position: relative;
     display: flex;
-    margin-top:19px;
+    margin-top: 19px;
     .notMarket {
-      margin:56px 0 100px 144px;
-      p:nth-child(1){
-        width:88px;
-        height:88px;
+      margin: 56px 0 100px 144px;
+      p:nth-child(1) {
+        width: 88px;
+        height: 88px;
       }
-      p:nth-child(2){
-        font-size:12px;
-        font-weight:400;
-        color:rgba(153,153,153,1);
-        line-height:17px;
-        margin-left:-12px;
+      p:nth-child(2) {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        line-height: 17px;
+        margin-left: -12px;
       }
     }
     .market-left {
       width: 100%;
     }
   }
-  .title-bar{
+  .title-bar {
     justify-content: space-between;
-    margin:24px 0 0 16px;
+    margin: 24px 0 0 16px;
     width: 343px;
   }
 

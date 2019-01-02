@@ -6,13 +6,7 @@
         <span class="edit-phone-remark">(不可更改)</span>
       </p>
       <p class="edit-phone-conter">
-        <input
-          type="text"
-          class="edit-phone-input"
-          placeholder=""
-          disabled="disabled"
-          :value="userInfo.registerMobile"
-        >
+        <input type="text" class="edit-phone-input" placeholder disabled="disabled" :value="userInfo.registerMobile">
       </p>
       <p class="edit-phone-card">名片展示手机号</p>
       <p class="edit-phone-card-conter">
@@ -23,15 +17,11 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 import strFormat from '@/filters/strFormat'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Dialog
-  },
   data() {
     return {
       Cphone: '',

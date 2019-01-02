@@ -18,15 +18,15 @@
         <div class="hot-container">
           <p class="hot-title">热门城市</p>
           <div class="hot-item-content">
-            <div class="hot-item" v-for="item in hotCityMap" @click="itemClick(item.city)">{{item.city}}</div>
+            <div class="hot-item" v-for="(item,index) in hotCityMap" :key="index" @click="itemClick(item.city)">{{item.city}}</div>
           </div>
         </div>
         <div class="index-container">
           <ul class="index-content">
-            <li class="indexlist-item" v-for="arr in cityMap">
+            <li class="indexlist-item" v-for="(arr, index) in cityMap" :key="index">
               <p class="index-item-title" :id="'city_'+arr.character">{{arr.character}}</p>
               <ul class="index-content-item">
-                <p class="van-hairline--bottom index-content-item-link" v-for="item in arr.city" @click="itemClick(item)">{{item}}</p>
+                <p class="van-hairline--bottom index-content-item-link" v-for="(item,index) in arr.city" :key="index" @click="itemClick(item)" >{{item}}</p>
               </ul>
             </li>
           </ul>
@@ -35,7 +35,7 @@
     </div>
     <div class="index-key-box" ref="nav">
       <ul class="index-key-nav">
-        <li class="index-key-item" v-for="item in indexList" @touchstart="keyTouchStartHandler">{{item}}</li>
+        <li class="index-key-item" v-for="(item,index) in indexList" :key="index" @touchstart="keyTouchStartHandler">{{item}}</li>
       </ul>
     </div>
     <div class="selected-indicator" :style="indicatorStyle">{{indicator.str}}</div>
@@ -72,7 +72,6 @@ export default {
   },
   methods: {
     itemClick(val) {
-      console.log(val, this.fromPage)
       switch (this.fromPage) {
         case 'myMember':
           this.$store.commit(types['USER_AREA'], { vipSelectedCity: val })
@@ -102,12 +101,11 @@ export default {
 
       window.addEventListener('touchmove', this.handleTouchMove, false)
       window.addEventListener('touchend', this.handleTouchEnd)
-      console.log(e.changedTouches[0].clientY);
 
-      if(e.target.innerText == '热'){
-        document.getElementById('hot-city-box').scrollIntoView();
+      if (e.target.innerText == '热') {
+        document.getElementById('hot-city-box').scrollIntoView()
       } else {
-        document.getElementById('city_'+e.target.innerText).scrollIntoView();
+        document.getElementById('city_' + e.target.innerText).scrollIntoView()
       }
     },
     scrollHander(val) {
@@ -133,9 +131,6 @@ export default {
       }
     },
     handleTouchMove(e) {
-      // e.preventDefault()
-      // this.scrollList(e.changedTouches[0].clientY)
-      // console.log(e)
       if (e.target.tagName !== 'LI') return
 
       this.scrollHander(e.target.innerText)
@@ -145,13 +140,6 @@ export default {
       if (e.target.tagName !== 'LI') return
 
       this.scrollHander(e.target.innerText)
-
-      // this.indicatorTime = setTimeout(() => {
-      //   this.moving = false
-      //   this.currentIndicator = ''
-      // }, 500)
-      // window.removeEventListener('touchmove', this.handleTouchMove)
-      // window.removeEventListener('touchend', this.handleTouchEnd)
     }
   },
   computed: {

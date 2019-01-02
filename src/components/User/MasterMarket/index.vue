@@ -74,9 +74,9 @@ export default {
       this.swipeJudge()
       this.$emit('noRecommend', linkerId)
       this.$toast({
-            duration:800,
-            message:'已取消推荐',
-          })
+        duration: 800,
+        message: '已取消推荐'
+      })
     },
     filterHandle() {
       this.masterList = this.limitList.filter(item => {
@@ -107,14 +107,17 @@ export default {
     },
     limitList() {
       if (this.swipeList.length > 5) {
-        this.$dialog.confirm({
-          title: '当前推荐楼盘数量达到上限',
-          message: '继续推荐将取消最初推荐楼盘是否确定推荐当前楼盘'
-        }).then(() => {
-          // on confirm
-        }).catch(() => {
-          // on cancel
-        });
+        this.$dialog
+          .confirm({
+            title: '当前推荐楼盘数量达到上限',
+            message: '继续推荐将取消最初推荐楼盘是否确定推荐当前楼盘'
+          })
+          .then(() => {
+            // on confirm
+          })
+          .catch(() => {
+            // on cancel
+          })
         return this.swipeList.slice(0, 5)
       } else {
         return this.swipeList
@@ -124,7 +127,7 @@ export default {
 }
 </script>
 <style lang="less">
-.distributor{
+.distributor {
   width: 280px;
   > .van-dialog__content {
     > .van-dialog__message {
@@ -187,7 +190,7 @@ export default {
     .master-recommend {
       margin: 20px 0 20px 0;
       font-size: 20px;
-      
+
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
       line-height: 28px;
@@ -204,7 +207,7 @@ export default {
         bottom: 29px;
         li:nth-child(1) {
           font-size: 16px;
-          
+
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 22px;
@@ -213,20 +216,20 @@ export default {
           width: 300px;
           margin: 3px 0 4px 0;
           font-size: 24px;
-          
+
           font-weight: 600;
           color: rgba(255, 255, 255, 1);
           line-height: 33px;
         }
         li:nth-child(3) {
           font-size: 14px;
-          
+
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
           span {
             font-size: 12px;
-            
+
             font-weight: 400;
             color: #ffffff;
             line-height: 15px;
@@ -244,7 +247,7 @@ export default {
         bottom: 29px;
         li:nth-child(1) {
           font-size: 16px;
-          
+
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 22px;
@@ -252,7 +255,7 @@ export default {
         li:nth-child(2) {
           width: 300px;
           font-size: 24px;
-          
+
           font-weight: 600;
           color: rgba(255, 255, 255, 1);
           line-height: 33px;
@@ -260,13 +263,13 @@ export default {
         }
         li:nth-child(3) {
           font-size: 14px;
-          
+
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
           span {
             font-size: 12px;
-            
+
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 15px;

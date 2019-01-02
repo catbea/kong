@@ -74,7 +74,7 @@ export default {
   },
   created() {
     this.dredgeColor()
-    if(this.tags.indexOf(this.saleStatus)<0){
+    if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
   },
@@ -118,8 +118,6 @@ export default {
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.status == 0) {
-        console.log(this.itemInfo.city,'------',this.userInfo.vipInfo.city);
-        
         if (this.itemInfo.city === this.userInfo.vipInfo.city) {
           await marketService.addHouseByVip(this.itemInfo.linkerId)
           this.status = 2
@@ -151,7 +149,7 @@ export default {
   background: #ffffff;
   width: 375px;
   .market-box {
-    width: 343px;
+    // market-describewidth: 343px;
     padding-top: 16px;
     margin: 0 0px 0 16px;
     .padding {
@@ -181,9 +179,9 @@ export default {
             left: -4px;
             top: 4px;
             white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 36px; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 36px;
             height: 24px;
             text-align: center;
             line-height: 20px;
@@ -194,7 +192,8 @@ export default {
           }
         }
         .market-describe {
-          width: 207px;
+          flex: 1;
+          padding-right: 12px;
           .market-name {
             display: flex;
             justify-content: space-between;

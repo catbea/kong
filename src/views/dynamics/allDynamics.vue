@@ -124,10 +124,9 @@ export default {
       const timer = setInterval(() => {
         second--
         if (second) {
-           if(this.allDynamicsNum){
-            this.showDynamics = true;
-           }
-           
+          if (this.allDynamicsNum) {
+            this.showDynamics = true
+          }
         } else {
           clearInterval(timer)
           this.showDynamics = false
@@ -135,7 +134,6 @@ export default {
       }, 1000)
     },
     checkPosition(val) {
-      console.log(val)
     },
     goList(index, title) {
       this.finished = false
@@ -397,7 +395,7 @@ export default {
   }
   > .tab-container {
     z-index: 99;
-    >.van-tabs{
+    > .van-tabs {
       z-index: 99;
     }
     // position: fixed;

@@ -22,7 +22,7 @@ export default {
     height: 60px;
     text-align: center;
     font-size: 12px;
-    
+
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
     line-height: 60px;

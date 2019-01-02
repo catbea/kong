@@ -16,7 +16,7 @@ export default {}
   text-align: center;
   p {
     font-size: 13px;
-    
+
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
     line-height: 18px;
@@ -32,7 +32,7 @@ export default {}
       border-radius: 6px;
       border: 1px solid rgba(0, 122, 230, 1);
       font-size: 16px;
-      
+
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
     }
@@ -43,7 +43,7 @@ export default {}
       background: rgba(0, 122, 230, 1);
       border-radius: 6px;
       font-size: 16px;
-      
+
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
     }

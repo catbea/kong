@@ -24,8 +24,6 @@ export default {
     this.flagTjHandle()
     this.flagZsHandle()
     this.flagZdHandle()
-    console.log(this.renewInfo,'续费数据');
-    
   },
   data: () => ({
     recommendColor: require('IMG/marketDetail/tj copy 10@2x.png'),
@@ -106,37 +104,38 @@ export default {
       await userService.changeMarketData(linkerId, operationType, status)
     },
     dialogHandle(n) {
-      this.$dialog.alert({
-        message: n,
-        confirmButtonText: '知道啦'
-        
-      }).then(() => {
-        // on close
-      })
+      this.$dialog
+        .alert({
+          message: n,
+          confirmButtonText: '知道啦'
+        })
+        .then(() => {
+          // on close
+        })
     },
     recommendHandle() {
       this.flagTj = !this.flagTj
       switch (this.flagTj) {
         case true:
-          if(this.flagZs===false){
+          if (this.flagZs === false) {
             this.$toast({
-            duration:800,
-            message:'已推荐与展示',
-          })
-          }else{
+              duration: 800,
+              message: '已推荐与展示'
+            })
+          } else {
             this.$toast({
-            duration:800,
-            message:'已推荐',
-          })
+              duration: 800,
+              message: '已推荐'
+            })
           }
-          this.flagZs =true
+          this.flagZs = true
           this.changeHandle(this.renewInfo.linkerId, 30, 0)
           this.changeHandle(this.renewInfo.linkerId, 20, 2)
           break
         case false:
           this.$toast({
-            duration:800,
-            message:'已取消推荐',
+            duration: 800,
+            message: '已取消推荐'
           })
           this.changeHandle(this.renewInfo.linkerId, 20, 0)
           break
@@ -146,20 +145,20 @@ export default {
       this.flagZs = !this.flagZs
       switch (this.flagZs) {
         case true:
-         this.$toast({
-            duration:800,
-            message:'已开启展示',
+          this.$toast({
+            duration: 800,
+            message: '已开启展示'
           })
           this.changeHandle(this.renewInfo.linkerId, 30, 0)
           break
         case false:
           this.$toast({
-            duration:800,
-            message:'已关闭展示、推荐与置顶',
+            duration: 800,
+            message: '已关闭展示、推荐与置顶'
           })
           this.changeHandle(this.renewInfo.linkerId, 30, 1)
-          this.flagTj=false
-          this.flagZd=false
+          this.flagTj = false
+          this.flagZd = false
           break
       }
     },
@@ -167,25 +166,25 @@ export default {
       this.flagZd = !this.flagZd
       switch (this.flagZd) {
         case true:
-          if(this.flagZs===false){
+          if (this.flagZs === false) {
             this.$toast({
-            duration:800,
-            message:'已置顶与展示',
-          })
-          }else{
+              duration: 800,
+              message: '已置顶与展示'
+            })
+          } else {
             this.$toast({
-            duration:800,
-            message:'已置顶',
-          })
+              duration: 800,
+              message: '已置顶'
+            })
           }
-          this.flagZs =true
+          this.flagZs = true
           this.changeHandle(this.renewInfo.linkerId, 30, 0)
           this.changeHandle(this.renewInfo.linkerId, 40, 10)
           break
         case false:
           this.$toast({
-            duration:800,
-            message:'已取消置顶',
+            duration: 800,
+            message: '已取消置顶'
           })
           this.changeHandle(this.renewInfo.linkerId, 40, 0)
           break
@@ -207,7 +206,8 @@ export default {
 }
 </script>
 <style lang="less">
-.renewDialog,.distributor{
+.renewDialog,
+.distributor {
   width: 280px;
   > .van-dialog__content {
     > .van-dialog__message {
@@ -255,7 +255,7 @@ export default {
     margin: 0 34px 0 25px;
     .recommend {
       font-size: 11px;
-      
+
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       height: 16px;
@@ -265,7 +265,7 @@ export default {
     margin-right: 34px;
     .marketShow {
       font-size: 11px;
-      
+
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       height: 16px;
@@ -275,7 +275,7 @@ export default {
     margin-right: 34px;
     .stickText {
       font-size: 11px;
-      
+
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       height: 16px;
@@ -290,7 +290,7 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    
+
     font-weight: 400;
     color: #007ae6;
     margin-left: 7px;

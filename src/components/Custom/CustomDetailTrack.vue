@@ -59,7 +59,7 @@ export default {
   margin-bottom: 60px;
   .info-container {
     margin: 20px 20px 25px;
-    padding: 25px 0 ;
+    padding: 25px 0;
     display: flex;
     justify-content: space-around;
     .info-item {

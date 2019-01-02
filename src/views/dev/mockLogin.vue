@@ -21,7 +21,7 @@ export default {
     // this.userId = this.$route.params.userId
     // window.localStorage.setItem('userId', this.userId)
     // this.getUserInfo()
-  },
+  }
   // methods: {
   //   async getUserInfo() {
   //     this.$store.dispatch('getUserInfo', this.userId)

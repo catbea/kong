@@ -9,13 +9,9 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 export default {
-  components: {
-    Dialog
-  },
   data() {
     return {
       Cphone: ''
@@ -30,19 +26,23 @@ export default {
   methods: {
     godSub() {
       if (Number(this.Cphone).length == 0) {
-        this.$dialog.alert({
-          message: '名片展示手机号不可为空'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            message: '名片展示手机号不可为空'
+          })
+          .then(() => {
+            // on close
+          })
         return
       }
       if (this.Cphone.length != 11) {
-        this.$dialog.alert({
-          message: '请输入正确手机号'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            message: '请输入正确手机号'
+          })
+          .then(() => {
+            // on close
+          })
         return
       }
       let _reportAddInfo = {
@@ -90,7 +90,7 @@ export default {
         width: 99%;
         border: 0;
         border-bottom: 1px solid #eeeeee;
-        &::-webkit-input-placeholder{
+        &::-webkit-input-placeholder {
           color: rgba(187, 187, 187, 1);
         }
       }

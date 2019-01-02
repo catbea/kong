@@ -132,10 +132,10 @@ export default {
             font-size: 16px;
             font-weight: 600;
             color: #333333;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
           }
         }
-        .tag-item{
+        .tag-item {
           margin-left: 0;
           font-size: 10px;
           transform: scale(1);
@@ -145,7 +145,7 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: #666666;
-          padding-bottom: 8px;
+          padding-bottom: 5px;
         }
         > .estate-info {
           white-space: nowrap;

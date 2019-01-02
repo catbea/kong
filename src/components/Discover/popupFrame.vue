@@ -1,5 +1,5 @@
 <template>
-  <popup  v-model="show" :close-on-click-overlay="false" :lock-scroll="true">
+  <van-popup  v-model="show" :close-on-click-overlay="false" :lock-scroll="true">
     <div class="popupframe-container">
       <div class="popupframe-top">
         <span class="popupframe-top-title">长按识别查看更多</span>
@@ -16,16 +16,12 @@
       </div>
       <div class="popupframe-btn">开启买房新模式 及时获取一手房源信息</div>
     </div>
-  </popup>
+  </van-popup>
 </template>
 <script>
-import { Popup } from 'vant'
 export default {
   props: {
     value: Boolean
-  },
-  components: {
-    Popup
   },
   data() {
     return {

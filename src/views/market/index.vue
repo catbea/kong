@@ -65,8 +65,7 @@ export default {
         this.finished = false
         setTimeout(() => {
           this.$refs.list.check()
-        }, 100);
-        
+        }, 100)
       },
       deep: true
     }
@@ -87,7 +86,6 @@ export default {
       const res = await marketService.getHouseList(param)
       this.marketList = this.marketList.concat(res.records)
       if (res.pages === 0 || this.page === res.pages) {
-        
         this.finished = true
       }
       this.page++
@@ -145,8 +143,8 @@ export default {
       top: 15px;
     }
   }
-  .all-market{
-    margin-top:5px;
+  .all-market {
+    margin-top: 5px;
   }
 }
 </style>

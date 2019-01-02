@@ -1,7 +1,6 @@
 
 <template>
   <div class="report-page">
-    <!-- <Tips></Tips>#F7F9FA; -->
     <div class="report-container">
       <div class="report-container-css">
         <div class="report-title">
@@ -36,14 +35,8 @@
   </div>
 </template>
 <script>
-import { Step, Steps } from 'vant'
 import reportService from 'SERVICE/reportService'
 export default {
-  components: {
-    Step,
-    Steps
-  },
-
   data() {
     return {
       distClientId: '', // 报备单id

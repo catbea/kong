@@ -2,15 +2,8 @@
   <div class="user-market-page">
     <div class="user-market-page-box" @click="skipMarketDetail(dataArr.linkerId)">
       <div class="user-market-page-box-top">
-        <div
-          class="user-market-page-box-top-left bg_img"
-          :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}"
-        >
-          <p
-            v-show="dataArr.sale"
-            class="icon-discount bg_img"
-            :style="{backgroundImage:'url('+discountImg+')'}"
-          >{{dataArr.sale}}</p>
+        <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
+          <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
@@ -20,41 +13,20 @@
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
-            <span
-              style="color:#999999;font-size:16px;"
-              class="icon iconfont icon-Building_list_share"
-              @click.stop="skipShare"
-            ></span>
+            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share" @click.stop="skipShare"></span>
           </li>
           <li v-if="dataArr.price===0">{{dataArr.city}} {{dataArr.county}} 价格待定</li>
           <li v-else>{{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}</li>
           <li>
-            <div
-              class="tag-item-statu blue"
-              v-if="0===dataArr.saleStatus"
-            >{{status[dataArr.saleStatus]}}</div>
-            <div
-              class="tag-item-statu red"
-              v-if="1===dataArr.saleStatus"
-            >{{status[dataArr.saleStatus]}}</div>
-            <div
-              class="tag-item-statu gary"
-              v-if="3===dataArr.saleStatus"
-            >{{status[dataArr.saleStatus]}}</div>
-            <div
-              class="tag-item"
-              v-for="(item,index) in dataArr.linkerTags.slice(0,2)"
-              :key="index"
-            >{{item}}</div>
+            <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
           </li>
           <li>
             {{dataArr.openTimes}}次开通
-            <span
-              v-show="!stride"
-            >&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
-            <span
-              v-show="stride"
-            >&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
+            <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
+            <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
               <span></span>
               <span></span>
@@ -64,21 +36,15 @@
         </ul>
       </div>
       <div class="user-market-page-box-bottom" v-if="dataArr.divisionRules">
-        <img class="bg_img" :src="imgCommission" alt="" srcset="">
+        <img class="bg_img" :src="imgCommission" alt srcset>
         <span>{{dataArr.divisionRules}}</span>
       </div>
     </div>
     <div style="padding-left:16px">
       <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay>
         <ul>
-          <li
-            @click="goRenew(dataArr.linkerId)"
-            v-show="!stride"
-          >续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
-          <li
-            @click="goRenew(dataArr.linkerId)"
-            v-show="stride"
-          >续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
+          <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+          <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
           <div v-if="pastShow">
             <li class="borderDottom" @click="masterHandle(marketIndex)">
               <span v-show="dataArr.masterRecommand != 1">大师推荐</span>
@@ -105,7 +71,6 @@
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/'
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   components: {
@@ -113,10 +78,10 @@ export default {
   },
   data: () => ({
     linkerId: null,
-    masterButtonShow:false,//师推按钮
-    commonButtonShow:false,//普推按钮
+    masterButtonShow: false, //师推按钮
+    commonButtonShow: false, //普推按钮
     stickNum: 0,
-    recommandNum:0,
+    recommandNum: 0,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     show: false,
     stickSwitch: null,
@@ -136,17 +101,15 @@ export default {
       type: Number
     }
   },
-  computed: {
-    
-  },
+  computed: {},
   created() {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    console.log(this.dataArr, '展示的楼盘数据')
   },
   methods: {
-    recommendNumHandle() {//判断有没有超过5个推荐
+    recommendNumHandle() {
+      //判断有没有超过5个推荐
       let parent = this.$parent.$parent
       for (let i = 0; i < parent.showMarketList.length; i++) {
         const element = parent.showMarketList[i]
@@ -154,7 +117,6 @@ export default {
           this.recommandNum++
         }
       }
-      console.log(this.recommandNum, '推荐个数')
     },
     strideYear() {
       //判断是否跨年
@@ -343,9 +305,9 @@ export default {
         align-items: center;
         .icon-discount {
           white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 36px; 
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 36px;
           height: 20px;
           position: absolute;
           top: 4px;
@@ -449,7 +411,7 @@ export default {
             padding: 1px 5px;
             border-radius: 3px;
             height: 18px;
-            line-height:17.5px;
+            line-height: 17.5px;
           }
           .tag-item {
             background: rgba(143, 159, 177, 0.15);

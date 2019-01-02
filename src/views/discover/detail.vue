@@ -237,7 +237,6 @@ export default {
     },
     // 分享成功之后
     async articleShare() {
-      console.log('[article share suss]')
       let params = {
         deleteType: 0,
         infoId: this.infoId
@@ -246,27 +245,13 @@ export default {
     },
     // 设置分享
     async shareHandler() {
-      // await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
-      console.log('serShare', this.shareData)
-      // alert(this.shareData)
       window.awHelper.wechatHelper.setShare(this.shareData)
-      // wechatApi
-      //   .wechatShare(this.shareData)
-      //   .then(res => {
-      //     this.articleShare()
-      //   })
-      //   .catch(e => {})
     }
   },
-  // mounted() {
-  //   this.shareHandler()
-  // },
   watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
     $route() {
-      // this.$router.go(0) // 该方法不兼容iOS
-      // history.go(-1)
       location.reload()
     }
   }
@@ -405,7 +390,7 @@ export default {
           color: rgba(255, 255, 255, 1);
           border: 0;
           margin-right: 7px;
-          b{
+          b {
             font-size: 14px;
           }
         }
@@ -502,12 +487,6 @@ export default {
       margin: 5px;
       padding: 8px 20px;
       opacity: 0.7;
-    }
-    > .app-btn {
-    }
-    > .collect-btn {
-    }
-    > .share-btn {
     }
   }
 }

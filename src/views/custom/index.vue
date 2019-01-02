@@ -207,10 +207,10 @@ export default {
     // height: 100%;
     line-height: 24px !important;
   }
-  .van-cell{
-      background-color: #F5F5F5;
-    }
-  .search-icon{
+  .van-cell {
+    background-color: #f5f5f5;
+  }
+  .search-icon {
     width: 24px;
     height: 24px;
   }
@@ -231,7 +231,7 @@ export default {
       line-height: 50px;
       font-size: 15px;
       box-shadow: inset 0px -1px 1px -1px #c8c7cc;
-      span{
+      span {
         color: #999;
       }
     }

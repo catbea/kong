@@ -19,15 +19,10 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Dialog
-  },
-
   data() {
     return {
       signature: '',
@@ -48,11 +43,13 @@ export default {
     toUpDateSignature() {
       let signature = this.signature
       if (signature.length == 0) {
-        this.$dialog.alert({
-          message: '个人介绍不可为空'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            message: '个人介绍不可为空'
+          })
+          .then(() => {
+            // on close
+          })
       } else {
         let obj = {
           signature: signature

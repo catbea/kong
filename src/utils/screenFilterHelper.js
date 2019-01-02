@@ -3,10 +3,7 @@ import isEmpty from 'lodash/isEmpty'
 let defaultConf = {
   name: 'projectName',
   area: 'county',
-  aveprice: [
-    ['priceTotalStart', 'priceTotalEnd'],
-    ['projectPriceAvgStart', 'projectPriceAvgEnd']
-  ],
+  aveprice: [['priceTotalStart', 'priceTotalEnd'], ['projectPriceAvgStart', 'projectPriceAvgEnd']],
   popularity: ['togetherNumStart', 'togetherNumEnd'],
   areaSize: ['areaStart', 'areaEnd'],
   type: 'houseType',
@@ -57,7 +54,7 @@ export default (name, filters, conf = {}) => {
 
   // 特色
   // 全景
-  if (filters.hasOwnProperty('generalView') && typeof (filters.generalView) === 'boolean') {
+  if (filters.hasOwnProperty('generalView') && typeof filters.generalView === 'boolean') {
     if (filters.generalView) {
       result[conf.generalView] = '1'
     } else {
@@ -66,7 +63,7 @@ export default (name, filters, conf = {}) => {
   }
 
   // 优惠
-  if (filters.hasOwnProperty('discountHouse') && typeof (filters.discountHouse) === 'boolean') {
+  if (filters.hasOwnProperty('discountHouse') && typeof filters.discountHouse === 'boolean') {
     if (filters.discountHouse) {
       result[conf.discountHouse] = '1'
     } else {

@@ -83,51 +83,49 @@ export default {
 .article-container {
   background: #ffffff;
 
-.article-containers{
-  margin-top: 30px;
-}
-.discover-item {
-  background: #ffffff;
-  margin: 15px;
-  display: flex;
-  height: 110px;
-  > .discover-list-left {
-    position: relative;
-    flex: 1;
-    height: 90px;
-   // padding: 6px 15px;
-    > .list-left-title {
-      font-size: 16px;
-      font-weight: 400;
-      color: rgba(51, 51, 51, 1);
-      width: 95%;
-    }
-    > .list-left-time {
-      position: absolute;
-      bottom: 4px;
-      font-size: 12px;
-      font-weight: 400;
-      color: rgba(153, 153, 153, 1);
-      .left-time-nub{
-            font-size: 12px;
-            font-family: PingFangSC-Regular;
-            font-weight: 400;
-            color: rgba(0, 122, 230, 1);
-            line-height: 17px;
-            padding-left: 25px;
+  .article-containers {
+    margin-top: 30px;
+  }
+  .discover-item {
+    background: #ffffff;
+    margin: 15px;
+    display: flex;
+    height: 110px;
+    > .discover-list-left {
+      position: relative;
+      flex: 1;
+      height: 90px;
+      // padding: 6px 15px;
+      > .list-left-title {
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        width: 95%;
+      }
+      > .list-left-time {
+        position: absolute;
+        bottom: 4px;
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        .left-time-nub {
+          font-size: 12px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(0, 122, 230, 1);
+          line-height: 17px;
+          padding-left: 25px;
+        }
       }
     }
+    > .discover-list-right {
+      width: 120px;
+      height: 90px;
+      border-radius: 6px;
+      background-color: #999999;
+      // margin-right: 16px;
+      // margin-top: 10px;
+    }
   }
-  > .discover-list-right {
-    width: 120px;
-    height: 90px;
-    border-radius: 6px;
-    background-color: #999999;
-    // margin-right: 16px;
-    // margin-top: 10px;
-  }
-}
-
-
 }
 </style>

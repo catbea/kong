@@ -81,7 +81,7 @@ export default {
     border-radius: 6px;
     margin: 24px 0 0 16px;
     font-size: 16px;
-    
+
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
     line-height: 44px;

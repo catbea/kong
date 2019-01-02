@@ -192,7 +192,7 @@ export default {
         }
         li:nth-of-type(4) {
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 11px;
@@ -210,7 +210,7 @@ export default {
       background: rgba(247, 249, 250, 1);
       border-radius: 4px;
       font-size: 13px;
-      
+
       font-weight: 500;
       color: rgba(102, 102, 102, 1);
       padding: 0 0 0 0;

@@ -32,7 +32,7 @@ export default {
     justify-content: space-between;
     li {
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
     }
@@ -53,7 +53,7 @@ export default {
     }
     .site-nearby-box-hint {
       font-size: 12px;
-      
+
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
     }

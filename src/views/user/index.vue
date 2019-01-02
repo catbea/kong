@@ -1,27 +1,15 @@
 <template>
   <div class="me-page">
-    <business-card @showPopup="this.showPopp" @shareUserCard="this.enterSharePage"></business-card>
+    <business-card @showPopup="this.showPopp" @shareUserCard="this.enterSharePage"/>
     <div class="top-null"></div>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
       <div class="modify-child">
-        <div
-          v-if="showInvitation"
-          v-for="(item,index) in headIcons.slice(0,6)"
-          :key="index"
-          class="head-img"
-          @click="selectedHead(item,index)"
-        >
+        <div v-if="showInvitation" v-for="(item,index) in headIcons.slice(0,6)" :key="index" class="head-img" @click="selectedHead(item,index)">
           <img :src="item.Icon">
           <p class="grou1Icon-p">{{item.title}}</p>
         </div>
-        <div
-          v-if="!showInvitation"
-          v-for="(item,index) in headIcons"
-          :key="index"
-          class="head-img"
-          @click="selectedHead(item,index)"
-        >
+        <div v-if="!showInvitation" v-for="(item,index) in headIcons" :key="index" class="head-img" @click="selectedHead(item,index)">
           <img :src="item.Icon">
           <p class="grou1Icon-p">{{item.title}}</p>
         </div>
@@ -31,13 +19,7 @@
     <div class="business-status-tow">
       <div class="business-status-title">我的服务</div>
       <div class="modify-child">
-        <div
-          v-for="(img,index) in btnIcons"
-          :key="index"
-          class="head-img"
-          @click="selectedHeads(index,img.type,img.itemCode)"
-        >
-          <!--   -->
+        <div v-for="(img,index) in btnIcons" :key="index" class="head-img" @click="selectedHeads(index,img.type,img.itemCode)">
           <img :src="img.Icon">
           <p class="grou1Icon-p">{{img.title}}</p>
         </div>
@@ -48,14 +30,7 @@
       </div>
     </div>
     <div class="top-null-css"></div>
-    <van-popup
-      class="popup-view"
-      v-model="openPopup"
-      :overlay="true"
-      :lock-scroll="true"
-      :close-on-click-overlay="true"
-      :click-overlay="overlayClose"
-    >
+    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
       </div>
@@ -69,14 +44,11 @@
 <script>
 import businessCard from 'COMP/User/BusinessCard'
 import userService from 'SERVICE/userService'
-import { Cell, CellGroup } from 'vant'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {
   components: {
-    businessCard,
-    Cell,
-    CellGroup
+    businessCard
   },
   data: () => ({
     consultImg: require('IMG/user/Group8@2x.png'),

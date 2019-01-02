@@ -4,65 +4,50 @@
       <div class="close-market-page-box-top">
         <div class="close-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
-          <span class="bg_img icon-play" 
-          :style="{backgroundImage:'url('+imgPlay+')'}"></span>
+          <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
           <li>
-           <div style="display:flex;"> 
-            <span class="text">{{dataArr.linkerName}}</span> 
-             <span class="van-hairline--surround past-tag" v-if="!pastShow">
-                已过期
-              </span>
-             <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
-             </div>
-           <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share" @click.stop="skipShare"></span>
+            <div style="display:flex;">
+              <span class="text">{{dataArr.linkerName}}</span>
+              <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
+              <!-- <span class="stick" v-if="dataArr.recommand==10">置顶</span> -->
+            </div>
+            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share" @click.stop="skipShare"></span>
+          </li>
+          <li>{{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}</li>
+          <li>
+            <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
           </li>
           <li>
-            {{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}
-          </li>
-          <li>
-             <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-             <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-             <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
-          </li>
-          <li>{{dataArr.openTimes}}次开通 
+            {{dataArr.openTimes}}次开通
             <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
             <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
               <span></span>
               <span></span>
               <span></span>
-            </div> 
+            </div>
           </li>
         </ul>
       </div>
       <div class="close-market-page-box-bottom" v-if="dataArr.divisionRules">
-        <img class="bg_img" :src="imgCommission" alt="" srcset="">
-       <span>{{dataArr.divisionRules}}</span> 
+        <img class="bg_img" :src="imgCommission" alt srcset>
+        <span>{{dataArr.divisionRules}}</span>
       </div>
     </div>
     <div style="margin-left:16px">
-      <van-popup
-        v-model="show"
-        position="bottom"
-        :close-on-click-overlay="false"
-        overlay
-      >
+      <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay>
         <ul>
           <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
           <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
-          <!-- <li @click="masterHandle">大师推荐</li>
-          <li @click="commonHandle">普通推荐</li> -->
-          <!-- <li @click="stickHandle(marketIndex)">
-            <span v-show="dataArr.recommand==0">置顶</span>
-            <span v-show="dataArr.recommand==10">取消置顶</span>
-          </li> -->
           <li @click="exhibitionHandle">
-            <span v-show="!exhibitionMarketShow">关闭楼盘展示</span> 
-            <span v-show="exhibitionMarketShow">开启楼盘展示</span> 
-            </li>
+            <span v-show="!exhibitionMarketShow">关闭楼盘展示</span>
+            <span v-show="exhibitionMarketShow">开启楼盘展示</span>
+          </li>
           <li @click="closeHandle">取消</li>
         </ul>
       </van-popup>
@@ -71,7 +56,6 @@
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/'
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   components: {
@@ -157,20 +141,16 @@ export default {
       this.show = !this.show
     },
     exhibitionHandle() {
-      this.$dialog.confirm({
-        title: '是否确定开启该楼盘名片展示',
-        className: 'close-Dialog'
-      })
+      this.$dialog
+        .confirm({
+          title: '是否确定开启该楼盘名片展示',
+          className: 'close-Dialog'
+        })
         .then(() => {
-          // on confirm
           this.stickShow = false
           this.show = !this.show
-          // this.exhibitionMarketShow = false
           this.changeUserStatus(this.linkerId, 30, 0)
-          console.log(this.linkerId);
-          
           this.dataArr.displayFlag = 0
-          // this.dataArr.displayFlag='1'
           this.$emit('openCut', this.dataArr)
         })
         .catch(() => {
@@ -219,15 +199,15 @@ export default {
         align-items: center;
         .icon-discount {
           white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 36px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 36px;
           height: 20px;
           position: absolute;
           top: 4px;
           left: -4px;
           font-size: 11px;
-          
+
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
           line-height: 20px;
@@ -246,12 +226,12 @@ export default {
           line-height: 16px;
           display: flex;
           justify-content: space-between;
-          .text{
+          .text {
             white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                max-width: 103px;
-                line-height:21px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 103px;
+            line-height: 21px;
           }
           .past-tag {
             padding: 2px 5px 1px 5px;
@@ -262,7 +242,7 @@ export default {
             transform: scale(0.84);
             font-weight: 400;
             color: #ea4d2e;
-            margin-left:4px;
+            margin-left: 4px;
             &::after {
               border-color: #ea4d2e;
               border-radius: 2px;
@@ -275,7 +255,7 @@ export default {
             border: 1px solid;
             font-size: 12px;
             transform: scale(0.84);
-            
+
             font-weight: 400;
             color: rgba(0, 122, 230, 1);
             display: flex;
@@ -290,7 +270,7 @@ export default {
         }
         li:nth-of-type(2) {
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 15px;
@@ -330,7 +310,7 @@ export default {
         }
         li:nth-of-type(4) {
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 13px;
@@ -339,18 +319,18 @@ export default {
           position: relative;
           align-items: center;
           .apostrophe {
-            position:absolute;
-            right:-5px;
+            position: absolute;
+            right: -5px;
             width: 40px;
-            height:40px;
+            height: 40px;
             display: flex;
             align-items: center;
-            justify-content:center;
+            justify-content: center;
             span {
               width: 4px;
               height: 4px;
               border-radius: 50%;
-              margin-right:3px;
+              margin-right: 3px;
               background: rgba(158, 158, 158, 1);
             }
           }
@@ -365,7 +345,7 @@ export default {
       background: rgba(247, 249, 250, 1);
       border-radius: 4px;
       font-size: 13px;
-      
+
       font-weight: 500;
       color: rgba(102, 102, 102, 1);
       margin-bottom: 16px;
@@ -393,7 +373,7 @@ export default {
         line-height: 50px;
         text-align: center;
         font-size: 16px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }
@@ -422,14 +402,14 @@ export default {
   flex-direction: column;
   .van-dialog__header {
     font-size: 18px;
-    
+
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     padding-top: 26px;
   }
   .van-dialog__message--has-title {
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     text-align: center;

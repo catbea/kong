@@ -42,7 +42,7 @@ export default {
         div:nth-child(1) {
           width: 100px;
           font-size: 14px;
-          
+
           font-weight: 400;
           color: rgba(150, 158, 168, 1);
           line-height: normal;
@@ -50,7 +50,7 @@ export default {
         div:nth-child(2) {
           width: 220px;
           font-size: 14px;
-          
+
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           line-height: normal;
