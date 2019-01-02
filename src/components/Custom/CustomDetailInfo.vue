@@ -13,17 +13,19 @@ export default {
   props: {
     customerInfoList: {
       type: Array,
-      default: [
-        { title: '备注名称', content: '暂无' },
-        { title: '性别', content: '暂无' },
-        { title: '年龄', content: '暂无' },
-        { title: '位置', content: '暂无' },
-        { title: '手机号', content: '暂无' },
-        { title: '来源', content: '暂无' },
-        { title: '收入', content: '暂无' },
-        { title: '行业', content: '暂无' },
-        { title: '购房目的', content: '暂无' }
-      ]
+      default: () => {
+        return [
+          { title: '备注名称', content: '暂无' },
+          { title: '性别', content: '暂无' },
+          { title: '年龄', content: '暂无' },
+          { title: '位置', content: '暂无' },
+          { title: '手机号', content: '暂无' },
+          { title: '来源', content: '暂无' },
+          { title: '收入', content: '暂无' },
+          { title: '行业', content: '暂无' },
+          { title: '购房目的', content: '暂无' }
+        ]
+      }
     },
     areaShow: { type: Boolean, default: false },
     areaCode: { type: String, default: '440305' },

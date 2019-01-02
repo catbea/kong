@@ -11,6 +11,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {}, codeHandleList = nu
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toLowerCase()
   const host = process.env.VUE_APP_BASE_API_URL
+
   let head = Object.assign(
     {
       'Content-Type': 'application/json; charset=UTF-8'

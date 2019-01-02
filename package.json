@@ -7,7 +7,7 @@
     "build-sit": "cross-env NODE_ENV=\"production\" vue-cli-service build --mode sit --modern",
     "build-uat": "cross-env NODE_ENV=\"production\" vue-cli-service build --mode uat --modern",
     "build-prod": "cross-env NODE_ENV=\"production\" vue-cli-service build --mode prod --modern",
-    "serve-sit": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode sit",
+    "serve-sit": "vue-cli-service  --mode sit serve",
     "serve-uat": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode uat",
     "serve-prod": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode prod",
     "start": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode sit"
