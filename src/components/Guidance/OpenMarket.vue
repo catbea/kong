@@ -29,7 +29,7 @@ export default {
   },
   data: () => ({
     currentShow: false,
-    bgImg: require('IMG/guidance/marketGuidance.png'),
+    bgImg: require('IMG/guidance/marketGuidance.jpg'),
     aiImg: require('IMG/guidance/guidance_ai.png'),
     closeImg: require('IMG/guidance/closeBtn.png')
   }),
