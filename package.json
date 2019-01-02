@@ -4,14 +4,13 @@
   "private": true,
   "scripts": {
     "lint": "vue-cli-service lint",
-    "build-dev": "vue-cli-service build --model development --modern",
-    "build-cs": "vue-cli-service build --model test --modern",
-    "build-uat": "vue-cli-service build --model uat --modern",
-    "build-prod": "vue-cli-service build --model production --modern",
-    "serve-dev": "vue-cli-service serve --mode development",
-    "serve-cs": "vue-cli-service serve --mode test",
-    "serve-uat": "vue-cli-service serve --mode uat",
-    "serve-prod": "vue-cli-service serve --mode production"
+    "build-sit": "cross-env NODE_ENV=\"production\" vue-cli-service build --mode sit --modern",
+    "build-uat": "cross-env NODE_ENV=\"production\" vue-cli-service build --mode uat --modern",
+    "build-prod": "cross-env NODE_ENV=\"production\" vue-cli-service build --mode prod --modern",
+    "serve-sit": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode sit",
+    "serve-uat": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode uat",
+    "serve-prod": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode prod",
+    "start": "cross-env NODE_ENV=\"development\" vue-cli-service serve --mode sit"
   },
   "dependencies": {
     "@antv/f2": "^3.3.3",
@@ -19,6 +18,7 @@
     "clipboard": "^2.0.4",
     "cos-js-sdk-v4": "^1.1.11",
     "cropperjs": "^1.4.3",
+    "cross-env": "^5.2.0",
     "es6-promise": "^4.2.5",
     "html2canvas": "^1.0.0-alpha.12",
     "lodash": "^4.17.11",
