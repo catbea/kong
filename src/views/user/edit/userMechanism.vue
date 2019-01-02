@@ -100,15 +100,17 @@ export default {
     async queryOrganizationList(distributorId, enterpriseId) {
       let obj = {}
       const result = await userService.obtainOrganizationInfo(distributorId, enterpriseId)
+
+      console.log(result);
+
       if (result.length > 0) {
         let tempResult = result
         this.organizationInfo = tempResult
-
-        // this.organizationList
         let tempArr = this.parseList(result, '0')
         obj.children = tempArr
         obj.name = '选择机构'
         obj.id = -1
+        obj.logo = result[0].logo
         this.organizationList = obj
       } else {
         obj.name = '暂无可供选择的数据'
