@@ -135,7 +135,7 @@ export default {
             padding-bottom: 12px;
           }
         }
-        .tag-item{
+        .tag-item {
           margin-left: 0;
           font-size: 10px;
           transform: scale(1);

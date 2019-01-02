@@ -102,12 +102,12 @@ export default {
 
       window.addEventListener('touchmove', this.handleTouchMove, false)
       window.addEventListener('touchend', this.handleTouchEnd)
-      console.log(e.changedTouches[0].clientY);
+      console.log(e.changedTouches[0].clientY)
 
-      if(e.target.innerText == '热'){
-        document.getElementById('hot-city-box').scrollIntoView();
+      if (e.target.innerText == '热') {
+        document.getElementById('hot-city-box').scrollIntoView()
       } else {
-        document.getElementById('city_'+e.target.innerText).scrollIntoView();
+        document.getElementById('city_' + e.target.innerText).scrollIntoView()
       }
     },
     scrollHander(val) {

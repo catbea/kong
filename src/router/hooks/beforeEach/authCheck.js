@@ -14,11 +14,11 @@ const getUrlQueryParams = url => {
   return params
 }
 
-const isIOS = ()=> {
+const isIOS = () => {
   var isIphone = navigator.userAgent.includes('iPhone')
   var isIpad = navigator.userAgent.includes('iPad')
-  return isIphone || isIpad;
-};
+  return isIphone || isIpad
+}
 
 export default async (to, from, next) => {
   console.log(to.path, 'to.path')
@@ -45,7 +45,7 @@ export default async (to, from, next) => {
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
-      console.log(36, userInfo, userInfo.payCorpId);
+      console.log(36, userInfo, userInfo.payCorpId)
 
       if (payCorpId) {
         // 通过payopenid返回的code
@@ -69,9 +69,9 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         next()
       } else {
-        console.log('wxAuthObject');
+        console.log('wxAuthObject')
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
-        console.log('wxAuthObject', wxAuthObject);
+        console.log('wxAuthObject', wxAuthObject)
 
         payCorpId = wxAuthObject.payCorpId
         let userInfo = wxAuthObject.userInfo
@@ -94,8 +94,8 @@ export default async (to, from, next) => {
         } else {
           if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
             try {
-              if(isIOS()) {
-                if(to.path == '/'){
+              if (isIOS()) {
+                if (to.path == '/') {
                   window.awHelper.wechatHelper.init()
                 }
               } else {

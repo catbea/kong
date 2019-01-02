@@ -100,8 +100,7 @@ export default {
           }
         }
 
-        console.log(JSON.stringify(this.dataArr));
-        
+        console.log(JSON.stringify(this.dataArr))
 
         this.haveData = true
         if (page === result.pages) {

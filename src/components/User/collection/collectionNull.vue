@@ -36,7 +36,7 @@ export default {
     color: #999999;
     line-height: 17px;
   }
-   > .collection-null-tips-s {
+  > .collection-null-tips-s {
     font-size: 12px;
     font-weight: 400;
     color: #dddddd;

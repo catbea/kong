@@ -143,7 +143,6 @@ export default {
       this.listEmpty = res.listEmpty
 
       for (let i = 0; i < this.dynamicsList.length; i++) {
-
         if (this.dynamicsList[i].price === 0) {
           this.dynamicsList[i].price = '价格待定'
           this.dynamicsList[i].priceUnit = ''

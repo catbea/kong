@@ -100,7 +100,7 @@ class WechatApi {
       nonceStr: res.nonceStr, // 必填，生成签名的随机串
       signature: res.signature, // 必填，签名，见附录1
       jsApiList: [
-        'chooseWXPay',        // 微信支付
+        'chooseWXPay', // 微信支付
         'hideOptionMenu',
         'showOptionMenu',
         'hideMenuItems',

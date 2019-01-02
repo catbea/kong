@@ -17,7 +17,6 @@
 </template>
 <script>
 import NewMsgPopup from 'COMP/Message/NewMsgPopup'
-import commonService from 'SERVICE/commonService'
 import Navbar from '@/components/Common/Navbar'
 import Tabbar from '@/components/Common/Tabbar'
 import { mapGetters } from 'vuex'
@@ -80,10 +79,6 @@ export default {
         clientId: clientId
       }
     }
-  },
-  mounted() {
-    // this.$nextTick()
-    // document.addEventListener('touchstart', this.handler, false)
   },
   computed: {
     ...mapGetters(['userInfo'])

@@ -143,8 +143,8 @@ export default {
     // padding: 5px 16px 11px;
     // margin-top: -12px;
   }
-  .sub-title{
-    padding: 10px 16px 8px!important;
+  .sub-title {
+    padding: 10px 16px 8px !important;
   }
   > .business-card-box {
     width: 100%;
@@ -267,9 +267,9 @@ export default {
           line-height: 1.5;
           margin-left: 28px;
           margin-top: 8px;
-          overflow:hidden;
-          text-overflow:ellipsis;
-          white-space:nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
           padding-bottom: 10px;
         }
       }
@@ -325,9 +325,9 @@ export default {
       margin: 0 15px;
       > .info-desc {
         font-size: 10px;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

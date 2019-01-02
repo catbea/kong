@@ -58,7 +58,7 @@ export default {
         p:nth-child(1) {
           width: 170px;
           font-size: 16px;
-          
+
           font-weight: 600;
           color: rgba(255, 255, 255, 1);
           line-height: 22px;
@@ -67,7 +67,7 @@ export default {
           width: 170px;
           margin-top: 6px;
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 17px;
@@ -90,7 +90,7 @@ export default {
       i:nth-child(2) {
         font-style: normal;
         font-size: 28px;
-        
+
         font-weight: 600;
         color: rgba(255, 255, 255, 1);
         line-height: 40px;

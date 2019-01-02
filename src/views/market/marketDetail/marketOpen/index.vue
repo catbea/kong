@@ -204,11 +204,12 @@ export default {
       // this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price }
       this.getMarketDescribeInfo()
       this.getLinkerAmountList()
-      this.$dialog.confirm({
-        title: '开通成功',
-        message: '你已经成功开通楼盘' + this.projectInfo.linkerName + '，快去推荐给身边的小伙伴',
-        cancelButtonText: '取消'
-      })
+      this.$dialog
+        .confirm({
+          title: '开通成功',
+          message: '你已经成功开通楼盘' + this.projectInfo.linkerName + '，快去推荐给身边的小伙伴',
+          cancelButtonText: '取消'
+        })
         .then(() => {
           this.$router.replace('/market/' + this.linkerId)
         })
@@ -217,20 +218,20 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
-      console.log(res,'开通数据',res.city,res.district);
-      
+      console.log(res, '开通数据', res.city, res.district)
+
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,
-        city:res.city,
-        district:res.district,
+        city: res.city,
+        district: res.district,
         linkerTags: res.projectTagList,
         linkerPrice: res.averagePrice,
         linkerName: res.linkerName,
         openTimes: res.openTimes,
         sale: res.sale,
         commission: res.commission,
-        saleStatus:res.saleStatus
+        saleStatus: res.saleStatus
       }
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { linkerId: this.linkerId, projectInfo: this.projectInfo }))
     },

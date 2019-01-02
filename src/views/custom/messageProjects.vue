@@ -76,7 +76,7 @@ export default {
           saleStatus: item.saleStatus,
           ifPanorama: item.ifPanorama,
           price: `${buildPrice} ${priceUnit}`,
-          address:`${item.city} ${item.county}`
+          address: `${item.city} ${item.county}`
         }
         _list.push(obj)
       }
@@ -126,9 +126,9 @@ export default {
     .meal-market-page {
       .meal-market-page-box {
         margin: 16px 0 0 16px;
-        box-shadow: none!important;
+        box-shadow: none !important;
         position: relative;
-        &:after{
+        &:after {
           content: '';
           position: absolute;
           bottom: 0;
@@ -142,7 +142,6 @@ export default {
           transform-origin: 0 0;
         }
       }
-
     }
   }
   .send-box {

@@ -1,7 +1,7 @@
 import store from '@/store/'
 
 const jsApiList = [
-  'chooseWXPay',        // 微信支付
+  'chooseWXPay', // 微信支付
   'hideOptionMenu',
   'showOptionMenu',
   'hideMenuItems',
@@ -31,7 +31,7 @@ const jsApiList = [
 class WechatHelper {
   constructor() {
     this.wx = wx
-    // this.queue = new Map()  
+    // this.queue = new Map()
     // this.counter = 0
     // this.initTimer = null
     // this.queueTimer = null
@@ -44,9 +44,8 @@ class WechatHelper {
     this.wx.hideOptionMenu()
   }
 
-
   async init() {
-    console.log('init');
+    console.log('init')
     // this.wx.hideAllNonBaseMenuItem()
 
     // wx.hideMenuItems({
@@ -89,7 +88,7 @@ class WechatHelper {
 
   /**
    * 设置分享设置
-   * @param {*} conf 
+   * @param {*} conf
    */
   async setShare(conf) {
     const defaultConf = {
@@ -97,7 +96,7 @@ class WechatHelper {
       desc: '',
       link: '',
       imgUrl: '',
-      success: () => { }
+      success: () => {}
     }
     this._universalShare(conf)
     // return new Promise ((resolve, reject) => {
@@ -109,10 +108,10 @@ class WechatHelper {
   }
   /**
    * 设置分享泛方法
-   * @param {*} conf 
+   * @param {*} conf
    */
   _universalShare(conf) {
-    console.log('_universalShare', conf);
+    console.log('_universalShare', conf)
     // alert(conf)
     this.wx.onMenuShareAppMessage(conf)
     this.wx.onMenuShareTimeline(conf)
@@ -126,10 +125,9 @@ class WechatHelper {
   _apiCheck() {
     this.wx.checkJsApi({
       jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-      success: function (res) {
-        console.log('api可用情况');
-        console.log(res);
-
+      success: function(res) {
+        console.log('api可用情况')
+        console.log(res)
 
         // 以键值对的形式返回，可用的api值true，不可用为false
         // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}

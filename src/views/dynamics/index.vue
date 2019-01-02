@@ -70,7 +70,7 @@ export default {
       if (num.customerCount != 0 || num.businessCardViews != 0 || num.estateViews != 0) {
         this.$router.push({
           path: '/dynamics/allDynamics',
-          query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount ,allDynamicsNum:num.allDynamicsNum }
+          query: { customerCount: num.customerCount, businessCardViews: num.businessCardViews, estateViews: num.estateViews, articleCount: num.articleCount, allDynamicsNum: num.allDynamicsNum }
         })
       } else {
         this.$dialog.alert({
@@ -143,11 +143,11 @@ export default {
       }
       this.hotEstateListData = res.hotLinkerVOs
       for (let i = 0; i < this.hotEstateListData.length; i++) {
-        const element = this.hotEstateListData[i];
-        element.openStatus='0'
+        const element = this.hotEstateListData[i]
+        element.openStatus = '0'
       }
-      console.log(this.hotEstateListData,'热门楼盘数据');
-      
+      console.log(this.hotEstateListData, '热门楼盘数据')
+
       for (let i = 0; i < this.hotEstateListData.length; i++) {
         let temp = this.hotEstateListData[i]
         temp.linkerAddress = `${temp.city || ''}-${temp.district || ''}`

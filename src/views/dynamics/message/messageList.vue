@@ -73,7 +73,7 @@ export default {
       sysMessage: [],
       nullIcon: require('IMG/user/bill-null.png'),
       nullcontent: '暂无信息',
-      haveData:true
+      haveData: true
     }
   },
   mounted() {
@@ -159,7 +159,6 @@ export default {
             padding: 1px 3px;
           }
           .messageInfo-sys-nums {
-           
             position: absolute;
             margin-left: 23px;
             margin-top: 10px;
@@ -172,7 +171,6 @@ export default {
             font-size: 12px;
             text-align: center;
             line-height: 16px;
-            
           }
         }
         > .messageInfo-sys-right {

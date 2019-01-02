@@ -148,7 +148,7 @@ export default {
     background: #007ae6;
     border-radius: 5px;
     font-size: 15px;
-    
+
     font-weight: 600;
     color: #ffffff;
     line-height: 44px;
@@ -159,20 +159,20 @@ export default {
     width: 343px;
     background: #ffffff;
     font-size: 13px;
-    
+
     font-weight: 400;
     color: rgba(41, 46, 51, 1);
     h3 {
       margin-bottom: 8px;
       font-size: 13px;
-      
+
       font-weight: 600;
       color: rgba(41, 46, 51, 1);
       line-height: 20px;
     }
     p {
       font-size: 13px;
-      
+
       font-weight: 400;
       color: rgba(41, 46, 51, 1);
       line-height: 20px;

@@ -53,21 +53,21 @@ export default {
 
       > .introduce-name {
         font-size: 18px;
-        
+
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 22px;
       }
       > .introduce-company {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 20px;
       }
       > .introduce-adder {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 20px;
@@ -85,7 +85,7 @@ export default {
       border-radius: 16px;
 
       font-size: 12px;
-      
+
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       line-height: 17px;

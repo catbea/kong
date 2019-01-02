@@ -18,7 +18,6 @@ export const GUIDANCE = 'GUIDANCE' //新手引导
 export const CITY_LIST = 'CITY_LIST'
 export const HOT_CITY_CITY = 'HOT_CITY_CITY'
 
-
 // market
 export const PROJECT_COUPONS = 'PROJECT_COUPONS'
 export const CURR_SELECTED_COUPON = 'CURR_SELECTED_COUPON'

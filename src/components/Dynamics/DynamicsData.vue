@@ -48,14 +48,13 @@ export default {
   display: flex;
   padding: 20px 0 20px 20px;
   border-radius: 10px;
-  .dynaData-container-article{
-      margin-left: 20px;
-    }
-  span {
-    width: 90px; 
-   
+  .dynaData-container-article {
+    margin-left: 20px;
   }
-   
+  span {
+    width: 90px;
+  }
+
   .container-title {
     font-size: 12px;
     font-weight: 400;

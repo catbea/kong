@@ -87,16 +87,15 @@ export default {
     ...mapGetters(['userRegistInfo'])
   },
   methods: {
-    
     /**
      * 获取注册的默认信息
      */
     async queryByRegister(enterpriseId) {
       const result = await RegisterService.queryByRegister(enterpriseId)
       let _userRegistInfo = {
-        distributorId: result.defaultDistributorId, 
+        distributorId: result.defaultDistributorId,
         distributorName: result.defaultDistributorName,
-        institutionId: result.defaultInstitutionId, 
+        institutionId: result.defaultInstitutionId,
         institutionName: result.defaultInstitutionName
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
@@ -204,12 +203,12 @@ export default {
         this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
         this.city = val[1].name
         this.area = val[2].name
-      }else {
+      } else {
         this.majorRegion = val[0].name + '/' + val[1].name
         this.city = val[1].name
-        this.area =  ''
+        this.area = ''
       }
-       
+
       let _userRegistInfo = {
         majorRegion: this.majorRegion,
         city: this.city,

@@ -29,7 +29,7 @@ export default {
     background: rgba(0, 122, 230, 1);
     border-radius: 6px;
     font-size: 14px;
-    
+
     font-weight: 400;
     color: rgba(255, 255, 255, 1);
   }

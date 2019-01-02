@@ -198,7 +198,7 @@ export default {
           opacity: 0.5;
         }
       }
-      .material-input__component{
+      .material-input__component {
         margin-top: 15px;
       }
     }

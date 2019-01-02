@@ -183,7 +183,7 @@ export default {
           line-height: 20px;
           > .bill-title-num {
             font-size: 20px;
-            font-family:PingFangSC-Semibold;
+            font-family: PingFangSC-Semibold;
           }
         }
       }
