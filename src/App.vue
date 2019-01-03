@@ -6,18 +6,13 @@
       </div>
       <tabbar></tabbar>
     </div>
-    <van-popup 
-        v-model="newMsgPop" 
-        :overlay="false"
-        position="top" 
-        class="new-msg-popup">
-        <new-msg-popup :msg="newMsgObject"></new-msg-popup>
+    <van-popup v-model="newMsgPop" :overlay="false" position="top" class="new-msg-popup">
+      <new-msg-popup :msg="newMsgObject"></new-msg-popup>
     </van-popup>
   </div>
 </template>
 <script>
 import NewMsgPopup from 'COMP/Message/NewMsgPopup'
-import Navbar from '@/components/Common/Navbar'
 import Tabbar from '@/components/Common/Tabbar'
 import { mapGetters } from 'vuex'
 import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
@@ -30,7 +25,6 @@ export default {
   },
   components: {
     NewMsgPopup,
-    Navbar,
     Tabbar
   },
   watch: {

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import F2 from '@antv/f2/dist/f2-all.min'
+import F2 from '@antv/f2/dist/f2.min'
 
 export default {
   props: {

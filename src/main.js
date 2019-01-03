@@ -7,11 +7,22 @@ import '@/filters'
 import '@/directives'
 import '@/vant' // vant
 import global from '@/global/'
+import vconsole from 'vconsole'
 Vue.config.productionTip = false
 Vue.prototype.$devicePixelRatio = window.devicePixelRatio
 global()
 
-// Vue.$wechatHelper()
+if (process.env.NODE_ENV === 'development') {
+
+  Vue.config.silent = false
+  Vue.config.devtools = true
+} else if (process.env.NODE_ENV === 'production') {
+  Vue.config.silent = true
+  Vue.config.devtools = false
+}
+
+if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
+
 window.vue = new Vue({
   router,
   store,
