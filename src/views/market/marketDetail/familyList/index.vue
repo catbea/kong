@@ -42,6 +42,7 @@ export default {
     this.getHouseTypeInfo(this.linkerId)
   },
   data: () => ({
+    instance:null,
     photoList: [],
     linkerId: '13f8c005b5c6440ea1ba2a0d9341e56c',
     num: null,
@@ -73,6 +74,10 @@ export default {
       }
     }
   },
+  beforeRouteLeave (to, from, next) {
+    if(this.instance){this.instance.close()}
+    next()
+  },
   methods: {
     photoHandle(n) {
       //查看户型相册
@@ -80,12 +85,9 @@ export default {
         const element = n[index]
         this.photoList.push(element)
       }
-      ImagePreview({
+     this.instance = ImagePreview({
         images: this.photoList,
-        startPosition: 0,
-        onClose() {
-          // do something
-        }
+        startPosition: 0
       })
       this.photoList = []
     },

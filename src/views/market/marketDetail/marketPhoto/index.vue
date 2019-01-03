@@ -32,17 +32,22 @@ export default {
   components: {
     // FullScreen
   },
+  beforeRouteLeave(to, from, next){
+   if(this.one){this.one.close()}
+   if(this.two){this.two.close()}
+   if(this.therr){this.three.close()}
+   next()
+  },
   methods: {
-    fun(){//关闭图片预览
+    fun(){
       if(this.one){
         this.one.close();
       }
     },
-    han(){//执行一次事件
+    han(){
     if (window.history && window.history.pushState) {//监听浏览器的返回按钮事件
    history.pushState(null, null, document.URL);
-    window.addEventListener('popstate', this.fun, false);
-    
+    window.addEventListener('popstate', this.fun, false); 
     }
     },
     async getMarketDetailPhotoInfo() {
@@ -76,7 +81,7 @@ export default {
           images: this.templetList,
           startPosition: inde
         })
-        this.han()
+        // this.han()
       }
       if (index == 1) {
        this.two= ImagePreview({

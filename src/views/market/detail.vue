@@ -223,22 +223,11 @@ export default {
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
     // window.addEventListener("popstate", this.fun, false);
   },
-  mounted(){
-   
-},
+  beforeRouteLeave (to, from, next) {
+    if(this.instance){this.instance.close()}
+    next()
+  },
   methods: {
-    fun(){//关闭图片预览
-      if(this.instance){
-        this.instance.close();
-      }
-    },
-    han(){//执行一次事件
-    if (window.history && window.history.pushState) {//监听浏览器的返回按钮事件
-   history.pushState(null, null, document.URL);
-    window.addEventListener('popstate', this.fun, false);
-    this.han=null
-    }
-    },
     async getMarketDetailPhotoInfo() {//判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
       if (res.length > 0) {
@@ -275,14 +264,13 @@ export default {
     },
     houseTypeHandle(n) {
       //查看户型图片预览
-      let arr = []
-      arr.push(n)
+      let data = []
+      data.push(n)
+      // this.$router.push({ name: 'Preview-Picture', query: { arr: data }})
     this.instance =  ImagePreview({
-        images: arr,
+        images: data,
         startPosition: 0
       })
-      this.photoList = []
-      this.han()
   },
     async collectHandler() {
       //修改收藏状态

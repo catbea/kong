@@ -38,6 +38,17 @@ export default [
     }
   },
   {
+    path: '/PreviewPicture/:arr',
+    name: 'Preview-Picture',
+    component: resolve => require(['COMP/PreviewPicture/index.vue'], resolve),
+    meta: {
+      title: '图片预览',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     // TODO 准备移除
     path: '/marketDetail/perfect',
     name: 'marketDetailPerfect',
