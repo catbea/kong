@@ -254,7 +254,7 @@ export default {
       margin-left: 12px;
       > .list-right-title {
         font-size: 16px;
-        font-weight: 400;
+        font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 24px;
         margin-top: -4px;
@@ -277,9 +277,11 @@ export default {
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         padding-top: 6px;
+        
       }
       > .list-right-label {
         margin-top: 10px;
+        margin-left: -3px;
         // line-height: 27px;
         > .right-label {
           font-size: 10px;
@@ -303,8 +305,8 @@ export default {
         font-size: 15px;
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
-        padding-top: 4px;
-        //  margin-bottom: 16px;
+        padding-top: 5px;
+      //  margin-bottom: 16px;
         > .right-price-lab-ok {
           color: rgba(0, 122, 230, 1);
           font-size: 10px;

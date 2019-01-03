@@ -19,7 +19,7 @@
                     </span>
                     <span class="agent-left-right">
                       <p class="left-right-name">{{item.clientName }}</p>
-                      <p class="left-right-time">{{item.updateTime | dateTimeFormatter(3,'/')}}</p>
+                      <p class="left-right-time">{{item.updateTime | dateTimeFormatter(1,':')}}</p>
                     </span>
                   </span>
                   <span class="list-agent-right">
@@ -62,25 +62,25 @@
                 <div class="dynamics-list-btn">
                   <span></span>
                   <span class="list-btn-right">
-                    <button
+                    <div
                       id="attentionStatusNO"
                       class="list-btn-follow"
                       v-show="item.attentionStatus  == 1"
                       @click="getupdateCustomerInfo(item,key)"
                     >
                       <img :src="gzImg" class="agent-gzImg">
-                      关注
-                    </button>
+                      <span class="list-btn-right-gz">关注</span>
+                    </div>
                     <button
                       id="attentionStatusOK"
                       class="list-btn-followOK"
                       v-show="item.attentionStatus  == 0"
                       @click="getupdateCustomerInfo(item,key)"
                     >已关注</button>
-                    <button class="list-btn-contact" @click="goalldynamics(item)">
+                    <div class="list-btn-contact" @click="goalldynamics(item)">
                       <img :src="lxImg" class="btn-contact-userImg">
-                      联系
-                    </button>
+                       联系
+                    </div>
                   </span>
                 </div>
               </div>
@@ -243,8 +243,8 @@ export default {
         right: 32px;
         line-height: 40px;
         float: right;
-        margin-top: 8px;
-        //  margin-top: 15px;
+        margin-top: 25px;
+        display: flex;
         > .list-btn-follow {
           width: 64px;
           height: 24px;
@@ -253,14 +253,17 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(0, 122, 230, 1);
-          line-height: 17px;
+          line-height: 21px; 
           background: #ffffff;
-          //  position: absolute;
-          right: 80px;
-          top: 12px;
+          display: flex;
+           padding-left: 7px;
           > .agent-gzImg {
-            width: 11px;
-            height: 11px;
+            width: 16px;
+            height: 16px;
+            padding-top: 3px;
+          }
+          .list-btn-right-gz{
+            padding-top: -5px;
           }
         }
         > .list-btn-followOK {
@@ -273,7 +276,6 @@ export default {
           border-radius: 16px;
           border: 1px solid #999999;
           background: #ffffff;
-          //  position: absolute;
           right: 80px;
           top: 12px;
         }
@@ -289,11 +291,13 @@ export default {
           border: 0;
           margin-left: 24px;
           // position: absolute;
-          right: 0;
-          top: 0.32rem;
+          display: flex;
+          padding: 3px 11px;
+          display: flex;
           > .btn-contact-userImg {
-            width: 11px;
-            height: 11px;
+            width: 16px;
+            height: 16px;
+            padding-right: 3px;
           }
         }
       }

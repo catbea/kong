@@ -415,11 +415,13 @@ export default {
      */
     async getCustomerDynamicList(id, current) {
       const res = await CustomService.getCustomerDynamicList(id, current)
+
       if (this.trackCurrent > 1) {
         this.trackList = this.trackList.concat(res.records)
       } else {
         this.trackList = res.records
       }
+
       if (this.trackList.length > 0) {
         this.haveData = true
         if (res.pages === 0 || this.trackCurrent >= res.pages) {
