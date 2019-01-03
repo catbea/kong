@@ -19,10 +19,8 @@
 <script>
 import MaterialInput from 'COMP/MaterialInput'
 import CustomService from 'SERVICE/customService'
-import { Dialog } from 'vant'
 export default {
   components: {
-    Dialog,
     MaterialInput
   },
 
@@ -52,19 +50,23 @@ export default {
     savePhone() {
       let phone = this.phone
       if (phone.length == 0) {
-        this.$dialog.alert({
-          message: '手机号不可为空'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            message: '手机号不可为空'
+          })
+          .then(() => {
+            // on close
+          })
         return
       }
       if (phone.length < 11) {
-        this.$dialog.alert({
-          message: '请输入正确手机号'
-        }).then(() => {
-          // on close
-        })
+        this.$dialog
+          .alert({
+            message: '请输入正确手机号'
+          })
+          .then(() => {
+            // on close
+          })
         return
       }
 

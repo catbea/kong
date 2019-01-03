@@ -21,7 +21,6 @@ import MarketPriceSurface from 'COMP/MarketPriceSurface/'
 import OpenPayment from 'COMP/OpenPayment/'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
-import { Dialog } from 'vant'
 export default {
   components: {
     MarketDescribe,
@@ -31,10 +30,8 @@ export default {
   created() {
     this.linkerId = this.$route.params.id
     if (this.marketOpenCache && this.marketOpenCache.linkerId && this.marketOpenCache.linkerId == this.linkerId) {
-      console.log(this.marketOpenCache, 'marketOpenCache')
       this.priceList = this.marketOpenCache.priceList
       this.projectInfo = this.marketOpenCache.projectInfo
-      // this.priceItemClickHandle(this.marketOpenCache.currPriceListIndex)
       this.initSelectedInfo()
       return
     }
@@ -74,7 +71,6 @@ export default {
       let submitPrice = priceItem.subscribeAmount
       let coupon = 0
 
-      // console.log(this.marketOpenCache, 'this.marketOpenCache======')
       if (this.marketOpenCache && this.marketOpenCache.currSelectedCoupon) {
         this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
         let currCunpon = this.marketOpenCache.currSelectedCoupon
@@ -100,7 +96,6 @@ export default {
 
       submitPrice = submitPrice - this.userInfo.price
       balancePay = this.userInfo.price
-      console.log(submitPrice, balancePay + 'submitPrice======')
       if (submitPrice < 0) {
         balancePay = this.userInfo.price + submitPrice
         submitPrice = 0
@@ -111,7 +106,6 @@ export default {
         }
       }
       balancePay = balancePay < 0 ? (balancePay = 0) : balancePay
-      console.log(balancePay, 'submitPrice======')
       this.submitPayInfo = { value: submitPrice, coupon: coupon }
       this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balanceAmount: this.userInfo.price, balancePay: balancePay })
     },
@@ -126,7 +120,6 @@ export default {
       let balancePay = 0
       submitPrice = submitPrice - this.userInfo.price
       balancePay = this.userInfo.price
-      // console.log(submitPrice, 'balancePay')
       if (submitPrice < 0) {
         submitPrice = 0
         balancePay = priceItem.subscribeAmount
@@ -207,11 +200,12 @@ export default {
       // this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price }
       this.getMarketDescribeInfo()
       this.getLinkerAmountList()
-      this.$dialog.confirm({
-        title: '开通成功',
-        message: '你已经成功开通楼盘' + this.projectInfo.linkerName + '，快去推荐给身边的小伙伴',
-        cancelButtonText: '取消'
-      })
+      this.$dialog
+        .confirm({
+          title: '开通成功',
+          message: '你已经成功开通楼盘' + this.projectInfo.linkerName + '，快去推荐给身边的小伙伴',
+          cancelButtonText: '取消'
+        })
         .then(() => {
           this.$router.replace('/market/' + this.linkerId)
         })
@@ -220,20 +214,20 @@ export default {
 
     async getMarketDescribeInfo() {
       const res = await marketService.getLinkerSimpleDetail(this.linkerId)
-      console.log(res,'开通数据',res.city,res.district);
-      
+      console.log(res, '开通数据', res.city, res.district)
+
       this.projectInfo = {
         linkerImg: res.headImgUrl,
         linkerAddress: `${res.city} ${res.county}`,
-        city:res.city,
-        district:res.district,
+        city: res.city,
+        district: res.district,
         linkerTags: res.projectTagList,
         linkerPrice: res.averagePrice,
         linkerName: res.linkerName,
         openTimes: res.openTimes,
         sale: res.sale,
         commission: res.commission,
-        saleStatus:res.saleStatus
+        saleStatus: res.saleStatus
       }
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { linkerId: this.linkerId, projectInfo: this.projectInfo }))
     },

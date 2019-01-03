@@ -277,16 +277,16 @@ export default {
             text-overflow: ellipsis; /* 超出内容显示为省略号*/
             white-space: nowrap; /*文本不进行换行*/
             width: 70%;
-            font-weight:600;
+            font-weight: 600;
             margin-top: -5px;
           }
           .dynamicsInfo-list-right-tab-div {
             // position: absolute;
             // right: 0px;
             // top: 0;
-                float: right;
-              margin-top: -20px;
-             
+            float: right;
+            margin-top: -20px;
+
             .left-title-right {
               font-size: 12px;
               font-weight: 400;
@@ -355,7 +355,7 @@ export default {
           font-size: 15px;
           font-weight: 600;
           color: rgba(234, 77, 46, 1);
-         margin-top: 7px;
+          margin-top: 7px;
           > .right-price-text {
             font-size: 12px;
           }
@@ -380,7 +380,7 @@ export default {
       line-height: 30px;
       padding-left: 11px;
       margin: 15px 0 9px 0;
-      
+
       > .dynamicsInfo-list-commission-word {
         padding: 0 2px;
         border-radius: 2px;
@@ -467,7 +467,7 @@ export default {
       }
       > .dynamics-list-content {
         font-size: 14px;
-        
+
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 21px;

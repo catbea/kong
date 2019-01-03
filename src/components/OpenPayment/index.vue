@@ -53,14 +53,14 @@ export default {
       li:nth-child(1) {
         margin-bottom: 5px;
         font-size: 18px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 22px;
       }
       li:nth-child(2) {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         line-height: 17px;
@@ -75,7 +75,7 @@ export default {
       background: rgba(0, 122, 230, 1);
       border-radius: 22px;
       font-size: 15px;
-      
+
       font-weight: 600;
       color: rgba(255, 255, 255, 1);
       line-height: 44px;
@@ -88,7 +88,7 @@ export default {
       background: #ddd;
       border-radius: 22px;
       font-size: 15px;
-      
+
       font-weight: 600;
       color: rgba(255, 255, 255, 1);
       line-height: 44px;

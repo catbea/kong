@@ -108,7 +108,7 @@ export default {
     finished: false,
     nullcontent: '没有找到任何相关楼盘',
     haveData: true,
-    showNull:false,
+    showNull: false,
     titleBarConf: {
       title: '热门楼盘'
     },
@@ -164,7 +164,7 @@ export default {
         this.searchResult = this.searchResult.concat(result.records)
         this.loading = false
         this.haveData = true
-        this.showNull=false
+        this.showNull = false
         if (result.pages === this.page) {
           this.finished = true
         } else {
@@ -175,7 +175,7 @@ export default {
           this.finished = true
           this.loading = false
           this.haveData = false
-          this.showNull=false
+          this.showNull = false
           let hotParams = {
             city: this.userInfo.majorCity || '全国',
             hotTotal: 5
@@ -188,7 +188,7 @@ export default {
         this.finished = true
         this.loading = false
         this.haveData = false
-        this.showNull=true
+        this.showNull = true
         let hotParams = {
           city: this.userInfo.majorCity || '全国',
           hotTotal: 5
@@ -273,14 +273,14 @@ export default {
     .van-field__body {
       height: 100%;
     }
-    .van-cell{
-      background-color: #F5F5F5;
+    .van-cell {
+      background-color: #f5f5f5;
     }
-    .search-icon{
+    .search-icon {
       width: 24px;
       height: 24px;
     }
-    .van-field__control{
+    .van-field__control {
       height: 24px;
       line-height: 24px;
     }
@@ -330,8 +330,6 @@ export default {
   }
   > .search-result-container {
     > .search-result-content {
-      > .list-container {
-      }
       > .null-container {
         margin-top: 10%;
       }

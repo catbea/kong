@@ -69,7 +69,7 @@ export default {
       justify-content: space-between;
       .forestall-open {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(113, 73, 59, 1);
         line-height: 17px;
@@ -98,7 +98,7 @@ export default {
       flex-wrap: wrap;
       .active {
         background: rgba(194, 161, 113, 0.17);
-        border-color: #A07E72;
+        border-color: #a07e72;
       }
       li {
         width: 105px;
@@ -113,7 +113,7 @@ export default {
         border-color: #999;
         p:nth-child(1) {
           font-size: 16px;
-          
+
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 22px;
@@ -122,7 +122,7 @@ export default {
           display: flex;
           p {
             font-size: 26px;
-            
+
             font-weight: 600;
             color: rgba(135, 102, 90, 1);
           }

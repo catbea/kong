@@ -19,6 +19,9 @@ export default {
     await this.pushHandle()
   },
   data: () => ({
+    one:0,
+    two:0,
+    three:0,
     linkerId: null,
     photoData: null,
     show: false,
@@ -30,9 +33,20 @@ export default {
     // FullScreen
   },
   methods: {
+    fun(){//关闭图片预览
+      if(this.one){
+        this.one.close();
+      }
+    },
+    han(){//执行一次事件
+    if (window.history && window.history.pushState) {//监听浏览器的返回按钮事件
+   history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', this.fun, false);
+    
+    }
+    },
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
-      console.log(res, '相册数据')
       this.photoData = res
     },
     pushHandle() {
@@ -58,16 +72,14 @@ export default {
     previewHandle(index, inde) {
       //预览图片
       if (index == 0) {
-        ImagePreview({
+       this.one=ImagePreview({
           images: this.templetList,
-          startPosition: inde,
-          onClose() {
-            // do something
-          }
+          startPosition: inde
         })
+        this.han()
       }
       if (index == 1) {
-        ImagePreview({
+       this.two= ImagePreview({
           images: this.resultList,
           startPosition: inde,
           onClose() {
@@ -76,7 +88,7 @@ export default {
         })
       }
       if (index == 2) {
-        ImagePreview({
+       this.three= ImagePreview({
           images: this.deployList,
           startPosition: inde,
           onClose() {
@@ -95,7 +107,7 @@ export default {
   background: #ffffff;
   p {
     font-size: 20px;
-    
+
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 28px;

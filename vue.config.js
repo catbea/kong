@@ -1,4 +1,5 @@
 var resolve = require('path').resolve
+
 module.exports = {
   productionSourceMap: false,
   devServer: {

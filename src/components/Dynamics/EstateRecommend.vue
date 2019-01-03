@@ -29,7 +29,7 @@ export default {
       linkText: '更多楼盘',
       link: '/market'
     },
-    blurImg: require('IMG/dynamics/blurImg.png'),
+    blurImg: require('IMG/dynamics/blurImg.png')
   }),
   methods: {
     goRecommendInfo() {

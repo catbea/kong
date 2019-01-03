@@ -10,8 +10,8 @@
         </button>
       </div>
       <div v-show="status === 1" class="bg_img awWelfare-center" id="share-top">
-        <img :src="awbgcardIcon" alt="">
-        <div class="qrcode" id="qrcode" ref="qrCodeUrl" ></div>
+        <img :src="awbgcardIcon" alt>
+        <div class="qrcode" id="qrcode" ref="qrCodeUrl"></div>
         <div class="awWelfare-info">
           <div class="awWelfare-info-left">
             <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
@@ -27,18 +27,13 @@
       </div>
       <div class="awWelfare-text">请长按保存邀请图片</div>
     </div>
-    <popup v-model="show1" position="center" masker-opacity="0.6" :close-on-click-overlay="false">
+    <van-popup v-model="show1" position="center" masker-opacity="0.6" :close-on-click-overlay="false">
       <div class="register-rule-box" :style="{'backgroundImage':'url('+teammatBack+')'}">
         <div class="register-rule-box-name">活动规则</div>
         <div class="register-rule-box-content">
           <div class="register-rule-box-title">邀请注册</div>
           <div class="register-rule-box-text">
-            <div
-              class="register-rule-box-text-item"
-              v-if="regisItem"
-              v-for="(regisItem,key) in registrationRules"
-              :key="key"
-            >
+            <div class="register-rule-box-text-item" v-if="regisItem" v-for="(regisItem,key) in registrationRules" :key="key">
               <div class="div-dian">•</div>
               <div>{{regisItem}}</div>
             </div>
@@ -52,20 +47,16 @@
       <button class="register-rule-box-close" @click="show1 = false">
         <img :src="awbocloseIcon">
       </button>
-    </popup>
+    </van-popup>
   </div>
 </template>
 
 <script>
 import QRCode from 'qrcodejs2'
-import { Popup } from 'vant'
 import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 import h2c from 'html2canvas'
 export default {
-  components: {
-    Popup
-  },
   data() {
     return {
       bgCombinedShapeIcon: require('IMG/user/invitation/bgCombinedShape@2x.png'),
@@ -107,18 +98,18 @@ export default {
       // canvas.style.height = '466px'
       // canvas.style.zIndex = 99
       // document.getElementById('card-result').appendChild(canvas)
-      let imgW = document.body.clientWidth * .8
-      let imgH = document.body.clientHeight * .75
+      let imgW = document.body.clientWidth * 0.8
+      let imgH = document.body.clientHeight * 0.75
       let box = document.getElementById('card-result')
       box.style.overflow = 'hidden'
-      box.style.width = imgW+'px'
-      box.style.height = imgH+'px'
+      box.style.width = imgW + 'px'
+      box.style.height = imgH + 'px'
 
       let image = document.getElementById('imgcard')
       image.src = canvas.toDataURL('image/png')
-      image.style.width = (imgW+1)+'px'
-      image.style.maxWidth = (imgW+1)+'px'
-      image.style.height = (imgH+1)+'px'
+      image.style.width = imgW + 1 + 'px'
+      image.style.maxWidth = imgW + 1 + 'px'
+      image.style.height = imgH + 1 + 'px'
 
       this.status = 2
     },
@@ -208,7 +199,7 @@ export default {
       background: #ffffff;
       padding: 7px;
     }
-    
+
     .awWelfare-info {
       padding: 34px 50px 34px 62px;
       position: absolute;
@@ -247,11 +238,11 @@ export default {
     padding: 0px 5x 2px 0px;
     border-color: transparent;
 
-    > .imgcard-img{
+    > .imgcard-img {
       width: 100%;
       height: 100%;
-      border:none;
-      border-color: transparent
+      border: none;
+      border-color: transparent;
     }
   }
 

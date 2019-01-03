@@ -135,7 +135,6 @@ export default {
       }, 1000)
     },
     checkPosition(val) {
-      console.log(val)
     },
     goList(index, title) {
       this.finished = false
@@ -397,7 +396,7 @@ export default {
   }
   > .tab-container {
     z-index: 99;
-    >.van-tabs{
+    > .van-tabs {
       z-index: 99;
     }
     // position: fixed;

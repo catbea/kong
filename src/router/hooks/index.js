@@ -9,7 +9,6 @@ import imSigCheck from './beforeEach/imSigCheck'
 export default router => {
   // 仅开发时调用
 
-  
   if (process.env.NODE_ENV === 'development') {
     router.afterEach(simpleLogger)
   }

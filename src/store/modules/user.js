@@ -7,7 +7,7 @@ const state = {
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     agentId: '1',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
-    distributorI9d: '124',
+    distributorId: '124',
     distributorName: '广佛分公司',
     enterpriseId: '91',
     institutionId: '82',
@@ -43,7 +43,7 @@ const state = {
       }
     ],
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJvOTl4eHQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ5MDY5OTY5LCJpYXQiOjE1NDYwNjUxNjl9.byZthA7-AoGJrFY39A_1zTMZPvLxJ77PEiK9mqjlVF1cNu_tl_e12mf0VT9avRq6YTUA4uIN-vuANIM9sd2ecg',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI4Z21jb3IiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ5NDAyNjI1LCJpYXQiOjE1NDYzOTc4MjV9.Y8ZxsVdEjNBoWwZ8XopI_r8ii9sU9bVn6Va2OnAZAljzP2WWsVLgB8CncX8Ov4Zi99WBe6D-sGC8kph-lHU0Hg',
     majorCity: '广州市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
@@ -57,7 +57,7 @@ const state = {
     tempPhone: '18603000246',
     vipInfo: '',
     wechatAccount: '',
-    ifView:'1'
+    ifView: '1'
   },
   userVipInfo: {},
   userArea: {
@@ -125,7 +125,9 @@ const getters = {
 const actions = {
   async getUserInfo({ commit }, userInfo) {
     let _userInfo = JSON.stringify(userInfo)
-    await localStorage.setItem('awMasterUserInfo', _userInfo)
+    // alert('actions'+userInfo)
+    localStorage.setItem('awMasterUserInfo', _userInfo)
+    // alert('localStorage')
     commit(types.USER_INFO, userInfo)
   },
   async getImUserSig({ commit }) {
@@ -159,6 +161,7 @@ const actions = {
 
 const mutations = {
   [types.USER_INFO](state, data) {
+    // alert('mutations'+data)
     state.userInfo = data
   },
   [types.IM_USER_SIG](state, data) {

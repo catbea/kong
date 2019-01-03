@@ -28,7 +28,6 @@
         plain
         @click="onClickConfirm(item)"
       >
-        <!-- @click="onClickConfirm" 1未开通，2已开通{{item.linkerName }}-->
         <p class="list-left">
           {{item.linkerName }}{{item.openStatus == 1 ? "（未开通）":""}}
           <span
@@ -40,32 +39,20 @@
         >{{item.area}} {{item.city}} | {{item.price == 0?"价格待定": item.price+item.priceUnit }}</p>
       </div>
     </div>
-    <dynamics-null v-else></dynamics-null>
-    <!-- <div class="Properties-list">
-      <p class="list-left"><span class="list-right" >条动态</span></p>
-      <p class="list-left-btn"> | 元/㎡</p>
-    </div>-->
-    <!-- <dialog :title="$t('confirm')">
-      <button type="primary" plain @click="onClickConfirm">
-        {{ $t('confirm') }}
-      </button>
-    </dialog>-->
+    <dynamics-null v-else/>
   </div>
 </template>
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import ShadowBox from 'COMP/ShadowBox'
-import { Dialog } from 'vant'
 import DynamicsNull from 'COMP/Dynamics/DynamicsNull'
 export default {
   components: {
     DynamicsData,
     ShadowBox,
-    Dialog,
     DynamicsNull
   },
   props: {
-    // info: Object,
     item: Object,
     houseDynamicList: { type: Array },
     houseDynamicCount: { type: '' },
@@ -84,16 +71,10 @@ export default {
   methods: {
     onClickConfirm(item) {
       let parm = {
-        // info:this.info,
         itemDynamiclist: item
-        // statue:item.openStatus
       }
       this.$emit('click', parm)
     }
-    // godynamicsInfo() {
-    //   //跳转到动态详情
-    //   this.$router.push('/dynamics/dynamicsInfo')
-    // }
   }
 }
 </script>

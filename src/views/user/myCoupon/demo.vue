@@ -105,7 +105,6 @@
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/'
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   components: {
@@ -160,7 +159,6 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    console.log(this.dataArr, '展示的楼盘数据')
   },
   methods: {
     stickNumHandle() {
@@ -172,7 +170,6 @@ export default {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '楼盘个数')
     },
     recommendNumHandle() {
       //判断有没有超过3个置顶
@@ -183,7 +180,6 @@ export default {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '楼盘个数')
     },
     strideYear() {
       //判断是否跨年
@@ -287,41 +283,43 @@ export default {
     async masterHandle(n) {
       let parent = this.$parent.$parent
       if (this.masterButtonShow === false) {
-
-        if(parent.swipeList.length==5){
-          this.$dialog.confirm({
-          title: '当前推荐楼盘数量达到上限',
-          message: '继续推荐将取消最初推荐楼盘是否确定推荐当前楼盘'
-        }).then(() => {
-          this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
-        this.$dialog
-          .alert({
-            message: '大师推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
-        this.$emit('pushMaster', this.dataArr)
-        this.show = !this.show
-      this.masterButtonShow = !this.masterButtonShow
-        }).catch(() => {
-          // on cancel
-        });
-        }else{
+        if (parent.swipeList.length == 5) {
+          this.$dialog
+            .confirm({
+              title: '当前推荐楼盘数量达到上限',
+              message: '继续推荐将取消最初推荐楼盘是否确定推荐当前楼盘'
+            })
+            .then(() => {
+              this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
+              this.$dialog
+                .alert({
+                  message: '大师推荐成功',
+                  className: 'hint-alert'
+                })
+                .then(() => {
+                  // on close
+                })
+              this.$emit('pushMaster', this.dataArr)
+              this.show = !this.show
+              this.masterButtonShow = !this.masterButtonShow
+            })
+            .catch(() => {
+              // on cancel
+            })
+        } else {
           await this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
-        this.$dialog
-          .alert({
-            message: '大师推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
-        this.$emit('pushMaster', this.dataArr)
-        this.show = !this.show
-      this.masterButtonShow = !this.masterButtonShow
-        }  
+          this.$dialog
+            .alert({
+              message: '大师推荐成功',
+              className: 'hint-alert'
+            })
+            .then(() => {
+              // on close
+            })
+          this.$emit('pushMaster', this.dataArr)
+          this.show = !this.show
+          this.masterButtonShow = !this.masterButtonShow
+        }
       } else {
         await this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
         this.$dialog
@@ -334,47 +332,49 @@ export default {
           })
         this.$emit('spliceMaster', this.dataArr)
         this.show = !this.show
-      this.masterButtonShow = !this.masterButtonShow
+        this.masterButtonShow = !this.masterButtonShow
       }
-      
     },
     commonHandle(n) {
       let parent = this.$parent.$parent
       if (this.commonButtonShow === false) {
-        if(parent.swipeList.length==5){
-          this.$dialog.confirm({
-          title: '当前推荐楼盘数量达到上限',
-          message: '继续推荐将取消最初推荐楼盘是否确定推荐当前楼盘'
-        }).then(() => {
+        if (parent.swipeList.length == 5) {
+          this.$dialog
+            .confirm({
+              title: '当前推荐楼盘数量达到上限',
+              message: '继续推荐将取消最初推荐楼盘是否确定推荐当前楼盘'
+            })
+            .then(() => {
+              this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
+              this.$dialog
+                .alert({
+                  message: '普通推荐成功',
+                  className: 'hint-alert'
+                })
+                .then(() => {
+                  // on close
+                })
+              this.$emit('pushCommon', this.dataArr)
+              this.show = !this.show
+              this.commonButtonShow = !this.commonButtonShow
+            })
+            .catch(() => {
+              // on cancel
+            })
+        } else {
           this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
-        this.$dialog
-          .alert({
-            message: '普通推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
-        this.$emit('pushCommon', this.dataArr)
-        this.show = !this.show
-      this.commonButtonShow = !this.commonButtonShow
-        }).catch(() => {
-          // on cancel
-        });
-        }else{
-          this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
-        this.$dialog
-          .alert({
-            message: '普通推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
-        this.$emit('pushCommon', this.dataArr)
-        this.show = !this.show
-      this.commonButtonShow = !this.commonButtonShow
-        }  
+          this.$dialog
+            .alert({
+              message: '普通推荐成功',
+              className: 'hint-alert'
+            })
+            .then(() => {
+              // on close
+            })
+          this.$emit('pushCommon', this.dataArr)
+          this.show = !this.show
+          this.commonButtonShow = !this.commonButtonShow
+        }
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
         this.$dialog
@@ -387,9 +387,8 @@ export default {
           })
         this.$emit('spliceCommon', this.dataArr)
         this.show = !this.show
-      this.commonButtonShow = !this.commonButtonShow
+        this.commonButtonShow = !this.commonButtonShow
       }
-      
     },
 
     exhibitionHandle() {
@@ -455,9 +454,9 @@ export default {
         align-items: center;
         .icon-discount {
           white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 36px; 
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 36px;
           height: 20px;
           position: absolute;
           top: 4px;

@@ -108,7 +108,7 @@ export default {
           }
           li:nth-child(3) {
             font-size: 9px;
-            
+
             font-weight: 400;
             color: rgba(229, 179, 123, 1);
             line-height: 13px;
@@ -127,7 +127,7 @@ export default {
           }
           p {
             font-size: 7px;
-            
+
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 10px;
@@ -149,7 +149,7 @@ export default {
             p {
               transform: scale(0.84);
               font-size: 12px;
-              
+
               font-weight: 600;
               color: rgba(164, 184, 213, 1);
               line-height: 13px;
@@ -159,7 +159,7 @@ export default {
         .company {
           font-size: 12px;
           transform: scale(0.67);
-          
+
           font-weight: 400;
           color: rgba(164, 184, 213, 1);
           line-height: 11px;

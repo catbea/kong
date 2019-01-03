@@ -23,7 +23,6 @@ import PopularityFilter from './PopularityFilter'
 import MoreFilter from './MoreFilter'
 import SortWay from './SortWay'
 import { mapGetters } from 'vuex'
-import { getAreaCode, getChildren, fullArea } from '@/utils/fullArea'
 export default {
   props: {
     value: {
@@ -92,10 +91,10 @@ export default {
       this.currentIndex = -1
     },
     // 确认个数修改
-    confirmHandler(val) {
+    confirmHandler() {
       this.currentIndex = -1
     },
-    sortChangeHandler(){
+    sortChangeHandler() {
       this.currentIndex = -1
     }
   },

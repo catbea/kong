@@ -36,7 +36,6 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import marketService from 'SERVICE/marketService'
 import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'
@@ -162,7 +161,6 @@ export default {
           await this.getPackageInfo()
           this.packageCheckedInit()
         }
-        
       }
       this.page++
       this.loading = false
@@ -194,11 +192,12 @@ export default {
       } else {
         let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
       }
-      this.$dialog.confirm({
-        title: '开通成功',
-        message: '成功开通楼盘',
-        cancelButtonText: '取消'
-      })
+      this.$dialog
+        .confirm({
+          title: '开通成功',
+          message: '成功开通楼盘',
+          cancelButtonText: '取消'
+        })
         .then(() => {
           this.$router.replace({ path: '/user/myMarket' })
         })
@@ -249,7 +248,7 @@ export default {
 <style lang="less">
 .my-member-page {
   .search-box {
-    background: #FFF;
+    background: #fff;
     position: fixed;
     top: 0px;
     padding: 8px;

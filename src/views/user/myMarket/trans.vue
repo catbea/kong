@@ -105,7 +105,6 @@
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/'
-import { Dialog } from 'vant'
 import userService from 'SERVICE/userService'
 export default {
   components: {
@@ -160,7 +159,6 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    console.log(this.dataArr, '展示的楼盘数据')
   },
   methods: {
     stickNumHandle() {
@@ -172,7 +170,6 @@ export default {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '楼盘个数')
     },
     recommendNumHandle() {
       //判断有没有超过3个置顶
@@ -183,7 +180,6 @@ export default {
           this.stickNum++
         }
       }
-      console.log(this.stickNum, '楼盘个数')
     },
     strideYear() {
       //判断是否跨年
@@ -401,9 +397,9 @@ export default {
         align-items: center;
         .icon-discount {
           white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                width: 36px; 
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 36px;
           height: 20px;
           position: absolute;
           top: 4px;

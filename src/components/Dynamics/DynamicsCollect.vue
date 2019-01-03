@@ -78,16 +78,15 @@ export default {
       this.$router.push('/dynamics/message/messageList')
     },
     goMessageInfo(data) {
-      console.log("====================",data)
       let parm = {
         info: this.info,
         customerCount: data.customerCount.val,
         businessCardViews: data.businessCardViews.val,
         estateViews: data.estateViews.val,
         articleCount: data.articleCount.val,
-        allDynamicsNum: data.customerCount.change+data.businessCardViews.change+data.estateViews.change+data.articleCount.change
+        allDynamicsNum: data.customerCount.change + data.businessCardViews.change + data.estateViews.change + data.articleCount.change
       }
-       this.$emit('click', parm)
+      this.$emit('click', parm)
     }
   }
 }
@@ -218,6 +217,9 @@ export default {
           justify-content: center;
           font-size: 12px;
           line-height: 24px;
+          .card-tips{
+            padding-left: 5px;
+          }
           > .house-tips {
             > span {
               color: #007ae6;

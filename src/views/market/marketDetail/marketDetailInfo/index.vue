@@ -158,7 +158,6 @@ export default {
     async getLinkerSimpleDetail(linkerId) {
       const res = await MarketService.getLinkerSimpleDetail(linkerId)
       this.info = res
-      console.log(this.info, 'kljlkjlkjlkjlkjlkjlk')
     }
   }
 }
@@ -179,7 +178,7 @@ export default {
       li {
         width: 122px;
         font-size: 14px;
-        
+
         font-weight: 400;
         color: rgba(150, 158, 168, 1);
         line-height: normal;
@@ -198,7 +197,7 @@ export default {
       margin-left: 8px;
       width: 324px;
       font-size: 12px;
-      
+
       font-weight: 400;
       color: rgba(150, 158, 168, 1);
       line-height: normal;

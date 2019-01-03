@@ -21,5 +21,6 @@ export default {
 .tag-group {
   display: flex;
   overflow: hidden;
+  padding: 2px 0;
 }
 </style>

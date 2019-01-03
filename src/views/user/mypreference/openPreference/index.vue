@@ -35,7 +35,6 @@
   </div>
 </template>
 <script>
-import { Dialog } from 'vant'
 import { mapGetters } from 'vuex'
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'
@@ -142,11 +141,12 @@ export default {
 
     paySuss() {
       this.getPackageInfo()
-      this.$dialog.confirm({
-        title: '开通成功',
-        message: '成功开通套餐，海量楼盘等你添加~',
-        cancelButtonText: '取消'
-      })
+      this.$dialog
+        .confirm({
+          title: '开通成功',
+          message: '成功开通套餐，海量楼盘等你添加~',
+          cancelButtonText: '取消'
+        })
         .then(() => {
           this.addProjectHandle()
         })
@@ -198,7 +198,7 @@ export default {
 .open-preference-page {
   background: rgba(247, 249, 250, 1);
   padding-bottom: 48px;
-  .already-buy{
+  .already-buy {
     margin-bottom: 10px;
   }
   .background {
@@ -243,7 +243,7 @@ export default {
         line-height: 25px;
         li:nth-child(2) {
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(164, 184, 213, 1);
           line-height: 25px;
@@ -251,7 +251,7 @@ export default {
         li:nth-child(3) {
           margin: 4px 0 3px 0;
           font-size: 12px;
-          
+
           font-weight: 400;
           color: rgba(164, 184, 213, 1);
           line-height: 17px;
@@ -272,12 +272,12 @@ export default {
       padding-left: 24px;
       line-height: 56px;
       font-size: 14px;
-      
+
       font-weight: 400;
       color: rgba(102, 102, 102, 1);
       p {
         font-size: 20px;
-        
+
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
       }
@@ -287,7 +287,7 @@ export default {
       width: 125px;
       text-align: center;
       font-size: 18px;
-      
+
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       background: #ccc;
@@ -297,7 +297,7 @@ export default {
       width: 125px;
       text-align: center;
       font-size: 18px;
-      
+
       font-weight: 400;
       color: rgba(255, 255, 255, 1);
       background: rgba(195, 151, 101, 1);

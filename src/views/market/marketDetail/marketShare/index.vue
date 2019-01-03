@@ -226,7 +226,7 @@ export default {
     p {
       text-align: center;
       font-size: 13px;
-      
+
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
       line-height: normal;
@@ -243,7 +243,7 @@ export default {
         border-radius: 4px;
         border: 1px solid;
         font-size: 16px;
-        
+
         font-weight: 400;
         color: rgba(0, 122, 230, 1);
         background: #ffffff;
@@ -257,7 +257,7 @@ export default {
         background: rgba(0, 122, 230, 1);
         border-radius: 4px;
         font-size: 16px;
-        
+
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
         margin-right: 38px;

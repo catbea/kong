@@ -51,7 +51,7 @@ export default {
       switch (tempArr[0]) {
         case '1':
           str = '总价'
-          break;
+          break
         case '2':
           str = '单价'
           break

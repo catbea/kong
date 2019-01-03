@@ -135,27 +135,38 @@ export default {
             padding-bottom: 10px;
           }
         }
+        .tag-item {
+          margin-left: 0;
+          font-size: 10px;
+          transform: scale(1);
+          margin-right: 4px;
+        }
         > .estate-location {
           font-size: 12px;
           font-weight: 400;
           color: #666666;
-          padding-bottom: 10px;
+          padding-bottom: 5px;
         }
         > .estate-info {
           white-space: nowrap;
+          line-height: 22px;
+          display: flex;
+          padding-top: 2px;
           > p {
             display: inline-block;
           }
           > .estate-price {
-            width: 130px;
+            // width: 130px;
             color: #ea4d2e;
             font-size: 15px;
             font-weight: 600;
+            padding-right: 12px;
           }
           > .estate-area {
             font-size: 12px;
             font-weight: 400;
             color: #999999;
+            flex: 1;
           }
         }
       }

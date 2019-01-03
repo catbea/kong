@@ -1,86 +1,36 @@
 <template>
   <div class="custom-detail">
     <div class="custom-info-box" v-if="customBaseInfo">
-      <avatar
-        class="custom-avatar"
-        :avatar="customBaseInfo.clientAvatarUrl"
-        @click.native="previewAvatarUrl"
-      ></avatar>
-      <div
-        class="bg_img custom-attention"
-        :style="{backgroundImage:'url('+attentionImg+')'}"
-        v-if="attentionFlag"
-      ></div>
+      <avatar class="custom-avatar" :avatar="customBaseInfo.clientAvatarUrl" @click.native="previewAvatarUrl"/>
+      <div class="bg_img custom-attention" :style="{backgroundImage:'url('+attentionImg+')'}" v-if="attentionFlag"></div>
       <div class="custom-info">
         <div class="custom-name-box">
-          <h5
-            class="custom-name"
-          >{{customBaseInfo.remarkName ? customBaseInfo.remarkName : customBaseInfo.clientName}}</h5>
-          <div
-            class="custome-realname"
-            v-if="customBaseInfo.remarkName"
-          >({{customBaseInfo.clientName}})</div>
-          <!-- <van-icon name="edit" size="24px"/> -->
+          <h5 class="custom-name">{{customBaseInfo.remarkName ? customBaseInfo.remarkName : customBaseInfo.clientName}}</h5>
+          <div class="custome-realname" v-if="customBaseInfo.remarkName">({{customBaseInfo.clientName}})</div>
         </div>
         <p class="custom-browsed">最近浏览：{{customBaseInfo&&customBaseInfo.lastViewTime}}</p>
       </div>
     </div>
     <div class="custom-analyze-box">
-      <van-tabs
-        v-model="activeIndex" sticky
-        color="#007AE6"
-        :line-width="15"
-        :swipe-threshold="6"
-        @click="onClick"
-      >
+      <van-tabs v-model="activeIndex" sticky color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
         <van-tab title="足迹">
-          <!-- :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData" :finished="currentData.finished"-->
           <van-list v-model="loading" :finished="finished" @load="onLoad">
             <custom-detail-track :trackInfo="trackInfo" :trackList="trackList"/>
           </van-list>
         </van-tab>
         <van-tab title="分析">
-          <custom-detail-analyze
-            :baseInfo="customAnalyzeInfo"
-            :tempTagData="intentionProjectTag"
-            v-if="isPieDataReqOk"
-            :pieChartHidden="pieChartHidden"
-            :pieData="pieData"
-            :lineChartHidden="lineChartHidden"
-            :lineData="lineData"
-            :barChartHidden="barChartHidden"
-            :barData="barData"
-            :analysisListData="analysisListData"
-            @renew="renewHandler"
-          />
+          <custom-detail-analyze :baseInfo="customAnalyzeInfo" :tempTagData="intentionProjectTag" v-if="isPieDataReqOk" :pieChartHidden="pieChartHidden" :pieData="pieData" :lineChartHidden="lineChartHidden" :lineData="lineData" :barChartHidden="barChartHidden" :barData="barData" :analysisListData="analysisListData" @renew="renewHandler"/>
         </van-tab>
         <van-tab title="资料">
-          <custom-detail-info
-            @onClick="onClickHandler"
-            :customerInfoList="customerInfoList"
-            :areaShow="areaShow"
-            :areaTitle="areaTitle"
-            :pickerShow="pickerShow"
-            :columns="pickerList"
-            @cancel="cancelHandler"
-            @confirm="confirmHandler"
-          />
+          <custom-detail-info @onClick="onClickHandler" :customerInfoList="customerInfoList" :areaShow="areaShow" :areaTitle="areaTitle" :pickerShow="pickerShow" :columns="pickerList" @cancel="cancelHandler" @confirm="confirmHandler"/>
         </van-tab>
       </van-tabs>
-      <custom-operation
-        :attentionFlag="attentionFlag"
-        :clientMobile="clientMobile"
-        @onattention="attentionHandler"
-        @onreport="reportHandler"
-        @onphone="phoneHandler"
-        @onconsult="consultHandler"
-      ></custom-operation>
+      <custom-operation :attentionFlag="attentionFlag" :clientMobile="clientMobile" @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"/>
     </div>
   </div>
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
-import { ImagePreview, Dialog } from 'vant'
 import timeUtils from '@/utils/timeUtils'
 import * as types from '@/store/mutation-types'
 import CustomDetailAnalyze from 'COMP/Custom/CustomDetailAnalyze'
@@ -88,7 +38,7 @@ import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
 import CustomDetailInfo from 'COMP/Custom/CustomDetailInfo'
 import CustomOperation from 'COMP/Custom/CustomOperation.vue'
 import CustomService from 'SERVICE/customService'
-
+import { ImagePreview } from 'vant'
 export default {
   components: {
     Avatar,
@@ -476,7 +426,7 @@ export default {
         this.haveData = true
         if (res.pages === 0 || this.trackCurrent >= res.pages) {
           this.finished = true
-        }else {
+        } else {
           this.trackCurrent++
         }
         this.loading = false
@@ -548,14 +498,13 @@ export default {
       width: 60px;
       height: 60px;
       margin: 20px 16px 33px;
-
     }
     .custom-attention {
       width: 16px;
       height: 16px;
       position: absolute;
       left: 60px;
-      top: 64px; 
+      top: 64px;
     }
     .custom-info {
       margin: 20px 15px 15px 0;

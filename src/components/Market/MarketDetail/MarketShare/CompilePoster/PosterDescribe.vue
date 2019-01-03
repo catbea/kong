@@ -40,7 +40,7 @@ export default {
         width: 100px;
         margin-right: 10px;
         font-size: 16px;
-        
+
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
       }

@@ -15,10 +15,7 @@
           <button class="agent-right">+ 名片</button>
         </div>
       </div>
-      <div
-        class="bg_img van-hairline--surround discover-img"
-        :style="{backgroundImage:'url('+ (info&&info.image) +')'}"
-      ></div>
+      <div class="bg_img van-hairline--surround discover-img" :style="{backgroundImage:'url('+ (info&&info.image) +')'}"></div>
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -29,10 +26,7 @@
       <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
     </div>
     <!-- 推荐房源 -->
-    <div
-      class="recommend-houses"
-      v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0"
-    >
+    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
       <div class="recommend-houses-content">
         <!-- swiper -->
@@ -48,14 +42,7 @@
         </swiper>
       </div>
     </div>
-    <van-popup
-      class="popup-view"
-      v-model="openPopup"
-      :overlay="true"
-      :lock-scroll="true"
-      :close-on-click-overlay="true"
-      :click-overlay="overlayClose"
-    >
+    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
       </div>
@@ -91,7 +78,7 @@
       </div>
       <!-- <div class="share-btn" @click="shareHandler">
         <i class="icon iconfont icon-Building_list_share"></i>分享
-      </div> -->
+      </div>-->
     </div>
     <!-- 小程序名片 -->
     <div class="app-card"></div>
@@ -178,7 +165,7 @@ export default {
         institutionName: this.info.institutionName
       }
       let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + this.city + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
+      host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
       this.shareData = {
         title: this.info.title,
         imgUrl: this.info.image,
@@ -237,21 +224,14 @@ export default {
     async shareHandler() {
       await window.awHelper.wechatHelper.init()
       this.shareData.success = this.articleShare
-      console.log('serShare', this.shareData)
 
       window.awHelper.wechatHelper.setShare(this.shareData)
-      // wechatApi
-      //   .wechatShare(this.shareData)
-      //   .then(res => {
-      //     this.articleShare()
-      //   })
-      //   .catch(e => {})
     }
   },
   watch: {
     // 当前页面跳转当前页面不会自动刷新 所以强制刷新页面
     $route() {
-      this.$router.go(0)
+      location.reload()
     }
   }
 }
@@ -300,7 +280,6 @@ export default {
       color: #333333;
       font-size: 16px;
       margin-top: 12px;
-      
     }
     > .introduce-view {
       font-size: 14px;
@@ -467,12 +446,6 @@ export default {
       margin: 5px;
       padding: 8px 20px;
       opacity: 0.7;
-    }
-    > .app-btn {
-    }
-    > .collect-btn {
-    }
-    > .share-btn {
     }
   }
 }

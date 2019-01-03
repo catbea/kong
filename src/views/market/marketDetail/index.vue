@@ -69,7 +69,6 @@ import SwipeBox from 'COMP/Market/MarketDetail/SwipeBox'
 import TagGroup from 'COMP/TagGroup/'
 import TitleBar from 'COMP/TitleBar/arrow.vue'
 import MarketService from 'SERVICE/marketService'
-import { Dialog } from 'vant'
 export default {
   components: {
     HintTire,
@@ -145,7 +144,6 @@ export default {
   },
   methods: {
     headSlide() {
-      console.log(this.customerList, '头像数据')
       setInterval(() => {
         if (this.headCount < this.customerList.length - 1) {
           this.headCount += 1
@@ -158,12 +156,13 @@ export default {
       if (this.userInfo.name !== '' && this.userInfo.distributorName !== '' && this.userInfo.majorRegion !== '' && this.userInfo.institutionName !== '') {
         this.$router.push({ name: 'marketDetail-share' })
       } else {
-        this.$dialog.confirm({
-          title: '您有未完善的信息',
-          message: '信息不完整会影响传播效率哦',
-          confirmButtonText: '去完善',
-          className: 'marketShareHint'
-        })
+        this.$dialog
+          .confirm({
+            title: '您有未完善的信息',
+            message: '信息不完整会影响传播效率哦',
+            confirmButtonText: '去完善',
+            className: 'marketShareHint'
+          })
           .then(() => {
             this.$router.push({ name: 'user-edit' })
           })
@@ -190,7 +189,6 @@ export default {
      */
     async getLinkerDetail(id) {
       const result = await MarketService.getLinkerDetail(id)
-      console.log(result, '楼盘详情数据')
       this.linkerInfo = result
       this.customerList = result.customerList
       this.headSlide()
@@ -200,8 +198,6 @@ export default {
       this.info = houseUseList
       this.confDynamic.title = '楼盘动态 (' + this.linkerInfo.houseDynamicList.length + ')'
       this.expireFlag = result.expireFlag
-      console.log(this.expireFlag, '是否已开通')
-      //this.titleBarHandle()
     },
     //判断该楼盘有无图片列表
     async getMarketDetailPhotoInfo() {
@@ -292,7 +288,7 @@ export default {
         justify-content: space-between;
         .house-owner {
           font-size: 13px;
-          
+
           font-weight: 600;
           display: flex;
           margin-right: 16px;
@@ -321,7 +317,7 @@ export default {
       background: rgba(0, 122, 230, 0.05);
       border-radius: 4px;
       font-size: 16px;
-      
+
       font-weight: 400;
       text-align: center;
       line-height: 44px;
@@ -375,7 +371,7 @@ export default {
         text-overflow: ellipsis;
         width: 291px;
         font-size: 16px;
-        
+
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         margin-bottom: 6px;
@@ -388,14 +384,14 @@ export default {
         -webkit-line-clamp: 2;
         width: 323px;
         font-size: 14px;
-        
+
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         margin-bottom: 10px;
       }
       .market-state-box-bottom {
         font-size: 12px;
-        
+
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
       }
@@ -417,14 +413,14 @@ export default {
   text-align: center;
   .van-dialog__header {
     font-size: 18px;
-    
+
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 25px;
   }
   .van-dialog__message {
     font-size: 15px;
-    
+
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     line-height: 21px;
