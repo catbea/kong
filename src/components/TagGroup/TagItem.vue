@@ -31,7 +31,5 @@ export default {
   transform: scale(0.85);
   margin: 1px 0;
   padding: 3px 8px;
-  
-  
 }
 </style>

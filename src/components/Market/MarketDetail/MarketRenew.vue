@@ -191,14 +191,16 @@ export default {
       }
     },
     renewHandle(n) {
-      if(this.renewInfo.thisDistributor===false){
-        this.$dialog.alert({
-        message: '该楼盘不可续费非当前所属公司下楼盘无法开通续费',
-        confirmButtonText:'知道啦'
-      }).then(() => {
-        // on close
-      });
-      }else{
+      if (this.renewInfo.thisDistributor === false) {
+        this.$dialog
+          .alert({
+            message: '该楼盘不可续费非当前所属公司下楼盘无法开通续费',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: n } })
       }
     }

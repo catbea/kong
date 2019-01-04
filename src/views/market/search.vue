@@ -26,13 +26,31 @@
     <div class="search-result-container" v-if="searchStatus === 2">
       <screen v-model="filters"></screen>
       <div class="search-result-content">
-        <van-list class="list-container" v-model="loading" :finished="finished" finished-text @load="onLoad">
-          <market-describe v-for="(item,index) in searchResult" :key="index" :itemInfo="item" @openReturnHandle="opClickHandler(item)"></market-describe>
+        <van-list
+          class="list-container"
+          v-model="loading"
+          :finished="finished"
+          finished-text
+          @load="onLoad"
+        >
+          <market-describe
+            v-for="(item,index) in searchResult"
+            :key="index"
+            :itemInfo="item"
+            @openReturnHandle="opClickHandler(item)"
+            @skipDetail="skipDetail(item)"
+          ></market-describe>
         </van-list>
         <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="showNull"></null>
         <div class="hot-recommend" v-if="!haveData">
           <title-bar class="title-container" :conf="titleBarConf"/>
-          <market-describe v-for="(item,index) in hotResult" :key="index" :itemInfo="item" @openReturnHandle="opClickHandler(item)"></market-describe>
+          <market-describe
+            v-for="(item,index) in hotResult"
+            :key="index"
+            :itemInfo="item"
+            @openReturnHandle="opClickHandler(item)"
+            @skipDetail="skipDetail(item)"
+          ></market-describe>
         </div>
       </div>
     </div>
@@ -180,6 +198,9 @@ export default {
     },
     opClickHandler(item) {
       this.$router.push(`/marketDetail/open/${item.linkerId}`)
+    },
+    skipDetail(item) {
+      this.$router.push(`/market/${item.linkerId}`)
     },
     //
     /**

@@ -277,7 +277,6 @@ export default {
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
         padding-top: 6px;
-        
       }
       > .list-right-label {
         margin-top: 10px;
@@ -306,7 +305,7 @@ export default {
         font-weight: 600;
         color: rgba(234, 77, 46, 1);
         padding-top: 5px;
-      //  margin-bottom: 16px;
+        //  margin-bottom: 16px;
         > .right-price-lab-ok {
           color: rgba(0, 122, 230, 1);
           font-size: 10px;

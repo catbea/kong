@@ -170,7 +170,7 @@ export default {
   },
   data() {
     return {
-      instance:0,
+      instance: 0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: true, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
@@ -223,12 +223,15 @@ export default {
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
     // window.addEventListener("popstate", this.fun, false);
   },
-  beforeRouteLeave (to, from, next) {
-    if(this.instance){this.instance.close()}
+  beforeRouteLeave(to, from, next) {
+    if (this.instance) {
+      this.instance.close()
+    }
     next()
   },
   methods: {
-    async getMarketDetailPhotoInfo() {//判断该楼盘有无图片列表
+    async getMarketDetailPhotoInfo() {
+      //判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
       if (res.length > 0) {
         this.photoButton = true
@@ -236,13 +239,16 @@ export default {
         this.photoButton = false
       }
     },
-    photoHandle() {//进入相册页面
+    photoHandle() {
+      //进入相册页面
       this.$router.push({ name: 'photoList', params: { id: this.id } })
     },
-    commission() {//进入佣金详情
+    commission() {
+      //进入佣金详情
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
-    async getDetailInfo(id) {// 获取楼盘详情
+    async getDetailInfo(id) {
+      // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
       if (!this.info.linkerOtherList) {
@@ -267,11 +273,11 @@ export default {
       let data = []
       data.push(n)
       // this.$router.push({ name: 'Preview-Picture', query: { arr: data }})
-    this.instance =  ImagePreview({
+      this.instance = ImagePreview({
         images: data,
         startPosition: 0
       })
-  },
+    },
     async collectHandler() {
       //修改收藏状态
       if (this.status == 1) {
@@ -345,7 +351,7 @@ export default {
   },
   beforeDestroy() {
     clearInterval(this.rd.headSlideTimer)
-    window.removeEventListener('popstate', this.fun, false);
+    window.removeEventListener('popstate', this.fun, false)
   }
 }
 </script>
