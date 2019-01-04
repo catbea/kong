@@ -293,7 +293,10 @@ export default {
     hideface(event) {
       //关闭表情
       this.isShowEmjie = false
-      document.body.scrollTop = document.body.scrollHeight
+      setTimeout(() => {
+        document.body.scrollTop = document.body.scrollHeight
+      }, 100)
+
       this.pyzmaoviwe()
     },
 
