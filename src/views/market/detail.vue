@@ -28,7 +28,7 @@
         </div>
         <!-- 存在全景时全景播放 -->
       </div>
-      <div class="bg_img operate-2" v-if="info.ifPanorama" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
+      <div class="bg_img operate-2" v-if="info.ifPanorama===0" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
     </div>
     <!-- 楼盘基础信息 -->
     <div class="base-info-container">
