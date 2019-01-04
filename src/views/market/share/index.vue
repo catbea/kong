@@ -224,6 +224,8 @@ export default {
       left: 20px;
       bottom: 43px;
       border-radius: 50%;
+      object-fit: cover;
+      background-size: cover
     }
 
     > .username-view {
