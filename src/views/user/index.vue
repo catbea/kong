@@ -1,7 +1,7 @@
 <template>
-  <div class="me-page">
+  <div class="user-page">
+    <!-- 顶部个人信息及vip信息 -->
     <business-card @showPopup="this.showPopp" @shareUserCard="this.enterSharePage"/>
-    <div class="top-null"></div>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
       <div class="modify-child">
@@ -15,7 +15,6 @@
         </div>
       </div>
     </div>
-    <div class="top-null"></div>
     <div class="business-status-tow">
       <div class="business-status-title">我的服务</div>
       <div class="modify-child">
@@ -29,7 +28,6 @@
         </div>
       </div>
     </div>
-    <div class="top-null-css"></div>
     <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
@@ -194,9 +192,9 @@ export default {
     font-size: 12px;
   }
 }
-.me-page {
+.user-page {
   height: 100%;
-  background: #ffffff;
+  background: #f7f9fa;
   .business-status-title {
     font-size: 20px;
     font-weight: 600;
@@ -204,19 +202,15 @@ export default {
     line-height: 28px;
     padding: 20px 16px 18px;
   }
-  .top-null {
-    height: 10px;
-    background: rgba(247, 249, 250, 1);
-  }
-  .top-null-css {
-    height: 30px;
-    background: rgba(247, 249, 250, 1);
-  }
   .business-status-con {
+    background: #fff;
     height: 218px;
+    margin-top: 10px;
   }
   .business-status-tow {
+    background: #fff;
     height: 140px;
+    margin-top: 10px;
   }
   .modify-child {
     .head-img {
@@ -234,43 +228,11 @@ export default {
       }
       > .grou1Icon-p {
         font-size: 12px;
-
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
       }
     }
   }
-
-  // > .business-info,
-  // > .business-help {
-  //   background: #fff;
-  //   margin-top: 10px;
-  //   > .business-info-cell {
-  //     height: 56px;
-  //     line-height: 56px;
-  //     padding: 0 20px;
-  //     font-size: 16px;
-  //     color: #333333;
-  //     font-weight: 400;
-  //     > .van-icon {
-  //       font-size: 16px;
-  //       position: absolute;
-  //       right: 5px;
-  //       top: 50%;
-  //       transform: translateY(-50%);
-  //     }
-  //     > .msg-dot {
-  //       position: absolute;
-  //       background: #ea4d2e;
-  //       width: 8px;
-  //       height: 8px;
-  //       right: 30px;
-  //       border-radius: 100%;
-  //       top: 50%;
-  //       transform: translateY(-50%);
-  //     }
-  //   }
-  // }
 }
 </style>
