@@ -253,16 +253,16 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(0, 122, 230, 1);
-          line-height: 21px; 
+          line-height: 21px;
           background: #ffffff;
           display: flex;
-           padding-left: 7px;
+          padding-left: 7px;
           > .agent-gzImg {
             width: 16px;
             height: 16px;
             padding-top: 3px;
           }
-          .list-btn-right-gz{
+          .list-btn-right-gz {
             padding-top: -5px;
           }
         }

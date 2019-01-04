@@ -143,11 +143,13 @@ export default {
     skipMarketDetail(linkerId) {
       this.$router.push('/market/' + linkerId)
     },
-    popupHandle() {//更多
+    popupHandle() {
+      //更多
       this.show = !this.show
     },
     stickHandle(index) {
-      if (this.dataArr.recommand == 0) {//将当前点击的楼盘置顶
+      if (this.dataArr.recommand == 0) {
+        //将当前点击的楼盘置顶
         if (this.$parent.$parent.stickNum > 2) {
           this.$dialog
             .confirm({
@@ -155,22 +157,24 @@ export default {
               message: '继续置顶将取消最初置顶楼盘置顶状态是否确定置顶当前楼盘'
             })
             .then(() => {
-              this.$emit('recommandTrueHandle',this.dataArr)
+              this.$emit('recommandTrueHandle', this.dataArr)
               let parent = this.$parent.$parent
               parent.showMarketList.unshift(parent.showMarketList[index])
               parent.showMarketList.splice(index + 1, 1)
               parent.showMarketList[3].recommand = 0
               // parent.showMarketList.splice(1,1)
-              this.$dialog.alert({
+              this.$dialog
+                .alert({
                   message: '楼盘置顶成功',
                   className: 'hint-alert'
                 })
                 .then(() => {})
               this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
-              this.show = !this.show//关闭弹出层
+              this.show = !this.show //关闭弹出层
             })
-        } else {//将当前点击的楼盘置顶
-          this.$emit('recommandTrueHandle',this.dataArr)
+        } else {
+          //将当前点击的楼盘置顶
+          this.$emit('recommandTrueHandle', this.dataArr)
           let parent = this.$parent.$parent
           parent.showMarketList.unshift(parent.showMarketList[index])
           parent.showMarketList.splice(index + 1, 1)
@@ -185,8 +189,9 @@ export default {
           this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
           this.show = !this.show
         }
-      } else if (this.dataArr.recommand == 10) {//将当前点击的楼盘取消置顶
-        this.$emit('recommandFalseHandle',this.dataArr)
+      } else if (this.dataArr.recommand == 10) {
+        //将当前点击的楼盘取消置顶
+        this.$emit('recommandFalseHandle', this.dataArr)
         this.$dialog
           .alert({
             message: '楼盘取消置顶成功',
@@ -256,7 +261,8 @@ export default {
       this.show = !this.show
       this.commonButtonShow = !this.commonButtonShow
     },
-    exhibitionHandle() {//关闭楼盘展示
+    exhibitionHandle() {
+      //关闭楼盘展示
       this.$dialog
         .confirm({
           title: '是否确定关闭该楼盘名片展示',
@@ -270,10 +276,12 @@ export default {
           this.$emit('closeCut', this.dataArr)
         })
     },
-    goRenew(linkerId) {//去续费
+    goRenew(linkerId) {
+      //去续费
       this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
     },
-    skipShare() {//去分享
+    skipShare() {
+      //去分享
       this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
     }
   }

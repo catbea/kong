@@ -124,20 +124,18 @@ export default {
       const timer = setInterval(() => {
         second--
         if (second) {
-           if(this.allDynamicsNum !=0){
+          if (this.allDynamicsNum != 0) {
             this.showDynamics = true
-           }else{
-             this.showDynamics = false
-           }
-           
+          } else {
+            this.showDynamics = false
+          }
         } else {
           clearInterval(timer)
           this.showDynamics = false
         }
       }, 1000)
     },
-    checkPosition(val) {
-    },
+    checkPosition(val) {},
     goList(index, title) {
       this.finished = false
       document.querySelector('.router-view').scrollTop = '0px'

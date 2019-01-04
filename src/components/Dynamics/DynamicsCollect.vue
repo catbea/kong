@@ -217,7 +217,7 @@ export default {
           justify-content: center;
           font-size: 12px;
           line-height: 24px;
-          .card-tips{
+          .card-tips {
             padding-left: 5px;
           }
           > .house-tips {

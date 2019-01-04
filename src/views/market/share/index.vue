@@ -61,22 +61,21 @@ export default {
     Avatar,
     swiper,
     swiperSlide
-  },  
+  },
   data: () => ({
-    list:[1,2,3,4],
-    swiperOption:{
+    list: [1, 2, 3, 4],
+    swiperOption: {
       slidesPerView: 'auto',
       centeredSlides: true,
       spaceBetween: 30,
       pagination: {
         el: '.swiper-pagination',
-        clickable: true,
+        clickable: true
       },
       on: {
-    slideChangeTransitionEnd: function(){
-      alert(this.activeIndex);//切换结束时，告诉我现在是第几个slide
-      
-    }
+        slideChangeTransitionEnd: function() {
+          alert(this.activeIndex) //切换结束时，告诉我现在是第几个slide
+        }
       }
     },
     id: -1,
@@ -94,8 +93,8 @@ export default {
     this.getPosterInfo(this.id)
   },
   methods: {
-    onChange(index) {//轮播图
-      
+    onChange(index) {
+      //轮播图
     },
     async getPosterInfo(buildId) {
       const result = await marketService.shareBuildingCard(buildId)
@@ -134,44 +133,42 @@ export default {
 }
 </script>
 <style lang="less">
-
 .market-share-page {
   width: 100%;
   height: 100%;
   position: relative;
   background: #ffffff;
-  
+
   .swiper-container {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .swiper-slide {
-            text-align: center;
-            font-size: 18px;
-            background: #fff;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            -webkit-justify-content: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            -webkit-align-items: center;
-            align-items: center;
-        }
-        
-        .swiper-slide {
-            width: 192px;
-            height:308px;
-            
-        }
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  .swiper-slide {
+    width: 192px;
+    height: 308px;
+  }
 
   .box {
-    width:100%;
+    width: 100%;
     position: absolute;
   }
 
@@ -184,19 +181,19 @@ export default {
     margin-top: 50%;
     z-index: 10000;
   }
-  .swipe-box{
-    .trans{
-    transform: scale(1.25);
-    background:black;
-  }
-    .share-top-swipe{
-    width: 240px;
-    height: 308px;
-    background:red;
-    border-radius:5px;
+  .swipe-box {
+    .trans {
+      transform: scale(1.25);
+      background: black;
+    }
+    .share-top-swipe {
+      width: 240px;
+      height: 308px;
+      background: red;
+      border-radius: 5px;
     }
   }
-  
+
   .share-top {
     position: relative;
     width: 300px;
@@ -298,7 +295,7 @@ export default {
       bottom: 43px;
       border-radius: 50%;
       object-fit: cover;
-      background-size: cover
+      background-size: cover;
     }
 
     > .username-view {

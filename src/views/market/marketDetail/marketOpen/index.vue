@@ -287,7 +287,7 @@ export default {
   }
   .van-dialog__message--has-title {
     font-size: 15px;
-    line-height:1.5 !important;
+    line-height: 1.5 !important;
     font-weight: 400;
     color: rgba(51, 51, 51, 1);
     text-align: center;

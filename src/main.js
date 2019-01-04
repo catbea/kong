@@ -13,7 +13,6 @@ Vue.prototype.$devicePixelRatio = window.devicePixelRatio
 global()
 
 if (process.env.NODE_ENV === 'development') {
-
   Vue.config.silent = false
   Vue.config.devtools = true
 } else if (process.env.NODE_ENV === 'production') {

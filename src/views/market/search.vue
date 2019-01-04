@@ -199,7 +199,7 @@ export default {
     opClickHandler(item) {
       this.$router.push(`/marketDetail/open/${item.linkerId}`)
     },
-    skipDetail(item){
+    skipDetail(item) {
       this.$router.push(`/market/${item.linkerId}`)
     },
     //
