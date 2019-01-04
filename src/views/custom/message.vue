@@ -1,13 +1,9 @@
 <template>
   <div class="massage-info-body">
-    <div class="massage-info-list" 　>
+    <div class="massage-info-list">
       <!--消息-->
-      <div class=" " style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
-        <van-pull-refresh
-            v-model="loading"
-            pulling-text="下拉加载下一页"
-            loosing-text="释放加载下一页"
-            @refresh="getmsgListnext">
+      <div class style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
+        <van-pull-refresh v-model="loading" pulling-text="下拉加载下一页" loosing-text="释放加载下一页" @refresh="getmsgListnext">
           <div style="height: auto">
             <div class="massage-info-msg" v-for="(items,index) in msgList" v-bind:key="index">
               <div class="massage-info-msg-time">
@@ -15,24 +11,22 @@
               </div>
               <div v-for="(item,index) in items.msgList" v-bind:key="index">
                 <div :id="item.id" class="massage-info-msg-customer" v-if="item.fromType == 1">
-                  <img @click='goDetails' class="massage-info-msg-customer-img"
-                       v-if="headImgUrl   !='' && headImgUrl !=null && headImgUrl !=undefined"
-                       v-bind:src="headImgUrl"/>
-                  <div class="msg-customer-con" v-if="item.msgType=='1'">
-                    {{item.content}}
-                  </div>
+                  <img @click="goDetails" class="massage-info-msg-customer-img" v-if="headImgUrl   !='' && headImgUrl !=null && headImgUrl !=undefined" v-bind:src="headImgUrl">
+                  <div class="msg-customer-con" v-if="item.msgType=='1'">{{item.content}}</div>
                   <div class="msg-customer-con-voice" v-if="item.msgType=='2'" @click="playVoice(item.content,item.id)">
                     <img v-if="isplay==item.id" class="left-voice-img" src="@/assets/img/message/left_voice.gif">
-                    <img v-else class="left-voice-img" src="@/assets/img/message/Rectangle@3x.png"/>
+                    <img v-else class="left-voice-img" src="@/assets/img/message/Rectangle@3x.png">
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                   </div>
 
                   <div class="msg_custom_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
-                    <div class='info-img'><img v-bind:src="item.content.avatarMediaid"/></div>
+                    <div class="info-img">
+                      <img v-bind:src="item.content.avatarMediaid">
+                    </div>
                     <div class="info-data">
-                      <div class='info-name'>{{item.content.linkerName}}</div>
-                      <div class='info-address'>{{item.content.address}}</div>
-                      <div class='info-Price'>
+                      <div class="info-name">{{item.content.linkerName}}</div>
+                      <div class="info-address">{{item.content.address}}</div>
+                      <div class="info-Price">
                         <span>{{item.content.linkerPrice}}</span>
                         <span>{{item.content.building}}</span>
                       </div>
@@ -40,27 +34,26 @@
                   </div>
                 </div>
                 <div :id="item.id" class="massage-info-msg-me" v-if="item.fromType == 2">
-                  <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="avatar"/>
-                  <div class="msg-customer-con-me" v-if="item.msgType=='1'">
-                    {{item.content}}
-                  </div>
+                  <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="avatar">
+                  <div class="msg-customer-con-me" v-if="item.msgType=='1'">{{item.content}}</div>
                   <div class="msg-customer-con-me-voice" v-if="item.msgType=='2'" @click="playVoice(item.content,item.id)">
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                     <img v-if="isplay==item.id" class="left-voice-img" src="@/assets/img/message/right_voice.gif">
-                    <img v-else class="left-voice-img" src="@/assets/img/message/Path@3x.png"/>
+                    <img v-else class="left-voice-img" src="@/assets/img/message/Path@3x.png">
                   </div>
                   <div class="msg_house_info" v-if="item.msgType==3" @click="gomarket(item.content.linkerId,item.content.linkerName)">
-                    <div class='info-img'><img v-bind:src="item.content.avatarMediaid"/></div>
+                    <div class="info-img">
+                      <img v-bind:src="item.content.avatarMediaid">
+                    </div>
                     <div>
-                      <div class='info-name'>{{item.content.linkerName}}</div>
-                      <div class='info-address'>{{item.content.address}}</div>
-                      <div class='info-Price'>
-                        <span >{{item.content.linkerPrice}}</span>
+                      <div class="info-name">{{item.content.linkerName}}</div>
+                      <div class="info-address">{{item.content.address}}</div>
+                      <div class="info-Price">
+                        <span>{{item.content.linkerPrice}}</span>
                         <span>{{item.content.building}}</span>
                       </div>
                     </div>
                   </div>
-                  
                 </div>
                 <div class="msg-customer-con-me-status" v-show="!item.cardDelFlag">
                   <p v-if="item.msgStatus==1" style="color: #333">未读</p>
@@ -78,94 +71,78 @@
     </div>
     <div class="voiceInfo-div">
       <div class="voiceInfo" v-if="isvoice==1">
-        <img src="@/assets/img/message/voice01.gif"/>
+        <img src="@/assets/img/message/voice01.gif">
         <div>手指上划 取消发送</div>
       </div>
     </div>
     <div class="voiceInfo-div-cancel" v-if="isvoice==3">
       <div class="voiceInfo-cancel">
-        <img src="@/assets/img/message/voice-cancel.png"/>
+        <img src="@/assets/img/message/voice-cancel.png">
         <div>松开手指 取消发送</div>
       </div>
     </div>
-
     <div id="footer" ref="inputContent" :class="isShowEmjie || isShowOption?'massage-info-lower-emjie':'massage-info-lower'">
       <div class="massage-info-lower-left" @click="switchMsg">
-        <img v-if="msgType==1" src="@/assets/img/message/Oval@3x.png"/>
-        <img v-else src="@/assets/img/message/Oval_slices_text.png"/>
+        <img v-if="msgType==1" src="@/assets/img/message/Oval@3x.png">
+        <img v-else src="@/assets/img/message/Oval_slices_text.png">
       </div>
       <div class="massage-info-lower-cen">
-        <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage('','')" v-model="message" id='message'
-               v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？"/>
-        <button v-else :class="isvoice==1? 'msgContentvoice msgContentvoice-bg':'msgContentvoice'"
-                @touchstart="startRecord" @touchend="stopRecord" @touchmove='touchmoveRecord'>{{def_btvalue}}
-        </button>
+        <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage('','')" v-model="message" id="message" v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？">
+        <button v-else :class="isvoice==1? 'msgContentvoice msgContentvoice-bg':'msgContentvoice'" @touchstart="startRecord" @touchend="stopRecord" @touchmove="touchmoveRecord">{{def_btvalue}}</button>
       </div>
       <div class="massage-info-lower-right">
         <div class="lower-right-bnt">
-          <img class="face" src="@/assets/img/message/Oval_bq.png" @click="displayface"/>
+          <img class="face" src="@/assets/img/message/Oval_bq.png" @click="displayface">
         </div>
         <div class="lower-right-bnt">
           <div class="send" v-if="message.length>0" @click="sendMessage('','')">发送</div>
-          <img class="selTempl" v-else src="@/assets/img/message/Oval@3x_tpl.png" @click="displayOption"/>
+          <img class="selTempl" v-else src="@/assets/img/message/Oval@3x_tpl.png" @click="displayOption">
         </div>
       </div>
     </div>
-
     <div class="msg-emjie" v-show="isShowEmjie">
-        <span v-for="(itemone,emojikeyone) in emojiFactory"
-            @click="emojiSelect(itemone.key)" style="font-size:0.5rem;margin:0.15rem;float:left;"
-            :key="emojikeyone">{{getEmoji(itemone.tag)}}</span>
+      <span v-for="(itemone,emojikeyone) in emojiFactory" @click="emojiSelect(itemone.key)" style="font-size:0.5rem;margin:0.15rem;float:left;" :key="emojikeyone">{{getEmoji(itemone.tag)}}</span>
     </div>
-
     <div v-show="isShowOption" class="massage_temp_main">
-        <div class="im-option-item" @click="defaultMsgClick">
-            <div class="im-option-icon-item">
-                <img :src="iMTempMsgIcon" />
-            </div>
-            <div class="im-option-lebal-item">常用语</div>
+      <div class="im-option-item" @click="defaultMsgClick">
+        <div class="im-option-icon-item">
+          <img :src="iMTempMsgIcon">
         </div>
+        <div class="im-option-lebal-item">常用语</div>
+      </div>
 
-        <div class="im-option-item">
-            <div class="im-option-icon-item" @click="projectClick">
-                <img :src="iMTempProjectIcon" />
-            </div>
-            <div class="im-option-lebal-item">楼盘</div>
+      <div class="im-option-item">
+        <div class="im-option-icon-item" @click="projectClick">
+          <img :src="iMTempProjectIcon">
         </div>
+        <div class="im-option-lebal-item">楼盘</div>
+      </div>
 
-        <div class="im-option-item" v-show="clientMobile" @click="phoneCall">
-            <div class="im-option-icon-item">
-                <img :src="iMTempPhoneIcon" />
-            </div>
-            <div class="im-option-lebal-item">拨打电话</div>
+      <div class="im-option-item" v-show="clientMobile" @click="phoneCall">
+        <div class="im-option-icon-item">
+          <img :src="iMTempPhoneIcon">
         </div>
+        <div class="im-option-lebal-item">拨打电话</div>
+      </div>
 
-        <div class="im-option-item" @click="gotoReport">
-            <div class="im-option-icon-item">
-                <img :src="iMTempReportIcon" />
-            </div>
-            <div class="im-option-lebal-item">发起报备</div>
+      <div class="im-option-item" @click="gotoReport">
+        <div class="im-option-icon-item">
+          <img :src="iMTempReportIcon">
         </div>
+        <div class="im-option-lebal-item">发起报备</div>
+      </div>
     </div>
-
-    <audio :src="nowVoiceUrl" ref='audio' id="myaudio" hidden="true" preload="auto" v-show="false"/>
-
-    <van-popup 
-        v-model="defaultMsgPopShow" 
-        position="bottom" 
-        class="default-msg-popup">
-        <div class="default-msg-box">
-            <div class="default-msg-title van-hairline--bottom">
-                <span>常用语</span>
-                <img :src="closeIcon" @click="closeDefaultMsg"/>
-            </div>
-            <div class="default-msg-item van-hairline--bottom" v-for="(info,index) in tempValue" :key="index" @click="defaultMsgClickHandle(info)">
-                {{info}}
-            </div>
+    <audio :src="nowVoiceUrl" ref="audio" id="myaudio" hidden="true" preload="auto" v-show="false"/>
+    <van-popup v-model="defaultMsgPopShow" position="bottom" class="default-msg-popup">
+      <div class="default-msg-box">
+        <div class="default-msg-title van-hairline--bottom">
+          <span>常用语</span>
+          <img :src="closeIcon" @click="closeDefaultMsg">
         </div>
+        <div class="default-msg-item van-hairline--bottom" v-for="(info,index) in tempValue" :key="index" @click="defaultMsgClickHandle(info)">{{info}}</div>
+      </div>
     </van-popup>
   </div>
-
 </template>
 <script>
 import emoji from '@/utils/emoji'
@@ -185,7 +162,6 @@ export default {
       defaultMsgPopShow: false,
       clientMobile: this.$route.query.clientMobile,
       loading: false,
-      finished: false,
       emojiFactory: [],
       clientId: this.$route.query.clientId,
       nickName: this.$route.query.customerRemarkName,
@@ -202,26 +178,19 @@ export default {
       def_btvalue: '按住 说话',
       isvoice: 0, //1代表是正在发送语音,
       toAccount: this.$route.query.toAccount,
-      headers: {},
-      timeoutObj: '',
-      stompClient: '',
       message: '',
       msgType: 1, //1文本输入2语音输入
       sourceType: 2, //来源类型2企业微信 1小程序
       audioTime: 10,
       posStart: 0, //初始化起点坐标
-      posEnd: 0, //初始化终点坐标
       posMove: 0, //初始化滑动坐标
       isShowEmjie: false,
       isplay: 0, //正在播放的语音对象
       nowVoiceUrl: '', //正在播放的语音地址
       voiceUrl: '',
-      pages: 1,
       current: 1,
       START: 0,
       END: 0,
-      msgid: 0, //接收消息的id
-      msgTimeStamp: '',
       tempValue: [
         '您好，请问有什么需要帮助？',
         '您是准备用来投资还是自己住呢?',
@@ -708,22 +677,24 @@ export default {
 </script>
 <style lang="less" scoped>
 .massage-info-body {
-  // display: flex;
-  // -webkit-box-orient: vertical;
-  // -webkit-box-direction: normal;
-  // -webkit-flex-direction: column;
-  // flex-direction: column;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   font-size: 13px;
-  padding: 0;
-  margin: 0;
-}
-.massage-info-list {
-  width: 100%;
-  height: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  flex: 1;
+  > .massage-info-list {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 45px;
+    // height: 100%;
+    // -webkit-box-flex: 1;
+    // -webkit-flex: 1;
+    // flex: 1;
+  }
 }
 
 .project-msg-popup {
@@ -980,12 +951,16 @@ export default {
 }
 
 .massage-info-lower {
-  position: fixed;
+  position: absolute;
+  left: 0;
   bottom: 0;
+  right: 0;
+  // position: fixed;
+  // bottom: 0;
   height: 50px;
   display: flex;
   text-align: center;
-  width: 100%;
+  // width: 100%;
   background: rgba(250, 250, 250, 1);
   padding: 8px 10px;
   z-index: 99;
