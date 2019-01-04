@@ -57,6 +57,7 @@
             :key="index"
             :itemInfo="item"
             @openReturnHandle="opClickHandler(item)"
+            @skipDetail="skipDetail(item)"
           ></market-describe>
         </van-list>
         <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="showNull"></null>
@@ -67,6 +68,7 @@
             :key="index"
             :itemInfo="item"
             @openReturnHandle="opClickHandler(item)"
+            @skipDetail="skipDetail(item)"
           ></market-describe>
         </div>
       </div>
@@ -215,6 +217,9 @@ export default {
     },
     opClickHandler(item) {
       this.$router.push(`/marketDetail/open/${item.linkerId}`)
+    },
+    skipDetail(item){
+      this.$router.push(`/market/${item.linkerId}`)
     },
     //
     /**
