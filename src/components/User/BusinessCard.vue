@@ -15,7 +15,7 @@
         <div class="user-info-content">
           <!-- 姓名、主营区域 -->
           <div class="user-detail-box">
-            <div class="username-box">
+            <div class="username-box" @click="editCLickHandler">
               <span class="username-text">{{userInfo.name}}</span>
               <i class="icon iconfont icon-me_editor username-edit-icon"></i>
             </div>
@@ -58,15 +58,9 @@ export default {
     Avatar
   },
   data: () => ({
-    leftIcon: require('IMG/user/left@2x.png'),
-    rightIcon: require('IMG/user/fx.png'),
-    personIcon: require('IMG/user/person_icon.png'),
-    updataIcon: require('IMG/user/Group10@2x.png'),
     modifyImg: require('IMG/user/usercard_bg@2x.png'),
     crownIcon: require('IMG/user/cardGroup5@2x.png'),
-    discountIcon: require('IMG/user/SetmealGroup17@2x.png'),
-    shareIcon: require('IMG/user/share.png'),
-    editIcon: require('IMG/user/editInfo@2x.png')
+    discountIcon: require('IMG/user/SetmealGroup17@2x.png')
   }),
   methods: {
     editCLickHandler() {
