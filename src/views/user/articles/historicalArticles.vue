@@ -105,7 +105,5 @@ export default {
       }
     }
   }
-  > .historicalArticles-null {
-  }
 }
 </style>

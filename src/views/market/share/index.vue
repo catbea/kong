@@ -173,7 +173,6 @@ export default {
   .box {
     width:100%;
     position: absolute;
-    margin-bottom: 5px;
   }
 
   .van-loading {
@@ -205,7 +204,7 @@ export default {
     border-radius: 10px;
     left: 10%;
     right: 10%;
-    margin-top: 30px;
+    margin-top: 10px;
     background: rgba(255, 255, 255, 1);
     > .avatar-img {
       position: absolute;
@@ -298,6 +297,8 @@ export default {
       left: 20px;
       bottom: 43px;
       border-radius: 50%;
+      object-fit: cover;
+      background-size: cover
     }
 
     > .username-view {
@@ -328,8 +329,8 @@ export default {
     }
   }
   .share-bottom {
-    margin-top: 12px;
     margin-bottom: 20px;
+    margin-top: -6px;
     p {
       text-align: center;
       font-size: 13px;

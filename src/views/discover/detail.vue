@@ -15,10 +15,6 @@
           <button class="agent-right"><b>+</b> 名片</button>
         </div>
       </div>
-      <!-- <div
-        class="bg_img van-hairline--surround discover-img"
-        :style="{backgroundImage:'url('+ (info&&info.image) +')'}"
-      ></div>-->
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -93,9 +89,7 @@
           <i class="icon iconfont icon-package_Optimal"></i>收藏
         </div>
       </div>
-      <!-- <div class="share-btn" @click="shareHandler">
-        <i class="icon iconfont icon-Building_list_share"></i>分享
-      </div>-->
+    
     </div>
     <!-- 小程序名片 -->
     <div class="app-card"></div>
@@ -108,7 +102,6 @@ import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-// import wechatApi from '@/utils/wechatApi'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'

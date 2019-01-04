@@ -126,6 +126,8 @@ export default {
         if (second) {
            if(this.allDynamicsNum !=0){
             this.showDynamics = true
+           }else{
+             this.showDynamics = false
            }
            
         } else {
@@ -251,19 +253,6 @@ export default {
     async getAllDynamicList(current) {
       const res = await dynamicsService.getAllDynamicList()
       this.allDynamicList = res.records
-
-      // if(res.records.length > 0){
-      //   this.allDynamicList = this.allDynamicList.concat(res.records)
-      //     if (res.pages === 0 || this.page === res.pages) {
-      //       this.finished = true
-      //     }
-      //     this.current++
-      //     this.loading = false
-      //   } else {
-      //     this.current = 1
-      //     this.loading = false
-      //     this.finished = true
-      //   }
     },
     //名片数据动态统计
     async getCardDynamicCount() {

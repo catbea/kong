@@ -1,42 +1,23 @@
 <template>
   <div class="market-search-page">
     <div class="search-box">
-      <van-search
-        v-model="searchValue"
-        placeholder="请输入搜索关键词"
-        show-action
-        @keypress="onKeypressHandler"
-        @search="onSearchHandler"
-        background="#fff"
-      >
-        <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon"/>
+      <van-search v-model="searchValue" placeholder="请输入搜索关键词" show-action @keypress="onKeypressHandler" @search="onSearchHandler" background="#fff">
+        <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
     </div>
     <div class="history-words-content" v-if="searchStatus === 0 && searchHistory.length>0">
-      <div class="title-box" v-if>
+      <div class="title-box">
         <p class="history-title">历史搜索</p>
-        <div
-          class="bg_img clear-icon"
-          :style="{backgroundImage:'url('+clearIcon+')'}"
-          @click="cleanHandler"
-        ></div>
+        <div class="bg_img clear-icon" :style="{backgroundImage:'url('+clearIcon+')'}" @click="cleanHandler"></div>
       </div>
       <div class="history-content">
-        <div
-          class="history-item"
-          v-for="item in searchHistory"
-          @click="historyItemClick(item)"
-        >{{item}}</div>
+        <div class="history-item" v-for="(item, index) in searchHistory" :key="index" @click="historyItemClick(item)">{{item}}</div>
       </div>
     </div>
     <!-- 搜索建议 -->
     <div class="search-reminder" v-if="searchStatus === 1">
-      <div
-        class="search-reminder-item"
-        v-for="info in searchBirefList"
-        @click="reminderItemHandler(info)"
-      >
+      <div class="search-reminder-item" v-for="(info, index) in searchBirefList" :key="index" @click="reminderItemHandler(info)">
         <p class="house-name">{{info.linkerName}}</p>
         <p class="house-info">{{`${info.linkerAddress} ${info.linkerPrice}`}}</p>
       </div>
