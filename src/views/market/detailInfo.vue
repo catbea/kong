@@ -11,7 +11,7 @@
     <InfoMiddle v-for="(item,index) in middleList" :key="index" :middleInfo="item"></InfoMiddle>
     <div class="info-bottom">
       <span :style="{backgroundImage:'url('+warnImg+')'}" class="bg_img"></span>
-      <p>免责申明：楼盘信息来源于政府共事网站，开发商， 第三方公众平台最终以政府部门登记备案为准，请谨慎检查。</p>
+      <p>免责申明：楼盘信息来源于政府共事网站、开发商、第三方公众平台最终以政府部门登记备案为准，请谨慎检查。</p> 
     </div>
   </div>
 </template>
