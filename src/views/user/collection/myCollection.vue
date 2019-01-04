@@ -346,8 +346,6 @@ export default {
             border: 1px solid;
           }
         }
-        > .right-price {
-        }
 
         > .right-price-open {
           font-size: 12px;
