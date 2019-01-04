@@ -111,7 +111,6 @@ export default {
   background: #ffffff;
   .box {
     position: absolute;
-    margin-bottom: 5px;
   }
 
   .van-loading {
@@ -256,8 +255,8 @@ export default {
     }
   }
   .share-bottom {
-    margin-top: 10px;
     margin-bottom: 20px;
+    margin-top: -6px;
     p {
       text-align: center;
       font-size: 13px;
