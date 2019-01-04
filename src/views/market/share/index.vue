@@ -131,7 +131,7 @@ export default {
     border-radius: 10px;
     left: 10%;
     right: 10%;
-    margin-top: 30px;
+    margin-top: 10px;
     background: rgba(255, 255, 255, 1);
     > .avatar-img {
       position: absolute;
@@ -256,7 +256,7 @@ export default {
     }
   }
   .share-bottom {
-    margin-top: 12px;
+    margin-top: 10px;
     margin-bottom: 20px;
     p {
       text-align: center;
