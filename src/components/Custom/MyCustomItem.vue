@@ -47,7 +47,7 @@ export default {
   width: 100%;
   height: 80px;
   .user-avatar {
-    margin: 15px -15px;
+    margin: 15px;
     width: 50px;
     height: 50px;
   }
@@ -59,12 +59,18 @@ export default {
     top: 49px;
   }
   .baseinfo-box {
-    margin: 15px 0 15px -20px;
+    margin: 15px;
+    flex: 1;
+    width: calc(100%-160px);
+    width:-webkit-calc(100%-160px);
     .username {
       font-size: 16px;
       font-weight: 600;
       color: #333333;
       padding-bottom: 10px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
     .base-focus {
       font-size: 13px;
@@ -75,6 +81,7 @@ export default {
   .intention-box {
     margin: 15px 0;
     text-align: center;
+    width: 80px;
     .intention-value {
       font-size: 20px;
       font-weight: 500;

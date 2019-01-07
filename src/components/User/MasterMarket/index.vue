@@ -65,18 +65,26 @@ export default {
     }
   },
   methods: {
-    skipDetail(n) {//点击图片跳转到改楼盘详情
+    skipDetail(n) {
+      //点击图片跳转到改楼盘详情
       this.$router.push({ name: 'market-detail', params: { id: n } })
     },
-    async closeHandle(linkerId, index) {//图片列表删除某个，楼盘列表重置推荐
-      await userService.changeMarketData(linkerId, 20, 0)
-      this.limitList.splice(index, 1)
-      this.swipeJudge()
-      this.$emit('noRecommend', linkerId)
-      this.$toast({
-        duration: 800,
-        message: '已取消推荐'
-      })
+    async closeHandle(linkerId, index) {
+      //图片列表删除某个，楼盘列表重置推荐
+      this.$dialog
+          .confirm({
+            message: '是否确认取消该楼盘推荐'
+          })
+          .then(() => {
+            userService.changeMarketData(linkerId, 20, 0)
+            this.limitList.splice(index, 1)
+            this.swipeJudge()
+            this.$emit('noRecommend', linkerId)
+            this.$toast({
+              duration: 800,
+              message: '已取消推荐'
+            })
+          })
     },
     filterHandle() {
       this.masterList = this.limitList.filter(item => {

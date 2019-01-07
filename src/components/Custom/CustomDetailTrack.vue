@@ -52,11 +52,8 @@ export default {
     // ]
     backColor: true
   }),
-  created() {
-  },
-  methods: {
-   
-  },
+  created() {},
+  methods: {}
 }
 </script>
 <style lang="less">

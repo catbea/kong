@@ -187,8 +187,7 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime) {
       }
       webim.Tool.setCookie('tmpmsg_' + toAccount, '', 0)
     },
-    function(err) {
-    }
+    function(err) {}
   )
 }
 

@@ -203,8 +203,9 @@ export default {
       this.$dialog
         .confirm({
           title: '开通成功',
-          message: '你已经成功开通楼盘' + this.projectInfo.linkerName + '，快去推荐给身边的小伙伴',
-          cancelButtonText: '取消'
+          message: '你已成功开通楼盘' + '，快去推荐给身边的小伙伴',
+          cancelButtonText: '取消',
+          className: 'success-hint'
         })
         .then(() => {
           this.$router.replace('/market/' + this.linkerId)
@@ -267,6 +268,37 @@ export default {
       height: 14px;
       font-weight: 400;
       color: #007ae6;
+    }
+  }
+}
+.success-hint {
+  width: 290px;
+  height: 160px;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  .van-dialog__header {
+    font-size: 18px;
+
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    padding-top: 16px;
+  }
+  .van-dialog__message--has-title {
+    font-size: 15px;
+    line-height: 1.5 !important;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    text-align: center;
+    width: 253px;
+    padding: 0;
+    margin: 9px 0 15px 15px;
+  }
+  .van-dialog__footer--buttons {
+    flex: 1;
+    .van-hairline--left {
+      color: rgba(0, 122, 230, 1);
     }
   }
 }

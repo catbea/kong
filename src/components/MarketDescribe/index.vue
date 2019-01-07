@@ -250,7 +250,7 @@ export default {
             line-height: 12px;
             margin-bottom: 5px;
           }
-          .tag-group-left{
+          .tag-group-left {
             margin-left: -3px;
           }
           .unit-price {

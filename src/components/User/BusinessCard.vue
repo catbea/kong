@@ -2,72 +2,38 @@
   <div class="business-card-container">
     <div class="business-card-box">
       <div class="bg_img info-box">
-        <div class="info-top">
-          <div class="info-box-title">
-            <img class="info-box-left" :src="leftIcon" @click="showQrCode">
-            <div class="info-box-right" @click="shareUserCard">
-              <!-- <img class="share-img" :src="rightIcon"> -->
-              <i
-                style="color:#afb0b6;font-size:24px;"
-                class="icon iconfont icon-Building_list_share"
-              ></i>
-              <span class="share-view">分享</span>
-            </div>
-          </div>
-          <div class="info-box-center-p" @click="editCLickHandler">
-            <div class="info-box-center">
-              <div class="username-box">
-                <span class="username-view">{{userInfo.name}}</span>
-                <img class="username-img" :src="updataIcon">
-              </div>
-              <span class="main-camp-view">主营：{{userInfo.majorRegion}}</span>
-              <span class="campany-view">{{userInfo.distributorName}}</span>
-            </div>
-            <img class="avatar-view" :src="userInfo.avatarUrl">
-          </div>
+        <!-- 左上二维码形状,点击出名片 -->
+        <i class="icon iconfont icon-me_Qrcode qr-icon" @click.stop="showQrCode"/>
+        <!-- 右上分享 -->
+        <div class="share-box" @click.stop="shareUserCard">
+          <i class="icon iconfont icon-Building_list_share share-icon"/>
+          <span class="share-text">分享</span>
         </div>
-        <div class="info-bottom">
-          <p class="content-left-labe">
-            <a
-              class="left-labe-css"
-              v-for="(item,index) in newLabelList"
-              :key="index"
-            >{{item.labelName}}</a>
-          </p>
-          <p class="content-left-remar">{{userInfo.signature}}</p>
-        </div>
-        <!-- <div class="info-box-left">
-          <img :src="leftIcon" class="box-left-leftIcon" @click="showQrCode">
-          <span class="box-right-fx" @click="shareUserCard">
-            <img :src="rightIcon" class="right-fx-rightIcon">
-            <p class="right-fx-title">分享</p>
-          </span>
-        </div>-->
-        <!-- <div class="info-box-content" @click="editCLickHandler">
-          <span class="box-content-left">
-            <p class="content-left-name">
-              {{userInfo.name}}
-              <img :src="updataIcon" class="updataIcon">
-            </p>
-            <p class="content-left-addres">主营：{{userInfo.majorRegion}}</p>
-            <p class="content-left-compay">{{userInfo.distributorName}}</p>
+        <!-- 用户avatar -->
+        <avatar class="user-avatar" :avatar="userInfo.avatarUrl"/>
+
+        <div class="user-info-content">
+          <!-- 姓名、主营区域 -->
+          <div class="user-detail-box">
+            <div class="username-box" @click="editCLickHandler">
+              <span class="username-text">{{userInfo.name}}</span>
+              <i class="icon iconfont icon-me_editor username-edit-icon"></i>
+            </div>
+            <p class="main-camp-view">主营：{{userInfo.majorRegion}}</p>
+          </div>
+          <!-- 公司、标签、签名 -->
+          <div class="user-company-box">
+            <p class="campany-view">{{userInfo.distributorName}}</p>
             <p class="content-left-labe">
-              <a
-                class="left-labe-css"
-                v-for="(item,index) in newLabelList"
-                :key="index"
-              >{{item.labelName}}</a>
+              <a class="left-labe-css" v-for="(item,index) in newLabelList" :key="index">{{item.labelName}}</a>
             </p>
             <p class="content-left-remar">{{userInfo.signature}}</p>
-          </span>
-          <span class="box-content-right">
-            <img :src="userInfo.avatarUrl" class="personIcon">
-          </span>
-        </div>-->
+          </div>
+        </div>
       </div>
       <img class="modify-img" :src="modifyImg">
     </div>
-    <div class="business-status-title sub-title">优惠服务</div>
+    <div class="business-status-title">优惠服务</div>
     <div class="business-status-box">
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
@@ -83,23 +49,18 @@
   </div>
 </template>
 <script>
+import Avatar from 'COMP/Avatar'
 import TagGroup from 'COMP/TagGroup'
 import { mapGetters } from 'vuex'
 export default {
   components: {
-    TagGroup
+    TagGroup,
+    Avatar
   },
   data: () => ({
-    leftIcon: require('IMG/user/left@2x.png'),
-    rightIcon: require('IMG/user/fx.png'),
-    personIcon: require('IMG/user/person_icon.png'),
-    updataIcon: require('IMG/user/Group10@2x.png'),
-
     modifyImg: require('IMG/user/usercard_bg@2x.png'),
     crownIcon: require('IMG/user/cardGroup5@2x.png'),
-    discountIcon: require('IMG/user/SetmealGroup17@2x.png'),
-    shareIcon: require('IMG/user/share.png'),
-    editIcon: require('IMG/user/editInfo@2x.png')
+    discountIcon: require('IMG/user/SetmealGroup17@2x.png')
   }),
   methods: {
     editCLickHandler() {
@@ -135,152 +96,99 @@ export default {
 </script>   
 <style lang="less">
 .business-card-container {
-  .business-status-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: rgba(51, 51, 51, 1);
-    // line-height: 28px;
-    // padding: 5px 16px 11px;
-    // margin-top: -12px;
-  }
-  .sub-title {
-    padding: 10px 16px 8px !important;
-  }
+  background: #fff;
   > .business-card-box {
-    width: 100%;
-    min-height: 190px;
-    position: relative;
-
     > .info-box {
       position: relative;
-      min-height: 190px;
+      height: 190px;
       margin: 12px 16px;
       border-radius: 10px;
-      background: rgba(64, 68, 87, 1);
-      display: flex;
-      flex-direction: column;
-
-      > .info-top {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-
-        > .info-box-title {
-          display: flex;
-          justify-content: space-between;
-
-          > .info-box-left {
-            width: 24px;
-            height: 24px;
-            // border-top-left-radius: 10px;
-            margin-left: 7px;
-            margin-top: 7px;
-          }
-
-          > .info-box-right {
-            margin-right: 7px;
-            margin-top: 7px;
-            display: flex;
-            flex-direction: column;
-
-            > .share-img {
-              width: 24px;
-              height: 24px;
-            }
-
-            > .share-view {
-              color: #ffffff;
-              font-size: 10px;
-              margin-top: 3px;
-            }
-          }
+      background: #404456;
+      > .qr-icon {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        font-size: 24px;
+        color: #686b80;
+      }
+      > .share-box {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        color: #ffffff;
+        > .share-icon {
+          display: block;
+          font-size: 24px;
         }
-        > .info-box-center-p {
-          display: flex;
-          flex-direction: row;
-          > .info-box-center {
-            display: flex;
-            flex-direction: column;
-            margin-left: 28px;
-            margin-top: -50px;
-            flex: 1;
-            > .username-box {
-              margin-top: 44px;
-
-              > .username-view {
-                color: #ffffff;
-                font-size: 20px;
-              }
-              > .username-img {
-                width: 14px;
-                height: 14px;
-                margin-left: 5px;
-              }
-            }
-
-            > .main-camp-view {
-              color: #aeb1c2;
-              font-size: 11px;
-              margin-top: 6px;
-            }
-
-            > .campany-view {
-              color: #aeb1c2;
-              font-size: 12px;
-              margin-top: 25px;
-            }
-          }
-
-          > .avatar-view {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin-right: 40px;
-            margin-top: -15px;
-          }
+        > .share-text {
+          display: block;
+          font-size: 10px;
         }
       }
-
-      > .info-bottom {
-        padding-top: 5px;
-        > .content-left-labe {
-          font-size: 10px;
-          font-weight: 400;
-          color: rgba(174, 177, 194, 1);
-          margin-left: 27px;
-          margin-top: 5px;
-          > .left-labe-css {
-            padding: 2px 5px;
-            font-size: 10px;
-            background: rgba(143, 159, 177, 0.15);
-            border-radius: 4px;
-            border: 0;
-            margin-right: 8px;
+      > .user-avatar {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        top: 30px;
+        right: 40px;
+      }
+      > .user-info-content {
+        padding: 25px 30px;
+        > .user-detail-box {
+          line-height: 1;
+          > .username-box {
+            color: #fff;
+            > .username-text {
+              font-size: 20px;
+            }
+            > .username-edit-icon {
+              color: rgba(255, 255, 255, 0.15);
+            }
+          }
+          > .main-camp-view {
+            margin-top: 8px;
             color: #aeb1c2;
+            font-size: 12px;
           }
         }
-
-        > .content-left-remar {
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(174, 177, 194, 1);
+        > .user-company-box {
+          color: #aeb1c2;
           line-height: 1.5;
-          margin-left: 28px;
-          margin-top: 8px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          padding-bottom: 10px;
+          font-size: 12px;
+          margin-top: 20px;
+          > .content-left-labe {
+            margin-top: 8px;
+            > .left-labe-css {
+              background: rgba(143, 159, 177, 0.15);
+              padding: 1px 3px;
+              border-radius: 4px;
+              color: #aeb1c2;
+              margin: 3px 5px 3px 0;
+              transform: scale(0.8);
+            }
+          }
+          > .content-left-remar {
+            margin-top: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
       }
     }
-
     > .modify-img {
       width: 100%;
       position: absolute;
       margin-top: -40px;
     }
   }
+
+  > .business-status-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    padding: 10px 16px 8px !important;
+  }
+
   > .business-status-box {
     background-color: #ffffff;
     width: 100%;
@@ -288,7 +196,6 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
-    // margin: -17px 0 0;
     > div {
       position: relative;
       display: inline-block;

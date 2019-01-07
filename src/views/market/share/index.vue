@@ -2,7 +2,6 @@
   <div class="market-share-page" id="market-share-page">
     <div class="box" v-show="status === 1">
       <div class="share-top" id="share-top">
-        <!--  -->
         <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
         <img class="cover-img" :src="coverBg">
         <div class="logo-body">
@@ -23,6 +22,14 @@
         <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
         <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
       </div>
+      <!-- <div class="swipe-box">
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="(item,index) in list" :key="index" :class="{trans:index==activeIndex}">
+           <div class="share-top-swipe">{{item}}</div> 
+          </swiper-slide>
+        </swiper>
+      </div> -->
+    
       <div class="share-bottom">
         <!-- <p>长按保存图片 可分享好友或朋友圈</p> -->
         <ul>
@@ -43,15 +50,34 @@
   </div>
 </template>
 <script>
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import Avatar from 'COMP/Avatar'
 import { mapGetters } from 'vuex'
 import h2c from 'html2canvas'
 import marketService from 'SERVICE/marketService'
 export default {
   components: {
-    Avatar
+    Avatar,
+    swiper,
+    swiperSlide
   },
   data: () => ({
+    list: [1, 2, 3, 4],
+    swiperOption: {
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      on: {
+        slideChangeTransitionEnd: function() {
+          alert(this.activeIndex) //切换结束时，告诉我现在是第几个slide
+        }
+      }
+    },
     id: -1,
     avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg',
     coverBg: require('IMG/dev/page1/cover2@2x.png'),
@@ -67,6 +93,9 @@ export default {
     this.getPosterInfo(this.id)
   },
   methods: {
+    onChange(index) {
+      //轮播图
+    },
     async getPosterInfo(buildId) {
       const result = await marketService.shareBuildingCard(buildId)
       if (result) {
@@ -109,7 +138,37 @@ export default {
   height: 100%;
   position: relative;
   background: #ffffff;
+
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+  }
+
+  .swiper-slide {
+    width: 192px;
+    height: 308px;
+  }
+
   .box {
+    width: 100%;
     position: absolute;
   }
 
@@ -121,6 +180,18 @@ export default {
     height: 84px;
     margin-top: 50%;
     z-index: 10000;
+  }
+  .swipe-box {
+    .trans {
+      transform: scale(1.25);
+      background: black;
+    }
+    .share-top-swipe {
+      width: 240px;
+      height: 308px;
+      background: red;
+      border-radius: 5px;
+    }
   }
 
   .share-top {
@@ -224,7 +295,7 @@ export default {
       bottom: 43px;
       border-radius: 50%;
       object-fit: cover;
-      background-size: cover
+      background-size: cover;
     }
 
     > .username-view {
