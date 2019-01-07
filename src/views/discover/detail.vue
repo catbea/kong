@@ -180,7 +180,7 @@ export default {
     sharePopupHandle(){//首次进入引导
     this.sharePopup=false
     },
-   async getRecommendInfo(){
+   async getRecommendInfo(){//去重推荐文章
       const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
       this.recommendInformationList=res.records  
     },
