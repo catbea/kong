@@ -1,4 +1,3 @@
-import html2canvas from 'html2canvas'
 // 校验最大字符串长度
 export function checkStrLength (str, maxLen) {
     str += ''
@@ -28,7 +27,27 @@ export function checkPhoneNum (str) {
     return reg.test(str)
 }
 
-// html转canvas
-export function html2canvas () {
+// 防抖动方法 fn: 回调方法 wait：延迟时间 immediate: 第一次是否立即执行
+export function debounce (fn, wait = 500, immediate = false) {
+    let timeout = null
+    return function (...args) {
+        let content = this
+        if (timeout) {
+            clearTimeout(timeout)
+        }
+        if (immediate) {
+            let callNow = !timeout
+            timeout = setTimeout(() => {
+                timeout = null
+            }, wait)
+            if (callNow) {
+                fn.apply(content, args)
+            }
+        } else {
+            timeout = setTimeout(() => {
+                fn.apply(content, args)
+            })
+        }
+    }
 }
 
