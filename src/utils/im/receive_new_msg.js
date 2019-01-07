@@ -100,7 +100,7 @@ function initUnreadMsgCount() {
 //msgType  2语音 3楼盘信息 4消息已读上报 5动态信息
 //audioTime语音时长 类型为语音的时候填写
 // isSend 是否为自己发送
-function onSendMsg(msgtosend, isSend, msgType, audioTime) {
+function onSendMsg(msgtosend, isSend, msgType, audioTime, user={}) {
   //获取消息内容
   var msgLen = webim.Tool.getStrBytes(msgtosend)
   if (msgtosend.length < 1) {
@@ -139,21 +139,18 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime) {
     //webim.GROUP_MSG_SUB_TYPE.REDPACKET-红包消息，优先级最高
     subType = webim.GROUP_MSG_SUB_TYPE.COMMON
   }
-
   let msg = new webim.Msg(selSess, isSend, seq, random, msgTime, fromAccount, subType, fromAccount)
-
   let text_obj
-
   // //解析文本和表情
   if (msgType == 1) {
     let desc = msgType
-    let ext = {}
+    let ext = user
     let custom_obj = new webim.Msg.Elem.Custom(msgtosend + '', desc + '', JSON.stringify(ext) + '')
     msg.addCustom(custom_obj)
   } else if (msgType == 2) {
     let ext = {
       audioTime: audioTime,
-      userInfo: {}
+      userInfo: user
     }
     let desc = msgType
     // let ext = audioTime
@@ -169,7 +166,7 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime) {
   } else if (msgType == 4) {
     let desc = msgType
     let data = '1'
-    let ext = {}
+    let ext = user
     let custom_obj = new webim.Msg.Elem.Custom(JSON.stringify(data) + '', desc + '', JSON.stringify(ext) + '')
     msg.addCustom(custom_obj)
   } else {
