@@ -11,6 +11,7 @@ const state = {
     distributorName: '广佛分公司',
     enterpriseId: '91',
     institutionId: '82',
+    institutionLogo: '',
     institutionName: '',
     isOne: false, // true新用户 false老用户
     isVip: '',
