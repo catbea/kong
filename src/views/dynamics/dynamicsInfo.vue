@@ -27,11 +27,11 @@
                 <button class="right-label right-label-blur" v-show="linkerVO.saleStatus == 0 ">热销中</button>
                 <button class="right-label right-label-red" v-show="linkerVO.saleStatus == 1">即将发售</button>
                 <button class="right-label right-label-grey" v-show="linkerVO.saleStatus == 2">售罄</button>
-                <button class="right-label right-label-gray" >{{linkerVO.linkerTags[0]}}</button>
-                <button class="right-label right-label-gray" >{{linkerVO.linkerTags[1]}}</button>
+                <button class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[0] : ''}}</button>
+                <button class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[1] : ''}}</button>
               </p>
               <p class="dynamicsInfo-list-right-price" @click="godynamicsInfo(linkerVO.linkerId)">
-                {{linkerVO.price }}{{linkerVO.priceUnit }}
+                {{linkerVO.price>0 ? linkerVO.price+linkerVO.priceUnit :'价格待定' }}
                 <!-- <span class="right-price-text"></span> -->
                 <span class="right-price-open">{{linkerVO.openTimes }}次开通</span>
               </p>
@@ -89,7 +89,7 @@
               </span>
             </div>
             <div class="dynamics-list-content" @click="gocustomInfo(item)">
-              <p>查看浏览了楼盘  <span>{{item.linkerName}}</span></p>
+              <p>浏览了楼盘  <span>{{item.linkerName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
               <samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
