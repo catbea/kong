@@ -87,7 +87,7 @@
         <img v-else src="@/assets/img/message/Oval_slices_text.png">
       </div>
       <div class="massage-info-lower-cen">
-        <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage('','')" v-model="message" id="message" v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？">
+        <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage(1,'')" v-model="message" id="message" v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？">
         <button v-else :class="isvoice==1? 'msgContentvoice msgContentvoice-bg':'msgContentvoice'" @touchstart="startRecord" @touchend="stopRecord" @touchmove="touchmoveRecord">{{def_btvalue}}</button>
       </div>
       <div class="massage-info-lower-right">
@@ -95,7 +95,7 @@
           <img class="face" src="@/assets/img/message/Oval_bq.png" @click="displayface">
         </div>
         <div class="lower-right-bnt">
-          <div class="send" v-if="message.length>0" @click="sendMessage('','')">发送</div>
+          <div class="send" v-if="message.length>0" @click="sendMessage(1,'')">发送</div>
           <img class="selTempl" v-else src="@/assets/img/message/Oval@3x_tpl.png" @click="displayOption">
         </div>
       </div>
