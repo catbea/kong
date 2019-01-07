@@ -21,7 +21,7 @@
             <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
-          <div class="operate-share" @click="shareHandler">
+          <div class="operate-share" @click="shareHandler" v-if="info.saleStatusFlag!=3">
             <i class="icon iconfont icon-article_share"></i>
             分享
           </div>
@@ -136,10 +136,11 @@
       </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="openStatus">
+      <div class="unopen-status-box" v-if="openStatus&&info.saleStatusFlag!=3">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="!openStatus" :renewInfo="info"/>
+      <market-renew v-if="!openStatus&&info.saleStatusFlag!=3" :renewInfo="info"/>
+      <div class="saleStatusFlag" v-if="info.saleStatusFlag==3"> <p>售罄</p> </div>
     </div>
   </div>
 </template>
@@ -251,6 +252,8 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      console.log(res,'楼盘详情kkkk');
+      
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -700,6 +703,22 @@ export default {
         color: #ffffff;
         line-height: 44px;
         text-align: center;
+      }
+    }
+    .saleStatusFlag{
+      width:343px;
+      height:44px;
+      background:#c8c9cc;
+      border-radius:6px;
+      line-height:44px;
+      text-align:center;
+      margin-top:14px;
+      margin-left:16px;
+      p{
+        font-size:16px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(102,102,102,1);
       }
     }
   }

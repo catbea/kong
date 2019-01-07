@@ -94,6 +94,7 @@ export default {
   created() {
     this.id = this.$route.params.id
     this.getPosterInfo(this.id)
+    this.photoIndex=0
   },
   methods: {
     onChange(index) {
@@ -168,6 +169,7 @@ export default {
   .swiper-slide {
     width: 192px;
     height: 308px;
+    border-radius: 5px;
   }
 
   .box {
