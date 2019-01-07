@@ -1,22 +1,16 @@
 <template>
   <div class="messageInfo-page">
-    <div class="messageInfo-back" v-if="haveData">
-      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
-        <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
+    <div class="messageInfo-back">
+      <div class="messageInfo-wd">
+        <span class="messageInfo-wd-left">当前共有未读消息 12 条</span>
         <div class="messageInfo-wd-right">
-          <button class="messageInfo-wd-right-select" @click="goSelestMessage">查 看</button>
-          <button class="messageInfo-wd-right-select" @click="godiscoverHelp">全部已读</button>
+          <button class="messageInfo-wd-right-select">全部已读</button> 
         </div>
       </div>
       <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
-            <div
-              :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
-              v-if="sysMessage.unreadMsgCount != 0 "
-            >
-              <span v-if="sysMessage.unreadMsgCount > 99">99+</span>
-              <span v-else>{{sysMessage.unreadMsgCount}}</span>
+            <div class="messageInfo-sys-num">
             </div>
             <img :src="backIcon" class="sys-left-img">
           </span>
@@ -42,12 +36,7 @@
       >
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
-            <div
-              :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
-              v-show="item.unreadMsgCount !=0"
-            >
-              <span v-if="item.unreadMsgCount > 99 ">99+</span>
-              <span v-else>{{item.unreadMsgCount}}</span>
+            <div class="messageInfo-sys-num">
             </div>
             <img :src="item.c2cImage" class="sys-left-img">
           </span>
@@ -63,16 +52,11 @@
       </div>
      
     </div>
-    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
 </template>
 <script>
 import dynamicsService from 'SERVICE/dynamicsService'
-import Null from 'COMP/Null'
 export default {
-  components: {
-    Null
-  },
   data() {
     return {
       backIcon: require('IMG/dynamics/top-img.png'),
@@ -80,10 +64,8 @@ export default {
       sysMessage: [],
       nullIcon: require('IMG/user/bill-null.png'),
       nullcontent: '暂无信息',
-      haveData: true,
       current:1,
-      size:20,
-      UnreadMsgTotal:0
+      size:20
     }
   },
   mounted() {
@@ -100,12 +82,7 @@ export default {
         }
       })
     },
-    async godiscoverHelp(){
-      this.$router.push('/discover/discoverHelp')
-    },
-    async goSelestMessage(){
-       this.$router.push('/dynamics/message/unreadMessage')
-    },
+ 
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
@@ -127,19 +104,10 @@ export default {
       }
     },
     async getMsgList() {
-      const res = await dynamicsService.getAgentMsgAndTotal(1,this.current,this.size)
+      const res = await dynamicsService.getAgentMsgAndTotal(3,this.current,this.size)
       this.messageList = res.msgPage.records
       this.sysMessage = res.systemMessage
-      if (res.msgList.length > 0 || res.systemMessage != '') {
-        this.haveData = true
-      } else {
-        this.haveData = false
-      }
-    },
-    //未读消息数
-    async getcpUnreadMsgTotal(){
-      const res = await dynamicsService.getcpUnreadMsgTotal()
-      this.UnreadMsgTotal = res
+    
     }
   }
 }
@@ -202,29 +170,14 @@ export default {
             background: rgba(234, 77, 46, 1);
             transform: translate(50%, -50%);
             border-radius: 100%;
-            // width:18px;
-            // height:18px;
+            width:11px;
+            height:11px;
             border: 0;
             position: absolute;
-           // margin-left: 35px;
-            margin-left: 18px;
-            margin-top: 8px;
-            padding: 1px 3px;
+            margin-left: 30px;
+            margin-top: 6px;
           }
-          .messageInfo-sys-nums {
-            position: absolute;
-            margin-left: 23px;
-            margin-top: 10px;
-            transform: translate(50%, -50%);
-            width: 18px;
-            height: 18px;
-            background-color: #ea4d2e;
-            border-radius: 100%;
-            color: #fff;
-            font-size: 12px;
-            text-align: center;
-            line-height: 16px;
-          }
+         
         }
         > .messageInfo-sys-right {
           padding-left: 12px;

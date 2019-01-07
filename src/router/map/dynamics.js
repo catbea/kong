@@ -75,5 +75,16 @@
         show: false
       }
     }
+  },
+  {
+    path: '/dynamics/message/unreadMessage',
+    name: 'unreadMessage',
+    component: resolve => require(['@/views/dynamics/message/unreadMessage.vue'], resolve),
+    meta: {
+      title: '未读消息',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
