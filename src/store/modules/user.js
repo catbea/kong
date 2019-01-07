@@ -43,7 +43,7 @@ const state = {
       }
     ],
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI4Z21jb3IiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ5NDAyNjI1LCJpYXQiOjE1NDYzOTc4MjV9.Y8ZxsVdEjNBoWwZ8XopI_r8ii9sU9bVn6Va2OnAZAljzP2WWsVLgB8CncX8Ov4Zi99WBe6D-sGC8kph-lHU0Hg',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ5dXpsODEiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTQ5NTEyNTA0LCJpYXQiOjE1NDY1MDc3MDR9.4yfxDEK8yfAyN6EFGOZntrIl0xcpSCAmA1g9TIMO8RZOG4WEZO1nLWIg3FPsa_r_7Oj1t9if-e1BlRYIxbx9pA',
     majorCity: '广州市',
     majorRegion: '山西省/长治市/襄垣县',
     name: '周丹',
