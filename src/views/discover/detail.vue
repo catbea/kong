@@ -84,7 +84,7 @@
     <div class="recommend-discover" v-if="info&&info.recommendInformationList">
       <title-bar :conf="titleArticle"/>
       <div class="recommend-discover-content">
-        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
+        <discover-item v-for="item in recommendInformationList" :key="item.id" :data="item"/>
       </div>
     </div>
     <!-- 悬浮工具栏 -->
@@ -126,6 +126,7 @@ export default {
     DiscoverItem
   },
   data: () => ({
+    recommendInformationList:[],//去重推荐文章
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12,
@@ -167,8 +168,10 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
+    this.classify=this.$route.query.classify
     this.getDetail()
     this.getQrCode(this.agentId)
+    this.getRecommendInfo()
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -177,10 +180,13 @@ export default {
     sharePopupHandle(){//首次进入引导
     this.sharePopup=false
     },
+   async getRecommendInfo(){
+      const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
+      this.recommendInformationList=res.records  
+    },
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
       this.info = res
-
       this.infoId = res.id
       this.collectionStatus = res.collectType
 
