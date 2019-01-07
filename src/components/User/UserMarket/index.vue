@@ -163,12 +163,16 @@ export default {
               parent.showMarketList.splice(index + 1, 1)
               parent.showMarketList[3].recommand = 0
               // parent.showMarketList.splice(1,1)
-              this.$dialog
-                .alert({
-                  message: '楼盘置顶成功',
-                  className: 'hint-alert'
-                })
-                .then(() => {})
+              // this.$dialog
+              //   .alert({
+              //     message: '楼盘置顶成功',
+              //     className: 'hint-alert'
+              //   })
+              //   .then(() => {})
+              this.$toast({
+              duration: 800,
+              message: '置顶成功'
+            })
               this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
               this.show = !this.show //关闭弹出层
             })
@@ -178,13 +182,17 @@ export default {
           let parent = this.$parent.$parent
           parent.showMarketList.unshift(parent.showMarketList[index])
           parent.showMarketList.splice(index + 1, 1)
-          this.$dialog
-            .alert({
-              message: '楼盘置顶成功',
-              className: 'hint-alert'
-            })
-            .then(() => {
-              // on close
+          // this.$dialog
+          //   .alert({
+          //     message: '楼盘置顶成功',
+          //     className: 'hint-alert'
+          //   })
+          //   .then(() => {
+          //     // on close
+          //   })
+          this.$toast({
+              duration: 800,
+              message: '取消置顶成功'
             })
           this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
           this.show = !this.show
@@ -192,14 +200,18 @@ export default {
       } else if (this.dataArr.recommand == 10) {
         //将当前点击的楼盘取消置顶
         this.$emit('recommandFalseHandle', this.dataArr)
-        this.$dialog
-          .alert({
-            message: '楼盘取消置顶成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        // this.$dialog
+        //   .alert({
+        //     message: '楼盘取消置顶成功',
+        //     className: 'hint-alert'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
+        this.$toast({
+              duration: 800,
+              message: '取消置顶成功'
+            })
         this.changeUserStatus(this.linkerId, 40, 0) //改置顶状态
         this.show = !this.show
       }
@@ -210,25 +222,33 @@ export default {
     async masterHandle(n) {
       if (this.dataArr.masterRecommand != 1) {
         await this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
-        this.$dialog
-          .alert({
-            message: '大师推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        // this.$dialog
+        //   .alert({
+        //     message: '大师推荐成功',
+        //     className: 'hint-alert'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
+        this.$toast({
+              duration: 800,
+              message: '大师推荐成功'
+            })
         this.$emit('pushMaster', this.dataArr)
       } else {
         await this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        this.$dialog
-          .alert({
-            message: '取消大师推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        // this.$dialog
+        //   .alert({
+        //     message: '取消大师推荐成功',
+        //     className: 'hint-alert'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
+        this.$toast({
+              duration: 800,
+              message: '取消大师推荐成功'
+            })
         this.$emit('spliceMaster', this.dataArr)
       }
       this.show = !this.show
@@ -237,25 +257,33 @@ export default {
     commonHandle(n) {
       if (this.dataArr.masterRecommand != 2) {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
-        this.$dialog
-          .alert({
-            message: '普通推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        // this.$dialog
+        //   .alert({
+        //     message: '普通推荐成功',
+        //     className: 'hint-alert'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
+        this.$toast({
+              duration: 800,
+              message: '普通推荐成功'
+            })
         this.$emit('pushCommon', this.dataArr)
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        this.$dialog
-          .alert({
-            message: '取消普通推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        // this.$dialog
+        //   .alert({
+        //     message: '取消普通推荐成功',
+        //     className: 'hint-alert'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
+        this.$toast({
+              duration: 800,
+              message: '取消普通推荐成功'
+            })
         this.$emit('spliceCommon', this.dataArr)
       }
       this.show = !this.show
@@ -274,11 +302,46 @@ export default {
           this.show = !this.show
           this.changeUserStatus(this.linkerId, 30, 1) //改为不展示
           this.$emit('closeCut', this.dataArr)
+          this.$toast({
+              duration: 800,
+              message: '关闭展示成功'
+            })
         })
     },
     goRenew(linkerId) {
-      //去续费
+      if(this.dataArr.saleStatus==3){
+        this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已售罄，无法开通',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else if (this.dataArr.thisDistributor === false) {
+        this.$dialog
+          .alert({
+            title: '该楼盘不可续费',
+            message: '非当前所属公司下楼盘无法开通续费',
+            className: 'renew-Dialog',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      }else{
+        //去续费
       this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
+      }
     },
     skipShare() {
       //去分享
@@ -522,6 +585,14 @@ export default {
   justify-content: center;
   .van-dialog__confirm {
     border-top: 1px solid #ebedf0;
+  }
+}
+.renew-Dialog{
+  .van-dialog__header,.van-dialog__message--has-title{
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    padding-top: 26px;
   }
 }
 .show-Dialog {

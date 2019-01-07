@@ -32,7 +32,7 @@
                 </div>
                 <div class="dynamics-list-content" @click="godynamicsList(item)">
                   <p v-show="item.type == 2">
-                    查看浏览了楼盘
+                    浏览了楼盘
                     <span>{{item.objectName}}</span>
                   </p>
                   <p v-show="item.type == 1">

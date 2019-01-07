@@ -24,8 +24,8 @@
       </div>
       <!-- <div class="swipe-box">
         <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in list" :key="index" :class="{trans:index==activeIndex}">
-           <div class="share-top-swipe">{{item}}</div> 
+          <swiper-slide v-for="(item,index) in list" :key="index" :class="{trans:photoIndex==index}">
+           <div class="share-top-swipe" :class="{trans:photoIndex==index}">{{item}}</div> 
           </swiper-slide>
         </swiper>
       </div> -->
@@ -62,8 +62,11 @@ export default {
     swiper,
     swiperSlide
   },
-  data: () => ({
+  data(){
+    const _this=this;
+    return ({
     list: [1, 2, 3, 4],
+    photoIndex:null,
     swiperOption: {
       slidesPerView: 'auto',
       centeredSlides: true,
@@ -74,7 +77,7 @@ export default {
       },
       on: {
         slideChangeTransitionEnd: function() {
-          alert(this.activeIndex) //切换结束时，告诉我现在是第几个slide
+         _this.photoIndex=this.activeIndex //切换结束时，告诉我现在是第几个slide
         }
       }
     },
@@ -87,10 +90,11 @@ export default {
     showLoading: false,
     pointerEvents: '',
     lastOpTimer: 0
-  }),
+  })},
   created() {
     this.id = this.$route.params.id
     this.getPosterInfo(this.id)
+    this.photoIndex=0
   },
   methods: {
     onChange(index) {
@@ -165,6 +169,7 @@ export default {
   .swiper-slide {
     width: 192px;
     height: 308px;
+    border-radius: 5px;
   }
 
   .box {
@@ -182,15 +187,16 @@ export default {
     z-index: 10000;
   }
   .swipe-box {
-    .trans {
-      transform: scale(1.25);
-      background: black;
-    }
     .share-top-swipe {
-      width: 240px;
+      width:192px;
       height: 308px;
       background: red;
       border-radius: 5px;
+    }
+    .trans {
+      width:240px;
+      height:387px;
+      background: black;
     }
   }
 
