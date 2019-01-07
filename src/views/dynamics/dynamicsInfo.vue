@@ -27,8 +27,8 @@
                 <button class="right-label right-label-blur" v-show="linkerVO.saleStatus == 0 ">热销中</button>
                 <button class="right-label right-label-red" v-show="linkerVO.saleStatus == 1">即将发售</button>
                 <button class="right-label right-label-grey" v-show="linkerVO.saleStatus == 2">售罄</button>
-                <button class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[0] : ''}}</button>
-                <button class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[1] : ''}}</button>
+                <button v-show="linkerVO.linkerTags && linkerVO.linkerTags.length>0" class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[0] : ''}}</button>
+                <button v-show="linkerVO.linkerTags && linkerVO.linkerTags.length>1" class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[1] : ''}}</button>
               </p>
               <p class="dynamicsInfo-list-right-price" @click="godynamicsInfo(linkerVO.linkerId)">
                 {{linkerVO.price>0 ? linkerVO.price+linkerVO.priceUnit :'价格待定' }}
