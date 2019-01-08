@@ -156,7 +156,7 @@ export default {
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
     shareData: null,
-    sharePopup:true
+    sharePopup:false
   }),
   created() {
     // window.awHelper.wechatHelper.wx.showAllNonBaseMenuItem()
