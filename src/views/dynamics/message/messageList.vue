@@ -1,13 +1,6 @@
 <template>
   <div class="messageInfo-page">
     <div class="messageInfo-back" v-if="haveData">
-      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
-        <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
-        <div class="messageInfo-wd-right">
-          <button class="messageInfo-wd-right-select" @click="goSelestMessage">查 看</button>
-          <button class="messageInfo-wd-right-select" @click="godiscoverHelp">全部已读</button>
-        </div>
-      </div>
       <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
@@ -80,10 +73,7 @@ export default {
       sysMessage: [],
       nullIcon: require('IMG/user/bill-null.png'),
       nullcontent: '暂无信息',
-      haveData: true,
-      current:1,
-      size:20,
-      UnreadMsgTotal:0
+      haveData:true
     }
   },
   mounted() {
@@ -100,17 +90,9 @@ export default {
         }
       })
     },
-    async godiscoverHelp(){
-      this.$router.push('/discover/discoverHelp')
-    },
-    async goSelestMessage(){
-       this.$router.push('/dynamics/message/unreadMessage')
-    },
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
-    //查看未读消息
-   
     formatMsg(item) {
       if (item.msgType == 'TIMCustomElem') {
         let msg = JSON.parse(item.msgShow)
@@ -130,17 +112,12 @@ export default {
       const res = await dynamicsService.getAgentMsgAndTotal()
       this.messageList = res.msgList
       this.sysMessage = res.systemMessage
+      debugger
       if (res.msgList.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
         this.haveData = false
       }
-
-    },
-    //未读消息数
-    async getcpUnreadMsgTotal(){
-      const res = await dynamicsService.getcpUnreadMsgTotal()
-      this.UnreadMsgTotal = res
     }
   }
 }
@@ -151,34 +128,6 @@ export default {
   background: rgba(247, 249, 250, 1);
   > .messageInfo-back {
     background: #ffffff;
-    > .messageInfo-wd{
-      height:50px;
-      background:rgba(255,255,255,1);
-      border-bottom: 1px solid #eeeeee;
-      padding: 7px 16px;
-      .messageInfo-wd-left{
-        font-size:14px;
-      font-weight:400;
-      color:rgba(51,51,51,1);
-      line-height:20px;
-      }
-      .messageInfo-wd-right{
-        float: right;
-        .messageInfo-wd-right-select{
-          font-size:12px;
-          font-weight:400;
-          color:rgba(0,122,230,1);
-          line-height:17px;
-          width:72px;
-          height:24px;
-          border-radius:22px;
-          border:1px solid rgba(0,122,230,1);
-          margin-left: 8px;
-          background-color: #ffffff;
-        }
-
-      }
-    }
     > .messageInfo-sys {
       background: #ffffff;
       padding-top: 16px;
@@ -207,12 +156,11 @@ export default {
             // height:18px;
             border: 0;
             position: absolute;
-           // margin-left: 35px;
-            margin-left: 18px;
-            margin-top: 8px;
+            margin-left: 35px;
             padding: 1px 3px;
           }
           .messageInfo-sys-nums {
+           
             position: absolute;
             margin-left: 23px;
             margin-top: 10px;
@@ -225,6 +173,7 @@ export default {
             font-size: 12px;
             text-align: center;
             line-height: 16px;
+            
           }
         }
         > .messageInfo-sys-right {
