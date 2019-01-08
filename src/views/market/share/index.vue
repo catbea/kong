@@ -44,7 +44,7 @@
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2">
-      <img id="imgcard">
+      <img id="imgcard" class="imgcard">
       <div class="notice-text">长按保存图片可分享好友或朋友圈</div>
     </div>
   </div>
@@ -125,13 +125,12 @@ export default {
       })
 
       let imgW = document.body.clientWidth * 0.8
-      // let imgH = document.body.clientHeight * 0.7
+      let imgH = 480
       let image = document.getElementById('imgcard')
-
       image.src = canvas.toDataURL('image/png')
-      image.style.width = imgW + 1 + 'px'
-      image.style.maxWidth = imgW + 1 + 'px'
-      image.style.height = '480px'
+      image.style.width = imgW + 'px'
+      image.style.maxWidth = imgW + 'px'
+      image.style.height = imgH + 'px'
       image.style.marginLeft = '10%'
       image.style.marginTop = '25%'
       image.style.borderRadius = '10px'
@@ -197,12 +196,19 @@ export default {
   .result {
     border-radius: 10px;
     border-color: transparent;
+    background: transparent;
+
+    > .imgcard {
+      border: none;
+      border-color: transparent;
+      background: transparent;
+    }
+
     > .notice-text {
       color: #999999;
       font-size: 13px;
       text-align: center;
       margin-top: 20px;
-      border-color: transparent;
     }
   }
 
@@ -210,7 +216,7 @@ export default {
     .share-top-swipe {
       width: 192px;
       height: 308px;
-      border-radius: 5px;
+      border-radius: 10px;
     }
     .trans {
       width: 240px;
@@ -221,16 +227,16 @@ export default {
 
   .share-top {
     position: relative;
-    width: 300px;
-    height: 480px;
+    width: 297px;
+    height: 483px;
     border-radius: 10px;
     left: 10%;
     right: 10%;
     margin-top: 10px;
-    background: rgba(255, 255, 255, 1);
+    padding-right: 2px;
     > .avatar-img {
       position: absolute;
-      width: 299px;
+      width: 296px;
       height: 330px;
       border-radius: 10px;
       background-repeat: no-repeat;
@@ -244,7 +250,7 @@ export default {
       z-index: 1;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
-      bottom: 0;
+      bottom: -2px;
     }
 
     > .logo-body {
