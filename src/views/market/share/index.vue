@@ -125,16 +125,16 @@ export default {
       })
 
       let imgW = document.body.clientWidth * 0.8
-      let imgH = document.body.clientHeight * 0.7
+      // let imgH = document.body.clientHeight * 0.7
       let image = document.getElementById('imgcard')
 
       image.src = canvas.toDataURL('image/png')
       image.style.width = imgW + 1 + 'px'
       image.style.maxWidth = imgW + 1 + 'px'
-      image.style.height = imgH + 1 + 'px'
-      image.style.marginLeft='10%'
-      image.style.marginTop='25%'
-
+      image.style.height = '480px'
+      image.style.marginLeft = '10%'
+      image.style.marginTop = '25%'
+      image.style.borderRadius = '10px'
       this.showLoading = false
     }
   },
@@ -194,21 +194,22 @@ export default {
     z-index: 10000;
   }
 
-  .result{
-      > .notice-text{
-        color: #999999;
-        font-size: 13px;
-        text-align: center;
-        margin-top: 20px
-      }
+  .result {
+    border-radius: 10px;
+    border-color: transparent;
+    > .notice-text {
+      color: #999999;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 20px;
+      border-color: transparent;
+    }
   }
-
 
   .swipe-box {
     .share-top-swipe {
       width: 192px;
       height: 308px;
-      background: red;
       border-radius: 5px;
     }
     .trans {
