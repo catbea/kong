@@ -1,11 +1,12 @@
 <template>
   <div class="messageInfo-page">
     <div class="messageInfo-back" v-if="haveData">
-      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
+      <!-- v-show="UnreadMsgTotal != 0" -->
+      <div class="messageInfo-wd" >
         <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
         <div class="messageInfo-wd-right">
           <button class="messageInfo-wd-right-select" @click="goSelestMessage">查 看</button>
-          <button class="messageInfo-wd-right-select" @click="godiscoverHelp">全部已读</button>
+          <button class="messageInfo-wd-right-select" @click="getsetMsgRead">全部已读</button>
         </div>
       </div>
       <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
@@ -100,11 +101,16 @@ export default {
         }
       })
     },
-    async godiscoverHelp(){
-      this.$router.push('/discover/discoverHelp')
+    //帮助页面
+    // async godiscoverHelp(){
+    //   this.$router.push('/discover/discoverHelp')
+    // },
+    async getsetMsgRead(){
+      //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
+     dynamicsService.getsetMsgRead()
     },
     async goSelestMessage(){
-       this.$router.push('/dynamics/message/unreadMessage')
+       this.$router.push({path: '/dynamics/message/unreadMessage', query: {UnreadMsgTotal: this.UnreadMsgTotal} })
     },
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
@@ -130,16 +136,18 @@ export default {
       const res = await dynamicsService.getAgentMsgAndTotal(1,this.current,this.size)
       this.messageList = res.msgPage.records
       this.sysMessage = res.systemMessage
-      if (res.msgList.length > 0 || res.systemMessage != '') {
+      if (res.msgPage.records.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
         this.haveData = false
       }
+      this.getcpUnreadMsgTotal()
     },
     //未读消息数
     async getcpUnreadMsgTotal(){
       const res = await dynamicsService.getcpUnreadMsgTotal()
-      this.UnreadMsgTotal = res
+      this.UnreadMsgTotal = res.count
+
     }
   }
 }

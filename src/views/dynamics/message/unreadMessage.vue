@@ -1,20 +1,20 @@
 <template>
-  <div class="messageInfo-page">
-    <div class="messageInfo-back">
-      <div class="messageInfo-wd">
-        <span class="messageInfo-wd-left">当前共有未读消息 12 条</span>
-        <div class="messageInfo-wd-right">
-          <button class="messageInfo-wd-right-select">全部已读</button> 
+  <div class="unreadMessage-page">
+    <div class="unreadMessage-back">
+      <div class="unreadMessage-wd">
+        <span class="unreadMessage-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
+        <div class="unreadMessage-wd-right">
+          <button class="unreadMessage-wd-right-select" @click="getsetMsgRead">全部已读</button> 
         </div>
       </div>
-      <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
-        <div class="messageInfo-sys-container">
-          <span class="messageInfo-sys-left">
-            <div class="messageInfo-sys-num">
+      <div class="unreadMessage-sys" v-show="sysMessage !='' " @click="gosysMessage">
+        <div class="unreadMessage-sys-container">
+          <span class="unreadMessage-sys-left">
+            <div class="unreadMessage-sys-num">
             </div>
             <img :src="backIcon" class="sys-left-img">
           </span>
-          <span class="messageInfo-sys-right">
+          <span class="unreadMessage-sys-right">
             <p class="sys-right-top">
               系统消息
               <span
@@ -26,21 +26,21 @@
           </span>
         </div>
       </div>
-      <div class="messageInfo-fill"></div>
+      <div class="unreadMessage-fill"></div>
       <div
       v-show="messageList.length !=0"
-        class="messageInfo-sys"
+        class="unreadMessage-sys"
         v-for="(item,key) in messageList"
         :key="key"
         @click="msgClickHandle(item)"
       >
-        <div class="messageInfo-sys-container">
-          <span class="messageInfo-sys-left">
-            <div class="messageInfo-sys-num">
+        <div class="unreadMessage-sys-container">
+          <span class="unreadMessage-sys-left">
+            <div class="unreadMessage-sys-num">
             </div>
             <img :src="item.c2cImage" class="sys-left-img">
           </span>
-          <span class="messageInfo-sys-right">
+          <span class="unreadMessage-sys-right">
             <p class="sys-right-top">
               {{item.c2cNick}}
               <!-- >3分钟前 -->
@@ -65,7 +65,8 @@ export default {
       nullIcon: require('IMG/user/bill-null.png'),
       nullcontent: '暂无信息',
       current:1,
-      size:20
+      size:20,
+      UnreadMsgTotal:this.$route.query.UnreadMsgTotal
     }
   },
   mounted() {
@@ -85,6 +86,10 @@ export default {
  
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
+    },
+      async getsetMsgRead(){
+      //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
+      dynamicsService.getsetMsgRead()
     },
     //查看未读消息
    
@@ -113,25 +118,25 @@ export default {
 }
 </script>
 <style lang="less">
-.messageInfo-page {
+.unreadMessage-page {
   width: 100%;
   background: rgba(247, 249, 250, 1);
-  > .messageInfo-back {
+  > .unreadMessage-back {
     background: #ffffff;
-    > .messageInfo-wd{
+    > .unreadMessage-wd{
       height:50px;
       background:rgba(255,255,255,1);
       border-bottom: 1px solid #eeeeee;
       padding: 7px 16px;
-      .messageInfo-wd-left{
+      .unreadMessage-wd-left{
         font-size:14px;
       font-weight:400;
       color:rgba(51,51,51,1);
       line-height:20px;
       }
-      .messageInfo-wd-right{
+      .unreadMessage-wd-right{
         float: right;
-        .messageInfo-wd-right-select{
+        .unreadMessage-wd-right-select{
           font-size:12px;
           font-weight:400;
           color:rgba(0,122,230,1);
@@ -146,23 +151,23 @@ export default {
 
       }
     }
-    > .messageInfo-sys {
+    > .unreadMessage-sys {
       background: #ffffff;
       padding-top: 16px;
       margin: 0 16px;
       margin-bottom: 0;
       border-bottom: 1px solid #eeeeee;
-      > .messageInfo-sys-container {
+      > .unreadMessage-sys-container {
         display: flex;
         margin-bottom: 10px;
-        > .messageInfo-sys-left {
+        > .unreadMessage-sys-left {
           > .sys-left-img {
             width: 50px;
             height: 50px;
             background: rgba(0, 122, 230, 1);
             border-radius: 50%;
           }
-          .messageInfo-sys-num {
+          .unreadMessage-sys-num {
             font-size: 12px;
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
@@ -179,7 +184,7 @@ export default {
           }
          
         }
-        > .messageInfo-sys-right {
+        > .unreadMessage-sys-right {
           padding-left: 12px;
           > .sys-right-top {
             font-size: 16px;
@@ -207,7 +212,7 @@ export default {
         }
       }
     }
-    > .messageInfo-fill {
+    > .unreadMessage-fill {
       height: 10px;
       background: rgba(247, 249, 250, 1);
     }
