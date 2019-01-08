@@ -1,5 +1,16 @@
 <template>
   <div class="discover-detail-page">
+    <!-- 首次引导分享 -->
+    <div class="guidance-view" v-if="sharePopup">
+      <div class="top">
+       <p>点击此处分享给好友</p>
+       <p>
+         <span></span>
+         <span></span>
+       </p>
+      </div>
+      <p class="bottom" @click="sharePopupHandle">知道了</p>
+    </div>
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
@@ -73,7 +84,7 @@
     <div class="recommend-discover" v-if="info&&info.recommendInformationList">
       <title-bar :conf="titleArticle"/>
       <div class="recommend-discover-content">
-        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
+        <discover-item v-for="item in recommendInformationList" :key="item.id" :data="item"/>
       </div>
     </div>
     <!-- 悬浮工具栏 -->
@@ -115,6 +126,7 @@ export default {
     DiscoverItem
   },
   data: () => ({
+    recommendInformationList:[],//去重推荐文章
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12,
@@ -143,7 +155,8 @@ export default {
     openPopup: false,
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
-    shareData: null
+    shareData: null,
+    sharePopup:true
   }),
   created() {
     // window.awHelper.wechatHelper.wx.showAllNonBaseMenuItem()
@@ -155,17 +168,25 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
+    this.classify=this.$route.query.classify
     this.getDetail()
     this.getQrCode(this.agentId)
+    this.getRecommendInfo()
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
   methods: {
+    sharePopupHandle(){//首次进入引导
+    this.sharePopup=false
+    },
+   async getRecommendInfo(){//去重推荐文章
+      const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
+      this.recommendInformationList=res.records  
+    },
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
       this.info = res
-
       this.infoId = res.id
       this.collectionStatus = res.collectType
 
@@ -238,6 +259,13 @@ export default {
     },
     // 设置分享
     async shareHandler() {
+      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {//分享点进去，没有签名信息，从新签名
+        try {
+          await window.awHelper.wechatHelper.init()
+        } catch (e) {
+          console.log('[error:window.awHelper.wechatHelper]')
+        }
+      }
       this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
     }
@@ -251,6 +279,67 @@ export default {
 }
 </script>
 <style lang="less">
+.guidance-view{
+  position:fixed;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,.7);
+    z-index:6;
+    .top{
+      width:100%;
+      height:165px;
+      font-size:17px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      display:flex;
+      margin-top:10px;
+      p:nth-child(1){
+        margin-left:120px;
+        margin-top:175px;
+      }
+      p:nth-child(2){
+        width:65px;
+        height:185px;
+        border-right: dashed rgba(255, 255, 255, 1);
+       border-bottom: dashed rgba(255, 255, 255, 1);
+       border-width:0.5px;
+       position: relative;
+       margin-left:10px;
+       span {
+              position:absolute;
+              display:inline-block;
+              width: 5px;
+              height: 5px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 1);
+            }
+        span:nth-child(1){
+          top:-7px;
+          right: -3px;
+        }
+        span:nth-child(2){
+          bottom:-2.5px;
+          left:-7px;
+        }
+      }
+    }
+  .bottom{
+    width:95px;
+    height:32px;
+    border-radius:16px;
+    opacity:0.6163000000000001;
+    border:1px solid rgba(255,255,255,1);
+    text-align:center;
+    font-size:17px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:32px;
+    margin-top:180px;
+    margin-left:150px;
+  }
+  }
 .popup-view {
   width: 260px;
   height: 371px;

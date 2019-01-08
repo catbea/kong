@@ -231,10 +231,11 @@ class UserService {
    * @param {*} current
    * @param {*} size
    */
-  gethistoryList(current, size = 10) {
+  gethistoryList(type, current, size = 10) {
     return xhr({
       url: '/cpInformation/historyList',
       body: {
+        type,
         current,
         size
       }
@@ -443,5 +444,16 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 申请离岗、机构切换 
+   */
+  applyAgent(data) {
+    return xhr({
+      method: 'POST',
+      url: '/user/insertAgentPersonnelLog',
+      body: data
+    })
+  } 
 }
 export default new UserService()

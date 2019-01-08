@@ -24,12 +24,11 @@
       </div>
       <!-- <div class="swipe-box">
         <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in list" :key="index" :class="{trans:index==activeIndex}">
-           <div class="share-top-swipe">{{item}}</div> 
+          <swiper-slide v-for="(item,index) in list" :key="index" :class="{trans:photoIndex==index}">
+           <div class="share-top-swipe" :class="{trans:photoIndex==index}">{{item}}</div> 
           </swiper-slide>
         </swiper>
-      </div> -->
-    
+      </div>-->
       <div class="share-bottom">
         <!-- <p>长按保存图片 可分享好友或朋友圈</p> -->
         <ul>
@@ -45,7 +44,8 @@
     </div>
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2">
-      <img id="imgcard">
+      <img id="imgcard" class="imgcard">
+      <div class="notice-text">长按保存图片可分享好友或朋友圈</div>
     </div>
   </div>
 </template>
@@ -62,35 +62,40 @@ export default {
     swiper,
     swiperSlide
   },
-  data: () => ({
-    list: [1, 2, 3, 4],
-    swiperOption: {
-      slidesPerView: 'auto',
-      centeredSlides: true,
-      spaceBetween: 30,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      },
-      on: {
-        slideChangeTransitionEnd: function() {
-          alert(this.activeIndex) //切换结束时，告诉我现在是第几个slide
+  data() {
+    const _this = this
+    return {
+      list: [1, 2, 3, 4],
+      photoIndex: null,
+      swiperOption: {
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 30,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        on: {
+          slideChangeTransitionEnd: function() {
+            _this.photoIndex = this.activeIndex //切换结束时，告诉我现在是第几个slide
+          }
         }
-      }
-    },
-    id: -1,
-    avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg',
-    coverBg: require('IMG/dev/page1/cover2@2x.png'),
-    logoImg: require('IMG/dev/page1/logo@2x.png'),
-    buildingInfo: {},
-    status: 1,
-    showLoading: false,
-    pointerEvents: '',
-    lastOpTimer: 0
-  }),
+      },
+      id: -1,
+      avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg',
+      coverBg: require('IMG/dev/page1/cover2@2x.png'),
+      logoImg: require('IMG/dev/page1/logo@2x.png'),
+      buildingInfo: {},
+      status: 1,
+      showLoading: false,
+      pointerEvents: '',
+      lastOpTimer: 0
+    }
+  },
   created() {
     this.id = this.$route.params.id
     this.getPosterInfo(this.id)
+    this.photoIndex = 0
   },
   methods: {
     onChange(index) {
@@ -118,12 +123,17 @@ export default {
         logging: false,
         useCORS: true
       })
-      // canvas.style.width = '100%'
-      // canvas.style.height = '100%'
 
+      let imgW = document.body.clientWidth * 0.8
+      let imgH = 480
       let image = document.getElementById('imgcard')
       image.src = canvas.toDataURL('image/png')
-      // document.getElementById('card-result').appendChild(canvas)
+      image.style.width = imgW + 'px'
+      image.style.maxWidth = imgW + 'px'
+      image.style.height = imgH + 'px'
+      image.style.marginLeft = '10%'
+      image.style.marginTop = '25%'
+      image.style.borderRadius = '10px'
       this.showLoading = false
     }
   },
@@ -165,6 +175,7 @@ export default {
   .swiper-slide {
     width: 192px;
     height: 308px;
+    border-radius: 5px;
   }
 
   .box {
@@ -181,31 +192,51 @@ export default {
     margin-top: 50%;
     z-index: 10000;
   }
-  .swipe-box {
-    .trans {
-      transform: scale(1.25);
-      background: black;
+
+  .result {
+    border-radius: 10px;
+    border-color: transparent;
+    background: transparent;
+
+    > .imgcard {
+      border: none;
+      border-color: transparent;
+      background: transparent;
     }
+
+    > .notice-text {
+      color: #999999;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+
+  .swipe-box {
     .share-top-swipe {
-      width: 240px;
+      width: 192px;
       height: 308px;
-      background: red;
-      border-radius: 5px;
+      border-radius: 10px;
+    }
+    .trans {
+      width: 240px;
+      height: 387px;
+      background: black;
     }
   }
 
   .share-top {
     position: relative;
-    width: 300px;
-    height: 480px;
+    width: 297px;
+    height: 483px;
     border-radius: 10px;
     left: 10%;
     right: 10%;
     margin-top: 10px;
-    background: rgba(255, 255, 255, 1);
+    padding-right: 2px;
     > .avatar-img {
       position: absolute;
-      width: 299px;
+      width: 296px;
       height: 330px;
       border-radius: 10px;
       background-repeat: no-repeat;
@@ -219,7 +250,7 @@ export default {
       z-index: 1;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
-      bottom: 0;
+      bottom: -2px;
     }
 
     > .logo-body {

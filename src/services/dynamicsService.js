@@ -41,10 +41,36 @@ class DynamicsService {
 
   /**
    * 消息列表和未读消息数量
+   * @param {*} msgStatus 消息状态：1、查所有消息列表 2、查已读消息列表 3、查未读消息列表
+   * @param {*} current 当前页
+   * @param {*} size 页大小
    */
-  getAgentMsgAndTotal() {
+  getAgentMsgAndTotal(msgStatus,current,size) {
     return xhr({
-      url: '/cpIM/agentMsgAndTotal'
+      url: '/cpIM/agentMsgAndTotal',
+      body: {
+        msgStatus,
+        current,
+        size
+      }
+    })
+  }
+  /**
+   * 消息-设置消息已读
+   * @param {*} clientId 	客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
+   */
+  getsetMsgRead(clientId) {
+    return xhr({
+      url: '/cpIM/setMsgRead',
+      clientId,
+    })
+  }
+  /**
+   * 未读消息总数
+   */
+  getcpUnreadMsgTotal() {
+    return xhr({
+      url: '/cpIM/cpUnreadMsgTotal'
     })
   }
 

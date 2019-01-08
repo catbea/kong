@@ -5,13 +5,14 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    agentId: '4193',
-    avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_008.png',
-    distributorId: '268',
-    distributorName: '深圳分销商',
-    enterpriseId: '90',
-    institutionId: '100074',
-    institutionName: '深圳分销商一级代理1',
+    agentId: '1',
+    avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
+    distributorId: '124',
+    distributorName: '广佛分公司',
+    enterpriseId: '91',
+    institutionId: '82',
+    institutionLogo: '',
+    institutionName: '',
     isOne: 0, // 1新用户 0老用户
     isVip: '',
     vipDefaultCity: '深圳市',

@@ -152,6 +152,10 @@ export default {
           this.changeUserStatus(this.linkerId, 30, 0)
           this.dataArr.displayFlag = 0
           this.$emit('openCut', this.dataArr)
+          this.$toast({
+              duration: 800,
+              message: '开启展示成功'
+            })
         })
         .catch(() => {
           // on cancel
