@@ -28,8 +28,7 @@
            <div class="share-top-swipe" :class="{trans:photoIndex==index}">{{item}}</div> 
           </swiper-slide>
         </swiper>
-      </div> -->
-    
+      </div>-->
       <div class="share-bottom">
         <!-- <p>长按保存图片 可分享好友或朋友圈</p> -->
         <ul>
@@ -46,6 +45,7 @@
     <van-loading type="spinner" class="van-loading" v-if="showLoading==true"/>
     <div class="result" id="card-result" v-show="status === 2">
       <img id="imgcard">
+      <div class="notice-text">长按保存图片可分享好友或朋友圈</div>
     </div>
   </div>
 </template>
@@ -62,39 +62,40 @@ export default {
     swiper,
     swiperSlide
   },
-  data(){
-    const _this=this;
-    return ({
-    list: [1, 2, 3, 4],
-    photoIndex:null,
-    swiperOption: {
-      slidesPerView: 'auto',
-      centeredSlides: true,
-      spaceBetween: 30,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-      },
-      on: {
-        slideChangeTransitionEnd: function() {
-         _this.photoIndex=this.activeIndex //切换结束时，告诉我现在是第几个slide
+  data() {
+    const _this = this
+    return {
+      list: [1, 2, 3, 4],
+      photoIndex: null,
+      swiperOption: {
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 30,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+        on: {
+          slideChangeTransitionEnd: function() {
+            _this.photoIndex = this.activeIndex //切换结束时，告诉我现在是第几个slide
+          }
         }
-      }
-    },
-    id: -1,
-    avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg',
-    coverBg: require('IMG/dev/page1/cover2@2x.png'),
-    logoImg: require('IMG/dev/page1/logo@2x.png'),
-    buildingInfo: {},
-    status: 1,
-    showLoading: false,
-    pointerEvents: '',
-    lastOpTimer: 0
-  })},
+      },
+      id: -1,
+      avatvrImg: 'https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e31d7a55dba20cf4529df68d17602053/91ef76c6a7efce1b27893518a451f3deb58f6546.jpg',
+      coverBg: require('IMG/dev/page1/cover2@2x.png'),
+      logoImg: require('IMG/dev/page1/logo@2x.png'),
+      buildingInfo: {},
+      status: 1,
+      showLoading: false,
+      pointerEvents: '',
+      lastOpTimer: 0
+    }
+  },
   created() {
     this.id = this.$route.params.id
     this.getPosterInfo(this.id)
-    this.photoIndex=0
+    this.photoIndex = 0
   },
   methods: {
     onChange(index) {
@@ -122,12 +123,18 @@ export default {
         logging: false,
         useCORS: true
       })
-      // canvas.style.width = '100%'
-      // canvas.style.height = '100%'
 
+      let imgW = document.body.clientWidth * 0.8
+      let imgH = document.body.clientHeight * 0.7
       let image = document.getElementById('imgcard')
+
       image.src = canvas.toDataURL('image/png')
-      // document.getElementById('card-result').appendChild(canvas)
+      image.style.width = imgW + 1 + 'px'
+      image.style.maxWidth = imgW + 1 + 'px'
+      image.style.height = imgH + 1 + 'px'
+      image.style.marginLeft='10%'
+      image.style.marginTop='25%'
+
       this.showLoading = false
     }
   },
@@ -186,16 +193,27 @@ export default {
     margin-top: 50%;
     z-index: 10000;
   }
+
+  .result{
+      > .notice-text{
+        color: #999999;
+        font-size: 13px;
+        text-align: center;
+        margin-top: 20px
+      }
+  }
+
+
   .swipe-box {
     .share-top-swipe {
-      width:192px;
+      width: 192px;
       height: 308px;
       background: red;
       border-radius: 5px;
     }
     .trans {
-      width:240px;
-      height:387px;
+      width: 240px;
+      height: 387px;
       background: black;
     }
   }
