@@ -127,14 +127,15 @@ export default {
       }
     },
     async getMsgList() {
-      const res = await dynamicsService.getAgentMsgAndTotal(1,this.current,this.size)
-      this.messageList = res.msgPage.records
+      const res = await dynamicsService.getAgentMsgAndTotal()
+      this.messageList = res.msgList
       this.sysMessage = res.systemMessage
       if (res.msgList.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
         this.haveData = false
       }
+
     },
     //未读消息数
     async getcpUnreadMsgTotal(){
