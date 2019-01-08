@@ -526,6 +526,10 @@ export default {
       })
     }, //接收消息
     addmsgInfo(msg) {
+      if(msg.code && msg.code==500){
+        this.$toast(msg.msg)
+        return
+      }
       var elems = msg.elems[0]
       var sess = msg.sess
       var item
