@@ -27,6 +27,18 @@ class DynamicsService {
       url: '/homepage/getBuildingInfo'
     })
   }
+
+  /**
+   * 更新经纪人信息
+   */
+  updateAgentInfo(param) {
+    return xhr({
+      method: 'POST',
+      url: '/homepage/updateAgentInfo',
+      body: param
+    })
+  }
+
   /**
    * 消息列表和未读消息数量
    */

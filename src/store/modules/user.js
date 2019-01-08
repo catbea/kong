@@ -5,14 +5,14 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    agentId: '1',
-    avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
-    distributorId: '124',
-    distributorName: '广佛分公司',
-    enterpriseId: '91',
-    institutionId: '82',
-    institutionName: '',
-    isOne: false, // true新用户 false老用户
+    agentId: '4193',
+    avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_008.png',
+    distributorId: '268',
+    distributorName: '深圳分销商',
+    enterpriseId: '90',
+    institutionId: '100074',
+    institutionName: '深圳分销商一级代理1',
+    isOne: 0, // 1新用户 0老用户
     isVip: '',
     vipDefaultCity: '深圳市',
     ifView: 0, //是否展示邀请有礼
@@ -42,22 +42,23 @@ const state = {
         userId: ''
       }
     ],
+    leavingStatus: 0,
     token:
       'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI4Z21jb3IiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ5NDAyNjI1LCJpYXQiOjE1NDYzOTc4MjV9.Y8ZxsVdEjNBoWwZ8XopI_r8ii9sU9bVn6Va2OnAZAljzP2WWsVLgB8CncX8Ov4Zi99WBe6D-sGC8kph-lHU0Hg',
-    majorCity: '广州市',
-    majorRegion: '山西省/长治市/襄垣县',
-    name: '周丹',
-    nickName: '',
+    majorCity: '深圳市',
+    majorRegion: '广东省/深圳市/南山区',
+    name: '周丹Nike',
+    nickName: '周丹Nike',
     // payCorpId: 'onXUy1sGkPMX-Z34buMYLs5q2',
     payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
-    pcOpenid: 'onXUy1sGkPMX-Z34buMYLs5q2IEc',
-    price: 874400,
+    pcOpenid: 'oPeLD1Mdkzf8nnZ4yHaHfF2YBYUo',
+    price: 984200,
     registerMobile: '18603000246',
     signature: 'mwwwwwwwmm',
     tempPhone: '18603000246',
+    vipDefaultCity: '',
     vipInfo: '',
     wechatAccount: '',
-    ifView: '1'
   },
   userVipInfo: {},
   userArea: {

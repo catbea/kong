@@ -52,7 +52,8 @@ export default {
     // this.area = this.$route.query.area
   },
   computed: {
-    ...mapGetters(['userRegistInfo'])
+    ...mapGetters(['userRegistInfo']),
+    ...mapGetters(['userInfo'])
   },
   methods: {
     async queryRegisterDistributor(enterpriseId, city, searchData) {
@@ -90,6 +91,9 @@ export default {
         institutionName: this.searchLists[index].childDistributorName
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+      // 完善经纪人信息时使用,完善信息从userInfo中取值
+      this.$store.dispatch('userInfo', Object.assign(this.userInfo, _userRegistInfo))
+      window.localStorage.setItem('distributorDisabled', false)
       this.$router.back(-1)
     }
   }
