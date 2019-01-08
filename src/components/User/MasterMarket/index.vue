@@ -15,7 +15,9 @@
             v-for="(item,index) in limitList"
             :key="item.linkerId"
           >
-            <div class="master-box" v-show='!item.masterRecommand==0' @click='skipDetail(item.linkerId)'>
+        <!-- <swiper :options="swiperOption">
+          <swiper-slide v-for="(item,index) in limitList" :key="item.linkerId"> -->
+           <div class="master-box" v-show='!item.masterRecommand==0' @click='skipDetail(item.linkerId)'>
               <p
                 class="bg_img icon-cancel"
                 :style="{backgroundImage:'url('+img+')'}"
@@ -33,16 +35,24 @@
                 <li>{{item.city}} <span v-show="item.masterRecommand==2">{{item.county}}{{item.openTimes}}人开通{{item.price}}{{item.priceUnit}}</span> <span v-show="item.masterRecommand==1">{{item.scanTimes}} 人关注了它</span></li>
               </ol>
             </div>
-          </van-swipe-item>
-        
-        </van-swipe>
+          <!-- </swiper-slide>
+          <div class="swiper-pagination" slot="pagination"></div>
+        </swiper> -->
+                  </van-swipe-item>
+                  </van-swipe>
       </div>
     </div>
   </div>
 </template>
 <script>
 import userService from 'SERVICE/userService'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
+    components: {
+    swiper,
+    swiperSlide
+  },
   created() {
     this.filterHandle()
   },
@@ -56,6 +66,15 @@ export default {
   data() {
     return {
       // changeBoxShow:true,
+      swiperOption: {
+          slidesPerView: 1,
+          spaceBetween:30,
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          }
+        },
       changeshow: false,
       masterSave: null,
       img: require('IMG/user/Combined Shape@2x.png'),
@@ -71,6 +90,8 @@ export default {
     },
     async closeHandle(linkerId, index) {
       //图片列表删除某个，楼盘列表重置推荐
+      console.log('删除');
+      
       this.$dialog
           .confirm({
             message: '是否确认取消该楼盘推荐'
@@ -157,6 +178,19 @@ export default {
   }
 }
 .mymarket-page {
+  .swiper-container{
+        // width:100%;
+        height:100%;
+        border-radius:10px;
+        .swiper-wrapper{
+          // width:100%;
+          height:100%;
+          .swiper-slide{
+            width: 343px ;
+        height: 193px;
+          }
+        }
+      }
   .master-market-box {
     display: flex;
     flex-direction: column;
@@ -205,6 +239,9 @@ export default {
     }
     .master-box {
       position: relative;
+      width: 343px;
+        height: 193px;
+        border-radius:10px;
       .master-item {
         width: 343px;
         height: 193px;
