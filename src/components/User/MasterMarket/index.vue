@@ -199,6 +199,10 @@ export default {
     .vanSWipe-box {
       width: 343px;
       height: 194px;
+      .van-swipe-item{
+        width: 343px;
+      height: 194px;
+      }
       .hint {
         width: 100%;
         height: 100%;
