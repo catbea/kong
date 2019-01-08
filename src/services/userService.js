@@ -453,6 +453,16 @@ class UserService {
       url: '/user/insertAgentPersonnelLog',
       body: data
     })
-  } 
+  }
+
+  /**
+   * 名片海报
+   */
+  getAgentCard(data) {
+    return xhr({
+      url: '/user/getAgentCard',
+      body: data
+    })
+  }
 }
 export default new UserService()

@@ -19,6 +19,14 @@ export default [
     }
   },
   {
+    path: '/user/share-card',
+    name: 'share-card',
+    component: resolve => require(['@/views/user/share/index.vue'], resolve),
+    meta: {
+      title: '分享名片'
+    }
+  },
+  {
     path: '/user/edit',
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
