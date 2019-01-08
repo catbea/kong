@@ -67,6 +67,22 @@ export default [
     }
   },
   {
+    path: '/user/edit/userCompany',
+    name: 'user-edit-userCompany',
+    component: resolve => require(['@/views/user/edit/userCompany.vue'], resolve),
+    meta: {
+      title: '修改平台公司'
+    }
+  },
+  {
+    path: '/user/edit/userPlatform',
+    name: 'user-edit-userPlatform',
+    component: resolve => require(['@/views/user/edit/userPlatform.vue'], resolve),
+    meta: {
+      title: '修改我的机构'
+    }
+  },
+  {
     path: '/user/edit/userMechanism',
     name: 'userMechanism',
     component: resolve => require(['@/views/user/edit/userMechanism.vue'], resolve),

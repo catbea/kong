@@ -184,8 +184,22 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime, user={}) {
       }
       webim.Tool.setCookie('tmpmsg_' + toAccount, '', 0)
     },
-    function(err) {}
+    function(err) {
+      if(getErrorMsg(err.ErrorCode)) {
+        let msg = {
+          code: 500,
+          msg: getErrorMsg(err.ErrorCode)
+        }
+        callbackaddMsgFunction && callbackaddMsgFunction(msg)
+      }
+    }
   )
+}
+
+function getErrorMsg(code) {
+  switch(code) {
+    case 20003: return '用户无效'; break;
+  }
 }
 
 //消息已读通知

@@ -13,6 +13,7 @@
         :style="{'backgroundImage':'url('+ data.image +')'}"
       ></div>
     </div>
+    
   </router-link>
 </template>
 <script>
@@ -25,7 +26,7 @@ export default {
   computed: {
     ...mapGetters(['userInfo']),
     routeComputed() {
-      return `/discover/${this.data.id}/${this.data.city ? this.data.city : '全国'}?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
+      return `/discover/${this.data.id}/${this.data.city ? this.data.city : '全国'}?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}&classify=${this.data.classify}`
     }
   }
 }
@@ -68,4 +69,5 @@ export default {
     margin-top: 10px;
   }
 }
+
 </style>

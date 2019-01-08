@@ -1,0 +1,170 @@
+<template>
+<div class="user-platform">
+  <div class="platform">
+    <h3>我的机构</h3>
+    <p class="name">
+      <img :src="userInfo.institutionLogo" v-if="userInfo.institutionLogo"/>
+      <img src="../../../assets/img/user/Group9@2x.png"  v-else />
+      {{userInfo.institutionName || 'AW大师'}}</p>
+  </div>
+  <div class="warning">{{this.warning}}</div>
+  <div class="action">
+    <button type="button" @click="toApply" :class="{'disabled': disBtn}">申请离岗</button>
+  </div>
+</div>
+</template>
+
+<script>
+import {
+  mapGetters
+} from 'vuex'
+import userService from 'SERVICE/userService'
+export default {
+  data() {
+    return {
+      warning: '修改您的机构需向后台提交申请修改。审核通过后，可重新进行选择。',
+      btnText: '申请修改',
+      disBtn: true
+    }
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+  created () {
+    // 获取用户离岗状态
+    this.getUserInfo()
+  },
+  methods: {
+    // 获取用户离岗状态
+    async getUserInfo () {
+      let result = await userService.getUserInfo(this.userInfo.agentId)
+      if (result) {
+        // switchStatus 组织切换状态 空 未申请 0 待处理  1 通过  2 拒绝
+        let switchStatus = result.switchStatus
+        let text = {
+          '': '申请修改',
+          '0': '申请审批中',
+          '1': '审批通过',
+          '2': '审批不通过'
+        } 
+        this.btnText = text[switchStatus] || '未知状态'
+        if (switchStatus === '' || switchStatus === 2) {
+          this.disBtn = false
+        }
+        if (switchStatus === 1) {
+          // 审批通过，更新信息
+          this.$dialog.alert({
+            title: '审批通过',
+            confirmButtonText: '更新数据',
+            message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
+          }).then(() => {
+            this.$router.push('/')
+          })
+        }
+        if (switchStatus === 2) {
+          // 审批不通过
+          this.$dialog.alert({
+            title: '审批不通过',
+            message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
+          }).then(() => {
+          })
+        }
+      }
+    },
+    // 点击申请离岗按钮
+    toApply () {
+      if (this.disBtn) {
+        return false
+      }
+      this.$dialog.confirm({
+        title: '提示',
+        message: '是否确认申请修改?'
+      }).then(() => {
+        // 确认离岗
+        this.apply()
+      }).catch(() => {
+        // 取消离岗
+      })
+    },
+    // 申请离岗
+    async apply () {
+      let obj = {
+        agentId: this.userInfo.agentId,
+        personnelType: 2 // 1 离岗 2 变换组织
+      }
+      let result = await userService.applyAgent(obj)
+      if (result) {
+        this.$dialog.confirm({
+          title: '申请成功',
+          message: '后台通过修改申请后，即可重新选择我的机构'
+        }).then(() => {
+          // 按钮置灰不可点击
+          this.disBtn = true
+          this.btnText = '申请审批中'
+        }).catch(() => {
+        })
+      }
+    }
+
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.user-platform {
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  padding: 16px;
+  .platform {
+    padding: 12px 0 0;
+    position: relative;
+    border: none;
+    h3 {
+      font-size: 20px;
+      height: 28px;
+      line-height: 28px;
+      font-weight: 600;
+    }
+    p {
+      vertical-align: middle;
+      padding: 20px 0 10px;
+      font-size: 24px;
+      color: rgba(51, 51, 51, 1);
+      line-height: 50px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      img{
+        width: 50px;
+        height: 50px;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .warning {
+    padding-top: 24px;
+    line-height: 1.5;
+    color: rgba(150,158,168,1);
+    font-size: 14px;
+  }
+  .action {
+    padding-top: 32px;
+    button {
+      width: 100%;
+      border: none;
+      height: 44px;
+      background:rgba(242, 248, 254, 1);
+      border-radius: 4px;
+      color: rgba(68, 81, 102, 1);
+      font-size: 16px;
+      &.disabled{
+        background-color: rgba(102, 102, 102, 1);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+</style>

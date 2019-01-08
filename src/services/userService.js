@@ -444,5 +444,16 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 申请离岗、机构切换 
+   */
+  applyAgent(data) {
+    return xhr({
+      method: 'POST',
+      url: '/user/insertAgentPersonnelLog',
+      body: data
+    })
+  } 
 }
 export default new UserService()
