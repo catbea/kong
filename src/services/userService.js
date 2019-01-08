@@ -231,10 +231,11 @@ class UserService {
    * @param {*} current
    * @param {*} size
    */
-  gethistoryList(current, size = 10) {
+  gethistoryList(type, current, size = 10) {
     return xhr({
       url: '/cpInformation/historyList',
       body: {
+        type,
         current,
         size
       }
