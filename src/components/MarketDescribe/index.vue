@@ -76,7 +76,10 @@ export default {
   },
   created() {
     this.dredgeColor()
-    if (this.tags.indexOf(this.saleStatus) < 0) {
+    if(this.tags===""){
+      this.tags=[]
+      this.tags.unshift(this.saleStatus)
+    }else if(this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
   },

@@ -120,7 +120,9 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index" @click.native="itemClickHandler(item.linkerId)">
             <div class="recommend-house-item">
-              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}"></div>
+              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
+                <p class="bg_img panorama-icon" v-if="item.ifPanorama==1" :style="{backgroundImage:'url('+panoramaIcon+')'}"></p>
+              </div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
                 <p class="house-location">{{item.district}}</p>
@@ -176,6 +178,7 @@ export default {
       photoButton: true, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
       siteDetailImg: require('IMG/marketDetail/arrow.png'),
+      panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -649,6 +652,16 @@ export default {
           width: 160px;
           height: 90px;
           border-radius: 6px;
+          position: relative;
+          .panorama-icon{
+            position:absolute;
+            width:34px;
+            height:34px;
+            left:50%;
+            top:50%;
+            margin-left:-17px;
+            margin-top:-17px;
+          }
         }
         > .recommend-house-info {
           .house-name {

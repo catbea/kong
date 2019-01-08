@@ -159,9 +159,16 @@ export default {
           this.loading = false
           this.haveData = false
           this.showNull = false
+          let arr = []
+          for (let i = 0; i < this.searchResult.length; i++) {
+            const element = this.searchResult[i];
+           arr.push(element.linkerId) 
+          }
+         arr = arr.join()
           let hotParams = {
             city: this.userInfo.majorCity || '全国',
-            hotTotal: 5
+            hotTotal: 5,
+            linkerIds:arr
           }
           const hotRes = await userService.getHotLinker(hotParams)
           this.hotResult = hotRes
