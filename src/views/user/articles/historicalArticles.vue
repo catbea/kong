@@ -1,59 +1,23 @@
 <template>
   <div class="historicalArticles-page">
-    <van-tabs
-      v-model="activeIndex"
-      color="#007AE6"
-      :line-width="15"
-      :swipe-threshold="6"
-      @change="tabsChange"
-      sticky
-      animated
-    >
-      <van-tab :title="tabs[0].typeName">
-        <keep-alive>
-          <van-list
-            v-model="loading"
-            v-if="0 === activeIndex"
-            :finished="tabs[0].finished"
-            :finished-text="'没有更多了'"
-            @load="onLoad"
-          >
-            <articles-list v-for="(item,index) in tabs[0].list" :key="index" :data="tabs[0].list"></articles-list>
-          </van-list>
-        </keep-alive>
-      </van-tab>
-      <van-tab :title="tabs[1].typeName">
-        <keep-alive>
-          <van-list
-            v-model="loading"
-            v-if="1 === activeIndex"
-            :finished="tabs[1].finished"
-            :finished-text="'没有更多了'"
-            @load="onLoad"
-          >
-            <articles-list v-for="(item,index) in tabs[1].list" :key="index" :data="tabs[1].list"></articles-list>
-          </van-list>
-        </keep-alive>
-      </van-tab>
-      <van-tab :title="tabs[2].typeName">
-        <keep-alive>
-          <van-list
-            v-model="loading"
-            v-if="2 === activeIndex"
-            :finished="tabs[2].finished"
-            :finished-text="'没有更多了'"
-            @load="onLoad"
-          >
-            <collection-article :data="tabs[2].list"></collection-article>
-          </van-list>
-        </keep-alive>
-      </van-tab>
-    </van-tabs>
+    <div class="historicalArticles-content" v-if="haveData">
+      <div class="historicalArticles-title">
+        共{{total}}文章
+        <span class="historicalArticles-title-right">
+          <router-link :to="{name:'updateArticles',params: {total:total }}">编辑</router-link>
+        </span>
+      </div>
+      <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="onLoad">
+        <discover-list :data="historyList" @click="GOheadline"></discover-list>
+      </van-list>
+    </div>
+    <div class="historicalArticles-null" v-if="!haveData">
+      <null-articles :nullIcon="nullIcon" :nullcontent="nullcontent"></null-articles>
+    </div>
   </div>
 </template>
 <script>
-import articlesList from 'COMP/User/collection/articlesList'
-import collectionArticle from 'COMP/User/collection/collectionArticle'
+import discoverList from 'COMP/Discover/discoverList'
 import nullArticles from 'COMP/Null'
 import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
@@ -61,99 +25,57 @@ import timeUtils from '@/utils/timeUtils'
 
 export default {
   components: {
-    articlesList,
-    nullArticles,
-    collectionArticle
+    discoverList,
+    nullArticles
   },
   data() {
     return {
-      activeIndex: 0,
-      tabs: [],
+      articles: '1',
+      nullIcon: require('IMG/user/collection/Article@2x.png'),
+      nullcontent: '暂无历史文章',
+      historyList: [],
+      total: 0,
+      current: 1,
       loading: false,
-      editAndShare: true
+      finished: false,
+      haveData: true
     }
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
-  mounted() {
-    document.querySelector('.router-view').addEventListener('scroll', this.scrollHandler)
-  },
-
   created() {
-    this.initTabs()
+    // this.gethistoryList(this.current)
   },
   methods: {
-    // 获取当前玄宗tab的typeid
-    getCurrentType() {
-      for (let temp of this.tabs) {
-        if (temp.index === this.activeIndex) return temp
-      }
-    },
-    loadTabs(tabs) {
-      for (let i = 0; i < tabs.length; i++) {
-        tabs[i].index = i
-        tabs[i].page = 1
-        tabs[i].finished = false
-        tabs[i].list = []
-        tabs[i].offsetHeight = 0
-        this.tabs.push(tabs[i])
-      }
-    },
-    initTabs() {
-      let tabs = [{ typeName: '历史编辑', type: '0' }, { typeName: '历史分享', type: '1' }, { typeName: '收藏写一写', type: '2' }]
-      this.loadTabs(tabs)
-    },
-    scrollHandler(e) {
-      let current = this.getCurrentType()
-      current.offsetHeight = e.target.scrollTop
-    },
-    tabsChange(e) {
-      let current = this.getCurrentType()
-      console.log(current.index)
-      document.querySelector('.router-view').scrollTop = current.offsetHeight
+    onLoad() {
+      this.gethistoryList(this.current)
     },
 
-    async onLoad() {
-      let current = this.getCurrentType()
-      console.log(current)
-      if (current.type == '0') {
-        const result = await userService.gethistoryList('0', current.page)
-        if (result.records.length > 0) {
-          current.list = current.list.concat(result.records)
-          if (current.page == result.page) {
-            current.finished = true
-          }
-          current.page++
-        } else {
-          current.finished = true
+    async gethistoryList(current) {
+      const res = await userService.gethistoryList(current)
+
+      if (res.records.length > 0) {
+        //  this.historyList = res.records
+        for (let i = 0; i < res.records.length; i++) {
+          let tempTime = timeUtils.getDateTimeBefor(res.records[i].createDate)
+          res.records[i].createDate = tempTime
         }
-        this.loading = false
-      } else if (current.type == '1') {
-        const result = await userService.gethistoryList('1', current.page)
-        if (result.records.length > 0) {
-          current.list = current.list.concat(result.records)
-          if (current.page == result.page) {
-            current.finished = true
-          }
-          current.page++
-        } else {
-          current.finished = true
+        this.historyList = this.historyList.concat(res.records)
+        if (res.pages === 0 || this.current === res.pages) {
+          this.finished = true
         }
+        this.current++
         this.loading = false
+        this.haveData = true
       } else {
-        const res = await userService.getqueryInfoList()
-        if (res.list.records > 0) {
-          current.list = current.list.concat(res.list.records)
-          if (current.page == res.page) {
-            current.finished = true
-          }
-          current.page++
-        } else {
-          current.finished = true
+        if (current == 1) {
+          this.haveData = false
         }
         this.loading = false
+        this.finished = true
       }
+      this.total = res.total
     },
     GOheadline(discover) {
       //跳转到房产头条
