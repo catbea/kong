@@ -53,7 +53,7 @@ const state = {
     nickName: '周丹Nike',
     // payCorpId: 'onXUy1sGkPMX-Z34buMYLs5q2',
     payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
-    pcOpenid: 'oPeLD1Mdkzf8nnZ4yHaHfF2YBYUo',
+    // pcOpenid: 'oPeLD1Mdkzf8nnZ4yHaHfF2YBYUo',
     price: 984200,
     registerMobile: '18603000246',
     signature: 'mwwwwwwwmm',
