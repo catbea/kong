@@ -188,6 +188,14 @@ export default [
     }
   },
   {
+    path: '/user/myReport/reportCustomerEdit',
+    name: 'reportCustomerEdit',
+    component: resolve => require(['@/views/user/myReport/reportCustomerEdit.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
     path: '/user/myMarket',
     name: 'mymarket',
     component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
