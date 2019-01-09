@@ -12,7 +12,7 @@
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
       <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
-      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.enterpriseId}}"/>
+      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" @click="goEdit" />
     </van-cell-group>
     <van-cell-group class="user-advance-info">
       <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel'">
@@ -46,6 +46,14 @@ export default {
     }
   },
   methods: {
+    goEdit() {
+      if (!this.userInfo.institutionName) {
+        this.$router.push({path:'/user/edit/userMechanism',query:{distributorId:this.userInfo.distributorId,enterpriseId:this.userInfo.enterpriseId}})
+      } else {
+        this.$router.push('/user/edit/userPlatform')
+      }
+    },
+
     godistributorName() {
       //此处不可进行操作
       //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面

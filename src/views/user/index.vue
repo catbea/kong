@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     enterSharePage() {
-      this.$router.push({ path: '/user/share-business-card', query: { agentId: this.userInfo.agentId } })
+      this.$router.push({ path: '/user/share-card', query: { agentId: this.userInfo.agentId } })
     },
 
     overlayClose() {

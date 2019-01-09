@@ -298,14 +298,14 @@
     methods: {
       // 获取分享卡片详情
       async getCardInfo() {
-        const result = await userService.getQrCode(this.agentId)
+        let result = await userService.getQrCode(this.agentId)
         if (result) {
           this.shareBaseInfo = result
         }
       },
       // 获取代理商卡片
       async getAgentCard() {
-        const result = await userService.getAgentCard({
+        let result = await userService.getAgentCard({
           agentId: this.agentId
         })
         if (result) {
@@ -386,7 +386,7 @@
         if (!checkStrLength(slogan, 48)) {
            return this.$toast('宣传语最多为24个汉字')
         }
-        const result = await userService.updateAgentCard({
+        let result = await userService.updateAgentCard({
           agentId: this.agentId,
           imageUrl: this.editData.avatarUrl,
           slogan: this.editData.signature,
@@ -405,7 +405,7 @@
       },
       // 上传图片签名
       async initCos () {
-        const result = await userService.getCosAppSign()
+        let result = await userService.getCosAppSign()
         if (result) {
           this.cos = new CosCloud({
             appid: this.appId,
