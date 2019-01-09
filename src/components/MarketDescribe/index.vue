@@ -210,7 +210,7 @@ export default {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                max-width: 103px;
+                max-width: 150px;
                 font-size: 16px;
 
                 font-weight: 600;
@@ -257,21 +257,19 @@ export default {
             margin-left: -3px;
           }
           .unit-price {
-            display: flex;
             height: 15px;
             margin-top: 4px;
-            justify-content: space-between;
+            display:flex;
             span:nth-child(1) {
               line-height: 15px;
               font-size: 15px;
-
               font-weight: 600;
               color: rgba(234, 77, 46, 1);
             }
             span:nth-child(2) {
+              margin-left:12px;
               line-height: 15px;
               font-size: 12px;
-
               font-weight: 400;
               color: rgba(153, 153, 153, 1);
             }
@@ -293,7 +291,7 @@ export default {
           height: 16px;
         }
         span:nth-child(2) {
-          margin: 0 0 0 4px;
+          margin: 0 0 0 6px;
           font-size: 15px;
 
           font-weight: 400;
