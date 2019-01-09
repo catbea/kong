@@ -32,7 +32,7 @@ export default {
     if(defaultPath) {
       localStorage.removeItem('defaultPath')
       this.$router.push({ path: defaultPath })
-      // console.log('ccccccccccccccccc'+defaultPath)
+      console.log('ccccccccccccccccc'+defaultPath)
     }
   },
   watch: {
