@@ -463,6 +463,14 @@ export default {
   }
 }
 //弹出确认框
+.renew-Dialog{
+  .van-dialog__header,.van-dialog__message--has-title{
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    padding-top: 26px;
+  }
+}
 .close-Dialog {
   width: 280px;
   background: rgba(255, 255, 255, 1);
