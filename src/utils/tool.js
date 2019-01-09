@@ -50,3 +50,29 @@ export function debounce(fn, wait = 500, immediate = false) {
     }
   }
 }
+
+
+// 图片压缩
+export function randomString(len) {
+  len = len || 32
+  var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678' /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+  var maxPos = $chars.length
+  var pwd = ''
+  for (var i = 0; i < len; i++) {
+    pwd += $chars.charAt(Math.floor(Math.random() * maxPos))
+  }
+  var timestamp = new Date().getTime()
+  return timestamp + pwd + '.png'
+}
+
+export function dataURLtoBlob(dataurl) {
+  var arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
+  }
+  return new Blob([u8arr], { type: mime })
+}
