@@ -5,7 +5,7 @@
       <div class="messageInfo-wd" >
         <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
         <div class="messageInfo-wd-right">
-          <button class="messageInfo-wd-right-select" @click="goSelestMessage">查 看</button>
+          <button class="messageInfo-wd-right-select messageInfo-wd-select" @click="goSelestMessage">查 看</button>
           <button class="messageInfo-wd-right-select" @click="getsetMsgRead">全部已读</button>
         </div>
       </div>
@@ -107,7 +107,8 @@ export default {
     // },
     async getsetMsgRead(){
       //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
-     dynamicsService.getsetMsgRead()
+     await dynamicsService.getsetMsgRead()
+     this.getMsgList()
     },
     async goSelestMessage(){
        this.$router.push({path: '/dynamics/message/unreadMessage', query: {UnreadMsgTotal: this.UnreadMsgTotal} })
@@ -162,7 +163,9 @@ export default {
       height:50px;
       background:rgba(255,255,255,1);
       border-bottom: 1px solid #eeeeee;
-      padding: 7px 16px;
+      // padding: 7px 16px;
+      padding: 0 0.42667rem;
+      line-height: 40px;
       .messageInfo-wd-left{
         font-size:14px;
       font-weight:400;
@@ -171,17 +174,20 @@ export default {
       }
       .messageInfo-wd-right{
         float: right;
+        .messageInfo-wd-select{
+          width:72px;
+        }
         .messageInfo-wd-right-select{
           font-size:12px;
           font-weight:400;
           color:rgba(0,122,230,1);
           line-height:17px;
-          width:72px;
           height:24px;
           border-radius:22px;
           border:1px solid rgba(0,122,230,1);
           margin-left: 8px;
           background-color: #ffffff;
+          padding: 0 12px;
         }
 
       }

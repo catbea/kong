@@ -133,7 +133,7 @@ export default {
       image.style.maxWidth = imgW + 'px'
       image.style.height = imgH + 'px'
       image.style.marginLeft = '10%'
-      image.style.marginTop = '25%'
+      image.style.marginTop = '10%'
       image.style.borderRadius = '10px'
       this.showLoading = false
     }
