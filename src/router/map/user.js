@@ -207,6 +207,17 @@ export default [
     }
   },
   {
+    path: '/swiper',
+    name: 'swiper',
+    component: resolve => require(['@/views/user/myMarket/swiper.vue'], resolve),
+    meta: {
+      title: '我的轮播图',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/myCoupon',
     name: 'myCoupon',
     component: resolve => require(['@/views/user/myCoupon/index.vue'], resolve),
