@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'es6-polyfill'
 import 'amfe-flexible'
 import App from '@/App.vue'
 import router from '@/router/'

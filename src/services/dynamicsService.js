@@ -27,6 +27,18 @@ class DynamicsService {
       url: '/homepage/getBuildingInfo'
     })
   }
+
+  /**
+   * 更新经纪人信息
+   */
+  updateAgentInfo(param) {
+    return xhr({
+      method: 'POST',
+      url: '/homepage/updateAgentInfo',
+      body: param
+    })
+  }
+
   /**
    * 消息列表和未读消息数量
    * @param {*} msgStatus 消息状态：1、查所有消息列表 2、查已读消息列表 3、查未读消息列表

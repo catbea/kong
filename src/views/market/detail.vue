@@ -120,7 +120,9 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index" @click.native="itemClickHandler(item.linkerId)">
             <div class="recommend-house-item">
-              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}"></div>
+              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
+                <p class="bg_img panorama-icon" v-if="item.ifPanorama==1" :style="{backgroundImage:'url('+panoramaIcon+')'}"></p>
+              </div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
                 <p class="house-location">{{item.district}}</p>
@@ -176,6 +178,7 @@ export default {
       photoButton: true, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
       siteDetailImg: require('IMG/marketDetail/arrow.png'),
+      panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -560,9 +563,9 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 38px;
+    margin-top:28px;
     .type-swipe-content {
-      margin: 13px 22px;
+      margin: 16px 22px 0px 22px;
       .house-type {
         > .house-type-img {
           width: 160px;
@@ -570,12 +573,12 @@ export default {
           border-radius: 6px;
         }
         > .house-type-info {
-          margin-top: 8px;
+          margin-top: 12px;
           line-height: 1.5;
           > .house-type-name {
             font-size: 16px;
             color: #333333;
-            font-weight: 500;
+            font-weight: 600;
           }
           > .house-type-area {
             font-size: 12px;
@@ -639,7 +642,7 @@ export default {
     }
   }
   > .house-recommend {
-    margin-top: 15px;
+    margin-top: 18px;
     margin-bottom: 10px;
     > .recommend-swipe-content {
       margin: 0 15px;
@@ -649,6 +652,16 @@ export default {
           width: 160px;
           height: 90px;
           border-radius: 6px;
+          position: relative;
+          .panorama-icon{
+            position:absolute;
+            width:34px;
+            height:34px;
+            left:50%;
+            top:50%;
+            margin-left:-17px;
+            margin-top:-17px;
+          }
         }
         > .recommend-house-info {
           .house-name {

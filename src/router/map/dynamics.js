@@ -1,7 +1,7 @@
 ﻿export default [
   {
     path: '/',
-    name: 'dynamics',
+    name: 'index',
     component: resolve => require(['@/views/dynamics/index.vue'], resolve),
     meta: {
       title: '数据',

@@ -143,7 +143,7 @@ export default {
         clientName: this.radio.clientName
       }
       this.$store.commit(types.REPORT_INFO, _reportAddInfo)
-      this.$router.back(-1)
+      this.$router.replace({name: 'addReport'})
     }
   },
   computed: {
