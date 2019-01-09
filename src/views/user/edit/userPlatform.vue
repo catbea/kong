@@ -9,7 +9,7 @@
   </div>
   <div class="warning">{{this.warning}}</div>
   <div class="action">
-    <button type="button" @click="toApply" :class="{'disabled': disBtn}">申请离岗</button>
+    <button type="button" @click="toApply" :class="{'disabled': disBtn}">{{btnText}}</button>
   </div>
 </div>
 </template>
@@ -40,7 +40,7 @@ export default {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
         // switchStatus 组织切换状态 空 未申请 0 待处理  1 通过  2 拒绝
-        let switchStatus = result.switchStatus
+        let switchStatus = result.switchStatus + ''
         let text = {
           '': '申请修改',
           '0': '申请审批中',
@@ -161,8 +161,9 @@ export default {
       color: rgba(68, 81, 102, 1);
       font-size: 16px;
       &.disabled{
-        background-color: rgba(102, 102, 102, 1);
+        background-color:#e8e8e8;
         cursor: not-allowed;
+        color: #999;
       }
     }
   }
