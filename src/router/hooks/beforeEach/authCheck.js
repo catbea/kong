@@ -76,14 +76,17 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         next()
       } else {
-        const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
-
-        payCorpId = wxAuthObject.payCorpId
-        let userInfo = wxAuthObject.userInfo
-        userInfo.payCorpId = payCorpId
-        userInfo.cropId = cropId
-        userInfo.token = wxAuthObject.token
-        await store.dispatch('getUserInfo', userInfo)
+        let userInfo = store.getters.userInfo
+        if (!userInfo.token) {
+          const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
+          payCorpId = wxAuthObject.payCorpId
+          let userInfo = wxAuthObject.userInfo
+          userInfo.payCorpId = payCorpId
+          userInfo.cropId = cropId
+          userInfo.token = wxAuthObject.token
+          await store.dispatch('getUserInfo', userInfo)
+        }
+        
         if (!userInfo.payOpenId) {
           //返回的payopenid为空，则从新授权获取
           await localStorage.setItem('payCorpId', payCorpId)

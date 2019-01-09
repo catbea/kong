@@ -31,8 +31,8 @@ export default {
     let defaultPath = localStorage.getItem('defaultPath', defaultPath)
     if(defaultPath) {
       localStorage.removeItem('defaultPath')
-      this.$router.push({ path: defaultPath })
-      console.log('ccccccccccccccccc'+defaultPath)
+      this.$router.replace({ path: defaultPath })
+      console.log('path:'+defaultPath)
     }
   },
   watch: {
