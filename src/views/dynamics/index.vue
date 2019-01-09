@@ -52,14 +52,6 @@ export default {
     this.timer = setInterval(() => {
       this.getCollectInfo()
     }, 30000)
-    this.$dialog.alert({
-        title: '非常抱歉',
-        message: '该楼盘已被下架或删除',
-        className: 'renew-Dialog',
-        confirmButtonText: '知道啦'
-      }).then(() => {
-        // on close
-      });
   },
   methods: {
     shiftHandle() {
