@@ -210,7 +210,7 @@ export default {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                max-width: 103px;
+                max-width: 150px;
                 font-size: 16px;
 
                 font-weight: 600;
@@ -293,7 +293,7 @@ export default {
           height: 16px;
         }
         span:nth-child(2) {
-          margin: 0 0 0 4px;
+          margin: 0 0 0 6px;
           font-size: 15px;
 
           font-weight: 400;
