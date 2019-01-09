@@ -77,7 +77,7 @@ export default async (to, from, next) => {
         next()
       } else {
         let userInfo = store.getters.userInfo
-        console.log(userInfo, 'userInfo')
+        console.log(userInfo.pcOpenid, 'userInfo')
         if(userInfo && userInfo.pcOpenid) {
           console.log(userInfo.pcOpenid, 'userInfo.pcOpenid')
           next()
@@ -85,7 +85,7 @@ export default async (to, from, next) => {
         }
 
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
-        console.log(wxAuthObject, 'wxAuthObject')
+        console.log(wxAuthObject, 'userInfo')
         payCorpId = wxAuthObject.payCorpId
         userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId
