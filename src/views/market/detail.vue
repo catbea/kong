@@ -563,9 +563,9 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 38px;
+    margin-top:28px;
     .type-swipe-content {
-      margin: 13px 22px;
+      margin: 16px 22px 0px 22px;
       .house-type {
         > .house-type-img {
           width: 160px;
@@ -573,12 +573,12 @@ export default {
           border-radius: 6px;
         }
         > .house-type-info {
-          margin-top: 8px;
+          margin-top: 12px;
           line-height: 1.5;
           > .house-type-name {
             font-size: 16px;
             color: #333333;
-            font-weight: 500;
+            font-weight: 600;
           }
           > .house-type-area {
             font-size: 12px;
@@ -642,7 +642,7 @@ export default {
     }
   }
   > .house-recommend {
-    margin-top: 15px;
+    margin-top: 18px;
     margin-bottom: 10px;
     > .recommend-swipe-content {
       margin: 0 15px;
