@@ -17,7 +17,8 @@
           class="building-price"
           v-else
         >价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
-        <img class="avatar-view" :src="buildingInfo.avatarMediaid">
+        <!-- <img class="avatar-view" :src="buildingInfo.avatarMediaid"> -->
+        <div class="avatar-view"  :style="{backgroundImage:'url(' + buildingInfo.avatarMediaid + ')'}"></div>
         <span class="username-view">{{buildingInfo.agentName}}</span>
         <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
         <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
@@ -132,7 +133,7 @@ export default {
       image.style.maxWidth = imgW + 'px'
       image.style.height = imgH + 'px'
       image.style.marginLeft = '10%'
-      image.style.marginTop = '25%'
+      image.style.marginTop = '10%'
       image.style.borderRadius = '10px'
       this.showLoading = false
     }
