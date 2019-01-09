@@ -59,7 +59,7 @@ export default {
             className: 'update',
             message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
           }).then(() => {
-            this.$router.push('/')
+            this.$router.push('/public/complete-info')
           })
         }
         if (leavingStatus === 2) {
