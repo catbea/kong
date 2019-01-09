@@ -127,7 +127,9 @@ export default {
       height:50px;
       background:rgba(255,255,255,1);
       border-bottom: 1px solid #eeeeee;
-      padding: 7px 16px;
+      // padding: 7px 16px;
+      padding: 0 0.42667rem;
+      line-height: 40px;
       .unreadMessage-wd-left{
         font-size:14px;
       font-weight:400;
@@ -136,12 +138,13 @@ export default {
       }
       .unreadMessage-wd-right{
         float: right;
+      
         .unreadMessage-wd-right-select{
           font-size:12px;
           font-weight:400;
           color:rgba(0,122,230,1);
           line-height:17px;
-          width:72px;
+          padding: 0 12px;
           height:24px;
           border-radius:22px;
           border:1px solid rgba(0,122,230,1);
