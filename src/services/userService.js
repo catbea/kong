@@ -456,7 +456,7 @@ class UserService {
   }
 
   /**
-   * 名片海报
+   * 名片海报信息
    */
   getAgentCard(data) {
     return xhr({
@@ -464,5 +464,17 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 更新名片海报信息
+   */
+  updateAgentCard (data) {
+    return xhr({
+      method: 'POST',
+      url: '/user/updateAgentCard',
+      body: data
+    })
+  }
+
 }
 export default new UserService()
