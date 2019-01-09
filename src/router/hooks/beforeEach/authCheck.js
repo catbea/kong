@@ -25,19 +25,29 @@ export default async (to, from, next) => {
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
+  
   if (parm.cropId) {
     // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
     store.dispatch('getUserInfo', null)
-    // store.dispatch('setJssdkConfig', null)
     store.commit(types.WX_JSSDK, null)
     let cropId = parm.cropId
-    await localStorage.setItem('cropId', cropId)
+    localStorage.setItem('cropId', cropId)
+
+    let defaultPathArr = window.location.href.split('#')
+    if(defaultPathArr.length>1) {
+      let defaultPath = window.location.href.split('#')[1].split('?')[0]
+      if(defaultPath !== '/') {
+        localStorage.setItem('defaultPath', defaultPath)
+      }
+    }
+    
     let wxurl =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
       cropId +
       '&redirect_uri=' +
       encodeURIComponent(wxredirecturl).toLowerCase() +
       '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+    // console.log(wxredirecturl)
     window.location.href = wxurl
   } else {
     if (parm.code) {

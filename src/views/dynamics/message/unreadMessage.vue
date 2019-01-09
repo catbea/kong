@@ -87,9 +87,10 @@ export default {
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
-      async getsetMsgRead(){
+    async getsetMsgRead(){
       //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
-      dynamicsService.getsetMsgRead()
+      await dynamicsService.getsetMsgRead()
+      this.getMsgList()
     },
     //查看未读消息
    
