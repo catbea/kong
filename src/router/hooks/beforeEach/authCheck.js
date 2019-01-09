@@ -85,7 +85,7 @@ export default async (to, from, next) => {
         }
 
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
-        console.log(wxAuthObject, 'userInfo')
+        console.log(wxAuthObject, 'wxAuthObject')
         payCorpId = wxAuthObject.payCorpId
         userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId
