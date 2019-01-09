@@ -35,7 +35,7 @@ export default async (to, from, next) => {
 
     let defaultPathArr = window.location.href.split('#')
     if(defaultPathArr.length>1) {
-      let defaultPath = window.location.href.split('#')[1]
+      let defaultPath = window.location.href.split('#')[1].split('?')[0]
       if(defaultPath !== '/') {
         localStorage.setItem('defaultPath', defaultPath)
       }
@@ -47,6 +47,7 @@ export default async (to, from, next) => {
       '&redirect_uri=' +
       encodeURIComponent(wxredirecturl).toLowerCase() +
       '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+    // console.log(wxredirecturl)
     window.location.href = wxurl
   } else {
     if (parm.code) {
