@@ -621,9 +621,11 @@ export default {
   }
 }
 .renew-Dialog{
+  width:235px;
+  border-radius: 10px;
   .van-dialog__header,.van-dialog__message--has-title{
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     color: rgba(51, 51, 51, 1);
     padding-top: 26px;
   }
