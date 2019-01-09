@@ -77,6 +77,10 @@ export default async (to, from, next) => {
         next()
       } else {
         let userInfo = store.getters.userInfo
+        if(userInfo && userInfo.devMode){
+          next()
+          return
+        }
         if (!userInfo.token) {
           const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
           payCorpId = wxAuthObject.payCorpId
@@ -85,6 +89,8 @@ export default async (to, from, next) => {
           userInfo.cropId = cropId
           userInfo.token = wxAuthObject.token
           await store.dispatch('getUserInfo', userInfo)
+        } else {
+          console.log(userInfo, 'userInfo')
         }
         
         if (!userInfo.payOpenId) {
