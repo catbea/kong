@@ -40,7 +40,6 @@
 <script>
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
 import ShadowBox from 'COMP/ShadowBox'
-import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import Properties from 'COMP/Dynamics/Properties'
 import DynamicsArticle from 'COMP/Dynamics/DynamicsArticle'
 import DynamicsCard from 'COMP/Dynamics/DynamicsCard'
@@ -51,7 +50,6 @@ import { mapGetters } from 'vuex'
 export default {
   components: {
     DynamicsData,
-    DynamicsList,
     Properties,
     DynamicsArticle,
     ShadowBox,
