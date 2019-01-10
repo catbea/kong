@@ -48,10 +48,10 @@ export default {
           '2': '审批不通过'
         } 
         this.btnText = text[leavingStatus] || '未知状态'
-        if (leavingStatus === '' || leavingStatus === 2) {
+        if (leavingStatus === '' || leavingStatus === '2') {
           this.disBtn = false
         }
-        if (leavingStatus === 1) {
+        if (leavingStatus === '1') {
           // 审批通过，更新信息
           this.$dialog.alert({
             title: '审批通过',
@@ -62,13 +62,14 @@ export default {
             this.$router.push('/public/complete-info')
           })
         }
-        if (leavingStatus === 2) {
+        if (leavingStatus === '2') {
           // 审批不通过
           this.$dialog.alert({
             title: '审批不通过',
             confirmButtonText: '我知道了',
             message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
           }).then(() => {
+            this.btnText = '申请离岗'
           })
         }
       }
