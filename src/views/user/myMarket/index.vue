@@ -247,8 +247,8 @@ export default {
         //   let arr = []
         // arr.push(n)
         // this.masterList = arr.concat(this.masterList)
-        this.masterList = this.masterList.concat(n)
-        // this.masterList.unshift(n)
+        // this.masterList = this.masterList.concat(n)
+        this.masterList.unshift(n)
         console.log(this.masterList,"master大师");
         this.swipeList = this.masterList.concat(this.commonList)
         console.log(this.swipeList,"swipe大师");
@@ -291,8 +291,8 @@ export default {
         //   let arr = []
         // arr.push(n)
         // this.commonList = arr.concat(this.commonList)
-        this.commonList = this.commonList.concat(n)
-        // this.commonList.unshift(n)
+        // this.commonList = this.commonList.concat(n)
+        this.commonList.unshift(n)
         console.log(this.commonList,"commonList普通");
         this.swipeList = this.masterList.concat(this.commonList)
         console.log(this.swipeList,"swipeList普通");
