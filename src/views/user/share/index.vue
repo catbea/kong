@@ -1054,9 +1054,9 @@
       }
 
       .share-card-action {
-        // position: absolute;
+        position: absolute;
         width: 100%;
-        margin-top: 70px;
+        bottom: 24px;
         text-align: center;
 
         button {
