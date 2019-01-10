@@ -23,7 +23,7 @@ const isIOS = () => {
 export default async (to, from, next) => {
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
-  let wxredirecturl = window.location.href.split('?')[0]
+  let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
   
   if (parm.cropId) {
