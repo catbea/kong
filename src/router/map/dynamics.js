@@ -2,9 +2,9 @@
   {
     path: '/',
     name: 'index',
-    component: resolve => require(['@/views/dynamics/index.vue'], resolve),
+    component: resolve => require(['@/views/public/index.vue'], resolve),
     meta: {
-      title: '数据',
+      title: '首页',
       tabbar: {
         show: true
       }
