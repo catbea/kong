@@ -96,7 +96,7 @@ export default [
     name: 'historicalArticles',
     component: resolve => require(['@/views/user/articles/historicalArticles.vue'], resolve),
     meta: {
-      title: '历史文章'
+      title: '我的写一写'
     }
   },
   {
@@ -104,7 +104,7 @@ export default [
     name: 'updateArticles',
     component: resolve => require(['@/views/user/articles/updateArticles.vue'], resolve),
     meta: {
-      title: '历史文章'
+      title: '我的写一写'
     }
   },
   {
