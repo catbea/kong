@@ -6,12 +6,12 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="card-info card1">
-              <div class="cover">
-                <p class="avat"><img :src="editData.avatarUrl" alt="封面"></p>
-                <div class="name text-one-line">
-                  <h3>{{editData.agentName}}</h3>
-                  <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
-                </div>
+              <div class="avat">
+                <img :src="editData.avatarUrl" alt="封面">
+              </div>
+              <div class="name text-one-line">
+                <h3>{{editData.agentName}}</h3>
+                <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
               </div>
               <div class="qrcode">
                 <img :src="editData.miniQrCode" alt="小程序">
@@ -486,40 +486,35 @@
           position: relative;
 
           &.card1 {
-            background-color: #113460;
-            .cover {
-              position: absolute;
-              height: 200px;
-              width: 100%;
-              top: 0;
-              z-index: 1;
-
+            background-color: #113460;          
               .avat {
+                position: relative;
+                height: 260px;
+                z-index: 1;
+                text-align: center;
+                overflow: hidden;
                 img {
-                  height: 100%;
-                  width: 100%;
+                  min-height: 100%;
+                  min-width: auto;
                 }
               }
-            }
-
             .name {
               position: absolute;
-              left: 15px;
-              bottom: 5px;
+              left: 10px;
+              top: 160px;
               color: #fff;
               border-bottom: 2px solid #0069CA;
               padding-bottom: 5px;
-              z-index: 2;
               max-width: 140px;
+              z-index: 4;
               h3 {
-                font-size: 28px;
+                font-size: 24px;
               }
 
               span {
                 font-size: 12px;
               }
             }
-
             .qrcode {
               position: absolute;
               top: 36%;
@@ -545,15 +540,12 @@
             }
 
             .data-info {
-              position: absolute;
+              position: relative;
               // background: url('../../../assets/img/share/card1.png') no-repeat left top;
-              // background-size: cover;
+              // backgr7und-size: cover;
+              margin-top: -80px;
               z-index: 2;
-              bottom: 0;
-              left: 0;
-              right: -1px;
-              left: -1px;
-              height: 240px;
+              height: 280px;
               color: #fff;
               padding: 0 20px;
               overflow: hidden;
@@ -596,10 +588,11 @@
               position: relative;
               height: 220px;
               z-index: 1;
-
+              text-align: center;
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                min-height: 100%;
               }
             }
 
@@ -627,7 +620,7 @@
 
                 .data {
                   padding-top: 30px;
-                  padding: 20px 20px 10px 20px;
+                  padding: 20px 0 10px 20px;
                   color: #fff;
                   flex: 1;
 
@@ -700,18 +693,18 @@
 
             .avat {
               text-align: center;
-              padding: 10px 20px;
-
+              padding: 15px 20px;
+              
               img {
-                width: 120px;
-                height: 120px;
+                max-width: 120px;
+                max-height: 120px;
                 border-radius: 50%;
               }
 
               p {
                 font-size: 12px;
                 opacity: 0.5;
-                padding-top: 5px;
+                padding-top: 8px;
                 color: #fff;
                 line-height: 1.5;
               }
@@ -772,10 +765,10 @@
               position: relative;
               height: 220px;
               z-index: 1;
-
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                min-height: 100%;
               }
             }
 
@@ -803,7 +796,7 @@
 
                 .data {
                   padding-top: 30px;
-                  padding: 20px 20px 10px 20px;
+                  padding: 20px 0 10px 20px;
                   color: #14355F;
                   flex: 1;
 
@@ -894,10 +887,11 @@
               position: relative;
               height: 220px;
               z-index: 1;
-
+              text-align: center;
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                min-height: 100%;
               }
             }
 
@@ -960,10 +954,11 @@
               position: relative;
               height: 290px;
               z-index: 1;
-
+              text-align: center;
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                min-height: 100%;
               }
             }
 
@@ -1000,7 +995,7 @@
                 display: flex;
 
                 .data {
-                  padding: 0 20px;
+                  padding: 0 0 0 20px;
                   color: #14355F;
                   flex: 1;
 
