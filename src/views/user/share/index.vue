@@ -401,11 +401,11 @@
         })
         if (result) {
           let toast = this.$toast('保存成功')
-          this.initData()
-          // setTimeout(() => {
-          //   toast.clear()
-          //   this.showEdit = false
-          // }, 1000)
+          // this.initData()
+          setTimeout(() => {
+            toast.clear()
+            this.showEdit = false
+          }, 1000)
         }
       },
       // 图片上传
