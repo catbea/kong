@@ -1,5 +1,5 @@
 <template>
-  <div class="hint-tire-page" v-if="hintShow">
+  <div class="hint-tire-page" v-if="!isOne&&!marketFirst">
      <div class="operate-1">
           <div class="operate-share">
             <i class="icon iconfont icon-article_share"></i>
@@ -8,9 +8,8 @@
         </div>
     <div class="hint-box">
       <p>快点击这里分享楼盘</p>
-      <div class="line">
-        <span class="one"></span>
-        <span class="tow"></span>
+      <div class="bg_img line" :style="{backgroundImage:'url('+labelImg+')'}">
+
       </div>
     </div>
     <div class="know-button" @click="knowHandle">
@@ -24,29 +23,29 @@ import { mapGetters } from 'vuex'
 import marketService from 'SERVICE/marketService'
 export default {
   created() {
-    this.guidanceHandle()
+    if(this.userInfo.isOne==1){
+      this.isOne=false
+    }else{
+      this.isOne=true
+    }
+   this.marketFirst=this.guidance.marketFirst
   },
   data: () => ({
-    enjoyImg: require('IMG/marketDetail/enjoy@2x.png'),
-    hintShow: true
+    isOne:false,//0：不是首次注册 1:首次注册 ,
+    marketFirst:false,//true为已是老用户
+    labelImg: require('IMG/marketDetail/yindao.png'),
+    enjoyImg: require('IMG/marketDetail/enjoy@2x.png')
   }),
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo','guidance'])
   },
   methods: {
-    guidanceHandle() {
-      //新手引导
-      if (this.userInfo.isOne == 1) {
-        this.hintShow = true
-      } else {
-        this.hintShow = false
-      }
-    },
     async knowHandle() {
       const res = await marketService.getMarketUpdateIsOne()
-      this.hintShow = false
-      // TODO 不是修改is_one
-      this.$store.commit(types.IS_ONE, 0)
+      this.$store.commit(types.FIRST,true)
+      this.marketFirst=true
+      console.log(this.guidance,'store数据');
+      
     }
   }
 }
@@ -58,7 +57,7 @@ export default {
   position: fixed;
   background: rgba(0, 0, 0, 1);
   opacity: 0.65;
-  z-index: 11;
+  z-index: 1000;
   .operate-1 {
     margin: 0 0 0 320px;
     display: flex;
@@ -75,7 +74,7 @@ export default {
   }
   .hint-box {
     width: 225px;
-    height: 194px;
+    height: 171px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -89,11 +88,8 @@ export default {
       margin-bottom: -10px;
     }
     .line {
-      display: flex;
-      width: 62px;
-      height: 189px;
-      border-right: dashed rgba(255, 255, 255, 1);
-      border-bottom: dashed rgba(255, 255, 255, 1);
+      width: 69px;
+      height: 171px;
       // border-style: dotted;
       position: relative;
       .one {

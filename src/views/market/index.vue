@@ -14,7 +14,7 @@
         <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
-    <div class="hot-recommend" v-if="!haveData">
+    <div class="hot-recommend" v-if="!haveData&&hotResult">
           <title-bar class="title-container" :conf="titleBarConf"/>
           <market-describe
             v-for="(item,index) in hotResult"
