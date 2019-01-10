@@ -1,30 +1,17 @@
-<template>
-  
-</template>
+<template></template>
 <script>
-
+import { mapGetters } from 'vuex'
 export default {
-  components: {
-    discoverList,
-    nullArticles
-  },
+  components: {},
   data() {
-    return {
-      
-    }
+    return {}
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
-  created() {
-  },
-  methods: {
-    
-
-   
-  }
+  created() {},
+  methods: {}
 }
 </script>
 <style lang="less">
-
 </style>
