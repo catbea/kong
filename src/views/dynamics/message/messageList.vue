@@ -1,8 +1,8 @@
 <template>
   <div class="messageInfo-page">
     <div class="messageInfo-back" v-if="haveData">
-      <!-- v-show="UnreadMsgTotal != 0" -->
-      <div class="messageInfo-wd" >
+      <!--  -->
+      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
         <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
         <div class="messageInfo-wd-right">
           <button class="messageInfo-wd-right-select messageInfo-wd-select" @click="goSelestMessage">查 看</button>
