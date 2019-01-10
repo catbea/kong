@@ -6,7 +6,7 @@
     meta: {
       title: '首页',
       tabbar: {
-        show: true
+        show: false
       }
     }
   },
