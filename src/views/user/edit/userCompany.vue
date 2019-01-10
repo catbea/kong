@@ -8,7 +8,7 @@
   </div>
   <div class="tips">{{this.tips}}</div>
   <div class="action">
-    <button type="button" @click="toApply" :class="{'disabled': disBtn}">申请离岗</button>
+    <button type="button" @click="toApply" :class="{'disabled': disBtn}">{{btnText}}</button>
   </div>
 </div>
 </template>
@@ -40,7 +40,7 @@ export default {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
         // leavingStatus  离岗状态  空 未申请 0 待处理  1 通过  2 拒绝
-        let leavingStatus = result.leavingStatus
+        let leavingStatus = result.leavingStatus + '' 
         let text = {
           '': '申请离岗',
           '0': '申请审批中',
@@ -59,7 +59,7 @@ export default {
             className: 'update',
             message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
           }).then(() => {
-            this.$router.push('/')
+            this.$router.push('/public/complete-info')
           })
         }
         if (leavingStatus === 2) {
@@ -162,8 +162,9 @@ export default {
       color: #fff;
       font-size: 16px;
       &.disabled{
-        background-color: rgba(102, 102, 102, 1);
+        background-color: #e8e8e8;
         cursor: not-allowed;
+        color: #999;
       }
     }
   }

@@ -5,6 +5,7 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
+    devMode: true,
     agentId: '1',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
@@ -52,7 +53,7 @@ const state = {
     nickName: '周丹Nike',
     // payCorpId: 'onXUy1sGkPMX-Z34buMYLs5q2',
     payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
-    pcOpenid: 'oPeLD1Mdkzf8nnZ4yHaHfF2YBYUo',
+    // pcOpenid: 'oPeLD1Mdkzf8nnZ4yHaHfF2YBYUo',
     price: 984200,
     registerMobile: '18603000246',
     signature: 'mwwwwwwwmm',

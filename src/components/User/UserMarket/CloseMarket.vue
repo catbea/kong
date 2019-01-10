@@ -112,8 +112,19 @@ export default {
       await userService.changeMarketData(linkerId, operationType, status)
     }, //修改楼盘状态
     popupHandle() {
-      //更多
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        //更多
       this.show = !this.show
+      }
     },
     stickHandle(index) {
       if (this.dataArr.recommand == 0) {
@@ -162,17 +173,71 @@ export default {
         })
     },
     goRenew(linkerId) {
-      //去续费
+      if(this.dataArr.saleStatus==3){
+        this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已售罄，无法开通',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else if (this.dataArr.thisDistributor === false) {
+        this.$dialog
+          .alert({
+            title: '该楼盘不可续费',
+            message: '非当前所属公司下楼盘无法开通续费',
+            className: 'renew-Dialog',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      }else{
+        //去续费
       this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
+      }
     },
     apostropheReturn() {
       this.$emit('apostropheReturn', 1)
     },
     skipShare() {
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        //去分享
       this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
+      }
     },
     skipMarketDetail(linkerId) {
-      this.$router.push('/market/' + linkerId)
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        this.$router.push('/market/' + linkerId)
+      }
     }
   }
 }
@@ -398,6 +463,14 @@ export default {
   }
 }
 //弹出确认框
+.renew-Dialog{
+  .van-dialog__header,.van-dialog__message--has-title{
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(51, 51, 51, 1);
+    padding-top: 26px;
+  }
+}
 .close-Dialog {
   width: 280px;
   background: rgba(255, 255, 255, 1);

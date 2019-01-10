@@ -2,7 +2,7 @@
   <div class="addReport-page">
     <van-cell-group>
       <van-cell title="报备楼盘" is-link :value="reportAddInfo.linkerName" :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"/>
-      <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomer"/>
+      <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomerEdit"/>
       <van-cell title="手机号" is-link :value="reportAddInfo.clientPhone" to="reportPhone"/>
     </van-cell-group>
     <p class="addReport-remarks">注：客户手机号只提供前三后四给分销商使用，请放心填写。</p>
@@ -42,7 +42,6 @@ export default {
      * 修改所属机构
      */
     editInstitutionHandler() {
-      // this.$router.push('/user/edit/userMechanism')
       this.$router.push({ path: '/user/edit/userMechanism', query: { distributorId: this.userInfo.distributorId, enterpriseId: this.userInfo.enterpriseId } })
     },
     /**
@@ -55,7 +54,7 @@ export default {
         })
         return
       }
-      if (!this.reportAddInfo.clientId) {
+      if (!this.reportAddInfo.clientName) {
         this.$dialog.alert({
           title: '请选择客户名字'
         })

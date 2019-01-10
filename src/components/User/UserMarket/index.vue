@@ -141,11 +141,33 @@ export default {
       await userService.changeMarketData(linkerId, operationType, status)
     }, //修改楼盘状态
     skipMarketDetail(linkerId) {
-      this.$router.push('/market/' + linkerId)
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        this.$router.push('/market/' + linkerId)
+      }
     },
     popupHandle() {
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
       //更多
       this.show = !this.show
+      }
     },
     stickHandle(index) {
       if (this.dataArr.recommand == 0) {
@@ -182,14 +204,6 @@ export default {
           let parent = this.$parent.$parent
           parent.showMarketList.unshift(parent.showMarketList[index])
           parent.showMarketList.splice(index + 1, 1)
-          // this.$dialog
-          //   .alert({
-          //     message: '楼盘置顶成功',
-          //     className: 'hint-alert'
-          //   })
-          //   .then(() => {
-          //     // on close
-          //   })
           this.$toast({
               duration: 800,
               message: '取消置顶成功'
@@ -200,14 +214,6 @@ export default {
       } else if (this.dataArr.recommand == 10) {
         //将当前点击的楼盘取消置顶
         this.$emit('recommandFalseHandle', this.dataArr)
-        // this.$dialog
-        //   .alert({
-        //     message: '楼盘取消置顶成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '取消置顶成功'
@@ -222,14 +228,6 @@ export default {
     async masterHandle(n) {
       if (this.dataArr.masterRecommand != 1) {
         await this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '大师推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '大师推荐成功'
@@ -237,14 +235,6 @@ export default {
         this.$emit('pushMaster', this.dataArr)
       } else {
         await this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '取消大师推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '取消大师推荐成功'
@@ -257,14 +247,6 @@ export default {
     commonHandle(n) {
       if (this.dataArr.masterRecommand != 2) {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '普通推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '普通推荐成功'
@@ -272,14 +254,6 @@ export default {
         this.$emit('pushCommon', this.dataArr)
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '取消普通推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '取消普通推荐成功'
@@ -344,8 +318,19 @@ export default {
       }
     },
     skipShare() {
-      //去分享
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        //去分享
       this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
+      }
     }
   }
 }
@@ -588,9 +573,11 @@ export default {
   }
 }
 .renew-Dialog{
+  width:235px;
+  border-radius: 10px;
   .van-dialog__header,.van-dialog__message--has-title{
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     color: rgba(51, 51, 51, 1);
     padding-top: 26px;
   }

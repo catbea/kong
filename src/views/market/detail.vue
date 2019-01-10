@@ -563,9 +563,9 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 38px;
+    margin-top:28px;
     .type-swipe-content {
-      margin: 13px 22px;
+      margin: 16px 22px 0px 22px;
       .house-type {
         > .house-type-img {
           width: 160px;
@@ -573,12 +573,12 @@ export default {
           border-radius: 6px;
         }
         > .house-type-info {
-          margin-top: 8px;
+          margin-top: 12px;
           line-height: 1.5;
           > .house-type-name {
             font-size: 16px;
             color: #333333;
-            font-weight: 500;
+            font-weight: 600;
           }
           > .house-type-area {
             font-size: 12px;
@@ -602,15 +602,16 @@ export default {
       margin: 0 15px;
       > .news-title {
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
+        margin-top:11px;
+        margin-bottom:6px;
       }
       > .news-content {
-        margin-top: 3px;
         font-size: 14px;
         font-weight: 400;
       }
       > .news-time {
-        margin-top: 16px;
+        margin-top: 12px;
         font-size: 12px;
         color: #999999;
       }
@@ -642,13 +643,15 @@ export default {
     }
   }
   > .house-recommend {
-    margin-top: 15px;
+    margin-top: 28px;
     margin-bottom: 10px;
     > .recommend-swipe-content {
       margin: 0 15px;
       .recommend-house-item {
         line-height: 1.5;
         > .recommend-house-img {
+          margin-top:18px;
+          margin-bottom:12px;
           width: 160px;
           height: 90px;
           border-radius: 6px;
@@ -666,7 +669,7 @@ export default {
         > .recommend-house-info {
           .house-name {
             font-size: 16px;
-            font-weight: 500;
+            font-weight:600;
             color: #333333;
           }
           .house-location {

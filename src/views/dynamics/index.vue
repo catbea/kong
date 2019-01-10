@@ -81,7 +81,18 @@ export default {
     },
     //楼盘详情
     async goRecommendInfo(val) {
-      this.$router.push('/market/' + val.linkerId)
+      if(val.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        this.$router.push('/market/' + val.linkerId)
+      }
     },
     async getCollectInfo() {
       const res = await dynamicsService.getDynamicsCollect()
@@ -165,7 +176,16 @@ export default {
       }
     },
     shareHandler(info) {
-      if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
+      if(info.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else if(isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
         this.$dialog
           .confirm({
             title: '您有未完善的信息',
@@ -202,6 +222,16 @@ export default {
   .list-container {
     background: #fff;
     margin-top: 10px;
+  }
+}
+.renew-Dialog{
+  width:235px;
+  border-radius: 10px;
+  .van-dialog__header,.van-dialog__message--has-title{
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    padding-top: 26px;
   }
 }
 </style>
