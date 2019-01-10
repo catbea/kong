@@ -10,7 +10,7 @@
       <div class="unreadMessage-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="unreadMessage-sys-container">
           <span class="unreadMessage-sys-left">
-            <div class="unreadMessage-sys-num">
+            <div class="unreadMessage-sys-num" v-if>
             </div>
             <img :src="backIcon" class="sys-left-img">
           </span>
@@ -130,7 +130,9 @@ export default {
       border-bottom: 1px solid #eeeeee;
       // padding: 7px 16px;
       padding: 0 0.42667rem;
-      line-height: 40px;
+      //line-height: 40px;
+       position: relative;
+      padding-top: 6px;
       .unreadMessage-wd-left{
         font-size:14px;
       font-weight:400;
