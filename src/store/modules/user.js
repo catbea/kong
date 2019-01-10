@@ -15,7 +15,7 @@ const state = {
     institutionLogo: '',
     institutionName: '',
     isOne: 0, // 1新用户 0老用户
-    articleShareFlag:0,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    articleShareFlag:1,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     isVip: '',
     vipDefaultCity: '深圳市',
     ifView: 0, //是否展示邀请有礼
@@ -47,7 +47,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI4Z21jb3IiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ5NDAyNjI1LCJpYXQiOjE1NDYzOTc4MjV9.Y8ZxsVdEjNBoWwZ8XopI_r8ii9sU9bVn6Va2OnAZAljzP2WWsVLgB8CncX8Ov4Zi99WBe6D-sGC8kph-lHU0Hg',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJzejR0bjEiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTUwMTA4MDcxLCJpYXQiOjE1NDcxMDMyNzF9.WR0Go7Ekxav7rA4fyUzyJVXebDEba7cA4mMqyV6_e--1u9otE1cz2gK5wXTPidlOWUcBwtQCMKagHNj86G6PeQ',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
@@ -105,13 +105,18 @@ const state = {
   buildId: '',
   imUserSig: null,
   guidance: {
-    dynamics: false
+    dynamics: false,
+    marketFirst:false,//首次注册
+    article:false//0未完成文章详情引导，1完成
   }
 }
 
 const getters = {
   userInfo: state => {
     return state.userInfo
+  },
+  guidance: state => {
+    return state.guidance
   },
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
@@ -192,8 +197,11 @@ const mutations = {
   [types.USER_BUILD_INFO](state, data) {
     state.buildId = data
   },
-  [types.IS_ONE](state, data) {
-    state.userInfo.isOne = data
+  [types.FIRST](state, data) { 
+    state.guidance.marketFirst = data
+  },
+  [types.ARTICLE_SHARE_FLAG](state, data) {
+    state.guidance.article = data
   },
   [types.GUIDANCE](state, data) {
     state.guidance = Object.assign(state.guidance, data)

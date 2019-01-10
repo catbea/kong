@@ -138,11 +138,11 @@
       </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="openStatus&&info.saleStatusFlag!=3">
+      <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="!openStatus&&info.saleStatusFlag!=3" :renewInfo="info"/>
-      <div class="saleStatusFlag" v-if="info.saleStatusFlag==3"> <p>售罄</p> </div>
+      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
+      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'"> <p>售罄</p> </div>
     </div>
   </div>
 </template>
@@ -226,7 +226,6 @@ export default {
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
     // window.addEventListener("popstate", this.fun, false);
-    console.log(this.userInfo,'用户信息');
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
