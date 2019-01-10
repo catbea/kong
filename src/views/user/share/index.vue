@@ -380,7 +380,7 @@
         if (!checkPhoneNum(mobile)) {
           return this.$toast('电话只能为11位数字')
         }
-        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?]+$/g
+        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？]+$/g
         if (!reg.test(slogan)) {
           return this.$toast('宣传语只支持中文、英文和数字')
         }
