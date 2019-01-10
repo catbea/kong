@@ -305,9 +305,7 @@
       },
       // 获取代理商卡片
       async getAgentCard() {
-        let result = await userService.getAgentCard({
-          agentId: this.agentId
-        })
+        let result = await userService.getAgentCard()
         if (result) {
           this.shareInfo = result
         }
@@ -394,7 +392,7 @@
            return this.$toast('宣传语最多为24个汉字')
         }
         let result = await userService.updateAgentCard({
-          agentId: this.agentId,
+          // agentId: this.agentId,
           imageUrl: this.editData.avatarUrl,
           slogan: this.editData.signature,
           institutionalAddress: this.editData.mojarRegion,
@@ -403,7 +401,7 @@
         })
         if (result) {
           let toast = this.$toast('保存成功')
-          // this.initData()
+          this.initData()
           // setTimeout(() => {
           //   toast.clear()
           //   this.showEdit = false
