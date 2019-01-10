@@ -4,7 +4,7 @@
     name: 'index',
     component: resolve => require(['@/views/public/index.vue'], resolve),
     meta: {
-      title: '首页',
+      title: 'AW大师',
       tabbar: {
         show: false
       }
