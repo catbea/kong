@@ -15,6 +15,7 @@ const state = {
     institutionLogo: '',
     institutionName: '',
     isOne: 0, // 1新用户 0老用户
+    articleShareFlag:0,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     isVip: '',
     vipDefaultCity: '深圳市',
     ifView: 0, //是否展示邀请有礼
@@ -46,7 +47,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI4Z21jb3IiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTQ5NDAyNjI1LCJpYXQiOjE1NDYzOTc4MjV9.Y8ZxsVdEjNBoWwZ8XopI_r8ii9sU9bVn6Va2OnAZAljzP2WWsVLgB8CncX8Ov4Zi99WBe6D-sGC8kph-lHU0Hg',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJsNXljdWYiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTM2IiwiZXhwIjoxNTQ5OTI0MTk4LCJpYXQiOjE1NDY5MTkzOTh9.DWBWh15muyAKfP5G7OJV3WUTsyf19TQlqwIcVyV_D3amj2McsNBVeQFLaBRo9QQom7zI0BWJcNsDZg-mavreFw',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',

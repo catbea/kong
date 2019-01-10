@@ -11,11 +11,11 @@ export default {
     
   }),
   created() {
-    let defaultPath = localStorage.getItem('defaultPath', defaultPath)
+    let defaultPath = localStorage.getItem('defaultPath')
     if(defaultPath) {
       localStorage.removeItem('defaultPath')
       this.$router.replace({ path: defaultPath })
-      console.log('path:'+defaultPath)
+    //   console.log('path:'+defaultPath)
     } else {
       this.$router.replace('/dynamics')
     }

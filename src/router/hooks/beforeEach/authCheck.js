@@ -90,6 +90,7 @@ export default async (to, from, next) => {
         userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId
         userInfo.cropId = cropId
+        userInfo.articleShareFlag=wxAuthObject.articleShareFlag
         userInfo.token = wxAuthObject.token
         await store.dispatch('getUserInfo', userInfo)
         if (!userInfo.payOpenId) {

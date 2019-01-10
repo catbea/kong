@@ -123,13 +123,11 @@
 import TagGroup from 'COMP/TagGroup'
 import ShadowBox from 'COMP/ShadowBox'
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
-import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import dynamicsService from 'SERVICE/dynamicsService'
 export default {
   components: {
     ShadowBox,
     DynamicsData,
-    DynamicsList,
     TagGroup
   },
   data() {

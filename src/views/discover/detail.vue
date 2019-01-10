@@ -1,7 +1,7 @@
 <template>
   <div class="discover-detail-page">
     <!-- 首次引导分享 -->
-    <div class="guidance-view" v-if="sharePopup">
+    <div class="guidance-view" v-if="sharePopup==0">
       <div class="top">
        <p>点击此处分享给好友</p>
        <p>
@@ -115,6 +115,7 @@ import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
+import commonService from 'SERVICE/commonService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
@@ -156,7 +157,7 @@ export default {
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
     shareData: null,
-    sharePopup:true
+    sharePopup:0//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
   }),
   created() {
     // window.awHelper.wechatHelper.wx.showAllNonBaseMenuItem()
@@ -172,13 +173,16 @@ export default {
     this.getDetail()
     this.getQrCode(this.agentId)
     this.getRecommendInfo()
+    console.log(this.userInfo,'用户信息');
+    this.sharePopup=this.userInfo.articleShareFlag
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
   methods: {
-    sharePopupHandle(){//首次进入引导
-    this.sharePopup=false
+   async sharePopupHandle(){//首次进入引导
+      await commonService.updateUserExpandInfo(1)
+      this.sharePopup=1
     },
    async getRecommendInfo(){//去重推荐文章
       const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)

@@ -1,8 +1,8 @@
 <template>
   <div class="messageInfo-page">
     <div class="messageInfo-back" v-if="haveData">
-      <!-- v-show="UnreadMsgTotal != 0" -->
-      <div class="messageInfo-wd" >
+      <!--  -->
+      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
         <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
         <div class="messageInfo-wd-right">
           <button class="messageInfo-wd-right-select messageInfo-wd-select" @click="goSelestMessage">查 看</button>
@@ -170,7 +170,9 @@ export default {
         font-size:14px;
       font-weight:400;
       color:rgba(51,51,51,1);
-      line-height:20px;
+      //line-height:20px;
+      position: relative;
+      padding-top: 6px;
       }
       .messageInfo-wd-right{
         float: right;
