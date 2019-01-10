@@ -8,7 +8,7 @@
             <div class="card-info card1">
               <div class="cover">
                 <p class="avat"><img :src="editData.avatarUrl" alt="封面"></p>
-                <div class="name">
+                <div class="name text-one-line">
                   <h3>{{editData.agentName}}</h3>
                   <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
                 </div>
@@ -36,7 +36,7 @@
                 <img class="bg" src="../../../assets/img/share/card2.png" alt="" />
                 <div class="data-info-box">
                   <div class="data">
-                    <div class="name">
+                    <div class="name text-one-line">
                       <b>{{editData.agentName}}</b>
                       <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
                     </div>
@@ -86,7 +86,7 @@
                 <img src="../../../assets/img/share/card4.png" alt="" class="bg">
                 <div class="data-info-box">
                   <div class="data">
-                    <div class="name">
+                    <div class="name text-one-line">
                       <b>{{editData.agentName}}</b>
                       <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
                     </div>
@@ -134,7 +134,7 @@
               <div class="vata">
                 <img :src="editData.avatarUrl" alt="封面" />
               </div>
-              <div class="name">
+              <div class="name text-one-line">
                 <b>{{editData.agentName}}</b>
                 <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
               </div>
@@ -193,7 +193,7 @@
               <img :src="shareBaseInfo.avatarUrl" alt="">
               <van-icon name="success" v-show="editData.avatarUrl === shareBaseInfo.avatarUrl" />
             </div>
-            <div class="img-item" @click="editData.avatarUrl = uploadImg" v-show="uploadImg">
+            <div class="img-item" @click="editData.avatarUrl = uploadImg" v-show="shareBaseInfo.avatarUrl !== uploadImg">
               <img :src="uploadImg" alt="">
               <van-icon name="success" v-show="editData.avatarUrl === uploadImg"/>
             </div>
@@ -305,9 +305,7 @@
       },
       // 获取代理商卡片
       async getAgentCard() {
-        let result = await userService.getAgentCard({
-          agentId: this.agentId
-        })
+        let result = await userService.getAgentCard()
         if (result) {
           this.shareInfo = result
         }
@@ -317,6 +315,12 @@
         await this.getCardInfo()
         await this.getAgentCard()
         this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+        // 合并两个接口参数
+        this.editData.mobile = this.editData.agentMobile || this.editData.mobile
+        this.editData.avatarUrl = this.editData.imageUrl || this.editData.avatarUrl
+        this.editData.signature = this.editData.slogan || this.editData.signature
+        this.editData.mojarRegion = this.editData.institutionalAddress || this.editData.mojarRegion
+        this.uploadImg = this.editData.avatarUrl
         this.showLoading = false
       },
       // 编辑海报信息按钮
@@ -380,7 +384,7 @@
         if (!checkPhoneNum(mobile)) {
           return this.$toast('电话只能为11位数字')
         }
-        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?]+$/g
+        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？]+$/g
         if (!reg.test(slogan)) {
           return this.$toast('宣传语只支持中文、英文和数字')
         }
@@ -388,7 +392,7 @@
            return this.$toast('宣传语最多为24个汉字')
         }
         let result = await userService.updateAgentCard({
-          agentId: this.agentId,
+          // agentId: this.agentId,
           imageUrl: this.editData.avatarUrl,
           slogan: this.editData.signature,
           institutionalAddress: this.editData.mojarRegion,
@@ -397,10 +401,11 @@
         })
         if (result) {
           let toast = this.$toast('保存成功')
+          // this.initData()
           setTimeout(() => {
             toast.clear()
             this.showEdit = false
-          }, 1000) 
+          }, 1000)
         }
       },
       // 图片上传
@@ -494,7 +499,7 @@
               border-bottom: 2px solid #0069CA;
               padding-bottom: 5px;
               z-index: 2;
-
+              max-width: 140px;
               h3 {
                 font-size: 28px;
               }
@@ -618,7 +623,7 @@
                   .name {
                     padding-top: 15px;
                     padding-bottom: 15px;
-
+                    max-width: 140px;
                     b {
                       font-size: 20px;
                     }
@@ -794,7 +799,7 @@
                   .name {
                     padding-top: 15px;
                     padding-bottom: 15px;
-
+                    max-width: 140px;
                     b {
                       font-size: 20px;
                     }
@@ -959,7 +964,7 @@
               background: none;
               margin-top: -60px;
               padding: 0 20px;
-
+              max-width: 140px;
               b {
                 font-size: 24px;
               }
