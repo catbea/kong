@@ -193,7 +193,7 @@
               <img :src="shareBaseInfo.avatarUrl" alt="">
               <van-icon name="success" v-show="editData.avatarUrl === shareBaseInfo.avatarUrl" />
             </div>
-            <div class="img-item" @click="editData.avatarUrl = uploadImg" v-show="uploadImg">
+            <div class="img-item" @click="editData.avatarUrl = uploadImg" v-show="shareBaseInfo.avatarUrl !== uploadImg">
               <img :src="uploadImg" alt="">
               <van-icon name="success" v-show="editData.avatarUrl === uploadImg"/>
             </div>
@@ -305,9 +305,7 @@
       },
       // 获取代理商卡片
       async getAgentCard() {
-        let result = await userService.getAgentCard({
-          agentId: this.agentId
-        })
+        let result = await userService.getAgentCard()
         if (result) {
           this.shareInfo = result
         }
@@ -317,6 +315,12 @@
         await this.getCardInfo()
         await this.getAgentCard()
         this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+        // 合并两个接口参数
+        this.editData.mobile = this.editData.agentMobile || this.editData.mobile
+        this.editData.avatarUrl = this.editData.imageUrl || this.editData.avatarUrl
+        this.editData.signature = this.editData.slogan || this.editData.signature
+        this.editData.mojarRegion = this.editData.institutionalAddress || this.editData.mojarRegion
+        this.uploadImg = this.editData.avatarUrl
         this.showLoading = false
       },
       // 编辑海报信息按钮
@@ -388,7 +392,7 @@
            return this.$toast('宣传语最多为24个汉字')
         }
         let result = await userService.updateAgentCard({
-          agentId: this.agentId,
+          // agentId: this.agentId,
           imageUrl: this.editData.avatarUrl,
           slogan: this.editData.signature,
           institutionalAddress: this.editData.mojarRegion,
@@ -398,10 +402,10 @@
         if (result) {
           let toast = this.$toast('保存成功')
           this.initData()
-          setTimeout(() => {
-            toast.clear()
-            this.showEdit = false
-          }, 1000)
+          // setTimeout(() => {
+          //   toast.clear()
+          //   this.showEdit = false
+          // }, 1000)
         }
       },
       // 图片上传
