@@ -698,6 +698,8 @@
               img {
                 max-width: 120px;
                 max-height: 120px;
+                min-width: 120px;
+                min-height: 120px;
                 border-radius: 50%;
               }
 
