@@ -27,9 +27,10 @@
             <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
             <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
+              <!-- <span></span>
               <span></span>
-              <span></span>
-              <span></span>
+              <span></span> -->
+              <p style="font-size:25px;" class="icon iconfont icon-more"></p>
             </div>
           </li>
         </ul>
@@ -343,7 +344,7 @@ export default {
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 15px;
-          margin: 8px 0 8px 0;
+          margin: 6px 0 6px 0;
         }
         li:nth-of-type(3) {
           display: flex;
@@ -383,7 +384,7 @@ export default {
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 13px;
-          margin-top: 12px;
+          margin-top: 10px;
           display: flex;
           position: relative;
           align-items: center;
