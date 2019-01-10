@@ -226,7 +226,7 @@ export default {
     border-radius: 10px;
     border-color: transparent;
     background: transparent;
-
+    user-select: none;
     > .imgcard {
       border: none;
       border-color: transparent;
