@@ -10,8 +10,8 @@
           </div>
           <span class="distinguish-span">长按识别更多</span>
         </div>
-        <span class="poster-describe">{{buildingInfo.posterDescribe}}</span>
-        <span class="building-name">{{buildingInfo.linkerName}}</span>
+        <span class="poster-describe">{{buildingInfo.linkerName}}</span>
+        <span class="building-name">{{buildingInfo.posterDescribe}}</span>
         <span class="building-price" v-if="buildingInfo.linkerPrice=='0'">价格：价格待定</span>
         <span
           class="building-price"
@@ -369,7 +369,8 @@ export default {
     }
     ul {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
+      justify-content: center;
       margin-top: 17px;
       .compile {
         width: 144px;
@@ -384,6 +385,7 @@ export default {
         background: #ffffff;
         margin-left: 38px;
         margin-right: 3px;
+        display: none
       }
       .save {
         width: 144px;
@@ -395,8 +397,8 @@ export default {
         font-size: 16px;
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
-        margin-right: 38px;
-        margin-left: 3px;
+        // margin-right: 38px;
+        // margin-left: 3px;
       }
     }
   }
