@@ -226,6 +226,7 @@ export default {
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
     // window.addEventListener("popstate", this.fun, false);
+    console.log(this.userInfo,'用户信息');
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {

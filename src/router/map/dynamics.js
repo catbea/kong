@@ -2,11 +2,11 @@
   {
     path: '/',
     name: 'index',
-    component: resolve => require(['@/views/dynamics/index.vue'], resolve),
+    component: resolve => require(['@/views/public/index.vue'], resolve),
     meta: {
-      title: '数据',
+      title: 'AW大师',
       tabbar: {
-        show: true
+        show: false
       }
     }
   },

@@ -19,7 +19,6 @@
     "cos-js-sdk-v4": "^1.2.0",
     "cropperjs": "^1.4.3",
     "cross-env": "^5.2.0",
-    "es6-polyfill": "^1.1.0",
     "es6-promise": "^4.2.5",
     "html2canvas": "^1.0.0-alpha.12",
     "lodash": "^4.17.11",

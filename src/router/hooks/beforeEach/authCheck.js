@@ -23,7 +23,7 @@ const isIOS = () => {
 export default async (to, from, next) => {
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
-  let wxredirecturl = window.location.href.split('?')[0]
+  let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
   
   if (parm.cropId) {
@@ -76,13 +76,13 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         next()
       } else {
-        let userInfo = store.getters.userInfo
-        console.log(userInfo.pcOpenid, 'userInfo')
-        if(userInfo && userInfo.pcOpenid) {
-          console.log(userInfo.pcOpenid, 'userInfo.pcOpenid')
-          next()
-          return
-        }
+        // let userInfo = store.getters.userInfo
+        // console.log(userInfo.pcOpenid, 'userInfo')
+        // if(userInfo && userInfo.pcOpenid) {
+        //   console.log(userInfo.pcOpenid, 'userInfo.pcOpenid')
+        //   next()
+        //   return
+        // }
 
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
         console.log(wxAuthObject, 'wxAuthObject')
@@ -90,6 +90,7 @@ export default async (to, from, next) => {
         userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId
         userInfo.cropId = cropId
+        userInfo.articleShareFlag=wxAuthObject.articleShareFlag
         userInfo.token = wxAuthObject.token
         await store.dispatch('getUserInfo', userInfo)
         if (!userInfo.payOpenId) {
