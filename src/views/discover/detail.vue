@@ -3,18 +3,7 @@
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
-      <div class="agent-top-info-box">
-        <div class="agent-box-left">
-          <avatar class="agent-avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
-          <div class="agent-info">
-            <p class="agent-name">{{agentInfo&&agentInfo.agentName}}</p>
-            <p class="agent-company">{{agentInfo&&agentInfo.enterpriseName}}</p>
-          </div>
-        </div>
-        <div class="agent-box-right" @click="showQRCode">
-          <button class="agent-right"><b>+</b> 名片</button>
-        </div>
-      </div>
+      <agent-card-small :info="agentInfo" @click.native="popupShowControl(true)"/>
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         转载于
@@ -22,13 +11,10 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
         <span class="reprint-views">浏览：{{ info&&info.scanNum | currency('')}}</span>
       </p>
-      <agent-card class="agent-card" :info="agentInfo" @showQRCode="showQRCode"></agent-card>
+      <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card>
     </div>
     <!-- 推荐房源 -->
-    <div
-      class="recommend-houses"
-      v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0"
-    >
+    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
       <div class="recommend-houses-content">
         <!-- swiper -->
@@ -40,22 +26,37 @@
               <p class="house-localtion">{{item.city}}</p>
               <p class="house-price" v-if="item.averagePrice=='0'">价格待定</p>
               <p class="house-price" v-else>{{item.averagePrice}} {{item.priceUnit}}</p>
-              <!--  -->
             </div>
           </swiper-slide>
         </swiper>
       </div>
     </div>
-    <van-popup
-      class="popup-view"
-      v-model="openPopup"
-      :overlay="true"
-      :lock-scroll="true"
-      :close-on-click-overlay="true"
-      :click-overlay="overlayClose"
-    >
+    <!-- 推荐文章 -->
+    <div class="recommend-discover" v-if="info&&info.recommendInformationList">
+      <title-bar :conf="titleArticle"/>
+      <div class="recommend-discover-content">
+        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
+      </div>
+    </div>
+    <!-- 悬浮工具栏 -->
+    <div class="van-hairline--top tools-bar">
+      <div class="tool-item">
+        <i class="icon iconfont icon-Building_details_for"></i>
+        分享
+      </div>
+      <div class="tool-item" @click="editClickHandler">
+        <i class="icon iconfont icon-me_opinion"></i>
+        编辑
+      </div>
+      <div class="tool-item" @click="collectHandler()">
+        <i v-if="collectionStatus===1" class="icon iconfont icon-Building_details_col"></i>
+        <i v-else class="icon iconfont icon-Building_details_col1"></i>
+        收藏
+      </div>
+    </div>
+    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="popupShowControl(false)">
       <div class="close-titile">
-        <img class="closePopup" :src="this.closeImg" @click="overlayClose">
+        <img class="closePopup" :src="this.closeImg" @click="popupShowControl(false)">
       </div>
       <span class="notice-view">长按识别查看更多</span>
       <img class="qrcode-view" :src="qrcodeInfo.miniQrCode">
@@ -69,34 +70,10 @@
         <span class="info-view">开启买房新模式及时获取一手房源信息</span>
       </div>
     </van-popup>
-    <!-- 推荐文章 -->
-    <div class="recommend-discover" v-if="info&&info.recommendInformationList">
-      <title-bar :conf="titleArticle"/>
-      <div class="recommend-discover-content">
-        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
-      </div>
-    </div>
-    <!-- 悬浮工具栏 -->
-    <div class="van-hairline--top tools-bar">
-      <div class="app-btn" @click="showQRCode">
-        <i class="icon iconfont icon-article_program"></i>小程序名片
-      </div>
-      <div class="collect-btn" @click="collectHandler(info.id)">
-        <div v-if="this.collectionStatus===1">
-          <i class="icon iconfont icon-Building_details_col"></i>收藏
-        </div>
-        <div v-else>
-          <i class="icon iconfont icon-package_Optimal"></i>收藏
-        </div>
-      </div>
-    
-    </div>
-    <!-- 小程序名片 -->
-    <div class="app-card"></div>
   </div>
 </template>
 <script>
-import Avatar from 'COMP/Avatar'
+import AgentCardSmall from 'COMP/Discover/AgentCardSmall'
 import AgentCard from 'COMP/AgentCard'
 import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
@@ -107,7 +84,7 @@ import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
-    Avatar,
+    AgentCardSmall,
     AgentCard,
     TitleBar,
     swiper,
@@ -143,14 +120,11 @@ export default {
     openPopup: false,
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
-    shareData: null
+    shareData: null,
+    virtualDom: null
   }),
   created() {
-    // window.awHelper.wechatHelper.wx.showAllNonBaseMenuItem()
     window.awHelper.wechatHelper.wx.showOptionMenu()
-    // window.awHelper.wechatHelper.wx.showMenuItems({
-    //   menuList: ['menuItem:share:appMessage', 'menuItem:share:timeline'] // 要显示的菜单项
-    // })
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
@@ -184,9 +158,10 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-      // alert(this.shareData.imgUrl)
-      // alert(this.shareData.link)
       this.shareHandler()
+      this.virtualDom = document.createElement('div')
+      this.virtualDom.innerHTML = this.info.content
+      console.log(this.virtualDom)
     },
 
     //进入楼盘详情
@@ -200,33 +175,18 @@ export default {
         this.qrcodeInfo = result
       }
     },
-
-    overlayClose() {
-      this.openPopup = false
+    popupShowControl(status) {
+      this.openPopup = status
     },
 
-    // 小程序名片
-    showQRCode() {
-      this.openPopup = true
-    },
-
-    // 收藏文章
-    async collectHandler(infoId) {
-      let obj = {}
-      if (this.collectionStatus === 0) {
-        obj.deleteType = 0
-      } else {
-        obj.deleteType = 1
-      }
-      obj.infoId = infoId
-      const res = await userService.articleCollection(obj)
-      if (res) {
-        if (res.deleteType === 0) {
-          this.collectionStatus = 1
-        } else {
-          this.collectionStatus = 0
-        }
-      }
+    // 收藏文章按钮点击
+    async collectHandler() {
+      const deleteType = this.collectionStatus === 0 ? 0 : 1
+      const res = await userService.articleCollection({
+        infoId: this.infoId,
+        deleteType
+      })
+      this.collectionStatus = res.deleteType === 0 ? 1 : 0
     },
     // 分享成功之后
     async articleShare() {
@@ -235,6 +195,12 @@ export default {
         infoId: this.infoId
       }
       const result = await discoverService.articleShare(params)
+    },
+    // 编辑按钮点击处理
+    editClickHandler(){
+      // console.log(this.$route.);
+      
+      this.$router.push({path:`/discover/edit/${this.$route.params.id}/${this.$route.params.city}`,query:this.$route.query})
     },
     // 设置分享
     async shareHandler() {
@@ -345,50 +311,7 @@ export default {
       font-weight: 600;
       line-height: 1.3;
     }
-    > .agent-top-info-box {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 10px;
-      > .agent-box-left {
-        display: flex;
-        > .agent-avatar {
-          width: 40px;
-          height: 40px;
-          margin: 0 5px;
-        }
-        > .agent-info {
-          padding-top: 3px;
-          font-weight: 400;
-          > .agent-name {
-            font-size: 14px;
-            color: #333333;
-            font-weight: 500;
-            margin: 2px 0 2px 3px;
-          }
-          > .agent-company {
-            font-size: 12px;
-            color: #8a8f99;
-            margin: 1px 0 0 3px;
-          }
-        }
-      }
-      > .agent-box-right {
-        > .agent-right {
-          width: 64px;
-          height: 32px;
-          background: rgba(0, 122, 230, 1);
-          border-radius: 16px;
-          font-size: 12px;
-          font-weight: 400;
-          color: rgba(255, 255, 255, 1);
-          border: 0;
-          margin-right: 7px;
-          b {
-            font-size: 14px;
-          }
-        }
-      }
-    }
+
     > .discover-img {
       margin: 15px;
       height: 195px;
@@ -396,7 +319,6 @@ export default {
       background-color: #999999;
     }
     > .discover-detail-content {
-      margin-top: 15px;
       padding: 15px;
       font-size: 16px !important;
       color: #333333 !important;
@@ -471,16 +393,24 @@ export default {
     bottom: 0;
     z-index: 5;
     display: flex;
-    justify-content: space-between;
-    font-size: 14px;
+    justify-content: space-around;
+    font-size: 12px;
     padding: 5px 15px;
+    color: #666666;
     > div {
-      border-radius: 100px;
-      border: 1px solid #aeb1c2;
-      margin: 5px;
-      padding: 8px 20px;
-      opacity: 0.7;
+      text-align: center;
+      > i {
+        display: block;
+        font-size: 24px;
+      }
     }
+    // > div {
+    //   border-radius: 100px;
+    //   border: 1px solid #aeb1c2;
+    //   margin: 5px;
+    //   padding: 8px 20px;
+    //   opacity: 0.7;
+    // }
   }
 }
 </style>

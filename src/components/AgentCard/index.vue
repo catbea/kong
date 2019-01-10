@@ -7,7 +7,6 @@
         </span>
         <span class="agent-left-introduce">
           <p class="introduce-name">{{info.agentName}}</p>
-          <!-- {{info.distributorName}} -->
           <p class="introduce-company">资深房产经纪人</p>    
           <p class="introduce-adder">{{info.institutionName}}</p>
         </span>

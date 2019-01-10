@@ -3,12 +3,7 @@
     <div class="dynamics-list-body" v-if="allDynamicList.length>0">
       <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
         <div class="dynamics-time">{{times.dynamicDate | dateTimeFormatter(2,'/')}}</div>
-        <div
-          class="dynamics-container-list"
-          v-for="(item,key) in times.allDynamicInfoVOS"
-          :key="key"
-          v-if="times.allDynamicInfoVOS"
-        >
+        <div class="dynamics-container-list" v-for="(item,key) in times.allDynamicInfoVOS" :key="key" v-if="times.allDynamicInfoVOS">
           <shadow-box>
             <div slot="container">
               <div class="dynamics-list">
@@ -23,10 +18,7 @@
                     </span>
                   </span>
                   <span class="list-agent-right">
-                    <p
-                      class="agent-right-num"
-                      v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
-                    >{{item.intentionality}}%</p>
+                    <p class="agent-right-num" v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}">{{item.intentionality}}%</p>
                     <p class="agent-right-title">意向度</p>
                   </span>
                 </div>
@@ -50,7 +42,9 @@
                   <p>
                     浏览时长大于
                     <span>{{item.currentTime / 1000}}s</span>&nbsp;
-                    篇幅<samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
+                    篇幅
+                    <samp v-if="item.currentArticleLength >= '100' ">游览</samp>
+                    <samp v-else>小于</samp>
                     <span>{{item.currentArticleLength}}%</span>
                   </p>
                   <p>
@@ -62,24 +56,14 @@
                 <div class="dynamics-list-btn">
                   <span></span>
                   <span class="list-btn-right">
-                    <div
-                      id="attentionStatusNO"
-                      class="list-btn-follow"
-                      v-show="item.attentionStatus  == 1"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >
+                    <div id="attentionStatusNO" class="list-btn-follow" v-show="item.attentionStatus  == 1" @click="getupdateCustomerInfo(item,key)">
                       <img :src="gzImg" class="agent-gzImg">
                       <span class="list-btn-right-gz">关注</span>
                     </div>
-                    <button
-                      id="attentionStatusOK"
-                      class="list-btn-followOK"
-                      v-show="item.attentionStatus  == 0"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >已关注</button>
+                    <button id="attentionStatusOK" class="list-btn-followOK" v-show="item.attentionStatus  == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                     <div class="list-btn-contact" @click="goalldynamics(item)">
                       <img :src="lxImg" class="btn-contact-userImg">
-                       联系
+                      联系
                     </div>
                   </span>
                 </div>

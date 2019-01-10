@@ -1,6 +1,8 @@
 <template>
   <div class="mock-login-page">
-    <p>{{result}}</p>
+    <p>当前环境为{process.env.VUE_APP_BASE_API_URL}</p>
+    <input class="input-area" type="text" v-model="token">
+    <!-- <p>{{result}}</p> -->
     <router-link to="/">返回首页</router-link>
   </div>
 </template>
@@ -10,47 +12,46 @@ import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {
   data: () => ({
-    userId: -1,
-    result: ''
+    token: ''
   }),
   created() {
-    let userInfo = {
-      token: this.$route.params.token
+    if (this.$route.query.token) {
+      this.token = this.$route.query.token
+      this.mockLogin()
     }
-    this.$store.dispatch('getUserInfo', userInfo)
-    // this.userId = this.$route.params.userId
-    // window.localStorage.setItem('userId', this.userId)
-    // this.getUserInfo()
+
+    // store.getters.userInfo.token
+
+    // let token
+    // let userInfo = {
+    //   token: this.$route.params.token
+    // }
+    // this.$store.dispatch('getUserInfo', userInfo)
+    // console.log(this.apiUrl)
+  },
+  methods: {
+    async mockLogin() {
+      this.$store.dispatch('getUserInfo', {
+        token: this.token
+      })
+      let userInfo = await userService.getUserInfo()
+      userInfo = Object.assign(userInfo,{
+        token: this.token
+      })
+      this.$store.dispatch('getUserInfo', userInfo)
+    }
+  },
+  computed: {
+    ...mapGetters({ userInfo: 'userInfo' })
   }
-  // methods: {
-  //   async getUserInfo() {
-  //     this.$store.dispatch('getUserInfo', this.userId)
-  //   }
-  // },
-  // computed: {
-  //   ...mapGetters({ userInfo: 'userInfo' })
-  // },
-  // watch: {
-  //   userInfo(val) {
-  //     try {
-  //       const userInfoStr = JSON.stringify(val)
-  //       window.localStorage.setItem('userInfo', userInfoStr)
-  //       this.result = `已登录账号:id:[${val.userId}] name:[${val.name}]`
-  //     } catch (error) {
-  //       this.result = error
-  //     }
-  //   }
-  // }
 }
 </script>
 <style lang="less">
 .mock-login-page {
   padding: 30px;
   font-size: 14px;
-  > a {
-    // padding-top: 200px;
-    // background: ;
-    color: red;
+  > .input-area {
+    border: 1px solid #333333;
   }
 }
 </style>
