@@ -50,12 +50,16 @@
                   <p>
                     浏览时长大于
                     <span>{{item.currentTime / 1000}}s</span>&nbsp;
-                    篇幅<samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
+                    篇幅<samp v-if="item.currentArticleLength >= '100' ">游览</samp ><samp v-else>小于</samp>
                     <span>{{item.currentArticleLength}}%</span>
                   </p>
                   <p>
                     累计浏览
-                    <span>{{item.todayClickCount }}次</span>名片，平均停留
+                    <span>{{item.todayClickCount }}次</span>该
+                    <span  v-show="item.type == 2">楼盘</span>
+                    <span  v-show="item.type == 1">名片</span>
+                    <span  v-show="item.type == 3">文章</span>
+                    ，平均停留
                     <span>{{item.totalTime / 1000}}s</span>
                   </p>
                 </div>

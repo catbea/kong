@@ -380,7 +380,8 @@
         if (!checkPhoneNum(mobile)) {
           return this.$toast('电话只能为11位数字')
         }
-        if (!checkStrType(slogan)) {
+        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?]+$/g
+        if (!reg.test(slogan)) {
           return this.$toast('宣传语只支持中文、英文和数字')
         }
         if (!checkStrLength(slogan, 48)) {
@@ -395,7 +396,11 @@
           agentName: this.editData.agentName
         })
         if (result) {
-          this.showEdit = false
+          let toast = this.$toast('保存成功')
+          setTimeout(() => {
+            toast.clear()
+            this.showEdit = false
+          }, 1000) 
         }
       },
       // 图片上传
