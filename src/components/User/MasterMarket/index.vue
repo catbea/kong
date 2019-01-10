@@ -6,7 +6,7 @@
        <!-- <div class="bg_img hint" v-if="!swipeShow" :style="{backgroundImage:'url('+hintImg+')'}">
         <span>您还没有任何推荐楼盘</span> 
         </div> -->
-        <van-swipe
+        <!-- <van-swipe
           :touchable="true"
           :loop="true"
           :autoplay="3000"
@@ -14,9 +14,9 @@
           <van-swipe-item
             v-for="(item,index) in limitList"
             :key="item.linkerId"
-          >
-        <!-- <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in limitList" :key="item.linkerId"> -->
+          > -->
+        <swiper :options="swiperOption">
+          <swiper-slide v-for="(item,index) in limitList" :key="item.linkerId">
            <div class="master-box" v-show='!item.masterRecommand==0' @click='skipDetail(item.linkerId)'>
               <p
                 class="bg_img icon-cancel"
@@ -35,11 +35,11 @@
                 <li>{{item.city}} <span v-show="item.masterRecommand==2">{{item.county}}{{item.openTimes}}人开通{{item.price}}{{item.priceUnit}}</span> <span v-show="item.masterRecommand==1">{{item.scanTimes}} 人关注了它</span></li>
               </ol>
             </div>
-          <!-- </swiper-slide>
+          </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
-        </swiper> -->
-                  </van-swipe-item>
-                  </van-swipe>
+        </swiper>
+                  <!-- </van-swipe-item>
+                  </van-swipe> -->
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@ export default {
     swiperSlide
   },
   created() {
-    this.filterHandle()
+    this.filterHandle()  
   },
   mounted() {},
   props: {
@@ -65,14 +65,22 @@ export default {
   },
   data() {
     return {
-      // changeBoxShow:true,
-      swiperOption: {
-          slidesPerView: 1,
+      swiperOption:{
+          slidesPerView:1,
           spaceBetween:30,
-          loop: true,
+          // loop: true,
+          // autoplay:true,
+          observer:true,//修改swiper自己或子元素时，自动初始化swiper 
+          observeParents:true,//修改swiper的父元素时，自动初始化swiper 
           pagination: {
             el: '.swiper-pagination',
             clickable: true
+          },
+          on:{
+            click:function() {
+              console.log('删除'+this.clickedIndex);
+              
+            }
           }
         },
       changeshow: false,
@@ -90,8 +98,6 @@ export default {
     },
     async closeHandle(linkerId, index) {
       //图片列表删除某个，楼盘列表重置推荐
-      console.log('删除');
-      
       this.$dialog
           .confirm({
             message: '是否确认取消该楼盘推荐'
@@ -136,6 +142,7 @@ export default {
     },
     limitList() {
       if (this.swipeList.length > 5) {
+        let _this=this
         this.$dialog
           .confirm({
             title: '当前推荐楼盘数量达到上限',
@@ -149,6 +156,7 @@ export default {
           })
         return this.swipeList.slice(0, 5)
       } else {
+        let _this=this
         return this.swipeList
       }
     }
