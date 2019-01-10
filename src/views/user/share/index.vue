@@ -8,7 +8,7 @@
             <div class="card-info card1">
               <div class="cover">
                 <p class="avat"><img :src="editData.avatarUrl" alt="封面"></p>
-                <div class="name">
+                <div class="name text-one-line">
                   <h3>{{editData.agentName}}</h3>
                   <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
                 </div>
@@ -36,7 +36,7 @@
                 <img class="bg" src="../../../assets/img/share/card2.png" alt="" />
                 <div class="data-info-box">
                   <div class="data">
-                    <div class="name">
+                    <div class="name text-one-line">
                       <b>{{editData.agentName}}</b>
                       <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
                     </div>
@@ -86,7 +86,7 @@
                 <img src="../../../assets/img/share/card4.png" alt="" class="bg">
                 <div class="data-info-box">
                   <div class="data">
-                    <div class="name">
+                    <div class="name text-one-line">
                       <b>{{editData.agentName}}</b>
                       <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
                     </div>
@@ -134,7 +134,7 @@
               <div class="vata">
                 <img :src="editData.avatarUrl" alt="封面" />
               </div>
-              <div class="name">
+              <div class="name text-one-line">
                 <b>{{editData.agentName}}</b>
                 <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
               </div>
@@ -380,7 +380,8 @@
         if (!checkPhoneNum(mobile)) {
           return this.$toast('电话只能为11位数字')
         }
-        if (!checkStrType(slogan)) {
+        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？]+$/g
+        if (!reg.test(slogan)) {
           return this.$toast('宣传语只支持中文、英文和数字')
         }
         if (!checkStrLength(slogan, 48)) {
@@ -395,7 +396,12 @@
           agentName: this.editData.agentName
         })
         if (result) {
-          this.showEdit = false
+          let toast = this.$toast('保存成功')
+          this.initData()
+          setTimeout(() => {
+            toast.clear()
+            this.showEdit = false
+          }, 1000)
         }
       },
       // 图片上传
@@ -489,7 +495,7 @@
               border-bottom: 2px solid #0069CA;
               padding-bottom: 5px;
               z-index: 2;
-
+              max-width: 140px;
               h3 {
                 font-size: 28px;
               }
@@ -613,7 +619,7 @@
                   .name {
                     padding-top: 15px;
                     padding-bottom: 15px;
-
+                    max-width: 140px;
                     b {
                       font-size: 20px;
                     }
@@ -789,7 +795,7 @@
                   .name {
                     padding-top: 15px;
                     padding-bottom: 15px;
-
+                    max-width: 140px;
                     b {
                       font-size: 20px;
                     }
@@ -954,7 +960,7 @@
               background: none;
               margin-top: -60px;
               padding: 0 20px;
-
+              max-width: 140px;
               b {
                 font-size: 24px;
               }

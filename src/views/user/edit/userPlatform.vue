@@ -4,7 +4,7 @@
     <h3>我的机构</h3>
     <p class="name">
       <img :src="userInfo.institutionLogo" v-if="userInfo.institutionLogo"/>
-      <img src="../../../assets/img/user/Group9@2x.png"  v-else />
+      <img :src="userInfo.avatarUrl"  v-else />
       {{userInfo.institutionName || 'AW大师'}}</p>
   </div>
   <div class="warning">{{this.warning}}</div>
@@ -140,6 +140,7 @@ export default {
         height: 50px;
         vertical-align: middle;
         margin-right: 10px;
+        border-radius: 50%;
       }
     }
   }
