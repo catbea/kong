@@ -225,7 +225,7 @@
         <button class="save" @click="updateAgentCard">保存</button>
       </p>
       <p class="btn" v-else>
-        <button class="save" style="width:100%" @click="closeView">关闭</button>
+        <button class="save" style="width:100%" @click="closeView">确认</button>
       </p>
     </div>
     <div class="loading"  v-show="showLoading" >
@@ -242,7 +242,7 @@
   import userService from '@/services/userService'
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
-  import { randomString, dataURLtoBlob, checkStrLength, checkStrType, checkPhoneNum } from '@/utils/tool'
+  import { randomString, dataURLtoBlob, checkStrLength, checkStrType, checkPhoneNum, downloadFile } from '@/utils/tool'
   import CosCloud from 'cos-js-sdk-v4'
   export default {
     data() {
@@ -356,6 +356,17 @@
       // 关闭预览
       closeView () {
         this.showView = false
+      },
+      // 下载图片
+      downLoad () {
+        let img =document.getElementById('share-cover-img')
+        let data = img.getAttribute('src')
+        downloadFile(data, '名片')
+        let toast = this.$toast('下载成功')
+        setTimeout(() => {
+          toast.clear()
+          this.showView = false
+        }, 1000)
       },
       // 预览名片
       async viewCover () {
