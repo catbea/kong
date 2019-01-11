@@ -6,7 +6,7 @@
         <material-input
           :type="'text'"
           class="edit-customer-input"
-          :maxlength="16"
+          :maxlength="8"
           placeholder="请输入客户名称"
           v-model.trim="name"
           @input="inputHandler"

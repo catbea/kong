@@ -42,7 +42,8 @@ export default {
      * 修改所属机构
      */
     editInstitutionHandler() {
-      this.$router.push({ path: '/user/edit/userMechanism', query: { distributorId: this.userInfo.distributorId, enterpriseId: this.userInfo.enterpriseId } })
+      // this.$router.push({ path: '/user/edit/userMechanism', query: { distributorId: this.userInfo.distributorId, enterpriseId: this.userInfo.enterpriseId } })
+      this.$router.push('/user/edit/userPlatform')
     },
     /**
      * 创建报备
