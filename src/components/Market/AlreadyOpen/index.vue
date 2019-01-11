@@ -4,7 +4,7 @@
       <li>已开通
         <span>{{agentIdInfo}}</span> 个楼盘
         </li>
-      <li class="van-hairline--surround li" @click="myMarket">
+      <li class="li" @click="myMarket">
           <p>我的楼盘</p>
       </li>
     </ul>
@@ -57,10 +57,8 @@ export default {
       text-align: center;
       width: 68px;
       height: 24px;
-      &::after {
-              border-color: rgba(0, 122, 230, 1);
-              border-radius:25px;
-            }
+      border-radius:25px;
+      border:0.8px solid rgba(0, 122, 230, 1);
     }
   }
 }
