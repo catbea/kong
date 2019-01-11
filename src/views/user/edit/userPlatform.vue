@@ -11,6 +11,9 @@
   <div class="action">
     <button type="button" @click="toApply" :class="{'disabled': disBtn}">{{btnText}}</button>
   </div>
+  <div class="loading"  v-show="showLoading" >
+      <van-loading type="spinner" color="white" class="van-loading"/>
+  </div>
 </div>
 </template>
 
@@ -25,7 +28,8 @@ export default {
       warning: '修改您的机构需向后台提交申请修改。审核通过后，可重新进行选择。',
       btnText: '申请修改',
       disBtn: true,
-      userData: ''
+      userData: '',
+      showLoading: true
     }
   },
   computed: {
@@ -66,6 +70,7 @@ export default {
             confirmButtonText: '更新数据',
             message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
           }).then(() => {
+            this.$store.commit('USER_INFO', Object.assign(this.userInfo, { institutionId: '', institutionName: ''}))
             this.$router.push('/public/complete-info')
           })
         }
@@ -79,6 +84,7 @@ export default {
           })
         }
       }
+      this.showLoading = false
     },
     // 点击申请离岗按钮
     toApply () {
@@ -175,6 +181,27 @@ export default {
         cursor: not-allowed;
         color: #999;
       }
+    }
+  }
+  // loading
+  .loading{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    .van-loading {
+      display: inline-block;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 50px;
+      height: 50px;
+      z-index: 5;
+      margin-left: -25px;
+      margin-top: -25px;
     }
   }
 }

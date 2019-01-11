@@ -110,9 +110,7 @@ export default {
      await dynamicsService.getsetMsgRead()
      this.getMsgList()
     },
-    async goSelestMessage(){
-       this.$router.push({path: '/dynamics/message/unreadMessage', query: {UnreadMsgTotal: this.UnreadMsgTotal} })
-    },
+  
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
@@ -149,7 +147,10 @@ export default {
       const res = await dynamicsService.getcpUnreadMsgTotal()
       this.UnreadMsgTotal = res.count
 
-    }
+    },
+      async goSelestMessage(){
+       this.$router.push({path: '/dynamics/message/unreadMessage', query: {UnreadMsgTotal: this.UnreadMsgTotal} })
+    },
   }
 }
 </script>
@@ -165,7 +166,7 @@ export default {
       border-bottom: 1px solid #eeeeee;
       // padding: 7px 16px;
       padding: 0 0.42667rem;
-      line-height: 40px;
+      line-height: 37px;
       .messageInfo-wd-left{
         font-size:14px;
       font-weight:400;
