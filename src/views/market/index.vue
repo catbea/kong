@@ -6,7 +6,7 @@
           <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
         </div>
       </div>
-      <screen v-model="projectFilters" :local="this.selectedCity" ></screen>
+      <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
@@ -93,6 +93,7 @@ export default {
     await this.hotMarketHandle()
   },
   methods: {
+    touchmove(){},
     async getProjectList() {
       let param = { current: this.page, size: this.pageSize }
       //组装检索条件

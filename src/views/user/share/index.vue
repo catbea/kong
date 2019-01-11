@@ -225,7 +225,8 @@
         <button class="save" @click="updateAgentCard">保存</button>
       </p>
       <p class="btn" v-else>
-        <button class="save" style="width:100%" @click="closeView">确认</button>
+        <span>长按图片保存，分享给好友或朋友圈</span>
+        <button class="save" style="width:100%" @click="closeView">返回</button>
       </p>
     </div>
     <div class="loading"  v-show="showLoading" >
@@ -572,7 +573,7 @@
               h3 {
                 padding-top: 40%;
                 font-size: 14px;
-                line-height: 1.4;
+                // line-height: 1.4;
                 margin-bottom: 15px;
               }
 
@@ -694,7 +695,7 @@
                 font-size: 14px;
                 opacity: 0.5;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
               }
             }
@@ -723,7 +724,7 @@
                 opacity: 0.5;
                 padding-top: 8px;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
 
@@ -875,7 +876,7 @@
                 font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
                 position: relative;
                 border: none;
@@ -1063,7 +1064,7 @@
                 font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
           }
@@ -1231,7 +1232,7 @@
       .img-box{
         height: 420px;
         width: 260px;
-        margin: 48px auto 30px auto;
+        margin: 48px auto 15px auto;
       }
       .btn{
         width: 260px;
@@ -1239,6 +1240,12 @@
         font-size: 14px;
         color: #fff;
         text-align: center;
+        span{
+          display: block;
+          padding-bottom: 25px;
+          font-size: 12px;
+          opacity: 0.5;
+        }
         button{
           height: 44px;
           width: 120px;
@@ -1268,11 +1275,11 @@
         position: fixed;
         left: 50%;
         top: 50%;
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         z-index: 5;
-        margin-left: -30px;
-        margin-top: -30px;
+        margin-left: -25px;
+        margin-top: -25px;
       }
     }
   }

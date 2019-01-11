@@ -180,10 +180,13 @@ export default {
       margin-bottom: 20px;
       justify-content: space-between;
       > .item {
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
         width:75px;
         height:30px;
         text-align: center;
-        line-height:32px;
+        line-height:34px;
         font-size: 13px;
         color: #445166;
         background-color: #f2f5f9;
