@@ -7,7 +7,7 @@
       <div class="market-left" v-show="myMarketShow">
         <div v-show="showMarketListCount>=showFilterLimit" >
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
-          <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'16rem'"></screen>
+          <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'17rem'"></screen>
         </div>
         <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo" v-if="!yes">
           <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" 

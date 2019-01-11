@@ -183,7 +183,7 @@ export default {
         width:75px;
         height:30px;
         text-align: center;
-        line-height:30px;
+        line-height:32px;
         font-size: 13px;
         color: #445166;
         background-color: #f2f5f9;
