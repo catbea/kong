@@ -10,7 +10,7 @@ const state = {
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',
-    enterpriseId: '91',
+    enterpriseId: '90',
     institutionId: '82',
     institutionLogo: '',
     institutionName: 'test',
