@@ -61,6 +61,7 @@ export default {
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
+    this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
   },
   methods: {

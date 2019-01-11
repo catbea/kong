@@ -3,22 +3,28 @@
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
-      <agent-card-small :info="agentInfo" @click.native="popupShowControl(true)"/>
+      <!-- <agent-card-small :info="agentInfo" @click.native="popupShowControl(true)"/> -->
+      <div class="discover-views">
+        <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
+        <div class="reprint-source"><span>分享源自</span><span style="color:#445166"> AW大师写一写</span></div>
+      </div>
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
-        转载于
         <span class="reprint-from">{{info&&info.publisher}}</span>
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
-        <span class="reprint-views">浏览：{{ info&&info.scanNum | currency('')}}</span>
       </p>
-      <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card>
+      <p class="discover-disclaimer">
+        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">  举报反馈</span>
+      </p>
+      <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
     </div>
     <!-- 推荐房源 -->
-    <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
+    <!-- <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
-      <div class="recommend-houses-content">
+      <div class="recommend-houses-content"> -->
         <!-- swiper -->
-        <swiper :options="swiperOption">
+        <!-- <swiper :options="swiperOption">
           <swiper-slide v-for="item in info.projectRecommendList" :key="item.linkerId">
             <div class="house-item" @click="enterDetail(item)">
               <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
@@ -30,20 +36,16 @@
           </swiper-slide>
         </swiper>
       </div>
-    </div>
+    </div> -->
     <!-- 推荐文章 -->
-    <div class="recommend-discover" v-if="info&&info.recommendInformationList">
+    <!-- <div class="recommend-discover" v-if="info&&info.recommendInformationList">
       <title-bar :conf="titleArticle"/>
       <div class="recommend-discover-content">
         <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
       </div>
-    </div>
+    </div> -->
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
-      <div class="tool-item">
-        <i class="icon iconfont icon-Building_details_for"></i>
-        分享
-      </div>
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
         编辑
@@ -53,7 +55,15 @@
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
+      <div class="tool-item">
+        <i class="icon iconfont icon-Building_details_for"></i>
+        分享
+      </div>
     </div>
+    <!-- 好看 -->
+    <div class="easy-look-container"></div>
+    <!-- 评论 -->
+    <div class="comment-container"></div>
     <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="popupShowControl(false)">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="popupShowControl(false)">
@@ -179,6 +189,10 @@ export default {
       this.openPopup = status
     },
 
+    // 举报反馈
+    feedbackClickHandler() {
+      // this.$router.push({path:`/discover/edit/${this.$route.params.id}/${this.$route.params.city}`,query:this.$route.query})
+    },
     // 收藏文章按钮点击
     async collectHandler() {
       const deleteType = this.collectionStatus === 0 ? 0 : 1
@@ -187,6 +201,11 @@ export default {
         deleteType
       })
       this.collectionStatus = res.deleteType === 0 ? 1 : 0
+      if (this.collectionStatus) {
+        this.$toast('收藏成功')
+      }else {
+        this.$toast('取消收藏成功')
+      }
     },
     // 分享成功之后
     async articleShare() {
@@ -198,8 +217,6 @@ export default {
     },
     // 编辑按钮点击处理
     editClickHandler(){
-      // console.log(this.$route.);
-      
       this.$router.push({path:`/discover/edit/${this.$route.params.id}/${this.$route.params.city}`,query:this.$route.query})
     },
     // 设置分享
@@ -303,7 +320,7 @@ export default {
   background-color: #f7f9fa;
   > .discover-detail-container {
     background-color: #fff;
-    padding-bottom: 10px;
+    padding-bottom: 50px;
     > .discover-title {
       padding: 10px 15px;
       font-size: 22px;
@@ -311,7 +328,21 @@ export default {
       font-weight: 600;
       line-height: 1.3;
     }
-
+    > .discover-views {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 15px;
+      > .reprint-views {
+        color: #969EA8;
+        font-size: 14px;
+      }
+      > .reprint-source {
+        color: #969EA8;
+        font-size: 14px;
+      }
+    }
     > .discover-img {
       margin: 15px;
       height: 195px;
@@ -326,20 +357,25 @@ export default {
       line-height: 28px !important;
     }
     > .discover-extra-info {
-      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
       color: #8a8f99;
-      font-size: 12px;
+      font-size: 14px;
       padding: 0 15px;
       > .reprint-from {
         padding-left: 5px;
       }
       > .reprint-time {
-        padding-left: 15px;
+        padding-right: 15px;
       }
-      > .reprint-views {
-        position: absolute;
-        right: 15px;
-      }
+    }
+    > .discover-disclaimer {
+      padding: 15px;
+      color: #969EA8;
+      font-size: 14px;
+      line-height: 1.5;
     }
     > .agent-card {
       margin-top: 8px;
