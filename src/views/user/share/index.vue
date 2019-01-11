@@ -180,7 +180,7 @@
         </div>
         <div class="group-item">
           <span>机构地址</span>
-          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址" disabled>
+          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址">
         </div>
         <div class="group-item">
           <span>宣传语</span>
