@@ -42,7 +42,7 @@
           ></market-describe>
         </van-list>
         <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="showNull"></null>
-        <div class="hot-recommend" v-if="!haveData">
+        <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
           <title-bar class="title-container" :conf="titleBarConf"/>
           <market-describe
             v-for="(item,index) in hotResult"
