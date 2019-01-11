@@ -376,7 +376,7 @@
       },
       // 重置数据
       reset () {
-        this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+        this.initData()
       },
       // 保存名片信息
       async updateAgentCard () {
