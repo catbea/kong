@@ -13,7 +13,7 @@ const state = {
     enterpriseId: '91',
     institutionId: '82',
     institutionLogo: '',
-    institutionName: '',
+    institutionName: 'test',
     isOne: 0, // 1新用户 0老用户
     articleShareFlag:1,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     isVip: '',
