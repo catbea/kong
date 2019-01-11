@@ -967,8 +967,14 @@
               text-align: center;
               overflow: hidden;
               img {
-                width: auto;
+                // width: auto;
+                // min-height: 100%;
+                min-width: 100%;
                 min-height: 100%;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
               }
             }
 
