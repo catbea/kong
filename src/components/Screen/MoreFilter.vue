@@ -178,13 +178,18 @@ export default {
       display: flex;
       flex-wrap: wrap;
       margin-bottom: 20px;
+      justify-content: space-between;
       > .item {
+        width:75px;
+        height:30px;
+        text-align: center;
+        line-height:30px;
         font-size: 13px;
         color: #445166;
         background-color: #f2f5f9;
         border-radius: 6px;
-        padding: 5px 10px;
-        margin: 5px 10px;
+        // padding: 5px 10px;
+        margin: 7px 0px;
         &.active {
           background-color: #017fff;
           color: #ffffff;
