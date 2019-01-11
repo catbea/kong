@@ -6,10 +6,8 @@
         <material-input
           :type="'text'"
           class="edit-customer-input"
-          :maxlength="8"
           placeholder="请输入客户名称"
           v-model.trim="name"
-          @input="inputHandler"
         ></material-input>
       </p>
       <div class="edit-customer-bottom">
@@ -22,6 +20,7 @@
 <script>
 import MaterialInput from 'COMP/MaterialInput'
 import strFormat from '@/filters/strFormat'
+import { checkStrLength, checkStrType } from '@/utils/tool'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 export default {
@@ -42,27 +41,26 @@ export default {
   methods: {
     inputHandler(event) {
       console.log(event)
-      if (event && event.length > 0) {
-        let inputStr = strFormat.fmtWebCode(this.name)
-        console.log(this.name)
-        setTimeout(() => {
-          this.name = inputStr
-        }, 1)
-      }
+      // if (event && event.length > 0) {
+      //   let inputStr = strFormat.fmtWebCode(this.name)
+      //   console.log(this.name)
+      //   setTimeout(() => {
+      //     this.name = inputStr
+      //   }, 1)
+      // }
     },
     selectCustomerHandler() {
       this.$router.push('/user/myReport/reportCustomer')
     },
     sureHandler() {
       if (this.name.length == 0) {
-        this.$dialog
-          .alert({
-            message: '昵称不可为空'
-          })
-          .then(() => {
-            // on close
-          })
-        return
+        return this.$toast('昵称不能为空')
+      }
+      if (!checkStrLength(this.name, 16)) {
+        return this.$toast('昵称最多8个汉字(或16个字符)')
+      }
+      if (!checkStrType(this.name)) {
+        return this.$toast('昵称只支持中文、英文和数字')
       }
       let _reportAddInfo = {
         clientName: this.name
