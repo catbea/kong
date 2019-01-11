@@ -572,7 +572,7 @@
               h3 {
                 padding-top: 40%;
                 font-size: 14px;
-                line-height: 1.4;
+                // line-height: 1.4;
                 margin-bottom: 15px;
               }
 
@@ -694,7 +694,7 @@
                 font-size: 14px;
                 opacity: 0.5;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
               }
             }
@@ -723,7 +723,7 @@
                 opacity: 0.5;
                 padding-top: 8px;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
 
@@ -875,7 +875,7 @@
                 font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
                 position: relative;
                 border: none;
@@ -977,8 +977,8 @@
               text-align: center;
               overflow: hidden;
               img {
-                min-width: 100%;
                 min-height: 100%;
+                min-width: 100%;
               }
             }
 
@@ -1063,7 +1063,7 @@
                 font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
           }
