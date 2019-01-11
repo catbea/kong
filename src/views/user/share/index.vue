@@ -517,6 +517,7 @@
               padding-bottom: 5px;
               max-width: 140px;
               z-index: 4;
+              text-shadow: 0 0 5px #999;
               h3 {
                 font-size: 24px;
               }
