@@ -2,7 +2,9 @@
     <div class="write-item-body">
         <div class="write-item-left">
             <span class="article-title">厦门今年第二批9000套保障性商品房上午摇号</span>
-            <span class="article-label">12313132</span>
+            <li class="article-label">
+                <tag-group :arr="tags"></tag-group>
+            </li>
             <span class="share-time">分享时间：2019/1/6 16:33</span>
         </div>
         <div class="write-item-right">
@@ -11,13 +13,18 @@
     </div>
 </template>
 <script>
+import TagGroup from 'COMP/TagGroup/index'
 export default {
+  components: {
+      TagGroup
+  },
   created() {},
   mounted() {},
   props: {},
   data() {
     return {
-      myImage: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg'
+      myImage: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg',
+      tags: ['已收藏', '未分享', '已编辑']
     }
   },
   methods: {},
@@ -32,7 +39,7 @@ export default {
   padding: 11px 15px;
   justify-content: space-between;
   background: #ffffff;
-  border-bottom: #E2E2E3 1px solid;
+  border-bottom: #e2e2e3 1px solid;
 
   > .write-item-left {
     display: flex;
@@ -48,7 +55,8 @@ export default {
     }
 
     > .article-label {
-      margin-left: 8px;
+      margin-top: 8px;
+      list-style: none;
     }
 
     > .share-time {
@@ -59,7 +67,7 @@ export default {
   }
 
   > .write-item-right {
-       margin-top: 5px;
+    margin-top: 5px;
     width: 120px;
     height: 90px;
 
