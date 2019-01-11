@@ -423,8 +423,9 @@
           // this.initData()
           setTimeout(() => {
             toast.clear()
+            this.showView = false
             this.showEdit = false
-          }, 1000)
+          }, 500)
         }
       },
       // 图片上传
