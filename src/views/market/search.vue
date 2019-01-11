@@ -1,7 +1,7 @@
 <template>
   <div class="market-search-page">
     <div class="search-box">
-      <van-search v-model="searchValue" placeholder="请输入搜索关键词" show-action @keypress="onKeypressHandler" @search="onSearchHandler" background="#fff">
+      <van-search v-model="searchValue" placeholder="请输入楼盘名称" show-action @keypress="onKeypressHandler" @search="onSearchHandler" background="#fff">
         <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
