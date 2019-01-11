@@ -29,7 +29,7 @@
                 v-show="sysMessage !='' "
               >{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
-            <p class="sys-right-btn">{{sysMessage.content}}</p>
+            <p class="sys-right-btn" v-html="sysMessage.content"></p>
           </span>
         </div>
       </div>
@@ -87,10 +87,45 @@ export default {
       UnreadMsgTotal:0
     }
   },
+  watch: {
+    '$store.getters.newMsgStatus': function(v) {
+      if(v) {
+        this.updateNewMsg()
+      }
+    }
+  },
   mounted() {
     this.getMsgList()
   },
   methods: {
+    updateNewMsg() {
+      let msgContent = this.$store.getters.newMsgContent
+      this.UnreadMsgTotal++
+      for(let item of this.messageList) {
+        let cid = item.keyword.split('|')[0]
+        if(msgContent.clientId == cid) {
+          let msgShow = {}
+          item.unreadMsgCount = parseInt(item.unreadMsgCount) + 1
+          if(msgContent.desc == 1) {
+            item.msgType == 'TIMTextElem'
+            msgShow.Text = msgContent.data
+          } else if(msgContent.desc == 2){
+            item.Desc = 2
+            item.msgType == 'TIMCustomElem'
+            msgShow = {Ext: msgContent.ext}
+          } else if(msgContent.desc == 3){
+            item.Desc = 3
+            item.msgType == 'TIMCustomElem'
+            msgShow = { Ext: msgContent.ext }
+          } else if(msgContent.desc == 4){
+            item.msgType == 'TIMTextElem'
+            msgShow.Text = msgContent.data
+          }
+          item.msgShow = JSON.stringify(msgShow)
+          console.log(item, '===========')
+        }
+      }
+    },
     msgClickHandle(item) {
       let CId = item.keyword.split('|')[0]
       let clientId = CId.split('_')[1]
@@ -129,8 +164,14 @@ export default {
           return msg.Data
         }
       } else {
-        let msg = JSON.parse(item.msgShow)
-        return msg.Text
+        if (item.Desc == 2) {
+          return '[语音消息]'
+        } else if (item.Desc == 3) {
+          return '【楼盘消息】'
+        } else {
+          let msg = JSON.parse(item.msgShow)
+          return msg.Text
+        }
       }
     },
     async getMsgList() {

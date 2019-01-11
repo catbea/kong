@@ -59,7 +59,7 @@ export default {
     },
     searchInfo: {
       siteText: '',
-      placeholderText: ''
+      placeholderText: '请输入楼盘名称'
     },
     navOffsetX: 0,
     moving: false
