@@ -186,7 +186,7 @@ export default {
           font-size: 12px;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
-          line-height: 11px;
+          // line-height: 11px;
           margin-top: 12px;
           display: flex;
           justify-content: space-between;
