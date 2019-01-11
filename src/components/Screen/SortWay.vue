@@ -1,7 +1,13 @@
 <template>
   <div class="sortWay-page" v-if="show">
     <ul>
-      <li v-for="(item,index) in conf" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=index">{{item}}</li>
+      <li
+        v-for="(item,index) in conf"
+        :key="index"
+        class="van-hairline--bottom"
+        :class="checked===item && 'active'"
+        @click="checked=index"
+      >{{item}}</li>
     </ul>
   </div>
 </template>
