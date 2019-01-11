@@ -298,7 +298,7 @@
     methods: {
       // 获取分享卡片详情
       async getCardInfo() {
-        let result = await userService.getQrCode(this.agentId)
+        let result = await userService.getQrCodeWithToken()
         if (result) {
           this.shareBaseInfo = result
         }

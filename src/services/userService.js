@@ -371,7 +371,7 @@ class UserService {
   }
 
   /**
-   * 获取分享二维码
+   * 获取分享二维码-白名单
    * @param {*} agentId
    */
   getQrCode(agentId) {
@@ -382,6 +382,18 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 获取分享二维码
+   */
+  getQrCodeWithToken() {
+    return xhr({
+      url: '/cpShare/nameCardShareByToken',
+      body: {
+      }
+    })
+  }
+
   /**
    * 邀请开通列表 -【企业微信
    * @param {*} current
