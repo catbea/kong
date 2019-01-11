@@ -403,7 +403,8 @@
         if (!checkStrLength(slogan, 48)) {
            return this.$toast('宣传语最多为24个汉字')
         }
-        if (!checkStrType(mojarRegion)) {
+        let reg2 = /^[\u4E00-\u9FA5A-Za-z0-9\/\\]+$/g
+        if (!reg2.test(mojarRegion)) {
           return this.$toast('机构地址只支持中文、英文和数字')
         }
         if (!checkStrLength(mojarRegion, 48)) {
