@@ -66,7 +66,7 @@ export default {
       nullcontent: '暂无信息',
       current:1,
       size:20,
-      UnreadMsgTotal:this.$route.query.UnreadMsgTotal
+      UnreadMsgTotal:0
     }
   },
   mounted() {
@@ -82,6 +82,12 @@ export default {
           clientId: clientId
         }
       })
+    },
+    //未读消息数
+    async getcpUnreadMsgTotal(){
+      const res = await dynamicsService.getcpUnreadMsgTotal()
+      this.UnreadMsgTotal = res.count
+
     },
  
     gosysMessage() {
@@ -113,6 +119,7 @@ export default {
       const res = await dynamicsService.getAgentMsgAndTotal(3,this.current,this.size)
       this.messageList = res.msgPage.records
       this.sysMessage = res.systemMessage
+      this.getcpUnreadMsgTotal()
     
     }
   }
