@@ -6,7 +6,7 @@
           <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
         </div>
       </div>
-      <screen v-model="projectFilters" :local="this.selectedCity" ></screen>
+      <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
@@ -14,7 +14,7 @@
         <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
-    <div class="hot-recommend" v-if="!haveData&&hotResult">
+    <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
           <title-bar class="title-container" :conf="titleBarConf"/>
           <market-describe
             v-for="(item,index) in hotResult"
@@ -93,6 +93,7 @@ export default {
     await this.hotMarketHandle()
   },
   methods: {
+    touchmove(){},
     async getProjectList() {
       let param = { current: this.page, size: this.pageSize }
       //组装检索条件

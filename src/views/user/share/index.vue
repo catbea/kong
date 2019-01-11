@@ -60,7 +60,7 @@
           <div class="swiper-slide">
             <div class="card-info card3">
               <div class="avat">
-                <img :src="editData.avatarUrl" alt="封面" />
+                <div class="img"><img :src="editData.avatarUrl" alt="封面" /></div>
                 <p>{{editData.signature}}</p>
               </div>
               <div class="name">
@@ -124,7 +124,7 @@
                   <p><span>Tel :</span>{{editData.mobile}}</p>
                   <p><span>Col :</span>{{editData.institutionName}}</p>
                   <p><span>Add:</span>{{editData.mojarRegion}}</p>
-                  <p>{{editData.signature}}</p>
+                  <p class="signature">{{editData.signature}}</p>
                 </div>
               </div>
             </div>
@@ -225,7 +225,8 @@
         <button class="save" @click="updateAgentCard">保存</button>
       </p>
       <p class="btn" v-else>
-        <button class="save" style="width:100%" @click="closeView">确认</button>
+        <span>长按图片保存，分享给好友或朋友圈</span>
+        <button class="save" style="width:100%" @click="closeView">返回</button>
       </p>
     </div>
     <div class="loading"  v-show="showLoading" >
@@ -504,8 +505,8 @@
                 text-align: center;
                 overflow: hidden;
                 img {
+                  width: auto;
                   min-height: 100%;
-                  min-width: auto;
                 }
               }
             .name {
@@ -517,6 +518,7 @@
               padding-bottom: 5px;
               max-width: 140px;
               z-index: 4;
+              text-shadow: 0 0 5px #000;
               h3 {
                 font-size: 24px;
               }
@@ -565,12 +567,13 @@
                 right: 0;
                 bottom: 0;
                 top: 0;
+                height: 100%;
                 z-index: -1;
               }
               h3 {
                 padding-top: 40%;
                 font-size: 14px;
-                line-height: 1.4;
+                // line-height: 1.4;
                 margin-bottom: 15px;
               }
 
@@ -689,10 +692,10 @@
 
               .signature {
                 padding: 0 20px 5px 20px;
-                font-size: 10px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
               }
             }
@@ -704,21 +707,24 @@
             .avat {
               text-align: center;
               padding: 15px 20px;
-              
+              .img{
+                width: 120px;
+                height: 120px;
+                overflow: hidden;
+                border-radius: 50%;
+                margin: auto;
+              }
               img {
-                max-width: 120px;
-                max-height: 120px;
                 min-width: 120px;
                 min-height: 120px;
-                border-radius: 50%;
               }
 
               p {
-                font-size: 12px;
+                font-size: 14px;
                 opacity: 0.5;
                 padding-top: 8px;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
 
@@ -867,10 +873,10 @@
               .signature {
                 margin: 5px 20px;
                 padding: 10px 0 5px;
-                font-size: 10px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
                 position: relative;
                 border: none;
@@ -949,7 +955,10 @@
                 p {
                   margin: 5px;
                 }
-
+                .signature{
+                    margin-top: 10px;
+                    font-size: 14px;
+                  }
                 span {
                   display: inline-block;
                   padding-right: 8px;
@@ -969,8 +978,8 @@
               text-align: center;
               overflow: hidden;
               img {
-                width: auto;
                 min-height: 100%;
+                min-width: 100%;
               }
             }
 
@@ -985,12 +994,14 @@
               max-width: 140px;
               b {
                 font-size: 24px;
+                text-shadow: 0 0 5px #000;
               }
 
               span {
                 font-size: 12px;
                 opacity: 0.8;
                 padding-left: 10px;
+                text-shadow: 0 0 5px #000;
               }
             }
 
@@ -1049,11 +1060,11 @@
               }
 
               .signature {
-                margin: 0 20px;
-                font-size: 10px;
+                margin: 5px 20px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
           }
@@ -1221,7 +1232,7 @@
       .img-box{
         height: 420px;
         width: 260px;
-        margin: 48px auto 30px auto;
+        margin: 48px auto 15px auto;
       }
       .btn{
         width: 260px;
@@ -1229,6 +1240,12 @@
         font-size: 14px;
         color: #fff;
         text-align: center;
+        span{
+          display: block;
+          padding-bottom: 25px;
+          font-size: 12px;
+          opacity: 0.5;
+        }
         button{
           height: 44px;
           width: 120px;
@@ -1258,11 +1275,11 @@
         position: fixed;
         left: 50%;
         top: 50%;
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
         z-index: 5;
-        margin-left: -30px;
-        margin-top: -30px;
+        margin-left: -25px;
+        margin-top: -25px;
       }
     }
   }
