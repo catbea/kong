@@ -21,7 +21,7 @@
             <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
-          <div class="operate-share" @click="shareHandler" v-if="info.saleStatusFlag!=3">
+          <div class="operate-share" @click="shareHandler" v-if="info.saleStatus!=='售罄'">
             <i class="icon iconfont icon-article_share"></i>
             分享
           </div>
