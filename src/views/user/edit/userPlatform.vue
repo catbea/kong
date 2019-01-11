@@ -48,11 +48,13 @@ export default {
           '2': '审批不通过'
         } 
         this.btnText = text[switchStatus] || '未知状态'
+        // 审核通过，并且完善了信息
         if (switchStatus === '1' && this.userInfo.institutionId) {
           this.btnText = '申请修改'
           this.disBtn = false
         }
-        if (switchStatus === '' || (switchStatus === '2' && this.userInfo.institutionId) ) {
+        // 审核不通过或未申请
+        if (switchStatus === '' || switchStatus === '2') {
           this.disBtn = false
         }
         if (switchStatus === '1' && !this.userInfo.institutionId) {

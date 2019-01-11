@@ -48,11 +48,13 @@ export default {
           '2': '审批不通过'
         } 
         this.btnText = text[leavingStatus] || '未知状态'
+        // 审核通过，并且完善了信息
         if(leavingStatus === '1' && this.userInfo.distributorId) {
           this.btnText = '申请离岗'
           this.disBtn = false
         }
-        if (leavingStatus === '' || (leavingStatus === '2' && this.userInfo.distributorId)) {
+        // 审核不通过或未申请
+        if (leavingStatus === '' || leavingStatus === '2') {
           this.disBtn = false
         }
         if (leavingStatus === '1' && !this.userInfo.distributorId) {
