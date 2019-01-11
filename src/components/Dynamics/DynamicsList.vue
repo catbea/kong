@@ -5,9 +5,8 @@
         <div class="dynamics-time">{{times.dynamicDate | dateTimeFormatter(2,'/')}}</div>
         <div
           class="dynamics-container-list"
-          v-for="(item,key) in times.allDynamicInfoVOS"
+          v-for="(item,key) in times.msgList"
           :key="key"
-          v-if="times.allDynamicInfoVOS"
         >
           <shadow-box>
             <div slot="container">
@@ -15,53 +14,23 @@
                 <div class="dynamics-list-agent" @click="godynamicsList(item)">
                   <span class="list-agent-left">
                     <span class="agent-left-left">
-                      <img :src="item.avatarUrl" class="agent-userImg">
+                      <img :src="item.clientAvatarUrl" class="agent-userImg">
                     </span>
                     <span class="agent-left-right">
                       <p class="left-right-name">{{item.clientName }}</p>
-                      <p class="left-right-time">{{item.updateTime | dateTimeFormatter(1,':')}}</p>
+                      <p class="left-right-time">{{item.timeStr | dateTimeFormatter(1,':')}}</p>
                     </span>
                   </span>
                   <span class="list-agent-right">
                     <p
                       class="agent-right-num"
                       v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
-                    >{{item.intentionality}}%</p>
+                    >{{item.intentionality || 0}}%</p>
                     <p class="agent-right-title">意向度</p>
                   </span>
                 </div>
                 <div class="dynamics-list-content" @click="godynamicsList(item)">
-                  <p v-show="item.type == 2">
-                    浏览了楼盘
-                    <span>{{item.objectName}}</span>
-                  </p>
-                  <p v-show="item.type == 1">
-                    浏览了
-                    <span class="dynamics-list-card">你的名片</span>
-                  </p>
-                  <p v-show="item.type == 3">
-                    浏览了文章
-                    <span class="dynamics-list-card">{{item.objectName}}</span>
-                  </p>
-                  <p>
-                    {{item.updateTime | dateTimeFormatter(2,'/')}} 日第
-                    <span>{{item.clickCount }}次</span>打开
-                  </p>
-                  <p>
-                    浏览时长大于
-                    <span>{{item.currentTime / 1000}}s</span>&nbsp;
-                    篇幅<samp v-if="item.currentArticleLength >= '100' ">游览</samp ><samp v-else>小于</samp>
-                    <span>{{item.currentArticleLength}}%</span>
-                  </p>
-                  <p>
-                    累计浏览
-                    <span>{{item.todayClickCount }}次</span>该
-                    <span  v-show="item.type == 2">楼盘</span>
-                    <span  v-show="item.type == 1">名片</span>
-                    <span  v-show="item.type == 3">文章</span>
-                    ，平均停留
-                    <span>{{item.totalTime / 1000}}s</span>
-                  </p>
+                  <p><span>{{item.clientName}}</span>{{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}</p>
                 </div>
                 <div class="dynamics-list-btn">
                   <span></span>

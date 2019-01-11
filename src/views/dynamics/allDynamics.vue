@@ -43,8 +43,10 @@ import ShadowBox from 'COMP/ShadowBox'
 import Properties from 'COMP/Dynamics/Properties'
 import DynamicsArticle from 'COMP/Dynamics/DynamicsArticle'
 import DynamicsCard from 'COMP/Dynamics/DynamicsCard'
+import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import Tips from 'COMP/Dynamics/Tips'
 import dynamicsService from 'SERVICE/dynamicsService'
+import customService from 'SERVICE/customService'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {
@@ -52,6 +54,7 @@ export default {
     DynamicsData,
     Properties,
     DynamicsArticle,
+    DynamicsList,
     ShadowBox,
     DynamicsCard,
     Tips
@@ -166,7 +169,12 @@ export default {
 
     async onLoad() {
       this.loading = true
-      const result = await dynamicsService[this.getServeceFunc()](this.current)
+      let result = []
+      if(this.active === 0) {
+        result = await customService.getCustomerDynamicList('', this.current)
+      } else {
+        result = await dynamicsService[this.getServeceFunc()](this.current)
+      }
 
       if (this.active === 0) {
         //全部
