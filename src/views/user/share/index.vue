@@ -60,7 +60,7 @@
           <div class="swiper-slide">
             <div class="card-info card3">
               <div class="avat">
-                <img :src="editData.avatarUrl" alt="封面" />
+                <div class="img"><img :src="editData.avatarUrl" alt="封面" /></div>
                 <p>{{editData.signature}}</p>
               </div>
               <div class="name">
@@ -504,8 +504,8 @@
                 text-align: center;
                 overflow: hidden;
                 img {
+                  width: auto;
                   min-height: 100%;
-                  min-width: auto;
                 }
               }
             .name {
@@ -517,7 +517,7 @@
               padding-bottom: 5px;
               max-width: 140px;
               z-index: 4;
-              text-shadow: 0 0 5px #999;
+              text-shadow: 0 0 5px #000;
               h3 {
                 font-size: 24px;
               }
@@ -566,6 +566,7 @@
                 right: 0;
                 bottom: 0;
                 top: 0;
+                height: 100%;
                 z-index: -1;
               }
               h3 {
@@ -690,7 +691,7 @@
 
               .signature {
                 padding: 0 20px 5px 20px;
-                font-size: 10px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #fff;
                 line-height: 1.5;
@@ -705,13 +706,16 @@
             .avat {
               text-align: center;
               padding: 15px 20px;
-              
+              .img{
+                width: 120px;
+                height: 120px;
+                overflow: hidden;
+                border-radius: 50%;
+                margin: auto;
+              }
               img {
-                max-width: 120px;
-                max-height: 120px;
                 min-width: 120px;
                 min-height: 120px;
-                border-radius: 50%;
               }
 
               p {
@@ -973,7 +977,7 @@
               text-align: center;
               overflow: hidden;
               img {
-                width: auto;
+                min-width: 100%;
                 min-height: 100%;
               }
             }
@@ -989,12 +993,14 @@
               max-width: 140px;
               b {
                 font-size: 24px;
+                text-shadow: 0 0 5px #000;
               }
 
               span {
                 font-size: 12px;
                 opacity: 0.8;
                 padding-left: 10px;
+                text-shadow: 0 0 5px #000;
               }
             }
 
