@@ -1,7 +1,7 @@
 <template>
 <div class="user-company">
   <div class="company">
-    <h3>{{userInfo.distributorName}}</h3>
+    <h3>{{userInfo.distributorName || userData.distributorName}}</h3>
   </div>
   <div class="warning" v-show="!disBtn">
     <b>提示</b>{{this.warning}}
@@ -24,7 +24,8 @@ export default {
       warning: '请慎重编辑所属平台公司。成功申请离岗将导致楼盘不可续费、不可报备等一系列不可逆行为。',
       tips: '申请离岗后，会向所属后台提交离岗申请。若5个工作日所属平台未审批会默认通过处理。',
       btnText: '申请离岗',
-      disBtn: true
+      disBtn: true,
+      userData: ''
     }
   },
   computed: {
@@ -39,6 +40,7 @@ export default {
     async getUserInfo () {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
+        this.userData = result
         // leavingStatus  离岗状态  空 未申请 0 待处理  1 通过  2 拒绝
         let leavingStatus = result.leavingStatus + '' 
         let text = {

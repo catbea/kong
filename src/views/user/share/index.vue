@@ -403,7 +403,7 @@
         if (!checkStrLength(slogan, 48)) {
            return this.$toast('宣传语最多为24个汉字')
         }
-        if (!reg.test(mojarRegion)) {
+        if (!checkStrType(mojarRegion)) {
           return this.$toast('机构地址只支持中文、英文和数字')
         }
         if (!checkStrLength(mojarRegion, 48)) {
