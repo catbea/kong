@@ -124,7 +124,7 @@
                   <p><span>Tel :</span>{{editData.mobile}}</p>
                   <p><span>Col :</span>{{editData.institutionName}}</p>
                   <p><span>Add:</span>{{editData.mojarRegion}}</p>
-                  <p>{{editData.signature}}</p>
+                  <p class="signature">{{editData.signature}}</p>
                 </div>
               </div>
             </div>
@@ -715,7 +715,7 @@
               }
 
               p {
-                font-size: 12px;
+                font-size: 14px;
                 opacity: 0.5;
                 padding-top: 8px;
                 color: #fff;
@@ -868,7 +868,7 @@
               .signature {
                 margin: 5px 20px;
                 padding: 10px 0 5px;
-                font-size: 10px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
                 line-height: 1.5;
@@ -950,7 +950,10 @@
                 p {
                   margin: 5px;
                 }
-
+                .signature{
+                    margin-top: 10px;
+                    font-size: 14px;
+                  }
                 span {
                   display: inline-block;
                   padding-right: 8px;
@@ -1050,8 +1053,8 @@
               }
 
               .signature {
-                margin: 0 20px;
-                font-size: 10px;
+                margin: 5px 20px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
                 line-height: 1.5;
