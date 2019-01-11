@@ -18,7 +18,7 @@ const state = {
     articleShareFlag:1,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     isVip: '',
     vipDefaultCity: '深圳市',
-    ifView: 0, //是否展示邀请有礼
+    ifView: 1, //是否展示邀请有礼
     labelList: [
       {
         id: '',
