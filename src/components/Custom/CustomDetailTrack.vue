@@ -6,7 +6,7 @@
         <p class="info-value">{{item.value}}</p>
       </div>
     </div>
-    <ul v-for="(times,key) in trackList" :key="key">
+    <ul v-for="(times,index) in trackList" :key="index">
       <!-- <li v-for="(times,key) in trackList" :key="key">
         <p class="content-title">{{times.timeStr | dateTimeFormatter(3,'/')}}</p>
         <div class="content-box" v-for="(item,key) in times.msgList" :key="key">
@@ -17,7 +17,8 @@
        <li v-for="(item,key) in times.msgList" :key="key">
         <p class="content-title">{{item.timeStr | dateTimeFormatter(3,'/')}}</p>
         <div class="content-box" >
-          <span class="icon-radius day" :class="{day:backColor,dayIn:!backColor}"></span>
+          <!-- :class="{day:backColor,dayIn:!backColor}" -->
+          <span class="icon-radius" id="icon-radius" :class="{day:index==0,dayIn:!times.show_item}"></span>
           <p><span>{{item.clientName}}</span>{{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}</p>
         </div>
       </li>
@@ -44,16 +45,13 @@ export default {
     trackList: { type: Array }
   },
   data: () => ({
-    // info: [
-    //   { key: '总浏览数', value: 90 },
-    //   { key: '名片浏览', value: 17 },
-    //   { key: '楼盘浏览', value: 190 },
-    //   { key: '文章浏览', value: 124 }
-    // ]
+ 
     backColor: true
   }),
-  created() {},
-  methods: {}
+
+  mounted() {
+  },
+
 }
 </script>
 <style lang="less">
@@ -61,7 +59,7 @@ export default {
   margin-bottom: 60px;
   .info-container {
     margin: 20px 20px 25px;
-    padding: 25px 0;
+    padding: 25px 0 19px;
     display: flex;
     justify-content: space-around;
     .info-item {
@@ -75,6 +73,7 @@ export default {
         font-size: 24px;
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
+        line-height: 36px;
       }
     }
   }

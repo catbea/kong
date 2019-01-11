@@ -125,14 +125,13 @@ export default {
   > .unreadMessage-back {
     background: #ffffff;
     > .unreadMessage-wd{
-      height:50px;
+       height:50px;
       background:rgba(255,255,255,1);
       border-bottom: 1px solid #eeeeee;
-      // padding: 7px 16px;
       padding: 0 0.42667rem;
-      //line-height: 40px;
-       position: relative;
-      padding-top: 6px;
+      line-height: 37px;
+
+
       .unreadMessage-wd-left{
         font-size:14px;
       font-weight:400;
