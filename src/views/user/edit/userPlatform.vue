@@ -5,7 +5,7 @@
     <p class="name">
       <img :src="userInfo.institutionLogo" v-if="userInfo.institutionLogo"/>
       <img :src="userInfo.avatarUrl"  v-else />
-      {{userInfo.institutionName || 'AW大师'}}</p>
+      {{userInfo.institutionName || this.userData.institutionName}}</p>
   </div>
   <div class="warning">{{this.warning}}</div>
   <div class="action">
@@ -24,7 +24,8 @@ export default {
     return {
       warning: '修改您的机构需向后台提交申请修改。审核通过后，可重新进行选择。',
       btnText: '申请修改',
-      disBtn: true
+      disBtn: true,
+      userData: ''
     }
   },
   computed: {
@@ -39,6 +40,7 @@ export default {
     async getUserInfo () {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
+        this.userData = result
         // switchStatus 组织切换状态 空 未申请 0 待处理  1 通过  2 拒绝
         let switchStatus = result.switchStatus + ''
         let text = {
@@ -49,7 +51,7 @@ export default {
         } 
         this.btnText = text[switchStatus] || '未知状态'
         // 审核通过，并且完善了信息
-        if (switchStatus === '1' && this.userInfo.institutionId) {
+        if (switchStatus === '1' && this.userData.institutionId) {
           this.btnText = '申请修改'
           this.disBtn = false
         }
@@ -57,7 +59,7 @@ export default {
         if (switchStatus === '' || switchStatus === '2') {
           this.disBtn = false
         }
-        if (switchStatus === '1' && !this.userInfo.institutionId) {
+        if (switchStatus === '1' && !this.userData.institutionId) {
           // 审批通过，更新信息
           this.$dialog.alert({
             title: '审批通过',

@@ -376,7 +376,7 @@
       },
       // 重置数据
       reset () {
-        this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+        this.initData()
       },
       // 保存名片信息
       async updateAgentCard () {
@@ -396,14 +396,15 @@
         if (!checkPhoneNum(mobile)) {
           return this.$toast('电话只能为11位数字')
         }
-        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？]+$/g
+        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？\'\"\’\‘\“\”]+$/g
         if (!reg.test(slogan)) {
           return this.$toast('宣传语只支持中文、英文和数字')
         }
         if (!checkStrLength(slogan, 48)) {
            return this.$toast('宣传语最多为24个汉字')
         }
-        if (!reg.test(mojarRegion)) {
+        let reg2 = /^[\u4E00-\u9FA5A-Za-z0-9\/\\]+$/g
+        if (!reg2.test(mojarRegion)) {
           return this.$toast('机构地址只支持中文、英文和数字')
         }
         if (!checkStrLength(mojarRegion, 48)) {
@@ -423,8 +424,9 @@
           // this.initData()
           setTimeout(() => {
             toast.clear()
+            this.showView = false
             this.showEdit = false
-          }, 1000)
+          }, 500)
         }
       },
       // 图片上传
