@@ -1,7 +1,7 @@
 <template>
 <div class="user-company">
   <div class="company">
-    <h3>{{userInfo.distributorName}}</h3>
+    <h3>{{userInfo.distributorName || userData.distributorName}}</h3>
   </div>
   <div class="warning" v-show="!disBtn">
     <b>提示</b>{{this.warning}}
@@ -24,7 +24,8 @@ export default {
       warning: '请慎重编辑所属平台公司。成功申请离岗将导致楼盘不可续费、不可报备等一系列不可逆行为。',
       tips: '申请离岗后，会向所属后台提交离岗申请。若5个工作日所属平台未审批会默认通过处理。',
       btnText: '申请离岗',
-      disBtn: true
+      disBtn: true,
+      userData: ''
     }
   },
   computed: {
@@ -39,6 +40,7 @@ export default {
     async getUserInfo () {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
+        this.userData = result
         // leavingStatus  离岗状态  空 未申请 0 待处理  1 通过  2 拒绝
         let leavingStatus = result.leavingStatus + '' 
         let text = {
@@ -48,10 +50,16 @@ export default {
           '2': '审批不通过'
         } 
         this.btnText = text[leavingStatus] || '未知状态'
-        if (leavingStatus === '' || leavingStatus === 2) {
+        // 审核通过，并且完善了信息
+        if(leavingStatus === '1' && this.userData.distributorId) {
+          this.btnText = '申请离岗'
           this.disBtn = false
         }
-        if (leavingStatus === 1) {
+        // 审核不通过或未申请
+        if (leavingStatus === '' || leavingStatus === '2') {
+          this.disBtn = false
+        }
+        if (leavingStatus === '1' && !this.userData.distributorId) {
           // 审批通过，更新信息
           this.$dialog.alert({
             title: '审批通过',
@@ -62,13 +70,15 @@ export default {
             this.$router.push('/public/complete-info')
           })
         }
-        if (leavingStatus === 2) {
+
+        if (leavingStatus === '2') {
           // 审批不通过
           this.$dialog.alert({
             title: '审批不通过',
             confirmButtonText: '我知道了',
             message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
           }).then(() => {
+            this.btnText = '申请离岗'
           })
         }
       }

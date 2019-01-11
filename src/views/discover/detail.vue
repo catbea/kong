@@ -1,12 +1,11 @@
 <template>
   <div class="discover-detail-page">
     <!-- 首次引导分享 -->
-    <div class="guidance-view" v-if="sharePopup==0">
+    <div class="guidance-view" v-if="!articleShareFlag&&!article">
       <div class="top">
        <p>点击此处分享给好友</p>
-       <p>
-         <span></span>
-         <span></span>
+       <p :style="{backgroundImage:'url('+lineImg+')'}" class="bg_img">
+         
        </p>
       </div>
       <p class="bottom" @click="sharePopupHandle">知道了</p>
@@ -114,6 +113,7 @@ import DiscoverItem from 'COMP/DiscoverItem'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import discoverService from 'SERVICE/discoverService'
 import commonService from 'SERVICE/commonService'
 import userService from 'SERVICE/userService'
@@ -154,10 +154,12 @@ export default {
       link: '/discover'
     },
     openPopup: false,
+    lineImg:require('IMG/marketDetail/yindao.png'),
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
     shareData: null,
-    sharePopup:0//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    articleShareFlag:0,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    article:false
   }),
   created() {
     // window.awHelper.wechatHelper.wx.showAllNonBaseMenuItem()
@@ -173,16 +175,21 @@ export default {
     this.getDetail()
     this.getQrCode(this.agentId)
     this.getRecommendInfo()
-    console.log(this.userInfo,'用户信息');
-    this.sharePopup=this.userInfo.articleShareFlag
+    if(this.userInfo.articleShareFlag==0){//0：未完成指引；1：已完成指引 
+      this.articleShareFlag=false
+    }else{
+      this.articleShareFlag=true
+    }
+    this.article=this.guidance.article
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo','guidance'])
   },
   methods: {
    async sharePopupHandle(){//首次进入引导
       await commonService.updateUserExpandInfo(1)
-      this.sharePopup=1
+      this.$store.commit(types.ARTICLE_SHARE_FLAG,true)
+      this.article=true
     },
    async getRecommendInfo(){//去重推荐文章
       const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
@@ -291,7 +298,7 @@ export default {
     z-index:6;
     .top{
       width:100%;
-      height:165px;
+      height:171px;
       font-size:17px;
       font-family:PingFangSC-Regular;
       font-weight:400;
@@ -300,14 +307,11 @@ export default {
       margin-top:10px;
       p:nth-child(1){
         margin-left:120px;
-        margin-top:175px;
+        margin-top:158px;
       }
       p:nth-child(2){
-        width:65px;
-        height:185px;
-        border-right: dashed rgba(255, 255, 255, 1);
-       border-bottom: dashed rgba(255, 255, 255, 1);
-       border-width:0.5px;
+        width:69px;
+        height:171px;
        position: relative;
        margin-left:10px;
        span {
@@ -340,7 +344,7 @@ export default {
     font-weight:400;
     color:rgba(255,255,255,1);
     line-height:32px;
-    margin-top:180px;
+    margin-top:168px;
     margin-left:150px;
   }
   }

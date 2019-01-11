@@ -17,7 +17,11 @@ export default {
       this.$router.replace({ path: defaultPath })
     //   console.log('path:'+defaultPath)
     } else {
-      this.$router.replace('/dynamics')
+        if(!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
+            this.$router.replace('/public/complete-info')
+        } else {
+            this.$router.replace('/dynamics')
+        }
     }
   },
   methods: {

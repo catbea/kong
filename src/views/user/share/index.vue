@@ -6,12 +6,12 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="card-info card1">
-              <div class="cover">
-                <p class="avat"><img :src="editData.avatarUrl" alt="封面"></p>
-                <div class="name text-one-line">
-                  <h3>{{editData.agentName}}</h3>
-                  <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
-                </div>
+              <div class="avat">
+                <img :src="editData.avatarUrl" alt="封面">
+              </div>
+              <div class="name text-one-line">
+                <h3>{{editData.agentName}}</h3>
+                <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
               </div>
               <div class="qrcode">
                 <img :src="editData.miniQrCode" alt="小程序">
@@ -60,7 +60,7 @@
           <div class="swiper-slide">
             <div class="card-info card3">
               <div class="avat">
-                <img :src="editData.avatarUrl" alt="封面" />
+                <div class="img"><img :src="editData.avatarUrl" alt="封面" /></div>
                 <p>{{editData.signature}}</p>
               </div>
               <div class="name">
@@ -124,7 +124,7 @@
                   <p><span>Tel :</span>{{editData.mobile}}</p>
                   <p><span>Col :</span>{{editData.institutionName}}</p>
                   <p><span>Add:</span>{{editData.mojarRegion}}</p>
-                  <p>{{editData.signature}}</p>
+                  <p class="signature">{{editData.signature}}</p>
                 </div>
               </div>
             </div>
@@ -180,7 +180,7 @@
         </div>
         <div class="group-item">
           <span>机构地址</span>
-          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址" disabled>
+          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址">
         </div>
         <div class="group-item">
           <span>宣传语</span>
@@ -225,7 +225,7 @@
         <button class="save" @click="updateAgentCard">保存</button>
       </p>
       <p class="btn" v-else>
-        <button class="save" style="width:100%" @click="closeView">关闭</button>
+        <button class="save" style="width:100%" @click="closeView">确认</button>
       </p>
     </div>
     <div class="loading"  v-show="showLoading" >
@@ -242,7 +242,7 @@
   import userService from '@/services/userService'
   import Swiper from 'swiper'
   import 'swiper/dist/css/swiper.min.css'
-  import { randomString, dataURLtoBlob, checkStrLength, checkStrType, checkPhoneNum } from '@/utils/tool'
+  import { randomString, dataURLtoBlob, checkStrLength, checkStrType, checkPhoneNum, downloadFile } from '@/utils/tool'
   import CosCloud from 'cos-js-sdk-v4'
   export default {
     data() {
@@ -298,7 +298,7 @@
     methods: {
       // 获取分享卡片详情
       async getCardInfo() {
-        let result = await userService.getQrCode(this.agentId)
+        let result = await userService.getQrCodeWithToken()
         if (result) {
           this.shareBaseInfo = result
         }
@@ -357,6 +357,17 @@
       closeView () {
         this.showView = false
       },
+      // 下载图片
+      downLoad () {
+        let img =document.getElementById('share-cover-img')
+        let data = img.getAttribute('src')
+        downloadFile(data, '名片')
+        let toast = this.$toast('下载成功')
+        setTimeout(() => {
+          toast.clear()
+          this.showView = false
+        }, 1000)
+      },
       // 预览名片
       async viewCover () {
         this.showLoading = true
@@ -365,13 +376,14 @@
       },
       // 重置数据
       reset () {
-        this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+        this.initData()
       },
       // 保存名片信息
       async updateAgentCard () {
         let name = this.editData.agentName
         let mobile = this.editData.mobile
         let slogan = this.editData.signature
+        let mojarRegion = this.editData.mojarRegion
         if (!name) {
           return this.$toast('姓名不能为空')
         }
@@ -384,13 +396,21 @@
         if (!checkPhoneNum(mobile)) {
           return this.$toast('电话只能为11位数字')
         }
-        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？]+$/g
+        let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？\'\"\’\‘\“\”]+$/g
         if (!reg.test(slogan)) {
           return this.$toast('宣传语只支持中文、英文和数字')
         }
         if (!checkStrLength(slogan, 48)) {
            return this.$toast('宣传语最多为24个汉字')
         }
+        let reg2 = /^[\u4E00-\u9FA5A-Za-z0-9\/\\]+$/g
+        if (!reg2.test(mojarRegion)) {
+          return this.$toast('机构地址只支持中文、英文和数字')
+        }
+        if (!checkStrLength(mojarRegion, 48)) {
+           return this.$toast('机构地址最多为24个汉字')
+        }
+
         let result = await userService.updateAgentCard({
           // agentId: this.agentId,
           imageUrl: this.editData.avatarUrl,
@@ -404,8 +424,9 @@
           // this.initData()
           setTimeout(() => {
             toast.clear()
+            this.showView = false
             this.showEdit = false
-          }, 1000)
+          }, 500)
         }
       },
       // 图片上传
@@ -475,40 +496,36 @@
           position: relative;
 
           &.card1 {
-            background-color: #113460;
-            .cover {
-              position: absolute;
-              height: 200px;
-              width: 100%;
-              top: 0;
-              z-index: 1;
-
+            background-color: #113460;          
               .avat {
+                position: relative;
+                height: 260px;
+                z-index: 1;
+                text-align: center;
+                overflow: hidden;
                 img {
-                  height: 100%;
-                  width: 100%;
+                  width: auto;
+                  min-height: 100%;
                 }
               }
-            }
-
             .name {
               position: absolute;
-              left: 15px;
-              bottom: 5px;
+              left: 10px;
+              top: 160px;
               color: #fff;
               border-bottom: 2px solid #0069CA;
               padding-bottom: 5px;
-              z-index: 2;
               max-width: 140px;
+              z-index: 4;
+              text-shadow: 0 0 5px #000;
               h3 {
-                font-size: 28px;
+                font-size: 24px;
               }
 
               span {
                 font-size: 12px;
               }
             }
-
             .qrcode {
               position: absolute;
               top: 36%;
@@ -534,15 +551,12 @@
             }
 
             .data-info {
-              position: absolute;
+              position: relative;
               // background: url('../../../assets/img/share/card1.png') no-repeat left top;
-              // background-size: cover;
+              // backgr7und-size: cover;
+              margin-top: -80px;
               z-index: 2;
-              bottom: 0;
-              left: 0;
-              right: -1px;
-              left: -1px;
-              height: 240px;
+              height: 280px;
               color: #fff;
               padding: 0 20px;
               overflow: hidden;
@@ -552,12 +566,13 @@
                 right: 0;
                 bottom: 0;
                 top: 0;
+                height: 100%;
                 z-index: -1;
               }
               h3 {
                 padding-top: 40%;
                 font-size: 14px;
-                line-height: 1.4;
+                // line-height: 1.4;
                 margin-bottom: 15px;
               }
 
@@ -585,10 +600,11 @@
               position: relative;
               height: 220px;
               z-index: 1;
-
+              text-align: center;
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                min-height: 100%;
               }
             }
 
@@ -616,7 +632,7 @@
 
                 .data {
                   padding-top: 30px;
-                  padding: 20px 20px 10px 20px;
+                  padding: 20px 0 10px 20px;
                   color: #fff;
                   flex: 1;
 
@@ -675,10 +691,10 @@
 
               .signature {
                 padding: 0 20px 5px 20px;
-                font-size: 10px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
               }
             }
@@ -689,20 +705,25 @@
 
             .avat {
               text-align: center;
-              padding: 10px 20px;
-
-              img {
+              padding: 15px 20px;
+              .img{
                 width: 120px;
                 height: 120px;
+                overflow: hidden;
                 border-radius: 50%;
+                margin: auto;
+              }
+              img {
+                min-width: 120px;
+                min-height: 120px;
               }
 
               p {
-                font-size: 12px;
+                font-size: 14px;
                 opacity: 0.5;
-                padding-top: 5px;
+                padding-top: 8px;
                 color: #fff;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
 
@@ -761,10 +782,10 @@
               position: relative;
               height: 220px;
               z-index: 1;
-
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                min-height: 100%;
               }
             }
 
@@ -792,7 +813,7 @@
 
                 .data {
                   padding-top: 30px;
-                  padding: 20px 20px 10px 20px;
+                  padding: 20px 0 10px 20px;
                   color: #14355F;
                   flex: 1;
 
@@ -851,10 +872,10 @@
               .signature {
                 margin: 5px 20px;
                 padding: 10px 0 5px;
-                font-size: 10px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
                 text-align: center;
                 position: relative;
                 border: none;
@@ -883,10 +904,11 @@
               position: relative;
               height: 220px;
               z-index: 1;
-
+              text-align: center;
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                width: auto;
+                min-height: 100%;
               }
             }
 
@@ -932,7 +954,10 @@
                 p {
                   margin: 5px;
                 }
-
+                .signature{
+                    margin-top: 10px;
+                    font-size: 14px;
+                  }
                 span {
                   display: inline-block;
                   padding-right: 8px;
@@ -949,10 +974,11 @@
               position: relative;
               height: 290px;
               z-index: 1;
-
+              text-align: center;
+              overflow: hidden;
               img {
-                width: 100%;
-                height: 100%;
+                min-height: 100%;
+                min-width: 100%;
               }
             }
 
@@ -967,12 +993,14 @@
               max-width: 140px;
               b {
                 font-size: 24px;
+                text-shadow: 0 0 5px #000;
               }
 
               span {
                 font-size: 12px;
                 opacity: 0.8;
                 padding-left: 10px;
+                text-shadow: 0 0 5px #000;
               }
             }
 
@@ -989,7 +1017,7 @@
                 display: flex;
 
                 .data {
-                  padding: 0 20px;
+                  padding: 0 0 0 20px;
                   color: #14355F;
                   flex: 1;
 
@@ -1031,11 +1059,11 @@
               }
 
               .signature {
-                margin: 0 20px;
-                font-size: 10px;
+                margin: 5px 20px;
+                font-size: 14px;
                 opacity: 0.5;
                 color: #14355F;
-                line-height: 1.5;
+                // line-height: 1.5;
               }
             }
           }
@@ -1043,9 +1071,9 @@
       }
 
       .share-card-action {
-        // position: absolute;
+        position: absolute;
         width: 100%;
-        margin-top: 70px;
+        bottom: 24px;
         text-align: center;
 
         button {
