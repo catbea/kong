@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="info-container">
     <div class="top-container">
       <div class="top-text">您有未完善的信息</div>
       <div class="top-detail">信息不完整会影响您的正常使用</div>
@@ -9,10 +9,7 @@
         <material-input
           placeholder="请输入姓名"
           v-model="name"
-          :type="'text'" :maxlength="16"
-          @focus="focusHandler"
-          @blur="blurHandler"
-          @input="inputHandler"
+          :type="'text'"
           :disabled="false"
         ></material-input>
       </div>
@@ -98,12 +95,12 @@ export default {
         this.area = ''
       }
     }
-    if (window.localStorage.getItem('distributorDisabled') == null && this.userInfo.distributorId) {
+    if ((window.localStorage.getItem('distributorDisabled') == null || window.localStorage.getItem('distributorDisabled') === 'true') && this.userInfo.distributorId) {
       window.localStorage.setItem('distributorDisabled', true)
     }else {
       window.localStorage.setItem('distributorDisabled', false)
     }
-    if (window.localStorage.getItem('institutionDisabled') == null && this.userInfo.institutionId) {
+    if ((window.localStorage.getItem('institutionDisabled') == null || window.localStorage.getItem('institutionDisabled') == 'true') && this.userInfo.institutionId) {
       window.localStorage.setItem('institutionDisabled', true)
     }else {
       window.localStorage.setItem('institutionDisabled', false)
@@ -112,16 +109,16 @@ export default {
   methods: {
     inputHandler(event) {
       console.log(event)
-      if (event && event.length > 0) {
-        let isMaxLength = checkStrLength(event, this.maxLength)
-        let isValid = checkStrType(event)
-        console.log('isMaxLength===' + isMaxLength, 'isValid===' + isValid)
-        let inputStr = strFormat.fmtWebCode(this.name)
-        console.log(this.name)
-        setTimeout(() => {
-          this.name = inputStr
-        }, 1)
-      }
+      // if (event && event.length > 0) {
+      //   let isMaxLength = checkStrLength(event, this.maxLength)
+      //   let isValid = checkStrType(event)
+      //   console.log('isMaxLength===' + isMaxLength, 'isValid===' + isValid)
+      //   let inputStr = strFormat.fmtWebCode(this.name)
+      //   console.log(this.name)
+      //   setTimeout(() => {
+      //     this.name = inputStr
+      //   }, 1)
+      // }
     },
     focusHandler(focus) {},
     blurHandler(focus) {},
@@ -151,7 +148,7 @@ export default {
      * 搜索公司
      */
     seachCompanyHandler() {
-      if (window.localStorage.getItem('distributorDisabled') == true) {
+      if (window.localStorage.getItem('distributorDisabled') === 'true') {
         return
       }
       let params = {
@@ -165,7 +162,7 @@ export default {
      * 选择机构
      */
     selectInstitutionHandler() {
-      if (window.localStorage.getItem('institutionDisabled') == true) {
+      if (window.localStorage.getItem('institutionDisabled') === 'true') {
         return
       }
       let params = {
@@ -175,6 +172,15 @@ export default {
       this.$router.push({ path: '/user/edit/userMechanism', query: params })
     },
     sureHandler() {
+      if (!this.name) {
+        return this.$toast('昵称不能为空')
+      }
+      if (!checkStrLength(this.name, 16)) {
+        return this.$toast('昵称最多8个汉字(或16个字符)')
+      }
+      if (!checkStrType(this.name)) {
+        return this.$toast('昵称只支持中文、英文和数字')
+      }
       if (this.name && this.majorRegion && this.userInfo.distributorId && this.userInfo.institutionId) {
         this.$dialog
           .confirm({
@@ -212,12 +218,11 @@ export default {
 }
 </script>
 <style lang="less">
-.container {
+.info-container {
   display: flex;
   flex-direction: column;
-  margin: 16px;
   > .top-container {
-    margin-top: 10px;
+    margin: 25px 16px 0;
     > .top-text {
       color: #333;
       font-size: 24px;
@@ -230,8 +235,7 @@ export default {
     }
   }
   > .bottom-container {
-    margin-top: 24px;
-    margin-right: 32px;
+    margin: 10px 16px;
     > .name-cell {
     }
     > .major-cell {
@@ -268,6 +272,7 @@ export default {
     }
   }
   > .bottom-bar {
+    margin: 10px 16px;
     width: 90%;
     position: absolute;
     bottom: 32px;
