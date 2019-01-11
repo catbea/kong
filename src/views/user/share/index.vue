@@ -225,7 +225,7 @@
         <button class="save" @click="updateAgentCard">保存</button>
       </p>
       <p class="btn" v-else>
-        <span>长按保存图片，分享给好友或朋友圈</span>
+        <span>长按图片保存，分享给好友或朋友圈</span>
         <button class="save" style="width:100%" @click="closeView">返回</button>
       </p>
     </div>
