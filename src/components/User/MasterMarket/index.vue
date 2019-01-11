@@ -15,7 +15,7 @@
             v-for="(item,index) in limitList"
             :key="item.linkerId"
           > -->
-        <swiper :options="swiperOption">
+        <swiper :options="swiperOption" ref="mySwiper">
           <swiper-slide v-for="(item,index) in limitList" :key="item.linkerId">
            <div class="master-box" v-show='!item.masterRecommand==0' @click='skipDetail(item.linkerId)'>
               <p
@@ -165,8 +165,16 @@ export default {
         let _this=this
         return this.swipeList
       }
-    }
-  }
+    },
+    // swiper() {
+    //   return this.$refs.mySwiper.swiper
+    // }
+  },
+  // updated(){
+  //   this.swiper.update();
+  //   // this.swiper.autoplay.start();
+  //   console.log(11111111)
+  // }
 }
 </script>
 <style lang="less">
