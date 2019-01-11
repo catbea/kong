@@ -48,10 +48,10 @@ export default {
           '2': '审批不通过'
         } 
         this.btnText = text[switchStatus] || '未知状态'
-        if (switchStatus === '' || switchStatus === 2) {
+        if (switchStatus === '' || switchStatus === '2') {
           this.disBtn = false
         }
-        if (switchStatus === 1) {
+        if (switchStatus === '1') {
           // 审批通过，更新信息
           this.$dialog.alert({
             title: '审批通过',
@@ -61,12 +61,13 @@ export default {
             this.$router.push('/public/complete-info')
           })
         }
-        if (switchStatus === 2) {
+        if (switchStatus === '2') {
           // 审批不通过
           this.$dialog.alert({
             title: '审批不通过',
             message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
           }).then(() => {
+            this.btnText = '申请修改'
           })
         }
       }

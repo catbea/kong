@@ -180,7 +180,7 @@
         </div>
         <div class="group-item">
           <span>机构地址</span>
-          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址" disabled>
+          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址">
         </div>
         <div class="group-item">
           <span>宣传语</span>
@@ -383,6 +383,7 @@
         let name = this.editData.agentName
         let mobile = this.editData.mobile
         let slogan = this.editData.signature
+        let mojarRegion = this.editData.mojarRegion
         if (!name) {
           return this.$toast('姓名不能为空')
         }
@@ -402,6 +403,13 @@
         if (!checkStrLength(slogan, 48)) {
            return this.$toast('宣传语最多为24个汉字')
         }
+        if (!reg.test(mojarRegion)) {
+          return this.$toast('机构地址只支持中文、英文和数字')
+        }
+        if (!checkStrLength(mojarRegion, 48)) {
+           return this.$toast('机构地址最多为24个汉字')
+        }
+
         let result = await userService.updateAgentCard({
           // agentId: this.agentId,
           imageUrl: this.editData.avatarUrl,
@@ -698,6 +706,8 @@
               img {
                 max-width: 120px;
                 max-height: 120px;
+                min-width: 120px;
+                min-height: 120px;
                 border-radius: 50%;
               }
 
