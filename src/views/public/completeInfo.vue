@@ -10,6 +10,7 @@
           placeholder="请输入姓名"
           v-model="name"
           :type="'text'"
+          @input="inputHandler"
           :disabled="false"
         ></material-input>
       </div>
@@ -62,6 +63,7 @@ import strFormat from '@/filters/strFormat'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import DynamicsService from 'SERVICE/dynamicsService'
+import UserService from 'SERVICE/userService'
 export default {
   components: {
     MaterialInput,
@@ -109,7 +111,7 @@ export default {
   methods: {
     inputHandler(event) {
       console.log(event)
-      // if (event && event.length > 0) {
+      if (event && event.length > 0) {
       //   let isMaxLength = checkStrLength(event, this.maxLength)
       //   let isValid = checkStrType(event)
       //   console.log('isMaxLength===' + isMaxLength, 'isValid===' + isValid)
@@ -118,7 +120,8 @@ export default {
       //   setTimeout(() => {
       //     this.name = inputStr
       //   }, 1)
-      // }
+        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { name: this.name }))
+      }
     },
     focusHandler(focus) {},
     blurHandler(focus) {},
@@ -207,10 +210,16 @@ export default {
         institutionId: this.userInfo.institutionId
       }
       const result = await DynamicsService.updateAgentInfo(params)
+      // 完善信息成功之后请求接口获取最新经纪人信息存储到vuex
+      this.updateUserInfo()
       this.$router.back(-1)
       window.localStorage.removeItem('distributorDisabled')
       window.localStorage.removeItem('institutionDisabled')
-    }
+    },
+    async updateUserInfo() {
+      const res = await UserService.getUserInfo()
+      this.$store.dispatch('userInfo', Object.assign(this.userInfo, res))
+    },
   },
   computed: {
     ...mapGetters(['userInfo'])
