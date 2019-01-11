@@ -51,7 +51,7 @@ export default {
         } 
         this.btnText = text[leavingStatus] || '未知状态'
         // 审核通过，并且完善了信息
-        if(leavingStatus === '1' && this.userInfo.distributorId) {
+        if(leavingStatus === '1' && this.userData.distributorId) {
           this.btnText = '申请离岗'
           this.disBtn = false
         }
@@ -59,7 +59,7 @@ export default {
         if (leavingStatus === '' || leavingStatus === '2') {
           this.disBtn = false
         }
-        if (leavingStatus === '1' && !this.userInfo.distributorId) {
+        if (leavingStatus === '1' && !this.userData.distributorId) {
           // 审批通过，更新信息
           this.$dialog.alert({
             title: '审批通过',
