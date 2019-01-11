@@ -48,6 +48,10 @@ export default {
           '2': '审批不通过'
         } 
         this.btnText = text[switchStatus] || '未知状态'
+        if (switchStatus === '1' && this.userInfo.institutionId) {
+          this.btnText = '申请修改'
+          this.disBtn = false
+        }
         if (switchStatus === '' || (switchStatus === '2' && this.userInfo.institutionId) ) {
           this.disBtn = false
         }
