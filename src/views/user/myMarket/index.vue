@@ -123,6 +123,9 @@ export default {
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
   },
+  mounted() {
+    
+  },
   computed: {
     ...mapGetters(['userArea'])
   },
