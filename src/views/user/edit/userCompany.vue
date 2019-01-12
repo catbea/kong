@@ -78,7 +78,7 @@ export default {
         // 审批不通过
         if (leavingStatus === '2') {
           this.btnText = '申请离岗'
-          if (!window.localStorage.setItem('userCompany')) {
+          if (!window.localStorage.getItem('userCompany')) {
             this.$dialog.alert({
             title: '审批不通过',
             confirmButtonText: '我知道了',
