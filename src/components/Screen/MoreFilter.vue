@@ -1,5 +1,6 @@
 <template>
-  <div class="more-filter" v-if="show">
+ <div class="more-page" v-if="show">
+  <div class="more-filter" :class="{act:flag}">
     <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
       <h5 class="item-title">{{group.name}}</h5>
       <div class="item-list-container">
@@ -11,15 +12,22 @@
       <div class="confirm-btn" @click="confirmHandler">确定</div>
     </div>
   </div>
+  </div>
 </template>
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 export default {
+  created() {
+    if(this.$route.name==='mymarket'){
+      this.flag=true
+    }
+  },
   props: {
     show: { type: Boolean, default: false },
     value: Object
   },
   data: () => ({
+    flag:false,
     conf: {
       areaSize: {
         name: '面积',
@@ -159,6 +167,7 @@ export default {
 }
 </script>
 <style lang="less">
+.more-page{
 .more-filter {
   position: relative;
   width: 100%;
@@ -202,13 +211,13 @@ export default {
   }
   > .op-box {
     background: #ffffff;
-    position: fixed;
+    // position: fixed;
     display: flex;
     justify-content: space-around;
     width: 100%;
-    top: 477px;
+    // top: 477px;
     padding: 7px 0;
-    left: 0;
+    // left: 0;
     margin: 0;
     z-index: 30;
     > div {
@@ -229,5 +238,9 @@ export default {
       }
     }
   }
+  }
+  .act{
+  height:265px;
+}
 }
 </style>
