@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="view-box" ref="viewBox" v-if="userStatus">
+    <div id="view-box" ref="viewBox">
       <div class="router-view">
         <router-view :key="$route.fullPath"></router-view>
       </div>
@@ -9,10 +9,6 @@
     <van-popup v-model="newMsgPop" :overlay="false" position="top" class="new-msg-popup">
       <new-msg-popup :msg="newMsgObject"></new-msg-popup>
     </van-popup>
-    <div class="userStatus" v-show="!userStatus">
-      <div><img :src="disabelIcon" /></div>
-      <div>用户已被禁用</div>
-    </div>
   </div>
 </template>
 <script>
@@ -23,8 +19,6 @@ import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 export default {
   data() {
     return {
-      disabelIcon:require('IMG/public/disable_icon.png'),
-      userStatus: true,
       newMsgPop: false,
       newMsgObject: {}
     }
@@ -34,16 +28,12 @@ export default {
     Tabbar
   },
   created() {
-    
-  },
-  mounted() {
-    this.$nextTick(() => {
-      console.log('userStatus disabel========='+this.userInfo.userStatus)
-      if(parseInt(this.userInfo.userStatus) === 1) {
-        this.userStatus = false
-        return
-      }
-    })
+    // let defaultPath = localStorage.getItem('defaultPath', defaultPath)
+    // if(defaultPath) {
+    //   localStorage.removeItem('defaultPath')
+    //   // this.$router.replace({ path: defaultPath })
+    //   console.log('path:'+defaultPath)
+    // }
   },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
@@ -111,16 +101,6 @@ html {
 #app {
   width: 100%;
   height: 100%;
-  .userStatus {
-    margin-top: 50%;
-    text-align: center;
-    color: #ddd;
-    font-size: 14px;
-    img {
-      width: 100px;
-      height:100px;
-    }
-  }
   .new-msg-popup {
     height: 50px;
     width: 80%;

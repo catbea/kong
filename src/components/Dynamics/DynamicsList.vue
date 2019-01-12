@@ -18,7 +18,7 @@
                     </span>
                     <span class="agent-left-right">
                       <p class="left-right-name">{{item.clientName }}</p>
-                      <p class="left-right-time">{{item.timeStr | dateTimeFormatter(1,':')}}</p>
+                      <p class="left-right-time">{{item.timeStr | dateTimeFormatter()}}</p>
                     </span>
                   </span>
                   <span class="list-agent-right">
@@ -32,7 +32,7 @@
                 <div class="dynamics-list-content" @click="godynamicsList(item)">
                   <p><span>{{item.clientName}}</span>{{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}</p>
                 </div>
-                <div class="dynamics-list-btn">
+                <!-- <div class="dynamics-list-btn">
                   <span></span>
                   <span class="list-btn-right">
                     <div
@@ -55,7 +55,7 @@
                        联系
                     </div>
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
           </shadow-box>

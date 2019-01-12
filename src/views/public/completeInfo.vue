@@ -107,6 +107,14 @@ export default {
     } else {
       window.localStorage.setItem('institutionDisabled', false)
     }
+    var h = document.body.scrollHeight
+    window.onresize = function() {
+      if (document.body.scrollHeight < h) {
+        document.getElementsByClassName('bottom-bar')[0].style.display = 'none'
+      } else {
+        document.getElementsByClassName('bottom-bar')[0].style.display = 'block'
+      }
+    }
   },
   methods: {
     inputHandler(event) {
@@ -223,16 +231,6 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo'])
-  },
-  mounted() {
-    var height = $(window).height()
-    window.addEventListener('resize', function() {
-      if ($(window).height() < height) {
-        $('.bottom-bar').hide()
-      } else {
-        $('.bottom-bar').show()
-      }
-    })
   }
 }
 </script>
