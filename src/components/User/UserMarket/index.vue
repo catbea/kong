@@ -207,7 +207,7 @@ export default {
           parent.showMarketList.splice(index + 1, 1)
           this.$toast({
               duration: 800,
-              message: '取消置顶成功'
+              message: '置顶成功'
             })
           this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
           this.show = !this.show
