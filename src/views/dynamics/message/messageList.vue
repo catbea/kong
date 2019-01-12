@@ -29,40 +29,37 @@
                 v-show="sysMessage !='' "
               >{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
-            <p class="sys-right-btn">{{sysMessage.content.replace(/<[^>]+>/g,"")}}</p>
+            <p class="sys-right-btn">{{sysMessage.content ? sysMessage.content.replace(/<[^>]+>/g,"") : ''}}</p>
           </span>
         </div>
       </div>
       <div class="messageInfo-fill"></div>
-      <div
-      v-show="messageList.length !=0"
-        class="messageInfo-sys"
-        v-for="(item,key) in messageList"
-        :key="key"
-        @click="msgClickHandle(item)"
-      >
-        <div class="messageInfo-sys-container">
-          <span class="messageInfo-sys-left">
-            <div
-              :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
-              v-show="item.unreadMsgCount !=0"
-            >
-              <span v-if="item.unreadMsgCount > 99 ">99+</span>
-              <span v-else>{{item.unreadMsgCount}}</span>
-            </div>
-            <img :src="item.c2cImage" class="sys-left-img">
-          </span>
-          <span class="messageInfo-sys-right">
-            <p class="sys-right-top">
-              {{item.c2cNick}}
-              <!-- >3分钟前 -->
-              <span class="sys-right-time">{{ item.msgTimeStamp | dateFormatterToHuman}}</span>
-            </p>
-            <p class="sys-right-btn">{{formatMsg(item)}}</p>
-          </span>
+      <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getMsgList">
+        <div v-show="messageList.length !=0"
+          class="messageInfo-sys"
+          v-for="(item,key) in messageList"
+          :key="key" @click="msgClickHandle(item)">
+          <div class="messageInfo-sys-container">
+            <span class="messageInfo-sys-left">
+              <div
+                :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
+                v-show="item.unreadMsgCount !=0">
+                <span v-if="item.unreadMsgCount > 99 ">99+</span>
+                <span v-else>{{item.unreadMsgCount}}</span>
+              </div>
+              <img :src="item.c2cImage" class="sys-left-img">
+            </span>
+            <span class="messageInfo-sys-right">
+              <p class="sys-right-top">
+                {{item.c2cNick}}
+                <!-- >3分钟前 -->
+                <span class="sys-right-time">{{ item.msgTimeStamp | dateFormatterToHuman}}</span>
+              </p>
+              <p class="sys-right-btn">{{formatMsg(item)}}</p>
+            </span>
+          </div>
         </div>
-      </div>
-     
+      </van-list>
     </div>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
@@ -84,6 +81,8 @@ export default {
       haveData: true,
       current:1,
       size:20,
+      loading: false,
+      finished: false,
       UnreadMsgTotal:0
     }
   },
@@ -177,13 +176,18 @@ export default {
     },
     async getMsgList() {
       const res = await dynamicsService.getAgentMsgAndTotal(1,this.current,this.size)
-      this.messageList = res.msgPage.records
+      this.messageList = this.messageList.concat(res.msgPage.records)
       this.sysMessage = res.systemMessage
       if (res.msgPage.records.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
         this.haveData = false
       }
+      if (res.msgPage.pages === 0 || this.current >= res.msgPage.pages) {
+        this.finished = true
+      }
+      this.current++
+      this.loading = false
       this.getcpUnreadMsgTotal()
     },
     //未读消息数
@@ -239,7 +243,7 @@ export default {
 
       }
     }
-    > .messageInfo-sys {
+    .messageInfo-sys {
       background: #ffffff;
       padding-top: 16px;
       margin: 0 16px;
