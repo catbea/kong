@@ -99,12 +99,12 @@ export default {
     }
     if ((window.localStorage.getItem('distributorDisabled') == null || window.localStorage.getItem('distributorDisabled') === 'true') && this.userInfo.distributorId) {
       window.localStorage.setItem('distributorDisabled', true)
-    }else {
+    } else {
       window.localStorage.setItem('distributorDisabled', false)
     }
     if ((window.localStorage.getItem('institutionDisabled') == null || window.localStorage.getItem('institutionDisabled') == 'true') && this.userInfo.institutionId) {
       window.localStorage.setItem('institutionDisabled', true)
-    }else {
+    } else {
       window.localStorage.setItem('institutionDisabled', false)
     }
   },
@@ -112,14 +112,14 @@ export default {
     inputHandler(event) {
       console.log(event)
       if (event && event.length > 0) {
-      //   let isMaxLength = checkStrLength(event, this.maxLength)
-      //   let isValid = checkStrType(event)
-      //   console.log('isMaxLength===' + isMaxLength, 'isValid===' + isValid)
-      //   let inputStr = strFormat.fmtWebCode(this.name)
-      //   console.log(this.name)
-      //   setTimeout(() => {
-      //     this.name = inputStr
-      //   }, 1)
+        //   let isMaxLength = checkStrLength(event, this.maxLength)
+        //   let isValid = checkStrType(event)
+        //   console.log('isMaxLength===' + isMaxLength, 'isValid===' + isValid)
+        //   let inputStr = strFormat.fmtWebCode(this.name)
+        //   console.log(this.name)
+        //   setTimeout(() => {
+        //     this.name = inputStr
+        //   }, 1)
         this.$store.dispatch('userInfo', Object.assign(this.userInfo, { name: this.name }))
       }
     },
@@ -219,7 +219,7 @@ export default {
     async updateUserInfo() {
       const res = await UserService.getUserInfo()
       this.$store.dispatch('userInfo', Object.assign(this.userInfo, res))
-    },
+    }
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -228,11 +228,9 @@ export default {
     var height = $(window).height()
     window.addEventListener('resize', function() {
       if ($(window).height() < height) {
-        // $('.bottom-bar').hide()
-        document.querySelector('.bottom-bar').hide()
+        $('.bottom-bar').hide()
       } else {
-        // $('.bottom-bar').show()
-        document.querySelector('.bottom-bar').show()
+        $('.bottom-bar').show()
       }
     })
   }
