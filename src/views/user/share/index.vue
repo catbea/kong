@@ -220,9 +220,9 @@
       <p class="img-box">
         <img src="" alt="" id="share-cover-img">
       </p>
-      <p class="btn" v-if="!creatCover">
+      <p class="btn btnview" v-if="!creatCover">
         <button class="close" @click="closeView">关闭预览</button>
-        <button class="save" @click="updateAgentCard">保存</button>
+        <button class="save" @click="updateAgentCard">保存信息</button>
       </p>
       <p class="btn" v-else>
         <span>长按图片保存，分享给好友或朋友圈</span>
@@ -980,6 +980,8 @@
               img {
                 min-height: 100%;
                 min-width: 100%;
+                max-width: 120%;
+                margin-left: -10%;
               }
             }
 
@@ -1131,6 +1133,9 @@
           font-size: 16px;
         }
         input{
+          height: 30px;
+          line-height: 30px;
+          padding: 13px 10px 13px 5px;
           flex: 1;
           border: none;
           font-size: 14px;
@@ -1157,9 +1162,10 @@
             height: 75px;
             display: inline-block;
             margin-right: 15px;
+            overflow: hidden;
             img{
-              width: 100%;
-              height: 100%;
+              min-width: 100%;
+              min-height: 100%;
             }
             .van-icon{
               background-color: #007AE6;
@@ -1258,6 +1264,9 @@
           &.save{
             background-color: #007AE6;
           }
+        }
+        &.btnview{
+          margin-top: 30px;
         }
       }
     }

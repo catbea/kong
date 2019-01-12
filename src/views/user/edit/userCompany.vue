@@ -46,7 +46,7 @@ export default {
       if (result) {
         this.userData = result
         // leavingStatus  离岗状态  空 未申请 0 待处理  1 通过  2 拒绝
-        let leavingStatus = result.leavingStatus + '' 
+        let leavingStatus = result.leavingStatus + ''
         let text = {
           '': '申请离岗',
           '0': '申请审批中',
@@ -75,7 +75,7 @@ export default {
             this.$router.push('/public/complete-info')
           })
         }
-        if (leavingStatus === '2') {
+        if (leavingStatus === '2' && !window.localStorage.getItem('userCompany')) {
           // 审批不通过
           this.$dialog.alert({
             title: '审批不通过',
@@ -83,6 +83,7 @@ export default {
             message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
           }).then(() => {
             this.btnText = '申请离岗'
+            window.localStorage.setItem('userCompany', true)
           })
         }
       }
@@ -99,6 +100,7 @@ export default {
       }).then(() => {
         // 确认离岗
         this.apply()
+        window.localStorage.setItem('userCompany', false)
       }).catch(() => {
         // 取消离岗
       })
@@ -118,7 +120,7 @@ export default {
         }).then(() => {
           // 按钮置灰不可点击
           this.disBtn = true
-          this.btnText = '申请审核中...'
+          this.btnText = '申请审核中'
         })
       }
     }
