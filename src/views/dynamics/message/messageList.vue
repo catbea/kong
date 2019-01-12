@@ -29,7 +29,7 @@
                 v-show="sysMessage !='' "
               >{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
-            <p class="sys-right-btn" v-html="sysMessage.content"></p>
+            <p class="sys-right-btn">{{sysMessage.content.replace(/<[^>]+>/g,"")}}</p>
           </span>
         </div>
       </div>
@@ -106,7 +106,9 @@ export default {
         if(msgContent.clientId == cid) {
           let msgShow = {}
           item.unreadMsgCount = parseInt(item.unreadMsgCount) + 1
+          // console.log(msgContent, 'msgContent+++++=')
           if(msgContent.desc == 1) {
+            item.Desc = 1
             item.msgType == 'TIMTextElem'
             msgShow.Text = msgContent.data
           } else if(msgContent.desc == 2){
@@ -118,11 +120,12 @@ export default {
             item.msgType == 'TIMCustomElem'
             msgShow = { Ext: msgContent.ext }
           } else if(msgContent.desc == 4){
+            item.Desc = 1
             item.msgType == 'TIMTextElem'
             msgShow.Text = msgContent.data
           }
           item.msgShow = JSON.stringify(msgShow)
-          console.log(item, '===========')
+          // console.log(item, '===========')
         }
       }
     },
