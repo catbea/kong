@@ -6,7 +6,10 @@
       <!-- <agent-card-small :info="agentInfo" @click.native="popupShowControl(true)"/> -->
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
-        <div class="reprint-source"><span>分享源自</span><span style="color:#445166"> AW大师写一写</span></div>
+        <div class="reprint-source">
+          <span>分享源自</span>
+          <span style="color:#445166">AW大师写一写</span>
+        </div>
       </div>
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
@@ -14,17 +17,35 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">  举报反馈</span>
+        <span
+          class="disclaimer-text"
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
+      <!-- 好看 -->
+      <div class="easy-look-container">
+        <div class="easy-look-top">
+          <div class="easy-look-left">
+            <div class="bg_img"></div>
+            <div class="easy-look-text">{{num}}人觉得好看</div>
+          </div>
+          <div class="easy-look-right" @click="easyLookClickHandler">
+            <div class="bg_img"></div>
+            <div class="easy-look-text">好看</div>
+          </div>
+        </div>
+        <div class="easy-look-list"></div>
+      </div>
     </div>
+    <!-- 评论 -->
+    <div class="comment-container"></div>
     <!-- 推荐房源 -->
     <!-- <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
-      <div class="recommend-houses-content"> -->
-        <!-- swiper -->
-        <!-- <swiper :options="swiperOption">
+    <div class="recommend-houses-content">-->
+    <!-- swiper -->
+    <!-- <swiper :options="swiperOption">
           <swiper-slide v-for="item in info.projectRecommendList" :key="item.linkerId">
             <div class="house-item" @click="enterDetail(item)">
               <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
@@ -36,14 +57,14 @@
           </swiper-slide>
         </swiper>
       </div>
-    </div> -->
+    </div>-->
     <!-- 推荐文章 -->
     <!-- <div class="recommend-discover" v-if="info&&info.recommendInformationList">
       <title-bar :conf="titleArticle"/>
       <div class="recommend-discover-content">
         <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
       </div>
-    </div> -->
+    </div>-->
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
@@ -60,11 +81,14 @@
         分享
       </div>
     </div>
-    <!-- 好看 -->
-    <div class="easy-look-container"></div>
-    <!-- 评论 -->
-    <div class="comment-container"></div>
-    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="popupShowControl(false)">
+    <van-popup
+      class="popup-view"
+      v-model="openPopup"
+      :overlay="true"
+      :lock-scroll="true"
+      :close-on-click-overlay="true"
+      :click-overlay="popupShowControl(false)"
+    >
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="popupShowControl(false)">
       </div>
@@ -127,11 +151,13 @@ export default {
       linkText: '查看全部',
       link: '/discover'
     },
-    openPopup: false,
+    openPopup: true,
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
     shareData: null,
-    virtualDom: null
+    virtualDom: null,
+    num: 320,
+    easylookList: ['张佳玮','静静','路遥|AW大师','小风风','坑坑','辣椒','A链家-小李','小锅锅mike','红色诺亚','贾班王','中原-小陈']
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -189,6 +215,10 @@ export default {
       this.openPopup = status
     },
 
+    // 好看点击事件
+    easyLookClickHandler() {
+
+    },
     // 举报反馈
     feedbackClickHandler() {
       // this.$router.push({path:`/discover/edit/${this.$route.params.id}/${this.$route.params.city}`,query:this.$route.query})
@@ -203,7 +233,7 @@ export default {
       this.collectionStatus = res.deleteType === 0 ? 1 : 0
       if (this.collectionStatus) {
         this.$toast('收藏成功')
-      }else {
+      } else {
         this.$toast('取消收藏成功')
       }
     },
@@ -216,8 +246,8 @@ export default {
       const result = await discoverService.articleShare(params)
     },
     // 编辑按钮点击处理
-    editClickHandler(){
-      this.$router.push({path:`/discover/edit/${this.$route.params.id}/${this.$route.params.city}`,query:this.$route.query})
+    editClickHandler() {
+      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
     },
     // 设置分享
     async shareHandler() {
@@ -335,11 +365,11 @@ export default {
       align-items: center;
       padding: 0 15px;
       > .reprint-views {
-        color: #969EA8;
+        color: #969ea8;
         font-size: 14px;
       }
       > .reprint-source {
-        color: #969EA8;
+        color: #969ea8;
         font-size: 14px;
       }
     }
@@ -373,7 +403,7 @@ export default {
     }
     > .discover-disclaimer {
       padding: 15px;
-      color: #969EA8;
+      color: #969ea8;
       font-size: 14px;
       line-height: 1.5;
     }
@@ -381,6 +411,23 @@ export default {
       margin-top: 8px;
       margin-bottom: 10px;
     }
+    // 好看
+    > .easy-look-container {
+    margin: 10px 16px;
+    > .easy-look-top {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      > .easy-look-left {
+      }
+      > .easy-look-right {
+      }
+      .easy-look-text {
+        color: #445166;
+        font-size: 14px;
+      }
+    }
+  }
   }
   > .recommend-houses {
     background-color: #fff;
@@ -421,6 +468,9 @@ export default {
     .discover-item {
       margin: 15px 0;
     }
+  }
+  // 评论
+  > .comment-container {
   }
   > .tools-bar {
     width: 100%;
