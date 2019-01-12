@@ -4,8 +4,8 @@ import commonService from 'SERVICE/commonService'
 
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  userStatus: 0,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    userStatus: 0, //用户是否有效 0:有效 1:禁用
     devMode: true,
     agentId: '4193',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
@@ -113,6 +113,7 @@ const state = {
 }
 
 const getters = {
+  userStatus: state => state.userStatus,
   userInfo: state => {
     return state.userInfo
   },
@@ -206,6 +207,9 @@ const mutations = {
   },
   [types.GUIDANCE](state, data) {
     state.guidance = Object.assign(state.guidance, data)
+  },
+  [types.USER_STATUS](state, data) {
+    state.userStatus = Object.assign(state.userStatus, data)
   }
 }
 
