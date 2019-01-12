@@ -1,5 +1,5 @@
 <template>
-    <div class="write-item-body">
+    <div class="write-item-body" @click="enterDetail">
         <div class="write-item-left">
             <span class="article-title">厦门今年第二批9000套保障性商品房上午摇号</span>
             <li class="article-label">
@@ -27,7 +27,11 @@ export default {
       tags: ['已收藏', '未分享', '已编辑']
     }
   },
-  methods: {},
+  methods: {
+    enterDetail(){
+      this.$emit('enterDetail','');
+    }
+  },
   computed: {}
 }
 </script>

@@ -5,7 +5,7 @@
     </div>
     <div class="list-result">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-          <write-article></write-article>
+        <write-article @enterDetail="enterDetail"></write-article>
       </van-list>
     </div>
   </div>
@@ -21,8 +21,8 @@ export default {
   },
   data() {
     return {
-      loading:false,
-      finished:false
+      loading: false,
+      finished: false
     }
   },
   computed: {
@@ -32,9 +32,12 @@ export default {
   methods: {
     goSearch(val) {},
 
-    onLoad(){
+    enterDetail() {
+      // this.$router.push({ name: 'easyLookList', params: { id: n } })
+      this.$router.push({ name: 'easyLookList' })
+    },
 
-    }
+    onLoad() {}
   }
 }
 </script>
