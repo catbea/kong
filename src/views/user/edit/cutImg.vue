@@ -405,7 +405,7 @@ export default {
 
       if (result) {
       } else {
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { avatarUrl: this.avatar }))
+        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { avatarUrl: this.avatar }))
         this.destoried()
         this.$router.go(-1)
       }

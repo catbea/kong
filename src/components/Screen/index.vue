@@ -114,11 +114,9 @@ export default {
       if (val !== -1) {
         document.getElementsByClassName('choose-container')[0].style.height = this.height
         this.$emit('sor',true)
-        console.log(1111111111);
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
         this.$emit('sor',false)
-        console.log(22222222222222);
       }
     },
     local(val) {
