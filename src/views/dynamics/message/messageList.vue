@@ -1,6 +1,14 @@
 <template>
   <div class="messageInfo-page">
     <div class="messageInfo-back" v-if="haveData">
+      <!--  -->
+      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
+        <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
+        <div class="messageInfo-wd-right">
+          <button class="messageInfo-wd-right-select messageInfo-wd-select" @click="goSelestMessage">查 看</button>
+          <button class="messageInfo-wd-right-select" @click="getsetMsgRead">全部已读</button>
+        </div>
+      </div>
       <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="messageInfo-sys-container">
           <span class="messageInfo-sys-left">
@@ -21,7 +29,7 @@
                 v-show="sysMessage !='' "
               >{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
-            <p class="sys-right-btn">{{sysMessage.content}}</p>
+            <p class="sys-right-btn">{{sysMessage.content.replace(/<[^>]+>/g,"")}}</p>
           </span>
         </div>
       </div>
@@ -73,13 +81,54 @@ export default {
       sysMessage: [],
       nullIcon: require('IMG/user/bill-null.png'),
       nullcontent: '暂无信息',
-      haveData:true
+      haveData: true,
+      current:1,
+      size:20,
+      UnreadMsgTotal:0
+    }
+  },
+  watch: {
+    '$store.getters.newMsgStatus': function(v) {
+      if(v) {
+        this.updateNewMsg()
+      }
     }
   },
   mounted() {
     this.getMsgList()
   },
   methods: {
+    updateNewMsg() {
+      let msgContent = this.$store.getters.newMsgContent
+      this.UnreadMsgTotal++
+      for(let item of this.messageList) {
+        let cid = item.keyword.split('|')[0]
+        if(msgContent.clientId == cid) {
+          let msgShow = {}
+          item.unreadMsgCount = parseInt(item.unreadMsgCount) + 1
+          // console.log(msgContent, 'msgContent+++++=')
+          if(msgContent.desc == 1) {
+            item.Desc = 1
+            item.msgType == 'TIMTextElem'
+            msgShow.Text = msgContent.data
+          } else if(msgContent.desc == 2){
+            item.Desc = 2
+            item.msgType == 'TIMCustomElem'
+            msgShow = {Ext: msgContent.ext}
+          } else if(msgContent.desc == 3){
+            item.Desc = 3
+            item.msgType == 'TIMCustomElem'
+            msgShow = { Ext: msgContent.ext }
+          } else if(msgContent.desc == 4){
+            item.Desc = 1
+            item.msgType == 'TIMTextElem'
+            msgShow.Text = msgContent.data
+          }
+          item.msgShow = JSON.stringify(msgShow)
+          // console.log(item, '===========')
+        }
+      }
+    },
     msgClickHandle(item) {
       let CId = item.keyword.split('|')[0]
       let clientId = CId.split('_')[1]
@@ -90,9 +139,21 @@ export default {
         }
       })
     },
+    //帮助页面
+    // async godiscoverHelp(){
+    //   this.$router.push('/discover/discoverHelp')
+    // },
+    async getsetMsgRead(){
+      //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
+     await dynamicsService.getsetMsgRead()
+     this.getMsgList()
+    },
+  
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
+    //查看未读消息
+   
     formatMsg(item) {
       if (item.msgType == 'TIMCustomElem') {
         let msg = JSON.parse(item.msgShow)
@@ -104,21 +165,36 @@ export default {
           return msg.Data
         }
       } else {
-        let msg = JSON.parse(item.msgShow)
-        return msg.Text
+        if (item.Desc == 2) {
+          return '[语音消息]'
+        } else if (item.Desc == 3) {
+          return '【楼盘消息】'
+        } else {
+          let msg = JSON.parse(item.msgShow)
+          return msg.Text
+        }
       }
     },
     async getMsgList() {
-      const res = await dynamicsService.getAgentMsgAndTotal()
-      this.messageList = res.msgList
+      const res = await dynamicsService.getAgentMsgAndTotal(1,this.current,this.size)
+      this.messageList = res.msgPage.records
       this.sysMessage = res.systemMessage
-      debugger
-      if (res.msgList.length > 0 || res.systemMessage != '') {
+      if (res.msgPage.records.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
         this.haveData = false
       }
-    }
+      this.getcpUnreadMsgTotal()
+    },
+    //未读消息数
+    async getcpUnreadMsgTotal(){
+      const res = await dynamicsService.getcpUnreadMsgTotal()
+      this.UnreadMsgTotal = res.count
+
+    },
+      async goSelestMessage(){
+       this.$router.push({path: '/dynamics/message/unreadMessage', query: {UnreadMsgTotal: this.UnreadMsgTotal} })
+    },
   }
 }
 </script>
@@ -128,6 +204,41 @@ export default {
   background: rgba(247, 249, 250, 1);
   > .messageInfo-back {
     background: #ffffff;
+    > .messageInfo-wd{
+      height:50px;
+      background:rgba(255,255,255,1);
+      border-bottom: 1px solid #eeeeee;
+      // padding: 7px 16px;
+      padding: 0 0.42667rem;
+      line-height: 37px;
+      .messageInfo-wd-left{
+        font-size:14px;
+      font-weight:400;
+      color:rgba(51,51,51,1);
+      //line-height:20px;
+      position: relative;
+      padding-top: 6px;
+      }
+      .messageInfo-wd-right{
+        float: right;
+        .messageInfo-wd-select{
+          width:72px;
+        }
+        .messageInfo-wd-right-select{
+          font-size:12px;
+          font-weight:400;
+          color:rgba(0,122,230,1);
+          line-height:17px;
+          height:24px;
+          border-radius:22px;
+          border:1px solid rgba(0,122,230,1);
+          margin-left: 8px;
+          background-color: #ffffff;
+          padding: 0 12px;
+        }
+
+      }
+    }
     > .messageInfo-sys {
       background: #ffffff;
       padding-top: 16px;
@@ -156,11 +267,12 @@ export default {
             // height:18px;
             border: 0;
             position: absolute;
-            margin-left: 35px;
+           // margin-left: 35px;
+            margin-left: 18px;
+            margin-top: 8px;
             padding: 1px 3px;
           }
           .messageInfo-sys-nums {
-           
             position: absolute;
             margin-left: 23px;
             margin-top: 10px;
@@ -173,7 +285,6 @@ export default {
             font-size: 12px;
             text-align: center;
             line-height: 16px;
-            
           }
         }
         > .messageInfo-sys-right {
@@ -200,6 +311,7 @@ export default {
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 280px;
+            height: 20px;
           }
         }
       }

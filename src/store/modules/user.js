@@ -4,19 +4,23 @@ import commonService from 'SERVICE/commonService'
 
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
+  userStatus: 0,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
-    agentId: '1',
+    userStatus: 0,
+    devMode: true,
+    agentId: '4193',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',
-    enterpriseId: '91',
+    enterpriseId: '90',
     institutionId: '82',
     institutionLogo: '',
-    institutionName: '',
-    isOne: false, // true新用户 false老用户
+    institutionName: 'test',
+    isOne: 0, // 1新用户 0老用户
+    articleShareFlag:1,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     isVip: '',
     vipDefaultCity: '深圳市',
-    ifView: 0, //是否展示邀请有礼
+    ifView: 1, //是否展示邀请有礼
     labelList: [
       {
         id: '',
@@ -43,22 +47,23 @@ const state = {
         userId: ''
       }
     ],
+    leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJxaTQyODgiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjI2IiwiZXhwIjoxNTQ5ODM0NjgxLCJpYXQiOjE1NDY4Mjk4ODF9.CRbrojaY1AtUBAQ9QUzkzwMjdmJcv9isZ_f88_4QK0MEktmdlIZpFv7UjOclnNBD74wlZVqw1P7gGYEIRtV2qw',
-    majorCity: '广州市',
-    majorRegion: '山西省/长治市/襄垣县',
-    name: '周丹',
-    nickName: '',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJlOW4ycm4iLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTUwMjk2NDgwLCJpYXQiOjE1NDcyOTE2ODB9.YsMBvwahFOWE5Lpg-Mj1y1LzwYoe7g3BXI-Avygd23F4nYzWY8Q0TSerg0cihFSncQ1YyaT_J1ly3nLT4QZWLA',
+    majorCity: '深圳市',
+    majorRegion: '广东省/深圳市/南山区',
+    name: '周丹Nike',
+    nickName: '周丹Nike',
     // payCorpId: 'onXUy1sGkPMX-Z34buMYLs5q2',
     payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
-    pcOpenid: 'onXUy1sGkPMX-Z34buMYLs5q2IEc',
-    price: 874400,
+    // pcOpenid: 'oPeLD1Mdkzf8nnZ4yHaHfF2YBYUo',
+    price: 984200,
     registerMobile: '18603000246',
     signature: 'mwwwwwwwmm',
     tempPhone: '18603000246',
+    vipDefaultCity: '',
     vipInfo: '',
     wechatAccount: '',
-    ifView: '1'
   },
   userVipInfo: {},
   userArea: {
@@ -102,13 +107,19 @@ const state = {
   buildId: '',
   imUserSig: null,
   guidance: {
-    dynamics: false
+    dynamics: false,
+    marketFirst:false,//首次注册
+    article:false//0未完成文章详情引导，1完成
   }
 }
 
 const getters = {
+  userStatus: state => state.userStatus,
   userInfo: state => {
     return state.userInfo
+  },
+  guidance: state => {
+    return state.guidance
   },
   userVipInfo: state => state.userVipInfo,
   userArea: state => state.userArea,
@@ -189,11 +200,17 @@ const mutations = {
   [types.USER_BUILD_INFO](state, data) {
     state.buildId = data
   },
-  [types.IS_ONE](state, data) {
-    state.userInfo.isOne = data
+  [types.FIRST](state, data) { 
+    state.guidance.marketFirst = data
+  },
+  [types.ARTICLE_SHARE_FLAG](state, data) {
+    state.guidance.article = data
   },
   [types.GUIDANCE](state, data) {
     state.guidance = Object.assign(state.guidance, data)
+  },
+  [types.USER_STATUS](state, data) {
+    state.userStatus = data
   }
 }
 

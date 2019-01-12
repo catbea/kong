@@ -21,16 +21,17 @@
             <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
             <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
             <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-            <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
+            <div class="tag-item" v-for="(item,index) in dataArr.linkerTags ? dataArr.linkerTags.slice(0,2):[]" :key="index">{{item}}</div>
           </li>
           <li>
             {{dataArr.openTimes}}次开通
             <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
             <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
+              <!-- <span></span>
               <span></span>
-              <span></span>
-              <span></span>
+              <span></span> -->
+              <p style="font-size:25px;" class="icon iconfont icon-more"></p>
             </div>
           </li>
         </ul>
@@ -165,7 +166,7 @@ export default {
         // on close
       });
       }else{
-        //更多
+      //更多
       this.show = !this.show
       }
     },
@@ -204,14 +205,6 @@ export default {
           let parent = this.$parent.$parent
           parent.showMarketList.unshift(parent.showMarketList[index])
           parent.showMarketList.splice(index + 1, 1)
-          // this.$dialog
-          //   .alert({
-          //     message: '楼盘置顶成功',
-          //     className: 'hint-alert'
-          //   })
-          //   .then(() => {
-          //     // on close
-          //   })
           this.$toast({
               duration: 800,
               message: '取消置顶成功'
@@ -222,14 +215,6 @@ export default {
       } else if (this.dataArr.recommand == 10) {
         //将当前点击的楼盘取消置顶
         this.$emit('recommandFalseHandle', this.dataArr)
-        // this.$dialog
-        //   .alert({
-        //     message: '楼盘取消置顶成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '取消置顶成功'
@@ -244,14 +229,6 @@ export default {
     async masterHandle(n) {
       if (this.dataArr.masterRecommand != 1) {
         await this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '大师推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '大师推荐成功'
@@ -259,14 +236,6 @@ export default {
         this.$emit('pushMaster', this.dataArr)
       } else {
         await this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '取消大师推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '取消大师推荐成功'
@@ -279,14 +248,6 @@ export default {
     commonHandle(n) {
       if (this.dataArr.masterRecommand != 2) {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '普通推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '普通推荐成功'
@@ -294,14 +255,6 @@ export default {
         this.$emit('pushCommon', this.dataArr)
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        // this.$dialog
-        //   .alert({
-        //     message: '取消普通推荐成功',
-        //     className: 'hint-alert'
-        //   })
-        //   .then(() => {
-        //     // on close
-        //   })
         this.$toast({
               duration: 800,
               message: '取消普通推荐成功'
@@ -488,7 +441,7 @@ export default {
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 15px;
-          margin: 8px 0 8px 0;
+          margin: 6px 0 6px 0;
         }
         li:nth-of-type(3) {
           display: flex;
@@ -528,7 +481,7 @@ export default {
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 13px;
-          margin-top: 12px;
+          margin-top:10px;
           display: flex;
           position: relative;
           align-items: center;

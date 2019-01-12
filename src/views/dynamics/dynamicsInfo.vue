@@ -94,7 +94,7 @@
               <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
               <samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
               <span>{{item.currentArticleLength}}%</span></p>
-              <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
+              <p>累计浏览<span>{{item.todayClickCount}}次</span>该楼盘，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
@@ -123,13 +123,11 @@
 import TagGroup from 'COMP/TagGroup'
 import ShadowBox from 'COMP/ShadowBox'
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
-import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import dynamicsService from 'SERVICE/dynamicsService'
 export default {
   components: {
     ShadowBox,
     DynamicsData,
-    DynamicsList,
     TagGroup
   },
   data() {

@@ -84,7 +84,7 @@
                     </p>
                     <p>
                       累计浏览
-                      <span>{{item.todayClickCount}}次</span>名片，平均停留
+                      <span>{{item.todayClickCount}}次</span>该文章，平均停留
                       <span>{{item.totalTime / 1000}}s</span>
                     </p>
                   </div>
@@ -122,13 +122,11 @@
 <script>
 import ShadowBox from 'COMP/ShadowBox'
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
-import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import dynamicsService from 'SERVICE/dynamicsService'
 export default {
   components: {
     ShadowBox,
-    DynamicsData,
-    DynamicsList
+    DynamicsData
   },
   data() {
     return {

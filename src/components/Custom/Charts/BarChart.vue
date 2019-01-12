@@ -60,7 +60,8 @@ export default {
         })
       this.barData.map(obj => {
         chart.guide().text({
-          position: [obj.type, obj.virtualCount],
+          // position: [obj.type, obj.virtualCount],
+          position: [obj.type, 100],
           content: obj.count,
           style: {
             color: obj.type === '聊天' ? '#f6bc51' : '#2f7bdf',

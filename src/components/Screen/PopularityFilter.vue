@@ -1,5 +1,5 @@
 <template>
-  <div class="popularity-filter" v-if="show">
+  <div class="popularity-filter" v-if="show" :class="{act:flag}">
     <ul>
       <li class="van-hairline--bottom" v-for="(item,index) in conf" :key="index" :class="checked===index&&'active'" @click="itemClick(item,index)">{{item}}</li>
     </ul>
@@ -7,11 +7,17 @@
 </template>
 <script>
 export default {
+  created() {
+    if(this.$route.name==='mymarket'){
+      this.flag=true
+    }
+  },
   props: {
     show: { type: Boolean, default: false },
     value: String
   },
   data: () => ({
+    flag:false,
     checked: null,
     conf: {
       '-1,-1': '不限',
@@ -58,6 +64,10 @@ export default {
       color: rgba(51, 51, 51, 1);
       line-height: 49px;
     }
+  }
+  &.act{
+  height:265px;
+  overflow: scroll;
   }
 }
 </style>

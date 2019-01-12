@@ -4,12 +4,15 @@
     <h3>我的机构</h3>
     <p class="name">
       <img :src="userInfo.institutionLogo" v-if="userInfo.institutionLogo"/>
-      <img src="../../../assets/img/user/Group9@2x.png"  v-else />
-      {{userInfo.institutionName || 'AW大师'}}</p>
+      <img :src="userInfo.avatarUrl"  v-else />
+      {{userInfo.institutionName || this.userData.institutionName}}</p>
   </div>
   <div class="warning">{{this.warning}}</div>
   <div class="action">
-    <button type="button" @click="toApply" :class="{'disabled': disBtn}">申请离岗</button>
+    <button type="button" @click="toApply" :class="{'disabled': disBtn}">{{btnText}}</button>
+  </div>
+  <div class="loading"  v-show="showLoading" >
+      <van-loading type="spinner" color="white" class="van-loading"/>
   </div>
 </div>
 </template>
@@ -24,7 +27,9 @@ export default {
     return {
       warning: '修改您的机构需向后台提交申请修改。审核通过后，可重新进行选择。',
       btnText: '申请修改',
-      disBtn: true
+      disBtn: true,
+      userData: '',
+      showLoading: true
     }
   },
   computed: {
@@ -39,8 +44,9 @@ export default {
     async getUserInfo () {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
+        this.userData = result
         // switchStatus 组织切换状态 空 未申请 0 待处理  1 通过  2 拒绝
-        let switchStatus = result.switchStatus
+        let switchStatus = result.switchStatus + ''
         let text = {
           '': '申请修改',
           '0': '申请审批中',
@@ -48,28 +54,41 @@ export default {
           '2': '审批不通过'
         } 
         this.btnText = text[switchStatus] || '未知状态'
-        if (switchStatus === '' || switchStatus === 2) {
+        // 审核通过，并且完善了信息
+        if (switchStatus === '1' && this.userData.institutionId) {
+          this.btnText = '申请修改'
           this.disBtn = false
         }
-        if (switchStatus === 1) {
+        // 审核不通过或未申请
+        if (switchStatus === '' || switchStatus === '2') {
+          this.disBtn = false
+        }
+        if (switchStatus === '1' && !this.userData.institutionId) {
           // 审批通过，更新信息
           this.$dialog.alert({
             title: '审批通过',
             confirmButtonText: '更新数据',
             message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
           }).then(() => {
-            this.$router.push('/')
+            this.$store.commit('USER_INFO', Object.assign(this.userInfo, { institutionId: '', institutionName: ''}))
+            this.$router.push('/public/complete-info')
           })
         }
-        if (switchStatus === 2) {
-          // 审批不通过
-          this.$dialog.alert({
-            title: '审批不通过',
-            message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
-          }).then(() => {
-          })
+        // 审批不通过
+        if (switchStatus === '2') {
+          this.btnText = '申请修改'
+          let storage = JSON.parse(window.localStorage.getItem('userPlatform'))
+          if (!storage) {
+            this.$dialog.alert({
+              title: '审批不通过',
+              message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
+            }).then(() => {
+              window.localStorage.setItem('userPlatform', true)
+            })
+          }
         }
       }
+      this.showLoading = false
     },
     // 点击申请离岗按钮
     toApply () {
@@ -82,6 +101,7 @@ export default {
       }).then(() => {
         // 确认离岗
         this.apply()
+        window.localStorage.setItem('userPlatform', false)
       }).catch(() => {
         // 取消离岗
       })
@@ -105,7 +125,7 @@ export default {
         })
       }
     }
-
+    
   }
 }
 </script>
@@ -140,6 +160,7 @@ export default {
         height: 50px;
         vertical-align: middle;
         margin-right: 10px;
+        border-radius: 50%;
       }
     }
   }
@@ -161,9 +182,31 @@ export default {
       color: rgba(68, 81, 102, 1);
       font-size: 16px;
       &.disabled{
-        background-color: rgba(102, 102, 102, 1);
+        background-color:#e8e8e8;
         cursor: not-allowed;
+        color: #999;
       }
+    }
+  }
+  // loading
+  .loading{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 3;
+    .van-loading {
+      display: inline-block;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 50px;
+      height: 50px;
+      z-index: 5;
+      margin-left: -25px;
+      margin-top: -25px;
     }
   }
 }

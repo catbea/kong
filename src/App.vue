@@ -27,6 +27,14 @@ export default {
     NewMsgPopup,
     Tabbar
   },
+  created() {
+    // let defaultPath = localStorage.getItem('defaultPath', defaultPath)
+    // if(defaultPath) {
+    //   localStorage.removeItem('defaultPath')
+    //   // this.$router.replace({ path: defaultPath })
+    //   console.log('path:'+defaultPath)
+    // }
+  },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
       this.newMsgPop = v

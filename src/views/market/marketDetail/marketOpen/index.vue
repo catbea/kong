@@ -15,6 +15,7 @@
 <script>
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'
+import userService from 'SERVICE/userService'
 import mycoupons from 'SERVICE/mycoupons'
 import MarketDescribe from 'COMP/MarketDescribe/'
 import MarketPriceSurface from 'COMP/MarketPriceSurface/'
@@ -35,8 +36,7 @@ export default {
       this.initSelectedInfo()
       return
     }
-    this.getMarketDescribeInfo()
-    this.getLinkerAmountList()
+    this.init()
   },
   data: () => ({
     currPriceAct: 0,
@@ -51,12 +51,24 @@ export default {
     describeInfo: [{ dredgeFlag: false, borderBottom: false }],
     show: false,
     dredge: false,
+    userPrice: 0,
     borderBottom: false
   }),
   computed: {
     ...mapGetters(['userInfo', 'marketOpenCache', 'currSelectedCoupon'])
   },
   methods: {
+    async init() {
+      this.userPrice = this.userInfo.price
+      this.getUserInfo()
+      this.getLinkerAmountList()
+      this.getMarketDescribeInfo()
+    },
+    async getUserInfo() {
+      const res = await userService.getUserInfo()
+      this.userPrice = res.price
+      // this.$store.dispatch('userInfo', Object.assign(this.userInfo, { price: res.price }))
+    },
     skipAgreement() {
       this.$router.push('/open/agreement')
     },
@@ -72,7 +84,7 @@ export default {
       let coupon = 0
 
       if (this.marketOpenCache && this.marketOpenCache.currSelectedCoupon) {
-        this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
+        this.priceSurfacePayInfo = { balanceAmount: this.userPrice, balancePay: 0, coupon: 0 }
         let currCunpon = this.marketOpenCache.currSelectedCoupon
         if (currCunpon.type == 20) {
           let couponValue = Number(priceItem.subscribeAmount) * Number(1 - currCunpon.discountsLimit / 10)
@@ -94,32 +106,32 @@ export default {
         }
       }
 
-      submitPrice = submitPrice - this.userInfo.price
-      balancePay = this.userInfo.price
+      submitPrice = submitPrice - this.userPrice
+      balancePay = this.userPrice
       if (submitPrice < 0) {
-        balancePay = this.userInfo.price + submitPrice
+        balancePay = this.userPrice + submitPrice
         submitPrice = 0
       } else {
-        if (balancePay > this.userInfo.price) {
-          balancePay = this.userInfo.price
-          submitPrice = balancePay - this.userInfo.price
+        if (balancePay > this.userPrice) {
+          balancePay = this.userPrice
+          submitPrice = balancePay - this.userPrice
         }
       }
       balancePay = balancePay < 0 ? (balancePay = 0) : balancePay
       this.submitPayInfo = { value: submitPrice, coupon: coupon }
-      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balanceAmount: this.userInfo.price, balancePay: balancePay })
+      this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balanceAmount: this.userPrice, balancePay: balancePay })
     },
     priceItemClickHandle(index) {
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { currPriceListIndex: index }))
       this.currPriceAct = index
-      this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price, balancePay: 0, coupon: 0 }
+      this.priceSurfacePayInfo = { balanceAmount: this.userPrice, balancePay: 0, coupon: 0 }
       this.currPriceListIndex = index
       let priceItem = this.priceList[this.currPriceListIndex]
       let submitPrice = priceItem.subscribeAmount
       if (submitPrice < 0) submitPrice = 0
       let balancePay = 0
-      submitPrice = submitPrice - this.userInfo.price
-      balancePay = this.userInfo.price
+      submitPrice = submitPrice - this.userPrice
+      balancePay = this.userPrice
       if (submitPrice < 0) {
         submitPrice = 0
         balancePay = priceItem.subscribeAmount
@@ -195,9 +207,8 @@ export default {
     },
 
     paySuss() {
-      let _pirce = this.userInfo.price - this.priceSurfacePayInfo.balancePay
+      let _pirce = this.userPrice - this.priceSurfacePayInfo.balancePay
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { price: _pirce }))
-      // this.priceSurfacePayInfo = { balanceAmount: this.userInfo.price }
       this.getMarketDescribeInfo()
       this.getLinkerAmountList()
       this.$dialog
@@ -251,16 +262,13 @@ export default {
     z-index: 9;
   }
   .agreement-box {
-    height: 17px;
-    line-height: 17px;
     text-align: center;
-    margin: 18px 0 0 0;
+    margin: 5px 0 62px 0;
 
     span:nth-child(1) {
       font-size: 10px;
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
-      line-height: 14px;
     }
     .agreement {
       font-size: 12px;
