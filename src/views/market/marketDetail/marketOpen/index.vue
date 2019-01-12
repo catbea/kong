@@ -207,7 +207,7 @@ export default {
     },
 
     paySuss() {
-      let _pirce = this.this.userPrice - this.priceSurfacePayInfo.balancePay
+      let _pirce = this.userPrice - this.priceSurfacePayInfo.balancePay
       this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { price: _pirce }))
       this.getMarketDescribeInfo()
       this.getLinkerAmountList()
