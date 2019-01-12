@@ -77,7 +77,11 @@
             v-model="notShowProjectName"
             @areaClick="areaClickHandler"
           ></search>
-          <screen v-model="notShowProjectFilters"></screen>
+          <screen 
+            v-model="notShowProjectFilters" 
+            :height="'18rem'"
+            @screen="screenHandle"
+            @sor="sortHandle"></screen>
         </div>
         <van-list
           v-model="notShowLoading"
@@ -85,6 +89,7 @@
           finished-text="没有更多了"
           @load="notShowGetMyMarketInfo"
           v-show="!no"
+          :class="{screen:flag}"
         >
           <close-market
             v-for="(item,index) in notShowMarketList"
@@ -251,7 +256,7 @@ export default {
     }
   },
   methods: {
-    screenHandle (index) {
+    screenHandle (index) {//筛选中更多等滚动条操作
       // this.screenNum = index
       // if (this.screenNum == index) {
       //   this.flag = false
@@ -270,7 +275,7 @@ export default {
         console.log("现在的状态",document.querySelector('.more-page'));
       })
     },
-    sortHandle(n){
+    sortHandle(n){//筛选中排序滚动条操作
       this.$nextTick(() => {
         if(document.querySelector('.sortWay-page'))
       {
