@@ -186,8 +186,9 @@ export default {
     > .item-list-container {
       display: flex;
       flex-wrap: wrap;
+      margin-top:16px;
       margin-bottom: 20px;
-      justify-content: space-between;
+      // justify-content: space-between;
       > .item {
         // display: flex;
         // align-items: center;
@@ -202,10 +203,14 @@ export default {
         border-radius: 6px;
         // padding: 5px 10px;
         margin: 7px 0px;
+        margin-left:15px;
         &.active {
           background-color: #017fff;
           color: #ffffff;
         }
+      }
+      div:first-child,div:nth-child(5){
+        margin-left:0px;
       }
     }
   }

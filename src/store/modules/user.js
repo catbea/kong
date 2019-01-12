@@ -6,6 +6,7 @@ const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userStatus: 0,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
+    userStatus: 0,
     devMode: true,
     agentId: '4193',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
@@ -209,7 +210,7 @@ const mutations = {
     state.guidance = Object.assign(state.guidance, data)
   },
   [types.USER_STATUS](state, data) {
-    state.userStatus = Object.assign(state.userStatus, data)
+    state.userStatus = data
   }
 }
 

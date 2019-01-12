@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="view-box" ref="viewBox" v-if="userDisabelStatus">
+    <div id="view-box" ref="viewBox">
       <div class="router-view">
         <router-view :key="$route.fullPath"></router-view>
       </div>
@@ -9,10 +9,6 @@
     <van-popup v-model="newMsgPop" :overlay="false" position="top" class="new-msg-popup">
       <new-msg-popup :msg="newMsgObject"></new-msg-popup>
     </van-popup>
-    <div class="userStatus" v-show="!userDisabelStatus">
-      <div><img :src="disabelIcon" /></div>
-      <div>用户已被禁用</div>
-    </div>
   </div>
 </template>
 <script>
@@ -23,8 +19,6 @@ import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 export default {
   data() {
     return {
-      disabelIcon:require('IMG/public/disable_icon.png'),
-      userDisabelStatus: true,
       newMsgPop: false,
       newMsgObject: {}
     }
@@ -34,24 +28,14 @@ export default {
     Tabbar
   },
   created() {
-    
-  },
-  mounted() {
-    this.$nextTick(() => {
-      if(parseInt(this.userStatus) === 1) {
-        this.userDisabelStatus = false
-        return
-      }
-    })
+    // let defaultPath = localStorage.getItem('defaultPath', defaultPath)
+    // if(defaultPath) {
+    //   localStorage.removeItem('defaultPath')
+    //   // this.$router.replace({ path: defaultPath })
+    //   console.log('path:'+defaultPath)
+    // }
   },
   watch: {
-    '$store.getters.userStatus': function(v) {
-      console.log(v, 'userStatus')
-      if(parseInt(v) === 1) {
-        this.userDisabelStatus = false
-        return
-      }
-    },
     '$store.getters.newMsgStatus': function(v) {
       this.newMsgPop = v
       if (this.$route.path == '/custom/message/message') {
@@ -99,7 +83,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo', 'userStatus'])
+    ...mapGetters(['userInfo'])
   }
 }
 </script>
@@ -117,16 +101,6 @@ html {
 #app {
   width: 100%;
   height: 100%;
-  .userStatus {
-    margin-top: 50%;
-    text-align: center;
-    color: #ddd;
-    font-size: 14px;
-    img {
-      width: 100px;
-      height:100px;
-    }
-  }
   .new-msg-popup {
     height: 50px;
     width: 80%;
