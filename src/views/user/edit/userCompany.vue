@@ -75,16 +75,18 @@ export default {
             this.$router.push('/public/complete-info')
           })
         }
-        if (leavingStatus === '2' && !window.localStorage.getItem('userCompany')) {
-          // 审批不通过
-          this.$dialog.alert({
+        // 审批不通过
+        if (leavingStatus === '2') {
+          this.btnText = '申请离岗'
+          if (!window.localStorage.setItem('userCompany')) {
+            this.$dialog.alert({
             title: '审批不通过',
             confirmButtonText: '我知道了',
             message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
-          }).then(() => {
-            this.btnText = '申请离岗'
-            window.localStorage.setItem('userCompany', true)
-          })
+            }).then(() => {
+              window.localStorage.setItem('userCompany', true)
+            })
+          }
         }
       }
       this.showLoading = false

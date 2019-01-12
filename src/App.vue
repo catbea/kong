@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="view-box" ref="viewBox" v-if="userStatus">
+    <div id="view-box" ref="viewBox" v-if="userDisabelStatus">
       <div class="router-view">
         <router-view :key="$route.fullPath"></router-view>
       </div>
@@ -9,7 +9,7 @@
     <van-popup v-model="newMsgPop" :overlay="false" position="top" class="new-msg-popup">
       <new-msg-popup :msg="newMsgObject"></new-msg-popup>
     </van-popup>
-    <div class="userStatus" v-show="!userStatus">
+    <div class="userStatus" v-show="!userDisabelStatus">
       <div><img :src="disabelIcon" /></div>
       <div>用户已被禁用</div>
     </div>
@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       disabelIcon:require('IMG/public/disable_icon.png'),
-      userStatus: true,
+      userDisabelStatus: true,
       newMsgPop: false,
       newMsgObject: {}
     }
@@ -38,14 +38,19 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      console.log('userStatus disabel========='+this.userInfo.userStatus)
-      if(parseInt(this.userInfo.userStatus) === 1) {
-        this.userStatus = false
+      if(parseInt(this.userStatus) === 1) {
+        this.userDisabelStatus = false
         return
       }
     })
   },
   watch: {
+    '$store.getters.userStatus': function(v) {
+      if(parseInt(v) === 1) {
+        this.userDisabelStatus = false
+        return
+      }
+    },
     '$store.getters.newMsgStatus': function(v) {
       this.newMsgPop = v
       if (this.$route.path == '/custom/message/message') {
@@ -93,7 +98,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo', 'userStatus'])
   }
 }
 </script>

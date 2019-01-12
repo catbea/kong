@@ -2,7 +2,7 @@
   <div class="already-open-page">
     <ul>
       <li>已开通
-        <span>{{agentIdInfo}}</span> 个楼盘
+        <span>{{agentIdInfo}}</span> 个有效楼盘
         </li>
       <li class="li" @click="myMarket">
           <p>我的楼盘</p>
