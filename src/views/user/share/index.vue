@@ -1133,6 +1133,9 @@
           font-size: 16px;
         }
         input{
+          height: 30px;
+          line-height: 30px;
+          padding: 13px 10px 13px 5px;
           flex: 1;
           border: none;
           font-size: 14px;
