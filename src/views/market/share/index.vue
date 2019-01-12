@@ -288,7 +288,7 @@ export default {
     > .poster-describe {
       position: absolute;
       color: #e5b37b;
-      font-size: 29px;
+      font-size: 24px;
       z-index: 2;
       left: 20px;
       top: 280px;
