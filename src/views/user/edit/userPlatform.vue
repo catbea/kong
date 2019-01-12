@@ -77,7 +77,8 @@ export default {
         // 审批不通过
         if (switchStatus === '2') {
           this.btnText = '申请修改'
-          if (!window.localStorage.getItem('userPlatform')) {
+          let storage = JSON.parse(window.localStorage.getItem('userPlatform'))
+          if (!storage) {
             this.$dialog.alert({
               title: '审批不通过',
               message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
