@@ -92,7 +92,8 @@ export default {
       this.userInfo.majorRegion = this.majorRegion
       this.userInfo.majorCity = this.majorCity
       if (result) {
-        this.$store.commit(types.USER_INFO, this.userInfo)
+        // this.$store.getUserInfo(types.USER_INFO, this.userInfo)
+         this.$store.dispatch('getUserInfo', this.userInfo)
       }
     }
   },

@@ -262,16 +262,13 @@ export default {
     z-index: 9;
   }
   .agreement-box {
-    height: 17px;
-    line-height: 17px;
     text-align: center;
-    margin: 18px 0 0 0;
+    margin: 5px 0 62px 0;
 
     span:nth-child(1) {
       font-size: 10px;
       font-weight: 400;
       color: rgba(153, 153, 153, 1);
-      line-height: 14px;
     }
     .agreement {
       font-size: 12px;
