@@ -46,6 +46,7 @@ export default {
   },
   watch: {
     '$store.getters.userStatus': function(v) {
+      console.log(v, 'userStatus')
       if(parseInt(v) === 1) {
         this.userDisabelStatus = false
         return
