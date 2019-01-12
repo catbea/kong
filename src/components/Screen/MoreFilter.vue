@@ -18,9 +18,9 @@
 import cloneDeep from 'lodash/cloneDeep'
 export default {
   created() {
-    if(this.$route.name==='mymarket'){
-      this.flag=true
-    }
+    // if(this.$route.name==='mymarket'){
+    //   this.flag=true
+    // }
   },
   props: {
     show: { type: Boolean, default: false },
