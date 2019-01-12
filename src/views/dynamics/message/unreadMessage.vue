@@ -10,7 +10,14 @@
       <div class="unreadMessage-sys" v-show="sysMessage !='' " @click="gosysMessage">
         <div class="unreadMessage-sys-container">
           <span class="unreadMessage-sys-left">
-            <div class="unreadMessage-sys-num" v-if>
+            <!-- <div class="unreadMessage-sys-num" v-if>
+            </div> -->
+             <div
+              :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
+              v-if="sysMessage.unreadMsgCount != 0 "
+            >
+              <span v-if="sysMessage.unreadMsgCount > 99">99+</span>
+              <span v-else>{{sysMessage.unreadMsgCount}}</span>
             </div>
             <img :src="backIcon" class="sys-left-img">
           </span>
@@ -36,7 +43,14 @@
       >
         <div class="unreadMessage-sys-container">
           <span class="unreadMessage-sys-left">
-            <div class="unreadMessage-sys-num">
+            <!-- <div class="unreadMessage-sys-num">
+            </div> -->
+            <div
+              :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
+              v-show="item.unreadMsgCount !=0"
+            >
+              <span v-if="item.unreadMsgCount > 99 ">99+</span>
+              <span v-else>{{item.unreadMsgCount}}</span>
             </div>
             <img :src="item.c2cImage" class="sys-left-img">
           </span>
@@ -173,6 +187,37 @@ export default {
         display: flex;
         margin-bottom: 10px;
         > .unreadMessage-sys-left {
+            .messageInfo-sys-num {
+            font-size: 12px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 16px;
+            background: rgba(234, 77, 46, 1);
+            transform: translate(50%, -50%);
+            border-radius: 100%;
+            // width:18px;
+            // height:18px;
+            border: 0;
+            position: absolute;
+           // margin-left: 35px;
+            margin-left: 18px;
+            margin-top: 8px;
+            padding: 1px 3px;
+          }
+          .messageInfo-sys-nums {
+            position: absolute;
+            margin-left: 23px;
+            margin-top: 10px;
+            transform: translate(50%, -50%);
+            width: 18px;
+            height: 18px;
+            background-color: #ea4d2e;
+            border-radius: 100%;
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+            line-height: 16px;
+          }
           > .sys-left-img {
             width: 50px;
             height: 50px;
