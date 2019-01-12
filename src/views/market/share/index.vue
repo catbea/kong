@@ -321,8 +321,8 @@ export default {
     > .avatar-view {
       position: absolute;
       z-index: 2;
-      width: 50px;
-      height: 50px;
+      width: 36px;
+      height: 36px;
       left: 20px;
       bottom: 43px;
       border-radius: 50%;
@@ -335,8 +335,8 @@ export default {
       z-index: 2;
       color: #a4b8d5;
       font-size: 12px;
-      left: 80px;
-      bottom: 70px;
+      left: 65px;
+      bottom: 63px;
     }
 
     > .mobile-view {
@@ -344,8 +344,8 @@ export default {
       z-index: 2;
       color: #a4b8d5;
       font-size: 11px;
-      left: 80px;
-      bottom: 50px;
+      left: 65px;
+      bottom: 45px;
     }
 
     > .canpamy-view {
