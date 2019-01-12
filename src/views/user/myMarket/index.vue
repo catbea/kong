@@ -1,15 +1,19 @@
 <template>
   <div class="user-mymarket-page">
-      <master-market :swipeList="swipeList"  @noRecommend="noRecommendHandle"></master-market>
-      <title-bar :conf="titleInfo" @return="returnHandle"></title-bar>
+      
     <div class="user-market-box">
       <!-- 展示的楼盘 -->
-      <div class="market-left" v-show="myMarketShow">
-        <div v-show="showMarketListCount>=showFilterLimit" >
-          <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
-          <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'17rem'"></screen>
+      <div class="market-left">
+        <div class="fixed">
+          <master-market :swipeList="swipeList"  @noRecommend="noRecommendHandle" @exist="existHandle"></master-market>
+          <title-bar :conf="titleInfo" @return="returnHandle" ></title-bar>
+          <div v-show="showMarketListCount>=showFilterLimit" v-if="myMarketShow" style="margin-top:20px;">
+            <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
+            <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'17rem'"></screen>
+          </div>
         </div>
-        <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo" v-if="!yes">
+        <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo" v-if="!yes" 
+        class="default" :class="{showStyle:showMarketListCount>=showFilterLimit,onlySwiperStyle:swipeList.length>0,swiperStyle:swipeList.length>0&&showMarketListCount>=showFilterLimit}" v-show="myMarketShow">
           <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" 
           @pushMaster="pushMasterHandle" @spliceMaster="spliceMasterHandle" 
           @pushCommon="pushCommonHandle" @spliceCommon="spliceCommonHandle" 
@@ -29,7 +33,8 @@
           <search :conf="searchInfo" v-model="notShowProjectName" @areaClick="areaClickHandler"></search>
           <screen v-model="notShowProjectFilters"></screen>
         </div>
-        <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowGetMyMarketInfo" v-show="!no">
+        <van-list v-model="notShowLoading" :finished="notShowFinished" finished-text="没有更多了" @load="notShowGetMyMarketInfo" v-show="!no" 
+        class="default" :class="{showStyle:notShowMarketListCount>=showFilterLimit,onlySwiperStyle:swipeList.length>0,swiperStyle:swipeList.length>0&&notShowMarketListCount>=showFilterLimit}">
           <close-market v-for="(item,index) in notShowMarketList" :key="index" :dataArr="item" :marketIndex="index" @openCut="openCut"></close-market>
         </van-list>
         <div v-show="no" class="notMarket">
@@ -184,6 +189,9 @@ export default {
     }
   },
   methods: {
+    existHandle(n){//存在轮播图时的操作
+
+    },
     stickNumHandle() {
       //判断有没有超过3个置顶
       for (let i = 0; i < this.showMarketList.length; i++) {
@@ -514,6 +522,12 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
+  .fixed {//筛选及搜索样式
+        position: fixed;
+        width: 100%;
+        background: #ffffff;
+        z-index: 3;
+      }
   .search-container {
     margin-left: 18px;
     width: 343px;
@@ -546,7 +560,7 @@ export default {
   .user-market-box {
     position: relative;
     display: flex;
-    margin-top: 19px;
+    // margin-top: 19px;
     .notMarket {
       margin: 56px 0 100px 144px;
       p:nth-child(1) {
@@ -573,6 +587,18 @@ export default {
 
   .user-mymarket-page-search {
     height: 44px;
+  }
+  .default{
+    margin-top:54px;
+  }
+  .showStyle{
+    margin-top:141px;
+  }
+  .onlySwiperStyle{
+    margin-top:307px;
+  }
+  .swiperStyle{
+    margin-top:389px;
   }
 }
 </style>

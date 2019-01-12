@@ -1,5 +1,5 @@
 <template>
-  <div class="area-filter" v-if="show">
+  <div class="area-filter" v-if="show" :class="{act:flag}">
     <ul>
       <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=item">{{item}}</li>
     </ul>
@@ -14,10 +14,14 @@ export default {
     value: String
   },
   data: () => ({
+    flag:false,
     list: null,
     checked: null
   }),
   created() {
+    if(this.$route.name==='mymarket'){
+      this.flag=true
+    }
     this.list = {
       '0': '不限'
     }
@@ -55,5 +59,9 @@ export default {
       line-height: 49px;
     }
   }
+  &.act{
+  height:265px;
+  }
 }
+
 </style>
