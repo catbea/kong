@@ -308,6 +308,7 @@ export default {
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 280px;
+            height: 20px;
           }
         }
       }

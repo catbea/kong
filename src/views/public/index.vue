@@ -8,14 +8,12 @@ import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 export default {
   data: () => ({
-    
   }),
   created() {
     let defaultPath = localStorage.getItem('defaultPath')
     if(defaultPath) {
       localStorage.removeItem('defaultPath')
       this.$router.replace({ path: defaultPath })
-    //   console.log('path:'+defaultPath)
     } else {
         if(!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
             this.$router.replace('/public/complete-info')
@@ -36,6 +34,11 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  margin: 16px;
+  .userStatus {
+    margin-top: 50%;
+    text-align: center;
+    color: #ddd;
+    font-size: 14px;
+  }
 }
 </style>
