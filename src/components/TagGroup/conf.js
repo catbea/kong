@@ -15,6 +15,21 @@ export default tag => {
         background: 'rgba(110,184,163,1)',
         color: '#FFFFFF'
       }
+    case '已收藏': //白字蓝底
+      return {
+        background: 'rgba(0, 122, 230, 1)',
+        color: '#FFFFFF'
+      }
+    case '已分享': // 白字蓝底
+      return {
+        background: 'rgba(0, 122, 230, 1)',
+        color: '#FFFFFF'
+      }
+    case '已编辑': //白字蓝底
+      return {
+        background: 'rgba(0, 122, 230, 1)',
+        color: '#FFFFFF'
+      }
     default:
       // 灰字灰底
       return {
