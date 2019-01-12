@@ -47,7 +47,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ3bDR4ZGQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjI2IiwiZXhwIjoxNTUwMTk5NDI2LCJpYXQiOjE1NDcxOTQ2MjZ9.4fuXhVz2Y1TUSaeUDnznTJ_yftzZjpT7X73fZ2jAzI8TFt1wZaX0k9UTMMjM-FEFWVIOVKBe_Th281xxjOL0yA',
+      ' eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJveXB5dmoiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTUwMjA5ODYxLCJpYXQiOjE1NDcyMDUwNjF9.W4vBKNA_n2sdMFCSnXAuh_kqQZVCaPtMUcluU_0DO3Jpulv-fWQGjJQivs4ysnzwYEUfaCOokcZTAZ88XCcztQ',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',

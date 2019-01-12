@@ -1,15 +1,21 @@
 <template>
-  <div class="price-filter" v-if="show">
+  <div class="price-filter" v-if="show" :class="{act:flag}">
     <van-tree-select :items="items" :main-active-index="mainActiveIndex" :active-id="checked" @navclick="onNavClick" @itemclick="onItemClick"/>
   </div>
 </template>
 <script>
 export default {
+  created() {
+    if(this.$route.name==='mymarket'){
+      this.flag=true
+    }
+  },
   props: {
     show: { type: Boolean, default: false },
     value: String
   },
   data: () => ({
+    flag:false,
     items: [
       {
         text: '总价',
@@ -137,5 +143,8 @@ export default {
       }
     }
   }
+  &.act{
+  height:265px;
+}
 }
 </style>

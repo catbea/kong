@@ -1,5 +1,6 @@
 <template>
   <div class="market-page">
+    <!-- <div style="height:192px;width:300px;"></div> -->
     <div class="fixed">
       <div class="search-box van-hairline--bottom">
         <div class="search-comp">
