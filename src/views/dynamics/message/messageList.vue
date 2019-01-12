@@ -94,7 +94,7 @@ export default {
     }
   },
   mounted() {
-    this.getMsgList()
+    // this.getMsgList()
   },
   methods: {
     updateNewMsg() {
