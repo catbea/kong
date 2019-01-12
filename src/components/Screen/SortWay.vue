@@ -36,7 +36,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  position: fixed;
+  // position: fixed;
   .active {
     color: rgba(0, 122, 230, 1) !important;
   }
