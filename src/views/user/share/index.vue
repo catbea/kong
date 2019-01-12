@@ -1162,9 +1162,10 @@
             height: 75px;
             display: inline-block;
             margin-right: 15px;
+            overflow: hidden;
             img{
-              width: 100%;
-              height: 100%;
+              min-width: 100%;
+              min-height: 100%;
             }
             .van-icon{
               background-color: #007AE6;
