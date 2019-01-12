@@ -1,6 +1,6 @@
 <template>
   <div class="article-list">
-    <Guide v-if="showGuide" @hideStep="hideStep"/>
+    <Guide v-if="showGuide" @hideGuide="hideStep"/>
   </div>
 </template>
 
@@ -12,16 +12,18 @@ export default {
   },
   data () {
     return{
-      showGuide: true
+      showGuide: false
     }
   },
   created () {
-    // this.showGuide = !!window.localStorage.getItem('guideStatus')
+    this.showGuide = JSON.parse(window.localStorage.getItem('guideStatus')) 
+  },
+  mounted () {
   },
   methods: {
     // 隐藏引导页
     hideStep () {
-      showGuide = false
+      this.showGuide = false
       window.localStorage.setItem('guideStatus', false)
     }
   }

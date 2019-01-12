@@ -43,7 +43,7 @@ export default {
     },
     // 跳过
     hideStep () {
-      this.$emit('hideStep')
+      this.$emit('hideGuide')
     } 
   }
 }
@@ -66,6 +66,7 @@ export default {
      margin:  0 72px;
      text-align: center;
      z-index: 3;
+     width: 230px;
      button{
        border: 1px solid #fff;
        height: 32px;
