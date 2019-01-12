@@ -35,11 +35,34 @@
             <div class="easy-look-text">好看</div>
           </div>
         </div>
-        <div class="easy-look-list"></div>
+        <div class="easy-look-list">
+          {{easylookList && easylookList.join('、')}}
+          <span class="easy-look-fold" v-if="isMore">展开更多</span>
+        </div>
+      </div>
+      <!-- 评论 -->
+      <div class="comment-container">
+        <title-bar :conf="titleComments"/>
+        <div class="comment-list-wrap">
+          <div class="comment-list" v-for="(item, index) in commentList" :key="index">
+            <div class="bg_img" style="backgroundColor:red;width:40px;height:40px;"></div>
+            <div class="comment-right">
+              <div class="comment-name-wrap">
+                <span class="comment-name">{{item.name}}</span>
+                <span v-if="item.toName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                <span class="comment-reply" v-if="item.toName">{{item.toName}}</span>
+              </div>
+              <div class="comment-content">{{item.content}}</div>
+              <div></div>
+            </div>
+          </div>
+          <div class="comment-list-more" @click="moreCommentHandler">查看更多评论</div>
+        </div>
+        <div class="comment-input-wrap">
+          <textarea class="comment-textarea" placeholder="我来说两句" maxlength='140'></textarea>
+        </div>
       </div>
     </div>
-    <!-- 评论 -->
-    <div class="comment-container"></div>
     <!-- 推荐房源 -->
     <!-- <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
       <title-bar :conf="titleProperties"/>
@@ -151,13 +174,47 @@ export default {
       linkText: '查看全部',
       link: '/discover'
     },
+    titleComments: {
+      title: '精彩评论',
+      linkText: '',
+      link: ''
+    },
     openPopup: true,
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
     num: 320,
-    easylookList: ['张佳玮','静静','路遥|AW大师','小风风','坑坑','辣椒','A链家-小李','小锅锅mike','红色诺亚','贾班王','中原-小陈']
+    isMore: true,
+    easylookList: [
+      '张佳玮',
+      '静静',
+      '路遥|AW大师',
+      '小风风',
+      '坑坑',
+      '辣椒',
+      'A链家-小李',
+      '小锅锅mike',
+      '红色诺亚',
+      '贾班王',
+      '中原-小陈',
+      '张佳玮',
+      '静静',
+      '路遥|AW大师',
+      '小风风',
+      '坑坑',
+      '辣椒',
+      'A链家-小李',
+      '小锅锅mike',
+      '红色诺亚',
+      '贾班王',
+      '中原-小陈'
+    ],
+    commentList: [{logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: ''},
+    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭', toName: '静静'},
+    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'},
+    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'},
+    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'}]
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -216,7 +273,9 @@ export default {
     },
 
     // 好看点击事件
-    easyLookClickHandler() {
+    easyLookClickHandler() {},
+    // 查看更多评论
+    moreCommentHandler() {
 
     },
     // 举报反馈
@@ -350,7 +409,7 @@ export default {
   background-color: #f7f9fa;
   > .discover-detail-container {
     background-color: #fff;
-    padding-bottom: 50px;
+    padding-bottom: 65px;
     > .discover-title {
       padding: 10px 15px;
       font-size: 22px;
@@ -413,21 +472,89 @@ export default {
     }
     // 好看
     > .easy-look-container {
-    margin: 10px 16px;
-    > .easy-look-top {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      > .easy-look-left {
+      padding: 10px 16px 20px 16px;
+      border-bottom: 10px solid #f7f9fa;
+      > .easy-look-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        > .easy-look-left {
+        }
+        > .easy-look-right {
+        }
+        .easy-look-text {
+          color: #445166;
+          font-size: 14px;
+        }
       }
-      > .easy-look-right {
-      }
-      .easy-look-text {
+      > .easy-look-list {
+        padding-left: 24px;
+        padding-top: 8px;
+        line-height: 1.5;
         color: #445166;
         font-size: 14px;
+        width: 260px;
+        word-break: break-all;
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
     }
-  }
+    // 评论
+    > .comment-container {
+      
+      > .comment-list-wrap {
+        margin-top: 20px;
+        padding: 0 16px;
+        > .comment-list {
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 20px;
+          > .comment-right {
+            margin-left: 8px;
+            display: flex;
+            flex-direction: column;
+            > .comment-name-wrap {
+              display: flex;
+              > .comment-name {
+              color: #333333;
+              font-size: 14px;
+              font-weight: bold;
+            }
+            > .comment-reply {
+              color: #333333;
+              font-size: 14px;
+            }
+            }
+            > .comment-content {
+              color: #333333;
+              font-size: 14px;
+              margin-top: 8px;
+            }
+          }
+        }
+        > .comment-list-more {
+          color: #969EA8;
+          font-size: 14px;
+          margin: 20px 0;
+          text-align: center;
+        }
+      }
+      > .comment-input-wrap {
+        padding: 0 16px;
+        > .comment-textarea {
+          background-color: #F2F6F7;
+          border-radius: 6px;
+          height: 30px;
+          line-height: 30px;
+          font-size: 14px;
+          border: 0;
+          width: 100%;
+          padding: 0 5px;
+        }
+      }
+    }
   }
   > .recommend-houses {
     background-color: #fff;
@@ -469,9 +596,7 @@ export default {
       margin: 15px 0;
     }
   }
-  // 评论
-  > .comment-container {
-  }
+
   > .tools-bar {
     width: 100%;
     background-color: #fff;
