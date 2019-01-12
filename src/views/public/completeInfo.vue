@@ -223,6 +223,18 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo'])
+  },
+  mounted() {
+    var height = $(window).height()
+    window.addEventListener('resize', function() {
+      if ($(window).height() < height) {
+        // $('.bottom-bar').hide()
+        document.querySelector('.bottom-bar').hide()
+      } else {
+        // $('.bottom-bar').show()
+        document.querySelector('.bottom-bar').show()
+      }
+    })
   }
 }
 </script>
@@ -230,7 +242,6 @@ export default {
 .info-container {
   display: flex;
   flex-direction: column;
-  position: relative !important;
   > .top-container {
     margin: 25px 16px 0;
     > .top-text {
