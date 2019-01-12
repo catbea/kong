@@ -34,6 +34,7 @@ export default {
     Tabbar
   },
   created() {
+    console.log('userStatus disabel=========')
     if(parseInt(this.userInfo.userStatus) === 1) {
       this.userStatus = false
       return
