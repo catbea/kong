@@ -61,7 +61,7 @@ export default {
     async upDateSignature(obj) {
       const result = await userService.upDateUserInfo(obj)
       if (result) {
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { signature: this.signature }))
+        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { signature: this.signature }))
         this.$router.go(-1)
       }
     },
