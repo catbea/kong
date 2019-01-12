@@ -10,6 +10,7 @@ export default {
   data: () => ({
   }),
   created() {
+    console.log(this.userInfo.userStatus, 'userInfo.status/////')
     let defaultPath = localStorage.getItem('defaultPath')
     if(defaultPath) {
       localStorage.removeItem('defaultPath')
