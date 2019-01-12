@@ -230,6 +230,7 @@ export default {
 .info-container {
   display: flex;
   flex-direction: column;
+  position: relative !important;
   > .top-container {
     margin: 25px 16px 0;
     > .top-text {
