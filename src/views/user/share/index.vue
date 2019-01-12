@@ -371,6 +371,7 @@
       },
       // 预览名片
       async viewCover () {
+        this.creatCover = false
         this.showLoading = true
         await this.htmlToImg()
         this.showView = true
@@ -1086,11 +1087,11 @@
           color: #fff;
           border: none;
           margin: 0 10px;
-
+          border: #007AE6 1px solid;
           &.edit {
-            background: rgba(64, 68, 87, 1);
+            background:linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
+            color: #007AE6;
           }
-
           &.save {
             background: rgba(0, 122, 230, 1);
           }
@@ -1257,9 +1258,11 @@
           width: 120px;
           border-radius:6px;
           border: none;
+          border:1px solid #007AE6;
           &.close{
             margin-right: 20px;
-            background-color: #404457;
+            background:linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
+            color: #007AE6;
           }
           &.save{
             background-color: #007AE6;
