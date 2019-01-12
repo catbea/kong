@@ -34,11 +34,16 @@ export default {
     Tabbar
   },
   created() {
-    console.log('userStatus disabel========='+this.userInfo.userStatus)
-    if(parseInt(this.userInfo.userStatus) === 1) {
-      this.userStatus = false
-      return
-    }
+    
+  },
+  mounted() {
+    this.$nextTick(() => {
+      console.log('userStatus disabel========='+this.userInfo.userStatus)
+      if(parseInt(this.userInfo.userStatus) === 1) {
+        this.userStatus = false
+        return
+      }
+    })
   },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
