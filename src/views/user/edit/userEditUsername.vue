@@ -46,7 +46,7 @@ export default {
       }
       const result = await userService.upDateUserInfo(obj)
       if (result) {
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, {
+        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, {
           name: this.userName
         }))
         this.$router.go(-1)
