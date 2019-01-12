@@ -117,7 +117,7 @@ export default {
       const result = await userService.upHeaderImg(obj)
       if (result) {
       } else {
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { avatarUrl: this.avatar }))
+        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { avatarUrl: this.avatar }))
         this.$router.go(-1)
       }
     },
