@@ -80,7 +80,7 @@ export default {
       nullcontent: '暂无信息',
       haveData: true,
       current:1,
-      size:20,
+      size: 20,
       loading: false,
       finished: false,
       UnreadMsgTotal:0
@@ -177,7 +177,7 @@ export default {
     async getMsgList() {
       const res = await dynamicsService.getAgentMsgAndTotal(1,this.current,this.size)
       this.messageList = this.messageList.concat(res.msgPage.records)
-      this.sysMessage = res.systemMessage
+      if(this.current == 1) this.sysMessage = res.systemMessage
       if (res.msgPage.records.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
