@@ -95,6 +95,7 @@ export default async (to, from, next) => {
         await store.dispatch('getUserInfo', userInfo)
         //更新用户禁用状态
         store.commit(types['USER_STATUS'], userInfo.userStatus)
+        console.log(userInfo.userStatus, 'userInfo.userStatus')
         
 
         if (!userInfo.payOpenId) {
