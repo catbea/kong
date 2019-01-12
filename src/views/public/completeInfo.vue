@@ -226,7 +226,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .info-container {
   display: flex;
   flex-direction: column;
