@@ -34,9 +34,9 @@ import userService from 'SERVICE/userService'
 import timeUtils from '@/utils/timeUtils'
 export default {
   components: {
-    Checkbox,
-    CheckboxGroup,
-    nullArticles
+    // Checkbox,
+    // CheckboxGroup,
+    // nullArticles
   },
   data() {
     return {
