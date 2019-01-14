@@ -1334,11 +1334,13 @@
           margin-right: 30px;
           font-size: 10px;
           color: #666;
+          text-align: center;
           &.reset{
             margin-left: 20px;
           }
           img{
             padding-top: 20px;
+            width: 24px;
           }
         }
         button{
