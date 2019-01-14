@@ -177,7 +177,7 @@ export default {
       status: null, // 0-未收藏 1-已收藏
       photoButton: true, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-      siteDetailImg: require('IMG/marketDetail/arrow.png'),
+      siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       id: -1,
       info: null,
@@ -497,8 +497,8 @@ export default {
           right: 5px;
         }
         span:nth-child(1) {
-          width: 16px;
-          height: 16px;
+          width: 17px;
+          height: 17px;
           margin: 0 8px;
         }
         .commission-text {
