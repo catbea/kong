@@ -73,7 +73,7 @@
           <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
         </div>
         <div class="comment-input-wrap">
-          <textarea class="comment-textarea" placeholder="我来说两句" maxlength="140" rows="5" v-model="commentContent"></textarea>
+          <textarea class="comment-textarea" placeholder="我来说两句" maxlength="140" rows="5" @focus="focusHandler"></textarea>
         </div>
       </div>
     </div>
@@ -126,12 +126,14 @@
       @cancel="onCancel"
     ></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
+    <comment-alert :show="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
   </div>
 </template>
 <script>
 import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
+import CommentAlert from 'COMP//Discover/CommentAlert'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
@@ -143,7 +145,8 @@ export default {
     swiper,
     swiperSlide,
     DiscoverItem,
-    OpenArticle
+    OpenArticle,
+    CommentAlert
   },
   data: () => ({
     swiperOption: {
@@ -203,7 +206,9 @@ export default {
     selectCommentId: '', // 选中的评论ID
     commentContent: '', // 评论内容
     isShowDeleteComment: false, // 是否显示删除评论上拉菜单
-    actions: [{ name: '删除评论', className: 'comment-delete' }]
+    actions: [{ name: '删除评论', className: 'comment-delete' }],
+    showCommentAlert: false, // 是否显示评论输入框
+    commentInfo: {name: '王毅', content: '年前不景气，看看年后怎么样呗年前不景气，看看年后怎么样呗年前不景气，看看年后怎么样呗年前不景气，看看年后怎么样呗'}
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -252,7 +257,7 @@ export default {
     },
     // 评论列表
     async getCommentList() {
-      const res = await discoverService.commentList(this.commentCur, this.commentSize, this.id)
+      const res = await discoverService.commentList(this.commentCur, this.commentCur==1?5:10, this.id)
       if (res.pages <= this.commentCur) {
         this.isMoreComment = false
       } else {
@@ -282,7 +287,7 @@ export default {
         senderSource: 0, // 0-企业微信；1-小程序
         receiverId: receiver ? receiver.receiverId : '',
         receiverSource: receiver ? receiver.receiverSource: '',
-        
+        type: receiver.type
       }
       const res = await discoverService.insertComment(param)
     },
@@ -298,14 +303,81 @@ export default {
         this.qrcodeInfo = result
       }
     },
-    clickoOverlayHandler() {
-      window.localStorage.removeItem('isFirst')
-      this.popupShowControl(false)
+    // 好看点击事件
+    easyLookClickHandler() {},
+   focusHandler() {
+     this.showCommentAlert = true
+     this.commentInfo = {
+       receiverId: '',
+       receiverName: '', 
+       receiverSource: '', 
+       senderId: this.agentId,
+       senderSource: 0,
+       title: this.info.title, 
+       placeholder: '分享你的想法', 
+       type: 0
+      }
+   },
+   inputHandler(commentContent) {
+     console.log(commentContent)
+     this.commentContent = commentContent
+   },
+   // 取消评论
+   cancelHandler () {
+     this.showCommentAlert = false
+   },
+   // 发布评论
+   publishHandler() {
+     this.showCommentAlert = false
+     this.insertComment(this.commentInfo)
+   },
+    // 查看更多评论
+    moreCommentHandler() {
+      this.getCommentList()
     },
-    popupShowControl(status) {
-      this.openPopup = status
+    // 评论发送者
+    commentSenderClickHandler(item) {
+      this.selectCommentId = item.id
+      if ((this.agentId = item.senderId)) {
+        this.isShowDeleteComment = true
+        this.showCommentAlert = false
+      } else {
+        this.isShowDeleteComment = false
+        this.showCommentAlert = true
+        this.commentInfo = {
+          receiverId: item.senderId,
+          receiverName: item.senderName,
+          receiverSource: item.receiverSource, 
+          senderId: this.agentId,
+          senderSource: 0,
+          title: this.info.title, 
+          placeholder: '回复' + item.senderName + '：', 
+          type: 1
+        }
+      }
     },
-    // 删除对象
+    // 评论被回复者
+    commentReceiverClickHandler(item) {
+      this.selectCommentId = item.id
+      if ((this.agentId = item.receiverId)) {
+        this.isShowDeleteComment = true
+        this.showCommentAlert = false
+      } else {
+        this.isShowDeleteComment = false
+        this.showCommentAlert = true
+        this.commentInfo = {
+          receiverId: item.receiverId, 
+          receiverName: item.receiverName, 
+          receiverSource: item.receiverSource,
+          senderId: this.agentId,
+          senderSource: 0, 
+          title: this.info.title, 
+          placeholder: '回复' + item.receiverName + '：', 
+          type: 1
+        }
+      }
+    },
+    // 删除对象（删除评论）
     removeObject(arr, id) {
       for(var i = 0, len = arr.length; i < len; i++) {
         if (arr[i].id == id) {
@@ -320,31 +392,6 @@ export default {
             return arr
           }
         }
-      }
-    },
-
-    // 好看点击事件
-    easyLookClickHandler() {},
-    // 查看更多评论
-    moreCommentHandler() {
-      this.getCommentList()
-    },
-    // 评论发送者
-    commentSenderClickHandler(item) {
-      this.selectCommentId = item.id
-      if ((this.agentId = item.senderId)) {
-        this.isShowDeleteComment = true
-      } else {
-        this.isShowDeleteComment = false
-      }
-    },
-    // 评论被回复者
-    commentReceiverClickHandler(item) {
-      this.selectCommentId = item.id
-      if ((this.agentId = item.receiverId)) {
-        this.isShowDeleteComment = true
-      } else {
-        this.isShowDeleteComment = false
       }
     },
     onSelect(item) {
