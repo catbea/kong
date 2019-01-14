@@ -1,7 +1,8 @@
 <template>
   <div class="title-bar" v-if="isShow">
     <h5 class="title-text">{{conf.title}}</h5>
-    <router-link :to="linkComputed" >
+    <router-link to="">
+      <!-- :to="linkComputed"  -->
       <p class="link-text" @click="byClick">{{`${conf.linkText} ${conf.link?'':''}`}} 
          <img :src="arrowIcon" class="left-img">
       </p>
