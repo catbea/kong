@@ -9,6 +9,17 @@ class ArticleService {
       body: data
     })
   }
+
+  /**
+   * 文章类型查询
+   */
+  getArticleType (data) {
+    return xhr({
+      url: '/cpInformation/informationCarousel',
+      body: data
+    })
+  }
+  
 }
 
 export default new ArticleService()

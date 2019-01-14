@@ -2,10 +2,9 @@
   <div class="article-box">
     <Guide v-if="showGuide" @hideGuide="hideStep"/>
     <div class="tab-bar scale-1px-bottom">
-      <span class="recommend" :class="{'active': tabIndex === 0}">推荐</span>
-      <span class="tab" :class="{'active': tabIndex === 1}">{{city}}</span>
-      <span class="tab" :class="{'active': tabIndex === 2}">行情</span>
-      <span class="tab" :class="{'active': tabIndex === 3}">大佬说</span>
+      <div class="classify">
+        <span :class="{'recommend': index===0, 'active': item.type===classify && item.typeName === classifyName}" v-for="(item, index) in articleType" :key="index">{{item.typeName}}</span>
+      </div>
       <span class="icon" @click="showSubFn">
         <img v-show="!showSub" src="../../assets/img/article/tabicon.png" alt="">
         <img v-show="showSub" src="../../assets/img/article/tabicon2.png" alt="">
@@ -73,8 +72,26 @@
         </van-list>
       </van-pull-refresh>
     </div>
-    <div class="artcle-tips">
+    <div class="artcle-tips" v-show="showNewArticle">
       {{'10'}}条新内容<van-icon name="arrow-down" />
+    </div>
+    <div class="write">
+      <img src="../../assets/img/article/write.png" alt="">
+    </div>
+    <div class="replay" v-show="showReplay">
+      <div class="replay-cnt">
+        <div class="top-action">
+          <span class="cancle">取消</span>
+          <span  class="publish"><button>发布</button></span>
+        </div>
+        <div class="replay-title">
+          {{'这是文章的标题市到访客市到访客开发商的房价开始打'}}
+        </div>
+        <div class="replay-box">
+          <span class="name">回复{{'王毅'}}</span>
+          <textarea class="textarea" name="" id="" maxlength="140">这是文章的标题市到访客市到访客开发商的房价开始打</textarea>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -94,22 +111,41 @@ export default {
       articleData: {}, // 文章列表
       tabIndex: 0,  // tab切换
       showSub: false, // 显示排序菜单
-      city: '', // 用户所在城市
+      city: '', // 用户主营城市
       subIndex: '', // 排序索引
       loading: false,   //是否处于加载状态
       finished: false,  //是否已加载完所有数据
       isLoading: false,   //是否处于下拉刷新状态
+      showReplay: false, //显示回复框
+      showNewArticle: false, // 显示新消息
+      articleType: [{type: '', typeName: '推荐'}],
+      listSize: 10,
+      listCurrent: 1,
+      listPages: 1,
+      likeSize: 15,
+      likeCurrent: 1,
+      likePages: 1,
+      disSize: 10,
+      disCurrent: 1,
+      disPages: 1,
+      classify: '',
+      sortType: 1,
+      classifyName: '推进'
     }
   },
   created () {
     this.showGuide = JSON.parse(window.localStorage.getItem('guideStatus'))
-    this.getArticleList()
     if (!this.userArea.city) {
       this.getLocation()
       this.city = this.userArea.city || ''
     } else {
       this.city = this.userArea.city
     }
+    if (this.userArea.city) {
+      this.articleType.push({type: '', typeName: this.city})
+    }
+    this.getArticleType()
+    this.getArticleList()
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
@@ -122,9 +158,23 @@ export default {
       this.showGuide = false
       window.localStorage.setItem('guideStatus', false)
     },
+    // 获取文章分类
+    async getArticleType () {
+      let result = await ArticleService.getArticleType({city: this.city})
+      if (result) {
+        this.articleType.push(...result.infoSettingList)
+      }
+    },
     // 获取文章列表
     async getArticleList () {
-      let result = await ArticleService.getArticleList({agentId: this.userInfo.agentId})
+      let result = await ArticleService.getArticleList({
+        agentId: this.userInfo.agentId,
+        current: this.listCurrent,
+        size: this.listSize,
+        city: this.city,
+        classify: this.classify,
+        sortType: this.sortType
+      })
       if (result) {
         this.articleData = result
       }
@@ -166,6 +216,11 @@ export default {
     padding: 12px 16px;
     height: 54px;
     position: relative;
+    .classify{
+      width: 85%;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
     span{
       display: inline-block;
       margin-right: 32px;
@@ -281,6 +336,85 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     top: 4px;
+  }
+  .write{
+    width: 56px;
+    height: 56px;
+    position: fixed;
+    right: 12px;
+    bottom: 65px;
+  }
+  .replay{
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    z-index: 3;
+    .replay-cnt{
+      margin-top: 50px;
+      width: 100%;
+      padding: 20px 16px 30px 13px;
+      box-sizing: border-box;
+      position: relative;
+      background-color: #fff;
+      .top-action{
+        display: flex;
+        .cancle{
+          font-size: 16px;
+          color: #333;
+          width: 80px;
+          height: 32px;
+          line-height: 32px;
+        }
+        .publish{
+          flex: 1;
+          text-align: right;
+          button{
+            width: 56px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            background-color: #007AE6;
+            color: #fff;
+            font-size: 14px;
+          }
+        }
+      }
+      .replay-title{
+        margin: 16px 0;
+        font-size: 16px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        color: #666;
+      }
+      .replay-box{
+        position: relative;
+        font-size: 16px;
+        height: 130px;
+        overflow-y: auto;
+        background-color: #F7F8F8;
+        .name{
+          color: #969EA8;
+          position: absolute;
+          left: 10px;
+          top: 5px;
+          line-height: 1.5;
+        }
+        .textarea{
+          width: 100%;
+          height: 100%;
+          box-sizing: boder-box;
+          border: none;
+          background-color: #F7F8F8;
+          line-height: 1.5;
+          text-indent: 75px;
+          padding: 5px 10px;
+        }
+      }
+    }
   }
 }
 </style>
