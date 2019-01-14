@@ -37,6 +37,7 @@ export default {
       return
     }
     this.init()
+    
   },
   data: () => ({
     currPriceAct: 0,
@@ -66,7 +67,7 @@ export default {
     },
     async getUserInfo() {
       const res = await userService.getUserInfo()
-      this.userPrice = res.price
+      this.userPrice = res.price 
       // this.$store.dispatch('userInfo', Object.assign(this.userInfo, { price: res.price }))
     },
     skipAgreement() {
@@ -97,6 +98,7 @@ export default {
           coupon = currCunpon.discountsLimit * 100
         }
         this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { coupon: couponStr, isShowCoupon: true })
+        
       } else {
         if (this.marketOpenCache.projectCoupons) {
           let couponStr = this.marketOpenCache.projectCoupons.length + '张可用'
