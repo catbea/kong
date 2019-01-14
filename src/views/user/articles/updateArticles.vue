@@ -64,7 +64,7 @@ export default {
     //获取文章列表
     async getHistoryList(current) {
       this.isLoading == true
-      const res = await userService.getBrowseHistoryList(current)
+      const res = await userService.gethistoryList(current)
 
       let dataList = res.records
       this.total = res.total
