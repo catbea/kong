@@ -65,5 +65,69 @@ class DiscoverService {
       body: param
     })
   }
+
+  /**
+   * 文章详情评论列表
+   * @param {*} current 
+   * @param {*} size 
+   * @param {*} infoId 
+   */
+  commentList(current, size=5, infoId) {
+    return xhr({
+      url: '/comment/previewPage',
+      body: {
+        current,
+        size,
+        infoId
+      }
+    })
+  }
+  
+  /**
+   * h5文章详情评论列表
+   * @param {*} current 
+   * @param {*} size 
+   * @param {*} infoId 
+   * @param {*} enterpriseId 
+   */
+  commentListForH5(current, size=5, infoId, enterpriseId) {
+    return xhr({
+      url: '/comment/previewPageForWhite',
+      body: {
+        current,
+        size,
+        infoId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 修改评论的状态
+   * @param {*} id 
+   * @param {*} status 0-审核中，1-审核通过，2-审核不通过，3-删除
+   */
+  updateCommentStatus(id, status) {
+    return xhr({
+      method: 'POST',
+      url: '/comment/updateCommentStatus',
+      body: {
+        id,
+        status
+      }
+    })
+  }
+
+  /**
+   * 文章新增评论
+   * @param {*} param 
+   */
+  insertComment(param) {
+    return xhr({
+      method: 'POST',
+      url: '/comment/insertComment',
+      body: param
+    })
+  }
 }
 export default new DiscoverService()
