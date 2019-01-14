@@ -26,7 +26,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <div>22222222</div>
+        <write-article></write-article>
       </van-list>
     </div>
     <div class="list-result" v-if="typeCode=='3'">
@@ -136,7 +136,7 @@ export default {
 
   > .list-result {
     width: 100%;
-    border-top: 1px #E5E5F0 solid;
+    border-top: 1px #e5e5f0 solid;
   }
 }
 </style>
