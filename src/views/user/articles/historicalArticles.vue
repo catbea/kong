@@ -15,7 +15,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article></write-article>
+        <write-article :selectType='typeCode'></write-article>
       </van-list>
     </div>
     <div class="list-result" v-if="typeCode=='2'">
@@ -26,7 +26,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article></write-article>
+        <write-article :selectType='typeCode'></write-article>
       </van-list>
     </div>
     <div class="list-result" v-if="typeCode=='3'">
@@ -37,7 +37,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <div>3333333</div>
+       <write-article :selectType='typeCode'></write-article>
       </van-list>
     </div>
   </div>
