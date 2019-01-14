@@ -198,7 +198,7 @@
               <van-icon name="success" v-show="editData.avatarUrl === uploadImg"/>
             </div>
             <div class="uploader-box">
-              <van-uploader :after-read="onRead" accept="image/gif, image/jpeg, image/png">
+              <van-uploader :after-read="onRead" accept="image/*">
                 <van-icon name="plus" />
               </van-uploader>
             </div>
@@ -433,6 +433,7 @@
       },
       // 图片上传
       onRead (file) {
+        this.showLoading = true
         let imgData = file.content
         let image = new Image()
         image.src = imgData
@@ -463,7 +464,6 @@
       },
       //图片的上传
       postImg (imageData) {
-        this.showLoading = true
         var file = dataURLtoBlob(imageData)
         this.cos.uploadFile(this.uploadSuccess, this.uploadError, null, this.bucket, randomString(16), file, 0, null)
       },
@@ -473,13 +473,13 @@
           this.uploadImg = res_data.access_url
           this.editData.avatarUrl = res_data.access_url
         } else {
-          console.log('上传失败')
+          this.$toast('上传失败')
         }
         this.showLoading = false
       },
       uploadError (err) {
         this.showLoading = false
-        console.log(err)
+        this.$toast(err)
       },
       //图片压缩
       compress: function(img, Orientation) {
