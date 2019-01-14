@@ -6,7 +6,7 @@
         :key="index"
         class="van-hairline--bottom"
         :class="item.checked===item && 'active'"
-        @click="selectType(item.name)"
+        @click="selectType(item.name,item.value)"
       >{{item.name}}</li>
     </ul>
   </div>
@@ -23,8 +23,12 @@ export default {
     show: { type: Boolean, default: false }
   },
   methods: {
-    selectType(val) {
-      this.$emit('selectSuccess',val)
+    selectType(val,code) {  
+      let obj={
+        val:val,
+        code:code
+      }
+      this.$emit('selectSuccess',obj)
     }
   }
 }

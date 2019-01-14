@@ -43,13 +43,12 @@ export default {
   },
   data: () => ({
     arrowIcon: require('IMG/market/list__arrow_@2x.png'),
-    inputContent: '',
     currentValue: '',
     confData: [
-      { index: 0, name: '全部', value: '', checked: false },
-      { index: 1, name: '分享', value: '', checked: false },
-      { index: 2, name: '编辑', value: '', checked: false },
-      { index: 3, name: '收藏', value: '', checked: false }
+      { index: 0, name: '全部', value: '0', checked: false },
+      { index: 1, name: '分享', value: '1', checked: false },
+      { index: 2, name: '编辑', value: '2', checked: false },
+      { index: 3, name: '收藏', value: '3', checked: false }
     ],
     currentIndex: -1
   }),
@@ -67,6 +66,9 @@ export default {
       this.conf.siteText = val
       this.currentIndex = -1
       this.$emit('goSearch', val)
+    },
+    inputContent() {
+      this.$emit('getContent', this.currentValue)
     }
   }
 }
