@@ -2,7 +2,10 @@
   <div class="discover-edit-page">
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
-      <div class="discover-detail-content" v-html="info&&info.content"></div>
+      <!-- <div class="discover-detail-content" v-html="info&&info.content"> -->
+      <div class="discover-detail-content">
+        <edit-paragraph v-for="(paragraph,index) in renderDom" :key="index" :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
+      </div>
       <p class="discover-extra-info">
         转载于
         <span class="reprint-from">{{info&&info.publisher}}</span>
@@ -10,7 +13,7 @@
         <span class="reprint-views">浏览：{{ info&&info.scanNum | currency('')}}</span>
       </p>
     </div>
-    <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect" @cancel="onDelCancel"/>
+    <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect"/>
     <!-- 浮动栏 -->
     <div class="fixed-bar">
       <div class="left-operation">
@@ -33,11 +36,10 @@
       <div class="pull-btn" @click="viewpointPullHandler">发布</div>
       <textarea class="write-content" v-model="viewpointText"/>
     </van-popup>
-    <edit-paragraph :text="'呐喊'"/>
   </div>
 </template>
 <script>
-import EditParagraph from 'COMP/Discover/edit/editParagraph'
+import EditParagraph from 'COMP/Discover/edit/editParagraph.vue'
 import discoverService from 'SERVICE/discoverService'
 export default {
   components: {
@@ -52,7 +54,8 @@ export default {
     currentDelDom: null, // 当前要处理的dom(点击x的dom)
     delActionsheetShow: false,
     delActions: [{ type: 1, name: '删除此后内容' }, { type: 2, name: '删除选中' }],
-    originalSection: [], //
+    originalSection: [], // 原始dom解析
+    renderDom: [],
     editStatus: 1, // 1-编辑态 2-预览态
     viewpointEditShow: false,
     viewpointText: ''
@@ -81,51 +84,75 @@ export default {
         enterpriseName: this.info.enterpriseName,
         institutionName: this.info.institutionName
       }
-      this.$nextTick(() => {
-        const htmlCollection = document.querySelector('.discover-detail-content').children
-        for (let dom of htmlCollection) {
-          this.originalSection.push(dom)
-        }
-        this.editControl(1)
-      })
+
+      let virtualDom = document.createElement('div')
+      virtualDom.innerHTML = this.info.content
+      this.originalSection = []
+      for (let dom of virtualDom.children) {
+        this.originalSection.push(dom)
+        this.renderDom.push({
+          text: dom.innerText,
+          status: 'edit'
+        })
+      }
+      // status   edit-编辑 del-被删除
+
+      // console.log(virtualDom.children);
+
+      // virtualDom.
+      // console.log(this.info.content);
+
+      // this.$nextTick(() => {
+      //   const htmlCollection = document.querySelector('.discover-detail-content').children
+      //   for (let dom of htmlCollection) {
+      //     this.originalSection.push(dom)
+      //   }
+      //   this.editControl(1)
+      // })
     },
     // 标记文章内容,编辑状态切换 1-编辑态 2-浏览态
-    editControl(status) {
-      if (status === 1) {
-        for (let dom of this.originalSection) {
-          let closeBtn = document.createElement('i')
-          closeBtn.classList.add('icon', 'iconfont', 'icon-search_empty', 'close-btn')
-          dom.classList.add('section-edit')
-          dom.append(closeBtn)
-          closeBtn.addEventListener('click', this.delClickHandler)
-        }
-        this.crateViewpoint()
-        this.createHouses()
-      } else {
-      }
-    },
+    // editControl(status) {
+    //   if (status === 1) {
+    //     for (let dom of this.originalSection) {
+    //       let closeBtn = document.createElement('i')
+    //       closeBtn.classList.add('icon', 'iconfont', 'icon-search_empty', 'close-btn')
+    //       dom.classList.add('section-edit')
+    //       dom.append(closeBtn)
+    //       closeBtn.addEventListener('click', this.delClickHandler)
+    //     }
+    //     this.crateViewpoint()
+    //     this.createHouses()
+    //   } else {
+    //   }
+    // },
     // 段落删除处理-弹出选择删除当前或删除以下所有
-    delClickHandler(e) {
-      this.currentDelDom = e.target.parentNode
+    delParagraphHandler(e) {
+      this.currentDelDom = e.dom
       this.delActionsheetShow = true
     },
     // 删除段落处理
     onDelSelect(e) {
       if (e.type === 1) {
+        // 删除以下所有
         let lock = false
         let toDelArr = []
-        for (let dom of this.originalSection) {
+        for (let dom of this.renderDom) {
           if (this.currentDelDom === dom) lock = true
-          if (lock) dom.classList.add('status-delete') //dom.remove()
+          if (lock) dom.status = 'del'
         }
       } else {
-        this.currentDelDom.classList.add('status-delete') // this.currentDelDom.remove()
+        // 删除当前
+        this.currentDelDom.status = 'del'
       }
       this.delActionsheetShow = false
     },
-    onDelCancel(e) {
-      console.log(e)
+    // 恢复段落处理
+    repealParagraphHandler(e){
+      e.dom.status = 'edit'
     },
+    // onDelCancel(e) {
+    //   console.log(e)
+    // },
     // 创建观点dom
     crateViewpoint() {
       let el = document.createElement('div')
@@ -194,6 +221,7 @@ export default {
   > .discover-detail-container {
     background-color: #fff;
     padding-bottom: 10px;
+    margin-bottom: 20px;
     > .discover-title {
       padding: 10px 15px;
       font-size: 22px;
@@ -327,27 +355,6 @@ export default {
       height: 112px;
       background: rgba(150, 158, 168, 0.08);
     }
-  }
-}
-</style>
-<style lang="less">
-.section-edit {
-  position: relative !important;
-  border: 1px dashed #969ea8 !important;
-  padding: 5px !important;
-  margin-bottom: 5px !important;
-  text-indent: unset !important;
-  &.status-delete {
-    ::after {
-      content: '撤销删除';
-    }
-  }
-  > .close-btn {
-    position: absolute;
-    top: 4px;
-    right: -14px;
-    transform: translate(-50%, -50%);
-    color: #ea4d2e;
   }
 }
 </style>
