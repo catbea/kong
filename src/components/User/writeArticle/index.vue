@@ -1,39 +1,28 @@
 <template>
-  <div>
     <div
       class="write-item-body"
       @click="enterDetail"
-      v-for="item in dataArray"
-      :key="item"
-      v-if="dataArray.length>0"
     >
       <div class="write-item-left">
-        <span class="article-title">{{item.title}}</span>
-        <li class="article-label">
-          <tag-group :arr="tags"></tag-group>
-        </li>
+        <span class="article-title">123</span>
+
         <span class="share-time">分享时间：2019/1/6 16:33</span>
       </div>
       <div class="write-item-right">
-        <img class="article-img" :src="item.image">
+        <img class="article-img">
       </div>
     </div>
-    <!-- <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="dataArray.length<=0"></null> -->
-  </div>
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/index'
-// import Null from 'COMP/Null'
 
 export default {
   components: {
-    TagGroup,
-    // Null
   },
   created() {},
   mounted() {},
   props: {
-    dataArray: Array
+    
   },
   data() {
     return {
@@ -60,6 +49,7 @@ export default {
   justify-content: space-between;
   background: #ffffff;
   border-bottom: #e2e2e3 1px solid;
+  border-top: 1px #E5E5F0 solid;
 
   > .write-item-left {
     display: flex;
