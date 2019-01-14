@@ -11,7 +11,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :dataArray="myWriteList"></write-article>
+        <write-article :dataArray="myWriteList" @enterDetail='enterDetail'></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -56,10 +56,10 @@ export default {
       this.editContent = val
     },
 
-    // enterDetail() {
-    //   // this.$router.push({ name: 'easyLookList', params: { id: n } })
-    //   this.$router.push({ name: 'easyLookList' })
-    // },
+    enterDetail() {
+      // this.$router.push({ name: 'easyLookList', params: { id: n } })
+      this.$router.push({ name: 'easyLookList' })
+    },
 
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.editContent, this.current)
@@ -71,8 +71,6 @@ export default {
         }
         this.current++
         this.loading = false
-
-       
       } else {
         if (this.current == 1) {
           this.haveData = false
