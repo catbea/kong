@@ -7,7 +7,7 @@
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
         <div class="reprint-source">
-          <span>分享源自</span>
+          <span>分享源自 </span>
           <span style="color:#445166">AW大师写一写</span>
         </div>
       </div>
@@ -20,46 +20,60 @@
         <span
           class="disclaimer-text"
         >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <div class="bg_img"></div>
-            <div class="easy-look-text">{{num}}人觉得好看</div>
+            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <div class="easy-look-text">{{likeTimes}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <div class="bg_img"></div>
+            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
         <div class="easy-look-list">
           {{easylookList && easylookList.join('、')}}
-          <span class="easy-look-fold" v-if="isMore">展开更多</span>
+          <span class="easy-look-fold" v-if="isMoreLike">展开更多</span>
         </div>
       </div>
       <!-- 评论 -->
-      <div class="comment-container">
+      <div class="comment-container" v-if="commentList.length">
         <title-bar :conf="titleComments"/>
         <div class="comment-list-wrap">
           <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-            <div class="bg_img" style="backgroundColor:red;width:40px;height:40px;"></div>
+            <div
+              class="bg_img"
+              :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+              style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
+            ></div>
             <div class="comment-right">
               <div class="comment-name-wrap">
-                <span class="comment-name">{{item.name}}</span>
-                <span v-if="item.toName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
-                <span class="comment-reply" v-if="item.toName">{{item.toName}}</span>
+                <span
+                  class="comment-name"
+                  @click="commentSenderClickHandler(item)"
+                >{{item.senderName}}</span>
+                <span
+                  v-if="item.receiverName"
+                  style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                >回复</span>
+                <span
+                  class="comment-reply"
+                  v-if="item.receiverName"
+                  @click="commentReceiverClickHandler(item)"
+                >{{item.receiverName}}</span>
               </div>
               <div class="comment-content">{{item.content}}</div>
               <div></div>
             </div>
           </div>
-          <div class="comment-list-more" @click="moreCommentHandler">查看更多评论</div>
+          <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
         </div>
         <div class="comment-input-wrap">
-          <textarea class="comment-textarea" placeholder="我来说两句" maxlength='140'></textarea>
+          <textarea class="comment-textarea" placeholder="我来说两句" maxlength="140" rows="5" v-model="commentContent"></textarea>
         </div>
       </div>
     </div>
@@ -99,41 +113,25 @@
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
-      <div class="tool-item">
+      <div class="tool-item" @click="shareHandler">
         <i class="icon iconfont icon-Building_details_for"></i>
         分享
       </div>
     </div>
-    <van-popup
-      class="popup-view"
-      v-model="openPopup"
-      :overlay="true"
-      :lock-scroll="true"
-      :close-on-click-overlay="true"
-      :click-overlay="popupShowControl(false)"
-    >
-      <div class="close-titile">
-        <img class="closePopup" :src="this.closeImg" @click="popupShowControl(false)">
-      </div>
-      <span class="notice-view">长按识别查看更多</span>
-      <img class="qrcode-view" :src="qrcodeInfo.miniQrCode">
-      <div class="introduce-box">
-        <span class="username-view">{{qrcodeInfo.agentName}}</span>
-        <span class="introduce-view">资深房产经纪人</span>
-        <span class="phone-view">{{qrcodeInfo.mobile}}</span>
-        <span class="company-view">{{qrcodeInfo.enterpriseName}}</span>
-      </div>
-      <div class="info-bottom">
-        <span class="info-view">开启买房新模式及时获取一手房源信息</span>
-      </div>
-    </van-popup>
+    <van-actionsheet
+      v-model="isShowDeleteComment"
+      :actions="actions"
+      cancel-text="取消"
+      @select="onSelect"
+      @cancel="onCancel"
+    ></van-actionsheet>
+    <open-article :show.sync="guidanceShow"></open-article>
   </div>
 </template>
 <script>
-import AgentCardSmall from 'COMP/Discover/AgentCardSmall'
-import AgentCard from 'COMP/AgentCard'
 import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
+import OpenArticle from 'COMP//Guidance/OpenArticle'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
@@ -141,12 +139,11 @@ import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
-    AgentCardSmall,
-    AgentCard,
     TitleBar,
     swiper,
     swiperSlide,
-    DiscoverItem
+    DiscoverItem,
+    OpenArticle
   },
   data: () => ({
     swiperOption: {
@@ -161,31 +158,20 @@ export default {
     city: '',
     info: null,
     agentInfo: null,
-    show: false,
     infoId: '', //文章的id
     collectionStatus: -1, //收藏状态
-    titleProperties: {
-      title: '推荐房源',
-      linkText: '全部楼盘',
-      link: '/market'
-    },
-    titleArticle: {
-      title: '推荐文章',
-      linkText: '查看全部',
-      link: '/discover'
-    },
     titleComments: {
       title: '精彩评论',
       linkText: '',
       link: ''
     },
-    openPopup: true,
-    closeImg: require('IMG/user/close_popup.png'),
+    guidanceShow: true,
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
-    num: 320,
-    isMore: true,
+    likeTimes: 0, // 好看数
+    isMoreLike: true, // 是否有更多好看
+    easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
     easylookList: [
       '张佳玮',
       '静静',
@@ -210,11 +196,14 @@ export default {
       '贾班王',
       '中原-小陈'
     ],
-    commentList: [{logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: ''},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭', toName: '静静'},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'}]
+    commentCur: 1,
+    commentSize: 5,
+    isMoreComment: false,
+    commentList: [],
+    selectCommentId: '', // 选中的评论ID
+    commentContent: '', // 评论内容
+    isShowDeleteComment: false, // 是否显示删除评论上拉菜单
+    actions: [{ name: '删除评论', className: 'comment-delete' }]
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -222,8 +211,14 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
+    if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
+      this.guidanceShow = true
+    }else {
+      this.guidanceShow = false
+    }
     this.getDetail()
-    this.getQrCode(this.agentId)
+    this.getCommentList()
+    // this.getQrCode(this.agentId)
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -232,10 +227,9 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
       this.info = res
-
       this.infoId = res.id
       this.collectionStatus = res.collectType
-
+      this.likeTimes = res.likeTimes
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -251,10 +245,46 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-      this.shareHandler()
+      this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
       console.log(this.virtualDom)
+    },
+    // 评论列表
+    async getCommentList() {
+      const res = await discoverService.commentList(this.commentCur, this.commentSize, this.id)
+      if (res.pages <= this.commentCur) {
+        this.isMoreComment = false
+      } else {
+        this.isMoreComment = true
+      }
+      if (this.commentCur > 1) {
+        this.commentList = this.commentList.concat(res.records)
+      } else {
+        this.commentList = res.records
+      }
+      if (this.commentList && this.commentList.length > 0) {
+        this.commentCur++
+      }
+    },
+    // 修改评论的状态(删除自己的评论)
+    async updateCommentStatus() {
+      const res = await discoverService.updateCommentStatus(this.selectCommentId, 3)
+      this.commentList = this.removeObject(this.commentList, this.selectCommentId)
+    },
+    // 新增评论
+    async insertComment(receiver) {
+      let param = {
+        enterpriseId: this.enterpriseId,
+        infoId: this.infoId,
+        content: this.commentContent,
+        senderId: this.agentId,
+        senderSource: 0, // 0-企业微信；1-小程序
+        receiverId: receiver ? receiver.receiverId : '',
+        receiverSource: receiver ? receiver.receiverSource: '',
+        
+      }
+      const res = await discoverService.insertComment(param)
     },
 
     //进入楼盘详情
@@ -268,19 +298,68 @@ export default {
         this.qrcodeInfo = result
       }
     },
+    clickoOverlayHandler() {
+      window.localStorage.removeItem('isFirst')
+      this.popupShowControl(false)
+    },
     popupShowControl(status) {
       this.openPopup = status
+    },
+    // 删除对象
+    removeObject(arr, id) {
+      for(var i = 0, len = arr.length; i < len; i++) {
+        if (arr[i].id == id) {
+          if (i == 0) {
+            arr.shift()
+            return arr
+          }else if(i == len - 1) {
+            arr.pop()
+            return arr
+          }else {
+            arr.splice(i, 1)
+            return arr
+          }
+        }
+      }
     },
 
     // 好看点击事件
     easyLookClickHandler() {},
     // 查看更多评论
     moreCommentHandler() {
-
+      this.getCommentList()
     },
+    // 评论发送者
+    commentSenderClickHandler(item) {
+      this.selectCommentId = item.id
+      if ((this.agentId = item.senderId)) {
+        this.isShowDeleteComment = true
+      } else {
+        this.isShowDeleteComment = false
+      }
+    },
+    // 评论被回复者
+    commentReceiverClickHandler(item) {
+      this.selectCommentId = item.id
+      if ((this.agentId = item.receiverId)) {
+        this.isShowDeleteComment = true
+      } else {
+        this.isShowDeleteComment = false
+      }
+    },
+    onSelect(item) {
+      // 点击选项时默认不会关闭菜单，可以手动关闭
+      this.isShowDeleteComment = false
+      this.updateCommentStatus()
+    },
+    onCancel() {},
     // 举报反馈
     feedbackClickHandler() {
-      // this.$router.push({path:`/discover/edit/${this.$route.params.id}/${this.$route.params.city}`,query:this.$route.query})
+      this.$router.push({path:'/discover/reportFeedback', query: {id: this.infoId}})
+    },
+    // 编辑按钮点击处理
+    editClickHandler() {
+      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
     },
     // 收藏文章按钮点击
     async collectHandler() {
@@ -296,6 +375,15 @@ export default {
         this.$toast('取消收藏成功')
       }
     },
+    // 分享按钮点击处理
+    shareHandler() {
+      this.guidanceShow = true
+    },
+    // 设置分享
+    async setShare() {
+      this.shareData.success = this.articleShare
+      window.awHelper.wechatHelper.setShare(this.shareData)
+    },
     // 分享成功之后
     async articleShare() {
       let params = {
@@ -303,15 +391,6 @@ export default {
         infoId: this.infoId
       }
       const result = await discoverService.articleShare(params)
-    },
-    // 编辑按钮点击处理
-    editClickHandler() {
-      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
-    },
-    // 设置分享
-    async shareHandler() {
-      this.shareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.shareData)
     }
   },
   watch: {
@@ -323,88 +402,6 @@ export default {
 }
 </script>
 <style lang="less">
-.popup-view {
-  width: 260px;
-  height: 371px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  > .close-titile {
-    width: 100%;
-    height: 24px;
-    display: flex;
-    flex-direction: row-reverse;
-
-    > .closePopup {
-      width: 24px;
-      height: 24px;
-      margin-top: 8px;
-      margin-right: 8px;
-    }
-  }
-
-  > .notice-view {
-    color: #333333;
-    font-size: 16px;
-  }
-
-  > .qrcode-view {
-    width: 162px;
-    height: 162px;
-    text-align: center;
-    margin-top: 11px;
-    padding: 5px;
-  }
-
-  > .introduce-box {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    margin-left: -45px;
-
-    > .username-view {
-      color: #333333;
-      font-size: 16px;
-      margin-top: 12px;
-    }
-    > .introduce-view {
-      font-size: 14px;
-      color: #666666;
-      margin-top: 3px;
-    }
-
-    > .company-view {
-      margin-top: 7px;
-      color: #666666;
-      font-size: 12px;
-    }
-
-    > .phone-view {
-      margin-top: 12px;
-      color: #666666;
-      font-size: 12px;
-    }
-  }
-
-  > .info-bottom {
-    width: 100%;
-    height: 32px;
-    margin-bottom: 0;
-    background: #eeeeee;
-    margin-top: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    > .info-view {
-      color: #666666;
-      font-size: 12px;
-      background-color: #eeeeee;
-    }
-  }
-}
-
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {
@@ -479,8 +476,17 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         > .easy-look-left {
+          display: flex;
+          flex-direction: row;
         }
         > .easy-look-right {
+          display: flex;
+          flex-direction: row;
+        }
+        .easy-look-icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 4px;
         }
         .easy-look-text {
           color: #445166;
@@ -503,29 +509,30 @@ export default {
     }
     // 评论
     > .comment-container {
-      
       > .comment-list-wrap {
         margin-top: 20px;
         padding: 0 16px;
         > .comment-list {
+          width: 100%;
           display: flex;
           flex-direction: row;
           margin-bottom: 20px;
           > .comment-right {
+            width: 85%;
             margin-left: 8px;
             display: flex;
             flex-direction: column;
             > .comment-name-wrap {
               display: flex;
               > .comment-name {
-              color: #333333;
-              font-size: 14px;
-              font-weight: bold;
-            }
-            > .comment-reply {
-              color: #333333;
-              font-size: 14px;
-            }
+                color: #333333;
+                font-size: 14px;
+                font-weight: bold;
+              }
+              > .comment-reply {
+                color: #333333;
+                font-size: 14px;
+              }
             }
             > .comment-content {
               color: #333333;
@@ -535,7 +542,7 @@ export default {
           }
         }
         > .comment-list-more {
-          color: #969EA8;
+          color: #969ea8;
           font-size: 14px;
           margin: 20px 0;
           text-align: center;
@@ -544,7 +551,7 @@ export default {
       > .comment-input-wrap {
         padding: 0 16px;
         > .comment-textarea {
-          background-color: #F2F6F7;
+          background-color: #f2f6f7;
           border-radius: 6px;
           height: 30px;
           line-height: 30px;
@@ -596,7 +603,10 @@ export default {
       margin: 15px 0;
     }
   }
-
+  .comment-delete {
+    color: #ea4d2e;
+    font-size: 16px;
+  }
   > .tools-bar {
     width: 100%;
     background-color: #fff;
