@@ -50,16 +50,16 @@ export default {
     font-size: 20px;
     font-weight: 600;
     color: #333333;
-    padding-top: 10px;
+    // padding-top: 10px;
   }
   .link-text {
     font-size: 13px;
     font-weight: 400;
     color: #999999;
     display: flex;
-    align-items: center;
+    // align-items: center;
     span{
-      margin-left:4px;
+      // margin-left:4px;
       width:12px;
       height:12px;
     }
