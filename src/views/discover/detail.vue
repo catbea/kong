@@ -417,9 +417,9 @@ export default {
   > .info-bottom {
     width: 100%;
     height: 32px;
-    margin-bottom: 0;
+    bottom: 0px;
     background: #eeeeee;
-    margin-top: 30px;
+    margin-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;

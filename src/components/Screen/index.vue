@@ -99,7 +99,7 @@ export default {
     sortChangeHandler() {
       this.currentIndex = -1
     }
-  },
+   },
   watch: {
     value(val) {
       this.filters = val
