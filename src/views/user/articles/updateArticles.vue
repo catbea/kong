@@ -163,7 +163,7 @@ export default {
     //加载更多
     async onLoad() {
       let tempCurrent = this.current
-      const res = await userService.getBrowseHistoryList(tempCurrent)
+      const res = await userService.gethistoryList(tempCurrent)
       let dataList = res.records
 
       if (dataList.length !== 0) {
