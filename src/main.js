@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
   Vue.config.devtools = false
 }
 
-if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
+if (process.env.VUE_APP_TOOL_VCONSOLE === 'true') new vconsole()
 
 window.vue = new Vue({
   router,

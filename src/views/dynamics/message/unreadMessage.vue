@@ -22,7 +22,7 @@
                 v-show="sysMessage !='' "
               >{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
-            <p class="sys-right-btn">{{sysMessage.content}}</p>
+            <p class="sys-right-btn">{{sysMessage.content ? sysMessage.content.replace(/<[^>]+>/g,"") : ''}}</p>
           </span>
         </div>
       </div>

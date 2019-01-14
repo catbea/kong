@@ -262,7 +262,7 @@ export default {
       width: 73px;
       top: 236px;
       right: 20px;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -288,7 +288,7 @@ export default {
     > .poster-describe {
       position: absolute;
       color: #e5b37b;
-      font-size: 29px;
+      font-size: 24px;
       z-index: 2;
       left: 20px;
       top: 280px;
