@@ -43,7 +43,6 @@ export default {
   },
   data: () => ({
     arrowIcon: require('IMG/market/list__arrow_@2x.png'),
-    inputContent: '',
     currentValue: '',
     confData: [
       { index: 0, name: '全部', value: '', checked: false },
@@ -67,6 +66,9 @@ export default {
       this.conf.siteText = val
       this.currentIndex = -1
       this.$emit('goSearch', val)
+    },
+    inputContent() {
+      this.$emit('getContent', this.currentValue)
     }
   }
 }

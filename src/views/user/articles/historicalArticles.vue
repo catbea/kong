@@ -1,7 +1,7 @@
 <template>
   <div class="my-write-body">
     <div class="search-body">
-      <search-write @goSearch="goSearch"></search-write>
+      <search-write @goSearch="goSearch" @getContent="getContent"></search-write>
     </div>
     <div class="list-result">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
@@ -31,6 +31,11 @@ export default {
   created() {},
   methods: {
     goSearch(val) {},
+
+    getContent(val) {
+      console.log(val);
+      
+    },
 
     enterDetail() {
       // this.$router.push({ name: 'easyLookList', params: { id: n } })
