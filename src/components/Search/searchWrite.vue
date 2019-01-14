@@ -45,10 +45,10 @@ export default {
     arrowIcon: require('IMG/market/list__arrow_@2x.png'),
     currentValue: '',
     confData: [
-      { index: 0, name: '全部', value: '', checked: false },
-      { index: 1, name: '分享', value: '', checked: false },
-      { index: 2, name: '编辑', value: '', checked: false },
-      { index: 3, name: '收藏', value: '', checked: false }
+      { index: 0, name: '全部', value: '0', checked: false },
+      { index: 1, name: '分享', value: '1', checked: false },
+      { index: 2, name: '编辑', value: '2', checked: false },
+      { index: 3, name: '收藏', value: '3', checked: false }
     ],
     currentIndex: -1
   }),

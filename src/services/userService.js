@@ -443,5 +443,23 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 我的写一写文章列表
+   * @param {*} type 
+   * @param {*} searchData 
+   * @param {*} current 
+   * @param {*} size 
+   */
+  queryWriteArticleList(type, searchData, current, size = 10) {
+    return xhr({
+      url: '/cpInformation/queryMyArticleList',
+      body: {
+        type,
+        searchData,
+        current
+      }
+    })
+  }
 }
 export default new UserService()
