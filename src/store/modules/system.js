@@ -23,7 +23,7 @@ const state = {
         name: '写一写',
         icon: require('IMG/tabbar/dis_tab.png'),
         icon_atc: require('IMG/tabbar/dis_tab_act.png'),
-        path: '/article',
+        path: '/write-article',
         info: 0
       },
       {
