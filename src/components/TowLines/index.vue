@@ -38,7 +38,7 @@ export default {
       height: 100%;
       li {
         display: flex;
-        margin-bottom: 14px;
+        margin-bottom:20px;
         div:nth-child(1) {
           width: 100px;
           font-size: 14px;

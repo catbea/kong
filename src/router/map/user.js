@@ -19,6 +19,14 @@ export default [
     }
   },
   {
+    path: '/user/share-card',
+    name: 'share-card',
+    component: resolve => require(['@/views/user/share/index.vue'], resolve),
+    meta: {
+      title: '分享名片'
+    }
+  },
+  {
     path: '/user/edit',
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
@@ -64,6 +72,22 @@ export default [
     component: resolve => require(['@/views/user/edit/userWechat.vue'], resolve),
     meta: {
       title: '修改微信号'
+    }
+  },
+  {
+    path: '/user/edit/userCompany',
+    name: 'user-edit-userCompany',
+    component: resolve => require(['@/views/user/edit/userCompany.vue'], resolve),
+    meta: {
+      title: '修改平台公司'
+    }
+  },
+  {
+    path: '/user/edit/userPlatform',
+    name: 'user-edit-userPlatform',
+    component: resolve => require(['@/views/user/edit/userPlatform.vue'], resolve),
+    meta: {
+      title: '修改我的机构'
     }
   },
   {
@@ -189,11 +213,30 @@ export default [
     }
   },
   {
+    path: '/user/myReport/reportCustomerEdit',
+    name: 'reportCustomerEdit',
+    component: resolve => require(['@/views/user/myReport/reportCustomerEdit.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
     path: '/user/myMarket',
     name: 'mymarket',
     component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
     meta: {
       title: '我的楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/swiper',
+    name: 'swiper',
+    component: resolve => require(['@/views/user/myMarket/swiper.vue'], resolve),
+    meta: {
+      title: '我的轮播图',
       tabbar: {
         show: false
       }

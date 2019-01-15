@@ -15,6 +15,7 @@ export default [
     name: 'discover-detail',
     component: resolve => require(['@/views/discover/detail.vue'], resolve)
   },
+<<<<<<< HEAD
   {
     path: '/discover/edit-help',
     name: 'discover-edit-help',
@@ -31,6 +32,14 @@ export default [
     component: resolve => require(['@/views/discover/reportFeedback.vue'], resolve),
     meta: {
       title: '文章举报反馈',
+=======
+    {
+    path: '/discover/discoverHelp',
+    name: 'discoverHelp',
+    component: resolve => require(['@/views/discover/discoverHelp.vue'], resolve),
+    meta: {
+      title: '帮助',
+>>>>>>> v3.0.3
       tabbar: {
         show: false
       }

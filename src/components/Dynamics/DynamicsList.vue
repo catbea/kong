@@ -3,26 +3,42 @@
     <div class="dynamics-list-body" v-if="allDynamicList.length>0">
       <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
         <div class="dynamics-time">{{times.dynamicDate | dateTimeFormatter(2,'/')}}</div>
+<<<<<<< HEAD
         <div class="dynamics-container-list" v-for="(item,key) in times.allDynamicInfoVOS" :key="key" v-if="times.allDynamicInfoVOS">
+=======
+        <div
+          class="dynamics-container-list"
+          v-for="(item,key) in times.msgList"
+          :key="key"
+        >
+>>>>>>> v3.0.3
           <shadow-box>
             <div slot="container">
               <div class="dynamics-list">
                 <div class="dynamics-list-agent" @click="godynamicsList(item)">
                   <span class="list-agent-left">
                     <span class="agent-left-left">
-                      <img :src="item.avatarUrl" class="agent-userImg">
+                      <img :src="item.clientAvatarUrl" class="agent-userImg">
                     </span>
                     <span class="agent-left-right">
                       <p class="left-right-name">{{item.clientName }}</p>
-                      <p class="left-right-time">{{item.updateTime | dateTimeFormatter(1,':')}}</p>
+                      <p class="left-right-time">{{item.timeStr | dateTimeFormatter(1,':')}}</p>
                     </span>
                   </span>
                   <span class="list-agent-right">
+<<<<<<< HEAD
                     <p class="agent-right-num" v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}">{{item.intentionality}}%</p>
+=======
+                    <p
+                      class="agent-right-num"
+                      v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
+                    >{{item.intentionality || 0}}%</p>
+>>>>>>> v3.0.3
                     <p class="agent-right-title">意向度</p>
                   </span>
                 </div>
                 <div class="dynamics-list-content" @click="godynamicsList(item)">
+<<<<<<< HEAD
                   <p v-show="item.type == 2">
                     浏览了楼盘
                     <span>{{item.objectName}}</span>
@@ -52,6 +68,9 @@
                     <span>{{item.todayClickCount }}次</span>名片，平均停留
                     <span>{{item.totalTime / 1000}}s</span>
                   </p>
+=======
+                  <p><span>{{item.clientName}}</span>{{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}</p>
+>>>>>>> v3.0.3
                 </div>
                 <div class="dynamics-list-btn">
                   <span></span>

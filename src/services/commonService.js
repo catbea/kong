@@ -27,6 +27,22 @@ class CommonService {
   }
 
   /**
+   * 修改用户引导是否为首次
+   * @param articleEditFlag: 随手编新手引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+   * @param articleShareFlag: 文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+   */
+  updateUserExpandInfo(articleShareFlag, articleEditFlag) {
+    return xhr({
+      url: '/user/updateUserExpandInfo',
+      method: 'post',
+      body: {
+        articleShareFlag,
+        articleEditFlag
+      }
+    })
+  }
+
+  /**
    * 通过code获取企业微信账户信息
    * @param code 微信跳转地址截取code
    * @param payCorpId

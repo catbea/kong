@@ -7,7 +7,7 @@
       <div class="current-location">
         <p class="location-str" v-if="userArea.city">
           {{userArea.city}}
-          <span>当前城市</span>
+          <span @click="itemClick(userArea.city)">当前城市</span>
         </p>
         <div class="location-fail" v-else>
           <p class="fail-str">定位失败,请检查</p>
@@ -59,7 +59,7 @@ export default {
     },
     searchInfo: {
       siteText: '',
-      placeholderText: ''
+      placeholderText: '请输入楼盘名称'
     },
     navOffsetX: 0,
     moving: false

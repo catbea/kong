@@ -14,5 +14,13 @@ export default [
     meta: {
       title: '地图看房'
     }
+  },
+  {
+    path: '/public/complete-info',
+    name: 'complete-info',
+    component: resolve => require(['@/views/public/completeInfo.vue'], resolve),
+    meta: {
+      title: '请完善信息'
+    }
   }
 ]
