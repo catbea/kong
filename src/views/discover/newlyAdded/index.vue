@@ -5,7 +5,7 @@
         <textarea class="linker-input" :placeholder="defaultText"></textarea>
         <div class="clear-address">清空地址</div>
         <div class="add-article">添加文章</div>
-        <div class="start-edit">开始编辑</div>
+        <div class="start-edit" @click="startEdit">开始编辑</div>
     </div>
 </template>
 
@@ -13,7 +13,14 @@
 export default {
   data: () => ({
     defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里'
-  })
+  }),
+
+  methods: {
+    //开始编辑
+    startEdit() {
+      this.$router.push({ name: 'analysis' })
+    }
+  }
 }
 </script>
 <style lang="less">
