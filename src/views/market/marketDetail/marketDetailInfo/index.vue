@@ -11,7 +11,7 @@
     <InfoMiddle :middleInfo="this.licenceList"></InfoMiddle>
     <div class="info-bottom">
       <span :style="{backgroundImage:'url('+warnImg+')'}" class="bg_img"></span>
-      <p>免责申明：楼盘信息来源于政府共事网站、开发商、第三方公众平台最终以政府部门登记备案为准，请谨慎检查。</p>
+      <p>免责申明：楼盘信息来源于政府共事网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎检查。</p>
     </div>
   </div>
 </template>
@@ -165,7 +165,7 @@ export default {
 <style lang="less">
 .market-detail-info-page {
   width: 100%;
-  background: #eeeeee;
+  background: #F7F9FA;
   .title {
     background: #fff;
     height: 39px;

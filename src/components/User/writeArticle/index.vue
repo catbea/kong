@@ -1,35 +1,55 @@
 <template>
-    <div class="write-item-body" @click="enterDetail">
-        <div class="write-item-left">
-            <span class="article-title">厦门今年第二批9000套保障性商品房上午摇号</span>
-            <li class="article-label">
-                <tag-group :arr="tags"></tag-group>
-            </li>
-            <span class="share-time">分享时间：2019/1/6 16:33</span>
+  <div>
+    <div
+      class="write-item-body"
+      v-for="(item, index) in dataArray"
+      :key="index"
+      @click="enterDetail(selectType,item.id)"
+    >
+      <div class="write-item-left">
+        <span class="article-title">{{item.title}}</span>
+        <div class="share-bottom">
+          <span class="share-time">分享时间：2019/1/6 16:33</span>
+          <div class="collection-view" v-if="selectType=='3'" @click="cancelCollect">
+            <span class="collection-text">取消收藏</span>
+            <img class="collection-img" :src="cancelCollection">
+          </div>
         </div>
-        <div class="write-item-right">
-            <img class="article-img" :src="myImage">
-        </div>
+      </div>
+      <div class="write-item-right">
+        <img class="article-img" :src="item.image">
+      </div>
     </div>
+  </div>
 </template>
 <script>
 import TagGroup from 'COMP/TagGroup/index'
+
 export default {
-  components: {
-      TagGroup
-  },
+  components: {},
   created() {},
   mounted() {},
-  props: {},
+  props: {
+    selectType: String,
+    dataArray: Array
+  },
   data() {
     return {
-      myImage: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg',
-      tags: ['已收藏', '未分享', '已编辑']
+      cancelCollection: require('IMG/user/myWrite/cancelCollection.png')
+      // nullIcon: require('IMG/user/collection/Article@2x.png'),
+      // nullcontent: '暂还没有文章记录'
     }
   },
   methods: {
-    enterDetail(){
-      this.$emit('enterDetail','');
+    enterDetail(selectType, id) {
+      let obj = {
+        selectType: selectType,
+        infoId: id
+      }
+      this.$emit('enterDetail', obj)
+    },
+    cancelCollect() {
+      this.$emit('cancelCollect', '')
     }
   },
   computed: {}
@@ -43,12 +63,12 @@ export default {
   padding: 11px 15px;
   justify-content: space-between;
   background: #ffffff;
-  border-bottom: #e2e2e3 1px solid;
+  border-top: 1px #e5e5f0 solid;
 
   > .write-item-left {
     display: flex;
     flex-direction: column;
-    padding-right: 16px;
+    padding-right: 5px;
     justify-items: center;
     margin-top: 5px;
 
@@ -63,10 +83,31 @@ export default {
       list-style: none;
     }
 
-    > .share-time {
-      font-size: 12px;
-      color: #969ea8;
-      margin-top: 12px;
+    > .share-bottom {
+      display: flex;
+      flex-direction: row;
+      margin-top: 50px;
+
+      > .share-time {
+        font-size: 12px;
+        color: #969ea8;
+        display: none;
+      }
+
+      > .collection-view {
+        display: flex;
+
+        > .collection-text {
+          color: #bbbbbb;
+          font-size: 10px;
+          margin-left: 5px;
+        }
+
+        > .collection-img {
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
   }
 

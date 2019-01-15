@@ -149,7 +149,6 @@ export default {
         if (current == 1) {
           this.haveData = false
         }
-
         this.loading = false
         this.finished = true
       }

@@ -1,5 +1,15 @@
 <template>
   <div class="discover-detail-page">
+    <!-- 首次引导分享 -->
+    <div class="guidance-view" v-if="!articleShareFlag&&!article">
+      <div class="top">
+       <p>点击此处分享给好友</p>
+       <p :style="{backgroundImage:'url('+lineImg+')'}" class="bg_img">
+         
+       </p>
+      </div>
+      <p class="bottom" @click="sharePopupHandle">知道了</p>
+    </div>
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
@@ -7,7 +17,7 @@
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
         <div class="reprint-source">
-          <span>分享源自</span>
+          <span>分享源自 </span>
           <span style="color:#445166">AW大师写一写</span>
         </div>
       </div>
@@ -20,46 +30,69 @@
         <span
           class="disclaimer-text"
         >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <div class="bg_img"></div>
-            <div class="easy-look-text">{{num}}人觉得好看</div>
+            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <div class="bg_img"></div>
+            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
         <div class="easy-look-list">
           {{easylookList && easylookList.join('、')}}
-          <span class="easy-look-fold" v-if="isMore">展开更多</span>
+          <span
+            class="easy-look-fold"
+            v-if="isMoreLike"
+          >展开更多</span>
         </div>
       </div>
       <!-- 评论 -->
       <div class="comment-container">
-        <title-bar :conf="titleComments"/>
-        <div class="comment-list-wrap">
-          <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-            <div class="bg_img" style="backgroundColor:red;width:40px;height:40px;"></div>
-            <div class="comment-right">
-              <div class="comment-name-wrap">
-                <span class="comment-name">{{item.name}}</span>
-                <span v-if="item.toName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
-                <span class="comment-reply" v-if="item.toName">{{item.toName}}</span>
+        <div class="comment-box" v-if="commentList.length">
+          <title-bar :conf="titleComments"/>
+          <div class="comment-list-wrap">
+            <div class="comment-list" v-for="(item, index) in commentList" :key="index">
+              <div
+                class="bg_img"
+                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+                style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
+                @click="commentSenderClickHandler(item)"
+              ></div>
+              <div class="comment-right">
+                <div class="comment-name-wrap">
+                  <span
+                    class="comment-name"
+                    @click="commentSenderClickHandler(item)"
+                  >{{item.senderName}}</span>
+                  <span
+                    v-if="item.receiverName"
+                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                  >回复</span>
+                  <span
+                    class="comment-reply"
+                    v-if="item.receiverName"
+                    @click="commentReceiverClickHandler(item)"
+                  >{{item.receiverName}}</span>
+                </div>
+                <div class="comment-content">{{item.content}}</div>
+                <div></div>
               </div>
-              <div class="comment-content">{{item.content}}</div>
-              <div></div>
             </div>
+            <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
           </div>
-          <div class="comment-list-more" @click="moreCommentHandler">查看更多评论</div>
         </div>
         <div class="comment-input-wrap">
-          <textarea class="comment-textarea" placeholder="我来说两句" maxlength='140'></textarea>
+          <!-- <textarea class="comment-textarea" placeholder="我来说两句" maxlength="140" rows="5" @focus="focusHandler"></textarea> -->
+          <div class="comment-textarea" @click="commentClickHandler">
+            <div style="color:#969EA8;font-size:14px;">我来说两句</div>
+          </div>
         </div>
       </div>
     </div>
@@ -85,7 +118,7 @@
     <!-- <div class="recommend-discover" v-if="info&&info.recommendInformationList">
       <title-bar :conf="titleArticle"/>
       <div class="recommend-discover-content">
-        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
+        <discover-item v-for="item in recommendInformationList" :key="item.id" :data="item"/>
       </div>
     </div>-->
     <!-- 悬浮工具栏 -->
@@ -99,56 +132,51 @@
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
-      <div class="tool-item">
+      <div class="tool-item" @click="shareHandler">
         <i class="icon iconfont icon-Building_details_for"></i>
         分享
       </div>
     </div>
-    <van-popup
-      class="popup-view"
-      v-model="openPopup"
-      :overlay="true"
-      :lock-scroll="true"
-      :close-on-click-overlay="true"
-      :click-overlay="popupShowControl(false)"
-    >
-      <div class="close-titile">
-        <img class="closePopup" :src="this.closeImg" @click="popupShowControl(false)">
-      </div>
-      <span class="notice-view">长按识别查看更多</span>
-      <img class="qrcode-view" :src="qrcodeInfo.miniQrCode">
-      <div class="introduce-box">
-        <span class="username-view">{{qrcodeInfo.agentName}}</span>
-        <span class="introduce-view">资深房产经纪人</span>
-        <span class="phone-view">{{qrcodeInfo.mobile}}</span>
-        <span class="company-view">{{qrcodeInfo.enterpriseName}}</span>
-      </div>
-      <div class="info-bottom">
-        <span class="info-view">开启买房新模式及时获取一手房源信息</span>
-      </div>
-    </van-popup>
+    <van-actionsheet
+      v-model="isShowDeleteComment"
+      :actions="actions"
+      cancel-text="取消"
+      @select="onSelect"
+      @cancel="onCancel"
+    ></van-actionsheet>
+    <open-article :show.sync="guidanceShow"></open-article>
+    <comment-alert
+      :show.sync="showCommentAlert"
+      :info="commentInfo"
+      @cancel="cancelHandler"
+      @publish="publishHandler"
+      @input="inputHandler"
+    ></comment-alert>
   </div>
 </template>
 <script>
-import AgentCardSmall from 'COMP/Discover/AgentCardSmall'
-import AgentCard from 'COMP/AgentCard'
 import TitleBar from 'COMP/TitleBar/'
 import DiscoverItem from 'COMP/DiscoverItem'
+import OpenArticle from 'COMP//Guidance/OpenArticle'
+import CommentAlert from 'COMP//Discover/CommentAlert'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import discoverService from 'SERVICE/discoverService'
+import commonService from 'SERVICE/commonService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
-    AgentCardSmall,
-    AgentCard,
     TitleBar,
     swiper,
     swiperSlide,
-    DiscoverItem
+    DiscoverItem,
+    OpenArticle,
+    CommentAlert
   },
   data: () => ({
+    recommendInformationList:[],//去重推荐文章
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12,
@@ -161,60 +189,25 @@ export default {
     city: '',
     info: null,
     agentInfo: null,
-    show: false,
     infoId: '', //文章的id
     collectionStatus: -1, //收藏状态
-    titleProperties: {
-      title: '推荐房源',
-      linkText: '全部楼盘',
-      link: '/market'
+    titleComments: {
+      title: '精彩评论',
+      linkText: '',
+      link: ''
     },
     titleArticle: {
       title: '推荐文章',
       linkText: '查看全部',
       link: '/discover'
     },
-    titleComments: {
-      title: '精彩评论',
-      linkText: '',
-      link: ''
-    },
-    openPopup: true,
+    openPopup: false,
+    lineImg:require('IMG/marketDetail/yindao.png'),
     closeImg: require('IMG/user/close_popup.png'),
     qrcodeInfo: {},
     shareData: null,
-    virtualDom: null,
-    num: 320,
-    isMore: true,
-    easylookList: [
-      '张佳玮',
-      '静静',
-      '路遥|AW大师',
-      '小风风',
-      '坑坑',
-      '辣椒',
-      'A链家-小李',
-      '小锅锅mike',
-      '红色诺亚',
-      '贾班王',
-      '中原-小陈',
-      '张佳玮',
-      '静静',
-      '路遥|AW大师',
-      '小风风',
-      '坑坑',
-      '辣椒',
-      'A链家-小李',
-      '小锅锅mike',
-      '红色诺亚',
-      '贾班王',
-      '中原-小陈'
-    ],
-    commentList: [{logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: ''},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭', toName: '静静'},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'},
-    {logo: '', name: '张佳玮', content: '昨天刚卖，今天出利好。。。想哭',toName: '静静'}]
+    articleShareFlag:0,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    article:false
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -222,20 +215,36 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
+    this.classify=this.$route.query.classify
     this.getDetail()
     this.getQrCode(this.agentId)
+    this.getRecommendInfo()
+    if(this.userInfo.articleShareFlag==0){//0：未完成指引；1：已完成指引 
+      this.articleShareFlag=false
+    }else{
+      this.articleShareFlag=true
+    }
+    this.article=this.guidance.article
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo','guidance'])
   },
   methods: {
+   async sharePopupHandle(){//首次进入引导
+      await commonService.updateUserExpandInfo(1)
+      this.$store.commit(types.ARTICLE_SHARE_FLAG,true)
+      this.article=true
+    },
+   async getRecommendInfo(){//去重推荐文章
+      const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
+      this.recommendInformationList=res.records  
+    },
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city)
       this.info = res
-
       this.infoId = res.id
       this.collectionStatus = res.collectType
-
+      
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -251,10 +260,60 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-      this.shareHandler()
+      this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
       console.log(this.virtualDom)
+    },
+    // 好看列表
+    async getLikeList() {
+      const res = await discoverService.queryLikeList(this.id)
+      if (res && res.length > 0) {
+        for (var index in  res) {
+          let item = res[index]
+          this.easylookList.push(item.userName)
+        }
+      }
+    },
+    // 评论列表
+    async getCommentList() {
+      const res = await discoverService.commentList(this.commentCur, this.commentSize, this.id)
+      if (res.pages <= this.commentCur) {
+        this.isMoreComment = false
+      } else {
+        this.isMoreComment = true
+      }
+      if (this.commentCur > 1) {
+        this.commentList = this.commentList.concat(res.records)
+      } else {
+        this.commentList = res.records
+      }
+      if (this.commentList && this.commentList.length > 0) {
+        this.commentCur++
+        this.filterComment()
+      }
+    },
+    // 修改评论的状态(删除自己的评论)
+    async updateCommentStatus() {
+      const res = await discoverService.updateCommentStatus(this.selectCommentId, 3)
+      this.commentList = this.removeObject(this.commentList, this.selectCommentId)
+    },
+    // 新增评论
+    async insertComment(receiver) {
+      let param = {
+        enterpriseId: this.enterpriseId,
+        infoId: this.infoId,
+        parentId: receiver ? receiver.parentId : '',
+        content: this.commentContent,
+        senderId: this.agentId,
+        senderSource: 0, // 0-企业微信；1-小程序
+        receiverId: receiver ? receiver.receiverId : '',
+        receiverSource: receiver ? receiver.receiverSource : '',
+        type: receiver.type // 0-评论，1-回复
+      }
+      const res = await discoverService.insertComment(param)
+      this.commentIds.push(res.id)
+      this.commentList.push(res)
     },
 
     //进入楼盘详情
@@ -268,19 +327,146 @@ export default {
         this.qrcodeInfo = result
       }
     },
-    popupShowControl(status) {
-      this.openPopup = status
-    },
-
     // 好看点击事件
     easyLookClickHandler() {},
+    // 点击评论
+    commentClickHandler() {
+      this.showCommentAlert = true
+      this.commentInfo = {
+        parentId: '',
+        receiverId: '',
+        receiverName: '',
+        receiverSource: '',
+        senderId: this.agentId,
+        senderSource: 0,
+        title: this.info.title,
+        placeholder: '分享你的想法',
+        type: 0
+      }
+    },
+    // 评论输入框编辑
+    inputHandler(commentContent) {
+      console.log(commentContent)
+      this.commentContent = commentContent
+    },
+    // 取消评论
+    cancelHandler() {
+      this.showCommentAlert = false
+      this.commentContent = ''
+    },
+    // 发布评论
+    publishHandler() {
+      this.showCommentAlert = false
+      this.insertComment(this.commentInfo)
+      this.commentContent = ''
+    },
     // 查看更多评论
     moreCommentHandler() {
-
+      this.getCommentList()
     },
+    // 评论发送者
+    commentSenderClickHandler(item) {
+      this.selectCommentId = item.id
+      if ((this.agentId = item.senderId)) {
+        this.isShowDeleteComment = true
+        this.showCommentAlert = false
+      } else {
+        this.isShowDeleteComment = false
+        this.showCommentAlert = true
+        this.commentInfo = {
+          parentId: item.id,
+          receiverId: item.senderId,
+          receiverName: item.senderName,
+          receiverSource: item.receiverSource,
+          senderId: this.agentId,
+          senderSource: 0,
+          title: this.info.title,
+          placeholder: '回复' + item.senderName + '：',
+          type: 1
+        }
+      }
+    },
+    // 评论被回复者
+    commentReceiverClickHandler(item) {
+      this.selectCommentId = item.id
+      if ((this.agentId = item.receiverId)) {
+        this.isShowDeleteComment = true
+        this.showCommentAlert = false
+      } else {
+        this.isShowDeleteComment = false
+        this.showCommentAlert = true
+        this.commentInfo = {
+          parentId: item.id,
+          receiverId: item.receiverId,
+          receiverName: item.receiverName,
+          receiverSource: item.receiverSource,
+          senderId: this.agentId,
+          senderSource: 0,
+          title: this.info.title,
+          placeholder: '回复' + item.receiverName + '：',
+          type: 1
+        }
+      }
+    },
+    // 删除对象（删除评论）
+    removeObject(arr, id) {
+      for (var i = 0, len = arr.length; i < len; i++) {
+        if (arr[i].id == id) {
+          if (i == 0) {
+            arr.shift()
+            return arr
+          } else if (i == len - 1) {
+            arr.pop()
+            return arr
+          } else {
+            arr.splice(i, 1)
+            return arr
+          }
+        }
+      }
+    },
+    // 过滤评论(自己回复的评论前端处理,不取后台的数据)
+    filterComment() {
+      let filterList = []
+      for (var index in this.commentIds) {
+        let commentId = this.commentIds[index]
+        this.commentList = this.removeObject(this.commentList, commentId)
+        console.log(this.commentList)
+      }
+    },
+    // 新增评论
+    addComment() {
+      let commentInfo = {
+          parentId: item.id,
+          receiverId: item.receiverId,
+          receiverName: item.receiverName,
+          receiverSource: item.receiverSource,
+          senderId: this.agentId,
+          senderSource: 0,
+          title: this.info.title,
+          placeholder: '回复' + item.receiverName + '：',
+          type: 1
+        }
+    },
+    // 数组的浅拷贝
+    copyArray(arr) {
+      var result = []
+      result = arr.concat()
+      return result
+    },
+    onSelect(item) {
+      // 点击选项时默认不会关闭菜单，可以手动关闭
+      this.isShowDeleteComment = false
+      this.updateCommentStatus()
+    },
+    onCancel() {},
     // 举报反馈
     feedbackClickHandler() {
-      // this.$router.push({path:`/discover/edit/${this.$route.params.id}/${this.$route.params.city}`,query:this.$route.query})
+      this.$router.push({ path: '/discover/reportFeedback', query: { id: this.infoId } })
+    },
+    // 编辑按钮点击处理
+    editClickHandler() {
+      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
     },
     // 收藏文章按钮点击
     async collectHandler() {
@@ -296,6 +482,15 @@ export default {
         this.$toast('取消收藏成功')
       }
     },
+    // 分享按钮点击处理
+    shareHandler() {
+      this.guidanceShow = true
+    },
+    // 设置分享
+    async setShare() {
+      this.shareData.success = this.articleShare
+      window.awHelper.wechatHelper.setShare(this.shareData)
+    },
     // 分享成功之后
     async articleShare() {
       let params = {
@@ -304,12 +499,15 @@ export default {
       }
       const result = await discoverService.articleShare(params)
     },
-    // 编辑按钮点击处理
-    editClickHandler() {
-      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
-    },
     // 设置分享
     async shareHandler() {
+      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {//分享点进去，没有签名信息，从新签名
+        try {
+          await window.awHelper.wechatHelper.init()
+        } catch (e) {
+          console.log('[error:window.awHelper.wechatHelper]')
+        }
+      }
       this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
     }
@@ -323,6 +521,64 @@ export default {
 }
 </script>
 <style lang="less">
+.guidance-view{
+  position:fixed;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,.7);
+    z-index:6;
+    .top{
+      width:100%;
+      height:171px;
+      font-size:17px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      display:flex;
+      margin-top:10px;
+      p:nth-child(1){
+        margin-left:120px;
+        margin-top:158px;
+      }
+      p:nth-child(2){
+        width:69px;
+        height:171px;
+       position: relative;
+       margin-left:10px;
+       span {
+              position:absolute;
+              display:inline-block;
+              width: 5px;
+              height: 5px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 1);
+            }
+        span:nth-child(1){
+          top:-7px;
+          right: -3px;
+        }
+        span:nth-child(2){
+          bottom:-2.5px;
+          left:-7px;
+        }
+      }
+    }
+  .bottom{
+    width:95px;
+    height:32px;
+    border-radius:16px;
+    opacity:0.6163000000000001;
+    border:1px solid rgba(255,255,255,1);
+    text-align:center;
+    font-size:17px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:32px;
+    margin-top:168px;
+    margin-left:150px;
+  }
+  }
 .popup-view {
   width: 260px;
   height: 371px;
@@ -479,8 +735,17 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         > .easy-look-left {
+          display: flex;
+          flex-direction: row;
         }
         > .easy-look-right {
+          display: flex;
+          flex-direction: row;
+        }
+        .easy-look-icon {
+          width: 16px;
+          height: 16px;
+          margin-right: 4px;
         }
         .easy-look-text {
           color: #445166;
@@ -503,48 +768,53 @@ export default {
     }
     // 评论
     > .comment-container {
-      
-      > .comment-list-wrap {
-        margin-top: 20px;
-        padding: 0 16px;
-        > .comment-list {
-          display: flex;
-          flex-direction: row;
-          margin-bottom: 20px;
-          > .comment-right {
-            margin-left: 8px;
+      > .comment-box {
+        > .comment-list-wrap {
+          margin-top: 20px;
+          padding: 0 16px;
+          > .comment-list {
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            > .comment-name-wrap {
+            flex-direction: row;
+            margin-bottom: 20px;
+            > .comment-right {
+              width: 85%;
+              margin-left: 8px;
               display: flex;
-              > .comment-name {
-              color: #333333;
-              font-size: 14px;
-              font-weight: bold;
-            }
-            > .comment-reply {
-              color: #333333;
-              font-size: 14px;
-            }
-            }
-            > .comment-content {
-              color: #333333;
-              font-size: 14px;
-              margin-top: 8px;
+              flex-direction: column;
+              > .comment-name-wrap {
+                height: 20px;
+                display: flex;
+                > .comment-name {
+                  color: #333333;
+                  font-size: 14px;
+                  font-weight: bold;
+                }
+                > .comment-reply {
+                  color: #333333;
+                  font-size: 14px;
+                }
+              }
+              > .comment-content {
+                color: #333333;
+                font-size: 14px;
+                margin-top: 3px;
+              }
             }
           }
-        }
-        > .comment-list-more {
-          color: #969EA8;
-          font-size: 14px;
-          margin: 20px 0;
-          text-align: center;
+          > .comment-list-more {
+            color: #969ea8;
+            font-size: 14px;
+            margin: 20px 0;
+            text-align: center;
+          }
         }
       }
+
       > .comment-input-wrap {
-        padding: 0 16px;
+        padding: 10px 16px;
         > .comment-textarea {
-          background-color: #F2F6F7;
+          background-color: #f2f6f7;
           border-radius: 6px;
           height: 30px;
           line-height: 30px;
@@ -596,7 +866,10 @@ export default {
       margin: 15px 0;
     }
   }
-
+  .comment-delete {
+    color: #ea4d2e;
+    font-size: 16px;
+  }
   > .tools-bar {
     width: 100%;
     background-color: #fff;

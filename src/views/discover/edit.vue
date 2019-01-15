@@ -88,7 +88,7 @@ export default {
   methods: {
     // 获取文章信息
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city)
       this.info = res
 
       // 创建虚拟dom解析html结构
