@@ -3,7 +3,7 @@
     <Guide v-if="showGuide" @hideGuide="hideStep"/>
     <div class="tab-bar scale-1px-bottom">
       <div class="classify">
-        <span :class="{'recommend': index===0, 'active': item.itemCode===classify && item.itemName === classifyName}" v-for="(item, index) in articleType" :key="index" @click="changeClassify(item)">{{item.itemName}}</span>
+        <span :class="{'recommend': item.itemCode===classify && item.itemName === classifyName}" v-for="(item, index) in articleType" :key="index" @click="changeClassify(item)">{{item.itemName}}</span>
       </div>
       <span class="icon" @click="showSubFn">
         <img v-show="!showSub" src="../../assets/img/article/tabicon.png" alt="">
@@ -47,17 +47,17 @@
                   <div class="list">
                     <span class="name" v-for="(data,num) in item.praiseAndShareUserVOS" :key="num" @click="" v-show="num < item.likeCount-1">{{data.userName}}<label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label></span>
                     <span class="more" v-show="item.praiseAndShareUserVOS.length > item.likeCount" @click="item.likeCount=item.praiseAndShareUserVOS.length">展开查看<van-icon name="arrow-down" /></span>
-                    <span class="more" v-show="item.praiseAndShareUserVOS.length <= item.likeCount" @click="item.likeCount=25" >收起<van-icon name="arrow-up" /></span>
+                    <span class="more" v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 25" @click="item.likeCount=25" >收起<van-icon name="arrow-up" /></span>
                   </div>
                 </div>
                 <div class="comment-box" v-show="item.discussVOS.length">
                   <span class="icon"><img src="../../assets/img/article/dis1.png" alt=""></span>
                   <div class="list">
                     <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
-                      <p  v-show="num < item.replayCount-1"><span class="name">{{data.senderName}}</span><span class="name" v-if="data.receiverName ">回复{{data.receiverName }}</span>:<span class="content">{{data.content}}</span></p>
+                      <p  v-show="num < item.replayCount-1"><span class="name">{{data.senderName}}</span><span class="text" v-if="data.receiverName">回复</span><span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:<span class="replay-cnt">{{data.content}}</span></p>
                     </div>
                     <span class="more" v-show="item.discussVOS.length > item.replayCount" @click="item.replayCount=item.discussVOS.length">展开查看<van-icon name="arrow-down" /></span>
-                    <span class="more" v-show="item.discussVOS.length === item.replayCount" @click="item.replayCount=5">收起<van-icon name="arrow-up" /></span>
+                    <span class="more" v-show="item.discussVOS.length === item.replayCount && item.discussVOS.length > 5" @click="item.replayCount=5">收起<van-icon name="arrow-up" /></span>
                   </div>
                   
                 </div>
@@ -90,15 +90,15 @@
     <div class="replay" v-show="showReplay">
       <div class="replay-cnt">
         <div class="top-action">
-          <span class="cancle">取消</span>
-          <span  class="publish"><button>发布</button></span>
+          <span class="cancle" @click="hideReplayFn">取消</span>
+          <span  class="publish" @click=""><button>发布</button></span>
         </div>
         <div class="replay-title">
-          {{'这是文章的标题市到访客市到访客开发商的房价开始打'}}
+          {{}}
         </div>
         <div class="replay-box">
           <span class="name">回复{{'王毅'}}</span>
-          <textarea class="textarea" name="" id="" ref="replaybox" maxlength="140" v-model="replayCnt">这是文章的标题市到访客市到访客开发商的房价开始打</textarea>
+          <textarea class="textarea" name="" id="" ref="replaybox" maxlength="140" v-model="replayCnt"></textarea>
         </div>
       </div>
     </div>
@@ -136,7 +136,8 @@ export default {
       sortType: 1,  // 排序
       classifyName: '推荐', // 分类
       showLoading: false, // loading
-      replayCnt: ''
+      replayCnt: '', // 评论内容
+      replayItem: '' // 评论文章
     }
   },
   created () {
@@ -235,15 +236,19 @@ export default {
       }
     },
     // 展示评论框
-    showReplayFn () {
+    showReplayFn (item, index) {
+      this.replayItem = item
       this.showReplay = true
       this.$nextTick(function() {
         this.$refs.replaybox.focus()
       })
     },
-    // 新增文章
-    goAdd () {
-      this.$router.push('/discover/newlyAdded/index')
+    // 隐藏评论框
+    hideReplayFn () {
+      this.showReplay = false
+    },
+    insertCommentFn () {
+
     },
     // 评论
     async insertComment (item, index) {
@@ -261,6 +266,10 @@ export default {
       if (result) {
 
       }
+    },
+    // 新增文章
+    goAdd () {
+      this.$router.push('/discover/newlyAdded/index')
     },
     // 加载更多
     onLoad() {
@@ -453,6 +462,18 @@ export default {
               -webkit-box-orient: vertical;
               .name{
                 margin: 0 5px 5px 0;
+              }
+            }
+          }
+          .comment-box{
+            font-size: 14px;
+            .comment-item{
+              margin-bottom: 5px;
+              .replay-cnt{
+                margin-left: 8px;
+              }
+              .text{
+                margin: 0 5px;
               }
             }
           }
