@@ -4,7 +4,7 @@
       <van-search
         class="search-container"
         v-model="searchVal"
-        placeholder="请输入楼盘名称"
+        placeholder="请输入客户名称"
         show-action
         @search="onSearchHandler"
         @click="onFocusHandler"
@@ -19,7 +19,7 @@
     <!-- <div class="popup-container">
 
     </div>-->
-    <div class="sort-container" v-show="sortShow">
+    <div class="sort-container" v-show="sortShow" @click="sortHandle">
       <ul>
         <li class="van-hairline-bottom" @click="sortClickHandler('intention')">意向度排序</li>
         <li class="van-hairline-bottom" @click="sortClickHandler('createTime')">
@@ -95,6 +95,9 @@ export default {
     onSearchHandler() {
       this.currentData.page = 1
       this.onLoad()
+    },
+    sortHandle(){
+      this.sortShow = false
     },
     onSortHandler() {
       this.sortShow = !this.sortShow
