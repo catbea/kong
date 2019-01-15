@@ -450,12 +450,13 @@ class UserService {
    * @param {*} current 
    * @param {*} size 
    */
-  queryWriteArticleList(type, current, size = 10) {
+  queryWriteArticleList(type, current, infoId, size = 10) {
     return xhr({
       url: '/cpInformation/queryMyArticleList',
       body: {
         type,
-        current
+        current,
+        infoId
       }
     })
   }

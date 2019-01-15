@@ -1,11 +1,16 @@
 <template>
   <div>
-    <div class="write-item-body" @click="enterDetail" v-for="(item, index) in dataArray" :key="index">
+    <div
+      class="write-item-body"
+      v-for="(item, index) in dataArray"
+      :key="index"
+      @click="enterDetail(selectType,item.id)"
+    >
       <div class="write-item-left">
         <span class="article-title">{{item.title}}</span>
         <div class="share-bottom">
           <span class="share-time">分享时间：2019/1/6 16:33</span>
-          <div class="collection-view" v-if="selectType=='3'"  @click="cancelCollect">
+          <div class="collection-view" v-if="selectType=='3'" @click="cancelCollect">
             <span class="collection-text">取消收藏</span>
             <img class="collection-img" :src="cancelCollection">
           </div>
@@ -36,11 +41,15 @@ export default {
     }
   },
   methods: {
-    enterDetail() {
-      this.$emit('enterDetail', '')
+    enterDetail(selectType, id) {
+      let obj = {
+        selectType: selectType,
+        infoId: id
+      }
+      this.$emit('enterDetail', obj)
     },
-    cancelCollect(){
-       this.$emit('cancelCollect', '')
+    cancelCollect() {
+      this.$emit('cancelCollect', '')
     }
   },
   computed: {}
@@ -54,7 +63,6 @@ export default {
   padding: 11px 15px;
   justify-content: space-between;
   background: #ffffff;
-  border-bottom: #e2e2e3 1px solid;
   border-top: 1px #e5e5f0 solid;
 
   > .write-item-left {

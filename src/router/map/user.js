@@ -99,6 +99,15 @@ export default [
       title: '我的写一写'
     }
   },
+  //我的写一写二级列表
+  {
+    path: '/user/articles/easyLookChildList',
+    name: 'easyLookChildList',
+    component: resolve => require(['@/views/user/articles/easyLookChildList.vue'], resolve),
+    meta: {
+      title: '我的写一写'
+    }
+  },
   {
     path: '/user/articles/easyLookList',
     name: 'easyLookList',
