@@ -149,7 +149,7 @@ export default {
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '1')
+      const res = await discoverService.getDiscoverDetailForH5(this.id, this.city, this.enterpriseId, this.agentId, 1)
       this.info = res
 
       this.infoId = res.id

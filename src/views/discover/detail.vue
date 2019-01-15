@@ -28,7 +28,7 @@
         <div class="easy-look-top">
           <div class="easy-look-left">
             <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
-            <div class="easy-look-text">{{likeTimes}}人觉得好看</div>
+            <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
             <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
@@ -37,43 +37,52 @@
         </div>
         <div class="easy-look-list">
           {{easylookList && easylookList.join('、')}}
-          <span class="easy-look-fold" v-if="isMoreLike">展开更多</span>
+          <span
+            class="easy-look-fold"
+            v-if="isMoreLike"
+          >展开更多</span>
         </div>
       </div>
       <!-- 评论 -->
-      <div class="comment-container" v-if="commentList.length">
-        <title-bar :conf="titleComments"/>
-        <div class="comment-list-wrap">
-          <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-            <div
-              class="bg_img"
-              :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
-              style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
-            ></div>
-            <div class="comment-right">
-              <div class="comment-name-wrap">
-                <span
-                  class="comment-name"
-                  @click="commentSenderClickHandler(item)"
-                >{{item.senderName}}</span>
-                <span
-                  v-if="item.receiverName"
-                  style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
-                >回复</span>
-                <span
-                  class="comment-reply"
-                  v-if="item.receiverName"
-                  @click="commentReceiverClickHandler(item)"
-                >{{item.receiverName}}</span>
+      <div class="comment-container">
+        <div class="comment-box" v-if="commentList.length">
+          <title-bar :conf="titleComments"/>
+          <div class="comment-list-wrap">
+            <div class="comment-list" v-for="(item, index) in commentList" :key="index">
+              <div
+                class="bg_img"
+                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+                style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
+                @click="commentSenderClickHandler(item)"
+              ></div>
+              <div class="comment-right">
+                <div class="comment-name-wrap">
+                  <span
+                    class="comment-name"
+                    @click="commentSenderClickHandler(item)"
+                  >{{item.senderName}}</span>
+                  <span
+                    v-if="item.receiverName"
+                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                  >回复</span>
+                  <span
+                    class="comment-reply"
+                    v-if="item.receiverName"
+                    @click="commentReceiverClickHandler(item)"
+                  >{{item.receiverName}}</span>
+                </div>
+                <div class="comment-content">{{item.content}}</div>
+                <div></div>
               </div>
-              <div class="comment-content">{{item.content}}</div>
-              <div></div>
             </div>
+            <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
           </div>
-          <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
         </div>
         <div class="comment-input-wrap">
-          <textarea class="comment-textarea" placeholder="我来说两句" maxlength="140" rows="5" @focus="focusHandler"></textarea>
+          <!-- <textarea class="comment-textarea" placeholder="我来说两句" maxlength="140" rows="5" @focus="focusHandler"></textarea> -->
+          <div class="comment-textarea" @click="commentClickHandler">
+            <div style="color:#969EA8;font-size:14px;">我来说两句</div>
+          </div>
         </div>
       </div>
     </div>
@@ -126,7 +135,13 @@
       @cancel="onCancel"
     ></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
-    <comment-alert :show="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+    <comment-alert
+      :show.sync="showCommentAlert"
+      :info="commentInfo"
+      @cancel="cancelHandler"
+      @publish="publishHandler"
+      @input="inputHandler"
+    ></comment-alert>
   </div>
 </template>
 <script>
@@ -172,44 +187,20 @@ export default {
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
-    likeTimes: 0, // 好看数
     isMoreLike: true, // 是否有更多好看
     easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
-    easylookList: [
-      '张佳玮',
-      '静静',
-      '路遥|AW大师',
-      '小风风',
-      '坑坑',
-      '辣椒',
-      'A链家-小李',
-      '小锅锅mike',
-      '红色诺亚',
-      '贾班王',
-      '中原-小陈',
-      '张佳玮',
-      '静静',
-      '路遥|AW大师',
-      '小风风',
-      '坑坑',
-      '辣椒',
-      'A链家-小李',
-      '小锅锅mike',
-      '红色诺亚',
-      '贾班王',
-      '中原-小陈'
-    ],
+    easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,
     isMoreComment: false,
-    commentList: [],
+    commentList: [], // 评论列表
     selectCommentId: '', // 选中的评论ID
     commentContent: '', // 评论内容
     isShowDeleteComment: false, // 是否显示删除评论上拉菜单
     actions: [{ name: '删除评论', className: 'comment-delete' }],
     showCommentAlert: false, // 是否显示评论输入框
     commentInfo: null,
-    commentIds: [], // 评论Ids
+    commentIds: [] // 评论Ids
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -219,10 +210,11 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.guidanceShow = true
-    }else {
+    } else {
       this.guidanceShow = false
     }
     this.getDetail()
+    this.getLikeList()
     this.getCommentList()
     // this.getQrCode(this.agentId)
   },
@@ -231,11 +223,11 @@ export default {
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
+      const res = await discoverService.getDiscoverDetail(this.id, this.city)
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
-      this.likeTimes = res.likeTimes
+      
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -256,9 +248,19 @@ export default {
       this.virtualDom.innerHTML = this.info.content
       console.log(this.virtualDom)
     },
+    // 好看列表
+    async getLikeList() {
+      const res = await discoverService.queryLikeList(this.id)
+      if (res && res.length > 0) {
+        for (var index in  res) {
+          let item = res[index]
+          this.easylookList.push(item.userName)
+        }
+      }
+    },
     // 评论列表
     async getCommentList() {
-      const res = await discoverService.commentList(this.commentCur, this.commentCur==1?5:10, this.id)
+      const res = await discoverService.commentList(this.commentCur, this.commentSize, this.id)
       if (res.pages <= this.commentCur) {
         this.isMoreComment = false
       } else {
@@ -271,6 +273,7 @@ export default {
       }
       if (this.commentList && this.commentList.length > 0) {
         this.commentCur++
+        this.filterComment()
       }
     },
     // 修改评论的状态(删除自己的评论)
@@ -283,14 +286,17 @@ export default {
       let param = {
         enterpriseId: this.enterpriseId,
         infoId: this.infoId,
+        parentId: receiver ? receiver.parentId : '',
         content: this.commentContent,
         senderId: this.agentId,
         senderSource: 0, // 0-企业微信；1-小程序
         receiverId: receiver ? receiver.receiverId : '',
-        receiverSource: receiver ? receiver.receiverSource: '',
-        type: receiver.type
+        receiverSource: receiver ? receiver.receiverSource : '',
+        type: receiver.type // 0-评论，1-回复
       }
       const res = await discoverService.insertComment(param)
+      this.commentIds.push(res.id)
+      this.commentList.push(res)
     },
 
     //进入楼盘详情
@@ -306,32 +312,37 @@ export default {
     },
     // 好看点击事件
     easyLookClickHandler() {},
-   focusHandler() {
-     this.showCommentAlert = true
-     this.commentInfo = {
-       receiverId: '',
-       receiverName: '', 
-       receiverSource: '', 
-       senderId: this.agentId,
-       senderSource: 0,
-       title: this.info.title, 
-       placeholder: '分享你的想法', 
-       type: 0
+    // 点击评论
+    commentClickHandler() {
+      this.showCommentAlert = true
+      this.commentInfo = {
+        parentId: '',
+        receiverId: '',
+        receiverName: '',
+        receiverSource: '',
+        senderId: this.agentId,
+        senderSource: 0,
+        title: this.info.title,
+        placeholder: '分享你的想法',
+        type: 0
       }
-   },
-   inputHandler(commentContent) {
-     console.log(commentContent)
-     this.commentContent = commentContent
-   },
-   // 取消评论
-   cancelHandler () {
-     this.showCommentAlert = false
-   },
-   // 发布评论
-   publishHandler() {
-     this.showCommentAlert = false
-     this.insertComment(this.commentInfo)
-   },
+    },
+    // 评论输入框编辑
+    inputHandler(commentContent) {
+      console.log(commentContent)
+      this.commentContent = commentContent
+    },
+    // 取消评论
+    cancelHandler() {
+      this.showCommentAlert = false
+      this.commentContent = ''
+    },
+    // 发布评论
+    publishHandler() {
+      this.showCommentAlert = false
+      this.insertComment(this.commentInfo)
+      this.commentContent = ''
+    },
     // 查看更多评论
     moreCommentHandler() {
       this.getCommentList()
@@ -346,13 +357,14 @@ export default {
         this.isShowDeleteComment = false
         this.showCommentAlert = true
         this.commentInfo = {
+          parentId: item.id,
           receiverId: item.senderId,
           receiverName: item.senderName,
-          receiverSource: item.receiverSource, 
+          receiverSource: item.receiverSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: this.info.title, 
-          placeholder: '回复' + item.senderName + '：', 
+          title: this.info.title,
+          placeholder: '回复' + item.senderName + '：',
           type: 1
         }
       }
@@ -367,33 +379,63 @@ export default {
         this.isShowDeleteComment = false
         this.showCommentAlert = true
         this.commentInfo = {
-          receiverId: item.receiverId, 
-          receiverName: item.receiverName, 
+          parentId: item.id,
+          receiverId: item.receiverId,
+          receiverName: item.receiverName,
           receiverSource: item.receiverSource,
           senderId: this.agentId,
-          senderSource: 0, 
-          title: this.info.title, 
-          placeholder: '回复' + item.receiverName + '：', 
+          senderSource: 0,
+          title: this.info.title,
+          placeholder: '回复' + item.receiverName + '：',
           type: 1
         }
       }
     },
     // 删除对象（删除评论）
     removeObject(arr, id) {
-      for(var i = 0, len = arr.length; i < len; i++) {
+      for (var i = 0, len = arr.length; i < len; i++) {
         if (arr[i].id == id) {
           if (i == 0) {
             arr.shift()
             return arr
-          }else if(i == len - 1) {
+          } else if (i == len - 1) {
             arr.pop()
             return arr
-          }else {
+          } else {
             arr.splice(i, 1)
             return arr
           }
         }
       }
+    },
+    // 过滤评论(自己回复的评论前端处理,不取后台的数据)
+    filterComment() {
+      let filterList = []
+      for (var index in this.commentIds) {
+        let commentId = this.commentIds[index]
+        this.commentList = this.removeObject(this.commentList, commentId)
+        console.log(this.commentList)
+      }
+    },
+    // 新增评论
+    addComment() {
+      let commentInfo = {
+          parentId: item.id,
+          receiverId: item.receiverId,
+          receiverName: item.receiverName,
+          receiverSource: item.receiverSource,
+          senderId: this.agentId,
+          senderSource: 0,
+          title: this.info.title,
+          placeholder: '回复' + item.receiverName + '：',
+          type: 1
+        }
+    },
+    // 数组的浅拷贝
+    copyArray(arr) {
+      var result = []
+      result = arr.concat()
+      return result
     },
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
@@ -403,7 +445,7 @@ export default {
     onCancel() {},
     // 举报反馈
     feedbackClickHandler() {
-      this.$router.push({path:'/discover/reportFeedback', query: {id: this.infoId}})
+      this.$router.push({ path: '/discover/reportFeedback', query: { id: this.infoId } })
     },
     // 编辑按钮点击处理
     editClickHandler() {
@@ -557,47 +599,51 @@ export default {
     }
     // 评论
     > .comment-container {
-      > .comment-list-wrap {
-        margin-top: 20px;
-        padding: 0 16px;
-        > .comment-list {
-          width: 100%;
-          display: flex;
-          flex-direction: row;
-          margin-bottom: 20px;
-          > .comment-right {
-            width: 85%;
-            margin-left: 8px;
+      > .comment-box {
+        > .comment-list-wrap {
+          margin-top: 20px;
+          padding: 0 16px;
+          > .comment-list {
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            > .comment-name-wrap {
+            flex-direction: row;
+            margin-bottom: 20px;
+            > .comment-right {
+              width: 85%;
+              margin-left: 8px;
               display: flex;
-              > .comment-name {
+              flex-direction: column;
+              > .comment-name-wrap {
+                height: 20px;
+                display: flex;
+                > .comment-name {
+                  color: #333333;
+                  font-size: 14px;
+                  font-weight: bold;
+                }
+                > .comment-reply {
+                  color: #333333;
+                  font-size: 14px;
+                }
+              }
+              > .comment-content {
                 color: #333333;
                 font-size: 14px;
-                font-weight: bold;
+                margin-top: 3px;
               }
-              > .comment-reply {
-                color: #333333;
-                font-size: 14px;
-              }
-            }
-            > .comment-content {
-              color: #333333;
-              font-size: 14px;
-              margin-top: 8px;
             }
           }
-        }
-        > .comment-list-more {
-          color: #969ea8;
-          font-size: 14px;
-          margin: 20px 0;
-          text-align: center;
+          > .comment-list-more {
+            color: #969ea8;
+            font-size: 14px;
+            margin: 20px 0;
+            text-align: center;
+          }
         }
       }
+
       > .comment-input-wrap {
-        padding: 0 16px;
+        padding: 10px 16px;
         > .comment-textarea {
           background-color: #f2f6f7;
           border-radius: 6px;
