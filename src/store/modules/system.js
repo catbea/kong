@@ -20,10 +20,10 @@ const state = {
         info: 0
       },
       {
-        name: '写一写',
+        name: '发现',
         icon: require('IMG/tabbar/dis_tab.png'),
         icon_atc: require('IMG/tabbar/dis_tab_act.png'),
-        path: '/write-article',
+        path: '/discover',
         info: 0
       },
       {
