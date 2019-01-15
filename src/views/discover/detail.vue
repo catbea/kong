@@ -1,5 +1,15 @@
 <template>
   <div class="discover-detail-page">
+    <!-- 首次引导分享 -->
+    <div class="guidance-view" v-if="!articleShareFlag&&!article">
+      <div class="top">
+       <p>点击此处分享给好友</p>
+       <p :style="{backgroundImage:'url('+lineImg+')'}" class="bg_img">
+         
+       </p>
+      </div>
+      <p class="bottom" @click="sharePopupHandle">知道了</p>
+    </div>
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
@@ -108,7 +118,7 @@
     <!-- <div class="recommend-discover" v-if="info&&info.recommendInformationList">
       <title-bar :conf="titleArticle"/>
       <div class="recommend-discover-content">
-        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
+        <discover-item v-for="item in recommendInformationList" :key="item.id" :data="item"/>
       </div>
     </div>-->
     <!-- 悬浮工具栏 -->
@@ -152,7 +162,9 @@ import CommentAlert from 'COMP//Discover/CommentAlert'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import discoverService from 'SERVICE/discoverService'
+import commonService from 'SERVICE/commonService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
@@ -164,6 +176,7 @@ export default {
     CommentAlert
   },
   data: () => ({
+    recommendInformationList:[],//去重推荐文章
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12,
@@ -183,6 +196,7 @@ export default {
       linkText: '',
       link: ''
     },
+<<<<<<< HEAD
     guidanceShow: true,
     qrcodeInfo: {},
     shareData: null,
@@ -201,6 +215,20 @@ export default {
     showCommentAlert: false, // 是否显示评论输入框
     commentInfo: null,
     commentIds: [] // 评论Ids
+=======
+    titleArticle: {
+      title: '推荐文章',
+      linkText: '查看全部',
+      link: '/discover'
+    },
+    openPopup: false,
+    lineImg:require('IMG/marketDetail/yindao.png'),
+    closeImg: require('IMG/user/close_popup.png'),
+    qrcodeInfo: {},
+    shareData: null,
+    articleShareFlag:0,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    article:false
+>>>>>>> v3.0.3
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -208,6 +236,7 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
+<<<<<<< HEAD
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.guidanceShow = true
     } else {
@@ -217,11 +246,32 @@ export default {
     this.getLikeList()
     this.getCommentList()
     // this.getQrCode(this.agentId)
+=======
+    this.classify=this.$route.query.classify
+    this.getDetail()
+    this.getQrCode(this.agentId)
+    this.getRecommendInfo()
+    if(this.userInfo.articleShareFlag==0){//0：未完成指引；1：已完成指引 
+      this.articleShareFlag=false
+    }else{
+      this.articleShareFlag=true
+    }
+    this.article=this.guidance.article
+>>>>>>> v3.0.3
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo','guidance'])
   },
   methods: {
+   async sharePopupHandle(){//首次进入引导
+      await commonService.updateUserExpandInfo(1)
+      this.$store.commit(types.ARTICLE_SHARE_FLAG,true)
+      this.article=true
+    },
+   async getRecommendInfo(){//去重推荐文章
+      const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
+      this.recommendInformationList=res.records  
+    },
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id, this.city)
       this.info = res
@@ -481,6 +531,21 @@ export default {
         infoId: this.infoId
       }
       const result = await discoverService.articleShare(params)
+<<<<<<< HEAD
+=======
+    },
+    // 设置分享
+    async shareHandler() {
+      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {//分享点进去，没有签名信息，从新签名
+        try {
+          await window.awHelper.wechatHelper.init()
+        } catch (e) {
+          console.log('[error:window.awHelper.wechatHelper]')
+        }
+      }
+      this.shareData.success = this.articleShare
+      window.awHelper.wechatHelper.setShare(this.shareData)
+>>>>>>> v3.0.3
     }
   },
   watch: {
@@ -492,6 +557,149 @@ export default {
 }
 </script>
 <style lang="less">
+<<<<<<< HEAD
+=======
+.guidance-view{
+  position:fixed;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,.7);
+    z-index:6;
+    .top{
+      width:100%;
+      height:171px;
+      font-size:17px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      display:flex;
+      margin-top:10px;
+      p:nth-child(1){
+        margin-left:120px;
+        margin-top:158px;
+      }
+      p:nth-child(2){
+        width:69px;
+        height:171px;
+       position: relative;
+       margin-left:10px;
+       span {
+              position:absolute;
+              display:inline-block;
+              width: 5px;
+              height: 5px;
+              border-radius: 50%;
+              background: rgba(255, 255, 255, 1);
+            }
+        span:nth-child(1){
+          top:-7px;
+          right: -3px;
+        }
+        span:nth-child(2){
+          bottom:-2.5px;
+          left:-7px;
+        }
+      }
+    }
+  .bottom{
+    width:95px;
+    height:32px;
+    border-radius:16px;
+    opacity:0.6163000000000001;
+    border:1px solid rgba(255,255,255,1);
+    text-align:center;
+    font-size:17px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:32px;
+    margin-top:168px;
+    margin-left:150px;
+  }
+  }
+.popup-view {
+  width: 260px;
+  height: 371px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > .close-titile {
+    width: 100%;
+    height: 24px;
+    display: flex;
+    flex-direction: row-reverse;
+
+    > .closePopup {
+      width: 24px;
+      height: 24px;
+      margin-top: 8px;
+      margin-right: 8px;
+    }
+  }
+
+  > .notice-view {
+    color: #333333;
+    font-size: 16px;
+  }
+
+  > .qrcode-view {
+    width: 162px;
+    height: 162px;
+    text-align: center;
+    margin-top: 11px;
+    padding: 5px;
+  }
+
+  > .introduce-box {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-left: -45px;
+
+    > .username-view {
+      color: #333333;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+    > .introduce-view {
+      font-size: 14px;
+      color: #666666;
+      margin-top: 3px;
+    }
+
+    > .company-view {
+      margin-top: 7px;
+      color: #666666;
+      font-size: 12px;
+    }
+
+    > .phone-view {
+      margin-top: 12px;
+      color: #666666;
+      font-size: 12px;
+    }
+  }
+
+  > .info-bottom {
+    width: 100%;
+    height: 32px;
+    margin-bottom: 0;
+    background: #eeeeee;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > .info-view {
+      color: #666666;
+      font-size: 12px;
+      background-color: #eeeeee;
+    }
+  }
+}
+
+>>>>>>> v3.0.3
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {

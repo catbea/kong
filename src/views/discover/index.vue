@@ -87,6 +87,8 @@ export default {
     async onLoad() {
       let current = this.getCurrentType()
       const result = await discoverService.getDiscoverList(this.userInfo.majorCity, current.type, current.page)
+      console.log(result,"发现列表数据");
+      
       if (result.records.length > 0) {
         current.list = current.list.concat(result.records)
         if (current.page == result.page) {
