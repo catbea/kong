@@ -7,36 +7,43 @@ const state = {
     items: [
       {
         name: '数据',
-        icon: require('IMG/tabbar/data_tab.png'),
-        icon_atc: require('IMG/tabbar/data_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x.png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13 Copy 6@2x.png'),
         path: '/dynamics',
         info: 0
       },
       {
         name: '楼盘',
-        icon: require('IMG/tabbar/project_tab.png'),
-        icon_atc: require('IMG/tabbar/project_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x(1).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13@2x(5).png'),
         path: '/market',
         info: 0
       },
       {
+<<<<<<< HEAD
         name: '写一写',
         icon: require('IMG/tabbar/dis_tab.png'),
         icon_atc: require('IMG/tabbar/dis_tab_act.png'),
         path: '/article',
+=======
+        name: '发现',
+        icon: require('IMG/tabbar/Rectangle 13@2x(2).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13 Copy 5@2x.png'),
+        path: '/discover',
+>>>>>>> 272b2bc557e99f3d0b9389fb6424961a607e225c
         info: 0
       },
       {
         name: '客户',
-        icon: require('IMG/tabbar/client_tab.png'),
-        icon_atc: require('IMG/tabbar/client_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x(3).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13@2x(6).png'),
         path: '/custom',
         info: 0
       },
       {
         name: '名片',
-        icon: require('IMG/tabbar/card_tab.png'),
-        icon_atc: require('IMG/tabbar/card_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x(4).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13@2x(7).png'),
         path: '/user',
         info: 0
       }
