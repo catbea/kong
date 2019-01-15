@@ -144,8 +144,14 @@ export default {
     // },
     async getsetMsgRead(){
       //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
-     await dynamicsService.getsetMsgRead()
-     this.getMsgList()
+      
+      await dynamicsService.getsetMsgRead()
+       const res = await dynamicsService.getAgentMsgAndTotal(1,1,this.size)
+       this.messageList = res.msgPage.records
+       this.sysMessage = res.systemMessage
+       this.getcpUnreadMsgTotal()
+      // window.location.reload()
+    //  this.getMsgList()
     },
   
     gosysMessage() {
