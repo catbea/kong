@@ -208,7 +208,8 @@ export default {
     isShowDeleteComment: false, // 是否显示删除评论上拉菜单
     actions: [{ name: '删除评论', className: 'comment-delete' }],
     showCommentAlert: false, // 是否显示评论输入框
-    commentInfo: {name: '王毅', content: '年前不景气，看看年后怎么样呗年前不景气，看看年后怎么样呗年前不景气，看看年后怎么样呗年前不景气，看看年后怎么样呗'}
+    commentInfo: null,
+    commentIds: [], // 评论Ids
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
