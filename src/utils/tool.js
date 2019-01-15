@@ -104,7 +104,7 @@ export function downloadFile (content, fileName) {
 
 // 格式化时间 xx小时前
 export function formatTime (time, option) {
-  time = +time * 1000
+  time = +time
   const d = new Date(time)
   const now = Date.now()
   const diff = (now - d) / 1000
@@ -123,7 +123,7 @@ export function formatTime (time, option) {
     return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
   }
 }
-// 格式化时间  yyyy-mm-dd
+// 格式化时间  {y}-{m}-{d}
 export function parseTime (time, cFormat) {
   if (arguments.length === 0) {
     return null

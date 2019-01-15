@@ -19,6 +19,17 @@ class ArticleService {
       body: data
     })
   }
+
+  /**
+   * 文章点赞
+   */
+  updateLike (data) {
+    return xhr({
+      url: '/cpInformation/updateLikeNum',
+      method: 'post',
+      body: data
+    })
+  }
   
 }
 
