@@ -5,7 +5,7 @@
         <span class="article-title">{{item.title}}</span>
         <div class="share-bottom">
           <span class="share-time">分享时间：2019/1/6 16:33</span>
-          <div class="collection-view" v-if="selectType=='3'">
+          <div class="collection-view" v-if="selectType=='3'"  @click="cancelCollect">
             <span class="collection-text">取消收藏</span>
             <img class="collection-img" :src="cancelCollection">
           </div>
@@ -30,8 +30,6 @@ export default {
   },
   data() {
     return {
-      myImage: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg',
-      tags: ['已收藏', '未分享', '已编辑'],
       cancelCollection: require('IMG/user/myWrite/cancelCollection.png')
       // nullIcon: require('IMG/user/collection/Article@2x.png'),
       // nullcontent: '暂还没有文章记录'
@@ -40,6 +38,9 @@ export default {
   methods: {
     enterDetail() {
       this.$emit('enterDetail', '')
+    },
+    cancelCollect(){
+       this.$emit('cancelCollect', '')
     }
   },
   computed: {}

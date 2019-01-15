@@ -24,6 +24,17 @@ export default [
     path: '/discover/edit/:id/:city',
     name: 'discover-edit',
     component: resolve => require(['@/views/discover/edit.vue'], resolve)
+  },
+  {
+    path: '/discover/reportFeedback',
+    name: 'reportFeedback',
+    component: resolve => require(['@/views/discover/reportFeedback.vue'], resolve),
+    meta: {
+      title: '文章举报反馈',
+      tabbar: {
+        show: false
+      }
+    }
   }
 
 ]
