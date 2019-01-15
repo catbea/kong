@@ -443,5 +443,30 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 测试 - 授权相关 - 根据agentId获取token
+   */
+  getTokenById(agentId, corpId) {
+    return xhr({
+      method: 'POST',
+      url: '/cp/oauth2/getToken',
+      body: {
+        agentId,
+        corpId
+      }
+    })
+  }
+
+  /**
+   * 经纪人楼盘信息
+   * @param {Object} payload 参数过多 直接查看api文档,有相关工具类 screenFilterHelper.js
+   */
+  getMyHouses(payload){
+    return xhr({
+      url: '/myLinker/articleLinkerList',
+      body: payload
+    })
+  }
 }
 export default new UserService()

@@ -2,6 +2,7 @@ import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 import store from '@/store/'
 
 export default async (to, from, next) => {
+  setTimeout(() => { next() }, 3000)
   if (to.meta.skipIM) return next()
   if (store.getters.imUserSig || !store.getters.userInfo.token) return next()
   try {

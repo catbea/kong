@@ -2,17 +2,29 @@
   <div class="discover-edit-page">
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
-      <!-- <div class="discover-detail-content" v-html="info&&info.content"> -->
-      <div class="discover-detail-content">
-        <edit-paragraph v-for="(paragraph,index) in renderDom" :key="index" :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
+      <div class="discover-view-info">
+        <p class="view-count">
+          浏览量:
+          <span>912</span>
+        </p>
+        <p class="view-source">
+          分享源自
+          <span>AW大师写一写</span>
+        </p>
       </div>
-      <p class="discover-extra-info">
-        转载于
-        <span class="reprint-from">{{info&&info.publisher}}</span>
-        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
-        <span class="reprint-views">浏览：{{ info&&info.scanNum | currency('')}}</span>
-      </p>
+      <div class="discover-detail-content">
+        <edit-viewpoint/>
+        <edit-paragraph v-for="(paragraph,index) in renderDom" :key="index" :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
+        <!-- <edit-houses v-model="recommendList"/> -->
+      </div>
     </div>
+    <div class="recommend-house-container">
+      <title-bar :conf="{title:'推荐房源'}"/>
+      <div class="recommend-house-box">
+         <edit-houses v-model="recommendList"/>
+      </div>
+    </div>
+    <!-- 删除段落操作弹窗 -->
     <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect"/>
     <!-- 浮动栏 -->
     <div class="fixed-bar">
@@ -31,19 +43,24 @@
         <div class="save-btn" @click="saveClickHandler">保存</div>
       </div>
     </div>
-    <van-popup class="write-board" v-model="viewpointEditShow" position="bottom" :close-on-click-overlay="false">
-      <p class="write-title">发表观点</p>
-      <div class="pull-btn" @click="viewpointPullHandler">发布</div>
-      <textarea class="write-content" v-model="viewpointText"/>
-    </van-popup>
   </div>
 </template>
 <script>
-import EditParagraph from 'COMP/Discover/edit/editParagraph.vue'
+import EditParagraph from 'COMP/Discover/edit/editParagraph'
+import EditViewpoint from 'COMP/Discover/edit/editViewpoint'
+import EditHouses from 'COMP/Discover/edit/editHouses'
+import TitleBar from 'COMP/TitleBar'
+import EstateItem from 'COMP/EstateItem'
+
 import discoverService from 'SERVICE/discoverService'
+import userService from 'SERVICE/userService'
 export default {
   components: {
-    EditParagraph
+    EditParagraph,
+    EditViewpoint,
+    EditHouses,
+    TitleBar,
+    EstateItem
   },
   data: () => ({
     id: '',
@@ -54,11 +71,11 @@ export default {
     currentDelDom: null, // 当前要处理的dom(点击x的dom)
     delActionsheetShow: false,
     delActions: [{ type: 1, name: '删除此后内容' }, { type: 2, name: '删除选中' }],
-    originalSection: [], // 原始dom解析
     renderDom: [],
-    editStatus: 1, // 1-编辑态 2-预览态
     viewpointEditShow: false,
-    viewpointText: ''
+    viewpointText: '',
+    mergeData:null,       // 混入文章中的楼盘信息
+    recommendList: [],  // 文末的推荐文章
   }),
   created() {
     this.id = this.$route.params.id
@@ -66,6 +83,7 @@ export default {
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
+    this.getMyHouseRecommend()
   },
   methods: {
     // 获取文章信息
@@ -73,59 +91,27 @@ export default {
       const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
       this.info = res
 
-      this.infoId = res.id
-      this.collectionStatus = res.collectType
-
-      this.agentInfo = {
-        agentId: this.info.agentId,
-        agentName: this.info.agentName,
-        avatarUrl: this.info.avatarUrl,
-        distributorName: this.info.distributorName,
-        enterpriseName: this.info.enterpriseName,
-        institutionName: this.info.institutionName
-      }
-
+      // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
-      this.originalSection = []
       for (let dom of virtualDom.children) {
-        this.originalSection.push(dom)
         this.renderDom.push({
           text: dom.innerText,
           status: 'edit'
         })
       }
-      // status   edit-编辑 del-被删除
-
-      // console.log(virtualDom.children);
-
-      // virtualDom.
-      // console.log(this.info.content);
-
-      // this.$nextTick(() => {
-      //   const htmlCollection = document.querySelector('.discover-detail-content').children
-      //   for (let dom of htmlCollection) {
-      //     this.originalSection.push(dom)
-      //   }
-      //   this.editControl(1)
-      // })
     },
-    // 标记文章内容,编辑状态切换 1-编辑态 2-浏览态
-    // editControl(status) {
-    //   if (status === 1) {
-    //     for (let dom of this.originalSection) {
-    //       let closeBtn = document.createElement('i')
-    //       closeBtn.classList.add('icon', 'iconfont', 'icon-search_empty', 'close-btn')
-    //       dom.classList.add('section-edit')
-    //       dom.append(closeBtn)
-    //       closeBtn.addEventListener('click', this.delClickHandler)
-    //     }
-    //     this.crateViewpoint()
-    //     this.createHouses()
-    //   } else {
-    //   }
-    // },
-    // 段落删除处理-弹出选择删除当前或删除以下所有
+    // 获取我的楼盘推荐
+    async getMyHouseRecommend() {
+      const payload = {
+        orderBy: 3, // 人气最旺
+        current: 1,
+        size: 1
+      }
+      const res = await userService.getMyHouses(payload)
+      this.recommendList = res.records
+    },
+    // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
       this.currentDelDom = e.dom
       this.delActionsheetShow = true
@@ -147,41 +133,26 @@ export default {
       this.delActionsheetShow = false
     },
     // 恢复段落处理
-    repealParagraphHandler(e){
+    repealParagraphHandler(e) {
       e.dom.status = 'edit'
     },
-    // onDelCancel(e) {
-    //   console.log(e)
-    // },
-    // 创建观点dom
-    crateViewpoint() {
-      let el = document.createElement('div')
-      el.classList.add('viewpoint-container')
-      el.innerText = '在这里可以写出您的观点（不可换行)'
-      el.addEventListener('click', this.viewpointClickHandler)
-      let indexList = document.querySelector('.discover-detail-content').children
-      document.querySelector('.discover-detail-content').insertBefore(el, indexList[0])
-    },
-    // 创建空楼盘dom
-    createHouses() {
-      let el = document.createElement('div')
-      el.classList.add('edit-houses-container')
-      // 添加“+”图标
-      let addBtn = document.createElement('i')
-      addBtn.classList.add('icon', 'iconfont', 'icon-Focuson_', 'add-icon')
-      el.appendChild(addBtn)
-      // 添加文本
-      let helpText = document.createElement('p')
-      helpText.innerText = '这里可以插入您推荐的楼盘'
-      el.appendChild(helpText)
-      // dom.classList.add('section-edit')
-      // let closeIcon = dom.querySelector('.close-btn')
 
-      // el.addEventListener('click', this.viewpointClickHandler)
-      let indexList = document.querySelector('.discover-detail-content').children
-      let target = indexList[Math.floor(indexList.length / 2)]
-      document.querySelector('.discover-detail-content').insertBefore(el, target)
-    },
+    // 创建空楼盘dom
+    // createHouses() {
+    //   let el = document.createElement('div')
+    //   el.classList.add('edit-houses-container')
+    //   // 添加“+”图标
+    //   let addBtn = document.createElement('i')
+    //   addBtn.classList.add('icon', 'iconfont', 'icon-Focuson_', 'add-icon')
+    //   el.appendChild(addBtn)
+    //   // 添加文本
+    //   let helpText = document.createElement('p')
+    //   helpText.innerText = '这里可以插入您推荐的楼盘'
+    //   el.appendChild(helpText)
+    //   let indexList = document.querySelector('.discover-detail-content').children
+    //   let target = indexList[Math.floor(indexList.length / 2)]
+    //   document.querySelector('.discover-detail-content').insertBefore(el, target)
+    // },
     // 底部栏帮助按钮点击
     helpClickHandler() {
       this.$router.push('/discover/edit-help')
@@ -191,37 +162,19 @@ export default {
       this.$router.go(0)
     },
     // 底部栏预览按钮点击
-    async previewClickHandler() {
-      // this.editStatus
-      for (let dom of this.originalSection) {
-        dom.classList.remove('section-edit')
-        let closeIcon = dom.querySelector('.close-btn')
-        closeIcon.removeEventListener('click')
-        closeIcon.remove()
-      }
-    },
+    async previewClickHandler() {},
     // 底部栏保存按钮点击
-    saveClickHandler() {},
-    // 发布观点框体点击处理
-    viewpointClickHandler() {
-      this.viewpointEditShow = true
-    },
-    // 发布观点-保存按钮点击处理
-    viewpointPullHandler() {
-      let viewpointDom = document.querySelector('.viewpoint-container')
-      viewpointDom.innerText = this.viewpointText
-      this.viewpointEditShow = false
-    }
+    saveClickHandler() {}
   }
 }
 </script>
 <style lang="less">
 .discover-edit-page {
-  background-color: #f7f9fa;
+  background: #f7f9fa;
   > .discover-detail-container {
-    background-color: #fff;
+    background: #fff;
     padding-bottom: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     > .discover-title {
       padding: 10px 15px;
       font-size: 22px;
@@ -229,11 +182,18 @@ export default {
       font-weight: 600;
       line-height: 1.3;
     }
-    > .discover-img {
-      margin: 15px;
-      height: 195px;
-      border-radius: 10px;
-      background-color: #999999;
+    > .discover-view-info {
+      margin: 0 15px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 400;
+      color: #969ea8;
+      > .view-source {
+        > span {
+          color: #445166;
+        }
+      }
     }
     > .discover-detail-content {
       padding: 15px;
@@ -241,15 +201,6 @@ export default {
       color: #333333 !important;
       font-weight: 400 !important;
       line-height: 28px !important;
-      > .viewpoint-container {
-        border: 1px dashed #969ea8;
-        height: 90px;
-        margin-bottom: 5px;
-        background: rgba(150, 158, 168, 0.08);
-        font-size: 14px;
-        color: #969ea8;
-        padding: 7px 9px;
-      }
       > .edit-houses-container {
         height: 140px;
         background: rgba(150, 158, 168, 0.08);
@@ -261,25 +212,12 @@ export default {
         }
       }
     }
-    > .discover-extra-info {
-      position: relative;
-      color: #8a8f99;
-      font-size: 12px;
-      padding: 0 15px;
-      > .reprint-from {
-        padding-left: 5px;
-      }
-      > .reprint-time {
-        padding-left: 15px;
-      }
-      > .reprint-views {
-        position: absolute;
-        right: 15px;
-      }
-    }
-    > .agent-card {
-      margin-top: 8px;
-      margin-bottom: 10px;
+  }
+  > .recommend-house-container {
+    background: #fff;
+    margin-bottom: 80px;
+    >.recommend-house-box{
+      margin: 0 15px;
     }
   }
   > .fixed-bar {
@@ -322,38 +260,6 @@ export default {
           background: #007ae6;
         }
       }
-    }
-  }
-  > .write-board {
-    // position: relative;
-    height: 187px;
-    > .pull-btn {
-      position: absolute;
-      transform: translate(-50%, -50%);
-      top: 30px;
-      right: -15px;
-      font-size: 14px;
-      font-weight: 400;
-      background: #007ae6;
-      border-radius: 100px;
-      color: #fff;
-      padding: 8px 21px;
-    }
-    > .write-title {
-      font-size: 20px;
-      color: #333333;
-      padding: 18px 16px;
-      font-weight: 600;
-    }
-    > .write-content {
-      font-size: 16px;
-      color: #13294f;
-      border: none;
-      margin: 0 15px;
-      padding: 5px;
-      width: 345px;
-      height: 112px;
-      background: rgba(150, 158, 168, 0.08);
     }
   }
 }
