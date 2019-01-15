@@ -35,6 +35,11 @@ export default [
         show: false
       }
     }
-  }
+  },
+  {
+    path: '/discover/newlyAdded/index',
+    name: 'addLinker',
+    component: resolve => require(['@/views/discover/newlyAdded/index.vue'], resolve)
+  },
 
 ]
