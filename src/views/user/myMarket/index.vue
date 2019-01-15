@@ -260,7 +260,6 @@ export default {
       }else{
         this.flag=false
       }
-        console.log("现在的状态",document.querySelector('.more-page'));
       })
     },
     sortHandle(n){//筛选中排序滚动条操作
@@ -271,7 +270,6 @@ export default {
       }else{
         this.flag=n
       }
-        console.log("以后的状态",document.querySelector('.sortWay-page'));
       })
     },
     stickNumHandle () {
