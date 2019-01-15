@@ -3,7 +3,7 @@
     <Guide v-if="showGuide" @hideGuide="hideStep"/>
     <div class="tab-bar scale-1px-bottom">
       <div class="classify">
-        <span :class="{'recommend': index===0, 'active': item.type===classify && item.typeName === classifyName}" v-for="(item, index) in articleType" :key="index" @click="changeClassify(item)">{{item.typeName}}</span>
+        <span :class="{'recommend': index===0, 'active': item.itemCode===classify && item.itemName === classifyName}" v-for="(item, index) in articleType" :key="index" @click="changeClassify(item)">{{item.itemName}}</span>
       </div>
       <span class="icon" @click="showSubFn">
         <img v-show="!showSub" src="../../assets/img/article/tabicon.png" alt="">
@@ -45,9 +45,9 @@
                 <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                   <span class="icon"><img src="../../assets/img/article/like1.png" alt=""></span>
                   <div class="list">
-                    <span class="name" v-for="(data,num) in item.praiseAndShareUserVOS" :key="num" @click="show" v-show="num < item.likeCount-1">{{data.userName}}</span>
+                    <span class="name" v-for="(data,num) in item.praiseAndShareUserVOS" :key="num" @click="" v-show="num < item.likeCount-1">{{data.userName}}<label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label></span>
                     <span class="more" v-show="item.praiseAndShareUserVOS.length > item.likeCount" @click="item.likeCount=item.praiseAndShareUserVOS.length">展开查看<van-icon name="arrow-down" /></span>
-                    <span class="more" v-show="item.praiseAndShareUserVOS.length===item.likeCount" @click="item.likeCount=25" >收起<van-icon name="arrow-up" /></span>
+                    <span class="more" v-show="item.praiseAndShareUserVOS.length <= item.likeCount" @click="item.likeCount=25" >收起<van-icon name="arrow-up" /></span>
                   </div>
                 </div>
                 <div class="comment-box" v-show="item.discussVOS.length">
@@ -68,7 +68,7 @@
                   <img src="../../assets/img/article/like1.png" alt="" v-else  @click="updateLike(item.articleId, 1, index)" />
                 </span>
                 <span class="comment-icon">
-                  <img src="../../assets/img/article/dis1.png" alt="" />
+                  <img src="../../assets/img/article/dis1.png" alt="" @click="showReplayFn(item,index)" />
                 </span>
               </div>
             </div>
@@ -84,7 +84,7 @@
       {{'10'}}条新内容<van-icon name="arrow-down" />
     </div>
     <div class="write">
-      <p><img src="../../assets/img/article/plus.png" alt=""></p>
+      <p @click="goAdd"><img src="../../assets/img/article/plus.png" alt=""></p>
       <p><img src="../../assets/img/article/write.png" alt=""></p>
     </div>
     <div class="replay" v-show="showReplay">
@@ -98,7 +98,7 @@
         </div>
         <div class="replay-box">
           <span class="name">回复{{'王毅'}}</span>
-          <textarea class="textarea" name="" id="" maxlength="140">这是文章的标题市到访客市到访客开发商的房价开始打</textarea>
+          <textarea class="textarea" name="" id="" ref="replaybox" maxlength="140" v-model="replayCnt">这是文章的标题市到访客市到访客开发商的房价开始打</textarea>
         </div>
       </div>
     </div>
@@ -128,24 +128,26 @@ export default {
       isLoading: false,   //是否处于下拉刷新状态
       showReplay: false, //显示回复框
       showNewArticle: false, // 显示新消息
-      articleType: [{type: '', typeName: '推荐'}],
+      articleType: [{itemCode: '', itemName: '推荐'}],
       size: 10,
       current: 1,
       pages: null,
-      classify: '',
-      sortType: 1,
-      classifyName: '推荐',
-      showLoading: false
+      classify: '', // 分类
+      sortType: 1,  // 排序
+      classifyName: '推荐', // 分类
+      showLoading: false, // loading
+      replayCnt: ''
     }
   },
   created () {
     this.showGuide = JSON.parse(window.localStorage.getItem('guideStatus'))
     if (this.userArea.city) {
       this.city = this.userArea.city
-      this.articleType.push({type: '', typeName: this.userArea.city})
+      this.articleType.push({itemCode: '', itemName: this.userArea.city})
     }
     this.getArticleType()
     this.getArticleList()
+    console.log(this.userInfo)
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
@@ -161,9 +163,9 @@ export default {
     // 获取文章分类
     async getArticleType () {
       this.showLoading = true
-      let result = await ArticleService.getArticleType({city: this.city})
+      let result = await ArticleService.getArticleType({classify: 'information_classify'})
       if (result) {
-        this.articleType.push(...result.infoSettingList)
+        this.articleType.push(...result)
       }
       this.showLoading = false
     },
@@ -192,8 +194,8 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify (item) {
-      this.classify = item.type
-      this.classifyName = item.typeName
+      this.classify = item.itemCode
+      this.classifyName = item.itemName
       this.articleData = []
       this.getArticleList()
     },
@@ -213,21 +215,51 @@ export default {
     },
     // 点赞
     async updateLike (articleId, praiseStatus, index) {
+      // debugger
       let result = await ArticleService.updateLike({
         infoId: articleId,
         likeFlag: praiseStatus
       })
+      this.articleData[index].praiseStatus = praiseStatus
+      if (praiseStatus===0) {
+        let item = this.articleData[index].praiseAndShareUserVOS
+        let r = item.filter(el => el.articleId !== articleId)
+        this.articleData[index].praiseAndShareUserVOS = r
+      } else {
+        this.articleData[index].praiseAndShareUserVOS.unshift({
+          operationTime: +new Date(),
+          userId: this.userInfo.agentId,
+          userName: this.userInfo.nickName,
+          userSource: 0
+        })
+      }
+    },
+    // 展示评论框
+    showReplayFn () {
+      this.showReplay = true
+      this.$nextTick(function() {
+        this.$refs.replaybox.focus()
+      })
+    },
+    // 新增文章
+    goAdd () {
+      this.$router.push('/discover/newlyAdded/index')
+    },
+    // 评论
+    async insertComment (item, index) {
+      let result = await ArticleService.insertComment({
+        content: this.replayCnt,
+        enterpriseId: this.userInfo.enterpriseId,
+        infoId: item.articleId,
+        receiverId: '',
+        receiverSource: '',
+        senderId: this.userInfo.agentId,
+        senderSource: 0,
+        syncId: '',
+        type: 0
+      })
       if (result) {
-        this.articleData[index].praiseStatus = praiseStatus
-        if (praiseStatus===0) {
 
-        } else {
-           this.articleData[index].praiseAndShareUserVOS.unshift({
-             operationTime: +new Date(),
-             userId: this.userInfo.agentId,
-             userName: ''
-           })
-        }
       }
     },
     // 加载更多
@@ -393,11 +425,18 @@ export default {
           .icon{
             display: inline-block;
             width: 16px;
+            height: 16px;
             margin-right: 8px;
+            padding-top: 2px;
           }
           .list{
             flex: 1;
-            margin-right: 50px;
+            margin-right: 20px;
+            .name{
+              font-size: 14px;
+              color: #445166;
+              display: inline-block;
+            }
           }
           .more{
             font-size: 12px;
@@ -412,6 +451,9 @@ export default {
               display: -webkit-box;
               -webkit-line-clamp: 5; //（行数）
               -webkit-box-orient: vertical;
+              .name{
+                margin: 0 5px 5px 0;
+              }
             }
           }
         }
