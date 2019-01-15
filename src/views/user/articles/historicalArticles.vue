@@ -15,8 +15,9 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType='typeCode'></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail='enterDetail'></write-article>
       </van-list>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
     <div class="list-result" v-if="typeCode=='2'">
       <van-list
@@ -26,7 +27,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType='typeCode'></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail='enterDetail'></write-article>
       </van-list>
     </div>
     <div class="list-result" v-if="typeCode=='3'">
@@ -37,7 +38,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-       <write-article :selectType='typeCode'></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail='enterDetail'></write-article>
       </van-list>
     </div>
   </div>
@@ -76,14 +77,23 @@ export default {
   methods: {
     clickShare(val) {
       this.typeCode = val
+      this.current = 1
+      this.myWriteList=[]
+      this.onLoad()
     },
 
     clickEdit(val) {
       this.typeCode = val
+      this.current = 1
+      this.myWriteList=[]
+      this.onLoad()
     },
 
     clickCollection(val) {
       this.typeCode = val
+      this.current = 1
+      this.myWriteList=[]
+      this.onLoad()
     },
 
     getContent(val) {
@@ -95,26 +105,32 @@ export default {
       this.$router.push({ name: 'easyLookList' })
     },
 
-    async onLoad() {}
+    getCurrentType() {
+      for (let temp of this.tabs) {
+        if (temp.index === this.activeIndex) return temp
+      }
+    },
 
-    // async onLoad() {
-    //   const res = await userService.queryWriteArticleList(this.typeCode, this.current)
-    //   if (res.records.length > 0) {
-    //     this.haveData = true
-    //     this.myWriteList = this.myWriteList.concat(res.records)
-    //     if (res.pages === 0 || this.current === res.pages) {
-    //       this.finished = true
-    //     }
-    //     this.current++
-    //     this.loading = false
-    //   } else {
-    //     if (this.current == 1) {
-    //       this.haveData = false
-    //     }
-    //     this.loading = false
-    //     this.finished = true
-    //   }
-    // }
+    async onLoad() {
+      //获取选中的位置
+      let selectType = this.typeCode
+      const res = await userService.queryWriteArticleList(selectType, this.current)
+      if (res.records.length > 0) {
+        this.haveData = true
+        this.myWriteList = this.myWriteList.concat(res.records)
+        if (res.pages === 0 || this.current === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
+      } else {
+        if (this.current == 1) {
+          this.haveData = false
+        }
+        this.loading = false
+        this.finished = true
+      }
+    }
   }
 }
 </script>

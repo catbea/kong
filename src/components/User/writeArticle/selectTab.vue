@@ -19,7 +19,7 @@ export default {
         this.editFontSize='14px'
         this.collectionFontSize='14px'
 
-        this.$emit('clickShare','1')
+        this.$emit('clickShare','2')
 
     },
     onClickEdit() {
@@ -27,7 +27,7 @@ export default {
         this.editFontSize='24px'
         this.collectionFontSize='14px'
 
-        this.$emit('clickEdit','2')
+        this.$emit('clickEdit','3')
 
     },
     onClickCollection() {
@@ -35,7 +35,7 @@ export default {
         this.editFontSize='14px'
         this.collectionFontSize='24px'
 
-        this.$emit('clickCollection','3')
+        this.$emit('clickCollection','1')
     }
   },
 

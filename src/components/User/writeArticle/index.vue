@@ -1,17 +1,19 @@
 <template>
-  <div class="write-item-body" @click="enterDetail">
-    <div class="write-item-left">
-      <span class="article-title">123</span>
-      <div class="share-bottom">
-        <span class="share-time">分享时间：2019/1/6 16:33</span>
-        <div class="collection-view" v-if="selectType=='3'">
-          <span class="collection-text">取消收藏</span>
-          <img class="collection-img" :src="cancelCollection">
+  <div>
+    <div class="write-item-body" @click="enterDetail" v-for="(item, index) in dataArray" :key="index">
+      <div class="write-item-left">
+        <span class="article-title">{{item.title}}</span>
+        <div class="share-bottom">
+          <span class="share-time">分享时间：2019/1/6 16:33</span>
+          <div class="collection-view" v-if="selectType=='3'">
+            <span class="collection-text">取消收藏</span>
+            <img class="collection-img" :src="cancelCollection">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="write-item-right">
-      <img class="article-img">
+      <div class="write-item-right">
+        <img class="article-img" :src="item.image">
+      </div>
     </div>
   </div>
 </template>
@@ -23,7 +25,8 @@ export default {
   created() {},
   mounted() {},
   props: {
-    selectType: String
+    selectType: String,
+    dataArray: Array
   },
   data() {
     return {
@@ -79,6 +82,7 @@ export default {
       > .share-time {
         font-size: 12px;
         color: #969ea8;
+        display: none;
       }
 
       > .collection-view {
