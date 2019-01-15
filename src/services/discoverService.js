@@ -34,14 +34,29 @@ class DiscoverService {
   }
 
   /**
-   *
+   * 文章详情预览
+   * @param {*} infoId
+   * @param {*} city
+   */
+  getDiscoverDetail(infoId, city) {
+    return xhr({
+      url: '/cpInformation/informationPreviewByToken',
+      body: {
+        infoId,
+        city
+      }
+    })
+  }
+
+  /**
+   * 文章详情预览白名单(h5)
    * @param {*} infoId
    * @param {*} city
    * @param {*} enterpriseId
    * @param {*} agentId
    * @param {*} type  1-游客 2-经纪人
    */
-  getDiscoverDetail(infoId, city, enterpriseId, agentId, type) {
+  getDiscoverDetailForH5(infoId, city, enterpriseId, agentId, type=1) {
     return xhr({
       url: '/cpInformation/informationPreview',
       body: {
@@ -130,7 +145,20 @@ class DiscoverService {
     })
   }
 
-    /**
+  /**
+   * 文章详情好看列表
+   * @param {*} infoId 
+   */
+  queryLikeList(infoId) {
+    return xhr({
+      url: '/cpInformation/queryLikeList',
+      body: {
+        infoId
+      }
+    })
+  }
+
+  /**
    * 企业微信-查询文章举报反馈选项 
    */
   getFeedbackOptions() {

@@ -39,9 +39,11 @@ export default {
       this.$emit('input', this.commentContent)
     },
     cancelHandler() {
+      this.commentContent = ''
       this.$emit('cancel')
     },
     publishHandler() {
+      this.commentContent = ''
       this.$emit('publish')
     }
   }
