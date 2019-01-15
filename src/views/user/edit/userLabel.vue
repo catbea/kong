@@ -102,7 +102,7 @@ export default {
           }
           const res = await userService.upDateUserInfo(userList)
           if (res) {
-            this.$store.dispatch('userInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
+            this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
             this.$router.go(-1)
           }
         }

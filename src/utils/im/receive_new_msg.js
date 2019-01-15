@@ -70,7 +70,7 @@ function onMsgNotify(newMsgList) {
     } else {
       // 不在聊天页面，弹出消息
       let content = elems.content
-      console.log(content,'content---')
+      // console.log(content,'content---')
       if (content.desc == 1 || content.desc == 2 || content.desc == 3) {
         content.clientId = newMsg.getSession().id()
         store.commit(types['NEW_MSG_CONTENT'], content)

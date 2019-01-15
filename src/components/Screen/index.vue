@@ -71,6 +71,8 @@ export default {
   methods: {
     itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
+      console.log(11111111111111);
+      this.$emit('screen',val.index)
     },
     coverClickHandler() {
       // this.currentIndex = -1
@@ -97,7 +99,7 @@ export default {
     sortChangeHandler() {
       this.currentIndex = -1
     }
-  },
+   },
   watch: {
     value(val) {
       this.filters = val
@@ -111,8 +113,10 @@ export default {
     currentIndex(val) {
       if (val !== -1) {
         document.getElementsByClassName('choose-container')[0].style.height = this.height
+        this.$emit('sor',true)
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
+        this.$emit('sor',false)
       }
     },
     local(val) {

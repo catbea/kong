@@ -2,16 +2,22 @@
   <div class="user-edit-phone-page">
     <div class="user-edit-phone">
       <p class="edit-phone-title">手机号</p>
-      <p class="edit-phone-conter"><input type="number" class="edit-phone-input" maxlength="11" placeholder="请输入手机号码" v-model.trim="Cphone"></p>
-     
-      <button class=edit-phone-query @click="godSub">确认</button>
+      <p class="edit-phone-conter">
+        <!-- <input type="number" class="edit-phone-input" maxlength="11" placeholder="请输入手机号码" v-model.trim="Cphone"> -->
+        <material-input placeholder="请输入手机号码" :type="'number'" :maxlength="11" v-model="Cphone"></material-input>
+      </p>
+      <button class='edit-phone-query' @click="godSub">确认</button>
     </div>
   </div>
 </template>
 <script>
+import MaterialInput from 'COMP/MaterialInput'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 export default {
+  components: {
+    MaterialInput
+  },
   data() {
     return {
       Cphone: ''

@@ -192,14 +192,15 @@ export default {
       this.article=true
     },
    async getRecommendInfo(){//去重推荐文章
-      const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
-      this.recommendInformationList=res.records  
+      // const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
+      // this.recommendInformationList=res.records  
     },
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id, this.city, this.enterpriseId, this.agentId, '2')
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
+      this.recommendInformationList=res.recommendInformationList
 
       this.agentInfo = {
         agentId: this.info.agentId,
@@ -416,9 +417,9 @@ export default {
   > .info-bottom {
     width: 100%;
     height: 32px;
-    margin-bottom: 0;
+    bottom: 0px;
     background: #eeeeee;
-    margin-top: 30px;
+    margin-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;

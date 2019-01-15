@@ -132,7 +132,7 @@
         </swiper>
       </div>
     </div>
-    <div class="van-hairline--top m-statement">
+    <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
       </div>
@@ -177,7 +177,7 @@ export default {
       status: null, // 0-未收藏 1-已收藏
       photoButton: true, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-      siteDetailImg: require('IMG/marketDetail/arrow.png'),
+      siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       id: -1,
       info: null,
@@ -497,8 +497,8 @@ export default {
           right: 5px;
         }
         span:nth-child(1) {
-          width: 16px;
-          height: 16px;
+          width: 17px;
+          height: 17px;
           margin: 0 8px;
         }
         .commission-text {
@@ -682,14 +682,14 @@ export default {
     }
   }
   .m-statement {
-    padding-top: 10px;
-    margin: 0 0 77px 16px;
-    width: 343px;
-    color: rgba(153, 153, 153, 1);
+    padding: 16px 23px 77px 16px;
+    // width: 343px;
+    background:#F7F9FA;
+    color: #8A9299;
     font-size: 12px;
     // line-height: 0.34rem;
     .feedback {
-      color: #017fff;
+      color: #525C66;
     }
   }
   > .house-status {
