@@ -61,18 +61,18 @@ export default {
           slidesPerView:1,
           spaceBetween:30,
           // loop: true,
-         autoplay: {
-           delay: 1000,
-            disableOnInteraction: false,
-          },
+        //  autoplay: {
+        //    delay: 1000,
+        //     disableOnInteraction: false,
+        //   },
           initialSlide :0,
           observer:true,//修改swiper自己或子元素时，自动初始化swiper 
           observeParents:true,//修改swiper的父元素时，自动初始化swiper 
-          onSlideChangeEnd: function(swiper){ 
-          　　　swiper.update();  
-          　　　mySwiper.startAutoplay();
-          　　   mySwiper.reLoop();  
-          },
+          // onSlideChangeEnd: function(swiper){ 
+          // 　　　swiper.update();  
+          // 　　　mySwiper.startAutoplay();
+          // 　　   mySwiper.reLoop();  
+          // },
           pagination: {
             el: '.swiper-pagination',
             clickable: true
