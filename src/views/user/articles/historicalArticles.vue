@@ -29,6 +29,7 @@
       >
         <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
       </van-list>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
     <div class="list-result" v-if="typeCode=='3'">
       <van-list
@@ -40,6 +41,7 @@
       >
         <write-article :selectType="typeCode" :dataArray="myWriteList"></write-article>
       </van-list>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
   </div>
 </template>
