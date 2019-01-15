@@ -6,12 +6,36 @@
       <div class="business-status-title">个人中心</div>
       <div class="modify-child">
         <div v-if="showInvitation" v-for="(item,index) in headIcons.slice(0,6)" :key="index" class="head-img" @click="selectedHead(item,index)">
-          <img :src="item.Icon">
+          <!-- <img :src="item.Icon"> -->
+          <svg class="icon" aria-hidden="true">
+              <use :xlink:href="item.Icon"></use>
+           </svg>
           <p class="grou1Icon-p">{{item.title}}</p>
         </div>
+        <div v-if="showInvitation" class="head-img" @click="invitationHead">
+          <!-- <img :src="item.Icon"> -->
+           <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-me_gift"></use>
+           </svg>
+          <p class="grou1Icon-p">邀请有礼</p>
+          <p class="politeness">有礼</p>
+        </div>
         <div v-if="!showInvitation" v-for="(item,index) in headIcons" :key="index" class="head-img" @click="selectedHead(item,index)">
-          <img :src="item.Icon">
+          <!-- <img :src="item.Icon"> -->
+           <svg class="icon" aria-hidden="true">
+              <use :xlink:href="item.Icon"></use>
+           </svg>
           <p class="grou1Icon-p">{{item.title}}</p>
+        </div>
+        <!-- 邀请有礼 -->
+        <div v-if="!showInvitation" class="head-img" @click="invitationHead">
+          <!-- <img :src="item.Icon"> -->
+           <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-me_gift"></use>
+              
+           </svg>
+          <p class="grou1Icon-p">邀请有礼</p>
+          <p class="politeness">有礼</p>
         </div>
       </div>
     </div>
@@ -19,11 +43,17 @@
       <div class="business-status-title">我的服务</div>
       <div class="modify-child">
         <div v-for="(img,index) in btnIcons" :key="index" class="head-img" @click="selectedHeads(index,img.type,img.itemCode)">
-          <img :src="img.Icon">
+          <!-- <img :src="img.Icon"> -->
+          <svg class="icon" aria-hidden="true">
+              <use :xlink:href="img.Icon"></use>
+           </svg>
           <p class="grou1Icon-p">{{img.title}}</p>
         </div>
         <div class="head-img" onclick="qimoChatClick();">
-          <img :src="consultImg">
+          <!-- <img :src="consultImg"> -->
+          <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-me_Customer"></use>
+           </svg>
           <p class="grou1Icon-p">在线咨询</p>
         </div>
       </div>
@@ -52,15 +82,16 @@ export default {
     consultImg: require('IMG/user/Group8@2x.png'),
     closeImg: require('IMG/user/close_popup.png'),
     headIcons: [
-      { title: '我的楼盘', Icon: require('IMG/user/mm@2x.png') },
-      { title: '我的收藏', Icon: require('IMG/user/Group1@2x.png') },
-      { title: '历史文章', Icon: require('IMG/user/Group3@2x.png') },
-      { title: '我的报备', Icon: require('IMG/user/Group6@2x.png') },
-      { title: '我的优惠券', Icon: require('IMG/user/Group5@2x.png') },
-      { title: '消费账单', Icon: require('IMG/user/Group2@2x.png') },
-      { title: '邀请有礼', Icon: require('IMG/user/Group4@2x.png') }
+      { title: '我的楼盘', Img: require('IMG/user/mm@2x.png'),Icon:'#icon-me_building'},
+      { title: '我的收藏', Img: require('IMG/user/Group1@2x.png'),Icon:'#icon-me_collection'},
+      { title: '历史文章', Img: require('IMG/user/Group3@2x.png'),Icon:'#icon-me_history' },
+      { title: '我的报备', Img: require('IMG/user/Group6@2x.png'),Icon:'#icon-me_Reported' },
+      { title: '我的优惠券', Img: require('IMG/user/Group5@2x.png'),Icon:'#icon-me_coupons' },
+      { title: '消费账单', Img: require('IMG/user/Group2@2x.png'),Icon:'#icon-me_order' },
+      // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'#icon-me_gift' }
     ],
-    btnIcons: [{ title: '勿扰模式', Icon: require('IMG/user/Group9@2x.png') }, { title: '意见反馈', Icon: require('IMG/user/Group7@2x.png') }],
+    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'),Icon:'#icon-me_night'}, 
+    { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'),Icon:'#icon-me_opinion'}],
     openPopup: false,
     qrcodeImg: ''
   }),
@@ -126,10 +157,13 @@ export default {
         case 5:
           this.$router.push('/user/consumption/consumptionBill')
           break
-        case 6:
-          this.$router.push('/user/invitation/awWelfare')
-          break
+        // case 6:
+        //   this.$router.push('/user/invitation/awWelfare')
+        //   break
       }
+    },
+    invitationHead(){
+      this.$router.push('/user/invitation/awWelfare')
     },
     selectedHeads(index, type, itemCode) {
       switch (index) {
@@ -147,6 +181,13 @@ export default {
 }
 </script>
 <style lang="less">
+ .icon {
+  width: 23px;
+  height:23px;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
 .popup-view {
   width: 280px;
   height: 417px;
@@ -231,6 +272,21 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
+      }
+      .politeness{
+        position:absolute;
+        right:-7px;
+        top:-5px;
+        width:41px;
+        height:22.3px;
+        line-height:21.3px;
+        background:rgba(234,77,46,1);
+        border-radius:10.6px;
+        font-size:12px;
+        transform: scale(0.75);
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(255,255,255,1);
       }
     }
   }
