@@ -15,7 +15,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail='enterDetail'></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -27,7 +27,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail='enterDetail'></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
       </van-list>
     </div>
     <div class="list-result" v-if="typeCode=='3'">
@@ -38,7 +38,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail='enterDetail'></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList"></write-article>
       </van-list>
     </div>
   </div>
@@ -63,7 +63,7 @@ export default {
       loading: false,
       finished: false,
       current: 1,
-      typeCode: '1', //选中的code
+      typeCode: '2', //选中的code
       myWriteList: [], //我的写一写列表
       nullIcon: require('IMG/user/collection/Article@2x.png'),
       nullcontent: '暂还没有文章记录',
@@ -78,22 +78,38 @@ export default {
     clickShare(val) {
       this.typeCode = val
       this.current = 1
-      this.myWriteList=[]
+      this.myWriteList = []
+      finished: false
       this.onLoad()
     },
 
     clickEdit(val) {
       this.typeCode = val
       this.current = 1
-      this.myWriteList=[]
-      this.onLoad()
+      this.myWriteList = []
+      finished: false, this.onLoad()
     },
 
     clickCollection(val) {
       this.typeCode = val
       this.current = 1
-      this.myWriteList=[]
-      this.onLoad()
+      this.myWriteList = []
+      finished: false, this.onLoad()
+    },
+
+    cancelCollect() {
+      Dialog.alert({
+        title: '取消收藏',
+        message: '是否取消文章收藏'
+      }).then(() => {
+        //执行取消收藏操作
+      })
+    },
+
+    async cancelClooection(info) {
+      const result = await userService.articleCollection(info)
+
+      this.$toast('取消收藏成功')
     },
 
     getContent(val) {
