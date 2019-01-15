@@ -194,7 +194,7 @@ export default {
     z-index: 3;
   }
   .already-open-page {
-    margin-top: 86px;
+    margin-top: 94px;
   }
   .search-box {
     position: relative;

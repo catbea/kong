@@ -158,7 +158,7 @@ export default {
       span:nth-child(2) {
         width: 16px;
         height: 16px;
-        margin-top: 3px;
+        margin-top: 1px;
       }
     }
     .sort {
