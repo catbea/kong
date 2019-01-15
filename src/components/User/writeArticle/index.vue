@@ -10,7 +10,11 @@
         <span class="article-title">{{item.title}}</span>
         <div class="share-bottom">
           <span class="share-time">分享时间：2019/1/6 16:33</span>
-          <div class="collection-view" v-if="selectType=='3'" @click="cancelCollect">
+          <div
+            class="collection-view"
+            v-if="selectType=='1'"
+            @click.stop="cancelCollect(item.id,index)"
+          >
             <span class="collection-text">取消收藏</span>
             <img class="collection-img" :src="cancelCollection">
           </div>
@@ -48,8 +52,12 @@ export default {
       }
       this.$emit('enterDetail', obj)
     },
-    cancelCollect() {
-      this.$emit('cancelCollect', '')
+    cancelCollect(id, index) {
+      let obj = {
+        id: id,
+        index: index
+      }
+      this.$emit('cancelCollect', obj)
     }
   },
   computed: {}
@@ -86,7 +94,7 @@ export default {
     > .share-bottom {
       display: flex;
       flex-direction: row;
-      margin-top: 50px;
+      margin-top: 40px;
 
       > .share-time {
         font-size: 12px;

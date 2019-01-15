@@ -15,7 +15,12 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
+        <write-article
+          :selectType="typeCode"
+          :dataArray="myWriteList"
+          @enterDetail="enterDetail"
+          @cancelCollect="cancelCollect"
+        ></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -99,19 +104,30 @@ export default {
       finished: false, this.onLoad()
     },
 
-    cancelCollect() {
-      Dialog.alert({
-        title: '取消收藏',
-        message: '是否取消文章收藏'
-      }).then(() => {
-        //执行取消收藏操作
-      })
+    cancelCollect(val) {
+      this.$dialog
+        .alert({
+          title: '取消收藏',
+          message: '是否取消文章收藏'
+        })
+        .then(() => {
+          // on close
+          this.cancelClooection(val)
+        })
     },
 
     async cancelClooection(info) {
-      const result = await userService.articleCollection(info)
+      let id = info.id
+      let index = info.index
 
-      this.$toast('取消收藏成功')
+      const result = await userService.getlinkerCollection(id, 1)
+      let dataArray = this.myWriteList
+
+      dataArray.splice(index, 1)
+
+      if (result) {
+        this.$toast('取消收藏成功')
+      }
     },
 
     getContent(val) {

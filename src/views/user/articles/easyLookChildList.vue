@@ -53,9 +53,13 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     this.infoId = this.$route.params.infoId
     this.typeCode = this.$route.params.type
+  },
+
+  created() {
+    
   },
 
   computed: {
