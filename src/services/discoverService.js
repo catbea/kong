@@ -129,5 +129,26 @@ class DiscoverService {
       body: param
     })
   }
+
+    /**
+   * 企业微信-查询文章举报反馈选项 
+   */
+  getFeedbackOptions() {
+    return xhr({
+      url: '/informationfeedback/feedbackOptions',
+    })
+  }
+
+  /**
+   * 文章投诉举报
+   * @param {*} param 
+   */
+  getInsertFeedback(param) {
+    return xhr({
+      method: 'POST',
+      url: '/informationfeedback/insertFeedback',
+      body: param
+    })
+  }
 }
 export default new DiscoverService()
