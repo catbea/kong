@@ -196,26 +196,6 @@ export default {
       linkText: '',
       link: ''
     },
-<<<<<<< HEAD
-    guidanceShow: true,
-    qrcodeInfo: {},
-    shareData: null,
-    virtualDom: null,
-    isMoreLike: true, // 是否有更多好看
-    easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
-    easylookList: [], // 好看列表
-    commentCur: 1,
-    commentSize: 5,
-    isMoreComment: false,
-    commentList: [], // 评论列表
-    selectCommentId: '', // 选中的评论ID
-    commentContent: '', // 评论内容
-    isShowDeleteComment: false, // 是否显示删除评论上拉菜单
-    actions: [{ name: '删除评论', className: 'comment-delete' }],
-    showCommentAlert: false, // 是否显示评论输入框
-    commentInfo: null,
-    commentIds: [] // 评论Ids
-=======
     titleArticle: {
       title: '推荐文章',
       linkText: '查看全部',
@@ -228,7 +208,6 @@ export default {
     shareData: null,
     articleShareFlag:0,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     article:false
->>>>>>> v3.0.3
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -236,17 +215,6 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
-<<<<<<< HEAD
-    if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
-      this.guidanceShow = true
-    } else {
-      this.guidanceShow = false
-    }
-    this.getDetail()
-    this.getLikeList()
-    this.getCommentList()
-    // this.getQrCode(this.agentId)
-=======
     this.classify=this.$route.query.classify
     this.getDetail()
     this.getQrCode(this.agentId)
@@ -257,7 +225,6 @@ export default {
       this.articleShareFlag=true
     }
     this.article=this.guidance.article
->>>>>>> v3.0.3
   },
   computed: {
     ...mapGetters(['userInfo','guidance'])
@@ -531,8 +498,6 @@ export default {
         infoId: this.infoId
       }
       const result = await discoverService.articleShare(params)
-<<<<<<< HEAD
-=======
     },
     // 设置分享
     async shareHandler() {
@@ -545,7 +510,6 @@ export default {
       }
       this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
->>>>>>> v3.0.3
     }
   },
   watch: {
@@ -557,8 +521,6 @@ export default {
 }
 </script>
 <style lang="less">
-<<<<<<< HEAD
-=======
 .guidance-view{
   position:fixed;
     width:100%;
@@ -699,7 +661,6 @@ export default {
   }
 }
 
->>>>>>> v3.0.3
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {
