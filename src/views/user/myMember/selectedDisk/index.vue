@@ -31,7 +31,8 @@
           :style="{backgroundImage:'url('+(projectSelectIco)+')'}" ></span>
         <span class="check-label">待选楼盘（{{checkedList.length}}/{{limitCount}}）</span>
       </div>
-      <span @click="vipProjectOpenHandle" class="check-all-button">开通</span>
+      <span @click="vipProjectOpenHandle" v-show="!saving" class="check-all-button">开通</span>
+      <span v-show="saving" class="saving-button">开通中...</span>
     </div>
   </div>
 </template>
@@ -71,6 +72,7 @@ export default {
     ...mapGetters(['userInfo', 'userArea'])
   },
   data: () => ({
+    saving: false,
     type: 'vip',
     projectFilters: {},
     packageIscheckedIds: [],
@@ -187,11 +189,13 @@ export default {
       for (let item of this.checkedList) {
         isCheckLinkerArr.push(item.linkerId)
       }
+      this.saving = true
       if (this.type == 'package') {
         let res = await marketService.userPackageAddHouse(isCheckLinkerArr.join(), this.$route.query.packageId)
       } else {
         let res = await marketService.addHouseByVip(isCheckLinkerArr.join())
       }
+      this.saving = false
       this.$dialog
         .confirm({
           title: '开通成功',
@@ -300,6 +304,18 @@ export default {
       font-size: 14px;
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
+      line-height: 30px;
+      text-align: center;
+    }
+    .saving-button{
+      margin-right: 16px;
+      width: 72px;
+      height: 30px;
+      border-radius: 22px;
+      border: 1px solid;
+      font-size: 14px;
+      font-weight: 400;
+      color: #ccc;
       line-height: 30px;
       text-align: center;
     }
