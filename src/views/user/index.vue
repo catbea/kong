@@ -92,7 +92,7 @@ export default {
     },
     //点击获取二维码
     async getQrCode(agentId) {
-      const result = await userService.getQrCode(agentId)
+      const result = await userService.getQrCodeByToken(agentId)
       if (result) {
         this.qrcodeImg = result.miniQrCode
       }

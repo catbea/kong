@@ -196,5 +196,69 @@ class DiscoverService {
       }
     })
   }
+
+  /**
+   * H5使用-获取楼盘小程序码(白名单)
+   * @param {*} agentId 
+   * @param {*} linkerId 
+   * @param {*} enterpriseId 
+   */
+  queryLinkerQrcode(agentId, linkerId, enterpriseId) {
+    return xhr({
+      url: '/cpShare/queryLinkerQrcode',
+      body: {
+        agentId,
+        linkerId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 获取楼盘小程序码
+   * @param {*} linkerId 
+   */
+  queryLinkerQrcodeByToken(linkerId) {
+    return xhr({
+      url: '/cpShare/queryLinkerQrcodeByToken',
+      body: {
+        agentId,
+        linkerId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * H5使用-获取文章小程序码(白名单)
+   * @param {*} agentId 
+   * @param {*} infoId 
+   * @param {*} enterpriseId 
+   */
+  queryArticleQrcode(agentId, infoId, enterpriseId) {
+    return xhr({
+      url: '/cpShare/queryArticleQrcode',
+      body: {
+        agentId,
+        infoId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 获取文章小程序码
+   * @param {*} infoId 
+   */
+  queryArticleQrcodeByToken(infoId) {
+    return xhr({
+      url: '/cpShare/queryArticleQrcodeByToken',
+      body: {
+        agentId,
+        infoId,
+        enterpriseId
+      }
+    })
+  }
 }
 export default new DiscoverService()
