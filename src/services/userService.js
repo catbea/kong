@@ -458,7 +458,6 @@ class UserService {
   }
 
   /**
-<<<<<<< HEAD
    * 我的写一写文章列表
    * @param {*} type 
    * @param {*} current 
@@ -474,7 +473,8 @@ class UserService {
       }
     })
   }
-=======
+
+  /*
    * 申请离岗、机构切换 
    */
   applyAgent(data) {
@@ -498,7 +498,7 @@ class UserService {
   /**
    * 更新名片海报信息
    */
-  updateAgentCard (data) {
+  updateAgentCard(data) {
     return xhr({
       method: 'POST',
       url: '/user/updateAgentCard',
@@ -506,6 +506,5 @@ class UserService {
     })
   }
 
->>>>>>> v3.0.3
 }
 export default new UserService()

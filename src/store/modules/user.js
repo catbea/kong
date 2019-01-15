@@ -47,19 +47,11 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-<<<<<<< HEAD
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJmczgyaHAiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxIiwiZXhwIjoxNTUwNDcyMzk5LCJpYXQiOjE1NDc0Njc1OTl9.8qeUhe-WqHbcDi4JuHDOSYYJQrxUYdPw48uv1-vz-2Fa52erz5c8JodCL30S9JBrzGK_0RV_WrEQ9QIvK7cw0A',
-    majorCity: '广州市',
-    majorRegion: '山西省/长治市/襄垣县',
-    name: '周丹',
-    nickName: '',
-=======
       'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ3bDR4ZGQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjI2IiwiZXhwIjoxNTUwMTk5NDI2LCJpYXQiOjE1NDcxOTQ2MjZ9.4fuXhVz2Y1TUSaeUDnznTJ_yftzZjpT7X73fZ2jAzI8TFt1wZaX0k9UTMMjM-FEFWVIOVKBe_Th281xxjOL0yA',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
     nickName: '周丹Nike',
->>>>>>> v3.0.3
     // payCorpId: 'onXUy1sGkPMX-Z34buMYLs5q2',
     payOpenId: 'oeKML1Lx2W1E-uDyUJCOkTTJdKCY',
     // pcOpenid: 'oPeLD1Mdkzf8nnZ4yHaHfF2YBYUo',
