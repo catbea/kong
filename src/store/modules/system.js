@@ -20,17 +20,10 @@ const state = {
         info: 0
       },
       {
-<<<<<<< HEAD
         name: '写一写',
         icon: require('IMG/tabbar/dis_tab.png'),
         icon_atc: require('IMG/tabbar/dis_tab_act.png'),
         path: '/article',
-=======
-        name: '发现',
-        icon: require('IMG/tabbar/Rectangle 13@2x(2).png'),
-        icon_atc: require('IMG/tabbar/Rectangle 13 Copy 5@2x.png'),
-        path: '/discover',
->>>>>>> 272b2bc557e99f3d0b9389fb6424961a607e225c
         info: 0
       },
       {
