@@ -7,7 +7,12 @@
       @load="onLoad"
       v-if="haveData"
     >
-      <div class="write-item-body" v-for="(item,index) in this.writeList" :key="index">
+      <div
+        class="write-item-body"
+        v-for="(item,index) in this.writeList"
+        :key="index"
+        @click="enterArticleDetail"
+      >
         <div class="write-item-left">
           <span class="article-title">{{item.title}}</span>
           <span class="share-time" v-if="typeCode=='2'">分享时间 {{item.createTimeStamp}}</span>
@@ -26,6 +31,7 @@ import writeArticle from 'COMP/User/writeArticle/index'
 import Null from 'COMP/Null'
 import userService from 'SERVICE/userService'
 import timeUtils from '@/utils/timeUtils'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -52,6 +58,10 @@ export default {
     this.typeCode = this.$route.params.type
   },
 
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
+
   methods: {
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
@@ -74,6 +84,10 @@ export default {
         this.loading = false
         this.finished = true
       }
+    },
+
+    enterArticleDetail() {
+      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: this.infoId, city: '全国' } })
     }
   }
 }
