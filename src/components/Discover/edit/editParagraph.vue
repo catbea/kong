@@ -32,9 +32,10 @@ export default {
   padding: 5px;
   text-indent: unset;
   > .del-icon {
+    font-size: 16px;
     position: absolute;
     top: 4px;
-    right: -14px;
+    right: -15px;
     transform: translate(-50%, -50%);
     color: #ea4d2e;
   }

@@ -27,6 +27,9 @@ export default {
     NewMsgPopup,
     Tabbar
   },
+  created() {
+    
+  },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
       this.newMsgPop = v

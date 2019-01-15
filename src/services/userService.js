@@ -231,10 +231,11 @@ class UserService {
    * @param {*} current
    * @param {*} size
    */
-  gethistoryList(current, size = 10) {
+  gethistoryList(type, current, size = 10) {
     return xhr({
       url: '/cpInformation/historyList',
       body: {
+        type,
         current,
         size
       }
@@ -370,7 +371,7 @@ class UserService {
   }
 
   /**
-   * 获取分享二维码
+   * 获取分享二维码-白名单
    * @param {*} agentId
    */
   getQrCode(agentId) {
@@ -381,6 +382,18 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 获取分享二维码
+   */
+  getQrCodeWithToken() {
+    return xhr({
+      url: '/cpShare/nameCardShareByToken',
+      body: {
+      }
+    })
+  }
+
   /**
    * 邀请开通列表 -【企业微信
    * @param {*} current
@@ -445,19 +458,79 @@ class UserService {
   }
 
   /**
-   * 我的写一写文章列表
-   * @param {*} type 
-   * @param {*} current 
-   * @param {*} size 
+   * 测试 - 授权相关 - 根据agentId获取token
    */
-  queryWriteArticleList(type, current, size = 10) {
+  getTokenById(agentId, corpId) {
+    return xhr({
+      method: 'POST',
+      url: '/cp/oauth2/getToken',
+      body: {
+        agentId,
+        corpId
+      }
+    })
+  }
+
+
+
+  /**
+     * 我的写一写文章列表
+     * @param {*} type 
+     * @param {*} current 
+     * @param {*} size 
+     */
+  queryWriteArticleList(type, current, infoId, size = 10) {
     return xhr({
       url: '/cpInformation/queryMyArticleList',
       body: {
         type,
-        current
+        current,
+        infoId
       }
     })
   }
+
+  /**
+   * 经纪人楼盘信息
+   * @param {Object} payload 参数过多 直接查看api文档,有相关工具类 screenFilterHelper.js
+   */
+  getMyHouses(payload) {
+    return xhr({
+      url: '/myLinker/articleLinkerList',
+      body: payload
+    })
+  }
+  /*
+   * 申请离岗、机构切换 
+   */
+  applyAgent(data) {
+    return xhr({
+      method: 'POST',
+      url: '/user/insertAgentPersonnelLog',
+      body: data
+    })
+  }
+
+  /**
+   * 名片海报信息
+   */
+  getAgentCard(data) {
+    return xhr({
+      url: '/user/getAgentCard',
+      body: data
+    })
+  }
+
+  /**
+   * 更新名片海报信息
+   */
+  updateAgentCard(data) {
+    return xhr({
+      method: 'POST',
+      url: '/user/updateAgentCard',
+      body: data
+    })
+  }
+
 }
 export default new UserService()

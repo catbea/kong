@@ -21,14 +21,15 @@ class DiscoverService {
    * @param {*} current 当前页
    * @param {*} size 页大小
    */
-  getDiscoverList(city, classify, current, size = 10) {
+  getDiscoverList(city, classify, current, size = 10,infoIds) {
     return xhr({
       url: '/cpInformation/discoverList',
       body: {
         city,
         classify,
         current,
-        size
+        size,
+        infoIds
       }
     })
   }

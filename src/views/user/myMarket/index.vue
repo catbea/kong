@@ -7,7 +7,7 @@
       <div class="market-left" v-show="myMarketShow">
         <div v-show="showMarketListCount>=showFilterLimit" >
           <search :conf="searchInfo" v-model="showProjectName" @areaClick="areaClickHandler"></search>
-          <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'16rem'"></screen>
+          <screen v-model="showProjectFilters" :local="this.selectedCity" :height="'17rem'"></screen>
         </div>
         <van-list v-model="showLoading" :finished="showFinished" finished-text="没有更多了" @load="showGetMyMarketInfo" v-if="!yes">
           <user-market @usmarIconReturn="skipShareHandle" v-for="(item,index) in showMarketList" :key="index" :marketIndex="index" :dataArr="item" 
@@ -122,6 +122,9 @@ export default {
     this.getShowProjectCount()
     this.getUnShowProjectCount()
     this.notShowGetMyMarketInfo()
+  },
+  mounted() {
+    
   },
   computed: {
     ...mapGetters(['userArea'])
@@ -243,14 +246,17 @@ export default {
         }
       }
 
-      this.$nextTick(() => {
+      // this.$nextTick(() => {
         //   let arr = []
         // arr.push(n)
         // this.masterList = arr.concat(this.masterList)
-        this.masterList = this.masterList.concat(n)
-        // this.masterList.unshift(n)
+        // this.masterList = this.masterList.concat(n)
+        this.masterList.unshift(n)
+        console.log(this.masterList,"master大师");
         this.swipeList = this.masterList.concat(this.commonList)
-      })
+        console.log(this.swipeList,"swipe大师");
+        
+      // })
     },
     spliceMasterHandle(n) {
       //点击实时改为取消大师改为未推荐
@@ -284,14 +290,16 @@ export default {
         }
       }
 
-      this.$nextTick(() => {
+      // this.$nextTick(() => {
         //   let arr = []
         // arr.push(n)
         // this.commonList = arr.concat(this.commonList)
-        this.commonList = this.commonList.concat(n)
-        // this.commonList.unshift(n)
+        // this.commonList = this.commonList.concat(n)
+        this.commonList.unshift(n)
+        console.log(this.commonList,"commonList普通");
         this.swipeList = this.masterList.concat(this.commonList)
-      })
+        console.log(this.swipeList,"swipeList普通");
+      // })
     },
     spliceCommonHandle(n) {
       //点击实时改为取消普通改为未推荐

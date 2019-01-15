@@ -116,9 +116,10 @@ export default {
       this.editContent = val
     },
 
-    enterDetail() {
-      // this.$router.push({ name: 'easyLookList', params: { id: n } })
-      this.$router.push({ name: 'easyLookList' })
+    enterDetail(val) {
+      let id = val.infoId
+      let type = val.selectType
+      this.$router.push({ name: 'easyLookChildList', params: { infoId: id, type: type } })
     },
 
     getCurrentType() {
@@ -130,7 +131,7 @@ export default {
     async onLoad() {
       //获取选中的位置
       let selectType = this.typeCode
-      const res = await userService.queryWriteArticleList(selectType, this.current)
+      const res = await userService.queryWriteArticleList(selectType, this.current, '')
       if (res.records.length > 0) {
         this.haveData = true
         this.myWriteList = this.myWriteList.concat(res.records)
