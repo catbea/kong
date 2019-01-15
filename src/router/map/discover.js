@@ -37,7 +37,7 @@ export default [
     }
   },
   {
-    path: '/discover/newlyAdded/index',
+    path: '/discover/newlyAdded',
     name: 'addLinker',
     component: resolve => require(['@/views/discover/newlyAdded/index.vue'], resolve)
   },

@@ -243,7 +243,8 @@ export default {
     },
     // 新增文章
     goAdd () {
-      this.$router.push('/discover/newlyAdded/index')
+      this.$router.push('/discover/newlyAdded')
+      // this.$router.push({ name: 'addLinker'})
     },
     // 评论
     async insertComment (item, index) {
