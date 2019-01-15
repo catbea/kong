@@ -54,7 +54,7 @@
                   <span class="icon"><img src="../../assets/img/article/dis1.png" alt=""></span>
                   <div class="list">
                     <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
-                      <p  v-show="num < item.replayCount-1"><span class="name">{{data.senderName}}</span><span class="text" v-if="data.receiverName">回复</span><span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:<span class="replay-cnt">{{data.content}}</span></p>
+                      <p v-show="num < item.replayCount" @click="showReplayFn(item, index,2,data,num)"><span class="name">{{data.senderName}}</span><span class="text" v-if="data.receiverName">回复</span><span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:<span class="replay-cnt">{{data.content}}</span></p>
                     </div>
                     <span class="more" v-show="item.discussVOS.length > item.replayCount" @click="item.replayCount=item.discussVOS.length">展开查看<van-icon name="arrow-down" /></span>
                     <span class="more" v-show="item.discussVOS.length === item.replayCount && item.discussVOS.length > 5" @click="item.replayCount=5">收起<van-icon name="arrow-up" /></span>
@@ -68,7 +68,7 @@
                   <img src="../../assets/img/article/like1.png" alt="" v-else  @click="updateLike(item.articleId, 1, index)" />
                 </span>
                 <span class="comment-icon">
-                  <img src="../../assets/img/article/dis1.png" alt="" @click="showReplayFn(item,index)" />
+                  <img src="../../assets/img/article/dis1.png" alt="" @click="showReplayFn(item,index,1)" />
                 </span>
               </div>
             </div>
@@ -91,19 +91,27 @@
       <div class="replay-cnt">
         <div class="top-action">
           <span class="cancle" @click="hideReplayFn">取消</span>
-          <span  class="publish" @click=""><button>发布</button></span>
+          <span  class="publish" @click="insertCommentFn"><button>发布</button></span>
         </div>
         <div class="replay-title">
-          {{}}
+          <p v-if="replayStatus===1">{{commentItem.articleTitle}}</p>
+          <p v-else>{{replayItem.senderName}}: {{replayItem.content}}</p>
         </div>
         <div class="replay-box">
-          <span class="name">回复{{'王毅'}}</span>
-          <textarea class="textarea" name="" id="" ref="replaybox" maxlength="140" v-model="replayCnt"></textarea>
+          <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span>
+          <textarea class="textarea" name="" id="" ref="replaybox" maxlength="280" v-model="replayCnt" :style="{'text-indent': (replayStatus===2 ? '75px' : '')}"></textarea>
         </div>
       </div>
     </div>
     <div class="loading"  v-show="showLoading" >
         <van-loading type="spinner" color="white" class="van-loading"/>
+    </div>
+    <div class="delete-replay">
+      <van-actionsheet
+        v-model="showDelete"
+        :actions="actions"
+        @select="onSelect"
+      />
     </div>
   </div>
 </template>
@@ -112,7 +120,7 @@
 import { mapGetters } from 'vuex'
 import Guide from './guide'
 import ArticleService from 'SERVICE/articleService'
-import { formatTime, parseTime } from '@/utils/tool'
+import { formatTime, parseTime, checkStrLength } from '@/utils/tool'
 export default {
   components: {
     Guide
@@ -137,7 +145,23 @@ export default {
       classifyName: '推荐', // 分类
       showLoading: false, // loading
       replayCnt: '', // 评论内容
-      replayItem: '' // 评论文章
+      commentItem: '', // 评论文章
+      replayItem: '', // 回复评论
+      commentIndex: '', // 评论文章索引
+      replayStatus: '', //恢复状态 1为评论 2为回复
+      showDelete: false, // 删除评论
+      actions: [ // 上拉菜单
+        {
+          name: '删除评论',
+          value: 1,
+          className: 'van-actionsheet-del'
+        },
+        {
+          name: '取消',
+          value: 2
+        }
+      ],
+      deleteIndex: '' // 删除评论
     }
   },
   created () {
@@ -148,7 +172,6 @@ export default {
     }
     this.getArticleType()
     this.getArticleList()
-    console.log(this.userInfo)
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
@@ -181,7 +204,7 @@ export default {
         sortType: this.sortType
       })
       if (result) {
-        this.listPages = result.pages
+        this.pages = result.pages
         let records = result.records.map(item => {
          return Object.assign(item, {likeCount: 25, replayCount: 5})
         })
@@ -197,6 +220,7 @@ export default {
     changeClassify (item) {
       this.classify = item.itemCode
       this.classifyName = item.itemName
+      this.current = 1
       this.articleData = []
       this.getArticleList()
     },
@@ -236,8 +260,18 @@ export default {
       }
     },
     // 展示评论框
-    showReplayFn (item, index) {
-      this.replayItem = item
+    showReplayFn (item, index, type, replay, num) {
+      if (replay&&(replay.senderId === this.userInfo.agentId)) {
+        this.commentIndex = index
+        this.deleteIndex = num
+        return this.showDelete = true
+      }
+      this.replayStatus = type
+      this.commentItem = item
+      if (replay) {
+        this.replayItem = replay
+      }
+      this.commentIndex = index
       this.showReplay = true
       this.$nextTick(function() {
         this.$refs.replaybox.focus()
@@ -247,24 +281,49 @@ export default {
     hideReplayFn () {
       this.showReplay = false
     },
-    insertCommentFn () {
-
+    // 发表评论
+    insertCommentFn (index) {
+      if (!this.replayCnt) {
+        return this.$toast('评论内容不能为空')
+      }
+      if (!checkStrLength(this.replayCnt, 280)) {
+        return this.$toast('评论内容不超过140个汉字')
+      }
+      this.insertComment()
     },
     // 评论
-    async insertComment (item, index) {
+    async insertComment () {
+      let receiverId = (this.replayStatus === 2) ? this.replayItem.senderId : ''
+      let receiverName = (this.replayStatus === 2) ? this.replayItem.senderName  : ''
+      let parentId = (this.replayStatus === 2) ? this.replayItem.id : ''
+      let type = (this.replayStatus === 2) ? 1 : 0
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
-        infoId: item.articleId,
-        receiverId: '',
-        receiverSource: '',
+        infoId: this.commentItem.articleId,
+        parentId: parentId,
+        receiverId: receiverId,
+        receiverName: receiverName,
+        receiverSource: 0,
+        senderAvatarUrl: this.userInfo.avatarUrl,
         senderId: this.userInfo.agentId,
+        senderName: this.userInfo.nickName,
         senderSource: 0,
         syncId: '',
-        type: 0
+        type: type
       })
       if (result) {
-
+        this.articleData[this.commentIndex].discussVOS.unshift({
+          id: result.id,
+          receiverId: this.replayItem.senderId,
+          receiverName: this.replayItem.senderName,
+          content: this.replayCnt,
+          senderId: this.userInfo.agentId,
+          senderName: this.userInfo.nickName,
+          senderSource: 0,
+          type: type
+        })
+        this.hideReplayFn()
       }
     },
     // 新增文章
@@ -272,13 +331,37 @@ export default {
       this.$router.push('/discover/newlyAdded/index')
     },
     // 加载更多
-    onLoad() {
-      // 加载状态结束
+    async onLoad() {
+      if (this.current >= this.pages) {
+        // 加载状态结束
+        this.finished = true
+      }
+      await this.getArticleList()
       this.loading = false
     },
     // 下拉刷新
-    onRefresh() {
+    async onRefresh() {
+      this.current = 1
+      this.articleData = []
+      await this.getArticleList()
       this.isLoading = false
+    },
+    // 删除评论
+    onSelect (item) {
+      if (item.value === 1) {
+        this.delComment()
+      }
+      this.showDelete = false
+    },
+    async delComment () {
+      let id = this.articleData[this.commentIndex].discussVOS[this.deleteIndex].id || ''
+      let result = await ArticleService.updateCommentStatus({
+        id: id,
+        status: 3
+      })
+      if (result) {
+        this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex, 1)
+      }
     }
   },
   filters: {
@@ -598,8 +681,8 @@ export default {
           border: none;
           background-color: #F7F8F8;
           line-height: 1.5;
-          text-indent: 75px;
           padding: 5px 10px;
+          font-size: 14px;
         }
       }
     }
@@ -625,5 +708,11 @@ export default {
       margin-top: -25px;
     }
   }
+}
+</style>
+
+<style lang="less">
+.van-actionsheet-del{
+  color: #EA4D2E;
 }
 </style>

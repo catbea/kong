@@ -41,7 +41,17 @@ class ArticleService {
       body: data
     })
   }
-  
+
+  /**
+   * 删除评论
+   */ 
+  updateCommentStatus (data) {
+    return xhr({
+      url: '/comment/updateCommentStatus',
+      method: 'post',
+      body: data
+    })
+  }
   
 }
 
