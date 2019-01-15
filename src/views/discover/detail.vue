@@ -273,8 +273,8 @@ export default {
       this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
     },
 
-    async getQrCode(agentId) {
-      const result = await userService.getQrCode(agentId)
+    async getQrCode() {
+      const result = await userService.getQrCodeByToken()
       if (result) {
         this.qrcodeInfo = result
       }

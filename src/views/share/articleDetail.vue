@@ -22,7 +22,7 @@
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
       </p>
       <!-- 好看 -->
-      <div class="easy-look-container">
+      <div class="easy-look-container" @click="popHandler(1)">
         <div class="easy-look-top">
           <div class="easy-look-left">
             <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
@@ -41,7 +41,7 @@
       <div class="comment-container">
         <div class="comment-box" v-if="commentList.length">
           <title-bar :conf="titleComments"/>
-          <div class="comment-list-wrap">
+          <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
               <div
                 class="bg_img"
@@ -74,14 +74,14 @@
         </div>
       </div>
       <!-- 推荐房源 -->
-      <div class="recommend-houses">
+      <div class="recommend-houses" @click="popHandler(2)">
         <title-bar :conf="titleProperties"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in houseList" :key="index" :info="item" @click="popHandler(2)"></estate-item>
+          <estate-item v-for="(item,index) in houseList" :key="index" :info="item"></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
-      <div class="recommend-article">
+      <div class="recommend-article" @click="popHandler(3)">
         <title-bar :conf="titleArticle"/>
         <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index">
           <div class="recommend-article-name">{{item.title}}</div>
@@ -89,40 +89,44 @@
       </div>
     </div>
     <!-- 悬浮工具栏 -->
-    <div class="van-hairline--top tools-bar">
+    <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
         <div class="tool-left">
-          <avatar class="avatar" :avatar="agentInfo.avatarUrl"></avatar>
+          <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
           <div class="tool-content">
-            <div class="tool-name">{{agentInfo.agentName}}</div>
-            <div class="tool-institution">{{agentInfo.institutionName}}</div>
+            <div class="tool-name">{{agentInfo&&agentInfo.agentName}}</div>
+            <div class="tool-institution">{{agentInfo&&agentInfo.institutionName}}</div>
           </div>
         </div>
         <div class="tool-right">在线咨询</div>
       </div>
     </div>
     <open-article :show.sync="guidanceShow"></open-article>
-    <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card>
+    <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
+    <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
+    <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
   </div>
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
-import AgentCard from 'COMP/AgentCard'
 import TitleBar from 'COMP/TitleBar/'
-import DiscoverItem from 'COMP/DiscoverItem'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import EstateItem from 'COMP/EstateItem'
-import 'swiper/dist/css/swiper.css'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import CardDialog from 'COMP/Dialog/CardDialog'
+import MarketDialog from 'COMP/Dialog/MarketDialog'
+import ArticleDialog from 'COMP/Dialog/ArticleDialog'
+import { uuid } from '@/utils/tool'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
     Avatar,
-    AgentCard,
     TitleBar,
     OpenArticle,
-    EstateItem
+    EstateItem,
+    CardDialog,
+    MarketDialog,
+    ArticleDialog
   },
   data: () => ({
     id: -1,
@@ -145,10 +149,8 @@ export default {
       linkText: '',
       link: ''
     },
-    openPopup: false,
     closeImg: require('IMG/user/close_popup.png'),
     guidanceShow: false,
-    qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
     isMoreLike: true, // 是否有更多好看
@@ -167,6 +169,13 @@ export default {
     commentIds: [], // 评论Ids
     houseList: [], // 房源列表
     articleList: [], // 文章列表
+    uuid: '',
+    openCardPopup: false,
+    openMarketPopup: false,
+    openArticlePopup: false,
+    cardQrInfo: null,
+    marketQrInfo: null,
+    articleQrInfo: null
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -174,11 +183,14 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
+    this.uuid = uuid()
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
     this.getArticleList()
-    // this.getQrCode(this.agentId)
+    this.getCardQrCode()
+    this.getLinkerQrcode()
+    this.getArticleQrcode()
     this.shareHandler()
   },
   methods: {
@@ -241,28 +253,42 @@ export default {
       const res = await discoverService.queryArticleListForH5(this.agentId, this.enterpriseId, this.id)
       this.articleList = res
     },
-    async getQrCode(agentId) {
-      const result = await userService.getQrCode(agentId)
-      if (result) {
-        this.qrcodeInfo = result
-      }
+    // 名片二维码信息
+    async getCardQrCode() {
+      const result = await userService.getQrCode(this.agentId, this.enterpriseId)
+      this.cardQrInfo = result
+    },
+    // 楼盘二维码信息
+    async getLinkerQrcode() {
+      const result = await discoverService.queryLinkerQrcode(this.agentId, this.linkerId, this.enterpriseId)
+      this.marketQrInfo = result
+    },
+    // 文章二维码信息
+    async getArticleQrcode() {
+      const result = await discoverService.queryArticleQrcode(this.agentId, this.id, this.enterpriseId)
+      this.articleQrInfo = result
     },
     popupShowControl(val) {
-      
+      this.overlayClose()
     },
     // 弹出框
     popHandler(val) {
       if (val == 1) {
         // 名片
+        this.openCardPopup = true
       }else if (val == 2) {
         // 楼盘
+        this.openMarketPopup = true
       }else {
         // 文章
+        this.openArticlePopup = true
       }
     },
     // 关闭弹出框
     overlayClose() {
-      this.openPopup = false
+      this.openCardPopup = false
+      this.openMarketPopup = false
+      this.openArticlePopup = false
     },
 
     // 举报反馈
@@ -356,10 +382,7 @@ export default {
       font-size: 14px;
       line-height: 1.5;
     }
-    > .agent-card {
-      margin-top: 8px;
-      margin-bottom: 10px;
-    }
+    
     // 好看
     > .easy-look-container {
       padding: 10px 16px 20px 16px;
