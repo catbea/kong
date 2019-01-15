@@ -178,5 +178,22 @@ class DiscoverService {
       body: param
     })
   }
+
+  /**
+   * h5文章详情页面TA的写一写
+   * @param {*} agentId 
+   * @param {*} enterpriseId 
+   * @param {*} infoIds 
+   */
+  queryArticleListForH5(agentId, enterpriseId, infoIds) {
+    return xhr({
+      url: '/cpInformation/queryShareArticleByAgentIdForWhite',
+      body: {
+        agentId,
+        enterpriseId,
+        infoIds
+      }
+    })
+  }
 }
 export default new DiscoverService()

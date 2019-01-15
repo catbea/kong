@@ -86,31 +86,6 @@
         </div>
       </div>
     </div>
-    <!-- 推荐房源 -->
-    <!-- <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
-      <title-bar :conf="titleProperties"/>
-    <div class="recommend-houses-content">-->
-    <!-- swiper -->
-    <!-- <swiper :options="swiperOption">
-          <swiper-slide v-for="item in info.projectRecommendList" :key="item.linkerId">
-            <div class="house-item" @click="enterDetail(item)">
-              <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
-              <p class="house-name">{{item.linkerName}}</p>
-              <p class="house-localtion">{{item.city}}</p>
-              <p class="house-price" v-if="item.averagePrice=='0'">价格待定</p>
-              <p class="house-price" v-else>{{item.averagePrice}} {{item.priceUnit}}</p>
-            </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>-->
-    <!-- 推荐文章 -->
-    <!-- <div class="recommend-discover" v-if="info&&info.recommendInformationList">
-      <title-bar :conf="titleArticle"/>
-      <div class="recommend-discover-content">
-        <discover-item v-for="item in info.recommendInformationList" :key="item.id" :data="item"/>
-      </div>
-    </div>-->
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
@@ -146,20 +121,14 @@
 </template>
 <script>
 import TitleBar from 'COMP/TitleBar/'
-import DiscoverItem from 'COMP/DiscoverItem'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
-import 'swiper/dist/css/swiper.css'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
     TitleBar,
-    swiper,
-    swiperSlide,
-    DiscoverItem,
     OpenArticle,
     CommentAlert
   },
@@ -183,7 +152,7 @@ export default {
       linkText: '',
       link: ''
     },
-    guidanceShow: true,
+    guidanceShow: false,
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
