@@ -1,15 +1,5 @@
 <template>
   <div class="discover-detail-page">
-    <!-- 首次引导分享 -->
-    <div class="guidance-view" v-if="!articleShareFlag&&!article">
-      <div class="top">
-       <p>点击此处分享给好友</p>
-       <p :style="{backgroundImage:'url('+lineImg+')'}" class="bg_img">
-         
-       </p>
-      </div>
-      <p class="bottom" @click="sharePopupHandle">知道了</p>
-    </div>
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
@@ -24,7 +14,7 @@
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         <span class="reprint-from">{{info&&info.publisher}}</span>
-        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
+        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter(3, '/')}}</span>
       </p>
       <p class="discover-disclaimer">
         <span
@@ -42,14 +32,16 @@
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
             <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <!-- <i v-if="likeFlag===1" class="icon iconfont icon-Building_details_col"></i> -->
+            <!-- <i v-else class="icon iconfont icon-Building_details_col1"></i> -->
             <div class="easy-look-text">好看</div>
           </div>
         </div>
         <div class="easy-look-list">
-          {{easylookList && easylookList.join('、')}}
+          <span class="easy-look-name">{{easylookList && easylookList.join('、')}}</span>
           <span
             class="easy-look-fold"
-            v-if="isMoreLike"
+            v-if="isMoreLike" @click="moreLikeListHandler"
           >展开更多</span>
         </div>
       </div>
@@ -96,31 +88,6 @@
         </div>
       </div>
     </div>
-    <!-- 推荐房源 -->
-    <!-- <div class="recommend-houses" v-if="info&&info.projectRecommendList&&info.projectRecommendList.length>0">
-      <title-bar :conf="titleProperties"/>
-    <div class="recommend-houses-content">-->
-    <!-- swiper -->
-    <!-- <swiper :options="swiperOption">
-          <swiper-slide v-for="item in info.projectRecommendList" :key="item.linkerId">
-            <div class="house-item" @click="enterDetail(item)">
-              <div class="bg_img house-img" :style="{backgroundImage:'url('+item.linkerImg+')'}"></div>
-              <p class="house-name">{{item.linkerName}}</p>
-              <p class="house-localtion">{{item.city}}</p>
-              <p class="house-price" v-if="item.averagePrice=='0'">价格待定</p>
-              <p class="house-price" v-else>{{item.averagePrice}} {{item.priceUnit}}</p>
-            </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>-->
-    <!-- 推荐文章 -->
-    <!-- <div class="recommend-discover" v-if="info&&info.recommendInformationList">
-      <title-bar :conf="titleArticle"/>
-      <div class="recommend-discover-content">
-        <discover-item v-for="item in recommendInformationList" :key="item.id" :data="item"/>
-      </div>
-    </div>-->
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
@@ -156,27 +123,19 @@
 </template>
 <script>
 import TitleBar from 'COMP/TitleBar/'
-import DiscoverItem from 'COMP/DiscoverItem'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
-import 'swiper/dist/css/swiper.css'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { uuid } from '@/utils/tool'
 import { mapGetters } from 'vuex'
-import * as types from '@/store/mutation-types'
 import discoverService from 'SERVICE/discoverService'
-import commonService from 'SERVICE/commonService'
 import userService from 'SERVICE/userService'
 export default {
   components: {
     TitleBar,
-    swiper,
-    swiperSlide,
-    DiscoverItem,
     OpenArticle,
     CommentAlert
   },
   data: () => ({
-    recommendInformationList:[],//去重推荐文章
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12,
@@ -191,23 +150,31 @@ export default {
     agentInfo: null,
     infoId: '', //文章的id
     collectionStatus: -1, //收藏状态
+    likeFlag: -1, // 是否点赞 0-未点赞 1-点赞
     titleComments: {
       title: '精彩评论',
       linkText: '',
       link: ''
     },
-    titleArticle: {
-      title: '推荐文章',
-      linkText: '查看全部',
-      link: '/discover'
-    },
-    openPopup: false,
-    lineImg:require('IMG/marketDetail/yindao.png'),
-    closeImg: require('IMG/user/close_popup.png'),
+    guidanceShow: false,
     qrcodeInfo: {},
     shareData: null,
-    articleShareFlag:0,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
-    article:false
+    virtualDom: null,
+    isMoreLike: true, // 是否有更多好看
+    easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
+    easylookList: [], // 好看列表
+    commentCur: 1,
+    commentSize: 5,
+    isMoreComment: false,
+    commentList: [], // 评论列表
+    selectCommentId: '', // 选中的评论ID
+    commentContent: '', // 评论内容
+    isShowDeleteComment: false, // 是否显示删除评论上拉菜单
+    actions: [{ name: '删除评论', className: 'comment-delete' }],
+    showCommentAlert: false, // 是否显示评论输入框
+    commentInfo: null,
+    commentIds: [], // 评论Ids
+    shareUuid: ''
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -215,32 +182,23 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
-    this.classify=this.$route.query.classify
-    this.getDetail()
-    this.getQrCode(this.agentId)
-    this.getRecommendInfo()
-    if(this.userInfo.articleShareFlag==0){//0：未完成指引；1：已完成指引 
-      this.articleShareFlag=false
-    }else{
-      this.articleShareFlag=true
+    this.shareUuid = uuid()
+    console.log(this.shareUuid)
+    if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
+      this.guidanceShow = true
+    } else {
+      this.guidanceShow = false
     }
-    this.article=this.guidance.article
+    this.getDetail()
+    this.getLikeList()
+    this.getCommentList()
   },
   computed: {
-    ...mapGetters(['userInfo','guidance'])
+    ...mapGetters(['userInfo'])
   },
   methods: {
-   async sharePopupHandle(){//首次进入引导
-      await commonService.updateUserExpandInfo(1)
-      this.$store.commit(types.ARTICLE_SHARE_FLAG,true)
-      this.article=true
-    },
-   async getRecommendInfo(){//去重推荐文章
-      const res = await discoverService.getDiscoverList(this.city,this.classify,1,5,this.id)
-      this.recommendInformationList=res.records  
-    },
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city)
+      const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
@@ -254,7 +212,7 @@ export default {
         institutionName: this.info.institutionName
       }
       let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
+      host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.shareData = {
         title: this.info.title,
         imgUrl: this.info.image,
@@ -267,12 +225,15 @@ export default {
     },
     // 好看列表
     async getLikeList() {
-      const res = await discoverService.queryLikeList(this.id)
+      const res = await discoverService.queryLikeListByToken(this.id)
       if (res && res.length > 0) {
         for (var index in  res) {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
+        let height = document.getElementsByClassName('easy-look-list')[0].style.height
+        debugger
+        console.log(height)
       }
     },
     // 评论列表
@@ -316,19 +277,11 @@ export default {
       this.commentList.push(res)
     },
 
-    //进入楼盘详情
-    enterDetail(item) {
-      this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
-    },
-
-    async getQrCode(agentId) {
-      const result = await userService.getQrCode(agentId)
-      if (result) {
-        this.qrcodeInfo = result
-      }
-    },
     // 好看点击事件
     easyLookClickHandler() {},
+    moreLikeListHandler() {
+
+    },
     // 点击评论
     commentClickHandler() {
       this.showCommentAlert = true
@@ -367,7 +320,7 @@ export default {
     // 评论发送者
     commentSenderClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId = item.senderId)) {
+      if ((this.agentId == item.senderId)) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -377,7 +330,7 @@ export default {
           parentId: item.id,
           receiverId: item.senderId,
           receiverName: item.senderName,
-          receiverSource: item.receiverSource,
+          receiverSource: item.senderSource,
           senderId: this.agentId,
           senderSource: 0,
           title: this.info.title,
@@ -389,7 +342,7 @@ export default {
     // 评论被回复者
     commentReceiverClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId = item.receiverId)) {
+      if ((this.agentId == item.receiverId)) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -434,7 +387,7 @@ export default {
         console.log(this.commentList)
       }
     },
-    // 新增评论
+    // 新增评论待用
     addComment() {
       let commentInfo = {
           parentId: item.id,
@@ -448,12 +401,7 @@ export default {
           type: 1
         }
     },
-    // 数组的浅拷贝
-    copyArray(arr) {
-      var result = []
-      result = arr.concat()
-      return result
-    },
+    
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.isShowDeleteComment = false
@@ -494,22 +442,14 @@ export default {
     // 分享成功之后
     async articleShare() {
       let params = {
-        deleteType: 0,
-        infoId: this.infoId
+        agentId: this.agentId,
+        deleteType: 0, // 1-删除，0-未删除
+        enterpriseId: this.enterpriseId,
+        infoId: this.infoId,
+        shareUuid: this.shareUuid,
+        sourceType: 0 // 经纪人-0，客户-1 
       }
       const result = await discoverService.articleShare(params)
-    },
-    // 设置分享
-    async shareHandler() {
-      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {//分享点进去，没有签名信息，从新签名
-        try {
-          await window.awHelper.wechatHelper.init()
-        } catch (e) {
-          console.log('[error:window.awHelper.wechatHelper]')
-        }
-      }
-      this.shareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.shareData)
     }
   },
   watch: {
@@ -521,146 +461,6 @@ export default {
 }
 </script>
 <style lang="less">
-.guidance-view{
-  position:fixed;
-    width:100%;
-    height:100%;
-    background-color: rgba(0,0,0,.7);
-    z-index:6;
-    .top{
-      width:100%;
-      height:171px;
-      font-size:17px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(255,255,255,1);
-      display:flex;
-      margin-top:10px;
-      p:nth-child(1){
-        margin-left:120px;
-        margin-top:158px;
-      }
-      p:nth-child(2){
-        width:69px;
-        height:171px;
-       position: relative;
-       margin-left:10px;
-       span {
-              position:absolute;
-              display:inline-block;
-              width: 5px;
-              height: 5px;
-              border-radius: 50%;
-              background: rgba(255, 255, 255, 1);
-            }
-        span:nth-child(1){
-          top:-7px;
-          right: -3px;
-        }
-        span:nth-child(2){
-          bottom:-2.5px;
-          left:-7px;
-        }
-      }
-    }
-  .bottom{
-    width:95px;
-    height:32px;
-    border-radius:16px;
-    opacity:0.6163000000000001;
-    border:1px solid rgba(255,255,255,1);
-    text-align:center;
-    font-size:17px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(255,255,255,1);
-    line-height:32px;
-    margin-top:168px;
-    margin-left:150px;
-  }
-  }
-.popup-view {
-  width: 260px;
-  height: 371px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  > .close-titile {
-    width: 100%;
-    height: 24px;
-    display: flex;
-    flex-direction: row-reverse;
-
-    > .closePopup {
-      width: 24px;
-      height: 24px;
-      margin-top: 8px;
-      margin-right: 8px;
-    }
-  }
-
-  > .notice-view {
-    color: #333333;
-    font-size: 16px;
-  }
-
-  > .qrcode-view {
-    width: 162px;
-    height: 162px;
-    text-align: center;
-    margin-top: 11px;
-    padding: 5px;
-  }
-
-  > .introduce-box {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    margin-left: -45px;
-
-    > .username-view {
-      color: #333333;
-      font-size: 16px;
-      margin-top: 12px;
-    }
-    > .introduce-view {
-      font-size: 14px;
-      color: #666666;
-      margin-top: 3px;
-    }
-
-    > .company-view {
-      margin-top: 7px;
-      color: #666666;
-      font-size: 12px;
-    }
-
-    > .phone-view {
-      margin-top: 12px;
-      color: #666666;
-      font-size: 12px;
-    }
-  }
-
-  > .info-bottom {
-    width: 100%;
-    height: 32px;
-    margin-bottom: 0;
-    background: #eeeeee;
-    margin-top: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    > .info-view {
-      color: #666666;
-      font-size: 12px;
-      background-color: #eeeeee;
-    }
-  }
-}
-
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {
@@ -755,15 +555,21 @@ export default {
       > .easy-look-list {
         padding-left: 24px;
         padding-top: 8px;
-        line-height: 1.5;
-        color: #445166;
-        font-size: 14px;
         width: 260px;
-        word-break: break-all;
-        display: -webkit-box;
-        -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        > .easy-look-name {
+          color: #445166;
+          font-size: 14px;
+          word-break: break-all;
+          display: -webkit-box;
+          -webkit-line-clamp: 5;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.5;
+        }
+        > .easy-look-fold {
+          color: #969EA8;
+          font-size: 14px;
+        }
       }
     }
     // 评论

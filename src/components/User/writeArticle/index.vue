@@ -4,13 +4,17 @@
       class="write-item-body"
       v-for="(item, index) in dataArray"
       :key="index"
-      @click="enterDetail(selectType,item.id)"
+      @click="enterDetail(selectType,item)"
     >
       <div class="write-item-left">
-        <span class="article-title">{{item.title}}</span>
+        <span class="article-title">{{item.title | textOver(26)}}</span>
         <div class="share-bottom">
           <span class="share-time">分享时间：2019/1/6 16:33</span>
-          <div class="collection-view" v-if="selectType=='3'" @click="cancelCollect">
+          <div
+            class="collection-view"
+            v-if="selectType=='1'"
+            @click.stop="cancelCollect(item.id,index)"
+          >
             <span class="collection-text">取消收藏</span>
             <img class="collection-img" :src="cancelCollection">
           </div>
@@ -41,15 +45,16 @@ export default {
     }
   },
   methods: {
-    enterDetail(selectType, id) {
-      let obj = {
-        selectType: selectType,
-        infoId: id
-      }
-      this.$emit('enterDetail', obj)
+    enterDetail(selectType, item) {
+      item['selectType'] = selectType
+      this.$emit('enterDetail', item)
     },
-    cancelCollect() {
-      this.$emit('cancelCollect', '')
+    cancelCollect(id, index) {
+      let obj = {
+        id: id,
+        index: index
+      }
+      this.$emit('cancelCollect', obj)
     }
   },
   computed: {}
@@ -86,7 +91,7 @@ export default {
     > .share-bottom {
       display: flex;
       flex-direction: row;
-      margin-top: 50px;
+      margin-top: 40px;
 
       > .share-time {
         font-size: 12px;

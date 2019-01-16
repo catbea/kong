@@ -1,10 +1,12 @@
 <template>
+<!-- 1-收藏，2-分享，3-编辑 -->
   <div class="my-write-body">
     <div class="search-body">
       <select-tab
         @clickShare="clickShare"
         @clickEdit="clickEdit"
         @clickCollection="clickCollection"
+        :toSelectTap="typeCode"
       ></select-tab>
     </div>
     <div class="list-result" v-if="typeCode=='1'">
@@ -15,7 +17,12 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
+        <write-article
+          :selectType="typeCode"
+          :dataArray="myWriteList"
+          @cancelCollect="cancelCollect"
+           @enterDetail="collectionDetail"
+        ></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -29,6 +36,7 @@
       >
         <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
       </van-list>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
     <div class="list-result" v-if="typeCode=='3'">
       <van-list
@@ -38,8 +46,9 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType="typeCode" :dataArray="myWriteList"></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
       </van-list>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
   </div>
 </template>
@@ -73,7 +82,13 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
-  created() {},
+  created() {
+    this.typeCode = this.$route.query.typeCode
+
+    if (this.typeCode == '3') {
+      this.clickEdit('3')
+    }
+  },
   methods: {
     clickShare(val) {
       this.typeCode = val
@@ -97,19 +112,29 @@ export default {
       finished: false, this.onLoad()
     },
 
-    cancelCollect() {
-      Dialog.alert({
-        title: '取消收藏',
-        message: '是否取消文章收藏'
-      }).then(() => {
-        //执行取消收藏操作
-      })
+    cancelCollect(val) {
+      this.$dialog
+        .alert({
+          title: '取消收藏',
+          message: '是否取消文章收藏'
+        })
+        .then(() => {
+          // on close
+          this.cancelClooection(val)
+        })
     },
 
     async cancelClooection(info) {
-      const result = await userService.articleCollection(info)
+      let id = info.id
+      let index = info.index
 
-      this.$toast('取消收藏成功')
+      const result = await userService.getlinkerCollection(id, 1)
+      let dataArray = this.myWriteList
+
+      dataArray.splice(index, 1)
+      if (result) {
+        this.$toast('取消收藏成功')
+      }
     },
 
     getContent(val) {
@@ -117,9 +142,14 @@ export default {
     },
 
     enterDetail(val) {
-      let id = val.infoId
-      let type = val.selectType
-      this.$router.push({ name: 'easyLookChildList', params: { infoId: id, type: type } })
+        // this.$router.push({ name: 'analysis'})
+      this.$router.push({ name: 'easyLookChildList', query: val })
+    },
+
+
+    collectionDetail(val){
+       
+       this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val.id, city: '全国' } })
     },
 
     getCurrentType() {

@@ -92,7 +92,7 @@ export default {
     },
     //点击获取二维码
     async getQrCode(agentId) {
-      const result = await userService.getQrCode(agentId)
+      const result = await userService.getQrCodeByToken(agentId)
       if (result) {
         this.qrcodeImg = result.miniQrCode
       }
@@ -115,7 +115,8 @@ export default {
           this.$router.push('/user/collection/myCollection')
           break
         case 2:
-          this.$router.push('/user/articles/historicalArticles')
+          // this.$router.push('/user/articles/historicalArticles')
+            this.$router.push({name:'historicalArticles',query:{typeCode:'2'}})
           break
         case 3:
           this.$router.push('/user/myReport')

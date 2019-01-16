@@ -6,7 +6,7 @@
         <div class="comment-publish" @click="publishHandler">发布</div>
       </div>
       <div class="comment-title">
-        <div class="comment-name" v-if="info.receiverName">{{info&&info.receiverName}}：</div>
+        <span class="comment-name" v-if="info.receiverName">{{info&&info.receiverName}}：</span>
         <div class="comment-content">{{info&&info.title}}</div>
       </div>
       <div class="comment-input-wrap">
@@ -92,11 +92,13 @@ export default {
         color: #666666;
         font-weight: 500;
         margin: 2px 0 2px 3px;
+        flex: 1;
       }
       > .comment-content {
         font-size: 16px;
         color: #666666;
         margin: 1px 0 0 3px;
+        flex: 6;
       }
     }
     > .comment-input-wrap {
