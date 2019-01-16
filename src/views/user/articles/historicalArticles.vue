@@ -5,7 +5,7 @@
         @clickShare="clickShare"
         @clickEdit="clickEdit"
         @clickCollection="clickCollection"
-        :toSelectTap='typeCode'
+        :toSelectTap="typeCode"
       ></select-tab>
     </div>
     <div class="list-result" v-if="typeCode=='1'">
@@ -82,13 +82,11 @@ export default {
     ...mapGetters(['userInfo'])
   },
   created() {
+    this.typeCode = this.$route.query.typeCode
 
-   this.typeCode = this.$route.query.typeCode
-
-   if(this.typeCode=='3'){
-      this.clickEdit('3');
-   }
-
+    if (this.typeCode == '3') {
+      this.clickEdit('3')
+    }
   },
   methods: {
     clickShare(val) {
@@ -143,9 +141,10 @@ export default {
     },
 
     enterDetail(val) {
-      let id = val.infoId
-      let type = val.selectType
-      this.$router.push({ name: 'easyLookChildList', params: { infoId: id, type: type } })
+      
+      val.createTimeStamp=
+
+      this.$router.push({ name: 'easyLookChildList', params: val })
     },
 
     getCurrentType() {

@@ -4,7 +4,7 @@
       class="write-item-body"
       v-for="(item, index) in dataArray"
       :key="index"
-      @click="enterDetail(selectType,item.id)"
+      @click="enterDetail(selectType,item)"
     >
       <div class="write-item-left">
         <span class="article-title">{{item.title}}</span>
@@ -45,12 +45,9 @@ export default {
     }
   },
   methods: {
-    enterDetail(selectType, id) {
-      let obj = {
-        selectType: selectType,
-        infoId: id
-      }
-      this.$emit('enterDetail', obj)
+    enterDetail(selectType, item) {
+      item['selectType'] = selectType
+      this.$emit('enterDetail', item)
     },
     cancelCollect(id, index) {
       let obj = {
