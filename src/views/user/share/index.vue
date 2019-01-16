@@ -244,8 +244,6 @@
         :fixedBox="true"
         :canMoveBox="false"
         :centerBox="true"
-        :original="true"
-        :scalable="true"
         :rotatable="true"
         mode="cover"
 			></vueCropper>
