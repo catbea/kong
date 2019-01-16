@@ -1,11 +1,12 @@
 <template>
+<!-- 1-收藏，2-分享，3-编辑 -->
   <div class="my-write-body">
     <div class="search-body">
       <select-tab
         @clickShare="clickShare"
         @clickEdit="clickEdit"
         @clickCollection="clickCollection"
-        :toSelectTap='typeCode'
+        :toSelectTap="typeCode"
       ></select-tab>
     </div>
     <div class="list-result" v-if="typeCode=='1'">
@@ -19,8 +20,8 @@
         <write-article
           :selectType="typeCode"
           :dataArray="myWriteList"
-          @enterDetail="enterDetail"
           @cancelCollect="cancelCollect"
+           @enterDetail="collectionDetail"
         ></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
@@ -45,7 +46,7 @@
         @load="onLoad"
         v-if="haveData"
       >
-        <write-article :selectType="typeCode" :dataArray="myWriteList"></write-article>
+        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -82,13 +83,11 @@ export default {
     ...mapGetters(['userInfo'])
   },
   created() {
+    this.typeCode = this.$route.query.typeCode
 
-   this.typeCode = this.$route.query.typeCode
-
-   if(this.typeCode=='3'){
-      this.clickEdit('3');
-   }
-
+    if (this.typeCode == '3') {
+      this.clickEdit('3')
+    }
   },
   methods: {
     clickShare(val) {
@@ -143,9 +142,14 @@ export default {
     },
 
     enterDetail(val) {
-      let id = val.infoId
-      let type = val.selectType
-      this.$router.push({ name: 'easyLookChildList', params: { infoId: id, type: type } })
+
+      this.$router.push({ name: 'easyLookChildList', query: val })
+    },
+
+
+    collectionDetail(val){
+       
+       this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val.id, city: '全国' } })
     },
 
     getCurrentType() {
