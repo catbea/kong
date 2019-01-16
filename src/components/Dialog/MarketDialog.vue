@@ -2,12 +2,14 @@
   <div class="dialog-container" v-if="currentShow">
     <div class="shadow_box dialog-box">
       <div class="dialog-title">长按识别查看更多</div>
-      <div class="mini-qrcode" :style="{backgroundImage:'url('+info&&info.qrCode+')'}"></div>
+      <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div>
       <div class="dialog-content">
         <p class="dialog-name">{{info&&info.linkerName}}</p>
         <p class="dialog-tag">{{info&&info.tagList&&info.tagList.join(' ')}}</p>
-        <p class="dialog-mobile">{{info&&info.linkerPrice}}</p>
-        <p class="dialog-adder">{{info&&info.institutionName}}</p>
+        <p class="dialog-price">
+          <span v-if="info&&info.linkerPrice">均价</span>
+          {{info&&info.linkerPrice}}{{info&&info.priceUnit}}
+        </p>
       </div>
       <div class="dialog-bottom">开启买房新模式 及时获取一手房源信息</div>
       <div
@@ -47,7 +49,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .dialog-container {
   width: 100%;
   height: 100%;
@@ -75,7 +77,7 @@ export default {
     //   bottom: 200px;
     //   left: 50%;
     //   transform: translate(-50%, -50%);
-      margin: 10px auto;
+      margin: 20px auto;
       width: 162px;
       height: 162px;
     }
@@ -86,21 +88,19 @@ export default {
             font-size: 20px;
             font-weight: bold;
             height: 28px;
+            text-align: center;
         }
         > .dialog-tag {
             color: #333;
             font-size: 12px;
             height: 18px;
+            text-align: center;
         }
-        > .dialog-mobile {
+        > .dialog-price {
             color: #333;
             font-size: 12px;
             margin-top: 13px;
-        }
-        > .dialog-adder {
-            color: #333;
-            font-size: 12px;
-            margin-top: 6px;
+            text-align: center;
         }
     }
     > .dialog-bottom {

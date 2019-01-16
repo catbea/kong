@@ -37,14 +37,12 @@ class DiscoverService {
   /**
    * 文章详情预览
    * @param {*} infoId
-   * @param {*} city
    */
-  getDiscoverDetail(infoId, city) {
+  getDiscoverDetail(infoId) {
     return xhr({
       url: '/cpInformation/informationPreviewByToken',
       body: {
-        infoId,
-        city
+        infoId
       }
     })
   }
@@ -52,20 +50,16 @@ class DiscoverService {
   /**
    * 文章详情预览白名单(h5)
    * @param {*} infoId
-   * @param {*} city
    * @param {*} enterpriseId
    * @param {*} agentId
-   * @param {*} type  1-游客 2-经纪人
    */
-  getDiscoverDetailForH5(infoId, city, enterpriseId, agentId, type=1) {
+  getDiscoverDetailForH5(infoId, enterpriseId, agentId) {
     return xhr({
       url: '/cpInformation/informationPreview',
       body: {
         infoId,
-        city,
         enterpriseId,
         agentId,
-        type
       }
     })
   }
@@ -147,12 +141,27 @@ class DiscoverService {
   }
 
   /**
+   * H5使用-文章详情好看列表
+   * @param {*} infoId 
+   * @param {*} enterpriseId
+   */
+  queryLikeList(infoId, enterpriseId) {
+    return xhr({
+      url: '/cpInformation/queryLikeList',
+      body: {
+        infoId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
    * 文章详情好看列表
    * @param {*} infoId 
    */
-  queryLikeList(infoId) {
+  queryLikeListByToken(infoId) {
     return xhr({
-      url: '/cpInformation/queryLikeList',
+      url: '/cpInformation/queryLikeListByToken',
       body: {
         infoId
       }
@@ -177,6 +186,21 @@ class DiscoverService {
       method: 'POST',
       url: '/informationfeedback/insertFeedback',
       body: param
+    })
+  }
+
+  /**
+   * H5使用-推荐房源列表
+   * @param {*} shareUuid 
+   * @param {*} enterpriseId 
+   */
+  queryLinkerListByIdsForH5(shareUuid, enterpriseId) {
+    return xhr({
+      url: '/myLinker/queryLinkerListByIdsForWhite',
+      body: {
+        shareUuid,
+        enterpriseId
+      }
     })
   }
 

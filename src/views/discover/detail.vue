@@ -32,6 +32,8 @@
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
             <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <!-- <i v-if="likeFlag===1" class="icon iconfont icon-Building_details_col"></i> -->
+            <!-- <i v-else class="icon iconfont icon-Building_details_col1"></i> -->
             <div class="easy-look-text">好看</div>
           </div>
         </div>
@@ -123,6 +125,7 @@
 import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
+import { uuid } from '@/utils/tool'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
@@ -147,6 +150,7 @@ export default {
     agentInfo: null,
     infoId: '', //文章的id
     collectionStatus: -1, //收藏状态
+    likeFlag: -1, // 是否点赞 0-未点赞 1-点赞
     titleComments: {
       title: '精彩评论',
       linkText: '',
@@ -169,7 +173,8 @@ export default {
     actions: [{ name: '删除评论', className: 'comment-delete' }],
     showCommentAlert: false, // 是否显示评论输入框
     commentInfo: null,
-    commentIds: [] // 评论Ids
+    commentIds: [], // 评论Ids
+    shareUuid: ''
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -177,6 +182,8 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
+    this.shareUuid = uuid()
+    console.log(this.shareUuid)
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.guidanceShow = true
     } else {
@@ -185,14 +192,13 @@ export default {
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
-    // this.getQrCode(this.agentId)
   },
   computed: {
     ...mapGetters(['userInfo'])
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetail(this.id, this.city)
+      const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
@@ -206,7 +212,7 @@ export default {
         institutionName: this.info.institutionName
       }
       let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
+      host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.shareData = {
         title: this.info.title,
         imgUrl: this.info.image,
@@ -219,7 +225,7 @@ export default {
     },
     // 好看列表
     async getLikeList() {
-      const res = await discoverService.queryLikeList(this.id)
+      const res = await discoverService.queryLikeListByToken(this.id)
       if (res && res.length > 0) {
         for (var index in  res) {
           let item = res[index]
@@ -268,17 +274,6 @@ export default {
       this.commentList.push(res)
     },
 
-    //进入楼盘详情
-    enterDetail(item) {
-      this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
-    },
-
-    async getQrCode() {
-      const result = await userService.getQrCodeByToken()
-      if (result) {
-        this.qrcodeInfo = result
-      }
-    },
     // 好看点击事件
     easyLookClickHandler() {},
     // 点击评论
@@ -319,7 +314,7 @@ export default {
     // 评论发送者
     commentSenderClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId = item.senderId)) {
+      if ((this.agentId == item.senderId)) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -329,7 +324,7 @@ export default {
           parentId: item.id,
           receiverId: item.senderId,
           receiverName: item.senderName,
-          receiverSource: item.receiverSource,
+          receiverSource: item.senderSource,
           senderId: this.agentId,
           senderSource: 0,
           title: this.info.title,
@@ -341,7 +336,7 @@ export default {
     // 评论被回复者
     commentReceiverClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId = item.receiverId)) {
+      if ((this.agentId == item.receiverId)) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -386,7 +381,7 @@ export default {
         console.log(this.commentList)
       }
     },
-    // 新增评论
+    // 新增评论待用
     addComment() {
       let commentInfo = {
           parentId: item.id,
@@ -400,12 +395,7 @@ export default {
           type: 1
         }
     },
-    // 数组的浅拷贝
-    copyArray(arr) {
-      var result = []
-      result = arr.concat()
-      return result
-    },
+    
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.isShowDeleteComment = false
@@ -446,8 +436,12 @@ export default {
     // 分享成功之后
     async articleShare() {
       let params = {
-        deleteType: 0,
-        infoId: this.infoId
+        agentId: this.agentId,
+        deleteType: 0, // 1-删除，0-未删除
+        enterpriseId: this.enterpriseId,
+        infoId: this.infoId,
+        shareUuid: this.shareUuid,
+        sourceType: 0 // 经纪人-0，客户-1 
       }
       const result = await discoverService.articleShare(params)
     }

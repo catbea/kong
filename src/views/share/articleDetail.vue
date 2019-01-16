@@ -10,6 +10,21 @@
           <span style="color:#445166">AW大师写一写</span>
         </div>
       </div>
+      <!-- 观点 -->
+      <div class="discover-viewpoint" v-if="info&&info.editData&&info.editData.viewpoint">
+        <div class="viewpoint-line"></div>
+        <div class="viewpoint-top">
+          <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
+          <div class="viewpoint-right">
+            <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
+            <div class="viewpoint-name">
+              <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
+              <span style="color:#969EA8;font-size:14px"> 点评</span>
+            </div>
+          </div>
+        </div>
+        <div class="viewpoint-content">{{info&&info.editData&&info.editData.viewpoint}}</div>
+      </div>
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         <span class="reprint-from">{{info&&info.publisher}}</span>
@@ -31,10 +46,6 @@
         </div>
         <div class="easy-look-list">
           {{easylookList && easylookList.join('、')}}
-          <span
-            class="easy-look-fold"
-            v-if="isMoreLike"
-          >展开更多</span>
         </div>
       </div>
       <!-- 评论 -->
@@ -69,21 +80,21 @@
                 <div></div>
               </div>
             </div>
-            <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
+            <div class="comment-list-more" v-if="isMoreComment" @click.stop="moreCommentHandler">查看更多评论</div>
           </div>
         </div>
       </div>
       <!-- 推荐房源 -->
-      <div class="recommend-houses" @click="popHandler(2)">
+      <div class="recommend-houses" v-if="houseList.length>0">
         <title-bar :conf="titleProperties"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in houseList" :key="index" :info="item"></estate-item>
+          <estate-item v-for="(item,index) in houseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
-      <div class="recommend-article" @click="popHandler(3)">
+      <div class="recommend-article" v-if="articleList.length>0">
         <title-bar :conf="titleArticle"/>
-        <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index">
+        <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index" @click="popHandler(3, item)">
           <div class="recommend-article-name">{{item.title}}</div>
         </div>
       </div>
@@ -115,7 +126,6 @@ import EstateItem from 'COMP/EstateItem'
 import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
 import ArticleDialog from 'COMP/Dialog/ArticleDialog'
-import { uuid } from '@/utils/tool'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 export default {
@@ -153,7 +163,6 @@ export default {
     guidanceShow: false,
     shareData: null,
     virtualDom: null,
-    isMoreLike: true, // 是否有更多好看
     easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
     easylookList: [], // 好看列表
     commentCur: 1,
@@ -169,13 +178,13 @@ export default {
     commentIds: [], // 评论Ids
     houseList: [], // 房源列表
     articleList: [], // 文章列表
-    uuid: '',
     openCardPopup: false,
     openMarketPopup: false,
     openArticlePopup: false,
     cardQrInfo: null,
     marketQrInfo: null,
-    articleQrInfo: null
+    articleQrInfo: null,
+    shareUuid: '' // 分享ID
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -183,19 +192,18 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
-    this.uuid = uuid()
+    this.shareUuid = this.$route.query.shareUuid
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
+    this.getLinkerList()
     this.getArticleList()
     this.getCardQrCode()
-    this.getLinkerQrcode()
-    this.getArticleQrcode()
     this.shareHandler()
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetailForH5(this.id, this.city, this.enterpriseId, this.agentId, 1)
+      const res = await discoverService.getDiscoverDetailForH5(this.id, this.enterpriseId, this.agentId)
       this.info = res
 
       this.infoId = res.id
@@ -219,7 +227,7 @@ export default {
     },
     // 好看列表
     async getLikeList() {
-      const res = await discoverService.queryLikeList(this.id)
+      const res = await discoverService.queryLikeList(this.id, this.enterpriseId)
       if (res && res.length > 0) {
         for (var index in res) {
           let item = res[index]
@@ -229,7 +237,7 @@ export default {
     },
     // 评论列表
     async getCommentList() {
-      const res = await discoverService.commentList(this.commentCur, this.commentSize, this.id)
+      const res = await discoverService.commentListForH5(this.commentCur, this.commentSize, this.id, this.enterpriseId)
       if (res.pages <= this.commentCur) {
         this.isMoreComment = false
       } else {
@@ -248,6 +256,11 @@ export default {
     moreCommentHandler() {
       this.getCommentList()
     },
+    // 推荐房源列表
+    async getLinkerList() {
+      const res = await discoverService.queryLinkerListByIdsForH5(this.shareUuid, this.enterpriseId)
+      this.houseList = res
+    },
     // TA的写一写
     async getArticleList() {
       const res = await discoverService.queryArticleListForH5(this.agentId, this.enterpriseId, this.id)
@@ -259,30 +272,34 @@ export default {
       this.cardQrInfo = result
     },
     // 楼盘二维码信息
-    async getLinkerQrcode() {
-      const result = await discoverService.queryLinkerQrcode(this.agentId, this.linkerId, this.enterpriseId)
+    async getLinkerQrcode(linkerId) {
+      const result = await discoverService.queryLinkerQrcode(this.agentId, linkerId, this.enterpriseId)
       this.marketQrInfo = result
     },
     // 文章二维码信息
-    async getArticleQrcode() {
-      const result = await discoverService.queryArticleQrcode(this.agentId, this.id, this.enterpriseId)
+    async getArticleQrcode(infoId) {
+      const result = await discoverService.queryArticleQrcode(this.agentId, infoId, this.enterpriseId)
       this.articleQrInfo = result
     },
     popupShowControl(val) {
       this.overlayClose()
     },
     // 弹出框
-    popHandler(val) {
+    popHandler(val, item) {
       if (val == 1) {
         // 名片
         this.openCardPopup = true
       }else if (val == 2) {
         // 楼盘
+        this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
       }else {
         // 文章
+        this.getArticleQrcode(item.id)
         this.openArticlePopup = true
       }
+      // this.getLinkerQrcode('69c2a2851d2b4004952f7829e37d3c63')
+      // this.openMarketPopup = true
     },
     // 关闭弹出框
     overlayClose() {
@@ -354,8 +371,42 @@ export default {
       border-radius: 10px;
       background-color: #999999;
     }
+    // 观点
+    > .discover-viewpoint {
+      border: 1px dashed #969ea8;
+      margin: 20px 16px;
+      padding: 16px;
+      position: relative;
+      > .viewpoint-line {
+        width: 2px;
+        height: 13px;
+        background-color: #007AE6;
+        position: absolute;
+        top: 22px;
+        left: 0;
+      }
+      > .viewpoint-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        > .viewpoint-right {
+          display: flex;
+          > .viewpoint-name {
+            margin-left: 7px;
+            margin-top: -5px;
+          }
+        }
+      }
+      > .viewpoint-content {
+        color: #445166;
+        font-size: 16px;
+        margin-top: 20px;
+        line-height: 1.5;
+      }
+    }
     > .discover-detail-content {
-      padding: 15px;
+      padding: 0 15px;
       font-size: 16px !important;
       color: #333333 !important;
       font-weight: 400 !important;
@@ -476,7 +527,7 @@ export default {
       margin-top: 10px;
       border-bottom: 10px solid #f7f9fa;
       > .recommend-houses-content {
-        padding: 10px 15px;
+        
         .house-item {
           > .house-img {
             width: 166px;
@@ -506,10 +557,17 @@ export default {
     // TA的写一写
     > .recommend-article {
       background-color: #fff;
-      margin: 10px 0 30px;
-      padding: 10px 0px;
+      // margin: 10px 0 30px;
+      // padding: 10px 0px;
       .recommend-article-list {
-        margin: 15px 0;
+        margin: 0 16px;
+        padding: 15px 0;
+        border-bottom: 1px solid #E2E2E3;
+        > .recommend-article-name {
+          color: #333333;
+          font-size: 15px;
+          line-height: 1.5;
+        }
       }
     }
   }
