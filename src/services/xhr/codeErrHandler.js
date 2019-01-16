@@ -8,6 +8,8 @@ export default (msg, url) => {
     // 以下为特殊处理,需要放到控制层处理的错误code,必须注释使用页面和错误行为
     case 31100:
       return true
+    case 31102:
+      return true
 
     default:
       console.error(msg)

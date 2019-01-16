@@ -69,6 +69,19 @@ export default {
         this.icon = '获取失败'
         this.imgNum = '获取失败'
         this.errColor = '#EA4D2E'
+
+        this.$dialog
+          .alert({
+            title: '爬取失败',
+            message: '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试',
+            confirmButtonText:'我知道了'
+          })
+          .then(() => {
+            // on close
+            this.cancelClooection(val)
+          })
+
+
       } else {
         this.analysisText = '解析成功'
         this.showLoading = 'none'
