@@ -5,7 +5,7 @@
         <estate-item :key="index" :info="currentData[index-1]"/>
         <i class="icon iconfont icon-search_empty del-icon" @click="delClickHandler(index-1)"/>
       </div>
-      <div class="empty-box" v-else>
+      <div class="empty-box" v-else @click="">
         <div class="info-box">
           <div class="add-icon">
             <i class="icon iconfont icon-chat_register_rb_n"></i>
@@ -27,7 +27,7 @@ export default {
     count: { type: Number, default: 3 },
     value: { type: Array },
     status: { tyle: String, default: 'empty' },
-    reminder: { type: Boolean, default: true }
+    reminder: { type: Boolean, default: false }
   },
   data: () => ({
     currentData: []
