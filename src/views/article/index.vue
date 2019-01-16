@@ -80,14 +80,10 @@
                   </span>
                   <div class="list">
                     <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
-<<<<<<< HEAD
-                      <p v-show="num < item.replayCount-1">
-=======
                       <p
                         v-show="num < item.replayCount"
                         @click="showReplayFn(item, index,2,data,num)"
                       >
->>>>>>> v3.0.3
                         <span class="name">{{data.senderName}}</span>
                         <span class="text" v-if="data.receiverName">回复</span>
                         <span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:
@@ -97,21 +93,13 @@
                     <span
                       class="more"
                       v-show="item.discussVOS.length > item.replayCount"
-<<<<<<< HEAD
-                      @click="item.replayCount=item.discussVOS.length"
-=======
                       @click="item.replayCount += 10"
->>>>>>> v3.0.3
                     >展开查看
                       <van-icon name="arrow-down"/>
                     </span>
                     <span
                       class="more"
-<<<<<<< HEAD
-                      v-show="item.discussVOS.length === item.replayCount && item.discussVOS.length > 5"
-=======
                       v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
->>>>>>> v3.0.3
                       @click="item.replayCount=5"
                     >收起
                       <van-icon name="arrow-up"/>
@@ -242,11 +230,7 @@ export default {
       current: 1,
       pages: null,
       classify: '', // 分类
-<<<<<<< HEAD
-      sortType: 1, // 排序
-=======
       sortType: 1, // 排序 1：按活跃度排序 2：按文章创建时间排序
->>>>>>> v3.0.3
       classifyName: '推荐', // 分类
       showLoading: false, // loading
       replayCnt: '', // 评论内容
@@ -276,11 +260,7 @@ export default {
     }
   },
   created() {
-<<<<<<< HEAD
-    this.showGuide = JSON.parse(window.localStorage.getItem('guideStatus'))
-=======
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
->>>>>>> v3.0.3
     if (this.userArea.city) {
       this.city = this.userArea.city
       this.articleType.push({ itemCode: '', itemName: this.userArea.city })
@@ -334,12 +314,9 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify(item) {
-<<<<<<< HEAD
-=======
       if (this.classifyName === item.itemName) {
         return false
       }
->>>>>>> v3.0.3
       this.classify = item.itemCode
       this.classifyName = item.itemName
       this.current = 1
@@ -356,22 +333,15 @@ export default {
     },
     // 按时间菜单排序
     sortTypeFn(val) {
-<<<<<<< HEAD
-=======
       if (this.sortType === val) {
         return false
       }
->>>>>>> v3.0.3
       this.sortType = val
       this.articleData = []
       this.getArticleList()
     },
     // 点赞
     async updateLike(articleId, praiseStatus, index) {
-<<<<<<< HEAD
-      // debugger
-=======
->>>>>>> v3.0.3
       let result = await ArticleService.updateLike({
         infoId: articleId,
         likeFlag: praiseStatus
@@ -391,10 +361,6 @@ export default {
       }
     },
     // 展示评论框
-<<<<<<< HEAD
-    showReplayFn(item, index) {
-      this.replayItem = item
-=======
     showReplayFn(item, index, type, replay, num) {
       if (replay && replay.senderId === this.userInfo.agentId) {
         this.commentIndex = index
@@ -407,7 +373,6 @@ export default {
         this.replayItem = replay
       }
       this.commentIndex = index
->>>>>>> v3.0.3
       this.showReplay = true
       this.$nextTick(function() {
         this.$refs.replaybox.focus()
@@ -421,11 +386,6 @@ export default {
     hideReplayFn() {
       this.showReplay = false
     },
-<<<<<<< HEAD
-    insertCommentFn() {},
-    // 评论
-    async insertComment(item, index) {
-=======
     // 发表评论
     insertCommentFn(index) {
       if (!this.replayCnt) {
@@ -442,7 +402,6 @@ export default {
       let receiverName = this.replayStatus === 2 ? this.replayItem.senderName : ''
       let parentId = this.replayStatus === 2 ? this.replayItem.id : ''
       let type = this.replayStatus === 2 ? 1 : 0
->>>>>>> v3.0.3
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
@@ -459,8 +418,6 @@ export default {
         type: type
       })
       if (result) {
-<<<<<<< HEAD
-=======
         this.articleData[this.commentIndex].discussVOS.unshift({
           id: result.id,
           receiverId: this.replayItem.senderId,
@@ -483,7 +440,6 @@ export default {
       } else {
         this.activeLikeItem = data
         this.showLikeDialog = true
->>>>>>> v3.0.3
       }
       
     },
