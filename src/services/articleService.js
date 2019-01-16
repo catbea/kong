@@ -41,6 +41,19 @@ class ArticleService {
       body: data
     })
   }
+
+
+  /**
+   * 文章解析
+   */
+  articleAnalysis(data){
+    return xhr({
+      url: '/cpInformationShare/articleAnalysis',
+      method: 'post',
+      body: data
+    })
+  }
+  // /qywx/cpInformationShare/articleAnalysis
   
   
 }

@@ -1,24 +1,43 @@
 <template>
-    <div class="page-body">
-        <div class="copyTitle">请复制原文链接</div>
-        <div class="notice-view">目前仅支持爬取微信公众号内容，如有侵权行为，发布人将承担相关责任</div>
-        <textarea class="linker-input" :placeholder="defaultText"></textarea>
-        <div class="clear-address">清空地址</div>
-        <div class="add-article">添加文章</div>
-        <div class="start-edit" @click="startEdit">开始编辑</div>
-    </div>
+  <div class="page-body">
+    <div class="copyTitle">请复制原文链接</div>
+    <div class="notice-view">目前仅支持爬取微信公众号内容，如有侵权行为，发布人将承担相关责任</div>
+    <textarea class="linker-input" :placeholder="defaultText" v-model="linkerText"></textarea>
+    <div class="clear-address" @click="clearAddress">清空地址</div>
+    <div class="add-article" @click="addArticle">添加文章</div>
+    <div class="start-edit" @click="startEdit">开始编辑</div>
+  </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里'
+    defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里',
+    linkerText: ''
   }),
 
   methods: {
     //开始编辑
     startEdit() {
-      this.$router.push({ name: 'analysis' })
+      if (this.linkerText.length > 0) {
+        this.$router.push({ name: 'analysis' })
+      } else {
+        this.$toast('您尚未填写原文链接')
+      }
+    },
+
+    //清除输入框地址信息
+    clearAddress() {
+      this.linkerText = ''
+    },
+
+    //添加文章
+    addArticle() {
+      if (this.linkerText.length > 0) {
+        this.$toast('22222222222')
+      } else {
+        this.$toast('您尚未填写原文链接')
+      }
     }
   }
 }
