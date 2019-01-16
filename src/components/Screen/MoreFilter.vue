@@ -177,7 +177,7 @@ export default {
   padding: 15px;
   overflow: scroll;
   > .item-container {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     > .item-title {
       font-size: 15px;
       font-weight: 400;

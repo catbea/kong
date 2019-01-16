@@ -1,11 +1,11 @@
 <template>
-  <div class="screen-container">
+  <div class="van-hairline--bottom screen-container">
     <ul class="screen-ul">
       <li class="area" :class="item.index===currentIndex&&'selected'" v-for="item in conf" :key="item.index" @click="itemClickHandler(item)">
         <span class="value-content">{{(item.value ===''||item.value ==='不限')?item.name:item.value}}</span>
         <span class="bg_img" :style="{'backgroundImage':'url(' + (item.index===currentIndex ? arrowUpIcon : arrowDownIcon )  + ')'}"></span>
       </li>
-      <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
+      <li class="sort" @click="sortHandle"></li>
     </ul>
     <div class="choose-container" @click="coverClickHandler">
       <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @checkedText="areaStrChange"></area-filter>
@@ -31,7 +31,7 @@ export default {
       }
     },
     local: { type: String, default: '' },
-    height: { type: String, default: '14rem' }
+    height: { type: String, default: '16rem' }
   },
   components: {
     AreaFilter,
@@ -51,6 +51,11 @@ export default {
       localCity: '',
       moreFilters: {}
     },
+    areaFlage:false,
+    priceFlage:false,
+    popularityFlage:false,
+    moreFlage:false,
+    sortFlage:false,
     conf: [
       { index: 0, name: '区域', value: '', checked: false },
       { index: 1, name: '均价', value: '', checked: false },
@@ -69,9 +74,11 @@ export default {
     }
   },
   methods: {
+    sortHandle(){
+     this.currentIndex = this.currentIndex===4?-1:4 
+    },
     itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
-      console.log(11111111111111);
       this.$emit('screen',val.index)
     },
     coverClickHandler() {
@@ -81,6 +88,7 @@ export default {
     areaStrChange(val) {
       this.conf[0].value = val
       this.currentIndex = -1
+      
     },
     // 价格文字修改
     priceStrChange(val) {
@@ -98,6 +106,7 @@ export default {
     },
     sortChangeHandler() {
       this.currentIndex = -1
+      console.log(111111111111111);
     }
    },
   watch: {
@@ -131,6 +140,10 @@ export default {
 <style lang="less">
 .screen-container {
   position: relative;
+  padding-bottom:4px;
+  &.active{
+    font-size: #007AE6;
+  }
   > .screen-ul {
     display: flex;
     justify-content: space-between;
