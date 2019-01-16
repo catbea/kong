@@ -7,11 +7,11 @@
     <div class="article-body">
       <div class="article-title">
         <span class="title-first">标题</span>
-        <span class="title-second">{{title}}</span>
+        <span class="title-second" :style="{color:errColor}">{{title|textOver(15)}}</span>
       </div>
       <div class="article-source">
         <span class="source-first">来源</span>
-        <span class="source-second">{{source}}</span>
+        <span class="source-second" :style="{color:errColor}">{{source}}</span>
       </div>
       <div class="article-content">
         <span class="content-first">正文</span>
@@ -19,11 +19,11 @@
       </div>
       <div class="article-cover">
         <span class="cover-first">封面</span>
-        <span class="cover-second">{{icon}}</span>
+        <span class="cover-second" :style="{color:errColor}">{{icon}}</span>
       </div>
       <div class="article-Illustration">
         <span class="Illustration-first">插画</span>
-        <span class="Illustration-second">{{imgNum}}</span>
+        <span class="Illustration-second" :style="{color:errColor}">共{{imgNum}}副插画</span>
       </div>
     </div>
   </div>
@@ -41,14 +41,16 @@ export default {
       source: '',
       content: '',
       icon: '',
-      imgNum: ''
+      imgNum: '',
+      errColor: ''
     }
   },
 
   created() {
     this.articleUrl = this.$route.params.url
     let obj = {
-      articleUrl: 'https://mp.weixin.qq.com'
+      // articleUrl: 'https://mp.weixin.qq.com/s/0R6naTBzZsvVV2RyQp2_cw'
+      articleUrl: this.articleUrl
     }
     this.commitInfo(obj)
   },
@@ -66,14 +68,20 @@ export default {
         this.content = '获取失败'
         this.icon = '获取失败'
         this.imgNum = '获取失败'
+        this.errColor = '#EA4D2E'
       } else {
         this.analysisText = '解析成功'
         this.showLoading = 'none'
         this.title = result.title
         this.source = result.source
-        this.content = result.content
-        this.icon = result.icon
+        if (result.content) {
+          this.content = '已完成'
+        }
+        if (result.icon) {
+          this.icon = '已完成'
+        }
         this.imgNum = result.imgNum
+        this.errColor = '#445166'
       }
     }
   }

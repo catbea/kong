@@ -124,7 +124,6 @@ export default {
       let dataArray = this.myWriteList
 
       dataArray.splice(index, 1)
-
       if (result) {
         this.$toast('取消收藏成功')
       }
