@@ -42,19 +42,16 @@ class ArticleService {
     })
   }
 
-
   /**
-   * 文章解析
-   */
-  articleAnalysis(data){
+   * 删除评论
+   */ 
+  updateCommentStatus (data) {
     return xhr({
-      url: '/cpInformationShare/articleAnalysis',
+      url: '/comment/updateCommentStatus',
       method: 'post',
       body: data
     })
   }
-  // /qywx/cpInformationShare/articleAnalysis
-  
   
 }
 
