@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import articleService from 'SERVICE/articleService'
 export default {
   data: () => ({
     defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里',
@@ -20,7 +21,7 @@ export default {
     //开始编辑
     startEdit() {
       if (this.linkerText.length > 0) {
-        this.$router.push({ name: 'analysis' })
+        this.$router.push({ name: 'analysis', params: { url: this.linkerText } })
       } else {
         this.$toast('您尚未填写原文链接')
       }
@@ -34,10 +35,19 @@ export default {
     //添加文章
     addArticle() {
       if (this.linkerText.length > 0) {
-        this.$toast('22222222222')
+        let obj = {
+          // articleUrl: this.linkerText,
+           articleUrl:'https://mp.weixin.qq.com'
+        }
+        this.commitInfo(obj)
       } else {
         this.$toast('您尚未填写原文链接')
       }
+    },
+
+    //commitInfo
+    async commitInfo(data) {
+      const result = articleService.articleAnalysis(data)
     }
   }
 }
