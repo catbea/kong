@@ -80,7 +80,7 @@
       <img src="../../assets/img/article/noarticle.png" alt="">
       <p>对不起，暂时没有查询到相关文章！</p>
     </div>
-    <div class="artcle-tips" v-show="showNewArticle">
+    <div class="artcle-tips" v-show="showNewArticle" @click="onRefresh">
       {{'10'}}条新内容<van-icon name="arrow-down" />
     </div>
     <div class="write">
@@ -513,6 +513,13 @@ export default {
           flex: 1;
           .like-box,.comment-box{
             display: flex;
+            .icon{
+              img{
+                width: 14px;
+                height: 14px;
+                opacity: 0.7;
+              }
+            }
           }
           .icon{
             display: inline-block;
@@ -673,6 +680,7 @@ export default {
           left: 10px;
           top: 5px;
           line-height: 1.5;
+          font-size: 14px;
         }
         .textarea{
           width: 100%;
