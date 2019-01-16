@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     async getCardInfo(agentId) {
-      const result = await userService.getQrCode(agentId)
+      const result = await userService.getQrCodeByToken(agentId)
       if (result) {
         this.shareInfo = {
           qrcode: result.miniQrCode,

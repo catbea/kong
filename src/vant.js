@@ -31,7 +31,8 @@ import {
   Cell,
   CellGroup,
   CheckboxGroup,
-  SubmitBar
+  SubmitBar,
+  Actionsheet
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -62,3 +63,4 @@ Vue.use(Cell).use(CellGroup)
 Vue.use(CheckboxGroup)
 
 Vue.use(SubmitBar)
+Vue.use(Actionsheet)

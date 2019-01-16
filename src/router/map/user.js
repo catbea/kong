@@ -120,7 +120,24 @@ export default [
     name: 'historicalArticles',
     component: resolve => require(['@/views/user/articles/historicalArticles.vue'], resolve),
     meta: {
-      title: '历史文章'
+      title: '我的写一写'
+    }
+  },
+  //我的写一写二级列表
+  {
+    path: '/user/articles/easyLookChildList',
+    name: 'easyLookChildList',
+    component: resolve => require(['@/views/user/articles/easyLookChildList.vue'], resolve),
+    meta: {
+      title: '我的写一写'
+    }
+  },
+  {
+    path: '/user/articles/easyLookList',
+    name: 'easyLookList',
+    component: resolve => require(['@/views/user/articles/easyLookList.vue'], resolve),
+    meta: {
+      title: '沙雕认为好看的'
     }
   },
   {
@@ -128,7 +145,7 @@ export default [
     name: 'updateArticles',
     component: resolve => require(['@/views/user/articles/updateArticles.vue'], resolve),
     meta: {
-      title: '历史文章'
+      title: '我的写一写'
     }
   },
   {

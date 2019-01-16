@@ -15,7 +15,7 @@ class ArticleService {
    */
   getArticleType (data) {
     return xhr({
-      url: '/cpInformation/informationCarousel',
+      url: '/dictionary/queryListByClassify',
       body: data
     })
   }
@@ -26,6 +26,28 @@ class ArticleService {
   updateLike (data) {
     return xhr({
       url: '/cpInformation/updateLikeNum',
+      method: 'post',
+      body: data
+    })
+  }
+
+  /**
+   * 文章评论
+   */ 
+  insertComment (data) {
+    return xhr({
+      url: '/comment/insertComment',
+      method: 'post',
+      body: data
+    })
+  }
+
+  /**
+   * 删除评论
+   */ 
+  updateCommentStatus (data) {
+    return xhr({
+      url: '/comment/updateCommentStatus',
       method: 'post',
       body: data
     })
