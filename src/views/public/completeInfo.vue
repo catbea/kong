@@ -226,7 +226,16 @@ export default {
     },
     async updateUserInfo() {
       const res = await UserService.getUserInfo()
-      this.$store.dispatch('userInfo', Object.assign(this.userInfo, res))
+      let params = {
+        name: res.name,
+        majorRegion: res.majorRegion,
+        majorCity: res.majorCity,
+        distributorId: res.distributorId,
+        distributorName: res.distributorName,
+        institutionId: res.institutionId,
+        institutionName: res.institutionName
+      }
+      this.$store.dispatch('userInfo', Object.assign(this.userInfo, params))
     }
   },
   computed: {
