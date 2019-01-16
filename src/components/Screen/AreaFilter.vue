@@ -1,7 +1,7 @@
 <template>
   <div class="area-filter" v-if="show" :class="{act:flag}">
     <ul>
-      <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=item">{{item}}</li>
+      <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="active(item)">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -26,6 +26,12 @@ export default {
       '0': '不限'
     }
     if (this.parent) this.list = Object.assign(this.list, getChildren(this.parent))
+  },
+  methods: {
+    active(item){
+      this.checked=item
+      this.$emit('activeHandle')
+    }
   },
   watch: {
     checked(val) {

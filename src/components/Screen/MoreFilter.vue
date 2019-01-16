@@ -28,6 +28,7 @@ export default {
   },
   data: () => ({
     flag:false,
+    num:0,
     conf: {
       areaSize: {
         name: '面积',
@@ -98,7 +99,12 @@ export default {
     itemClickHandler(type, value) {
       switch (type) {
         case 'areaSize':
-          this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
+          // this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
+          if(this.currentValue.areaSize === value){
+            this.currentValue.areaSize = '-1,-1'
+          }else{
+            this.currentValue.areaSize = value
+          }
           break
         case 'type':
           this.currentValue.type = this.currentValue.type === value ? '-2' : value
@@ -117,6 +123,7 @@ export default {
           this.currentValue.focusStatus = this.currentValue.focusStatus === value ? '-1' : value
           break
       }
+      this.num++
     },
     activeCheck(mainKey, index) {
       let status = false
@@ -153,10 +160,13 @@ export default {
         openStatus: '-1',
         focusStatus: '-1'
       }
+      this.num=0
+      this.$emit('resetNum')
     },
     confirmHandler() {
       this.$emit('confirm', this.currentValue)
       this.$emit('input', this.currentValue)
+      this.$emit('numHandle',this.num)
     }
   },
   watch: {
@@ -175,6 +185,7 @@ export default {
   height: 430px;
   background-color: #fff;
   padding: 15px;
+  padding-bottom:0px;
   overflow: scroll;
   > .item-container {
     margin-bottom: 30px;
