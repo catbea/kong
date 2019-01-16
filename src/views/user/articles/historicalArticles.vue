@@ -142,7 +142,7 @@ export default {
     },
 
     enterDetail(val) {
-
+        // this.$router.push({ name: 'analysis'})
       this.$router.push({ name: 'easyLookChildList', query: val })
     },
 
