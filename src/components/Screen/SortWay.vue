@@ -1,7 +1,7 @@
 <template>
   <div class="sortWay-page" v-if="show">
     <ul>
-      <li v-for="(item,index) in conf" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="checked=index">{{item}}</li>
+      <li v-for="(item,index) in conf" :key="index" class="van-hairline--bottom" :class="{active:checked===index}" @click="activeHandle(index)">{{item}}</li>
     </ul>
   </div>
 </template>
@@ -19,7 +19,12 @@ export default {
     show: { type: Boolean, default: false },
     value: String
   },
-  methods: {},
+  methods: {
+    activeHandle(index){
+      this.checked=index
+      this.$emit('activeHandle')
+    }
+  },
   watch: {
     checked(val) {
       this.$emit('input', val)
