@@ -36,8 +36,8 @@ export default {
     addArticle() {
       if (this.linkerText.length > 0) {
         let obj = {
-          // articleUrl: this.linkerText,
-           articleUrl:'https://mp.weixin.qq.com'
+          articleUrl: this.linkerText,
+          //  articleUrl:'https://mp.weixin.qq.com'
         }
         this.commitInfo(obj)
       } else {

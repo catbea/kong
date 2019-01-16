@@ -1,29 +1,29 @@
 <template>
   <div class="analysis-body">
     <div class="progress-body">
-      <van-loading type="spinner"/>
-      <span>解析中</span>
+      <van-loading type="spinner" :style="{display:showLoading}"/>
+      <span>{{analysisText}}</span>
     </div>
     <div class="article-body">
       <div class="article-title">
         <span class="title-first">标题</span>
-        <span class="title-second">厦门今年第二批9000套保障性···</span>
+        <span class="title-second">{{title}}</span>
       </div>
       <div class="article-source">
         <span class="source-first">来源</span>
-        <span class="source-second">楚天都市报</span>
+        <span class="source-second">{{source}}</span>
       </div>
       <div class="article-content">
         <span class="content-first">正文</span>
-        <span class="content-second">获取失败</span>
+        <span class="content-second">{{content}}</span>
       </div>
       <div class="article-cover">
         <span class="cover-first">封面</span>
-        <span class="cover-second">40/44（获取中…)</span>
+        <span class="cover-second">{{icon}}</span>
       </div>
       <div class="article-Illustration">
         <span class="Illustration-first">插画</span>
-        <span class="Illustration-second">获取准备中…</span>
+        <span class="Illustration-second">{{imgNum}}</span>
       </div>
     </div>
   </div>
@@ -34,14 +34,21 @@ export default {
   data() {
     return {
       cancelCollection: require('IMG/user/myWrite/cancelCollection.png'),
-      articleUrl: ''
+      articleUrl: '',
+      showLoading: 'block',
+      analysisText: '解析中',
+      title: '',
+      source: '',
+      content: '',
+      icon: '',
+      imgNum: ''
     }
   },
 
   created() {
     this.articleUrl = this.$route.params.url
     let obj = {
-      articleUrl: this.articleUrl
+      articleUrl: 'https://mp.weixin.qq.com'
     }
     this.commitInfo(obj)
   },
@@ -50,6 +57,24 @@ export default {
     //commitInfo
     async commitInfo(data) {
       const result = await articleService.articleAnalysis(data)
+
+      if (result.returnCode == '31100') {
+        this.showLoading = 'none'
+        this.analysisText = '解析失败'
+        this.title = '获取失败'
+        this.source = '获取失败'
+        this.content = '获取失败'
+        this.icon = '获取失败'
+        this.imgNum = '获取失败'
+      } else {
+        this.analysisText = '解析成功'
+        this.showLoading = 'none'
+        this.title = result.title
+        this.source = result.source
+        this.content = result.content
+        this.icon = result.icon
+        this.imgNum = result.imgNum
+      }
     }
   }
 }
@@ -68,6 +93,9 @@ export default {
     width: 100%;
     height: 234px;
     flex-direction: column;
+
+    > .loading-view {
+    }
 
     span {
       font-size: 14px;
