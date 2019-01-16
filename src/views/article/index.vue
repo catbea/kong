@@ -16,7 +16,7 @@
         <li :class="{'active': sortType === 2}" @click="sortTypeFn(2)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list"  v-if="articleData.length">
+    <div class="article-list"  v-if="articleData.length" @click="hideLike">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list
           v-model="loading"
@@ -25,7 +25,7 @@
           @load="onLoad"
         >
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
-            <div class="content scale-1px-bottom">
+            <div class="content scale-1px-bottom"  @click="goInfo(item)">
               <div class="left-cnt">
                 <h3 class="title">{{item.articleTitle}}</h3>
                 <div class="attr">
@@ -45,8 +45,8 @@
                 <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                   <span class="icon"><img src="../../assets/img/article/like1.png" alt=""></span>
                   <div class="list">
-                    <span class="name" v-for="(data,num) in item.praiseAndShareUserVOS" :key="num" @click="" v-show="num < item.likeCount-1">{{data.userName}}<label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label></span>
-                    <span class="more" v-show="item.praiseAndShareUserVOS.length > item.likeCount" @click="item.likeCount=item.praiseAndShareUserVOS.length">展开查看<van-icon name="arrow-down" /></span>
+                    <span class="name" :class="{'active': data===activeLikeItem}"  v-for="(data,num) in item.praiseAndShareUserVOS" :key="num" @click.stop="showLike($event,data)" v-show="num < item.likeCount-1">{{data.userName}}<label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label></span>
+                    <span class="more" v-show="item.praiseAndShareUserVOS.length > item.likeCount" @click="item.likeCount += 15">展开查看<van-icon name="arrow-down" /></span>
                     <span class="more" v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 25" @click="item.likeCount=25" >收起<van-icon name="arrow-up" /></span>
                   </div>
                 </div>
@@ -56,7 +56,7 @@
                     <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
                       <p v-show="num < item.replayCount" @click="showReplayFn(item, index,2,data,num)"><span class="name">{{data.senderName}}</span><span class="text" v-if="data.receiverName">回复</span><span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:<span class="replay-cnt">{{data.content}}</span></p>
                     </div>
-                    <span class="more" v-show="item.discussVOS.length > item.replayCount" @click="item.replayCount=item.discussVOS.length">展开查看<van-icon name="arrow-down" /></span>
+                    <span class="more" v-show="item.discussVOS.length > item.replayCount" @click="item.replayCount += 10">展开查看<van-icon name="arrow-down" /></span>
                     <span class="more" v-show="item.discussVOS.length === item.replayCount && item.discussVOS.length > 5" @click="item.replayCount=5">收起<van-icon name="arrow-up" /></span>
                   </div>
                   
@@ -113,6 +113,13 @@
         @select="onSelect"
       />
     </div>
+    <div class="comment-like-dialog" v-show="showLikeDialog" :style="{'left': dialogX+'px', 'top': dialogY+'px'}">
+      <!-- <div class="arrow-up"></div> -->
+      <div class="action">
+        <span><img src="../../assets/img/article/card.png" alt="" v-show="activeLikeItem&&activeLikeItem.userSource === 0"> 查看名片</span>
+        <span><img src="../../assets/img/article/share.png" alt=""> 查看分享</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -161,11 +168,15 @@ export default {
           value: 2
         }
       ],
-      deleteIndex: '' // 删除评论
+      deleteIndex: '', // 删除评论
+      showLikeDialog: false, // 显示好看弹框
+      dialogX: '', // 弹框位置
+      dialogY: '', // 弹框位置
+      activeLikeItem: '' // 点击好看名称
     }
   },
   created () {
-    this.showGuide = JSON.parse(window.localStorage.getItem('guideStatus'))
+    this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     if (this.userArea.city) {
       this.city = this.userArea.city
       this.articleType.push({itemCode: '', itemName: this.userArea.city})
@@ -182,7 +193,7 @@ export default {
     // 隐藏引导页
     hideStep () {
       this.showGuide = false
-      window.localStorage.setItem('guideStatus', false)
+      window.localStorage.setItem('guideStatus', true)
     },
     // 获取文章分类
     async getArticleType () {
@@ -240,7 +251,6 @@ export default {
     },
     // 点赞
     async updateLike (articleId, praiseStatus, index) {
-      // debugger
       let result = await ArticleService.updateLike({
         infoId: articleId,
         likeFlag: praiseStatus
@@ -248,7 +258,7 @@ export default {
       this.articleData[index].praiseStatus = praiseStatus
       if (praiseStatus===0) {
         let item = this.articleData[index].praiseAndShareUserVOS
-        let r = item.filter(el => el.articleId !== articleId)
+        let r = item.filter( element => element.userId !== this.userInfo.agentId)
         this.articleData[index].praiseAndShareUserVOS = r
       } else {
         this.articleData[index].praiseAndShareUserVOS.unshift({
@@ -326,6 +336,27 @@ export default {
         this.hideReplayFn()
       }
     },
+    // 点击好看名字弹框
+    showLike (e, data) {
+      this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
+      this.dialogY = e.pageY + 10
+      this.activeLikeItem = data
+      this.showLikeDialog = true
+    },
+    // 隐藏好看名字弹框
+    hideLike () {
+      this.showLikeDialog = false
+      this.activeLikeItem = ''
+    },
+    // 跳转文章详情
+    goInfo (item) {
+      let articleId = item.articleId
+      let area = (this.classifyName === this.userArea.city) ? this.userArea.city : '全国'
+      let agentId = item.agentId
+      let enterpriseId = this.userInfo.enterpriseId
+      let classify = this.classify
+      this.$router.push(`/discover/${articleId}/${area}?agentId=${agentId}&enterpriseId=${enterpriseId}&classify=${classify}`)
+    },
     // 新增文章
     goAdd () {
       this.$router.push('/discover/newlyAdded/index')
@@ -346,13 +377,14 @@ export default {
       await this.getArticleList()
       this.isLoading = false
     },
-    // 删除评论
+    // 删除评论上拉菜单
     onSelect (item) {
       if (item.value === 1) {
         this.delComment()
       }
       this.showDelete = false
     },
+    // 删除评论
     async delComment () {
       let id = this.articleData[this.commentIndex].discussVOS[this.deleteIndex].id || ''
       let result = await ArticleService.updateCommentStatus({
@@ -552,6 +584,9 @@ export default {
               -webkit-box-orient: vertical;
               .name{
                 margin: 0 5px 5px 0;
+                &.active{
+                  color: #007AE6;
+                }
               }
             }
           }
@@ -714,6 +749,45 @@ export default {
       z-index: 5;
       margin-left: -25px;
       margin-top: -25px;
+    }
+  }
+  .comment-like-dialog{
+    position: fixed;
+    width: 200px;
+    height: 45px;
+    color: #fff;
+    // left: 50%;
+    // transform: translateX(-50%);
+    text-align: center;
+    z-index: 3;
+    .arrow-up{
+      width:0;
+      height:0;
+      border-left:5px solid transparent;
+      border-right:5px solid transparent;
+      border-bottom:5px solid #4B5154;
+      position: relative;
+      left: 50%;
+    }
+    .action{
+      position: relative;
+      background-color: #4B5154;
+      height: 40px;
+      border-radius: 6px;
+      font-size: 14px;
+      vertical-align: middle;
+      line-height: 40px;
+      display: flex;
+      span{
+        flex: 1;
+        img{
+          width: 16px;
+          height: 16px;
+          vertical-align: middle;
+          position: relative;
+          top: -1px;
+        }
+      }
     }
   }
 }
