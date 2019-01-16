@@ -232,6 +232,28 @@
     <div class="loading"  v-show="showLoading" >
        <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
+    <div class="cropper-box" v-show="showCopper">
+      <vueCropper
+				ref="cropper"
+				:img="imgSrc"
+        :viewMode="1"
+        :autoCrop="true"
+        :canMove="true"
+        :autoCropWidth="375"
+				:autoCropHeight="420"
+        :fixedBox="true"
+        :canMoveBox="false"
+        :centerBox="true"
+        :original="true"
+        :scalable="true"
+        :rotatable="true"
+        mode="cover"
+			></vueCropper>
+      <div class="action">
+        <button class="cancle" @click="cancleCropper">取消</button>
+        <button class="save" @click="cropper">确定</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -245,7 +267,11 @@
   import 'swiper/dist/css/swiper.min.css'
   import { randomString, dataURLtoBlob, checkStrLength, checkStrType, checkPhoneNum, downloadFile } from '@/utils/tool'
   import CosCloud from 'cos-js-sdk-v4'
+  import { VueCropper }  from 'vue-cropper' 
   export default {
+    components: {
+      VueCropper,
+    },
     data() {
       return {
         agentId: 1,
@@ -261,14 +287,16 @@
         appId: '10037467',
         bucket: '720ljq2test',
         region: 'sh',
-        uploadImg: ''
+        uploadImg: '', // 上传图片
+        showCopper: false, // 截图框
+        imgSrc: '' // 被截图图片
       }
     },
     computed: {
       ...mapGetters(['userInfo'])
     },
     created() {
-      this.showLoading = true
+      // this.showLoading = true
       this.agentId = this.$route.query.agentId
       this.initData()
       this.initCos()
@@ -431,10 +459,27 @@
           }, 500)
         }
       },
-      // 图片上传
+      // 图片上传组件
       onRead (file) {
+        this.imgSrc = file.content
+        this.showCopper = true
+      },
+      // 图片裁剪
+      cropper () {
+        this.showCopper = false
+        this.$refs.cropper.getCropData((data) => {
+          this.uploadCropperImg(data)
+        })
+      },
+      // 取消图片截图
+      cancleCropper () {
+        this.showCopper = false
+        this.imgSrc = ''
+      },
+      // 图片压缩上传
+      uploadCropperImg (imgData) {
         this.showLoading = true
-        let imgData = file.content
+        // let imgData = file.content
         let image = new Image()
         image.src = imgData
         if (imgData.length > 100 * 1024) {
@@ -1420,6 +1465,36 @@
         z-index: 5;
         margin-left: -25px;
         margin-top: -25px;
+      }
+    }
+    // 截图
+    .cropper-box{
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      .action{
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        font-size: 14px;
+        color: #fff;
+        text-align: center;
+        button{
+          width: 120px;
+          height: 40px;
+          border: none;
+          border-radius: 6px;
+          margin: 0 15px;
+          &.cancle{
+            background-color: #999;
+          }
+          &.save{
+            background-color: #0069CA;
+          }
+        }
       }
     }
   }
