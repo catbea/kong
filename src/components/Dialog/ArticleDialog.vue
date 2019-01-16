@@ -2,10 +2,11 @@
   <div class="dialog-container" v-if="currentShow">
     <div class="shadow_box dialog-box">
       <div class="dialog-title">扫描二维码阅读文章</div>
-      <div class="mini-qrcode" :style="{backgroundImage:'url('+info&&info.qrCode+')'}"></div>
+      <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div>
+      <p class="dialog-atitle">{{info&&info.title}}</p>
       <div class="dialog-content">
-        <p class="dialog-name">{{info&&info.publisher}}</p>
-        <p class="dialog-mobile">{{info&&info.createTimeStamp}}</p>
+        <p class="dialog-publisher">{{info&&info.publisher}}</p>
+        <p class="dialog-time">{{info&&info.createTimeStamp | dateTimeFormatter(2, '/')}}</p>
       </div>
       <div class="dialog-bottom">开启买房新模式 及时获取一手房源信息</div>
       <div
@@ -45,7 +46,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .dialog-container {
   width: 100%;
   height: 100%;
@@ -63,55 +64,55 @@ export default {
     background-color: #ffffff;
     position: relative;
     > .dialog-title {
-        text-align: center;
-        margin-top: 22px;
-        color: #333;
-        font-size: 16px;
+      text-align: center;
+      margin-top: 22px;
+      color: #333;
+      font-size: 16px;
     }
     > .mini-qrcode {
-    //   position: absolute;
-    //   bottom: 200px;
-    //   left: 50%;
-    //   transform: translate(-50%, -50%);
-      margin: 10px auto;
+      //   position: absolute;
+      //   bottom: 200px;
+      //   left: 50%;
+      //   transform: translate(-50%, -50%);
+      margin: 20px auto;
       width: 162px;
       height: 162px;
     }
+    > .dialog-atitle {
+      color: #333;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 0 24px;
+      line-height: 1.5;
+      text-align: center;
+    }
     > .dialog-content {
-        padding: 0 36px;
-        > .dialog-name {
-            color: #333;
-            font-size: 20px;
-            font-weight: bold;
-            height: 28px;
-        }
-        > .dialog-tag {
-            color: #333;
-            font-size: 12px;
-            height: 18px;
-        }
-        > .dialog-mobile {
-            color: #333;
-            font-size: 12px;
-            margin-top: 13px;
-        }
-        > .dialog-adder {
-            color: #333;
-            font-size: 12px;
-            margin-top: 6px;
-        }
+      margin-top: 6px;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      > .dialog-publisher {
+        color: #333;
+        font-size: 12px;
+      }
+      > .dialog-time {
+        color: #333;
+        font-size: 12px;
+      }
     }
     > .dialog-bottom {
-        width: 100%;
-        height: 32px;
-        line-height: 32px;
-        background-color: #F7F9FA;
-        position: absolute;
-        bottom: 0;
-        color: #969EA8;
-        font-size: 12px;
-        text-align: center;
-        border-radius: 10px;
+      width: 100%;
+      height: 32px;
+      line-height: 32px;
+      background-color: #f7f9fa;
+      position: absolute;
+      bottom: 0;
+      color: #969ea8;
+      font-size: 12px;
+      text-align: center;
+      border-radius: 10px;
     }
     > .dialog-close {
       color: white;

@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length" @click="hideLike">
+    <div class="article-list" v-if="articleData.length">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
@@ -52,7 +52,7 @@
                       :class="{'active': data===activeLikeItem}"
                       v-for="(data,num) in item.praiseAndShareUserVOS"
                       :key="num"
-                      @click.stop="showLike($event,data)"
+                      @click.stop="showLike(data)"
                       v-show="num < item.likeCount-1"
                     >
                       {{data.userName}}
@@ -147,7 +147,7 @@
       <p @click="goAdd">
         <img src="../../assets/img/article/plus.png" alt="">
       </p>
-      <p>
+      <p @click="goWrite">
         <img src="../../assets/img/article/write.png" alt="">
       </p>
     </div>
@@ -184,24 +184,24 @@
     <div class="delete-replay">
       <van-actionsheet v-model="showDelete" :actions="actions" @select="onSelect"/>
     </div>
-    <div
+    <!-- <div
       class="comment-like-dialog"
       v-show="showLikeDialog"
       :style="{'left': dialogX+'px', 'top': dialogY+'px'}"
     >
       <div class="action">
-        <span>
+        <span @click="goCard">
           <img
             src="../../assets/img/article/card.png"
             alt=""
             v-show="activeLikeItem&&activeLikeItem.userSource === 0"
           >查看名片
         </span>
-        <span>
+        <span @click="goShare">
           <img src="../../assets/img/article/share.png" alt="">查看分享
         </span>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -432,22 +432,24 @@ export default {
       }
     },
     // 点击好看名字弹框
-    showLike(e, data) {
-      this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
-      this.dialogY = e.pageY + 10
-      if(this.activeLikeItem.userId === data.userId){
-        this.showLikeDialog = !this.showLikeDialog
-      } else {
-        this.activeLikeItem = data
-        this.showLikeDialog = true
-      }
-      
+    showLike (data) {
+      this.$router.push({path: '/user/articles/historicalArticles', query:{typeCode:'2'}})
     },
+    // showLike(e, data) {
+    //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
+    //   this.dialogY = e.pageY + 10
+    //   if(this.activeLikeItem.userId === data.userId){
+    //     this.showLikeDialog = !this.showLikeDialog
+    //   } else {
+    //     this.activeLikeItem = data
+    //     this.showLikeDialog = true
+    //   }
+    // },
     // 隐藏好看名字弹框
-    hideLike() {
-      this.showLikeDialog = false
-      this.activeLikeItem = ''
-    },
+    // hideLike() {
+    //   this.showLikeDialog = false
+    //   this.activeLikeItem = ''
+    // },
     // 跳转文章详情
     goInfo(item) {
       let articleId = item.articleId
@@ -457,9 +459,17 @@ export default {
       let classify = this.classify
       this.$router.push(`/discover/${articleId}/${area}?agentId=${agentId}&enterpriseId=${enterpriseId}&classify=${classify}`)
     },
-    // 新增文章
+    // 去新增文章页面
     goAdd() {
       this.$router.push('/discover/newlyAdded/index')
+    },
+    // 去名片详情页
+    // goCard() {},
+    // 去我的分享
+    // goShare() {},
+    // 去我的写一写
+    goWrite() {
+      this.$router.push('/user/articles/historicalArticles')
     },
     // 加载更多
     async onLoad() {

@@ -47,7 +47,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .dialog-container {
   width: 100%;
   height: 100%;
@@ -75,7 +75,7 @@ export default {
     //   bottom: 200px;
     //   left: 50%;
     //   transform: translate(-50%, -50%);
-      margin: 10px auto;
+      margin: 20px auto;
       width: 162px;
       height: 162px;
     }
@@ -86,6 +86,7 @@ export default {
             font-size: 20px;
             font-weight: bold;
             height: 28px;
+            text-align: center;
         }
         > .dialog-tag {
             color: #333;
