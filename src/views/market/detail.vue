@@ -442,6 +442,7 @@ export default {
       display: flex;
       justify-content: space-between;
       margin: 15px;
+      margin-left:9px;
       font-size: 12px;
       > .browser-info {
         display: flex;
@@ -553,6 +554,7 @@ export default {
         height: 44px;
         line-height: 44px;
         margin: 5px;
+        margin-left:0px;
         background-color: rgba(0, 122, 230, 0.05);
         color: #445166;
         font-weight: 400;
@@ -682,7 +684,7 @@ export default {
     }
   }
   .m-statement {
-    padding: 16px 23px 77px 16px;
+    padding: 16px 23px 90px 16px;
     // width: 343px;
     background:#F7F9FA;
     color: #8A9299;
