@@ -99,7 +99,7 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.discussVOS.length === item.replayCount && item.discussVOS.length > 5"
+                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
                       @click="item.replayCount=5"
                     >收起
                       <van-icon name="arrow-up"/>
@@ -229,7 +229,7 @@ export default {
       current: 1,
       pages: null,
       classify: '', // 分类
-      sortType: 2, // 排序 1：按活跃度排序 2：按文章创建时间排序
+      sortType: 1, // 排序 1：按活跃度排序 2：按文章创建时间排序
       classifyName: '推荐', // 分类
       showLoading: false, // loading
       replayCnt: '', // 评论内容
@@ -430,8 +430,13 @@ export default {
     showLike(e, data) {
       this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
       this.dialogY = e.pageY + 10
-      this.activeLikeItem = data
-      this.showLikeDialog = true
+      if(this.activeLikeItem.userId === data.userId){
+        this.showLikeDialog = !this.showLikeDialog
+      } else {
+        this.activeLikeItem = data
+        this.showLikeDialog = true
+      }
+      
     },
     // 隐藏好看名字弹框
     hideLike() {
@@ -663,7 +668,7 @@ export default {
           .more {
             font-size: 12px;
             color: #969ea8;
-            margin-left: 10px;
+            display: block;
           }
           .like-box {
             margin-bottom: 10px;
