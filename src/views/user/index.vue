@@ -115,7 +115,8 @@ export default {
           this.$router.push('/user/collection/myCollection')
           break
         case 2:
-          this.$router.push('/user/articles/historicalArticles')
+          // this.$router.push('/user/articles/historicalArticles')
+            this.$router.push({name:'historicalArticles',query:{typeCode:'2'}})
           break
         case 3:
           this.$router.push('/user/myReport')

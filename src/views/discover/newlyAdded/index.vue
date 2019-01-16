@@ -36,8 +36,7 @@ export default {
     addArticle() {
       if (this.linkerText.length > 0) {
         let obj = {
-          articleUrl: this.linkerText,
-          //  articleUrl:'https://mp.weixin.qq.com'
+          articleUrl: this.linkerText
         }
         this.commitInfo(obj)
       } else {
@@ -47,7 +46,11 @@ export default {
 
     //commitInfo
     async commitInfo(data) {
-      const result = articleService.articleAnalysis(data)
+      const result = await articleService.articleAnalysis(data)
+
+      if (result) {
+        this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
+      }
     }
   }
 }
