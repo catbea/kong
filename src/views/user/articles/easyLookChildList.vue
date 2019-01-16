@@ -92,7 +92,8 @@ export default {
 
     enterArticleDetail() {
       // this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: this.infoId, city: '全国' } })
-      this.$router.push({ name: 'analysis' })
+      // this.$router.push({ name: 'analysis' })
+      this.$router.push({ name: 'addLinker' })
     }
   }
 }

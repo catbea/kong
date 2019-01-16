@@ -1,41 +1,47 @@
 <template>
-    <div class="tab-body">
-        <div class="share-type" :style="{'fontSize':shareFontSize}" @click="onClickShare">分享</div>
-        <div class="edit-type" :style="{'fontSize':editFontSize}" @click="onClickEdit">编辑</div>
-        <div
-            class="collection-type"
-            :style="{'fontSize':collectionFontSize}"
-            @click="onClickCollection"
-        >收藏</div>
-    </div>
+  <div class="tab-body">
+    <div class="share-type" :style="{'fontSize':shareFontSize}" @click="onClickShare">分享</div>
+    <div class="edit-type" :style="{'fontSize':editFontSize}" @click="onClickEdit">编辑</div>
+    <div
+      class="collection-type"
+      :style="{'fontSize':collectionFontSize}"
+      @click="onClickCollection"
+    >收藏</div>
+  </div>
 </template>
 <script>
 export default {
-  props: {},
+  props: {
+    toSelectTap: String
+  },
+
+  created() {
+    if (this.toSelectTap == '3') {
+      this.onClickEdit()
+    }
+  },
 
   methods: {
     onClickShare() {
-        this.shareFontSize='24px'
-        this.editFontSize='14px'
-        this.collectionFontSize='14px'
+      this.shareFontSize = '24px'
+      this.editFontSize = '14px'
+      this.collectionFontSize = '14px'
 
-        this.$emit('clickShare','2')
-
+      this.$emit('clickShare', '2')
     },
     onClickEdit() {
-        this.shareFontSize='14px'
-        this.editFontSize='24px'
-        this.collectionFontSize='14px'
+      this.shareFontSize = '14px'
+      this.editFontSize = '24px'
+      this.collectionFontSize = '14px'
 
-        this.$emit('clickEdit','3')
-
+      this.$emit('clickEdit', '3')
     },
     onClickCollection() {
-        this.shareFontSize='14px'
-        this.editFontSize='14px'
-        this.collectionFontSize='24px'
+      this.shareFontSize = '14px'
+      this.editFontSize = '14px'
+      this.collectionFontSize = '24px'
 
-        this.$emit('clickCollection','1')
+      this.$emit('clickCollection', '1')
     }
   },
 

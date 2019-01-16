@@ -5,6 +5,7 @@
         @clickShare="clickShare"
         @clickEdit="clickEdit"
         @clickCollection="clickCollection"
+        :toSelectTap='typeCode'
       ></select-tab>
     </div>
     <div class="list-result" v-if="typeCode=='1'">
@@ -80,7 +81,15 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
-  created() {},
+  created() {
+
+   this.typeCode = this.$route.query.typeCode
+
+   if(this.typeCode=='3'){
+      this.clickEdit('3');
+   }
+
+  },
   methods: {
     clickShare(val) {
       this.typeCode = val
@@ -124,7 +133,6 @@ export default {
       let dataArray = this.myWriteList
 
       dataArray.splice(index, 1)
-
       if (result) {
         this.$toast('取消收藏成功')
       }
