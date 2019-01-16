@@ -56,10 +56,11 @@ export default {
   top: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9;
   .step{
     height: 100%;
-    position: absolute;
-    z-index: 2;
+    position: relative;
+    z-index: 3;
   }
   .action-btn{
      position: absolute;

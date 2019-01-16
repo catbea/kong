@@ -372,12 +372,14 @@ class UserService {
   /**
    * 获取分享二维码-白名单
    * @param {*} agentId
+   * @param {*} agentId
    */
-  getQrCode(agentId) {
+  getQrCode(agentId, enterpriseId) {
     return xhr({
       url: '/cpShare/nameCardShare',
       body: {
-        agentId
+        agentId,
+        enterpriseId
       }
     })
   }
@@ -385,7 +387,7 @@ class UserService {
   /**
    * 获取分享二维码
    */
-  getQrCodeWithToken() {
+  getQrCodeByToken() {
     return xhr({
       url: '/cpShare/nameCardShareByToken',
       body: {
@@ -457,6 +459,49 @@ class UserService {
   }
 
   /**
+   * 测试 - 授权相关 - 根据agentId获取token
+   */
+  getTokenById(agentId, corpId) {
+    return xhr({
+      method: 'POST',
+      url: '/cp/oauth2/getToken',
+      body: {
+        agentId,
+        corpId
+      }
+    })
+  }
+
+
+
+  /**
+     * 我的写一写文章列表
+     * @param {*} type 
+     * @param {*} current 
+     * @param {*} size 
+     */
+  queryWriteArticleList(type, current, infoId, size = 10) {
+    return xhr({
+      url: '/cpInformation/queryMyArticleList',
+      body: {
+        type,
+        current,
+        infoId
+      }
+    })
+  }
+
+  /**
+   * 经纪人楼盘信息
+   * @param {Object} payload 参数过多 直接查看api文档,有相关工具类 screenFilterHelper.js
+   */
+  getMyHouses(payload) {
+    return xhr({
+      url: '/myLinker/articleLinkerList',
+      body: payload
+    })
+  }
+  /*
    * 申请离岗、机构切换 
    */
   applyAgent(data) {

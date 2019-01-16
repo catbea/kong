@@ -35,24 +35,14 @@
                 <!-- <div class="dynamics-list-btn">
                   <span></span>
                   <span class="list-btn-right">
-                    <div
-                      id="attentionStatusNO"
-                      class="list-btn-follow"
-                      v-show="item.attentionStatus  == 1"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >
+                    <div id="attentionStatusNO" class="list-btn-follow" v-show="item.attentionStatus  == 1" @click="getupdateCustomerInfo(item,key)">
                       <img :src="gzImg" class="agent-gzImg">
                       <span class="list-btn-right-gz">关注</span>
                     </div>
-                    <button
-                      id="attentionStatusOK"
-                      class="list-btn-followOK"
-                      v-show="item.attentionStatus  == 0"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >已关注</button>
+                    <button id="attentionStatusOK" class="list-btn-followOK" v-show="item.attentionStatus  == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                     <div class="list-btn-contact" @click="goalldynamics(item)">
                       <img :src="lxImg" class="btn-contact-userImg">
-                       联系
+                      联系
                     </div>
                   </span>
                 </div> -->
