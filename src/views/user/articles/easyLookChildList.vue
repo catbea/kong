@@ -19,7 +19,7 @@
         <img class="article-img" :src="itemInfo.image">
       </div>
     </div>
-    <span class="totalNum">总计43条分享记录</span>
+    <span class="totalNum">总计{{total}}条分享记录</span>
     <div class="list-item-view">
       <van-list
         v-model="loading"
@@ -72,7 +72,8 @@ export default {
       typeCode: '',
       itemInfo: '',
       current: 1,
-      writeList: []
+      writeList: [],
+      total:''
     }
   },
 
@@ -90,6 +91,9 @@ export default {
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
       if (res.records.length > 0) {
+
+        this.total=res.total;
+
         for (let i = 0; i < res.records.length; i++) {
           let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
           res.records[i].createTimeStamp = myTime
