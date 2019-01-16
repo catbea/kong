@@ -14,7 +14,7 @@
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
         <span class="reprint-from">{{info&&info.publisher}}</span>
-        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
+        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter(3, '/')}}</span>
       </p>
       <p class="discover-disclaimer">
         <span
@@ -38,10 +38,10 @@
           </div>
         </div>
         <div class="easy-look-list">
-          {{easylookList && easylookList.join('、')}}
+          <span class="easy-look-name">{{easylookList && easylookList.join('、')}}</span>
           <span
             class="easy-look-fold"
-            v-if="isMoreLike"
+            v-if="isMoreLike" @click="moreLikeListHandler"
           >展开更多</span>
         </div>
       </div>
@@ -231,6 +231,9 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
+        let height = document.getElementsByClassName('easy-look-list')[0].style.height
+        debugger
+        console.log(height)
       }
     },
     // 评论列表
@@ -276,6 +279,9 @@ export default {
 
     // 好看点击事件
     easyLookClickHandler() {},
+    moreLikeListHandler() {
+
+    },
     // 点击评论
     commentClickHandler() {
       this.showCommentAlert = true
@@ -549,15 +555,21 @@ export default {
       > .easy-look-list {
         padding-left: 24px;
         padding-top: 8px;
-        line-height: 1.5;
-        color: #445166;
-        font-size: 14px;
         width: 260px;
-        word-break: break-all;
-        display: -webkit-box;
-        -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        > .easy-look-name {
+          color: #445166;
+          font-size: 14px;
+          word-break: break-all;
+          display: -webkit-box;
+          -webkit-line-clamp: 5;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.5;
+        }
+        > .easy-look-fold {
+          color: #969EA8;
+          font-size: 14px;
+        }
       }
     }
     // 评论
