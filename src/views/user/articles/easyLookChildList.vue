@@ -1,6 +1,6 @@
 <template>
   <div class="list-body">
-    <div class="write-item-body" @click="enterDetail(selectType,item.id)">
+    <div class="write-item-body" @click="enterDetail(itemInfo.id)">
       <div class="write-item-left">
         <span class="article-title">{{itemInfo.title}}</span>
         <div class="label-view">
@@ -19,7 +19,7 @@
         <img class="article-img" :src="itemInfo.image">
       </div>
     </div>
-    <span class="totalNum">总计43条分享记录</span>
+    <span class="totalNum">总计{{total}}条分享记录</span>
     <div class="list-item-view">
       <van-list
         v-model="loading"
@@ -32,7 +32,7 @@
           class="write-item-body"
           v-for="(item,index) in this.writeList"
           :key="index"
-          @click="enterArticleDetail"
+          @click="enterArticleDetail(item.id)"
         >
           <div class="write-item-left">
             <span class="article-title">{{item.title}}</span>
@@ -72,13 +72,13 @@ export default {
       typeCode: '',
       itemInfo: '',
       current: 1,
-      writeList: []
+      writeList: [],
+      total:''
     }
   },
 
   mounted() {
-    this.itemInfo = this.$route.params
-    console.log(this.itemInfo)
+    this.itemInfo = this.$route.query
   },
 
   created() {},
@@ -91,6 +91,9 @@ export default {
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
       if (res.records.length > 0) {
+
+        this.total=res.total;
+
         for (let i = 0; i < res.records.length; i++) {
           let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
           res.records[i].createTimeStamp = myTime
@@ -111,10 +114,12 @@ export default {
       }
     },
 
-    enterArticleDetail() {
-      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: this.infoId, city: '全国' } })
-      // this.$router.push({ name: 'analysis' })
-      // this.$router.push({ name: 'addLinker' })
+    enterDetail(val) {
+      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id:val, city: '全国' } })
+    },
+
+    enterArticleDetail(val) {
+      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val, city: '全国' } })
     }
   }
 }

@@ -7,7 +7,7 @@
       @click="enterDetail(selectType,item)"
     >
       <div class="write-item-left">
-        <span class="article-title">{{item.title}}</span>
+        <span class="article-title">{{item.title | textOver(26)}}</span>
         <div class="share-bottom">
           <span class="share-time">分享时间：2019/1/6 16:33</span>
           <div

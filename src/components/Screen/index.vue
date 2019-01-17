@@ -167,7 +167,7 @@ export default {
   > .screen-ul {
     display: flex;
     justify-content: space-between;
-    width: 357px;
+    width: 100%;
     height: 32px;
     padding-top: 12px;
     background: rgba(255, 255, 255, 1);

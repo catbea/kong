@@ -14,14 +14,16 @@
       </div>
       <div class="discover-detail-content">
         <edit-viewpoint/>
-        <edit-paragraph v-for="(paragraph,index) in renderDom" :key="index" :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
-        <!-- <edit-houses v-model="recommendList"/> -->
+        <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
+          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
+          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="mergeData" :count="1" @click.native="singleAddClickHandler()"/>
+        </div>
       </div>
     </div>
     <div class="recommend-house-container">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
-         <edit-houses v-model="recommendList"/>
+        <edit-houses v-model="recommendList" :reminder="true" @click="multiShow=true"/>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
@@ -43,6 +45,8 @@
         <div class="save-btn" @click="saveClickHandler">保存</div>
       </div>
     </div>
+    <single-select-box v-model="singleShow"/>
+    <!-- multiple -->
   </div>
 </template>
 <script>
@@ -50,7 +54,7 @@ import EditParagraph from 'COMP/Discover/edit/editParagraph'
 import EditViewpoint from 'COMP/Discover/edit/editViewpoint'
 import EditHouses from 'COMP/Discover/edit/editHouses'
 import TitleBar from 'COMP/TitleBar'
-import EstateItem from 'COMP/EstateItem'
+import SingleSelectBox from 'COMP/Discover/edit/singleSelectBox'
 
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
@@ -60,7 +64,7 @@ export default {
     EditViewpoint,
     EditHouses,
     TitleBar,
-    EstateItem
+    SingleSelectBox
   },
   data: () => ({
     id: '',
@@ -74,8 +78,10 @@ export default {
     renderDom: [],
     viewpointEditShow: false,
     viewpointText: '',
-    mergeData:null,       // 混入文章中的楼盘信息
-    recommendList: [],  // 文末的推荐文章
+    mergeData: [], // 混入文章中的楼盘信息
+    recommendList: [], // 文末的推荐文章
+    singleShow: false,
+    multiShow: false
   }),
   created() {
     this.id = this.$route.params.id
@@ -96,10 +102,14 @@ export default {
       virtualDom.innerHTML = this.info.content
       for (let dom of virtualDom.children) {
         this.renderDom.push({
-          text: dom.innerText,
+          text: dom.innerHTML,
           status: 'edit'
         })
       }
+
+      // this.$nextTick(() => {
+      //   this.createHouses()
+      // })
     },
     // 获取我的楼盘推荐
     async getMyHouseRecommend() {
@@ -150,9 +160,14 @@ export default {
     //   helpText.innerText = '这里可以插入您推荐的楼盘'
     //   el.appendChild(helpText)
     //   let indexList = document.querySelector('.discover-detail-content').children
+    //   console.log('indexList', indexList.length)
     //   let target = indexList[Math.floor(indexList.length / 2)]
     //   document.querySelector('.discover-detail-content').insertBefore(el, target)
     // },
+    singleAddClickHandler(){
+      console.log(123132);
+      this.singleShow = true
+    },
     // 底部栏帮助按钮点击
     helpClickHandler() {
       this.$router.push('/discover/edit-help')
@@ -206,17 +221,13 @@ export default {
         background: rgba(150, 158, 168, 0.08);
         border: 1px dashed #969ea8;
         margin-bottom: 5px;
-        > .add-icon {
-        }
-        > p {
-        }
       }
     }
   }
   > .recommend-house-container {
     background: #fff;
     margin-bottom: 80px;
-    >.recommend-house-box{
+    > .recommend-house-box {
       margin: 0 15px;
     }
   }
@@ -264,3 +275,4 @@ export default {
   }
 }
 </style>
+

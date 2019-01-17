@@ -10,7 +10,7 @@ export default {
 </script>
 <style lang="less">
 .discover-edit-help-page{
-
+ background: #fff;
 }
 </style>
 
