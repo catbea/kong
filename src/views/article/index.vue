@@ -328,6 +328,7 @@ export default {
           return Object.assign(item, { likeCount: 25, replayCount: 5 })
         })
         this.articleData.push(...records)
+        this.current += 1
       }
       this.nodataStatus = true
       this.showLoading = false
@@ -341,6 +342,7 @@ export default {
       if (this.classifyName === item.itemName) {
         return false
       }
+      this.finished = false
       this.classify = item.itemCode
       this.classifyName = item.itemName
       this.current = 1
@@ -503,12 +505,16 @@ export default {
     },
     // 加载更多
     async onLoad() {
-      if (this.current >= this.pages) {
+      if (this.current >= this.pages || this.classifyName==='推荐') {
+        debugger
         // 加载状态结束
         this.finished = true
+        this.loading = false
+      } else {
+        await this.getArticleList()
+        this.loading = false
       }
-      await this.getArticleList()
-      this.loading = false
+      
     },
     // 下拉刷新
     async onRefresh() {

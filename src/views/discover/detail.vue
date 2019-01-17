@@ -24,7 +24,7 @@
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
-      <div class="easy-look-container">
+      <div class="easy-look-container" v-if="easylookList.length>0">
         <div class="easy-look-top">
           <div class="easy-look-left">
             <span class="icon iconfont icon-found_like"></span>
@@ -46,9 +46,9 @@
       </div>
       <!-- 评论 -->
       <div class="comment-container">
-        <div class="comment-box" v-if="commentList.length">
+        <div class="comment-box">
           <title-bar :conf="titleComments"/>
-          <div class="comment-list-wrap">
+          <div class="comment-list-wrap" v-if="commentList.length">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
               <div
                 class="bg_img"
@@ -560,7 +560,7 @@ export default {
     }
     > .easy-look-container {
       padding: 10px 16px 30px 16px;
-      border-bottom: 10px solid #f7f9fa;
+      // border-bottom: 10px solid #f7f9fa;
       > .easy-look-top {
         display: flex;
         flex-direction: row;
@@ -620,7 +620,9 @@ export default {
     }
     // 评论
     > .comment-container {
+      border-top: 10px solid #f7f9fa;
       > .comment-box {
+        padding-top: 10px;
         > .comment-list-wrap {
           margin-top: 20px;
           padding: 0 16px;
