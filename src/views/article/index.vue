@@ -67,8 +67,8 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 25"
-                      @click="item.likeCount=25"
+                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                      @click="item.likeCount=15"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
@@ -434,7 +434,7 @@ export default {
     // 点击好看名字弹框
     showLike (data) {
       let clientId = data.userSource === 0 ? '' : data.userId
-      this.$router.push({path: '/user/articles/easyLookList', query:{clientId: clientId}})
+      this.$router.push({path: '/user/articles/easyLookList', query:{userType: data.userSource, clientId: clientId}})
     },
     // showLike(e, data) {
     //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10

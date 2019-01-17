@@ -7,7 +7,7 @@
       </div>
       <div class="house-box">
         <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
-          <meal-market v-for="(item,index) in projectList" :key="index" :dataArr="item" :indexData="index"  @click.native="selectHandle(item)"/>
+          <discover-item2 v-for="(item,index) in projectList" :key="index" :dataArr="item" :indexData="index" @click.native="selectHandle(item)"/>
         </van-list>
       </div>
     </div>
@@ -17,6 +17,7 @@
 <script>
 import Search from 'COMP/Search/'
 import Screen from 'COMP/Screen/'
+import DiscoverItem2 from 'COMP/DiscoverItem2/'
 import { mapGetters } from 'vuex'
 import marketService from 'SERVICE/marketService'
 import userService from 'SERVICE/userService'
@@ -24,8 +25,8 @@ import screenFilterHelper from '@/utils/screenFilterHelper'
 export default {
   components: {
     Search,
-    Screen
-    // MealMarket
+    Screen,
+    DiscoverItem2
   },
   props: {
     value: false // 对应show
@@ -44,7 +45,8 @@ export default {
     page: 1,
     pageSize: 10,
     projectName: '',
-    projectList: []
+    projectList: [],
+    selectedItems: []
   }),
   created() {
     this.searchInfo.siteText = this.userInfo.majorCity
@@ -63,7 +65,7 @@ export default {
       payload = Object.assign(payload, { current: this.page, size: this.pageSize })
       console.log(payload)
       const res = await userService.getMyMarket(payload)
-          let _list = []
+      let _list = []
       for (let item of res.records) {
         let obj = {
           linkerId: item.linkerId,
@@ -86,60 +88,17 @@ export default {
       }
       this.page++
       this.loading = false
-
-      // this.checkAllShow = false
-      // let param = { current: this.page, size: this.pageSize }
-      // if (this.projectName) {
-      //   param.projectName = this.projectName
-      // } else {
-      //   //组装检索条件
-      //   let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
-      //   let _filters = screenFilterHelper(this.projectName, mergeFilters)
-      //   param = Object.assign(param, _filters)
-      //   //
-      // }
-      // let res = []
-      // if (this.type == 'package') {
-      //   param.city = this.searchInfo.siteText
-      //   res = await marketService.packageLinkerList(param)
-      // } else {
-      //   res = await marketService.vipLinkerList(param)
-      // }
-
-      // let _list = []
-      // for (let item of res.records) {
-      //   let obj = {
-      //     linkerId: item.linkerId,
-      //     linkerUrl: item.linkerUrl,
-      //     sale: item.sale,
-      //     linkerName: item.linkerName,
-      //     site: `${item.city} ${item.county} ${item.price} ${item.priceUnit}`, //'深圳 南山 120000元/㎡',
-      //     condition: item.linkerTags,
-      //     open: `${item.openTimes}次开通`,
-      //     saleStatus: item.saleStatus,
-      //     isChecked: false,
-      //     divisionRules: item.divisionRules,
-      //     price: `${item.price} ${item.priceUnit}`
-      //   }
-      //   _list.push(obj)
-      // }
-      // this.projectList = this.page <= 1 ? _list : this.projectList.concat(_list)
-      // if (res.pages === 0 || this.page >= res.pages) {
-      //   this.finished = true
-      // }
-      // if (this.type == 'package') {
-      //   //套盘跳过来的，加载套盘内容
-      //   if (this.page == 1) {
-      //     await this.getPackageInfo()
-      //     this.packageCheckedInit()
-      //   }
-      // }
-      // this.page++
-      // this.loading = false
     },
     areaClickHandle() {
       this.status = 2
-      // this.$router.push({ path: '/public/area-select' })
+    },
+    selectHandle(item) {
+      const index = this.selectedItems.indexOf(item)
+      if (index === -1) {
+        this.selectedItems.push(item)
+      } else {
+        this.$delete(this.selectedItems, index)
+      }
     }
   },
   watch: {
