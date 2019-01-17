@@ -457,10 +457,11 @@ export default {
         .easy-look-text {
           color: #445166;
           font-size: 14px;
+          margin-left: 4px;
         }
       }
       > .easy-look-list {
-        padding-left: 24px;
+        margin-left: 20px;
         padding-top: 8px;
         line-height: 1.5;
         color: #445166;

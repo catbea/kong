@@ -230,8 +230,6 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
-        let height = document.getElementsByClassName('easy-look-name')[0].style.height
-        console.log(height)
       }
     },
     // 评论列表
@@ -586,7 +584,7 @@ export default {
         }
       }
       > .easy-look-list {
-        padding-left: 24px;
+        margin-left: 20px;
         padding-top: 6px;
         width: 260px;
         position: relative;
@@ -613,7 +611,7 @@ export default {
           color: #969ea8;
           font-size: 14px;
           position: absolute;
-          left: 23px;
+          left: 0;
           bottom: -20px;
         }
       }
