@@ -58,10 +58,10 @@ export default {
     color: #999999;
     display: flex;
     // align-items: center;
-    span{
+    span {
       // margin-left:4px;
-      width:12px;
-      height:12px;
+      width: 12px;
+      height: 12px;
     }
   }
 }

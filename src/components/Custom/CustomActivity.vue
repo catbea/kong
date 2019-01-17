@@ -5,28 +5,28 @@
 </template>
 <script>
 export default {
-  props:{
-     info: { type: Object },
+  props: {
+    info: { type: Object }
   },
   data() {
     return {
-      activityIcon: require('IMG/custom/customActivity.png'),
+      activityIcon: require('IMG/custom/customActivity.png')
     }
   },
   methods: {
-    goactivitDetaily(){
+    goactivitDetaily() {
       this.$emit('click')
     }
-  },
+  }
 }
 </script>
 
 <style lang="less">
-.CustomActivity-page{
+.CustomActivity-page {
   position: fixed;
-  bottom:67px;
+  bottom: 67px;
   right: 20px;
-  .CustomActivity-img{
+  .CustomActivity-img {
     width: 84px;
     height: 84px;
   }

@@ -32,12 +32,11 @@ export default {
   data: () => ({
     currentData: []
   }),
-  created() {
-  },
+  created() {},
   methods: {
     delClickHandler(index) {
-      console.log(index);
-      
+      console.log(index)
+
       this.$delete(this.currentData, index)
     }
   },
@@ -108,4 +107,3 @@ export default {
   }
 }
 </style>
-

@@ -237,7 +237,7 @@ class UserService {
       body: {
         current,
         size,
-        type,
+        type
       }
     })
   }
@@ -390,8 +390,7 @@ class UserService {
   getQrCodeByToken() {
     return xhr({
       url: '/cpShare/nameCardShareByToken',
-      body: {
-      }
+      body: {}
     })
   }
 
@@ -472,14 +471,12 @@ class UserService {
     })
   }
 
-
-
   /**
-     * 我的写一写文章列表
-     * @param {*} type 
-     * @param {*} current 
-     * @param {*} size 
-     */
+   * 我的写一写文章列表
+   * @param {*} type
+   * @param {*} current
+   * @param {*} size
+   */
   queryWriteArticleList(type, current, infoId, size = 10) {
     return xhr({
       url: '/cpInformation/queryMyArticleList',
@@ -532,6 +529,5 @@ class UserService {
       body: data
     })
   }
-
 }
 export default new UserService()

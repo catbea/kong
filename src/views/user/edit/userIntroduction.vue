@@ -24,7 +24,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-      content:'',
+      content: '',
       signature: '',
       inputSize: 0
     }

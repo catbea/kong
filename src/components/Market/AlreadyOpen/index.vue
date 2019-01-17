@@ -57,8 +57,8 @@ export default {
       text-align: center;
       width: 68px;
       height: 24px;
-      border-radius:25px;
-      border:0.8px solid rgba(0, 122, 230, 1);
+      border-radius: 25px;
+      border: 0.8px solid rgba(0, 122, 230, 1);
     }
   }
 }

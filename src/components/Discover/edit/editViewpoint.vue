@@ -10,8 +10,8 @@
 </template>
 <script>
 export default {
-  props:{
-    value: { type: String, default: ''}
+  props: {
+    value: { type: String, default: '' }
   },
   data: () => ({
     viewpointEditShow: false,
@@ -25,11 +25,11 @@ export default {
       this.viewpointEditShow = false
     }
   },
-  watch:{
-    value(val){
+  watch: {
+    value(val) {
       this.currentValue = val
     },
-    currentValue(val){
+    currentValue(val) {
       this.$emit('input', val)
     }
   }
@@ -84,4 +84,3 @@ export default {
   }
 }
 </style>
-

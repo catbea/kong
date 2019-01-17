@@ -270,8 +270,8 @@ class CustomService {
   getLinkerApplyListByAgentId(current, size = 10) {
     return xhr({
       url: '/user/getLinkerApplyListByAgentId',
-      body:{
-        current, 
+      body: {
+        current,
         size
       }
     })

@@ -14,13 +14,8 @@
 <script>
 import userService from 'SERVICE/userService'
 import strFormat from '@/filters/strFormat'
-import {
-  mapGetters
-} from 'vuex'
-import {
-  checkStrLength,
-  checkStrType
-} from '@/utils/tool'
+import { mapGetters } from 'vuex'
+import { checkStrLength, checkStrType } from '@/utils/tool'
 
 export default {
   data() {
@@ -46,9 +41,12 @@ export default {
       }
       const result = await userService.upDateUserInfo(obj)
       if (result) {
-        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, {
-          name: this.userName
-        }))
+        this.$store.dispatch(
+          'getUserInfo',
+          Object.assign(this.userInfo, {
+            name: this.userName
+          })
+        )
         this.$router.go(-1)
       }
     },
@@ -105,10 +103,10 @@ export default {
 .user-edit-username-page {
   background: #ffffff;
 
-  >.user-edit-username {
+  > .user-edit-username {
     margin: 27px 16px;
 
-    >.edit-username-title {
+    > .edit-username-title {
       font-size: 20px;
       font-weight: 600;
       color: rgba(51, 51, 51, 1);
@@ -116,8 +114,8 @@ export default {
       margin-bottom: 22px;
     }
 
-    >.edit-username-conter {
-      >.edit-username-input {
+    > .edit-username-conter {
+      > .edit-username-input {
         font-size: 15px;
         font-weight: 500;
         color: rgba(153, 153, 153, 1);
@@ -127,17 +125,17 @@ export default {
         border-bottom: 1px solid #eeeeee;
         padding: 8px 0;
         color: #333;
-        &::placeholder{
+        &::placeholder {
           color: rgba(150, 158, 168, 1);
         }
       }
-      .tips{
+      .tips {
         font-size: 12px;
         color: rgba(150, 158, 168, 1);
       }
     }
 
-    >.edit-username-query {
+    > .edit-username-query {
       font-size: 16px;
       font-weight: 400;
       color: rgba(255, 255, 255, 1);

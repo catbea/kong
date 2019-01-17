@@ -388,7 +388,7 @@ export default {
         background: #ffffff;
         margin-left: 38px;
         margin-right: 3px;
-        display: none
+        display: none;
       }
       .save {
         width: 144px;

@@ -94,7 +94,7 @@ export default {
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
-      finished: false
+      false
       this.onLoad()
     },
 
@@ -102,14 +102,14 @@ export default {
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
-      finished: false, this.onLoad()
+      false, this.onLoad()
     },
 
     clickCollection(val) {
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
-      finished: false, this.onLoad()
+      false, this.onLoad()
     },
 
     cancelCollect(val) {
@@ -142,14 +142,12 @@ export default {
     },
 
     enterDetail(val) {
-        // this.$router.push({ name: 'analysis'})
+      // this.$router.push({ name: 'analysis'})
       this.$router.push({ name: 'easyLookChildList', query: val })
     },
 
-
-    collectionDetail(val){
-       
-       this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val.id, city: '全国' } })
+    collectionDetail(val) {
+      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val.id, city: '全国' } })
     },
 
     getCurrentType() {

@@ -42,7 +42,7 @@ export default {
     SortWay
   },
   data: () => ({
-    num:0,
+    num: 0,
     filters: {
       baseFilters: {
         area: '',
@@ -53,12 +53,12 @@ export default {
       localCity: '',
       moreFilters: {}
     },
-    sortFlage:false,
+    sortFlage: false,
     conf: [
-      { index: 0, name: '区域', value: '', checked: false,flag:false},
-      { index: 1, name: '均价', value: '', checked: false,flag:false},
-      { index: 2, name: '人气', value: '', checked: false,flag:false},
-      { index: 3, name: '更多', value: '', checked: false,flag:false}
+      { index: 0, name: '区域', value: '', checked: false, flag: false },
+      { index: 1, name: '均价', value: '', checked: false, flag: false },
+      { index: 2, name: '人气', value: '', checked: false, flag: false },
+      { index: 3, name: '更多', value: '', checked: false, flag: false }
     ],
     currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
@@ -74,32 +74,35 @@ export default {
     }
   },
   methods: {
-    areaColorHandle(){
-      this.conf[0].flag=true
+    areaColorHandle() {
+      this.conf[0].flag = true
     },
-    priceColorHandle(){
-      this.conf[1].flag=true
+    priceColorHandle() {
+      this.conf[1].flag = true
     },
-    popularityColorHandle(){
-      this.conf[2].flag=true
+    popularityColorHandle() {
+      this.conf[2].flag = true
     },
-    numHandle(num){//更多
-    if(num!=0){
-       this.conf[3].flag=true
-    }else{this.conf[3].flag=false}
-      this.num=num
+    numHandle(num) {
+      //更多
+      if (num != 0) {
+        this.conf[3].flag = true
+      } else {
+        this.conf[3].flag = false
+      }
+      this.num = num
     },
-    resetNumHandle(){
-      this.num=0
-      this.conf[3].flag=false
+    resetNumHandle() {
+      this.num = 0
+      this.conf[3].flag = false
     },
-    sortHandle(){
-     this.currentIndex = this.currentIndex===4?-1:4 
-     this.sortFlage=!this.sortFlage
+    sortHandle() {
+      this.currentIndex = this.currentIndex === 4 ? -1 : 4
+      this.sortFlage = !this.sortFlage
     },
     itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
-      this.$emit('screen',val.index)
+      this.$emit('screen', val.index)
     },
     coverClickHandler() {
       // this.currentIndex = -1
@@ -108,7 +111,6 @@ export default {
     areaStrChange(val) {
       this.conf[0].value = val
       this.currentIndex = -1
-      
     },
     // 价格文字修改
     priceStrChange(val) {
@@ -126,9 +128,9 @@ export default {
     },
     sortChangeHandler() {
       this.currentIndex = -1
-      console.log(111111111111111);
+      console.log(111111111111111)
     }
-   },
+  },
   watch: {
     value(val) {
       this.filters = val
@@ -142,10 +144,10 @@ export default {
     currentIndex(val) {
       if (val !== -1) {
         document.getElementsByClassName('choose-container')[0].style.height = this.height
-        this.$emit('sor',true)
+        this.$emit('sor', true)
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
-        this.$emit('sor',false)
+        this.$emit('sor', false)
       }
     },
     local(val) {
@@ -158,12 +160,12 @@ export default {
 }
 </script>
 <style lang="less">
-  .active{
-    color: #007AE6;
-  }
+.active {
+  color: #007ae6;
+}
 .screen-container {
   position: relative;
-  padding-bottom:4px;
+  padding-bottom: 4px;
   > .screen-ul {
     display: flex;
     justify-content: space-between;

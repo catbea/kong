@@ -23,12 +23,12 @@ export default {
     show: { type: Boolean, default: false }
   },
   methods: {
-    selectType(val,code) {  
-      let obj={
-        val:val,
-        code:code
+    selectType(val, code) {
+      let obj = {
+        val: val,
+        code: code
       }
-      this.$emit('selectSuccess',obj)
+      this.$emit('selectSuccess', obj)
     }
   }
 }

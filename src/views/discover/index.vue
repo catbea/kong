@@ -103,7 +103,7 @@ export default {
     },
     async onLoad() {
       let current = this.getCurrentType()
-      const result = await discoverService.getDiscoverList(this.userInfo.majorCity, current.type, current.page,this.idStr)
+      const result = await discoverService.getDiscoverList(this.userInfo.majorCity, current.type, current.page, this.idStr)
       console.log(result, '发现列表数据')
 
       if (result.records.length > 0) {
@@ -141,7 +141,7 @@ export default {
       console.log('222222222222')
     },
     enterDetail(val) {
-      this.$router.push({ name: 'discover-detail', params: { id: val.id, city: val.city }, query: { agentId: val.agentId, enterpriseId: val.enterpriseId, classify: val.classify } })
+      this.$router.push({ name: 'discover-detail', params: { id: val.id, city: val.city }, query: { agentId: val.agentId, enterpriseId: val.enterpriseId } })
     }
   },
   computed: {

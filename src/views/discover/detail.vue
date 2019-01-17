@@ -27,13 +27,12 @@
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <span class="icon iconfont icon-found_like"></span>
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
-            <!-- <i v-if="likeFlag===1" class="icon iconfont icon-Building_details_col"></i> -->
-            <!-- <i v-else class="icon iconfont icon-Building_details_col1"></i> -->
+            <span class="icon iconfont icon-found_like" v-if="likeFlag"></span>
+            <span class="icon iconfont icon-found_like_pre" v-else></span>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
@@ -129,6 +128,7 @@ import { uuid } from '@/utils/tool'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
+import articleService from 'SERVICE/articleService'
 export default {
   components: {
     TitleBar,
@@ -202,7 +202,7 @@ export default {
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
-      
+
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -227,7 +227,7 @@ export default {
     async getLikeList() {
       const res = await discoverService.queryLikeListByToken(this.id)
       if (res && res.length > 0) {
-        for (var index in  res) {
+        for (var index in res) {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
@@ -278,7 +278,14 @@ export default {
     },
 
     // 好看点击事件
-    easyLookClickHandler() {},
+    async easyLookClickHandler() {
+      this.likeFlag = this.likeFlag === true ? 0 : 1
+      let param = {
+        infoId: this.id,
+        likeFlag: this.likeFlag
+      }
+      const res = await articleService.updateLike(param)
+    },
     moreLikeListHandler() {
 
     },
@@ -320,7 +327,7 @@ export default {
     // 评论发送者
     commentSenderClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId == item.senderId)) {
+      if (this.agentId == item.senderId) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -342,7 +349,7 @@ export default {
     // 评论被回复者
     commentReceiverClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId == item.receiverId)) {
+      if (this.agentId == item.receiverId) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -390,18 +397,18 @@ export default {
     // 新增评论待用
     addComment() {
       let commentInfo = {
-          parentId: item.id,
-          receiverId: item.receiverId,
-          receiverName: item.receiverName,
-          receiverSource: item.receiverSource,
-          senderId: this.agentId,
-          senderSource: 0,
-          title: this.info.title,
-          placeholder: '回复' + item.receiverName + '：',
-          type: 1
-        }
+        parentId: item.id,
+        receiverId: item.receiverId,
+        receiverName: item.receiverName,
+        receiverSource: item.receiverSource,
+        senderId: this.agentId,
+        senderSource: 0,
+        title: this.info.title,
+        placeholder: '回复' + item.receiverName + '：',
+        type: 1
+      }
     },
-    
+
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.isShowDeleteComment = false
@@ -447,7 +454,7 @@ export default {
         enterpriseId: this.enterpriseId,
         infoId: this.infoId,
         shareUuid: this.shareUuid,
-        sourceType: 0 // 经纪人-0，客户-1 
+        sourceType: 0 // 经纪人-0，客户-1
       }
       const result = await discoverService.articleShare(params)
     }
@@ -550,11 +557,13 @@ export default {
         .easy-look-text {
           color: #445166;
           font-size: 14px;
+          margin-left: 4px;
+          margin-top: 1px;
         }
       }
       > .easy-look-list {
         padding-left: 24px;
-        padding-top: 8px;
+        padding-top: 6px;
         width: 260px;
         > .easy-look-name {
           color: #445166;
@@ -567,7 +576,7 @@ export default {
           line-height: 1.5;
         }
         > .easy-look-fold {
-          color: #969EA8;
+          color: #969ea8;
           font-size: 14px;
         }
       }

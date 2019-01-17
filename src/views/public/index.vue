@@ -11,27 +11,25 @@ import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 export default {
   data: () => ({
-    disabelIcon: require('IMG/public/disable_icon.png'),
+    disabelIcon: require('IMG/public/disable_icon.png')
   }),
   created() {
-    if(this.userInfo.userStatus == 1) {
+    if (this.userInfo.userStatus == 1) {
       return
     }
     let defaultPath = localStorage.getItem('defaultPath')
-    if(defaultPath) {
+    if (defaultPath) {
       localStorage.removeItem('defaultPath')
       this.$router.replace({ path: defaultPath })
     } else {
-        if(!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
-            this.$router.replace('/public/complete-info')
-        } else {
-            this.$router.replace('/dynamics')
-        }
+      if (!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
+        this.$router.replace('/public/complete-info')
+      } else {
+        this.$router.replace('/dynamics')
+      }
     }
   },
-  methods: {
-    
-  },
+  methods: {},
   computed: {
     ...mapGetters(['userInfo'])
   }
