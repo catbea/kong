@@ -1,5 +1,5 @@
 <template>
-<!-- 1-收藏，2-分享，3-编辑 -->
+  <!-- 1-收藏，2-分享，3-编辑 -->
   <div class="my-write-body">
     <div class="search-body">
       <select-tab
@@ -21,7 +21,7 @@
           :selectType="typeCode"
           :dataArray="myWriteList"
           @cancelCollect="cancelCollect"
-           @enterDetail="collectionDetail"
+          @enterDetail="collectionDetail"
         ></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
@@ -65,7 +65,7 @@ export default {
     // searchWrite,
     writeArticle,
     Null,
-    selectTab
+    selectTab,
   },
   data() {
     return {
@@ -114,13 +114,16 @@ export default {
 
     cancelCollect(val) {
       this.$dialog
-        .alert({
+        .confirm({
           title: '取消收藏',
           message: '是否取消文章收藏'
         })
         .then(() => {
           // on close
           this.cancelClooection(val)
+        })
+        .catch(() => {
+          // on cancel
         })
     },
 

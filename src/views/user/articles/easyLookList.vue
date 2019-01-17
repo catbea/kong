@@ -1,12 +1,11 @@
 <template>
   <div class="easy-look-body">
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <div
-        class="easy-look-list"
-        v-if="(index,item) in this.likeArray"
+      <!-- v-if="(index,item) in this.likeArray"
         :key="index"
-        @click="articleDetail(item.id)"
-      >
+      @click="articleDetail(item.id)"-->
+
+      <div class="easy-look-list">
         <div class="easy-look-time">
           <span class="time-text">1月9日</span>
         </div>
@@ -47,13 +46,19 @@ export default {
   },
 
   mounted() {
-    this.clientId = this.$route.query.clientId
+    let clientId = this.$route.query.clientId
     this.userType = this.$route.query.userType
+
+    if (clientId) {
+      this.clientId = ''
+    } else {
+      this.clientId = clientId
+    }
   },
 
   methods: {
     async getLikeList(current, clientId, userType) {
-      const result = await articleService.queryLikeArticleList()
+      const result = await articleService.queryLikeArticleList(current, clientId, userType)
       if (result.records.length > 0) {
         this.likeArray = this.likeArray.concat(result.records)
       }
