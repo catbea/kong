@@ -165,6 +165,7 @@ export default {
       const res = await userService.queryWriteArticleList(selectType, this.current, '')
       if (res.records.length > 0) {
         this.haveData = true
+
         this.myWriteList = this.myWriteList.concat(res.records)
         if (res.pages === 0 || this.current === res.pages) {
           this.finished = true

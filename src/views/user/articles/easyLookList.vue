@@ -1,11 +1,18 @@
 <template>
   <div class="easy-look-body">
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <!-- v-if="(index,item) in this.likeArray"
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+      v-if="haveData"
+    >
+      <div
+        class="easy-look-list"
+        v-for="(index,item) in this.likeArray"
         :key="index"
-      @click="articleDetail(item.id)"-->
-
-      <div class="easy-look-list">
+        @click="articleDetail(item.id)"
+      >
         <div class="easy-look-time">
           <span class="time-text">1月9日</span>
         </div>
@@ -23,11 +30,13 @@
         </div>
       </div>
     </van-list>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
 </template>
 <script>
 import articleService from 'SERVICE/articleService'
 import { mapGetters } from 'vuex'
+import Null from 'COMP/Null'
 export default {
   data() {
     return {
@@ -37,8 +46,14 @@ export default {
       userType: '',
       likeArray: [],
       finished: false,
-      loading: false
+      loading: false,
+      haveData: true,
+      nullIcon: require('IMG/user/no_report.png'),
+      nullcontent: '暂还信息记录'
     }
+  },
+  components: {
+    Null
   },
 
   computed: {
@@ -59,8 +74,21 @@ export default {
   methods: {
     async getLikeList(current, clientId, userType) {
       const result = await articleService.queryLikeArticleList(current, clientId, userType)
+
       if (result.records.length > 0) {
         this.likeArray = this.likeArray.concat(result.records)
+
+        if (res.pages === 0 || this.current === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
+      } else {
+        if (current == 1) {
+          this.haveData = false
+        }
+        this.loading = false
+        this.finished = true
       }
     },
 
