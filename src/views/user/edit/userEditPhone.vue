@@ -2,13 +2,13 @@
   <div class="user-edit-phone-page">
     <div class="user-edit-phone">
       <p class="edit-phone-title">
-        注册手机
+        注册联系电话
         <span class="edit-phone-remark">(不可更改)</span>
       </p>
       <p class="edit-phone-conter">
         <input type="text" class="edit-phone-input" placeholder disabled="disabled" :value="userInfo.registerMobile">
       </p>
-      <p class="edit-phone-card">名片展示手机号</p>
+      <p class="edit-phone-card">名片展示联系电话</p>
       <p class="edit-phone-card-conter">
         <input type="tel" class="edit-phone-card-input" autofocus="autofocus" maxlength="16" v-model="Cphone">
       </p>
