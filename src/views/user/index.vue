@@ -272,7 +272,7 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
-        margin-top:2px;
+        margin-top:4px;
       }
       .politeness{
         position:absolute;
