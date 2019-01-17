@@ -441,7 +441,7 @@ export default {
         receiverSource: 0,
         senderAvatarUrl: this.userInfo.avatarUrl,
         senderId: this.userInfo.agentId,
-        senderName: this.userInfo.nickName,
+        senderName: this.userInfo.name,
         senderSource: 0,
         syncId: '',
         type: type
