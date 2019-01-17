@@ -63,6 +63,7 @@ export default {
     flex: 1;
     width: calc(100%-160px);
     width: -webkit-calc(100%-160px);
+    font-family:PingFangSC-Semibold;
     .username {
       font-size: 16px;
       font-weight: 600;
@@ -76,6 +77,7 @@ export default {
       font-size: 13px;
       font-weight: 400;
       color: #666666;
+      font-family:PingFangSC-Regular;
     }
   }
   .intention-box {
@@ -87,6 +89,7 @@ export default {
       font-weight: 500;
       color: #007ae6;
       padding: 3px 0;
+      font-family:PingFangSC-Semibold;
     }
     .intention-title {
       font-size: 12px;

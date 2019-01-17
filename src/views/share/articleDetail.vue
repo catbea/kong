@@ -40,7 +40,7 @@
       <div class="easy-look-container" @click="popHandler(1)">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <span class="icon iconfont icon-found_like"></span>
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
         </div>
@@ -163,7 +163,6 @@ export default {
     guidanceShow: false,
     shareData: null,
     virtualDom: null,
-    easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
     easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,

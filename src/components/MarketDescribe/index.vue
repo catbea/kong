@@ -191,7 +191,7 @@ export default {
             text-align: center;
             line-height: 20px;
             font-size: 11px;
-
+            font-family:PingFangSC-Regular;
             font-weight: 500;
             color: rgba(255, 255, 255, 1);
           }
@@ -212,7 +212,7 @@ export default {
                 text-overflow: ellipsis;
                 max-width: 120px;
                 font-size: 16px;
-
+                font-family:PingFangSC-Semibold;
                 font-weight: 600;
                 color: rgba(51, 51, 51, 1);
                 line-height: normal;
@@ -252,6 +252,7 @@ export default {
             color: rgba(102, 102, 102, 1);
             line-height: 12px;
             margin-bottom: 5px;
+            font-family:PingFangSC-Regular;
           }
           .tag-group-left {
             height: 25px;
@@ -267,6 +268,7 @@ export default {
               font-size: 15px;
               font-weight: 600;
               color: rgba(234, 77, 46, 1);
+              font-family:PingFangSC-Semibold;
             }
             span:nth-child(2) {
               margin-left: 12px;
@@ -274,6 +276,7 @@ export default {
               font-size: 12px;
               font-weight: 400;
               color: rgba(153, 153, 153, 1);
+              font-family:PingFangSC-Regular;
             }
           }
         }
