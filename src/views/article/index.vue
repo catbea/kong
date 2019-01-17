@@ -88,9 +88,9 @@
                           v-show="num < item.replayCount"
                           @click="showReplayFn(item, index,2,data,num)"
                         >
-                          <span class="name">{{data.senderName}}</span>
+                          <span class="name" @click.stop="replayLike(data,1)" >{{data.senderName}}</span>
                           <span class="text" v-if="data.receiverName">回复</span>
-                          <span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:
+                          <span class="name" @click.stop="replayLike(data,2)" v-if="data.receiverName">{{data.receiverName }}</span>:
                           <span class="replay-cnt">{{data.content}}</span>
                         </p>
                       </div>
@@ -465,7 +465,21 @@ export default {
     // 点击好看名字弹框
     showLike(data) {
       let clientId = data.userSource === 0 ? '' : data.userId
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: data.userSource, clientId: clientId } })
+      let userType = data.userSource
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, clientId: clientId }})
+    },
+    // 点击评论的名字
+    replayLike(data, type) {
+      let userType = ''
+      let clientId = ''
+      if (type === 1) {
+        clientId = data.senderSource === 0 ? '' : data.senderId
+        userType = data.senderSource
+      } else {
+        clientId = data.receiverSource === 0 ? '' : data.receiverId
+        userType =data.receiverSource
+      }
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, clientId: clientId }})
     },
     // showLike(e, data) {
     //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10

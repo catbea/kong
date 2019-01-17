@@ -8,7 +8,7 @@
       <div class="empty-box" v-else @click="">
         <div class="info-box">
           <div class="add-icon">
-            <i class="icon iconfont icon-chat_register_rb_n"></i>
+            <i class="icon iconfont icon-write_add"></i>
           </div>
           <p class="help-text">请选择推荐楼盘</p>
           <p v-if="reminder" class="remind-text">若无推荐楼盘将进行随机推荐</p>
@@ -88,8 +88,7 @@ export default {
         line-height: 1.3;
         > .add-icon {
           > i {
-            width: 24px;
-            height: 24px;
+            font-size: 24px;
           }
         }
         > .help-text {
