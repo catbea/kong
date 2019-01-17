@@ -61,17 +61,21 @@
       <div v-if="!currentData.haveData">
         <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
       </div>
+      
     </div>
+     <custom-activity @click="goactivitDetaily"></custom-activity>
   </div>
 </template>
 <script>
 import MyCustomItem from 'COMP/Custom/MyCustomItem'
+import CustomActivity from 'COMP/Custom/CustomActivity'
 import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
 export default {
   components: {
     Null,
-    MyCustomItem
+    MyCustomItem,
+    CustomActivity
   },
   data: () => ({
     activeIndex: 0,
@@ -92,6 +96,9 @@ export default {
     activeIcon: false
   }),
   methods: {
+    goactivitDetaily(){
+       this.$router.push('/custom/message/activityDetail')
+    },
     onSearchHandler() {
       this.currentData.page = 1
       this.onLoad()
