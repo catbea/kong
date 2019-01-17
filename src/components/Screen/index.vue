@@ -86,7 +86,7 @@ export default {
     numHandle(num){//更多
     if(num!=0){
        this.conf[3].flag=true
-    }
+    }else{this.conf[3].flag=false}
       this.num=num
     },
     resetNumHandle(){
