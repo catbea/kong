@@ -468,7 +468,7 @@ export default {
     showLike(data) {
       // let clientId = data.userSource === 0 ? '' : data.userId
       let userType = data.userSource
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId }})
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId ,userName:data.userName}})
     },
     // 点击评论的名字
     replayLike(data, type) {

@@ -11,12 +11,12 @@
         class="easy-look-list"
         v-for="(item, index) in this.likeArray"
         :key="index"
-        @click="articleDetail(item.id)"
+        
       >
         <div class="easy-look-time">
           <span class="time-text">{{item.groupTime | dateTimeFormatter(2,'/')}}</span>
         </div>
-        <div class="easy-look-item" v-for="(items, indexs) in item.infoList" :key="indexs">
+        <div class="easy-look-item" v-for="(items, indexs) in item.infoList" :key="indexs"  @click="articleDetail(items.id)">
           <div class="easy-look-item-left">
             <img class="easy-look-img" :src="items.image">
           </div>
@@ -63,12 +63,7 @@ export default {
   mounted() {
     this.userId = this.$route.query.userId
     this.userType = this.$route.query.userType
-
-    // if (clientId) {
-    //   this.clientId = ''
-    // } else {
-    //   this.clientId = clientId
-    // }
+    document.title = this.$route.query.userName+"认为好看"
   },
 
   methods: {
@@ -98,8 +93,13 @@ export default {
 
     //进入文章详情
     articleDetail(id) {
+      console.log(id);
       this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: id, city: '全国' } })
     }
+  },
+
+  watch: {
+    $route(to, from) {}
   }
 }
 </script>
