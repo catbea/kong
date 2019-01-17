@@ -141,7 +141,7 @@ export default {
       console.log('222222222222')
     },
     enterDetail(val) {
-      this.$router.push({ name: 'discover-detail', params: { id: val.id, city: val.city }, query: { agentId: val.agentId, enterpriseId: val.enterpriseId, classify: val.classify } })
+      this.$router.push({ name: 'discover-detail', params: { id: val.id, city: val.city }, query: { agentId: val.agentId, enterpriseId: val.enterpriseId } })
     }
   },
   computed: {
