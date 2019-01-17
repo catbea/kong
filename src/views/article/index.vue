@@ -465,7 +465,7 @@ export default {
     // 点击好看名字弹框
     showLike(data) {
       // let clientId = data.userSource === 0 ? '' : data.userId
-      // let userType = data.userSource
+      let userType = data.userSource
       this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId }})
     },
     // 点击评论的名字
