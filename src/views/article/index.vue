@@ -506,7 +506,6 @@ export default {
     // 加载更多
     async onLoad() {
       if (this.current >= this.pages || this.classifyName==='推荐') {
-        debugger
         // 加载状态结束
         this.finished = true
         this.loading = false
