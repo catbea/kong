@@ -100,6 +100,8 @@ export default {
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
+      console.log(virtualDom);
+      
       for (let dom of virtualDom.children) {
         this.renderDom.push({
           text: dom.innerHTML,
@@ -111,6 +113,7 @@ export default {
       //   this.createHouses()
       // })
     },
+    
     // 获取我的楼盘推荐
     async getMyHouseRecommend() {
       const payload = {
