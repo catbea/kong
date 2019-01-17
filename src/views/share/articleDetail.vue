@@ -11,7 +11,7 @@
         </div>
       </div>
       <!-- 观点 -->
-      <div class="discover-viewpoint" v-if="info&&info.editData&&info.editData.viewpoint">
+      <div class="discover-viewpoint" v-if="info&&info.editData&&info.editData.viewpoint" @click="popHandler(1)">
         <div class="viewpoint-line"></div>
         <div class="viewpoint-top">
           <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
@@ -37,10 +37,10 @@
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
       </p>
       <!-- 好看 -->
-      <div class="easy-look-container" @click="popHandler(1)">
+      <div class="easy-look-container" v-if="easylookList.length>0" @click="popHandler(1)">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <span class="icon iconfont icon-found_like"></span>
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
         </div>
@@ -163,7 +163,6 @@ export default {
     guidanceShow: false,
     shareData: null,
     virtualDom: null,
-    easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
     easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,
@@ -406,7 +405,7 @@ export default {
       }
     }
     > .discover-detail-content {
-      padding: 0 15px;
+      padding: 15px;
       font-size: 16px !important;
       color: #333333 !important;
       font-weight: 400 !important;
@@ -437,7 +436,7 @@ export default {
     // 好看
     > .easy-look-container {
       padding: 10px 16px 20px 16px;
-      border-bottom: 10px solid #f7f9fa;
+      // border-bottom: 10px solid #f7f9fa;
       > .easy-look-top {
         display: flex;
         flex-direction: row;
@@ -458,10 +457,11 @@ export default {
         .easy-look-text {
           color: #445166;
           font-size: 14px;
+          margin-left: 4px;
         }
       }
       > .easy-look-list {
-        padding-left: 24px;
+        margin-left: 20px;
         padding-top: 8px;
         line-height: 1.5;
         color: #445166;

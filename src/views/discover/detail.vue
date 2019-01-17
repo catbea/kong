@@ -24,31 +24,31 @@
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
-      <div class="easy-look-container">
+      <div class="easy-look-container" v-if="easylookList.length>0">
         <div class="easy-look-top">
           <div class="easy-look-left">
             <span class="icon iconfont icon-found_like"></span>
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <span class="icon iconfont icon-found_like" v-if="likeFlag"></span>
-            <span class="icon iconfont icon-found_like_pre" v-else></span>
+            <span class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
+            <span class="icon iconfont icon-found_like" v-else></span>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
         <div class="easy-look-list">
-          <span class="easy-look-name">{{easylookList && easylookList.join('、')}}</span>
-          <span
+          <span class="easy-look-name" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
+          <div
             class="easy-look-fold"
             v-if="isMoreLike" @click="moreLikeListHandler"
-          >展开更多</span>
+          >展开更多<van-icon name="arrow-down"/></div>
         </div>
       </div>
       <!-- 评论 -->
       <div class="comment-container">
-        <div class="comment-box" v-if="commentList.length">
+        <div class="comment-box">
           <title-bar :conf="titleComments"/>
-          <div class="comment-list-wrap">
+          <div class="comment-list-wrap" v-if="commentList.length">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
               <div
                 class="bg_img"
@@ -150,7 +150,7 @@ export default {
     agentInfo: null,
     infoId: '', //文章的id
     collectionStatus: -1, //收藏状态
-    likeFlag: -1, // 是否点赞 0-未点赞 1-点赞
+    likeFlag: false, // 是否点赞
     titleComments: {
       title: '精彩评论',
       linkText: '',
@@ -161,7 +161,6 @@ export default {
     shareData: null,
     virtualDom: null,
     isMoreLike: true, // 是否有更多好看
-    easylookImg: require('IMG/discover/icon_easy_look@2x.png'),
     easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,
@@ -202,7 +201,7 @@ export default {
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
-
+      this.likeFlag = res.likeFlag
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -231,9 +230,6 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
-        let height = document.getElementsByClassName('easy-look-list')[0].style.height
-        debugger
-        console.log(height)
       }
     },
     // 评论列表
@@ -277,17 +273,23 @@ export default {
       this.commentList.push(res)
     },
 
-    // 好看点击事件
+    // 好看取消好看/点击事件
     async easyLookClickHandler() {
-      this.likeFlag = this.likeFlag === true ? 0 : 1
+      this.likeFlag = !this.likeFlag
       let param = {
         infoId: this.id,
-        likeFlag: this.likeFlag
+        likeFlag: this.likeFlag === true ? 1 : 0
       }
       const res = await articleService.updateLike(param)
+      if (this.likeFlag) {
+        this.easylookList.unshift(this.agentInfo.agentName)
+      }else {
+        this.easylookList = this.remove(this.easylookList, this.agentInfo.agentName)
+      }
     },
+    // 展开更多好看
     moreLikeListHandler() {
-
+      this.isMoreLike = false
     },
     // 点击评论
     commentClickHandler() {
@@ -379,6 +381,23 @@ export default {
             arr.pop()
             return arr
           } else {
+            arr.splice(i, 1)
+            return arr
+          }
+        }
+      }
+    },
+    // 删除数组中某个元素
+    remove(arr, val) {
+      for (var i = 0, len=arr.length; i< len; i++) {
+        if (arr[i] == val) {
+          if (i == 0) {
+            arr.shift()
+            return arr
+          }else if (i == len - 1) {
+            arr.pop()
+            return arr
+          }else {
             arr.splice(i, 1)
             return arr
           }
@@ -534,9 +553,12 @@ export default {
       margin-bottom: 10px;
     }
     // 好看
+    .van-icon {
+
+    }
     > .easy-look-container {
-      padding: 10px 16px 20px 16px;
-      border-bottom: 10px solid #f7f9fa;
+      padding: 10px 16px 30px 16px;
+      // border-bottom: 10px solid #f7f9fa;
       > .easy-look-top {
         display: flex;
         flex-direction: row;
@@ -562,15 +584,25 @@ export default {
         }
       }
       > .easy-look-list {
-        padding-left: 24px;
+        margin-left: 20px;
         padding-top: 6px;
         width: 260px;
+        position: relative;
+        > .easy-look-name-clamp {
+          color: #445166;
+          font-size: 14px;
+          word-break: break-all;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.5;
+        }
         > .easy-look-name {
           color: #445166;
           font-size: 14px;
           word-break: break-all;
           display: -webkit-box;
-          -webkit-line-clamp: 5;
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 1.5;
@@ -578,12 +610,17 @@ export default {
         > .easy-look-fold {
           color: #969ea8;
           font-size: 14px;
+          position: absolute;
+          left: 0;
+          bottom: -20px;
         }
       }
     }
     // 评论
     > .comment-container {
+      border-top: 10px solid #f7f9fa;
       > .comment-box {
+        padding-top: 10px;
         > .comment-list-wrap {
           margin-top: 20px;
           padding: 0 16px;

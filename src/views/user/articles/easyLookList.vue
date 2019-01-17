@@ -1,7 +1,18 @@
 <template>
   <div class="easy-look-body">
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <div class="easy-look-list">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+      v-if="haveData"
+    >
+      <div
+        class="easy-look-list"
+        v-for="(index,item) in this.likeArray"
+        :key="index"
+        @click="articleDetail(item.id)"
+      >
         <div class="easy-look-time">
           <span class="time-text">1月9日</span>
         </div>
@@ -19,10 +30,13 @@
         </div>
       </div>
     </van-list>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
   </div>
 </template>
 <script>
 import articleService from 'SERVICE/articleService'
+import { mapGetters } from 'vuex'
+import Null from 'COMP/Null'
 export default {
   data() {
     return {
@@ -30,28 +44,61 @@ export default {
       current: 1,
       clientId: '',
       userType: '',
-      likeArray: []
+      likeArray: [],
+      finished: false,
+      loading: false,
+      haveData: true,
+      nullIcon: require('IMG/user/no_report.png'),
+      nullcontent: '暂还信息记录'
     }
   },
+  components: {
+    Null
+  },
 
-  created() {},
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
 
   mounted() {
-    this.clientId = this.$route.query.clientId
+    this.userId = this.$route.query.userId
     this.userType = this.$route.query.userType
+
+    // if (clientId) {
+    //   this.clientId = ''
+    // } else {
+    //   this.clientId = clientId
+    // }
   },
 
   methods: {
-    async getLikeList(current, clientId, userType) {
-      const result = await articleService.queryLikeArticleList()
+    async getLikeList(current, userId, userType) {
+      const result = await articleService.queryLikeArticleList(current, userId, userType)
 
       if (result.records.length > 0) {
         this.likeArray = this.likeArray.concat(result.records)
+
+        if (res.pages === 0 || this.current === res.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
+      } else {
+        if (current == 1) {
+          this.haveData = false
+        }
+        this.loading = false
+        this.finished = true
       }
     },
 
     onLoad() {
-      this.getLikeList(this.current, this.clientId, this.userType)
+      this.getLikeList(this.current, this.userId, this.userType)
+    },
+
+    //进入文章详情
+    articleDetail(id) {
+      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: id, city: '全国' } })
     }
   }
 }

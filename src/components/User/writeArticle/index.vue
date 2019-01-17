@@ -9,7 +9,7 @@
       <div class="write-item-left">
         <span class="article-title">{{item.title | textOver(26)}}</span>
         <div class="share-bottom">
-          <span class="share-time">分享时间：2019/1/6 16:33</span>
+          <span class="share-time">发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
           <div
             class="collection-view"
             v-if="selectType=='1'"
@@ -68,7 +68,7 @@ export default {
   padding: 11px 15px;
   justify-content: space-between;
   background: #ffffff;
-  border-top: 1px #e5e5f0 solid;
+  margin-bottom: 1px;
 
   > .write-item-left {
     display: flex;
@@ -96,7 +96,6 @@ export default {
       > .share-time {
         font-size: 12px;
         color: #969ea8;
-        display: none;
       }
 
       > .collection-view {
