@@ -298,6 +298,8 @@ export default {
         classify: this.classify,
         sortType: this.sortType
       })
+      console.log(result,'数据');
+      
       if (result) {
         this.pages = result.pages
         let records = result.records.map(item => {

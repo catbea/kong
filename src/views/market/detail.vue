@@ -473,6 +473,7 @@ export default {
         color: #333333;
         font-size: 26px;
         font-weight: 600;
+        font-family:PingFangSC-Semibold;
       }
       > .house-feature {
         padding-top: 10px;

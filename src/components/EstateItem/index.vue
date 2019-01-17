@@ -87,6 +87,7 @@ export default {
       flex-basis: 225px;
       margin: 16px 16px 16px 0;
       > .estate-name {
+        font-family:PingFangSC-Semibold;
         font-size: 16px;
         font-weight: 600;
         color: #333333;

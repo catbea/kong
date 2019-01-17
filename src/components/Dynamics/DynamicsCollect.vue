@@ -165,6 +165,7 @@ export default {
           font-size: 20px;
           font-weight: 500;
           color: #333333;
+          font-family:PingFangSC-Semibold;
           > .data-change {
             position: absolute;
             font-size: 12px;
@@ -176,7 +177,7 @@ export default {
           }
         }
         &:first-child {
-          width: 90px;
+          // width: 90px;
           .data-value {
             font-size: 28px;
             .data-change {
@@ -214,9 +215,10 @@ export default {
           text-align: left;
           display: flex;
           height: 50px;
-          justify-content: center;
+          justify-content:center;
           font-size: 12px;
           line-height: 24px;
+          // padding-left:14px;
           .card-tips {
             padding-left: 5px;
           }
