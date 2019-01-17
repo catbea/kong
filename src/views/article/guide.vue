@@ -18,13 +18,16 @@
     <div class="step step6" v-show="step===6">
       <img src="../../assets/img/article/guide6.png" alt="" srcset="">
     </div>
-    <div class="step step6" v-show="step===7">
+    <div class="step step7" v-show="step===7">
       <img src="../../assets/img/article/guide7.png" alt="" srcset="">
     </div>
+    <div class="step step8" v-show="step===8">
+      <img src="../../assets/img/article/guide8.png" alt="" srcset="">
+    </div>
     <div class="action-btn" :class="'step'+step">
-      <button class="next" v-show="step < 6" @click="nextStep">下一步</button>
-      <button class="skip" v-show="step < 6" @click="hideStep">跳过</button>
-      <button class="save" v-show="step === 6" @click="hideStep">知道了</button>
+      <button class="next" v-show="step < 8" @click="nextStep">下一步</button>
+      <button class="skip" v-show="step < 8" @click="hideStep">跳过</button>
+      <button class="save" v-show="step === 8" @click="hideStep">知道了</button>
     </div>
   </div>
 </template>
@@ -99,6 +102,9 @@ export default {
       top: 130px;
     }
     &.step7 {
+      top: 72px;
+    }
+    &.step8 {
       top: 333px;
     }
   }
