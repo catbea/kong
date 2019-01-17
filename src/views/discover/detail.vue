@@ -202,7 +202,7 @@ export default {
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
-      
+
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -227,7 +227,7 @@ export default {
     async getLikeList() {
       const res = await discoverService.queryLikeListByToken(this.id)
       if (res && res.length > 0) {
-        for (var index in  res) {
+        for (var index in res) {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
@@ -279,9 +279,7 @@ export default {
 
     // 好看点击事件
     easyLookClickHandler() {},
-    moreLikeListHandler() {
-
-    },
+    moreLikeListHandler() {},
     // 点击评论
     commentClickHandler() {
       this.showCommentAlert = true
@@ -320,7 +318,7 @@ export default {
     // 评论发送者
     commentSenderClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId == item.senderId)) {
+      if (this.agentId == item.senderId) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -342,7 +340,7 @@ export default {
     // 评论被回复者
     commentReceiverClickHandler(item) {
       this.selectCommentId = item.id
-      if ((this.agentId == item.receiverId)) {
+      if (this.agentId == item.receiverId) {
         this.isShowDeleteComment = true
         this.showCommentAlert = false
       } else {
@@ -390,18 +388,18 @@ export default {
     // 新增评论待用
     addComment() {
       let commentInfo = {
-          parentId: item.id,
-          receiverId: item.receiverId,
-          receiverName: item.receiverName,
-          receiverSource: item.receiverSource,
-          senderId: this.agentId,
-          senderSource: 0,
-          title: this.info.title,
-          placeholder: '回复' + item.receiverName + '：',
-          type: 1
-        }
+        parentId: item.id,
+        receiverId: item.receiverId,
+        receiverName: item.receiverName,
+        receiverSource: item.receiverSource,
+        senderId: this.agentId,
+        senderSource: 0,
+        title: this.info.title,
+        placeholder: '回复' + item.receiverName + '：',
+        type: 1
+      }
     },
-    
+
     onSelect(item) {
       // 点击选项时默认不会关闭菜单，可以手动关闭
       this.isShowDeleteComment = false
@@ -447,7 +445,7 @@ export default {
         enterpriseId: this.enterpriseId,
         infoId: this.infoId,
         shareUuid: this.shareUuid,
-        sourceType: 0 // 经纪人-0，客户-1 
+        sourceType: 0 // 经纪人-0，客户-1
       }
       const result = await discoverService.articleShare(params)
     }
@@ -567,7 +565,7 @@ export default {
           line-height: 1.5;
         }
         > .easy-look-fold {
-          color: #969EA8;
+          color: #969ea8;
           font-size: 14px;
         }
       }

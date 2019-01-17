@@ -21,12 +21,14 @@ const isIOS = () => {
 }
 
 export default async (to, from, next) => {
-  setTimeout(() => { next() }, 3000)
+  setTimeout(() => {
+    next()
+  }, 3000)
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
-  
+
   if (parm.cropId) {
     // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
     store.dispatch('getUserInfo', null)
@@ -35,13 +37,13 @@ export default async (to, from, next) => {
     localStorage.setItem('cropId', cropId)
 
     let defaultPathArr = window.location.href.split('#')
-    if(defaultPathArr.length>1) {
+    if (defaultPathArr.length > 1) {
       let defaultPath = window.location.href.split('#')[1].split('?')[0]
-      if(defaultPath !== '/') {
+      if (defaultPath !== '/') {
         localStorage.setItem('defaultPath', defaultPath)
       }
     }
-    
+
     let wxurl =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
       cropId +
@@ -91,13 +93,12 @@ export default async (to, from, next) => {
         userInfo = wxAuthObject.userInfo
         userInfo.payCorpId = payCorpId
         userInfo.cropId = cropId
-        userInfo.articleShareFlag=wxAuthObject.articleShareFlag
+        userInfo.articleShareFlag = wxAuthObject.articleShareFlag
         userInfo.token = wxAuthObject.token
         await store.dispatch('getUserInfo', userInfo)
         //更新用户禁用状态
         // store.commit(types['USER_STATUS'], userInfo.userStatus)
         // console.log(userInfo.userStatus, 'userInfo.userStatus')
-        
 
         if (!userInfo.payOpenId) {
           //返回的payopenid为空，则从新授权获取

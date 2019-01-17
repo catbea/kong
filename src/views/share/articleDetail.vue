@@ -289,11 +289,11 @@ export default {
       if (val == 1) {
         // 名片
         this.openCardPopup = true
-      }else if (val == 2) {
+      } else if (val == 2) {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
-      }else {
+      } else {
         // 文章
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
@@ -380,7 +380,7 @@ export default {
       > .viewpoint-line {
         width: 2px;
         height: 13px;
-        background-color: #007AE6;
+        background-color: #007ae6;
         position: absolute;
         top: 22px;
         left: 0;
@@ -433,7 +433,7 @@ export default {
       font-size: 14px;
       line-height: 1.5;
     }
-    
+
     // 好看
     > .easy-look-container {
       padding: 10px 16px 20px 16px;
@@ -527,7 +527,6 @@ export default {
       margin-top: 10px;
       border-bottom: 10px solid #f7f9fa;
       > .recommend-houses-content {
-        
         .house-item {
           > .house-img {
             width: 166px;
@@ -562,7 +561,7 @@ export default {
       .recommend-article-list {
         margin: 0 16px;
         padding: 15px 0;
-        border-bottom: 1px solid #E2E2E3;
+        border-bottom: 1px solid #e2e2e3;
         > .recommend-article-name {
           color: #333333;
           font-size: 15px;

@@ -44,12 +44,12 @@ export default {
   z-index: 100;
   display: flex;
   align-items: center;
-  img{
-    width:23px;
-    height:23px;
+  img {
+    width: 23px;
+    height: 23px;
   }
-  span{
-    font-size:12px;
+  span {
+    font-size: 12px;
   }
 }
 </style>

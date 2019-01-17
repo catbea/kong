@@ -18,9 +18,9 @@ export default {
   created() {
     if (this.toSelectTap == '3') {
       this.onClickEdit()
-    }else  if (this.toSelectTap == '1') {
+    } else if (this.toSelectTap == '1') {
       this.onClickCollection()
-    }else  if (this.toSelectTap == '2') {
+    } else if (this.toSelectTap == '2') {
       this.onClickShare()
     }
   },
@@ -86,4 +86,3 @@ export default {
   }
 }
 </style>
-

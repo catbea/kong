@@ -18,9 +18,7 @@
 </template>
 
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 export default {
   data() {
@@ -35,13 +33,13 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
-  created () {
+  created() {
     // 获取用户离岗状态
     this.getUserInfo()
   },
   methods: {
     // 获取用户离岗状态
-    async getUserInfo () {
+    async getUserInfo() {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
         this.userData = result
@@ -52,7 +50,7 @@ export default {
           '0': '申请审批中',
           '1': '审批通过',
           '2': '审批不通过'
-        } 
+        }
         this.btnText = text[switchStatus] || '未知状态'
         // 审核通过，并且完善了信息
         if (switchStatus === '1' && this.userData.institutionId) {
@@ -65,67 +63,75 @@ export default {
         }
         if (switchStatus === '1' && !this.userData.institutionId) {
           // 审批通过，更新信息
-          this.$dialog.alert({
-            title: '审批通过',
-            confirmButtonText: '更新数据',
-            message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
-          }).then(() => {
-            this.$store.commit('USER_INFO', Object.assign(this.userInfo, { institutionId: '', institutionName: ''}))
-            this.$router.push('/public/complete-info')
-          })
+          this.$dialog
+            .alert({
+              title: '审批通过',
+              confirmButtonText: '更新数据',
+              message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
+            })
+            .then(() => {
+              this.$store.commit('USER_INFO', Object.assign(this.userInfo, { institutionId: '', institutionName: '' }))
+              this.$router.push('/public/complete-info')
+            })
         }
         // 审批不通过
         if (switchStatus === '2') {
           this.btnText = '申请修改'
           let storage = JSON.parse(window.localStorage.getItem('userPlatform'))
           if (!storage) {
-            this.$dialog.alert({
-              title: '审批不通过',
-              message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
-            }).then(() => {
-              window.localStorage.setItem('userPlatform', true)
-            })
+            this.$dialog
+              .alert({
+                title: '审批不通过',
+                message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
+              })
+              .then(() => {
+                window.localStorage.setItem('userPlatform', true)
+              })
           }
         }
       }
       this.showLoading = false
     },
     // 点击申请离岗按钮
-    toApply () {
+    toApply() {
       if (this.disBtn) {
         return false
       }
-      this.$dialog.confirm({
-        title: '提示',
-        message: '是否确认申请修改?'
-      }).then(() => {
-        // 确认离岗
-        this.apply()
-        window.localStorage.setItem('userPlatform', false)
-      }).catch(() => {
-        // 取消离岗
-      })
+      this.$dialog
+        .confirm({
+          title: '提示',
+          message: '是否确认申请修改?'
+        })
+        .then(() => {
+          // 确认离岗
+          this.apply()
+          window.localStorage.setItem('userPlatform', false)
+        })
+        .catch(() => {
+          // 取消离岗
+        })
     },
     // 申请离岗
-    async apply () {
+    async apply() {
       let obj = {
         agentId: this.userInfo.agentId,
         personnelType: 2 // 1 离岗 2 变换组织
       }
       let result = await userService.applyAgent(obj)
       if (result) {
-        this.$dialog.confirm({
-          title: '申请成功',
-          message: '后台通过修改申请后，即可重新选择我的机构'
-        }).then(() => {
-          // 按钮置灰不可点击
-          this.disBtn = true
-          this.btnText = '申请审批中'
-        }).catch(() => {
-        })
+        this.$dialog
+          .confirm({
+            title: '申请成功',
+            message: '后台通过修改申请后，即可重新选择我的机构'
+          })
+          .then(() => {
+            // 按钮置灰不可点击
+            this.disBtn = true
+            this.btnText = '申请审批中'
+          })
+          .catch(() => {})
       }
     }
-    
   }
 }
 </script>
@@ -155,7 +161,7 @@ export default {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      img{
+      img {
         width: 50px;
         height: 50px;
         vertical-align: middle;
@@ -168,7 +174,7 @@ export default {
   .warning {
     padding-top: 24px;
     line-height: 1.5;
-    color: rgba(150,158,168,1);
+    color: rgba(150, 158, 168, 1);
     font-size: 14px;
   }
   .action {
@@ -177,19 +183,19 @@ export default {
       width: 100%;
       border: none;
       height: 44px;
-      background:rgba(242, 248, 254, 1);
+      background: rgba(242, 248, 254, 1);
       border-radius: 4px;
       color: rgba(68, 81, 102, 1);
       font-size: 16px;
-      &.disabled{
-        background-color:#e8e8e8;
+      &.disabled {
+        background-color: #e8e8e8;
         cursor: not-allowed;
         color: #999;
       }
     }
   }
   // loading
-  .loading{
+  .loading {
     position: fixed;
     left: 0;
     top: 0;

@@ -96,14 +96,14 @@ export default {
     activeIcon: false
   }),
   methods: {
-    goactivitDetaily(){
-       this.$router.push('/custom/message/activityDetail')
+    goactivitDetaily() {
+      this.$router.push('/custom/message/activityDetail')
     },
     onSearchHandler() {
       this.currentData.page = 1
       this.onLoad()
     },
-    sortHandle(){
+    sortHandle() {
       this.sortShow = false
     },
     onSortHandler() {

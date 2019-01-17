@@ -29,7 +29,7 @@ class DiscoverService {
         classify,
         current,
         infoIds,
-        size,
+        size
       }
     })
   }
@@ -59,7 +59,7 @@ class DiscoverService {
       body: {
         infoId,
         enterpriseId,
-        agentId,
+        agentId
       }
     })
   }
@@ -78,11 +78,11 @@ class DiscoverService {
 
   /**
    * 文章详情评论列表
-   * @param {*} current 
-   * @param {*} size 
-   * @param {*} infoId 
+   * @param {*} current
+   * @param {*} size
+   * @param {*} infoId
    */
-  commentList(current, size=5, infoId) {
+  commentList(current, size = 5, infoId) {
     return xhr({
       url: '/comment/previewPage',
       body: {
@@ -92,15 +92,15 @@ class DiscoverService {
       }
     })
   }
-  
+
   /**
    * h5文章详情评论列表
-   * @param {*} current 
-   * @param {*} size 
-   * @param {*} infoId 
-   * @param {*} enterpriseId 
+   * @param {*} current
+   * @param {*} size
+   * @param {*} infoId
+   * @param {*} enterpriseId
    */
-  commentListForH5(current, size=5, infoId, enterpriseId) {
+  commentListForH5(current, size = 5, infoId, enterpriseId) {
     return xhr({
       url: '/comment/previewPageForWhite',
       body: {
@@ -114,7 +114,7 @@ class DiscoverService {
 
   /**
    * 修改评论的状态
-   * @param {*} id 
+   * @param {*} id
    * @param {*} status 0-审核中，1-审核通过，2-审核不通过，3-删除
    */
   updateCommentStatus(id, status) {
@@ -130,7 +130,7 @@ class DiscoverService {
 
   /**
    * 文章新增评论
-   * @param {*} param 
+   * @param {*} param
    */
   insertComment(param) {
     return xhr({
@@ -142,7 +142,7 @@ class DiscoverService {
 
   /**
    * H5使用-文章详情好看列表
-   * @param {*} infoId 
+   * @param {*} infoId
    * @param {*} enterpriseId
    */
   queryLikeList(infoId, enterpriseId) {
@@ -157,7 +157,7 @@ class DiscoverService {
 
   /**
    * 文章详情好看列表
-   * @param {*} infoId 
+   * @param {*} infoId
    */
   queryLikeListByToken(infoId) {
     return xhr({
@@ -169,17 +169,17 @@ class DiscoverService {
   }
 
   /**
-   * 企业微信-查询文章举报反馈选项 
+   * 企业微信-查询文章举报反馈选项
    */
   getFeedbackOptions() {
     return xhr({
-      url: '/informationfeedback/feedbackOptions',
+      url: '/informationfeedback/feedbackOptions'
     })
   }
 
   /**
    * 文章投诉举报
-   * @param {*} param 
+   * @param {*} param
    */
   getInsertFeedback(param) {
     return xhr({
@@ -191,8 +191,8 @@ class DiscoverService {
 
   /**
    * H5使用-推荐房源列表
-   * @param {*} shareUuid 
-   * @param {*} enterpriseId 
+   * @param {*} shareUuid
+   * @param {*} enterpriseId
    */
   queryLinkerListByIdsForH5(shareUuid, enterpriseId) {
     return xhr({
@@ -206,9 +206,9 @@ class DiscoverService {
 
   /**
    * h5文章详情页面TA的写一写
-   * @param {*} agentId 
-   * @param {*} enterpriseId 
-   * @param {*} infoIds 
+   * @param {*} agentId
+   * @param {*} enterpriseId
+   * @param {*} infoIds
    */
   queryArticleListForH5(agentId, enterpriseId, infoIds) {
     return xhr({
@@ -223,9 +223,9 @@ class DiscoverService {
 
   /**
    * H5使用-获取楼盘小程序码(白名单)
-   * @param {*} agentId 
-   * @param {*} linkerId 
-   * @param {*} enterpriseId 
+   * @param {*} agentId
+   * @param {*} linkerId
+   * @param {*} enterpriseId
    */
   queryLinkerQrcode(agentId, linkerId, enterpriseId) {
     return xhr({
@@ -240,7 +240,7 @@ class DiscoverService {
 
   /**
    * 获取楼盘小程序码
-   * @param {*} linkerId 
+   * @param {*} linkerId
    */
   queryLinkerQrcodeByToken(linkerId) {
     return xhr({
@@ -255,9 +255,9 @@ class DiscoverService {
 
   /**
    * H5使用-获取文章小程序码(白名单)
-   * @param {*} agentId 
-   * @param {*} infoId 
-   * @param {*} enterpriseId 
+   * @param {*} agentId
+   * @param {*} infoId
+   * @param {*} enterpriseId
    */
   queryArticleQrcode(agentId, infoId, enterpriseId) {
     return xhr({
@@ -272,7 +272,7 @@ class DiscoverService {
 
   /**
    * 获取文章小程序码
-   * @param {*} infoId 
+   * @param {*} infoId
    */
   queryArticleQrcodeByToken(infoId) {
     return xhr({

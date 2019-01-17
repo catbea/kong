@@ -35,7 +35,7 @@ const xhr = ({ url, body = {}, method = 'get', headers = {}, codeHandleList = nu
         let resultBody = res.body
         let isOk = codeErrHandler(resultBody, codeHandleList) === true // typeof body.code === 'undefined' || body.code === '0'
         // 错误处理丢去控制类需要完整的信息,强行等于10000为暂时处理,后期优化 TODO
-        isOk ? (parseInt(res.body.returnCode)===10000? resolve(resultBody.data):resolve(resultBody)) : codeErrHandler(resultBody, codeHandleList)
+        isOk ? (parseInt(res.body.returnCode) === 10000 ? resolve(resultBody.data) : resolve(resultBody)) : codeErrHandler(resultBody, codeHandleList)
       } catch (error) {
         console.error(error)
       }

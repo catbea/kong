@@ -170,7 +170,7 @@ export default {
     async onLoad() {
       this.loading = true
       let result = []
-      if(this.active === 0) {
+      if (this.active === 0) {
         result = await customService.getCustomerDynamicList('', this.current)
       } else {
         result = await dynamicsService[this.getServeceFunc()](this.current)

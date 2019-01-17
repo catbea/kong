@@ -18,7 +18,7 @@ export default {
       this.$emit('delParagraph', { dom: this.info })
     },
     // 撤销删除
-    repealClickHandler(e){
+    repealClickHandler(e) {
       this.$emit('repealParagraph', { dom: this.info })
     }
   }
@@ -31,8 +31,8 @@ export default {
   margin: 0 -5px 5px;
   padding: 5px;
   text-indent: unset;
-  >.paragraph-container{
-    >img{
+  > .paragraph-container {
+    > img {
       object-fit: cover;
     }
   }
@@ -54,7 +54,7 @@ export default {
     border: 1px solid rgba(150, 158, 168, 1);
     > .del-btn {
       position: absolute;
-      transform: translate(-50%,-50%);
+      transform: translate(-50%, -50%);
       left: 50%;
       top: 50%;
       width: 96px;
@@ -70,5 +70,3 @@ export default {
   }
 }
 </style>
-
-

@@ -49,22 +49,18 @@ export default {
       const result = await articleService.articleAnalysis(data)
 
       if (result.returnCode == '31102') {
-
-      this.$dialog
-        .alert({
-          title: '爬取失败',
-          message: '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试',
-         confirmButtonText:'我知道了'
-        })
-        .then(() => {
-          // on close
-        })
-
-
+        this.$dialog
+          .alert({
+            title: '爬取失败',
+            message: '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试',
+            confirmButtonText: '我知道了'
+          })
+          .then(() => {
+            // on close
+          })
       } else {
         this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
       }
-
     }
   }
 }

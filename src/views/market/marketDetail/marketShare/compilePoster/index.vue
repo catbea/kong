@@ -98,7 +98,7 @@ export default {
         scale: 3,
         useCORS: true,
         allowTaint: false,
-        logging: false,
+        logging: false
       })
       canvas.style.width = '100%'
       canvas.style.height = '100%'

@@ -17,7 +17,7 @@ const state = {
     institutionLogo: '',
     institutionName: 'test',
     isOne: 0, // 1新用户 0老用户
-    articleShareFlag:1,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    articleShareFlag: 1, //文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     isVip: '',
     vipDefaultCity: '深圳市',
     ifView: 1, //是否展示邀请有礼
@@ -63,7 +63,7 @@ const state = {
     tempPhone: '18603000246',
     vipDefaultCity: '',
     vipInfo: '',
-    wechatAccount: '',
+    wechatAccount: ''
   },
   userVipInfo: {},
   userArea: {
@@ -108,8 +108,8 @@ const state = {
   imUserSig: null,
   guidance: {
     dynamics: false,
-    marketFirst:false,//首次注册
-    article:false//0未完成文章详情引导，1完成
+    marketFirst: false, //首次注册
+    article: false //0未完成文章详情引导，1完成
   }
 }
 
@@ -200,7 +200,7 @@ const mutations = {
   [types.USER_BUILD_INFO](state, data) {
     state.buildId = data
   },
-  [types.FIRST](state, data) { 
+  [types.FIRST](state, data) {
     state.guidance.marketFirst = data
   },
   [types.ARTICLE_SHARE_FLAG](state, data) {
