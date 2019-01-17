@@ -325,7 +325,7 @@ export default {
       if (result) {
         this.pages = result.pages
         let records = result.records.map(item => {
-          return Object.assign(item, { likeCount: 25, replayCount: 5 })
+          return Object.assign(item, { likeCount: 6, replayCount: 3 })
         })
         this.articleData.push(...records)
         this.current += 1
