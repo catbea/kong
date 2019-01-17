@@ -49,41 +49,40 @@ import userService from 'SERVICE/userService'
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
-    components: {
+  components: {
     swiper,
     swiperSlide
   },
   created() {
-    this.filterHandle()  
+    this.filterHandle()
   },
   mounted() {
-    this.swiperOption={
-          slidesPerView:1,
-          spaceBetween:30,
-          // loop: true,
-        //  autoplay: {
-        //    delay: 1000,
-        //     disableOnInteraction: false,
-        //   },
-          initialSlide :0,
-          observer:true,//修改swiper自己或子元素时，自动初始化swiper 
-          observeParents:true,//修改swiper的父元素时，自动初始化swiper 
-          // onSlideChangeEnd: function(swiper){ 
-          // 　　　swiper.update();  
-          // 　　　mySwiper.startAutoplay();
-          // 　　   mySwiper.reLoop();  
-          // },
-          pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-          },
-          on:{
-            click:function() {
-              // console.log('删除'+this.clickedIndex);
-              
-            }
-          }
+    this.swiperOption = {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      // loop: true,
+      //  autoplay: {
+      //    delay: 1000,
+      //     disableOnInteraction: false,
+      //   },
+      initialSlide: 0,
+      observer: true, //修改swiper自己或子元素时，自动初始化swiper
+      observeParents: true, //修改swiper的父元素时，自动初始化swiper
+      // onSlideChangeEnd: function(swiper){
+      // 　　　swiper.update();
+      // 　　　mySwiper.startAutoplay();
+      // 　　   mySwiper.reLoop();
+      // },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+      },
+      on: {
+        click: function() {
+          // console.log('删除'+this.clickedIndex);
         }
+      }
+    }
   },
   props: {
     swipeList: {
@@ -93,7 +92,7 @@ export default {
   },
   data() {
     return {
-      swiperOption:{},
+      swiperOption: {},
       changeshow: false,
       masterSave: null,
       img: require('IMG/user/Combined Shape@2x.png'),
@@ -110,19 +109,19 @@ export default {
     async closeHandle(linkerId, index) {
       //图片列表删除某个，楼盘列表重置推荐
       this.$dialog
-          .confirm({
-            message: '是否确认取消该楼盘推荐'
+        .confirm({
+          message: '是否确认取消该楼盘推荐'
+        })
+        .then(() => {
+          userService.changeMarketData(linkerId, 20, 0)
+          this.limitList.splice(index, 1)
+          this.swipeJudge()
+          this.$emit('noRecommend', linkerId)
+          this.$toast({
+            duration: 800,
+            message: '已取消推荐'
           })
-          .then(() => {
-            userService.changeMarketData(linkerId, 20, 0)
-            this.limitList.splice(index, 1)
-            this.swipeJudge()
-            this.$emit('noRecommend', linkerId)
-            this.$toast({
-              duration: 800,
-              message: '已取消推荐'
-            })
-          })
+        })
     },
     filterHandle() {
       this.masterList = this.limitList.filter(item => {
@@ -153,7 +152,7 @@ export default {
     },
     limitList() {
       if (this.swipeList.length > 5) {
-        let _this=this
+        let _this = this
         this.$dialog
           .confirm({
             title: '当前推荐楼盘数量达到上限',
@@ -167,14 +166,14 @@ export default {
           })
         return this.swipeList.slice(0, 5)
       } else {
-        let _this=this
+        let _this = this
         return this.swipeList
       }
-    },
+    }
     // swiper() {
     //   return this.$refs.mySwiper.swiper
     // }
-  },
+  }
   // updated(){
   //   this.swiper.update();
   //   // this.swiper.autoplay.start();
@@ -205,19 +204,19 @@ export default {
   }
 }
 .mymarket-page {
-  .swiper-container{
-        // width:100%;
-        height:100%;
-        border-radius:10px;
-        .swiper-wrapper{
-          // width:100%;
-          height:100%;
-          .swiper-slide{
-            width: 343px ;
+  .swiper-container {
+    // width:100%;
+    height: 100%;
+    border-radius: 10px;
+    .swiper-wrapper {
+      // width:100%;
+      height: 100%;
+      .swiper-slide {
+        width: 343px;
         height: 193px;
-          }
-        }
       }
+    }
+  }
   .master-market-box {
     display: flex;
     flex-direction: column;
@@ -226,9 +225,9 @@ export default {
     .vanSWipe-box {
       width: 343px;
       height: 194px;
-      .van-swipe-item{
+      .van-swipe-item {
         width: 343px;
-      height: 194px;
+        height: 194px;
       }
       .hint {
         width: 100%;
@@ -271,8 +270,8 @@ export default {
     .master-box {
       position: relative;
       width: 343px;
-        height: 193px;
-        border-radius:10px;
+      height: 193px;
+      border-radius: 10px;
       .master-item {
         width: 343px;
         height: 193px;

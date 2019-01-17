@@ -187,7 +187,7 @@ export default {
     dataArr: [],
     sortShow: false
   }),
-  async created () {
+  async created() {
     this.selectedCity = this.userArea.myMarketSelectedCity
     this.searchInfo.siteText = this.selectedCity ? this.selectedCity : '全国'
     // await this.showGetMyMarketInfo()//请求展示楼盘
@@ -202,7 +202,7 @@ export default {
     ...mapGetters(['userArea'])
   },
   watch: {
-    showProjectName (val) {
+    showProjectName(val) {
       clearTimeout(this.setShowName)
       this.setShowName = setTimeout(() => {
         this.showPage = 1
@@ -215,7 +215,7 @@ export default {
       }, 500)
     },
     showProjectFilters: {
-      handler (val) {
+      handler(val) {
         this.showPage = 1
         this.showMarketList = []
         this.showFinished = false
@@ -223,7 +223,7 @@ export default {
       },
       deep: true
     },
-    notShowProjectName (val) {
+    notShowProjectName(val) {
       clearTimeout(this.setNotShowName)
       this.setNotShowName = setTimeout(() => {
         this.notShowPage = 1
@@ -234,7 +234,7 @@ export default {
       }, 500)
     },
     notShowProjectFilters: {
-      handler (val) {
+      handler(val) {
         this.notShowPage = 1
         this.notShowMarketList = []
         this.notShowFinished = false
@@ -244,7 +244,8 @@ export default {
     }
   },
   methods: {
-    screenHandle (index) {//筛选中更多等滚动条操作
+    screenHandle(index) {
+      //筛选中更多等滚动条操作
       // this.screenNum = index
       // if (this.screenNum == index) {
       //   this.flag = false
@@ -253,26 +254,24 @@ export default {
       // }
       // console.log('more-page');
       this.$nextTick(() => {
-        if(document.querySelector('.area-filter')||document.querySelector('.price-filter')
-      ||document.querySelector('.popularity-filter')||document.querySelector('.more-page'))
-      {
-        this.flag=true
-      }else{
-        this.flag=false
-      }
+        if (document.querySelector('.area-filter') || document.querySelector('.price-filter') || document.querySelector('.popularity-filter') || document.querySelector('.more-page')) {
+          this.flag = true
+        } else {
+          this.flag = false
+        }
       })
     },
-    sortHandle(n){//筛选中排序滚动条操作
+    sortHandle(n) {
+      //筛选中排序滚动条操作
       this.$nextTick(() => {
-        if(document.querySelector('.sortWay-page'))
-      {
-        this.flag=n
-      }else{
-        this.flag=n
-      }
+        if (document.querySelector('.sortWay-page')) {
+          this.flag = n
+        } else {
+          this.flag = n
+        }
       })
     },
-    stickNumHandle () {
+    stickNumHandle() {
       //判断有没有超过3个置顶
       for (let i = 0; i < this.showMarketList.length; i++) {
         const element = this.showMarketList[i]
@@ -280,29 +279,29 @@ export default {
           this.stickNum++
         }
       }
-      this.stickNumHandle = function () { }
+      this.stickNumHandle = function() {}
     },
-    async getShowProjectCount () {
+    async getShowProjectCount() {
       const res = await userService.queryMyLinkerCount(0)
       this.showMarketListCount = res.count
     },
-    async getUnShowProjectCount () {
+    async getUnShowProjectCount() {
       const res = await userService.queryMyLinkerCount(1)
       this.notShowMarketListCount = res.count
     },
-    showOnLoad () {
+    showOnLoad() {
       //展示数据初始化
       this.showGetMyMarketInfo()
     },
-    notShowOnLoad () {
+    notShowOnLoad() {
       //不展示数据初始化
       this.notShowGetMyMarketInfo()
     },
     // 搜索区域点击处理
-    areaClickHandler () {
+    areaClickHandler() {
       this.$router.push({ name: 'area-select', query: { fromPage: 'myMarket' } })
     },
-    operationSearch () {
+    operationSearch() {
       //根据展示/不展示楼盘数量来显示搜索
       if (this.searchShowNum > 20) {
         this.searchShow = true
@@ -310,7 +309,7 @@ export default {
         this.searchShow = false
       }
     },
-    marketShowHandle () {
+    marketShowHandle() {
       //展示/不展示都没数据时
       if (this.showMarketList.length == 0 && this.notShowMarketList.length == 0) {
         this.marketShow = false
@@ -319,7 +318,7 @@ export default {
       }
     },
     //-----大师推荐操作
-    pushMasterHandle (n) {
+    pushMasterHandle(n) {
       //点击实时更新大师推荐图片
       for (let index = 0; index < this.commonList.length; index++) {
         const element = this.commonList[index]
@@ -340,13 +339,13 @@ export default {
       // this.masterList = arr.concat(this.masterList)
       // this.masterList = this.masterList.concat(n)
       this.masterList.unshift(n)
-      console.log(this.masterList, "master大师");
+      console.log(this.masterList, 'master大师')
       this.swipeList = this.masterList.concat(this.commonList)
-      console.log(this.swipeList, "swipe大师");
+      console.log(this.swipeList, 'swipe大师')
 
       // })
     },
-    spliceMasterHandle (n) {
+    spliceMasterHandle(n) {
       //点击实时改为取消大师改为未推荐
       for (let index = 0; index < this.masterList.length; index++) {
         const element = this.masterList[index]
@@ -363,7 +362,7 @@ export default {
       }
     },
     //-----普通推荐操作
-    pushCommonHandle (n) {
+    pushCommonHandle(n) {
       //点击实时更新普通推荐图片
       for (let index = 0; index < this.masterList.length; index++) {
         const element = this.masterList[index]
@@ -384,12 +383,12 @@ export default {
       // this.commonList = arr.concat(this.commonList)
       // this.commonList = this.commonList.concat(n)
       this.commonList.unshift(n)
-      console.log(this.commonList, "commonList普通");
+      console.log(this.commonList, 'commonList普通')
       this.swipeList = this.masterList.concat(this.commonList)
-      console.log(this.swipeList, "swipeList普通");
+      console.log(this.swipeList, 'swipeList普通')
       // })
     },
-    spliceCommonHandle (n) {
+    spliceCommonHandle(n) {
       //点击实时改为取消普通改为未推荐
       for (let index = 0; index < this.commonList.length; index++) {
         const element = this.commonList[index]
@@ -406,7 +405,7 @@ export default {
       }
     },
     //-----置顶操作
-    recommandTrueHandle (n) {
+    recommandTrueHandle(n) {
       this.stickNum++
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element = this.showMarketList[index] //遍历未置顶改成置顶
@@ -415,7 +414,7 @@ export default {
         }
       }
     },
-    recommandFalseHandle (n) {
+    recommandFalseHandle(n) {
       this.stickNum--
       for (let index = 0; index < this.showMarketList.length; index++) {
         const element = this.showMarketList[index] //遍历置顶改成未置顶
@@ -424,7 +423,7 @@ export default {
         }
       }
     },
-    async noRecommendHandle (n) {
+    async noRecommendHandle(n) {
       //图片列表删除某个，楼盘列表重置推荐
       for (let index = 0; index < this.swipeList.length; index++) {
         const element = this.swipeList[index]
@@ -444,7 +443,7 @@ export default {
     // async changeMarketStatus(linkerId, operationType, status){//改变楼盘推荐状态
     //   await userService.changeMarketData(linkerId, operationType, status)
     // },
-    async getRecommendInfo () {
+    async getRecommendInfo() {
       //推荐楼盘的数据
       const res = await userService.getRecommend()
       this.recommendList = res
@@ -452,17 +451,17 @@ export default {
       this.common()
       this.swipeList = this.masterList.concat(this.commonList)
     },
-    master () {
+    master() {
       this.masterList = this.recommendList.filter(item => {
         return item.masterRecommand == '1'
       })
     },
-    common () {
+    common() {
       this.commonList = this.recommendList.filter(item => {
         return item.masterRecommand == '2'
       })
     },
-    async showGetMyMarketInfo () {
+    async showGetMyMarketInfo() {
       let name = this.showProjectName
       let filters = this.showProjectFilters
       let page = this.showPage
@@ -502,7 +501,7 @@ export default {
       this.showPage++
       this.showLoading = false
     },
-    async notShowGetMyMarketInfo () {
+    async notShowGetMyMarketInfo() {
       // this.notShowProjectName,this.notShowProjectFilters, this.notShowPage
 
       let name = this.notShowProjectName
@@ -545,7 +544,7 @@ export default {
       this.notShowPage++
       this.notShowLoading = false
     },
-    returnHandle () {
+    returnHandle() {
       //切换展示与否
       this.myMarketShow = !this.myMarketShow
       if (this.myMarketShow) {
@@ -554,10 +553,10 @@ export default {
         this.titleInfo.linkText = '切换开启展示楼盘'
       }
     },
-    skipShareHandle () {
+    skipShareHandle() {
       this.$router.push('/marketDetail/share')
     },
-    closeCut (n) {
+    closeCut(n) {
       this.notShowMarketList.push(n)
       for (let index = 0; index < this.showMarketList.length; index++) {
         //关闭展示
@@ -583,7 +582,7 @@ export default {
         this.close = true
       }
     },
-    openCut (n) {
+    openCut(n) {
       this.showMarketList.push(n)
       for (let index = 0; index < this.notShowMarketList.length; index++) {
         const element = this.notShowMarketList[index]

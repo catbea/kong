@@ -73,7 +73,7 @@ export default {
       itemInfo: '',
       current: 1,
       writeList: [],
-      total:''
+      total: ''
     }
   },
 
@@ -91,8 +91,7 @@ export default {
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
       if (res.records.length > 0) {
-
-        this.total=res.total;
+        this.total = res.total
 
         for (let i = 0; i < res.records.length; i++) {
           let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
@@ -115,7 +114,7 @@ export default {
     },
 
     enterDetail(val) {
-      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id:val, city: '全国' } })
+      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val, city: '全国' } })
     },
 
     enterArticleDetail(val) {

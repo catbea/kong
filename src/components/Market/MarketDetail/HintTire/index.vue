@@ -23,29 +23,28 @@ import { mapGetters } from 'vuex'
 import marketService from 'SERVICE/marketService'
 export default {
   created() {
-    if(this.userInfo.isOne==1){
-      this.isOne=false
-    }else{
-      this.isOne=true
+    if (this.userInfo.isOne == 1) {
+      this.isOne = false
+    } else {
+      this.isOne = true
     }
-   this.marketFirst=this.guidance.marketFirst
+    this.marketFirst = this.guidance.marketFirst
   },
   data: () => ({
-    isOne:false,//0：不是首次注册 1:首次注册 ,
-    marketFirst:false,//true为已是老用户
+    isOne: false, //0：不是首次注册 1:首次注册 ,
+    marketFirst: false, //true为已是老用户
     labelImg: require('IMG/marketDetail/yindao.png'),
     enjoyImg: require('IMG/marketDetail/enjoy@2x.png')
   }),
   computed: {
-    ...mapGetters(['userInfo','guidance'])
+    ...mapGetters(['userInfo', 'guidance'])
   },
   methods: {
     async knowHandle() {
       const res = await marketService.getMarketUpdateIsOne()
-      this.$store.commit(types.FIRST,true)
-      this.marketFirst=true
-      console.log(this.guidance,'store数据');
-      
+      this.$store.commit(types.FIRST, true)
+      this.marketFirst = true
+      console.log(this.guidance, 'store数据')
     }
   }
 }

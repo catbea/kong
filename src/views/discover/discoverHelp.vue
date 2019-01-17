@@ -12,52 +12,48 @@
     <button class="discoverHelp-page-btn">我知道了</button>
   </div>
 </template>
-<script> 
-export default {
-  
-}
+<script>
+export default {}
 </script>
 <style lang="less" >
-.discoverHelp-page{
+.discoverHelp-page {
   padding: 27px 16px 16px;
   background-color: #ffffff;
-  p{
-    font-size:14px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(51,51,51,1);
-    line-height:20px;
+  p {
+    font-size: 14px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 20px;
     margin-bottom: 20px;
-    span{
-       font-size:16px;
+    span {
+      font-size: 16px;
     }
   }
-  .discoverHelp-page-top{
-    font-size:12px;
-    font-weight:400;
-    color:rgba(102,102,102,1);
-    line-height:30px;
+  .discoverHelp-page-top {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(102, 102, 102, 1);
+    line-height: 30px;
     margin-bottom: 35px;
   }
-  .discoverHelp-page-btn{
-    height:44px;
-    background:rgba(0,122,230,1);
-    border-radius:6px;
+  .discoverHelp-page-btn {
+    height: 44px;
+    background: rgba(0, 122, 230, 1);
+    border-radius: 6px;
     width: 100%;
-    font-size:16px;
-    font-weight:400;
-    color:rgba(255,255,255,1);
-    line-height:22px;
-    border:0;
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    line-height: 22px;
+    border: 0;
     margin-top: 62px;
   }
-  .discoverHelp-page-notes{
-    font-size:14px;
-    font-weight:400;
-    color:rgba(234,77,46,1);
-    line-height:20px;
-    
+  .discoverHelp-page-notes {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(234, 77, 46, 1);
+    line-height: 20px;
   }
 }
 </style>
-

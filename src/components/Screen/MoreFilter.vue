@@ -27,8 +27,8 @@ export default {
     value: Object
   },
   data: () => ({
-    flag:false,
-    num:0,
+    flag: false,
+    num: 0,
     conf: {
       areaSize: {
         name: '面积',
@@ -100,9 +100,9 @@ export default {
       switch (type) {
         case 'areaSize':
           // this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
-          if(this.currentValue.areaSize === value){
+          if (this.currentValue.areaSize === value) {
             this.currentValue.areaSize = '-1,-1'
-          }else{
+          } else {
             this.currentValue.areaSize = value
           }
           break
@@ -159,16 +159,15 @@ export default {
         openStatus: '-1',
         focusStatus: '-1'
       }
-      this.num=0
+      this.num = 0
       this.$emit('resetNum')
     },
     confirmHandler() {
-      this.num=this.$refs.moreFilter.querySelectorAll('.active').length
+      this.num = this.$refs.moreFilter.querySelectorAll('.active').length
       this.$emit('confirm', this.currentValue)
       this.$emit('input', this.currentValue)
-      this.$emit('numHandle',this.num)
-      console.log(this.num,'现在的长度');
-      
+      this.$emit('numHandle', this.num)
+      console.log(this.num, '现在的长度')
     }
   },
   watch: {
@@ -179,86 +178,87 @@ export default {
 }
 </script>
 <style lang="less">
-.more-page{
-.more-filter {
-  position: relative;
-  width: 100%;
-  z-index: 10;
-  height: 430px;
-  background-color: #fff;
-  padding: 15px;
-  padding-bottom:0px;
-  overflow: scroll;
-  > .item-container {
-    margin-bottom: 30px;
-    > .item-title {
-      font-size: 15px;
-      font-weight: 400;
-      color: #333333;
-    }
-    > .item-list-container {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top:16px;
-      margin-bottom: 20px;
-      // justify-content: space-between;
-      > .item {
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        width:75px;
-        height:30px;
-        text-align: center;
-        line-height:33px;
-        font-size: 13px;
-        color: #445166;
-        background-color: #f2f5f9;
-        border-radius: 6px;
-        // padding: 5px 10px;
-        margin: 7px 0px;
-        margin-left:15px;
-        &.active {
-          background-color: #017fff;
-          color: #ffffff;
+.more-page {
+  .more-filter {
+    position: relative;
+    width: 100%;
+    z-index: 10;
+    height: 430px;
+    background-color: #fff;
+    padding: 15px;
+    padding-bottom: 0px;
+    overflow: scroll;
+    > .item-container {
+      margin-bottom: 30px;
+      > .item-title {
+        font-size: 15px;
+        font-weight: 400;
+        color: #333333;
+      }
+      > .item-list-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 16px;
+        margin-bottom: 20px;
+        // justify-content: space-between;
+        > .item {
+          // display: flex;
+          // align-items: center;
+          // justify-content: center;
+          width: 75px;
+          height: 30px;
+          text-align: center;
+          line-height: 33px;
+          font-size: 13px;
+          color: #445166;
+          background-color: #f2f5f9;
+          border-radius: 6px;
+          // padding: 5px 10px;
+          margin: 7px 0px;
+          margin-left: 15px;
+          &.active {
+            background-color: #017fff;
+            color: #ffffff;
+          }
+        }
+        div:first-child,
+        div:nth-child(5) {
+          margin-left: 0px;
         }
       }
-      div:first-child,div:nth-child(5){
-        margin-left:0px;
+    }
+    > .op-box {
+      background: #ffffff;
+      // position: fixed;
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      // top: 477px;
+      padding: 7px 0;
+      // left: 0;
+      margin: 0;
+      z-index: 30;
+      > div {
+        display: inline-block;
+        width: 165px;
+        height: 44px;
+        line-height: 44px;
+        font-size: 16px;
+        border-radius: 6px;
+        text-align: center;
+        &.reset-btn {
+          color: #8a8f99;
+          background: #f2f5f9;
+        }
+        &.confirm-btn {
+          color: #fff;
+          background: #007ae6;
+        }
       }
     }
   }
-  > .op-box {
-    background: #ffffff;
-    // position: fixed;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    // top: 477px;
-    padding: 7px 0;
-    // left: 0;
-    margin: 0;
-    z-index: 30;
-    > div {
-      display: inline-block;
-      width: 165px;
-      height: 44px;
-      line-height: 44px;
-      font-size: 16px;
-      border-radius: 6px;
-      text-align: center;
-      &.reset-btn {
-        color: #8a8f99;
-        background: #f2f5f9;
-      }
-      &.confirm-btn {
-        color: #fff;
-        background: #007ae6;
-      }
-    }
+  .act {
+    height: 265px;
   }
-  }
-  .act{
-  height:265px;
-}
 }
 </style>

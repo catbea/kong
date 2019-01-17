@@ -20,8 +20,8 @@ export default {
     value: String
   },
   methods: {
-    activeHandle(index){
-      this.checked=index
+    activeHandle(index) {
+      this.checked = index
       this.$emit('activeHandle')
     }
   },

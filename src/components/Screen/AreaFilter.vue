@@ -14,13 +14,13 @@ export default {
     value: String
   },
   data: () => ({
-    flag:false,
+    flag: false,
     list: null,
     checked: null
   }),
   created() {
-    if(this.$route.name==='mymarket'){
-      this.flag=true
+    if (this.$route.name === 'mymarket') {
+      this.flag = true
     }
     this.list = {
       '0': '不限'
@@ -28,8 +28,8 @@ export default {
     if (this.parent) this.list = Object.assign(this.list, getChildren(this.parent))
   },
   methods: {
-    active(item){
-      this.checked=item
+    active(item) {
+      this.checked = item
       this.$emit('activeHandle')
     }
   },
@@ -65,9 +65,8 @@ export default {
       line-height: 49px;
     }
   }
-  &.act{
-  height:265px;
+  &.act {
+    height: 265px;
   }
 }
-
 </style>

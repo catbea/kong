@@ -526,7 +526,7 @@ export default {
       })
     }, //接收消息
     addmsgInfo(msg) {
-      if(msg.code && msg.code==500){
+      if (msg.code && msg.code == 500) {
         this.$toast(msg.msg)
         return
       }

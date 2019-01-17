@@ -67,8 +67,8 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 25"
-                      @click="item.likeCount=25"
+                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                      @click="item.likeCount=15"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
@@ -432,8 +432,9 @@ export default {
       }
     },
     // 点击好看名字弹框
-    showLike (data) {
-      this.$router.push({path: '/user/articles/historicalArticles', query:{typeCode:'2'}})
+    showLike(data) {
+      let clientId = data.userSource === 0 ? '' : data.userId
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: data.userSource, clientId: clientId } })
     },
     // showLike(e, data) {
     //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
@@ -454,14 +455,14 @@ export default {
     goInfo(item) {
       let articleId = item.articleId
       let area = this.classifyName === this.userArea.city ? this.userArea.city : '全国'
-      let agentId = item.agentId
+      let agentId = this.userInfo.agentId
       let enterpriseId = this.userInfo.enterpriseId
       let classify = this.classify
       this.$router.push(`/discover/${articleId}/${area}?agentId=${agentId}&enterpriseId=${enterpriseId}`)
     },
     // 去新增文章页面
     goAdd() {
-      this.$router.push({name:'addLinker'})
+      this.$router.push({ name: 'addLinker' })
     },
     // 去名片详情页
     // goCard() {},

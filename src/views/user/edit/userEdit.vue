@@ -8,7 +8,7 @@
         </router-link>
       </div>
       <van-cell class="cell-item" title="名字" is-link :to="{path:'/user/edit/username',query:{userName:userInfo.name}}" :value="userInfo.name"/>
-      <van-cell class="cell-item" title="手机号" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
+      <van-cell class="cell-item" title="联系电话" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
       <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
@@ -24,7 +24,7 @@
           <div class="tag-item" v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</div>
         </div> -->
       </van-cell>
-      <van-cell class="cell-item user-signature" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction'}" :value="userInfo.signature"/>
+      <van-cell class="cell-item user-signature" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature"/>
     </van-cell-group>
     <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"/>
   </div>
@@ -48,7 +48,7 @@ export default {
   methods: {
     goEdit() {
       if (!this.userInfo.institutionName) {
-        this.$router.push({path:'/user/edit/userMechanism',query:{distributorId:this.userInfo.distributorId,enterpriseId:this.userInfo.enterpriseId}})
+        this.$router.push({ path: '/user/edit/userMechanism', query: { distributorId: this.userInfo.distributorId, enterpriseId: this.userInfo.enterpriseId } })
       } else {
         this.$router.push('/user/edit/userPlatform')
       }
@@ -93,7 +93,7 @@ export default {
       this.userInfo.majorCity = this.majorCity
       if (result) {
         // this.$store.getUserInfo(types.USER_INFO, this.userInfo)
-         this.$store.dispatch('getUserInfo', this.userInfo)
+        this.$store.dispatch('getUserInfo', this.userInfo)
       }
     }
   },
@@ -199,14 +199,14 @@ export default {
       display: block;
       // height: 110px;
       border-bottom: 10px solid #f2f5f9;
-      .user-tag{
+      .user-tag {
         float: right;
         margin-right: 20px;
       }
-      .van-tag{
+      .van-tag {
         margin-left: 5px;
-        background-color: rgba(143, 159, 177, 0.15)!important;
-        color: rgba(92,95,102,1);
+        background-color: rgba(143, 159, 177, 0.15) !important;
+        color: rgba(92, 95, 102, 1);
       }
       .van-cell__right-icon {
         position: absolute;

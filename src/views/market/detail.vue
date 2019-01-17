@@ -255,8 +255,8 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(res,'楼盘详情kkkk');
-      
+      console.log(res, '楼盘详情kkkk')
+
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -442,7 +442,7 @@ export default {
       display: flex;
       justify-content: space-between;
       margin: 15px;
-      margin-left:9px;
+      margin-left: 9px;
       font-size: 12px;
       > .browser-info {
         display: flex;
@@ -554,7 +554,7 @@ export default {
         height: 44px;
         line-height: 44px;
         margin: 5px;
-        margin-left:0px;
+        margin-left: 0px;
         background-color: rgba(0, 122, 230, 0.05);
         color: #445166;
         font-weight: 400;
@@ -565,7 +565,7 @@ export default {
     }
   }
   > .house-type {
-    margin-top:28px;
+    margin-top: 28px;
     .type-swipe-content {
       margin: 16px 22px 0px 22px;
       .house-type {
@@ -605,8 +605,8 @@ export default {
       > .news-title {
         font-size: 16px;
         font-weight: 600;
-        margin-top:11px;
-        margin-bottom:6px;
+        margin-top: 11px;
+        margin-bottom: 6px;
       }
       > .news-content {
         font-size: 14px;
@@ -652,26 +652,26 @@ export default {
       .recommend-house-item {
         line-height: 1.5;
         > .recommend-house-img {
-          margin-top:18px;
-          margin-bottom:12px;
+          margin-top: 18px;
+          margin-bottom: 12px;
           width: 160px;
           height: 90px;
           border-radius: 6px;
           position: relative;
-          .panorama-icon{
-            position:absolute;
-            width:34px;
-            height:34px;
-            left:50%;
-            top:50%;
-            margin-left:-17px;
-            margin-top:-17px;
+          .panorama-icon {
+            position: absolute;
+            width: 34px;
+            height: 34px;
+            left: 50%;
+            top: 50%;
+            margin-left: -17px;
+            margin-top: -17px;
           }
         }
         > .recommend-house-info {
           .house-name {
             font-size: 16px;
-            font-weight:600;
+            font-weight: 600;
             color: #333333;
           }
           .house-location {
@@ -686,12 +686,12 @@ export default {
   .m-statement {
     padding: 16px 23px 90px 16px;
     // width: 343px;
-    background:#F7F9FA;
-    color: #8A9299;
+    background: #f7f9fa;
+    color: #8a9299;
     font-size: 12px;
     // line-height: 0.34rem;
     .feedback {
-      color: #525C66;
+      color: #525c66;
     }
   }
   > .house-status {
@@ -723,20 +723,20 @@ export default {
         text-align: center;
       }
     }
-    .saleStatusFlag{
-      width:343px;
-      height:44px;
-      background:#c8c9cc;
-      border-radius:6px;
-      line-height:44px;
-      text-align:center;
-      margin-top:14px;
-      margin-left:16px;
-      p{
-        font-size:16px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(102,102,102,1);
+    .saleStatusFlag {
+      width: 343px;
+      height: 44px;
+      background: #c8c9cc;
+      border-radius: 6px;
+      line-height: 44px;
+      text-align: center;
+      margin-top: 14px;
+      margin-left: 16px;
+      p {
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
       }
     }
   }

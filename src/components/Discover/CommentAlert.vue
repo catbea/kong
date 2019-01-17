@@ -102,7 +102,7 @@ export default {
       }
     }
     > .comment-input-wrap {
-        width: 100%;
+      width: 100%;
       > .comment-textarea {
         width: 100%;
         background-color: rgba(150, 158, 168, 0.08);
@@ -116,4 +116,3 @@ export default {
   }
 }
 </style>
-

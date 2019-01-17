@@ -17,9 +17,7 @@
 </template>
 
 <script>
-import {
-  mapGetters
-} from 'vuex'
+import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 export default {
   data() {
@@ -35,13 +33,13 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
-  created () {
+  created() {
     // 获取用户离岗状态
     this.getUserInfo()
   },
   methods: {
     // 获取用户离岗状态
-    async getUserInfo () {
+    async getUserInfo() {
       let result = await userService.getUserInfo(this.userInfo.agentId)
       if (result) {
         this.userData = result
@@ -52,10 +50,10 @@ export default {
           '0': '申请审批中',
           '1': '审批通过',
           '2': '审批不通过'
-        } 
+        }
         this.btnText = text[leavingStatus] || '未知状态'
         // 审核通过，并且完善了信息
-        if(leavingStatus === '1' && this.userData.distributorId) {
+        if (leavingStatus === '1' && this.userData.distributorId) {
           this.btnText = '申请离岗'
           this.disBtn = false
         }
@@ -65,69 +63,77 @@ export default {
         }
         if (leavingStatus === '1' && !this.userData.distributorId) {
           // 审批通过，更新信息
-          this.$dialog.alert({
-            title: '审批通过',
-            confirmButtonText: '更新数据',
-            className: 'update',
-            message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
-          }).then(() => {
-            this.$store.commit('USER_INFO', Object.assign(this.userInfo, { distributorId: '', distributorName: '',institutionId: '', institutionName: ''}))
-            this.$router.push('/public/complete-info')
-          })
+          this.$dialog
+            .alert({
+              title: '审批通过',
+              confirmButtonText: '更新数据',
+              className: 'update',
+              message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
+            })
+            .then(() => {
+              this.$store.commit('USER_INFO', Object.assign(this.userInfo, { distributorId: '', distributorName: '', institutionId: '', institutionName: '' }))
+              this.$router.push('/public/complete-info')
+            })
         }
         // 审批不通过
         if (leavingStatus === '2') {
           this.btnText = '申请离岗'
           let storage = JSON.parse(window.localStorage.getItem('userCompany'))
           if (!storage) {
-            this.$dialog.alert({
-            title: '审批不通过',
-            confirmButtonText: '我知道了',
-            message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
-            }).then(() => {
-              window.localStorage.setItem('userCompany', true)
-            })
+            this.$dialog
+              .alert({
+                title: '审批不通过',
+                confirmButtonText: '我知道了',
+                message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
+              })
+              .then(() => {
+                window.localStorage.setItem('userCompany', true)
+              })
           }
         }
       }
       this.showLoading = false
     },
     // 点击申请离岗按钮
-    toApply () {
+    toApply() {
       if (this.disBtn) {
         return false
       }
-      this.$dialog.confirm({
-        title: '提示',
-        message: '是否确认申请离岗?'
-      }).then(() => {
-        // 确认离岗
-        this.apply()
-        window.localStorage.setItem('userCompany', false)
-      }).catch(() => {
-        // 取消离岗
-      })
+      this.$dialog
+        .confirm({
+          title: '提示',
+          message: '是否确认申请离岗?'
+        })
+        .then(() => {
+          // 确认离岗
+          this.apply()
+          window.localStorage.setItem('userCompany', false)
+        })
+        .catch(() => {
+          // 取消离岗
+        })
     },
     // 申请离岗
-    async apply () {
+    async apply() {
       let obj = {
         agentId: this.userInfo.agentId,
         personnelType: 1 // 1 离岗 2 变换组织
       }
       let result = await userService.applyAgent(obj)
       if (result) {
-        this.$dialog.alert({
-          title: '申请已提交',
-          confirmButtonText: '我知道了',
-          message: '后台通过修改申请后，即可重新选择我的平台公司'
-        }).then(() => {
-          // 按钮置灰不可点击
-          this.disBtn = true
-          this.btnText = '申请审核中'
-        })
+        this.$dialog
+          .alert({
+            title: '申请已提交',
+            confirmButtonText: '我知道了',
+            message: '后台通过修改申请后，即可重新选择我的平台公司'
+          })
+          .then(() => {
+            // 按钮置灰不可点击
+            this.disBtn = true
+            this.btnText = '申请审核中'
+          })
       }
     }
-
   }
 }
 </script>
@@ -158,7 +164,7 @@ export default {
     line-height: 1.5;
     color: rgba(234, 77, 46, 1);
     font-size: 14px;
-    b{
+    b {
       display: block;
       font-size: 20px;
     }
@@ -181,7 +187,7 @@ export default {
       border-radius: 6px;
       color: #fff;
       font-size: 16px;
-      &.disabled{
+      &.disabled {
         background-color: #e8e8e8;
         cursor: not-allowed;
         color: #999;
@@ -190,21 +196,21 @@ export default {
   }
 
   .update {
-    .van-button--large{
+    .van-button--large {
       height: 1.5rem;
     }
-    .van-button__text{
+    .van-button__text {
       display: inline-block;
       background-color: rgba(0, 122, 230, 1);
       color: #fff;
       width: 80%;
-      border-radius:6px;
+      border-radius: 6px;
       height: 40px;
       line-height: 40px;
     }
   }
   // loading
-  .loading{
+  .loading {
     position: fixed;
     left: 0;
     top: 0;
@@ -226,4 +232,3 @@ export default {
   }
 }
 </style>
-

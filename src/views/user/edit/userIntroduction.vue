@@ -9,10 +9,10 @@
           placeholder="别问我是谁,请叫我AW大师"
           class="edit-wechat-input"
           v-on:input="inputListener()"
-        ></textarea>
+        >{{content}}</textarea>
         <!-- <input type="text" class="edit-wechat-input" placeholder="十年房产置业生涯专业为您服务">{{signature.length}}/24 -->
       </p>
-      <div class="edit-wechat-number">{{this.inputSize}}/50</div>
+      <div class="edit-wechat-number">{{this.inputSize}}/24</div>
       <button class="edit-wechat-query" @click="toUpDateSignature">确认修改</button>
     </div>
   </div>
@@ -24,6 +24,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      content: '',
       signature: '',
       inputSize: 0
     }

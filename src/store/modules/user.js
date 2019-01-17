@@ -8,7 +8,7 @@ const state = {
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     userStatus: 0,
     devMode: true,
-    agentId: '1',
+    agentId: '4626',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',
@@ -17,7 +17,7 @@ const state = {
     institutionLogo: '',
     institutionName: 'test',
     isOne: 0, // 1新用户 0老用户
-    articleShareFlag:1,//文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    articleShareFlag: 1, //文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     isVip: '',
     vipDefaultCity: '深圳市',
     ifView: 1, //是否展示邀请有礼
@@ -49,7 +49,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJod3Zwc2UiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxIiwiZXhwIjoxNTUwNjQ1MTYzLCJpYXQiOjE1NDc2NDAzNjN9.Eoz2GSlxNTBfgIe_3HTjRPaz_upNZsEP2CCMd3c2og7n918nP3rXcFVE_Nrit-WSH9uMVpKdNpr7idbHyfCRJQ',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJmdHB0OW8iLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjI2IiwiZXhwIjoxNTUwNzAwNzE1LCJpYXQiOjE1NDc2OTU5MTV9.fnIMGRR2O1cUXlOca3-TgBEAI3Rgm9H8-s1t9f8V_sXZNog-jYojUqS7q2xeejMm-cSj08fB4_UOuZG6yi-wNw',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
@@ -63,7 +63,7 @@ const state = {
     tempPhone: '18603000246',
     vipDefaultCity: '',
     vipInfo: '',
-    wechatAccount: '',
+    wechatAccount: ''
   },
   userVipInfo: {},
   userArea: {
@@ -109,8 +109,8 @@ const state = {
   imUserSig: null,
   guidance: {
     dynamics: false,
-    marketFirst:false,//首次注册
-    article:false//0未完成文章详情引导，1完成
+    marketFirst: false, //首次注册
+    article: false //0未完成文章详情引导，1完成
   }
 }
 
@@ -201,7 +201,7 @@ const mutations = {
   [types.USER_BUILD_INFO](state, data) {
     state.buildId = data
   },
-  [types.FIRST](state, data) { 
+  [types.FIRST](state, data) {
     state.guidance.marketFirst = data
   },
   [types.ARTICLE_SHARE_FLAG](state, data) {

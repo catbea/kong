@@ -49,5 +49,13 @@ export default [
     meta: {
       title: '楼盘发送'
     }
+  },
+  {
+    path: '/custom/message/activityDetail',
+    name: 'activityDetail',
+    component: resolve => require(['@/views/custom/activityDetail.vue'], resolve),
+    meta: {
+      title: '活动报名客户'
+    }
   }
 ]

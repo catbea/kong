@@ -78,9 +78,9 @@ export default {
       sysMessage: [],
       nullIcon: require('IMG/user/bill-null.png'),
       nullcontent: '暂无信息',
-      current:1,
-      size:20,
-      UnreadMsgTotal:0
+      current: 1,
+      size: 20,
+      UnreadMsgTotal: 0
     }
   },
   mounted() {
@@ -98,22 +98,21 @@ export default {
       })
     },
     //未读消息数
-    async getcpUnreadMsgTotal(){
+    async getcpUnreadMsgTotal() {
       const res = await dynamicsService.getcpUnreadMsgTotal()
       this.UnreadMsgTotal = res.count
-
     },
- 
+
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
-    async getsetMsgRead(){
+    async getsetMsgRead() {
       //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
       await dynamicsService.getsetMsgRead()
       this.getMsgList()
     },
     //查看未读消息
-   
+
     formatMsg(item) {
       if (item.msgType == 'TIMCustomElem') {
         let msg = JSON.parse(item.msgShow)
@@ -130,11 +129,10 @@ export default {
       }
     },
     async getMsgList() {
-      const res = await dynamicsService.getAgentMsgAndTotal(3,this.current,this.size)
+      const res = await dynamicsService.getAgentMsgAndTotal(3, this.current, this.size)
       this.messageList = res.msgPage.records
       this.sysMessage = res.systemMessage
       this.getcpUnreadMsgTotal()
-    
     }
   }
 }
@@ -145,36 +143,34 @@ export default {
   background: rgba(247, 249, 250, 1);
   > .unreadMessage-back {
     background: #ffffff;
-    > .unreadMessage-wd{
-       height:50px;
-      background:rgba(255,255,255,1);
+    > .unreadMessage-wd {
+      height: 50px;
+      background: rgba(255, 255, 255, 1);
       border-bottom: 1px solid #eeeeee;
       padding: 0 0.42667rem;
       line-height: 37px;
 
-
-      .unreadMessage-wd-left{
-        font-size:14px;
-      font-weight:400;
-      color:rgba(51,51,51,1);
-      line-height:20px;
+      .unreadMessage-wd-left {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 20px;
       }
-      .unreadMessage-wd-right{
+      .unreadMessage-wd-right {
         float: right;
-      
-        .unreadMessage-wd-right-select{
-          font-size:12px;
-          font-weight:400;
-          color:rgba(0,122,230,1);
-          line-height:17px;
+
+        .unreadMessage-wd-right-select {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(0, 122, 230, 1);
+          line-height: 17px;
           padding: 0 12px;
-          height:24px;
-          border-radius:22px;
-          border:1px solid rgba(0,122,230,1);
+          height: 24px;
+          border-radius: 22px;
+          border: 1px solid rgba(0, 122, 230, 1);
           margin-left: 8px;
           background-color: #ffffff;
         }
-
       }
     }
     > .unreadMessage-sys {
@@ -187,7 +183,7 @@ export default {
         display: flex;
         margin-bottom: 10px;
         > .unreadMessage-sys-left {
-            .messageInfo-sys-num {
+          .messageInfo-sys-num {
             font-size: 12px;
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
@@ -199,7 +195,7 @@ export default {
             // height:18px;
             border: 0;
             position: absolute;
-           // margin-left: 35px;
+            // margin-left: 35px;
             margin-left: 18px;
             margin-top: 8px;
             padding: 1px 3px;
@@ -232,14 +228,13 @@ export default {
             background: rgba(234, 77, 46, 1);
             transform: translate(50%, -50%);
             border-radius: 100%;
-            width:11px;
-            height:11px;
+            width: 11px;
+            height: 11px;
             border: 0;
             position: absolute;
             margin-left: 30px;
             margin-top: 6px;
           }
-         
         }
         > .unreadMessage-sys-right {
           padding-left: 12px;

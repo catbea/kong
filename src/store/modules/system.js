@@ -21,8 +21,8 @@ const state = {
       },
       {
         name: '写一写',
-        icon: require('IMG/tabbar/dis_tab.png'),
-        icon_atc: require('IMG/tabbar/dis_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x(2).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13 Copy 5@2x.png'),
         path: '/write-article',
         info: 0
       },
