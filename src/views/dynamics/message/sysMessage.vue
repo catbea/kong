@@ -9,7 +9,7 @@
           <div slot="container">
             <div class="sys-shadowBox">
               <p class="sys-shadowBox-title">{{item.title}}</p>
-              <p class="sys-shadowBox-time" v-html="item.content"></p>
+              <p class="sys-shadowBox-time" v-html="item.content.replace(/(\r+\n+)|(\n+)/g,'<br>')"></p>
               <!-- <p class="sys-shadowBox-remarks">本次主要更新内容有： 1.增加勿扰模式 2.VIP功能优化调整 3.我的楼盘增加关闭展示功能</p> -->
             </div>
           </div>

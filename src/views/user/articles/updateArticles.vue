@@ -34,9 +34,9 @@ import userService from 'SERVICE/userService'
 import timeUtils from '@/utils/timeUtils'
 export default {
   components: {
-    Checkbox,
-    CheckboxGroup,
-    nullArticles
+    // Checkbox,
+    // CheckboxGroup,
+    // nullArticles
   },
   data() {
     return {
@@ -64,7 +64,7 @@ export default {
     //获取文章列表
     async getHistoryList(current) {
       this.isLoading == true
-      const res = await userService.getBrowseHistoryList(current)
+      const res = await userService.gethistoryList(current)
 
       let dataList = res.records
       this.total = res.total
@@ -163,7 +163,7 @@ export default {
     //加载更多
     async onLoad() {
       let tempCurrent = this.current
-      const res = await userService.getBrowseHistoryList(tempCurrent)
+      const res = await userService.gethistoryList(tempCurrent)
       let dataList = res.records
 
       if (dataList.length !== 0) {

@@ -71,20 +71,23 @@ export default {
             className: 'update',
             message: '您提交的我的机构申请，已经通过，请及时填写新的机构信息避免部分功能无法使用。'
           }).then(() => {
-            this.$store.commit('USER_INFO', Object.assign(this.userInfo, { distributorId: '', distributorName: ''}))
+            this.$store.commit('USER_INFO', Object.assign(this.userInfo, { distributorId: '', distributorName: '',institutionId: '', institutionName: ''}))
             this.$router.push('/public/complete-info')
           })
         }
-        if (leavingStatus === '2' && !window.localStorage.getItem('userCompany')) {
-          // 审批不通过
-          this.$dialog.alert({
+        // 审批不通过
+        if (leavingStatus === '2') {
+          this.btnText = '申请离岗'
+          let storage = JSON.parse(window.localStorage.getItem('userCompany'))
+          if (!storage) {
+            this.$dialog.alert({
             title: '审批不通过',
             confirmButtonText: '我知道了',
             message: '您提交的我的机构申请，被后台驳回，如有问题，请联系相关管理人员了解详细情况。'
-          }).then(() => {
-            this.btnText = '申请离岗'
-            window.localStorage.setItem('userCompany', true)
-          })
+            }).then(() => {
+              window.localStorage.setItem('userCompany', true)
+            })
+          }
         }
       }
       this.showLoading = false

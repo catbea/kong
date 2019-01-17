@@ -198,7 +198,7 @@
               <van-icon name="success" v-show="editData.avatarUrl === uploadImg"/>
             </div>
             <div class="uploader-box">
-              <van-uploader :after-read="onRead" accept="image/gif, image/jpeg, image/png">
+              <van-uploader :after-read="onRead" accept="image/*">
                 <van-icon name="plus" />
               </van-uploader>
             </div>
@@ -220,9 +220,9 @@
       <p class="img-box">
         <img src="" alt="" id="share-cover-img">
       </p>
-      <p class="btn" v-if="!creatCover">
+      <p class="btn btnview" v-if="!creatCover">
         <button class="close" @click="closeView">关闭预览</button>
-        <button class="save" @click="updateAgentCard">保存</button>
+        <button class="save" @click="updateAgentCard">保存信息</button>
       </p>
       <p class="btn" v-else>
         <span>长按图片保存，分享给好友或朋友圈</span>
@@ -231,6 +231,26 @@
     </div>
     <div class="loading"  v-show="showLoading" >
        <van-loading type="spinner" color="white" class="van-loading"/>
+    </div>
+    <div class="cropper-box" v-show="showCopper">
+      <vueCropper
+				ref="cropper"
+				:img="imgSrc"
+        :viewMode="1"
+        :autoCrop="true"
+        :canMove="true"
+        :autoCropWidth="375"
+				:autoCropHeight="420"
+        :fixedBox="true"
+        :canMoveBox="false"
+        :centerBox="true"
+        :rotatable="true"
+        mode="cover"
+			></vueCropper>
+      <div class="action">
+        <button class="cancle" @click="cancleCropper">取消</button>
+        <button class="save" @click="cropper">确定</button>
+      </div>
     </div>
   </div>
 </template>
@@ -245,7 +265,11 @@
   import 'swiper/dist/css/swiper.min.css'
   import { randomString, dataURLtoBlob, checkStrLength, checkStrType, checkPhoneNum, downloadFile } from '@/utils/tool'
   import CosCloud from 'cos-js-sdk-v4'
+  import { VueCropper }  from 'vue-cropper' 
   export default {
+    components: {
+      VueCropper,
+    },
     data() {
       return {
         agentId: 1,
@@ -261,14 +285,16 @@
         appId: '10037467',
         bucket: '720ljq2test',
         region: 'sh',
-        uploadImg: ''
+        uploadImg: '', // 上传图片
+        showCopper: false, // 截图框
+        imgSrc: '' // 被截图图片
       }
     },
     computed: {
       ...mapGetters(['userInfo'])
     },
     created() {
-      this.showLoading = true
+      // this.showLoading = true
       this.agentId = this.$route.query.agentId
       this.initData()
       this.initCos()
@@ -371,6 +397,7 @@
       },
       // 预览名片
       async viewCover () {
+        this.creatCover = false
         this.showLoading = true
         await this.htmlToImg()
         this.showView = true
@@ -430,9 +457,35 @@
           }, 500)
         }
       },
-      // 图片上传
+      // 图片上传组件
       onRead (file) {
-        let imgData = file.content
+        this.imgSrc = file.content
+        this.showCopper = true
+      },
+      // 图片裁剪
+      cropper () {
+        this.showCopper = false
+        this.$refs.cropper.getCropData((data) => {
+          this.uploadCropperImg(data)
+        })
+      },
+      // 取消图片截图
+      cancleCropper () {
+        this.showCopper = false
+        this.imgSrc = ''
+      },
+      // 图片压缩上传
+      uploadCropperImg (imgData) {
+        this.showLoading = true
+        // let imgData = file.content
+        let image = new Image()
+        image.src = imgData
+        if (imgData.length > 100 * 1024) {
+          let that = this
+          image.onload = function() {
+            imgData = that.compress(image, '')
+          }
+        }
         this.postImg(imgData)
       },
       // 上传图片签名
@@ -454,7 +507,6 @@
       },
       //图片的上传
       postImg (imageData) {
-        this.showLoading = true
         var file = dataURLtoBlob(imageData)
         this.cos.uploadFile(this.uploadSuccess, this.uploadError, null, this.bucket, randomString(16), file, 0, null)
       },
@@ -464,13 +516,131 @@
           this.uploadImg = res_data.access_url
           this.editData.avatarUrl = res_data.access_url
         } else {
-          console.log('上传失败')
+          this.$toast('上传失败')
         }
         this.showLoading = false
       },
       uploadError (err) {
         this.showLoading = false
-        console.log(err)
+        this.$toast(err)
+      },
+      //图片压缩
+      compress: function(img, Orientation) {
+        let canvas = document.createElement('canvas')
+        let ctx = canvas.getContext('2d')
+        //瓦片canvas
+        let tCanvas = document.createElement('canvas')
+        let tctx = tCanvas.getContext('2d')
+        let initSize = img.src.length
+        let width = img.width
+        let height = img.height
+
+        //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
+        let ratio
+        if ((ratio = (width * height) / 4000000) > 1) {
+          console.log('大于400万像素')
+          ratio = Math.sqrt(ratio)
+          width /= ratio
+          height /= ratio
+        } else {
+          ratio = 1
+        }
+        canvas.width = width
+        canvas.height = height
+        //        铺底色
+        ctx.fillStyle = '#fff'
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        //如果图片像素大于100万则使用瓦片绘制
+        let count
+        if ((count = (width * height) / 1000000) > 1) {
+          count = ~~(Math.sqrt(count) + 1) //计算要分成多少块瓦片
+          //            计算每块瓦片的宽和高
+          let nw = ~~(width / count)
+          let nh = ~~(height / count)
+          tCanvas.width = nw
+          tCanvas.height = nh
+          for (let i = 0; i < count; i++) {
+            for (let j = 0; j < count; j++) {
+              tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh)
+              ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh)
+            }
+          }
+        } else {
+          ctx.drawImage(img, 0, 0, width, height)
+        }
+        //修复ios上传图片的时候 被旋转的问题
+        if (Orientation != '' && Orientation != 1) {
+          switch (Orientation) {
+            case 6: //需要顺时针（向左）90度旋转
+              this.rotateImg(img, 'left', canvas)
+              break
+            case 8: //需要逆时针（向右）90度旋转
+              this.rotateImg(img, 'right', canvas)
+              break
+            case 3: //需要180度旋转
+              this.rotateImg(img, 'right', canvas) //转两次
+              this.rotateImg(img, 'right', canvas)
+              break
+          }
+        }
+        //进行最小压缩
+        let ndata = canvas.toDataURL('image/jpeg', 0.8)
+        console.log('压缩前：' + initSize)
+        console.log('压缩后：' + ndata.length)
+        console.log('压缩率：' + ~~((100 * (initSize - ndata.length)) / initSize) + '%')
+        tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0
+
+        return ndata
+      },
+      //图片旋转
+      rotateImg: function(img, direction, canvas) {
+        //最小与最大旋转方向，图片旋转4次后回到原方向
+        const min_step = 0
+        const max_step = 3
+        if (img == null) return
+        //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+        let height = img.height
+        let width = img.width
+        let step = 2
+        if (step == null) {
+          step = min_step
+        }
+        if (direction == 'right') {
+          step++
+          //旋转到原位置，即超过最大值
+          step > max_step && (step = min_step)
+        } else {
+          step--
+          step < min_step && (step = max_step)
+        }
+        //旋转角度以弧度值为参数
+        let degree = (step * 90 * Math.PI) / 180
+        let ctx = canvas.getContext('2d')
+        switch (step) {
+          case 0:
+            canvas.width = width
+            canvas.height = height
+            ctx.drawImage(img, 0, 0)
+            break
+          case 1:
+            canvas.width = height
+            canvas.height = width
+            ctx.rotate(degree)
+            ctx.drawImage(img, 0, -height)
+            break
+          case 2:
+            canvas.width = width
+            canvas.height = height
+            ctx.rotate(degree)
+            ctx.drawImage(img, -width, -height)
+            break
+          case 3:
+            canvas.width = height
+            canvas.height = width
+            ctx.rotate(degree)
+            ctx.drawImage(img, -width, 0)
+            break
+        }
       }
     }
   }
@@ -980,6 +1150,8 @@
               img {
                 min-height: 100%;
                 min-width: 100%;
+                max-width: 120%;
+                margin-left: -10%;
               }
             }
 
@@ -1084,11 +1256,11 @@
           color: #fff;
           border: none;
           margin: 0 10px;
-
+          border: #007AE6 1px solid;
           &.edit {
-            background: rgba(64, 68, 87, 1);
+            background:linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
+            color: #007AE6;
           }
-
           &.save {
             background: rgba(0, 122, 230, 1);
           }
@@ -1131,6 +1303,9 @@
           font-size: 16px;
         }
         input{
+          height: 30px;
+          line-height: 30px;
+          padding: 13px 10px 13px 5px;
           flex: 1;
           border: none;
           font-size: 14px;
@@ -1157,9 +1332,10 @@
             height: 75px;
             display: inline-block;
             margin-right: 15px;
+            overflow: hidden;
             img{
-              width: 100%;
-              height: 100%;
+              min-width: 100%;
+              min-height: 100%;
             }
             .van-icon{
               background-color: #007AE6;
@@ -1201,11 +1377,13 @@
           margin-right: 30px;
           font-size: 10px;
           color: #666;
+          text-align: center;
           &.reset{
             margin-left: 20px;
           }
           img{
             padding-top: 20px;
+            width: 24px;
           }
         }
         button{
@@ -1251,13 +1429,18 @@
           width: 120px;
           border-radius:6px;
           border: none;
+          border:1px solid #007AE6;
           &.close{
             margin-right: 20px;
-            background-color: #404457;
+            background:linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
+            color: #007AE6;
           }
           &.save{
             background-color: #007AE6;
           }
+        }
+        &.btnview{
+          margin-top: 30px;
         }
       }
     }
@@ -1280,6 +1463,36 @@
         z-index: 5;
         margin-left: -25px;
         margin-top: -25px;
+      }
+    }
+    // 截图
+    .cropper-box{
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      .action{
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        font-size: 14px;
+        color: #fff;
+        text-align: center;
+        button{
+          width: 120px;
+          height: 40px;
+          border: none;
+          border-radius: 6px;
+          margin: 0 15px;
+          &.cancle{
+            background-color: #999;
+          }
+          &.save{
+            background-color: #0069CA;
+          }
+        }
       }
     }
   }

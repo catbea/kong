@@ -4,7 +4,7 @@
       <van-search
         class="search-container"
         v-model="searchVal"
-        placeholder="请输入楼盘名称"
+        placeholder="请输入客户名称"
         show-action
         @search="onSearchHandler"
         @click="onFocusHandler"
@@ -19,7 +19,7 @@
     <!-- <div class="popup-container">
 
     </div>-->
-    <div class="sort-container" v-show="sortShow">
+    <div class="sort-container" v-show="sortShow" @click="sortHandle">
       <ul>
         <li class="van-hairline-bottom" @click="sortClickHandler('intention')">意向度排序</li>
         <li class="van-hairline-bottom" @click="sortClickHandler('createTime')">
@@ -61,17 +61,21 @@
       <div v-if="!currentData.haveData">
         <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
       </div>
+      
     </div>
+     <custom-activity @click="goactivitDetaily"></custom-activity>
   </div>
 </template>
 <script>
 import MyCustomItem from 'COMP/Custom/MyCustomItem'
+import CustomActivity from 'COMP/Custom/CustomActivity'
 import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
 export default {
   components: {
     Null,
-    MyCustomItem
+    MyCustomItem,
+    CustomActivity
   },
   data: () => ({
     activeIndex: 0,
@@ -92,9 +96,15 @@ export default {
     activeIcon: false
   }),
   methods: {
+    goactivitDetaily(){
+       this.$router.push('/custom/message/activityDetail')
+    },
     onSearchHandler() {
       this.currentData.page = 1
       this.onLoad()
+    },
+    sortHandle(){
+      this.sortShow = false
     },
     onSortHandler() {
       this.sortShow = !this.sortShow

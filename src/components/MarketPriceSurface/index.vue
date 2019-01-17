@@ -24,7 +24,7 @@
         <div>优惠劵</div>
         <div>
           <p>{{payInfo.coupon}}</p>
-          <p :style="{'background':'url('+backImg+') no-repeat'}"></p>
+          <p class="bg_img" :style="{backgroundImage:'url('+backImg+')'}"></p>
         </div>
       </div>
       <div class="balance-payment" v-show="payInfo.balanceAmount">
@@ -43,7 +43,7 @@
 <script>
 export default {
   data: () => ({
-    backImg: require('IMG/discountCoupon/arrow.png'),
+    backImg: require('IMG/discountCoupon/arrow@2x.png'),
     openLabel: require('IMG/user/open_label.png'),
     light: false
   }),

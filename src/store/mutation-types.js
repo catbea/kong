@@ -14,6 +14,7 @@ export const FIRST = 'IS_ONE' //判断是否显示新手引导
 export const ARTICLE_SHARE_FLAG = 'ARTICLE_SHARE_FLAG' //文章详情分享引导
 export const IM_USER_SIG = 'IM_USER_SIG' //im聊天签名
 export const GUIDANCE = 'GUIDANCE' //新手引导
+export const USER_STATUS = 'USER_STATUS'
 
 // city
 export const CITY_LIST = 'CITY_LIST'
