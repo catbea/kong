@@ -90,8 +90,9 @@ export default {
   methods: {
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
+
+      this.total = res.total
       if (res.records.length > 0) {
-        this.total = res.total
 
         for (let i = 0; i < res.records.length; i++) {
           let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
@@ -105,7 +106,7 @@ export default {
         this.current++
         this.loading = false
       } else {
-        if (current == 1) {
+        if (this.current == 1) {
           this.haveData = false
         }
         this.loading = false
