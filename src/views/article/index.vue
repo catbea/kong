@@ -310,15 +310,18 @@ export default {
       }
     },
     // 获取文章列表
-    async getArticleList() {
+    async getArticleList(sortType) {
       this.showLoading = true
       this.nodataStatus = false
+      if (!sortType) {
+        sortType = this.classifyName === '推荐' ? 1 : 2
+      }
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
         city: this.classifyName === this.city ? this.city : '',
         classify: this.classify,
-        sortType: this.classifyName === '推荐' ? 1 : 2
+        sortType: sortType
       })
       if (result) {
         this.pages = result.pages
@@ -360,9 +363,10 @@ export default {
       if (this.sortType === val) {
         return false
       }
+      this.current = 1
       this.sortType = val
       this.articleData = []
-      this.getArticleList()
+      this.getArticleList(val)
     },
     // 点赞
     async updateLike(item, praiseStatus, index) {
