@@ -148,7 +148,7 @@ export default {
       let vo = {
         mobile: this.mobile,
         code: this.code,
-        name: this.name,
+        agentName: this.name,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
         parentUserId: this.parentUserId,
