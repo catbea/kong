@@ -37,7 +37,11 @@
     >
       <div class="popup-top">
         <span class="popup-title">免责声明</span>
-        <div class="closePopup" @click="closeDefaultMsg" :style="{backgroundImage:'url(' + closeImg + ')'}"></div>
+        <div
+          class="closePopup"
+          @click="closeDefaultMsg"
+          :style="{backgroundImage:'url(' + closeImg + ')'}"
+        ></div>
       </div>
       <div class="notice-body">
         <span class="notice-first">版权声明</span>
@@ -53,6 +57,7 @@
 </template>
 <script>
 import articleService from 'SERVICE/articleService'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -69,13 +74,16 @@ export default {
       imgNum: '',
       errColor: '',
       show: true,
-      closeImg: require('IMG/user/close_popup.png'),
+      closeImg: require('IMG/user/close_popup.png')
     }
   },
 
   created() {
     this.articleUrl = this.$route.params.url
-    
+  },
+
+  computed: {
+    ...mapGetters(['userInfo'])
   },
 
   methods: {
@@ -103,8 +111,7 @@ export default {
             this.cancelClooection(val)
           })
       } else {
-        this.analysisText = '解析成功'
-        this.showLoading = 'none'
+        this.articleId = result.articleId
         this.title = result.title
         this.source = result.source
         if (result.content) {
@@ -115,7 +122,17 @@ export default {
         }
         this.imgNum = result.imgNum
         this.errColor = '#445166'
+
+        setTimeout(this.goToEditDetail(), 3000)
       }
+    },
+
+    goToEditDetail() {
+      this.analysisText = '解析成功'
+      this.showLoading = 'none'
+      let city = '全国'
+
+      this.$router.push({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
     },
 
     //关闭弹窗
@@ -128,9 +145,8 @@ export default {
     goToAnalysis() {
       this.show = false
       let obj = {
-      articleUrl: this.articleUrl
-    }
-    
+        articleUrl: this.articleUrl
+      }
       this.commitInfo(obj)
     }
   }
