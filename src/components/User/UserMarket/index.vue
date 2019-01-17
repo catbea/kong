@@ -445,7 +445,9 @@ export default {
         }
         li:nth-of-type(3) {
           display: flex;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
+          width:181px;
+          height:20px;
           .blue {
             background: rgba(0, 122, 230, 1);
             color: #ffffff;
