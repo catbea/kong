@@ -32,7 +32,6 @@
           <!-- <img :src="item.Icon"> -->
            <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-me_gift"></use>
-              
            </svg>
           <p class="grou1Icon-p">邀请有礼</p>
           <p class="politeness">有礼</p>
@@ -82,13 +81,13 @@ export default {
     consultImg: require('IMG/user/Group8@2x.png'),
     closeImg: require('IMG/user/close_popup.png'),
     headIcons: [
-      { title: '我的楼盘', Img: require('IMG/user/mm@2x.png'),Icon:'#icon-me_building'},
-      { title: '我的收藏', Img: require('IMG/user/Group1@2x.png'),Icon:'#icon-me_collection'},
-      { title: '历史文章', Img: require('IMG/user/Group3@2x.png'),Icon:'#icon-me_history' },
+      { title: '我的楼盘', Img: require('IMG/user/mm@2x.png'),Icon:'#icon-me_building' },
+      { title: '我的收藏', Img: require('IMG/user/Group1@2x.png'),Icon:'#icon-me_collection' },
+      { title: '我的写一写',Img: require('IMG/user/Group3@2x.png'),Icon:'#icon-me_history' },
       { title: '我的报备', Img: require('IMG/user/Group6@2x.png'),Icon:'#icon-me_Reported' },
       { title: '我的优惠券', Img: require('IMG/user/Group5@2x.png'),Icon:'#icon-me_coupons' },
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'),Icon:'#icon-me_order' },
-      // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'#icon-me_gift' }
+      // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
     ],
     btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'),Icon:'#icon-me_night'}, 
     { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'),Icon:'#icon-me_opinion'}],
@@ -123,7 +122,7 @@ export default {
     },
     //点击获取二维码
     async getQrCode(agentId) {
-      const result = await userService.getQrCode(agentId)
+      const result = await userService.getQrCodeByToken(agentId)
       if (result) {
         this.qrcodeImg = result.miniQrCode
       }
@@ -146,7 +145,8 @@ export default {
           this.$router.push('/user/collection/myCollection')
           break
         case 2:
-          this.$router.push('/user/articles/historicalArticles')
+          // this.$router.push('/user/articles/historicalArticles')
+            this.$router.push({name:'historicalArticles',query:{typeCode:'2'}})
           break
         case 3:
           this.$router.push('/user/myReport')
@@ -272,6 +272,7 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
+        margin-top:4px;
       }
       .politeness{
         position:absolute;

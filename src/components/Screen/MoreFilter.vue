@@ -1,6 +1,6 @@
 <template>
  <div class="more-page" v-if="show">
-  <div class="more-filter" :class="{act:flag}">
+  <div class="more-filter" :class="{act:flag}" ref="moreFilter">
     <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
       <h5 class="item-title">{{group.name}}</h5>
       <div class="item-list-container">
@@ -28,6 +28,7 @@ export default {
   },
   data: () => ({
     flag:false,
+    num:0,
     conf: {
       areaSize: {
         name: '面积',
@@ -98,7 +99,12 @@ export default {
     itemClickHandler(type, value) {
       switch (type) {
         case 'areaSize':
-          this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
+          // this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
+          if(this.currentValue.areaSize === value){
+            this.currentValue.areaSize = '-1,-1'
+          }else{
+            this.currentValue.areaSize = value
+          }
           break
         case 'type':
           this.currentValue.type = this.currentValue.type === value ? '-2' : value
@@ -153,10 +159,16 @@ export default {
         openStatus: '-1',
         focusStatus: '-1'
       }
+      this.num=0
+      this.$emit('resetNum')
     },
     confirmHandler() {
+      this.num=this.$refs.moreFilter.querySelectorAll('.active').length
       this.$emit('confirm', this.currentValue)
       this.$emit('input', this.currentValue)
+      this.$emit('numHandle',this.num)
+      console.log(this.num,'现在的长度');
+      
     }
   },
   watch: {
@@ -175,9 +187,10 @@ export default {
   height: 430px;
   background-color: #fff;
   padding: 15px;
+  padding-bottom:0px;
   overflow: scroll;
   > .item-container {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     > .item-title {
       font-size: 15px;
       font-weight: 400;

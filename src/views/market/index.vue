@@ -2,10 +2,12 @@
   <div class="market-page">
     <!-- <div style="height:192px;width:300px;"></div> -->
     <div class="fixed">
-      <div class="search-box van-hairline--bottom">
+      <div class="van-hairline--bottom">
+      <div class="search-box">
         <div class="search-comp">
           <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
         </div>
+      </div>
       </div>
       <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     </div>
@@ -194,7 +196,7 @@ export default {
     z-index: 3;
   }
   .already-open-page {
-    margin-top: 86px;
+    margin-top:105px;
   }
   .search-box {
     position: relative;

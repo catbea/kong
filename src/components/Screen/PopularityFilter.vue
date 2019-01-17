@@ -32,6 +32,7 @@ export default {
     itemClick(item, index) {
       this.checked = index
       this.$emit('checkedText', item)
+      this.$emit('activeHandle')
     }
   },
   watch: {

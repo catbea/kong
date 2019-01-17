@@ -3,11 +3,7 @@
     <div class="dynamics-list-body" v-if="allDynamicList.length>0">
       <div v-if="allDynamicList" v-for="(times,key) in allDynamicList" :key="key">
         <div class="dynamics-time">{{times.dynamicDate | dateTimeFormatter(2,'/')}}</div>
-        <div
-          class="dynamics-container-list"
-          v-for="(item,key) in times.msgList"
-          :key="key"
-        >
+        <div class="dynamics-container-list" v-for="(item,key) in times.msgList" :key="key">
           <shadow-box>
             <div slot="container">
               <div class="dynamics-list">
@@ -22,37 +18,27 @@
                     </span>
                   </span>
                   <span class="list-agent-right">
-                    <p
-                      class="agent-right-num"
-                      v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}"
-                    >{{item.intentionality || 0}}%</p>
+                    <p class="agent-right-num" v-bind:style="{'color':item.intentionality >70?'#007AE6':'#999999'}">{{item.intentionality || 0}}%</p>
                     <p class="agent-right-title">意向度</p>
                   </span>
                 </div>
                 <div class="dynamics-list-content" @click="godynamicsList(item)">
-                  <p><span>{{item.clientName}}</span>{{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}</p>
+                  <p>
+                    <span>{{item.clientName}}</span>
+                    {{item.clientName ? item.markedWords.replace(item.clientName, '') : item.markedWords}}
+                  </p>
                 </div>
                 <!-- <div class="dynamics-list-btn">
                   <span></span>
                   <span class="list-btn-right">
-                    <div
-                      id="attentionStatusNO"
-                      class="list-btn-follow"
-                      v-show="item.attentionStatus  == 1"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >
+                    <div id="attentionStatusNO" class="list-btn-follow" v-show="item.attentionStatus  == 1" @click="getupdateCustomerInfo(item,key)">
                       <img :src="gzImg" class="agent-gzImg">
                       <span class="list-btn-right-gz">关注</span>
                     </div>
-                    <button
-                      id="attentionStatusOK"
-                      class="list-btn-followOK"
-                      v-show="item.attentionStatus  == 0"
-                      @click="getupdateCustomerInfo(item,key)"
-                    >已关注</button>
+                    <button id="attentionStatusOK" class="list-btn-followOK" v-show="item.attentionStatus  == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
                     <div class="list-btn-contact" @click="goalldynamics(item)">
                       <img :src="lxImg" class="btn-contact-userImg">
-                       联系
+                      联系
                     </div>
                   </span>
                 </div> -->

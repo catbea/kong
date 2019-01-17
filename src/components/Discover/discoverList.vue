@@ -1,7 +1,6 @@
 <template>
-  <div class="discover-container">
-  
-    <div class="discover-list" @click="GOheadline(item)" v-if="data" v-for="(item,key) in data" :key="key">
+  <div class="discover-container" v-if="data">
+    <div class="discover-list" @click="GOheadline(item)"  v-for="(item,key) in data" :key="key">
       <span class="discover-list-left">
         <p class="list-left-title">{{item.title}}</p>
         <p class="list-left-time">{{item.publisher}}&nbsp;&nbsp;{{item.createDate}}&nbsp;&nbsp;{{item.scanNum}}浏览</p>

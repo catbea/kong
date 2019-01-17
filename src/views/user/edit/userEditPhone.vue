@@ -10,7 +10,7 @@
       </p>
       <p class="edit-phone-card">名片展示手机号</p>
       <p class="edit-phone-card-conter">
-        <input type="tel" class="edit-phone-card-input" autofocus="autofocus" maxlength="11" v-model="Cphone">
+        <input type="tel" class="edit-phone-card-input" autofocus="autofocus" maxlength="16" v-model="Cphone">
       </p>
       <button class="edit-phone-query" @click="godSub">确认修改</button>
     </div>
@@ -47,7 +47,7 @@ export default {
         if (phoneType == null) {
           this.Cphone = ''
           this.$toast('请输入数字')
-        } else if (this.Cphone.length != 11) {
+        } else if (this.Cphone.length < 11) {
           this.$toast('手机号长度有误')
         } else {
           let date = {

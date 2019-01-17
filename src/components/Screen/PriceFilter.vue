@@ -63,6 +63,7 @@ export default {
           break
       }
       this.$emit('checkedText', `${str}${data.text}`)
+      this.$emit('activeHandle')
     }
   },
   watch: {

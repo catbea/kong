@@ -48,6 +48,7 @@ export default {
     Search,
     Screen,
     MealMarket
+
   },
   watch: {
     projectFilters: {
@@ -252,6 +253,7 @@ export default {
 <style lang="less">
 .my-member-page {
   .search-box {
+    width: 100%;
     background: #fff;
     position: fixed;
     top: 0px;
