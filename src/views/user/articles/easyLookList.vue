@@ -61,19 +61,19 @@ export default {
   },
 
   mounted() {
-    let clientId = this.$route.query.clientId
+    this.userId = this.$route.query.userId
     this.userType = this.$route.query.userType
 
-    if (clientId) {
-      this.clientId = ''
-    } else {
-      this.clientId = clientId
-    }
+    // if (clientId) {
+    //   this.clientId = ''
+    // } else {
+    //   this.clientId = clientId
+    // }
   },
 
   methods: {
-    async getLikeList(current, clientId, userType) {
-      const result = await articleService.queryLikeArticleList(current, clientId, userType)
+    async getLikeList(current, userId, userType) {
+      const result = await articleService.queryLikeArticleList(current, userId, userType)
 
       if (result.records.length > 0) {
         this.likeArray = this.likeArray.concat(result.records)
@@ -93,7 +93,7 @@ export default {
     },
 
     onLoad() {
-      this.getLikeList(this.current, this.clientId, this.userType)
+      this.getLikeList(this.current, this.userId, this.userType)
     },
 
     //进入文章详情
