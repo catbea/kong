@@ -123,6 +123,7 @@ export default {
         > .share-text {
           display: block;
           font-size: 10px;
+          padding-top: 5px;
         }
       }
       > .user-avatar {
