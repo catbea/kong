@@ -461,7 +461,7 @@ export default {
     },
     // 去新增文章页面
     goAdd() {
-      this.$router.push('/discover/newlyAdded/index')
+      this.$router.push({name:'addLinker'})
     },
     // 去名片详情页
     // goCard() {},
