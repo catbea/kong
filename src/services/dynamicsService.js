@@ -45,7 +45,7 @@ class DynamicsService {
    * @param {*} current 当前页
    * @param {*} size 页大小
    */
-  getAgentMsgAndTotal(msgStatus,current,size) {
+  getAgentMsgAndTotal(msgStatus, current, size) {
     return xhr({
       url: '/cpIM/agentMsgAndTotal',
       body: {
@@ -62,7 +62,7 @@ class DynamicsService {
   getsetMsgRead(clientId) {
     return xhr({
       url: '/cpIM/setMsgRead',
-      clientId,
+      clientId
     })
   }
   /**

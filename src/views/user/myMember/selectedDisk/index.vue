@@ -48,7 +48,6 @@ export default {
     Search,
     Screen,
     MealMarket
-
   },
   watch: {
     projectFilters: {

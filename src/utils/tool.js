@@ -51,7 +51,6 @@ export function debounce(fn, wait = 500, immediate = false) {
   }
 }
 
-
 // 图片上传相关方法
 export function randomString(len) {
   len = len || 32
@@ -79,38 +78,39 @@ export function dataURLtoBlob(dataurl) {
 }
 
 // base64图片下载
-export function downloadFile (content, fileName) {
-  var base64ToBlob = function (code) {
-      let parts = code.split(';base64,');
-      let contentType = parts[0].split(':')[1];
-      let raw = window.atob(parts[1]);
-      let rawLength = raw.length;
-      let uInt8Array = new Uint8Array(rawLength);
-      for(let i = 0; i < rawLength; ++i) {
-          uInt8Array[i] = raw.charCodeAt(i);
-      }
-      return new Blob([uInt8Array], {
-          type: contentType
-      })
+export function downloadFile(content, fileName) {
+  var base64ToBlob = function(code) {
+    let parts = code.split(';base64,')
+    let contentType = parts[0].split(':')[1]
+    let raw = window.atob(parts[1])
+    let rawLength = raw.length
+    let uInt8Array = new Uint8Array(rawLength)
+    for (let i = 0; i < rawLength; ++i) {
+      uInt8Array[i] = raw.charCodeAt(i)
+    }
+    return new Blob([uInt8Array], {
+      type: contentType
+    })
   }
   let aLink = document.createElement('a')
   let blob = base64ToBlob(content) //new Blob([content]);
-  let evt = document.createEvent("HTMLEvents")
-  evt.initEvent("click", true, true) //initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+  let evt = document.createEvent('HTMLEvents')
+  evt.initEvent('click', true, true) //initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
   aLink.download = fileName
   aLink.href = URL.createObjectURL(blob)
   aLink.click()
 }
 
 // 格式化时间 xx小时前
-export function formatTime (time, option) {
+export function formatTime(time, option) {
   time = +time
   const d = new Date(time)
   const now = Date.now()
   const diff = (now - d) / 1000
   if (diff < 30) {
     return '刚刚'
-  } else if (diff < 3600) { // less 1 hour
+  } else if (diff < 3600) {
+    // less 1 hour
     return Math.ceil(diff / 60) + '分钟前'
   } else if (diff < 3600 * 24) {
     return Math.ceil(diff / 3600) + '小时前'
@@ -124,7 +124,7 @@ export function formatTime (time, option) {
   }
 }
 // 格式化时间  {y}-{m}-{d}
-export function parseTime (time, cFormat) {
+export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
   }
@@ -157,15 +157,15 @@ export function parseTime (time, cFormat) {
 }
 
 export function uuid() {
-  var s = [];
-  var hexDigits = "0123456789abcdef";
+  var s = []
+  var hexDigits = '0123456789abcdef'
   for (var i = 0; i < 36; i++) {
-    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1)
   }
-  s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-  s[8] = s[13] = s[18] = s[23] = "";
- 
-  var uuid = s.join("");
-  return uuid;
+  s[14] = '4' // bits 12-15 of the time_hi_and_version field to 0010
+  s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1) // bits 6-7 of the clock_seq_hi_and_reserved to 01
+  s[8] = s[13] = s[18] = s[23] = ''
+
+  var uuid = s.join('')
+  return uuid
 }

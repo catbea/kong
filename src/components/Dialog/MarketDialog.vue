@@ -67,53 +67,53 @@ export default {
     background-color: #ffffff;
     position: relative;
     > .dialog-title {
-        text-align: center;
-        margin-top: 22px;
-        color: #333;
-        font-size: 16px;
+      text-align: center;
+      margin-top: 22px;
+      color: #333;
+      font-size: 16px;
     }
     > .mini-qrcode {
-    //   position: absolute;
-    //   bottom: 200px;
-    //   left: 50%;
-    //   transform: translate(-50%, -50%);
+      //   position: absolute;
+      //   bottom: 200px;
+      //   left: 50%;
+      //   transform: translate(-50%, -50%);
       margin: 20px auto;
       width: 162px;
       height: 162px;
     }
     > .dialog-content {
-        padding: 0 36px;
-        > .dialog-name {
-            color: #333;
-            font-size: 20px;
-            font-weight: bold;
-            height: 28px;
-            text-align: center;
-        }
-        > .dialog-tag {
-            color: #333;
-            font-size: 12px;
-            height: 18px;
-            text-align: center;
-        }
-        > .dialog-price {
-            color: #333;
-            font-size: 12px;
-            margin-top: 13px;
-            text-align: center;
-        }
+      padding: 0 36px;
+      > .dialog-name {
+        color: #333;
+        font-size: 20px;
+        font-weight: bold;
+        height: 28px;
+        text-align: center;
+      }
+      > .dialog-tag {
+        color: #333;
+        font-size: 12px;
+        height: 18px;
+        text-align: center;
+      }
+      > .dialog-price {
+        color: #333;
+        font-size: 12px;
+        margin-top: 13px;
+        text-align: center;
+      }
     }
     > .dialog-bottom {
-        width: 100%;
-        height: 32px;
-        line-height: 32px;
-        background-color: #F7F9FA;
-        position: absolute;
-        bottom: 0;
-        color: #969EA8;
-        font-size: 12px;
-        text-align: center;
-        border-radius: 10px;
+      width: 100%;
+      height: 32px;
+      line-height: 32px;
+      background-color: #f7f9fa;
+      position: absolute;
+      bottom: 0;
+      color: #969ea8;
+      font-size: 12px;
+      text-align: center;
+      border-radius: 10px;
     }
     > .dialog-close {
       color: white;

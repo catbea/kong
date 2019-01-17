@@ -22,12 +22,12 @@ export default {
   },
   data: () => ({
     currentShow: false,
-    shareGuideImg: require('IMG/guidance/guide_share@2x.png'),
+    shareGuideImg: require('IMG/guidance/guide_share@2x.png')
   }),
   methods: {
     popupShowControl() {
-        this.currentShow = false
-        window.localStorage.setItem('isFirst', true)
+      this.currentShow = false
+      window.localStorage.setItem('isFirst', true)
     }
   },
   watch: {
@@ -47,14 +47,14 @@ export default {
   position: fixed;
   top: 0;
   background-color: #000;
-  opacity:0.65;
+  opacity: 0.65;
   z-index: 50;
   > .guide-share {
-      width: 69px;
-      height: 171px;
-      position: absolute;
-      top: 4px;
-      right: 20px;
+    width: 69px;
+    height: 171px;
+    position: absolute;
+    top: 4px;
+    right: 20px;
   }
   > .close-title {
     position: absolute;
@@ -78,6 +78,5 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
 }
 </style>

@@ -101,7 +101,7 @@ function initUnreadMsgCount() {
 //msgType  2语音 3楼盘信息 4消息已读上报 5动态信息
 //audioTime语音时长 类型为语音的时候填写
 // isSend 是否为自己发送
-function onSendMsg(msgtosend, isSend, msgType, audioTime, user={}) {
+function onSendMsg(msgtosend, isSend, msgType, audioTime, user = {}) {
   //获取消息内容
   var msgLen = webim.Tool.getStrBytes(msgtosend)
   if (msgtosend.length < 1) {
@@ -186,7 +186,7 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime, user={}) {
       webim.Tool.setCookie('tmpmsg_' + toAccount, '', 0)
     },
     function(err) {
-      if(getErrorMsg(err.ErrorCode)) {
+      if (getErrorMsg(err.ErrorCode)) {
         let msg = {
           code: 500,
           msg: getErrorMsg(err.ErrorCode)
@@ -198,9 +198,13 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime, user={}) {
 }
 
 function getErrorMsg(code) {
-  switch(code) {
-    case 70398: return '用户未注册'; break;
-    case 20003: return '用户无效'; break;
+  switch (code) {
+    case 70398:
+      return '用户未注册'
+      break
+    case 20003:
+      return '用户无效'
+      break
   }
 }
 
@@ -280,7 +284,7 @@ function webimLogin(sdkAppID, identifier, accountType, userSig, isLog) {
       loginInfo.headurl = resp.headurl //设置当前用户头像
     },
     function(err) {
-      if(getErrorMsg(err.ErrorCode)) {
+      if (getErrorMsg(err.ErrorCode)) {
         let msg = {
           code: 500,
           msg: getErrorMsg(err.ErrorCode)

@@ -51,6 +51,5 @@ export default [
         show: true
       }
     }
-  },
-
+  }
 ]

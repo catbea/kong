@@ -4,14 +4,10 @@
   </div>
 </template>
 <script>
-export default {
-  
-}
+export default {}
 </script>
 <style lang="less">
-.discover-edit-help-page{
- background: #fff;
+.discover-edit-help-page {
+  background: #fff;
 }
 </style>
-
-

@@ -69,13 +69,12 @@ export default {
       imgNum: '',
       errColor: '',
       show: true,
-      closeImg: require('IMG/user/close_popup.png'),
+      closeImg: require('IMG/user/close_popup.png')
     }
   },
 
   created() {
     this.articleUrl = this.$route.params.url
-    
   },
 
   methods: {
@@ -128,9 +127,9 @@ export default {
     goToAnalysis() {
       this.show = false
       let obj = {
-      articleUrl: this.articleUrl
-    }
-    
+        articleUrl: this.articleUrl
+      }
+
       this.commitInfo(obj)
     }
   }
