@@ -1,7 +1,7 @@
 <template>
   <div class="shadow_box meal-market-page-box">
     <div class="meal-market-page-box-top">
-      <span class="icon-check bg_img" :style="{backgroundImage:'url('+ ( dataArr.isUnable ? checkColorUnAble : (dataArr.isChecked ? checkColorImg : checkImg) )+')'}"></span>
+      <span class="icon-check" :class="statusClassCompute" @click="clickHandler"></span>
       <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
         <p class="icon-discount bg_img" v-show="dataArr.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
         <span class="bg_img icon-play" v-show="dataArr.ifPanorama==1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
@@ -33,9 +33,8 @@ export default {
     TagGroup
   },
   data: () => ({
+    currentStatus: false, // 当前存储是否选中
     status: ['热销中', '即将发售', '售罄'],
-    val: null,
-    faag: false,
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
@@ -45,8 +44,32 @@ export default {
     imgCommission: require('IMG/user/collection/icon_commission@2x.png')
   }),
   props: {
+    value: { type: Boolean, default: false }, // 是否选中
+    disabled: { type: Boolean, default: false }, // 是否禁用
+
     dataArr: {
       type: Object
+    }
+  },
+  methods: {
+    clickHandler() {
+      if (!this.disabled) {
+        this.currentStatus = !this.currentStatus
+        this.$emit('click', this.currentStatus)
+      }
+    }
+  },
+  watch: {
+    value(val) {
+      this.currentStatus = val
+    },
+    currentStatus(val) {
+      this.$emit('input', val)
+    }
+  },
+  computed: {
+    statusClassCompute() {
+      return `icon iconfont ${this.value ? 'icon-chat_register_rb_s' : 'icon-chat_register_rb_n'} ${this.disabled && 'disabled'}`
     }
   }
 }
@@ -69,7 +92,7 @@ export default {
     }
     .icon-check {
       flex: 0 0 18px;
-      height: 18px;
+      font-size: 18px;
       margin: 0 16px;
     }
     .meal-market-page-box-top-left {
