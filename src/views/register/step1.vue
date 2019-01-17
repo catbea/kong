@@ -13,6 +13,9 @@
           <material-input placeholder="请输入验证码" :type="'number'" :maxlength="6" v-model="code" @blur="blurHandler"></material-input>
           <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
         </div>
+        <div class="name-cell">
+          <material-input placeholder="请输入你的昵称" :type="'text'" :maxlength="16" v-model="name" @focus="focusHandler" @blur="blurHandler" @input="inputHandler"></material-input>
+        </div>
         <div class="van-hairline--bottom form-cell" @click="popAreaHandler">
           <p class="title">主营区域</p>
           <p class="value">{{userRegistInfo.majorRegion}}
@@ -45,6 +48,7 @@ import MaterialInput from 'COMP/MaterialInput'
 import AreaSelect from 'COMP/AreaSelect'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import { checkStrLength, checkStrType } from '@/utils/tool'
 import RegisterService from 'SERVICE/registService'
 export default {
   components: {
@@ -55,6 +59,7 @@ export default {
   data: () => ({
     query: null,
     mobile: '',
+    name: '',
     code: '',
     sendCodeText: '获取验证码',
     codeTime: 60,
@@ -79,6 +84,7 @@ export default {
     this.area = this.userRegistInfo.area
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
+    this.name = this.userRegistInfo.name
     if (!this.userRegistInfo.distributorId) {
       this.queryByRegister(this.enterpriseId)
     }
@@ -137,7 +143,8 @@ export default {
       this.phoneFocus = focus
       let _userRegistInfo = {
         registerMobile: this.mobile,
-        registerCode: this.code
+        registerCode: this.code,
+        name: this.name
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
@@ -169,16 +176,25 @@ export default {
       this.$router.push({ path: '/user/edit/userMechanism', query: params })
     },
     nextHandler() {
-      // let params = {
-      //   enterpriseId: this.enterpriseId
-      // }
-      // this.$router.push({ path: '/register/step2', query: params })
+      if (this.mobile.length == 0) {
+        return this.$toast('请输入微信绑定手机号')
+      }
+      if (this.code.length == 0) {
+        return this.$toast('请输入验证码')
+      }
+      if (!checkStrLength(this.name, 16)) {
+        return this.$toast('昵称最多8个汉字(或16个字符)')
+      }
+      if (!checkStrType(this.name)) {
+        return this.$toast('昵称只支持中文、英文和数字')
+      }
       this.register()
     },
     async register() {
       let vo = {
         mobile: this.mobile,
         code: this.code,
+        agentName: this.name,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
         majorRegion: this.majorRegion,
@@ -271,6 +287,9 @@ export default {
             opacity: 0.5;
           }
         }
+      }
+      > .name-cell {
+        margin: 10px 15px;
       }
       .form-cell {
         display: flex;

@@ -79,6 +79,12 @@ export default {
 
   mounted() {
     this.itemInfo = this.$route.query
+
+    if (this.itemInfo.selectType == '2') {
+      this.typeCode = '4'
+    } else if (this.itemInfo.selectType == '3') {
+      this.typeCode = '5'
+    }
   },
 
   created() {},
@@ -90,9 +96,13 @@ export default {
   methods: {
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
-      if (res.records.length > 0) {
-        this.total = res.total
+      this.total = res.total
 
+      if (this.current === 1) {
+        this.writeList = []
+      }
+
+      if (res.records.length > 0) {
         for (let i = 0; i < res.records.length; i++) {
           let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
           res.records[i].createTimeStamp = myTime
@@ -105,7 +115,7 @@ export default {
         this.current++
         this.loading = false
       } else {
-        if (current == 1) {
+        if (this.current == 1) {
           this.haveData = false
         }
         this.loading = false
@@ -158,12 +168,13 @@ export default {
         color: #ffffff;
         font-size: 5px;
         margin-top: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         > .label-text {
-          font-size: 5px;
+          font-size: 10px;
           color: #ffffff;
-          line-height: 15px;
-          margin-left: 1px;
         }
       }
 

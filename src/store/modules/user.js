@@ -95,6 +95,7 @@ const state = {
   userRegistInfo: {
     registerMobile: '', // 注册手机号
     registerCode: '', // 注册验证码
+    name: '',
     majorRegion: '广东省/深圳市/南山区',
     city: '深圳市',
     area: '南山区',

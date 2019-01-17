@@ -13,6 +13,9 @@
           <material-input placeholder="请输入验证码" :type="'number'" :maxlength='6' v-model="code" @blur="blurHandler"></material-input>
           <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
         </div>
+        <div class="name-cell">
+          <material-input placeholder="请输入你的昵称" :type="'text'" :maxlength="16" v-model="name" @focus="focusHandler" @blur="blurHandler"></material-input>
+        </div>
         <div class="invite-cell">
           <div class="invite-name">邀请人：{{parentUserName}}</div>
         </div>
@@ -31,6 +34,7 @@ import RegStep from 'COMP/Register/RegStep'
 import MaterialInput from 'COMP/MaterialInput'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import { checkStrLength, checkStrType } from '@/utils/tool'
 import RegisterService from 'SERVICE/registService'
 export default {
   components: {
@@ -40,6 +44,7 @@ export default {
   data: () => ({
     stepTitle: '手机注册',
     mobile: '',
+    name: '',
     code: '',
     sendCodeText: '获取验证码',
     codeTime: 60,
@@ -64,6 +69,7 @@ export default {
     this.distributorId = this.query.distributorId
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
+    this.name = this.userRegistInfo.name
     this.queryByRegister(this.enterpriseId)
     this.queryRegisterRecommendInfo(this.enterpriseId, this.registerType, this.parentUserId)
   },
@@ -103,15 +109,24 @@ export default {
       this.phoneFocus = focus
       let _userRegistInfo = {
         registerMobile: this.mobile,
-        registerCode: this.code
+        registerCode: this.code,
+        name: this.name
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
     registerHandler() {
-      // let params = {
-      //   enterpriseId: this.enterpriseId
-      // }
-      // this.$router.push({path: '/register/step2', query: params})
+      if (this.mobile.length == 0) {
+        return this.$toast('请输入微信绑定手机号')
+      }
+      if (this.code.length == 0) {
+        return this.$toast('请输入验证码')
+      }
+      if (!checkStrLength(this.name, 16)) {
+        return this.$toast('昵称最多8个汉字(或16个字符)')
+      }
+      if (!checkStrType(this.name)) {
+        return this.$toast('昵称只支持中文、英文和数字')
+      }
       this.register()
     },
     async queryByRegister(enterpriseId) {
@@ -133,6 +148,7 @@ export default {
       let vo = {
         mobile: this.mobile,
         code: this.code,
+        agentName: this.name,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
         parentUserId: this.parentUserId,
@@ -201,6 +217,9 @@ export default {
       .material-input__component {
         margin-top: 15px;
       }
+    }
+    > .name-cell {
+      margin: 10px 15px;
     }
     .invite-cell {
       margin: 26px 15px;

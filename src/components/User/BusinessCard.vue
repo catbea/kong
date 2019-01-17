@@ -1,7 +1,7 @@
 <template>
   <div class="business-card-container">
     <div class="business-card-box">
-      <div class="bg_img info-box">
+      <div class="bg_img info-box" @click="editCLickHandler">
         <!-- 左上二维码形状,点击出名片 -->
         <i class="icon iconfont icon-me_Qrcode qr-icon" @click.stop="showQrCode"/>
         <!-- 右上分享 -->
@@ -15,7 +15,7 @@
         <div class="user-info-content">
           <!-- 姓名、主营区域 -->
           <div class="user-detail-box">
-            <div class="username-box" @click="editCLickHandler">
+            <div class="username-box">
               <span class="username-text">{{userInfo.name}}</span>
               <i class="icon iconfont icon-me_editor username-edit-icon"></i>
             </div>
