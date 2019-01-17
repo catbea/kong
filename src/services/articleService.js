@@ -15,7 +15,7 @@ class ArticleService {
    */
   getArticleType(data) {
     return xhr({
-      url: '/dictionary/queryListByClassify',
+      url: '/dictionary/queryInformationClassify',
       body: data
     })
   }
