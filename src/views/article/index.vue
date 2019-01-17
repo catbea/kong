@@ -267,8 +267,8 @@ export default {
     }
   },
   created() {
+    this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
-    
     if (this.userArea.city) {
       this.city = this.userArea.city
       this.getCityArticle()
@@ -291,12 +291,10 @@ export default {
     },
     // 获取文章分类
     async getArticleType() {
-      this.showLoading = true
       let result = await ArticleService.getArticleType({ classify: 'information_classify' })
       if (result) {
         this.articleType.push(...result)
       }
-      this.showLoading = false
     },
     // 查询所属城市是否有文章
     async getCityArticle () {
