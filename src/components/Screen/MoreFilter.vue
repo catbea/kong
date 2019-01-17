@@ -1,6 +1,6 @@
 <template>
  <div class="more-page" v-if="show">
-  <div class="more-filter" :class="{act:flag}">
+  <div class="more-filter" :class="{act:flag}" ref="moreFilter">
     <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
       <h5 class="item-title">{{group.name}}</h5>
       <div class="item-list-container">
@@ -123,7 +123,6 @@ export default {
           this.currentValue.focusStatus = this.currentValue.focusStatus === value ? '-1' : value
           break
       }
-      this.num++
     },
     activeCheck(mainKey, index) {
       let status = false
@@ -164,9 +163,12 @@ export default {
       this.$emit('resetNum')
     },
     confirmHandler() {
+      this.num=this.$refs.moreFilter.querySelectorAll('.active').length
       this.$emit('confirm', this.currentValue)
       this.$emit('input', this.currentValue)
       this.$emit('numHandle',this.num)
+      console.log(this.num,'现在的长度');
+      
     }
   },
   watch: {
