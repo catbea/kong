@@ -1,11 +1,20 @@
 <template>
   <div>
-    <div class="write-item-body" @click="enterDetail" v-for="(item, index) in dataArray" :key="index">
+    <div
+      class="write-item-body"
+      v-for="(item, index) in dataArray"
+      :key="index"
+      @click="enterDetail(selectType,item)"
+    >
       <div class="write-item-left">
-        <span class="article-title">{{item.title}}</span>
+        <span class="article-title">{{item.title | textOver(26)}}</span>
         <div class="share-bottom">
           <span class="share-time">分享时间：2019/1/6 16:33</span>
-          <div class="collection-view" v-if="selectType=='3'">
+          <div
+            class="collection-view"
+            v-if="selectType=='1'"
+            @click.stop="cancelCollect(item.id,index)"
+          >
             <span class="collection-text">取消收藏</span>
             <img class="collection-img" :src="cancelCollection">
           </div>
@@ -30,16 +39,22 @@ export default {
   },
   data() {
     return {
-      myImage: 'http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg',
-      tags: ['已收藏', '未分享', '已编辑'],
       cancelCollection: require('IMG/user/myWrite/cancelCollection.png')
       // nullIcon: require('IMG/user/collection/Article@2x.png'),
       // nullcontent: '暂还没有文章记录'
     }
   },
   methods: {
-    enterDetail() {
-      this.$emit('enterDetail', '')
+    enterDetail(selectType, item) {
+      item['selectType'] = selectType
+      this.$emit('enterDetail', item)
+    },
+    cancelCollect(id, index) {
+      let obj = {
+        id: id,
+        index: index
+      }
+      this.$emit('cancelCollect', obj)
     }
   },
   computed: {}
@@ -53,7 +68,6 @@ export default {
   padding: 11px 15px;
   justify-content: space-between;
   background: #ffffff;
-  border-bottom: #e2e2e3 1px solid;
   border-top: 1px #e5e5f0 solid;
 
   > .write-item-left {
@@ -77,7 +91,7 @@ export default {
     > .share-bottom {
       display: flex;
       flex-direction: row;
-      margin-top: 50px;
+      margin-top: 40px;
 
       > .share-time {
         font-size: 12px;

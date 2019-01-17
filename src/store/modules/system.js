@@ -7,15 +7,15 @@ const state = {
     items: [
       {
         name: '数据',
-        icon: require('IMG/tabbar/data_tab.png'),
-        icon_atc: require('IMG/tabbar/data_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x.png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13 Copy 6@2x.png'),
         path: '/dynamics',
         info: 0
       },
       {
         name: '楼盘',
-        icon: require('IMG/tabbar/project_tab.png'),
-        icon_atc: require('IMG/tabbar/project_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x(1).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13@2x(5).png'),
         path: '/market',
         info: 0
       },
@@ -28,15 +28,15 @@ const state = {
       },
       {
         name: '客户',
-        icon: require('IMG/tabbar/client_tab.png'),
-        icon_atc: require('IMG/tabbar/client_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x(3).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13@2x(6).png'),
         path: '/custom',
         info: 0
       },
       {
         name: '名片',
-        icon: require('IMG/tabbar/card_tab.png'),
-        icon_atc: require('IMG/tabbar/card_tab_act.png'),
+        icon: require('IMG/tabbar/Rectangle 13@2x(4).png'),
+        icon_atc: require('IMG/tabbar/Rectangle 13@2x(7).png'),
         path: '/user',
         info: 0
       }

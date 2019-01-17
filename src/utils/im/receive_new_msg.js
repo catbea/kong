@@ -70,6 +70,7 @@ function onMsgNotify(newMsgList) {
     } else {
       // 不在聊天页面，弹出消息
       let content = elems.content
+      // console.log(content,'content---')
       if (content.desc == 1 || content.desc == 2 || content.desc == 3) {
         content.clientId = newMsg.getSession().id()
         store.commit(types['NEW_MSG_CONTENT'], content)
@@ -184,8 +185,23 @@ function onSendMsg(msgtosend, isSend, msgType, audioTime, user={}) {
       }
       webim.Tool.setCookie('tmpmsg_' + toAccount, '', 0)
     },
-    function(err) {}
+    function(err) {
+      if(getErrorMsg(err.ErrorCode)) {
+        let msg = {
+          code: 500,
+          msg: getErrorMsg(err.ErrorCode)
+        }
+        callbackaddMsgFunction && callbackaddMsgFunction(msg)
+      }
+    }
   )
+}
+
+function getErrorMsg(code) {
+  switch(code) {
+    case 70398: return '用户未注册'; break;
+    case 20003: return '用户无效'; break;
+  }
 }
 
 //消息已读通知
@@ -264,7 +280,13 @@ function webimLogin(sdkAppID, identifier, accountType, userSig, isLog) {
       loginInfo.headurl = resp.headurl //设置当前用户头像
     },
     function(err) {
-      // alert(err.ErrorInfo)
+      if(getErrorMsg(err.ErrorCode)) {
+        let msg = {
+          code: 500,
+          msg: getErrorMsg(err.ErrorCode)
+        }
+        callbackaddMsgFunction && callbackaddMsgFunction(msg)
+      }
     }
   )
 }

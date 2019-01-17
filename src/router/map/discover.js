@@ -35,6 +35,22 @@ export default [
         show: false
       }
     }
-  }
+  },
+  {
+    path: '/discover/newlyAdded',
+    name: 'addLinker',
+    component: resolve => require(['@/views/discover/newlyAdded/index.vue'], resolve)
+  },
+  {
+    path: '/discover/newlyAdded/analysis',
+    name: 'analysis',
+    component: resolve => require(['@/views/discover/newlyAdded/analysis.vue'], resolve),
+    meta: {
+      title: '文章数据爬取',
+      tabbar: {
+        show: true
+      }
+    }
+  },
 
 ]

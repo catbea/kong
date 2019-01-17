@@ -4,7 +4,7 @@
       <div class="user-market-page-box-top">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
-          <span class="bg_img icon-play"  v-if="dataArr.ifPanorama===1"   :style="{backgroundImage:'url('+imgPlay+')'}"></span>
+          <span class="bg_img icon-play"  v-if="dataArr.ifPanorama===1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
           <li>
@@ -21,16 +21,17 @@
             <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
             <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
             <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-            <div class="tag-item" v-for="(item,index) in dataArr.linkerTags.slice(0,2)" :key="index">{{item}}</div>
+            <div class="tag-item" v-for="(item,index) in dataArr.linkerTags ? dataArr.linkerTags.slice(0,2):[]" :key="index">{{item}}</div>
           </li>
           <li>
             {{dataArr.openTimes}}次开通
             <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
             <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
             <div class="apostrophe" @click.stop="popupHandle">
+              <!-- <span></span>
               <span></span>
-              <span></span>
-              <span></span>
+              <span></span> -->
+              <p style="font-size:25px;" class="icon iconfont icon-more"></p>
             </div>
           </li>
         </ul>
@@ -141,11 +142,33 @@ export default {
       await userService.changeMarketData(linkerId, operationType, status)
     }, //修改楼盘状态
     skipMarketDetail(linkerId) {
-      this.$router.push('/market/' + linkerId)
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        this.$router.push('/market/' + linkerId)
+      }
     },
     popupHandle() {
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
       //更多
       this.show = !this.show
+      }
     },
     stickHandle(index) {
       if (this.dataArr.recommand == 0) {
@@ -163,12 +186,16 @@ export default {
               parent.showMarketList.splice(index + 1, 1)
               parent.showMarketList[3].recommand = 0
               // parent.showMarketList.splice(1,1)
-              this.$dialog
-                .alert({
-                  message: '楼盘置顶成功',
-                  className: 'hint-alert'
-                })
-                .then(() => {})
+              // this.$dialog
+              //   .alert({
+              //     message: '楼盘置顶成功',
+              //     className: 'hint-alert'
+              //   })
+              //   .then(() => {})
+              this.$toast({
+              duration: 800,
+              message: '置顶成功'
+            })
               this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
               this.show = !this.show //关闭弹出层
             })
@@ -178,13 +205,9 @@ export default {
           let parent = this.$parent.$parent
           parent.showMarketList.unshift(parent.showMarketList[index])
           parent.showMarketList.splice(index + 1, 1)
-          this.$dialog
-            .alert({
-              message: '楼盘置顶成功',
-              className: 'hint-alert'
-            })
-            .then(() => {
-              // on close
+          this.$toast({
+              duration: 800,
+              message: '置顶成功'
             })
           this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
           this.show = !this.show
@@ -192,14 +215,10 @@ export default {
       } else if (this.dataArr.recommand == 10) {
         //将当前点击的楼盘取消置顶
         this.$emit('recommandFalseHandle', this.dataArr)
-        this.$dialog
-          .alert({
-            message: '楼盘取消置顶成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        this.$toast({
+              duration: 800,
+              message: '取消置顶成功'
+            })
         this.changeUserStatus(this.linkerId, 40, 0) //改置顶状态
         this.show = !this.show
       }
@@ -210,25 +229,17 @@ export default {
     async masterHandle(n) {
       if (this.dataArr.masterRecommand != 1) {
         await this.changeUserStatus(this.linkerId, 20, 1) //改为大师推荐
-        this.$dialog
-          .alert({
-            message: '大师推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        this.$toast({
+              duration: 800,
+              message: '大师推荐成功'
+            })
         this.$emit('pushMaster', this.dataArr)
       } else {
         await this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        this.$dialog
-          .alert({
-            message: '取消大师推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        this.$toast({
+              duration: 800,
+              message: '取消大师推荐成功'
+            })
         this.$emit('spliceMaster', this.dataArr)
       }
       this.show = !this.show
@@ -237,25 +248,17 @@ export default {
     commonHandle(n) {
       if (this.dataArr.masterRecommand != 2) {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
-        this.$dialog
-          .alert({
-            message: '普通推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        this.$toast({
+              duration: 800,
+              message: '普通推荐成功'
+            })
         this.$emit('pushCommon', this.dataArr)
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
-        this.$dialog
-          .alert({
-            message: '取消普通推荐成功',
-            className: 'hint-alert'
-          })
-          .then(() => {
-            // on close
-          })
+        this.$toast({
+              duration: 800,
+              message: '取消普通推荐成功'
+            })
         this.$emit('spliceCommon', this.dataArr)
       }
       this.show = !this.show
@@ -274,15 +277,61 @@ export default {
           this.show = !this.show
           this.changeUserStatus(this.linkerId, 30, 1) //改为不展示
           this.$emit('closeCut', this.dataArr)
+          this.$toast({
+              duration: 800,
+              message: '关闭展示成功'
+            })
         })
     },
     goRenew(linkerId) {
-      //去续费
+      if(this.dataArr.saleStatus==3){
+        this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已售罄，无法开通',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else if (this.dataArr.thisDistributor === false) {
+        this.$dialog
+          .alert({
+            title: '该楼盘不可续费',
+            message: '非当前所属公司下楼盘无法开通续费',
+            className: 'renew-Dialog',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      }else{
+        //去续费
       this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
+      }
     },
     skipShare() {
-      //去分享
+      if(this.dataArr.shelfFlag==1){
+      this.$dialog.alert({
+        title: '非常抱歉',
+        message: '该楼盘已被下架或删除',
+        className: 'renew-Dialog',
+        confirmButtonText: '知道啦'
+      }).then(() => {
+        // on close
+      });
+      }else{
+        //去分享
       this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
+      }
     }
   }
 }
@@ -392,7 +441,7 @@ export default {
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 15px;
-          margin: 8px 0 8px 0;
+          margin: 6px 0 6px 0;
         }
         li:nth-of-type(3) {
           display: flex;
@@ -432,7 +481,7 @@ export default {
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 13px;
-          margin-top: 12px;
+          margin-top:10px;
           display: flex;
           position: relative;
           align-items: center;
@@ -522,6 +571,16 @@ export default {
   justify-content: center;
   .van-dialog__confirm {
     border-top: 1px solid #ebedf0;
+  }
+}
+.renew-Dialog{
+  width:235px;
+  border-radius: 10px;
+  .van-dialog__header,.van-dialog__message--has-title{
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    padding-top: 26px;
   }
 }
 .show-Dialog {

@@ -1,7 +1,7 @@
 <template>
   <div class="market-search-page">
     <div class="search-box">
-      <van-search v-model="searchValue" placeholder="请输入搜索关键词" show-action @keypress="onKeypressHandler" @search="onSearchHandler" background="#fff">
+      <van-search v-model="searchValue" placeholder="请输入楼盘名称" show-action @keypress="onKeypressHandler" @search="onSearchHandler" background="#fff">
         <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
@@ -42,7 +42,7 @@
           ></market-describe>
         </van-list>
         <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="showNull"></null>
-        <div class="hot-recommend" v-if="!haveData">
+        <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
           <title-bar class="title-container" :conf="titleBarConf"/>
           <market-describe
             v-for="(item,index) in hotResult"
@@ -159,9 +159,16 @@ export default {
           this.loading = false
           this.haveData = false
           this.showNull = false
+          let arr = []
+          for (let i = 0; i < this.searchResult.length; i++) {
+            const element = this.searchResult[i];
+           arr.push(element.linkerId) 
+          }
+         arr = arr.join()
           let hotParams = {
             city: this.userInfo.majorCity || '全国',
-            hotTotal: 5
+            hotTotal: 5,
+            linkerIds:arr
           }
           const hotRes = await userService.getHotLinker(hotParams)
           this.hotResult = hotRes

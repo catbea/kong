@@ -2,9 +2,9 @@
   <div class="already-open-page">
     <ul>
       <li>已开通
-        <span>{{agentIdInfo}}</span> 个楼盘
+        <span>{{agentIdInfo}}</span> 个有效楼盘
         </li>
-      <li @click="myMarket">
+      <li class="li" @click="myMarket">
           <p>我的楼盘</p>
       </li>
     </ul>
@@ -37,7 +37,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 8px 0 8px 16px;
+    margin: 0 0 8px 16px;
     padding: 0 16px 0 16px;
     li:nth-child(1) {
       font-size: 15px;
@@ -49,17 +49,16 @@ export default {
         color: #007ae6;
       }
     }
-    li:nth-child(2) {
+    .li {
       font-size: 12px;
-
       font-weight: 400;
       color: rgba(0, 122, 230, 1);
       line-height: 24px;
       text-align: center;
       width: 68px;
       height: 24px;
-      border-radius: 12px;
-      border: 1px solid rgba(0, 122, 230, 1);
+      border-radius:25px;
+      border:0.8px solid rgba(0, 122, 230, 1);
     }
   }
 }

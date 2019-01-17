@@ -60,7 +60,7 @@
                   </p>
                   <p>
                     累计浏览
-                    <span>{{item.todayClickCount}}次</span>名片，平均停留
+                    <span>{{item.todayClickCount}}次</span>该名片，平均停留
                     <span>{{item.totalTime / 1000}}s</span>
                   </p>
                 </div>

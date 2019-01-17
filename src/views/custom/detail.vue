@@ -507,17 +507,19 @@ export default {
       top: 64px;
     }
     .custom-info {
-      margin: 20px 15px 15px 0;
+      margin: 25px 15px 0 0;
       .custom-name-box {
         display: flex;
         .custom-name {
           font-size: 18px;
           font-weight: 500;
           color: #333333;
+          line-height: 25px;
         }
         .custome-realname {
           color: #999999;
           font-size: 16px;
+          padding-top: 3px;
         }
       }
       .custom-browsed {

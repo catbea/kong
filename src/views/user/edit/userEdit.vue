@@ -11,16 +11,20 @@
       <van-cell class="cell-item" title="手机号" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
-      <van-cell class="cell-item" title="平台公司" :value="userInfo.distributorName" @click="godistributorName"/>
-      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" :to="{path:'/user/edit/userMechanism',query:{distributorId:userInfo.distributorId,enterpriseId:userInfo.enterpriseId}}"/>
+      <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
+      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" @click="goEdit" />
     </van-cell-group>
     <van-cell-group class="user-advance-info">
-      <van-cell class="cell-item tag-edit" title="标签展示" is-link :to="'/user/edit/userLabel'">
-        <div slot="extra" class="tag-show-container">
+      <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel'">
+        <template slot="title">
+          <span class="custom-text">标签展示</span>
+          <div class="user-tag"><van-tag  v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</van-tag></div>
+        </template>
+        <!-- <div slot="extra" class="tag-show-container">
           <div class="tag-item" v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</div>
-        </div>
+        </div> -->
       </van-cell>
-      <van-cell class="cell-item user-signature" title="个人介绍" :value="userInfo.signature"/>
+      <van-cell class="cell-item user-signature" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction'}" :value="userInfo.signature"/>
     </van-cell-group>
     <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"/>
   </div>
@@ -42,6 +46,14 @@ export default {
     }
   },
   methods: {
+    goEdit() {
+      if (!this.userInfo.institutionName) {
+        this.$router.push({path:'/user/edit/userMechanism',query:{distributorId:this.userInfo.distributorId,enterpriseId:this.userInfo.enterpriseId}})
+      } else {
+        this.$router.push('/user/edit/userPlatform')
+      }
+    },
+
     godistributorName() {
       //此处不可进行操作
       //如果一个月内已经切换过一次分销平台公司，提示，否则跳转到平台选择页面
@@ -80,7 +92,8 @@ export default {
       this.userInfo.majorRegion = this.majorRegion
       this.userInfo.majorCity = this.majorCity
       if (result) {
-        this.$store.commit(types.USER_INFO, this.userInfo)
+        // this.$store.getUserInfo(types.USER_INFO, this.userInfo)
+         this.$store.dispatch('getUserInfo', this.userInfo)
       }
     }
   },
@@ -127,11 +140,12 @@ export default {
     background: #fff;
 
     > .user-avatar {
-      padding: 32px 0;
+      padding: 32px 0 18px 0;
+      border-bottom: 10px solid #f2f5f9;
       text-align: center;
       .editIcon-icon {
-        width: 50px;
-        height: 50px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
       }
       .user-avatar-clik {
@@ -183,7 +197,17 @@ export default {
     .tag-edit {
       position: relative;
       display: block;
-      height: 110px;
+      // height: 110px;
+      border-bottom: 10px solid #f2f5f9;
+      .user-tag{
+        float: right;
+        margin-right: 20px;
+      }
+      .van-tag{
+        margin-left: 5px;
+        background-color: rgba(143, 159, 177, 0.15)!important;
+        color: rgba(92,95,102,1);
+      }
       .van-cell__right-icon {
         position: absolute;
         right: 22px;

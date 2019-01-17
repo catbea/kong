@@ -61,7 +61,7 @@ export default {
     async upDatePhoneNum(obj) {
       const result = await userService.upDateUserInfo(obj)
       if (result) {
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { tempPhone: this.Cphone }))
+        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { tempPhone: this.Cphone }))
         this.$router.go(-1)
       }
     }

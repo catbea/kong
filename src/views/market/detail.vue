@@ -21,7 +21,7 @@
             <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
-          <div class="operate-share" @click="shareHandler">
+          <div class="operate-share" @click="shareHandler" v-if="info.saleStatus!=='售罄'">
             <i class="icon iconfont icon-article_share"></i>
             分享
           </div>
@@ -120,7 +120,9 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index" @click.native="itemClickHandler(item.linkerId)">
             <div class="recommend-house-item">
-              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}"></div>
+              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
+                <p class="bg_img panorama-icon" v-if="item.ifPanorama==1" :style="{backgroundImage:'url('+panoramaIcon+')'}"></p>
+              </div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
                 <p class="house-location">{{item.district}}</p>
@@ -130,16 +132,17 @@
         </swiper>
       </div>
     </div>
-    <div class="van-hairline--top m-statement">
+    <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
         <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
       </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="openStatus">
+      <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
-      <market-renew v-if="!openStatus" :renewInfo="info"/>
+      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
+      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'"> <p>售罄</p> </div>
     </div>
   </div>
 </template>
@@ -174,7 +177,8 @@ export default {
       status: null, // 0-未收藏 1-已收藏
       photoButton: true, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-      siteDetailImg: require('IMG/marketDetail/arrow.png'),
+      siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
+      panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -251,6 +255,8 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      console.log(res,'楼盘详情kkkk');
+      
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -436,6 +442,7 @@ export default {
       display: flex;
       justify-content: space-between;
       margin: 15px;
+      margin-left:9px;
       font-size: 12px;
       > .browser-info {
         display: flex;
@@ -491,8 +498,8 @@ export default {
           right: 5px;
         }
         span:nth-child(1) {
-          width: 16px;
-          height: 16px;
+          width: 17px;
+          height: 17px;
           margin: 0 8px;
         }
         .commission-text {
@@ -547,6 +554,7 @@ export default {
         height: 44px;
         line-height: 44px;
         margin: 5px;
+        margin-left:0px;
         background-color: rgba(0, 122, 230, 0.05);
         color: #445166;
         font-weight: 400;
@@ -557,9 +565,9 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 38px;
+    margin-top:28px;
     .type-swipe-content {
-      margin: 13px 22px;
+      margin: 16px 22px 0px 22px;
       .house-type {
         > .house-type-img {
           width: 160px;
@@ -567,12 +575,12 @@ export default {
           border-radius: 6px;
         }
         > .house-type-info {
-          margin-top: 8px;
+          margin-top: 12px;
           line-height: 1.5;
           > .house-type-name {
             font-size: 16px;
             color: #333333;
-            font-weight: 500;
+            font-weight: 600;
           }
           > .house-type-area {
             font-size: 12px;
@@ -596,15 +604,16 @@ export default {
       margin: 0 15px;
       > .news-title {
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
+        margin-top:11px;
+        margin-bottom:6px;
       }
       > .news-content {
-        margin-top: 3px;
         font-size: 14px;
         font-weight: 400;
       }
       > .news-time {
-        margin-top: 16px;
+        margin-top: 12px;
         font-size: 12px;
         color: #999999;
       }
@@ -636,21 +645,33 @@ export default {
     }
   }
   > .house-recommend {
-    margin-top: 15px;
+    margin-top: 28px;
     margin-bottom: 10px;
     > .recommend-swipe-content {
       margin: 0 15px;
       .recommend-house-item {
         line-height: 1.5;
         > .recommend-house-img {
+          margin-top:18px;
+          margin-bottom:12px;
           width: 160px;
           height: 90px;
           border-radius: 6px;
+          position: relative;
+          .panorama-icon{
+            position:absolute;
+            width:34px;
+            height:34px;
+            left:50%;
+            top:50%;
+            margin-left:-17px;
+            margin-top:-17px;
+          }
         }
         > .recommend-house-info {
           .house-name {
             font-size: 16px;
-            font-weight: 500;
+            font-weight:600;
             color: #333333;
           }
           .house-location {
@@ -663,14 +684,14 @@ export default {
     }
   }
   .m-statement {
-    padding-top: 10px;
-    margin: 0 0 77px 16px;
-    width: 343px;
-    color: rgba(153, 153, 153, 1);
+    padding: 16px 23px 90px 16px;
+    // width: 343px;
+    background:#F7F9FA;
+    color: #8A9299;
     font-size: 12px;
     // line-height: 0.34rem;
     .feedback {
-      color: #017fff;
+      color: #525C66;
     }
   }
   > .house-status {
@@ -700,6 +721,22 @@ export default {
         color: #ffffff;
         line-height: 44px;
         text-align: center;
+      }
+    }
+    .saleStatusFlag{
+      width:343px;
+      height:44px;
+      background:#c8c9cc;
+      border-radius:6px;
+      line-height:44px;
+      text-align:center;
+      margin-top:14px;
+      margin-left:16px;
+      p{
+        font-size:16px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(102,102,102,1);
       }
     }
   }

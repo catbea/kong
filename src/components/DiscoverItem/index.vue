@@ -13,6 +13,7 @@
         :style="{'backgroundImage':'url('+ data.image +')'}"
       ></div>
     </div>
+    
   </router-link>
 </template>
 <script>
@@ -68,4 +69,5 @@ export default {
     margin-top: 10px;
   }
 }
+
 </style>

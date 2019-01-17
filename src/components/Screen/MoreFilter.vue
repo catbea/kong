@@ -1,5 +1,6 @@
 <template>
-  <div class="more-filter" v-if="show">
+ <div class="more-page" v-if="show">
+  <div class="more-filter" :class="{act:flag}">
     <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
       <h5 class="item-title">{{group.name}}</h5>
       <div class="item-list-container">
@@ -11,15 +12,23 @@
       <div class="confirm-btn" @click="confirmHandler">确定</div>
     </div>
   </div>
+  </div>
 </template>
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 export default {
+  created() {
+    // if(this.$route.name==='mymarket'){
+    //   this.flag=true
+    // }
+  },
   props: {
     show: { type: Boolean, default: false },
     value: Object
   },
   data: () => ({
+    flag:false,
+    num:0,
     conf: {
       areaSize: {
         name: '面积',
@@ -90,7 +99,12 @@ export default {
     itemClickHandler(type, value) {
       switch (type) {
         case 'areaSize':
-          this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
+          // this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
+          if(this.currentValue.areaSize === value){
+            this.currentValue.areaSize = '-1,-1'
+          }else{
+            this.currentValue.areaSize = value
+          }
           break
         case 'type':
           this.currentValue.type = this.currentValue.type === value ? '-2' : value
@@ -109,6 +123,7 @@ export default {
           this.currentValue.focusStatus = this.currentValue.focusStatus === value ? '-1' : value
           break
       }
+      this.num++
     },
     activeCheck(mainKey, index) {
       let status = false
@@ -145,10 +160,13 @@ export default {
         openStatus: '-1',
         focusStatus: '-1'
       }
+      this.num=0
+      this.$emit('resetNum')
     },
     confirmHandler() {
       this.$emit('confirm', this.currentValue)
       this.$emit('input', this.currentValue)
+      this.$emit('numHandle',this.num)
     }
   },
   watch: {
@@ -159,6 +177,7 @@ export default {
 }
 </script>
 <style lang="less">
+.more-page{
 .more-filter {
   position: relative;
   width: 100%;
@@ -166,9 +185,10 @@ export default {
   height: 430px;
   background-color: #fff;
   padding: 15px;
+  padding-bottom:0px;
   overflow: scroll;
   > .item-container {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     > .item-title {
       font-size: 15px;
       font-weight: 400;
@@ -177,30 +197,43 @@ export default {
     > .item-list-container {
       display: flex;
       flex-wrap: wrap;
+      margin-top:16px;
       margin-bottom: 20px;
+      // justify-content: space-between;
       > .item {
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        width:75px;
+        height:30px;
+        text-align: center;
+        line-height:33px;
         font-size: 13px;
         color: #445166;
         background-color: #f2f5f9;
         border-radius: 6px;
-        padding: 5px 10px;
-        margin: 5px 10px;
+        // padding: 5px 10px;
+        margin: 7px 0px;
+        margin-left:15px;
         &.active {
           background-color: #017fff;
           color: #ffffff;
         }
       }
+      div:first-child,div:nth-child(5){
+        margin-left:0px;
+      }
     }
   }
   > .op-box {
     background: #ffffff;
-    position: fixed;
+    // position: fixed;
     display: flex;
     justify-content: space-around;
     width: 100%;
-    top: 477px;
+    // top: 477px;
     padding: 7px 0;
-    left: 0;
+    // left: 0;
     margin: 0;
     z-index: 30;
     > div {
@@ -221,5 +254,9 @@ export default {
       }
     }
   }
+  }
+  .act{
+  height:265px;
+}
 }
 </style>

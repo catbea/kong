@@ -1,18 +1,19 @@
 <template>
-  <div class="screen-container">
+  <div class="van-hairline--bottom screen-container">
     <ul class="screen-ul">
       <li class="area" :class="item.index===currentIndex&&'selected'" v-for="item in conf" :key="item.index" @click="itemClickHandler(item)">
-        <span class="value-content">{{(item.value ===''||item.value ==='不限')?item.name:item.value}}</span>
+        <span class="value-content" :class="{active:item.flag}">{{(item.value ===''||item.value ==='不限')?item.name:item.value}}</span>
+        <span v-show="item.index==3&&num" :class="{active:item.flag}">({{num}})</span>
         <span class="bg_img" :style="{'backgroundImage':'url(' + (item.index===currentIndex ? arrowUpIcon : arrowDownIcon )  + ')'}"></span>
       </li>
-      <li class="sort" @click="currentIndex = currentIndex===4?-1:4"></li>
+      <li class="bg_img sort" @click="sortHandle" :style="{'backgroundImage':'url('+(sortFlage?sortColorImg:sortImg)+')'}"></li>
     </ul>
     <div class="choose-container" @click="coverClickHandler">
-      <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @checkedText="areaStrChange"></area-filter>
-      <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice" @checkedText="priceStrChange"></price-filter>
-      <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @checkedText="popularityStrChange"></popularity-filter>
-      <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @confirm="confirmHandler"></more-filter>
-      <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort" @input="sortChangeHandler"></sort-way>
+      <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @activeHandle="areaColorHandle" @checkedText="areaStrChange"></area-filter>
+      <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice" @activeHandle="priceColorHandle" @checkedText="priceStrChange"></price-filter>
+      <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @activeHandle="popularityColorHandle" @checkedText="popularityStrChange"></popularity-filter>
+      <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @resetNum="resetNumHandle" @numHandle="numHandle" @confirm="confirmHandler"></more-filter>
+      <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort" @activeHandle="sortHandle" @input="sortChangeHandler"></sort-way>
     </div>
   </div>
 </template>
@@ -31,7 +32,7 @@ export default {
       }
     },
     local: { type: String, default: '' },
-    height: { type: String, default: '14rem' }
+    height: { type: String, default: '16rem' }
   },
   components: {
     AreaFilter,
@@ -41,6 +42,7 @@ export default {
     SortWay
   },
   data: () => ({
+    num:0,
     filters: {
       baseFilters: {
         area: '',
@@ -51,15 +53,18 @@ export default {
       localCity: '',
       moreFilters: {}
     },
+    sortFlage:false,
     conf: [
-      { index: 0, name: '区域', value: '', checked: false },
-      { index: 1, name: '均价', value: '', checked: false },
-      { index: 2, name: '人气', value: '', checked: false },
-      { index: 3, name: '更多', value: '', checked: false }
+      { index: 0, name: '区域', value: '', checked: false,flag:false},
+      { index: 1, name: '均价', value: '', checked: false,flag:false},
+      { index: 2, name: '人气', value: '', checked: false,flag:false},
+      { index: 3, name: '更多', value: '', checked: false,flag:false}
     ],
     currentIndex: -1,
     arrowUpIcon: require('IMG/market/listArrowUp.png'),
-    arrowDownIcon: require('IMG/market/listArrowDown.png')
+    arrowDownIcon: require('IMG/market/listArrowDown.png'),
+    sortImg: require('IMG/market/sort.png'),
+    sortColorImg: require('IMG/market/sortColor.png')
   }),
   created() {
     if (this.local === '') {
@@ -69,8 +74,32 @@ export default {
     }
   },
   methods: {
+    areaColorHandle(){
+      this.conf[0].flag=true
+    },
+    priceColorHandle(){
+      this.conf[1].flag=true
+    },
+    popularityColorHandle(){
+      this.conf[2].flag=true
+    },
+    numHandle(num){//更多
+    if(num!=0){
+       this.conf[3].flag=true
+    }
+      this.num=num
+    },
+    resetNumHandle(){
+      this.num=0
+      this.conf[3].flag=false
+    },
+    sortHandle(){
+     this.currentIndex = this.currentIndex===4?-1:4 
+     this.sortFlage=!this.sortFlage
+    },
     itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
+      this.$emit('screen',val.index)
     },
     coverClickHandler() {
       // this.currentIndex = -1
@@ -79,6 +108,7 @@ export default {
     areaStrChange(val) {
       this.conf[0].value = val
       this.currentIndex = -1
+      
     },
     // 价格文字修改
     priceStrChange(val) {
@@ -96,8 +126,9 @@ export default {
     },
     sortChangeHandler() {
       this.currentIndex = -1
+      console.log(111111111111111);
     }
-  },
+   },
   watch: {
     value(val) {
       this.filters = val
@@ -111,8 +142,10 @@ export default {
     currentIndex(val) {
       if (val !== -1) {
         document.getElementsByClassName('choose-container')[0].style.height = this.height
+        this.$emit('sor',true)
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
+        this.$emit('sor',false)
       }
     },
     local(val) {
@@ -125,12 +158,16 @@ export default {
 }
 </script>
 <style lang="less">
+  .active{
+    color: #007AE6;
+  }
 .screen-container {
   position: relative;
+  padding-bottom:4px;
   > .screen-ul {
     display: flex;
     justify-content: space-between;
-    width: 357px;
+    width: 100%;
     height: 32px;
     padding-top: 12px;
     background: rgba(255, 255, 255, 1);
@@ -151,17 +188,17 @@ export default {
         font-size: 14px;
         font-weight: 400;
       }
-      span:nth-child(2) {
+      span:nth-child(3) {
         width: 16px;
         height: 16px;
-        margin-top: 3px;
+        margin-top: 1px;
       }
     }
     .sort {
       width: 16px;
       height: 17px;
-      background: url('../../assets/img/market/Combined Shape@2x.png') no-repeat;
-      background-size: contain;
+      // background: url('../../assets/img/market/Combined Shape@2x.png') no-repeat;
+      // background-size: contain;
       margin-right: 13px;
     }
   }

@@ -15,7 +15,7 @@ import { mapGetters } from 'vuex'
 
 export default {
   data: () => ({
-    commission: null
+    commission:""
   }),
   created() {
     this.linkerId = this.$route.params.id

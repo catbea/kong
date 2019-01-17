@@ -27,11 +27,11 @@
                 <button class="right-label right-label-blur" v-show="linkerVO.saleStatus == 0 ">热销中</button>
                 <button class="right-label right-label-red" v-show="linkerVO.saleStatus == 1">即将发售</button>
                 <button class="right-label right-label-grey" v-show="linkerVO.saleStatus == 2">售罄</button>
-                <button class="right-label right-label-gray" >{{linkerVO.linkerTags[0]}}</button>
-                <button class="right-label right-label-gray" >{{linkerVO.linkerTags[1]}}</button>
+                <button v-show="linkerVO.linkerTags && linkerVO.linkerTags.length>0" class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[0] : ''}}</button>
+                <button v-show="linkerVO.linkerTags && linkerVO.linkerTags.length>1" class="right-label right-label-gray" >{{linkerVO.linkerTags ? linkerVO.linkerTags[1] : ''}}</button>
               </p>
               <p class="dynamicsInfo-list-right-price" @click="godynamicsInfo(linkerVO.linkerId)">
-                {{linkerVO.price }}{{linkerVO.priceUnit }}
+                {{linkerVO.price>0 ? linkerVO.price+linkerVO.priceUnit :'价格待定' }}
                 <!-- <span class="right-price-text"></span> -->
                 <span class="right-price-open">{{linkerVO.openTimes }}次开通</span>
               </p>
@@ -89,12 +89,12 @@
               </span>
             </div>
             <div class="dynamics-list-content" @click="gocustomInfo(item)">
-              <p>查看浏览了楼盘  <span>{{item.linkerName}}</span></p>
+              <p>浏览了楼盘  <span>{{item.linkerName}}</span></p>
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
               <samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
               <span>{{item.currentArticleLength}}%</span></p>
-              <p>累计浏览<span>{{item.todayClickCount}}次</span>名片，平均停留<span>{{item.totalTime / 1000}}s</span></p>
+              <p>累计浏览<span>{{item.todayClickCount}}次</span>该楼盘，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
             <div class="dynamics-list-btn">
@@ -123,13 +123,11 @@
 import TagGroup from 'COMP/TagGroup'
 import ShadowBox from 'COMP/ShadowBox'
 import DynamicsData from 'COMP/Dynamics/DynamicsData'
-import DynamicsList from 'COMP/Dynamics/DynamicsList'
 import dynamicsService from 'SERVICE/dynamicsService'
 export default {
   components: {
     ShadowBox,
     DynamicsData,
-    DynamicsList,
     TagGroup
   },
   data() {

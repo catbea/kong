@@ -1,12 +1,12 @@
 ﻿export default [
   {
     path: '/',
-    name: 'dynamics',
-    component: resolve => require(['@/views/dynamics/index.vue'], resolve),
+    name: 'index',
+    component: resolve => require(['@/views/public/index.vue'], resolve),
     meta: {
-      title: '数据',
+      title: 'AW大师',
       tabbar: {
-        show: true
+        show: false
       }
     }
   },
@@ -71,6 +71,17 @@
     component: resolve => require(['@/views/dynamics/message/sysMessage.vue'], resolve),
     meta: {
       title: '系统消息',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/dynamics/message/unreadMessage',
+    name: 'unreadMessage',
+    component: resolve => require(['@/views/dynamics/message/unreadMessage.vue'], resolve),
+    meta: {
+      title: '未读消息',
       tabbar: {
         show: false
       }

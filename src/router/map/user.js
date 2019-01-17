@@ -19,6 +19,14 @@ export default [
     }
   },
   {
+    path: '/user/share-card',
+    name: 'share-card',
+    component: resolve => require(['@/views/user/share/index.vue'], resolve),
+    meta: {
+      title: '分享名片'
+    }
+  },
+  {
     path: '/user/edit',
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
@@ -67,6 +75,22 @@ export default [
     }
   },
   {
+    path: '/user/edit/userCompany',
+    name: 'user-edit-userCompany',
+    component: resolve => require(['@/views/user/edit/userCompany.vue'], resolve),
+    meta: {
+      title: '修改平台公司'
+    }
+  },
+  {
+    path: '/user/edit/userPlatform',
+    name: 'user-edit-userPlatform',
+    component: resolve => require(['@/views/user/edit/userPlatform.vue'], resolve),
+    meta: {
+      title: '修改我的机构'
+    }
+  },
+  {
     path: '/user/edit/userMechanism',
     name: 'userMechanism',
     component: resolve => require(['@/views/user/edit/userMechanism.vue'], resolve),
@@ -95,6 +119,15 @@ export default [
     path: '/user/articles/historicalArticles',
     name: 'historicalArticles',
     component: resolve => require(['@/views/user/articles/historicalArticles.vue'], resolve),
+    meta: {
+      title: '我的写一写'
+    }
+  },
+  //我的写一写二级列表
+  {
+    path: '/user/articles/easyLookChildList',
+    name: 'easyLookChildList',
+    component: resolve => require(['@/views/user/articles/easyLookChildList.vue'], resolve),
     meta: {
       title: '我的写一写'
     }
@@ -180,11 +213,30 @@ export default [
     }
   },
   {
+    path: '/user/myReport/reportCustomerEdit',
+    name: 'reportCustomerEdit',
+    component: resolve => require(['@/views/user/myReport/reportCustomerEdit.vue'], resolve),
+    meta: {
+      title: '我的报备'
+    }
+  },
+  {
     path: '/user/myMarket',
     name: 'mymarket',
     component: resolve => require(['@/views/user/myMarket/index.vue'], resolve),
     meta: {
       title: '我的楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/swiper',
+    name: 'swiper',
+    component: resolve => require(['@/views/user/myMarket/swiper.vue'], resolve),
+    meta: {
+      title: '我的轮播图',
       tabbar: {
         show: false
       }

@@ -75,9 +75,8 @@ export default {
 
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
 
-      this.$store.dispatch('userInfo', Object.assign(this.userInfo, { institutionName: val.name }))
-      this.$store.dispatch('userInfo', Object.assign(this.userInfo, { institutionId: val.id }))
-
+      this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { institutionId: val.id, institutionName: val.name }))
+      window.localStorage.setItem('institutionDisabled', false)
       this.saveInstitutionInfo()
 
       this.$router.back(-1)

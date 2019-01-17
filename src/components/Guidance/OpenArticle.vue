@@ -1,5 +1,5 @@
 <template>
-  <div class="popup-container" v-if="show">
+  <div class="popup-container" v-if="currentShow">
     <div class="bg_img guide-share" :style="{backgroundImage:'url('+shareGuideImg+')'}"></div>
     <div class="close-title">点击此处分享给好友</div>
     <div class="close-know" @click="popupShowControl(false)">知道了</div>
@@ -21,17 +21,18 @@ export default {
     }
   },
   data: () => ({
+    currentShow: false,
     shareGuideImg: require('IMG/guidance/guide_share@2x.png'),
   }),
   methods: {
     popupShowControl() {
-        this.show = false
+        this.currentShow = false
         window.localStorage.setItem('isFirst', true)
     }
   },
   watch: {
     show(val) {
-      this.show = val
+      this.currentShow = val
     },
     currentShow(val) {
       this.$emit('update:show', val)

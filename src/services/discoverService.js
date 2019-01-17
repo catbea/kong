@@ -21,35 +21,45 @@ class DiscoverService {
    * @param {*} current 当前页
    * @param {*} size 页大小
    */
-  getDiscoverList(city, classify, current, size = 10) {
+  getDiscoverList(city, classify, current, infoIds, size = 10) {
     return xhr({
       url: '/cpInformation/discoverList',
       body: {
         city,
         classify,
         current,
-        size
+        infoIds,
+        size,
       }
     })
   }
 
   /**
-   *
+   * 文章详情预览
    * @param {*} infoId
-   * @param {*} city
+   */
+  getDiscoverDetail(infoId) {
+    return xhr({
+      url: '/cpInformation/informationPreviewByToken',
+      body: {
+        infoId
+      }
+    })
+  }
+
+  /**
+   * 文章详情预览白名单(h5)
+   * @param {*} infoId
    * @param {*} enterpriseId
    * @param {*} agentId
-   * @param {*} type  1-游客 2-经纪人
    */
-  getDiscoverDetail(infoId, city, enterpriseId, agentId, type) {
+  getDiscoverDetailForH5(infoId, enterpriseId, agentId) {
     return xhr({
       url: '/cpInformation/informationPreview',
       body: {
         infoId,
-        city,
         enterpriseId,
         agentId,
-        type
       }
     })
   }
@@ -130,7 +140,35 @@ class DiscoverService {
     })
   }
 
-    /**
+  /**
+   * H5使用-文章详情好看列表
+   * @param {*} infoId 
+   * @param {*} enterpriseId
+   */
+  queryLikeList(infoId, enterpriseId) {
+    return xhr({
+      url: '/cpInformation/queryLikeList',
+      body: {
+        infoId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 文章详情好看列表
+   * @param {*} infoId 
+   */
+  queryLikeListByToken(infoId) {
+    return xhr({
+      url: '/cpInformation/queryLikeListByToken',
+      body: {
+        infoId
+      }
+    })
+  }
+
+  /**
    * 企业微信-查询文章举报反馈选项 
    */
   getFeedbackOptions() {
@@ -148,6 +186,102 @@ class DiscoverService {
       method: 'POST',
       url: '/informationfeedback/insertFeedback',
       body: param
+    })
+  }
+
+  /**
+   * H5使用-推荐房源列表
+   * @param {*} shareUuid 
+   * @param {*} enterpriseId 
+   */
+  queryLinkerListByIdsForH5(shareUuid, enterpriseId) {
+    return xhr({
+      url: '/myLinker/queryLinkerListByIdsForWhite',
+      body: {
+        shareUuid,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * h5文章详情页面TA的写一写
+   * @param {*} agentId 
+   * @param {*} enterpriseId 
+   * @param {*} infoIds 
+   */
+  queryArticleListForH5(agentId, enterpriseId, infoIds) {
+    return xhr({
+      url: '/cpInformation/queryShareArticleByAgentIdForWhite',
+      body: {
+        agentId,
+        enterpriseId,
+        infoIds
+      }
+    })
+  }
+
+  /**
+   * H5使用-获取楼盘小程序码(白名单)
+   * @param {*} agentId 
+   * @param {*} linkerId 
+   * @param {*} enterpriseId 
+   */
+  queryLinkerQrcode(agentId, linkerId, enterpriseId) {
+    return xhr({
+      url: '/cpShare/queryLinkerQrcode',
+      body: {
+        agentId,
+        linkerId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 获取楼盘小程序码
+   * @param {*} linkerId 
+   */
+  queryLinkerQrcodeByToken(linkerId) {
+    return xhr({
+      url: '/cpShare/queryLinkerQrcodeByToken',
+      body: {
+        agentId,
+        linkerId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * H5使用-获取文章小程序码(白名单)
+   * @param {*} agentId 
+   * @param {*} infoId 
+   * @param {*} enterpriseId 
+   */
+  queryArticleQrcode(agentId, infoId, enterpriseId) {
+    return xhr({
+      url: '/cpShare/queryArticleQrcode',
+      body: {
+        agentId,
+        infoId,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 获取文章小程序码
+   * @param {*} infoId 
+   */
+  queryArticleQrcodeByToken(infoId) {
+    return xhr({
+      url: '/cpShare/queryArticleQrcodeByToken',
+      body: {
+        agentId,
+        infoId,
+        enterpriseId
+      }
     })
   }
 }

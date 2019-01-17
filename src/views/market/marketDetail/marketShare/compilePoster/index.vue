@@ -91,9 +91,14 @@ export default {
       this.status = 2
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top').children[0], {
-        logging: false,
+        // logging: false,
+        // useCORS: true,
+        // dpr: 5,
+        backgroundColor: null,
+        scale: 3,
         useCORS: true,
-        dpr: 5
+        allowTaint: false,
+        logging: false,
       })
       canvas.style.width = '100%'
       canvas.style.height = '100%'

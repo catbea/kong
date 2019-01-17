@@ -36,7 +36,14 @@
               :finished-text="'没有更多了'"
               @load="onLoad"
             >
-              <discover-item v-for="(item,index) in item.list" :key="index" :data="item"></discover-item>
+              <discover-item
+                v-for="(item,index) in item.list"
+                :key="index"
+                :data="item"
+                @clickCollection="handlerCollection"
+                @clickEdit="handlerEdit"
+                @enterDetail="enterDetail"
+              ></discover-item>
             </van-list>
           </keep-alive>
         </van-tab>
@@ -46,19 +53,20 @@
 </template>
 <script>
 import AutomaticSwipes from 'COMP/Swipe/AutomaticSwipes'
-import discoverItem from 'COMP/DiscoverItem'
 import discoverService from 'SERVICE/discoverService'
+import DiscoverItem from 'COMP/DiscoverItem/index'
 import { mapGetters } from 'vuex'
 export default {
   components: {
     AutomaticSwipes,
-    discoverItem
+    DiscoverItem
   },
   data: () => ({
     tabs: [],
     swipeList: [],
     activeIndex: 0,
-    loading: false
+    loading: false,
+    idStr: ''
   }),
   created() {
     this.getInformationCarousel()
@@ -70,8 +78,17 @@ export default {
     // 获取轮播和tabs配置
     async getInformationCarousel() {
       const res = await discoverService.informationCarousel(this.userInfo.majorCity)
-      this.payloadTabs(res.infoSettingList)
       this.swipeList = res.infoCarouselList
+
+      let idList = []
+
+      for (let i = 0; i < this.swipeList.length; i++) {
+        idList.push(this.swipeList[i].id)
+      }
+
+      this.idStr = idList.toString()
+
+      this.payloadTabs(res.infoSettingList)
     },
     payloadTabs(tabs) {
       this.tabs.push({ index: 0, type: '', typeName: '热门', page: 1, finished: false, list: [], offsetHeight: 0 })
@@ -86,7 +103,9 @@ export default {
     },
     async onLoad() {
       let current = this.getCurrentType()
-      const result = await discoverService.getDiscoverList(this.userInfo.majorCity, current.type, current.page)
+      const result = await discoverService.getDiscoverList(this.userInfo.majorCity, current.type, current.page,this.idStr)
+      console.log(result, '发现列表数据')
+
       if (result.records.length > 0) {
         current.list = current.list.concat(result.records)
         if (current.page == result.page) {
@@ -114,6 +133,15 @@ export default {
     tabsChange(e) {
       let current = this.getCurrentType()
       document.querySelector('.router-view').scrollTop = current.offsetHeight
+    },
+    handlerCollection() {
+      console.log('111111111111')
+    },
+    handlerEdit() {
+      console.log('222222222222')
+    },
+    enterDetail(val) {
+      this.$router.push({ name: 'discover-detail', params: { id: val.id, city: val.city }, query: { agentId: val.agentId, enterpriseId: val.enterpriseId, classify: val.classify } })
     }
   },
   computed: {

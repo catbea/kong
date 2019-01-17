@@ -1,6 +1,6 @@
 <template>
   <div class="edit-paragraph">
-    <p class="paragraph-text">{{info.text}}</p>
+    <div class="paragraph-container" v-html="info.text"></div>
     <i v-if="this.info.status === 'edit'" class="icon iconfont icon-search_empty del-icon"  @click="delClickHandler"/>
     <div v-if="this.info.status === 'del'" class="repeal-del-container">
       <div class="del-btn" @click="repealClickHandler">撤销删除</div>
@@ -31,10 +31,16 @@ export default {
   margin: 0 -5px 5px;
   padding: 5px;
   text-indent: unset;
+  >.paragraph-container{
+    >img{
+      object-fit: cover;
+    }
+  }
   > .del-icon {
+    font-size: 16px;
     position: absolute;
     top: 4px;
-    right: -14px;
+    right: -15px;
     transform: translate(-50%, -50%);
     color: #ea4d2e;
   }
