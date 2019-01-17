@@ -52,6 +52,24 @@ class ArticleService {
       body: data
     })
   }
+
+  /**
+   * 认为好看的列表 userType 0-经纪人，1-客户
+   * @param {*} current 
+   * @param {*} clientId 
+   * @param {*} userType 
+   * @param {*} size 
+   */
+  queryLikeArticleList(current,clientId,userType,size=10){
+    return xhr({
+      url:'',
+      body:{
+        current,
+        clientId,
+        userType,
+      }
+    })
+  }
   
 }
 
