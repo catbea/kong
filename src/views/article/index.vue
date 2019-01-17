@@ -455,10 +455,10 @@ export default {
     goInfo(item) {
       let articleId = item.articleId
       let area = this.classifyName === this.userArea.city ? this.userArea.city : '全国'
-      let agentId = item.agentId
+      let agentId = this.userInfo.agentId
       let enterpriseId = this.userInfo.enterpriseId
       let classify = this.classify
-      this.$router.push(`/discover/${articleId}/${area}?agentId=${agentId}&enterpriseId=${enterpriseId}&classify=${classify}`)
+      this.$router.push(`/discover/${articleId}/${area}?agentId=${agentId}&enterpriseId=${enterpriseId}`)
     },
     // 去新增文章页面
     goAdd() {
