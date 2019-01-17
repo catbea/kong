@@ -220,7 +220,6 @@ export default {
       const result = await DynamicsService.updateAgentInfo(params)
       // 完善信息成功之后请求接口获取最新经纪人信息存储到vuex
       this.updateUserInfo()
-      this.$router.back(-1)
       window.localStorage.removeItem('distributorDisabled')
       window.localStorage.removeItem('institutionDisabled')
     },
@@ -236,6 +235,8 @@ export default {
         institutionName: res.institutionName
       }
       this.$store.dispatch('userInfo', Object.assign(this.userInfo, params))
+      this.$router.back(-1)
+      // location.reload()
     }
   },
   computed: {
