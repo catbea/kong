@@ -190,7 +190,7 @@ export default {
   > .search-body {
     width: 100%;
     background: #ffffff;
-    height: 44px;
+    height: 54px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,7 +200,8 @@ export default {
 
   > .list-result {
     width: 100%;
-    border-top: 1px #e5e5f0 solid;
+    margin-top: 1px;
+    
   }
 }
 </style>

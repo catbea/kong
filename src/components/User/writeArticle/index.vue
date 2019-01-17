@@ -68,7 +68,7 @@ export default {
   padding: 11px 15px;
   justify-content: space-between;
   background: #ffffff;
-  border-top: 1px #e5e5f0 solid;
+  margin-bottom: 1px;
 
   > .write-item-left {
     display: flex;
