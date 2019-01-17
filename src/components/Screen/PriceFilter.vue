@@ -6,8 +6,8 @@
 <script>
 export default {
   created() {
-    if(this.$route.name==='mymarket'){
-      this.flag=true
+    if (this.$route.name === 'mymarket') {
+      this.flag = true
     }
   },
   props: {
@@ -15,7 +15,7 @@ export default {
     value: String
   },
   data: () => ({
-    flag:false,
+    flag: false,
     items: [
       {
         text: '总价',
@@ -144,8 +144,8 @@ export default {
       }
     }
   }
-  &.act{
-  height:265px;
-}
+  &.act {
+    height: 265px;
+  }
 }
 </style>

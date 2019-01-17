@@ -45,13 +45,10 @@ export default {
     trackList: { type: Array }
   },
   data: () => ({
- 
     backColor: true
   }),
 
-  mounted() {
-  },
-
+  mounted() {}
 }
 </script>
 <style lang="less">

@@ -79,16 +79,16 @@ export default {
       nullIcon: require('IMG/user/bill-null.png'),
       nullcontent: '暂无信息',
       haveData: true,
-      current:1,
+      current: 1,
       size: 20,
       loading: false,
       finished: false,
-      UnreadMsgTotal:0
+      UnreadMsgTotal: 0
     }
   },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
-      if(v) {
+      if (v) {
         this.updateNewMsg()
       }
     }
@@ -100,25 +100,25 @@ export default {
     updateNewMsg() {
       let msgContent = this.$store.getters.newMsgContent
       this.UnreadMsgTotal++
-      for(let item of this.messageList) {
+      for (let item of this.messageList) {
         let cid = item.keyword.split('|')[0]
-        if(msgContent.clientId == cid) {
+        if (msgContent.clientId == cid) {
           let msgShow = {}
           item.unreadMsgCount = parseInt(item.unreadMsgCount) + 1
           // console.log(msgContent, 'msgContent+++++=')
-          if(msgContent.desc == 1) {
+          if (msgContent.desc == 1) {
             item.Desc = 1
             item.msgType == 'TIMTextElem'
             msgShow.Text = msgContent.data
-          } else if(msgContent.desc == 2){
+          } else if (msgContent.desc == 2) {
             item.Desc = 2
             item.msgType == 'TIMCustomElem'
-            msgShow = {Ext: msgContent.ext}
-          } else if(msgContent.desc == 3){
+            msgShow = { Ext: msgContent.ext }
+          } else if (msgContent.desc == 3) {
             item.Desc = 3
             item.msgType == 'TIMCustomElem'
             msgShow = { Ext: msgContent.ext }
-          } else if(msgContent.desc == 4){
+          } else if (msgContent.desc == 4) {
             item.Desc = 1
             item.msgType == 'TIMTextElem'
             msgShow.Text = msgContent.data
@@ -142,23 +142,23 @@ export default {
     // async godiscoverHelp(){
     //   this.$router.push('/discover/discoverHelp')
     // },
-    async getsetMsgRead(){
+    async getsetMsgRead() {
       //客户id，如果填写则更新单个客户为已读，不填，则更新这个经纪人的所有消息为已读
-      
+
       await dynamicsService.getsetMsgRead()
-       const res = await dynamicsService.getAgentMsgAndTotal(1,1,this.size)
-       this.messageList = res.msgPage.records
-       this.sysMessage = res.systemMessage
-       this.getcpUnreadMsgTotal()
+      const res = await dynamicsService.getAgentMsgAndTotal(1, 1, this.size)
+      this.messageList = res.msgPage.records
+      this.sysMessage = res.systemMessage
+      this.getcpUnreadMsgTotal()
       // window.location.reload()
-    //  this.getMsgList()
+      //  this.getMsgList()
     },
-  
+
     gosysMessage() {
       this.$router.push('/dynamics/message/sysMessage')
     },
     //查看未读消息
-   
+
     formatMsg(item) {
       if (item.msgType == 'TIMCustomElem') {
         let msg = JSON.parse(item.msgShow)
@@ -181,9 +181,9 @@ export default {
       }
     },
     async getMsgList() {
-      const res = await dynamicsService.getAgentMsgAndTotal(1,this.current,this.size)
+      const res = await dynamicsService.getAgentMsgAndTotal(1, this.current, this.size)
       this.messageList = this.messageList.concat(res.msgPage.records)
-      if(this.current == 1) this.sysMessage = res.systemMessage
+      if (this.current == 1) this.sysMessage = res.systemMessage
       if (res.msgPage.records.length > 0 || res.systemMessage != '') {
         this.haveData = true
       } else {
@@ -197,14 +197,13 @@ export default {
       this.getcpUnreadMsgTotal()
     },
     //未读消息数
-    async getcpUnreadMsgTotal(){
+    async getcpUnreadMsgTotal() {
       const res = await dynamicsService.getcpUnreadMsgTotal()
       this.UnreadMsgTotal = res.count
-
     },
-      async goSelestMessage(){
-       this.$router.push({path: '/dynamics/message/unreadMessage', query: {UnreadMsgTotal: this.UnreadMsgTotal} })
-    },
+    async goSelestMessage() {
+      this.$router.push({ path: '/dynamics/message/unreadMessage', query: { UnreadMsgTotal: this.UnreadMsgTotal } })
+    }
   }
 }
 </script>
@@ -214,39 +213,38 @@ export default {
   background: rgba(247, 249, 250, 1);
   > .messageInfo-back {
     background: #ffffff;
-    > .messageInfo-wd{
-      height:50px;
-      background:rgba(255,255,255,1);
+    > .messageInfo-wd {
+      height: 50px;
+      background: rgba(255, 255, 255, 1);
       border-bottom: 1px solid #eeeeee;
       // padding: 7px 16px;
       padding: 0 0.42667rem;
       line-height: 37px;
-      .messageInfo-wd-left{
-        font-size:14px;
-      font-weight:400;
-      color:rgba(51,51,51,1);
-      //line-height:20px;
-      position: relative;
-      padding-top: 6px;
+      .messageInfo-wd-left {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        //line-height:20px;
+        position: relative;
+        padding-top: 6px;
       }
-      .messageInfo-wd-right{
+      .messageInfo-wd-right {
         float: right;
-        .messageInfo-wd-select{
-          width:72px;
+        .messageInfo-wd-select {
+          width: 72px;
         }
-        .messageInfo-wd-right-select{
-          font-size:12px;
-          font-weight:400;
-          color:rgba(0,122,230,1);
-          line-height:17px;
-          height:24px;
-          border-radius:22px;
-          border:1px solid rgba(0,122,230,1);
+        .messageInfo-wd-right-select {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(0, 122, 230, 1);
+          line-height: 17px;
+          height: 24px;
+          border-radius: 22px;
+          border: 1px solid rgba(0, 122, 230, 1);
           margin-left: 8px;
           background-color: #ffffff;
           padding: 0 12px;
         }
-
       }
     }
     .messageInfo-sys {
@@ -277,7 +275,7 @@ export default {
             // height:18px;
             border: 0;
             position: absolute;
-           // margin-left: 35px;
+            // margin-left: 35px;
             margin-left: 18px;
             margin-top: 8px;
             padding: 1px 3px;

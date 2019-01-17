@@ -164,8 +164,8 @@ export default {
     //   let target = indexList[Math.floor(indexList.length / 2)]
     //   document.querySelector('.discover-detail-content').insertBefore(el, target)
     // },
-    singleAddClickHandler(){
-      console.log(123132);
+    singleAddClickHandler() {
+      console.log(123132)
       this.singleShow = true
     },
     // 底部栏帮助按钮点击
@@ -275,4 +275,3 @@ export default {
   }
 }
 </style>
-
