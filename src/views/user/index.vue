@@ -188,6 +188,7 @@ export default {
   fill: currentColor;
   overflow: hidden;
 }
+.user-page{height:auto!important;}
 .popup-view {
   width: 280px;
   height: 417px;
@@ -272,7 +273,7 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
-        margin-top:4px;
+        margin-top:8px;
       }
       .politeness{
         position:absolute;
