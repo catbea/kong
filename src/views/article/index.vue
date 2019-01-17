@@ -163,15 +163,15 @@
           <p v-if="replayStatus===1">{{commentItem.articleTitle}}</p>
           <p v-else>{{replayItem.senderName}}: {{replayItem.content}}</p>
         </div>
-        <div class="replay-title">{{}}</div>
         <div class="replay-box">
           <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span>
           <textarea
+            placeholder="最多输入140个字"
             class="textarea"
             name=""
             id=""
             ref="replaybox"
-            maxlength="280"
+            maxlength="140"
             v-model="replayCnt"
             :style="{'text-indent': (replayStatus===2 ? '75px' : '')}"
           ></textarea>
@@ -844,6 +844,10 @@ export default {
           line-height: 1.5;
           padding: 5px 10px;
           font-size: 14px;
+          &::-webkit-input-placeholder {
+            font-size: 14px;
+            color: #999;
+          }
         }
       }
     }
