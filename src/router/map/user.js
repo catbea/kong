@@ -63,7 +63,7 @@ export default [
     name: 'user-edit-phone',
     component: resolve => require(['@/views/user/edit/userEditPhone.vue'], resolve),
     meta: {
-      title: '修改手机号'
+      title: '修改联系电话'
     }
   },
   {

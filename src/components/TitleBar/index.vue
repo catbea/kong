@@ -50,6 +50,7 @@ export default {
     font-size: 20px;
     font-weight: 600;
     color: #333333;
+    font-family:PingFangSC-Semibold;
     // padding-top: 10px;
   }
   .link-text {

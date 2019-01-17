@@ -47,6 +47,7 @@ export default {
       line-height: 22px;
       span {
         color: #007ae6;
+        font-family:PingFangSC-Regular;
       }
     }
     .li {
