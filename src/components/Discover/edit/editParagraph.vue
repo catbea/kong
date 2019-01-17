@@ -1,7 +1,7 @@
 <template>
   <div class="edit-paragraph">
     <div class="paragraph-container" v-html="info.text"></div>
-    <i v-if="this.info.status === 'edit'" class="icon iconfont icon-search_empty del-icon"  @click="delClickHandler"/>
+    <i v-if="this.info.status === 'edit'" class="icon iconfont icon-search_empty del-icon"  @click.stop="delClickHandler"/>
     <div v-if="this.info.status === 'del'" class="repeal-del-container">
       <div class="del-btn" @click="repealClickHandler">撤销删除</div>
     </div>

@@ -168,12 +168,13 @@ export default {
         color: #ffffff;
         font-size: 5px;
         margin-top: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         > .label-text {
-          font-size: 5px;
+          font-size: 10px;
           color: #ffffff;
-          line-height: 15px;
-          margin-left: 1px;
         }
       }
 

@@ -7,8 +7,12 @@
       </div>
       <div class="house-box">
         <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
-          <discover-item2 v-for="(item,index) in projectList" :key="index" :dataArr="item" :indexData="index" @click.native="selectHandle(item)"/>
+          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :key="index" :dataArr="item" :indexData="index" @click.native="selectHandle(item)"/>
         </van-list>
+      </div>
+      <div class="van-hairline--top operate-box">
+        <div class="cancel-btn" @click="cancelBtnClick">取消</div>
+        <div class="submit-btn" @click="submitBtnClick">确认</div>
       </div>
     </div>
     <div v-else class="city-select-container"></div>
@@ -29,7 +33,9 @@ export default {
     DiscoverItem2
   },
   props: {
-    value: false // 对应show
+    value: { type: Boolean, default: false }, // 对应show.是否显示
+    maxSelect: { type: Number, default: 1 }, // 限制个数
+    selected: [] // 已经选中
   },
   data: () => ({
     singleShow: false,
@@ -52,6 +58,7 @@ export default {
     this.searchInfo.siteText = this.userInfo.majorCity
   },
   methods: {
+    // 搜索框文字改变时触发搜索
     searchChangeHandle(name) {
       this.finished = false
       this.page = 1
@@ -59,6 +66,7 @@ export default {
       this.projectList = []
       this.getLinkerList()
     },
+    // 加载数据方法 整合加载更多和重新搜索
     async getLinkerList() {
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let payload = screenFilterHelper(this.projectName, mergeFilters)
@@ -76,7 +84,7 @@ export default {
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
-          isChecked: false,
+          isChecked: this.existCheck(item.linkerId) !== -1,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`
         }
@@ -89,16 +97,44 @@ export default {
       this.page++
       this.loading = false
     },
+    // 切换到地域切换
     areaClickHandle() {
       this.status = 2
     },
+    // 验证是否已经被点击,不存在返回-1,存在返回index
+    existCheck(linkerId) {
+      for (let i = 0; i < this.selectedItems.length; i++) {
+        if (this.selectedItems[i].linkerId === linkerId) return i
+      }
+      return -1
+    },
+    // 验证是否可以继续选中
+    enableCheck() {
+      return this.selectedItems.length < this.maxSelect
+    },
+    // item点击
     selectHandle(item) {
-      const index = this.selectedItems.indexOf(item)
+      const index = this.existCheck(item.linkerId)
       if (index === -1) {
-        this.selectedItems.push(item)
+        if (this.enableCheck()) {
+          this.selectedItems.push(item)
+        } else {
+          // TODO 提示已到最大个数
+        }
       } else {
         this.$delete(this.selectedItems, index)
       }
+      console.log('result', this.selectedItems)
+    },
+    // 点击取消
+    cancelBtnClick() {
+      this.selectedItems = []
+      this.singleShow = false
+    },
+    // 点击确认
+    submitBtnClick() {
+      this.$emit('submit', this.selectedItems)
+      this.singleShow = false
     }
   },
   watch: {
@@ -121,5 +157,51 @@ export default {
 .single-select-box {
   width: 90%;
   height: 94%;
+  border-radius: 4px;
+  > .search-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    > .search-box {
+      position: relative;
+      margin: 8px 10px;
+    }
+    > .house-box {
+      flex: 1;
+      margin-bottom: 30px;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    > .operate-box {
+      position: fixed;
+      width: 100%;
+      height: 50px;
+      bottom: 0;
+      flex: 1;
+      display: flex;
+      justify-content: space-around;
+      background: #fff;
+      > div {
+        font-size: 12px;
+        color: #ffffff;
+        font-weight: 400;
+        width: 120px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        letter-spacing: 2px;
+        margin: 9px;
+        border-radius: 6px;
+        &.cancel-btn {
+          background: #404457;
+        }
+        &.submit-btn {
+          background: #007ae6;
+        }
+      }
+    }
+  }
 }
 </style>
