@@ -16,7 +16,7 @@
         <edit-viewpoint/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="mergeData" :count="1" @click.native="singleAddClickHandler()"/>
+          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click.native="singleAddClickHandler()" />
         </div>
       </div>
     </div>
@@ -32,11 +32,11 @@
     <div class="fixed-bar">
       <div class="left-operation">
         <div class @click="helpClickHandler">
-          <i class="icon iconfont icon-chat_register_rb_n"></i>
+          <i class="icon iconfont icon-write_help"></i>
           帮助
         </div>
         <div class @click="resetClickHandler">
-          <i class="icon iconfont icon-chat_register_rb_n"></i>
+          <i class="icon iconfont icon-write_reset"></i>
           重置
         </div>
       </div>
@@ -45,7 +45,7 @@
         <div class="save-btn" @click="saveClickHandler">保存</div>
       </div>
     </div>
-    <single-select-box v-model="singleShow"/>
+    <single-select-box v-model="singleShow" @submit="selectSubmitHandler"/>
     <!-- multiple -->
   </div>
 </template>
@@ -78,10 +78,11 @@ export default {
     renderDom: [],
     viewpointEditShow: false,
     viewpointText: '',
-    mergeData: [], // 混入文章中的楼盘信息
+    inlayHouse: [], // 混入文章中的楼盘信息
     recommendList: [], // 文末的推荐文章
     singleShow: false,
-    multiShow: false
+    multiShow: false,
+    target:null,
   }),
   created() {
     this.id = this.$route.params.id
@@ -146,26 +147,8 @@ export default {
     repealParagraphHandler(e) {
       e.dom.status = 'edit'
     },
-
-    // 创建空楼盘dom
-    // createHouses() {
-    //   let el = document.createElement('div')
-    //   el.classList.add('edit-houses-container')
-    //   // 添加“+”图标
-    //   let addBtn = document.createElement('i')
-    //   addBtn.classList.add('icon', 'iconfont', 'icon-Focuson_', 'add-icon')
-    //   el.appendChild(addBtn)
-    //   // 添加文本
-    //   let helpText = document.createElement('p')
-    //   helpText.innerText = '这里可以插入您推荐的楼盘'
-    //   el.appendChild(helpText)
-    //   let indexList = document.querySelector('.discover-detail-content').children
-    //   console.log('indexList', indexList.length)
-    //   let target = indexList[Math.floor(indexList.length / 2)]
-    //   document.querySelector('.discover-detail-content').insertBefore(el, target)
-    // },
     singleAddClickHandler() {
-      console.log(123132)
+      this.target = 'inlayHouse'
       this.singleShow = true
     },
     // 底部栏帮助按钮点击
@@ -179,7 +162,14 @@ export default {
     // 底部栏预览按钮点击
     async previewClickHandler() {},
     // 底部栏保存按钮点击
-    saveClickHandler() {}
+    saveClickHandler() {},
+    selectSubmitHandler(e){
+      if(this.target === 'inlayHouse'){
+        this.inlayHouse = e
+      }
+      // console.log('快看快看快看快看快看快看快看快看快看快看',e);
+      // this.target = e
+    }
   }
 }
 </script>
