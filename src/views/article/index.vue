@@ -453,7 +453,7 @@ export default {
           receiverName: this.replayItem.senderName,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
-          senderName: this.userInfo.nickName,
+          senderName: this.userInfo.name,
           senderSource: 0,
           type: type
         })
