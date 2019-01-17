@@ -67,8 +67,8 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 25"
-                      @click="item.likeCount=25"
+                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                      @click="item.likeCount=15"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
