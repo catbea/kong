@@ -115,12 +115,14 @@ export default {
           font-size: 15px;
           font-weight: 600;
           padding-right: 12px;
+          font-family:PingFangSC-Semibold;
         }
         > .estate-area {
           font-size: 12px;
           font-weight: 400;
           color: #999999;
           flex: 1;
+          font-family:PingFangSC-Regular;
         }
       }
     }
@@ -153,6 +155,7 @@ export default {
       color: #333333;
       font-size: 13px;
       margin-left: 8px;
+      font-family:PingFangSC-Regular;
     }
   }
 }
