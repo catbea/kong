@@ -27,13 +27,12 @@
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
+            <span class="icon iconfont icon-found_like"></span>
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <div class="bg_img easy-look-icon" :style="{backgroundImage:'url('+easylookImg+')'}"></div>
-            <!-- <i v-if="likeFlag===1" class="icon iconfont icon-Building_details_col"></i> -->
-            <!-- <i v-else class="icon iconfont icon-Building_details_col1"></i> -->
+            <span class="icon iconfont icon-found_like" v-if="likeFlag"></span>
+            <span class="icon iconfont icon-found_like_pre" v-else></span>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
@@ -129,6 +128,7 @@ import { uuid } from '@/utils/tool'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
+import articleService from 'SERVICE/articleService'
 export default {
   components: {
     TitleBar,
@@ -278,8 +278,17 @@ export default {
     },
 
     // 好看点击事件
-    easyLookClickHandler() {},
-    moreLikeListHandler() {},
+    async easyLookClickHandler() {
+      this.likeFlag = this.likeFlag === true ? 0 : 1
+      let param = {
+        infoId: this.id,
+        likeFlag: this.likeFlag
+      }
+      const res = await articleService.updateLike(param)
+    },
+    moreLikeListHandler() {
+
+    },
     // 点击评论
     commentClickHandler() {
       this.showCommentAlert = true
@@ -548,11 +557,13 @@ export default {
         .easy-look-text {
           color: #445166;
           font-size: 14px;
+          margin-left: 4px;
+          margin-top: 1px;
         }
       }
       > .easy-look-list {
         padding-left: 24px;
-        padding-top: 8px;
+        padding-top: 6px;
         width: 260px;
         > .easy-look-name {
           color: #445166;
