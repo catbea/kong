@@ -8,8 +8,8 @@
 <script>
 export default {
   created() {
-    if(this.$route.name==='mymarket'){
-      this.flag=true
+    if (this.$route.name === 'mymarket') {
+      this.flag = true
     }
   },
   props: {
@@ -17,7 +17,7 @@ export default {
     value: String
   },
   data: () => ({
-    flag:false,
+    flag: false,
     checked: null,
     conf: {
       '-1,-1': '不限',
@@ -66,9 +66,9 @@ export default {
       line-height: 49px;
     }
   }
-  &.act{
-  height:265px;
-  overflow: scroll;
+  &.act {
+    height: 265px;
+    overflow: scroll;
   }
 }
 </style>

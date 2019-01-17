@@ -18,13 +18,16 @@
     <div class="step step6" v-show="step===6">
       <img src="../../assets/img/article/guide6.png" alt="" srcset="">
     </div>
-    <div class="step step6" v-show="step===7">
+    <div class="step step7" v-show="step===7">
       <img src="../../assets/img/article/guide7.png" alt="" srcset="">
     </div>
+    <div class="step step8" v-show="step===8">
+      <img src="../../assets/img/article/guide8.png" alt="" srcset="">
+    </div>
     <div class="action-btn" :class="'step'+step">
-      <button class="next" v-show="step < 6" @click="nextStep">下一步</button>
-      <button class="skip" v-show="step < 6" @click="hideStep">跳过</button>
-      <button class="save" v-show="step === 6" @click="hideStep">知道了</button>
+      <button class="next" v-show="step < 8" @click="nextStep">下一步</button>
+      <button class="skip" v-show="step < 8" @click="hideStep">跳过</button>
+      <button class="save" v-show="step === 8" @click="hideStep">知道了</button>
     </div>
   </div>
 </template>
@@ -38,69 +41,72 @@ export default {
   },
   methods: {
     // 下一步
-    nextStep () {
-      this.step += 1 
+    nextStep() {
+      this.step += 1
     },
     // 跳过
-    hideStep () {
+    hideStep() {
       this.$emit('hideGuide')
-    } 
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.article-guide{
+.article-guide {
   position: fixed;
   width: 100%;
   top: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
   z-index: 9;
-  .step{
+  .step {
     height: 100%;
     position: relative;
     z-index: 3;
   }
-  .action-btn{
-     position: absolute;
-     margin:  0 72px;
-     text-align: center;
-     z-index: 3;
-     width: 230px;
-     button{
-       border: 1px solid #fff;
-       height: 32px;
-       width: 95px;
-       color: #fff;
-       border-radius: 16px;
-       background: transparent;
-       font-size: 16px;
-       &.next{
-         margin-right: 40px;
-       }
-     }
-     &.step1{
-       top: 370px;
-     }
-     &.step2{
-       top: 480px;
-     }
-     &.step3{
-       top: 60px;
-     }
-     &.step4{
-       top: 370px;
-     }
-     &.step5{
-       top: 420px;
-     }
-     &.step6{
-       top: 130px;
-     }
-     &.step7{
-       top: 333px;
-     }
+  .action-btn {
+    position: absolute;
+    margin: 0 72px;
+    text-align: center;
+    z-index: 3;
+    width: 230px;
+    button {
+      border: 1px solid #fff;
+      height: 32px;
+      width: 95px;
+      color: #fff;
+      border-radius: 16px;
+      background: transparent;
+      font-size: 16px;
+      &.next {
+        margin-right: 40px;
+      }
+    }
+    &.step1 {
+      top: 370px;
+    }
+    &.step2 {
+      top: 480px;
+    }
+    &.step3 {
+      top: 60px;
+    }
+    &.step4 {
+      top: 370px;
+    }
+    &.step5 {
+      top: 420px;
+    }
+    &.step6 {
+      top: 130px;
+    }
+    &.step7 {
+      top: 72px;
+    }
+    &.step8 {
+      top: 333px;
+    }
   }
 }
 </style>

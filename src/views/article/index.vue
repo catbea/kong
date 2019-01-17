@@ -113,13 +113,13 @@
                     src="../../assets/img/article/like2.png"
                     alt=""
                     v-if="item.praiseStatus===1"
-                    @click="updateLike(item.articleId, 0, index)"
+                    @click="updateLike(item, 0, index)"
                   >
                   <img
                     src="../../assets/img/article/like1.png"
                     alt=""
                     v-else
-                    @click="updateLike(item.articleId, 1, index)"
+                    @click="updateLike(item, 1, index)"
                   >
                 </span>
                 <span class="comment-icon">
@@ -256,7 +256,8 @@ export default {
       dialogX: '', // 弹框位置
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
-      nodataStatus: false
+      nodataStatus: false,
+      updateLikeItem: '' //点赞
     }
   },
   created() {
@@ -343,9 +344,14 @@ export default {
       this.getArticleList()
     },
     // 点赞
-    async updateLike(articleId, praiseStatus, index) {
+    async updateLike(item, praiseStatus, index) {
+      // 防止重复点赞
+      if(this.updateLikeItem === item) {
+        return false
+      }
+      this.updateLikeItem = item
       let result = await ArticleService.updateLike({
-        infoId: articleId,
+        infoId: item.articleId,
         likeFlag: praiseStatus
       })
       this.articleData[index].praiseStatus = praiseStatus
@@ -357,7 +363,7 @@ export default {
         this.articleData[index].praiseAndShareUserVOS.unshift({
           operationTime: +new Date(),
           userId: this.userInfo.agentId,
-          userName: this.userInfo.nickName,
+          userName: this.userInfo.name,
           userSource: 0
         })
       }
@@ -434,9 +440,9 @@ export default {
       }
     },
     // 点击好看名字弹框
-    showLike (data) {
+    showLike(data) {
       let clientId = data.userSource === 0 ? '' : data.userId
-      this.$router.push({path: '/user/articles/easyLookList', query:{userType: data.userSource, clientId: clientId}})
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: data.userSource, clientId: clientId } })
     },
     // showLike(e, data) {
     //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
@@ -457,14 +463,14 @@ export default {
     goInfo(item) {
       let articleId = item.articleId
       let area = this.classifyName === this.userArea.city ? this.userArea.city : '全国'
-      let agentId = item.agentId
+      let agentId = this.userInfo.agentId
       let enterpriseId = this.userInfo.enterpriseId
       let classify = this.classify
-      this.$router.push(`/discover/${articleId}/${area}?agentId=${agentId}&enterpriseId=${enterpriseId}&classify=${classify}`)
+      this.$router.push(`/discover/${articleId}/${area}?agentId=${agentId}&enterpriseId=${enterpriseId}`)
     },
     // 去新增文章页面
     goAdd() {
-      this.$router.push({name:'addLinker'})
+      this.$router.push({ name: 'addLinker' })
     },
     // 去名片详情页
     // goCard() {},

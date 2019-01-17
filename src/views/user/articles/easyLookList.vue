@@ -1,7 +1,12 @@
 <template>
   <div class="easy-look-body">
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <div class="easy-look-list">
+      <div
+        class="easy-look-list"
+        v-if="(index,item) in this.likeArray"
+        :key="index"
+        @click="articleDetail(item.id)"
+      >
         <div class="easy-look-time">
           <span class="time-text">1月9日</span>
         </div>
@@ -23,6 +28,7 @@
 </template>
 <script>
 import articleService from 'SERVICE/articleService'
+import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
@@ -30,11 +36,15 @@ export default {
       current: 1,
       clientId: '',
       userType: '',
-      likeArray: []
+      likeArray: [],
+      finished: false,
+      loading: false
     }
   },
 
-  created() {},
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
 
   mounted() {
     this.clientId = this.$route.query.clientId
@@ -44,7 +54,6 @@ export default {
   methods: {
     async getLikeList(current, clientId, userType) {
       const result = await articleService.queryLikeArticleList()
-
       if (result.records.length > 0) {
         this.likeArray = this.likeArray.concat(result.records)
       }
@@ -52,6 +61,11 @@ export default {
 
     onLoad() {
       this.getLikeList(this.current, this.clientId, this.userType)
+    },
+
+    //进入文章详情
+    articleDetail(id) {
+      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: id, city: '全国' } })
     }
   }
 }
@@ -134,4 +148,3 @@ export default {
   }
 }
 </style>
-

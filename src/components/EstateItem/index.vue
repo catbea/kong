@@ -69,7 +69,7 @@ export default {
       background-color: #999999;
       border-radius: 6px;
       width: 120px;
-      min-width: 120px;;
+      min-width: 120px;
       height: 90px;
       margin: 15px;
       flex-basis: 120px;
@@ -99,7 +99,7 @@ export default {
         color: #666666;
         padding-bottom: 3px;
       }
-      >.tag-box{
+      > .tag-box {
         margin-left: -3px;
       }
       > .estate-info {
@@ -157,4 +157,3 @@ export default {
   }
 }
 </style>
-  

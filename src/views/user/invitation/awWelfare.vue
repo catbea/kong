@@ -110,7 +110,6 @@ export default {
       image.style.width = imgW + 1 + 'px'
       image.style.maxWidth = imgW + 1 + 'px'
       image.style.height = imgH + 1 + 'px'
-      
 
       this.status = 2
     },

@@ -52,7 +52,7 @@ export default {
   },
   data: () => ({
     haveData: true,
-    hotResult:[],
+    hotResult: [],
     titleBarConf: {
       title: '热门楼盘'
     },
@@ -89,14 +89,14 @@ export default {
       deep: true
     }
   },
- async created() {
+  async created() {
     this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
     this.searchContent.siteText = this.selectedCity || '全国'
     this.getBrokerInfo()
     await this.hotMarketHandle()
   },
   methods: {
-    touchmove(){},
+    touchmove() {},
     async getProjectList() {
       let param = { current: this.page, size: this.pageSize }
       //组装检索条件
@@ -105,50 +105,54 @@ export default {
       param = Object.assign(param, _filters)
       param.city = this.selectedCity
       const res = await marketService.getHouseList(param)
-      console.log(res,"出来的数据");
-      
-      if(this.projectFilters.baseFilters){//筛选时
-        if(res.records.length > 0){//有结果时
-          this.marketList = this.marketList.concat(res.records);
-          if(res.records.length<8){//条数小于8时
-            console.log(res.records.length,"小与10了");
-            this.haveData=false
+      console.log(res, '出来的数据')
+
+      if (this.projectFilters.baseFilters) {
+        //筛选时
+        if (res.records.length > 0) {
+          //有结果时
+          this.marketList = this.marketList.concat(res.records)
+          if (res.records.length < 8) {
+            //条数小于8时
+            console.log(res.records.length, '小与10了')
+            this.haveData = false
             let arr = []
             for (let i = 0; i < this.marketList.length; i++) {
-            const element = this.marketList[i];
-            arr.push(element.linkerId) 
+              const element = this.marketList[i]
+              arr.push(element.linkerId)
             }
             arr = arr.join()
             await this.hotMarketHandle(arr)
-            console.log(this.marketList);
+            console.log(this.marketList)
           }
           if (res.pages === 0 || this.page === res.pages) {
-             this.finished = true
+            this.finished = true
           }
-            this.page++
-            this.loading = false
-          }else{
-            console.log(res.records.length,"为0了");
-            this.haveData=false
-            let arr = []
-            for (let i = 0; i < this.marketList.length; i++) {
-            const element = this.marketList[i];
-            arr.push(element.linkerId) 
-            }
-            arr = arr.join()
-            await this.hotMarketHandle(arr)
-            if (res.pages === 0 || this.page === res.pages) {
-             this.finished = true
-            }
-            this.loading = false
+          this.page++
+          this.loading = false
+        } else {
+          console.log(res.records.length, '为0了')
+          this.haveData = false
+          let arr = []
+          for (let i = 0; i < this.marketList.length; i++) {
+            const element = this.marketList[i]
+            arr.push(element.linkerId)
           }
-      }else{//未筛选时
+          arr = arr.join()
+          await this.hotMarketHandle(arr)
+          if (res.pages === 0 || this.page === res.pages) {
+            this.finished = true
+          }
+          this.loading = false
+        }
+      } else {
+        //未筛选时
         this.marketList = this.marketList.concat(res.records)
-      if (res.pages === 0 || this.page === res.pages) {
-        this.finished = true
-      }
-      this.page++
-      this.loading = false
+        if (res.pages === 0 || this.page === res.pages) {
+          this.finished = true
+        }
+        this.page++
+        this.loading = false
       }
     },
     onClickHandler() {
@@ -174,15 +178,15 @@ export default {
     focusHandler() {
       this.$router.push({ name: 'market-search' })
     },
-   async hotMarketHandle(arr){
+    async hotMarketHandle(arr) {
       let hotParams = {
-          city: this.selectedCity || '全国',
-          hotTotal: 5,
-          linkerIds:arr
-        }
-        const hotRes = await userService.getHotLinker(hotParams)
-        this.hotResult = hotRes
-        console.log(hotRes,'热门数据');    
+        city: this.selectedCity || '全国',
+        hotTotal: 5,
+        linkerIds: arr
+      }
+      const hotRes = await userService.getHotLinker(hotParams)
+      this.hotResult = hotRes
+      console.log(hotRes, '热门数据')
     }
   }
 }
@@ -196,7 +200,7 @@ export default {
     z-index: 3;
   }
   .already-open-page {
-    margin-top:105px;
+    margin-top: 105px;
   }
   .search-box {
     position: relative;
@@ -220,7 +224,7 @@ export default {
     margin-top: 8px;
   }
   .hot-recommend {
-        margin-top: 30px;
-      }
+    margin-top: 30px;
+  }
 }
 </style>

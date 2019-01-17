@@ -62,7 +62,7 @@ export default {
     margin: 15px;
     flex: 1;
     width: calc(100%-160px);
-    width:-webkit-calc(100%-160px);
+    width: -webkit-calc(100%-160px);
     .username {
       font-size: 16px;
       font-weight: 600;

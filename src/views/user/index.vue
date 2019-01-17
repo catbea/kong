@@ -81,16 +81,15 @@ export default {
     consultImg: require('IMG/user/Group8@2x.png'),
     closeImg: require('IMG/user/close_popup.png'),
     headIcons: [
-      { title: '我的楼盘', Img: require('IMG/user/mm@2x.png'),Icon:'#icon-me_building' },
-      { title: '我的收藏', Img: require('IMG/user/Group1@2x.png'),Icon:'#icon-me_collection' },
-      { title: '我的写一写',Img: require('IMG/user/Group3@2x.png'),Icon:'#icon-me_history' },
-      { title: '我的报备', Img: require('IMG/user/Group6@2x.png'),Icon:'#icon-me_Reported' },
-      { title: '我的优惠券', Img: require('IMG/user/Group5@2x.png'),Icon:'#icon-me_coupons' },
-      { title: '消费账单', Img: require('IMG/user/Group2@2x.png'),Icon:'#icon-me_order' },
+      { title: '我的楼盘', Img: require('IMG/user/mm@2x.png'), Icon: '#icon-me_building' },
+      { title: '我的收藏', Img: require('IMG/user/Group1@2x.png'), Icon: '#icon-me_collection' },
+      { title: '我的写一写', Img: require('IMG/user/Group3@2x.png'), Icon: '#icon-me_history' },
+      { title: '我的报备', Img: require('IMG/user/Group6@2x.png'), Icon: '#icon-me_Reported' },
+      { title: '我的优惠券', Img: require('IMG/user/Group5@2x.png'), Icon: '#icon-me_coupons' },
+      { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }
       // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
     ],
-    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'),Icon:'#icon-me_night'}, 
-    { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'),Icon:'#icon-me_opinion'}],
+    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
     openPopup: false,
     qrcodeImg: ''
   }),
@@ -146,7 +145,7 @@ export default {
           break
         case 2:
           // this.$router.push('/user/articles/historicalArticles')
-            this.$router.push({name:'historicalArticles',query:{typeCode:'2'}})
+          this.$router.push({ name: 'historicalArticles', query: { typeCode: '2' } })
           break
         case 3:
           this.$router.push('/user/myReport')
@@ -162,7 +161,7 @@ export default {
         //   break
       }
     },
-    invitationHead(){
+    invitationHead() {
       this.$router.push('/user/invitation/awWelfare')
     },
     selectedHeads(index, type, itemCode) {
@@ -181,9 +180,9 @@ export default {
 }
 </script>
 <style lang="less">
- .icon {
+.icon {
   width: 23px;
-  height:23px;
+  height: 23px;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;
@@ -275,20 +274,20 @@ export default {
         line-height: 17px;
         margin-top:8px;
       }
-      .politeness{
-        position:absolute;
-        right:-7px;
-        top:-5px;
-        width:41px;
-        height:22.3px;
-        line-height:21.3px;
-        background:rgba(234,77,46,1);
-        border-radius:10.6px;
-        font-size:12px;
+      .politeness {
+        position: absolute;
+        right: -7px;
+        top: -5px;
+        width: 41px;
+        height: 22.3px;
+        line-height: 21.3px;
+        background: rgba(234, 77, 46, 1);
+        border-radius: 10.6px;
+        font-size: 12px;
         transform: scale(0.75);
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(255,255,255,1);
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 1);
       }
     }
   }

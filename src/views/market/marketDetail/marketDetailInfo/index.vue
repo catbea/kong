@@ -165,7 +165,7 @@ export default {
 <style lang="less">
 .market-detail-info-page {
   width: 100%;
-  background: #F7F9FA;
+  background: #f7f9fa;
   .title {
     background: #fff;
     height: 39px;

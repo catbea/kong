@@ -76,10 +76,10 @@ export default {
   },
   created() {
     this.dredgeColor()
-    if(this.tags===""){
-      this.tags=[]
+    if (this.tags === '') {
+      this.tags = []
       this.tags.unshift(this.saleStatus)
-    }else if(this.tags.indexOf(this.saleStatus) < 0) {
+    } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
   },
@@ -254,14 +254,14 @@ export default {
             margin-bottom: 5px;
           }
           .tag-group-left {
-            height:25px;
-            width:100%;
+            height: 25px;
+            width: 100%;
             margin-left: -3px;
           }
           .unit-price {
             height: 15px;
             margin-top: 4px;
-            display:flex;
+            display: flex;
             span:nth-child(1) {
               line-height: 15px;
               font-size: 15px;
@@ -269,7 +269,7 @@ export default {
               color: rgba(234, 77, 46, 1);
             }
             span:nth-child(2) {
-              margin-left:12px;
+              margin-left: 12px;
               line-height: 15px;
               font-size: 12px;
               font-weight: 400;
