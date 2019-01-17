@@ -71,7 +71,7 @@
                     <span
                       class="more"
                        v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
-                      @click="item.likeCount=15"
+                      @click="item.likeCount=6"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
@@ -105,7 +105,7 @@
                     <span
                       class="more"
                       v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
-                      @click="item.replayCount=5"
+                      @click="item.replayCount=3"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
@@ -267,8 +267,8 @@ export default {
     }
   },
   created() {
+    this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
-    
     if (this.userArea.city) {
       this.city = this.userArea.city
       this.getCityArticle()
@@ -291,12 +291,10 @@ export default {
     },
     // 获取文章分类
     async getArticleType() {
-      this.showLoading = true
       let result = await ArticleService.getArticleType({ classify: 'information_classify' })
       if (result) {
         this.articleType.push(...result)
       }
-      this.showLoading = false
     },
     // 查询所属城市是否有文章
     async getCityArticle () {
@@ -312,20 +310,23 @@ export default {
       }
     },
     // 获取文章列表
-    async getArticleList() {
+    async getArticleList(sortType) {
       this.showLoading = true
       this.nodataStatus = false
+      if (!sortType) {
+        sortType = this.classifyName === '推荐' ? 1 : 2
+      }
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
         city: this.classifyName === this.city ? this.city : '',
         classify: this.classify,
-        sortType: this.classifyName === '推荐' ? 1 : 2
+        sortType: sortType
       })
       if (result) {
         this.pages = result.pages
         let records = result.records.map(item => {
-          return Object.assign(item, { likeCount: 25, replayCount: 5 })
+          return Object.assign(item, { likeCount: 6, replayCount: 3 })
         })
         this.articleData.push(...records)
         this.current += 1
@@ -362,9 +363,10 @@ export default {
       if (this.sortType === val) {
         return false
       }
+      this.current = 1
       this.sortType = val
       this.articleData = []
-      this.getArticleList()
+      this.getArticleList(val)
     },
     // 点赞
     async updateLike(item, praiseStatus, index) {
