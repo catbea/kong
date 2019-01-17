@@ -47,17 +47,20 @@
                     <img src="../../assets/img/article/like1.png" alt="">
                   </span>
                   <div class="list">
-                    <span
-                      class="name"
-                      :class="{'active': data===activeLikeItem}"
-                      v-for="(data,num) in item.praiseAndShareUserVOS"
-                      :key="num"
-                      @click.stop="showLike(data)"
-                      v-show="num < item.likeCount-1"
-                    >
-                      {{data.userName}}
-                      <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
-                    </span>
+                    <div class="cnt-box-like">
+                      <span
+                        class="name"
+                        :class="{'active': data===activeLikeItem}"
+                        v-for="(data,num) in item.praiseAndShareUserVOS"
+                        :key="num"
+                        @click.stop="showLike(data)"
+                        v-show="num < item.likeCount-1"
+                      >
+                        {{data.userName}}
+                        <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
+                      </span>
+                    </div>
+                    
                     <span
                       class="more"
                       v-show="item.praiseAndShareUserVOS.length > item.likeCount"
@@ -67,7 +70,7 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
                       @click="item.likeCount=15"
                     >收起
                       <van-icon name="arrow-up"/>
@@ -79,16 +82,18 @@
                     <img src="../../assets/img/article/dis1.png" alt="">
                   </span>
                   <div class="list">
-                    <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
-                      <p
-                        v-show="num < item.replayCount"
-                        @click="showReplayFn(item, index,2,data,num)"
-                      >
-                        <span class="name">{{data.senderName}}</span>
-                        <span class="text" v-if="data.receiverName">回复</span>
-                        <span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:
-                        <span class="replay-cnt">{{data.content}}</span>
-                      </p>
+                    <div class="cnt-box-replay">
+                      <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
+                        <p
+                          v-show="num < item.replayCount"
+                          @click="showReplayFn(item, index,2,data,num)"
+                        >
+                          <span class="name">{{data.senderName}}</span>
+                          <span class="text" v-if="data.receiverName">回复</span>
+                          <span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:
+                          <span class="replay-cnt">{{data.content}}</span>
+                        </p>
+                      </div>
                     </div>
                     <span
                       class="more"
@@ -163,15 +168,15 @@
           <p v-if="replayStatus===1">{{commentItem.articleTitle}}</p>
           <p v-else>{{replayItem.senderName}}: {{replayItem.content}}</p>
         </div>
-        <div class="replay-title">{{}}</div>
         <div class="replay-box">
           <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span>
           <textarea
+            placeholder="最多输入140个字"
             class="textarea"
             name=""
             id=""
             ref="replaybox"
-            maxlength="280"
+            maxlength="140"
             v-model="replayCnt"
             :style="{'text-indent': (replayStatus===2 ? '75px' : '')}"
           ></textarea>
@@ -220,6 +225,7 @@ export default {
       articleData: [], // 文章列表
       showSub: false, // 显示排序菜单
       city: '', // 用户主营城市
+      showCity: false, //是否显示城市菜单
       loading: false, //是否处于加载状态
       finished: false, //是否已加载完所有数据
       isLoading: false, //是否处于下拉刷新状态
@@ -262,8 +268,12 @@ export default {
   },
   created() {
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
+    
     if (this.userArea.city) {
       this.city = this.userArea.city
+      this.getCityArticle()
+    }
+    if (this.showCity) {
       this.articleType.push({ itemCode: '', itemName: this.userArea.city })
     }
     this.getArticleType()
@@ -288,6 +298,19 @@ export default {
       }
       this.showLoading = false
     },
+    // 查询所属城市是否有文章
+    async getCityArticle () {
+      let result = await ArticleService.getArticleList({
+        current: this.current,
+        size: this.size,
+        city: this.city,
+        classify: '',
+        sortType: 2
+      })
+      if (result.records && result.records.length) {
+        this.showCity = true
+      }
+    },
     // 获取文章列表
     async getArticleList() {
       this.showLoading = true
@@ -297,10 +320,8 @@ export default {
         size: this.size,
         city: this.classifyName === this.city ? this.city : '',
         classify: this.classify,
-        sortType: this.sortType
+        sortType: this.classifyName === '推荐' ? 1 : 2
       })
-      console.log(result,'数据');
-      
       if (result) {
         this.pages = result.pages
         let records = result.records.map(item => {
@@ -420,7 +441,7 @@ export default {
         receiverSource: 0,
         senderAvatarUrl: this.userInfo.avatarUrl,
         senderId: this.userInfo.agentId,
-        senderName: this.userInfo.nickName,
+        senderName: this.userInfo.name,
         senderSource: 0,
         syncId: '',
         type: type
@@ -432,7 +453,7 @@ export default {
           receiverName: this.replayItem.senderName,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
-          senderName: this.userInfo.nickName,
+          senderName: this.userInfo.name,
           senderSource: 0,
           type: type
         })
@@ -846,6 +867,10 @@ export default {
           line-height: 1.5;
           padding: 5px 10px;
           font-size: 14px;
+          &::-webkit-input-placeholder {
+            font-size: 14px;
+            color: #999;
+          }
         }
       }
     }

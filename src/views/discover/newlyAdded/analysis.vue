@@ -213,10 +213,11 @@ export default {
       border-radius: 6px;
       bottom: 16px;
       left: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       > .text {
-        line-height: 40px;
-        margin-left: 100px;
         color: #ffffff;
         font-size: 14px;
       }
