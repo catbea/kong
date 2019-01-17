@@ -10,7 +10,7 @@
                 <img :src="editData.avatarUrl" alt="封面">
               </div>
               <div class="name text-one-line">
-                <h3>{{editData.agentName}}</h3>
+                <h3 class="text-one-line">{{editData.agentName}}</h3>
                 <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
               </div>
               <div class="qrcode">
