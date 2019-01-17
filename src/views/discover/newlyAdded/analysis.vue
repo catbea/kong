@@ -215,7 +215,7 @@ export default {
       left: 16px;
 
       > .text {
-        line-height: 40px;
+        line-height: 20px;
         margin-left: 100px;
         color: #ffffff;
         font-size: 14px;

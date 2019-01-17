@@ -79,6 +79,12 @@ export default {
 
   mounted() {
     this.itemInfo = this.$route.query
+
+    if (this.itemInfo.selectType == '2') {
+      this.typeCode = '4'
+    } else if (this.itemInfo.selectType == '3') {
+      this.typeCode = '5'
+    }
   },
 
   created() {},
@@ -90,27 +96,28 @@ export default {
   methods: {
     async onLoad() {
       const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
-
       this.total = res.total
-      if (res.records.length > 0) {
 
-        for (let i = 0; i < res.records.length; i++) {
-          let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
-          res.records[i].createTimeStamp = myTime
-        }
-        this.writeList = this.writeList.concat(res.records)
+      if (this.current === 1) {
+        if (res.records.length > 0) {
+          for (let i = 0; i < res.records.length; i++) {
+            let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
+            res.records[i].createTimeStamp = myTime
+          }
+          this.writeList = this.writeList.concat(res.records)
 
-        if (res.pages === 0 || this.current === res.pages) {
+          if (res.pages === 0 || this.current === res.pages) {
+            this.finished = true
+          }
+          this.current++
+          this.loading = false
+        } else {
+          if (this.current == 1) {
+            this.haveData = false
+          }
+          this.loading = false
           this.finished = true
         }
-        this.current++
-        this.loading = false
-      } else {
-        if (this.current == 1) {
-          this.haveData = false
-        }
-        this.loading = false
-        this.finished = true
       }
     },
 
