@@ -4,7 +4,7 @@
       <div class="user-market-page-box-top">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
-          <span class="bg_img icon-play"  v-if="dataArr.ifPanorama===1"   :style="{backgroundImage:'url('+imgPlay+')'}"></span>
+          <span class="bg_img icon-play"  v-if="dataArr.ifPanorama===1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
           <li>
@@ -207,7 +207,7 @@ export default {
           parent.showMarketList.splice(index + 1, 1)
           this.$toast({
               duration: 800,
-              message: '取消置顶成功'
+              message: '置顶成功'
             })
           this.changeUserStatus(this.linkerId, 40, 10) //改置顶状态
           this.show = !this.show

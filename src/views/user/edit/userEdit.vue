@@ -24,7 +24,7 @@
           <div class="tag-item" v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</div>
         </div> -->
       </van-cell>
-      <van-cell class="cell-item user-signature" title="个人介绍" :value="userInfo.signature"/>
+      <van-cell class="cell-item user-signature" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction'}" :value="userInfo.signature"/>
     </van-cell-group>
     <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"/>
   </div>
@@ -92,7 +92,8 @@ export default {
       this.userInfo.majorRegion = this.majorRegion
       this.userInfo.majorCity = this.majorCity
       if (result) {
-        this.$store.commit(types.USER_INFO, this.userInfo)
+        // this.$store.getUserInfo(types.USER_INFO, this.userInfo)
+         this.$store.dispatch('getUserInfo', this.userInfo)
       }
     }
   },

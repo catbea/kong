@@ -9,7 +9,6 @@
           placeholder="别问我是谁,请叫我AW大师"
           class="edit-wechat-input"
           v-on:input="inputListener()"
-           disabled="disabled"
         ></textarea>
         <!-- <input type="text" class="edit-wechat-input" placeholder="十年房产置业生涯专业为您服务">{{signature.length}}/24 -->
       </p>
@@ -61,7 +60,7 @@ export default {
     async upDateSignature(obj) {
       const result = await userService.upDateUserInfo(obj)
       if (result) {
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { signature: this.signature }))
+        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { signature: this.signature }))
         this.$router.go(-1)
       }
     },

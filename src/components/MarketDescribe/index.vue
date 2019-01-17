@@ -254,6 +254,8 @@ export default {
             margin-bottom: 5px;
           }
           .tag-group-left {
+            height:25px;
+            width:100%;
             margin-left: -3px;
           }
           .unit-price {

@@ -228,30 +228,33 @@ export default {
 
   .share-top {
     position: relative;
-    width: 297px;
+    width: 298px;
     height: 483px;
     border-radius: 10px;
     left: 10%;
-    right: 10%;
+    // right: 10%;
     margin-top: 10px;
     padding-right: 2px;
+    overflow: hidden;
     > .avatar-img {
       position: absolute;
-      width: 296px;
+      width: 100%;
       height: 330px;
       border-radius: 10px;
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center top;
+      z-index: 1;
     }
     > .cover-img {
       position: absolute;
-      width: 300px;
-      height: 268px;
-      z-index: 1;
+      width: 101%;
+      height: 270px;
+      z-index: 2;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
-      bottom: -2px;
+      bottom: 0;
+      max-width: none;
     }
 
     > .logo-body {
@@ -259,7 +262,7 @@ export default {
       width: 73px;
       top: 236px;
       right: 20px;
-      z-index: 2;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -285,7 +288,7 @@ export default {
     > .poster-describe {
       position: absolute;
       color: #e5b37b;
-      font-size: 29px;
+      font-size: 24px;
       z-index: 2;
       left: 20px;
       top: 280px;

@@ -2,7 +2,7 @@
   <div class="already-open-page">
     <ul>
       <li>已开通
-        <span>{{agentIdInfo}}</span> 个楼盘
+        <span>{{agentIdInfo}}</span> 个有效楼盘
         </li>
       <li class="li" @click="myMarket">
           <p>我的楼盘</p>
@@ -37,7 +37,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 8px 0 8px 16px;
+    margin: 0 0 8px 16px;
     padding: 0 16px 0 16px;
     li:nth-child(1) {
       font-size: 15px;

@@ -231,13 +231,13 @@ class UserService {
    * @param {*} current
    * @param {*} size
    */
-  gethistoryList(type, current, size = 10) {
+  gethistoryList(current, size = 10, type = 1) {
     return xhr({
       url: '/cpInformation/historyList',
       body: {
-        type,
         current,
-        size
+        size,
+        type,
       }
     })
   }
@@ -263,11 +263,10 @@ class UserService {
    * @param {*} current
    * @param {*} size
    */
-  getBrowseHistoryList(agentId, current, size = 10) {
+  getBrowseHistoryList(current, size = 10) {
     return xhr({
       url: '/cpInformation/historyList',
       body: {
-        agentId,
         current,
         size
       }

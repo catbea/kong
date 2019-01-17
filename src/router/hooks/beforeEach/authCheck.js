@@ -94,6 +94,11 @@ export default async (to, from, next) => {
         userInfo.articleShareFlag=wxAuthObject.articleShareFlag
         userInfo.token = wxAuthObject.token
         await store.dispatch('getUserInfo', userInfo)
+        //更新用户禁用状态
+        // store.commit(types['USER_STATUS'], userInfo.userStatus)
+        // console.log(userInfo.userStatus, 'userInfo.userStatus')
+        
+
         if (!userInfo.payOpenId) {
           //返回的payopenid为空，则从新授权获取
           await localStorage.setItem('payCorpId', payCorpId)
