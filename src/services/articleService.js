@@ -62,12 +62,12 @@ class ArticleService {
    * @param {*} userType
    * @param {*} size
    */
-  queryLikeArticleList(current, clientId, userType, size = 10) {
+  queryLikeArticleList(current, userId, userType, size = 10) {
     return xhr({
       url:'/cpInformation/queryLikeArticleList',
       body:{
         current,
-        clientId,
+        userId,
         userType
       }
     })
