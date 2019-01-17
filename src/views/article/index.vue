@@ -263,7 +263,7 @@ export default {
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
       nodataStatus: false,
-      updateLikeItem: '' //点赞
+      updateLikeItem: '' //点赞数据
     }
   },
   created() {
@@ -392,6 +392,7 @@ export default {
           userSource: 0
         })
       }
+      this.updateLikeItem = ''
     },
     // 展示评论框
     showReplayFn(item, index, type, replay, num) {
