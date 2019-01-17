@@ -113,13 +113,13 @@
                     src="../../assets/img/article/like2.png"
                     alt=""
                     v-if="item.praiseStatus===1"
-                    @click="updateLike(item.articleId, 0, index)"
+                    @click="updateLike(item, 0, index)"
                   >
                   <img
                     src="../../assets/img/article/like1.png"
                     alt=""
                     v-else
-                    @click="updateLike(item.articleId, 1, index)"
+                    @click="updateLike(item, 1, index)"
                   >
                 </span>
                 <span class="comment-icon">
@@ -256,7 +256,8 @@ export default {
       dialogX: '', // 弹框位置
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
-      nodataStatus: false
+      nodataStatus: false,
+      updateLikeItem: '' //点赞
     }
   },
   created() {
@@ -341,9 +342,14 @@ export default {
       this.getArticleList()
     },
     // 点赞
-    async updateLike(articleId, praiseStatus, index) {
+    async updateLike(item, praiseStatus, index) {
+      // 防止重复点赞
+      if(this.updateLikeItem === item) {
+        return false
+      }
+      this.updateLikeItem = item
       let result = await ArticleService.updateLike({
-        infoId: articleId,
+        infoId: item.articleId,
         likeFlag: praiseStatus
       })
       this.articleData[index].praiseStatus = praiseStatus
@@ -355,7 +361,7 @@ export default {
         this.articleData[index].praiseAndShareUserVOS.unshift({
           operationTime: +new Date(),
           userId: this.userInfo.agentId,
-          userName: this.userInfo.nickName,
+          userName: this.userInfo.name,
           userSource: 0
         })
       }
