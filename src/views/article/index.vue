@@ -54,7 +54,7 @@
                         v-for="(data,num) in item.praiseAndShareUserVOS"
                         :key="num"
                         @click.stop="showLike(data)"
-                        v-show="num < item.likeCount-1"
+                        v-show="num < item.likeCount"
                       >
                         {{data.userName}}
                         <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
@@ -70,7 +70,7 @@
                     </span>
                     <span
                       class="more"
-                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 6"
                       @click="item.likeCount=6"
                     >收起
                       <van-icon name="arrow-up"/>
