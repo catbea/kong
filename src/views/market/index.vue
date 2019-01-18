@@ -173,7 +173,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select', query: { fromPage: 'market' } })
+      this.$router.push({ name: 'area-select', query: { fromPage: 'market',searchContent:this.searchContent.siteText} })
     },
     focusHandler() {
       this.$router.push({ name: 'market-search' })

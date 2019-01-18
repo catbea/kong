@@ -4,7 +4,7 @@ export default [
     name: 'area-select',
     component: resolve => require(['@/views/public/areaSelect.vue'], resolve),
     meta: {
-      title: '地域选择'
+      title: '城市选择'
     }
   },
   {

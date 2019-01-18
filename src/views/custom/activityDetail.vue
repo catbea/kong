@@ -16,7 +16,7 @@
               <p class="activityDetailImg-right-tel">{{item.clientMobile}}</p>
             </div>
         </div>
-        <div class="activityDetail-list-right">{{item.updateTime | dateTimeFormatter(3,'/')}}</div>
+        <div class="activityDetail-list-right">{{item.formatTime | dateTimeFormatter(3,'/')}}</div>
       </div>
     </div>
      </van-list>
@@ -121,7 +121,7 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
-        line-height: 55px;
+        line-height: 68px;
       }
     }
   }
