@@ -12,7 +12,7 @@
       </div>
       <div class="van-hairline--top operate-box">
         <div class="cancel-btn" @click="cancelBtnClick">取消</div>
-        <div class="submit-btn" @click="submitBtnClick">确认</div>
+        <div class="submit-btn" @click="submitBtnClick">确认({{`${selectedItems.length}/${maxSelect}`}})</div>
       </div>
     </div>
     <div v-else class="city-select-container">
@@ -157,9 +157,6 @@ export default {
     // 切换到地域切换
     areaClickHandle() {
       this.$store.dispatch('getAllCity')
-      // this.searchInfo.siteText = this.$route.query.searchContent
-      // this.fromPage = this.$route.query.fromPage
-      // },
       this.status = 2
     },
     // 验证是否已经被点击,不存在返回-1,存在返回index
@@ -179,8 +176,6 @@ export default {
         const index = this.existCheck(item.linkerId)
         if (index === -1) {
           if (this.enableCheck()) {
-            console.log('push', item)
-
             this.selectedItems.push(item)
             if (this.selectedItems.length === this.maxSelect) {
               for (let temp of this.projectList) {
@@ -205,8 +200,8 @@ export default {
       this.$emit('submit', this.selectedItems)
       this.singleShow = false
     },
-    reset() {
-      // for(let temp of this.)
+    // 重置,cleanData - 是否也清除数据
+    reset(cleanData = false) {
       this.selectedItems = []
       this.page = 1
       this.projectList = []
@@ -238,7 +233,7 @@ export default {
     itemClick(val) {
       this.searchInfo.siteText = val
       this.status =1
-      this.reset()
+      this.reset(this.maxSelect <= 1)
     },
     retryLocation() {
       this.$wechatHelper.getUserArea()

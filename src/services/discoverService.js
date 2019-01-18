@@ -272,17 +272,19 @@ class DiscoverService {
 
   /**
    * H5使用-查询楼盘信息
-   * @param {*} linkerIds 
-   * @param {*} agentId 
-   * @param {*} enterpriseId 
+   * @param {*} agentId  必传
+   * @param {*} enterpriseId  必传
+   * @param {*} shareUuid  原文章分享必传,编辑文章分享不必传
+   * @param {*} linkerIds  编辑文章分享必传
    */
-  queryLinkerInfoForH5(linkerIds, agentId, enterpriseId) {
+  queryLinkerInfoForH5(agentId, enterpriseId, shareUuid, linkerIds) {
     return xhr({
-      url: '/myLinker/queryLinkerInfo',
+      url: '/myLinker/queryLinkerListByIdsForWhite',
       body: {
-        linkerIds,
         agentId,
-        enterpriseId
+        enterpriseId,
+        shareUuid,
+        linkerIds
       }
     })
   }

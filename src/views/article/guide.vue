@@ -59,17 +59,17 @@ export default {
   top: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 9;
+  z-index: 4;
   .step {
     height: 100%;
     position: relative;
-    z-index: 3;
+    z-index: 4;
   }
   .action-btn {
     position: absolute;
     margin: 0 72px;
     text-align: center;
-    z-index: 3;
+    z-index: 4;
     width: 230px;
     button {
       border: 1px solid #fff;

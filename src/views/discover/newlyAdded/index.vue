@@ -24,7 +24,7 @@ export default {
     startEdit() {
       if (this.linkerText.length > 0) {
         if (this.editButtonClick == true) {
-          this.$router.push({ name: 'analysis', params: { url: this.linkerText } })
+          this.$router.push({ name: 'analysis', params: { url: this.linkerText, parseType: '1' } })
         }
       } else {
         this.editButtonClick = true
@@ -40,11 +40,8 @@ export default {
     //添加文章
     addArticle() {
       if (this.linkerText.length > 0) {
-        let obj = {
-          articleUrl: this.linkerText
-        }
         if (this.addButtonClick == true) {
-          this.commitInfo(obj)
+          this.$router.push({ name: 'analysis', params: { url: this.linkerText, parseType: '2' } })
         }
       } else {
         this.addButtonClick = true
