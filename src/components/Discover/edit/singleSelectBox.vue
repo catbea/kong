@@ -35,7 +35,7 @@ export default {
   props: {
     value: { type: Boolean, default: false }, // 对应show.是否显示
     maxSelect: { type: Number, default: 1 }, // 限制个数
-    selected: [] // 已经选中
+    selected: {type: Array} // 已经选中
   },
   data: () => ({
     singleShow: false,
@@ -106,6 +106,7 @@ export default {
     },
     // 验证是否已经被点击,不存在返回-1,存在返回index
     existCheck(linkerId) {
+      
       for (let i = 0; i < this.selectedItems.length; i++) {
         if (this.selectedItems[i].linkerId === linkerId) return i
       }
@@ -121,8 +122,10 @@ export default {
         const index = this.existCheck(item.linkerId)
         if (index === -1) {
           if (this.enableCheck()) {
+            console.log('push',item);
+            
             this.selectedItems.push(item)
-            if ((this.selectedItems.length = this.maxSelect)) {
+            if ((this.selectedItems.length === this.maxSelect)) {
               for (let temp of this.projectList) {
                 if (!temp.isChecked) temp.disabled = true
               }
