@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length">
+    <div class="article-list" v-if="articleData.length" @touchmove.stop='' @touchstart.stop=''>
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
@@ -271,23 +271,32 @@ export default {
       updateLikeItem: '' //点赞数据
     }
   },
-  created() {
+  async created() {
     this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
+    let storage = JSON.parse(window.sessionStorage.getItem('tab'))
+    if (storage) {
+     this.changeClassify(storage) 
+    } else {
+      this.getArticleList()
+    }
     if (this.userArea.city) {
       this.city = this.userArea.city
-      this.getCityArticle()
+      await this.getCityArticle()
     }
     if (this.showCity) {
       this.articleType.push({ itemCode: '', itemName: this.userArea.city })
     }
     this.getArticleType()
-    this.getArticleList()
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
   },
-  mounted() {},
+  mounted() {
+    // document.body.addEventListener('touchmove', function (e) {
+    //     e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+    // }, {passive: false}) // passive 参数不能省略，用来兼容ios和android
+  },
   methods: {
     // 隐藏引导页
     hideStep() {
@@ -345,9 +354,7 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify(item) {
-      if (this.classifyName === item.itemName) {
-        return false
-      }
+      window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
       this.classify = item.itemCode
       this.classifyName = item.itemName
@@ -577,6 +584,8 @@ export default {
 
 <style lang="less" scoped>
 .article-box {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   font-family: 'Microsoft YaHei';
   font-size: 16px;
   .tab-bar {
@@ -646,6 +655,7 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
+    padding-bottom: 60px;
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;

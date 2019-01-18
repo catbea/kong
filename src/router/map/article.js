@@ -1,7 +1,7 @@
 export default [
   {
     path: '/write-article',
-    name: 'custom-edit-phone',
+    name: 'write-article',
     component: resolve => require(['@/views/article/index.vue'], resolve),
     meta: {
       title: '写一写',

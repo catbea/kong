@@ -46,7 +46,6 @@
       </div>
     </div>
     <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
-    <!-- multiple -->
   </div>
 </template>
 <script>
@@ -58,6 +57,7 @@ import SingleSelectBox from 'COMP/Discover/edit/singleSelectBox'
 
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
+import cpInformationService from 'SERVICE/cpInformationService'
 export default {
   components: {
     EditParagraph,
@@ -161,7 +161,7 @@ export default {
     // 底部栏预览按钮点击
     async previewClickHandler() {},
     // 底部栏保存按钮点击
-    saveClickHandler() {
+    async saveClickHandler() {
       let payload = {
         viewpoint: this.viewpointText,
         inlayHouse: this.inlayHouse.length > 0 ? this.inlayHouse[0].linkerId : '',
@@ -175,8 +175,10 @@ export default {
       for (let temp of this.renderDom) {
         if(temp.status === 'edit') content += `<p>${temp.text}</p>` 
       }
-      console.log(payload)
+      console.log(JSON.stringify(payload))
       console.log(content);
+      const res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
+      console.log(res);
       
     },
     selectSubmitHandler(e) {
