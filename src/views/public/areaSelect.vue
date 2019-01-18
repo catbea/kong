@@ -26,7 +26,7 @@
             <li class="indexlist-item" v-for="(arr, index) in cityMap" :key="index">
               <p class="index-item-title" :id="'city_'+arr.character">{{arr.character}}</p>
               <ul class="index-content-item">
-                <p class="van-hairline--bottom index-content-item-link" v-for="(item,index) in arr.city" :key="index" @click="itemClick(item)" >{{item}}</p>
+                <p class="van-hairline--bottom index-content-item-link" v-for="(item,index) in arr.city" :key="index" @click="itemClick(item)">{{item}}</p>
               </ul>
             </li>
           </ul>
@@ -55,7 +55,7 @@ export default {
     indicator: {
       show: false,
       timer: null,
-      str: '',
+      str: ''
     },
     searchInfo: {
       siteText: '',

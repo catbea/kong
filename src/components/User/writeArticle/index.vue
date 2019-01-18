@@ -7,15 +7,15 @@
       @click="enterDetail(selectType,item)"
     >
       <div class="write-item-left">
-        <span class="article-title">{{item.title | textOver(26)}}</span>
+        <span class="article-title">{{item.title | textOver(25)}}</span>
         <div class="share-bottom">
           <span
             class="share-time"
             v-if="selectType=='1'"
           >收藏时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
           <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
-          <span class="collection-text">取消收藏</span>
-          <img class="collection-img" :src="cancelCollection">
+          <span class="collection-text" v-if="selectType=='1'"  @click.stop="cancelCollect(item.id,index)">取消收藏</span>
+          <img class="collection-img" v-if="selectType=='1'" :src="cancelCollection" @click.stop="cancelCollect(item.id,index)">
         </div>
       </div>
       <div class="write-item-right">
