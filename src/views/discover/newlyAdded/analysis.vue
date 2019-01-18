@@ -134,14 +134,17 @@ export default {
     },
 
     goToMyWrite() {
+      this.$toast('文章添加成功')
       this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
+
     },
 
     goToEditDetail() {
       this.analysisText = '解析成功'
       this.showLoading = 'none'
       let city = '全国'
-
+      
+      this.$toast('文章解析成功')
       this.$router.push({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
     },
 
