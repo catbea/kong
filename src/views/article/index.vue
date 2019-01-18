@@ -54,7 +54,7 @@
                         v-for="(data,num) in item.praiseAndShareUserVOS"
                         :key="num"
                         @click.stop="showLike(data)"
-                        v-show="num < item.likeCount-1"
+                        v-show="num < item.likeCount"
                       >
                         {{data.userName}}
                         <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
@@ -70,7 +70,7 @@
                     </span>
                     <span
                       class="more"
-                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 6"
                       @click="item.likeCount=6"
                     >收起
                       <van-icon name="arrow-up"/>
@@ -263,7 +263,7 @@ export default {
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
       nodataStatus: false,
-      updateLikeItem: '' //点赞
+      updateLikeItem: '' //点赞数据
     }
   },
   created() {
@@ -392,6 +392,7 @@ export default {
           userSource: 0
         })
       }
+      this.updateLikeItem = ''
     },
     // 展示评论框
     showReplayFn(item, index, type, replay, num) {
@@ -435,6 +436,7 @@ export default {
       let receiverName = this.replayStatus === 2 ? this.replayItem.senderName : ''
       let parentId = this.replayStatus === 2 ? this.replayItem.id : ''
       let type = this.replayStatus === 2 ? 1 : 0
+      let receiverSource = this.replayStatus === 2 ? this.replayItem.receiverSource : ''
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
@@ -442,7 +444,7 @@ export default {
         parentId: parentId,
         receiverId: receiverId,
         receiverName: receiverName,
-        receiverSource: 0,
+        receiverSource: receiverSource,
         senderAvatarUrl: this.userInfo.avatarUrl,
         senderId: this.userInfo.agentId,
         senderName: this.userInfo.name,
@@ -455,6 +457,7 @@ export default {
           id: result.id,
           receiverId: this.replayItem.senderId,
           receiverName: this.replayItem.senderName,
+          receiverSource: this.replayItem.senderSource,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
           senderName: this.userInfo.name,
@@ -468,7 +471,7 @@ export default {
     showLike(data) {
       // let clientId = data.userSource === 0 ? '' : data.userId
       let userType = data.userSource
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId }})
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId ,userName:data.userName}})
     },
     // 点击评论的名字
     replayLike(data, type) {
@@ -739,13 +742,18 @@ export default {
           .like-box {
             margin-bottom: 10px;
             .list {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp: 5; //（行数）
-              -webkit-box-orient: vertical;
+              // overflow: hidden;
+              // text-overflow: ellipsis;
+              // display: -webkit-box;
+              // -webkit-line-clamp: 5; //（行数）
+              // -webkit-box-orient: vertical;
               .name {
                 margin: 0 5px 5px 0;
+                display: inline-block;
+                max-width: 30%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 &.active {
                   color: #007ae6;
                 }
@@ -878,6 +886,11 @@ export default {
           top: 5px;
           line-height: 1.5;
           font-size: 14px;
+          max-width: 75px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: inline-block;
         }
         .textarea {
           width: 100%;
