@@ -55,24 +55,30 @@ export default {
     },
     async getLinkerApplyListByAgentId(current) {
       this.loading = true
-      const result = await customService.getLinkerApplyListByAgentId(current)
-
-      if (result.pages > 1) {
-        this.activitylist = this.activitylist.concat(result.records)
+      const res = await customService.getLinkerApplyListByAgentId(current)
+      if (res.pages > 1) {
+        this.activitylist = this.activitylist.concat(res.records)
       } else {
-        this.activitylist = result.records
+        this.activitylist = res.records
       }
       if (this.activitylist.length > 0) {
         this.haveData = true
+        if (res.pages === 0 || this.current >= res.pages) {
+          this.finished = true
+        } else {
+          this.current++
+        }
+        this.loading = false
       } else {
-        this.haveData = false
-      }
-      if (result.pages <= this.page) {
+        if (current == 1) {
+          this.haveData = false
+        } else {
+          this.haveData = true
+        }
+        this.loading = false
         this.finished = true
-      } else {
-        this.current++
       }
-      this.loading = false
+       
     }
   }
 }
