@@ -136,9 +136,6 @@ export default [
     path: '/user/articles/easyLookList',
     name: 'easyLookList',
     component: resolve => require(['@/views/user/articles/easyLookList.vue'], resolve),
-    meta: {
-      title: '沙雕认为好看的'
-    }
   },
   {
     path: '/user/articles/updateArticles',
