@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="easy-look-list">
-          <span class="easy-look-name" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
+          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
           <div
             class="easy-look-fold"
             v-if="isMoreLike" @click="moreLikeListHandler"
@@ -49,18 +49,16 @@
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index">
+            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
               <div
                 class="bg_img"
                 :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
                 style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
-                @click="commentSenderClickHandler(item)"
               ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span
                     class="comment-name"
-                    @click="commentSenderClickHandler(item)"
                   >{{item.senderName}}</span>
                   <span
                     v-if="item.receiverName"
@@ -69,7 +67,6 @@
                   <span
                     class="comment-reply"
                     v-if="item.receiverName"
-                    @click="commentReceiverClickHandler(item)"
                   >{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -230,6 +227,15 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
+        this.$nextTick(() => {
+          console.log(this.$refs.easyLook.offsetHeight)
+          let height = this.$refs.easyLook.offsetHeight
+          if (height <= 79) {
+            this.isMoreLike = false
+          }else {
+            this.isMoreLike = true
+          }
+        })
       }
     },
     // 评论列表
@@ -344,7 +350,7 @@ export default {
           receiverSource: item.senderSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: this.info.title,
+          title: item.content,
           placeholder: '回复' + item.senderName + '：',
           type: 1
         }
@@ -366,7 +372,7 @@ export default {
           receiverSource: item.receiverSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: this.info.title,
+          title: item.content,
           placeholder: '回复' + item.receiverName + '：',
           type: 1
         }
@@ -593,7 +599,7 @@ export default {
         padding-top: 6px;
         width: 260px;
         position: relative;
-        > .easy-look-name-clamp {
+        > .easy-look-name-clamp  {
           color: #445166;
           font-size: 14px;
           word-break: break-all;
