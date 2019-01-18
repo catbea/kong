@@ -109,9 +109,9 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
+                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 3"
                       @click="item.replayCount=3"
-                    >收起
+                    >收起 
                       <van-icon name="arrow-up"/>
                     </span>
                   </div>
@@ -271,23 +271,32 @@ export default {
       updateLikeItem: '' //点赞数据
     }
   },
-  created() {
+  async created() {
     this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
+    let storage = JSON.parse(window.sessionStorage.getItem('tab'))
+    if (storage) {
+     this.changeClassify(storage) 
+    } else {
+      this.getArticleList()
+    }
     if (this.userArea.city) {
       this.city = this.userArea.city
-      this.getCityArticle()
+      await this.getCityArticle()
     }
     if (this.showCity) {
       this.articleType.push({ itemCode: '', itemName: this.userArea.city })
     }
     this.getArticleType()
-    this.getArticleList()
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
   },
-  mounted() {},
+  mounted() {
+    // document.body.addEventListener('touchmove', function (e) {
+    //     e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+    // }, {passive: false}) // passive 参数不能省略，用来兼容ios和android
+  },
   methods: {
     // 隐藏引导页
     hideStep() {
@@ -345,9 +354,7 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify(item) {
-      if (this.classifyName === item.itemName) {
-        return false
-      }
+      window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
       this.classify = item.itemCode
       this.classifyName = item.itemName
@@ -577,7 +584,8 @@ export default {
 
 <style lang="less" scoped>
 .article-box {
-  font-family: 'Microsoft YaHei';
+  overflow: auto;
+  font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
     font-size: 14px;
@@ -586,23 +594,27 @@ export default {
     line-height: 20px;
     padding: 12px 16px;
     height: 54px;
-    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    position: fixed;
     .classify {
+      display: inline-block;
       width: 85%;
       overflow-x: auto;
+      overflow-y: hidden;
       white-space: nowrap;
-    }
-    span {
-      display: inline-block;
-      margin-right: 32px;
-      &.active {
-        color: #007ae6;
+      span {
+        display: inline-block;
+        margin-right: 32px;
+        &.active {
+          color: #007ae6;
+        }
       }
-    }
-    .recommend {
-      font-size: 24px;
-      height: 34px;
-      line-height: 34px;
+      .recommend {
+        font-size: 24px;
+        height: 34px;
+        line-height: 34px;
+      }
     }
     .icon {
       position: absolute;
@@ -646,6 +658,7 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
+    padding-bottom: 50px;
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
@@ -828,7 +841,7 @@ export default {
     width: 56px;
     position: fixed;
     right: 12px;
-    bottom: 60px;
+    bottom: 50px;
     z-index: 3;
     img {
       position: relative;

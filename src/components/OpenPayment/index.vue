@@ -1,5 +1,5 @@
 <template>
-  <div class="open-Payment-page">
+  <div class="van-hairline--top open-Payment-page">
     <div class="open-Payment-page-top">
     <ul>
       <li>￥{{payInfo.value | priceFormart}}</li>
@@ -42,7 +42,7 @@ export default {
 <style lang="less">
 .open-Payment-page {
   background: #ffffff;
-  border-top: 1px solid #e6e6e6;
+  // border-top: 1px solid #e6e6e6;
   width: 100%;
   .open-Payment-page-top {
     display: flex;

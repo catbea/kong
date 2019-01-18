@@ -20,14 +20,14 @@
         <!-- <span>不限量开通</span> -->
         <img :src="openLabel">
       </li>
-      <div class="coupon-box" v-show="payInfo.isShowCoupon" @click="couponClickHandle">
+      <div class="van-hairline--bottom coupon-box" v-show="payInfo.isShowCoupon" @click="couponClickHandle">
         <div>优惠劵</div>
         <div>
           <p>{{payInfo.coupon}}</p>
           <p class="bg_img" :style="{backgroundImage:'url('+backImg+')'}"></p>
         </div>
       </div>
-      <div class="balance-payment" v-show="payInfo.balanceAmount">
+      <div class="van-hairline--bottom balance-payment" v-show="payInfo.balanceAmount">
         <div>
           <p>余额支付 （￥</p>
           <p>{{payInfo.balanceAmount | priceFormart}}</p>
@@ -107,7 +107,7 @@ export default {
       border: 1px solid #dddddd;
       text-align: center;
       position: relative;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       img {
         width: 64px;
         height: 18px;
@@ -169,7 +169,7 @@ export default {
     .coupon-box {
       width: 360px;
       margin-left: 15px;
-      border-bottom: 1px solid #e6e6e6;
+      // border-bottom: 1px solid #e6e6e6;
       display: flex;
       justify-content: space-between;
       line-height: 56px;
@@ -202,7 +202,7 @@ export default {
       justify-content: space-between;
       line-height: 56px;
       margin: 0 0 0 15px;
-      border-bottom: 1px solid #e6e6e6;
+      // border-bottom: 1px solid #e6e6e6;
       div:nth-of-type(1) {
         display: flex;
         p {

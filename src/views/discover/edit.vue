@@ -5,7 +5,7 @@
       <div class="discover-view-info">
         <p class="view-count">
           浏览量:
-          <span>912</span>
+          <span>{{info&&info.scanNum}}</span>
         </p>
         <p class="view-source">
           分享源自
@@ -42,7 +42,7 @@
       </div>
       <div class="right-operation">
         <div class="preview-btn" @click="previewClickHandler">预览</div>
-        <div class="save-btn" @click="saveClickHandler">保存</div>
+        <div class="save-btn" @click="saveClickHandler">保存并分享</div>
       </div>
     </div>
     <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
@@ -129,8 +129,8 @@ export default {
         let lock = false
         let toDelArr = []
         for (let dom of this.renderDom) {
-          if (this.currentDelDom === dom) lock = true
           if (lock) dom.status = 'del'
+          if (this.currentDelDom === dom) lock = true
         }
       } else {
         // 删除当前
@@ -159,7 +159,8 @@ export default {
       this.$router.go(0)
     },
     // 底部栏预览按钮点击
-    async previewClickHandler() {},
+    async previewClickHandler() {
+    },
     // 底部栏保存按钮点击
     async saveClickHandler() {
       let payload = {
@@ -167,7 +168,6 @@ export default {
         inlayHouse: this.inlayHouse.length > 0 ? this.inlayHouse[0].linkerId : '',
         recommendHouse: []
       }
-
       for (let temp of this.recommendList) {
         payload.recommendHouse.push(temp.linkerId)
       }
@@ -175,11 +175,8 @@ export default {
       for (let temp of this.renderDom) {
         if(temp.status === 'edit') content += `<p>${temp.text}</p>` 
       }
-      console.log(JSON.stringify(payload))
-      console.log(content);
       const res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
-      console.log(res);
-      
+      this.$router.push(`/discover/${res.id}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
@@ -193,7 +190,7 @@ export default {
       this.inlayHouse = []
     },
     multiHouseDelHandler(item) {
-      console.log('delete', item)
+      // console.log('delete', item)
     }
   },
   computed: {

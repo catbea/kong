@@ -21,8 +21,8 @@
     </div>-->
     <div class="sort-container" v-show="sortShow" @click="sortHandle">
       <ul>
-        <li class="van-hairline-bottom" @click="sortClickHandler('intention')">意向度排序</li>
-        <li class="van-hairline-bottom" @click="sortClickHandler('createTime')">
+        <li class="van-hairline-bottom" :class="{active:pitch==='intention'}" @click="sortClickHandler('intention')">意向度排序</li>
+        <li class="van-hairline-bottom" :class="{active:pitch==='createTime'}" @click="sortClickHandler('createTime')">
           时间排序
           <span>(按客户新增时间)</span>
         </li>
@@ -93,7 +93,8 @@ export default {
     searchVal: '',
     sortShow: false,
     sort: 'intention', // intention：意向度（默认选项）， createTime：时间
-    activeIcon: false
+    activeIcon: false,
+    pitch:false
   }),
   methods: {
     goactivitDetaily() {
@@ -115,6 +116,7 @@ export default {
       this.activeIcon = true
       this.sortShow = false
       this.sort = val
+      this.pitch=val
       this.cleanCurrentData()
       this.onLoad()
     },
@@ -241,10 +243,13 @@ export default {
       line-height: 50px;
       font-size: 15px;
       box-shadow: inset 0px -1px 1px -1px #c8c7cc;
+    }
+    .active{
+        color:#1989fa
+      }
       span {
         color: #999;
       }
-    }
   }
 }
 </style>
