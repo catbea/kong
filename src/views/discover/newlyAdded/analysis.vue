@@ -81,6 +81,7 @@ export default {
 
   created() {
     this.articleUrl = this.$route.params.url
+    this.parseType = this.$route.params.parseType
   },
 
   computed: {
@@ -89,8 +90,6 @@ export default {
 
   methods: {
     async commitInfo(data) {
-      console.log('啦啦啦啦啦啦啦啦啦啦啦啦啦')
-
       const result = await articleService.articleAnalysis(data)
 
       if (result.returnCode == '31100') {
@@ -126,8 +125,16 @@ export default {
         this.imgNum = result.imgNum
         this.errColor = '#445166'
 
-        setTimeout(this.goToEditDetail(), 3000)
+        if (this.parseType == '1') {
+          setTimeout(this.goToEditDetail(), 5000)
+        } else if (this.parseType == '2') {
+          setTimeout(this.goToMyWrite(), 5000)
+        }
       }
+    },
+
+    goToMyWrite() {
+      this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
     },
 
     goToEditDetail() {
@@ -147,13 +154,13 @@ export default {
     //阅读并同意 进行解析文章操作
     goToAnalysis() {
       this.show = false
-     
+
       let obj = {
         articleUrl: this.articleUrl
       }
 
       if (this.canAnalysis == true) {
-         this.canAnalysis = false
+        this.canAnalysis = false
         this.commitInfo(obj)
       }
     }
