@@ -7,16 +7,16 @@
       @load="onLoad"
       v-if="haveData"
     >
-      <div
-        class="easy-look-list"
-        v-for="(item, index) in this.likeArray"
-        :key="index"
-        
-      >
+      <div class="easy-look-list" v-for="(item, index) in this.likeArray" :key="index">
         <div class="easy-look-time">
           <span class="time-text">{{item.groupTime | dateTimeFormatter(2,'/')}}</span>
         </div>
-        <div class="easy-look-item" v-for="(items, indexs) in item.infoList" :key="indexs"  @click="articleDetail(items.id)">
+        <div
+          class="easy-look-item"
+          v-for="(items, indexs) in item.infoList"
+          :key="indexs"
+          @click="articleDetail(items.id)"
+        >
           <div class="easy-look-item-left">
             <img class="easy-look-img" :src="items.image">
           </div>
@@ -63,7 +63,7 @@ export default {
   mounted() {
     this.userId = this.$route.query.userId
     this.userType = this.$route.query.userType
-    document.title = this.$route.query.userName+"认为好看"
+    document.title = this.$route.query.userName + '认为好看'
   },
 
   methods: {
@@ -72,7 +72,6 @@ export default {
 
       if (result.records.length > 0) {
         this.likeArray = this.likeArray.concat(result.records)
-
         if (result.pages === 0 || this.current === result.pages) {
           this.finished = true
         }
@@ -85,6 +84,20 @@ export default {
         this.loading = false
         this.finished = true
       }
+      
+      // if (result.records.length > 0) {
+      //   let parentArr = result.records
+      //   let lastGrounpTime = ''
+
+      //   if(current===1){
+
+      //   }
+
+      //   for (let i = 0; i < parentArr.length; i++) {
+      //     lastGrounpTime = parentArr[parentArr.length - 1].groupTime
+      //   }
+      // } else {
+      // }
     },
 
     onLoad() {
@@ -93,7 +106,7 @@ export default {
 
     //进入文章详情
     articleDetail(id) {
-      console.log(id);
+      console.log(id)
       this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: id, city: '全国' } })
     }
   },

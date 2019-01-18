@@ -13,17 +13,17 @@
         </p>
       </div>
       <div class="discover-detail-content">
-        <edit-viewpoint/>
+        <edit-viewpoint v-model="viewpointText"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click.native="singleAddClickHandler()" />
+          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
       </div>
     </div>
     <div class="recommend-house-container">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
-        <edit-houses v-model="recommendList" :reminder="true" @click="multiShow=true"/>
+        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" @delete="multiHouseDelHandler"/>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
@@ -45,7 +45,7 @@
         <div class="save-btn" @click="saveClickHandler">保存</div>
       </div>
     </div>
-    <single-select-box v-model="singleShow" @submit="selectSubmitHandler"/>
+    <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
     <!-- multiple -->
   </div>
 </template>
@@ -58,6 +58,7 @@ import SingleSelectBox from 'COMP/Discover/edit/singleSelectBox'
 
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
+import cpInformationService from 'SERVICE/cpInformationService'
 export default {
   components: {
     EditParagraph,
@@ -82,7 +83,7 @@ export default {
     recommendList: [], // 文末的推荐文章
     singleShow: false,
     multiShow: false,
-    target:null,
+    target: null
   }),
   created() {
     this.id = this.$route.params.id
@@ -97,24 +98,16 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
-
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
-      console.log(virtualDom);
-      
       for (let dom of virtualDom.children) {
         this.renderDom.push({
           text: dom.innerHTML,
           status: 'edit'
         })
       }
-
-      // this.$nextTick(() => {
-      //   this.createHouses()
-      // })
     },
-    
     // 获取我的楼盘推荐
     async getMyHouseRecommend() {
       const payload = {
@@ -154,6 +147,10 @@ export default {
       this.target = 'inlayHouse'
       this.singleShow = true
     },
+    multiAddClickHandler() {
+      this.target = 'multiHouse'
+      this.singleShow = true
+    },
     // 底部栏帮助按钮点击
     helpClickHandler() {
       this.$router.push('/discover/edit-help')
@@ -165,13 +162,57 @@ export default {
     // 底部栏预览按钮点击
     async previewClickHandler() {},
     // 底部栏保存按钮点击
-    saveClickHandler() {},
-    selectSubmitHandler(e){
-      if(this.target === 'inlayHouse'){
-        this.inlayHouse = e
+    async saveClickHandler() {
+      let payload = {
+        viewpoint: this.viewpointText,
+        inlayHouse: this.inlayHouse.length > 0 ? this.inlayHouse[0].linkerId : '',
+        recommendHouse: []
       }
-      // console.log('快看快看快看快看快看快看快看快看快看快看',e);
-      // this.target = e
+
+      for (let temp of this.recommendList) {
+        payload.recommendHouse.push(temp.linkerId)
+      }
+      let content = ''
+      for (let temp of this.renderDom) {
+        if(temp.status === 'edit') content += `<p>${temp.text}</p>` 
+      }
+      console.log(JSON.stringify(payload))
+      console.log(content);
+      const res = await cpInformationService.editArticleForAgent(this.id, payload, content)
+      console.log(res);
+      
+    },
+    selectSubmitHandler(e) {
+      if (this.target === 'inlayHouse') {
+        this.inlayHouse = e
+      } else {
+        this.recommendList = e
+      }
+    },
+    //  内嵌楼盘删除
+    inlayHouseDelHandler() {
+      this.inlayHouse = []
+    },
+    multiHouseDelHandler(item) {
+      console.log('delete', item)
+    }
+  },
+  computed: {
+    countCompute() {
+      if (this.target === 'inlayHouse') {
+        return 1
+      } else {
+        return 3
+      }
+    },
+    selectedCompute() {
+      if (this.target === 'inlayHouse') {
+        return this.inlayHouse
+      } else if (this.target === 'multiHouse') {
+        return this.recommendList
+      } else {
+        return null
+      }
     }
   }
 }

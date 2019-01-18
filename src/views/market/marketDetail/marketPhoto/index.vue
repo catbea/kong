@@ -4,7 +4,7 @@
       <p>{{item.groupName}} ({{item.listBannerVO.length}})</p>
       <div class="template-box">
         <li class="bg_img" v-for="(ite,inde) in item.listBannerVO" :key="ite.id"
-        :style="{backgroundImage:'url('+ite.imgUrl+')'}" @click="previewHandle(index,inde)"></li>
+        :style="{backgroundImage:'url('+ite.imgUrl+')'}" @click="previewHandle(item.listBannerVO,inde)"></li>
       </div>   
     </ul>
   </div>
@@ -16,12 +16,13 @@ export default {
   async created() {
     this.linkerId = this.$route.params.id
     await this.getMarketDetailPhotoInfo()
-    await this.pushHandle()
+    // await this.pushHandle()
   },
   data: () => ({
     one: 0,
     two: 0,
     three: 0,
+    arr:null,
     linkerId: null,
     photoData: null,
     show: false,
@@ -33,81 +34,30 @@ export default {
     // FullScreen
   },
   beforeRouteLeave(to, from, next) {
-    if (this.one) {
-      this.one.close()
-    }
-    if (this.two) {
-      this.two.close()
-    }
-    if (this.therr) {
-      this.three.close()
+    if (this.arr) {
+      this.arr.close()
     }
     next()
   },
   methods: {
-    fun() {
-      if (this.one) {
-        this.one.close()
-      }
-    },
-    han() {
-      if (window.history && window.history.pushState) {
-        //监听浏览器的返回按钮事件
-        history.pushState(null, null, document.URL)
-        window.addEventListener('popstate', this.fun, false)
-      }
-    },
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
       this.photoData = res
     },
-    pushHandle() {
-      if (this.photoData[0]) {
-        for (let index = 0; index < this.photoData[0].listBannerVO.length; index++) {
-          const element = this.photoData[0].listBannerVO[index].imgUrl
-          this.templetList.push(element)
-        }
-      }
-      if (this.photoData[1]) {
-        for (let index = 0; index < this.photoData[1].listBannerVO.length; index++) {
-          const element = this.photoData[1].listBannerVO[index].imgUrl
-          this.resultList.push(element)
-        }
-      }
-      if (this.photoData[2]) {
-        for (let index = 0; index < this.photoData[2].listBannerVO.length; index++) {
-          const element = this.photoData[2].listBannerVO[index].imgUrl
-          this.deployList.push(element)
-        }
-      }
-    },
-    previewHandle(index, inde) {
+    previewHandle(listBannerVO,inde) {
       //预览图片
-      if (index == 0) {
-        this.one = ImagePreview({
-          images: this.templetList,
-          startPosition: inde
-        })
-        // this.han()
+      this.arr=[]
+      for (let i = 0; i < listBannerVO.length; i++) {
+        const element = listBannerVO[i].imgUrl;
+        this.arr.push(element)
       }
-      if (index == 1) {
-        this.two = ImagePreview({
-          images: this.resultList,
+      this.arr=ImagePreview({
+          images:this.arr,
           startPosition: inde,
           onClose() {
             // do something
           }
         })
-      }
-      if (index == 2) {
-        this.three = ImagePreview({
-          images: this.deployList,
-          startPosition: inde,
-          onClose() {
-            // do something
-          }
-        })
-      }
     }
   }
 }
