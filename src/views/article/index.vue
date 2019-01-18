@@ -457,6 +457,7 @@ export default {
           id: result.id,
           receiverId: this.replayItem.senderId,
           receiverName: this.replayItem.senderName,
+          receiverSource: this.replayItem.senderSource,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
           senderName: this.userInfo.name,
