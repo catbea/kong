@@ -46,7 +46,6 @@
       </div>
     </div>
     <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
-    <!-- multiple -->
   </div>
 </template>
 <script>
@@ -178,7 +177,7 @@ export default {
       }
       console.log(JSON.stringify(payload))
       console.log(content);
-      const res = await cpInformationService.editArticleForAgent(this.id, payload, content)
+      const res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
       console.log(res);
       
     },
