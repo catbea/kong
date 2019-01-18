@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length">
+    <div class="article-list" v-if="articleData.length" @touchmove.stop=''>
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
@@ -293,9 +293,9 @@ export default {
     ...mapGetters(['userArea', 'userInfo'])
   },
   mounted() {
-    document.querySelector('.tab-bar').addEventListener('touchmove', function (e) {
-      e.preventDefault() //阻止默认的处理方式(阻止下拉滑动的效果)
-    }, {passive: false}) //passive 参数不能省略，用来兼容ios和android
+    // document.body.addEventListener('touchmove', function (e) {
+    //     e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+    // }, {passive: false}) // passive 参数不能省略，用来兼容ios和android
   },
   methods: {
     // 隐藏引导页
@@ -584,6 +584,8 @@ export default {
 
 <style lang="less" scoped>
 .article-box {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   font-family: 'Microsoft YaHei';
   font-size: 16px;
   .tab-bar {
@@ -653,7 +655,7 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
