@@ -9,15 +9,13 @@
       <div class="write-item-left">
         <span class="article-title">{{item.title | textOver(26)}}</span>
         <div class="share-bottom">
-          <span class="share-time">发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
-          <div
-            class="collection-view"
+          <span
+            class="share-time"
             v-if="selectType=='1'"
-            @click.stop="cancelCollect(item.id,index)"
-          >
-            <span class="collection-text">取消收藏</span>
-            <img class="collection-img" :src="cancelCollection">
-          </div>
+          >收藏时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+          <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+          <span class="collection-text">取消收藏</span>
+          <img class="collection-img" :src="cancelCollection">
         </div>
       </div>
       <div class="write-item-right">
@@ -89,39 +87,34 @@ export default {
     }
 
     > .share-bottom {
-      display: flex;
-      flex-direction: row;
-      margin-top: 40px;
-
+      width: 100%;
+      margin-top: 30px;
       > .share-time {
         font-size: 12px;
         color: #969ea8;
       }
 
-      > .collection-view {
-        display: flex;
+      > .collection-text {
+        color: #bbbbbb;
+        font-size: 10px;
+        margin-left: 5px;
+      }
 
-        > .collection-text {
-          color: #bbbbbb;
-          font-size: 10px;
-          margin-left: 5px;
-        }
-
-        > .collection-img {
-          width: 16px;
-          height: 16px;
-        }
+      > .collection-img {
+        width: 16px;
+        height: 16px;
+        margin-bottom: -5px;
       }
     }
   }
 
   > .write-item-right {
     margin-top: 5px;
-    width: 120px;
+    width: 31%;
     height: 90px;
 
     > .article-img {
-      width: 120px;
+      width: 110px;
       height: 90px;
       border-radius: 6px;
     }

@@ -57,10 +57,11 @@
                         v-show="num < item.likeCount"
                       >
                         {{data.userName}}
-                        <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
+                        <label
+                          v-show="num !== item.praiseAndShareUserVOS.length-1"
+                        >、</label>
                       </span>
                     </div>
-                    
                     <span
                       class="more"
                       v-show="item.praiseAndShareUserVOS.length > item.likeCount"
@@ -70,7 +71,7 @@
                     </span>
                     <span
                       class="more"
-                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 6"
+                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 6"
                       @click="item.likeCount=6"
                     >收起
                       <van-icon name="arrow-up"/>
@@ -88,9 +89,13 @@
                           v-show="num < item.replayCount"
                           @click="showReplayFn(item, index,2,data,num)"
                         >
-                          <span class="name" @click.stop="replayLike(data,1)" >{{data.senderName}}</span>
+                          <span class="name" @click.stop="replayLike(data,1)">{{data.senderName}}</span>
                           <span class="text" v-if="data.receiverName">回复</span>
-                          <span class="name" @click.stop="replayLike(data,2)" v-if="data.receiverName">{{data.receiverName }}</span>:
+                          <span
+                            class="name"
+                            @click.stop="replayLike(data,2)"
+                            v-if="data.receiverName"
+                          >{{data.receiverName }}</span>:
                           <span class="replay-cnt">{{data.content}}</span>
                         </p>
                       </div>
@@ -206,7 +211,7 @@
           <img src="../../assets/img/article/share.png" alt="">查看分享
         </span>
       </div>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -309,7 +314,7 @@ export default {
       }
     },
     // 查询所属城市是否有文章
-    async getCityArticle () {
+    async getCityArticle() {
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
@@ -381,7 +386,7 @@ export default {
     // 点赞
     async updateLike(item, praiseStatus, index) {
       // 防止重复点赞
-      if(this.updateLikeItem === item) {
+      if (this.updateLikeItem === item) {
         return false
       }
       this.updateLikeItem = item
@@ -481,20 +486,23 @@ export default {
     showLike(data) {
       // let clientId = data.userSource === 0 ? '' : data.userId
       let userType = data.userSource
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId ,userName:data.userName}})
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId, userName: data.userName } })
     },
     // 点击评论的名字
     replayLike(data, type) {
       let userType = ''
-      let clientId = ''
+      let userId = ''
+      let userName = ''
       if (type === 1) {
-        clientId = data.senderSource === 0 ? '' : data.senderId
+        userId = data.senderId
         userType = data.senderSource
+        userName = data.senderName
       } else {
-        clientId = data.receiverSource === 0 ? '' : data.receiverId
-        userType =data.receiverSource
+        userId = data.receiverId
+        userType = data.receiverSource
+        userName = data.receiverName
       }
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, clientId: clientId }})
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: userId, userName: userName } })
     },
     // showLike(e, data) {
     //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
@@ -534,7 +542,7 @@ export default {
     },
     // 加载更多
     async onLoad() {
-      if (this.current >= this.pages || this.classifyName==='推荐') {
+      if (this.current >= this.pages || this.classifyName === '推荐') {
         // 加载状态结束
         this.finished = true
         this.loading = false
@@ -542,7 +550,6 @@ export default {
         await this.getArticleList()
         this.loading = false
       }
-      
     },
     // 下拉刷新
     async onRefresh() {
