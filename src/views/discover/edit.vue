@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="discover-detail-content">
-        <edit-viewpoint/>
+        <edit-viewpoint v-model="viewpointText"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
           <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
@@ -161,10 +161,29 @@ export default {
     // 底部栏预览按钮点击
     async previewClickHandler() {},
     // 底部栏保存按钮点击
-    saveClickHandler() {},
+    saveClickHandler() {
+      let payload = {
+        viewpoint: this.viewpointText,
+        inlayHouse: this.inlayHouse.length > 0 ? this.inlayHouse[0].linkerId : '',
+        recommendHouse: []
+      }
+
+      for (let temp of this.recommendList) {
+        payload.recommendHouse.push(temp.linkerId)
+      }
+      let content = ''
+      for (let temp of this.renderDom) {
+        if(temp.status === 'edit') content += `<p>${temp.text}</p>` 
+      }
+      console.log(payload)
+      console.log(content);
+      
+    },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
         this.inlayHouse = e
+      } else {
+        this.recommendList = e
       }
     },
     //  内嵌楼盘删除
@@ -182,15 +201,6 @@ export default {
       } else {
         return 3
       }
-      // switch (this.target) {
-      //   case 'inlayHouse':
-      //     return 1
-      //   case 'multiHouse':
-      //     return 3
-      //   default:
-      //     return 1
-      // }
-      // return this.target === 'inlayHouse' ? 1 : 3
     },
     selectedCompute() {
       if (this.target === 'inlayHouse') {
