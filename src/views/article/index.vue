@@ -467,9 +467,9 @@ export default {
       if (result) {
         this.articleData[this.commentIndex].discussVOS.unshift({
           id: result.id,
-          receiverId: this.replayItem.senderId,
-          receiverName: this.replayItem.senderName,
-          receiverSource: this.replayItem.senderSource,
+          receiverId: receiverId,
+          receiverName: receiverName,
+          receiverSource: receiverSource,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
           senderName: this.userInfo.name,
