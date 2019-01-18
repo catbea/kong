@@ -16,7 +16,7 @@
               <p class="activityDetailImg-right-tel">{{item.clientMobile}}</p>
             </div>
         </div>
-        <div class="activityDetail-list-right">{{item.updateTime | dateTimeFormatter(3,'/')}}</div>
+        <div class="activityDetail-list-right">{{item.formatTime | dateTimeFormatter(3,'/')}}</div>
       </div>
     </div>
      </van-list>
