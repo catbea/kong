@@ -1,10 +1,12 @@
 <template>
-  <van-tabbar v-if="tabbar.show" class="tabbar" v-model="active">
-    <van-tabbar-item class="tabbar-item" v-for="item in tabbar.items" :key="item.name" :replace="true" :to="item.path" :info="infoCount(item.info)">
-      <span>{{item.name}}</span>
-      <img slot="icon" slot-scope="props" :src="props.active ? item.icon_atc : item.icon">
-    </van-tabbar-item>
-  </van-tabbar>
+  <div class="bottom-tabbar">
+    <van-tabbar v-if="tabbar.show" class="tabbar" v-model="active">
+      <van-tabbar-item class="tabbar-item" v-for="item in tabbar.items" :key="item.name" :replace="true" :to="item.path" :info="infoCount(item.info)">
+        <span>{{item.name}}</span>
+        <img slot="icon" slot-scope="props" :src="props.active ? item.icon_atc : item.icon">
+      </van-tabbar-item>
+    </van-tabbar>
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -33,6 +35,11 @@ export default {
         if (to.fullPath.indexOf(this.tabbar.items[i].path) !== -1) return (this.active = i)
       }
     }
+  },
+  mounted () {
+    document.querySelector('.bottom-tabbar').addEventListener('touchmove', function (e) {
+      e.preventDefault() //阻止默认的处理方式(阻止下拉滑动的效果)
+    }, {passive: false}) //passive 参数不能省略，用来兼容ios和android
   }
 }
 </script>
