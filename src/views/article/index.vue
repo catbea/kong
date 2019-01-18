@@ -54,7 +54,7 @@
                         v-for="(data,num) in item.praiseAndShareUserVOS"
                         :key="num"
                         @click.stop="showLike(data)"
-                        v-show="num < item.likeCount-1"
+                        v-show="num < item.likeCount"
                       >
                         {{data.userName}}
                         <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
@@ -70,8 +70,8 @@
                     </span>
                     <span
                       class="more"
-                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
-                      @click="item.likeCount=15"
+                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 6"
+                      @click="item.likeCount=6"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
@@ -105,7 +105,7 @@
                     <span
                       class="more"
                       v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
-                      @click="item.replayCount=5"
+                      @click="item.replayCount=3"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
@@ -263,12 +263,12 @@ export default {
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
       nodataStatus: false,
-      updateLikeItem: '' //点赞
+      updateLikeItem: '' //点赞数据
     }
   },
   created() {
+    this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
-    
     if (this.userArea.city) {
       this.city = this.userArea.city
       this.getCityArticle()
@@ -291,12 +291,10 @@ export default {
     },
     // 获取文章分类
     async getArticleType() {
-      this.showLoading = true
       let result = await ArticleService.getArticleType({ classify: 'information_classify' })
       if (result) {
         this.articleType.push(...result)
       }
-      this.showLoading = false
     },
     // 查询所属城市是否有文章
     async getCityArticle () {
@@ -312,20 +310,23 @@ export default {
       }
     },
     // 获取文章列表
-    async getArticleList() {
+    async getArticleList(sortType) {
       this.showLoading = true
       this.nodataStatus = false
+      if (!sortType) {
+        sortType = this.classifyName === '推荐' ? 1 : 2
+      }
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
         city: this.classifyName === this.city ? this.city : '',
         classify: this.classify,
-        sortType: this.classifyName === '推荐' ? 1 : 2
+        sortType: sortType
       })
       if (result) {
         this.pages = result.pages
         let records = result.records.map(item => {
-          return Object.assign(item, { likeCount: 25, replayCount: 5 })
+          return Object.assign(item, { likeCount: 6, replayCount: 3 })
         })
         this.articleData.push(...records)
         this.current += 1
@@ -362,9 +363,10 @@ export default {
       if (this.sortType === val) {
         return false
       }
+      this.current = 1
       this.sortType = val
       this.articleData = []
-      this.getArticleList()
+      this.getArticleList(val)
     },
     // 点赞
     async updateLike(item, praiseStatus, index) {
@@ -390,6 +392,7 @@ export default {
           userSource: 0
         })
       }
+      this.updateLikeItem = ''
     },
     // 展示评论框
     showReplayFn(item, index, type, replay, num) {
@@ -433,6 +436,7 @@ export default {
       let receiverName = this.replayStatus === 2 ? this.replayItem.senderName : ''
       let parentId = this.replayStatus === 2 ? this.replayItem.id : ''
       let type = this.replayStatus === 2 ? 1 : 0
+      let receiverSource = this.replayStatus === 2 ? this.replayItem.receiverSource : ''
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
@@ -440,7 +444,7 @@ export default {
         parentId: parentId,
         receiverId: receiverId,
         receiverName: receiverName,
-        receiverSource: 0,
+        receiverSource: receiverSource,
         senderAvatarUrl: this.userInfo.avatarUrl,
         senderId: this.userInfo.agentId,
         senderName: this.userInfo.name,
@@ -453,6 +457,7 @@ export default {
           id: result.id,
           receiverId: this.replayItem.senderId,
           receiverName: this.replayItem.senderName,
+          receiverSource: this.replayItem.senderSource,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
           senderName: this.userInfo.name,
@@ -465,8 +470,8 @@ export default {
     // 点击好看名字弹框
     showLike(data) {
       // let clientId = data.userSource === 0 ? '' : data.userId
-      // let userType = data.userSource
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId }})
+      let userType = data.userSource
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId ,userName:data.userName}})
     },
     // 点击评论的名字
     replayLike(data, type) {
@@ -730,20 +735,25 @@ export default {
             }
           }
           .more {
-            font-size: 12px;
+            font-size: 14px;
             color: #969ea8;
             display: block;
           }
           .like-box {
             margin-bottom: 10px;
             .list {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp: 5; //（行数）
-              -webkit-box-orient: vertical;
+              // overflow: hidden;
+              // text-overflow: ellipsis;
+              // display: -webkit-box;
+              // -webkit-line-clamp: 5; //（行数）
+              // -webkit-box-orient: vertical;
               .name {
                 margin: 0 5px 5px 0;
+                display: inline-block;
+                max-width: 30%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 &.active {
                   color: #007ae6;
                 }
@@ -876,6 +886,11 @@ export default {
           top: 5px;
           line-height: 1.5;
           font-size: 14px;
+          max-width: 75px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: inline-block;
         }
         .textarea {
           width: 100%;
