@@ -436,6 +436,7 @@ export default {
       let receiverName = this.replayStatus === 2 ? this.replayItem.senderName : ''
       let parentId = this.replayStatus === 2 ? this.replayItem.id : ''
       let type = this.replayStatus === 2 ? 1 : 0
+      let receiverSource = this.replayStatus === 2 ? this.replayItem.receiverSource : ''
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
@@ -443,7 +444,7 @@ export default {
         parentId: parentId,
         receiverId: receiverId,
         receiverName: receiverName,
-        receiverSource: 0,
+        receiverSource: receiverSource,
         senderAvatarUrl: this.userInfo.avatarUrl,
         senderId: this.userInfo.agentId,
         senderName: this.userInfo.name,
@@ -456,6 +457,7 @@ export default {
           id: result.id,
           receiverId: this.replayItem.senderId,
           receiverName: this.replayItem.senderName,
+          receiverSource: this.replayItem.senderSource,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
           senderName: this.userInfo.name,
@@ -884,6 +886,11 @@ export default {
           top: 5px;
           line-height: 1.5;
           font-size: 14px;
+          max-width: 75px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: inline-block;
         }
         .textarea {
           width: 100%;

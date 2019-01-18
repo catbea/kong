@@ -7,7 +7,7 @@
       </div>
       <div class="house-box">
         <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
-          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :key="index" :dataArr="item" :indexData="index" @click.native="selectHandle(item)"/>
+          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
         </van-list>
       </div>
       <div class="van-hairline--top operate-box">
@@ -73,6 +73,8 @@ export default {
       payload = Object.assign(payload, { current: this.page, size: this.pageSize })
       console.log(payload)
       const res = await userService.getMyMarket(payload)
+      console.log(res)
+
       let _list = []
       for (let item of res.records) {
         let obj = {
@@ -85,6 +87,7 @@ export default {
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
           isChecked: this.existCheck(item.linkerId) !== -1,
+          disabled: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`
         }
@@ -114,17 +117,24 @@ export default {
     },
     // item点击
     selectHandle(item) {
-      const index = this.existCheck(item.linkerId)
-      if (index === -1) {
-        if (this.enableCheck()) {
-          this.selectedItems.push(item)
+      setTimeout(() => {
+        const index = this.existCheck(item.linkerId)
+        if (index === -1) {
+          if (this.enableCheck()) {
+            this.selectedItems.push(item)
+            if ((this.selectedItems.length = this.maxSelect)) {
+              for (let temp of this.projectList) {
+                if (!temp.isChecked) temp.disabled = true
+              }
+            }
+          } else {
+
+            // TODO 提示已到最大个数
+          }
         } else {
-          // TODO 提示已到最大个数
+          this.$delete(this.selectedItems, index)
         }
-      } else {
-        this.$delete(this.selectedItems, index)
-      }
-      console.log('result', this.selectedItems)
+      }, 1)
     },
     // 点击取消
     cancelBtnClick() {
@@ -135,15 +145,21 @@ export default {
     submitBtnClick() {
       this.$emit('submit', this.selectedItems)
       this.singleShow = false
+    },
+    reset(){
+      // for(let temp of this.)
+       this.selectedItems = []
+       this.page =1 
+       this.projectList = []
+       this.finished = false
     }
   },
   watch: {
     value(val) {
       this.singleShow = val
+      if(val) this.reset()
     },
     singleShow(val) {
-      console.log('sigin dadasd')
-
       this.$emit('input', val)
     }
   },
