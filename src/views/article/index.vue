@@ -41,7 +41,37 @@
               </div>
             </div>
             <div class="comment">
-              <div class="like-cnt">
+              <div class="like-count">
+                <span class="icon">
+                  <img src="../../assets/img/article/like1.png" alt="">
+                </span>
+                <span v-show="item.praiseAndShareUserVOS.length">{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
+              </div>
+              <div class="action">
+                <span class="like-icon">
+                  <img
+                    src="../../assets/img/article/like2.png"
+                    alt=""
+                    v-if="item.praiseStatus===1"
+                    @click="updateLike(item, 0, index)"
+                  >
+                  <img
+                    src="../../assets/img/article/like1.png"
+                    alt=""
+                    v-else
+                    @click="updateLike(item, 1, index)"
+                  >
+                </span>
+                <span class="comment-icon">
+                  <img
+                    src="../../assets/img/article/dis1.png"
+                    alt=""
+                    @click="showReplayFn(item,index,1)"
+                  >
+                </span>
+              </div>
+            </div>
+            <div class="like-cnt">
                 <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                   <span class="icon">
                     <img src="../../assets/img/article/like1.png" alt="">
@@ -71,8 +101,8 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 6"
-                      @click="item.likeCount=6"
+                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                      @click="item.likeCount=15"
                     >收起
                       <van-icon name="arrow-up"/>
                     </span>
@@ -109,38 +139,14 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 3"
-                      @click="item.replayCount=3"
+                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
+                      @click="item.replayCount=5"
                     >收起 
                       <van-icon name="arrow-up"/>
                     </span>
                   </div>
                 </div>
               </div>
-              <div class="action">
-                <span class="like-icon">
-                  <img
-                    src="../../assets/img/article/like2.png"
-                    alt=""
-                    v-if="item.praiseStatus===1"
-                    @click="updateLike(item, 0, index)"
-                  >
-                  <img
-                    src="../../assets/img/article/like1.png"
-                    alt=""
-                    v-else
-                    @click="updateLike(item, 1, index)"
-                  >
-                </span>
-                <span class="comment-icon">
-                  <img
-                    src="../../assets/img/article/dis1.png"
-                    alt=""
-                    @click="showReplayFn(item,index,1)"
-                  >
-                </span>
-              </div>
-            </div>
           </div>
         </van-list>
       </van-pull-refresh>
@@ -272,6 +278,7 @@ export default {
     }
   },
   async created() {
+    // window.localStorage.removeItem('guideStatus')
     this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab'))
@@ -340,7 +347,7 @@ export default {
       if (result) {
         this.pages = result.pages
         let records = result.records.map(item => {
-          return Object.assign(item, { likeCount: 6, replayCount: 3 })
+          return Object.assign(item, { likeCount: 15, replayCount: 5 })
         })
         this.articleData.push(...records)
         this.current += 1
@@ -584,7 +591,7 @@ export default {
 
 <style lang="less" scoped>
 .article-box {
-  overflow: auto;
+  // overflow: auto;
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
@@ -724,9 +731,42 @@ export default {
       .comment {
         display: flex;
         padding-top: 10px;
-        padding-bottom: 18px;
-        .like-cnt {
+        padding-bottom: 5px;
+        .like-count{
           flex: 1;
+          font-size: 14px;
+          color: #445166;
+          font-weight: 600;
+          .icon {
+            margin-right: 8px;
+            img {
+              width: 14px;
+              height: 14px;
+              opacity: 0.7;
+              position: relative;
+            }
+          }
+        }
+        .action {
+          width: 70px;
+          .like-icon {
+            margin-right: 20px;
+            img {
+              width: 16px;
+              height: 16px;
+            }
+          }
+          .comment-icon {
+            img {
+              width: 16px;
+              height: 16px;
+            }
+          }
+        }
+      }
+      .like-cnt {
+          flex: 1;
+          padding-bottom: 15px;
           .like-box,
           .comment-box {
             display: flex;
@@ -752,6 +792,7 @@ export default {
               font-size: 14px;
               color: #445166;
               display: inline-block;
+              font-weight: 600;
             }
           }
           .more {
@@ -762,18 +803,9 @@ export default {
           .like-box {
             margin-bottom: 10px;
             .list {
-              // overflow: hidden;
-              // text-overflow: ellipsis;
-              // display: -webkit-box;
-              // -webkit-line-clamp: 5; //（行数）
-              // -webkit-box-orient: vertical;
               .name {
-                margin: 0 5px 5px 0;
+                margin: 0 0 5px 0;
                 display: inline-block;
-                max-width: 30%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
                 &.active {
                   color: #007ae6;
                 }
@@ -793,23 +825,6 @@ export default {
             }
           }
         }
-        .action {
-          width: 70px;
-          .like-icon {
-            margin-right: 20px;
-            img {
-              width: 16px;
-              height: 16px;
-            }
-          }
-          .comment-icon {
-            img {
-              width: 16px;
-              height: 16px;
-            }
-          }
-        }
-      }
     }
   }
   .nodata {
