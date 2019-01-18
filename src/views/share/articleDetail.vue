@@ -11,7 +11,7 @@
         </div>
       </div>
       <!-- 观点 -->
-      <div class="discover-viewpoint" v-if="info&&info.editData&&info.editData.viewpoint" @click="popHandler(1)">
+      <div class="discover-viewpoint" v-if="editData&&editData.viewpoint" @click="popHandler(1)">
         <div class="viewpoint-line"></div>
         <div class="viewpoint-top">
           <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
@@ -23,9 +23,15 @@
             </div>
           </div>
         </div>
-        <div class="viewpoint-content">{{info&&info.editData&&info.editData.viewpoint}}</div>
+        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
-      <div class="discover-detail-content" v-html="info&&info.content"></div>
+      <!-- 文章详情 -->
+      <div class="discover-detail-content">
+        <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
+          <paragraph :info="paragraph"/>
+          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
+        </div>
+      </div>
       <p class="discover-extra-info">
         <span class="reprint-from">{{info&&info.publisher}}</span>
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
@@ -58,13 +64,11 @@
                 class="bg_img"
                 :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
                 style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
-                @click="commentSenderClickHandler(item)"
               ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span
                     class="comment-name"
-                    @click="commentSenderClickHandler(item)"
                   >{{item.senderName}}</span>
                   <span
                     v-if="item.receiverName"
@@ -73,7 +77,6 @@
                   <span
                     class="comment-reply"
                     v-if="item.receiverName"
-                    @click="commentReceiverClickHandler(item)"
                   >{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -122,6 +125,7 @@
 import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
+import Paragraph from 'COMP/Discover/Paragraph'
 import EstateItem from 'COMP/EstateItem'
 import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
@@ -136,12 +140,15 @@ export default {
     EstateItem,
     CardDialog,
     MarketDialog,
-    ArticleDialog
+    ArticleDialog,
+    Paragraph,
   },
   data: () => ({
     id: -1,
     city: '',
     info: null,
+    editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
+    inlayHouseInfo: null, // 文章插入楼盘信息
     agentInfo: null,
     infoId: '', //文章的id
     titleComments: {
@@ -162,7 +169,7 @@ export default {
     closeImg: require('IMG/user/close_popup.png'),
     guidanceShow: false,
     shareData: null,
-    virtualDom: null,
+    renderDom: [],
     easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,
@@ -204,8 +211,15 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetailForH5(this.id, this.enterpriseId, this.agentId)
       this.info = res
-
       this.infoId = res.id
+      this.editData = JSON.stringify(this.info.editData)
+      this.editData = JSON.parse(this.editData)
+      // this.editData = this.info.editData
+      console.log(this.editData)
+      // 查询插入楼盘的信息
+      if (this.editData && this.editData.inlayHouse) {
+        this.getLinkerInfo()
+      }
 
       this.agentInfo = {
         agentId: this.info.agentId,
@@ -215,6 +229,19 @@ export default {
         enterpriseName: this.info.enterpriseName,
         institutionName: this.info.institutionName
       }
+
+      // 创建虚拟dom解析html结构
+      let virtualDom = document.createElement('div')
+      virtualDom.innerHTML = this.info.content
+      console.log(virtualDom);
+      
+      for (let dom of virtualDom.children) {
+        this.renderDom.push({
+          text: dom.innerHTML,
+          status: 'h5'
+        })
+      }
+
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
       this.shareData = {
@@ -224,9 +251,14 @@ export default {
       }
       this.shareHandler()
     },
+    // 查询楼盘信息
+    async getLinkerInfo() {
+      const res = await discoverService.queryLinkerInfoForH5(this.editData,inlayHouse, this.agentId, this.enterpriseId)
+      this.inlayHouseInfo = res
+    },
     // 好看列表
     async getLikeList() {
-      const res = await discoverService.queryLikeList(this.id, this.enterpriseId)
+      const res = await discoverService.queryLikeListForH5(this.id, this.enterpriseId)
       if (res && res.length > 0) {
         for (var index in res) {
           let item = res[index]
@@ -272,12 +304,12 @@ export default {
     },
     // 楼盘二维码信息
     async getLinkerQrcode(linkerId) {
-      const result = await discoverService.queryLinkerQrcode(this.agentId, linkerId, this.enterpriseId)
+      const result = await discoverService.queryLinkerQrcodeForH5(this.agentId, linkerId, this.enterpriseId)
       this.marketQrInfo = result
     },
     // 文章二维码信息
     async getArticleQrcode(infoId) {
-      const result = await discoverService.queryArticleQrcode(this.agentId, infoId, this.enterpriseId)
+      const result = await discoverService.queryArticleQrcodeForH5(this.agentId, infoId, this.enterpriseId)
       this.articleQrInfo = result
     },
     popupShowControl(val) {
