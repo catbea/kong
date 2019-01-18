@@ -740,13 +740,18 @@ export default {
           .like-box {
             margin-bottom: 10px;
             .list {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp: 5; //（行数）
-              -webkit-box-orient: vertical;
+              // overflow: hidden;
+              // text-overflow: ellipsis;
+              // display: -webkit-box;
+              // -webkit-line-clamp: 5; //（行数）
+              // -webkit-box-orient: vertical;
               .name {
                 margin: 0 5px 5px 0;
+                display: inline-block;
+                max-width: 30%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
                 &.active {
                   color: #007ae6;
                 }
