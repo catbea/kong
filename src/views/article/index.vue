@@ -42,7 +42,7 @@
             </div>
             <div class="comment">
               <div class="like-count">
-                <span class="icon">
+                <span class="icon" v-show="item.praiseAndShareUserVOS.length">
                   <img src="../../assets/img/article/like1.png" alt="">
                 </span>
                 <span v-show="item.praiseAndShareUserVOS.length">{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
@@ -74,7 +74,7 @@
             <div class="like-cnt">
                 <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                   <span class="icon">
-                    <img src="../../assets/img/article/like1.png" alt="">
+                    <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
                   </span>
                   <div class="list">
                     <div class="cnt-box-like">
@@ -278,7 +278,6 @@ export default {
     }
   },
   async created() {
-    // window.localStorage.removeItem('guideStatus')
     this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab'))
@@ -298,11 +297,6 @@ export default {
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
-  },
-  mounted() {
-    // document.body.addEventListener('touchmove', function (e) {
-    //     e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
-    // }, {passive: false}) // passive 参数不能省略，用来兼容ios和android
   },
   methods: {
     // 隐藏引导页
@@ -508,21 +502,6 @@ export default {
       }
       this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: userId, userName: userName } })
     },
-    // showLike(e, data) {
-    //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
-    //   this.dialogY = e.pageY + 10
-    //   if(this.activeLikeItem.userId === data.userId){
-    //     this.showLikeDialog = !this.showLikeDialog
-    //   } else {
-    //     this.activeLikeItem = data
-    //     this.showLikeDialog = true
-    //   }
-    // },
-    // 隐藏好看名字弹框
-    // hideLike() {
-    //   this.showLikeDialog = false
-    //   this.activeLikeItem = ''
-    // },
     // 跳转文章详情
     goInfo(item) {
       let articleId = item.articleId
@@ -536,10 +515,6 @@ export default {
     goAdd() {
       this.$router.push({ name: 'addLinker' })
     },
-    // 去名片详情页
-    // goCard() {},
-    // 去我的分享
-    // goShare() {},
     // 去我的写一写
     goWrite() {
       this.$router.push('/user/articles/historicalArticles')
@@ -591,7 +566,7 @@ export default {
 
 <style lang="less" scoped>
 .article-box {
-  // overflow: auto;
+  overflow: auto;
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
