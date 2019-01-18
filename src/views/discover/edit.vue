@@ -42,7 +42,7 @@
       </div>
       <div class="right-operation">
         <div class="preview-btn" @click="previewClickHandler">预览</div>
-        <div class="save-btn" @click="saveClickHandler">保存</div>
+        <div class="save-btn" @click="saveClickHandler">保存并分享</div>
       </div>
     </div>
     <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
