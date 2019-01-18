@@ -7,7 +7,7 @@
       </div>
       <div class="house-box">
         <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
-          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :key="index" :dataArr="item" :indexData="index" @click.native="selectHandle(item)"/>
+          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :disabled="item.disabled" :key="index"  @click.native="selectHandle(item)"/>
         </van-list>
       </div>
       <div class="van-hairline--top operate-box">
@@ -73,6 +73,8 @@ export default {
       payload = Object.assign(payload, { current: this.page, size: this.pageSize })
       console.log(payload)
       const res = await userService.getMyMarket(payload)
+      console.log(res);
+      
       let _list = []
       for (let item of res.records) {
         let obj = {
@@ -85,6 +87,7 @@ export default {
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
           isChecked: this.existCheck(item.linkerId) !== -1,
+          disabled:false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`
         }
@@ -111,6 +114,7 @@ export default {
     // 验证是否可以继续选中
     enableCheck() {
       return this.selectedItems.length < this.maxSelect
+
     },
     // item点击
     selectHandle(item) {
@@ -118,7 +122,16 @@ export default {
       if (index === -1) {
         if (this.enableCheck()) {
           this.selectedItems.push(item)
+          if(this.selectedItems.length = this.maxSelect){
+            for(let temp of this.projectList){
+              console.log(temp);
+              
+              if(!temp.isChecked)temp.disabled = true
+            }
+          }
         } else {
+          console.log(item);
+          
           // TODO 提示已到最大个数
         }
       } else {
@@ -142,8 +155,6 @@ export default {
       this.singleShow = val
     },
     singleShow(val) {
-      console.log('sigin dadasd')
-
       this.$emit('input', val)
     }
   },

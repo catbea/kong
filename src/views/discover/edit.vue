@@ -16,7 +16,7 @@
         <edit-viewpoint/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click.native="singleAddClickHandler()" />
+          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click="singleAddClickHandler()" @delete="inlayHouseDelHandler"/>
         </div>
       </div>
     </div>
@@ -107,10 +107,6 @@ export default {
           status: 'edit'
         })
       }
-
-      // this.$nextTick(() => {
-      //   this.createHouses()
-      // })
     },
     // 获取我的楼盘推荐
     async getMyHouseRecommend() {
@@ -169,6 +165,10 @@ export default {
       }
       // console.log('快看快看快看快看快看快看快看快看快看快看',e);
       // this.target = e
+    },
+    //  内嵌楼盘删除
+    inlayHouseDelHandler(){
+      this.inlayHouse = []
     }
   }
 }
