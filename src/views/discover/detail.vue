@@ -247,7 +247,9 @@ export default {
       }
       if (this.commentList && this.commentList.length > 0) {
         this.commentCur++
-        this.filterComment()
+        if (this.commentIds && this.commentIds.length > 0) {
+          this.filterComment()
+        }
       }
     },
     // 修改评论的状态(删除自己的评论)
@@ -386,6 +388,7 @@ export default {
           }
         }
       }
+      return arr
     },
     // 删除数组中某个元素
     remove(arr, val) {
@@ -406,7 +409,7 @@ export default {
     },
     // 过滤评论(自己回复的评论前端处理,不取后台的数据)
     filterComment() {
-      let filterList = []
+      debugger
       for (var index in this.commentIds) {
         let commentId = this.commentIds[index]
         this.commentList = this.removeObject(this.commentList, commentId)
@@ -476,6 +479,8 @@ export default {
         sourceType: 0 // 经纪人-0，客户-1
       }
       const result = await discoverService.articleShare(params)
+      // 分享成功之后重新获取新的UUID
+      this.shareUuid = uuid()
     }
   },
   watch: {
