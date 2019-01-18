@@ -1,7 +1,7 @@
 <template>
   <div class="area-selection-page" ref="content">
     <div class="search-box van-hairline--bottom">
-      <search :conf="searchInfo"></search>
+      <search :conf="searchInfo "></search>
     </div>
     <div class="area-selection-box">
       <div class="current-location">
@@ -55,7 +55,7 @@ export default {
     indicator: {
       show: false,
       timer: null,
-      str: ''
+      str: '',
     },
     searchInfo: {
       siteText: '',
@@ -66,7 +66,7 @@ export default {
   }),
   created() {
     this.$store.dispatch('getAllCity')
-    this.searchInfo.siteText = this.userArea.city
+    this.searchInfo.siteText = this.$route.query.searchContent
     this.fromPage = this.$route.query.fromPage
   },
   methods: {
