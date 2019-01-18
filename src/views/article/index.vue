@@ -22,7 +22,7 @@
       </ul>
     </div>
     <div class="article-list" v-if="articleData.length">
-      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
             <div class="content scale-1px-bottom" @click="goInfo(item)">
@@ -278,7 +278,6 @@ export default {
     }
   },
   async created() {
-    this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab'))
     if (storage) {
@@ -286,14 +285,7 @@ export default {
     } else {
       this.getArticleList()
     }
-    if (this.userArea.city) {
-      this.city = this.userArea.city
-      await this.getCityArticle()
-    }
-    if (this.showCity) {
-      this.articleType.push({ itemCode: '', itemName: this.userArea.city })
-    }
-    this.getArticleType()
+    
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
@@ -309,20 +301,25 @@ export default {
       let result = await ArticleService.getArticleType({ classify: 'information_classify' })
       if (result) {
         this.articleType.push(...result)
+        window.sessionStorage.setItem('type', JSON.stringify(this.articleType))
       }
     },
     // 查询所属城市是否有文章
     async getCityArticle() {
-      let result = await ArticleService.getArticleList({
+      if (this.userArea.city) {
+        let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
         city: this.city,
         classify: '',
         sortType: 2
-      })
-      if (result.records && result.records.length) {
-        this.showCity = true
+        })
+        if (result.records && result.records.length) {
+          // this.showCity = true
+          this.articleType.push({ itemCode: '', itemName: this.userArea.city })
+        }
       }
+      this.getArticleType()
     },
     // 获取文章列表
     async getArticleList(sortType) {
@@ -559,6 +556,14 @@ export default {
   filters: {
     formatData(time) {
       return time ? formatTime(time, '{y}-{m}-{d}') : ''
+    }
+  },
+  mounted () {
+    let type = JSON.parse(window.sessionStorage.getItem('type'))
+    if (type) {
+       this.articleType = type
+    } else {
+      this.getCityArticle()
     }
   }
 }
