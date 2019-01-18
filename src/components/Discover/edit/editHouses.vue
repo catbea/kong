@@ -3,9 +3,9 @@
     <div class="house-box" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
         <estate-item :key="index" :info="currentData[index-1]"/>
-        <i class="icon iconfont icon-search_empty del-icon" @click="delClickHandler(index-1)"/>
+        <i class="icon iconfont icon-search_empty del-icon" @click.stop="delClickHandler(index-1)"/>
       </div>
-      <div class="empty-box" v-else @click="">
+      <div class="empty-box" v-else @click="addClickHandler">
         <div class="info-box">
           <div class="add-icon">
             <i class="icon iconfont icon-write_add"></i>
@@ -35,9 +35,11 @@ export default {
   created() {},
   methods: {
     delClickHandler(index) {
-      console.log(index)
-
       this.$delete(this.currentData, index)
+      this.$emit('delete',this.currentData[index])
+    },
+    addClickHandler(){
+      this.$emit('click')
     }
   },
   watch: {

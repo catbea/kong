@@ -2,27 +2,27 @@
   <div class="shadow_box meal-market-page-box">
     <div class="meal-market-page-box-top">
       <span class="icon-check" :class="statusClassCompute" @click="clickHandler"></span>
-      <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
-        <p class="icon-discount bg_img" v-show="dataArr.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
-        <span class="bg_img icon-play" v-show="dataArr.ifPanorama==1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
+      <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+data.linkerUrl+')'}">
+        <p class="icon-discount bg_img" v-show="data.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{data.sale}}</p>
+        <span class="bg_img icon-play" v-show="data.ifPanorama==1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
       </div>
       <ul>
         <li>
-          <div>{{dataArr.linkerName}}</div>
+          <div>{{data.linkerName}}</div>
         </li>
-        <li>{{dataArr.site}}</li>
+        <li>{{data.site}}</li>
         <li>
-          <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-          <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-          <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-          <div class="tag-item" v-for="(item,index) in dataArr.condition.slice(0,1)" :key="index">{{item}}</div>
+          <div class="tag-item-statu blue" v-if="0===data.saleStatus">{{status[data.saleStatus]}}</div>
+          <div class="tag-item-statu red" v-if="1===data.saleStatus">{{status[data.saleStatus]}}</div>
+          <div class="tag-item-statu gary" v-if="3===data.saleStatus">{{status[data.saleStatus]}}</div>
+          <div class="tag-item" v-for="(item,index) in data.condition.slice(0,1)" :key="index">{{item}}</div>
         </li>
-        <li>{{dataArr.open}}</li>
+        <li>{{data.open}}</li>
       </ul>
     </div>
-    <div class="meal-market-page-box-bottom" v-if="dataArr.divisionRules">
+    <div class="meal-market-page-box-bottom" v-if="data.divisionRules">
       <img class="bg_img" :src="imgCommission" alt srcset>
-      {{dataArr.divisionRules}}
+      {{data.divisionRules}}
     </div>
   </div>
 </template>
@@ -46,10 +46,7 @@ export default {
   props: {
     value: { type: Boolean, default: false }, // 是否选中
     disabled: { type: Boolean, default: false }, // 是否禁用
-
-    dataArr: {
-      type: Object
-    }
+    data: { type: Object }
   },
   methods: {
     clickHandler() {
@@ -69,7 +66,7 @@ export default {
   },
   computed: {
     statusClassCompute() {
-      return `icon iconfont ${this.value ? 'icon-chat_register_rb_s' : 'icon-chat_register_rb_n'} ${this.disabled && 'disabled'}`
+      return `icon iconfont ${this.disabled ? 'icon-chat_register_rb_n' : this.value ? 'icon-chat_register_rb_s' : 'icon-chat_register_rb_n'} ${this.disabled && 'disabled'}`
     }
   }
 }
@@ -94,6 +91,11 @@ export default {
       flex: 0 0 18px;
       font-size: 18px;
       margin: 0 16px;
+      &.icon-chat_register_rb_s {
+        // color: 
+      }
+      &.icon-chat_register_rb_n {
+      }
     }
     .meal-market-page-box-top-left {
       width: 120px;
