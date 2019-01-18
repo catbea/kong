@@ -266,23 +266,35 @@ export default {
       updateLikeItem: '' //点赞数据
     }
   },
-  created() {
+  async created() {
     this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
+    let storage = JSON.parse(window.sessionStorage.getItem('tab'))
+    if (storage) {
+     this.changeClassify(storage) 
+    } else {
+      this.getArticleList()
+    }
     if (this.userArea.city) {
       this.city = this.userArea.city
-      this.getCityArticle()
+      await this.getCityArticle()
     }
     if (this.showCity) {
       this.articleType.push({ itemCode: '', itemName: this.userArea.city })
     }
     this.getArticleType()
-    this.getArticleList()
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
   },
-  mounted() {},
+  mounted() {
+    document.querySelector('.tab-bar').addEventListener('touchmove', function (e) {
+      e.preventDefault() //阻止默认的处理方式(阻止下拉滑动的效果)
+    }, {passive: false}) //passive 参数不能省略，用来兼容ios和android
+    document.querySelector('.van-tabbar').addEventListener('touchmove', function (e) {
+      e.preventDefault() //阻止默认的处理方式(阻止下拉滑动的效果)
+    }, {passive: false}) //passive 参数不能省略，用来兼容ios和android
+  },
   methods: {
     // 隐藏引导页
     hideStep() {
@@ -340,9 +352,7 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify(item) {
-      if (this.classifyName === item.itemName) {
-        return false
-      }
+      window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
       this.classify = item.itemCode
       this.classifyName = item.itemName
@@ -639,6 +649,7 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
+    padding-bottom: 40px;
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
