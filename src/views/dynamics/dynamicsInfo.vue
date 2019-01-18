@@ -15,9 +15,9 @@
               <img :src="ovalIcon" class="oval-icon" v-show="linkerVO.ifPanorama == 1">
             </span>
             <span class="dynamicsInfo-list-right">
-              <div class="dynamicsInfo-list-right-title" @click="gopay(linkerVO)">
+              <div class="dynamicsInfo-list-right-title">
                  <div class="dynamicsInfo-list-right-title-div">{{linkerVO.linkerName}}</div>
-                <div class="dynamicsInfo-list-right-tab-div">
+                <div class="dynamicsInfo-list-right-tab-div" @click="gopay(linkerVO)">
                    <span class="left-title-right"  v-if="linkerVO.linkerOpenEndTime !=''">续费</span>
                    <span class="left-title-right-open" v-else>开通</span>
                 </div>
@@ -141,7 +141,8 @@ export default {
       itemDynamiclist: this.$route.query.itemDynamiclist,
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
-      avgStayLinkerTime: 0
+      avgStayLinkerTime: 0,
+      linkerByDistributor:true//是否当前所属分销商楼盘
     }
   },
   created() {
@@ -160,6 +161,7 @@ export default {
       const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist)
       this.dynamicCount = res.houseDynamicCountReturnVO
       this.linkerVO = res.linkerVO
+      this.linkerByDistributor=res.linkerByDistributor
       this.avgStayLinkerTime = parseInt(this.dynamicCount.avgStayLinkerTime / 1000)
     },
     //關注
@@ -191,7 +193,11 @@ export default {
     },
     //续费开通
     gopay(item) {
-      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+      if(this.linkerByDistributor){
+        this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+      }else{
+        this.$toast('非当前所属公司下楼盘无法开通或续费');
+      }
     }
   }
 }

@@ -33,10 +33,8 @@ export default {
 
       const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId)
 
-      if (res == '') {
-        this.$toast('提交报备成功')
-        this.$router.go('-1')
-      }
+      this.$toast('提交报备成功')
+      this.$router.go('-1')
     },
     /**
      * 修改所属机构
