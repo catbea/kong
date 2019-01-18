@@ -56,7 +56,6 @@ export default {
     async getLinkerApplyListByAgentId(current) {
       this.loading = true
       const res = await customService.getLinkerApplyListByAgentId(current)
-debugger
       if (res.pages > 1) {
         this.activitylist = this.activitylist.concat(res.records)
       } else {
