@@ -183,9 +183,9 @@ export default {
       width: 100%;
       border: none;
       height: 44px;
-      background: rgba(242, 248, 254, 1);
+      background: #EA4D2E;
       border-radius: 4px;
-      color: rgba(68, 81, 102, 1);
+      color: #fff;
       font-size: 16px;
       &.disabled {
         background-color: #e8e8e8;

@@ -179,7 +179,7 @@ export default {
     },
     skipMarketDetail(val) {
       this.linkerId = val
-      this.$router.push({ name: 'marketDetail', params: { id: val } })
+      this.$router.push({ name: 'marketDetail', params: { id: val }})
     },
     marketOpenHandle() {
       this.$router.push({ name: 'marketDetail-open', params: { id: this.linkerId } })
@@ -222,7 +222,7 @@ export default {
     }
   },
   watch: {
-    $route(to, from) {
+    '$route' (to, from) {
       // 对路由变化作出响应...
       this.getLinkerDetail(this.linkerId)
     }

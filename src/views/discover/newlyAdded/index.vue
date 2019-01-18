@@ -14,15 +14,20 @@ import articleService from 'SERVICE/articleService'
 export default {
   data: () => ({
     defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里',
-    linkerText: ''
+    linkerText: '',
+    addButtonClick: true,
+    editButtonClick: true
   }),
 
   methods: {
     //开始编辑
     startEdit() {
       if (this.linkerText.length > 0) {
-        this.$router.push({ name: 'analysis', params: { url: this.linkerText } })
+        if (this.editButtonClick == true) {
+          this.$router.push({ name: 'analysis', params: { url: this.linkerText, parseType: '1' } })
+        }
       } else {
+        this.editButtonClick = true
         this.$toast('您尚未填写原文链接')
       }
     },
@@ -35,20 +40,21 @@ export default {
     //添加文章
     addArticle() {
       if (this.linkerText.length > 0) {
-        let obj = {
-          articleUrl: this.linkerText
+        if (this.addButtonClick == true) {
+          this.$router.push({ name: 'analysis', params: { url: this.linkerText, parseType: '2' } })
         }
-        this.commitInfo(obj)
       } else {
+        this.addButtonClick = true
         this.$toast('您尚未填写原文链接')
       }
     },
 
     //commitInfo
     async commitInfo(data) {
+      this.addButtonClick = false
       const result = await articleService.articleAnalysis(data)
-
       if (result.returnCode == '31102') {
+        this.addButtonClick = true
         this.$dialog
           .alert({
             title: '爬取失败',
@@ -59,6 +65,7 @@ export default {
             // on close
           })
       } else {
+        this.addButtonClick = true
         this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
       }
     }

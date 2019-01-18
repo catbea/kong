@@ -5,7 +5,7 @@
       <div class="discover-view-info">
         <p class="view-count">
           浏览量:
-          <span>912</span>
+          <span>{{info&&info.scanNum}}</span>
         </p>
         <p class="view-source">
           分享源自
@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="discover-detail-content">
-        <edit-viewpoint/>
+        <edit-viewpoint v-model="viewpointText"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
           <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
@@ -42,11 +42,10 @@
       </div>
       <div class="right-operation">
         <div class="preview-btn" @click="previewClickHandler">预览</div>
-        <div class="save-btn" @click="saveClickHandler">保存</div>
+        <div class="save-btn" @click="saveClickHandler">保存并分享</div>
       </div>
     </div>
     <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
-    <!-- multiple -->
   </div>
 </template>
 <script>
@@ -58,6 +57,7 @@ import SingleSelectBox from 'COMP/Discover/edit/singleSelectBox'
 
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
+import cpInformationService from 'SERVICE/cpInformationService'
 export default {
   components: {
     EditParagraph,
@@ -129,8 +129,8 @@ export default {
         let lock = false
         let toDelArr = []
         for (let dom of this.renderDom) {
-          if (this.currentDelDom === dom) lock = true
           if (lock) dom.status = 'del'
+          if (this.currentDelDom === dom) lock = true
         }
       } else {
         // 删除当前
@@ -159,12 +159,30 @@ export default {
       this.$router.go(0)
     },
     // 底部栏预览按钮点击
-    async previewClickHandler() {},
+    async previewClickHandler() {
+    },
     // 底部栏保存按钮点击
-    saveClickHandler() {},
+    async saveClickHandler() {
+      let payload = {
+        viewpoint: this.viewpointText,
+        inlayHouse: this.inlayHouse.length > 0 ? this.inlayHouse[0].linkerId : '',
+        recommendHouse: []
+      }
+      for (let temp of this.recommendList) {
+        payload.recommendHouse.push(temp.linkerId)
+      }
+      let content = ''
+      for (let temp of this.renderDom) {
+        if(temp.status === 'edit') content += `<p>${temp.text}</p>` 
+      }
+      const res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
+      this.$router.push(`/discover/${res.id}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
+    },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
         this.inlayHouse = e
+      } else {
+        this.recommendList = e
       }
     },
     //  内嵌楼盘删除
@@ -172,7 +190,7 @@ export default {
       this.inlayHouse = []
     },
     multiHouseDelHandler(item) {
-      console.log('delete', item)
+      // console.log('delete', item)
     }
   },
   computed: {
@@ -182,15 +200,6 @@ export default {
       } else {
         return 3
       }
-      // switch (this.target) {
-      //   case 'inlayHouse':
-      //     return 1
-      //   case 'multiHouse':
-      //     return 3
-      //   default:
-      //     return 1
-      // }
-      // return this.target === 'inlayHouse' ? 1 : 3
     },
     selectedCompute() {
       if (this.target === 'inlayHouse') {

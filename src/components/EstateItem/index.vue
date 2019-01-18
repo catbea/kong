@@ -1,17 +1,17 @@
 <template>
   <div class="van-hairline--bottom estate-item" :style="{paddingBottom:(info&&info.divisionRules)&&'15px'}">
     <div class="main-continer" @click="mainAreaClickHandler">
-      <div class="bg_img left-box" :style="{backgroundImage:'url(' + (info.headImgUrl ? info.headImgUrl : info.linkerUrl) + ')'}">
-        <img class="panorama-mark" :src="panoramaImg" v-if="info.ifPanorama">
+      <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
+        <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
       </div>
       <div class="right-box">
-        <h5 class="estate-name">{{info.linkerName}}</h5>
-        <p class="estate-location">{{`${info.city} ${info.district?info.district:''}`}}</p>
-        <tag-group class="tag-box" :arr="this.info.linkerTags||this.info.projectTagArr" />
+        <h5 class="estate-name">{{info&&info.linkerName}}</h5>
+        <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
+        <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
         <div class="estate-info">
-          <p class="estate-price" v-if="info.price===0">价格待定</p>
-          <p class="estate-price" v-else>{{info.price }} {{info.priceUnit}}</p>
-          <p class="estate-area">{{info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
+          <p class="estate-price" v-if="info&&info.price===0">价格待定</p>
+          <p class="estate-price" v-else>{{info&&info.price}} {{info&&info.priceUnit}}</p>
+          <p class="estate-area">{{info&&info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
         </div>
       </div>
     </div>
@@ -20,9 +20,9 @@
         <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
       </div>
     </div>
-    <div class="commission-box" v-if="info.divisionRules">
+    <div class="commission-box" v-if="info&&info.divisionRules">
       <img :src="commissionImg" class="bottom-view-img">
-      <span>{{info.divisionRules | textOver}}</span>
+      <span>{{info&&info.divisionRules | textOver}}</span>
     </div>
   </div>
 </template>
