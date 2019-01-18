@@ -232,7 +232,7 @@ export default {
     },
     itemClick(val) {
       this.searchInfo.siteText = val
-      this.status =1
+      this.status = 1
       this.reset(this.maxSelect <= 1)
     },
     retryLocation() {
