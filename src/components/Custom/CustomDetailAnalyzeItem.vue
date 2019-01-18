@@ -164,8 +164,8 @@ export default {
         }
         .analyze-info {
           // white-space: nowrap;
-          margin-top: 8px;
-          display: flex;
+          margin-top: -5px;
+        //  display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
@@ -182,6 +182,7 @@ export default {
             font-size: 12px;
             font-weight: 400;
             color: #999999;
+            padding-left: 8px;
           }
         }
       }
@@ -214,6 +215,7 @@ export default {
         background-color: #f7f9fa;
         padding: 5px 11px;
         margin-top: 16px;
+        height: 34px;
         .commission-img {
           width: 16px;
           height: 16px;
