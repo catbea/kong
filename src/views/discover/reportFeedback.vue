@@ -33,7 +33,7 @@
       <popup v-model="show1" :close-on-click-overlay="false" >
         <div class="reportFeedback-popup">
           <div class="reportFeedback-popup-title">提交成功</div>
-          <div class="reportFeedback-popup-ok" @click="show1 = false">知道了</div>
+          <div class="reportFeedback-popup-ok" @click="subFeedback">知道了</div>
         </div>
       </popup>
     </div>
@@ -78,7 +78,6 @@ export default {
         for (let i = 0; i < this.feedbackType.length; i++) {
           str += ',' + this.feedbackType[i].itemCode
         }
-        debugger
         let SelectedIndex = str.substring(1, str.length)
         let param = {
           articleId: this.articleId, //文章id
@@ -88,6 +87,10 @@ export default {
         await discoverService.getInsertFeedback(param)
         this.show1 = true
       }
+    },
+    async subFeedback(){
+      this.show1 = false
+       history.go(-1); 
     }
   }
 }
