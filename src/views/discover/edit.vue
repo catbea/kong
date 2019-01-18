@@ -99,7 +99,7 @@ export default {
     singleShow: false,
     multiShow: false,
     target: null,
-    helpShow: true
+    helpShow: false
   }),
   created() {
     this.id = this.$route.params.id
@@ -129,7 +129,8 @@ export default {
       const payload = {
         orderBy: 3, // 人气最旺
         current: 1,
-        size: 1
+        size: 3,
+        saleStatus:0
       }
       const res = await userService.getMyHouses(payload)
       this.recommendList = res.records
