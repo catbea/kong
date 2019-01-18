@@ -54,10 +54,6 @@
             class="easy-look-fold"
             v-if="isMoreLike" @click="moreLikeListHandler"
           >展开更多<van-icon name="arrow-down"/></div>
-          <span class="easy-look-name" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
-          <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
-            <van-icon name="arrow-down"/>
-          </div>
         </div>
       </div>
       <!-- 评论 -->
@@ -162,7 +158,7 @@ export default {
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
-    isMoreLike: true, // 是否有更多好看
+    isMoreLike: false, // 是否有更多好看
     easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,
