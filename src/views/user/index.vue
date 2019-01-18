@@ -83,7 +83,7 @@ export default {
     headIcons: [
       { title: '我的楼盘', Img: require('IMG/user/mm@2x.png'), Icon: '#icon-me_building' },
       { title: '我的收藏', Img: require('IMG/user/Group1@2x.png'), Icon: '#icon-me_collection' },
-      { title: '我的写一写', Img: require('IMG/user/Group3@2x.png'), Icon: '#icon-me_history' },
+      { title: '我的写一写', Img: require('IMG/user/Group3@2x.png'), Icon: '#icon-me_write' },
       { title: '我的报备', Img: require('IMG/user/Group6@2x.png'), Icon: '#icon-me_Reported' },
       { title: '我的优惠券', Img: require('IMG/user/Group5@2x.png'), Icon: '#icon-me_coupons' },
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }
