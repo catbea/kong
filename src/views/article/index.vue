@@ -277,7 +277,13 @@ export default {
       this.articleType.push({ itemCode: '', itemName: this.userArea.city })
     }
     this.getArticleType()
-    this.getArticleList()
+    let articleData = JSON.parse(window.sessionStorage.getItem('articleData'))
+    if (articleData) {
+      this.articleData.push(...articleData)
+      this.showLoading = false
+    } else {
+      this.getArticleList()
+    }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
@@ -330,6 +336,9 @@ export default {
         })
         this.articleData.push(...records)
         this.current += 1
+        if (this.classifyName === '推荐') {
+          window.sessionStorage.setItem('articleData', JSON.stringify(records))
+        }
       }
       this.nodataStatus = true
       this.showLoading = false
@@ -348,6 +357,12 @@ export default {
       this.classifyName = item.itemName
       this.current = 1
       this.articleData = []
+
+      let articleData = JSON.parse(window.sessionStorage.getItem('articleData'))
+      if (articleData && item.itemName==='推荐') {
+        return this.articleData.push(...articleData)
+      }
+
       this.getArticleList()
     },
     // 显示按时间排序菜单
@@ -534,6 +549,9 @@ export default {
     },
     // 下拉刷新
     async onRefresh() {
+      if (this.classifyName === '推荐') {
+        window.sessionStorage.removeItem('articleData')
+      }
       this.current = 1
       this.articleData = []
       await this.getArticleList()
@@ -884,6 +902,11 @@ export default {
           top: 5px;
           line-height: 1.5;
           font-size: 14px;
+          max-width: 75px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: inline-block;
         }
         .textarea {
           width: 100%;
