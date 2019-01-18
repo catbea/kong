@@ -113,8 +113,11 @@ export default {
   .bar-container {
     width: 335px;
     margin: 20px;
+    .pie-chart-container{
+          margin-top: -15px;
+    }
     .chart-title {
-      padding: 15px 15px 0;
+      padding: 22px 15px 0;
       font-size: 16px;
       font-weight: 600;
       color: #333333;
@@ -162,7 +165,7 @@ export default {
       }
     }
     .chart-desc {
-      padding: 0 15px 15px;
+      padding: 0 15px 27px;
       font-size: 14px;
       font-weight: 400;
       color: #333333;
@@ -196,6 +199,7 @@ export default {
         font-size: 15px;
         font-weight: 400;
         color: #333333;
+        line-height: 31px;
         > span {
           width: 45px;
           font-size: 15px;
