@@ -15,15 +15,19 @@ export default {
   data: () => ({
     defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里',
     linkerText: '',
-    addButtonClick: true
+    addButtonClick: true,
+    editButtonClick: true
   }),
 
   methods: {
     //开始编辑
     startEdit() {
       if (this.linkerText.length > 0) {
-        this.$router.push({ name: 'analysis', params: { url: this.linkerText } })
+        if (this.editButtonClick == true) {
+          this.$router.push({ name: 'analysis', params: { url: this.linkerText } })
+        }
       } else {
+        this.editButtonClick = true
         this.$toast('您尚未填写原文链接')
       }
     },
