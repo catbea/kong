@@ -109,7 +109,7 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
+                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 3"
                       @click="item.replayCount=3"
                     >收起
                       <van-icon name="arrow-up"/>
