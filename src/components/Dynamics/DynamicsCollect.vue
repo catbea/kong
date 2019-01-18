@@ -4,7 +4,8 @@
     <div class="top-container">
       <h5>数据中心</h5>
       <div class="bg_img msg-box" :style="{backgroundImage:'url(' + msgIcon + ')'}" @click="goMessage">
-        <div class="new-msg-num" v-if="data&&data.newMsg>0">{{data&&data.newMsg | countLimit}}</div>
+        <div class="new-msg-num"  v-if="data.newMsg<=99&&data.newMsg>0">99</div>
+        <div class="icon iconfont icon-more new-msg-num" style="font-size:16px;" v-if="data&&data.newMsg>99"></div>
       </div>
     </div>
     <div class="shadow_box info-box" v-if="data">
@@ -126,6 +127,7 @@ export default {
         transform: translate(50%, -50%);
         width: 22px;
         height: 22px;
+        // padding:
         background-color: #ea4d2e;
         border-radius: 100%;
         color: #fff;
