@@ -176,7 +176,7 @@
         </div>
         <div class="group-item">
           <span>经纪人电话</span>
-          <input type="text" v-model="editData.mobile" maxlength="11" placeholder="请输入电话号码">
+          <input type="text" v-model="editData.mobile" maxlength="16" placeholder="请输入电话号码">
         </div>
         <div class="group-item">
           <span>机构地址</span>
@@ -419,8 +419,10 @@ export default {
       if (!checkStrType(name)) {
         return this.$toast('姓名只支持中文、英文和数字')
       }
-      if (!checkPhoneNum(mobile)) {
-        return this.$toast('电话只能为11位数字')
+      if(mobile.length==11){
+        if (!checkPhoneNum(mobile)) {
+          return this.$toast('电话号码输入有误')
+        }
       }
       let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？\'\"\’\‘\“\”]+$/g
       if (!reg.test(slogan)) {
