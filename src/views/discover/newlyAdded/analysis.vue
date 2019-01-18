@@ -74,7 +74,8 @@ export default {
       imgNum: '',
       errColor: '',
       show: true,
-      closeImg: require('IMG/user/close_popup.png')
+      closeImg: require('IMG/user/close_popup.png'),
+      canAnalysis: true
     }
   },
 
@@ -88,6 +89,8 @@ export default {
 
   methods: {
     async commitInfo(data) {
+      console.log('啦啦啦啦啦啦啦啦啦啦啦啦啦')
+
       const result = await articleService.articleAnalysis(data)
 
       if (result.returnCode == '31100') {
@@ -144,10 +147,15 @@ export default {
     //阅读并同意 进行解析文章操作
     goToAnalysis() {
       this.show = false
+     
       let obj = {
         articleUrl: this.articleUrl
       }
-      this.commitInfo(obj)
+
+      if (this.canAnalysis == true) {
+         this.canAnalysis = false
+        this.commitInfo(obj)
+      }
     }
   }
 }

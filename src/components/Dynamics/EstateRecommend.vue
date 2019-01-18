@@ -50,8 +50,8 @@ export default {
   > .recommend-info {
     position: absolute;
     width: 100%;
-    top: 80px;
-    left: 35px;
+    top: 70px;
+    left:43px;
     > .desc-box {
       color: #fff;
       .title {
@@ -62,12 +62,12 @@ export default {
       .desc {
         font-size: 13px;
         font-weight: 400;
-        margin-top: 4px;
+        margin-top:10px;
       }
     }
     > .open-btn {
       position: absolute;
-      right: 65px;
+      right: 75px;
       top: 10px;
       display: inline-block;
       font-size: 13px;

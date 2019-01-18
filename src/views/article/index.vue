@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length" @touchmove.stop='' @touchstart.stop=''>
+    <div class="article-list" v-if="articleData.length">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
@@ -109,9 +109,9 @@
                     </span>
                     <span
                       class="more"
-                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
+                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 3"
                       @click="item.replayCount=3"
-                    >收起
+                    >收起 
                       <van-icon name="arrow-up"/>
                     </span>
                   </div>
@@ -585,8 +585,7 @@ export default {
 <style lang="less" scoped>
 .article-box {
   overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  font-family: 'Microsoft YaHei';
+  font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
     font-size: 14px;
@@ -595,23 +594,27 @@ export default {
     line-height: 20px;
     padding: 12px 16px;
     height: 54px;
-    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    position: fixed;
     .classify {
+      display: inline-block;
       width: 85%;
       overflow-x: auto;
+      overflow-y: hidden;
       white-space: nowrap;
-    }
-    span {
-      display: inline-block;
-      margin-right: 32px;
-      &.active {
-        color: #007ae6;
+      span {
+        display: inline-block;
+        margin-right: 32px;
+        &.active {
+          color: #007ae6;
+        }
       }
-    }
-    .recommend {
-      font-size: 24px;
-      height: 34px;
-      line-height: 34px;
+      .recommend {
+        font-size: 24px;
+        height: 34px;
+        line-height: 34px;
+      }
     }
     .icon {
       position: absolute;
@@ -655,7 +658,7 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
-    padding-bottom: 60px;
+    padding-bottom: 50px;
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
@@ -838,7 +841,7 @@ export default {
     width: 56px;
     position: fixed;
     right: 12px;
-    bottom: 60px;
+    bottom: 50px;
     z-index: 3;
     img {
       position: relative;
