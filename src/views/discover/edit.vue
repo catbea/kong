@@ -198,7 +198,7 @@ export default {
       }
       let res,targetid
       // 存在这个字段,说明是再次编辑
-      if (this.info.belongeder) {
+      if (this.info.belongeder === '0') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = this.info.id
       } else {

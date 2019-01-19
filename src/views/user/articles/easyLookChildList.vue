@@ -19,7 +19,8 @@
         <img class="article-img" :src="itemInfo.image">
       </div>
     </div>
-    <span class="totalNum">总计{{total}}条分享记录</span>
+    <span class="totalNum" v-if="itemInfo.selectType=='2'">总计{{total}}条分享记录</span>
+    <span class="totalNum" v-if="itemInfo.selectType=='3'">总计{{total}}条编辑记录</span>
     <div class="list-item-view">
       <van-list
         v-model="loading"
