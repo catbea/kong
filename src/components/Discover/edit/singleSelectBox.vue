@@ -125,7 +125,7 @@ export default {
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let payload = screenFilterHelper(this.projectName, mergeFilters)
       payload = Object.assign(payload, { current: this.page, size: this.pageSize })
-      const res = userService.getMyHouses(payload)
+      const res = await userService.getMyHouses(payload)
       let _list = []
       for (let item of res.records) {
         let obj = {
