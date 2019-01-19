@@ -119,11 +119,12 @@
                           v-show="num < item.replayCount"
                           @click="showReplayFn(item, index,2,data,num)"
                         >
-                          <span class="name" @click.stop="replayLike(data,1)">{{data.senderName}}</span>
+                          <!--  @click.stop="replayLike(data,1)" -->
+                          <span class="name">{{data.senderName}}</span>
                           <span class="text" v-if="data.receiverName">回复</span>
+                          <!--  @click.stop="replayLike(data,2)" -->
                           <span
                             class="name"
-                            @click.stop="replayLike(data,2)"
                             v-if="data.receiverName"
                           >{{data.receiverName }}</span>:
                           <span class="replay-cnt">{{data.content}}</span>
@@ -295,7 +296,6 @@ export default {
     }
   },
   async created() {
-    // window.localStorage.removeItem('guideStatus')
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
     this.changeClassify(storage)
@@ -323,7 +323,7 @@ export default {
         let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
-        city: this.city,
+        city: this.userInfo.majorCity,
         classify: '',
         sortType: 2
         })
@@ -344,7 +344,7 @@ export default {
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
-        city: this.classifyName === this.city ? this.city : '',
+        city: this.classifyName === this.userInfo.majorCity ? this.userInfo.majorCity : '',
         classify: this.classify,
         sortType: sortType
       })
@@ -447,6 +447,8 @@ export default {
       if (replay && replay.senderId === this.userInfo.agentId) {
         this.commentIndex = index
         this.deleteIndex = num
+        // 隐藏菜单
+        this.$store.commit('TABBAR',{show:false})
         return (this.showDelete = true)
       }
       this.replayStatus = type
@@ -455,6 +457,8 @@ export default {
         this.replayItem = replay
       }
       this.commentIndex = index
+      // 隐藏菜单
+      this.$store.commit('TABBAR',{show:false})
       this.showReplay = true
       this.$nextTick(function() {
         this.$refs.replaybox.focus()
@@ -466,6 +470,8 @@ export default {
     },
     // 隐藏评论框
     hideReplayFn() {
+      // 显示菜单
+      this.$store.commit('TABBAR',{show:true})
       this.showReplay = false
     },
     // 发表评论
@@ -579,6 +585,8 @@ export default {
         this.delComment()
       }
       this.showDelete = false
+      // 隐藏菜单
+      this.$store.commit('TABBAR',{show:true})
     },
     // 删除评论
     async delComment() {
@@ -604,6 +612,9 @@ export default {
     } else {
       this.getCityArticle()
     }
+    document.querySelector('.tab-bar').addEventListener('touchmove', (e) => {
+      e.preventDefault()
+    }, { passive: false })
   }
 }
 </script>
