@@ -211,7 +211,8 @@ export default {
           infoId: this.info.id,
           senderId: this.agentId,
           senderSource: 0,
-          type: 0
+          type: 0,
+          viewFlag:0
         }
         discoverService.insertComment(commentData)
       }
@@ -285,10 +286,10 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
-      font-size: 16px !important;
-      color: #333333 !important;
-      font-weight: 400 !important;
-      line-height: 28px !important;
+      font-size: 16px;
+      color: #333333;
+      font-weight: 400;
+      line-height: 28px;
       > .edit-houses-container {
         height: 140px;
         background: rgba(150, 158, 168, 0.08);
