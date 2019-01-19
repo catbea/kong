@@ -95,8 +95,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- 悬浮工具栏 -->
+      <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
@@ -112,6 +111,8 @@
         分享
       </div>
     </div>
+    </div>
+    
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
     <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
@@ -767,7 +768,7 @@ export default {
     color: #ea4d2e;
     font-size: 16px;
   }
-  > .tools-bar {
+   .tools-bar {
     width: 100%;
     background-color: #fff;
     position: fixed;
