@@ -34,7 +34,7 @@ export default {
       const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId)
 
       this.$toast('提交报备成功')
-      this.$router.go('-1')
+      this.$router.replace('/user/myReport')
     },
     /**
      * 修改所属机构

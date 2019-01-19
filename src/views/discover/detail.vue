@@ -36,7 +36,7 @@
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
-      <div class="easy-look-container" v-if="easylookList.length>0">
+      <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
             <span style="color:#999999" class="icon iconfont icon-found_like"></span>
@@ -233,7 +233,7 @@ export default {
         this.$nextTick(() => {
           console.log(this.$refs.easyLook.offsetHeight)
           let height = this.$refs.easyLook.offsetHeight
-          if (height <= 79) {
+          if (height <= 80) {
             this.isMoreLike = false
           }else {
             this.isMoreLike = true
