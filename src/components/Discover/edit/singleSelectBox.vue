@@ -10,10 +10,6 @@
           <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :showRules="false" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
         </van-list>
       </div>
-      <div class="van-hairline--top operate-box">
-        <div class="cancel-btn" @click="cancelBtnClick">取消</div>
-        <div class="submit-btn" @click="submitBtnClick">确认({{`${selectedItems.length}/${maxSelect}`}})</div>
-      </div>
     </div>
     <div v-else class="city-select-container">
       <div class="area-selection-page" ref="content">
@@ -76,8 +72,7 @@ export default {
   },
   props: {
     value: { type: Boolean, default: false }, // 对应show.是否显示
-    maxSelect: { type: Number, default: 1 }, // 限制个数
-    selected: { type: Array } // 已经选中
+    selected: { type: Array } // 已经选中的
   },
   data: () => ({
     singleShow: false,
@@ -133,11 +128,11 @@ export default {
           linkerUrl: item.linkerUrl,
           sale: item.sale,
           linkerName: item.linkerName,
-          site: `${item.city?item.city:''} ${item.county?item.county:''} ${item.price?item.price:''} ${item.priceUnit?item.priceUnit:''}`, //'深圳 南山 120000元/㎡',
+          site: `${item.city ? item.city : ''} ${item.county ? item.county : ''} ${item.price ? item.price : ''} ${item.priceUnit ? item.priceUnit : ''}`, //'深圳 南山 120000元/㎡',
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
-          isChecked: this.existCheck(item.linkerId) !== -1,
+          // isChecked: this.existCheck(item.linkerId) !== -1,
           disabled: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`
@@ -157,46 +152,48 @@ export default {
       this.status = 2
     },
     // 验证是否已经被点击,不存在返回-1,存在返回index
-    existCheck(linkerId) {
-      for (let i = 0; i < this.selectedItems.length; i++) {
-        if (this.selectedItems[i].linkerId === linkerId) return i
-      }
-      return -1
-    },
+    // existCheck(linkerId) {
+    //   for (let i = 0; i < this.selectedItems.length; i++) {
+    //     if (this.selectedItems[i].linkerId === linkerId) return i
+    //   }
+    //   return -1
+    // },
     // 验证是否可以继续选中
-    enableCheck() {
-      return this.selectedItems.length < this.maxSelect
-    },
+    // enableCheck() {
+    //   return this.selectedItems.length < this.maxSelect
+    // },
     // item点击
     selectHandle(item) {
-      setTimeout(() => {
-        const index = this.existCheck(item.linkerId)
-        if (index === -1) {
-          if (this.enableCheck()) {
-            this.selectedItems.push(item)
-            if (this.selectedItems.length === this.maxSelect) {
-              for (let temp of this.projectList) {
-                if (!temp.isChecked) temp.disabled = true
-              }
-            }
-          } else {
-            // TODO 提示已到最大个数
-          }
-        } else {
-          this.$delete(this.selectedItems, index)
-        }
-      }, 1)
+      this.$emit('submit', item)
+      this.singleShow = false
+      // setTimeout(() => {
+      //   const index = this.existCheck(item.linkerId)
+      //   if (index === -1) {
+      //     if (this.enableCheck()) {
+      //       this.selectedItems.push(item)
+      //       if (this.selectedItems.length === this.maxSelect) {
+      //         for (let temp of this.projectList) {
+      //           if (!temp.isChecked) temp.disabled = true
+      //         }
+      //       }
+      //     } else {
+      //       // TODO 提示已到最大个数
+      //     }
+      //   } else {
+      //     this.$delete(this.selectedItems, index)
+      //   }
+      // }, 1)
     },
     // 点击取消
-    cancelBtnClick() {
-      this.selectedItems = []
-      this.singleShow = false
-    },
+    // cancelBtnClick() {
+    //   this.selectedItems = []
+    //   this.singleShow = false
+    // },
     // 点击确认
-    submitBtnClick() {
-      this.$emit('submit', this.selectedItems)
-      this.singleShow = false
-    },
+    // submitBtnClick() {
+    //   this.$emit('submit', this.selectedItems)
+    //   this.singleShow = false
+    // },
     // 重置,cleanData - 是否也清除数据
     reset(cleanData = false) {
       this.selectedItems = []
@@ -239,7 +236,10 @@ export default {
   watch: {
     value(val) {
       this.singleShow = val
-      if (val) this.reset()
+      if (val) {
+        this.reset()
+        this.getLinkerList()
+      }
     },
     singleShow(val) {
       this.$emit('input', val)
@@ -278,7 +278,7 @@ export default {
     }
     > .house-box {
       flex: 1;
-      margin-bottom: 30px;
+      // margin-bottom: 30px;
       overflow-x: hidden;
       overflow-y: auto;
     }
