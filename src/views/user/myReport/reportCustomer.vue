@@ -181,6 +181,9 @@ export default {
       > .radio-item-container {
         margin: 10px 15px;
         padding: 20px 15px;
+        .van-icon-circle{
+          color: #757575;
+        }
       }
     }
   }

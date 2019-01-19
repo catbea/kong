@@ -2,7 +2,8 @@
   <van-popup class="popup-container" v-model="currentShow">
     <img class="close-btn" :src="closeImg" @click="closeHandler">
     <div class="bg_img img-content" :style="{backgroundImage:'url(' + bgImg + ')'}"></div>
-    <div class="bg_img img-ai" :style="{backgroundImage:'url(' + aiImg + ')'}"></div>
+    <!-- <div class="bg_img img-ai" :style="{backgroundImage:'url(' + aiImg + ')'}"></div> -->
+    <div class="img-ai">AI荐盘</div>
     <div class="tag-content">
       <div class="tag-item">地铁房</div>
       <div class="tag-item">商业潜力</div>
@@ -28,7 +29,7 @@ export default {
     }
   },
   data: () => ({
-    currentShow: false,
+    currentShow:false,
     bgImg: require('IMG/guidance/marketGuidance.jpg'),
     aiImg: require('IMG/guidance/guidance_ai.png'),
     closeImg: require('IMG/guidance/closeBtn.png')
@@ -73,6 +74,7 @@ export default {
     height: 200px;
     border-radius: 3px;
     margin: 15px;
+    margin-bottom:0;
     position: relative;
   }
   > .img-ai {
@@ -81,10 +83,20 @@ export default {
     position: absolute;
     left: 30px;
     top: 15px;
+    font-size:13px;
+    text-align:center;
+    line-height:24px;
+    color:#FFFFFF;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+    font-family:PingFangSC-Regular;
+    font-weight:500;
+    background-color:#ee7158;
   }
   > .tag-content {
     height: 30px;
     margin: 15px;
+    margin-top:8px;
     > .tag-item {
       color: #333333;
       font-size: 14px;
