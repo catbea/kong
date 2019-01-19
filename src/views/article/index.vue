@@ -25,9 +25,9 @@
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
-            <div class="content scale-1px-bottom" @click="goInfo(item)">
+            <div class="content scale-1px-bottom">
               <div class="left-cnt">
-                <h3 class="title">{{item.articleTitle}}</h3>
+                <h3 class="title"  @click="goInfo(item)">{{item.articleTitle}}</h3>
                 <div class="attr">
                   <p class="source">
                     <span class="name">{{item.publisher}}</span>
@@ -36,7 +36,7 @@
                   <span class="read">{{item.scanNum}}次阅读</span>
                 </div>
               </div>
-              <div class="img">
+              <div class="img"  @click="goInfo(item)">
                 <img :src="item.articleImg" alt="">
               </div>
             </div>
@@ -171,10 +171,10 @@
     <div class="replay" v-show="showReplay">
       <div class="replay-cnt">
         <div class="top-action">
-          <span class="cancle" @click.stop="hideReplayFn">取消</span>
-          <span class="publish" @click.stop="insertCommentFn">
-            <button>发布</button>
-          </span>
+          <p class="cancle" @click="hideReplayFn">取消</p>
+          <p class="publish" @click="insertCommentFn">
+            <span>发布</span>
+          </p>
         </div>
         <div class="replay-title">
           <p v-if="replayStatus===1">{{commentItem.articleTitle}}</p>
@@ -905,7 +905,7 @@ export default {
     height: 100%;
     z-index: 3;
     .replay-cnt {
-      margin-top: 50px;
+      // margin-top: 50px;
       width: 100%;
       padding: 20px 16px 30px 13px;
       box-sizing: border-box;
@@ -923,9 +923,12 @@ export default {
         .publish {
           flex: 1;
           text-align: right;
-          button {
+          span {
+            display: inline-block;
             width: 56px;
             height: 32px;
+            line-height: 32px;
+            text-align: center;
             border-radius: 6px;
             border: none;
             background-color: #007ae6;
