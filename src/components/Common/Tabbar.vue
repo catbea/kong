@@ -1,10 +1,12 @@
 <template>
-    <van-tabbar v-if="tabbar.show" class="tabbar" v-model="active">
+  <div id="tabbar">
+    <van-tabbar v-if="tabbar.show" class="tabbar" v-model="active" ref="tabbar">
       <van-tabbar-item class="tabbar-item" v-for="item in tabbar.items" :key="item.name" :replace="true" :to="item.path" :info="infoCount(item.info)">
         <span>{{item.name}}</span>
         <img slot="icon" slot-scope="props" :src="props.active ? item.icon_atc : item.icon">
       </van-tabbar-item>
     </van-tabbar>
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex'
@@ -33,6 +35,11 @@ export default {
         if (to.fullPath.indexOf(this.tabbar.items[i].path) !== -1) return (this.active = i)
       }
     }
+  },
+  mounted () {
+    document.getElementById('tabbar').addEventListener('touchmove', (e) => {
+      e.preventDefault()
+    }, { passive: false })
   }
 }
 </script>
