@@ -7,7 +7,7 @@
       </div>
       <div class="house-box">
         <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
-          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
+          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :showRules="false" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
         </van-list>
       </div>
       <div class="van-hairline--top operate-box">

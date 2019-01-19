@@ -20,7 +20,7 @@
         <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
       </div>
     </div>
-    <div class="commission-box" v-if="info&&info.divisionRules">
+    <div class="commission-box" v-if="showRules&&info&&info.divisionRules">
       <img :src="commissionImg" class="bottom-view-img">
       <span>{{info&&info.divisionRules | textOver}}</span>
     </div>
@@ -31,6 +31,7 @@ import TagGroup from 'COMP/TagGroup'
 export default {
   props: {
     info: { type: Object },
+    showRules:{type:Boolean, default: true},
     conf: {
       type: Object,
       default: () => {
