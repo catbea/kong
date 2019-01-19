@@ -210,8 +210,10 @@ export default {
       const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId)
       this.info = res
       this.infoId = res.id
-      this.editData = JSON.parse(this.info.editData)
-      console.log(this.editData)
+      if (this.info.editData) {
+        this.editData = JSON.parse(this.info.editData)
+        console.log(this.editData)
+      }
       this.handleLinkerInfo()
 
       this.agentInfo = {

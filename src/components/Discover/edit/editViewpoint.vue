@@ -1,6 +1,6 @@
 <template>
   <div class="edit-viewpoint-container">
-    <div class="viewpoint-container" @click="viewpointAreaClick">{{currentValue === '' ? '在这里可以写出您的观点（不可换行)' : currentValue}}</div>
+    <div class="viewpoint-container" @click="viewpointAreaClick">{{currentValue === '' ? '您可以在这里输入观点,若无内容分享后将不会进行展示.' : currentValue}}</div>
     <van-popup class="write-board" v-model="viewpointEditShow" position="bottom" :close-on-click-overlay="false">
       <p class="write-title">发表观点</p>
       <div class="pull-btn" @click="viewpointPullHandler">发布</div>

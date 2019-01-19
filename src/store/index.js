@@ -6,6 +6,7 @@ import city from './modules/city'
 import matket from './modules/market'
 import dynamics from './modules/dynamics'
 import wx from './modules/wx'
+import article from './modules/articles'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     city,
     matket,
     dynamics,
-    wx
+    wx,
+    article
   },
   strict: true
 })

@@ -88,6 +88,9 @@ export default {
 
     > .edit-phone-conter {
       margin-bottom: 24px;
+      .material-input{
+        color: #757575;
+      }
       > .edit-phone-input {
         font-size: 16px;
         font-weight: 500;

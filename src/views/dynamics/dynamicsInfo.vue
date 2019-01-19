@@ -161,6 +161,8 @@ export default {
       const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist)
       this.dynamicCount = res.houseDynamicCountReturnVO
       this.linkerVO = res.linkerVO
+      console.log(res,'单个楼盘数据');
+      
       this.linkerByDistributor=res.linkerByDistributor
       this.avgStayLinkerTime = parseInt(this.dynamicCount.avgStayLinkerTime / 1000)
     },
@@ -239,6 +241,10 @@ export default {
         position: relative;
         border-radius: 6px;
         .dynamicsInfo-left-bg_img {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:36px;
           text-align: center;
           width: 36px;
           height: 22px;

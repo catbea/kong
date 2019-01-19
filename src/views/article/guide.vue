@@ -56,20 +56,21 @@ export default {
 .article-guide {
   position: fixed;
   width: 100%;
-  top: 0;
+  top: -50px;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 9;
+  z-index: 4;
   .step {
     height: 100%;
     position: relative;
-    z-index: 3;
+    z-index: 4;
+    text-align: center;
   }
   .action-btn {
     position: absolute;
     margin: 0 72px;
     text-align: center;
-    z-index: 3;
+    z-index: 4;
     width: 230px;
     button {
       border: 1px solid #fff;
@@ -90,7 +91,7 @@ export default {
       top: 480px;
     }
     &.step3 {
-      top: 60px;
+      top: 70px;
     }
     &.step4 {
       top: 370px;
@@ -102,7 +103,7 @@ export default {
       top: 130px;
     }
     &.step7 {
-      top: 72px;
+      top: 82px;
     }
     &.step8 {
       top: 333px;

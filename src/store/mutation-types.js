@@ -34,3 +34,6 @@ export const CURR_DATA_DYNAMICS_TAB = 'CURR_DATA_DYNAMICS_TAB'
 
 //wechat
 export const WX_JSSDK = 'WX_JSSDK'
+
+//我的写一写
+export const MYWRITE_TAB = 'MYWRITE_TAB'
