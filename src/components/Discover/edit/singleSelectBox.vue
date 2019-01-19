@@ -7,7 +7,7 @@
       </div>
       <div class="house-box">
         <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
-          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
+          <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :showRules="false" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
         </van-list>
       </div>
       <div class="van-hairline--top operate-box">
@@ -125,10 +125,12 @@ export default {
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let payload = screenFilterHelper(this.projectName, mergeFilters)
       payload = Object.assign(payload, { current: this.page, size: this.pageSize })
-      console.log(payload)
-      const res = await userService.getMyMarket(payload)
-      console.log(res)
-
+      let res
+      if (this.maxSelect === 1) {
+        res = await marketService.getHouseList(payload)
+      } else {
+        res = await userService.getMyMarket(payload)
+      }
       let _list = []
       for (let item of res.records) {
         let obj = {
@@ -136,7 +138,7 @@ export default {
           linkerUrl: item.linkerUrl,
           sale: item.sale,
           linkerName: item.linkerName,
-          site: `${item.city} ${item.county} ${item.price} ${item.priceUnit}`, //'深圳 南山 120000元/㎡',
+          site: `${item.city?item.city:''} ${item.county?item.county:''} ${item.price?item.price:''} ${item.priceUnit?item.priceUnit:''}`, //'深圳 南山 120000元/㎡',
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,

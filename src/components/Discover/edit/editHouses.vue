@@ -2,7 +2,7 @@
   <div class="edit-houses">
     <div class="house-box" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
-        <estate-item :key="index" :info="currentData[index-1]"/>
+        <estate-item :key="index" :showRules="false" :info="currentData[index-1]"/>
         <i class="icon iconfont icon-search_empty del-icon" @click.stop="delClickHandler(index-1)"/>
       </div>
       <div class="empty-box" v-else @click="addClickHandler">

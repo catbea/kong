@@ -598,11 +598,11 @@ export default {
     // 列表touchend
     touchend (e) {
       this.endX = e.changedTouches[0].pageX
-      if (this.endX - this.startX > 50) {
-         this.touchChangeTab(1)
-      }
       if (this.startX - this.endX > 50) {
-        this.touchChangeTab(2)
+        this.touchChangeTab(1)
+      }
+      if (this.endX - this.startX > 50) {
+         this.touchChangeTab(2)
       }
     },
     // 滑动切换tab 1 右滑 2 左滑

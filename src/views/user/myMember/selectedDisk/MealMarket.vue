@@ -114,18 +114,28 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        border-radius: 8px;
+        border-radius: 4px;
+        .building-img {
+          width: 120px;
+          height: 90px;
+          border-radius: 4px;
+          // background:url(labelImg);
+        }
         .icon-discount {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:36px;
           width: 36px;
-          height: 20px;
+          height:20px;
           position: absolute;
-          top: 4px;
+          top:6px;
           left: -4px;
           font-size: 11px;
           font-weight: 500;
+          text-align:center;
           color: rgba(255, 255, 255, 1);
-          line-height: 18px;
-          text-align: center;
+          line-height:18px;
         }
         .icon-play {
           width: 32px;
@@ -135,22 +145,26 @@ export default {
       ul {
         width: 181px;
         li:nth-of-type(1) {
+
           font-size: 16px;
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
-          line-height: 16px;
-          display: flex;
-          justify-content: space-between;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:172px;
         }
         li:nth-of-type(2) {
           font-size: 12px;
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
-          line-height: 15px;
-          margin: 10px 0 7px 0;
+          margin: 7px 0 5px 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:172px;
         }
         li:nth-of-type(3) {
-          height: 15px;
           display: flex;
           flex-wrap: wrap;
           .blue {
@@ -172,9 +186,9 @@ export default {
             font-size: 12px;
             transform: scale(0.85);
             margin: 2px 4px 0px -6px;
-            padding: 1px 5px;
+            padding: 2px 5px;
             border-radius: 3px;
-            height: 15px;
+            height: 19px;
             line-height: 15px;
           }
           .tag-item {
@@ -184,10 +198,11 @@ export default {
         }
         li:nth-of-type(4) {
           font-size: 12px;
+          height:14px;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
-          // line-height: 11px;
-          margin-top: 12px;
+          line-height: 11px;
+          margin-top:10px;
           display: flex;
           justify-content: space-between;
         }
