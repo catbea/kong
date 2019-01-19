@@ -220,9 +220,9 @@ export default {
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
-        this.inlayHouse = e
+        this.inlayHouse.push(e)
       } else {
-        this.recommendList = e
+        this.recommendList.push(e)
       }
     },
     //  内嵌楼盘删除
