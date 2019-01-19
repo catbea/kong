@@ -100,7 +100,8 @@ export default {
     singleShow: false,
     multiShow: false,
     target: null,
-    helpShow: false
+    helpShow: false,
+    pushFlag: false
   }),
   created() {
     this.id = this.$route.params.id
@@ -131,7 +132,7 @@ export default {
         orderBy: 3, // 人气最旺
         current: 1,
         size: 3,
-        saleStatus:0
+        saleStatus: 0
       }
       const res = await userService.getMyHouses(payload)
       this.recommendList = res.records
@@ -178,11 +179,11 @@ export default {
       window.location.reload()
     },
     // 底部栏预览按钮点击
-    async previewClickHandler() {
-
-    },
+    async previewClickHandler() {},
     // 底部栏保存按钮点击
     async saveClickHandler() {
+      if(this.pushFlag) return 
+      this.pushFlag = true
       let payload = {
         viewpoint: this.viewpointText,
         inlayHouse: this.inlayHouse.length > 0 ? this.inlayHouse[0].linkerId : '',
@@ -195,14 +196,33 @@ export default {
       for (let temp of this.renderDom) {
         if (temp.status === 'edit') content += `<p>${temp.text}</p>`
       }
-      const res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
-      this.$router.push(`/discover/${res.id}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
+      let res,targetid
+      // 存在这个字段,说明是再次编辑
+      if (this.info.belongeder === '0') {
+        res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
+        targetid = this.info.id
+      } else {
+        res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
+        targetid = res.id
+        // 还要附加一个评论
+        const commentData = {
+          content: this.viewpointText,
+          enterpriseId: this.enterpriseId,
+          infoId: this.info.id,
+          senderId: this.agentId,
+          senderSource: 0,
+          type: 0
+        }
+        discoverService.insertComment(commentData)
+      }
+
+      this.$router.push(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
-        this.inlayHouse = e
+        this.inlayHouse.push(e)
       } else {
-        this.recommendList = e
+        this.recommendList.push(e)
       }
     },
     //  内嵌楼盘删除
@@ -212,7 +232,7 @@ export default {
     multiHouseDelHandler(item) {
       // console.log('delete', item)
     },
-    closeHelp(){
+    closeHelp() {
       this.helpShow = false
     }
   },
@@ -331,13 +351,13 @@ export default {
     height: 70%;
     border-radius: 12px;
     // position: relative;
-    > .close{
-      width:14px;
-      height:14px;
+    > .close {
+      width: 14px;
+      height: 14px;
       position: absolute;
-      top:10px;
-      right:16px;
-      color:#DCDCDC;
+      top: 10px;
+      right: 16px;
+      color: #dcdcdc;
     }
     > .help-title {
       font-size: 20px;

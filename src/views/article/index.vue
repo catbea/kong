@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length" @touchstart="touchstart($event)" @touchend="touchend($event)">
+    <div class="article-list" v-if="articleData.length">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
@@ -184,6 +184,7 @@
           <textarea
             placeholder="最多输入140个字"
             class="textarea"
+            :class="{'placeholder': replayStatus===2}"
             name=""
             id=""
             ref="replaybox"
@@ -275,9 +276,7 @@ export default {
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
       nodataStatus: false,
-      updateLikeItem: '', //点赞数据
-      startX: 0,
-      endX: 0
+      updateLikeItem: '' //点赞数据
     }
   },
   watch: {
@@ -296,12 +295,13 @@ export default {
     }
   },
   async created() {
+    // window.localStorage.removeItem('guideStatus')
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
     this.changeClassify(storage)
   },
   computed: {
-    ...mapGetters(['userArea', 'userInfo'])
+    ...mapGetters(['userInfo'])
   },
   methods: {
     // 隐藏引导页
@@ -319,7 +319,7 @@ export default {
     },
     // 查询所属城市是否有文章
     async getCityArticle() {
-      if (this.userArea.city) {
+      if (this.userInfo.majorCity) {
         let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
@@ -329,7 +329,7 @@ export default {
         })
         if (result.records && result.records.length) {
           // this.showCity = true
-          this.articleType.push({ itemCode: '', itemName: this.userArea.city })
+          this.articleType.push({ itemCode: '', itemName: this.userInfo.majorCity })
         }
       }
       this.getArticleType()
@@ -540,7 +540,7 @@ export default {
     // 跳转文章详情
     goInfo(item) {
       let articleId = item.articleId
-      let area = this.classifyName === this.userArea.city ? this.userArea.city : '全国'
+      let area = this.classifyName === this.userInfo.majorCity ? this.userInfo.majorCity : '全国'
       let agentId = this.userInfo.agentId
       let enterpriseId = this.userInfo.enterpriseId
       let classify = this.classify
@@ -590,35 +590,6 @@ export default {
       if (result) {
         this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex, 1)
       }
-    },
-    // 列表touchstart
-    touchstart (e) {
-      this.startX = e.changedTouches[0].pageX
-    },
-    // 列表touchend
-    touchend (e) {
-      this.endX = e.changedTouches[0].pageX
-      if (this.startX - this.endX > 50) {
-        this.touchChangeTab(1)
-      }
-      if (this.endX - this.startX > 50) {
-         this.touchChangeTab(2)
-      }
-    },
-    // 滑动切换tab 1 右滑 2 左滑
-    touchChangeTab (type) {
-      let num = 0
-      this.articleType.forEach((item, index) => {
-        if (item.itemName === this.classifyName) {
-          return num = index
-        }
-      })
-      if (type === 1) {
-        num = num < this.articleType.length - 1 ? num + 1 : 0
-      } else {
-        num = num >= 1 ? num -1 : this.articleType.length - 1
-      }
-      this.changeClassify(this.articleType[num])
     }
   },
   filters: {
@@ -971,6 +942,7 @@ export default {
           line-height: 1.5;
           font-size: 14px;
           max-width: 75px;
+          z-index: 2;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -985,9 +957,15 @@ export default {
           line-height: 1.5;
           padding: 5px 10px;
           font-size: 14px;
+          z-index: 1;
           &::-webkit-input-placeholder {
             font-size: 14px;
             color: #999;
+          }
+        }
+        .placeholder{
+            &::-webkit-input-placeholder {
+              padding-left: 75px;
           }
         }
       }
