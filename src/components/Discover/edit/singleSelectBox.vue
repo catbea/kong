@@ -274,6 +274,10 @@ export default {
     }
   }
   > .city-select-container {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
     > .area-selection-page {
       .search-box {
         position: relative;
