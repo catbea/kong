@@ -50,6 +50,7 @@
     <!-- 帮助 -->
     <van-popup class="help-box" v-model="helpShow">
       <h5 class="help-title">用户帮助</h5>
+      <p class="close icon iconfont icon-chat_Shutdown" style="font-size:20px;" @click="closeHelp"></p>
       <p class="help-sub-title">任何模块均可点击进行编辑</p>
       <div class="help-content">
         <p class="help-content-line">1、成功选中后，会有高亮显示，无用信息可进行删除</p>
@@ -329,6 +330,15 @@ export default {
     width: 80%;
     height: 70%;
     border-radius: 12px;
+    // position: relative;
+    > .close{
+      width:14px;
+      height:14px;
+      position: absolute;
+      top:10px;
+      right:16px;
+      color:#DCDCDC;
+    }
     > .help-title {
       font-size: 20px;
       color: #000;
