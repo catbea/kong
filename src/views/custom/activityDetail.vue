@@ -10,7 +10,7 @@
     <div class="activityDetail-center" v-for="(item, index) in activitylist" :key="index">
       <div class="activityDetail-list">
         <div class="activityDetail-list-left">
-            <img :src="activityDetailImg" class="activityDetail-Img">
+            <img :src="item.avatarUrl" class="activityDetail-Img">
             <div class="activityDetailImg-right">
               <p class="activityDetailImg-right-name">{{item.clientName}}</p>
               <p class="activityDetailImg-right-tel">{{item.clientMobile}}</p>
@@ -97,6 +97,7 @@ export default {
         .activityDetail-Img {
           width: 60px;
           height: 60px;
+          border-radius: 50%;
         }
         .activityDetailImg-right {
           margin-left: 17px;

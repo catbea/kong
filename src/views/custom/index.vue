@@ -63,7 +63,7 @@
       </div>
       
     </div>
-     <custom-activity @click="goactivitDetaily"></custom-activity>
+     <custom-activity @click="goactivitDetaily"v-show="Linkerok"></custom-activity>
   </div>
 </template>
 <script>
@@ -71,6 +71,7 @@ import MyCustomItem from 'COMP/Custom/MyCustomItem'
 import CustomActivity from 'COMP/Custom/CustomActivity'
 import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
+import marketService from 'SERVICE/marketService'
 export default {
   components: {
     Null,
@@ -94,8 +95,12 @@ export default {
     sortShow: false,
     sort: 'intention', // intention：意向度（默认选项）， createTime：时间
     activeIcon: false,
-    pitch:false
+    pitch:false,
+    Linkerok:[]
   }),
+  mounted() {
+    this.getLinker()
+  },
   methods: {
     goactivitDetaily() {
       this.$router.push('/custom/message/activityDetail')
@@ -151,6 +156,11 @@ export default {
         this.currentData.page++
       }
     },
+    async getLinker(){
+      const res = await CustomService.getLinker()
+      this.Linkerok = res
+    },
+    
     // 获取当前serviec处理方法
     getServeceFunc() {
       switch (this.activeIndex) {
