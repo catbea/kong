@@ -92,9 +92,13 @@ export default {
       font-size: 18px;
       margin: 0 16px;
       &.icon-chat_register_rb_s {
-        // color: 
+        color: #2f7bdf
       }
       &.icon-chat_register_rb_n {
+        color: #2f7bdf
+      }
+      &.disabled{
+        color: #333333;
       }
     }
     .meal-market-page-box-top-left {

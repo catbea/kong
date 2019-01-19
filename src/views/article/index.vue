@@ -22,7 +22,7 @@
       </ul>
     </div>
     <div class="article-list" v-if="articleData.length">
-      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
             <div class="content scale-1px-bottom" @click="goInfo(item)">
@@ -41,76 +41,11 @@
               </div>
             </div>
             <div class="comment">
-              <div class="like-cnt">
-                <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
-                  <span class="icon">
-                    <img src="../../assets/img/article/like1.png" alt="">
-                  </span>
-                  <div class="list">
-                    <div class="cnt-box-like">
-                      <span
-                        class="name"
-                        :class="{'active': data===activeLikeItem}"
-                        v-for="(data,num) in item.praiseAndShareUserVOS"
-                        :key="num"
-                        @click.stop="showLike(data)"
-                        v-show="num < item.likeCount"
-                      >
-                        {{data.userName}}
-                        <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
-                      </span>
-                    </div>
-                    
-                    <span
-                      class="more"
-                      v-show="item.praiseAndShareUserVOS.length > item.likeCount"
-                      @click="item.likeCount += 15"
-                    >展开查看
-                      <van-icon name="arrow-down"/>
-                    </span>
-                    <span
-                      class="more"
-                       v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 6"
-                      @click="item.likeCount=6"
-                    >收起
-                      <van-icon name="arrow-up"/>
-                    </span>
-                  </div>
-                </div>
-                <div class="comment-box" v-show="item.discussVOS.length">
-                  <span class="icon">
-                    <img src="../../assets/img/article/dis1.png" alt="">
-                  </span>
-                  <div class="list">
-                    <div class="cnt-box-replay">
-                      <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
-                        <p
-                          v-show="num < item.replayCount"
-                          @click="showReplayFn(item, index,2,data,num)"
-                        >
-                          <span class="name" @click.stop="replayLike(data,1)" >{{data.senderName}}</span>
-                          <span class="text" v-if="data.receiverName">回复</span>
-                          <span class="name" @click.stop="replayLike(data,2)" v-if="data.receiverName">{{data.receiverName }}</span>:
-                          <span class="replay-cnt">{{data.content}}</span>
-                        </p>
-                      </div>
-                    </div>
-                    <span
-                      class="more"
-                      v-show="item.discussVOS.length > item.replayCount"
-                      @click="item.replayCount += 10"
-                    >展开查看
-                      <van-icon name="arrow-down"/>
-                    </span>
-                    <span
-                      class="more"
-                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
-                      @click="item.replayCount=3"
-                    >收起
-                      <van-icon name="arrow-up"/>
-                    </span>
-                  </div>
-                </div>
+              <div class="like-count">
+                <span class="icon" v-show="item.praiseAndShareUserVOS.length">
+                  <img src="../../assets/img/article/like1.png" alt="">
+                </span>
+                <span v-show="item.praiseAndShareUserVOS.length">{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
               </div>
               <div class="action">
                 <span class="like-icon">
@@ -136,6 +71,82 @@
                 </span>
               </div>
             </div>
+            <div class="like-cnt">
+                <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
+                  <span class="icon">
+                    <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
+                  </span>
+                  <div class="list">
+                    <div class="cnt-box-like">
+                      <span
+                        class="name"
+                        :class="{'active': data===activeLikeItem}"
+                        v-for="(data,num) in item.praiseAndShareUserVOS"
+                        :key="num"
+                        @click.stop="showLike(data)"
+                        v-show="num < item.likeCount"
+                      >
+                        {{data.userName}}
+                        <label
+                          v-show="num !== item.praiseAndShareUserVOS.length-1"
+                        >、</label>
+                      </span>
+                    </div>
+                    <span
+                      class="more"
+                      v-show="item.praiseAndShareUserVOS.length > item.likeCount"
+                      @click="item.likeCount += 15"
+                    >展开查看
+                      <van-icon name="arrow-down"/>
+                    </span>
+                    <span
+                      class="more"
+                      v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                      @click="item.likeCount=15"
+                    >收起
+                      <van-icon name="arrow-up"/>
+                    </span>
+                  </div>
+                </div>
+                <div class="comment-box" v-show="item.discussVOS.length">
+                  <span class="icon">
+                    <img src="../../assets/img/article/dis1.png" alt="">
+                  </span>
+                  <div class="list">
+                    <div class="cnt-box-replay">
+                      <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
+                        <p
+                          v-show="num < item.replayCount"
+                          @click="showReplayFn(item, index,2,data,num)"
+                        >
+                          <span class="name" @click.stop="replayLike(data,1)">{{data.senderName}}</span>
+                          <span class="text" v-if="data.receiverName">回复</span>
+                          <span
+                            class="name"
+                            @click.stop="replayLike(data,2)"
+                            v-if="data.receiverName"
+                          >{{data.receiverName }}</span>:
+                          <span class="replay-cnt">{{data.content}}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <span
+                      class="more"
+                      v-show="item.discussVOS.length > item.replayCount"
+                      @click="item.replayCount += 10"
+                    >展开查看
+                      <van-icon name="arrow-down"/>
+                    </span>
+                    <span
+                      class="more"
+                      v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
+                      @click="item.replayCount=5"
+                    >收起 
+                      <van-icon name="arrow-up"/>
+                    </span>
+                  </div>
+                </div>
+              </div>
           </div>
         </van-list>
       </van-pull-refresh>
@@ -206,7 +217,7 @@
           <img src="../../assets/img/article/share.png" alt="">查看分享
         </span>
       </div>
-    </div> -->
+    </div>-->
   </div>
 </template>
 
@@ -266,23 +277,19 @@ export default {
       updateLikeItem: '' //点赞数据
     }
   },
-  created() {
-    this.showLoading = true
+  async created() {
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
-    if (this.userArea.city) {
-      this.city = this.userArea.city
-      this.getCityArticle()
+    let storage = JSON.parse(window.sessionStorage.getItem('tab'))
+    if (storage) {
+     this.changeClassify(storage) 
+    } else {
+      this.getArticleList()
     }
-    if (this.showCity) {
-      this.articleType.push({ itemCode: '', itemName: this.userArea.city })
-    }
-    this.getArticleType()
-    this.getArticleList()
+    
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
   },
-  mounted() {},
   methods: {
     // 隐藏引导页
     hideStep() {
@@ -294,20 +301,25 @@ export default {
       let result = await ArticleService.getArticleType({ classify: 'information_classify' })
       if (result) {
         this.articleType.push(...result)
+        window.sessionStorage.setItem('type', JSON.stringify(this.articleType))
       }
     },
     // 查询所属城市是否有文章
-    async getCityArticle () {
-      let result = await ArticleService.getArticleList({
+    async getCityArticle() {
+      if (this.userArea.city) {
+        let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
         city: this.city,
         classify: '',
         sortType: 2
-      })
-      if (result.records && result.records.length) {
-        this.showCity = true
+        })
+        if (result.records && result.records.length) {
+          // this.showCity = true
+          this.articleType.push({ itemCode: '', itemName: this.userArea.city })
+        }
       }
+      this.getArticleType()
     },
     // 获取文章列表
     async getArticleList(sortType) {
@@ -326,7 +338,7 @@ export default {
       if (result) {
         this.pages = result.pages
         let records = result.records.map(item => {
-          return Object.assign(item, { likeCount: 6, replayCount: 3 })
+          return Object.assign(item, { likeCount: 15, replayCount: 5 })
         })
         this.articleData.push(...records)
         this.current += 1
@@ -340,9 +352,7 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify(item) {
-      if (this.classifyName === item.itemName) {
-        return false
-      }
+      window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
       this.classify = item.itemCode
       this.classifyName = item.itemName
@@ -371,7 +381,7 @@ export default {
     // 点赞
     async updateLike(item, praiseStatus, index) {
       // 防止重复点赞
-      if(this.updateLikeItem === item) {
+      if (this.updateLikeItem === item) {
         return false
       }
       this.updateLikeItem = item
@@ -455,9 +465,9 @@ export default {
       if (result) {
         this.articleData[this.commentIndex].discussVOS.unshift({
           id: result.id,
-          receiverId: this.replayItem.senderId,
-          receiverName: this.replayItem.senderName,
-          receiverSource: this.replayItem.senderSource,
+          receiverId: receiverId,
+          receiverName: receiverName,
+          receiverSource: receiverSource,
           content: this.replayCnt,
           senderId: this.userInfo.agentId,
           senderName: this.userInfo.name,
@@ -471,36 +481,24 @@ export default {
     showLike(data) {
       // let clientId = data.userSource === 0 ? '' : data.userId
       let userType = data.userSource
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId ,userName:data.userName}})
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: data.userId, userName: data.userName } })
     },
     // 点击评论的名字
     replayLike(data, type) {
       let userType = ''
-      let clientId = ''
+      let userId = ''
+      let userName = ''
       if (type === 1) {
-        clientId = data.senderSource === 0 ? '' : data.senderId
+        userId = data.senderId
         userType = data.senderSource
+        userName = data.senderName
       } else {
-        clientId = data.receiverSource === 0 ? '' : data.receiverId
-        userType =data.receiverSource
+        userId = data.receiverId
+        userType = data.receiverSource
+        userName = data.receiverName
       }
-      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, clientId: clientId }})
+      this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: userId, userName: userName } })
     },
-    // showLike(e, data) {
-    //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
-    //   this.dialogY = e.pageY + 10
-    //   if(this.activeLikeItem.userId === data.userId){
-    //     this.showLikeDialog = !this.showLikeDialog
-    //   } else {
-    //     this.activeLikeItem = data
-    //     this.showLikeDialog = true
-    //   }
-    // },
-    // 隐藏好看名字弹框
-    // hideLike() {
-    //   this.showLikeDialog = false
-    //   this.activeLikeItem = ''
-    // },
     // 跳转文章详情
     goInfo(item) {
       let articleId = item.articleId
@@ -514,17 +512,13 @@ export default {
     goAdd() {
       this.$router.push({ name: 'addLinker' })
     },
-    // 去名片详情页
-    // goCard() {},
-    // 去我的分享
-    // goShare() {},
     // 去我的写一写
     goWrite() {
       this.$router.push('/user/articles/historicalArticles')
     },
     // 加载更多
     async onLoad() {
-      if (this.current >= this.pages || this.classifyName==='推荐') {
+      if (this.current >= this.pages || this.classifyName === '推荐') {
         // 加载状态结束
         this.finished = true
         this.loading = false
@@ -532,7 +526,6 @@ export default {
         await this.getArticleList()
         this.loading = false
       }
-      
     },
     // 下拉刷新
     async onRefresh() {
@@ -564,13 +557,22 @@ export default {
     formatData(time) {
       return time ? formatTime(time, '{y}-{m}-{d}') : ''
     }
+  },
+  mounted () {
+    let type = JSON.parse(window.sessionStorage.getItem('type'))
+    if (type) {
+       this.articleType = type
+    } else {
+      this.getCityArticle()
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
 .article-box {
-  font-family: 'Microsoft YaHei';
+  overflow: auto;
+  font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
     font-size: 14px;
@@ -579,23 +581,27 @@ export default {
     line-height: 20px;
     padding: 12px 16px;
     height: 54px;
-    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    position: fixed;
     .classify {
+      display: inline-block;
       width: 85%;
       overflow-x: auto;
+      overflow-y: hidden;
       white-space: nowrap;
-    }
-    span {
-      display: inline-block;
-      margin-right: 32px;
-      &.active {
-        color: #007ae6;
+      span {
+        display: inline-block;
+        margin-right: 32px;
+        &.active {
+          color: #007ae6;
+        }
       }
-    }
-    .recommend {
-      font-size: 24px;
-      height: 34px;
-      line-height: 34px;
+      .recommend {
+        font-size: 24px;
+        height: 34px;
+        line-height: 34px;
+      }
     }
     .icon {
       position: absolute;
@@ -639,6 +645,7 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
+    padding-bottom: 50px;
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
@@ -704,9 +711,42 @@ export default {
       .comment {
         display: flex;
         padding-top: 10px;
-        padding-bottom: 18px;
-        .like-cnt {
+        padding-bottom: 5px;
+        .like-count{
           flex: 1;
+          font-size: 14px;
+          color: #445166;
+          font-weight: 600;
+          .icon {
+            margin-right: 8px;
+            img {
+              width: 14px;
+              height: 14px;
+              opacity: 0.7;
+              position: relative;
+            }
+          }
+        }
+        .action {
+          width: 70px;
+          .like-icon {
+            margin-right: 20px;
+            img {
+              width: 16px;
+              height: 16px;
+            }
+          }
+          .comment-icon {
+            img {
+              width: 16px;
+              height: 16px;
+            }
+          }
+        }
+      }
+      .like-cnt {
+          flex: 1;
+          padding-bottom: 15px;
           .like-box,
           .comment-box {
             display: flex;
@@ -732,6 +772,7 @@ export default {
               font-size: 14px;
               color: #445166;
               display: inline-block;
+              font-weight: 600;
             }
           }
           .more {
@@ -742,18 +783,9 @@ export default {
           .like-box {
             margin-bottom: 10px;
             .list {
-              // overflow: hidden;
-              // text-overflow: ellipsis;
-              // display: -webkit-box;
-              // -webkit-line-clamp: 5; //（行数）
-              // -webkit-box-orient: vertical;
               .name {
-                margin: 0 5px 5px 0;
+                margin: 0 0 5px 0;
                 display: inline-block;
-                max-width: 30%;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
                 &.active {
                   color: #007ae6;
                 }
@@ -773,23 +805,6 @@ export default {
             }
           }
         }
-        .action {
-          width: 70px;
-          .like-icon {
-            margin-right: 20px;
-            img {
-              width: 16px;
-              height: 16px;
-            }
-          }
-          .comment-icon {
-            img {
-              width: 16px;
-              height: 16px;
-            }
-          }
-        }
-      }
     }
   }
   .nodata {
@@ -821,7 +836,7 @@ export default {
     width: 56px;
     position: fixed;
     right: 12px;
-    bottom: 60px;
+    bottom: 50px;
     z-index: 3;
     img {
       position: relative;

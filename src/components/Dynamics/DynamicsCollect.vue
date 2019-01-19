@@ -4,7 +4,8 @@
     <div class="top-container">
       <h5>数据中心</h5>
       <div class="bg_img msg-box" :style="{backgroundImage:'url(' + msgIcon + ')'}" @click="goMessage">
-        <div class="new-msg-num" v-if="data&&data.newMsg>0">{{data&&data.newMsg | countLimit}}</div>
+        <div class="new-msg-num"  v-if="data.newMsg<=99&&data.newMsg>0">{{data&&data.newMsg | countLimit}}</div>
+        <div class="icon iconfont icon-more new-msg-num" style="font-size:16px;" v-if="data&&data.newMsg>99"></div>
       </div>
     </div>
     <div class="shadow_box info-box" v-if="data">
@@ -94,7 +95,7 @@ export default {
 <style lang="less">
 .dynamics-collect {
   background-color: #2360ad;
-  margin: 0 0 65px;
+  margin: 0 0 60px;
   height: 175px;
   position: relative;
   > .modify-img {
@@ -108,7 +109,7 @@ export default {
     color: #333333;
     font-size: 28px;
     > h5 {
-      margin: 20px 0 15px;
+      margin: 26px 0 16px;
       display: inline-block;
       font-size: 20px;
       color: #fff;
@@ -126,6 +127,7 @@ export default {
         transform: translate(50%, -50%);
         width: 22px;
         height: 22px;
+        // padding:
         background-color: #ea4d2e;
         border-radius: 100%;
         color: #fff;
@@ -140,9 +142,10 @@ export default {
     position: relative;
     margin: 0 15px;
     padding: 10px;
+    padding-bottom:20px;
     line-height: 1;
     > .data-container {
-      padding: 25px 5px;
+      padding: 14px 5px 16px 5px;
       margin-right: 20px;
       display: flex;
       justify-content: space-around;
@@ -150,7 +153,7 @@ export default {
         display: inline-block;
         position: relative;
         width: 70px;
-        height: 50px;
+        height:50px;
         > .data-title {
           position: absolute;
           bottom: 0;
@@ -161,7 +164,7 @@ export default {
         }
         > .data-value {
           position: absolute;
-          bottom: 16px;
+          bottom: 21px;
           font-size: 20px;
           font-weight: 500;
           color: #333333;
@@ -194,7 +197,7 @@ export default {
       color: #8b9198;
       font-weight: bolder;
       right: 15px;
-      top: 60px;
+      top:47px;
     }
     > .bottom-line {
       margin: auto;

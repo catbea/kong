@@ -1,7 +1,7 @@
 <template>
   <div class="area-selection-page" ref="content">
     <div class="search-box van-hairline--bottom">
-      <search :conf="searchInfo"></search>
+      <search :conf="searchInfo "></search>
     </div>
     <div class="area-selection-box">
       <div class="current-location">
@@ -26,7 +26,7 @@
             <li class="indexlist-item" v-for="(arr, index) in cityMap" :key="index">
               <p class="index-item-title" :id="'city_'+arr.character">{{arr.character}}</p>
               <ul class="index-content-item">
-                <p class="van-hairline--bottom index-content-item-link" v-for="(item,index) in arr.city" :key="index" @click="itemClick(item)" >{{item}}</p>
+                <p class="van-hairline--bottom index-content-item-link" v-for="(item,index) in arr.city" :key="index" @click="itemClick(item)">{{item}}</p>
               </ul>
             </li>
           </ul>
@@ -66,7 +66,7 @@ export default {
   }),
   created() {
     this.$store.dispatch('getAllCity')
-    this.searchInfo.siteText = this.userArea.city
+    this.searchInfo.siteText = this.$route.query.searchContent
     this.fromPage = this.$route.query.fromPage
   },
   methods: {

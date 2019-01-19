@@ -2,11 +2,14 @@
   <div class="market-share-page" id="market-share-page">
     <div class="box" v-show="status === 1">
       <div class="share-top" id="share-top">
-        <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
-        <img class="cover-img" :src="coverBg">
+        <div class="bg_img avatar-img"  :style="{backgroundImage:'url(' + buildingInfo.postersUrl + ')'}"></div>
+        <!-- <img class="avatar-img" :src="buildingInfo.postersUrl" alt=""> -->
+        <div class="bg_img cover-img"  :style="{backgroundImage:'url(' + coverBg + ')'}"></div>
+        <!-- <img class="cover-img" :src="coverBg"> -->
         <div class="logo-body">
           <div class="logo-img">
-            <img :src="buildingInfo.qrCode">
+            <div class="bg_img img"  :style="{backgroundImage:'url(' + buildingInfo.qrCode + ')'}"></div>
+            <!-- <img :src="buildingInfo.qrCode"> -->
           </div>
           <span class="distinguish-span">长按识别更多</span>
         </div>
@@ -271,7 +274,7 @@ export default {
         width: 73px;
         height: 73px;
 
-        img {
+        .img {
           width: 68px;
           height: 68px;
           border-radius: 50%;

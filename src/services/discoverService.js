@@ -145,7 +145,7 @@ class DiscoverService {
    * @param {*} infoId
    * @param {*} enterpriseId
    */
-  queryLikeList(infoId, enterpriseId) {
+  queryLikeListForH5(infoId, enterpriseId) {
     return xhr({
       url: '/cpInformation/queryLikeList',
       body: {
@@ -227,7 +227,7 @@ class DiscoverService {
    * @param {*} linkerId
    * @param {*} enterpriseId
    */
-  queryLinkerQrcode(agentId, linkerId, enterpriseId) {
+  queryLinkerQrcodeForH5(agentId, linkerId, enterpriseId) {
     return xhr({
       url: '/cpShare/queryLinkerQrcode',
       body: {
@@ -259,13 +259,32 @@ class DiscoverService {
    * @param {*} infoId
    * @param {*} enterpriseId
    */
-  queryArticleQrcode(agentId, infoId, enterpriseId) {
+  queryArticleQrcodeForH5(agentId, infoId, enterpriseId) {
     return xhr({
       url: '/cpShare/queryArticleQrcode',
       body: {
         agentId,
         infoId,
         enterpriseId
+      }
+    })
+  }
+
+  /**
+   * H5使用-查询楼盘信息
+   * @param {*} agentId  必传
+   * @param {*} enterpriseId  必传
+   * @param {*} shareUuid  原文章分享必传,编辑文章分享不必传
+   * @param {*} linkerIds  编辑文章分享必传
+   */
+  queryLinkerInfoForH5(agentId, enterpriseId, shareUuid, linkerIds) {
+    return xhr({
+      url: '/myLinker/queryLinkerListByIdsForWhite',
+      body: {
+        agentId,
+        enterpriseId,
+        shareUuid,
+        linkerIds
       }
     })
   }

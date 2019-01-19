@@ -10,7 +10,8 @@ export default (msg, url) => {
       return true
     case 31102:
       return true
-
+    case 10028: // 文章被下架或被删除--待处理
+      return
     default:
       console.error(msg)
       window.vue.$toast(msg.msg)

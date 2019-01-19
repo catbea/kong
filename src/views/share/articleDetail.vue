@@ -11,7 +11,7 @@
         </div>
       </div>
       <!-- 观点 -->
-      <div class="discover-viewpoint" v-if="info&&info.editData&&info.editData.viewpoint" @click="popHandler(1)">
+      <div class="discover-viewpoint" v-if="editData&&editData.viewpoint" @click="popHandler(1)">
         <div class="viewpoint-line"></div>
         <div class="viewpoint-top">
           <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
@@ -23,9 +23,15 @@
             </div>
           </div>
         </div>
-        <div class="viewpoint-content">{{info&&info.editData&&info.editData.viewpoint}}</div>
+        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
-      <div class="discover-detail-content" v-html="info&&info.content"></div>
+      <!-- 文章详情 -->
+      <div class="discover-detail-content">
+        <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
+          <paragraph :info="paragraph"/>
+          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
+        </div>
+      </div>
       <p class="discover-extra-info">
         <span class="reprint-from">{{info&&info.publisher}}</span>
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
@@ -58,13 +64,11 @@
                 class="bg_img"
                 :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
                 style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
-                @click="commentSenderClickHandler(item)"
               ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span
                     class="comment-name"
-                    @click="commentSenderClickHandler(item)"
                   >{{item.senderName}}</span>
                   <span
                     v-if="item.receiverName"
@@ -73,7 +77,6 @@
                   <span
                     class="comment-reply"
                     v-if="item.receiverName"
-                    @click="commentReceiverClickHandler(item)"
                   >{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -85,10 +88,10 @@
         </div>
       </div>
       <!-- 推荐房源 -->
-      <div class="recommend-houses" v-if="houseList.length>0">
+      <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="titleProperties"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in houseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
@@ -122,6 +125,7 @@
 import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
+import Paragraph from 'COMP/Discover/Paragraph'
 import EstateItem from 'COMP/EstateItem'
 import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
@@ -136,14 +140,17 @@ export default {
     EstateItem,
     CardDialog,
     MarketDialog,
-    ArticleDialog
+    ArticleDialog,
+    Paragraph,
   },
   data: () => ({
-    id: -1,
+    infoId: '', //文章的id
     city: '',
     info: null,
+    editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
+    inlayHouseInfo: null, // 文章插入楼盘信息
     agentInfo: null,
-    infoId: '', //文章的id
+    
     titleComments: {
       title: '精彩评论',
       linkText: '',
@@ -159,10 +166,10 @@ export default {
       linkText: '',
       link: ''
     },
-    closeImg: require('IMG/user/close_popup.png'),
+    
     guidanceShow: false,
     shareData: null,
-    virtualDom: null,
+    renderDom: [],
     easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,
@@ -175,7 +182,7 @@ export default {
     showCommentAlert: false, // 是否显示评论输入框
     commentInfo: null,
     commentIds: [], // 评论Ids
-    houseList: [], // 房源列表
+    recommendHouseList: [], // 推荐房源列表
     articleList: [], // 文章列表
     openCardPopup: false,
     openMarketPopup: false,
@@ -187,7 +194,7 @@ export default {
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
-    this.id = this.$route.params.id
+    this.infoId = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
@@ -195,17 +202,19 @@ export default {
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
-    this.getLinkerList()
     this.getArticleList()
     this.getCardQrCode()
-    this.shareHandler()
   },
   methods: {
     async getDetail() {
-      const res = await discoverService.getDiscoverDetailForH5(this.id, this.enterpriseId, this.agentId)
+      const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId)
       this.info = res
-
       this.infoId = res.id
+      if (this.info.editData) {
+        this.editData = JSON.parse(this.info.editData)
+        console.log(this.editData)
+      }
+      this.handleLinkerInfo()
 
       this.agentInfo = {
         agentId: this.info.agentId,
@@ -215,8 +224,21 @@ export default {
         enterpriseName: this.info.enterpriseName,
         institutionName: this.info.institutionName
       }
+
+      // 创建虚拟dom解析html结构
+      let virtualDom = document.createElement('div')
+      virtualDom.innerHTML = this.info.content
+      console.log(virtualDom);
+      
+      for (let dom of virtualDom.children) {
+        this.renderDom.push({
+          text: dom.innerHTML,
+          status: 'h5'
+        })
+      }
+
       let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId
+      host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.shareData = {
         title: this.info.title,
         imgUrl: this.info.image,
@@ -224,9 +246,31 @@ export default {
       }
       this.shareHandler()
     },
+    // 楼盘信息处理
+    async handleLinkerInfo() {
+      // 查询插入楼盘的信息
+      if (this.editData) { // 编辑文章分享
+        if (this.editData.inlayHouse) {
+          const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
+          this.inlayHouseInfo = res[0]
+        }
+        if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
+          this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
+        }
+        
+      }else { // 原文章分享
+        this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
+      }
+      
+    },
+    // 查询楼盘信息
+    async getLinkerInfo(agentId, enterpriseId, shareUuid, linkerIds) {
+      const res = await discoverService.queryLinkerInfoForH5(agentId, enterpriseId, shareUuid, linkerIds)
+      return res
+    },
     // 好看列表
     async getLikeList() {
-      const res = await discoverService.queryLikeList(this.id, this.enterpriseId)
+      const res = await discoverService.queryLikeListForH5(this.infoId, this.enterpriseId)
       if (res && res.length > 0) {
         for (var index in res) {
           let item = res[index]
@@ -236,7 +280,7 @@ export default {
     },
     // 评论列表
     async getCommentList() {
-      const res = await discoverService.commentListForH5(this.commentCur, this.commentSize, this.id, this.enterpriseId)
+      const res = await discoverService.commentListForH5(this.commentCur, this.commentSize, this.infoId, this.enterpriseId)
       if (res.pages <= this.commentCur) {
         this.isMoreComment = false
       } else {
@@ -255,14 +299,14 @@ export default {
     moreCommentHandler() {
       this.getCommentList()
     },
-    // 推荐房源列表
-    async getLinkerList() {
-      const res = await discoverService.queryLinkerListByIdsForH5(this.shareUuid, this.enterpriseId)
-      this.houseList = res
-    },
+    // // 推荐房源列表
+    // async getLinkerList() {
+    //   const res = await discoverService.queryLinkerListByIdsForH5(this.shareUuid, this.enterpriseId)
+    //   this.recommendHouseList = res
+    // },
     // TA的写一写
     async getArticleList() {
-      const res = await discoverService.queryArticleListForH5(this.agentId, this.enterpriseId, this.id)
+      const res = await discoverService.queryArticleListForH5(this.agentId, this.enterpriseId, this.infoId)
       this.articleList = res
     },
     // 名片二维码信息
@@ -272,17 +316,15 @@ export default {
     },
     // 楼盘二维码信息
     async getLinkerQrcode(linkerId) {
-      const result = await discoverService.queryLinkerQrcode(this.agentId, linkerId, this.enterpriseId)
+      const result = await discoverService.queryLinkerQrcodeForH5(this.agentId, linkerId, this.enterpriseId)
       this.marketQrInfo = result
     },
     // 文章二维码信息
     async getArticleQrcode(infoId) {
-      const result = await discoverService.queryArticleQrcode(this.agentId, infoId, this.enterpriseId)
+      const result = await discoverService.queryArticleQrcodeForH5(this.agentId, infoId, this.enterpriseId)
       this.articleQrInfo = result
     },
-    popupShowControl(val) {
-      this.overlayClose()
-    },
+    
     // 弹出框
     popHandler(val, item) {
       if (val == 1) {
@@ -297,8 +339,9 @@ export default {
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
       }
-      // this.getLinkerQrcode('69c2a2851d2b4004952f7829e37d3c63')
-      // this.openMarketPopup = true
+    },
+    popupShowControl(val) {
+      this.overlayClose()
     },
     // 关闭弹出框
     overlayClose() {
@@ -323,8 +366,7 @@ export default {
     // 分享
     async shareHandler() {
       await window.awHelper.wechatHelper.init()
-      this.shareData.success = this.articleShare
-
+      // this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
     }
   },

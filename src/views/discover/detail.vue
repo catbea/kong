@@ -3,13 +3,27 @@
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
-      <!-- <agent-card-small :info="agentInfo" @click.native="popupShowControl(true)"/> -->
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
         <div class="reprint-source">
-          <span>分享源自 </span>
+          <span>分享源自</span>
           <span style="color:#445166">AW大师写一写</span>
         </div>
+      </div>
+      <!-- 观点 -->
+      <div class="discover-viewpoint" v-if="editData&&editData.viewpoint" @click="popHandler(1)">
+        <div class="viewpoint-line"></div>
+        <div class="viewpoint-top">
+          <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
+          <div class="viewpoint-right">
+            <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
+            <div class="viewpoint-name">
+              <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
+              <span style="color:#969EA8;font-size:14px">点评</span>
+            </div>
+          </div>
+        </div>
+        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
       <div class="discover-detail-content" v-html="info&&info.content"></div>
       <p class="discover-extra-info">
@@ -17,10 +31,8 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter(3, '/')}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span
-          class="disclaimer-text"
-        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
+        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
@@ -37,7 +49,7 @@
           </div>
         </div>
         <div class="easy-look-list">
-          <span class="easy-look-name" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
+          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
           <div
             class="easy-look-fold"
             v-if="isMoreLike" @click="moreLikeListHandler"
@@ -49,18 +61,16 @@
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index">
+            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
               <div
                 class="bg_img"
                 :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
                 style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
-                @click="commentSenderClickHandler(item)"
               ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span
                     class="comment-name"
-                    @click="commentSenderClickHandler(item)"
                   >{{item.senderName}}</span>
                   <span
                     v-if="item.receiverName"
@@ -69,7 +79,6 @@
                   <span
                     class="comment-reply"
                     v-if="item.receiverName"
-                    @click="commentReceiverClickHandler(item)"
                   >{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -103,21 +112,9 @@
         分享
       </div>
     </div>
-    <van-actionsheet
-      v-model="isShowDeleteComment"
-      :actions="actions"
-      cancel-text="取消"
-      @select="onSelect"
-      @cancel="onCancel"
-    ></van-actionsheet>
+    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
-    <comment-alert
-      :show.sync="showCommentAlert"
-      :info="commentInfo"
-      @cancel="cancelHandler"
-      @publish="publishHandler"
-      @input="inputHandler"
-    ></comment-alert>
+    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
   </div>
 </template>
 <script>
@@ -148,6 +145,7 @@ export default {
     city: '',
     info: null,
     agentInfo: null,
+    editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
     infoId: '', //文章的id
     collectionStatus: -1, //收藏状态
     likeFlag: false, // 是否点赞
@@ -160,7 +158,7 @@ export default {
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
-    isMoreLike: true, // 是否有更多好看
+    isMoreLike: false, // 是否有更多好看
     easylookList: [], // 好看列表
     commentCur: 1,
     commentSize: 5,
@@ -217,9 +215,11 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
+      if(this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
       this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
+       
       console.log(this.virtualDom)
     },
     // 好看列表
@@ -230,6 +230,15 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
+        this.$nextTick(() => {
+          console.log(this.$refs.easyLook.offsetHeight)
+          let height = this.$refs.easyLook.offsetHeight
+          if (height <= 79) {
+            this.isMoreLike = false
+          }else {
+            this.isMoreLike = true
+          }
+        })
       }
     },
     // 评论列表
@@ -247,7 +256,9 @@ export default {
       }
       if (this.commentList && this.commentList.length > 0) {
         this.commentCur++
-        this.filterComment()
+        if (this.commentIds && this.commentIds.length > 0) {
+          this.filterComment()
+        }
       }
     },
     // 修改评论的状态(删除自己的评论)
@@ -283,7 +294,7 @@ export default {
       const res = await articleService.updateLike(param)
       if (this.likeFlag) {
         this.easylookList.unshift(this.agentInfo.agentName)
-      }else {
+      } else {
         this.easylookList = this.remove(this.easylookList, this.agentInfo.agentName)
       }
     },
@@ -342,7 +353,7 @@ export default {
           receiverSource: item.senderSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: this.info.title,
+          title: item.content,
           placeholder: '回复' + item.senderName + '：',
           type: 1
         }
@@ -364,7 +375,7 @@ export default {
           receiverSource: item.receiverSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: this.info.title,
+          title: item.content,
           placeholder: '回复' + item.receiverName + '：',
           type: 1
         }
@@ -386,18 +397,19 @@ export default {
           }
         }
       }
+      return arr
     },
     // 删除数组中某个元素
     remove(arr, val) {
-      for (var i = 0, len=arr.length; i< len; i++) {
+      for (var i = 0, len = arr.length; i < len; i++) {
         if (arr[i] == val) {
           if (i == 0) {
             arr.shift()
             return arr
-          }else if (i == len - 1) {
+          } else if (i == len - 1) {
             arr.pop()
             return arr
-          }else {
+          } else {
             arr.splice(i, 1)
             return arr
           }
@@ -406,7 +418,7 @@ export default {
     },
     // 过滤评论(自己回复的评论前端处理,不取后台的数据)
     filterComment() {
-      let filterList = []
+      debugger
       for (var index in this.commentIds) {
         let commentId = this.commentIds[index]
         this.commentList = this.removeObject(this.commentList, commentId)
@@ -476,6 +488,8 @@ export default {
         sourceType: 0 // 经纪人-0，客户-1
       }
       const result = await discoverService.articleShare(params)
+      // 分享成功之后重新获取新的UUID
+      this.shareUuid = uuid()
     }
   },
   watch: {
@@ -520,6 +534,39 @@ export default {
       border-radius: 10px;
       background-color: #999999;
     }
+    > .discover-viewpoint {
+      border: 1px dashed #969ea8;
+      margin: 20px 16px;
+      padding: 16px;
+      position: relative;
+      > .viewpoint-line {
+        width: 2px;
+        height: 13px;
+        background-color: #007ae6;
+        position: absolute;
+        top: 22px;
+        left: 0;
+      }
+      > .viewpoint-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        > .viewpoint-right {
+          display: flex;
+          > .viewpoint-name {
+            margin-left: 7px;
+            margin-top: -5px;
+          }
+        }
+      }
+      > .viewpoint-content {
+        color: #445166;
+        font-size: 16px;
+        margin-top: 20px;
+        line-height: 1.5;
+      }
+    }
     > .discover-detail-content {
       padding: 15px;
       font-size: 16px !important;
@@ -554,7 +601,6 @@ export default {
     }
     // 好看
     .van-icon {
-
     }
     > .easy-look-container {
       padding: 10px 16px 30px 16px;
@@ -588,7 +634,7 @@ export default {
         padding-top: 6px;
         width: 260px;
         position: relative;
-        > .easy-look-name-clamp {
+        > .easy-look-name-clamp  {
           color: #445166;
           font-size: 14px;
           word-break: break-all;

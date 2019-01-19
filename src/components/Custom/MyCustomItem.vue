@@ -70,7 +70,7 @@ export default {
       font-weight: 600;
       color: #333333;
       padding-top:5px;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -90,7 +90,7 @@ export default {
       font-size: 20px;
       font-weight: 500;
       color: #007ae6;
-      padding: 6px 0 6px 0;
+      padding: 6px 0 8px 0;
       font-family:PingFangSC-Semibold;
     }
     .intention-title {
