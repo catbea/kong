@@ -55,7 +55,7 @@ export default {
     > .desc-box {
       color: #fff;
       .title {
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 500;
         height: 30px;
       }

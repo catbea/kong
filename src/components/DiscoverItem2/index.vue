@@ -20,7 +20,7 @@
         <li>{{data.open}}</li>
       </ul>
     </div>
-    <div class="meal-market-page-box-bottom" v-if="data.divisionRules">
+    <div class="meal-market-page-box-bottom" v-if="showRules&&data.divisionRules">
       <img class="bg_img" :src="imgCommission" alt srcset>
       {{data.divisionRules}}
     </div>
@@ -46,7 +46,8 @@ export default {
   props: {
     value: { type: Boolean, default: false }, // 是否选中
     disabled: { type: Boolean, default: false }, // 是否禁用
-    data: { type: Object }
+    data: { type: Object },
+    showRules: { type:Boolean, default: true}
   },
   methods: {
     clickHandler() {
