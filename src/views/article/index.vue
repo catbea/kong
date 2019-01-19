@@ -184,6 +184,7 @@
           <textarea
             placeholder="最多输入140个字"
             class="textarea"
+            :class="{'placeholder': replayStatus===2}"
             name=""
             id=""
             ref="replaybox"
@@ -941,6 +942,7 @@ export default {
           line-height: 1.5;
           font-size: 14px;
           max-width: 75px;
+          z-index: 2;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -955,9 +957,15 @@ export default {
           line-height: 1.5;
           padding: 5px 10px;
           font-size: 14px;
+          z-index: 1;
           &::-webkit-input-placeholder {
             font-size: 14px;
             color: #999;
+          }
+        }
+        .placeholder{
+            &::-webkit-input-placeholder {
+              padding-left: 75px;
           }
         }
       }
