@@ -125,12 +125,7 @@ export default {
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let payload = screenFilterHelper(this.projectName, mergeFilters)
       payload = Object.assign(payload, { current: this.page, size: this.pageSize })
-      let res
-      if (this.maxSelect === 1) {
-        res = await marketService.getHouseList(payload)
-      } else {
-        res = await userService.getMyMarket(payload)
-      }
+      const res = userService.getMyHouses(payload)
       let _list = []
       for (let item of res.records) {
         let obj = {
