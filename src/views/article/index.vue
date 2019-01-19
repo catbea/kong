@@ -295,6 +295,7 @@ export default {
     }
   },
   async created() {
+    // window.localStorage.removeItem('guideStatus')
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
     this.changeClassify(storage)
