@@ -35,7 +35,8 @@
           </p>
         </div>
       </div>
-      <div class="next-step" @click="nextHandler">下一步</div>
+      <!-- <div class="next-step" @click="nextHandler">下一步</div> -->
+      <button class="next-step" @click="nextHandler" :disabled="clickDisabled">下一步</button>
       <p class="protocol">注册代表您同意 <router-link to="/register/agreement?name=AW大师">AW大师用户协议</router-link>
       </p>
     </div>
@@ -72,7 +73,8 @@ export default {
     enterpriseId: '',
     majorRegion: '',
     city: '',
-    area: ''
+    area: '',
+    clickDisabled: false
   }),
   created() {
     this.query = this.$route.query
@@ -206,6 +208,7 @@ export default {
         let params = {
           enterpriseId: this.enterpriseId
         }
+        this.clickDisabled = true
         this.$router.push({ path: '/register/step2', query: params })
         // location.href = '/?cropId=ww8f6801ba5fd2a112'
       }

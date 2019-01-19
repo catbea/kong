@@ -1,7 +1,7 @@
 <template>
   <div class="discover-detail-page">
     <!-- 文章详情和经纪人信息 -->
-    <div class="discover-detail-container">
+    <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
@@ -34,7 +34,6 @@
         <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
       </p>
-      <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
       <div class="easy-look-container">
         <div class="easy-look-top">
@@ -65,7 +64,7 @@
               <div
                 class="bg_img"
                 :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
-                style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
+                style="width:40px;height:40px;border-radius:50%;"
               ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
@@ -95,7 +94,8 @@
           </div>
         </div>
       </div>
-      <!-- 悬浮工具栏 -->
+    </div>
+    <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
@@ -111,8 +111,6 @@
         分享
       </div>
     </div>
-    </div>
-    
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
     <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
@@ -142,6 +140,7 @@ export default {
         clickable: true
       }
     },
+    contentHeight: 0,
     id: -1,
     city: '',
     info: null,
@@ -175,6 +174,9 @@ export default {
     shareUuid: ''
   }),
   created() {
+    console.log(window.innerHeight)
+    this.contentHeight = window.innerHeight - 72
+    console.log(this.contentHeight)
     window.awHelper.wechatHelper.wx.showOptionMenu()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
@@ -503,16 +505,25 @@ export default {
 </script>
 <style lang="less">
 .discover-detail-page {
+  box-sizing: border-box;
   background-color: #f7f9fa;
   > .discover-detail-container {
     background-color: #fff;
-    padding-bottom: 80px;
+    padding-bottom: 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    overflow-y: scroll;
+    box-sizing: border-box;
+    overflow-x: hidden;
     > .discover-title {
       padding: 10px 15px;
       font-size: 22px;
       color: #333333;
       font-weight: 600;
       line-height: 1.3;
+      box-sizing: border-box;
     }
     > .discover-views {
       display: flex;
@@ -520,6 +531,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       padding: 0 15px;
+      box-sizing: border-box;
       > .reprint-views {
         color: #969ea8;
         font-size: 14px;
@@ -540,6 +552,7 @@ export default {
       margin: 20px 16px;
       padding: 16px;
       position: relative;
+      box-sizing: border-box;
       > .viewpoint-line {
         width: 2px;
         height: 13px;
