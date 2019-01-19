@@ -151,7 +151,7 @@
         </van-list>
       </van-pull-refresh>
     </div>
-    <div class="nodata" v-show="!articleData.length && nodataStatus">
+    <div class="nodata" v-show="!articleData.length && nodataStatus" @click="onRefresh">
       <img src="../../assets/img/article/noarticle.png" alt="">
       <p>对不起，没有查询到相关文章！</p>
     </div>
@@ -279,13 +279,8 @@ export default {
   },
   async created() {
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
-    let storage = JSON.parse(window.sessionStorage.getItem('tab'))
-    if (storage) {
-     this.changeClassify(storage) 
-    } else {
-      this.getArticleList()
-    }
-    
+    let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
+    this.changeClassify(storage)
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
@@ -342,6 +337,8 @@ export default {
         })
         this.articleData.push(...records)
         this.current += 1
+        // 缓存数据
+        this.cacheDataFn ({ itemCode: this.classify, itemName: this.classifyName })
       }
       this.nodataStatus = true
       this.showLoading = false
@@ -354,11 +351,34 @@ export default {
     changeClassify(item) {
       window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
-      this.classify = item.itemCode
-      this.classifyName = item.itemName
-      this.current = 1
-      this.articleData = []
-      this.getArticleList()
+      this.cacheDataFn(item)
+    },
+    // 缓存数据
+    cacheDataFn (item) {
+      // 缓存上一个tab的数据
+      let cacheData = JSON.parse(window.sessionStorage.getItem('cacheData')) || {}
+      if (this.articleData.length) {
+          cacheData[this.classifyName] = {
+          classify: this.classify,
+          classifyName: this.classifyName,
+          current: this.current,
+          articleData: this.articleData
+        }
+        window.sessionStorage.setItem('cacheData', JSON.stringify(cacheData))
+      }
+      let data = cacheData[item.itemName]
+      if (data && data.articleData && data.articleData.length) {
+        this.classify = data.classify
+        this.classifyName = data.classifyName
+        this.current = data.current
+        this.articleData = data.articleData
+      } else {
+        this.classify = item.itemCode
+        this.classifyName = item.itemName
+        this.current = 1
+        this.articleData = []
+        this.getArticleList()
+      }
     },
     // 显示按时间排序菜单
     showSubFn() {
@@ -446,7 +466,7 @@ export default {
       let receiverName = this.replayStatus === 2 ? this.replayItem.senderName : ''
       let parentId = this.replayStatus === 2 ? this.replayItem.id : ''
       let type = this.replayStatus === 2 ? 1 : 0
-      let receiverSource = this.replayStatus === 2 ? this.replayItem.receiverSource : ''
+      let receiverSource = this.replayStatus === 2 ? this.replayItem.senderSource : ''
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
