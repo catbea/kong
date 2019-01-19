@@ -156,7 +156,7 @@
       <p>对不起，没有查询到相关文章！</p>
     </div>
     <div class="artcle-tips" v-show="showNewArticle" @click="onRefresh">
-      {{'10'}}条新内容
+      {{newArticelCount}}条新内容
       <van-icon name="arrow-down"/>
     </div>
     <div class="write">
@@ -232,6 +232,7 @@ export default {
   },
   data() {
     return {
+      newArticelCount: 0,
       showGuide: false, // 显示引导
       articleData: [], // 文章列表
       showSub: false, // 显示排序菜单
@@ -277,6 +278,21 @@ export default {
       updateLikeItem: '', //点赞数据
       startX: 0,
       endX: 0
+    }
+  },
+  watch: {
+    '$store.getters.newMsgStatus': function(v) {
+      let msgContent = this.$store.getters.newMsgContent
+      if(!v) {
+        this.showNewArticle = false
+      } else {
+        if(msgContent.desc == 6 && this.$route.path == '/write-article') {
+          let data = JSON.parse(msgContent.data)
+          this.newArticelCount = data.newArticleCount
+          this.showNewArticle = v
+          return
+        }
+      }
     }
   },
   async created() {
@@ -553,6 +569,7 @@ export default {
     async onRefresh() {
       this.current = 1
       this.articleData = []
+      this.showNewArticle = false
       await this.getArticleList()
       this.isLoading = false
     },
