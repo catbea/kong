@@ -295,13 +295,12 @@ export default {
     }
   },
   async created() {
-    // window.localStorage.removeItem('guideStatus')
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
     this.changeClassify(storage)
   },
   computed: {
-    ...mapGetters(['userArea', 'userInfo'])
+    ...mapGetters(['userInfo'])
   },
   methods: {
     // 隐藏引导页
@@ -319,7 +318,7 @@ export default {
     },
     // 查询所属城市是否有文章
     async getCityArticle() {
-      if (this.userArea.city) {
+      if (this.userInfo.majorCity) {
         let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
@@ -329,7 +328,7 @@ export default {
         })
         if (result.records && result.records.length) {
           // this.showCity = true
-          this.articleType.push({ itemCode: '', itemName: this.userArea.city })
+          this.articleType.push({ itemCode: '', itemName: this.userInfo.majorCity })
         }
       }
       this.getArticleType()
@@ -540,7 +539,7 @@ export default {
     // 跳转文章详情
     goInfo(item) {
       let articleId = item.articleId
-      let area = this.classifyName === this.userArea.city ? this.userArea.city : '全国'
+      let area = this.classifyName === this.userInfo.majorCity ? this.userInfo.majorCity : '全国'
       let agentId = this.userInfo.agentId
       let enterpriseId = this.userInfo.enterpriseId
       let classify = this.classify
