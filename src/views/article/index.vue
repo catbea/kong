@@ -447,9 +447,9 @@ export default {
     },
     // 展示评论框
     showReplayFn(item, index, type, replay, num) {
+      this.deleteIndex = num || item.discussVOS.length
       if (replay && replay.senderId === this.userInfo.agentId) {
         this.commentIndex = index
-        this.deleteIndex = num
         // 隐藏菜单
         this.$store.commit('TABBAR',{show:false})
         return (this.showDelete = true)
@@ -510,7 +510,7 @@ export default {
         type: type
       })
       if (result) {
-        this.articleData[this.commentIndex].discussVOS.unshift({
+        let data = {
           id: result.id,
           receiverId: receiverId,
           receiverName: receiverName,
@@ -520,7 +520,8 @@ export default {
           senderName: this.userInfo.name,
           senderSource: 0,
           type: type
-        })
+        }
+        this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex +  1, 0, data)
         this.hideReplayFn()
       }
     },
