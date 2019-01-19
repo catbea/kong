@@ -39,12 +39,17 @@ export default {
   },
   watch: {
     '$store.getters.newMsgStatus': function(v) {
-      this.newMsgPop = v
+      let msgContent = this.$store.getters.newMsgContent
       if (this.$route.path == '/custom/message/message') {
         //当前在聊天页
         return
       }
-      let msgContent = this.$store.getters.newMsgContent
+      if(msgContent.desc == 6 && this.$route.path == '/write-article') {
+        // console.log(this.$store.getters.newMsgContent, 'this.$store.getters.newMsgContent')
+        return
+      }
+      this.newMsgPop = v
+      // let msgContent = this.$store.getters.newMsgContent
       let data = ''
       let desc = msgContent.desc
       let avatar = ''
