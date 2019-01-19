@@ -276,5 +276,14 @@ class CustomService {
       }
     })
   }
+  /**
+   * 查询楼盘报名活动
+   * @param {*} linkerId 
+   */
+  getLinker() {
+    return xhr({
+      url: '/activity/linker'
+    })
+  }
 }
 export default new CustomService()
