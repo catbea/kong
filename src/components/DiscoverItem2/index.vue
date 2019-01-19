@@ -15,7 +15,7 @@
           <div class="tag-item-statu blue" v-if="0===data.saleStatus">{{status[data.saleStatus]}}</div>
           <div class="tag-item-statu red" v-if="1===data.saleStatus">{{status[data.saleStatus]}}</div>
           <div class="tag-item-statu gary" v-if="3===data.saleStatus">{{status[data.saleStatus]}}</div>
-          <div class="tag-item" v-for="(item,index) in data.condition.slice(0,1)" :key="index">{{item}}</div>
+          <!-- <div class="tag-item" v-if="data&&data.condition&&data.condition!==''" v-for="(item,index) in data.condition.slice(0,1)" :key="index">{{item}}</div> -->
         </li>
         <li>{{data.open}}</li>
       </ul>

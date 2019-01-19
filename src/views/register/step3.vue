@@ -22,7 +22,8 @@
       </div>
     </div>
     <div class="register-bottom">
-      <div class="next-step" @click="registerHandler">注册</div>
+      <!-- <div class="next-step" @click="registerHandler">注册</div> -->
+      <button class="next-step" @click="registerHandler" :disabled="clickDisabled">注册</button>
       <p class="protocol">注册代表您同意
         <router-link :to="route">{{registerAgreementName}}注册协议</router-link>
       </p>
@@ -56,7 +57,8 @@ export default {
     parentUserName: '',
     distributorId: '',
     registerAgreementName: '',
-    route: ''
+    route: '',
+    clickDisabled: false
   }),
   computed: {
     ...mapGetters(['userRegistInfo'])
@@ -159,6 +161,7 @@ export default {
         let params = {
           enterpriseId: this.enterpriseId
         }
+        this.clickDisabled = true
         this.$router.push({ path: '/register/step2', query: params })
         // location.href = '/?cropId=ww8f6801ba5fd2a112'
       }
@@ -238,7 +241,7 @@ export default {
   text-align: center;
   .next-step {
     width: 343px;
-    margin-left: 16px;
+    // margin-left: 16px;
     background: #007ae6;
     border-radius: 6px;
     font-size: 16px;
