@@ -174,11 +174,11 @@ export default {
     },
     // 底部栏重置按钮点击
     resetClickHandler() {
-      this.$router.go(0)
+      window.location.reload()
     },
     // 底部栏预览按钮点击
     async previewClickHandler() {
-      
+
     },
     // 底部栏保存按钮点击
     async saveClickHandler() {

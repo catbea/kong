@@ -138,7 +138,7 @@ export default {
           linkerUrl: item.linkerUrl,
           sale: item.sale,
           linkerName: item.linkerName,
-          site: `${item.city} ${item.county} ${item.price} ${item.priceUnit}`, //'深圳 南山 120000元/㎡',
+          site: `${item.city?item.city:''} ${item.county?item.county:''} ${item.price?item.price:''} ${item.priceUnit?item.priceUnit:''}`, //'深圳 南山 120000元/㎡',
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
