@@ -466,7 +466,7 @@ export default {
       let receiverName = this.replayStatus === 2 ? this.replayItem.senderName : ''
       let parentId = this.replayStatus === 2 ? this.replayItem.id : ''
       let type = this.replayStatus === 2 ? 1 : 0
-      let receiverSource = this.replayStatus === 2 ? this.replayItem.receiverSource : ''
+      let receiverSource = this.replayStatus === 2 ? this.replayItem.senderSource : ''
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
