@@ -22,7 +22,7 @@
       </ul>
     </div>
     <div class="article-list" v-if="articleData.length">
-      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
             <div class="content scale-1px-bottom" @click="goInfo(item)">
@@ -42,7 +42,7 @@
             </div>
             <div class="comment">
               <div class="like-count">
-                <span class="icon">
+                <span class="icon" v-show="item.praiseAndShareUserVOS.length">
                   <img src="../../assets/img/article/like1.png" alt="">
                 </span>
                 <span v-show="item.praiseAndShareUserVOS.length">{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
@@ -74,7 +74,7 @@
             <div class="like-cnt">
                 <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                   <span class="icon">
-                    <img src="../../assets/img/article/like1.png" alt="">
+                    <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
                   </span>
                   <div class="list">
                     <div class="cnt-box-like">
@@ -278,8 +278,6 @@ export default {
     }
   },
   async created() {
-    // window.localStorage.removeItem('guideStatus')
-    this.showLoading = true
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab'))
     if (storage) {
@@ -287,22 +285,10 @@ export default {
     } else {
       this.getArticleList()
     }
-    if (this.userArea.city) {
-      this.city = this.userArea.city
-      await this.getCityArticle()
-    }
-    if (this.showCity) {
-      this.articleType.push({ itemCode: '', itemName: this.userArea.city })
-    }
-    this.getArticleType()
+    
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
-  },
-  mounted() {
-    // document.body.addEventListener('touchmove', function (e) {
-    //     e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
-    // }, {passive: false}) // passive 参数不能省略，用来兼容ios和android
   },
   methods: {
     // 隐藏引导页
@@ -315,20 +301,25 @@ export default {
       let result = await ArticleService.getArticleType({ classify: 'information_classify' })
       if (result) {
         this.articleType.push(...result)
+        window.sessionStorage.setItem('type', JSON.stringify(this.articleType))
       }
     },
     // 查询所属城市是否有文章
     async getCityArticle() {
-      let result = await ArticleService.getArticleList({
+      if (this.userArea.city) {
+        let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
         city: this.city,
         classify: '',
         sortType: 2
-      })
-      if (result.records && result.records.length) {
-        this.showCity = true
+        })
+        if (result.records && result.records.length) {
+          // this.showCity = true
+          this.articleType.push({ itemCode: '', itemName: this.userArea.city })
+        }
       }
+      this.getArticleType()
     },
     // 获取文章列表
     async getArticleList(sortType) {
@@ -508,21 +499,6 @@ export default {
       }
       this.$router.push({ path: '/user/articles/easyLookList', query: { userType: userType, userId: userId, userName: userName } })
     },
-    // showLike(e, data) {
-    //   this.dialogX = e.pageX - 100 > 10 ? e.pageX - 100 : 10
-    //   this.dialogY = e.pageY + 10
-    //   if(this.activeLikeItem.userId === data.userId){
-    //     this.showLikeDialog = !this.showLikeDialog
-    //   } else {
-    //     this.activeLikeItem = data
-    //     this.showLikeDialog = true
-    //   }
-    // },
-    // 隐藏好看名字弹框
-    // hideLike() {
-    //   this.showLikeDialog = false
-    //   this.activeLikeItem = ''
-    // },
     // 跳转文章详情
     goInfo(item) {
       let articleId = item.articleId
@@ -536,10 +512,6 @@ export default {
     goAdd() {
       this.$router.push({ name: 'addLinker' })
     },
-    // 去名片详情页
-    // goCard() {},
-    // 去我的分享
-    // goShare() {},
     // 去我的写一写
     goWrite() {
       this.$router.push('/user/articles/historicalArticles')
@@ -585,13 +557,21 @@ export default {
     formatData(time) {
       return time ? formatTime(time, '{y}-{m}-{d}') : ''
     }
+  },
+  mounted () {
+    let type = JSON.parse(window.sessionStorage.getItem('type'))
+    if (type) {
+       this.articleType = type
+    } else {
+      this.getCityArticle()
+    }
   }
 }
 </script>
 
 <style lang="less" scoped>
 .article-box {
-  // overflow: auto;
+  overflow: auto;
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
