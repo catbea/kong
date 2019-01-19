@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length">
+    <div class="article-list" v-if="articleData.length" @touchstart="touchstart($event)" @touchend="touchend($event)">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
@@ -151,12 +151,12 @@
         </van-list>
       </van-pull-refresh>
     </div>
-    <div class="nodata" v-show="!articleData.length && nodataStatus">
+    <div class="nodata" v-show="!articleData.length && nodataStatus" @click="onRefresh">
       <img src="../../assets/img/article/noarticle.png" alt="">
       <p>对不起，没有查询到相关文章！</p>
     </div>
     <div class="artcle-tips" v-show="showNewArticle" @click="onRefresh">
-      {{'10'}}条新内容
+      {{newArticelCount}}条新内容
       <van-icon name="arrow-down"/>
     </div>
     <div class="write">
@@ -232,6 +232,7 @@ export default {
   },
   data() {
     return {
+      newArticelCount: 0,
       showGuide: false, // 显示引导
       articleData: [], // 文章列表
       showSub: false, // 显示排序菜单
@@ -274,18 +275,30 @@ export default {
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
       nodataStatus: false,
-      updateLikeItem: '' //点赞数据
+      updateLikeItem: '', //点赞数据
+      startX: 0,
+      endX: 0
+    }
+  },
+  watch: {
+    '$store.getters.newMsgStatus': function(v) {
+      let msgContent = this.$store.getters.newMsgContent
+      if(!v) {
+        this.showNewArticle = false
+      } else {
+        if(msgContent.desc == 6 && this.$route.path == '/write-article') {
+          let data = JSON.parse(msgContent.data)
+          this.newArticelCount = data.newArticleCount
+          this.showNewArticle = v
+          return
+        }
+      }
     }
   },
   async created() {
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
-    let storage = JSON.parse(window.sessionStorage.getItem('tab'))
-    if (storage) {
-     this.changeClassify(storage) 
-    } else {
-      this.getArticleList()
-    }
-    
+    let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
+    this.changeClassify(storage)
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
@@ -342,6 +355,8 @@ export default {
         })
         this.articleData.push(...records)
         this.current += 1
+        // 缓存数据
+        this.cacheDataFn ({ itemCode: this.classify, itemName: this.classifyName })
       }
       this.nodataStatus = true
       this.showLoading = false
@@ -354,11 +369,34 @@ export default {
     changeClassify(item) {
       window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
-      this.classify = item.itemCode
-      this.classifyName = item.itemName
-      this.current = 1
-      this.articleData = []
-      this.getArticleList()
+      this.cacheDataFn(item)
+    },
+    // 缓存数据
+    cacheDataFn (item) {
+      // 缓存上一个tab的数据
+      let cacheData = JSON.parse(window.sessionStorage.getItem('cacheData')) || {}
+      if (this.articleData.length) {
+          cacheData[this.classifyName] = {
+          classify: this.classify,
+          classifyName: this.classifyName,
+          current: this.current,
+          articleData: this.articleData
+        }
+        window.sessionStorage.setItem('cacheData', JSON.stringify(cacheData))
+      }
+      let data = cacheData[item.itemName]
+      if (data && data.articleData && data.articleData.length) {
+        this.classify = data.classify
+        this.classifyName = data.classifyName
+        this.current = data.current
+        this.articleData = data.articleData
+      } else {
+        this.classify = item.itemCode
+        this.classifyName = item.itemName
+        this.current = 1
+        this.articleData = []
+        this.getArticleList()
+      }
     },
     // 显示按时间排序菜单
     showSubFn() {
@@ -446,7 +484,7 @@ export default {
       let receiverName = this.replayStatus === 2 ? this.replayItem.senderName : ''
       let parentId = this.replayStatus === 2 ? this.replayItem.id : ''
       let type = this.replayStatus === 2 ? 1 : 0
-      let receiverSource = this.replayStatus === 2 ? this.replayItem.receiverSource : ''
+      let receiverSource = this.replayStatus === 2 ? this.replayItem.senderSource : ''
       let result = await ArticleService.insertComment({
         content: this.replayCnt,
         enterpriseId: this.userInfo.enterpriseId,
@@ -531,6 +569,7 @@ export default {
     async onRefresh() {
       this.current = 1
       this.articleData = []
+      this.showNewArticle = false
       await this.getArticleList()
       this.isLoading = false
     },
@@ -551,6 +590,35 @@ export default {
       if (result) {
         this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex, 1)
       }
+    },
+    // 列表touchstart
+    touchstart (e) {
+      this.startX = e.changedTouches[0].pageX
+    },
+    // 列表touchend
+    touchend (e) {
+      this.endX = e.changedTouches[0].pageX
+      if (this.startX - this.endX > 50) {
+        this.touchChangeTab(1)
+      }
+      if (this.endX - this.startX > 50) {
+         this.touchChangeTab(2)
+      }
+    },
+    // 滑动切换tab 1 右滑 2 左滑
+    touchChangeTab (type) {
+      let num = 0
+      this.articleType.forEach((item, index) => {
+        if (item.itemName === this.classifyName) {
+          return num = index
+        }
+      })
+      if (type === 1) {
+        num = num < this.articleType.length - 1 ? num + 1 : 0
+      } else {
+        num = num >= 1 ? num -1 : this.articleType.length - 1
+      }
+      this.changeClassify(this.articleType[num])
     }
   },
   filters: {
@@ -729,6 +797,7 @@ export default {
         }
         .action {
           width: 70px;
+          text-align: right;
           .like-icon {
             margin-right: 20px;
             img {
