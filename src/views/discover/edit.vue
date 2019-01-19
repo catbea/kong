@@ -100,7 +100,8 @@ export default {
     singleShow: false,
     multiShow: false,
     target: null,
-    helpShow: false
+    helpShow: false,
+    pushFlag: false
   }),
   created() {
     this.id = this.$route.params.id
@@ -181,6 +182,8 @@ export default {
     async previewClickHandler() {},
     // 底部栏保存按钮点击
     async saveClickHandler() {
+      if(this.pushFlag) return 
+      this.pushFlag = true
       let payload = {
         viewpoint: this.viewpointText,
         inlayHouse: this.inlayHouse.length > 0 ? this.inlayHouse[0].linkerId : '',
@@ -193,18 +196,27 @@ export default {
       for (let temp of this.renderDom) {
         if (temp.status === 'edit') content += `<p>${temp.text}</p>`
       }
-      const res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
-      // 还要附加一个评论
-      const commentData = {
-        content: this.viewpointText,
-        enterpriseId: this.enterpriseId,
-        infoId: this.info.id,
-        senderId: this.agentId,
-        senderSource: 0,
-        type: 0
+      let res,targetid
+      // 存在这个字段,说明是再次编辑
+      if (this.info.belongeder) {
+        res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
+        targetid = this.info.id
+      } else {
+        res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
+        targetid = res.id
+        // 还要附加一个评论
+        const commentData = {
+          content: this.viewpointText,
+          enterpriseId: this.enterpriseId,
+          infoId: this.info.id,
+          senderId: this.agentId,
+          senderSource: 0,
+          type: 0
+        }
+        discoverService.insertComment(commentData)
       }
-      discoverService.insertComment(commentData)
-      this.$router.push(`/discover/${res.id}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
+
+      this.$router.push(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
