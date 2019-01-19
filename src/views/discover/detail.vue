@@ -39,12 +39,12 @@
       <div class="easy-look-container" v-if="easylookList.length>0">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <span class="icon iconfont icon-found_like"></span>
+            <span style="color:#999999" class="icon iconfont icon-found_like"></span>
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <span class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
-            <span class="icon iconfont icon-found_like" v-else></span>
+            <span style="color:#007AE6;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
+            <span style="color:#999999" class="icon iconfont icon-found_like" v-else></span>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
@@ -103,7 +103,7 @@
         编辑
       </div>
       <div class="tool-item" @click="collectHandler()">
-        <i v-if="collectionStatus===1" class="icon iconfont icon-Building_details_col"></i>
+        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
@@ -632,7 +632,6 @@ export default {
       > .easy-look-list {
         margin-left: 20px;
         padding-top: 6px;
-        width: 260px;
         position: relative;
         > .easy-look-name-clamp  {
           color: #445166;
@@ -777,7 +776,7 @@ export default {
     display: flex;
     justify-content: space-around;
     font-size: 12px;
-    padding: 5px 15px;
+    padding: 16px 15px;
     color: #666666;
     > div {
       text-align: center;
