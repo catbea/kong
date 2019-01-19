@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length">
+    <div class="article-list" v-if="articleData.length" @touchstart="touchstart($event)" @touchend="touchend($event)">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
@@ -274,7 +274,9 @@ export default {
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
       nodataStatus: false,
-      updateLikeItem: '' //点赞数据
+      updateLikeItem: '', //点赞数据
+      startX: 0,
+      endX: 0
     }
   },
   async created() {
@@ -571,6 +573,35 @@ export default {
       if (result) {
         this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex, 1)
       }
+    },
+    // 列表touchstart
+    touchstart (e) {
+      this.startX = e.changedTouches[0].pageX
+    },
+    // 列表touchend
+    touchend (e) {
+      this.endX = e.changedTouches[0].pageX
+      if (this.endX - this.startX > 50) {
+         this.touchChangeTab(1)
+      }
+      if (this.startX - this.endX > 50) {
+        this.touchChangeTab(2)
+      }
+    },
+    // 滑动切换tab 1 右滑 2 左滑
+    touchChangeTab (type) {
+      let num = 0
+      this.articleType.forEach((item, index) => {
+        if (item.itemName === this.classifyName) {
+          return num = index
+        }
+      })
+      if (type === 1) {
+        num = num < this.articleType.length - 1 ? num + 1 : 0
+      } else {
+        num = num >= 1 ? num -1 : this.articleType.length - 1
+      }
+      this.changeClassify(this.articleType[num])
     }
   },
   filters: {
