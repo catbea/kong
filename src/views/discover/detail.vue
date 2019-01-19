@@ -6,7 +6,7 @@
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
         <div class="reprint-source">
-          <span>分享源自</span>
+          <span>分享源自 </span>
           <span style="color:#445166">AW大师写一写</span>
         </div>
       </div>
@@ -32,11 +32,11 @@
       </p>
       <p class="discover-disclaimer">
         <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
       </p>
       <!-- <agent-card class="agent-card" v-if="agentInfo" :info="agentInfo" @showQRCode="popupShowControl(true)"></agent-card> -->
       <!-- 好看 -->
-      <div class="easy-look-container" v-if="easylookList.length>0">
+      <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
             <span style="color:#999999" class="icon iconfont icon-found_like"></span>
@@ -95,8 +95,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- 悬浮工具栏 -->
+      <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
@@ -112,6 +111,8 @@
         分享
       </div>
     </div>
+    </div>
+    
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
     <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
@@ -233,7 +234,7 @@ export default {
         this.$nextTick(() => {
           console.log(this.$refs.easyLook.offsetHeight)
           let height = this.$refs.easyLook.offsetHeight
-          if (height <= 79) {
+          if (height <= 80) {
             this.isMoreLike = false
           }else {
             this.isMoreLike = true
@@ -505,7 +506,7 @@ export default {
   background-color: #f7f9fa;
   > .discover-detail-container {
     background-color: #fff;
-    padding-bottom: 65px;
+    padding-bottom: 80px;
     > .discover-title {
       padding: 10px 15px;
       font-size: 22px;
@@ -767,7 +768,7 @@ export default {
     color: #ea4d2e;
     font-size: 16px;
   }
-  > .tools-bar {
+   .tools-bar {
     width: 100%;
     background-color: #fff;
     position: fixed;
@@ -776,13 +777,15 @@ export default {
     display: flex;
     justify-content: space-around;
     font-size: 12px;
-    padding: 16px 15px;
+    padding: 15px;
+    height: 72px;
     color: #666666;
     > div {
       text-align: center;
       > i {
         display: block;
         font-size: 24px;
+        margin-bottom: 4px;
       }
     }
     // > div {

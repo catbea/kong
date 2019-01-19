@@ -25,9 +25,9 @@
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh" >
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index">
-            <div class="content scale-1px-bottom" @click="goInfo(item)">
+            <div class="content scale-1px-bottom">
               <div class="left-cnt">
-                <h3 class="title">{{item.articleTitle}}</h3>
+                <h3 class="title"  @click="goInfo(item)">{{item.articleTitle}}</h3>
                 <div class="attr">
                   <p class="source">
                     <span class="name">{{item.publisher}}</span>
@@ -36,7 +36,7 @@
                   <span class="read">{{item.scanNum}}次阅读</span>
                 </div>
               </div>
-              <div class="img">
+              <div class="img"  @click="goInfo(item)">
                 <img :src="item.articleImg" alt="">
               </div>
             </div>
@@ -119,11 +119,12 @@
                           v-show="num < item.replayCount"
                           @click="showReplayFn(item, index,2,data,num)"
                         >
-                          <span class="name" @click.stop="replayLike(data,1)">{{data.senderName}}</span>
+                          <!--  @click.stop="replayLike(data,1)" -->
+                          <span class="name">{{data.senderName}}</span>
                           <span class="text" v-if="data.receiverName">回复</span>
+                          <!--  @click.stop="replayLike(data,2)" -->
                           <span
                             class="name"
-                            @click.stop="replayLike(data,2)"
                             v-if="data.receiverName"
                           >{{data.receiverName }}</span>:
                           <span class="replay-cnt">{{data.content}}</span>
@@ -170,10 +171,10 @@
     <div class="replay" v-show="showReplay">
       <div class="replay-cnt">
         <div class="top-action">
-          <span class="cancle" @click.stop="hideReplayFn">取消</span>
-          <span class="publish" @click.stop="insertCommentFn">
-            <button>发布</button>
-          </span>
+          <p class="cancle" @click="hideReplayFn">取消</p>
+          <p class="publish" @click="insertCommentFn">
+            <span>发布</span>
+          </p>
         </div>
         <div class="replay-title">
           <p v-if="replayStatus===1">{{commentItem.articleTitle}}</p>
@@ -295,7 +296,6 @@ export default {
     }
   },
   async created() {
-    // window.localStorage.removeItem('guideStatus')
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
     this.changeClassify(storage)
@@ -323,7 +323,7 @@ export default {
         let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
-        city: this.city,
+        city: this.userInfo.majorCity,
         classify: '',
         sortType: 2
         })
@@ -344,7 +344,7 @@ export default {
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
-        city: this.classifyName === this.city ? this.city : '',
+        city: this.classifyName === this.userInfo.majorCity ? this.userInfo.majorCity : '',
         classify: this.classify,
         sortType: sortType
       })
@@ -447,6 +447,8 @@ export default {
       if (replay && replay.senderId === this.userInfo.agentId) {
         this.commentIndex = index
         this.deleteIndex = num
+        // 隐藏菜单
+        this.$store.commit('TABBAR',{show:false})
         return (this.showDelete = true)
       }
       this.replayStatus = type
@@ -455,6 +457,8 @@ export default {
         this.replayItem = replay
       }
       this.commentIndex = index
+      // 隐藏菜单
+      this.$store.commit('TABBAR',{show:false})
       this.showReplay = true
       this.$nextTick(function() {
         this.$refs.replaybox.focus()
@@ -466,6 +470,8 @@ export default {
     },
     // 隐藏评论框
     hideReplayFn() {
+      // 显示菜单
+      this.$store.commit('TABBAR',{show:true})
       this.showReplay = false
     },
     // 发表评论
@@ -579,6 +585,8 @@ export default {
         this.delComment()
       }
       this.showDelete = false
+      // 隐藏菜单
+      this.$store.commit('TABBAR',{show:true})
     },
     // 删除评论
     async delComment() {
@@ -604,6 +612,9 @@ export default {
     } else {
       this.getCityArticle()
     }
+    document.querySelector('.tab-bar').addEventListener('touchmove', (e) => {
+      e.preventDefault()
+    }, { passive: false })
   }
 }
 </script>
@@ -640,6 +651,8 @@ export default {
         font-size: 24px;
         height: 34px;
         line-height: 34px;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
       }
     }
     .icon {
@@ -703,14 +716,16 @@ export default {
             -webkit-line-clamp: 2; //（行数）
             -webkit-box-orient: vertical;
             padding-top: 10px;
+            line-height:1.25;
           }
           .attr {
-            padding-top: 30px;
+            padding-top:26px;
             color: #969ea8;
             font-size: 12px;
             display: flex;
             .source {
               flex: 1;
+              padding-top:1.5px;
               .name {
                 display: inline-block;
                 margin-right: 8px;
@@ -807,7 +822,6 @@ export default {
           }
           .list {
             flex: 1;
-            margin-right: 20px;
             .name {
               font-size: 14px;
               color: #445166;
@@ -891,7 +905,7 @@ export default {
     height: 100%;
     z-index: 3;
     .replay-cnt {
-      margin-top: 50px;
+      // margin-top: 50px;
       width: 100%;
       padding: 20px 16px 30px 13px;
       box-sizing: border-box;
@@ -909,9 +923,12 @@ export default {
         .publish {
           flex: 1;
           text-align: right;
-          button {
+          span {
+            display: inline-block;
             width: 56px;
             height: 32px;
+            line-height: 32px;
+            text-align: center;
             border-radius: 6px;
             border: none;
             background-color: #007ae6;
