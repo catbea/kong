@@ -178,7 +178,9 @@ export default {
       this.$router.go(0)
     },
     // 底部栏预览按钮点击
-    async previewClickHandler() {},
+    async previewClickHandler() {
+      
+    },
     // 底部栏保存按钮点击
     async saveClickHandler() {
       let payload = {
