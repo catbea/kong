@@ -651,6 +651,8 @@ export default {
         font-size: 24px;
         height: 34px;
         line-height: 34px;
+        font-family:PingFangSC-Semibold;
+        font-weight:600;
       }
     }
     .icon {
@@ -714,14 +716,16 @@ export default {
             -webkit-line-clamp: 2; //（行数）
             -webkit-box-orient: vertical;
             padding-top: 10px;
+            line-height:1.25;
           }
           .attr {
-            padding-top: 30px;
+            padding-top:26px;
             color: #969ea8;
             font-size: 12px;
             display: flex;
             .source {
               flex: 1;
+              padding-top:1.5px;
               .name {
                 display: inline-block;
                 margin-right: 8px;
@@ -818,7 +822,6 @@ export default {
           }
           .list {
             flex: 1;
-            margin-right: 20px;
             .name {
               font-size: 14px;
               color: #445166;
