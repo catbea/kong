@@ -780,6 +780,7 @@ export default {
         }
         .action {
           width: 70px;
+          text-align: right;
           .like-icon {
             margin-right: 20px;
             img {
