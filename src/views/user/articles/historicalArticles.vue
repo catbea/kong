@@ -59,16 +59,18 @@ import writeArticle from 'COMP/User/writeArticle/index'
 import selectTab from 'COMP/User/writeArticle/selectTab'
 import userService from 'SERVICE/userService'
 import Null from 'COMP/Null'
+import * as types from '@/store/mutation-types'
 
 export default {
   components: {
     // searchWrite,
     writeArticle,
     Null,
-    selectTab,
+    selectTab
   },
   data() {
     return {
+      // index:0,
       loading: false,
       finished: false,
       current: 1,
@@ -82,11 +84,17 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
+
   created() {
-    this.typeCode = this.$route.query.typeCode
+
+    this.typeCode = this.$store.getters.currMyWriteTab
 
     if (this.typeCode == '3') {
       this.clickEdit('3')
+    } else if (this.typeCode == '2') {
+      this.clickShare('2')
+    } else if (this.typeCode == '1') {
+      this.clickCollection('1')
     }
   },
   methods: {
@@ -94,22 +102,25 @@ export default {
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
-      false
       this.onLoad()
+
+      this.$store.commit(types.MYWRITE_TAB, '2')
     },
 
     clickEdit(val) {
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
-      false, this.onLoad()
+      this.onLoad()
+      this.$store.commit(types.MYWRITE_TAB, '3')
     },
 
     clickCollection(val) {
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
-      false, this.onLoad()
+      this.onLoad()
+      this.$store.commit(types.MYWRITE_TAB, '1')
     },
 
     cancelCollect(val) {
@@ -202,7 +213,6 @@ export default {
   > .list-result {
     width: 100%;
     margin-top: 1px;
-    
   }
 }
 </style>

@@ -9,15 +9,15 @@
         <div class="meal-market-page-box-top-left">
           <img class="building-img" :src="dataArr.linkerHeadUrl">
           <p
-            class="icon-discount"  v-show="dataArr.sale"
+            class="bg_img icon-discount"  v-show="dataArr.sale"
             :style="{'backgroundImage':'url(' + labelImg + ')'}" v-if='dataArr.sale.length'>{{dataArr.sale}}</p>
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>
           <li>
-            <div style="display:flex;">{{dataArr.linkerName}}</div>
+            {{dataArr.linkerName}}
           </li>
-          <li>{{dataArr.city}} {{dataArr.district}} {{dataArr.price}} {{dataArr.priceUnit}}</li>
+          <li>{{dataArr.city}} {{dataArr.district}} {{dataArr.price}} {{dataArr.priceUnit}}111</li>
           <li>
             <div
               class="tag-item-statu blue"
@@ -106,7 +106,8 @@ export default {
       .icon-check {
         width: 18px;
         height: 18px;
-        margin: 0 16px;
+        flex: 0 0 18px;
+        margin: 0 14px;
       }
       .meal-market-page-box-top-left {
         width: 120px;
@@ -118,21 +119,25 @@ export default {
         align-items: center;
         .building-img {
           width: 120px;
-          height: 70px;
+          height: 90px;
           border-radius: 4px;
-          margin-top: 16px;
           // background:url(labelImg);
         }
         .icon-discount {
-          width: 38px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:36px;
+          width: 36px;
+          height:20px;
           position: absolute;
-          top: 22px;
+          top:6px;
           left: -4px;
           font-size: 11px;
           font-weight: 500;
-          padding-left: 3px;
+          text-align:center;
           color: rgba(255, 255, 255, 1);
-          line-height: 20px;
+          line-height:18px;
         }
         .icon-play {
           width: 32px;
@@ -142,23 +147,26 @@ export default {
       ul {
         width: 181px;
         li:nth-of-type(1) {
+
           font-size: 16px;
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
-          line-height: 16px;
-          display: flex;
-          justify-content: space-between;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:172px;
         }
         li:nth-of-type(2) {
           font-size: 12px;
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
-          height: 10px;
-          line-height: 10px;
-          margin: 10px 0 10px 0;
+          margin: 7px 0 5px 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:172px;
         }
         li:nth-of-type(3) {
-          height: 15px;
           display: flex;
           flex-wrap: wrap;
           .blue {
@@ -180,9 +188,9 @@ export default {
             font-size: 12px;
             transform: scale(0.85);
             margin: 2px 4px 0px -6px;
-            padding: 1px 5px;
+            padding: 2px 5px;
             border-radius: 3px;
-            height: 15px;
+            height: 19px;
             line-height: 15px;
           }
           .tag-item {
@@ -192,11 +200,11 @@ export default {
         }
         li:nth-of-type(4) {
           font-size: 12px;
-
+          height:14px;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 11px;
-          margin-top: 12px;
+          margin-top:10px;
           display: flex;
           justify-content: space-between;
         }

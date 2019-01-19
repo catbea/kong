@@ -263,7 +263,7 @@ export default {
     > .logo-body {
       position: absolute;
       width: 73px;
-      top: 236px;
+      top:340px;
       right: 20px;
       z-index: 3;
       display: flex;
