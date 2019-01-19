@@ -7,7 +7,7 @@
           :class="{'recommend': item.itemCode===classify && item.itemName === classifyName}"
           v-for="(item, index) in articleType"
           :key="index"
-          @click="changeClassify(item)"
+          @click="changeClassify(item,$event)"
         >{{item.itemName}}</span>
       </div>
       <span class="icon" @click="showSubFn">
@@ -366,7 +366,10 @@ export default {
       await this.$wechatHelper.getUserArea()
     },
     // tab切换 文章分类查询
-    changeClassify(item) {
+    changeClassify(item, e) {
+      if (e && e.currentTarget) {
+        e.currentTarget.scrollIntoView({behavior: 'smooth', block: 'end'})
+      }
       window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
       this.cacheDataFn(item)
@@ -612,9 +615,6 @@ export default {
     } else {
       this.getCityArticle()
     }
-    document.querySelector('.tab-bar').addEventListener('touchmove', (e) => {
-      e.preventDefault()
-    }, { passive: false })
   }
 }
 </script>
