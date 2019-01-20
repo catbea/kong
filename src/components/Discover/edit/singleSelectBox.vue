@@ -72,7 +72,12 @@ export default {
   },
   props: {
     value: { type: Boolean, default: false }, // 对应show.是否显示
-    selected: { type: Array } // 已经选中的
+    selected: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    } // 已经选中的
   },
   data: () => ({
     singleShow: false,
@@ -123,6 +128,8 @@ export default {
       const res = await userService.getMyHouses(payload)
       let _list = []
       for (let item of res.records) {
+       
+        if (this.selectedIdArr.indexOf(item.linkerId) !== -1) continue
         let obj = {
           linkerId: item.linkerId,
           linkerUrl: item.linkerUrl,
@@ -218,6 +225,13 @@ export default {
     },
     indicatorStyle() {
       return { display: this.indicator.show ? 'block' : 'none' }
+    },
+    selectedIdArr() {
+      let result = []
+      for (let temp of this.selected) {
+        result.push(temp.linkerId)
+      }
+      return result
     }
   }
 }
