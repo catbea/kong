@@ -459,7 +459,7 @@ export default {
     },
     // 展示评论框
     showReplayFn(item, index, type, replay, num) {
-      this.deleteIndex = num || item.discussVOS.length
+      this.deleteIndex = num !== undefined ?  num : item.discussVOS.length
       if (replay && replay.senderId === this.userInfo.agentId) {
         this.commentIndex = index
         // 隐藏菜单
