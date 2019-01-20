@@ -96,7 +96,7 @@ export default {
 
   methods: {
     async onLoad() {
-      const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.infoId)
+      const res = await userService.queryWriteArticleList(this.typeCode, this.current, this.itemInfo.id)
       this.total = res.total
 
       if (this.current === 1) {
