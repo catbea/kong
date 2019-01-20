@@ -185,7 +185,7 @@
           <textarea
             placeholder="最多输入140个字"
             class="textarea"
-            :class="{'placeholder': replayStatus===2}"
+            :class="{'placeholder': replayStatus===2 && system==='IOS'}"
             name=""
             id=""
             ref="replaybox"
@@ -301,7 +301,19 @@ export default {
     this.changeClassify(storage)
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo']),
+    system () {
+      let u = navigator.userAgent, app = navigator.appVersion;
+      let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+      let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      if (isAndroid) {
+        return 'Android'
+      } else if (isIOS) {
+         return 'IOS'
+      } else {
+        return ''
+      }
+    }
   },
   methods: {
     // 隐藏引导页
@@ -476,6 +488,7 @@ export default {
       // 显示菜单
       this.$store.commit('TABBAR',{show:true})
       this.showReplay = false
+      this.replayCnt = ''
     },
     // 发表评论
     insertCommentFn(index) {
