@@ -72,7 +72,12 @@ export default {
   },
   props: {
     value: { type: Boolean, default: false }, // 对应show.是否显示
-    selected: { type: Array } // 已经选中的
+    selected: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    } // 已经选中的
   },
   data: () => ({
     singleShow: false,
@@ -123,6 +128,8 @@ export default {
       const res = await userService.getMyHouses(payload)
       let _list = []
       for (let item of res.records) {
+       
+        if (this.selectedIdArr.indexOf(item.linkerId) !== -1) continue
         let obj = {
           linkerId: item.linkerId,
           linkerUrl: item.linkerUrl,
@@ -135,7 +142,8 @@ export default {
           // isChecked: this.existCheck(item.linkerId) !== -1,
           disabled: false,
           divisionRules: item.divisionRules,
-          price: `${item.price} ${item.priceUnit}`
+          price: `${item.price} ${item.priceUnit}`,
+          buildArea: `${item.minArea}-${item.maxArea}㎡`
         }
         _list.push(obj)
       }
@@ -151,49 +159,11 @@ export default {
       this.$store.dispatch('getAllCity')
       this.status = 2
     },
-    // 验证是否已经被点击,不存在返回-1,存在返回index
-    // existCheck(linkerId) {
-    //   for (let i = 0; i < this.selectedItems.length; i++) {
-    //     if (this.selectedItems[i].linkerId === linkerId) return i
-    //   }
-    //   return -1
-    // },
-    // 验证是否可以继续选中
-    // enableCheck() {
-    //   return this.selectedItems.length < this.maxSelect
-    // },
     // item点击
     selectHandle(item) {
       this.$emit('submit', item)
       this.singleShow = false
-      // setTimeout(() => {
-      //   const index = this.existCheck(item.linkerId)
-      //   if (index === -1) {
-      //     if (this.enableCheck()) {
-      //       this.selectedItems.push(item)
-      //       if (this.selectedItems.length === this.maxSelect) {
-      //         for (let temp of this.projectList) {
-      //           if (!temp.isChecked) temp.disabled = true
-      //         }
-      //       }
-      //     } else {
-      //       // TODO 提示已到最大个数
-      //     }
-      //   } else {
-      //     this.$delete(this.selectedItems, index)
-      //   }
-      // }, 1)
     },
-    // 点击取消
-    // cancelBtnClick() {
-    //   this.selectedItems = []
-    //   this.singleShow = false
-    // },
-    // 点击确认
-    // submitBtnClick() {
-    //   this.$emit('submit', this.selectedItems)
-    //   this.singleShow = false
-    // },
     // 重置,cleanData - 是否也清除数据
     reset(cleanData = false) {
       this.selectedItems = []
@@ -205,7 +175,6 @@ export default {
       if (e.target.tagName !== 'LI') return
 
       this.scrollHander(e.target.innerText)
-
       window.addEventListener('touchmove', this.handleTouchMove, false)
       window.addEventListener('touchend', this.handleTouchEnd)
 
@@ -256,6 +225,13 @@ export default {
     },
     indicatorStyle() {
       return { display: this.indicator.show ? 'block' : 'none' }
+    },
+    selectedIdArr() {
+      let result = []
+      for (let temp of this.selected) {
+        result.push(temp.linkerId)
+      }
+      return result
     }
   }
 }
@@ -312,6 +288,10 @@ export default {
     }
   }
   > .city-select-container {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
     > .area-selection-page {
       .search-box {
         position: relative;

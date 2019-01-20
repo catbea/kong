@@ -2,7 +2,8 @@
   <div class="edit-houses">
     <div class="house-box" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
-        <estate-item :key="index" :showRules="false" :info="currentData[index-1]"/>
+        <!-- currentData[index-1] -->
+        <estate-item :key="index" :showRules="false" :info="itemData(index-1)"/>
         <i class="icon iconfont icon-search_empty del-icon" @click.stop="delClickHandler(index-1)"/>
       </div>
       <div class="empty-box" v-else @click="addClickHandler">
@@ -21,7 +22,7 @@
 import EstateItem from 'COMP/EstateItem'
 export default {
   components: {
-    EstateItem
+    EstateItem,
   },
   props: {
     count: { type: Number, default: 3 },
@@ -32,14 +33,19 @@ export default {
   data: () => ({
     currentData: []
   }),
-  created() {},
   methods: {
     delClickHandler(index) {
       this.$delete(this.currentData, index)
-      this.$emit('delete',this.currentData[index])
+      this.$emit('delete', this.currentData[index])
     },
-    addClickHandler(){
+    addClickHandler() {
       this.$emit('click')
+    },
+    itemData(index){
+      let temp = this.currentData[index]
+      temp.city = '广州市 从化市'
+      temp.linkerTags = temp.condition
+      return temp
     }
   },
   watch: {
@@ -66,10 +72,11 @@ export default {
     margin-bottom: 10px;
     > div {
       width: 350px;
-      height: 122px;
+      // 
     }
     > .house-item {
       position: relative;
+      line-height: 1;
       > .del-icon {
         position: absolute;
         font-size: 16px;
@@ -81,6 +88,7 @@ export default {
     }
     > .empty-box {
       position: relative;
+      height: 122px;
       > .info-box {
         position: absolute;
         left: 50%;
