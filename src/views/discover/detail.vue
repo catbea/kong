@@ -6,7 +6,7 @@
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
         <div class="reprint-source">
-          <span>分享源自 </span>
+          <span>分享源自</span>
           <span style="color:#445166">AW大师写一写</span>
         </div>
       </div>
@@ -31,8 +31,10 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter(3, '/')}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
+        <span
+          class="disclaimer-text"
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
       <div class="easy-look-container">
@@ -48,19 +50,26 @@
           </div>
         </div>
         <div class="easy-look-list">
-          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
-          <div
-            class="easy-look-fold"
-            v-if="isMoreLike" @click="moreLikeListHandler"
-          >展开更多<van-icon name="arrow-down"/></div>
+          <span
+            ref="easyLook"
+            :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'"
+          >{{easylookList && easylookList.join('、')}}</span>
+          <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
+            <van-icon name="arrow-down"/>
+          </div>
         </div>
       </div>
       <!-- 评论 -->
-      <div class="comment-container">
+      <div class="comment-container" v-if="this.isPass=='1'">
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
+            <div
+              class="comment-list"
+              v-for="(item, index) in commentList"
+              :key="index"
+              @click="commentSenderClickHandler(item)"
+            >
               <div
                 class="bg_img"
                 :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
@@ -68,17 +77,12 @@
               ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
-                  <span
-                    class="comment-name"
-                  >{{item.senderName}}</span>
+                  <span class="comment-name">{{item.senderName}}</span>
                   <span
                     v-if="item.receiverName"
                     style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
                   >回复</span>
-                  <span
-                    class="comment-reply"
-                    v-if="item.receiverName"
-                  >{{item.receiverName}}</span>
+                  <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
                 <div></div>
@@ -102,7 +106,11 @@
         编辑
       </div>
       <div class="tool-item" @click="collectHandler()">
-        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
+        <i
+          v-if="collectionStatus===1"
+          style="color:#007AE6;"
+          class="icon iconfont icon-Building_details_col"
+        ></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
@@ -111,9 +119,21 @@
         分享
       </div>
     </div>
-    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
+    <van-actionsheet
+      v-model="isShowDeleteComment"
+      :actions="actions"
+      cancel-text="取消"
+      @select="onSelect"
+      @cancel="onCancel"
+    ></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
-    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+    <comment-alert
+      :show.sync="showCommentAlert"
+      :info="commentInfo"
+      @cancel="cancelHandler"
+      @publish="publishHandler"
+      @input="inputHandler"
+    ></comment-alert>
   </div>
 </template>
 <script>
@@ -171,7 +191,8 @@ export default {
     showCommentAlert: false, // 是否显示评论输入框
     commentInfo: null,
     commentIds: [], // 评论Ids
-    shareUuid: ''
+    shareUuid: '',
+    isPass:''
   }),
   created() {
     console.log(window.innerHeight)
@@ -203,6 +224,10 @@ export default {
       this.infoId = res.id
       this.collectionStatus = res.collectType
       this.likeFlag = res.likeFlag
+      this.isPass = res.status
+
+      console.log(res.status)
+
       this.agentInfo = {
         agentId: this.info.agentId,
         agentName: this.info.agentName,
@@ -218,11 +243,11 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-      if(this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
+      if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
       this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
-       
+
       console.log(this.virtualDom)
     },
     // 好看列表
@@ -238,7 +263,7 @@ export default {
           let height = this.$refs.easyLook.offsetHeight
           if (height <= 80) {
             this.isMoreLike = false
-          }else {
+          } else {
             this.isMoreLike = true
           }
         })
@@ -647,7 +672,7 @@ export default {
         margin-left: 20px;
         padding-top: 6px;
         position: relative;
-        > .easy-look-name-clamp  {
+        > .easy-look-name-clamp {
           color: #445166;
           font-size: 14px;
           word-break: break-all;
@@ -781,7 +806,7 @@ export default {
     color: #ea4d2e;
     font-size: 16px;
   }
-   .tools-bar {
+  .tools-bar {
     width: 100%;
     background-color: #fff;
     position: fixed;
