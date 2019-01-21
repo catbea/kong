@@ -5,22 +5,7 @@
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
       <div class="modify-child">
-        <div v-if="showInvitation" v-for="(item,index) in headIcons.slice(0,6)" :key="index" class="head-img" @click="selectedHead(item,index)">
-          <!-- <img :src="item.Icon"> -->
-          <svg class="icon" aria-hidden="true">
-              <use :xlink:href="item.Icon"></use>
-           </svg>
-          <p class="grou1Icon-p">{{item.title}}</p>
-        </div>
-        <div v-if="showInvitation" class="head-img" @click="invitationHead">
-          <!-- <img :src="item.Icon"> -->
-           <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-me_gift"></use>
-           </svg>
-          <p class="grou1Icon-p">邀请有礼</p>
-          <p class="politeness">有礼</p>
-        </div>
-        <div v-if="!showInvitation" v-for="(item,index) in headIcons" :key="index" class="head-img" @click="selectedHead(item,index)">
+        <div v-for="(item,index) in headIcons" :key="index" class="head-img" @click="selectedHead(item,index)">
           <!-- <img :src="item.Icon"> -->
            <svg class="icon" aria-hidden="true">
               <use :xlink:href="item.Icon"></use>
@@ -28,7 +13,7 @@
           <p class="grou1Icon-p">{{item.title}}</p>
         </div>
         <!-- 邀请有礼 -->
-        <div v-if="!showInvitation" class="head-img" @click="invitationHead">
+        <div v-if="parseInt(userInfo.ifView)===0" class="head-img" @click="invitationHead">
           <!-- <img :src="item.Icon"> -->
            <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-me_gift"></use>
@@ -99,12 +84,7 @@ export default {
     this.getVipAndPackage()
   },
   computed: {
-    ...mapGetters(['userInfo']),
-
-    showInvitation() {
-      //true 不展示  false  展示
-      return this.userInfo.ifView == '0' ? true : false
-    }
+    ...mapGetters(['userInfo'])
   },
   methods: {
     enterSharePage() {
