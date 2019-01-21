@@ -141,7 +141,6 @@ export default {
     },
     restoreData(json){
       try {
-        debugger
         let editData = JSON.parse(json)
         if(editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
       } catch (error) {
