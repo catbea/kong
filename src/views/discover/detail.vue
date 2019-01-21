@@ -31,7 +31,9 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter(3, '/')}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span
+          class="disclaimer-text"
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -48,7 +50,10 @@
           </div>
         </div>
         <div class="easy-look-list">
-          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
+          <span
+            ref="easyLook"
+            :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'"
+          >{{easylookList && easylookList.join('、')}}</span>
           <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
             <van-icon name="arrow-down"/>
           </div>
@@ -59,12 +64,24 @@
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
-              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
+            <div
+              class="comment-list"
+              v-for="(item, index) in commentList"
+              :key="index"
+              @click="commentSenderClickHandler(item)"
+            >
+              <div
+                class="bg_img"
+                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+                style="width:40px;height:40px;border-radius:50%;"
+              ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                  <span
+                    v-if="item.receiverName"
+                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                  >回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -88,7 +105,11 @@
         编辑
       </div>
       <div class="tool-item" @click="collectHandler()">
-        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
+        <i
+          v-if="collectionStatus===1"
+          style="color:#007AE6;"
+          class="icon iconfont icon-Building_details_col"
+        ></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
@@ -97,9 +118,21 @@
         分享
       </div>
     </div>
-    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
+    <van-actionsheet
+      v-model="isShowDeleteComment"
+      :actions="actions"
+      cancel-text="取消"
+      @select="onSelect"
+      @cancel="onCancel"
+    ></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
-    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+    <comment-alert
+      :show.sync="showCommentAlert"
+      :info="commentInfo"
+      @cancel="cancelHandler"
+      @publish="publishHandler"
+      @input="inputHandler"
+    ></comment-alert>
   </div>
 </template>
 <script>
@@ -188,8 +221,8 @@ export default {
   methods: {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
-      console.log(res,'该文章数据');
-      
+      console.log(res, '该文章数据')
+
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
@@ -502,6 +535,7 @@ export default {
 .discover-detail-page {
   box-sizing: border-box;
   background-color: #f7f9fa;
+  -webkit-overflow-scrolling: touch;
   > .discover-detail-container {
     background-color: #fff;
     padding-bottom: 20px;
@@ -545,8 +579,8 @@ export default {
     > .discover-viewpoint {
       border: 1px dashed #969ea8;
       margin: 20px 16px;
-      margin-bottom:5px;
-      margin-top:30px;
+      margin-bottom: 5px;
+      margin-top: 30px;
       padding: 16px;
       position: relative;
       box-sizing: border-box;
