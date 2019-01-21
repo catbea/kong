@@ -128,7 +128,6 @@ export default {
       const res = await userService.getMyHouses(payload)
       let _list = []
       for (let item of res.records) {
-       
         if (this.selectedIdArr.indexOf(item.linkerId) !== -1) continue
         let obj = {
           linkerId: item.linkerId,
@@ -143,7 +142,7 @@ export default {
           disabled: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`,
-          buildArea: `${item.minArea}-${item.maxArea}㎡`
+          buildArea: (item.minArea !== ''&& item.maxArea !== '') ? `${item.minArea}-${item.maxArea}㎡` : ''
         }
         _list.push(obj)
       }
