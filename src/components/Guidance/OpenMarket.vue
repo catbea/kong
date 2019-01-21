@@ -96,6 +96,7 @@ export default {
   > .tag-content {
     height: 30px;
     margin: 15px;
+    margin-left:12px;
     margin-top:8px;
     > .tag-item {
       color: #333333;
@@ -106,6 +107,7 @@ export default {
   }
   > .desc-content {
     margin: 15px;
+    margin-left:18px;
     font-size: 16px;
     color: #007ae6;
     font-weight: 600;
