@@ -15,10 +15,10 @@
       </div>
       <div class="viewpoint-content">{{currentValue}}</div>
     </div>
-    <van-popup class="write-board" v-model="viewpointEditShow" position="bottom" :close-on-click-overlay="false">
+    <van-popup class="write-board" v-model="viewpointEditShow" position="bottom" >
       <p class="write-title">发表观点</p>
       <div class="pull-btn" @click="viewpointPullHandler">发布</div>
-      <textarea class="write-content" v-model="currentValue"/>
+      <textarea class="write-content" v-model="tempValue"/>
     </van-popup>
   </div>
 </template>
@@ -30,23 +30,30 @@ export default {
   },
   data: () => ({
     viewpointEditShow: false,
-    currentValue: ''
+    currentValue: '',
+    tempValue:''
   }),
   methods: {
     viewpointAreaClick() {
       this.viewpointEditShow = true
+      this.tempValue = this.currentValue
     },
     viewpointPullHandler() {
       this.viewpointEditShow = false
+      this.currentValue = this.tempValue
     }
   },
   watch: {
     value(val) {
       this.currentValue = val
+      this.tempValue = val
     },
     currentValue(val) {
       this.$emit('input', val)
-    }
+    },
+    // tempValue(val){
+    //   this.currentValue = val
+    // }
   }
 }
 </script>
