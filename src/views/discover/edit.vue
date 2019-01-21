@@ -239,18 +239,19 @@ export default {
         res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = res.id
         // 还要附加一个评论
-        const commentData = {
-          content: this.viewpointText,
-          enterpriseId: this.enterpriseId,
-          infoId: this.info.id,
-          senderId: this.agentId,
-          senderSource: 0,
-          type: 0,
-          viewFlag: 0
+        if (this.viewpointText !== '') {
+          const commentData = {
+            content: this.viewpointText,
+            enterpriseId: this.enterpriseId,
+            infoId: this.info.id,
+            senderId: this.agentId,
+            senderSource: 0,
+            type: 0,
+            viewFlag: 0
+          }
+          discoverService.insertComment(commentData)
         }
-        discoverService.insertComment(commentData)
       }
-
       this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
     },
     selectSubmitHandler(e) {
