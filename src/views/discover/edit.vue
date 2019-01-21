@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="discover-detail-content">
-        <edit-viewpoint v-model="viewpointText"/>
+        <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
           <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
@@ -101,7 +101,8 @@ export default {
     multiShow: false,
     target: null,
     helpShow: false,
-    pushFlag: false
+    pushFlag: false,
+    previewFlag: false
   }),
   created() {
     this.id = this.$route.params.id
@@ -179,10 +180,22 @@ export default {
       window.location.reload()
     },
     // 底部栏预览按钮点击
-    async previewClickHandler() {},
+    async previewClickHandler() {
+      if (this.previewFlag) {
+        this.previewFlag = false
+        for (let temp of this.renderDom) {
+          temp.status = 'edit'
+        }
+      } else {
+        this.previewFlag = true
+        for (let temp of this.renderDom) {
+          temp.status = 'view'
+        }
+      }
+    },
     // 底部栏保存按钮点击
     async saveClickHandler() {
-      if(this.pushFlag) return 
+      if (this.pushFlag) return
       this.pushFlag = true
       let payload = {
         viewpoint: this.viewpointText,
@@ -196,7 +209,7 @@ export default {
       for (let temp of this.renderDom) {
         if (temp.status === 'edit') content += `<p>${temp.text}</p>`
       }
-      let res,targetid
+      let res, targetid
       // 存在这个字段,说明是再次编辑
       if (this.info.belongeder !== '0') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
@@ -212,7 +225,7 @@ export default {
           senderId: this.agentId,
           senderSource: 0,
           type: 0,
-          viewFlag:0
+          viewFlag: 0
         }
         discoverService.insertComment(commentData)
       }
