@@ -12,7 +12,7 @@
           <span
             class="share-time"
             v-if="selectType=='1'"
-          >收藏时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+          >收藏时间：{{item.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
           <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
           <span
             class="collection-text"
@@ -102,6 +102,7 @@ export default {
       width: 100%;
       margin-top: 30px;
       > .share-time {
+        
         font-size: 12px;
         color: #969ea8;
       }
@@ -109,7 +110,7 @@ export default {
       > .collection-text {
         color: #bbbbbb;
         font-size: 10px;
-        margin-left: 5px;
+        margin-left: 19px;
       }
 
       > .collection-img {

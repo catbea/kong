@@ -222,7 +222,9 @@ export default {
         .then(() => {
           this.$router.replace('/market/' + this.linkerId)
         })
-        .catch(() => {})
+        .catch(() => {
+          this.priceSurfacePayInfo.balanceAmount=this.priceSurfacePayInfo.balanceAmount-this.priceSurfacePayInfo.balancePay
+        })
     },
 
     async getMarketDescribeInfo() {
