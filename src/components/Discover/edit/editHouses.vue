@@ -1,12 +1,11 @@
 <template>
   <div class="edit-houses">
-    <div class="house-box" v-for="index in count" :key="index">
+    <div class="house-box" :class="!preview&&'box_border'" v-for="index in count" :key="index" >
       <div class="house-item" v-if="index<=currentData.length">
-        <!-- currentData[index-1] -->
         <estate-item :key="index" :showRules="false" :info="itemData(index-1)"/>
-        <i class="icon iconfont icon-search_empty del-icon" @click.stop="delClickHandler(index-1)"/>
+        <i class="icon iconfont icon-search_empty del-icon" v-if="!preview" @click.stop="delClickHandler(index-1)"/>
       </div>
-      <div class="empty-box" v-else @click="addClickHandler">
+      <div class="empty-box" v-if="index>currentData.length && !preview" @click="addClickHandler">
         <div class="info-box">
           <div class="add-icon">
             <i class="icon iconfont icon-write_add"></i>
@@ -28,7 +27,8 @@ export default {
     count: { type: Number, default: 3 },
     value: { type: Array },
     status: { tyle: String, default: 'empty' },
-    reminder: { type: Boolean, default: false }
+    reminder: { type: Boolean, default: false },
+    preview: { type: Boolean, default: false }
   },
   data: () => ({
     currentData: []
@@ -68,11 +68,9 @@ export default {
 .edit-houses {
   margin: 0 -5px;
   > .house-box {
-    border: 1px dashed #969ea8;
     margin-bottom: 10px;
     > div {
       width: 350px;
-      // 
     }
     > .house-item {
       position: relative;

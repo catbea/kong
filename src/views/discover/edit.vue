@@ -15,31 +15,15 @@
       <div class="discover-detail-content">
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
-          <edit-paragraph
-            :info="paragraph"
-            @delParagraph="delParagraphHandler"
-            @repealParagraph="repealParagraphHandler"
-          />
-          <edit-houses
-            v-if="index===parseInt(renderDom.length/2)"
-            v-model="inlayHouse"
-            :count="1"
-            @click="singleAddClickHandler"
-            @delete="inlayHouseDelHandler"
-          />
+          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
+          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
       </div>
     </div>
     <div class="recommend-house-container">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
-        <edit-houses
-          v-model="recommendList"
-          :count="3"
-          :reminder="true"
-          @click="multiAddClickHandler"
-          @delete="multiHouseDelHandler"
-        />
+        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
@@ -62,7 +46,7 @@
         </div>
       </div>
       <div class="right-operation">
-        <div class="preview-btn" @click="previewClickHandler">预览</div>
+        <div class="preview-btn" @click="previewClickHandler">{{previewFlag? '编辑':'预览'}}</div>
         <div class="save-btn" @click="saveClickHandler">保存并分享</div>
       </div>
     </div>
@@ -145,6 +129,7 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
+      this.restoreData(this.info.editData)
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
@@ -165,6 +150,14 @@ export default {
       }
       const res = await userService.getMyHouses(payload)
       this.recommendList = res.records
+    },
+    restoreData(json){
+      try {
+        let editData = JSON.parse(json)
+        if(editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
+      } catch (error) {
+        
+      }
     },
     // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
@@ -216,9 +209,6 @@ export default {
         }
       } else {
         this.previewFlag = true
-        for (let temp of this.renderDom) {
-          temp.status = 'view'
-        }
       }
     },
     // 底部栏保存按钮点击
@@ -307,6 +297,8 @@ export default {
     margin-bottom: 5px;
     > .discover-title {
       padding: 10px 15px;
+      padding-top:20px;
+      padding-bottom:17px;
       font-size: 22px;
       color: #333333;
       font-weight: 600;
@@ -324,9 +316,13 @@ export default {
           color: #445166;
         }
       }
+      .view-count{
+        font-size: 14px;
+      }
     }
     > .discover-detail-content {
       padding: 15px;
+      padding-top:30px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
