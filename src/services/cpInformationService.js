@@ -36,6 +36,25 @@ class CpInformationService {
       }
     })
   }
+
+  /**
+   * 文章状态修改 - 主要用于文章删除
+   * @param {*} agentId 
+   * @param {*} infoId 
+   * @param {*} status 
+   */
+  updateStatusByAgentId(agentId, infoId, status=0){
+    return xhr({
+      method:'post',
+      url:'/cpInformation/updateStatusByAgentId',
+      body:{
+        agentId,
+        infoId,
+        status
+      }
+    })
+  }
+  
 }
 
 export default new CpInformationService()

@@ -102,7 +102,7 @@
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
-        编辑
+        {{info&&info.belongeder === '0' ? '编辑' : '更新编辑'}}
       </div>
       <div class="tool-item" @click="collectHandler()">
         <i
@@ -116,6 +116,10 @@
       <div class="tool-item" @click="shareHandler">
         <i class="icon iconfont icon-Building_details_for"></i>
         分享
+      </div>
+      <div class="tool-item" v-if="info&&(info.agentId === info.belongeder)" @click="delHandler">
+        <i class="icon iconfont icon-delete"></i>
+        删除
       </div>
     </div>
     <van-actionsheet
@@ -141,10 +145,12 @@ import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
 import { uuid } from '@/utils/tool'
+import remove from 'lodash/remove'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
+import cpInformationService from 'SERVICE/cpInformationService'
 export default {
   components: {
     TitleBar,
@@ -196,16 +202,13 @@ export default {
     isPass: ''
   }),
   created() {
-    console.log(window.innerHeight)
     this.contentHeight = window.innerHeight - 72
-    console.log(this.contentHeight)
     window.awHelper.wechatHelper.wx.showOptionMenu()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = uuid()
-    console.log(this.shareUuid)
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.guidanceShow = true
     } else {
@@ -221,15 +224,11 @@ export default {
   methods: {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
-      console.log(res, '该文章数据')
-
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
       this.likeFlag = res.likeFlag
       this.isPass = res.status
-
-      console.log(res.status)
 
       this.agentInfo = {
         agentId: this.info.agentId,
@@ -250,8 +249,6 @@ export default {
       this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
-
-      console.log(this.virtualDom)
     },
     // 好看列表
     async getLikeList() {
@@ -262,7 +259,6 @@ export default {
           this.easylookList.push(item.userName)
         }
         this.$nextTick(() => {
-          console.log(this.$refs.easyLook.offsetHeight)
           let height = this.$refs.easyLook.offsetHeight
           if (height <= 80) {
             this.isMoreLike = false
@@ -326,7 +322,7 @@ export default {
       if (this.likeFlag) {
         this.easylookList.unshift(this.agentInfo.agentName)
       } else {
-        this.easylookList = this.remove(this.easylookList, this.agentInfo.agentName)
+        this.easylookList = remove(this.easylookList, this.agentInfo.agentName)
       }
     },
     // 展开更多好看
@@ -350,7 +346,6 @@ export default {
     },
     // 评论输入框编辑
     inputHandler(commentContent) {
-      console.log(commentContent)
       this.commentContent = commentContent
     },
     // 取消评论
@@ -431,22 +426,22 @@ export default {
       return arr
     },
     // 删除数组中某个元素
-    remove(arr, val) {
-      for (var i = 0, len = arr.length; i < len; i++) {
-        if (arr[i] == val) {
-          if (i == 0) {
-            arr.shift()
-            return arr
-          } else if (i == len - 1) {
-            arr.pop()
-            return arr
-          } else {
-            arr.splice(i, 1)
-            return arr
-          }
-        }
-      }
-    },
+    // remove(arr, val) {
+    //   for (var i = 0, len = arr.length; i < len; i++) {
+    //     if (arr[i] == val) {
+    //       if (i == 0) {
+    //         arr.shift()
+    //         return arr
+    //       } else if (i == len - 1) {
+    //         arr.pop()
+    //         return arr
+    //       } else {
+    //         arr.splice(i, 1)
+    //         return arr
+    //       }
+    //     }
+    //   }
+    // },
     // 过滤评论(自己回复的评论前端处理,不取后台的数据)
     filterComment() {
       debugger
@@ -521,6 +516,19 @@ export default {
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
+    },
+    delHandler(){
+      this.$dialog.confirm({
+        title:'提示',
+        message:'是否确认删除?'
+      }).then(async () => {
+        const res = await cpInformationService.updateStatusByAgentId(this.info.agentId,this.info.id)
+        this.$toast('删除成功')
+        setTimeout(() => {
+          this.$router.push('/user/articles/historicalArticles?typeCode=2')
+        }, 1000);
+      })
+
     }
   },
   watch: {
