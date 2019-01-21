@@ -18,7 +18,10 @@
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
           <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
-        <div class="disclaimer-box" v-if="previewFlag">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 。 如有问题请点击 <span>举报反馈</span></div>
+        <div class="disclaimer-box" v-if="previewFlag">
+          免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 。 如有问题请点击
+          <span>举报反馈</span>
+        </div>
       </div>
     </div>
     <div class="recommend-house-container">
@@ -28,12 +31,7 @@
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
-    <van-actionsheet
-      v-model="delActionsheetShow"
-      :actions="delActions"
-      cancel-text="取消"
-      @select="onDelSelect"
-    />
+    <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect"/>
     <!-- 浮动栏 -->
     <div class="fixed-bar">
       <div class="left-operation">
@@ -52,12 +50,7 @@
       </div>
     </div>
     <!-- 楼盘选择 -->
-    <single-select-box
-      v-model="singleShow"
-      :maxSelect="countCompute"
-      :selected="selectedCompute"
-      @submit="selectSubmitHandler"
-    />
+    <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
     <!-- 帮助 -->
     <van-popup class="help-box" v-model="helpShow">
       <h5 class="help-title">用户帮助</h5>
@@ -65,9 +58,7 @@
       <p class="help-sub-title">任何模块均可点击进行编辑</p>
       <div class="help-content">
         <p class="help-content-line">1、成功选中后，会有高亮显示，无用信息可进行删除</p>
-        <p
-          class="help-content-line"
-        >2、不同的活动会带来不同的效果，简介漂亮的封面、适当的文字可以提升用户的点击率。当然，活动的周期和用户期待价值也会直接影响传播效果</p>
+        <p class="help-content-line">2、不同的活动会带来不同的效果，简介漂亮的封面、适当的文字可以提升用户的点击率。当然，活动的周期和用户期待价值也会直接影响传播效果</p>
         <p class="help-content-line">3、提炼导读摘要、文中适当发表精彩观点，有助于形成温度和亲切感、塑造专业度。</p>
         <p class="help-content-line">4、切记粗暴插入广告，容易影响自然分享的扩散</p>
         <p class="help-content-line">5、插入的文字勿用敏感性词语；</p>
@@ -152,13 +143,11 @@ export default {
       const res = await userService.getMyHouses(payload)
       this.recommendList = res.records
     },
-    restoreData(json){
+    restoreData(json) {
       try {
         let editData = JSON.parse(json)
-        if(editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
-      } catch (error) {
-        
-      }
+        if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
+      } catch (error) {}
     },
     // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
@@ -186,10 +175,18 @@ export default {
       e.dom.status = 'edit'
     },
     singleAddClickHandler() {
+      if (this.info.linkerCount < 1) {
+        this.$toast('暂无开通楼盘')
+        return
+      }
       this.target = 'inlayHouse'
       this.singleShow = true
     },
     multiAddClickHandler() {
+      if (this.recommendList.length >= this.info.linkerCount) {
+        this.$toast('暂无更多开通楼盘')
+        return
+      }
       this.target = 'multiHouse'
       this.singleShow = true
     },
@@ -298,8 +295,8 @@ export default {
     margin-bottom: 5px;
     > .discover-title {
       padding: 10px 15px;
-      padding-top:20px;
-      padding-bottom:17px;
+      padding-top: 20px;
+      padding-bottom: 17px;
       font-size: 22px;
       color: #333333;
       font-weight: 600;
@@ -317,22 +314,22 @@ export default {
           color: #445166;
         }
       }
-      .view-count{
+      .view-count {
         font-size: 14px;
       }
     }
     > .discover-detail-content {
       padding: 15px;
-      padding-top:30px;
+      padding-top: 30px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
       line-height: 28px;
-      >.disclaimer-box{
+      > .disclaimer-box {
         font-size: 14px;
-        color: #969EA8;
-        >span{
-          color:#445166;
+        color: #969ea8;
+        > span {
+          color: #445166;
         }
       }
       > .edit-houses-container {
@@ -370,8 +367,6 @@ export default {
         width: 80px;
         justify-content: center;
         align-items: center;
-
-      
 
         > .help-text {
           font-size: 10px;
