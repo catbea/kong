@@ -22,8 +22,8 @@
       </div>
     </div>
     <div class="register-bottom">
-      <!-- <div class="next-step" @click="registerHandler">注册</div> -->
-      <button class="next-step" @click="registerHandler" :disabled="clickDisabled">注册</button>
+      <div class="next-step" @click="registerHandler">注册</div>
+      <!-- <button class="next-step" @click="registerHandler" :disabled="clickDisabled">注册</button> -->
       <p class="protocol">注册代表您同意
         <router-link :to="route">{{registerAgreementName}}注册协议</router-link>
       </p>
@@ -129,6 +129,9 @@ export default {
       if (!checkStrType(this.name)) {
         return this.$toast('昵称只支持中文、英文和数字')
       }
+      if (this.clickDisabled) {
+        return
+      }
       this.register()
     },
     async queryByRegister(enterpriseId) {
@@ -157,13 +160,16 @@ export default {
         distributorId: this.distributorId
       }
       const result = await RegisterService.register(vo)
-      if (JSON.stringify(result) != '{}') {
+      console.log(result)
+      if (result.returnCode == 21103 || result.returnCode == 21105) {
+        this.clickDisabled = false
+        this.$toast(result.msg)
+      }else {
+        this.clickDisabled = true
         let params = {
           enterpriseId: this.enterpriseId
         }
-        this.clickDisabled = true
         this.$router.push({ path: '/register/step2', query: params })
-        // location.href = '/?cropId=ww8f6801ba5fd2a112'
       }
     }
   }
@@ -248,6 +254,7 @@ export default {
     font-weight: 400;
     color: #fff;
     padding: 10px 0;
+    border: 0;
   }
   .protocol {
     margin: 10px;
