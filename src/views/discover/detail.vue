@@ -104,9 +104,8 @@
         <i class="icon iconfont icon-me_opinion"></i>
         {{info&&info.belongeder === '' ? '编辑' : '更新编辑'}}
       </div>
-      <div class="tool-item" @click="collectHandler()">
-        <i
-          v-if="collectionStatus===1"
+      <div v-if="info&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
+        <i v-if="collectionStatus===1"
           style="color:#007AE6;"
           class="icon iconfont icon-Building_details_col"
         ></i>
