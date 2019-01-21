@@ -228,6 +228,7 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
+
       this.shareHandler()
     },
     // 楼盘信息处理
@@ -349,6 +350,7 @@ export default {
     },
     // 分享
     async shareHandler() {
+      console.log(this.shareData, 'shareData')
       await window.awHelper.wechatHelper.init()
       // this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)

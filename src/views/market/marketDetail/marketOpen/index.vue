@@ -222,8 +222,9 @@ export default {
         .then(() => {
           this.$router.replace('/market/' + this.linkerId)
         })
-        .catch(() => {
-          this.priceSurfacePayInfo.balanceAmount=this.priceSurfacePayInfo.balanceAmount-this.priceSurfacePayInfo.balancePay
+        .catch(async () => {
+          await this.getUserInfo()
+          this.priceSurfacePayInfo = Object.assign(this.priceSurfacePayInfo, { balanceAmount: this.userPrice })
         })
     },
 

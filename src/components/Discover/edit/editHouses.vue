@@ -1,6 +1,6 @@
 <template>
   <div class="edit-houses">
-    <div class="house-box" :class="!preview&&'box_border'" v-for="index in count" :key="index" >
+    <div class="house-box" :class="!preview&&'box_border'" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
         <estate-item :key="index" :showRules="false" :info="itemData(index-1)"/>
         <i class="icon iconfont icon-search_empty del-icon" v-if="!preview" @click.stop="delClickHandler(index-1)"/>
@@ -21,7 +21,7 @@
 import EstateItem from 'COMP/EstateItem'
 export default {
   components: {
-    EstateItem,
+    EstateItem
   },
   props: {
     count: { type: Number, default: 3 },
@@ -41,10 +41,15 @@ export default {
     addClickHandler() {
       this.$emit('click')
     },
-    itemData(index){
+    itemData(index) {
       let temp = this.currentData[index]
-      temp.city = '广州市 从化市'
-      temp.linkerTags = temp.condition
+      // if
+      // temp.city = '广州市 从化市'
+      if (!temp.linkerTags) {
+        let statusArr = ['热销中', '即将发售', '售罄']
+        temp.linkerTags = [statusArr[temp.saleStatus], ...temp.condition]
+      }
+
       return temp
     }
   },
