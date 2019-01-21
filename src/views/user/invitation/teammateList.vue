@@ -4,10 +4,11 @@
           <div class="teammateList-top" :style="{'backgroundImage':'url('+teammateListBackIcon+')'}">
             <img :src="couponIcon" class="teammateList-top-icon">
             <div class="teammateList-top-center">
-              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{registerRewardsPrice}}</span>元</p>
+              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{registerRewardsPrice | priceFormart}}</span>元</p>
               <p class="teammateList-top-num">已邀请：{{ registerRewardsTotal == 0 ? 0 : registerRewardsTotal}}人</p>
             </div>
           </div>
+          <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getregisterRewards">
           <div class="teammateList-center" v-for="(registerItem,key) in registerRewards" :key="key">
               <div class="teammateList-center-left">
                 <p class="teammateList-center-left-text">成功邀请用户</p>
@@ -17,7 +18,7 @@
                 <p class="teammateList-center-right-time">{{registerItem.rewardsTime | dateTimeFormatter(2,'/')}}</p>
               </div>
           </div>
-          
+          </van-list>
       </div>
   </div>
 </template>
@@ -28,24 +29,34 @@ export default {
   data() {
     return {
       active: [],
+      page: 1,
+      pageSize: 10,
+      loading: false,
+      finished: false,
       teammateListBackIcon: require('IMG/user/invitation/aw-banner@2x.png'),
       kaitBackIcon: require('IMG/user/invitation/aw-banner1@2x.png'),
       couponIcon: require('IMG/user/invitation/aw-coupon@2x.png'),
       registerRewards: [],
       registerRewardsTotal: 0,
+      registerRewardsPrice: 0,
       openRewardsTotal: 0
     }
   },
   mounted() {
-    this.getregisterRewards()
+    // this.getregisterRewards()
   },
   methods: {
     //邀请注册列表
     async getregisterRewards() {
-      const res = await userService.getregisterRewards()
-      this.registerRewardsPrice = res.price
-      this.registerRewardsTotal = res.count
-      this.registerRewards = res.list.records
+      const res = await userService.getregisterRewards(this.page, this.pageSize)
+      if(res.list.pages === 0) this.registerRewardsPrice = res.price
+      if(res.list.pages === 0) this.registerRewardsTotal = res.count
+      this.registerRewards = res.pages === 0 ? res.list.records : this.registerRewards.concat(res.list.records)
+      if (res.list.pages === 0 || this.page === res.list.pages) {
+        this.finished = true
+      }
+      this.page++
+      this.loading = false
     }
   }
 }

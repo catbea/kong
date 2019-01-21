@@ -75,7 +75,7 @@ export default {
     vipClickHandle() {
       this.$router.push('/user/myMember')
     },
-    initSelectedInfo() {
+    async initSelectedInfo() {
       let couponStr = ''
       let priceItem = this.priceList[this.marketOpenCache.currPriceListIndex]
       let balancePay = 0
@@ -83,6 +83,7 @@ export default {
       let submitPrice = priceItem.subscribeAmount
       let coupon = 0
 
+      await this.getUserInfo()
       if (this.marketOpenCache && this.marketOpenCache.currSelectedCoupon) {
         this.priceSurfacePayInfo = { balanceAmount: this.userPrice, balancePay: 0, coupon: 0 }
         let currCunpon = this.marketOpenCache.currSelectedCoupon
@@ -221,7 +222,9 @@ export default {
         .then(() => {
           this.$router.replace('/market/' + this.linkerId)
         })
-        .catch(() => {})
+        .catch(() => {
+          this.priceSurfacePayInfo.balanceAmount=this.priceSurfacePayInfo.balanceAmount-this.priceSurfacePayInfo.balancePay
+        })
     },
 
     async getMarketDescribeInfo() {
