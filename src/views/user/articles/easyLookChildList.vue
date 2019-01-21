@@ -2,7 +2,7 @@
   <div class="list-body">
     <div class="write-item-body" @click="enterDetail(itemInfo.id)">
       <div class="write-item-left">
-        <span class="article-title">{{itemInfo.title}}</span>
+        <span class="article-title">{{itemInfo.title | textOver(25)}}</span>
         <div class="label-view">
           <span class="label-text">原文章</span>
         </div>

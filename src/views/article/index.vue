@@ -472,6 +472,10 @@ export default {
         this.replayItem = replay
       }
       this.commentIndex = index
+      // 如果是评论则展开更多评论
+      if (type === 1) {
+        item.replayCount = item.discussVOS.length + 1
+      }
       // 隐藏菜单
       this.$store.commit('TABBAR',{show:false})
       this.showReplay = true
@@ -629,6 +633,11 @@ export default {
     } else {
       this.getCityArticle()
     }
+  },
+  beforeDestroy () {
+    // 缓存数据
+    
+    this.cacheDataFn ({ itemCode: this.classify, itemName: this.classifyName })
   }
 }
 </script>

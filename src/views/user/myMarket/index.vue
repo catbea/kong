@@ -133,6 +133,9 @@ export default {
     UserMarket,
     CloseMarket
   },
+  mounted () {
+  window.addEventListener('scroll', this.handleScroll)
+  },
   data: () => ({
     flag: false,
     screenNum: null,
@@ -244,6 +247,10 @@ export default {
     }
   },
   methods: {
+    handleScroll() {
+  var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+  console.log(scrollTop)
+   },
     screenHandle(index) {
       //筛选中更多等滚动条操作
       // this.screenNum = index
