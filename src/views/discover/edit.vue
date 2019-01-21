@@ -33,11 +33,11 @@
       <div class="left-operation">
         <div class @click="helpClickHandler">
           <i class="icon iconfont icon-write_help"></i>
-          帮助
+          <p>帮助</p>
         </div>
         <div class @click="resetClickHandler">
           <i class="icon iconfont icon-write_reset"></i>
-          重置
+          <p>重置</p>
         </div>
       </div>
       <div class="right-operation">
@@ -346,8 +346,9 @@ export default {
         flex: 1;
         transform: scale(0.8);
         > i {
-          font-size: 30px;
-          display: block;
+          margin-bottom: 3px;
+          font-size: 24px;
+          display: inline-block;
         }
       }
     }
