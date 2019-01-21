@@ -324,9 +324,6 @@ export default {
         border: 1px dashed #969ea8;
         margin-bottom: 5px;
       }
-      .edit-viewpoint-container{
-        height:140px;
-      }
     }
   }
   > .recommend-house-container {
