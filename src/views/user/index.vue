@@ -13,7 +13,7 @@
           <p class="grou1Icon-p">{{item.title}}</p>
         </div>
         <!-- 邀请有礼 -->
-        <div v-if="parseInt(userInfo.ifView)===0" class="head-img" @click="invitationHead">
+        <div v-if="parseInt(userInfo.ifView)===1" class="head-img" @click="invitationHead">
           <!-- <img :src="item.Icon"> -->
            <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-me_gift"></use>
