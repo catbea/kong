@@ -266,6 +266,8 @@ export default {
     margin-bottom: 5px;
     > .discover-title {
       padding: 10px 15px;
+      padding-top:20px;
+      padding-bottom:17px;
       font-size: 22px;
       color: #333333;
       font-weight: 600;
@@ -283,9 +285,13 @@ export default {
           color: #445166;
         }
       }
+      .view-count{
+        font-size: 14px;
+      }
     }
     > .discover-detail-content {
       padding: 15px;
+      padding-top:30px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
@@ -295,6 +301,9 @@ export default {
         background: rgba(150, 158, 168, 0.08);
         border: 1px dashed #969ea8;
         margin-bottom: 5px;
+      }
+      .edit-viewpoint-container{
+        height:140px;
       }
     }
   }

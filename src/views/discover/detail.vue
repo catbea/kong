@@ -220,6 +220,8 @@ export default {
   methods: {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
+      console.log(res,'该文章数据');
+      
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
@@ -575,6 +577,8 @@ export default {
     > .discover-viewpoint {
       border: 1px dashed #969ea8;
       margin: 20px 16px;
+      margin-bottom:5px;
+      margin-top:30px;
       padding: 16px;
       position: relative;
       box-sizing: border-box;

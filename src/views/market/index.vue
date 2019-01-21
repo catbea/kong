@@ -105,7 +105,6 @@ export default {
       param = Object.assign(param, _filters)
       param.city = this.selectedCity
       const res = await marketService.getHouseList(param)
-      console.log(res, '出来的数据')
 
       if (this.projectFilters.baseFilters) {
         //筛选时
@@ -114,7 +113,6 @@ export default {
           this.marketList = this.marketList.concat(res.records)
           if (res.records.length < 8) {
             //条数小于8时
-            console.log(res.records.length, '小与10了')
             this.haveData = false
             let arr = []
             for (let i = 0; i < this.marketList.length; i++) {
@@ -131,7 +129,6 @@ export default {
           this.page++
           this.loading = false
         } else {
-          console.log(res.records.length, '为0了')
           this.haveData = false
           let arr = []
           for (let i = 0; i < this.marketList.length; i++) {
@@ -186,7 +183,6 @@ export default {
       }
       const hotRes = await userService.getHotLinker(hotParams)
       this.hotResult = hotRes
-      console.log(hotRes, '热门数据')
     }
   }
 }
