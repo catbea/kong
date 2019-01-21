@@ -1,5 +1,5 @@
 <template>
-  <div class="user-mymarket-page">
+  <div class="user-mymarket-page" ref="viewBox">
     <master-market
       :swipeList="swipeList"
       @noRecommend="noRecommendHandle"
@@ -12,9 +12,10 @@
       <!-- 展示的楼盘 -->
       <div
         class="market-left"
+        :class=""
         v-show="myMarketShow"
       >
-        <div v-show="showMarketListCount>=showFilterLimit">
+        <div v-show="showMarketListCount>=showFilterLimit" class="fixed" :class="{isFixed:searchBar}">
           <search
             :conf="searchInfo"
             v-model="showProjectName"
@@ -24,8 +25,8 @@
             v-model="showProjectFilters"
             :local="this.selectedCity"
             :height="'16rem'"
-            @screen="screenHandle"
-            @sor="sortHandle"
+           @screen="screenHandle"
+           @sor="sortHandle"
           ></screen>
         </div>
         <van-list
@@ -134,9 +135,21 @@ export default {
     CloseMarket
   },
   mounted () {
-  window.addEventListener('scroll', this.handleScroll)
+  // window.addEventListener('scroll', this.handleScroll)
+  // console.log(window,'windo数据');
+  var _this=this
+  // document.querySelector('#app') = this.$refs.viewBox
+  document.querySelector(".router-view").addEventListener('scroll', () => {
+   if(document.querySelector(".router-view").scrollTop>332){
+     this.searchBar=true
+     }else{
+       this.searchBar=false
+     }
+  console.log(document.querySelector(".router-view").scrollTop)
+}, false)
   },
   data: () => ({
+    searchBar:false,//是否吸顶
     flag: false,
     screenNum: null,
     stickNum: 0, //置顶个数
@@ -608,6 +621,12 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
+  // .fixed {
+  //   position: fixed;
+  //   width: 100%;
+  //   background: #ffffff;
+  //   z-index: 3;
+  // }
   .screen {
     overflow: hidden;
     height: 580px;
@@ -673,4 +692,11 @@ export default {
     height: 44px;
   }
 }
+// .isFixed{
+//     position:fixed;
+//     width:100%;
+//     background-color:#Fff;
+//     top:0;
+//     z-index:999;
+//   }
 </style>

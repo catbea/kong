@@ -4,7 +4,7 @@
     <div class="top-container">
       <h5>数据中心</h5>
       <div class="bg_img msg-box" :style="{backgroundImage:'url(' + msgIcon + ')'}" @click="goMessage">
-        <div class="new-msg-num"  v-if="data.newMsg<=99&&data.newMsg>0">{{data&&data.newMsg | countLimit}}</div>
+        <div class="new-msg-num"  v-if="data&&data.newMsg<=99&&data.newMsg>0">{{data&&data.newMsg | countLimit}}</div>
         <div class="icon iconfont icon-more new-msg-num" style="font-size:16px;" v-if="data&&data.newMsg>99"></div>
       </div>
     </div>
@@ -37,10 +37,10 @@
       </div>
       <div class="van-hairline--bottom bottom-line"></div>
       <div class="carousel-container">
-        <div class="marquee-box">
-          <marquee :itemHeight="`${50/37.5}rem`" v-if="data.simpleDynamic.length>0">
-            <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
-              <avatar :avatar="item.avatarUrl"></avatar>
+        <div class="carousel-swipe">
+          <van-swipe :autoplay="3000" vertical :show-indicators="false">
+            <van-swipe-item v-for="(item,index) in data.simpleDynamic" :key="index">
+              <img class="avatar" :src="item.avatarUrl" />
               <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
               <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(6)}}{{item.timeStr}}浏览了你的{{item.markedWords | textOver(9)}}</p>
               <p class="house-tips" v-if="item.dynamicType == 2">
@@ -48,24 +48,39 @@
                 <span>{{item.markedWords | textOver(9)}}</span>
               </p>
               <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName | textOver(6)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(9)}}</p>
+            </van-swipe-item>
+          </van-swipe>
+        </div>
+        
+        <!-- <div class="marquee-box">
+          <marquee :itemHeight="`${50/37.5}rem`" v-if="data.simpleDynamic.length>0">
+            <marquee-item class="carousel-item" v-for="(item,index) in data.simpleDynamic" :key="index">
+              <avatar :avatar="item.avatarUrl"></avatar> -->
+              <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
+              <!-- <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(6)}}{{item.timeStr}}浏览了你的{{item.markedWords | textOver(9)}}</p>
+              <p class="house-tips" v-if="item.dynamicType == 2">
+                {{item.clientName | textOver(6)}}{{item.timeStr}}浏览楼盘
+                <span>{{item.markedWords | textOver(9)}}</span>
+              </p>
+              <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName | textOver(6)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(9)}}</p>
             </marquee-item>
           </marquee>
-        </div>
+        </div> -->
       </div>
       <div v-if="data.simpleDynamic.length===0" class="no-carousel-tips">体验AI拓客新模式,连接客户更简单</div>
     </div>
   </div>
 </template>
 <script>
-import Marquee from 'COMP/Marquee'
-import MarqueeItem from 'COMP/MarqueeItem'
-import Avatar from 'COMP/Avatar'
+// import Marquee from 'COMP/Marquee'
+// import MarqueeItem from 'COMP/MarqueeItem'
+// import Avatar from 'COMP/Avatar'
 export default {
-  components: {
-    Marquee,
-    MarqueeItem,
-    Avatar
-  },
+  // components: {
+  //   Marquee,
+  //   MarqueeItem,
+  //   Avatar
+  // },
   props: {
     data: { type: Object },
     info: { type: Object }
@@ -235,6 +250,35 @@ export default {
             }
           }
         }
+      }
+      .carousel-swipe{
+        height: 30px;
+        overflow: hidden;
+        margin: 10px 0;
+        .van-swipe{
+          font-size: 12px;
+          height: 30px;
+          padding: 0 10px;
+          .van-swipe-item{
+            height: 24px;
+            display: flex;
+            .avatar{
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+              margin-right: 5px;
+            }
+            p{
+              flex: 1;
+              height: 24px;
+              line-height: 24px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+          
+        } 
       }
     }
     > .no-carousel-tips {

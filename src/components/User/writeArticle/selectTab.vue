@@ -1,10 +1,10 @@
 <template>
   <div class="tab-body">
-    <div class="share-type" :style="{'fontSize':shareFontSize}" @click="onClickShare">分享</div>
-    <div class="edit-type" :style="{'fontSize':editFontSize}" @click="onClickEdit">编辑</div>
+    <div class="share-type" :style="{'fontSize':shareFontSize,'fontWeight':shareStyle}" @click="onClickShare">分享</div>
+    <div class="edit-type" :style="{'fontSize':editFontSize,'fontWeight':editStyle}" @click="onClickEdit">编辑</div>
     <div
       class="collection-type"
-      :style="{'fontSize':collectionFontSize}"
+      :style="{'fontSize':collectionFontSize,'fontWeight':collectionStyle}"
       @click="onClickCollection"
     >收藏</div>
   </div>
@@ -30,6 +30,9 @@ export default {
       this.shareFontSize = '24px'
       this.editFontSize = '14px'
       this.collectionFontSize = '14px'
+      this.shareStyle='bold'
+      this.editStyle='normal'
+      this.collectionStyle='normal'
 
       this.$emit('clickShare', '2')
     },
@@ -38,12 +41,20 @@ export default {
       this.editFontSize = '24px'
       this.collectionFontSize = '14px'
 
+      this.shareStyle='normal'
+      this.editStyle='bold'
+      this.collectionStyle='normal'
+
       this.$emit('clickEdit', '3')
     },
     onClickCollection() {
       this.shareFontSize = '14px'
       this.editFontSize = '14px'
       this.collectionFontSize = '24px'
+
+      this.shareStyle='normal'
+      this.editStyle='normal'
+      this.collectionStyle='bold'
 
       this.$emit('clickCollection', '1')
     }
@@ -53,6 +64,7 @@ export default {
     return {
       shareFontSize: '24px',
       editFontSize: '14px',
+      editStyle:'bold',
       collectionFontSize: '14px'
     }
   }
@@ -68,7 +80,7 @@ export default {
   align-items: flex-end;
 
   > .share-type {
-    margin-left: 26px;
+    margin-left: 0px;
     margin-bottom: 12px;
     color: #333333;
   }

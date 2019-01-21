@@ -118,7 +118,6 @@ export default {
       this.page = 1
       this.projectName = name
       this.projectList = []
-      this.getLinkerList()
     },
     // 加载数据方法 整合加载更多和重新搜索
     async getLinkerList() {
@@ -208,7 +207,6 @@ export default {
       this.singleShow = val
       if (val) {
         this.reset()
-        this.getLinkerList()
       }
     },
     singleShow(val) {
