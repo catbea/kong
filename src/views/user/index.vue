@@ -21,6 +21,14 @@
           <p class="grou1Icon-p">邀请有礼</p>
           <p class="politeness">有礼</p>
         </div>
+        <!-- 拓客关系 -->
+        <div class="relation head-img" @click="relationHandle">
+          <!-- <img :src="item.Icon"> -->
+           <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-mi_data1"></use>
+           </svg>
+          <p class="grou1Icon-p">拓客关系</p>
+        </div>
       </div>
     </div>
     <div class="business-status-tow">
