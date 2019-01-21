@@ -18,7 +18,7 @@
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
           <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
-        <div class="disclaimer-box" v-if="previewFlag">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 </div>
+        <div class="disclaimer-box" v-if="previewFlag">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 。 如有问题请点击 <span>举报反馈</span></div>
       </div>
     </div>
     <div class="recommend-house-container">
@@ -230,7 +230,7 @@ export default {
       }
       let res, targetid
       // 存在这个字段,说明是再次编辑
-      if (this.info.belongeder !== '0') {
+      if (this.info.belongeder !== '') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = this.info.id
       } else {
@@ -331,6 +331,9 @@ export default {
       >.disclaimer-box{
         font-size: 14px;
         color: #969EA8;
+        >span{
+          color:#445166;
+        }
       }
       > .edit-houses-container {
         height: 140px;

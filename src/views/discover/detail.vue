@@ -31,7 +31,9 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter(3, '/')}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span
+          class="disclaimer-text"
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击 </span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -48,7 +50,10 @@
           </div>
         </div>
         <div class="easy-look-list">
-          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
+          <span
+            ref="easyLook"
+            :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'"
+          >{{easylookList && easylookList.join('、')}}</span>
           <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
             <van-icon name="arrow-down"/>
           </div>
@@ -59,12 +64,24 @@
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
-              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
+            <div
+              class="comment-list"
+              v-for="(item, index) in commentList"
+              :key="index"
+              @click="commentSenderClickHandler(item)"
+            >
+              <div
+                class="bg_img"
+                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+                style="width:40px;height:40px;border-radius:50%;"
+              ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                  <span
+                    v-if="item.receiverName"
+                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                  >回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -85,10 +102,14 @@
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
-        编辑
+        {{info&&info.belongeder === '' ? '编辑' : '更新编辑'}}
       </div>
       <div class="tool-item" @click="collectHandler()">
-        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
+        <i
+          v-if="collectionStatus===1"
+          style="color:#007AE6;"
+          class="icon iconfont icon-Building_details_col"
+        ></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
@@ -96,10 +117,26 @@
         <i class="icon iconfont icon-Building_details_for"></i>
         分享
       </div>
+      <div class="tool-item" v-if="info&&(info.agentId === info.belongeder)" @click="delHandler">
+        <i class="icon iconfont icon-delete"></i>
+        删除
+      </div>
     </div>
-    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
+    <van-actionsheet
+      v-model="isShowDeleteComment"
+      :actions="actions"
+      cancel-text="取消"
+      @select="onSelect"
+      @cancel="onCancel"
+    ></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
-    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+    <comment-alert
+      :show.sync="showCommentAlert"
+      :info="commentInfo"
+      @cancel="cancelHandler"
+      @publish="publishHandler"
+      @input="inputHandler"
+    ></comment-alert>
   </div>
 </template>
 <script>
@@ -108,10 +145,12 @@ import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
 import { uuid } from '@/utils/tool'
+import remove from 'lodash/remove'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
+import cpInformationService from 'SERVICE/cpInformationService'
 export default {
   components: {
     TitleBar,
@@ -163,16 +202,13 @@ export default {
     isPass: ''
   }),
   created() {
-    console.log(window.innerHeight)
     this.contentHeight = window.innerHeight - 72
-    console.log(this.contentHeight)
     window.awHelper.wechatHelper.wx.showOptionMenu()
     this.id = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = uuid()
-    console.log(this.shareUuid)
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.guidanceShow = true
     } else {
@@ -188,15 +224,11 @@ export default {
   methods: {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
-      console.log(res,'该文章数据');
-      
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
       this.likeFlag = res.likeFlag
       this.isPass = res.status
-
-      console.log(res.status)
 
       this.agentInfo = {
         agentId: this.info.agentId,
@@ -217,8 +249,6 @@ export default {
       this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
-
-      console.log(this.virtualDom)
     },
     // 好看列表
     async getLikeList() {
@@ -229,7 +259,6 @@ export default {
           this.easylookList.push(item.userName)
         }
         this.$nextTick(() => {
-          console.log(this.$refs.easyLook.offsetHeight)
           let height = this.$refs.easyLook.offsetHeight
           if (height <= 80) {
             this.isMoreLike = false
@@ -293,7 +322,7 @@ export default {
       if (this.likeFlag) {
         this.easylookList.unshift(this.agentInfo.agentName)
       } else {
-        this.easylookList = this.remove(this.easylookList, this.agentInfo.agentName)
+        this.easylookList = remove(this.easylookList, this.agentInfo.agentName)
       }
     },
     // 展开更多好看
@@ -317,7 +346,6 @@ export default {
     },
     // 评论输入框编辑
     inputHandler(commentContent) {
-      console.log(commentContent)
       this.commentContent = commentContent
     },
     // 取消评论
@@ -398,22 +426,22 @@ export default {
       return arr
     },
     // 删除数组中某个元素
-    remove(arr, val) {
-      for (var i = 0, len = arr.length; i < len; i++) {
-        if (arr[i] == val) {
-          if (i == 0) {
-            arr.shift()
-            return arr
-          } else if (i == len - 1) {
-            arr.pop()
-            return arr
-          } else {
-            arr.splice(i, 1)
-            return arr
-          }
-        }
-      }
-    },
+    // remove(arr, val) {
+    //   for (var i = 0, len = arr.length; i < len; i++) {
+    //     if (arr[i] == val) {
+    //       if (i == 0) {
+    //         arr.shift()
+    //         return arr
+    //       } else if (i == len - 1) {
+    //         arr.pop()
+    //         return arr
+    //       } else {
+    //         arr.splice(i, 1)
+    //         return arr
+    //       }
+    //     }
+    //   }
+    // },
     // 过滤评论(自己回复的评论前端处理,不取后台的数据)
     filterComment() {
       debugger
@@ -488,6 +516,19 @@ export default {
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
+    },
+    delHandler(){
+      this.$dialog.confirm({
+        title:'提示',
+        message:'是否确认删除?'
+      }).then(async () => {
+        const res = await cpInformationService.updateStatusByAgentId(this.info.agentId,this.info.id)
+        this.$toast('删除成功')
+        setTimeout(() => {
+          this.$router.push('/user/articles/historicalArticles?typeCode=2')
+        }, 1000);
+      })
+
     }
   },
   watch: {
@@ -502,6 +543,7 @@ export default {
 .discover-detail-page {
   box-sizing: border-box;
   background-color: #f7f9fa;
+  -webkit-overflow-scrolling: touch;
   > .discover-detail-container {
     background-color: #fff;
     padding-bottom: 20px;
@@ -545,8 +587,8 @@ export default {
     > .discover-viewpoint {
       border: 1px dashed #969ea8;
       margin: 20px 16px;
-      margin-bottom:5px;
-      margin-top:30px;
+      margin-bottom: 5px;
+      margin-top: 30px;
       padding: 16px;
       position: relative;
       box-sizing: border-box;
