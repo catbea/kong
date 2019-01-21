@@ -117,7 +117,7 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
-      this.restoreData = this.info.editData
+      this.restoreData(this.info.editData)
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
@@ -141,6 +141,7 @@ export default {
     },
     restoreData(json){
       try {
+        debugger
         let editData = JSON.parse(json)
         if(editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
       } catch (error) {
@@ -197,9 +198,6 @@ export default {
         }
       } else {
         this.previewFlag = true
-        // for (let temp of this.renderDom) {
-        //   temp.status = 'view'
-        // }
       }
     },
     // 底部栏保存按钮点击
