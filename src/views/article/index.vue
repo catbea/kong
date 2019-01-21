@@ -648,6 +648,16 @@ export default {
       document.querySelector('body').addEventListener('touchstart', function(e) {
         that.startY = e.changedTouches[0].pageY
       })
+      document.querySelector('body').addEventListener('touchmove', function(e) {
+        that.endY = e.changedTouches[0].pageY
+        let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
+        let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
+        let clientHeight = document.querySelector('.article-list').clientHeight  // 可视高度
+        let endStatus = scrollHeight <=  scrollTop + clientHeight // 是否滚到底了
+        if (that.finished && endStatus && that.startY - that.endY > 10) {
+          e.preventDefault()
+        }
+      }, { passive: false })
       document.querySelector('body').addEventListener('touchend', function(e) {
         that.endY = e.changedTouches[0].pageY
         if (that.finished && that.startY - that.endY > 10) {
