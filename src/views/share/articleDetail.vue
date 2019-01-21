@@ -244,6 +244,7 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
+      console.log(this.shareData, 'shareData')
       this.shareHandler()
     },
     // 楼盘信息处理
