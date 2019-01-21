@@ -86,7 +86,6 @@ export default {
   },
 
   created() {
-
     this.typeCode = this.$store.getters.currMyWriteTab
 
     if (this.typeCode == '3') {
@@ -103,7 +102,6 @@ export default {
       this.current = 1
       this.myWriteList = []
       this.onLoad()
-
       this.$store.commit(types.MYWRITE_TAB, '2')
     },
 
@@ -174,21 +172,26 @@ export default {
       //获取选中的位置
       let selectType = this.typeCode
       const res = await userService.queryWriteArticleList(selectType, this.current, '')
-      if (res.records.length > 0) {
-        this.haveData = true
 
-        this.myWriteList = this.myWriteList.concat(res.records)
-        if (res.pages === 0 || this.current === res.pages) {
+      if (this.current === 1) {
+        this.myWriteList = []
+
+        if (res.records.length > 0) {
+          this.haveData = true
+
+          this.myWriteList = this.myWriteList.concat(res.records)
+          if (res.pages === 0 || this.current === res.pages) {
+            this.finished = true
+          }
+          this.current++
+          this.loading = false
+        } else {
+          if (this.current == 1) {
+            this.haveData = false
+          }
+          this.loading = false
           this.finished = true
         }
-        this.current++
-        this.loading = false
-      } else {
-        if (this.current == 1) {
-          this.haveData = false
-        }
-        this.loading = false
-        this.finished = true
       }
     }
   }
