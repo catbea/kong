@@ -102,7 +102,7 @@
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
-        {{info&&info.belongeder === '0' ? '编辑' : '更新编辑'}}
+        {{info&&info.belongeder === '' ? '编辑' : '更新编辑'}}
       </div>
       <div class="tool-item" @click="collectHandler()">
         <i
