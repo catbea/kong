@@ -478,7 +478,7 @@ export default {
     },
     // 编辑按钮点击处理
     editClickHandler() {
-      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
+      this.$router.replace({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
     },
     // 收藏文章按钮点击
     async collectHandler() {
