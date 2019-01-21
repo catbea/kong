@@ -193,6 +193,7 @@ export default {
       if (this.clickDisabled) {
         return
       }
+      this.clickDisabled = true
       this.register()
     },
     async register() {
