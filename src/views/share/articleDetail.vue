@@ -86,9 +86,7 @@
         </div>
       </div>
     </div>
-    <div class="share-image">
-      <img :src="shareImage" />
-    </div>
+
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
@@ -106,6 +104,7 @@
     <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
+    <div class="share-image"> <img :src="shareImage" /> </div>
   </div>
 </template>
 <script>
