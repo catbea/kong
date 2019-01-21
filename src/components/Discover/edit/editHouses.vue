@@ -43,8 +43,7 @@ export default {
     },
     itemData(index) {
       let temp = this.currentData[index]
-      // if
-      // temp.city = '广州市 从化市'
+      if(!temp.city) temp.city = temp.site
       if (!temp.linkerTags) {
         let statusArr = ['热销中', '即将发售', '售罄']
         temp.linkerTags = [statusArr[temp.saleStatus], ...temp.condition]
