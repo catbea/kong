@@ -95,6 +95,8 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
+    relationHandle(){//分享插件
+    },
     enterSharePage() {
       this.$router.push({ path: '/user/share-card', query: { agentId: this.userInfo.agentId } })
     },
