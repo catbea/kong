@@ -72,6 +72,14 @@
         <div class="more-info" @click="moreInfoHandler">更多信息</div>
       </div>
     </div>
+    <!-- 楼盘分享关系图谱 -->
+    <div class="marker-relation-box">
+      <p>楼盘分享关系图谱</p>
+      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}">
+        <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
+        <li>{{info.linkerName}}</li>
+      </ol>
+    </div>
     <!-- 户型 -->
     <div class="house-type" v-if="info.houseTypeList&&info.houseTypeList.length>0">
       <title-bar :conf="typeTitleConf"/>
@@ -179,6 +187,7 @@ export default {
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
       siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
+      drawingImg: require('IMG/marketDetail/drawing@2x.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -574,6 +583,38 @@ export default {
       }
     }
   }
+ > .marker-relation-box{
+   padding:40px 0 0 15px;
+   p{
+     font-size:20px;
+     font-family:PingFangSC-Medium;
+     font-weight:600;
+   }
+   ol{
+     position: relative;
+     margin-top:12px;
+     width:343px;
+     height:114px;
+     li:nth-child(1){
+       border-radius:50%;
+       position:absolute;
+      top:48px;
+      left:153px;
+       width:23px;
+       height:23px;
+     }
+     li:nth-child(2){
+       text-align: center;
+       position:absolute;
+      top:73px;
+      left:135px;
+       width:60px;
+      font-size:8px;
+      font-family:PingFangSC-Semibold;
+      font-weight:600;
+     }
+   }
+ }
   > .house-type {
     margin-top: 28px;
     .type-swipe-content {
