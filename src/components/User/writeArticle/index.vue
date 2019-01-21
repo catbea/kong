@@ -14,8 +14,17 @@
             v-if="selectType=='1'"
           >收藏时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
           <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
-          <span class="collection-text" v-if="selectType=='1'"  @click.stop="cancelCollect(item.id,index)">取消收藏</span>
-          <img class="collection-img" v-if="selectType=='1'" :src="cancelCollection" @click.stop="cancelCollect(item.id,index)">
+          <span
+            class="collection-text"
+            v-if="selectType=='1'"
+            @click.stop="cancelCollect(item.id,index)"
+          >取消收藏</span>
+          <img
+            class="collection-img"
+            v-if="selectType=='1'"
+            :src="cancelCollection"
+            @click.stop="cancelCollect(item.id,index)"
+          >
         </div>
       </div>
       <div class="write-item-right">
@@ -79,6 +88,9 @@ export default {
       font-size: 16px;
       width: 208px;
       color: #333333;
+      line-height: 24px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
     }
 
     > .article-label {
@@ -110,11 +122,11 @@ export default {
 
   > .write-item-right {
     margin-top: 5px;
-    width: 31%;
+    width: 120px;
     height: 90px;
 
     > .article-img {
-      width: 110px;
+      width: 120px;
       height: 90px;
       border-radius: 6px;
     }

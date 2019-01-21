@@ -342,7 +342,7 @@ export default {
     > .right-operation {
       flex: 1;
       display: flex;
-      font-size: 14px;
+      font-size: 14px; 
       > div {
         flex: 1;
         width: 88px;
