@@ -232,6 +232,7 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
+      this.shareImage = this.info.image
       document.title = this.info.title
       this.shareHandler()
     },
