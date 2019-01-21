@@ -277,7 +277,9 @@ export default {
       dialogY: '', // 弹框位置
       activeLikeItem: '', // 点击好看名称
       nodataStatus: false,
-      updateLikeItem: '' //点赞数据
+      updateLikeItem: '', //点赞数据
+      startY: '',
+      endY: ''
     }
   },
   watch: {
@@ -348,7 +350,9 @@ export default {
     },
     // 获取文章列表
     async getArticleList(sortType) {
-      this.showLoading = true
+      if (!this.articleData.length) {
+        this.showLoading = true
+      }
       this.nodataStatus = false
       if (!sortType) {
         sortType = this.classifyName === '推荐' ? 1 : 2
@@ -365,7 +369,11 @@ export default {
         let records = result.records.map(item => {
           return Object.assign(item, { likeCount: 15, replayCount: 5 })
         })
-        this.articleData.push(...records)
+        if (this.current === 1) {
+          this.articleData = records
+        } else {
+          this.articleData.push(...records)
+        }
         this.current += 1
         // 缓存数据
         this.cacheDataFn ({ itemCode: this.classify, itemName: this.classifyName })
@@ -409,7 +417,7 @@ export default {
         this.classify = item.itemCode
         this.classifyName = item.itemName
         this.current = 1
-        this.articleData = []
+        // this.articleData = []
         this.getArticleList()
       }
     },
@@ -595,7 +603,7 @@ export default {
     // 下拉刷新
     async onRefresh() {
       this.current = 1
-      this.articleData = []
+      // this.articleData = []
       this.showNewArticle = false
       await this.getArticleList()
       this.isLoading = false
@@ -633,10 +641,20 @@ export default {
     } else {
       this.getCityArticle()
     }
+    // 防止ios弹簧效果
+    let that = this
+    document.querySelector('body').addEventListener('touchstart', function(e) {
+      that.startY = e.changedTouches[0].pageY
+    })
+    document.querySelector('body').addEventListener('touchend', function(e) {
+      that.endY = e.changedTouches[0].pageY
+      if (that.finished && that.startY - that.endY > 10) {
+        e.preventDefault()
+      }
+    })
   },
   beforeDestroy () {
     // 缓存数据
-    
     this.cacheDataFn ({ itemCode: this.classify, itemName: this.classifyName })
   }
 }
@@ -1017,7 +1035,7 @@ export default {
     top: 0;
     right: 0;
     bottom: 50px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     z-index: 5;
     .van-loading {
       display: inline-block;

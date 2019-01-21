@@ -52,7 +52,6 @@ export default {
 </script>
 <style lang="less">
 .edit-viewpoint-container {
-  // height: 90px;
   margin: 0 -5px 5px;
   font-size: 14px;
   color: #969ea8;

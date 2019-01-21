@@ -26,7 +26,7 @@
       </van-cell>
       <van-cell class="cell-item user-signature" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature"/>
     </van-cell-group>
-    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu"/>
+    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu" :code="cityCode"/>
   </div>
 </template>
 <script>
@@ -34,15 +34,19 @@ import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 import areaSelect from 'COMP/AreaSelect/index'
 import userService from 'SERVICE/userService'
+import { fullArea } from '@/utils/fullArea'
 export default {
   components: {
     areaSelect
   },
-  created() {},
+  created() {
+    this.fullArea = fullArea
+  },
   data() {
     return {
       userEditIcon: require('IMG/user/collection/Article@2x.png'),
-      isOpen: false
+      isOpen: false,
+      fullArea: ''
     }
   },
   methods: {
@@ -102,6 +106,17 @@ export default {
 
     newLabelList() {
       return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
+    },
+    cityCode () {
+      let codes = Object.keys(this.fullArea.city_list)
+      let cityList =  Object.values(this.fullArea.city_list)
+      let i = ''
+      cityList.forEach((el, index) => {
+        if (el === this.userInfo.majorCity) {
+          return (i = index)
+        }
+      })
+      return codes[i]
     }
   },
   watch: {

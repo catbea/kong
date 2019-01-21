@@ -15,38 +15,48 @@
       <div class="discover-detail-content">
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
-          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
+          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
+          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
       </div>
     </div>
     <div class="recommend-house-container">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
-        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" @delete="multiHouseDelHandler"/>
+        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
-    <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect"/>
+    <van-actionsheet
+      v-model="delActionsheetShow"
+      :actions="delActions"
+      cancel-text="取消"
+      @select="onDelSelect"
+    />
     <!-- 浮动栏 -->
     <div class="fixed-bar">
       <div class="left-operation">
-        <div class @click="helpClickHandler">
-          <i class="icon iconfont icon-write_help"></i>
+        <div class="left-first" @click="helpClickHandler">
+          <i class="icon iconfont icon-write_help" :style="{'width':'24px','height':'24px'}"></i>
           帮助
         </div>
-        <div class @click="resetClickHandler">
-          <i class="icon iconfont icon-write_reset"></i>
+        <div class="left-second" @click="resetClickHandler">
+          <i class="icon iconfont icon-write_reset" :style="{'width':'24px','height':'24px'}"></i>
           重置
         </div>
       </div>
       <div class="right-operation">
-        <div class="preview-btn" @click="previewClickHandler">预览</div>
+        <div class="preview-btn" @click="previewClickHandler">{{previewFlag? '编辑':'预览'}}</div>
         <div class="save-btn" @click="saveClickHandler">保存并分享</div>
       </div>
     </div>
     <!-- 楼盘选择 -->
-    <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
+    <single-select-box
+      v-model="singleShow"
+      :maxSelect="countCompute"
+      :selected="selectedCompute"
+      @submit="selectSubmitHandler"
+    />
     <!-- 帮助 -->
     <van-popup class="help-box" v-model="helpShow">
       <h5 class="help-title">用户帮助</h5>
@@ -54,7 +64,9 @@
       <p class="help-sub-title">任何模块均可点击进行编辑</p>
       <div class="help-content">
         <p class="help-content-line">1、成功选中后，会有高亮显示，无用信息可进行删除</p>
-        <p class="help-content-line">2、不同的活动会带来不同的效果，简介漂亮的封面、适当的文字可以提升用户的点击率。当然，活动的周期和用户期待价值也会直接影响传播效果</p>
+        <p
+          class="help-content-line"
+        >2、不同的活动会带来不同的效果，简介漂亮的封面、适当的文字可以提升用户的点击率。当然，活动的周期和用户期待价值也会直接影响传播效果</p>
         <p class="help-content-line">3、提炼导读摘要、文中适当发表精彩观点，有助于形成温度和亲切感、塑造专业度。</p>
         <p class="help-content-line">4、切记粗暴插入广告，容易影响自然分享的扩散</p>
         <p class="help-content-line">5、插入的文字勿用敏感性词语；</p>
@@ -117,6 +129,7 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
+      this.restoreData(this.info.editData)
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
@@ -137,6 +150,14 @@ export default {
       }
       const res = await userService.getMyHouses(payload)
       this.recommendList = res.records
+    },
+    restoreData(json){
+      try {
+        let editData = JSON.parse(json)
+        if(editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
+      } catch (error) {
+        
+      }
     },
     // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
@@ -188,9 +209,6 @@ export default {
         }
       } else {
         this.previewFlag = true
-        for (let temp of this.renderDom) {
-          temp.status = 'view'
-        }
       }
     },
     // 底部栏保存按钮点击
@@ -315,9 +333,6 @@ export default {
         border: 1px dashed #969ea8;
         margin-bottom: 5px;
       }
-      .edit-viewpoint-container{
-        height:140px;
-      }
     }
   }
   > .recommend-house-container {
@@ -339,19 +354,57 @@ export default {
       flex: 1;
       font-size: 12px;
       display: flex;
-      > div {
-        flex: 1;
+
+      > .left-first {
+        display: flex;
+        flex-direction: column;
         transform: scale(0.8);
-        > i {
-          font-size: 30px;
-          display: block;
+        width: 80px;
+        justify-content: center;
+        align-items: center;
+
+      
+
+        > .help-text {
+          font-size: 10px;
+          font-size: 10px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(102, 102, 102, 1);
+          line-height: 14px;
         }
       }
+
+      > .left-second {
+        display: flex;
+        flex-direction: column;
+        transform: scale(0.8);
+        width: 80px;
+        justify-content: center;
+        align-items: center;
+
+        > .reset-text {
+          font-size: 10px;
+          font-size: 10px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(102, 102, 102, 1);
+          line-height: 14px;
+        }
+      }
+      // > div {
+      //   flex: 1;
+      //   transform: scale(0.8);
+      //   > i {
+      //     font-size: 30px;
+      //     display: block;
+      //   }
+      // }
     }
     > .right-operation {
       flex: 1;
       display: flex;
-      font-size: 14px; 
+      font-size: 14px;
       > div {
         flex: 1;
         width: 88px;
