@@ -629,6 +629,10 @@ export default {
     } else {
       this.getCityArticle()
     }
+  },
+  beforeDestroy () {
+    // 缓存数据
+    this.cacheDataFn ({ itemCode: this.classify, itemName: this.classifyName })
   }
 }
 </script>
