@@ -86,6 +86,7 @@
         </div>
       </div>
     </div>
+
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
@@ -103,6 +104,7 @@
     <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
+    <div class="share-image"> <img :src="shareImage" /> </div>
   </div>
 </template>
 <script>
@@ -128,6 +130,7 @@ export default {
     Paragraph
   },
   data: () => ({
+    shareImage: '',
     infoId: '', //文章的id
     city: '',
     info: null,
@@ -228,7 +231,8 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-
+      this.shareImage = this.info.image
+      document.title = this.info.title
       this.shareHandler()
     },
     // 楼盘信息处理
@@ -365,6 +369,9 @@ export default {
 }
 </script>
 <style lang="less">
+.share-image {
+  display: none;
+}
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {

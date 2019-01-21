@@ -13,13 +13,21 @@
           <p class="grou1Icon-p">{{item.title}}</p>
         </div>
         <!-- 邀请有礼 -->
-        <div v-if="parseInt(userInfo.ifView)===0" class="head-img" @click="invitationHead">
+        <div v-if="parseInt(userInfo.ifView)===1" class="head-img" @click="invitationHead">
           <!-- <img :src="item.Icon"> -->
            <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-me_gift"></use>
            </svg>
           <p class="grou1Icon-p">邀请有礼</p>
           <p class="politeness">有礼</p>
+        </div>
+        <!-- 拓客关系 -->
+        <div class="relation head-img" @click="relationHandle">
+          <!-- <img :src="item.Icon"> -->
+           <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-mi_data1"></use>
+           </svg>
+          <p class="grou1Icon-p">拓客关系</p>
         </div>
       </div>
     </div>
@@ -87,6 +95,8 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
+    relationHandle(){//分享插件
+    },
     enterSharePage() {
       this.$router.push({ path: '/user/share-card', query: { agentId: this.userInfo.agentId } })
     },
