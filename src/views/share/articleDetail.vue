@@ -228,7 +228,7 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-
+      document.title = this.info.title
       this.shareHandler()
     },
     // 楼盘信息处理
