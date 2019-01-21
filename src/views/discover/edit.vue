@@ -38,7 +38,7 @@
     <div class="fixed-bar">
       <div class="left-operation">
         <div class="left-first" @click="helpClickHandler">
-          <i class="icon iconfont icon-write_help" style="fontSize:24px;margin-bottom:3px"></i>
+          <i class="icon iconfont icon-write_help" style="fontSize:26px;margin-bottom:3px"></i>
           帮助
         </div>
         <div class="left-second" @click="resetClickHandler">
