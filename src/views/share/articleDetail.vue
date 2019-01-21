@@ -86,6 +86,9 @@
         </div>
       </div>
     </div>
+    <div class="share-image">
+      <img :src="shareImage" />
+    </div>
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
@@ -128,6 +131,7 @@ export default {
     Paragraph
   },
   data: () => ({
+    shareImage: '',
     infoId: '', //文章的id
     city: '',
     info: null,
@@ -365,6 +369,9 @@ export default {
 }
 </script>
 <style lang="less">
+.share-image {
+  display: none;
+}
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {
