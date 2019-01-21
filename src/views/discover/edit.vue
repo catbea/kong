@@ -38,11 +38,11 @@
     <div class="fixed-bar">
       <div class="left-operation">
         <div class="left-first" @click="helpClickHandler">
-          <i class="icon iconfont icon-write_help" :style="{'width':'24px','height':'24px'}"></i>
+          <i class="icon iconfont icon-write_help" style="fontSize:26px;margin-bottom:3px"></i>
           帮助
         </div>
         <div class="left-second" @click="resetClickHandler">
-          <i class="icon iconfont icon-write_reset" :style="{'width':'24px','height':'24px'}"></i>
+          <i class="icon iconfont icon-write_reset" style="fontSize:24px;margin-bottom:3px"></i>
           重置
         </div>
       </div>
