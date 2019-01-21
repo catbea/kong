@@ -254,10 +254,11 @@ export default {
       .carousel-swipe{
         height: 30px;
         overflow: hidden;
+        margin: 10px 0;
         .van-swipe{
           font-size: 12px;
           height: 30px;
-          
+          padding: 0 10px;
           .van-swipe-item{
             height: 24px;
             display: flex;
