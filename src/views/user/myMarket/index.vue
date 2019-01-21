@@ -1,5 +1,5 @@
 <template>
-  <div class="user-mymarket-page">
+  <div class="user-mymarket-page" ref="viewBox">
     <master-market
       :swipeList="swipeList"
       @noRecommend="noRecommendHandle"
@@ -134,7 +134,13 @@ export default {
     CloseMarket
   },
   mounted () {
-  window.addEventListener('scroll', this.handleScroll)
+  // window.addEventListener('scroll', this.handleScroll)
+  // console.log(window,'windo数据');
+  var _this=this
+  this.box = this.$refs.viewBox
+  this.box.addEventListener('scroll', () => {
+  console.log(_this.$refs.viewBox.scrollTop)
+}, false)
   },
   data: () => ({
     flag: false,
