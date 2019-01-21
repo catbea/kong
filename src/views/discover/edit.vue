@@ -141,6 +141,11 @@ export default {
         saleStatus: 0
       }
       const res = await userService.getMyHouses(payload)
+      let statusArr = ['热销中', '即将发售', '售罄']
+      for (let temp of res.records) {
+        temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
+        this.recommendList.push(temp)
+      }
       this.recommendList = res.records
     },
     restoreData(json) {
