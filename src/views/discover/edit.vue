@@ -15,15 +15,15 @@
       <div class="discover-detail-content">
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
-          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
+          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
+          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
       </div>
     </div>
     <div class="recommend-house-container">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
-        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" @delete="multiHouseDelHandler"/>
+        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div class="right-operation">
-        <div class="preview-btn" @click="previewClickHandler">预览</div>
+        <div class="preview-btn" @click="previewClickHandler">{{previewFlag? '编辑':'预览'}}</div>
         <div class="save-btn" @click="saveClickHandler">保存并分享</div>
       </div>
     </div>
@@ -188,9 +188,9 @@ export default {
         }
       } else {
         this.previewFlag = true
-        for (let temp of this.renderDom) {
-          temp.status = 'view'
-        }
+        // for (let temp of this.renderDom) {
+        //   temp.status = 'view'
+        // }
       }
     },
     // 底部栏保存按钮点击

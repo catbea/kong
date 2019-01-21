@@ -1,8 +1,8 @@
 <template>
-  <div class="edit-paragraph">
-    <div class="paragraph-container" v-html="info.text"></div>
-    <i v-if="this.info.status === 'edit'" class="icon iconfont icon-search_empty del-icon"  @click.stop="delClickHandler"/>
-    <div v-if="this.info.status === 'del'" class="repeal-del-container">
+  <div class="edit-paragraph" :class="preview?'':'box_border'">
+    <div class="paragraph-container" v-if="!(preview && this.info.status === 'del')" v-html="info.text"></div>
+    <i v-if="this.info.status === 'edit' && !preview" class="icon iconfont icon-search_empty del-icon" @click.stop="delClickHandler"/>
+    <div v-if="this.info.status === 'del'&& !preview" class="repeal-del-container">
       <div class="del-btn" @click="repealClickHandler">撤销删除</div>
     </div>
   </div>
@@ -10,7 +10,8 @@
 <script>
 export default {
   props: {
-    info: { type: Object }
+    info: { type: Object },
+    preview: { type: Boolean, default: false }
   },
   methods: {
     // 点击删除
@@ -27,7 +28,7 @@ export default {
 <style lang="less" scoped>
 .edit-paragraph {
   position: relative;
-  border: 1px dashed #969ea8;
+  // border: 1px dashed #969ea8;
   margin: 0 -5px 5px;
   padding: 5px;
   text-indent: unset;
