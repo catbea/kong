@@ -21,16 +21,16 @@ class CpInformationService {
 
   /**
    * 文章修改
-   * @param {*} sourceInfoId 源文章id
+   * @param {*} id 源文章id
    * @param {*} editData 经纪人文章编辑json数据，包括评论，插入楼盘，名片等内容 ,
    * @param {*} content 文章内容
    */
-  updateArticleForAgent(sourceInfoId, editData, content) {
+  updateArticleForAgent(id, editData, content) {
     return xhr({
       method: 'post',
       url: '/cpInformation/updateArticleForAgent',
       body: {
-        sourceInfoId,
+        id,
         editData,
         content
       }
