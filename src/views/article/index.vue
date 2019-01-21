@@ -642,16 +642,19 @@ export default {
       this.getCityArticle()
     }
     // 防止ios弹簧效果
-    let that = this
-    document.querySelector('body').addEventListener('touchstart', function(e) {
-      that.startY = e.changedTouches[0].pageY
-    })
-    document.querySelector('body').addEventListener('touchend', function(e) {
-      that.endY = e.changedTouches[0].pageY
-      if (that.finished && that.startY - that.endY > 10) {
-        e.preventDefault()
-      }
-    })
+    let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    if (isiOS) {
+      let that = this
+      document.querySelector('body').addEventListener('touchstart', function(e) {
+        that.startY = e.changedTouches[0].pageY
+      })
+      document.querySelector('body').addEventListener('touchend', function(e) {
+        that.endY = e.changedTouches[0].pageY
+        if (that.finished && that.startY - that.endY > 10) {
+          e.preventDefault()
+        }
+      }, { passive: false })
+    }
   },
   beforeDestroy () {
     // 缓存数据

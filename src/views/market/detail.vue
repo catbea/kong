@@ -75,11 +75,18 @@
     <!-- 楼盘分享关系图谱 -->
     <div class="marker-relation-box">
       <p>楼盘分享关系图谱</p>
-      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}">
+      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}" @click="relationShow=true">
         <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
         <li>{{info.linkerName}}</li>
       </ol>
     </div>
+    <van-popup v-model="relationShow">
+      <div class="relationName">
+        <p class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="relationShow=false"></p>
+        <p>查看楼盘分享关系详情 请联系400-0904-99</p>
+        <p @click="relationHandle">立即联系</p>
+      </div>
+    </van-popup>
     <!-- 户型 -->
     <div class="house-type" v-if="info.houseTypeList&&info.houseTypeList.length>0">
       <title-bar :conf="typeTitleConf"/>
@@ -188,6 +195,7 @@ export default {
       siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       drawingImg: require('IMG/marketDetail/drawing@2x.png'),
+      closeImg: require('IMG/marketDetail/close@2x.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -195,6 +203,7 @@ export default {
       tagGroupArr: [],
       mapTab: 0,
       openStatus: false,
+      relationShow:false,//立即联系
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -252,6 +261,10 @@ export default {
     }
   },
   methods: {
+    relationHandle(){//立即联系弹窗
+        window.location.href = 'tel://400-0904-99'
+        this.relationShow=false
+    },
     async getMarketDetailPhotoInfo() {
       //判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
@@ -820,6 +833,49 @@ export default {
   .show-enter,
   .show-leave-to {
     opacity: 0;
+  }
+}
+.van-popup{
+  border-radius:12px;
+  width:311px;
+  height:214px;
+  // padding-top:45px;
+  .relationName{
+  width:311px;
+  height:214px;
+  background:rgba(255,255,255,1);
+  border-radius:12px;
+  position: relative;
+  p:nth-child(1){
+    width:12px;
+    height:12px;
+    position:absolute;
+    right:15px;
+    top:15px;
+  }
+  p:nth-child(2){
+    width:248px;
+    font-size:22px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    padding-top:45px;
+    margin:0px 25px 32px 32px;
+    text-align:center;
+  }
+  p:nth-child(3){
+    text-align: center;
+    margin-left:32px;
+    width:247px;
+    height:44px;
+    background:rgba(0,122,230,1);
+    border-radius:6px;
+    font-size:16px;
+    font-family:PingFangSC-Regular;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:44px;
+  }
   }
 }
 .marketShareHint {
