@@ -91,7 +91,7 @@
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
         <div class="tool-left">
-          <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
+          <!-- <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar> -->
           <div class="tool-content">
             <div class="tool-name">{{agentInfo&&agentInfo.agentName}}</div>
             <div class="tool-institution">{{agentInfo&&agentInfo.institutionName}}</div>
@@ -104,7 +104,7 @@
     <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
-    <div class="share-image"> <img :src="shareImage" /> </div>
+    <div class="share-image"> <img :src="shareImage" > </div>
   </div>
 </template>
 <script>
