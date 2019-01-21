@@ -10,6 +10,10 @@ export default (msg, url) => {
       return true
     case 31102:
       return true
+    case 21105: // 注册
+      return true
+    case 21103: // 验证码错误
+      return true
     case 10028: // 文章被下架或被删除--待处理
       return
     default:
