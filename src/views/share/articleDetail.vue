@@ -6,7 +6,7 @@
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
         <div class="reprint-source">
-          <span>分享源自 </span>
+          <span>分享源自</span>
           <span style="color:#445166">AW大师写一写</span>
         </div>
       </div>
@@ -19,7 +19,7 @@
             <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
             <div class="viewpoint-name">
               <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
-              <span style="color:#969EA8;font-size:14px"> 点评</span>
+              <span style="color:#969EA8;font-size:14px">点评</span>
             </div>
           </div>
         </div>
@@ -37,10 +37,8 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span
-          class="disclaimer-text"
-        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler"> 举报反馈</span>
+        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
       <div class="easy-look-container" v-if="easylookList.length>0" @click="popHandler(1)">
@@ -50,9 +48,7 @@
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
         </div>
-        <div class="easy-look-list">
-          {{easylookList && easylookList.join('、')}}
-        </div>
+        <div class="easy-look-list">{{easylookList && easylookList.join('、')}}</div>
       </div>
       <!-- 评论 -->
       <div class="comment-container">
@@ -60,24 +56,12 @@
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-              <div
-                class="bg_img"
-                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
-                style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"
-              ></div>
+              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
-                  <span
-                    class="comment-name"
-                  >{{item.senderName}}</span>
-                  <span
-                    v-if="item.receiverName"
-                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
-                  >回复</span>
-                  <span
-                    class="comment-reply"
-                    v-if="item.receiverName"
-                  >{{item.receiverName}}</span>
+                  <span class="comment-name">{{item.senderName}}</span>
+                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                  <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
                 <div></div>
@@ -141,7 +125,7 @@ export default {
     CardDialog,
     MarketDialog,
     ArticleDialog,
-    Paragraph,
+    Paragraph
   },
   data: () => ({
     infoId: '', //文章的id
@@ -150,7 +134,7 @@ export default {
     editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
     inlayHouseInfo: null, // 文章插入楼盘信息
     agentInfo: null,
-    
+
     titleComments: {
       title: '精彩评论',
       linkText: '',
@@ -166,7 +150,7 @@ export default {
       linkText: '',
       link: ''
     },
-    
+
     guidanceShow: false,
     shareData: null,
     renderDom: [],
@@ -228,8 +212,8 @@ export default {
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
-      console.log(virtualDom);
-      
+      console.log(virtualDom)
+
       for (let dom of virtualDom.children) {
         this.renderDom.push({
           text: dom.innerHTML,
@@ -249,7 +233,8 @@ export default {
     // 楼盘信息处理
     async handleLinkerInfo() {
       // 查询插入楼盘的信息
-      if (this.editData) { // 编辑文章分享
+      if (this.editData) {
+        // 编辑文章分享
         if (this.editData.inlayHouse) {
           const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
           this.inlayHouseInfo = res[0]
@@ -257,11 +242,10 @@ export default {
         if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
           this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
         }
-        
-      }else { // 原文章分享
+      } else {
+        // 原文章分享
         this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
       }
-      
     },
     // 查询楼盘信息
     async getLinkerInfo(agentId, enterpriseId, shareUuid, linkerIds) {
@@ -324,7 +308,7 @@ export default {
       const result = await discoverService.queryArticleQrcodeForH5(this.agentId, infoId, this.enterpriseId)
       this.articleQrInfo = result
     },
-    
+
     // 弹出框
     popHandler(val, item) {
       if (val == 1) {
