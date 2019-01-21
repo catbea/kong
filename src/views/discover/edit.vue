@@ -117,6 +117,7 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
+      this.restoreData = this.info.editData
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
@@ -137,6 +138,14 @@ export default {
       }
       const res = await userService.getMyHouses(payload)
       this.recommendList = res.records
+    },
+    restoreData(json){
+      try {
+        let editData = JSON.parse(json)
+        if(editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
+      } catch (error) {
+        
+      }
     },
     // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
