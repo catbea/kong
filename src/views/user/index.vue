@@ -25,7 +25,7 @@
         <div class="relation head-img" @click="relationHandle">
           <!-- <img :src="item.Icon"> -->
            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-mi_data"></use>
+              <use xlink:href="#icon-mi_data1"></use>
            </svg>
           <p class="grou1Icon-p">拓客关系</p>
         </div>

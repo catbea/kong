@@ -498,7 +498,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .discover-detail-page {
   box-sizing: border-box;
   background-color: #f7f9fa;
