@@ -71,7 +71,7 @@
                 </span>
               </div>
             </div>
-            <div class="like-cnt">
+            <div class="like-cnt" v-if="item.praiseAndShareUserVOS.length">
                 <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                   <span class="icon">
                     <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
@@ -295,11 +295,21 @@ export default {
           return
         }
       }
+    },
+    articleData () {
+      if (this.articleData.length) {
+        this.$nextTick(function() {
+          let top = window.sessionStorage.getItem('scrollTop') || 0
+          document.querySelector('.article-list').scrollTop = top
+        })
+      }
     }
   },
   async created() {
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
+    this.classifyName = storage.itemName
+    this.classify = storage.itemCode
     this.changeClassify(storage)
   },
   computed: {
@@ -389,6 +399,9 @@ export default {
     changeClassify(item, e) {
       if (e && e.currentTarget) {
         e.currentTarget.scrollIntoView({behavior: 'smooth', block: 'end'})
+      }
+      if (item.itemName !== this.classifyName) {
+        window.sessionStorage.setItem('scrollTop', 0)
       }
       window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
@@ -574,6 +587,8 @@ export default {
     },
     // 跳转文章详情
     goInfo(item) {
+      window.sessionStorage.setItem('scrollTop', document.querySelector('.article-list').scrollTop)
+      item.scanNum += 1
       let articleId = item.articleId
       let area = this.classifyName === this.userInfo.majorCity ? this.userInfo.majorCity : '全国'
       let agentId = this.userInfo.agentId
@@ -642,29 +657,27 @@ export default {
       this.getCityArticle()
     }
     // 防止ios弹簧效果
-    let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-    if (isiOS) {
-      let that = this
-      document.querySelector('body').addEventListener('touchstart', function(e) {
-        that.startY = e.changedTouches[0].pageY
-      })
-      document.querySelector('body').addEventListener('touchmove', function(e) {
-        that.endY = e.changedTouches[0].pageY
-        let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
-        let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-        let clientHeight = document.querySelector('.article-list').clientHeight  // 可视高度
-        let endStatus = scrollHeight <=  scrollTop + clientHeight // 是否滚到底了
-        if (that.finished && endStatus && that.startY - that.endY > 10) {
-          e.preventDefault()
-        }
-      }, { passive: false })
-      document.querySelector('body').addEventListener('touchend', function(e) {
-        that.endY = e.changedTouches[0].pageY
-        if (that.finished && that.startY - that.endY > 10) {
-          e.preventDefault()
-        }
-      }, { passive: false })
-    }
+    let that = this
+    document.querySelector('body').addEventListener('touchstart', function(e) {
+      that.startY = e.changedTouches[0].pageY
+    })
+    document.querySelector('body').addEventListener('touchmove', function(e) {
+      that.endY = e.changedTouches[0].pageY
+      let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
+      let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
+      let clientHeight = document.querySelector('.article-list').clientHeight  // 可视高度
+      let endStatus = scrollHeight <=  scrollTop + clientHeight // 是否滚到底了
+      if (that.finished && endStatus && that.startY - that.endY > 10) {
+        e.preventDefault()
+      }
+    }, { passive: false })
+    document.querySelector('body').addEventListener('touchend', function(e) {
+      that.endY = e.changedTouches[0].pageY
+      if (that.finished && that.startY - that.endY > 10) {
+        e.preventDefault()
+      }
+    }, { passive: false })
+    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
   },
   beforeDestroy () {
     // 缓存数据
@@ -694,6 +707,11 @@ export default {
       overflow-x: auto;
       overflow-y: hidden;
       white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      &::-webkit-scrollbar{
+        background-color:transparent;
+        display: none;
+      }
       span {
         display: inline-block;
         margin-right: 32px;
@@ -771,6 +789,7 @@ export default {
             -webkit-box-orient: vertical;
             padding-top: 10px;
             line-height:1.25;
+            min-height: 50px;
           }
           .attr {
             padding-top:26px;
@@ -889,7 +908,6 @@ export default {
             display: block;
           }
           .like-box {
-            margin-bottom: 10px;
             .list {
               .name {
                 margin: 0 0 5px 0;
@@ -901,6 +919,7 @@ export default {
             }
           }
           .comment-box {
+            margin-top: 10px;
             font-size: 14px;
             .comment-item {
               margin-bottom: 5px;

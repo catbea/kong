@@ -91,7 +91,8 @@
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
         <div class="tool-left">
-          <!-- <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar> -->
+          <div class="share-image"> <img :src="shareImage" > </div>
+          <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
           <div class="tool-content">
             <div class="tool-name">{{agentInfo&&agentInfo.agentName}}</div>
             <div class="tool-institution">{{agentInfo&&agentInfo.institutionName}}</div>
@@ -104,7 +105,7 @@
     <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
-    <div class="share-image"> <img :src="shareImage" > </div>
+    
   </div>
 </template>
 <script>
@@ -355,7 +356,15 @@ export default {
     // 分享
     async shareHandler() {
       console.log(this.shareData, 'shareData')
-      await window.awHelper.wechatHelper.init()
+      // await window.awHelper.wechatHelper.init()
+      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {//分享点进去，没有签名信息，从新签名
+        try {
+          await window.awHelper.wechatHelper.init()
+        } catch (e) {
+          console.log('[error:window.awHelper.wechatHelper]')
+        }
+      }
+
       // this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
     }
