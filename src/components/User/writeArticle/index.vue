@@ -13,7 +13,7 @@
             class="share-time"
             v-if="selectType=='1'"
           >收藏时间：{{item.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
-          <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+          <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
           <span
             class="collection-text"
             v-if="selectType=='1'"

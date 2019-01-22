@@ -26,7 +26,10 @@ export default [
   {
     path: '/discover/edit/:id/:city',
     name: 'discover-edit',
-    component: resolve => require(['@/views/discover/edit.vue'], resolve)
+    component: resolve => require(['@/views/discover/edit.vue'], resolve),
+    meta: {
+      title: '写一写'
+    }
   },
   {
     path: '/discover/reportFeedback',

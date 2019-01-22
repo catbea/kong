@@ -2,14 +2,25 @@
   <!-- 1-收藏，2-分享，3-编辑 -->
   <div class="my-write-body">
     <div class="search-body">
-      <select-tab
-        @clickShare="clickShare"
-        @clickEdit="clickEdit"
-        @clickCollection="clickCollection"
-        :toSelectTap="typeCode"
-      ></select-tab>
+      <div class="tab-body">
+        <div
+          class="share-type"
+          :style="{'fontSize':shareFontSize,'fontWeight':shareStyle}"
+          @click="clickShare('2')"
+        >分享</div>
+        <div
+          class="edit-type"
+          :style="{'fontSize':editFontSize,'fontWeight':editStyle}"
+          @click="clickEdit('3')"
+        >编辑</div>
+        <div
+          class="collection-type"
+          :style="{'fontSize':collectionFontSize,'fontWeight':collectionStyle}"
+          @click="clickCollection('1')"
+        >收藏</div>
+      </div>
     </div>
-    <div class="list-result" v-if="typeCode=='1'">
+    <div class="list-result">
       <van-list
         v-model="loading"
         :finished="finished"
@@ -21,32 +32,8 @@
           :selectType="typeCode"
           :dataArray="myWriteList"
           @cancelCollect="cancelCollect"
-          @enterDetail="collectionDetail"
+          @enterDetail="enterDetail"
         ></write-article>
-      </van-list>
-      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
-    </div>
-    <div class="list-result" v-if="typeCode=='2'">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-        v-if="haveData"
-      >
-        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
-      </van-list>
-      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
-    </div>
-    <div class="list-result" v-if="typeCode=='3'">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-        v-if="haveData"
-      >
-        <write-article :selectType="typeCode" :dataArray="myWriteList" @enterDetail="enterDetail"></write-article>
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
@@ -88,12 +75,14 @@ export default {
   created() {
     this.typeCode = this.$store.getters.currMyWriteTab
 
+    console.log(this.typeCode)
+
     if (this.typeCode == '3') {
-      this.clickEdit('3')
+      this.selectEditTap()
     } else if (this.typeCode == '2') {
-      this.clickShare('2')
+      this.selectShareTap()
     } else if (this.typeCode == '1') {
-      this.clickCollection('1')
+      this.selectCoolectionTap()
     }
   },
   methods: {
@@ -103,6 +92,8 @@ export default {
       this.myWriteList = []
       this.onLoad()
       this.$store.commit(types.MYWRITE_TAB, '2')
+
+      this.selectShareTap()
     },
 
     clickEdit(val) {
@@ -111,6 +102,8 @@ export default {
       this.myWriteList = []
       this.onLoad()
       this.$store.commit(types.MYWRITE_TAB, '3')
+
+      this.selectEditTap()
     },
 
     clickCollection(val) {
@@ -119,6 +112,36 @@ export default {
       this.myWriteList = []
       this.onLoad()
       this.$store.commit(types.MYWRITE_TAB, '1')
+
+      this.selectCoolectionTap()
+    },
+
+    //改变tab分享样式
+    selectShareTap() {
+      this.shareFontSize = '24px'
+      this.editFontSize = '14px'
+      this.collectionFontSize = '14px'
+      this.shareStyle = 'bold'
+      this.editStyle = 'normal'
+      this.collectionStyle = 'normal'
+    },
+    //改变tab编辑样式
+    selectEditTap() {
+      this.shareFontSize = '14px'
+      this.editFontSize = '24px'
+      this.collectionFontSize = '14px'
+      this.shareStyle = 'normal'
+      this.editStyle = 'bold'
+      this.collectionStyle = 'normal'
+    },
+    //改变tab收藏样式
+    selectCoolectionTap() {
+      this.shareFontSize = '14px'
+      this.editFontSize = '14px'
+      this.collectionFontSize = '24px'
+      this.shareStyle = 'normal'
+      this.editStyle = 'normal'
+      this.collectionStyle = 'bold'
     },
 
     cancelCollect(val) {
@@ -154,12 +177,11 @@ export default {
     },
 
     enterDetail(val) {
-      // this.$router.push({ name: 'analysis'})
-      this.$router.push({ name: 'easyLookChildList', query: val })
-    },
-
-    collectionDetail(val) {
-      this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val.id, city: '全国' } })
+      if (this.typeCode == '1') {
+        this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val.id, city: '全国' } })
+      } else {
+        this.$router.push({ name: 'easyLookChildList', query: val })
+      }
     },
 
     getCurrentType() {
@@ -173,25 +195,21 @@ export default {
       let selectType = this.typeCode
       const res = await userService.queryWriteArticleList(selectType, this.current, '')
 
-      if (this.current === 1) {
-        this.myWriteList = []
+      if (res.records.length > 0) {
+        this.haveData = true
 
-        if (res.records.length > 0) {
-          this.haveData = true
-
-          this.myWriteList = this.myWriteList.concat(res.records)
-          if (res.pages === 0 || this.current === res.pages) {
-            this.finished = true
-          }
-          this.current++
-          this.loading = false
-        } else {
-          if (this.current == 1) {
-            this.haveData = false
-          }
-          this.loading = false
+        this.myWriteList = this.myWriteList.concat(res.records)
+        if (res.pages === 0 || this.current === res.pages) {
           this.finished = true
         }
+        this.current++
+        this.loading = false
+      } else {
+        if (this.current == 1) {
+          this.haveData = false
+        }
+        this.loading = false
+        this.finished = true
       }
     }
   }
@@ -211,6 +229,32 @@ export default {
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
+
+    > .tab-body {
+      width: 100%;
+      height: 54px;
+      background: #ffffff;
+      display: flex;
+      align-items: flex-end;
+
+      > .share-type {
+        margin-left: 0px;
+        margin-bottom: 12px;
+        color: #333333;
+      }
+
+      > .edit-type {
+        margin-left: 22px;
+        margin-bottom: 12px;
+        color: #333333;
+      }
+
+      > .collection-type {
+        margin-left: 22px;
+        margin-bottom: 12px;
+        color: #333333;
+      }
+    }
   }
 
   > .list-result {
