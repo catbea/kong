@@ -8,7 +8,7 @@
       </li>
       <li class="bg_img sort" @click="sortHandle" :style="{'backgroundImage':'url('+(sortFlage?sortColorImg:sortImg)+')'}"></li>
     </ul>
-    <div class="choose-container" @click="coverClickHandler">
+    <div class="van-hairline--top choose-container" @click="coverClickHandler">
       <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @activeHandle="areaColorHandle" @checkedText="areaStrChange"></area-filter>
       <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice" @activeHandle="priceColorHandle" @checkedText="priceStrChange"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @activeHandle="popularityColorHandle" @checkedText="popularityStrChange"></popularity-filter>
@@ -102,6 +102,7 @@ export default {
     },
     itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
+      this.sortFlage = false
       this.$emit('screen', val.index)
     },
     coverClickHandler() {

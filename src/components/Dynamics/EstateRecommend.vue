@@ -45,13 +45,13 @@ export default {
     width: 345px;
     height: 125px;
     margin: 0 15px;
-    border-radius: 6px;
+    border-radius:15px;
   }
   > .recommend-info {
     position: absolute;
     width: 100%;
     top: 70px;
-    left:43px;
+    left:30px;
     > .desc-box {
       color: #fff;
       .title {

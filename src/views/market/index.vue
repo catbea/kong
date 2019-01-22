@@ -202,10 +202,11 @@ export default {
     position: relative;
     width: 375px;
     height: 44px;
+    padding:7px 0;
     > .search-comp {
       width: 345px;
       height: 30px;
-      margin: 10px 50px 7px 10px;
+      margin: 0px 50px 0px 10px;
     }
     > .location-icon {
       position: absolute;
