@@ -9,11 +9,11 @@
         <span
           class="time-view"
           v-if="itemInfo.selectType=='2'"
-        >分享时间 {{itemInfo.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+        >分享时间 {{itemInfo.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
         <span
           class="time-view"
           v-if="itemInfo.selectType=='3'"
-        >编辑时间 {{itemInfo.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+        >编辑时间 {{itemInfo.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
       </div>
       <div class="write-item-right">
         <img class="article-img" :src="itemInfo.image">
