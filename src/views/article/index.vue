@@ -467,7 +467,7 @@ export default {
         let r = item.filter(element => element.userId !== this.userInfo.agentId)
         this.articleData[index].praiseAndShareUserVOS = r
       } else {
-        this.articleData[index].praiseAndShareUserVOS.unshift({
+        this.articleData[index].praiseAndShareUserVOS.push({
           operationTime: +new Date(),
           userId: this.userInfo.agentId,
           userName: this.userInfo.name,
@@ -557,7 +557,7 @@ export default {
           senderSource: 0,
           type: type
         }
-        this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex + 1, 0, data)
+        this.articleData[this.commentIndex].discussVOS.push(data)
         this.hideReplayFn()
       }
     },
