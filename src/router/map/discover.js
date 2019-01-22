@@ -15,7 +15,7 @@ export default [
     name: 'discover-detail',
     component: resolve => require(['@/views/discover/detail.vue'], resolve),
     meta: {
-      title: '写一写'
+      title: 'AW大师写一写',
     }
   },
   {
