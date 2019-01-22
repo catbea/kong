@@ -92,7 +92,7 @@ export default {
     async commitInfo(data) {
       const result = await articleService.articleAnalysis(data)
 
-      if (result.returnCode == '31100') {
+      if (result.returnCode == '31100'||result.returnCode == '10500') {
         this.showLoading = 'none'
         this.analysisText = '解析失败'
         this.title = '获取失败'
@@ -112,7 +112,8 @@ export default {
             // on close
             this.cancelClooection(val)
           })
-      } else {
+        }
+       else {
         this.articleId = result.articleId
         this.title = result.title
         this.source = result.source

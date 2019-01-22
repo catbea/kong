@@ -138,6 +138,7 @@ export default {
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
         margin-top: -8px;
+        font-family:PingFangSC-Regular;
       }
       p:nth-child(2) {
         font-size: 24px;
@@ -146,7 +147,7 @@ export default {
         color: rgba(51, 51, 51, 1);
         line-height: 36px;
         margin: 4px 0 4px 0;
-        font-family: DIN-Medium;
+        font-family:PingFangSC-Regular;
       }
       .price-desc {
         width: 104px;
