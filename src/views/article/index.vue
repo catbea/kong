@@ -467,7 +467,7 @@ export default {
         let r = item.filter(element => element.userId !== this.userInfo.agentId)
         this.articleData[index].praiseAndShareUserVOS = r
       } else {
-        this.articleData[index].praiseAndShareUserVOS.unshift({
+        this.articleData[index].praiseAndShareUserVOS.push({
           operationTime: +new Date(),
           userId: this.userInfo.agentId,
           userName: this.userInfo.name,
@@ -491,10 +491,7 @@ export default {
         this.replayItem = replay
       }
       this.commentIndex = index
-      // 如果是评论则展开更多评论
-      if (type === 1) {
-        item.replayCount = item.discussVOS.length + 1
-      }
+      
       // 隐藏菜单
       this.$store.commit('TABBAR', { show: false })
       this.showReplay = true
@@ -557,7 +554,9 @@ export default {
           senderSource: 0,
           type: type
         }
-        this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex + 1, 0, data)
+        this.articleData[this.commentIndex].discussVOS.push(data)
+        // 如果是评论则展开更多评论
+        this.articleData[this.commentIndex].replayCount = this.articleData[this.commentIndex].discussVOS.length + 1
         this.hideReplayFn()
       }
     },
