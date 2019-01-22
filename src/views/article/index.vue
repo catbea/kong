@@ -702,6 +702,11 @@ export default {
       function(e) {
         e.preventDefault()
       },{ passive: false })
+      document.querySelector('.submenu').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
     document.querySelector('.tab-bar').addEventListener(
     'touchmove',
     function(e) {

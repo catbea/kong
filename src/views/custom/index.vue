@@ -100,6 +100,11 @@ export default {
   }),
   mounted() {
     this.getLinker()
+    document.querySelector('.sort-container').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
   },
   methods: {
     goactivitDetaily() {

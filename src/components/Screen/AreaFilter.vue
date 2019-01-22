@@ -27,6 +27,9 @@ export default {
     }
     if (this.parent) this.list = Object.assign(this.list, getChildren(this.parent))
   },
+  mounted() {
+    
+  },
   methods: {
     active(item) {
       this.checked = item
