@@ -691,6 +691,11 @@ export default {
       },
       { passive: false }
     )
+    document.querySelector('.replay').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
     // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
   },
   beforeDestroy() {

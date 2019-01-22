@@ -370,7 +370,7 @@ export default {
     },
     // 全景点击
     ifPanoramaClickHandler() {
-      window.location.href = this.info.linkerUrl
+      window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
     },
     competeOpenStatus() {
       this.openStatus = this.info.openStatus == 0
