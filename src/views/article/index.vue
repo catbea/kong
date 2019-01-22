@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length">
+    <div class="article-list" v-if="articleData.length" :class="{'bottom': !articleData[articleData.length-1].discussVOS.length}">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index" :class="{'noborder': index === articleData.length-1}">
@@ -804,8 +804,11 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
-    padding-bottom: 50px;
+    padding-bottom: 40px;
     padding-top: 5px;
+    &.bottom{
+      padding-bottom: 70px;
+    }
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
