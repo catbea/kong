@@ -776,6 +776,7 @@ export default {
     overflow-y: auto;
     z-index: 1;
     padding-bottom: 50px;
+    padding-top: 5px;
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
