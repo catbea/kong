@@ -53,9 +53,6 @@ export default [
     component: resolve => require(['@/views/discover/newlyAdded/analysis.vue'], resolve),
     meta: {
       title: '文章数据爬取',
-      tabbar: {
-        show: true
-      }
     }
   }
 ]

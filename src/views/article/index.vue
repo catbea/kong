@@ -21,7 +21,7 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length">
+    <div class="article-list" v-if="articleData.length" :class="{'bottom': !articleData[articleData.length-1].discussVOS.length}">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
           <div class="article-item" v-for="(item,index) in articleData" :key="index" :class="{'noborder': index === articleData.length-1}">
@@ -189,6 +189,7 @@
             maxlength="140"
             v-model="replayCnt"
             :style="{'text-indent': (replayStatus===2 ? '75px' : '')}"
+            @blur="blur"
           ></textarea>
         </div>
       </div>
@@ -639,7 +640,11 @@ export default {
       if (result) {
         this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex, 1)
       }
-    }
+    },
+    // 评论弹框
+    blur () {
+      document.activeElement.scrollIntoViewIfNeeded(true)
+    },
   },
   filters: {
     formatData(time) {
@@ -698,6 +703,11 @@ export default {
       { passive: false }
     )
     document.querySelector('.replay').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
+      document.querySelector('.submenu').addEventListener(
       'touchmove',
       function(e) {
         e.preventDefault()
@@ -804,8 +814,11 @@ export default {
     bottom: 50px;
     overflow-y: auto;
     z-index: 1;
-    padding-bottom: 50px;
+    padding-bottom: 40px;
     padding-top: 5px;
+    &.bottom{
+      padding-bottom: 70px;
+    }
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
@@ -815,6 +828,7 @@ export default {
       .content {
         display: flex;
         padding-bottom: 12px;
+        overflow: hidden;
         .left-cnt {
           height: 90px;
           flex: 1;
@@ -828,11 +842,11 @@ export default {
             -webkit-box-orient: vertical;
             padding-top: 10px;
             line-height: 1.25;
-            min-height: 50px;
+            min-height: 52px;
             font-weight: 600;
           }
           .attr {
-            padding-top: 26px;
+            padding-top: 22px;
             color: #969ea8;
             font-size: 12px;
             display: flex;
@@ -884,6 +898,8 @@ export default {
           font-size: 14px;
           color: #445166;
           font-weight: 600;
+          height: 24px;
+          line-height: 24px;
           .icon {
             margin-right: 8px;
             img {
@@ -891,11 +907,14 @@ export default {
               height: 14px;
               opacity: 0.7;
               position: relative;
+              top: 2px;
             }
           }
         }
         .action {
           width: 70px;
+          height: 24px;
+          line-height: 24px;
           text-align: right;
           .like-icon {
             margin-right: 20px;
@@ -914,7 +933,7 @@ export default {
       }
       .like-cnt {
         flex: 1;
-        padding-bottom: 15px;
+        padding-bottom: 25px;
         .like-box,
         .comment-box {
           display: flex;
@@ -928,10 +947,10 @@ export default {
         }
         .icon {
           display: inline-block;
-          width: 16px;
-          height: 16px;
+          width: 14px;
+          height: 14px;
           margin-right: 8px;
-          padding-top: 2px;
+          // padding-top: 2px;
         }
         .list {
           flex: 1;
@@ -941,11 +960,15 @@ export default {
             display: inline-block;
             font-weight: 600;
           }
+          .cnt-box-replay{
+            padding-top: 2px;
+          }
         }
         .more {
           font-size: 14px;
           color: #969ea8;
           display: block;
+          padding-top: 3px;
         }
         .like-box {
           .list {
@@ -953,7 +976,7 @@ export default {
               word-wrap: break-word;
             }
             .name {
-              margin: 0 0 5px 0;
+              margin: 0 0 6px 0;
               display: inline-block;
               &.active {
                 color: #007ae6;
@@ -965,7 +988,7 @@ export default {
           margin-top: 10px;
           font-size: 14px;
           .comment-item {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             .replay-cnt {
               margin-left: 8px;
             }
@@ -1017,6 +1040,7 @@ export default {
     position: fixed;
     left: 0;
     top: 0;
+    bottom: 0;
     right: 0;
     height: 100%;
     z-index: 3;
@@ -1025,7 +1049,8 @@ export default {
       width: 100%;
       padding: 20px 16px 30px 13px;
       box-sizing: border-box;
-      position: relative;
+      position: absolute;
+      bottom: 0;
       background-color: #fff;
       .top-action {
         display: flex;

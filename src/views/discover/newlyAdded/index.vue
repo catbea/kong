@@ -61,8 +61,7 @@ export default {
             message: '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试',
             confirmButtonText: '我知道了'
           })
-          .then(() => {
-            // on close
+          .then(async () => {
           })
       } else {
         this.addButtonClick = true
@@ -119,6 +118,7 @@ export default {
   }
 
   > .add-article {
+    display: none;
     margin-top: 20px;
     width: 90%;
     margin-left: 5%;
