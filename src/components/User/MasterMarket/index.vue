@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       swiperOption: {},
-      changeshow: false,
+      changeshow: true,
       masterSave: null,
       img: require('IMG/user/Combined Shape@2x.png'),
       hintImg: require('IMG/dev/timg.jpg'),

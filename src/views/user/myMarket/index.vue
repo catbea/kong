@@ -15,7 +15,7 @@
         :class=""
         v-show="myMarketShow"
       >
-        <div v-show="showMarketListCount>=showFilterLimit" class="fixed" :class="{isFixed:searchBar}">
+        <div  class="fixed" :class="{isFixed:searchBar}">
           <search
             :conf="searchInfo"
             v-model="showProjectName"
@@ -35,7 +35,7 @@
           finished-text="没有更多了"
           @load="showGetMyMarketInfo"
           v-if="!yes"
-          :class="{screen:flag}"
+          :class="{screen:flag,marginFlxed:searchBar}"
         >
           <user-market
             @usmarIconReturn="skipShareHandle"
@@ -140,12 +140,12 @@ export default {
   var _this=this
   // document.querySelector('#app') = this.$refs.viewBox
   document.querySelector(".router-view").addEventListener('scroll', () => {
-   if(document.querySelector(".router-view").scrollTop>332){
+   if(document.querySelector(".router-view").scrollTop>document.querySelector(".user-market-box").offsetTop){
      this.searchBar=true
      }else{
        this.searchBar=false
      }
-  console.log(document.querySelector(".router-view").scrollTop)
+  console.log(document.querySelector(".user-market-box").offsetTop)
 }, false)
   },
   data: () => ({
@@ -692,12 +692,15 @@ export default {
     height: 44px;
   }
 }
-// .isFixed{
-//     position:fixed;
-//     width:100%;
-//     background-color:#Fff;
-//     top:0;
-//     z-index:999;
-//     padding-top:3px
-//   }
+.isFixed{
+    position:fixed;
+    width:100%;
+    background-color:#Fff;
+    top:0;
+    z-index:999;
+    padding-top:3px
+  }
+  .marginFlxed{
+    margin-top:78px;
+  }
 </style>
