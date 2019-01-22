@@ -787,7 +787,7 @@ export default {
           flex: 1;
           margin-right: 15px;
           .title {
-            font-size: 16px;
+            font-size: 18px;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -796,6 +796,7 @@ export default {
             padding-top: 10px;
             line-height:1.25;
             min-height: 50px;
+            font-weight: 600;
           }
           .attr {
             padding-top:26px;
@@ -915,6 +916,9 @@ export default {
           }
           .like-box {
             .list {
+              .cnt-box-like{             
+                word-wrap: break-word;
+              }
               .name {
                 margin: 0 0 5px 0;
                 display: inline-block;
