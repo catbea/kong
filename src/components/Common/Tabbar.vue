@@ -1,6 +1,6 @@
 <template>
-  <div id="tabbar" class="tabbar">
-    <van-tabbar v-if="tabbar.show" v-model="active" ref="tabbar">
+  <div id="tabbar">
+    <van-tabbar v-if="tabbar.show" class="tabbar" v-model="active" ref="tabbar">
       <van-tabbar-item class="tabbar-item" v-for="item in tabbar.items" :key="item.name" :replace="true" :to="item.path" :info="infoCount(item.info)">
         <span>{{item.name}}</span>
         <img slot="icon" slot-scope="props" :src="props.active ? item.icon_atc : item.icon">
