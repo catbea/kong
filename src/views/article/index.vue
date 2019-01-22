@@ -308,6 +308,8 @@ export default {
   async created() {
     this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
+    this.classifyName = storage.itemName
+    this.classify = storage.itemCode
     this.changeClassify(storage)
   },
   computed: {
@@ -397,6 +399,9 @@ export default {
     changeClassify(item, e) {
       if (e && e.currentTarget) {
         e.currentTarget.scrollIntoView({behavior: 'smooth', block: 'end'})
+      }
+      if (item.itemName !== this.classifyName) {
+        window.sessionStorage.setItem('scrollTop', 0)
       }
       window.sessionStorage.setItem('tab',JSON.stringify(item))
       this.finished = false
