@@ -777,7 +777,7 @@ export default {
     }
   }
   .submenu {
-    position: absolute;
+    position: fixed;
     top: 54px;
     left: 0;
     width: 100%;

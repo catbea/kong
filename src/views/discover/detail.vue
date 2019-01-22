@@ -254,7 +254,6 @@ export default {
     // 楼盘信息处理
     async handleLinkerInfo() {
       // 查询插入楼盘的信息
-      debugger
       if (this.editData) {
         // 编辑文章分享
         if (this.editData.inlayHouse) {

@@ -91,7 +91,8 @@
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
         <div class="tool-left">
-          <div class="share-image"> <img :src="shareImage" > </div>
+          <div class="share-image"> <img :src="shareImage"></div>
+          <div class="share-desc"> <img :src="shareDesc"></div>
           <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
           <div class="tool-content">
             <div class="tool-name">{{agentInfo&&agentInfo.agentName}}</div>
@@ -132,6 +133,7 @@ export default {
   },
   data: () => ({
     shareImage: '',
+    shareDesc: '',
     infoId: '', //文章的id
     city: '',
     info: null,
@@ -206,32 +208,33 @@ export default {
 
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
+      let desc = res.title
       this.shareData = {
         title: 'AW大师写一写',
-        desc: this.info.title,
+        desc: desc,
         imgUrl: this.info.image,
         link: host
       }
+      this.shareDesc = this.info.title
       this.shareImage = this.info.image
       this.shareHandler()
     },
     // 楼盘信息处理
     async handleLinkerInfo() {
       // 查询插入楼盘的信息
-      // if (this.editData) {
-      //   // 编辑文章分享
-      //   if (this.editData.inlayHouse) {
-      //     const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
-      //     this.inlayHouseInfo = res[0]
-      //   }
-      //   debugger
-      //   if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
-      //     this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
-      //   }
-      // } else {
-      //   // 原文章分享
-      //   this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
-      // }
+      if (this.editData) {
+        // 编辑文章分享
+        if (this.editData.inlayHouse) {
+          const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
+          this.inlayHouseInfo = res[0]
+        }
+        if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
+          this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
+        }
+      } else {
+        // 原文章分享
+        this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
+      }
     },
     // 查询楼盘信息
     async getLinkerInfo(agentId, enterpriseId, shareUuid, linkerIds) {
@@ -361,6 +364,9 @@ export default {
 </script>
 <style lang="less">
 .share-image {
+  display: none;
+}
+.share-desc {
   display: none;
 }
 .discover-detail-page {
@@ -493,7 +499,7 @@ export default {
         line-height: 1.5;
         color: #445166;
         font-size: 14px;
-        width: 260px;
+        width: 300px;
         word-break: break-all;
         display: -webkit-box;
         -webkit-line-clamp: 5;
