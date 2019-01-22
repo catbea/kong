@@ -661,6 +661,9 @@ export default {
     document.querySelector('body').addEventListener(
       'touchmove',
       function(e) {
+        if (!document.querySelector('.article-list')) {
+          return false
+        }
         that.endY = e.changedTouches[0].pageY
         let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
         let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
