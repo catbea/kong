@@ -1,5 +1,5 @@
 <template>
-  <div class="discover-detail-page">
+  <div class="discover-detail-page" v-if="haveData">
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
@@ -143,6 +143,9 @@
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
   </div>
+  <div v-else>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+  </div>
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
@@ -150,6 +153,7 @@ import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import Paragraph from 'COMP/Discover/Paragraph'
 import EstateItem from 'COMP/EstateItem'
+import Null from 'COMP/Null'
 import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
 import ArticleDialog from 'COMP/Dialog/ArticleDialog'
@@ -164,9 +168,13 @@ export default {
     CardDialog,
     MarketDialog,
     ArticleDialog,
-    Paragraph
+    Paragraph,
+    Null
   },
   data: () => ({
+    haveData: false,
+    nullIcon: require('IMG/article/empty_article@2x.png'),
+    nullcontent: '该文章已被下架删除',
     shareImage: '',
     shareDesc: '',
     infoId: '', //文章的id
@@ -216,6 +224,11 @@ export default {
   methods: {
     async getDetail() {
       const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId)
+      if (res.returnCode == 10028) {
+        this.haveData = false
+        return
+      }
+      this.haveData = true
       this.info = res
       this.infoId = res.id
       if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
