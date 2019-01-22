@@ -28,7 +28,7 @@ export default [
     name: 'discover-edit',
     component: resolve => require(['@/views/discover/edit.vue'], resolve),
     meta: {
-      title: '写一写'
+      title: 'AW大师写一写'
     }
   },
   {

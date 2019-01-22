@@ -234,7 +234,6 @@ export default {
         link: host
       }
       this.shareImage = this.info.image
-      // document.title = this.info.title
       this.shareHandler()
     },
     // 楼盘信息处理
@@ -339,6 +338,8 @@ export default {
       this.openCardPopup = false
       this.openMarketPopup = false
       this.openArticlePopup = false
+      this.marketQrInfo = null
+      this.articleQrInfo = null
     },
 
     // 举报反馈
