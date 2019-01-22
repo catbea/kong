@@ -12,6 +12,8 @@ export default (msg, url) => {
       return true
     case 10500:   //文章解析异常(一个输入框填写一个具有正确域名地址却不是正确的文章地址问题)
       return true
+    case 31106:   //同个人不可解析同一篇文章
+      return true
     case 21105: // 注册
       return true
     case 21103: // 验证码错误
