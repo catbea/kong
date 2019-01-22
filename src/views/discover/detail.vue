@@ -118,7 +118,7 @@
       </div>
       <div class="tool-item" v-if="info&&(info.agentId === info.belongeder)" @click="delHandler">
         <i class="icon iconfont icon-delete"></i>
-        删除
+        删除下架
       </div>
     </div>
     <van-actionsheet
@@ -517,12 +517,13 @@ export default {
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
     },
+    // 文章删除
     delHandler(){
       this.$dialog.confirm({
         title:'提示',
         message:'是否确认删除?'
       }).then(async () => {
-        const res = await cpInformationService.updateStatusByAgentId(this.info.agentId,this.info.id)
+        const res = await cpInformationService.updateEnableByInfoId(this.info.agentId,this.info.id)
         this.$toast('删除成功')
         setTimeout(() => {
           this.$router.push('/user/articles/historicalArticles?typeCode=2')

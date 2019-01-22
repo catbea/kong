@@ -661,6 +661,9 @@ export default {
     document.querySelector('body').addEventListener(
       'touchmove',
       function(e) {
+        if (!document.querySelector('.article-list')) {
+          return false
+        }
         that.endY = e.changedTouches[0].pageY
         let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
         let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
@@ -696,6 +699,16 @@ export default {
       function(e) {
         e.preventDefault()
       },{ passive: false })
+    document.querySelector('.tab-bar').addEventListener(
+    'touchmove',
+    function(e) {
+      that.endY = e.changedTouches[0].pageY
+      if (that.endY - that.startY > 10) {
+        e.preventDefault()
+      }
+    },
+    { passive: false }
+    )
     // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
   },
   beforeDestroy() {

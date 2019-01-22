@@ -9,11 +9,11 @@
         <span
           class="time-view"
           v-if="itemInfo.selectType=='2'"
-        >分享时间 {{itemInfo.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+        >分享时间 {{itemInfo.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
         <span
           class="time-view"
           v-if="itemInfo.selectType=='3'"
-        >编辑时间 {{itemInfo.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+        >编辑时间 {{itemInfo.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
       </div>
       <div class="write-item-right">
         <img class="article-img" :src="itemInfo.image">
@@ -36,9 +36,9 @@
           @click="enterArticleDetail(item.id)"
         >
           <div class="write-item-left">
-            <span class="article-title">{{item.title}}</span>
-            <span class="time-view" v-if="itemInfo.selectType=='2'">分享时间 {{item.createTimeStamp}}</span>
-            <span class="time-view" v-if="itemInfo.selectType=='3'">编辑时间 {{item.createTimeStamp}}</span>
+            <span class="article-title">{{item.title | textOver(25) }}</span>
+            <span class="time-view" v-if="itemInfo.selectType=='2'">分享时间 {{item.createTimeStamp  | dateTimeFormatter(2,'/')}}</span>
+            <span class="time-view" v-if="itemInfo.selectType=='3'">编辑时间 {{item.createTimeStamp  | dateTimeFormatter(2,'/')}}</span>
           </div>
           <div class="write-item-right">
             <img class="article-img" :src="item.image">
@@ -104,10 +104,10 @@ export default {
       }
 
       if (res.records.length > 0) {
-        for (let i = 0; i < res.records.length; i++) {
-          let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
-          res.records[i].createTimeStamp = myTime
-        }
+        // for (let i = 0; i < res.records.length; i++) {
+        //   let myTime = timeUtils.fmtDate(res.records[i].createTimeStamp)
+        //   res.records[i].createTimeStamp = myTime
+        // }
         this.writeList = this.writeList.concat(res.records)
 
         if (res.pages === 0 || this.current === res.pages) {
