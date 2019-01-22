@@ -10,12 +10,15 @@ export default (msg, url) => {
       return true
     case 31102:
       return true
+    case 10500:   //文章解析异常(一个输入框填写一个具有正确域名地址却不是正确的文章地址问题)
+      return true
     case 21105: // 注册
       return true
     case 21103: // 验证码错误
       return true
     case 10028: // 文章被下架或被删除--待处理
       return
+
     default:
       console.error(msg)
       window.vue.$toast(msg.msg)
