@@ -118,7 +118,7 @@
       </div>
       <div class="tool-item" v-if="info&&(info.agentId === info.belongeder)" @click="delHandler">
         <i class="icon iconfont icon-delete"></i>
-        删除
+        删除下架
       </div>
     </div>
     <van-actionsheet
