@@ -83,8 +83,12 @@
     <van-popup v-model="relationShow">
       <div class="relationName">
         <p class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="relationShow=false"></p>
-        <p>查看楼盘分享关系详情 请联系400-0904-99</p>
-        <p @click="relationHandle">立即联系</p>
+        <ul>
+          <li>联系客服</li>
+          <li>查看楼盘分享关系详情 请联系</li>
+          <li>400-0904-999</li>
+        </ul>
+        <p class="immediately" @click="relationHandle">立即联系</p>
       </div>
     </van-popup>
     <!-- 户型 -->
@@ -838,11 +842,11 @@ export default {
 .van-popup{
   border-radius:12px;
   width:311px;
-  height:214px;
+  height:231px;
   // padding-top:45px;
   .relationName{
   width:311px;
-  height:214px;
+  height:231px;
   background:rgba(255,255,255,1);
   border-radius:12px;
   position: relative;
@@ -853,17 +857,31 @@ export default {
     right:15px;
     top:15px;
   }
-  p:nth-child(2){
-    width:248px;
-    font-size:22px;
+  ul{
+    padding-top:45px;
+    margin:0px 25px 32px 32px;
+    li:nth-child(1){
+      font-size:20px;
+      font-family:PingFangSC-Semibold;
+      font-weight:600;
+      color:rgba(51,51,51,1);
+    }
+    li:nth-child(2){
+      margin:12px 0;
+    font-size:16px;
     font-family:PingFangSC-Regular;
     font-weight:400;
     color:rgba(51,51,51,1);
-    padding-top:45px;
-    margin:0px 25px 32px 32px;
-    text-align:center;
+    }
+    li:nth-child(3){
+      width:248px;
+      font-size:26px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(51,51,51,1);
+    }
   }
-  p:nth-child(3){
+  .immediately{
     text-align: center;
     margin-left:32px;
     width:247px;
