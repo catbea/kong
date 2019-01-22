@@ -919,7 +919,7 @@ export default {
       }
       .like-cnt {
         flex: 1;
-        padding-bottom: 20px;
+        padding-bottom: 25px;
         .like-box,
         .comment-box {
           display: flex;
@@ -933,10 +933,10 @@ export default {
         }
         .icon {
           display: inline-block;
-          width: 16px;
-          height: 16px;
+          width: 14px;
+          height: 14px;
           margin-right: 8px;
-          padding-top: 2px;
+          // padding-top: 2px;
         }
         .list {
           flex: 1;
@@ -962,7 +962,7 @@ export default {
               word-wrap: break-word;
             }
             .name {
-              margin: 0 0 5px 0;
+              margin: 0 0 6px 0;
               display: inline-block;
               &.active {
                 color: #007ae6;
@@ -974,7 +974,7 @@ export default {
           margin-top: 10px;
           font-size: 14px;
           .comment-item {
-            margin-bottom: 7px;
+            margin-bottom: 8px;
             .replay-cnt {
               margin-left: 8px;
             }
