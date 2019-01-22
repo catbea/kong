@@ -32,7 +32,7 @@ export default {
       }
     },
     local: { type: String, default: '' },
-    height: { type: String, default: '16rem' }
+    height: { type: String, default: '20rem' }
   },
   components: {
     AreaFilter,
