@@ -75,8 +75,6 @@ export default {
   created() {
     this.typeCode = this.$store.getters.currMyWriteTab
 
-    console.log(this.typeCode)
-
     if (this.typeCode == '3') {
       this.selectEditTap()
     } else if (this.typeCode == '2') {
@@ -92,7 +90,8 @@ export default {
       this.myWriteList = []
       this.onLoad()
       this.$store.commit(types.MYWRITE_TAB, '2')
-
+      this.loading = true
+      this.finished = false
       this.selectShareTap()
     },
 
@@ -102,7 +101,8 @@ export default {
       this.myWriteList = []
       this.onLoad()
       this.$store.commit(types.MYWRITE_TAB, '3')
-
+      this.loading = true
+      this.finished = false
       this.selectEditTap()
     },
 
@@ -112,7 +112,8 @@ export default {
       this.myWriteList = []
       this.onLoad()
       this.$store.commit(types.MYWRITE_TAB, '1')
-
+      this.loading = true
+      this.finished = false
       this.selectCoolectionTap()
     },
 
