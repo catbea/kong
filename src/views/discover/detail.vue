@@ -33,7 +33,7 @@
       <p class="discover-disclaimer">
         <span
           class="disclaimer-text"
-        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击 </span>
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -105,7 +105,8 @@
         {{info&&info.belongeder === '' ? '编辑' : '更新编辑'}}
       </div>
       <div v-if="info&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
-        <i v-if="collectionStatus===1"
+        <i
+          v-if="collectionStatus===1"
           style="color:#007AE6;"
           class="icon iconfont icon-Building_details_col"
         ></i>
@@ -320,10 +321,14 @@ export default {
       }
       const res = await articleService.updateLike(param)
       if (this.likeFlag) {
+        // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
         this.easylookList.unshift(this.agentInfo.agentName)
       } else {
-        this.easylookList = remove(this.easylookList, this.agentInfo.agentName)
+        this.easylookList = remove(this.easylookList, n => {
+          return n !== this.agentInfo.agentName
+        })
       }
+      console.log(this.easylookList)
     },
     // 展开更多好看
     moreLikeListHandler() {
@@ -518,18 +523,19 @@ export default {
       this.shareUuid = uuid()
     },
     // 文章删除
-    delHandler(){
-      this.$dialog.confirm({
-        title:'提示',
-        message:'是否确认删除?'
-      }).then(async () => {
-        const res = await cpInformationService.updateEnableByInfoId(this.info.agentId,this.info.id)
-        this.$toast('删除成功')
-        setTimeout(() => {
-          this.$router.push('/user/articles/historicalArticles?typeCode=2')
-        }, 1000);
-      })
-
+    delHandler() {
+      this.$dialog
+        .confirm({
+          title: '提示',
+          message: '是否确认删除?'
+        })
+        .then(async () => {
+          const res = await cpInformationService.updateEnableByInfoId(this.info.agentId, this.info.id)
+          this.$toast('删除成功')
+          setTimeout(() => {
+            this.$router.push('/user/articles/historicalArticles?typeCode=2')
+          }, 1000)
+        })
     }
   },
   watch: {
