@@ -48,6 +48,7 @@ export default {
   height: 80px;
   .user-avatar {
     margin: 15px;
+    margin-right:12px;
     width: 50px;
     height: 50px;
   }
@@ -70,7 +71,7 @@ export default {
       font-weight: 600;
       color: #333333;
       padding-top:5px;
-      padding-bottom: 12px;
+      padding-bottom: 10px;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -84,13 +85,14 @@ export default {
   }
   .intention-box {
     margin: 15px 0;
+    margin-top:9px;
     text-align: center;
     width: 80px;
     .intention-value {
       font-size: 20px;
       font-weight: 500;
       color: #007ae6;
-      padding: 6px 0 8px 0;
+      padding: 6px 0 10px 0;
       font-family:PingFangSC-Semibold;
     }
     .intention-title {
