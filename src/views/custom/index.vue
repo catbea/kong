@@ -111,15 +111,9 @@ export default {
     },
     sortHandle() {
       this.sortShow = false
-      this.$store.commit('TABBAR', { show: true })
     },
     onSortHandler() {
       this.sortShow = !this.sortShow
-      if(this.sortShow){
-        this.$store.commit('TABBAR', { show: false })
-      }else{
-        this.$store.commit('TABBAR', { show: true })
-      }
     },
     onFocusHandler() {},
     // 排序切换
@@ -245,7 +239,7 @@ export default {
   > .sort-container {
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    position: absolute;
+    position: fixed;
     top: 45px;
     width: 100%;
     // background: #fff;
