@@ -248,7 +248,7 @@ export default {
   text-align: center;
   .next-step {
     width: 343px;
-    // margin-left: 16px;
+    margin-left: 16px;
     background: #007ae6;
     border-radius: 6px;
     font-size: 16px;
