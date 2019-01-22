@@ -253,7 +253,7 @@ export default {
           discoverService.insertComment(commentData)
         }
       }
-      this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
+      this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&sharePrompt=true`)
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {

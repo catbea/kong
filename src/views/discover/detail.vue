@@ -193,7 +193,8 @@ export default {
     isPass: '',
     recommendHouseList: [], // 推荐房源列表
     renderDom: [],
-    inlayHouseInfo: null // 文章插入楼盘信息
+    inlayHouseInfo: null, // 文章插入楼盘信息
+    sharePrompt:false
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -213,6 +214,9 @@ export default {
     this.getLikeList()
     this.getCommentList()
     
+  },
+  mounted(){
+if(this.$route.query.sharePrompt == 'true') this.$store.commit('SHARE_PROMPT', true)
   },
   computed: {
     ...mapGetters(['userInfo'])
