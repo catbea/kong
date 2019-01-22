@@ -44,10 +44,12 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+#tabbar{
+  height:50px;
 .tabbar {
   z-index: 999;
   width: 100%;
-  position: relative;
+  // position: relative;
   z-index: 100;
   display: flex;
   align-items: center;
@@ -58,5 +60,6 @@ export default {
   span {
     font-size: 12px;
   }
+}
 }
 </style>
