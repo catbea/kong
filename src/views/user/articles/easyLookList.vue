@@ -18,7 +18,7 @@
           @click="articleDetail(items.id)"
         >
           <div class="easy-look-item-left">
-            <img class="easy-look-img" :src="items.image">
+            <div class="easy-look-img" :style="{backgroundImage:'url(' + items.image + ')'}"></div>  
           </div>
           <div class="easy-look-item-right">
             <span class="easy-look-title">{{items.title}}</span>
@@ -63,7 +63,7 @@ export default {
   mounted() {
     this.userId = this.$route.query.userId
     this.userType = this.$route.query.userType
-    document.title = this.$route.query.userName + '认为好看'
+    document.title = this.$route.query.userName + '认为好看的文章'
   },
 
   methods: {
@@ -162,6 +162,7 @@ export default {
         width: 100%;
         height: 100%;
         border-radius: 6px;
+        background-size: cover;
       }
     }
 
