@@ -115,7 +115,7 @@
       </div>
     </div>
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
-    <open-article :show.sync="guidanceShow"></open-article>
+    <!-- <open-article :show.sync="guidanceShow"></open-article> -->
     <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
   </div>
   <div v-else>
@@ -173,7 +173,6 @@ export default {
       linkText: '',
       link: ''
     },
-    guidanceShow: false,
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
@@ -205,10 +204,10 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = uuid()
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
-      this.guidanceShow = true
+      this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
     } else {
-      this.guidanceShow = false
+      this.$store.commit('SHARE_PROMPT', false)
     }
     this.getDetail()
     this.getLikeList()
