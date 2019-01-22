@@ -1,6 +1,6 @@
 <template>
-  <div id="tabbar"  v-if="tabbar.show" class="tabbar">
-    <van-tabbar v-model="active" ref="tabbar">
+  <div id="tabbar" class="tabbar">
+    <van-tabbar v-if="tabbar.show" v-model="active" ref="tabbar">
       <van-tabbar-item class="tabbar-item" v-for="item in tabbar.items" :key="item.name" :replace="true" :to="item.path" :info="infoCount(item.info)">
         <span>{{item.name}}</span>
         <img slot="icon" slot-scope="props" :src="props.active ? item.icon_atc : item.icon">
@@ -45,7 +45,6 @@ export default {
 </script>
 <style lang="less" scoped>
 #tabbar{
-  height:50px;
 .tabbar {
   z-index: 999;
   width: 100%;
