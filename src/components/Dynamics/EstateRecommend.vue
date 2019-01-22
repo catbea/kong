@@ -45,7 +45,7 @@ export default {
     width: 345px;
     height: 125px;
     margin: 0 15px;
-    border-radius:15px;
+    border-radius:10px;
   }
   > .recommend-info {
     position: absolute;

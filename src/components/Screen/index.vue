@@ -172,12 +172,13 @@ export default {
     justify-content: space-between;
     width: 100%;
     height: 32px;
-    padding-top: 12px;
+    padding-top:9px;
     background: rgba(255, 255, 255, 1);
     background-position: center;
     background-repeat: no-repeat;
     padding-left: 18px;
     margin-bottom: 5px;
+    line-height:23px;
     li {
       display: flex;
       > .value-content {
@@ -194,7 +195,7 @@ export default {
       span:nth-child(3) {
         width: 16px;
         height: 16px;
-        margin-top: 1px;
+        margin-top:3px;
       }
     }
     .sort {
