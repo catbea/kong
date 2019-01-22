@@ -100,7 +100,7 @@ export default {
 
     > .share-bottom {
       width: 100%;
-      margin-top: 30px;
+      margin-top: 15px;
       > .share-time {
         
         font-size: 12px;
