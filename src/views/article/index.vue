@@ -24,7 +24,7 @@
     <div class="article-list" v-if="articleData.length">
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
-          <div class="article-item" v-for="(item,index) in articleData" :key="index">
+          <div class="article-item" v-for="(item,index) in articleData" :key="index" :class="{'noborder': index === articleData.length-1}">
             <div class="content scale-1px-bottom">
               <div class="left-cnt">
                 <h3 class="title" @click="goInfo(item)">{{item.articleTitle}}</h3>
@@ -110,7 +110,7 @@
               </div>
               <div class="comment-box" v-show="item.discussVOS.length">
                 <span class="icon">
-                  <img src="../../assets/img/article/dis1.png" alt="">
+                  <!-- <img src="../../assets/img/article/dis1.png" alt=""> -->
                 </span>
                 <div class="list">
                   <div class="cnt-box-replay">
@@ -682,6 +682,9 @@ export default {
     document.querySelector('body').addEventListener(
       'touchend',
       function(e) {
+        if (!document.querySelector('.article-list')) {
+          return false
+        }
         that.endY = e.changedTouches[0].pageY
         let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
         let target = e.srcElement.offsetParent.className === 'tab-bar scale-1px-bottom'
@@ -806,6 +809,9 @@ export default {
     .article-item {
       margin: 0 16px;
       border-bottom: 10px solid #f7f9fa;
+      &.noborder{
+        border: none;
+      }
       .content {
         display: flex;
         padding-bottom: 12px;

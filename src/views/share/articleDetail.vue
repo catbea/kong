@@ -56,7 +56,7 @@
           <title-bar :conf="{title: '精彩评论'}"/>
           <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="backgroundColor:red;width:40px;height:40px;border-radius:50%;"></div>
+              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
@@ -213,7 +213,6 @@ export default {
         link: host
       }
       this.shareImage = this.info.image
-      // document.title = this.info.title
       this.shareHandler()
     },
     // 楼盘信息处理
@@ -319,6 +318,8 @@ export default {
       this.openCardPopup = false
       this.openMarketPopup = false
       this.openArticlePopup = false
+      this.marketQrInfo = null
+      this.articleQrInfo = null
     },
 
     // 举报反馈
@@ -483,6 +484,7 @@ export default {
           color: #445166;
           font-size: 14px;
           margin-left: 4px;
+          margin-top: 1px;
         }
       }
       > .easy-look-list {
@@ -591,6 +593,11 @@ export default {
           color: #333333;
           font-size: 15px;
           line-height: 1.5;
+          word-break: break-all;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
         }
       }
     }

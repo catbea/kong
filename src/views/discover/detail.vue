@@ -345,10 +345,14 @@ export default {
       }
       const res = await articleService.updateLike(param)
       if (this.likeFlag) {
+        // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
         this.easylookList.unshift(this.agentInfo.agentName)
       } else {
-        this.easylookList = remove(this.easylookList, this.agentInfo.agentName)
+        this.easylookList = remove(this.easylookList, n => {
+          return n !== this.agentInfo.agentName
+        })
       }
+      console.log(this.easylookList)
     },
     // 展开更多好看
     moreLikeListHandler() {

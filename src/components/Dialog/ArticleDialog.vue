@@ -2,7 +2,8 @@
   <div class="dialog-container" v-if="currentShow">
     <div class="shadow_box dialog-box">
       <div class="dialog-title">扫描二维码阅读文章</div>
-      <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div>
+      <!-- <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div> -->
+      <img class="mini-qrcode" :src="info&&info.qrCode"></img>
       <p class="dialog-atitle">{{info&&info.title}}</p>
       <div class="dialog-content">
         <p class="dialog-publisher">{{info&&info.publisher}}</p>
@@ -63,6 +64,7 @@ export default {
     border-radius: 10px;
     background-color: #ffffff;
     position: relative;
+    text-align: center;
     > .dialog-title {
       text-align: center;
       margin-top: 22px;
@@ -85,6 +87,11 @@ export default {
       padding: 0 24px;
       line-height: 1.5;
       text-align: center;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     > .dialog-content {
       margin-top: 6px;
