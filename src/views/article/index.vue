@@ -699,6 +699,16 @@ export default {
       function(e) {
         e.preventDefault()
       },{ passive: false })
+    document.querySelector('.tab-bar').addEventListener(
+    'touchmove',
+    function(e) {
+      that.endY = e.changedTouches[0].pageY
+      if (that.endY - that.startY > 10) {
+        e.preventDefault()
+      }
+    },
+    { passive: false }
+    )
     // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
   },
   beforeDestroy() {
