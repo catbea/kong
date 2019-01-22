@@ -98,20 +98,20 @@
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
-        {{info&&info.belongeder === '' ? '编辑' : '更新编辑'}}
+        <p>{{info&&(info.source == 0 || info.source == 1)&&info.belongeder === '' ? '编辑' : '更新编辑'}}</p>
       </div>
-      <div v-if="info&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
+      <div v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
         <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
-        收藏
+        <p>收藏</p>
       </div>
       <div class="tool-item" @click="shareHandler">
         <i class="icon iconfont icon-Building_details_for"></i>
-        分享
+        <p>分享</p>
       </div>
-      <div class="tool-item" v-if="info&&(info.agentId === info.belongeder)" @click="delHandler">
+      <div class="tool-item" v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)" @click="delHandler">
         <i class="icon iconfont icon-delete"></i>
-        删除下架
+        <p>删除下架</p>
       </div>
     </div>
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
@@ -887,6 +887,8 @@ if(this.$route.query.sharePrompt == 'true') this.$store.commit('SHARE_PROMPT', t
       > i {
         display: block;
         font-size: 24px;
+        width: 100%;
+        height: 24px;
         margin-bottom: 4px;
       }
     }
