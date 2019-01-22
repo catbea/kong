@@ -104,9 +104,8 @@
         <i class="icon iconfont icon-me_opinion"></i>
         {{info&&info.belongeder === '' ? '编辑' : '更新编辑'}}
       </div>
-      <div class="tool-item" @click="collectHandler()">
-        <i
-          v-if="collectionStatus===1"
+      <div v-if="info&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
+        <i v-if="collectionStatus===1"
           style="color:#007AE6;"
           class="icon iconfont icon-Building_details_col"
         ></i>
@@ -478,7 +477,7 @@ export default {
     },
     // 编辑按钮点击处理
     editClickHandler() {
-      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
+      this.$router.replace({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
     },
     // 收藏文章按钮点击
     async collectHandler() {
