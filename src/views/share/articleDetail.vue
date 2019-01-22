@@ -29,7 +29,11 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
+          <estate-item
+            v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)"
+            :info="inlayHouseInfo"
+            @click="popHandler(2, inlayHouseInfo)"
+          ></estate-item>
         </div>
       </div>
       <p class="discover-extra-info">
@@ -37,7 +41,9 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span
+          class="disclaimer-text"
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -56,18 +62,29 @@
           <title-bar :conf="{title: '精彩评论'}"/>
           <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
+              <div
+                class="bg_img"
+                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+                style="width:40px;height:40px;border-radius:50%;"
+              ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                  <span
+                    v-if="item.receiverName"
+                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                  >回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
                 <div></div>
               </div>
             </div>
-            <div class="comment-list-more" v-if="isMoreComment" @click.stop="moreCommentHandler">查看更多评论</div>
+            <div
+              class="comment-list-more"
+              v-if="isMoreComment"
+              @click.stop="moreCommentHandler"
+            >查看更多评论</div>
           </div>
         </div>
       </div>
@@ -75,13 +92,23 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
+          <estate-item
+            v-for="(item,index) in recommendHouseList"
+            :key="index"
+            :info="item"
+            @click="popHandler(2, item)"
+          ></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
       <div class="recommend-article" v-if="articleList.length>0">
         <title-bar :conf="{title: 'TA的写一写'}"/>
-        <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index" @click="popHandler(3, item)">
+        <div
+          class="recommend-article-list"
+          v-for="(item, index) in articleList"
+          :key="index"
+          @click="popHandler(3, item)"
+        >
           <div class="recommend-article-name">{{item.title}}</div>
         </div>
       </div>
@@ -91,8 +118,12 @@
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
         <div class="tool-left">
-          <div class="share-image"> <img :src="shareImage"></div>
-          <div class="share-desc"> <img :src="shareDesc"></div>
+          <div class="share-image">
+            <img :src="shareImage">
+          </div>
+          <div class="share-desc">
+            <img :src="shareDesc">
+          </div>
           <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
           <div class="tool-content">
             <div class="tool-name">{{agentInfo&&agentInfo.agentName}}</div>
@@ -103,10 +134,14 @@
       </div>
     </div>
     <open-article :show.sync="guidanceShow"/>
-    <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
+    <card-dialog
+      class="agent-card"
+      :show.sync="openCardPopup"
+      :info="cardQrInfo"
+      @close="popupShowControl()"
+    ></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
-    
   </div>
 </template>
 <script>
@@ -227,13 +262,16 @@ export default {
         if (this.editData.inlayHouse) {
           const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
           this.inlayHouseInfo = res[0]
+          this.handleLinkerTags(this.inlayHouseInfo)
         }
         if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
           this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
+          this.handleLinkerTags(this.recommendHouseList)
         }
       } else {
         // 原文章分享
         this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
+        this.handleLinkerTags(this.recommendHouseList)
       }
     },
     // 查询楼盘信息
@@ -324,6 +362,39 @@ export default {
       this.marketQrInfo = null
       this.articleQrInfo = null
     },
+    // 处理楼盘标签
+    handleLinkerTags(obj) {
+      let statusArr = ['热销中', '即将发售', '', '售罄']
+      let tempArr = []
+      if (Array.isArray(obj)) {
+        for (var i in obj) {
+          var item = obj[i]
+          tempArr.push(statusArr[item.saleStatus])
+          if (item.linkerTags) {
+            tempArr = tempArr.concat(item.linkerTags)
+            if (tempArr && tempArr.length > 3) {
+              item.linkerTags = tempArr.slice(0, 3)
+            } else {
+              item.linkerTags = tempArr
+            }
+          } else {
+            item.linkerTags = tempArr
+          }
+        }
+      } else {
+        tempArr.push(statusArr[obj.saleStatus])
+        if (obj.linkerTags) {
+          tempArr = tempArr.concat(obj.linkerTags)
+          if (tempArr && tempArr.length > 3) {
+            obj.linkerTags = tempArr.slice(0, 3)
+          } else {
+            obj.linkerTags = tempArr
+          }
+        } else {
+          obj.linkerTags = tempArr
+        }
+      }
+    },
 
     // 举报反馈
     feedbackClickHandler() {
@@ -342,7 +413,8 @@ export default {
     async shareHandler() {
       console.log(this.shareData, 'shareData')
       // await window.awHelper.wechatHelper.init()
-      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {//分享点进去，没有签名信息，从新签名
+      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {
+        //分享点进去，没有签名信息，从新签名
         try {
           await window.awHelper.wechatHelper.init()
         } catch (e) {
@@ -440,8 +512,8 @@ export default {
       padding: 15px;
       font-size: 16px;
       color: #333333;
-      font-weight: 400 ;
-      line-height: 28px ;
+      font-weight: 400;
+      line-height: 28px;
     }
     > .discover-extra-info {
       display: flex;
