@@ -233,7 +233,6 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-      debugger
       if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
       this.handleLinkerInfo()
       this.setShare()
@@ -254,7 +253,6 @@ export default {
     // 楼盘信息处理
     async handleLinkerInfo() {
       // 查询插入楼盘的信息
-      debugger
       if (this.editData) {
         // 编辑文章分享
         if (this.editData.inlayHouse) {
@@ -285,7 +283,7 @@ export default {
         }
         this.$nextTick(() => {
           let height = this.$refs.easyLook.offsetHeight
-          if (height <= 80) {
+          if (height <= 85) {
             this.isMoreLike = false
           } else {
             this.isMoreLike = true
@@ -408,7 +406,7 @@ export default {
           receiverSource: item.senderSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: item.content,
+          title: item.senderName + '：' + item.content,
           placeholder: '回复' + item.senderName + '：',
           type: 1
         }
@@ -430,7 +428,7 @@ export default {
           receiverSource: item.receiverSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: item.content,
+          title: item.receiverName + '：' + item.content,
           placeholder: '回复' + item.receiverName + '：',
           type: 1
         }
@@ -526,6 +524,7 @@ export default {
     // 分享按钮点击处理
     shareHandler() {
       this.guidanceShow = true
+      console.log('this.guidanceShow===' + this.guidanceShow)
     },
     // 设置分享
     async setShare() {
