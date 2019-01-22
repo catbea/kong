@@ -682,6 +682,9 @@ export default {
     document.querySelector('body').addEventListener(
       'touchend',
       function(e) {
+        if (!document.querySelector('.article-list')) {
+          return false
+        }
         that.endY = e.changedTouches[0].pageY
         let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
         let target = e.srcElement.offsetParent.className === 'tab-bar scale-1px-bottom'
