@@ -53,7 +53,7 @@
       <!-- 评论 -->
       <div class="comment-container">
         <div class="comment-box" v-if="commentList.length">
-          <title-bar :conf="titleComments"/>
+          <title-bar :conf="{title: '精彩评论'}"/>
           <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
               <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
@@ -73,14 +73,14 @@
       </div>
       <!-- 推荐房源 -->
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
-        <title-bar :conf="titleProperties"/>
+        <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
           <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
       <div class="recommend-article" v-if="articleList.length>0">
-        <title-bar :conf="titleArticle"/>
+        <title-bar :conf="{title: 'TA的写一写'}"/>
         <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index" @click="popHandler(3, item)">
           <div class="recommend-article-name">{{item.title}}</div>
         </div>
@@ -91,7 +91,8 @@
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
         <div class="tool-left">
-          <div class="share-image"> <img :src="shareImage" > </div>
+          <div class="share-image"> <img :src="shareImage"></div>
+          <div class="share-desc"> <img :src="shareDesc"></div>
           <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
           <div class="tool-content">
             <div class="tool-name">{{agentInfo&&agentInfo.agentName}}</div>
@@ -101,7 +102,7 @@
         <div class="tool-right">在线咨询</div>
       </div>
     </div>
-    <open-article :show.sync="guidanceShow"></open-article>
+    <open-article :show.sync="guidanceShow"/>
     <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
@@ -132,29 +133,13 @@ export default {
   },
   data: () => ({
     shareImage: '',
+    shareDesc: '',
     infoId: '', //文章的id
     city: '',
     info: null,
     editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
     inlayHouseInfo: null, // 文章插入楼盘信息
     agentInfo: null,
-
-    titleComments: {
-      title: '精彩评论',
-      linkText: '',
-      link: ''
-    },
-    titleProperties: {
-      title: '推荐房源',
-      linkText: '',
-      link: ''
-    },
-    titleArticle: {
-      title: 'TA的写一写',
-      linkText: '',
-      link: ''
-    },
-
     guidanceShow: false,
     shareData: null,
     renderDom: [],
@@ -198,10 +183,7 @@ export default {
       const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId)
       this.info = res
       this.infoId = res.id
-      if (this.info.editData) {
-        this.editData = JSON.parse(this.info.editData)
-        console.log(this.editData)
-      }
+      if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
       this.handleLinkerInfo()
 
       this.agentInfo = {
@@ -216,23 +198,24 @@ export default {
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
-      console.log(virtualDom)
 
       for (let dom of virtualDom.children) {
         this.renderDom.push({
           text: dom.innerHTML,
-          status: 'h5'
+          status: 'view'
         })
       }
 
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
+      let desc = res.title
       this.shareData = {
         title: 'AW大师写一写',
-        desc: this.info.title,
+        desc: desc,
         imgUrl: this.info.image,
         link: host
       }
+      this.shareDesc = this.info.title
       this.shareImage = this.info.image
       this.shareHandler()
     },
@@ -383,6 +366,9 @@ export default {
 .share-image {
   display: none;
 }
+.share-desc {
+  display: none;
+}
 .discover-detail-page {
   background-color: #f7f9fa;
   > .discover-detail-container {
@@ -452,10 +438,10 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
-      font-size: 16px !important;
-      color: #333333 !important;
-      font-weight: 400 !important;
-      line-height: 28px !important;
+      font-size: 16px;
+      color: #333333;
+      font-weight: 400 ;
+      line-height: 28px ;
     }
     > .discover-extra-info {
       display: flex;
@@ -513,7 +499,7 @@ export default {
         line-height: 1.5;
         color: #445166;
         font-size: 14px;
-        width: 260px;
+        width: 300px;
         word-break: break-all;
         display: -webkit-box;
         -webkit-line-clamp: 5;
