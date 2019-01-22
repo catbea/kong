@@ -206,9 +206,10 @@ export default {
 
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
+      let desc = this.info.title
       this.shareData = {
         title: 'AW大师写一写',
-        desc: 'this.info.title',
+        desc: desc,
         imgUrl: this.info.image,
         link: host
       }
@@ -218,20 +219,19 @@ export default {
     // 楼盘信息处理
     async handleLinkerInfo() {
       // 查询插入楼盘的信息
-      // if (this.editData) {
-      //   // 编辑文章分享
-      //   if (this.editData.inlayHouse) {
-      //     const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
-      //     this.inlayHouseInfo = res[0]
-      //   }
-      //   debugger
-      //   if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
-      //     this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
-      //   }
-      // } else {
-      //   // 原文章分享
-      //   this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
-      // }
+      if (this.editData) {
+        // 编辑文章分享
+        if (this.editData.inlayHouse) {
+          const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
+          this.inlayHouseInfo = res[0]
+        }
+        if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
+          this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
+        }
+      } else {
+        // 原文章分享
+        this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
+      }
     },
     // 查询楼盘信息
     async getLinkerInfo(agentId, enterpriseId, shareUuid, linkerIds) {
