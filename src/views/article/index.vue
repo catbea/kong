@@ -189,6 +189,7 @@
             maxlength="140"
             v-model="replayCnt"
             :style="{'text-indent': (replayStatus===2 ? '75px' : '')}"
+            @blur="blur"
           ></textarea>
         </div>
       </div>
@@ -639,7 +640,11 @@ export default {
       if (result) {
         this.articleData[this.commentIndex].discussVOS.splice(this.deleteIndex, 1)
       }
-    }
+    },
+    // 评论弹框
+    blur () {
+      document.activeElement.scrollIntoViewIfNeeded(true)
+    },
   },
   filters: {
     formatData(time) {
@@ -698,6 +703,11 @@ export default {
       { passive: false }
     )
     document.querySelector('.replay').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
+      document.querySelector('.submenu').addEventListener(
       'touchmove',
       function(e) {
         e.preventDefault()
@@ -1030,6 +1040,7 @@ export default {
     position: fixed;
     left: 0;
     top: 0;
+    bottom: 0;
     right: 0;
     height: 100%;
     z-index: 3;
@@ -1038,7 +1049,8 @@ export default {
       width: 100%;
       padding: 20px 16px 30px 13px;
       box-sizing: border-box;
-      position: relative;
+      position: absolute;
+      bottom: 0;
       background-color: #fff;
       .top-action {
         display: flex;
