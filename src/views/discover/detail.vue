@@ -206,6 +206,7 @@ export default {
     this.shareUuid = uuid()
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.guidanceShow = true
+      window.localStorage.setItem('isFirst', true)
     } else {
       this.guidanceShow = false
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="popup-container" v-if="currentShow">
+  <div class="popup-container" v-model="currentShow">
     <div class="bg_img guide-share" :style="{backgroundImage:'url('+shareGuideImg+')'}"></div>
     <div class="close-title">点击此处分享给好友</div>
     <div class="close-know" @click="popupShowControl(false)">知道了</div>
@@ -40,7 +40,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .popup-container {
   width: 100%;
   height: 100%;
