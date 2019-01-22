@@ -1,6 +1,7 @@
-// for demo
+// for sys
 export const VERSIONS = 'VERSION'
 export const TABBAR = 'TABBAR'
+export const SHARE_PROMPT = 'SHARE_PROMPT'
 
 // user
 export const USER_INFO = 'USER_INFO'

@@ -1,5 +1,5 @@
 <template>
-  <div class="discover-detail-page">
+  <div class="discover-detail-page" v-if="haveData">
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
       <h5 class="discover-title">{{info&&info.title}}</h5>
@@ -118,12 +118,16 @@
     <open-article :show.sync="guidanceShow"></open-article>
     <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
   </div>
+  <div v-else>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+  </div>
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
+import Null from 'COMP/Null'
 import { uuid } from '@/utils/tool'
 import remove from 'lodash/remove'
 import { mapGetters } from 'vuex'
@@ -140,9 +144,13 @@ export default {
     CommentAlert,
     Avatar,
     EstateItem,
-    Paragraph
+    Paragraph,
+    Null
   },
   data: () => ({
+    haveData: true,
+    nullIcon: require('IMG/article/empty_article@2x.png'),
+    nullcontent: '该文章已被下架删除',
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12,
@@ -198,12 +206,14 @@ export default {
     this.shareUuid = uuid()
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.guidanceShow = true
+      window.localStorage.setItem('isFirst', true)
     } else {
       this.guidanceShow = false
     }
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
+    
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -211,6 +221,11 @@ export default {
   methods: {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
+      if (res.returnCode == 10028) {
+        this.haveData = false
+        return
+      }
+      this.haveData = true
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
@@ -368,7 +383,8 @@ export default {
         senderSource: 0,
         title: this.info.title,
         placeholder: '分享你的想法',
-        type: 0
+        type: 0,
+        contentHeight: window.screen.height - 64
       }
     },
     // 评论输入框编辑
@@ -408,7 +424,8 @@ export default {
           senderSource: 0,
           title: item.senderName + '：' + item.content,
           placeholder: '回复' + item.senderName + '：',
-          type: 1
+          type: 1,
+          contentHeight: window.screen.height - 64
         }
       }
     },
@@ -430,7 +447,8 @@ export default {
           senderSource: 0,
           title: item.receiverName + '：' + item.content,
           placeholder: '回复' + item.receiverName + '：',
-          type: 1
+          type: 1,
+          contentHeight: window.screen.height - 64
         }
       }
     },
@@ -523,8 +541,7 @@ export default {
     },
     // 分享按钮点击处理
     shareHandler() {
-      this.guidanceShow = true
-      console.log('this.guidanceShow===' + this.guidanceShow)
+      this.$store.commit('SHARE_PROMPT', true)
     },
     // 设置分享
     async setShare() {

@@ -19,8 +19,7 @@ export default (msg, url) => {
     case 21103: // 验证码错误
       return true
     case 10028: // 文章被下架或被删除--待处理
-      return
-
+      return true
     default:
       console.error(msg)
       window.vue.$toast(msg.msg)
