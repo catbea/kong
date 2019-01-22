@@ -148,7 +148,7 @@ export default {
     Null
   },
   data: () => ({
-    haveData: false,
+    haveData: true,
     nullIcon: require('IMG/article/empty_article@2x.png'),
     nullcontent: '该文章已被下架删除',
     swiperOption: {
