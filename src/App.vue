@@ -17,7 +17,7 @@
 <script>
 import NewMsgPopup from 'COMP/Message/NewMsgPopup'
 import Tabbar from 'COMP/Common/Tabbar'
-import SharePrompt from 'COMP/SharePrompt'
+import SharePrompt from 'COMP/Common/SharePrompt'
 import { mapGetters } from 'vuex'
 import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 export default {
