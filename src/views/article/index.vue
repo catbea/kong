@@ -818,6 +818,7 @@ export default {
       .content {
         display: flex;
         padding-bottom: 12px;
+        overflow: hidden;
         .left-cnt {
           height: 90px;
           flex: 1;
