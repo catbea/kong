@@ -28,6 +28,7 @@
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
         <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
+        <p class="open-pormpt" v-if="!previewFlag&&info.linkerCount<3">当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用</p>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
@@ -348,9 +349,16 @@ export default {
   }
   > .recommend-house-container {
     background: #fff;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
     > .recommend-house-box {
       margin: 0 15px;
+      > .open-pormpt {
+        text-align: center;
+        font-size: 12px;
+        font-weight: 400;
+        color: #ea4d2e;
+      }
     }
   }
   > .fixed-bar {
