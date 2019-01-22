@@ -670,10 +670,16 @@ export default {
       if (that.finished && endStatus && that.startY - that.endY > 10) {
         e.preventDefault()
       }
+      if (that.endY > that.startY  && scrollTop === 0) {
+        e.preventDefault()
+      }
     }, { passive: false })
     document.querySelector('body').addEventListener('touchend', function(e) {
       that.endY = e.changedTouches[0].pageY
       if (that.finished && that.startY - that.endY > 10) {
+        e.preventDefault()
+      }
+      if (that.endY > that.startY && scrollTop === 0) {
         e.preventDefault()
       }
     }, { passive: false })
