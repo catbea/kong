@@ -1,7 +1,7 @@
 <template>
   <div class="my-estate-list">
     <title-bar class="title-container" :conf="titleBarConf" v-if="list&&list.length>0"></title-bar>
-    <estate-item v-for="(item,index) in list" :key="index" :info="item" :conf="{op:'share'}" @click="godynamicsInfo(item)" @share="shareHandler(item)"></estate-item>
+    <estate-item v-for="(item,index) in list" :key="index" :info="item" :conf="{op:'share'}" :itemBorder="true" @click="godynamicsInfo(item)" @share="shareHandler(item)"></estate-item>
   </div>
 </template>
 <script>
