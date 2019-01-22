@@ -303,5 +303,19 @@ class DiscoverService {
       }
     })
   }
+
+
+  /**
+   * 查询多个楼盘信息
+   * @param {*} linkerIds 楼盘id,多个逗号隔开
+   */
+  queryLinkerListByIds(linkerIds) {
+    return xhr({
+      url: '/myLinker/queryLinkerListByIds',
+      body: {
+        linkerIds
+      }
+    })
+  }
 }
 export default new DiscoverService()

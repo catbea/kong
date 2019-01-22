@@ -53,7 +53,7 @@
       <!-- 评论 -->
       <div class="comment-container">
         <div class="comment-box" v-if="commentList.length">
-          <title-bar :conf="titleComments"/>
+          <title-bar :conf="{title: '精彩评论'}"/>
           <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
               <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
@@ -73,14 +73,14 @@
       </div>
       <!-- 推荐房源 -->
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
-        <title-bar :conf="titleProperties"/>
+        <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
           <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
       <div class="recommend-article" v-if="articleList.length>0">
-        <title-bar :conf="titleArticle"/>
+        <title-bar :conf="{title: 'TA的写一写'}"/>
         <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index" @click="popHandler(3, item)">
           <div class="recommend-article-name">{{item.title}}</div>
         </div>
@@ -101,7 +101,7 @@
         <div class="tool-right">在线咨询</div>
       </div>
     </div>
-    <open-article :show.sync="guidanceShow"></open-article>
+    <open-article :show.sync="guidanceShow"/>
     <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
@@ -138,23 +138,6 @@ export default {
     editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
     inlayHouseInfo: null, // 文章插入楼盘信息
     agentInfo: null,
-
-    titleComments: {
-      title: '精彩评论',
-      linkText: '',
-      link: ''
-    },
-    titleProperties: {
-      title: '推荐房源',
-      linkText: '',
-      link: ''
-    },
-    titleArticle: {
-      title: 'TA的写一写',
-      linkText: '',
-      link: ''
-    },
-
     guidanceShow: false,
     shareData: null,
     renderDom: [],
@@ -198,10 +181,7 @@ export default {
       const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId)
       this.info = res
       this.infoId = res.id
-      if (this.info.editData) {
-        this.editData = JSON.parse(this.info.editData)
-        console.log(this.editData)
-      }
+      if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
       this.handleLinkerInfo()
 
       this.agentInfo = {
@@ -216,12 +196,11 @@ export default {
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
-      console.log(virtualDom)
 
       for (let dom of virtualDom.children) {
         this.renderDom.push({
           text: dom.innerHTML,
-          status: 'h5'
+          status: 'view'
         })
       }
 
@@ -239,19 +218,20 @@ export default {
     // 楼盘信息处理
     async handleLinkerInfo() {
       // 查询插入楼盘的信息
-      if (this.editData) {
-        // 编辑文章分享
-        if (this.editData.inlayHouse) {
-          const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
-          this.inlayHouseInfo = res[0]
-        }
-        if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
-          this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
-        }
-      } else {
-        // 原文章分享
-        this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
-      }
+      // if (this.editData) {
+      //   // 编辑文章分享
+      //   if (this.editData.inlayHouse) {
+      //     const res = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.inlayHouse)
+      //     this.inlayHouseInfo = res[0]
+      //   }
+      //   debugger
+      //   if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
+      //     this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, this.editData.recommendHouse.join(','))
+      //   }
+      // } else {
+      //   // 原文章分享
+      //   this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
+      // }
     },
     // 查询楼盘信息
     async getLinkerInfo(agentId, enterpriseId, shareUuid, linkerIds) {
@@ -452,10 +432,10 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
-      font-size: 16px !important;
-      color: #333333 !important;
-      font-weight: 400 !important;
-      line-height: 28px !important;
+      font-size: 16px;
+      color: #333333;
+      font-weight: 400 ;
+      line-height: 28px ;
     }
     > .discover-extra-info {
       display: flex;

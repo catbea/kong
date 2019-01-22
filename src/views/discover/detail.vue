@@ -25,15 +25,19 @@
         </div>
         <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
-      <div class="discover-detail-content" v-html="info&&info.content"></div>
+      <!-- 文章详情 -->
+      <div class="discover-detail-content">
+        <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
+          <paragraph :info="paragraph"/>
+          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
+        </div>
+      </div>
       <p class="discover-extra-info">
         <span class="reprint-from">{{info&&info.publisher}}</span>
-        <span class="reprint-time">{{info&&info.releaseTime | dateTimeFormatter(3, '/')}}</span>
+        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span
-          class="disclaimer-text"
-        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -50,13 +54,17 @@
           </div>
         </div>
         <div class="easy-look-list">
-          <span
-            ref="easyLook"
-            :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'"
-          >{{easylookList && easylookList.join('、')}}</span>
+          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
           <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
             <van-icon name="arrow-down"/>
           </div>
+        </div>
+      </div>
+      <!-- 推荐房源 -->
+      <div class="recommend-houses" v-if="recommendHouseList.length>0">
+        <title-bar :conf="{title: '推荐房源'}"/>
+        <div class="recommend-houses-content">
+          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
         </div>
       </div>
       <!-- 评论 -->
@@ -64,24 +72,12 @@
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div
-              class="comment-list"
-              v-for="(item, index) in commentList"
-              :key="index"
-              @click="commentSenderClickHandler(item)"
-            >
-              <div
-                class="bg_img"
-                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
-                style="width:40px;height:40px;border-radius:50%;"
-              ></div>
+            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
+              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span
-                    v-if="item.receiverName"
-                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
-                  >回复</span>
+                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -105,11 +101,7 @@
         {{info&&info.belongeder === '' ? '编辑' : '更新编辑'}}
       </div>
       <div v-if="info&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
-        <i
-          v-if="collectionStatus===1"
-          style="color:#007AE6;"
-          class="icon iconfont icon-Building_details_col"
-        ></i>
+        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         收藏
       </div>
@@ -122,21 +114,9 @@
         删除下架
       </div>
     </div>
-    <van-actionsheet
-      v-model="isShowDeleteComment"
-      :actions="actions"
-      cancel-text="取消"
-      @select="onSelect"
-      @cancel="onCancel"
-    ></van-actionsheet>
+    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <open-article :show.sync="guidanceShow"></open-article>
-    <comment-alert
-      :show.sync="showCommentAlert"
-      :info="commentInfo"
-      @cancel="cancelHandler"
-      @publish="publishHandler"
-      @input="inputHandler"
-    ></comment-alert>
+    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
   </div>
 </template>
 <script>
@@ -151,12 +131,16 @@ import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
 import cpInformationService from 'SERVICE/cpInformationService'
+import EstateItem from 'COMP/EstateItem'
+import Paragraph from 'COMP/Discover/Paragraph'
 export default {
   components: {
     TitleBar,
     OpenArticle,
     CommentAlert,
-    Avatar
+    Avatar,
+    EstateItem,
+    Paragraph
   },
   data: () => ({
     swiperOption: {
@@ -199,7 +183,10 @@ export default {
     commentInfo: null,
     commentIds: [], // 评论Ids
     shareUuid: '',
-    isPass: ''
+    isPass: '',
+    recommendHouseList: [], // 推荐房源列表
+    renderDom: [],
+    inlayHouseInfo: null // 文章插入楼盘信息
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -246,10 +233,47 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
+      debugger
       if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
+      this.handleLinkerInfo()
       this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
+
+      // 创建虚拟dom解析html结构
+      let virtualDom = document.createElement('div')
+      virtualDom.innerHTML = this.info.content
+
+      for (let dom of virtualDom.children) {
+        this.renderDom.push({
+          text: dom.innerHTML,
+          status: 'h5'
+        })
+      }
+    },
+    // 楼盘信息处理
+    async handleLinkerInfo() {
+      // 查询插入楼盘的信息
+      debugger
+      if (this.editData) {
+        // 编辑文章分享
+        if (this.editData.inlayHouse) {
+          const res = await this.getLinkerInfo(this.editData.inlayHouse)
+          this.inlayHouseInfo = res[0]
+        }
+
+        if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
+          this.recommendHouseList = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
+        }
+      } else {
+        // 原文章分享
+        // this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
+      }
+    },
+    // 查询楼盘信息
+    async getLinkerInfo(linkerIds) {
+      const res = await discoverService.queryLinkerListByIds(linkerIds)
+      return res
     },
     // 好看列表
     async getLikeList() {
@@ -629,10 +653,10 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
-      font-size: 16px !important;
-      color: #333333 !important;
-      font-weight: 400 !important;
-      line-height: 28px !important;
+      font-size: 16px;
+      color: #333333;
+      font-weight: 400;
+      line-height: 28px;
     }
     > .discover-extra-info {
       display: flex;
@@ -783,10 +807,10 @@ export default {
       }
     }
   }
-  > .recommend-houses {
+  .recommend-houses {
     background-color: #fff;
     margin-top: 10px;
-
+    border-top: 10px solid #f7f9fa;
     > .recommend-houses-content {
       padding: 10px 15px;
       .house-item {
