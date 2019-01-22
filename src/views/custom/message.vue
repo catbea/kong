@@ -87,7 +87,7 @@
         <img v-else src="@/assets/img/message/Oval_slices_text.png">
       </div>
       <div class="massage-info-lower-cen">
-        <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage(1,'')" v-model="message" id="message" v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？">
+        <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage(1,'')" v-model="message" id="message" v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？" @blur="blur">
         <button v-else :class="isvoice==1? 'msgContentvoice msgContentvoice-bg':'msgContentvoice'" @touchstart="startRecord" @touchend="stopRecord" @touchmove="touchmoveRecord">{{def_btvalue}}</button>
       </div>
       <div class="massage-info-lower-right">
@@ -232,6 +232,9 @@ export default {
     setToAccount('')
   },
   methods: {
+    blur () {
+      document.activeElement.scrollIntoViewIfNeeded(true)
+    },
     /**
      * 客户基本信息以及购房意向度
      */
