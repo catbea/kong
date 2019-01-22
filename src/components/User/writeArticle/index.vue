@@ -78,13 +78,12 @@ export default {
   margin-bottom: 1px;
 
   > .write-item-left {
-    display: flex;
-    flex-direction: column;
-    padding-right: 5px;
-    justify-items: center;
+    position: relative;
     margin-top: 5px;
+    width: 200px;
 
     > .article-title {
+      position: absolute;
       font-size: 16px;
       width: 208px;
       color: #333333;
@@ -99,10 +98,11 @@ export default {
     }
 
     > .share-bottom {
+      position:absolute;
       width: 100%;
-      margin-top: 30px;
+      bottom: 0;
+     
       > .share-time {
-        
         font-size: 12px;
         color: #969ea8;
       }
@@ -110,7 +110,7 @@ export default {
       > .collection-text {
         color: #bbbbbb;
         font-size: 10px;
-        margin-left: 19px;
+        margin-left: 9px;
       }
 
       > .collection-img {
