@@ -283,7 +283,7 @@ export default {
         }
         this.$nextTick(() => {
           let height = this.$refs.easyLook.offsetHeight
-          if (height <= 80) {
+          if (height <= 85) {
             this.isMoreLike = false
           } else {
             this.isMoreLike = true
@@ -524,6 +524,7 @@ export default {
     // 分享按钮点击处理
     shareHandler() {
       this.guidanceShow = true
+      console.log('this.guidanceShow===' + this.guidanceShow)
     },
     // 设置分享
     async setShare() {
