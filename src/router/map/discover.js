@@ -13,7 +13,10 @@ export default [
   {
     path: '/discover/:id/:city',
     name: 'discover-detail',
-    component: resolve => require(['@/views/discover/detail.vue'], resolve)
+    component: resolve => require(['@/views/discover/detail.vue'], resolve),
+    meta: {
+      title: 'AW大师写一写',
+    }
   },
   {
     path: '/discover/edit-help',
