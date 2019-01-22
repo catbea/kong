@@ -12,10 +12,9 @@
       <!-- 展示的楼盘 -->
       <div
         class="market-left"
-        :class=""
         v-show="myMarketShow"
       >
-        <div  class="fixed" :class="{isFixed:searchBar}">
+        <div :class="{isFixed:searchBar}">
           <search
             :conf="searchInfo"
             v-model="showProjectName"
@@ -72,6 +71,7 @@
         <div
           v-show="notShowMarketListCount>=showFilterLimit"
           style="margin-right:16px;margin-left:16px;"
+          :class="{isFixed:searchBar}"
         >
           <search
             :conf="searchInfo"
@@ -90,7 +90,7 @@
           finished-text="没有更多了"
           @load="notShowGetMyMarketInfo"
           v-show="!no"
-          :class="{screen:flag}"
+          :class="{screen:flag,marginFlxed:searchBar}"
         >
           <close-market
             v-for="(item,index) in notShowMarketList"
@@ -135,18 +135,13 @@ export default {
     CloseMarket
   },
   mounted () {
-  // window.addEventListener('scroll', this.handleScroll)
-  // console.log(window,'windo数据');
-  var _this=this
-  // document.querySelector('#app') = this.$refs.viewBox
   document.querySelector(".router-view").addEventListener('scroll', () => {
    if(document.querySelector(".router-view").scrollTop>document.querySelector(".user-market-box").offsetTop){
      this.searchBar=true
      }else{
        this.searchBar=false
      }
-  console.log(document.querySelector(".user-market-box").offsetTop)
-}, false)
+    }, false)
   },
   data: () => ({
     searchBar:false,//是否吸顶
