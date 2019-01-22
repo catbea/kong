@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <div class="recommend-house-container">
+    <div class="recommend-house-container" v-if="!(previewFlag&&recommendList.length===0)">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
         <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
