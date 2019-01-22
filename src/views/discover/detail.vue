@@ -26,7 +26,7 @@
         <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
       <!-- 文章详情 -->
-       <div class="discover-detail-content">
+      <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
           <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
@@ -186,7 +186,7 @@ export default {
     isPass: '',
     recommendHouseList: [], // 推荐房源列表
     renderDom: [],
-    inlayHouseInfo: null, // 文章插入楼盘信息
+    inlayHouseInfo: null // 文章插入楼盘信息
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -261,7 +261,7 @@ export default {
           const res = await this.getLinkerInfo(this.editData.inlayHouse)
           this.inlayHouseInfo = res[0]
         }
-        
+
         if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
           this.recommendHouseList = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
         }
@@ -656,7 +656,7 @@ export default {
       font-size: 16px;
       color: #333333;
       font-weight: 400;
-      line-height: 28px ;
+      line-height: 28px;
     }
     > .discover-extra-info {
       display: flex;
@@ -807,10 +807,10 @@ export default {
       }
     }
   }
-  > .recommend-houses {
+  .recommend-houses {
     background-color: #fff;
     margin-top: 10px;
-
+    border-top: 10px solid #f7f9fa;
     > .recommend-houses-content {
       padding: 10px 15px;
       .house-item {
