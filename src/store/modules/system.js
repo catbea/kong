@@ -43,14 +43,16 @@ const state = {
     ]
   },
   newMsgStatus: false,
-  newMsgContent: null
+  newMsgContent: null,
+  sharePrompt: false
 }
 
 const getters = {
   versions: state => state.versions,
   tabbar: state => state.tabbar,
   newMsgStatus: state => state.newMsgStatus,
-  newMsgContent: state => state.newMsgContent
+  newMsgContent: state => state.newMsgContent,
+  sharePrompt: state => state.sharePrompt
 }
 
 const actions = {}
@@ -67,6 +69,9 @@ const mutations = {
   },
   [types.NEW_MSG_CONTENT](state, newMsgContent) {
     state.newMsgContent = newMsgContent
+  },
+  [types.SHARE_PROMPT](state, data) {
+    state.sharePrompt = data
   }
 }
 

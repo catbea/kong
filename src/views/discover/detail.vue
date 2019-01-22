@@ -524,7 +524,7 @@ export default {
     },
     // 分享按钮点击处理
     shareHandler() {
-      this.guidanceShow = true
+      this.$store.commit('SHARE_PROMPT', true)
     },
     // 设置分享
     async setShare() {
