@@ -233,7 +233,6 @@ export default {
         imgUrl: this.info.image,
         link: host
       }
-      debugger
       if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
       this.handleLinkerInfo()
       this.setShare()
@@ -407,7 +406,7 @@ export default {
           receiverSource: item.senderSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: item.content,
+          title: item.senderName + '：' + item.content,
           placeholder: '回复' + item.senderName + '：',
           type: 1
         }
@@ -429,7 +428,7 @@ export default {
           receiverSource: item.receiverSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: item.content,
+          title: item.receiverName + '：' + item.content,
           placeholder: '回复' + item.receiverName + '：',
           type: 1
         }
