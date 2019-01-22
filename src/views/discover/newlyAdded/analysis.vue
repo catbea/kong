@@ -58,6 +58,8 @@
 <script>
 import articleService from 'SERVICE/articleService'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
+
 export default {
   data() {
     return {
@@ -92,7 +94,7 @@ export default {
     async commitInfo(data) {
       const result = await articleService.articleAnalysis(data)
 
-      if (result.returnCode == '31100'||result.returnCode == '10500') {
+      if (result.returnCode == '31100' || result.returnCode == '10500' || result.returnCode == '31106') {
         this.showLoading = 'none'
         this.analysisText = '解析失败'
         this.title = '获取失败'
@@ -112,8 +114,9 @@ export default {
             // on close
             this.cancelClooection(val)
           })
-        }
-       else {
+      } else {
+        this.$store.commit(types.MYWRITE_TAB, '3')
+
         this.articleId = result.articleId
         this.title = result.title
         this.source = result.source
@@ -137,17 +140,19 @@ export default {
     goToMyWrite() {
       this.$toast('文章添加成功')
       this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
-
+     
     },
 
     goToEditDetail() {
       this.analysisText = '解析成功'
       this.showLoading = 'none'
       let city = '全国'
-      
+
       this.$toast('文章解析成功')
       this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
-    },
+
+      
+ },
 
     //关闭弹窗
     closeDefaultMsg() {

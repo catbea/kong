@@ -168,7 +168,7 @@ export default {
         border-radius: 2px;
         color: #ffffff;
         font-size: 5px;
-        margin-top: 8px;
+        margin-top: 55px;
         display: flex;
         justify-content: center;
         align-items: center;
