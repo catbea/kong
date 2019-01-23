@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="write-item-right">
-        <img class="article-img" :src="item.image">
+        <div class="article-img" :style="{backgroundImage:'url('+item.image+')'}"></div>
       </div>
     </div>
   </div>
@@ -131,6 +131,7 @@ export default {
       width: 120px;
       height: 90px;
       border-radius: 6px;
+      background-size: cover;
     }
   }
 }

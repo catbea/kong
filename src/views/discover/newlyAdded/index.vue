@@ -6,9 +6,11 @@
     <div class="linker-input">
       <textarea class="linker-input-body" :placeholder="defaultText" v-model="linkerText"></textarea>
     </div>
+
+    <div class="start-edit" @click="startEdit">开始编辑</div>
     <div class="clear-address" @click="clearAddress">清空地址</div>
     <div class="add-article" @click="addArticle">添加文章</div>
-    <div class="start-edit" @click="startEdit">开始编辑</div>
+    
   </div>
 </template>
 
@@ -113,7 +115,7 @@ export default {
   }
 
   > .clear-address {
-    margin-top: 40px;
+    margin-top: 20px;
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
@@ -140,7 +142,7 @@ export default {
   }
 
   > .start-edit {
-    margin-top: 20px;
+    margin-top: 40px;
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
