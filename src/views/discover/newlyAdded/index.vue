@@ -100,7 +100,7 @@ export default {
     margin-top: 46px;
     height: 126px;
     padding: 10px;
-    color: #c8cacc;
+    color: #13294F;
     font-size: 16px;
   }
 
