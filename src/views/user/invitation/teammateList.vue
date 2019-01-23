@@ -4,7 +4,7 @@
           <div class="teammateList-top" :style="{'backgroundImage':'url('+teammateListBackIcon+')'}">
             <img :src="couponIcon" class="teammateList-top-icon">
             <div class="teammateList-top-center">
-              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{0 | priceFormart}}</span>元</p>
+              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{registerRewardsPrice | priceFormart}}</span>元</p>
               <p class="teammateList-top-num">已邀请：{{ registerRewardsTotal == 0 ? 0 : registerRewardsTotal}}人</p>
             </div>
           </div>
