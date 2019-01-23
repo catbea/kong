@@ -649,10 +649,10 @@ export default {
     }
   },
   mounted () {
-    document.querySelector('.discover-detail-container').addEventListener('touchstart', (e) => {
+    document.querySelector('body').addEventListener('touchstart', (e) => {
       this.startY = e.changedTouches[0].pageY
     })
-    document.querySelector('.discover-detail-container').addEventListener('touchmove', (e) => {
+    document.querySelector('body').addEventListener('touchmove', (e) => {
       this.endY = e.changedTouches[0].pageY
       let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
       let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
@@ -664,6 +664,10 @@ export default {
         e.preventDefault()
       }
     }, { passive: false })
+    document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
+       e.preventDefault()
+    }, { passive: false })
+    
     
   }
 }
