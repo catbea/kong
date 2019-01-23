@@ -68,6 +68,7 @@ import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {
   components: {
+    ...mapGetters(['userInfo']),
     businessCard
   },
   data: () => ({
@@ -96,6 +97,9 @@ export default {
   },
   methods: {
     relationHandle(){//分享插件
+    let host = process.env.VUE_APP_APP_URL
+    window.location.href = host+`panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
+    // window.location.href = 'https://sit.zooming-data.com/panorama-helper/static/customerAnalysis.html?agentId=705&enterpriseId=90'
     },
     enterSharePage() {
       this.$router.push({ path: '/user/share-card', query: { agentId: this.userInfo.agentId } })
