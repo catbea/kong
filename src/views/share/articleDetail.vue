@@ -433,6 +433,7 @@ export default {
     },
     // 分享
     async shareHandler() {
+      /*
       console.log(this.shareData, 'shareData')
       // await window.awHelper.wechatHelper.init()
       if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {
@@ -446,6 +447,8 @@ export default {
 
       // this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
+      */
+     window.awHelper.wechatHelper.shareWechat(this.shareData)
     }
   },
   watch: {
