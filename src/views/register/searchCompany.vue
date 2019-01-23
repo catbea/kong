@@ -11,7 +11,7 @@
           v-on:input="onInput"
           background="#fff"
         >
-          <!-- <div slot="action" @click="onSearch">搜索</div> -->
+          <div slot="left-icon" class="bg_img search-icon" :style="{backgroundImage:'url(' + Icon + ')'}"></div>
         </van-search>
       </form>
     </div>
@@ -40,6 +40,7 @@ export default {
   data: () => ({
     value: '',
     searchIcon: require('IMG/register/searchIcon@2x.png'),
+    Icon: require('IMG/market/Group 3@2x.png'),
     searchLists: null,
     // regLists: null,
     enterpriseId: '',
@@ -100,10 +101,21 @@ export default {
 }
 </script>
 <style lang="less">
+.search-container{
+.search-icon {
+      width:24px;
+      height:24px;
+    }
+}
 .van-field {
   background-color: #f2f2f2;
   align-items: center;
 }
+.van-search {
+  .van-cell{
+  padding-left:5px;
+  }
+  }
 .search-content {
   margin: 15px;
   .search-tips {
@@ -119,6 +131,7 @@ export default {
       margin-left: 8px;
       height: 17px;
       line-height: 17px;
+      padding-top:1px;
     }
   }
   .search-list {
