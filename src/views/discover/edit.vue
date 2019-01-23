@@ -350,6 +350,9 @@ export default {
       color: #333333;
       font-weight: 400;
       line-height: 28px;
+      .edit-box:nth-child(3){
+        margin-top:24px;
+      }
       > .disclaimer-box {
         font-size: 14px;
         color: #969ea8;
@@ -387,11 +390,12 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
+    height:72px;
     > .left-operation {
       flex: 1;
       font-size: 12px;
       display: flex;
-
+      color:#666666;
       > .left-first {
         display: flex;
         flex-direction: column;
@@ -440,6 +444,7 @@ export default {
       flex: 1;
       display: flex;
       font-size: 14px;
+      align-items:center;
       > div {
         flex: 1;
         width: 88px;
