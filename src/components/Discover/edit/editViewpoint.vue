@@ -6,11 +6,6 @@
       <div class="viewpoint-top">
         <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
         <div class="viewpoint-right">
-          <!-- <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar> -->
-          <!-- <div class="viewpoint-name">
-            <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
-            <span style="color:#969EA8;font-size:14px">点评</span>
-          </div>-->
         </div>
       </div>
       <div class="viewpoint-content">{{currentValue}}</div>
@@ -18,7 +13,7 @@
     <van-popup class="write-board" v-model="viewpointEditShow" position="bottom">
       <p class="write-title">发表观点</p>
       <div class="pull-btn" @click="viewpointPullHandler">发布</div>
-      <textarea class="write-content" v-model="tempValue"/>
+      <textarea class="write-content" maxlength="140" v-model="tempValue"/>
     </van-popup>
   </div>
 </template>

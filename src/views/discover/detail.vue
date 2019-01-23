@@ -179,7 +179,7 @@ import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
 import Null from 'COMP/Null'
 import { uuid } from '@/utils/tool'
-import remove from 'lodash/remove'
+import { remove } from 'lodash'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
@@ -244,7 +244,10 @@ export default {
     recommendHouseList: [], // 推荐房源列表
     renderDom: [],
     inlayHouseInfo: null, // 文章插入楼盘信息
-    sharePrompt: true
+    sharePrompt: true,
+    isHasAgentName: false, // 好看/取消好看使用,当好看列表中有当前经纪人时前端不需要进行添加删除
+    startY: '',
+    endY: ''
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -345,6 +348,7 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
+        this.isHasAgentName = this.easylookList.indexOf(this.agentInfo.agentName) === -1 ? false : true
         this.$nextTick(() => {
           let height = this.$refs.easyLook.offsetHeight
           if (height <= 85) {
@@ -407,12 +411,20 @@ export default {
       }
       const res = await articleService.updateLike(param)
       if (this.likeFlag) {
-        // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
-        this.easylookList.unshift(this.agentInfo.agentName)
+        if (this.isHasAgentName == false) {
+          // 代表好看列表中没有当前经纪人
+          // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
+          this.easylookList.unshift(this.agentInfo.agentName)
+        }else {
+
+        }
       } else {
-        this.easylookList = remove(this.easylookList, n => {
-          return n !== this.agentInfo.agentName
-        })
+        if (this.isHasAgentName == false) {
+          this.easylookList = remove(this.easylookList, n => {
+            return n !== this.agentInfo.agentName
+          })
+        }
+        
       }
       console.log(this.easylookList)
     },
@@ -610,6 +622,7 @@ export default {
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
+      // 分享成功之后刷新当前页面
       location.reload()
     },
     // 文章删除
@@ -634,6 +647,28 @@ export default {
     $route() {
       location.reload()
     }
+  },
+  mounted () {
+    document.querySelector('body').addEventListener('touchstart', (e) => {
+      this.startY = e.changedTouches[0].pageY
+    })
+    document.querySelector('body').addEventListener('touchmove', (e) => {
+      this.endY = e.changedTouches[0].pageY
+      let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
+      let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
+      let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
+      if (scrollTop===0 && this.endY - this.startY > 10) {
+         e.preventDefault()
+      }
+      if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
+        e.preventDefault()
+      }
+    }, { passive: false })
+    document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
+       e.preventDefault()
+    }, { passive: false })
+    
+    
   }
 }
 </script>
@@ -645,10 +680,11 @@ export default {
   > .discover-detail-container {
     background-color: #fff;
     padding-bottom: 20px;
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
     left: 0;
+    bottom: 70px;
     overflow-y: scroll;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -794,7 +830,7 @@ export default {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 1.5;
-          font-weight: 600;
+          // font-weight: 600;
         }
         > .easy-look-name {
           color: #445166;
