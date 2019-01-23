@@ -48,6 +48,9 @@ export default {
         let statusArr = ['热销中', '即将发售', '售罄']
         temp.linkerTags = [statusArr[temp.saleStatus], ...temp.condition]
       }
+      while(temp.linkerTags.length>3){
+        temp.linkerTags.pop()
+      }
 
       return temp
     }
