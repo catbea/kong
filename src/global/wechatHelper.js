@@ -98,18 +98,18 @@ class WechatHelper {
     })
   }
 
-  shareWechat(conf) {
-    await store.dispatch('setJssdkConfig', jsApiList)
-    await this.wx.config(store.state.wx.jssdkConfig)
+  async shareWechat(conf) {
+    store.dispatch('setJssdkConfig', jsApiList)
+    this.wx.config(store.state.wx.jssdkConfig)
     wx.ready(function () {
       var shareData = conf
       wx.onMenuShareAppMessage(shareData); // 分享给朋友
       wx.onMenuShareTimeline(shareData); // 分享到朋友圈
-      wx.onMenuShareQQ(shareData);  // 分享到QQ
-      wx.onMenuShareWeibo(shareData); // 分享到腾讯微博
-      wx.onMenuShareQZone(shareData); // 分享到QQ空间
+      alert('ready')
     });
-
+    var shareData = conf
+    wx.onMenuShareAppMessage(shareData); // 分享给朋友
+    wx.onMenuShareTimeline(shareData); // 分享到朋友圈
   }
 }
 export default new WechatHelper()
