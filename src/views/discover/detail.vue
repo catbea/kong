@@ -1,7 +1,7 @@
 <template>
   <div class="discover-detail-page" v-if="haveData">
     <!-- 文章详情和经纪人信息 -->
-    <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
+    <div class="discover-detail-container" >
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
@@ -657,10 +657,10 @@ export default {
       let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
       let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
       let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
-      if (scrollTop===0 && endY - startY > 10) {
+      if (scrollTop===0 && this.endY - this.startY > 10) {
          e.preventDefault()
       }
-      if (scrollHeight <= scrollTop + clientHeight && startY - endY > 10) {
+      if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
         e.preventDefault()
       }
     }, { passive: false })
@@ -679,11 +679,12 @@ export default {
   -webkit-overflow-scrolling: touch;
   > .discover-detail-container {
     background-color: #fff;
-    padding-bottom: 20px;
-    position: absolute;
+    // padding-bottom: 20px;
+    position: fixed;
     width: 100%;
     top: 0;
     left: 0;
+    bottom: 70px;
     overflow-y: scroll;
     box-sizing: border-box;
     overflow-x: hidden;
