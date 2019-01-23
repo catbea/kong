@@ -383,7 +383,7 @@ export default {
         }
         this.current += 1
         // 缓存数据
-        this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
+        // this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
       }
       this.nodataStatus = true
       this.showLoading = false
@@ -461,17 +461,26 @@ export default {
         likeFlag: praiseStatus
       })
       this.articleData[index].praiseStatus = praiseStatus
+      let list = this.articleData[index].praiseAndShareUserVOS
+      let mul = list.filter(element => element.userId === this.userInfo.agentId)
+      let r = list.filter(element => element.userId !== this.userInfo.agentId)
+      // 取消点赞
       if (praiseStatus === 0) {
-        let item = this.articleData[index].praiseAndShareUserVOS
-        let r = item.filter(element => element.userId !== this.userInfo.agentId)
-        this.articleData[index].praiseAndShareUserVOS = r
+        if (mul.length > 1) {
+          this.articleData[index].praiseAndShareUserVOS = r.cancat(mul[0])
+        } else {
+          this.articleData[index].praiseAndShareUserVOS = r
+        }
       } else {
-        this.articleData[index].praiseAndShareUserVOS.push({
-          operationTime: +new Date(),
-          userId: this.userInfo.agentId,
-          userName: this.userInfo.name,
-          userSource: 0
-        })
+        // 新增点赞
+        if (mul.length === 0) {
+          this.articleData[index].praiseAndShareUserVOS.push({
+            operationTime: +new Date(),
+            userId: this.userInfo.agentId,
+            userName: this.userInfo.name,
+            userSource: 0
+          })
+        }
       }
       this.updateLikeItem = ''
     },
