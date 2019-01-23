@@ -1,7 +1,7 @@
 <template>
   <div class="discover-detail-page" v-if="haveData">
     <!-- 文章详情和经纪人信息 -->
-    <div class="discover-detail-container" >
+    <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
