@@ -10,7 +10,7 @@
         <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
         <div class="estate-info">
           <p class="estate-price" v-if="info&&info.price===0">价格待定</p>
-          <p class="estate-price" v-else>{{info&&info.price}} {{info&&info.priceUnit}}</p>
+          <p class="estate-price" v-else>{{info&&info.price}}{{info&&info.priceUnit}}</p>
           <p class="estate-area">{{info&&info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
         </div>
       </div>
