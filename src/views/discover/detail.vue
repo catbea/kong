@@ -620,10 +620,7 @@ export default {
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
-<<<<<<< HEAD
       // 分享成功之后刷新当前页面
-=======
->>>>>>> 434caa8847c24f1c8e5a0fa90f98809ace22b46c
       location.reload()
     },
     // 文章删除
