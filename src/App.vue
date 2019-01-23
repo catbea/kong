@@ -111,6 +111,7 @@ html {
 #app {
   width: 100%;
   height: 100%;
+  -webkit-overflow-scrolling: touch;
   .new-msg-popup {
     height: 50px;
     width: 80%;
