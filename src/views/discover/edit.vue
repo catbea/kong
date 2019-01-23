@@ -115,14 +115,13 @@ export default {
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.getDetail()
-    this.getMyHouseRecommend()
   },
   methods: {
     // 获取文章信息
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
-      this.restoreData(this.info.editData)
+
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
@@ -132,14 +131,35 @@ export default {
           status: 'edit'
         })
       }
+      debugger
+      if (this.info.editData !== '') {
+        try {
+          let editData = JSON.parse(this.info.editData)
+          this.restoreData(editData)
+        } catch (error) {
+          this.getMyHouseRecommend()
+        }
+      } else {
+        this.getMyHouseRecommend()
+      }
+    },
+    // 若出来editData,还原数据
+    async restoreData(editData) {
+      if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
+      if (editData.hasOwnProperty('inlayHouse') && editData.inlayHouse !== '') this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
+      if (editData.hasOwnProperty('recommendHouse') && editData.recommendHouse.length > 0) this.recommendList = await this.getLinkerInfo(editData.recommendHouse.join(','))
+    },
+    // 查询楼盘信息
+    async getLinkerInfo(linkerIds) {
+      const res = await discoverService.queryLinkerListByIds(linkerIds)
+      return res
     },
     // 获取我的楼盘推荐
     async getMyHouseRecommend() {
       const payload = {
         orderBy: 3, // 人气最旺
         current: 1,
-        size: 3,
-        saleStatus: 0
+        size: 3
       }
       const res = await userService.getMyHouses(payload)
       let statusArr = ['热销中', '即将发售', '售罄']
@@ -149,12 +169,7 @@ export default {
       }
       this.recommendList = res.records
     },
-    restoreData(json) {
-      try {
-        let editData = JSON.parse(json)
-        if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
-      } catch (error) {}
-    },
+
     // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
       this.currentDelDom = e.dom
@@ -233,7 +248,7 @@ export default {
       }
       let res, targetid
       // 存在这个字段,说明是再次编辑
-      if ((this.info.source == 2 || this.info.source == 3)&&this.info.belongeder !== '') {
+      if ((this.info.source == 2 || this.info.source == 3) && this.info.belongeder !== '') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = this.info.id
       } else {
@@ -294,8 +309,8 @@ export default {
 }
 </script>
 <style lang="less">
-.viewRedactStyle{
-  margin-bottom:15px; 
+.viewRedactStyle {
+  margin-bottom: 15px;
 }
 .discover-edit-page {
   background: #f7f9fa;
@@ -335,6 +350,9 @@ export default {
       color: #333333;
       font-weight: 400;
       line-height: 28px;
+      .edit-box:nth-child(3){
+        margin-top:24px;
+      }
       > .disclaimer-box {
         font-size: 14px;
         color: #969ea8;
@@ -372,11 +390,12 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
+    height:72px;
     > .left-operation {
       flex: 1;
       font-size: 12px;
       display: flex;
-
+      color:#666666;
       > .left-first {
         display: flex;
         flex-direction: column;
@@ -425,6 +444,7 @@ export default {
       flex: 1;
       display: flex;
       font-size: 14px;
+      align-items:center;
       > div {
         flex: 1;
         width: 88px;

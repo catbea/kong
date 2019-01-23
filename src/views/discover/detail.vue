@@ -319,7 +319,7 @@ export default {
       // 查询插入楼盘的信息
       if (this.editData) {
         // 编辑文章分享
-        if (this.editData.inlayHouse) {
+        if (this.editData.inlayHouse && this.editData.inlayHouse !== '') {
           const res = await this.getLinkerInfo(this.editData.inlayHouse)
           this.inlayHouseInfo = res[0]
         }
@@ -818,7 +818,7 @@ export default {
       > .comment-box {
         padding-top: 10px;
         > .comment-list-wrap {
-          margin-top: 20px;
+          margin-top: 24px;
           padding: 0 16px;
           > .comment-list {
             width: 100%;
