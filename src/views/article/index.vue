@@ -772,7 +772,7 @@ export default {
     box-sizing: border-box;
     overflow: hidden;
     .classify-box{
-      margin-top: 12px;
+      margin-top: 15px;
       height: 32px;
       overflow: hidden;
     }
@@ -790,7 +790,7 @@ export default {
 	      height:0;
       }
       span {
-        vertical-align: middle;
+        vertical-align: bottom;
         display: inline-block;
         height: 32px;
         line-height: 32px;
