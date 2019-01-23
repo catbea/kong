@@ -141,6 +141,7 @@ export default {
       } else {
         this.getMyHouseRecommend()
       }
+      document.scrollingElement.scrollTop = 0
     },
     // 若出来editData,还原数据
     async restoreData(editData) {
