@@ -1,6 +1,6 @@
 <template>
   <div class="comment-alert-container" v-if="show">
-    <div class="comment-alert">
+    <div class="comment-alert" :style="{height:info.contentHeight + 'px'}">
       <div class="comment-top">
         <div class="comment-cancel" @click="cancelHandler">取消</div>
         <div class="comment-publish" @click="publishHandler">发布</div>
@@ -59,14 +59,13 @@ export default {
   background-color: rgba(0, 0, 0, 0.65);
   z-index: 10;
   > .comment-alert {
-    position: fixed;
+    position: absolute;
     // bottom: 0;
-    top: 0;
-    left: 0;
+    top: 64px;
     background-color: #ffffff;
     padding: 20px 16px;
     width: 100%;
-    height: 100%;
+    // height: 667px;
     > .comment-top {
       display: flex;
       flex-direction: row;

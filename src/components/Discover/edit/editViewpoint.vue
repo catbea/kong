@@ -65,7 +65,7 @@ export default {
   // padding: 7px 9px;
   > .viewpoint-container {
     width: 100%;
-    height: 140px;
+    min-height: 140px;
     word-break: break-all;
     background: rgba(150, 158, 168, 0.08);
     padding: 7px 9px;
