@@ -13,7 +13,7 @@
     <van-popup class="write-board" v-model="viewpointEditShow" position="bottom">
       <p class="write-title">发表观点</p>
       <div class="pull-btn" @click="viewpointPullHandler">发布</div>
-      <textarea class="write-content" maxlength="140" v-model="tempValue"/>
+      <textarea class="write-content" maxlength="140" v-model="tempValue" @blur="blurHandler"/>
     </van-popup>
   </div>
 </template>
@@ -36,10 +36,9 @@ export default {
     viewpointPullHandler() {
       this.viewpointEditShow = false
       this.currentValue = this.tempValue
+    },
+    blurHandler(){
       document.activeElement.scrollIntoViewIfNeeded(true)
-      // setTimeout(() => {
-      //   document.body.scrollTop = document.body.scrollHeight
-      // }, 300)
     }
   },
   watch: {
