@@ -704,23 +704,23 @@ export default {
         },
         { passive: false }
       )
-      document.querySelector('body').addEventListener(
-        'touchend',
-        function(e) {
-          if (!document.querySelector('.article-list')) {
-            return false
-          }
-          that.endY = e.changedTouches[0].pageY
-          let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-          if (that.finished && that.startY - that.endY > 10) {
-            e.preventDefault()
-          }
-          if (that.endY > that.startY && scrollTop === 0) {
-            e.preventDefault()
-          }
-        },
-        { passive: false }
-      )
+      // document.querySelector('body').addEventListener(
+      //   'touchend',
+      //   function(e) {
+      //     if (!document.querySelector('.article-list')) {
+      //       return false
+      //     }
+      //     that.endY = e.changedTouches[0].pageY
+      //     let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
+      //     if (that.finished && that.startY - that.endY > 10) {
+      //       e.preventDefault()
+      //     }
+      //     if (that.endY > that.startY && scrollTop === 0) {
+      //       e.preventDefault()
+      //     }
+      //   },
+      //   { passive: false }
+      // )
       document.querySelector('.replay').addEventListener(
         'touchmove',
         function(e) {
@@ -747,7 +747,7 @@ export default {
       'touchmove',
       function(e) {
         that.endY = e.changedTouches[0].pageY
-        if (that.endY - that.startY > 5) {
+        if (that.endY - that.startY > 10) {
           e.preventDefault()
         }
       },
@@ -757,6 +757,12 @@ export default {
   beforeDestroy() {
     // 缓存数据
     this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
+    // 取消监听事件
+    document.querySelector('.tab-bar').removeEventListener('touchmove',function(e){e.preventDefault()},false)
+    document.querySelector('.replay').removeEventListener('touchmove',function(e){e.preventDefault()},false)
+    document.querySelector('.submenu').removeEventListener('touchmove',function(e){e.preventDefault()},false)
+    document.querySelector('body').removeEventListener('touchmove',function(e){e.preventDefault()},false)
+
   }
 }
 </script>
