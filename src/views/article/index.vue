@@ -767,17 +767,14 @@ export default {
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
-    font-size: 14px;
-    color: #333;
-    padding: 0 16px;
+    height: 20px;
+    line-height: 20px;
+    padding: 12px 16px;
     height: 54px;
-    width: 100%;
-    position: fixed;
-    overflow: hidden;
     box-sizing: border-box;
     .classify-box{
       overflow: hidden;
-      height: 54px;
+      // height: 54px;
     }
     .classify {
       display: inline-block;
@@ -786,8 +783,7 @@ export default {
       overflow-y: hidden;
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
-      height: 54px;
-      margin-top: 12px;
+      // height: 54px;
       &::-webkit-scrollbar {
         display: none;
         width:0;
