@@ -14,6 +14,7 @@
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @activeHandle="popularityColorHandle" @checkedText="popularityStrChange"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @resetNum="resetNumHandle" @numHandle="numHandle" @confirm="confirmHandler"></more-filter>
       <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort" @activeHandle="sortHandle" @input="sortChangeHandler"></sort-way>
+    
     </div>
   </div>
 </template>

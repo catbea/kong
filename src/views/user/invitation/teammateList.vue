@@ -4,7 +4,7 @@
           <div class="teammateList-top" :style="{'backgroundImage':'url('+teammateListBackIcon+')'}">
             <img :src="couponIcon" class="teammateList-top-icon">
             <div class="teammateList-top-center">
-              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{registerRewardsPrice | priceFormart}}</span>元</p>
+              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{0 | priceFormart}}</span>元</p>
               <p class="teammateList-top-num">已邀请：{{ registerRewardsTotal == 0 ? 0 : registerRewardsTotal}}人</p>
             </div>
           </div>
@@ -49,8 +49,13 @@ export default {
     //邀请注册列表
     async getregisterRewards() {
       const res = await userService.getregisterRewards(this.page, this.pageSize)
-      if(res.list.pages === 0) this.registerRewardsPrice = res.price
-      if(res.list.pages === 0) this.registerRewardsTotal = res.count
+      console.log(res,'邀请数据')
+       this.registerRewardsPrice = res.price
+      if(res.list.pages === 0) {
+        this.registerRewardsTotal = res.count
+      }else{
+        this.registerRewardsTotal = res.list.total
+      }
       this.registerRewards = res.pages === 0 ? res.list.records : this.registerRewards.concat(res.list.records)
       if (res.list.pages === 0 || this.page === res.list.pages) {
         this.finished = true
