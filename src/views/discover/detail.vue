@@ -50,12 +50,12 @@
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <span style="color:#999999" class="icon iconfont icon-found_like"></span>
+            <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span>
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <span style="color:#007AE6;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
-            <span style="color:#999999" class="icon iconfont icon-found_like" v-else></span>
+            <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
+            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
@@ -793,6 +793,7 @@ export default {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 1.5;
+          font-weight: 600;
         }
         > .easy-look-name {
           color: #445166;
