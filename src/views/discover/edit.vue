@@ -302,7 +302,7 @@ export default {
   > .discover-detail-container {
     background: #fff;
     padding-bottom: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     > .discover-title {
       padding: 10px 15px;
       padding-top: 20px;
