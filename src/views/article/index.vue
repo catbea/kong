@@ -81,7 +81,7 @@
                 </span>
               </div>
             </div>
-            <div class="like-cnt" v-if="item.praiseAndShareUserVOS.length">
+            <div class="like-cnt">
               <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                 <span class="icon">
                   <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
@@ -116,6 +116,7 @@
                   </span>
                 </div>
               </div>
+              <!--  -->
               <div class="comment-box" v-show="item.discussVOS.length">
                 <span class="icon">
                   <!-- <img src="../../assets/img/article/dis1.png" alt=""> -->
