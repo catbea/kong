@@ -471,23 +471,15 @@ export default {
       let list = this.articleData[index].praiseAndShareUserVOS
       let mul = list.filter(element => element.userId === this.userInfo.agentId)
       let r = list.filter(element => element.userId !== this.userInfo.agentId)
-      // 取消点赞
-      if (praiseStatus === 0) {
-        if (mul.length > 0 && !this.articleData[index]['addLike']) {
-          r = r.concat(mul[0])
-        }
-        this.articleData[index].praiseAndShareUserVOS = r
+      if (mul.length === 0) {
+        this.articleData[index].praiseAndShareUserVOS.push({
+          operationTime: +new Date(),
+          userId: this.userInfo.agentId,
+          userName: this.userInfo.name,
+          userSource: 0
+        })
       } else {
-        // 新增点赞
-        if (mul.length === 0) {
-          this.articleData[index].praiseAndShareUserVOS.push({
-            operationTime: +new Date(),
-            userId: this.userInfo.agentId,
-            userName: this.userInfo.name,
-            userSource: 0
-          })
-          this.articleData[index]['addLike'] = true
-        }
+        this.articleData[index].praiseAndShareUserVOS = r
       }
       this.updateLikeItem = ''
     },
