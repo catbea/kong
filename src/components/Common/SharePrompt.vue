@@ -20,11 +20,11 @@ export default {
   }),
   methods: {
     closeHandler() {
-      this.$store.commit(types.SHARE_PROMPT, false)
       this.sharePrompt=false
       console.log('999999999999999');
       console.log(this.sharePrompt);
       console.log('999999999999999');
+      this.$store.commit(types.SHARE_PROMPT, false)
     }
   },
   computed: {
