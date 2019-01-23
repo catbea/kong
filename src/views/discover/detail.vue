@@ -296,7 +296,7 @@ export default {
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.shareData = {
         title: this.info.title,
-        // desc: this.info.title,
+        desc: '',
         imgUrl: this.info.image,
         link: host
       }
