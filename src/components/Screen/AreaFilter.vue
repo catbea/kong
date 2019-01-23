@@ -1,5 +1,5 @@
 <template>
-  <div class="area-filter" v-if="show" :class="{act:flag}">
+  <div class="area-filter" v-show="show" :class="{act:flag}">
     <ul>
       <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="active(item)">{{item}}</li>
     </ul>
