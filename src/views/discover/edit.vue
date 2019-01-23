@@ -1,5 +1,5 @@
 <template>
-  <div class="discover-edit-page">
+  <div class="discover-edit-page" v-if="info">
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-view-info">
