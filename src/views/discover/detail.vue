@@ -295,8 +295,8 @@ export default {
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.shareData = {
-        title: 'AW大师写一写',
-        desc: this.info.title,
+        title: this.info.title,
+        // desc: this.info.title,
         imgUrl: this.info.image,
         link: host
       }
