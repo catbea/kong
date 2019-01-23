@@ -818,7 +818,7 @@ export default {
       > .comment-box {
         padding-top: 10px;
         > .comment-list-wrap {
-          margin-top: 20px;
+          margin-top: 24px;
           padding: 0 16px;
           > .comment-list {
             width: 100%;
