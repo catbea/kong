@@ -830,7 +830,7 @@ export default {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 1.5;
-          font-weight: 600;
+          // font-weight: 600;
         }
         > .easy-look-name {
           color: #445166;
