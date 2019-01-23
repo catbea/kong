@@ -36,9 +36,10 @@ export default {
     viewpointPullHandler() {
       this.viewpointEditShow = false
       this.currentValue = this.tempValue
-      setTimeout(() => {
-        document.body.scrollTop = document.body.scrollHeight
-      }, 300)
+      document.activeElement.scrollIntoViewIfNeeded(true)
+      // setTimeout(() => {
+      //   document.body.scrollTop = document.body.scrollHeight
+      // }, 300)
     }
   },
   watch: {
