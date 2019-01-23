@@ -90,6 +90,7 @@ export default {
       line-height: 24px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
+      font-weight: bold;
     }
 
     > .article-label {
