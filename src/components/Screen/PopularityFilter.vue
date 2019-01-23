@@ -1,5 +1,5 @@
 <template>
-  <div class="popularity-filter" v-if="show" :class="{act:flag}">
+  <div class="popularity-filter" v-show="show" :class="{act:flag}">
     <ul>
       <li class="van-hairline--bottom" v-for="(item,index) in conf" :key="index" :class="checked===index&&'active'" @click="itemClick(item,index)">{{item}}</li>
     </ul>

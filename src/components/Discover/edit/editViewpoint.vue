@@ -59,13 +59,13 @@ export default {
 </script>
 <style lang="less">
 .edit-viewpoint-container {
-  margin: 0 -5px 5px;
+  margin: 0 -5px 32px;
   font-size: 14px;
   color: #969ea8;
   // padding: 7px 9px;
   > .viewpoint-container {
     width: 100%;
-    height: 90px;
+    height: 140px;
     word-break: break-all;
     background: rgba(150, 158, 168, 0.08);
     padding: 7px 9px;
