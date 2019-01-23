@@ -1,5 +1,5 @@
 <template>
-  <div class="van-hairline--bottom screen-container">
+  <div class="screen-container">
     <ul class="screen-ul">
       <li class="area" :class="item.index===currentIndex&&'selected'" v-for="item in conf" :key="item.index" @click="itemClickHandler(item)">
         <span class="value-content" :class="{active:item.flag}">{{(item.value ===''||item.value ==='不限')?item.name:item.value}}</span>
@@ -221,7 +221,7 @@ export default {
     width: 100%;
     overflow: hidden;
     .prevent{
-      height:300px;
+      height:3000px;
     }
   }
 }
