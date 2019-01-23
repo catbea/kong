@@ -246,6 +246,8 @@ export default {
     inlayHouseInfo: null, // 文章插入楼盘信息
     sharePrompt: true,
     isHasAgentName: false, // 好看/取消好看使用,当好看列表中有当前经纪人时前端不需要进行添加删除
+    startY: '',
+    endY: ''
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -645,6 +647,28 @@ export default {
     $route() {
       location.reload()
     }
+  },
+  mounted () {
+    document.querySelector('body').addEventListener('touchstart', (e) => {
+      this.startY = e.changedTouches[0].pageY
+    })
+    document.querySelector('body').addEventListener('touchmove', (e) => {
+      this.endY = e.changedTouches[0].pageY
+      let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
+      let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
+      let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
+      if (scrollTop===0 && this.endY - this.startY > 10) {
+         e.preventDefault()
+      }
+      if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
+        e.preventDefault()
+      }
+    }, { passive: false })
+    document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
+       e.preventDefault()
+    }, { passive: false })
+    
+    
   }
 }
 </script>
@@ -656,10 +680,11 @@ export default {
   > .discover-detail-container {
     background-color: #fff;
     padding-bottom: 20px;
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
     left: 0;
+    bottom: 70px;
     overflow-y: scroll;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -805,7 +830,7 @@ export default {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 1.5;
-          font-weight: 600;
+          // font-weight: 600;
         }
         > .easy-look-name {
           color: #445166;

@@ -18,6 +18,7 @@
           rows="5"
           v-model="commentContent"
           @input="inputHandler"
+          @blur="blur"
         ></textarea>
       </div>
     </div>
@@ -46,6 +47,9 @@ export default {
     publishHandler() {
       this.commentContent = ''
       this.$emit('publish')
+    },
+    blur () {
+      document.activeElement.scrollIntoViewIfNeeded(true)
     }
   }
 }

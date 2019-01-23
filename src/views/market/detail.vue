@@ -758,7 +758,7 @@ export default {
     background: #f7f9fa;
     color: #8a9299;
     font-size: 12px;
-    // line-height: 0.34rem;
+    line-height:1.5;
     .feedback {
       color: #525c66;
     }
