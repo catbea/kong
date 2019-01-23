@@ -622,7 +622,8 @@ export default {
           const res = await cpInformationService.updateEnableByInfoId(this.info.agentId, this.info.id)
           this.$toast('删除成功')
           setTimeout(() => {
-            this.$router.push('/user/articles/historicalArticles?typeCode=2')
+            // this.$router.push('/user/articles/historicalArticles?typeCode=2')
+            this.$router.go(-1)
           }, 1000)
         })
     }
@@ -643,7 +644,7 @@ export default {
   > .discover-detail-container {
     background-color: #fff;
     padding-bottom: 20px;
-    position: fixed;
+    position: absolute;
     width: 100%;
     top: 0;
     left: 0;
@@ -920,7 +921,7 @@ export default {
   .tools-bar {
     width: 100%;
     background-color: #fff;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     z-index: 5;
     display: flex;
