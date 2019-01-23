@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-viewpoint-container" >
+  <div class="edit-viewpoint-container">
     <div v-if="status === 'edit'" class="box_border viewpoint-container" @click="viewpointAreaClick">{{currentValue === '' ? '您可以在这里输入观点,若无内容分享后将不会进行展示.' : currentValue}}</div>
     <div v-if="status === 'view' && currentValue !==''" class="discover-viewpoint">
       <div class="viewpoint-line"></div>
@@ -10,12 +10,12 @@
           <!-- <div class="viewpoint-name">
             <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
             <span style="color:#969EA8;font-size:14px">点评</span>
-          </div> -->
+          </div>-->
         </div>
       </div>
       <div class="viewpoint-content">{{currentValue}}</div>
     </div>
-    <van-popup class="write-board" v-model="viewpointEditShow" position="bottom" >
+    <van-popup class="write-board" v-model="viewpointEditShow" position="bottom">
       <p class="write-title">发表观点</p>
       <div class="pull-btn" @click="viewpointPullHandler">发布</div>
       <textarea class="write-content" v-model="tempValue"/>
@@ -31,7 +31,7 @@ export default {
   data: () => ({
     viewpointEditShow: false,
     currentValue: '',
-    tempValue:''
+    tempValue: ''
   }),
   methods: {
     viewpointAreaClick() {
@@ -41,6 +41,9 @@ export default {
     viewpointPullHandler() {
       this.viewpointEditShow = false
       this.currentValue = this.tempValue
+      setTimeout(() => {
+        document.body.scrollTop = document.body.scrollHeight
+      }, 300)
     }
   },
   watch: {
@@ -50,7 +53,7 @@ export default {
     },
     currentValue(val) {
       this.$emit('input', val)
-    },
+    }
     // tempValue(val){
     //   this.currentValue = val
     // }
