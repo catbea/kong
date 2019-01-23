@@ -28,9 +28,6 @@
             </div>
           </div>
         </div>
-
-        <div class="easy-line"></div>
-
       </div>
     </van-list>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
@@ -132,6 +129,7 @@ export default {
   display: flex;
   background: #ffffff;
   flex-direction: column;
+  
   > .easy-look-time {
     display: flex;
     width: 100%;
@@ -148,12 +146,12 @@ export default {
   }
 
   > .easy-look-item {
-    width: 100%;
+    width: 90%;
     height: 122px;
     display: flex;
     justify-content: space-between;
-    padding-left: 16px;
-    padding-right: 16px;
+    border-bottom: #E2E2E3 1px solid;
+    margin-left: 5%;
 
     > .easy-look-item-left {
       float: left;
