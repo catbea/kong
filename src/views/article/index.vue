@@ -466,11 +466,10 @@ export default {
       let r = list.filter(element => element.userId !== this.userInfo.agentId)
       // 取消点赞
       if (praiseStatus === 0) {
-        if (mul.length > 1) {
-          this.articleData[index].praiseAndShareUserVOS = r.cancat(mul[0])
-        } else {
-          this.articleData[index].praiseAndShareUserVOS = r
+        if (mul.length > 0 && !this.articleData[index]['addLike']) {
+          r = r.concat(mul[0])
         }
+        this.articleData[index].praiseAndShareUserVOS = r
       } else {
         // 新增点赞
         if (mul.length === 0) {
@@ -480,6 +479,7 @@ export default {
             userName: this.userInfo.name,
             userSource: 0
           })
+          this.articleData[index]['addLike'] = true
         }
       }
       this.updateLikeItem = ''
