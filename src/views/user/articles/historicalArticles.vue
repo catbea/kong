@@ -125,7 +125,6 @@ export default {
 
     //改变tab分享样式
     selectShareTap() {
-      console.log('分享')
       this.shareFontSize = '24px'
       this.editFontSize = '14px'
       this.collectionFontSize = '14px'
@@ -135,7 +134,6 @@ export default {
     },
     //改变tab编辑样式
     selectEditTap() {
-      console.log('编辑')
       this.shareFontSize = '14px'
       this.editFontSize = '24px'
       this.collectionFontSize = '14px'
@@ -145,7 +143,6 @@ export default {
     },
     //改变tab收藏样式
     selectCoolectionTap() {
-      console.log('收藏')
       this.shareFontSize = '14px'
       this.editFontSize = '14px'
       this.collectionFontSize = '24px'

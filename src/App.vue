@@ -51,44 +51,44 @@ export default {
         // console.log(this.$store.getters.newMsgContent, 'this.$store.getters.newMsgContent')
         return
       }
-      this.newMsgPop = v
-      // let msgContent = this.$store.getters.newMsgContent
-      let data = ''
-      let desc = msgContent.desc
-      let avatar = ''
-      let name = ''
-      let clientId = msgContent.clientId.split('_')[1]
-
-      if (desc == 2) {
-        //语音
-        let tmp = JSON.parse(msgContent.ext)
-        let userInfo = tmp.userInfo
-        avatar = userInfo.avatarUrl
-        name = userInfo.nickName
-        data = msgContent.data
-      } else if (desc == 5) {
-        //动态
-        let tmp = JSON.parse(msgContent.data)
-        avatar = tmp.avatarUrl
-        name = tmp.clientName
-        clientId = tmp.clientId
-        data = tmp.content
-      } else {
-        //文本消息 楼盘 消息已上报
-        if (!msgContent.ext) {
-          return
+      if (msgContent.desc == 1 || msgContent.desc == 2 || msgContent.desc == 3) {
+        this.newMsgPop = v
+        let data = ''
+        let desc = msgContent.desc
+        let avatar = ''
+        let name = ''
+        let clientId = msgContent.clientId.split('_')[1]
+        if (desc == 2) {
+          //语音
+          let tmp = JSON.parse(msgContent.ext)
+          let userInfo = tmp.userInfo
+          avatar = userInfo.avatarUrl
+          name = userInfo.nickName
+          data = msgContent.data
+        } else if (desc == 5) {
+          //动态
+          let tmp = JSON.parse(msgContent.data)
+          avatar = tmp.avatarUrl
+          name = tmp.clientName
+          clientId = tmp.clientId
+          data = tmp.content
+        } else {
+          //文本消息 楼盘 消息已上报
+          if (!msgContent.ext) {
+            return
+          }
+          let userInfo = JSON.parse(msgContent.ext)
+          avatar = userInfo.avatarUrl
+          name = userInfo.nickName
+          data = msgContent.data
         }
-        let userInfo = JSON.parse(msgContent.ext)
-        avatar = userInfo.avatarUrl
-        name = userInfo.nickName
-        data = msgContent.data
-      }
-      this.newMsgObject = {
-        data: data,
-        desc: desc,
-        avatar: avatar,
-        name: name,
-        clientId: clientId
+        this.newMsgObject = {
+          data: data,
+          desc: desc,
+          avatar: avatar,
+          name: name,
+          clientId: clientId
+        }
       }
     }
   },
