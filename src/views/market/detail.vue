@@ -375,6 +375,7 @@ export default {
     // 全景点击
     ifPanoramaClickHandler() {
       window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
+      console.log(this.info.linkerUrl)
     },
     competeOpenStatus() {
       this.openStatus = this.info.openStatus == 0
