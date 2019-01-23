@@ -266,7 +266,7 @@ export default {
   },
   methods: {
     relationHandle(){//立即联系弹窗
-        window.location.href = 'tel://400-0904-99'
+        window.location.href = 'tel://400-0904-999'
         this.relationShow=false
     },
     async getMarketDetailPhotoInfo() {
