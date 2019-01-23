@@ -471,22 +471,18 @@ export default {
       let list = this.articleData[index].praiseAndShareUserVOS
       let mul = list.filter(element => element.userId === this.userInfo.agentId)
       let r = list.filter(element => element.userId !== this.userInfo.agentId)
-      // 取消点赞
-      if (praiseStatus === 0) {
-        if (mul.length > 0 && !this.articleData[index]['addLike']) {
-          r = r.concat(mul[0])
-        }
-        this.articleData[index].praiseAndShareUserVOS = r
+
+      if (mul.length === 0) {
+        this.articleData[index].praiseAndShareUserVOS.push({
+          operationTime: +new Date(),
+          userId: this.userInfo.agentId,
+          userName: this.userInfo.name,
+          userSource: 0
+        })
+        this.articleData[index]['addLikeStatus'] = true
       } else {
-        // 新增点赞
-        if (mul.length === 0) {
-          this.articleData[index].praiseAndShareUserVOS.push({
-            operationTime: +new Date(),
-            userId: this.userInfo.agentId,
-            userName: this.userInfo.name,
-            userSource: 0
-          })
-          this.articleData[index]['addLike'] = true
+        if (this.articleData[index]['addLikeStatus']) {
+          this.articleData[index].praiseAndShareUserVOS = r
         }
       }
       this.updateLikeItem = ''
@@ -674,50 +670,48 @@ export default {
     }
     // 防止ios弹簧效果
     let that = this
-    document.querySelector('body').addEventListener('touchstart', function(e) {
-      that.startY = e.changedTouches[0].pageY
-    })
-    document.querySelector('body').addEventListener(
-      'touchmove',
-      function(e) {
-        if (!document.querySelector('.article-list')) {
-          return false
-        }
-        that.endY = e.changedTouches[0].pageY
-        let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
-        let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-        let clientHeight = document.querySelector('.article-list').clientHeight // 可视高度
-        let endStatus = scrollHeight <= scrollTop + clientHeight // 是否滚到底了
-        let target = e.srcElement.offsetParent.className === 'tab-bar scale-1px-bottom'
-        if (that.finished && endStatus && that.startY - that.endY > 10) {
-          e.preventDefault()
-        }
-        if (that.endY > that.startY && !target && scrollTop === 0) {
-          e.preventDefault()
-        }
-      },
-      { passive: false }
-    )
-    document.querySelector('body').addEventListener(
-      'touchend',
-      function(e) {
-        if (!document.querySelector('.article-list')) {
-          return false
-        }
-        that.endY = e.changedTouches[0].pageY
-        let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-        let target = e.srcElement.offsetParent.className === 'tab-bar scale-1px-bottom'
-        if (that.finished && that.startY - that.endY > 10) {
-          e.preventDefault()
-        }
-        if (that.endY > that.startY && !target && scrollTop === 0) {
-          e.preventDefault()
-        }
-      },
-      { passive: false }
-    )
     let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     if (isiOS) {
+      document.querySelector('body').addEventListener('touchstart', function(e) {
+        that.startY = e.changedTouches[0].pageY
+      })
+      document.querySelector('body').addEventListener(
+        'touchmove',
+        function(e) {
+          if (!document.querySelector('.article-list')) {
+            return false
+          }
+          that.endY = e.changedTouches[0].pageY
+          let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
+          let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
+          let clientHeight = document.querySelector('.article-list').clientHeight // 可视高度
+          let endStatus = scrollHeight <= scrollTop + clientHeight // 是否滚到底了
+          if (that.finished && endStatus && that.startY - that.endY > 10) {
+            e.preventDefault()
+          }
+          if (that.endY > that.startY && scrollTop === 0) {
+            e.preventDefault()
+          }
+        },
+        { passive: false }
+      )
+      document.querySelector('body').addEventListener(
+        'touchend',
+        function(e) {
+          if (!document.querySelector('.article-list')) {
+            return false
+          }
+          that.endY = e.changedTouches[0].pageY
+          let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
+          if (that.finished && that.startY - that.endY > 10) {
+            e.preventDefault()
+          }
+          if (that.endY > that.startY && scrollTop === 0) {
+            e.preventDefault()
+          }
+        },
+        { passive: false }
+      )
       document.querySelector('.replay').addEventListener(
         'touchmove',
         function(e) {
@@ -740,12 +734,11 @@ export default {
       },
       { passive: false }
     )
-
     document.querySelector('.tab-bar').addEventListener(
       'touchmove',
       function(e) {
         that.endY = e.changedTouches[0].pageY
-        if (that.endY - that.startY > 10) {
+        if (that.endY - that.startY > 5) {
           e.preventDefault()
         }
       },
