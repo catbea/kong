@@ -345,7 +345,6 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
-        this.easylookList = ['QQQ','左哼哼||右哼哼 | AW大师','一点都不厉害', '孙西暗 | AW大师', 'mk', 'MK', '以梦为马', 'J-Valentine|AW大师']
         this.$nextTick(() => {
           let height = this.$refs.easyLook.offsetHeight
           if (height <= 85) {
