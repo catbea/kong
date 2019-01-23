@@ -81,13 +81,13 @@
                 </span>
               </div>
             </div>
-            <div class="like-cnt" v-if="item.praiseAndShareUserVOS.length">
+            <div class="like-cnt" v-if="item.praiseAndShareUserVOS.length || item.discussVOS.length" :style="{'paddingBottom':item.discussVOS.length ? '' : '0'}">
               <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                 <span class="icon">
                   <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
                 </span>
                 <div class="list">
-                  <div class="cnt-box-like">
+                  <div class="cnt-box-like" :style="{'marginBottom':item.praiseAndShareUserVOS.length < 16 ? '10px' : ''}">
                     <span
                       class="name"
                       :class="{'active': data===activeLikeItem}"
