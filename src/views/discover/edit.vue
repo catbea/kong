@@ -159,8 +159,7 @@ export default {
       const payload = {
         orderBy: 3, // 人气最旺
         current: 1,
-        size: 3,
-        saleStatus: 0
+        size: 3
       }
       const res = await userService.getMyHouses(payload)
       let statusArr = ['热销中', '即将发售', '售罄']
