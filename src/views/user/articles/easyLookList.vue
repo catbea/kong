@@ -130,7 +130,6 @@ export default {
 .easy-look-list {
   width: 100%;
   display: flex;
-  border-bottom: #e2e2e3 1px solid;
   background: #ffffff;
   flex-direction: column;
   > .easy-look-time {

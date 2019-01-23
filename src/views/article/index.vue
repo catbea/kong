@@ -21,10 +21,19 @@
         <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
       </ul>
     </div>
-    <div class="article-list" v-if="articleData.length" :class="{'bottom': !articleData[articleData.length-1].discussVOS.length}">
+    <div
+      class="article-list"
+      v-if="articleData.length"
+      :class="{'bottom': !articleData[articleData.length-1].discussVOS.length}"
+    >
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
-          <div class="article-item" v-for="(item,index) in articleData" :key="index" :class="{'noborder': index === articleData.length-1}">
+          <div
+            class="article-item"
+            v-for="(item,index) in articleData"
+            :key="index"
+            :class="{'noborder': index === articleData.length-1}"
+          >
             <div class="content scale-1px-bottom">
               <div class="left-cnt">
                 <h3 class="title" @click="goInfo(item)">{{item.articleTitle}}</h3>
@@ -50,17 +59,15 @@
                 >{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
               </div>
               <div class="action">
-                <span class="like-icon" v-if="item.praiseStatus===1" @click="updateLike(item, 0, index)">
-                  <img
-                    src="../../assets/img/article/like2.png"
-                    alt=""
-                  >
+                <span
+                  class="like-icon"
+                  v-if="item.praiseStatus===1"
+                  @click="updateLike(item, 0, index)"
+                >
+                  <img src="../../assets/img/article/like2.png" alt="">
                 </span>
                 <span class="like-icon" v-else @click="updateLike(item, 1, index)">
-                  <img
-                    src="../../assets/img/article/like1.png"
-                    alt=""  
-                  >
+                  <img src="../../assets/img/article/like1.png" alt="">
                 </span>
                 <span class="comment-icon">
                   <img
@@ -499,7 +506,7 @@ export default {
         this.replayItem = replay
       }
       this.commentIndex = index
-      
+
       // 隐藏菜单
       this.$store.commit('TABBAR', { show: false })
       this.showReplay = true
@@ -649,9 +656,9 @@ export default {
       }
     },
     // 评论弹框
-    blur () {
+    blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
-    },
+    }
   },
   filters: {
     formatData(time) {
@@ -667,6 +674,8 @@ export default {
     }
     // 防止ios弹簧效果
     let that = this
+    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    // if (isiOS) {}
     document.querySelector('body').addEventListener('touchstart', function(e) {
       that.startY = e.changedTouches[0].pageY
     })
@@ -713,23 +722,35 @@ export default {
       'touchmove',
       function(e) {
         e.preventDefault()
-      },{ passive: false })
-      document.querySelector('.submenu').addEventListener(
+      },
+      { passive: false }
+    )
+    document.querySelector('.submenu').addEventListener(
       'touchmove',
       function(e) {
         e.preventDefault()
-      },{ passive: false })
-    document.querySelector('.tab-bar').addEventListener(
-    'touchmove',
-    function(e) {
-      that.endY = e.changedTouches[0].pageY
-      if (that.endY - that.startY > 10) {
-        e.preventDefault()
-      }
-    },
-    { passive: false }
+      },
+      { passive: false }
     )
-    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+
+    document.querySelector('.tab-bar').addEventListener(
+      'touchstart',
+      function(e) {
+        that.startY = e.changedTouches[0].pageY
+      },
+      { passive: false }
+    )
+
+    document.querySelector('.tab-bar').addEventListener(
+      'touchmove',
+      function(e) {
+        that.endY = e.changedTouches[0].pageY
+        if (that.endY - that.startY > 10) {
+          e.preventDefault()
+        }
+      },
+      { passive: false }
+    )
   },
   beforeDestroy() {
     // 缓存数据
@@ -822,13 +843,13 @@ export default {
     overflow-y: auto;
     z-index: 1;
     padding-bottom: 40px;
-    &.bottom{
+    &.bottom {
       padding-bottom: 70px;
     }
     .article-item {
       padding: 6px 16px 0 16px;
       border-bottom: 10px solid #f7f9fa;
-      &.noborder{
+      &.noborder {
         border: none;
       }
       .content {
@@ -925,7 +946,7 @@ export default {
           text-align: right;
           margin-left: 100px;
           display: inline-block;
-          span{
+          span {
             height: 34px;
             padding: 10px 5px 0;
             display: inline-block;
@@ -948,7 +969,7 @@ export default {
       .like-cnt {
         flex: 1;
         padding-top: 6px;
-        padding-bottom: 25px;
+        padding-bottom: 22px;
         .like-box,
         .comment-box {
           display: flex;
@@ -980,7 +1001,7 @@ export default {
           font-size: 14px;
           color: #969ea8;
           display: block;
-          padding: 2px 0 10px 0;
+          padding: 0 0 10px 0;
         }
         .like-box {
           .list {
@@ -1096,13 +1117,12 @@ export default {
       .replay-title {
         margin: 16px 0;
         font-size: 16px;
-        p{
+        p {
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
           color: #666;
         }
-        
       }
       .replay-box {
         position: relative;
