@@ -207,8 +207,8 @@ export default {
     marketQrInfo: null,
     articleQrInfo: null,
     shareUuid: '', // 分享ID
-    startY: '',
-    endY: ''
+    // startY: '',
+    // endY: ''
   }),
   created() {
     window.awHelper.wechatHelper.wx.showOptionMenu()
@@ -453,6 +453,7 @@ export default {
       location.reload()
     }
   },
+  /*
   mounted () {
     document.querySelector('.discover-detail-container').addEventListener('touchstart', (e) => {
       this.startY = e.changedTouches[0].pageY
@@ -462,15 +463,16 @@ export default {
       let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
       let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
       let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
-      if (scrollTop===0 && endY - startY > 10) {
+      if (scrollTop===0 && this.endY - this.startY > 10) {
          e.preventDefault()
       }
-      if (scrollHeight <= scrollTop + clientHeight && startY - endY > 10) {
+      if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
         e.preventDefault()
       }
     }, { passive: false })
     
   }
+  */
 }
 </script>
 <style lang="less">
