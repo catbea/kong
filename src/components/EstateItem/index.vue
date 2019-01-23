@@ -134,7 +134,7 @@ export default {
   }
   > .operate-box {
     position: absolute;
-    top: 0;
+    top:8px;
     right: 10px;
     > .share-icon {
       width: 100%;

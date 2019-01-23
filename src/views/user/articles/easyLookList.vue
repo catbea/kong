@@ -169,7 +169,7 @@ export default {
 
     > .easy-look-item-right {
       float: left;
-      width: 60%;
+      width: 62%;
       height: 90px;
       margin-top: 16px;
       position: relative;
