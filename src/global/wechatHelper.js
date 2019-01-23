@@ -98,10 +98,10 @@ class WechatHelper {
     })
   }
 
-  async shareWechat(conf) {
+  shareWechat(conf) {
     store.dispatch('setJssdkConfig', jsApiList)
     this.wx.config(store.state.wx.jssdkConfig)
-    wx.ready(function () {
+    this.wx.ready(function () {
       var shareData = conf
       wx.onMenuShareAppMessage(shareData); // 分享给朋友
       wx.onMenuShareTimeline(shareData); // 分享到朋友圈
