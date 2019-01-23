@@ -767,14 +767,14 @@ export default {
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
-    height: 20px;
-    line-height: 20px;
-    padding: 12px 16px;
+    padding: 0 16px;
     height: 54px;
     box-sizing: border-box;
+    overflow: hidden;
     .classify-box{
+      margin-top: 12px;
+      height: 32px;
       overflow: hidden;
-      // height: 54px;
     }
     .classify {
       display: inline-block;
@@ -783,20 +783,24 @@ export default {
       overflow-y: hidden;
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
-      // height: 54px;
+      height: 40px;
       &::-webkit-scrollbar {
         display: none;
         width:0;
 	      height:0;
       }
       span {
+        vertical-align: middle;
         display: inline-block;
-        margin-right: 32px;
+        height: 32px;
+        line-height: 32px;
+        margin-right: 22px;
         &.active {
           color: #007ae6;
         }
       }
       .recommend {
+        vertical-align: middle;
         font-size: 24px;
         height: 34px;
         line-height: 34px;
