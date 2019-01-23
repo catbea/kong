@@ -622,7 +622,8 @@ export default {
           const res = await cpInformationService.updateEnableByInfoId(this.info.agentId, this.info.id)
           this.$toast('删除成功')
           setTimeout(() => {
-            this.$router.push('/user/articles/historicalArticles?typeCode=2')
+            // this.$router.push('/user/articles/historicalArticles?typeCode=2')
+            this.$router.go(-1)
           }, 1000)
         })
     }
