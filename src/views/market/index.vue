@@ -90,31 +90,7 @@ export default {
     }
   },
   mounted() {
-    // document.querySelector('.area-filter').addEventListener(
-    //   'touchmove',
-    //   function(e) {
-    //     e.preventDefault()
-    //   },{ passive: false })
-    //   document.querySelector('.more-page').addEventListener(
-    //   'touchmove',
-    //   function(e) {
-    //     e.preventDefault()
-    //   },{ passive: false })
-      // document.querySelector('.popularity-filter').addEventListener(
-      // 'touchmove',
-      // function(e) {
-      //   e.preventDefault()
-      // },{ passive: false })
-    //   document.querySelector('.price-filter').addEventListener(
-    //   'touchmove',
-    //   function(e) {
-    //     e.preventDefault()
-    //   },{ passive: false })
-    // document.querySelector('.sortWay-page').addEventListener(
-    //   'touchmove',
-    //   function(e) {
-    //     e.preventDefault()
-    //   },{ passive: false })
+    
   },
   async created() {
     this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''

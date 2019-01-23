@@ -166,9 +166,9 @@
     <div class="replay" v-show="showReplay">
       <div class="replay-cnt">
         <div class="top-action">
-          <p class="cancle" @click="hideReplayFn">取消</p>
-          <p class="publish" @click="insertCommentFn">
-            <span>发布</span>
+          <p class="cancle" @click.stop="hideReplayFn">取消</p>
+          <p class="publish">
+            <span @click.stop="insertCommentFn">发布</span>
           </p>
         </div>
         <div class="replay-title">
@@ -822,19 +822,18 @@ export default {
     overflow-y: auto;
     z-index: 1;
     padding-bottom: 40px;
-    padding-top: 5px;
     &.bottom{
       padding-bottom: 70px;
     }
     .article-item {
-      padding: 0 16px;
+      padding: 6px 16px 0 16px;
       border-bottom: 10px solid #f7f9fa;
       &.noborder{
         border: none;
       }
       .content {
         display: flex;
-        padding-bottom: 12px;
+        padding-bottom: 16px;
         overflow: hidden;
         .left-cnt {
           height: 90px;
@@ -900,8 +899,7 @@ export default {
         display: flex;
         height: 34px;
         .like-count {
-          padding-top: 10px;
-          padding-bottom: 5px;
+          margin-top: 10px;
           flex: 1;
           font-size: 14px;
           color: #445166;
@@ -910,10 +908,12 @@ export default {
           line-height: 24px;
           display: inline-block;
           .icon {
+            width: 16px;
+            display: inline-block;
             margin-right: 8px;
             img {
-              width: 14px;
-              height: 14px;
+              width: 16px;
+              height: 16px;
               opacity: 0.7;
               position: relative;
               top: 2px;
@@ -922,20 +922,16 @@ export default {
         }
         .action {
           width: 100px;
-          height: 24px;
-          line-height: 24px;
-          padding-top: 10px;
-          padding-bottom: 5px;
           text-align: right;
           margin-left: 100px;
           display: inline-block;
           span{
-            height: 24px;
-            padding: 0 5px;
+            height: 34px;
+            padding: 10px 5px 0;
             display: inline-block;
           }
           .like-icon {
-            margin-right: 15px;
+            margin-right: 10px;
             img {
               width: 16px;
               height: 16px;
@@ -958,16 +954,16 @@ export default {
           display: flex;
           .icon {
             img {
-              width: 14px;
-              height: 14px;
+              width: 16px;
+              height: 16px;
               opacity: 0.7;
             }
           }
         }
         .icon {
           display: inline-block;
-          width: 14px;
-          height: 14px;
+          width: 16px;
+          height: 16px;
           margin-right: 8px;
           // padding-top: 2px;
         }
@@ -979,15 +975,12 @@ export default {
             display: inline-block;
             font-weight: 600;
           }
-          .cnt-box-replay{
-            padding-top: 2px;
-          }
         }
         .more {
           font-size: 14px;
           color: #969ea8;
           display: block;
-          padding-top: 3px;
+          padding: 2px 0 10px 0;
         }
         .like-box {
           .list {
@@ -1004,7 +997,6 @@ export default {
           }
         }
         .comment-box {
-          margin-top: 10px;
           font-size: 14px;
           .comment-item {
             margin-bottom: 8px;
@@ -1066,7 +1058,7 @@ export default {
     .replay-cnt {
       // margin-top: 50px;
       width: 100%;
-      padding: 20px 16px 30px 13px;
+      padding: 0 16px 30px 13px;
       box-sizing: border-box;
       position: absolute;
       bottom: 0;
@@ -1074,14 +1066,17 @@ export default {
       .top-action {
         display: flex;
         .cancle {
-          font-size: 16px;
-          color: #333;
           width: 80px;
           height: 32px;
           line-height: 32px;
+          font-size: 16px;
+          color: #333;
+          padding-top: 20px;
           margin-right: 50px;
+          box-sizing: content-box;
         }
         .publish {
+          padding-top: 20px;
           flex: 1;
           text-align: right;
           span {
