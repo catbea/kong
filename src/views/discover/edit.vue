@@ -28,7 +28,7 @@
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
         <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
-        <p class="open-pormpt" v-if="info&&!previewFlag&&info.linkerCount<3">当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用</p>
+        <p class="open-pormpt" v-if="info&&!previewFlag&&info.linkerCount<3">{{info.linkerCount==0?'您暂未开通任何楼盘，建议开通更多楼盘':'当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用'}}</p>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
@@ -233,7 +233,7 @@ export default {
       }
       let res, targetid
       // 存在这个字段,说明是再次编辑
-      if (this.info.belongeder !== '') {
+      if ((this.info.source == 0 || this.info.source == 1)&&this.info.belongeder !== '') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = this.info.id
       } else {
@@ -253,7 +253,7 @@ export default {
           discoverService.insertComment(commentData)
         }
       }
-      this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
+      this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&sharePrompt=true`)
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {

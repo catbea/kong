@@ -50,18 +50,16 @@
                 >{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
               </div>
               <div class="action">
-                <span class="like-icon">
+                <span class="like-icon" v-if="item.praiseStatus===1" @click="updateLike(item, 0, index)">
                   <img
                     src="../../assets/img/article/like2.png"
                     alt=""
-                    v-if="item.praiseStatus===1"
-                    @click="updateLike(item, 0, index)"
                   >
+                </span>
+                <span class="like-icon" v-else @click="updateLike(item, 1, index)">
                   <img
                     src="../../assets/img/article/like1.png"
-                    alt=""
-                    v-else
-                    @click="updateLike(item, 1, index)"
+                    alt=""  
                   >
                 </span>
                 <span class="comment-icon">
@@ -912,12 +910,17 @@ export default {
           }
         }
         .action {
-          width: 70px;
+          width: 100px;
           height: 24px;
           line-height: 24px;
           text-align: right;
+          span{
+            height: 24px;
+            padding: 0 5px;
+            display: inline-block;
+          }
           .like-icon {
-            margin-right: 20px;
+            margin-right: 15px;
             img {
               width: 16px;
               height: 16px;
@@ -1060,6 +1063,7 @@ export default {
           width: 80px;
           height: 32px;
           line-height: 32px;
+          margin-right: 50px;
         }
         .publish {
           flex: 1;
