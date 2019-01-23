@@ -4,7 +4,7 @@
     <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-views">
-        <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
+        <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
         <div class="reprint-source">
           <span>分享源自</span>
           <span style="color:#445166">AW大师写一写</span>
@@ -319,7 +319,7 @@ export default {
       // 查询插入楼盘的信息
       if (this.editData) {
         // 编辑文章分享
-        if (this.editData.inlayHouse) {
+        if (this.editData.inlayHouse && this.editData.inlayHouse !== '') {
           const res = await this.getLinkerInfo(this.editData.inlayHouse)
           this.inlayHouseInfo = res[0]
         }
@@ -819,7 +819,7 @@ export default {
       > .comment-box {
         padding-top: 10px;
         > .comment-list-wrap {
-          margin-top: 20px;
+          margin-top: 24px;
           padding: 0 16px;
           > .comment-list {
             width: 100%;

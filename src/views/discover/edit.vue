@@ -146,7 +146,7 @@ export default {
     // 若出来editData,还原数据
     async restoreData(editData) {
       if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
-      if (editData.hasOwnProperty('inlayHouse')) this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
+      if (editData.hasOwnProperty('inlayHouse') && editData.inlayHouse !== '') this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
       if (editData.hasOwnProperty('recommendHouse') && editData.recommendHouse.length > 0) this.recommendList = await this.getLinkerInfo(editData.recommendHouse.join(','))
     },
     // 查询楼盘信息
@@ -159,8 +159,7 @@ export default {
       const payload = {
         orderBy: 3, // 人气最旺
         current: 1,
-        size: 3,
-        saleStatus: 0
+        size: 3
       }
       const res = await userService.getMyHouses(payload)
       let statusArr = ['热销中', '即将发售', '售罄']
@@ -351,6 +350,9 @@ export default {
       color: #333333;
       font-weight: 400;
       line-height: 28px;
+      .edit-box:nth-child(3){
+        margin-top:24px;
+      }
       > .disclaimer-box {
         font-size: 14px;
         color: #969ea8;
@@ -388,11 +390,12 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
+    height:72px;
     > .left-operation {
       flex: 1;
       font-size: 12px;
       display: flex;
-
+      color:#666666;
       > .left-first {
         display: flex;
         flex-direction: column;
@@ -441,6 +444,7 @@ export default {
       flex: 1;
       display: flex;
       font-size: 14px;
+      align-items:center;
       > div {
         flex: 1;
         width: 88px;
