@@ -13,7 +13,7 @@
         </p>
       </div>
       <div class="discover-detail-content">
-        <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'"/>
+        <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'" :class="{viewRedactStyle:previewFlag,viewPreStyle:!previewFlag}"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
           <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
@@ -294,6 +294,9 @@ export default {
 }
 </script>
 <style lang="less">
+.viewRedactStyle{
+  margin-bottom:15px; 
+}
 .discover-edit-page {
   background: #f7f9fa;
   > .discover-detail-container {

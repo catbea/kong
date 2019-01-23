@@ -2,7 +2,10 @@
   <div class="page-body">
     <div class="copyTitle">请复制原文链接</div>
     <div class="notice-view">目前仅支持爬取微信公众号内容，如有侵权行为，发布人将承担相关责任</div>
-    <textarea class="linker-input" :placeholder="defaultText" v-model="linkerText"></textarea>
+    <!-- <textarea class="linker-input" :placeholder="defaultText" v-model="linkerText"></textarea> -->
+    <div class="linker-input">
+      <textarea class="linker-input-body" :placeholder="defaultText" v-model="linkerText"></textarea>
+    </div>
     <div class="clear-address" @click="clearAddress">清空地址</div>
     <div class="add-article" @click="addArticle">添加文章</div>
     <div class="start-edit" @click="startEdit">开始编辑</div>
@@ -61,8 +64,7 @@ export default {
             message: '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试',
             confirmButtonText: '我知道了'
           })
-          .then(async () => {
-          })
+          .then(async () => {})
       } else {
         this.addButtonClick = true
         this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
@@ -99,9 +101,15 @@ export default {
     border: #e4e6f0 1px solid;
     margin-top: 46px;
     height: 126px;
-    padding: 10px;
-    color: #13294F;
-    font-size: 16px;
+    
+    > .linker-input-body {
+      color: #13294f;
+      font-size: 16px;
+      padding: 10px;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   }
 
   > .clear-address {
