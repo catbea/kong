@@ -679,7 +679,7 @@ export default {
   -webkit-overflow-scrolling: touch;
   > .discover-detail-container {
     background-color: #fff;
-    // padding-bottom: 20px;
+    padding-bottom: 20px;
     position: fixed;
     width: 100%;
     top: 0;
