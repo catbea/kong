@@ -18,13 +18,14 @@ export default {
     currentValue: false,
     arrowImg: require('IMG/share/arrow.png')
   }),
-  methods:{
-    closeHandler(){
+  methods: {
+    closeHandler() {
       this.$store.commit(types.SHARE_PROMPT, false)
+      this.sharePrompt=false
     }
   },
-  computed:{
-     ...mapGetters(['sharePrompt'])
+  computed: {
+    ...mapGetters(['sharePrompt'])
   }
 }
 </script>
