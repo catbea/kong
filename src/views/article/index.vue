@@ -827,7 +827,7 @@ export default {
       padding-bottom: 70px;
     }
     .article-item {
-      margin: 0 16px;
+      padding: 0 16px;
       border-bottom: 10px solid #f7f9fa;
       &.noborder{
         border: none;
@@ -898,15 +898,17 @@ export default {
       }
       .comment {
         display: flex;
-        padding-top: 10px;
-        padding-bottom: 5px;
+        height: 34px;
         .like-count {
+          padding-top: 10px;
+          padding-bottom: 5px;
           flex: 1;
           font-size: 14px;
           color: #445166;
           font-weight: 600;
           height: 24px;
           line-height: 24px;
+          display: inline-block;
           .icon {
             margin-right: 8px;
             img {
@@ -922,7 +924,11 @@ export default {
           width: 100px;
           height: 24px;
           line-height: 24px;
+          padding-top: 10px;
+          padding-bottom: 5px;
           text-align: right;
+          margin-left: 100px;
+          display: inline-block;
           span{
             height: 24px;
             padding: 0 5px;
@@ -945,6 +951,7 @@ export default {
       }
       .like-cnt {
         flex: 1;
+        padding-top: 6px;
         padding-bottom: 25px;
         .like-box,
         .comment-box {
@@ -1094,10 +1101,13 @@ export default {
       .replay-title {
         margin: 16px 0;
         font-size: 16px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        color: #666;
+        p{
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          color: #666;
+        }
+        
       }
       .replay-box {
         position: relative;

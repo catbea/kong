@@ -29,7 +29,11 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
+          <estate-item
+            v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)"
+            :info="inlayHouseInfo"
+            @click="popHandler(2, inlayHouseInfo)"
+          ></estate-item>
         </div>
       </div>
       <p class="discover-extra-info">
@@ -37,7 +41,9 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span
+          class="disclaimer-text"
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -54,7 +60,10 @@
           </div>
         </div>
         <div class="easy-look-list">
-          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
+          <span
+            ref="easyLook"
+            :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'"
+          >{{easylookList && easylookList.join('、')}}</span>
           <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
             <van-icon name="arrow-down"/>
           </div>
@@ -64,7 +73,12 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
+          <estate-item
+            v-for="(item,index) in recommendHouseList"
+            :key="index"
+            :info="item"
+            @click="popHandler(2, item)"
+          ></estate-item>
         </div>
       </div>
       <!-- 评论 -->
@@ -72,12 +86,24 @@
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
-              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
+            <div
+              class="comment-list"
+              v-for="(item, index) in commentList"
+              :key="index"
+              @click="commentSenderClickHandler(item)"
+            >
+              <div
+                class="bg_img"
+                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+                style="width:40px;height:40px;border-radius:50%;"
+              ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                  <span
+                    v-if="item.receiverName"
+                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                  >回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -100,8 +126,16 @@
         <i class="icon iconfont icon-me_opinion"></i>
         <p>{{info&&(info.source == 0 || info.source == 1)&&info.belongeder === '' ? '编辑' : '更新编辑'}}</p>
       </div>
-      <div v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
-        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
+      <div
+        v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''"
+        class="tool-item"
+        @click="collectHandler()"
+      >
+        <i
+          v-if="collectionStatus===1"
+          style="color:#007AE6;"
+          class="icon iconfont icon-Building_details_col"
+        ></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         <p>收藏</p>
       </div>
@@ -109,17 +143,33 @@
         <i class="icon iconfont icon-Building_details_for"></i>
         <p>分享</p>
       </div>
-      <div class="tool-item" v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)" @click="delHandler">
+      <div
+        class="tool-item"
+        v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)"
+        @click="delHandler"
+      >
         <i class="icon iconfont icon-delete"></i>
         <p>删除下架</p>
       </div>
     </div>
-    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
+    <van-actionsheet
+      v-model="isShowDeleteComment"
+      :actions="actions"
+      cancel-text="取消"
+      @select="onSelect"
+      @cancel="onCancel"
+    ></van-actionsheet>
     <!-- <open-article :show.sync="guidanceShow"></open-article> -->
-    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+    <comment-alert
+      :show.sync="showCommentAlert"
+      :info="commentInfo"
+      @cancel="cancelHandler"
+      @publish="publishHandler"
+      @input="inputHandler"
+    ></comment-alert>
   </div>
   <div v-else>
-      <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
   </div>
 </template>
 <script>
@@ -194,7 +244,7 @@ export default {
     recommendHouseList: [], // 推荐房源列表
     renderDom: [],
     inlayHouseInfo: null, // 文章插入楼盘信息
-    sharePrompt:true
+    sharePrompt: true
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -213,10 +263,6 @@ export default {
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
-    
-  },
-  mounted(){
-if(this.$route.query.sharePrompt == 'true') this.$store.commit('SHARE_PROMPT', true)
   },
   computed: {
     ...mapGetters(['userInfo'])
