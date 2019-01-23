@@ -1,5 +1,5 @@
 <template>
-  <div class="sortWay-page" v-if="show">
+  <div class="sortWay-page" v-show="show">
     <ul>
       <li v-for="(item,index) in conf" :key="index" class="van-hairline--bottom" :class="{active:checked===index}" @click="activeHandle(index)">{{item}}</li>
     </ul>

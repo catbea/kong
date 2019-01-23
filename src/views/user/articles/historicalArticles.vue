@@ -65,7 +65,13 @@ export default {
       myWriteList: [], //我的写一写列表
       nullIcon: require('IMG/user/collection/Article@2x.png'),
       nullcontent: '暂还没有文章记录',
-      haveData: true
+      haveData: true,
+      shareFontSize : '24px',
+      editFontSize : '14px',
+      collectionFontSize : '14px',
+      shareStyle : 'bold',
+      editStyle : 'normal',
+      collectionStyle : 'normal',
     }
   },
   computed: {
@@ -85,6 +91,7 @@ export default {
   },
   methods: {
     clickShare(val) {
+      this.selectShareTap()
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
@@ -92,10 +99,10 @@ export default {
       this.$store.commit(types.MYWRITE_TAB, '2')
       this.loading = true
       this.finished = false
-      this.selectShareTap()
     },
 
     clickEdit(val) {
+      this.selectEditTap()
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
@@ -103,10 +110,10 @@ export default {
       this.$store.commit(types.MYWRITE_TAB, '3')
       this.loading = true
       this.finished = false
-      this.selectEditTap()
     },
 
     clickCollection(val) {
+      this.selectCoolectionTap()
       this.typeCode = val
       this.current = 1
       this.myWriteList = []
@@ -114,11 +121,11 @@ export default {
       this.$store.commit(types.MYWRITE_TAB, '1')
       this.loading = true
       this.finished = false
-      this.selectCoolectionTap()
     },
 
     //改变tab分享样式
     selectShareTap() {
+      console.log('分享')
       this.shareFontSize = '24px'
       this.editFontSize = '14px'
       this.collectionFontSize = '14px'
@@ -128,6 +135,7 @@ export default {
     },
     //改变tab编辑样式
     selectEditTap() {
+      console.log('编辑')
       this.shareFontSize = '14px'
       this.editFontSize = '24px'
       this.collectionFontSize = '14px'
@@ -137,6 +145,7 @@ export default {
     },
     //改变tab收藏样式
     selectCoolectionTap() {
+      console.log('收藏')
       this.shareFontSize = '14px'
       this.editFontSize = '14px'
       this.collectionFontSize = '24px'

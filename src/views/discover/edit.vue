@@ -327,7 +327,7 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
-      padding-top: 30px;
+      padding-top: 34px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;

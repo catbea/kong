@@ -14,7 +14,7 @@
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @activeHandle="popularityColorHandle" @checkedText="popularityStrChange"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @resetNum="resetNumHandle" @numHandle="numHandle" @confirm="confirmHandler"></more-filter>
       <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort" @activeHandle="sortHandle" @input="sortChangeHandler"></sort-way>
-    
+      <div class="prevent" v-show="currentIndex>=0"></div>
     </div>
   </div>
 </template>
@@ -73,6 +73,13 @@ export default {
     } else {
       this.localCity = this.local
     }
+  },
+  mounted() {
+    document.querySelector('.prevent').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
   },
   methods: {
     areaColorHandle() {
@@ -145,7 +152,7 @@ export default {
     },
     currentIndex(val) {
       if (val !== -1) {
-        document.getElementsByClassName('choose-container')[0].style.height = this.height
+        // document.getElementsByClassName('choose-container')[0].style.height = this.height
         this.$emit('sor', true)
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
@@ -213,6 +220,9 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     overflow: hidden;
+    .prevent{
+      height:300px;
+    }
   }
 }
 </style>
