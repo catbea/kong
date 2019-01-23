@@ -674,8 +674,6 @@ export default {
     }
     // 防止ios弹簧效果
     let that = this
-    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-    // if (isiOS) {}
     document.querySelector('body').addEventListener('touchstart', function(e) {
       that.startY = e.changedTouches[0].pageY
     })
@@ -718,21 +716,23 @@ export default {
       },
       { passive: false }
     )
-    document.querySelector('.replay').addEventListener(
-      'touchmove',
-      function(e) {
-        e.preventDefault()
-      },
-      { passive: false }
-    )
-    document.querySelector('.submenu').addEventListener(
-      'touchmove',
-      function(e) {
-        e.preventDefault()
-      },
-      { passive: false }
-    )
-
+    let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    if (isiOS) {
+      document.querySelector('.replay').addEventListener(
+        'touchmove',
+        function(e) {
+          e.preventDefault()
+        },
+        { passive: false }
+      )
+      document.querySelector('.submenu').addEventListener(
+        'touchmove',
+        function(e) {
+          e.preventDefault()
+        },
+        { passive: false }
+      )
+    }
     document.querySelector('.tab-bar').addEventListener(
       'touchstart',
       function(e) {
@@ -873,7 +873,7 @@ export default {
             font-weight: 600;
           }
           .attr {
-            padding-top: 22px;
+            padding-top: 32px;
             color: #969ea8;
             font-size: 12px;
             display: flex;
@@ -906,9 +906,9 @@ export default {
         .img {
           width: 120px;
           height: 90px;
-          padding-top: 10px;
           border-radius: 6px;
           overflow: hidden;
+          margin-top: 10px;
           img {
             min-width: 100%;
             min-height: 100%;
