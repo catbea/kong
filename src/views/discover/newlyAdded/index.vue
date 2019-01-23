@@ -1,16 +1,20 @@
 <template>
-  <div class="page-body">
+  <div class="page-body" :style="{marginTop:offesTop}">
     <div class="copyTitle">请复制原文链接</div>
     <div class="notice-view">目前仅支持爬取微信公众号内容，如有侵权行为，发布人将承担相关责任</div>
     <!-- <textarea class="linker-input" :placeholder="defaultText" v-model="linkerText"></textarea> -->
     <div class="linker-input">
-      <textarea class="linker-input-body" :placeholder="defaultText" v-model="linkerText"></textarea>
+      <textarea
+        class="linker-input-body"
+        :placeholder="defaultText"
+        v-model="linkerText"
+        @focus="getFocus"
+        @blur="getBlur"
+      ></textarea>
     </div>
-
     <div class="start-edit" @click="startEdit">开始编辑</div>
     <div class="clear-address" @click="clearAddress">清空地址</div>
     <div class="add-article" @click="addArticle">添加文章</div>
-    
   </div>
 </template>
 
@@ -21,8 +25,19 @@ export default {
     defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里',
     linkerText: '',
     addButtonClick: true,
-    editButtonClick: true
+    editButtonClick: true,
+    offesTop: ''
   }),
+
+  mounted() {
+    document.body.addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+      },
+      { passive: false }
+    ) // passive 参数不能省略，用来兼容ios和android
+  },
 
   methods: {
     //开始编辑
@@ -40,6 +55,16 @@ export default {
     //清除输入框地址信息
     clearAddress() {
       this.linkerText = ''
+    },
+
+    //获取焦点
+    getFocus() {
+      // this.offesTop = '20px'
+    },
+
+    //失去焦点问题
+    getBlur() {
+      document.activeElement.scrollIntoViewIfNeeded(true) 
     },
 
     //添加文章
@@ -103,7 +128,7 @@ export default {
     border: #e4e6f0 1px solid;
     margin-top: 46px;
     height: 126px;
-    
+
     > .linker-input-body {
       color: #13294f;
       font-size: 16px;

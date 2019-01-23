@@ -261,10 +261,12 @@ export default {
           status: 'view'
         })
       }
-
+      
+      this.shareHandler()
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       let desc = res.title
+      alert(desc)
       this.shareData = {
         title: 'AW大师写一写',
         desc: desc,
@@ -273,7 +275,6 @@ export default {
       }
       this.shareDesc = this.info.title
       this.shareImage = this.info.image
-      this.shareHandler()
     },
     // 楼盘信息处理
     async handleLinkerInfo() {
