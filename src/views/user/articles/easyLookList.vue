@@ -28,6 +28,9 @@
             </div>
           </div>
         </div>
+
+        <div class="easy-line"></div>
+
       </div>
     </van-list>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
@@ -141,6 +144,7 @@ export default {
       font-size: 16px;
       margin-left: 15px;
       margin-bottom: 7px;
+      font-weight:bold;
     }
   }
 
@@ -174,8 +178,8 @@ export default {
       position: relative;
 
       > .easy-look-title {
-        color: #445166;
-        font-size: 14px;
+        color: #333333;
+        font-size: 16px;
         position: absolute;
         top: 0;
         line-height: 20px;
@@ -197,6 +201,13 @@ export default {
         }
       }
     }
+  }
+
+  > .easy-line{
+    width: 90%;
+    margin-left: 5%;
+    height: 1px;
+    background-color: #E2E2E3;
   }
 }
 </style>
