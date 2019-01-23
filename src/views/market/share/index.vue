@@ -2,14 +2,20 @@
   <div class="market-share-page" id="market-share-page">
     <div class="box" v-show="status === 1">
       <div class="share-top" id="share-top">
-        <div class="bg_img avatar-img"  :style="{backgroundImage:'url(' + buildingInfo.postersUrl + ')'}"></div>
-        <!-- <img class="avatar-img" :src="buildingInfo.postersUrl" alt=""> -->
-        <div class="bg_img cover-img"  :style="{backgroundImage:'url(' + coverBg + ')'}"></div>
+        <!-- <div
+          class="bg_img avatar-img"
+          :style="{backgroundImage:'url(' + buildingInfo.postersUrl + ')'}"
+        ></div> -->
+        <img class="avatar-img" :src="buildingInfo.postersUrl" alt="">
+        <div class="bg_img cover-img" :style="{backgroundImage:'url(' + coverBg + ')'}"></div>
         <!-- <img class="cover-img" :src="coverBg"> -->
         <div class="logo-body">
           <div class="logo-img">
-            <div class="bg_img img"  :style="{backgroundImage:'url(' + buildingInfo.qrCode + ')'}"></div>
-            <!-- <img :src="buildingInfo.qrCode"> -->
+            <!-- <div
+              class="bg_img qr-code"
+              :style="{backgroundImage:'url(' + buildingInfo.qrCode + ')'}"
+            ></div> -->
+            <img class="qr-code" :src="buildingInfo.qrCode">
           </div>
           <span class="distinguish-span">长按识别更多</span>
         </div>
@@ -21,7 +27,10 @@
           v-else
         >价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
         <!-- <img class="avatar-view" :src="buildingInfo.avatarMediaid"> -->
-        <div class="avatar-view"  :style="{backgroundImage:'url(' + buildingInfo.avatarMediaid + ')'}"></div>
+        <div
+          class="avatar-view"
+          :style="{backgroundImage:'url(' + buildingInfo.avatarMediaid + ')'}"
+        ></div>
         <span class="username-view">{{buildingInfo.agentName}}</span>
         <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
         <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
@@ -111,34 +120,60 @@ export default {
         this.buildingInfo = result
       }
     },
-    savaReport() {
+   async savaReport() {
       let dd = new Date().getTime()
       if (dd - this.lastOpTimer < 3000) return
       this.lastOpTimer = dd
-      this.handleDate()
+      await this.handleDate()
     },
 
+    // async handleDate() {
+    //   this.showLoading = true
+    //   this.pointerEvents = 'none'
+    //   this.status = 2
+    //   const dpr = window.devicePixelRatio
+    //   const canvas = await h2c(document.querySelector('#share-top'), {
+    //     logging: false,
+    //     useCORS: true,
+    //     scale: 3,
+    //     width: '300px',
+    //     heigt: '480px'
+    //   })
+
+    //   let imgW = document.body.clientWidth * 0.8
+    //   let imgH = 480
+    //   let image = document.getElementById('imgcard')
+    //   image.src = canvas.toDataURL('image/png')
+    //   image.style.width = imgW + 'px'
+    //   // image.style.maxWidth = imgW + 'px'
+    //   // image.style.height = imgH + 'px'
+    //   image.style.marginLeft = '10%'
+    //   image.style.marginTop = '10%'
+    //   image.style.borderRadius = '10px'
+    //   this.showLoading = false
+    // }
+
     async handleDate() {
+      console.log('99999999999999')
       this.showLoading = true
       this.pointerEvents = 'none'
       this.status = 2
-      const dpr = window.devicePixelRatio
-      const canvas = await h2c(document.querySelector('#share-top'), {
-        logging: false,
-        useCORS: true
-      })
 
-      let imgW = document.body.clientWidth * 0.8
-      let imgH = 480
-      let image = document.getElementById('imgcard')
-      image.src = canvas.toDataURL('image/png')
-      image.style.width = imgW + 'px'
-      image.style.maxWidth = imgW + 'px'
-      image.style.height = imgH + 'px'
-      image.style.marginLeft = '10%'
-      image.style.marginTop = '10%'
-      image.style.borderRadius = '10px'
-      this.showLoading = false
+      let img = document.getElementById('imgcard')
+      let _that = this
+       h2c(document.querySelector('#share-top'), {
+        backgroundColor: null,
+        scale: 3,
+        useCORS: true,
+        allowTaint: false,
+        logging: false,
+        width: '300px',
+        heigt: '480px'
+      }).then(canvas => {
+        let dataURL = canvas.toDataURL()
+        img.src = dataURL
+        this.showLoading = false
+      })
     }
   },
   computed: {
@@ -201,11 +236,12 @@ export default {
     border-radius: 10px;
     border-color: transparent;
     background: transparent;
+    margin-left: 10%;
+    margin-top: 10%;
 
     > .imgcard {
-      border: none;
-      border-color: transparent;
-      background: transparent;
+      width: 300px;
+      height: 480px;
     }
 
     > .notice-text {
@@ -263,7 +299,7 @@ export default {
     > .logo-body {
       position: absolute;
       width: 73px;
-      top:340px;
+      top: 340px;
       right: 20px;
       z-index: 3;
       display: flex;
@@ -273,11 +309,13 @@ export default {
       > .logo-img {
         width: 73px;
         height: 73px;
+        border-radius: 50%;
 
-        .img {
+        > .qr-code {
           width: 68px;
           height: 68px;
           border-radius: 50%;
+          background-size: cover;
         }
       }
 
