@@ -170,8 +170,9 @@ export default {
   }
   .reportFeedback-bottom-btn {
     margin: 16px;
-    bottom: 25px;
-    position: absolute;
+    margin-top: 24px;
+    // bottom: 25px;
+    // position: absolute;
     width: 91%;
     .reportFeedback-btn {
       font-size: 16px;
