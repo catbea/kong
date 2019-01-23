@@ -2,14 +2,17 @@
   <div class="article-box">
     <Guide v-if="showGuide" @hideGuide="hideStep"/>
     <div class="tab-bar scale-1px-bottom">
-      <div class="classify">
-        <span
-          :class="{'recommend': item.itemCode===classify && item.itemName === classifyName}"
-          v-for="(item, index) in articleType"
-          :key="index"
-          @click="changeClassify(item,$event)"
-        >{{item.itemName}}</span>
+      <div class="classify-box">
+        <div class="classify">
+          <span
+            :class="{'recommend': item.itemCode===classify && item.itemName === classifyName}"
+            v-for="(item, index) in articleType"
+            :key="index"
+            @click="changeClassify(item,$event)"
+          >{{item.itemName}}</span>
+        </div>
       </div>
+      
       <span class="icon" @click="showSubFn">
         <img v-show="!showSub" src="../../assets/img/article/tabicon.png" alt="">
         <img v-show="showSub" src="../../assets/img/article/tabicon2.png" alt="">
@@ -441,10 +444,16 @@ export default {
     // 显示按时间排序菜单
     showSubFn() {
       this.showSub = !this.showSub
+      if (this.showSub) {
+        this.$store.commit('TABBAR', { show: false })
+      } else {
+        this.$store.commit('TABBAR', { show: true })
+      }
     },
     // 隐藏时间排序菜单
     hideSubMenu() {
       this.showSub = false
+      this.$store.commit('TABBAR', { show: true })
     },
     // 按时间菜单排序
     sortTypeFn(val) {
@@ -758,34 +767,40 @@ export default {
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
   .tab-bar {
-    font-size: 14px;
-    color: #333;
-    height: 20px;
-    line-height: 20px;
-    padding: 12px 16px;
+    padding: 0 16px;
     height: 54px;
     box-sizing: border-box;
-    width: 100%;
-    position: fixed;
+    overflow: hidden;
+    .classify-box{
+      margin-top: 12px;
+      height: 32px;
+      overflow: hidden;
+    }
     .classify {
       display: inline-block;
       width: 85%;
-      overflow-x: auto;
+      overflow: scroll;
       overflow-y: hidden;
       white-space: nowrap;
       -webkit-overflow-scrolling: touch;
+      height: 40px;
       &::-webkit-scrollbar {
-        background-color: transparent;
         display: none;
+        width:0;
+	      height:0;
       }
       span {
+        vertical-align: middle;
         display: inline-block;
-        margin-right: 32px;
+        height: 32px;
+        line-height: 32px;
+        margin-right: 22px;
         &.active {
           color: #007ae6;
         }
       }
       .recommend {
+        vertical-align: middle;
         font-size: 24px;
         height: 34px;
         line-height: 34px;
@@ -814,7 +829,7 @@ export default {
     width: 100%;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 2;
+    z-index: 4;
     ul {
       position: relative;
       background-color: #fff;

@@ -146,7 +146,7 @@ export default {
     // 若出来editData,还原数据
     async restoreData(editData) {
       if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
-      if (editData.hasOwnProperty('inlayHouse')) this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
+      if (editData.hasOwnProperty('inlayHouse') && editData.inlayHouse !== '') this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
       if (editData.hasOwnProperty('recommendHouse') && editData.recommendHouse.length > 0) this.recommendList = await this.getLinkerInfo(editData.recommendHouse.join(','))
     },
     // 查询楼盘信息
