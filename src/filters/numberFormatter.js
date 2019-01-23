@@ -11,7 +11,7 @@ export default (num, type = 0) => {
     case 0: // 中文 11000 -> 11万 || 110000000 -> 1.1亿 (万位取整,亿取1位小数点)
       return numProcess(_num)
     case 1: // 英文 1100 -> 11k
-      if (_num > 1000000000) {
+      if (_num > 100000000) {
         return (_num / 100000000).toFixed(1) + 'm'
       } else if (_num > 100000) {
         return (_num / 10000).toFixed(1) + 'w'

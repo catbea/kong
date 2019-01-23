@@ -4,7 +4,7 @@
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-views">
-        <div class="reprint-views">浏览量：{{ info&&info.scanNum | currency('')}}</div>
+        <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
         <div class="reprint-source">
           <span>分享源自</span>
           <span style="color:#445166">AW大师写一写</span>
