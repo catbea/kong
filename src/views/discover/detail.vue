@@ -264,13 +264,6 @@ export default {
     this.getLikeList()
     this.getCommentList()
   },
-  mounted() {
-    if (this.$route.query.sharePrompt == 'true') {
-      this.$store.commit('SHARE_PROMPT', true)
-    }else{
-      this.$store.commit('SHARE_PROMPT', false)
-    }
-  },
   computed: {
     ...mapGetters(['userInfo'])
   },

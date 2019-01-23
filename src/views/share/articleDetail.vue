@@ -133,7 +133,7 @@
         <div class="tool-right">在线咨询</div>
       </div>
     </div>
-    <open-article :show.sync="guidanceShow"/>
+    <!-- <open-article :show.sync="guidanceShow"/> -->
     <card-dialog
       class="agent-card"
       :show.sync="openCardPopup"
@@ -215,6 +215,12 @@ export default {
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = this.$route.query.shareUuid
+    if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
+      this.$store.commit('SHARE_PROMPT', true)
+      window.localStorage.setItem('isFirst', true)
+    } else {
+      this.$store.commit('SHARE_PROMPT', false)
+    }
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
