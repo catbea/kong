@@ -2,15 +2,15 @@
   <div class="messageInfo-page">
     <div class="messageInfo-back" v-if="haveData">
       <!--  -->
-      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
+      <div class="van-hairline--bottom messageInfo-wd" v-show="UnreadMsgTotal != 0">
         <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
         <div class="messageInfo-wd-right">
           <button class="messageInfo-wd-right-select messageInfo-wd-select" @click="goSelestMessage">查 看</button>
           <button class="messageInfo-wd-right-select" @click="getsetMsgRead">全部已读</button>
         </div>
       </div>
-      <div class="messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
-        <div class="messageInfo-sys-container">
+      <div class=" messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
+        <div class="van-hairline--bottom messageInfo-sys-container">
           <span class="messageInfo-sys-left">
             <div
               :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
@@ -39,7 +39,7 @@
           class="messageInfo-sys"
           v-for="(item,key) in messageList"
           :key="key" @click="msgClickHandle(item)">
-          <div class="messageInfo-sys-container">
+          <div class="van-hairline--bottom messageInfo-sys-container">
             <span class="messageInfo-sys-left">
               <div
                 :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
@@ -216,7 +216,7 @@ export default {
     > .messageInfo-wd {
       height: 50px;
       background: rgba(255, 255, 255, 1);
-      border-bottom: 1px solid #eeeeee;
+      // border-bottom: 1px solid #eeeeee;
       // padding: 7px 16px;
       padding: 0 0.42667rem;
       line-height: 37px;
@@ -252,10 +252,10 @@ export default {
       padding-top: 16px;
       margin: 0 16px;
       margin-bottom: 0;
-      border-bottom: 1px solid #eeeeee;
+      // border-bottom: 1px solid #eeeeee;
       > .messageInfo-sys-container {
         display: flex;
-        margin-bottom: 10px;
+        padding-bottom: 10px;
         > .messageInfo-sys-left {
           > .sys-left-img {
             width: 50px;
@@ -297,11 +297,11 @@ export default {
         }
         > .messageInfo-sys-right {
           padding-left: 12px;
+          padding-top:6px;
           > .sys-right-top {
             font-size: 16px;
             font-weight: 600;
             color: rgba(51, 51, 51, 1);
-            line-height: 22px;
             > .sys-right-time {
               font-size: 12px;
               font-weight: 400;
@@ -314,12 +314,12 @@ export default {
             font-size: 13px;
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
-            line-height: 27px;
+            line-height:27px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 280px;
-            height: 20px;
+            height:20px;
           }
         }
       }

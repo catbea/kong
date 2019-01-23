@@ -6,7 +6,7 @@ export default [
     meta: {
       skipAuth: true,
       skipIM: true,
-      title: '文章'
+      title: 'AW大师写一写'
     }
   }
 ]

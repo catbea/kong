@@ -44,6 +44,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+#tabbar{
 .tabbar {
   z-index: 999;
   width: 100%;
@@ -58,5 +59,6 @@ export default {
   span {
     font-size: 12px;
   }
+}
 }
 </style>

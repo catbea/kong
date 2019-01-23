@@ -58,6 +58,8 @@
 <script>
 import articleService from 'SERVICE/articleService'
 import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
+
 export default {
   data() {
     return {
@@ -92,27 +94,39 @@ export default {
     async commitInfo(data) {
       const result = await articleService.articleAnalysis(data)
 
-      if (result.returnCode == '31100') {
+      let errorMsg = ''
+
+      if (result.returnCode == '31100' || result.returnCode == '10500' || result.returnCode == '31106'||result.returnCode=='31102') {
         this.showLoading = 'none'
         this.analysisText = '解析失败'
         this.title = '获取失败'
         this.source = '获取失败'
         this.content = '获取失败'
         this.icon = '获取失败'
-        this.imgNum = '获取失败'
+        this.imgNum = '0'
         this.errColor = '#EA4D2E'
+
+        if (result.returnCode == '31106') {
+          errorMsg = '该文章已经存在,请勿重复爬取'
+        } else if (result.returnCode == '10500'||result.returnCode == '31102') {
+          errorMsg = result.msg
+        } else {
+          errorMsg = '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试'
+        }
 
         this.$dialog
           .alert({
             title: '爬取失败',
-            message: '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试',
+            message: errorMsg,
             confirmButtonText: '我知道了'
           })
           .then(() => {
             // on close
-            this.cancelClooection(val)
+            this.$router.go(-2)
           })
       } else {
+        this.$store.commit(types.MYWRITE_TAB, '3')
+
         this.articleId = result.articleId
         this.title = result.title
         this.source = result.source
@@ -126,9 +140,13 @@ export default {
         this.errColor = '#445166'
 
         if (this.parseType == '1') {
-          setTimeout(this.goToEditDetail(), 5000)
+          setTimeout(async () => {
+            this.goToEditDetail()
+          }, 1500)
         } else if (this.parseType == '2') {
-          setTimeout(this.goToMyWrite(), 5000)
+          setTimeout(() => {
+            this.goToMyWrite()
+          }, 3000)
         }
       }
     },
@@ -136,16 +154,15 @@ export default {
     goToMyWrite() {
       this.$toast('文章添加成功')
       this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
-
     },
 
     goToEditDetail() {
       this.analysisText = '解析成功'
       this.showLoading = 'none'
       let city = '全国'
-      
+
       this.$toast('文章解析成功')
-      this.$router.push({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
+      this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
     },
 
     //关闭弹窗

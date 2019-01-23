@@ -1,5 +1,5 @@
 <template>
-  <div class="discover-detail-page">
+  <div class="discover-detail-page" v-if="haveData">
     <!-- 文章详情和经纪人信息 -->
     <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
       <h5 class="discover-title">{{info&&info.title}}</h5>
@@ -25,10 +25,20 @@
         </div>
         <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
-      <div class="discover-detail-content" v-html="info&&info.content"></div>
+      <!-- 文章详情 -->
+      <div class="discover-detail-content">
+        <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
+          <paragraph :info="paragraph"/>
+          <estate-item
+            v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)"
+            :info="inlayHouseInfo"
+            @click="popHandler(2, inlayHouseInfo)"
+          ></estate-item>
+        </div>
+      </div>
       <p class="discover-extra-info">
         <span class="reprint-from">{{info&&info.publisher}}</span>
-        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter(3, '/')}}</span>
+        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer">
         <span
@@ -57,6 +67,18 @@
           <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
             <van-icon name="arrow-down"/>
           </div>
+        </div>
+      </div>
+      <!-- 推荐房源 -->
+      <div class="recommend-houses" v-if="recommendHouseList.length>0">
+        <title-bar :conf="{title: '推荐房源'}"/>
+        <div class="recommend-houses-content">
+          <estate-item
+            v-for="(item,index) in recommendHouseList"
+            :key="index"
+            :info="item"
+            @click="popHandler(2, item)"
+          ></estate-item>
         </div>
       </div>
       <!-- 评论 -->
@@ -102,24 +124,32 @@
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
         <i class="icon iconfont icon-me_opinion"></i>
-        {{info&&info.belongeder === '0' ? '编辑' : '更新编辑'}}
+        <p>{{info&&(info.source == 0 || info.source == 1)&&info.belongeder === '' ? '编辑' : '更新编辑'}}</p>
       </div>
-      <div class="tool-item" @click="collectHandler()">
+      <div
+        v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''"
+        class="tool-item"
+        @click="collectHandler()"
+      >
         <i
           v-if="collectionStatus===1"
           style="color:#007AE6;"
           class="icon iconfont icon-Building_details_col"
         ></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
-        收藏
+        <p>收藏</p>
       </div>
       <div class="tool-item" @click="shareHandler">
         <i class="icon iconfont icon-Building_details_for"></i>
-        分享
+        <p>分享</p>
       </div>
-      <div class="tool-item" v-if="info&&(info.agentId === info.belongeder)" @click="delHandler">
+      <div
+        class="tool-item"
+        v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)"
+        @click="delHandler"
+      >
         <i class="icon iconfont icon-delete"></i>
-        删除
+        <p>删除下架</p>
       </div>
     </div>
     <van-actionsheet
@@ -129,7 +159,7 @@
       @select="onSelect"
       @cancel="onCancel"
     ></van-actionsheet>
-    <open-article :show.sync="guidanceShow"></open-article>
+    <!-- <open-article :show.sync="guidanceShow"></open-article> -->
     <comment-alert
       :show.sync="showCommentAlert"
       :info="commentInfo"
@@ -138,12 +168,16 @@
       @input="inputHandler"
     ></comment-alert>
   </div>
+  <div v-else>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+  </div>
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
 import TitleBar from 'COMP/TitleBar/'
 import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
+import Null from 'COMP/Null'
 import { uuid } from '@/utils/tool'
 import remove from 'lodash/remove'
 import { mapGetters } from 'vuex'
@@ -151,14 +185,22 @@ import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
 import cpInformationService from 'SERVICE/cpInformationService'
+import EstateItem from 'COMP/EstateItem'
+import Paragraph from 'COMP/Discover/Paragraph'
 export default {
   components: {
     TitleBar,
     OpenArticle,
     CommentAlert,
-    Avatar
+    Avatar,
+    EstateItem,
+    Paragraph,
+    Null
   },
   data: () => ({
+    haveData: true,
+    nullIcon: require('IMG/article/empty_article@2x.png'),
+    nullcontent: '该文章已被下架删除',
     swiperOption: {
       slidesPerView: 2,
       spaceBetween: 12,
@@ -181,7 +223,6 @@ export default {
       linkText: '',
       link: ''
     },
-    guidanceShow: false,
     qrcodeInfo: {},
     shareData: null,
     virtualDom: null,
@@ -199,7 +240,11 @@ export default {
     commentInfo: null,
     commentIds: [], // 评论Ids
     shareUuid: '',
-    isPass: ''
+    isPass: '',
+    recommendHouseList: [], // 推荐房源列表
+    renderDom: [],
+    inlayHouseInfo: null, // 文章插入楼盘信息
+    sharePrompt: true
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -210,9 +255,10 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = uuid()
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
-      this.guidanceShow = true
+      this.$store.commit('SHARE_PROMPT', true)
+      window.localStorage.setItem('isFirst', true)
     } else {
-      this.guidanceShow = false
+      this.$store.commit('SHARE_PROMPT', false)
     }
     this.getDetail()
     this.getLikeList()
@@ -224,6 +270,11 @@ export default {
   methods: {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
+      if (res.returnCode == 10028) {
+        this.haveData = false
+        return
+      }
+      this.haveData = true
       this.info = res
       this.infoId = res.id
       this.collectionStatus = res.collectType
@@ -241,14 +292,50 @@ export default {
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.shareData = {
-        title: this.info.title,
+        title: 'AW大师写一写',
+        desc: this.info.title,
         imgUrl: this.info.image,
         link: host
       }
       if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
+      this.handleLinkerInfo()
       this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
+
+      // 创建虚拟dom解析html结构
+      let virtualDom = document.createElement('div')
+      virtualDom.innerHTML = this.info.content
+
+      for (let dom of virtualDom.children) {
+        this.renderDom.push({
+          text: dom.innerHTML,
+          status: 'h5'
+        })
+      }
+    },
+    // 楼盘信息处理
+    async handleLinkerInfo() {
+      // 查询插入楼盘的信息
+      if (this.editData) {
+        // 编辑文章分享
+        if (this.editData.inlayHouse) {
+          const res = await this.getLinkerInfo(this.editData.inlayHouse)
+          this.inlayHouseInfo = res[0]
+        }
+
+        if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
+          this.recommendHouseList = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
+        }
+      } else {
+        // 原文章分享
+        // this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
+      }
+    },
+    // 查询楼盘信息
+    async getLinkerInfo(linkerIds) {
+      const res = await discoverService.queryLinkerListByIds(linkerIds)
+      return res
     },
     // 好看列表
     async getLikeList() {
@@ -260,7 +347,7 @@ export default {
         }
         this.$nextTick(() => {
           let height = this.$refs.easyLook.offsetHeight
-          if (height <= 80) {
+          if (height <= 85) {
             this.isMoreLike = false
           } else {
             this.isMoreLike = true
@@ -320,10 +407,14 @@ export default {
       }
       const res = await articleService.updateLike(param)
       if (this.likeFlag) {
+        // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
         this.easylookList.unshift(this.agentInfo.agentName)
       } else {
-        this.easylookList = remove(this.easylookList, this.agentInfo.agentName)
+        this.easylookList = remove(this.easylookList, n => {
+          return n !== this.agentInfo.agentName
+        })
       }
+      console.log(this.easylookList)
     },
     // 展开更多好看
     moreLikeListHandler() {
@@ -341,7 +432,8 @@ export default {
         senderSource: 0,
         title: this.info.title,
         placeholder: '分享你的想法',
-        type: 0
+        type: 0,
+        contentHeight: window.screen.height - 64
       }
     },
     // 评论输入框编辑
@@ -379,9 +471,10 @@ export default {
           receiverSource: item.senderSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: item.content,
+          title: item.senderName + '：' + item.content,
           placeholder: '回复' + item.senderName + '：',
-          type: 1
+          type: 1,
+          contentHeight: window.screen.height - 64
         }
       }
     },
@@ -401,9 +494,10 @@ export default {
           receiverSource: item.receiverSource,
           senderId: this.agentId,
           senderSource: 0,
-          title: item.content,
+          title: item.receiverName + '：' + item.content,
           placeholder: '回复' + item.receiverName + '：',
-          type: 1
+          type: 1,
+          contentHeight: window.screen.height - 64
         }
       }
     },
@@ -478,7 +572,7 @@ export default {
     },
     // 编辑按钮点击处理
     editClickHandler() {
-      this.$router.push({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
+      this.$router.replace({ path: `/discover/edit/${this.$route.params.id}/${this.$route.params.city}`, query: this.$route.query })
     },
     // 收藏文章按钮点击
     async collectHandler() {
@@ -496,7 +590,7 @@ export default {
     },
     // 分享按钮点击处理
     shareHandler() {
-      this.guidanceShow = true
+      this.$store.commit('SHARE_PROMPT', true)
     },
     // 设置分享
     async setShare() {
@@ -517,18 +611,20 @@ export default {
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
     },
-    delHandler(){
-      this.$dialog.confirm({
-        title:'提示',
-        message:'是否确认删除?'
-      }).then(async () => {
-        const res = await cpInformationService.updateStatusByAgentId(this.info.agentId,this.info.id)
-        this.$toast('删除成功')
-        setTimeout(() => {
-          this.$router.push('/user/articles/historicalArticles?typeCode=2')
-        }, 1000);
-      })
-
+    // 文章删除
+    delHandler() {
+      this.$dialog
+        .confirm({
+          title: '提示',
+          message: '是否确认删除?'
+        })
+        .then(async () => {
+          const res = await cpInformationService.updateEnableByInfoId(this.info.agentId, this.info.id)
+          this.$toast('删除成功')
+          setTimeout(() => {
+            this.$router.push('/user/articles/historicalArticles?typeCode=2')
+          }, 1000)
+        })
     }
   },
   watch: {
@@ -622,10 +718,10 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
-      font-size: 16px !important;
-      color: #333333 !important;
-      font-weight: 400 !important;
-      line-height: 28px !important;
+      font-size: 16px;
+      color: #333333;
+      font-weight: 400;
+      line-height: 28px;
     }
     > .discover-extra-info {
       display: flex;
@@ -686,6 +782,7 @@ export default {
         margin-left: 20px;
         padding-top: 6px;
         position: relative;
+        width: 300px;
         > .easy-look-name-clamp {
           color: #445166;
           font-size: 14px;
@@ -776,10 +873,10 @@ export default {
       }
     }
   }
-  > .recommend-houses {
+  .recommend-houses {
     background-color: #fff;
     margin-top: 10px;
-
+    border-top: 10px solid #f7f9fa;
     > .recommend-houses-content {
       padding: 10px 15px;
       .house-item {
@@ -837,6 +934,8 @@ export default {
       > i {
         display: block;
         font-size: 24px;
+        width: 100%;
+        height: 24px;
         margin-bottom: 4px;
       }
     }

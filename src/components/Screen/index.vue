@@ -1,5 +1,5 @@
 <template>
-  <div class="van-hairline--bottom screen-container">
+  <div class="screen-container">
     <ul class="screen-ul">
       <li class="area" :class="item.index===currentIndex&&'selected'" v-for="item in conf" :key="item.index" @click="itemClickHandler(item)">
         <span class="value-content" :class="{active:item.flag}">{{(item.value ===''||item.value ==='不限')?item.name:item.value}}</span>
@@ -8,12 +8,13 @@
       </li>
       <li class="bg_img sort" @click="sortHandle" :style="{'backgroundImage':'url('+(sortFlage?sortColorImg:sortImg)+')'}"></li>
     </ul>
-    <div class="choose-container" @click="coverClickHandler">
+    <div class="van-hairline--top choose-container" @click="coverClickHandler">
       <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @activeHandle="areaColorHandle" @checkedText="areaStrChange"></area-filter>
       <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice" @activeHandle="priceColorHandle" @checkedText="priceStrChange"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @activeHandle="popularityColorHandle" @checkedText="popularityStrChange"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @resetNum="resetNumHandle" @numHandle="numHandle" @confirm="confirmHandler"></more-filter>
       <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort" @activeHandle="sortHandle" @input="sortChangeHandler"></sort-way>
+      <div class="prevent" v-show="currentIndex>=0"></div>
     </div>
   </div>
 </template>
@@ -32,7 +33,7 @@ export default {
       }
     },
     local: { type: String, default: '' },
-    height: { type: String, default: '16rem' }
+    height: { type: String, default: '20rem' }
   },
   components: {
     AreaFilter,
@@ -73,6 +74,13 @@ export default {
       this.localCity = this.local
     }
   },
+  mounted() {
+    document.querySelector('.prevent').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
+  },
   methods: {
     areaColorHandle() {
       this.conf[0].flag = true
@@ -102,6 +110,7 @@ export default {
     },
     itemClickHandler(val) {
       this.currentIndex = val.index === this.currentIndex ? -1 : val.index
+      this.sortFlage = false
       this.$emit('screen', val.index)
     },
     coverClickHandler() {
@@ -143,7 +152,7 @@ export default {
     },
     currentIndex(val) {
       if (val !== -1) {
-        document.getElementsByClassName('choose-container')[0].style.height = this.height
+        // document.getElementsByClassName('choose-container')[0].style.height = this.height
         this.$emit('sor', true)
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0
@@ -171,12 +180,13 @@ export default {
     justify-content: space-between;
     width: 100%;
     height: 32px;
-    padding-top: 12px;
+    padding-top:9px;
     background: rgba(255, 255, 255, 1);
     background-position: center;
     background-repeat: no-repeat;
     padding-left: 18px;
     margin-bottom: 5px;
+    line-height:23px;
     li {
       display: flex;
       > .value-content {
@@ -193,7 +203,7 @@ export default {
       span:nth-child(3) {
         width: 16px;
         height: 16px;
-        margin-top: 1px;
+        margin-top:3px;
       }
     }
     .sort {
@@ -210,6 +220,9 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     overflow: hidden;
+    .prevent{
+      height:3000px;
+    }
   }
 }
 </style>

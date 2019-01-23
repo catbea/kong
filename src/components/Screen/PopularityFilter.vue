@@ -1,5 +1,5 @@
 <template>
-  <div class="popularity-filter" v-if="show" :class="{act:flag}">
+  <div class="popularity-filter" v-show="show" :class="{act:flag}">
     <ul>
       <li class="van-hairline--bottom" v-for="(item,index) in conf" :key="index" :class="checked===index&&'active'" @click="itemClick(item,index)">{{item}}</li>
     </ul>
@@ -11,6 +11,9 @@ export default {
     if (this.$route.name === 'mymarket') {
       this.flag = true
     }
+  },
+  mounted() {
+    
   },
   props: {
     show: { type: Boolean, default: false },

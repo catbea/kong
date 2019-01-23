@@ -13,7 +13,10 @@ export default [
   {
     path: '/discover/:id/:city',
     name: 'discover-detail',
-    component: resolve => require(['@/views/discover/detail.vue'], resolve)
+    component: resolve => require(['@/views/discover/detail.vue'], resolve),
+    meta: {
+      title: 'AW大师写一写',
+    }
   },
   {
     path: '/discover/edit-help',
@@ -23,7 +26,10 @@ export default [
   {
     path: '/discover/edit/:id/:city',
     name: 'discover-edit',
-    component: resolve => require(['@/views/discover/edit.vue'], resolve)
+    component: resolve => require(['@/views/discover/edit.vue'], resolve),
+    meta: {
+      title: 'AW大师写一写'
+    }
   },
   {
     path: '/discover/reportFeedback',
@@ -47,9 +53,6 @@ export default [
     component: resolve => require(['@/views/discover/newlyAdded/analysis.vue'], resolve),
     meta: {
       title: '文章数据爬取',
-      tabbar: {
-        show: true
-      }
     }
   }
 ]

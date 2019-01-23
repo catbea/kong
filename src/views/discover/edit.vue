@@ -13,27 +13,26 @@
         </p>
       </div>
       <div class="discover-detail-content">
-        <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'"/>
+        <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'" :class="{viewRedactStyle:previewFlag,viewPreStyle:!previewFlag}"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
           <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
-        <div class="disclaimer-box" v-if="previewFlag">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 </div>
+        <div class="disclaimer-box" v-if="previewFlag">
+          免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 。 如有问题请点击
+          <span>举报反馈</span>
+        </div>
       </div>
     </div>
-    <div class="recommend-house-container">
+    <div class="recommend-house-container" v-if="!(previewFlag&&recommendList.length===0)">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
         <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
+        <p class="open-pormpt" v-if="info&&!previewFlag&&info.linkerCount<3">{{info.linkerCount==0?'您暂未开通任何楼盘，建议开通更多楼盘':'当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用'}}</p>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
-    <van-actionsheet
-      v-model="delActionsheetShow"
-      :actions="delActions"
-      cancel-text="取消"
-      @select="onDelSelect"
-    />
+    <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect"/>
     <!-- 浮动栏 -->
     <div class="fixed-bar">
       <div class="left-operation">
@@ -52,12 +51,7 @@
       </div>
     </div>
     <!-- 楼盘选择 -->
-    <single-select-box
-      v-model="singleShow"
-      :maxSelect="countCompute"
-      :selected="selectedCompute"
-      @submit="selectSubmitHandler"
-    />
+    <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
     <!-- 帮助 -->
     <van-popup class="help-box" v-model="helpShow">
       <h5 class="help-title">用户帮助</h5>
@@ -65,9 +59,7 @@
       <p class="help-sub-title">任何模块均可点击进行编辑</p>
       <div class="help-content">
         <p class="help-content-line">1、成功选中后，会有高亮显示，无用信息可进行删除</p>
-        <p
-          class="help-content-line"
-        >2、不同的活动会带来不同的效果，简介漂亮的封面、适当的文字可以提升用户的点击率。当然，活动的周期和用户期待价值也会直接影响传播效果</p>
+        <p class="help-content-line">2、不同的活动会带来不同的效果，简介漂亮的封面、适当的文字可以提升用户的点击率。当然，活动的周期和用户期待价值也会直接影响传播效果</p>
         <p class="help-content-line">3、提炼导读摘要、文中适当发表精彩观点，有助于形成温度和亲切感、塑造专业度。</p>
         <p class="help-content-line">4、切记粗暴插入广告，容易影响自然分享的扩散</p>
         <p class="help-content-line">5、插入的文字勿用敏感性词语；</p>
@@ -150,15 +142,18 @@ export default {
         saleStatus: 0
       }
       const res = await userService.getMyHouses(payload)
+      let statusArr = ['热销中', '即将发售', '售罄']
+      for (let temp of res.records) {
+        temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
+        this.recommendList.push(temp)
+      }
       this.recommendList = res.records
     },
-    restoreData(json){
+    restoreData(json) {
       try {
         let editData = JSON.parse(json)
-        if(editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
-      } catch (error) {
-        
-      }
+        if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
+      } catch (error) {}
     },
     // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
@@ -186,10 +181,18 @@ export default {
       e.dom.status = 'edit'
     },
     singleAddClickHandler() {
+      if (this.info.linkerCount < 1) {
+        this.$toast('暂无开通楼盘')
+        return
+      }
       this.target = 'inlayHouse'
       this.singleShow = true
     },
     multiAddClickHandler() {
+      if (this.recommendList.length >= this.info.linkerCount) {
+        this.$toast('暂无更多开通楼盘')
+        return
+      }
       this.target = 'multiHouse'
       this.singleShow = true
     },
@@ -230,26 +233,27 @@ export default {
       }
       let res, targetid
       // 存在这个字段,说明是再次编辑
-      if (this.info.belongeder !== '0') {
+      if ((this.info.source == 2 || this.info.source == 3)&&this.info.belongeder !== '') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = this.info.id
       } else {
         res = await cpInformationService.editArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = res.id
         // 还要附加一个评论
-        const commentData = {
-          content: this.viewpointText,
-          enterpriseId: this.enterpriseId,
-          infoId: this.info.id,
-          senderId: this.agentId,
-          senderSource: 0,
-          type: 0,
-          viewFlag: 0
+        if (this.viewpointText !== '') {
+          const commentData = {
+            content: this.viewpointText,
+            enterpriseId: this.enterpriseId,
+            infoId: this.info.id,
+            senderId: this.agentId,
+            senderSource: 0,
+            type: 0,
+            viewFlag: 0
+          }
+          discoverService.insertComment(commentData)
         }
-        discoverService.insertComment(commentData)
       }
-
-      this.$router.push(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}`)
+      this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&sharePrompt=true`)
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
@@ -290,16 +294,19 @@ export default {
 }
 </script>
 <style lang="less">
+.viewRedactStyle{
+  margin-bottom:15px; 
+}
 .discover-edit-page {
   background: #f7f9fa;
   > .discover-detail-container {
     background: #fff;
     padding-bottom: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     > .discover-title {
       padding: 10px 15px;
-      padding-top:20px;
-      padding-bottom:17px;
+      padding-top: 20px;
+      padding-bottom: 17px;
       font-size: 22px;
       color: #333333;
       font-weight: 600;
@@ -317,20 +324,23 @@ export default {
           color: #445166;
         }
       }
-      .view-count{
+      .view-count {
         font-size: 14px;
       }
     }
     > .discover-detail-content {
       padding: 15px;
-      padding-top:30px;
+      padding-top: 34px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
       line-height: 28px;
-      >.disclaimer-box{
+      > .disclaimer-box {
         font-size: 14px;
-        color: #969EA8;
+        color: #969ea8;
+        > span {
+          color: #445166;
+        }
       }
       > .edit-houses-container {
         height: 140px;
@@ -342,9 +352,16 @@ export default {
   }
   > .recommend-house-container {
     background: #fff;
-    margin-bottom: 80px;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
     > .recommend-house-box {
       margin: 0 15px;
+      > .open-pormpt {
+        text-align: center;
+        font-size: 12px;
+        font-weight: 400;
+        color: #ea4d2e;
+      }
     }
   }
   > .fixed-bar {
@@ -367,8 +384,6 @@ export default {
         width: 80px;
         justify-content: center;
         align-items: center;
-
-      
 
         > .help-text {
           font-size: 10px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="van-hairline--bottom estate-item" :style="{paddingBottom:(info&&info.divisionRules)&&'15px'}">
+  <div class=" estate-item" :class="itemBorder&&'van-hairline--bottom'" :style="{paddingBottom:(info&&info.divisionRules)&&'15px'}">
     <div class="main-continer" @click="mainAreaClickHandler">
       <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
         <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
@@ -32,6 +32,7 @@ export default {
   props: {
     info: { type: Object },
     showRules:{type:Boolean, default: true},
+    itemBorder:{type:Boolean,default:false},
     conf: {
       type: Object,
       default: () => {
@@ -62,6 +63,7 @@ export default {
 .estate-item {
   position: relative;
   overflow: hidden;
+  line-height: 1;
   > .main-continer {
     word-wrap: none;
     display: flex;
@@ -98,9 +100,11 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: #666666;
+        padding-top:1px;
         padding-bottom: 3px;
       }
       > .tag-box {
+        padding: 5px 0;
         margin-left: -3px;
       }
       > .estate-info {
@@ -130,7 +134,7 @@ export default {
   }
   > .operate-box {
     position: absolute;
-    top: 0;
+    top:8px;
     right: 10px;
     > .share-icon {
       width: 100%;

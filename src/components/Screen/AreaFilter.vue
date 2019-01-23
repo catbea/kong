@@ -1,5 +1,5 @@
 <template>
-  <div class="area-filter" v-if="show" :class="{act:flag}">
+  <div class="area-filter" v-show="show" :class="{act:flag}">
     <ul>
       <li v-for="(item,index) in list" :key="index" class="van-hairline--bottom" :class="checked===item && 'active'" @click="active(item)">{{item}}</li>
     </ul>
@@ -26,6 +26,9 @@ export default {
       '0': '不限'
     }
     if (this.parent) this.list = Object.assign(this.list, getChildren(this.parent))
+  },
+  mounted() {
+    
   },
   methods: {
     active(item) {
@@ -54,6 +57,9 @@ export default {
   > ul {
     background: rgba(255, 255, 255, 1);
     padding: 0 20px;
+    // height:420px;
+    max-height:420px;
+    overflow:auto;
     > .active {
       color: rgba(0, 122, 230, 1);
     }
@@ -65,8 +71,8 @@ export default {
       line-height: 49px;
     }
   }
-  &.act {
-    height: 265px;
-  }
+  // &.act {
+  //   height: 265px;
+  // }
 }
 </style>

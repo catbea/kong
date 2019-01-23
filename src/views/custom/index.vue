@@ -100,6 +100,11 @@ export default {
   }),
   mounted() {
     this.getLinker()
+    document.querySelector('.sort-container').addEventListener(
+      'touchmove',
+      function(e) {
+        e.preventDefault()
+      },{ passive: false })
   },
   methods: {
     goactivitDetaily() {
@@ -239,7 +244,7 @@ export default {
   > .sort-container {
     min-height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    position: absolute;
+    position: fixed;
     top: 45px;
     width: 100%;
     // background: #fff;

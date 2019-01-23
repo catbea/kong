@@ -124,7 +124,7 @@ export default {
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let payload = screenFilterHelper(this.projectName, mergeFilters)
       payload = Object.assign(payload, { current: this.page, size: this.pageSize, city: this.searchInfo.siteText })
-      
+
       const res = await userService.getMyHouses(payload)
       let _list = []
       for (let item of res.records) {
@@ -142,8 +142,13 @@ export default {
           disabled: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`,
-          buildArea: (item.minArea !== ''&& item.maxArea !== '') ? `${item.minArea}-${item.maxArea}㎡` : ''
+          buildArea: item.minArea !== '' && item.maxArea !== '' ? `${item.minArea}-${item.maxArea}㎡` : ''
         }
+        // if (!obj.city) obj.city = obj.site
+        // if (!obj.linkerTags) {
+        //   let statusArr = ['热销中', '即将发售', '售罄']
+        //   obj.linkerTags = [statusArr[obj.saleStatus], ...obj.condition]
+        // }
         _list.push(obj)
       }
       this.projectList = this.page <= 1 ? _list : this.projectList.concat(_list)
@@ -211,7 +216,7 @@ export default {
     singleShow(val) {
       this.$emit('input', val)
     },
-    'searchInfo.siteText'(val){
+    'searchInfo.siteText'(val) {
       this.reset()
     }
   },

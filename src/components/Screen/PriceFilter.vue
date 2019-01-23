@@ -1,5 +1,5 @@
 <template>
-  <div class="price-filter" v-if="show" :class="{act:flag}">
+  <div class="price-filter" v-show="show" :class="{act:flag}">
     <van-tree-select :items="items" :main-active-index="mainActiveIndex" :active-id="checked" @navclick="onNavClick" @itemclick="onItemClick"/>
   </div>
 </template>
@@ -9,6 +9,9 @@ export default {
     if (this.$route.name === 'mymarket') {
       this.flag = true
     }
+  },
+  mounted() {
+    
   },
   props: {
     show: { type: Boolean, default: false },

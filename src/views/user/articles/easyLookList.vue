@@ -18,7 +18,7 @@
           @click="articleDetail(items.id)"
         >
           <div class="easy-look-item-left">
-            <img class="easy-look-img" :src="items.image">
+            <div class="easy-look-img" :style="{backgroundImage:'url(' + items.image + ')'}"></div>  
           </div>
           <div class="easy-look-item-right">
             <span class="easy-look-title">{{items.title}}</span>
@@ -63,7 +63,7 @@ export default {
   mounted() {
     this.userId = this.$route.query.userId
     this.userType = this.$route.query.userType
-    document.title = this.$route.query.userName + '认为好看'
+    document.title = this.$route.query.userName + '认为好看的文章'
   },
 
   methods: {
@@ -127,9 +127,9 @@ export default {
 .easy-look-list {
   width: 100%;
   display: flex;
-  border-bottom: #e2e2e3 1px solid;
   background: #ffffff;
   flex-direction: column;
+  
   > .easy-look-time {
     display: flex;
     width: 100%;
@@ -141,16 +141,17 @@ export default {
       font-size: 16px;
       margin-left: 15px;
       margin-bottom: 7px;
+      font-weight:bold;
     }
   }
 
   > .easy-look-item {
-    width: 100%;
+    width: 90%;
     height: 122px;
     display: flex;
     justify-content: space-between;
-    padding-left: 16px;
-    padding-right: 16px;
+    border-bottom: #E2E2E3 1px solid;
+    margin-left: 5%;
 
     > .easy-look-item-left {
       float: left;
@@ -162,19 +163,20 @@ export default {
         width: 100%;
         height: 100%;
         border-radius: 6px;
+        background-size: cover;
       }
     }
 
     > .easy-look-item-right {
       float: left;
-      width: 60%;
+      width: 62%;
       height: 90px;
       margin-top: 16px;
       position: relative;
 
       > .easy-look-title {
-        color: #445166;
-        font-size: 14px;
+        color: #333333;
+        font-size: 16px;
         position: absolute;
         top: 0;
         line-height: 20px;
@@ -196,6 +198,13 @@ export default {
         }
       }
     }
+  }
+
+  > .easy-line{
+    width: 90%;
+    margin-left: 5%;
+    height: 1px;
+    background-color: #E2E2E3;
   }
 }
 </style>

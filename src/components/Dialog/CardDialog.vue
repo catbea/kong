@@ -2,7 +2,8 @@
   <div class="dialog-container" v-if="currentShow">
     <div class="shadow_box dialog-box">
       <div class="dialog-title">长按识别查看更多</div>
-      <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.miniQrCode)+')'}"></div>
+      <!-- <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.miniQrCode)+')'}"></div> -->
+      <img class="mini-qrcode" :src="info&&info.miniQrCode"></img>
       <div class="dialog-content">
         <p class="dialog-name">{{info&&info.agentName}}</p>
         <p class="dialog-tag">{{info&&info.tagList&&info.tagList.join(' ')}}</p>
@@ -64,6 +65,7 @@ export default {
     border-radius: 10px;
     background-color: #ffffff;
     position: relative;
+    text-align: center;
     > .dialog-title {
       text-align: center;
       margin-top: 22px;

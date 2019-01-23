@@ -1,6 +1,6 @@
 <template>
- <div class="more-page" v-if="show">
-  <div class="more-filter" :class="{act:flag}" ref="moreFilter">
+ <div class="more-page" v-show="show">
+  <div class="van-hairline--top more-filter" :class="{act:flag}" ref="moreFilter">
     <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
       <h5 class="item-title">{{group.name}}</h5>
       <div class="item-list-container">
@@ -21,6 +21,9 @@ export default {
     // if(this.$route.name==='mymarket'){
     //   this.flag=true
     // }
+  },
+    mounted() {
+    
   },
   props: {
     show: { type: Boolean, default: false },

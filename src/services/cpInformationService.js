@@ -41,19 +41,22 @@ class CpInformationService {
    * 文章状态修改 - 主要用于文章删除
    * @param {*} agentId 
    * @param {*} infoId 
-   * @param {*} status 
+   * @param {*} enable  
    */
-  updateStatusByAgentId(agentId, infoId, status=0){
+  updateEnableByInfoId(agentId, infoId, enable=1){
     return xhr({
       method:'post',
-      url:'/cpInformation/updateStatusByAgentId',
+      url:'/cpInformation/updateEnableByInfoId',
       body:{
         agentId,
         infoId,
-        status
+        enable
       }
     })
   }
+
+
+  
   
 }
 

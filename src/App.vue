@@ -5,6 +5,7 @@
         <keep-alive exclude="market-detail" include="write-article">
           <router-view></router-view>
         </keep-alive>
+        <share-prompt/>
       </div>
       <tabbar></tabbar>
     </div>
@@ -15,7 +16,8 @@
 </template>
 <script>
 import NewMsgPopup from 'COMP/Message/NewMsgPopup'
-import Tabbar from '@/components/Common/Tabbar'
+import Tabbar from 'COMP/Common/Tabbar'
+import SharePrompt from 'COMP/Common/SharePrompt'
 import { mapGetters } from 'vuex'
 import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 export default {
@@ -27,7 +29,8 @@ export default {
   },
   components: {
     NewMsgPopup,
-    Tabbar
+    Tabbar,
+    SharePrompt
   },
   created() {
     // let defaultPath = localStorage.getItem('defaultPath', defaultPath)

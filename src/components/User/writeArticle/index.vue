@@ -13,7 +13,7 @@
             class="share-time"
             v-if="selectType=='1'"
           >收藏时间：{{item.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
-          <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(3,'/')}}</span>
+          <span class="share-time" v-else>发布时间：{{item.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
           <span
             class="collection-text"
             v-if="selectType=='1'"
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="write-item-right">
-        <img class="article-img" :src="item.image">
+        <div class="article-img" :style="{backgroundImage:'url('+item.image+')'}"></div>
       </div>
     </div>
   </div>
@@ -78,19 +78,19 @@ export default {
   margin-bottom: 1px;
 
   > .write-item-left {
-    display: flex;
-    flex-direction: column;
-    padding-right: 5px;
-    justify-items: center;
+    position: relative;
     margin-top: 5px;
+    width: 200px;
 
     > .article-title {
+      position: absolute;
       font-size: 16px;
       width: 208px;
       color: #333333;
       line-height: 24px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
+      font-weight: bold;
     }
 
     > .article-label {
@@ -99,10 +99,11 @@ export default {
     }
 
     > .share-bottom {
+      position:absolute;
       width: 100%;
-      margin-top: 30px;
+      bottom: 0;
+     
       > .share-time {
-        
         font-size: 12px;
         color: #969ea8;
       }
@@ -110,7 +111,7 @@ export default {
       > .collection-text {
         color: #bbbbbb;
         font-size: 10px;
-        margin-left: 19px;
+        margin-left: 9px;
       }
 
       > .collection-img {
@@ -130,6 +131,7 @@ export default {
       width: 120px;
       height: 90px;
       border-radius: 6px;
+      background-size: cover;
     }
   }
 }
