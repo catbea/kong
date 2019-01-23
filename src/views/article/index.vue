@@ -471,6 +471,7 @@ export default {
       let list = this.articleData[index].praiseAndShareUserVOS
       let mul = list.filter(element => element.userId === this.userInfo.agentId)
       let r = list.filter(element => element.userId !== this.userInfo.agentId)
+
       if (mul.length === 0) {
         this.articleData[index].praiseAndShareUserVOS.push({
           operationTime: +new Date(),
@@ -478,8 +479,11 @@ export default {
           userName: this.userInfo.name,
           userSource: 0
         })
+        this.articleData[index]['addLikeStatus'] = true
       } else {
-        this.articleData[index].praiseAndShareUserVOS = r
+        if (this.articleData[index]['addLikeStatus']) {
+          this.articleData[index].praiseAndShareUserVOS = r
+        }
       }
       this.updateLikeItem = ''
     },
