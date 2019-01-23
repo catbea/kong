@@ -16,7 +16,7 @@
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'" :class="{viewRedactStyle:previewFlag,viewPreStyle:!previewFlag}"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/2)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
+          <edit-houses v-if="index===parseInt(renderDom.length/2-1)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
         <div class="disclaimer-box" v-if="previewFlag">
           免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 。 如有问题请点击
@@ -131,7 +131,6 @@ export default {
           status: 'edit'
         })
       }
-      debugger
       if (this.info.editData !== '') {
         try {
           let editData = JSON.parse(this.info.editData)
@@ -187,7 +186,17 @@ export default {
         }
       } else {
         // 删除当前
-        this.currentDelDom.status = 'del'
+        // 检查是否为最后一段
+        let count = 0
+        for (let temp of this.renderDom) {
+          if (temp.status !== 'del') count++
+        }
+        console.log(count)
+        if (count > 1) {
+          this.currentDelDom.status = 'del'
+        } else {
+          this.$toast('请至少保留一个段落!');
+        }
       }
       this.delActionsheetShow = false
     },
@@ -350,8 +359,8 @@ export default {
       color: #333333;
       font-weight: 400;
       line-height: 28px;
-      .edit-box:nth-child(3){
-        margin-top:24px;
+      .edit-box:nth-child(3) {
+        margin-top: 24px;
       }
       > .disclaimer-box {
         font-size: 14px;
@@ -390,12 +399,12 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    height:72px;
+    height: 72px;
     > .left-operation {
       flex: 1;
       font-size: 12px;
       display: flex;
-      color:#666666;
+      color: #666666;
       > .left-first {
         display: flex;
         flex-direction: column;
@@ -444,7 +453,7 @@ export default {
       flex: 1;
       display: flex;
       font-size: 14px;
-      align-items:center;
+      align-items: center;
       > div {
         flex: 1;
         width: 88px;
