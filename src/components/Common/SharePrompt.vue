@@ -32,7 +32,7 @@ export default {
 #share-prompt {
   position: fixed !important;
   background: #000000;
-  opacity: 0.85;
+  opacity: 0.65;
   z-index: 9999;
   > .arrow-box {
     position: absolute;
