@@ -87,7 +87,7 @@
                   <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
                 </span>
                 <div class="list">
-                  <div class="cnt-box-like">
+                  <div class="cnt-box-like" :style="{'marginBottom':item.praiseAndShareUserVOS.length < 16 ? '10px' : ''}">
                     <span
                       class="name"
                       :class="{'active': data===activeLikeItem}"
@@ -116,7 +116,6 @@
                   </span>
                 </div>
               </div>
-              <!--  -->
               <div class="comment-box" v-show="item.discussVOS.length">
                 <span class="icon">
                   <!-- <img src="../../assets/img/article/dis1.png" alt=""> -->
