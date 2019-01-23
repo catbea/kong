@@ -40,8 +40,8 @@ export default {
   > .del-icon {
     font-size: 16px;
     position: absolute;
-    top: 4px;
-    right: -15px;
+    top: -1px;
+    right: -25px;
     transform: translate(-50%, -50%);
     color: #ea4d2e;
   }
