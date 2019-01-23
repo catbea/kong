@@ -948,7 +948,7 @@ export default {
       .like-cnt {
         flex: 1;
         padding-top: 6px;
-        padding-bottom: 25px;
+        padding-bottom: 22px;
         .like-box,
         .comment-box {
           display: flex;
