@@ -194,7 +194,7 @@ export default {
     recommendHouseList: [], // 推荐房源列表
     renderDom: [],
     inlayHouseInfo: null, // 文章插入楼盘信息
-    sharePrompt:false
+    sharePrompt:true
   }),
   created() {
     this.contentHeight = window.innerHeight - 72

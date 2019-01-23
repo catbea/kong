@@ -100,9 +100,11 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: #666666;
+        padding-top:1px;
         padding-bottom: 3px;
       }
       > .tag-box {
+        padding: 5px 0;
         margin-left: -3px;
       }
       > .estate-info {
