@@ -664,11 +664,14 @@ export default {
     //     e.preventDefault()
     //   }
     // }, { passive: false })
-    // document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
-    //    e.preventDefault()
-    // }, { passive: false })
+    document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
+       e.preventDefault()
+    }, { passive: false })
     
     
+  },
+  beforeDestroy(){
+    document.querySelector('.tools-bar').removeEventListener('touchmove')
   }
 }
 </script>
