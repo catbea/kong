@@ -1101,10 +1101,13 @@ export default {
       .replay-title {
         margin: 16px 0;
         font-size: 16px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        color: #666;
+        p{
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          color: #666;
+        }
+        
       }
       .replay-box {
         position: relative;
