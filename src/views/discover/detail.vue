@@ -622,8 +622,8 @@ export default {
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
-      // 分享成功之后刷新当前页面
-      location.reload()
+      // 分享成功之后获取最新好看列表
+      this.getLikeList()
     },
     // 文章删除
     delHandler() {
@@ -664,11 +664,14 @@ export default {
     //     e.preventDefault()
     //   }
     // }, { passive: false })
-    // document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
-    //    e.preventDefault()
-    // }, { passive: false })
+    document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
+       e.preventDefault()
+    }, { passive: false })
     
     
+  },
+  beforeDestroy(){
+    document.querySelector('.tools-bar').removeEventListener('touchmove')
   }
 }
 </script>

@@ -261,8 +261,7 @@ export default {
           status: 'view'
         })
       }
-      
-      this.shareHandler()
+
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       let desc = res.title
@@ -275,6 +274,7 @@ export default {
       }
       this.shareDesc = this.info.title
       this.shareImage = this.info.image
+      this.shareHandler()
     },
     // 楼盘信息处理
     async handleLinkerInfo() {
@@ -433,6 +433,7 @@ export default {
     },
     // 分享
     async shareHandler() {
+      /*
       console.log(this.shareData, 'shareData')
       // await window.awHelper.wechatHelper.init()
       if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {
@@ -446,6 +447,8 @@ export default {
 
       // this.shareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.shareData)
+      */
+     window.awHelper.wechatHelper.shareWechat(this.shareData)
     }
   },
   watch: {
