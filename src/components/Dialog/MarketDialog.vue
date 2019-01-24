@@ -7,7 +7,8 @@
       <div class="dialog-content">
         <p class="dialog-name">{{info&&info.linkerName}}</p>
         <p class="dialog-tag">{{info&&info.tagList&&info.tagList.join(' ')}}</p>
-        <p class="dialog-price">
+        <p class="dialog-price" v-if="info&&info.linkerPrice&&info.linkerPrice==='0'">价格待定</p>
+        <p class="dialog-price" v-else>
           <span v-if="info&&info.linkerPrice">均价</span>
           {{info&&info.linkerPrice}}{{info&&info.priceUnit}}
         </p>
