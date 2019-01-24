@@ -297,7 +297,7 @@ export default {
         }
         > .messageInfo-sys-right {
           padding-left: 12px;
-          padding-top:6px;
+          padding-top: 6px;
           > .sys-right-top {
             font-size: 16px;
             font-weight: 600;
@@ -314,12 +314,12 @@ export default {
             font-size: 13px;
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
-            line-height:27px;
+            line-height: 27px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 280px;
-            height:20px;
+            height: 20px;
           }
         }
       }

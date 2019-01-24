@@ -47,7 +47,7 @@ export default {
     value: { type: Boolean, default: false }, // 是否选中
     disabled: { type: Boolean, default: false }, // 是否禁用
     data: { type: Object },
-    showRules: { type:Boolean, default: true}
+    showRules: { type: Boolean, default: true }
   },
   methods: {
     clickHandler() {
@@ -93,12 +93,12 @@ export default {
       font-size: 18px;
       margin: 0 16px;
       &.icon-chat_register_rb_s {
-        color: #2f7bdf
+        color: #2f7bdf;
       }
       &.icon-chat_register_rb_n {
-        color: #2f7bdf
+        color: #2f7bdf;
       }
-      &.disabled{
+      &.disabled {
         color: #333333;
       }
     }

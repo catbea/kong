@@ -45,13 +45,13 @@ export default {
     width: 345px;
     height: 125px;
     margin: 0 15px;
-    border-radius:10px;
+    border-radius: 10px;
   }
   > .recommend-info {
     position: absolute;
     width: 100%;
     top: 70px;
-    left:30px;
+    left: 30px;
     > .desc-box {
       color: #fff;
       .title {
@@ -62,7 +62,7 @@ export default {
       .desc {
         font-size: 13px;
         font-weight: 400;
-        margin-top:10px;
+        margin-top: 10px;
       }
     }
     > .open-btn {

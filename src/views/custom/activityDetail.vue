@@ -78,7 +78,6 @@ export default {
         this.loading = false
         this.finished = true
       }
-       
     }
   }
 }

@@ -107,9 +107,9 @@ export default {
     newLabelList() {
       return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
     },
-    cityCode () {
+    cityCode() {
       let codes = Object.keys(this.fullArea.city_list)
-      let cityList =  Object.values(this.fullArea.city_list)
+      let cityList = Object.values(this.fullArea.city_list)
       let i = ''
       cityList.forEach((el, index) => {
         if (el === this.userInfo.majorCity) {
@@ -243,7 +243,7 @@ export default {
       }
     }
     .user-signature {
-      // overflow: auto;  
+      // overflow: auto;
       // text-align: left;
       .van-cell__value {
         position: absolute;

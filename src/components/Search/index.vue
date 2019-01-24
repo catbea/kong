@@ -6,7 +6,6 @@
       <div class="border-right"></div>
     </div>
     <div class="search-input-box">
-      <!-- <i class="van-icon van-icon-search van-cell__left-icon"></i> -->
       <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" />
       <input type="search" :placeholder="conf.placeholder" @focus="focusHandler" v-on:input="inputContent" v-model="currentValue">
     </div>
@@ -29,6 +28,7 @@ export default {
   }),
   methods: {
     siteClickHandler() {
+      debugger
       if (this.$route.name === 'area-select') {
         // 在地区选择页面,直接返回上个
         this.$router.go(-1)
@@ -37,6 +37,7 @@ export default {
       }
     },
     focusHandler() {
+      debugger
       if (this.$route.name === 'area-select') {
         // 在地区选择页面,直接返回上个
         this.$router.go(-1)

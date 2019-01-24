@@ -1,7 +1,9 @@
 <template>
   <div class="edit-paragraph" :class="preview?'':'box_border'">
     <div class="paragraph-container" v-if="!(preview && this.info.status === 'del')" v-html="info.text"></div>
-    <i v-if="this.info.status === 'edit' && !preview" class="icon iconfont icon-write_empty del-icon" @click.stop="delClickHandler"/>
+    <!-- <i v-if="this.info.status === 'edit' && !preview" class="icon iconfont icon-write_empty del-icon" @click.stop="delClickHandler"/>
+     -->
+     <img  v-if="this.info.status === 'edit' && !preview" class="del-icon" :src="closeIcon" @click.stop="delClickHandler">
     <div v-if="this.info.status === 'del'&& !preview" class="repeal-del-container">
       <div class="del-btn" @click="repealClickHandler">撤销删除</div>
     </div>
@@ -13,6 +15,9 @@ export default {
     info: { type: Object },
     preview: { type: Boolean, default: false }
   },
+  data: () => ({
+    closeIcon: require('IMG/discover/closeIcon.png')
+  }),
   methods: {
     // 点击删除
     delClickHandler(e) {
@@ -38,12 +43,12 @@ export default {
     }
   }
   > .del-icon {
-    font-size: 16px;
+    width: 16px;
+    height: 16px;
     position: absolute;
-    top:3px;
+    top: 0;
     right: -15px;
     transform: translate(-50%, -50%);
-    color: #ea4d2e;
   }
   > .repeal-del-container {
     position: absolute;

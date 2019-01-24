@@ -29,11 +29,7 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item
-            v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)"
-            :info="inlayHouseInfo"
-            @click="popHandler(2, inlayHouseInfo)"
-          ></estate-item>
+          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
         </div>
       </div>
       <p class="discover-extra-info">
@@ -41,32 +37,27 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer">
-        <span
-          class="disclaimer-text"
-        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <img src="../../assets/img/article/leftLike1.png" alt="">
+            <img src="../../assets/img/article/leftLike1.png" alt>
             <!-- <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span> -->
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
             <!-- <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
-            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span> -->
-            <img src="../../assets/img/article/like2.png" alt="" v-if="likeFlag"> 
-           <img src="../../assets/img/article/like1.png" alt="" v-else>
+            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span>-->
+            <img src="../../assets/img/article/like2.png" alt v-if="likeFlag">
+            <img src="../../assets/img/article/like1.png" alt v-else>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
         <div class="easy-look-list">
-          <span
-            ref="easyLook"
-            :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'"
-          >{{easylookList && easylookList.join('、')}}</span>
+          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
           <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
             <van-icon name="arrow-down"/>
           </div>
@@ -76,12 +67,7 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item
-            v-for="(item,index) in recommendHouseList"
-            :key="index"
-            :info="item"
-            @click="popHandler(2, item)"
-          ></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
         </div>
       </div>
       <!-- 评论 -->
@@ -89,24 +75,12 @@
         <div class="comment-box">
           <title-bar :conf="titleComments"/>
           <div class="comment-list-wrap" v-if="commentList.length">
-            <div
-              class="comment-list"
-              v-for="(item, index) in commentList"
-              :key="index"
-              @click="commentSenderClickHandler(item)"
-            >
-              <div
-                class="bg_img"
-                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
-                style="width:40px;height:40px;border-radius:50%;"
-              ></div>
+            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
+              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span
-                    v-if="item.receiverName"
-                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
-                  >回复</span>
+                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
@@ -129,16 +103,8 @@
         <i class="icon iconfont icon-found_editor"></i>
         <p>{{info&&(info.source == 0 || info.source == 1)&&info.belongeder === '' ? '编辑' : '更新编辑'}}</p>
       </div>
-      <div
-        v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''"
-        class="tool-item"
-        @click="collectHandler()"
-      >
-        <i
-          v-if="collectionStatus===1"
-          style="color:#007AE6;"
-          class="icon iconfont icon-Building_details_col"
-        ></i>
+      <div v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
+        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         <p>收藏</p>
       </div>
@@ -146,30 +112,14 @@
         <i class="icon iconfont icon-Building_details_for"></i>
         <p>分享</p>
       </div>
-      <div
-        class="tool-item"
-        v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)"
-        @click="delHandler"
-      >
+      <div class="tool-item" v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)" @click="delHandler">
         <i class="icon iconfont icon-delete"></i>
         <p>删除下架</p>
       </div>
     </div>
-    <van-actionsheet
-      v-model="isShowDeleteComment"
-      :actions="actions"
-      cancel-text="取消"
-      @select="onSelect"
-      @cancel="onCancel"
-    ></van-actionsheet>
+    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <!-- <open-article :show.sync="guidanceShow"></open-article> -->
-    <comment-alert
-      :show.sync="showCommentAlert"
-      :info="commentInfo"
-      @cancel="cancelHandler"
-      @publish="publishHandler"
-      @input="inputHandler"
-    ></comment-alert>
+    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
   </div>
   <div v-else>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
@@ -419,14 +369,14 @@ export default {
       }
       const res = await articleService.updateLike(param)
       if (res.likeFlag && res.shareFlag == false) {
-          // 代表好看列表中当前经纪人是分享的
-          // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
-          this.easylookList.unshift(this.agentInfo.agentName)
-      } else if (res.likeFlag == false && res.shareFlag == false){
-          // 代表好看列表中当前经纪人是分享的
-          this.easylookList = remove(this.easylookList, n => {
-            return n !== this.agentInfo.agentName
-          })
+        // 代表好看列表中当前经纪人是分享的
+        // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
+        this.easylookList.unshift(this.agentInfo.agentName)
+      } else if (res.likeFlag == false && res.shareFlag == false) {
+        // 代表好看列表中当前经纪人是分享的
+        this.easylookList = remove(this.easylookList, n => {
+          return n !== this.agentInfo.agentName
+        })
       }
       this.easylookList = uniq(this.easylookList)
       console.log(this.easylookList)
@@ -652,20 +602,19 @@ export default {
       location.reload()
     }
   },
-  mounted () {
-    document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
-       e.preventDefault()
-    }, { passive: false })
-    
-    
+  mounted() {
+    document.querySelector('.tools-bar').addEventListener(
+      'touchmove',
+      e => {
+        e.preventDefault()
+      },
+      { passive: false }
+    )
   },
-  beforeDestroy(){
+  beforeDestroy() {
     try {
       document.querySelector('.tools-bar').removeEventListener('touchmove')
-    } catch (error) {
-      
-    }
-    
+    } catch (error) {}
   }
 }
 </script>
@@ -794,21 +743,21 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin-bottom:4px;
+        margin-bottom: 4px;
         > .easy-look-left {
           display: flex;
           flex-direction: row;
-          img{
-            width:16px;
-            height:16px;
+          img {
+            width: 16px;
+            height: 16px;
           }
         }
         > .easy-look-right {
           display: flex;
           flex-direction: row;
-          img{
-            width:16px;
-            height:16px;
+          img {
+            width: 16px;
+            height: 16px;
           }
         }
         .easy-look-icon {
@@ -986,8 +935,8 @@ export default {
         height: 24px;
         margin-bottom: 4px;
       }
-      p{
-        transform:scale(0.84)
+      p {
+        transform: scale(0.84);
       }
     }
     // > div {

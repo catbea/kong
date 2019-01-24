@@ -147,13 +147,10 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
-  beforeDestroy(){
+  beforeDestroy() {
     try {
       document.querySelector('.router-view').removeEventListener('scroll')
-    } catch (error) {
-      
-    }
-    
+    } catch (error) {}
   }
 }
 </script>

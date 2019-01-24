@@ -89,9 +89,7 @@ export default {
       deep: true
     }
   },
-  mounted() {
-    
-  },
+  mounted() {},
   async created() {
     this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
     this.searchContent.siteText = this.selectedCity || '全国'
@@ -173,7 +171,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select', query: { fromPage: 'market',searchContent:this.searchContent.siteText} })
+      this.$router.push({ name: 'area-select', query: { fromPage: 'market', searchContent: this.searchContent.siteText } })
     },
     focusHandler() {
       this.$router.push({ name: 'market-search' })
@@ -205,7 +203,7 @@ export default {
     position: relative;
     width: 375px;
     height: 44px;
-    padding:7px 0;
+    padding: 7px 0;
     > .search-comp {
       width: 345px;
       height: 30px;

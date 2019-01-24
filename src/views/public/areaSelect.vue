@@ -154,13 +154,11 @@ export default {
       return { display: this.indicator.show ? 'block' : 'none' }
     }
   },
-  beforeDestroy(){
+  beforeDestroy() {
     try {
       window.removeEventListener('touchmove')
       window.removeEventListener('touchend')
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 }
 </script>

@@ -7,7 +7,7 @@
       @click="enterDetail(selectType,item)"
     >
       <div class="write-item-left">
-        <span class="article-title">{{item.title | textOver(25)}}</span>
+        <span class="article-title">{{item.title | textOver(23)}}</span>
         <div class="share-bottom">
           <span
             class="share-time"
@@ -89,7 +89,6 @@ export default {
       color: #333333;
       line-height: 24px;
       font-family: PingFangSC-Regular;
-      font-weight: 400;
       font-weight: bold;
     }
 
@@ -99,10 +98,10 @@ export default {
     }
 
     > .share-bottom {
-      position:absolute;
+      position: absolute;
       width: 100%;
       bottom: 0;
-     
+
       > .share-time {
         font-size: 12px;
         color: #969ea8;

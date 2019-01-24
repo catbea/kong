@@ -134,18 +134,22 @@ export default {
     UserMarket,
     CloseMarket
   },
-  mounted () {
-  document.querySelector(".router-view").addEventListener('scroll', () => {
-   if(document.querySelector(".router-view").scrollTop>document.querySelector(".user-market-box").offsetTop){
-     this.searchBar=true
-     }else{
-       this.searchBar=false
-     }
-    }, false)
+  mounted() {
+    document.querySelector('.router-view').addEventListener(
+      'scroll',
+      () => {
+        if (document.querySelector('.router-view').scrollTop > document.querySelector('.user-market-box').offsetTop) {
+          this.searchBar = true
+        } else {
+          this.searchBar = false
+        }
+      },
+      false
+    )
     // document.querySelector('.choose-container').setAttribute('style', 'position: absolute !important');
   },
   data: () => ({
-    searchBar:false,//是否吸顶
+    searchBar: false, //是否吸顶
     flag: false,
     screenNum: null,
     stickNum: 0, //置顶个数
@@ -257,9 +261,9 @@ export default {
   },
   methods: {
     handleScroll() {
-  var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-  console.log(scrollTop)
-   },
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      console.log(scrollTop)
+    },
     screenHandle(index) {
       this.$nextTick(() => {
         if (document.querySelector('.area-filter') || document.querySelector('.price-filter') || document.querySelector('.popularity-filter') || document.querySelector('.more-page')) {
@@ -680,15 +684,15 @@ export default {
     height: 44px;
   }
 }
-.isFixed{
-    position:fixed;
-    width:100%;
-    background-color:#Fff;
-    top:0;
-    z-index:999;
-    padding-top:3px
-  }
-  .marginFlxed{
-    margin-top:78px;
-  }
+.isFixed {
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  top: 0;
+  z-index: 999;
+  padding-top: 3px;
+}
+.marginFlxed {
+  margin-top: 78px;
+}
 </style>

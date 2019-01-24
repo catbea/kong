@@ -113,8 +113,8 @@ export default {
   .bar-container {
     width: 335px;
     margin: 20px;
-    .pie-chart-container{
-          margin-top: -15px;
+    .pie-chart-container {
+      margin-top: -15px;
     }
     .chart-title {
       padding: 22px 15px 0;
