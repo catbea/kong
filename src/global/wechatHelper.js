@@ -82,14 +82,49 @@ class WechatHelper {
    * @param {*} timelineConf
    */
   _universalShare(friendConf, timelineConf) {
-    this.wx.onMenuShareAppMessage(friendConf)
-    this.wx.onMenuShareTimeline(friendConf)
+    // this.wx.onMenuShareAppMessage(friendConf)
+    // this.wx.onMenuShareTimeline(timelineConf)
+    this.shareAppMessage(friendConf)
+    this.shareTimeline(timelineConf)
     this.wx.showOptionMenu()
     this.wx.showMenuItems({
       menuList: ['menuItem:refresh', 'menuItem:share:appMessage', "menuItem:share:timeline"] // 要隐藏的菜单项，所有menu项见附录3
     })
   }
 
+  shareAppMessage(option) {
+    this.wx.onMenuShareAppMessage({
+      title: option.title, // 分享标题
+      desc: option.desc, // 分享描述
+      link: option.link, // 分享链接
+      imgUrl: option.imgUrl, // 分享图标
+      success () {
+        // 用户成功分享后执行的回调函数
+        option.success()
+      },
+      cancel () {
+        // 用户取消分享后执行的回调函数
+        option.error()
+      }
+    })
+  }
+  shareTimeline(option) {
+    this.wx.onMenuShareTimeline({
+      title: option.title, // 分享标题
+      desc: option.desc, // 分享描述
+      link: option.link, // 分享链接
+      imgUrl: option.imgUrl, // 分享图标
+      success () {
+        // 用户成功分享后执行的回调函数
+        option.success()
+      },
+      cancel () {
+        // 用户取消分享后执行的回调函数
+        option.error()
+      }
+    })
+  }
+ 
   _apiCheck() {
     this.wx.checkJsApi({
       jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
