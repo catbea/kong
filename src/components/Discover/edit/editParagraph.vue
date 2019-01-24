@@ -46,6 +46,7 @@ export default {
     width: 16px;
     height: 16px;
     position: absolute;
+    object-fit: cover;
     top: 0;
     right: -15px;
     transform: translate(-50%, -50%);
