@@ -243,8 +243,8 @@ export default {
       z-index: 30;
       > div {
         display: inline-block;
-        width: 165px;
-        height: 44px;
+        width: 115px;
+        height: 40px;
         line-height: 44px;
         font-size: 16px;
         border-radius: 6px;
