@@ -452,6 +452,23 @@ export default {
       // this.friendShareData.success = this.articleShare
       // this.timelineShareData.success = this.articleShare
       await window.awHelper.wechatHelper.init(this.agentId)
+
+      wx.onMenuShareTimeline({
+        title: this.friendShareData.title, // 分享标题
+        desc: this.friendShareData.desc,
+        link: this.friendShareData.link, // 分享链接,将当前登录用户转为puid,以便于发展下线
+        imgUrl: this.friendShareData.imgUrl, // 分享图标
+        success: function () { 
+          alert('分享成功');
+        },
+        cancel: function () { 
+          alert('分享取消');
+        }
+      });
+      wx.error(function(res){
+        alert("errorMSG:"+res);
+      });
+
       // window.awHelper.wechatHelper.wx.showOptionMenu()
       // window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       
