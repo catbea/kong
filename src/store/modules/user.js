@@ -8,7 +8,7 @@ const state = {
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
     userStatus: 0,
     devMode: true,
-    agentId: '4538',
+    agentId: '4626',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',
@@ -49,7 +49,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiIyamd6aXAiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxIiwiZXhwIjoxNTUxMjE1MDA4LCJpYXQiOjE1NDgyMTAyMDh9.7pa-qBoOfWaYg1sHNNUPkq3t26Wh6xKSFPCI_IrC8Nc9f6MPav1x-Hoe7R_gwQ4PDQu52oH7G9fkCTxRLKOG7A',
+    'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiIycXZ2a2siLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjI2IiwiZXhwIjoxNTUxMjEzNDkxLCJpYXQiOjE1NDgyMDg2OTF9.ZbbbzSIzhchAV9rizDhGaP1_mcXo4vvxdZSGA2vTlgSvb-hKnTuGifJT7jtDTF9hdEDDf4VY_ZDA5sOLwi73ow',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',

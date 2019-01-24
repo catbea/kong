@@ -43,6 +43,7 @@ export default {
     //开始编辑
     startEdit() {
       if (this.linkerText.length > 0) {
+        this.linkerText = this.linkerText.replace(' ', '')
         if (this.editButtonClick == true) {
           this.$router.push({ name: 'analysis', params: { url: this.linkerText, parseType: '1' } })
         }
@@ -64,7 +65,7 @@ export default {
 
     //失去焦点问题
     getBlur() {
-      document.activeElement.scrollIntoViewIfNeeded(true) 
+      document.activeElement.scrollIntoViewIfNeeded(true)
     },
 
     //添加文章

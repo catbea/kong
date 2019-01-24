@@ -38,11 +38,12 @@
     >
       <div class="popup-top">
         <span class="popup-title">免责声明</span>
-        <div
+        <!-- :style="{backgroundImage:'url(' + closeImg + ')'}" -->
+        <img
           class="closePopup"
           @click="closeDefaultMsg"
-          :style="{backgroundImage:'url(' + closeImg + ')'}"
-        ></div>
+          :src="closeImg"          
+        />
       </div>
       <div class="notice-body">
         <span class="notice-first">版权声明</span>
@@ -211,9 +212,9 @@ export default {
 
       > .closePopup {
         position: absolute;
-        width: 14px;
-        height: 14px;
-        right: 16px;
+        width: 20px;
+        height: 20px;
+        right: 20px;
         top: 16px;
       }
     }
