@@ -40,6 +40,13 @@ export default {
     document.getElementById('tabbar').addEventListener('touchmove', (e) => {
       e.preventDefault()
     }, { passive: false })
+  },
+  beforeDestroy(){
+    try {
+      document.getElementById('tabbar').removeEventListener('touchmove')
+    } catch (error) {
+      
+    }
   }
 }
 </script>
