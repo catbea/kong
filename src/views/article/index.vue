@@ -757,12 +757,6 @@ export default {
   beforeDestroy() {
     // 缓存数据
     this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
-    // 取消监听事件
-    document.querySelector('.tab-bar').removeEventListener('touchmove',function(e){e.preventDefault()},false)
-    document.querySelector('.replay').removeEventListener('touchmove',function(e){e.preventDefault()},false)
-    document.querySelector('.submenu').removeEventListener('touchmove',function(e){e.preventDefault()},false)
-    document.querySelector('body').removeEventListener('touchmove',function(e){e.preventDefault()},false)
-
   }
 }
 </script>
