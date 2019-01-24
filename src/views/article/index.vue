@@ -12,7 +12,6 @@
           >{{item.itemName}}</span>
         </div>
       </div>
-      
       <span class="icon" @click="showSubFn">
         <img v-show="!showSub" src="../../assets/img/article/tabicon.png" alt="">
         <img v-show="showSub" src="../../assets/img/article/tabicon2.png" alt="">
@@ -81,13 +80,20 @@
                 </span>
               </div>
             </div>
-            <div class="like-cnt" v-if="item.praiseAndShareUserVOS.length || item.discussVOS.length" :style="{'paddingBottom':item.discussVOS.length ? '' : '0'}">
+            <div
+              class="like-cnt"
+              v-if="item.praiseAndShareUserVOS.length || item.discussVOS.length"
+              :style="{'paddingBottom':item.discussVOS.length ? '' : '0'}"
+            >
               <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
                 <span class="icon">
                   <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
                 </span>
                 <div class="list">
-                  <div class="cnt-box-like" :style="{'marginBottom':item.praiseAndShareUserVOS.length < 16 ? '10px' : ''}">
+                  <div
+                    class="cnt-box-like"
+                    :style="{'marginBottom':item.praiseAndShareUserVOS.length < 16 ? '10px' : ''}"
+                  >
                     <span
                       class="name"
                       :class="{'active': data===activeLikeItem}"
@@ -187,6 +193,7 @@
         </div>
         <div class="replay-box">
           <!-- <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span> -->
+
           <textarea
             :placeholder="replayStatus===2 ? `回复${replayItem.senderName}` : '分享你的想法'"
             class="textarea"
@@ -677,59 +684,41 @@ export default {
       this.getCityArticle()
     }
     // 防止ios弹簧效果
-    let that = this
     let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     if (isiOS) {
-      document.querySelector('body').addEventListener('touchstart', function(e) {
-        that.startY = e.changedTouches[0].pageY
+      document.querySelector('body').addEventListener('touchstart', e => {
+        this.startY = e.changedTouches[0].pageY
       })
       document.querySelector('body').addEventListener(
         'touchmove',
-        function(e) {
+        e => {
           if (!document.querySelector('.article-list')) {
             return false
           }
-          that.endY = e.changedTouches[0].pageY
+          this.endY = e.changedTouches[0].pageY
           let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
           let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
           let clientHeight = document.querySelector('.article-list').clientHeight // 可视高度
           let endStatus = scrollHeight <= scrollTop + clientHeight // 是否滚到底了
-          if (that.finished && endStatus && that.startY - that.endY > 10) {
+          if (this.finished && endStatus && this.startY - this.endY > 10) {
             e.preventDefault()
           }
-          if (that.endY > that.startY && scrollTop === 0) {
+          if (this.endY > this.startY && scrollTop === 0) {
             e.preventDefault()
           }
         },
         { passive: false }
       )
-      // document.querySelector('body').addEventListener(
-      //   'touchend',
-      //   function(e) {
-      //     if (!document.querySelector('.article-list')) {
-      //       return false
-      //     }
-      //     that.endY = e.changedTouches[0].pageY
-      //     let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-      //     if (that.finished && that.startY - that.endY > 10) {
-      //       e.preventDefault()
-      //     }
-      //     if (that.endY > that.startY && scrollTop === 0) {
-      //       e.preventDefault()
-      //     }
-      //   },
-      //   { passive: false }
-      // )
       document.querySelector('.replay').addEventListener(
         'touchmove',
-        function(e) {
+        e => {
           e.preventDefault()
         },
         { passive: false }
       )
       document.querySelector('.submenu').addEventListener(
         'touchmove',
-        function(e) {
+        e => {
           e.preventDefault()
         },
         { passive: false }
@@ -737,16 +726,16 @@ export default {
     }
     document.querySelector('.tab-bar').addEventListener(
       'touchstart',
-      function(e) {
-        that.startY = e.changedTouches[0].pageY
+      e => {
+        this.startY = e.changedTouches[0].pageY
       },
       { passive: false }
     )
     document.querySelector('.tab-bar').addEventListener(
       'touchmove',
-      function(e) {
-        that.endY = e.changedTouches[0].pageY
-        if (that.endY - that.startY > 15) {
+      e => {
+        this.endY = e.changedTouches[0].pageY
+        if (this.endY - this.startY > 15) {
           e.preventDefault()
         }
       },
@@ -756,6 +745,18 @@ export default {
   beforeDestroy() {
     // 缓存数据
     this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
+
+    try {
+      if (isiOS) {
+        document.querySelector('body').removeEventListener('touchstart')
+        document.querySelector('body').removeEventListener('touchmove')
+        document.querySelector('.replay').removeEventListener('touchmove')
+        document.querySelector('.submenu').removeEventListener('touchmove')
+      } else {
+        document.querySelector('.tab-bar').removeEventListener('touchstart')
+        document.querySelector('.tab-bar').removeEventListener('touchmove')
+      }
+    } catch (error) {}
   }
 }
 </script>
@@ -770,7 +771,7 @@ export default {
     height: 54px;
     box-sizing: border-box;
     overflow: hidden;
-    .classify-box{
+    .classify-box {
       margin-top: 15px;
       height: 32px;
       overflow: hidden;
@@ -785,8 +786,8 @@ export default {
       height: 40px;
       &::-webkit-scrollbar {
         display: none;
-        width:0;
-	      height:0;
+        width: 0;
+        height: 0;
       }
       span {
         vertical-align: bottom;

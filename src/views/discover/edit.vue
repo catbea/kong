@@ -1,5 +1,5 @@
 <template>
-  <div class="discover-edit-page" v-if="info">
+  <div class="discover-edit-page">
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-view-info">
@@ -145,6 +145,7 @@ export default {
     },
     // 若出来editData,还原数据
     async restoreData(editData) {
+      debugger
       if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
       if (editData.hasOwnProperty('inlayHouse') && editData.inlayHouse !== '') this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
       if (editData.hasOwnProperty('recommendHouse') && editData.recommendHouse.length > 0) this.recommendList = await this.getLinkerInfo(editData.recommendHouse.join(','))
@@ -479,9 +480,8 @@ export default {
   }
   > .help-box {
     width: 80%;
-    height: 70%;
+    padding: 20px 10px;
     border-radius: 12px;
-    // position: relative;
     > .close {
       width: 14px;
       height: 14px;

@@ -29,15 +29,15 @@ export default {
     offesTop: ''
   }),
 
-  mounted() {
-    document.body.addEventListener(
-      'touchmove',
-      function(e) {
-        e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
-      },
-      { passive: false }
-    ) // passive 参数不能省略，用来兼容ios和android
-  },
+  // mounted() {
+  //   document.body.addEventListener(
+  //     'touchmove',
+  //     function(e) {
+  //       e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+  //     },
+  //     { passive: false }
+  //   ) // passive 参数不能省略，用来兼容ios和android
+  // },
 
   methods: {
     //开始编辑
@@ -98,6 +98,13 @@ export default {
         this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
       }
     }
+  },
+  beforeDestroy(){
+    try {
+      document.body.removeEventListener('touchmove')
+    } catch (error) {
+      
+    }
   }
 }
 </script>
@@ -112,6 +119,7 @@ export default {
     color: #333333;
     margin-top: 27px;
     margin-left: 16px;
+    font-weight: bolder;
   }
 
   > .notice-view {

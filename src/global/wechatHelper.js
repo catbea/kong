@@ -40,7 +40,7 @@ class WechatHelper {
   async init(agentId='') {
     await store.dispatch('setJssdkConfig', {jsApiList: jsApiList, agentId: agentId})
     await this.wx.config(store.state.wx.jssdkConfig)
-    await this.getUserArea()
+    if(agentId.length > 0) await this.getUserArea()
   }
 
   /**
@@ -75,7 +75,6 @@ class WechatHelper {
       success: () => { }
     }
     this._universalShare(friendConf, timelineConf)
-    // this._universalShare(conf)
   }
   /**
    * 设置分享泛方法
@@ -85,8 +84,6 @@ class WechatHelper {
   _universalShare(friendConf, timelineConf) {
     this.wx.onMenuShareAppMessage(friendConf)
     this.wx.onMenuShareTimeline(timelineConf)
-    // this.shareAppMessage(friendConf)
-    // this.shareTimeline(timelineConf)
     this.wx.showOptionMenu()
     this.wx.hideMenuItems({
       menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email']
@@ -96,43 +93,11 @@ class WechatHelper {
     })
   }
 
-  shareAppMessage(option) {
-    this.wx.onMenuShareAppMessage({
-      title: option.title, // 分享标题
-      desc: option.desc, // 分享描述
-      link: option.link, // 分享链接
-      imgUrl: option.imgUrl, // 分享图标
-      success () {
-        // 用户成功分享后执行的回调函数
-        option.success()
-      },
-      cancel () {
-        // 用户取消分享后执行的回调函数
-        option.error()
-      }
-    })
-  }
-  shareTimeline(option) {
-    this.wx.onMenuShareTimeline({
-      title: option.title, // 分享标题
-      desc: option.desc, // 分享描述
-      link: option.link, // 分享链接
-      imgUrl: option.imgUrl, // 分享图标
-      success () {
-        // 用户成功分享后执行的回调函数
-        option.success()
-      },
-      cancel () {
-        // 用户取消分享后执行的回调函数
-        option.error()
-      }
-    })
-  }
- 
   _apiCheck() {
     this.wx.checkJsApi({
       jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
       success: function (res) {
+        alert(res);
         // 以键值对的形式返回，可用的api值true，不可用为false
         // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
       }

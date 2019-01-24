@@ -18,7 +18,7 @@
           <div class="viewpoint-right">
             <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
             <div class="viewpoint-name">
-              <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
+              <span style="color:#333;font-size:14px">{{agentInfo&&agentInfo.agentName}}</span>
               <span style="color:#969EA8;font-size:14px">点评</span>
             </div>
           </div>
@@ -182,7 +182,7 @@ import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
 import Null from 'COMP/Null'
 import { uuid } from '@/utils/tool'
-import { remove } from 'lodash'
+import { remove, uniq } from 'lodash'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
@@ -249,7 +249,6 @@ export default {
     renderDom: [],
     inlayHouseInfo: null, // 文章插入楼盘信息
     sharePrompt: true,
-    isHasAgentName: false, // 好看/取消好看使用,当好看列表中有当前经纪人时前端不需要进行添加删除
     startY: '',
     endY: ''
   }),
@@ -358,7 +357,6 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
-        this.isHasAgentName = this.easylookList.indexOf(this.agentInfo.agentName) === -1 ? false : true
         this.$nextTick(() => {
           let height = this.$refs.easyLook.offsetHeight
           if (height <= 85) {
@@ -420,22 +418,17 @@ export default {
         likeFlag: this.likeFlag === true ? 1 : 0
       }
       const res = await articleService.updateLike(param)
-      if (this.likeFlag) {
-        if (this.isHasAgentName == false) {
-          // 代表好看列表中没有当前经纪人
+      if (res.likeFlag && res.shareFlag == false) {
+          // 代表好看列表中当前经纪人是分享的
           // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
           this.easylookList.unshift(this.agentInfo.agentName)
-        }else {
-
-        }
-      } else {
-        if (this.isHasAgentName == false) {
+      } else if (res.likeFlag == false && res.shareFlag == false){
+          // 代表好看列表中当前经纪人是分享的
           this.easylookList = remove(this.easylookList, n => {
             return n !== this.agentInfo.agentName
           })
-        }
-        
       }
+      this.easylookList = uniq(this.easylookList)
       console.log(this.easylookList)
     },
     // 展开更多好看
@@ -660,21 +653,6 @@ export default {
     }
   },
   mounted () {
-    // document.querySelector('body').addEventListener('touchstart', (e) => {
-    //   this.startY = e.changedTouches[0].pageY
-    // })
-    // document.querySelector('body').addEventListener('touchmove', (e) => {
-    //   this.endY = e.changedTouches[0].pageY
-    //   let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
-    //   let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
-    //   let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
-    //   if (scrollTop===0 && this.endY - this.startY > 10) {
-    //      e.preventDefault()
-    //   }
-    //   if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
-    //     e.preventDefault()
-    //   }
-    // }, { passive: false })
     document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
        e.preventDefault()
     }, { passive: false })
@@ -682,7 +660,12 @@ export default {
     
   },
   beforeDestroy(){
-    document.querySelector('.tools-bar').removeEventListener('touchmove')
+    try {
+      document.querySelector('.tools-bar').removeEventListener('touchmove')
+    } catch (error) {
+      
+    }
+    
   }
 }
 </script>
