@@ -18,7 +18,7 @@
           <div class="viewpoint-right">
             <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
             <div class="viewpoint-name">
-              <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
+              <span style="color:#333;font-size:14px">{{agentInfo&&agentInfo.agentName}}</span>
               <span style="color:#969EA8;font-size:14px">点评</span>
             </div>
           </div>
@@ -249,7 +249,6 @@ export default {
     renderDom: [],
     inlayHouseInfo: null, // 文章插入楼盘信息
     sharePrompt: true,
-    isHasAgentName: false, // 好看/取消好看使用,当好看列表中有当前经纪人时前端不需要进行添加删除
     startY: '',
     endY: ''
   }),
@@ -358,7 +357,6 @@ export default {
           let item = res[index]
           this.easylookList.push(item.userName)
         }
-        this.isHasAgentName = this.easylookList.indexOf(this.agentInfo.agentName) === -1 ? false : true
         this.$nextTick(() => {
           let height = this.$refs.easyLook.offsetHeight
           if (height <= 85) {
@@ -420,21 +418,15 @@ export default {
         likeFlag: this.likeFlag === true ? 1 : 0
       }
       const res = await articleService.updateLike(param)
-      if (this.likeFlag) {
-        if (this.isHasAgentName == false) {
-          // 代表好看列表中没有当前经纪人
+      if (res.likeFlag && res.shareFlag == false) {
+          // 代表好看列表中当前经纪人是分享的
           // unshift() 方法可向数组的开头添加一个或更多元素，并返回新的长度
           this.easylookList.unshift(this.agentInfo.agentName)
-        }else {
-
-        }
-      } else {
-        if (this.isHasAgentName == false) {
+      } else if (res.likeFlag == false && res.shareFlag == false){
+          // 代表好看列表中当前经纪人是分享的
           this.easylookList = remove(this.easylookList, n => {
             return n !== this.agentInfo.agentName
           })
-        }
-        
       }
       console.log(this.easylookList)
     },
