@@ -261,14 +261,6 @@ export default {
   console.log(scrollTop)
    },
     screenHandle(index) {
-      //筛选中更多等滚动条操作
-      // this.screenNum = index
-      // if (this.screenNum == index) {
-      //   this.flag = false
-      // } else {
-      //   this.flag = true
-      // }
-      // console.log('more-page');
       this.$nextTick(() => {
         if (document.querySelector('.area-filter') || document.querySelector('.price-filter') || document.querySelector('.popularity-filter') || document.querySelector('.more-page')) {
           this.flag = true

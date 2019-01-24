@@ -18,7 +18,7 @@
     <div class="search-content">
       <div class="search-tips">
         <div class="bg_img search-tips-icon" :style="{backgroundImage:'url(' + searchIcon + ')'}"></div>
-        <div class="search-tips-cnt">请输入主营区域下所属公司</div>
+        <div class="search-tips-cnt">请输入主营城市下所属公司名称至少4个字进行匹配查询</div>
       </div>
       <div class="search-list" v-for="(item, index) in searchLists" :key="index">
         <div class="search-item" @click="onSelectHandler(index)">
