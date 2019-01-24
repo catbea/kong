@@ -138,7 +138,6 @@ export default {
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
-          // isChecked: this.existCheck(item.linkerId) !== -1,
           disabled: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`,
@@ -216,6 +215,12 @@ export default {
     },
     'searchInfo.siteText'(val) {
       this.reset()
+    },
+    projectFilters:{
+      handler(val){
+        this.reset()
+      },
+      deep: true
     }
   },
   computed: {
