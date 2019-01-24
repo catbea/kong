@@ -668,7 +668,7 @@ export default {
     },
     // 评论弹框
     blur() {
-      document.activeElement.scrollIntoViewIfNeeded(true)
+      setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
     }
   },
   filters: {

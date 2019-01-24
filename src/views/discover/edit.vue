@@ -433,7 +433,7 @@ export default {
         width: 80px;
         justify-content: center;
         align-items: center;
-        padding-left: 12px;
+        padding-left:22px;
         > .help-text {
           font-size: 10px;
           font-size: 10px;

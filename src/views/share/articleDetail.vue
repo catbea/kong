@@ -144,7 +144,7 @@
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
   </div>
   <div v-else>
-      <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+    <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
   </div>
 </template>
 <script>
@@ -451,29 +451,12 @@ export default {
 */
       // this.friendShareData.success = this.articleShare
       // this.timelineShareData.success = this.articleShare
-      await window.awHelper.wechatHelper.init(this.agentId)
+      window.awHelper.wechatHelper.init(this.agentId).then(()=>{
+        window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+        console.log('======')
+      })
 
-      // wx.onMenuShareTimeline({
-      //   title: this.friendShareData.title, // 分享标题
-      //   desc: this.friendShareData.desc,
-      //   link: this.friendShareData.link, // 分享链接,将当前登录用户转为puid,以便于发展下线
-      //   imgUrl: this.friendShareData.imgUrl, // 分享图标
-      //   success: function () {
-      //     alert('分享成功');
-      //   },
-      //   cancel: function () {
-      //     alert('分享取消');
-      //   }
-      // });
-      // wx.error(function(res){
-      //   alert("errorMSG:"+res);
-      // });
-
-      // window.awHelper.wechatHelper.wx.showOptionMenu()
-      setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2000)
-      
-      
-    //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
+      // setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2000)
     }
   },
   watch: {

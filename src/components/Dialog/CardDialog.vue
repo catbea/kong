@@ -6,7 +6,7 @@
       <img class="mini-qrcode" :src="info&&info.miniQrCode"></img>
       <div class="dialog-content">
         <p class="dialog-name">{{info&&info.agentName}}</p>
-        <p class="dialog-tag">{{info&&info.tagList&&info.tagList.join(' ')}}</p>
+        <p class="dialog-tag">{{info&&info.tagList&&info.tagList.slice(0,3).join(' ')}}</p>
         <p class="dialog-mobile">{{info&&info.mobile}}</p>
         <p class="dialog-adder">{{info&&info.institutionName}}</p>
       </div>
