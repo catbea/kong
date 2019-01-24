@@ -179,8 +179,6 @@ export default {
       if (e.target.tagName !== 'LI') return
 
       this.scrollHander(e.target.innerText)
-      window.addEventListener('touchmove', this.handleTouchMove, false)
-      window.addEventListener('touchend', this.handleTouchEnd)
 
       if (e.target.innerText == '热') {
         document.getElementById('hot-city-box').scrollIntoView()

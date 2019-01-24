@@ -247,7 +247,6 @@ export default {
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
-    // window.addEventListener("popstate", this.fun, false);
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {

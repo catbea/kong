@@ -153,6 +153,14 @@ export default {
     indicatorStyle() {
       return { display: this.indicator.show ? 'block' : 'none' }
     }
+  },
+  beforeDestroy(){
+    try {
+      window.removeEventListener('touchmove')
+      window.removeEventListener('touchend')
+    } catch (error) {
+      
+    }
   }
 }
 </script>

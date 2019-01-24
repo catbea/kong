@@ -98,6 +98,13 @@ export default {
         this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
       }
     }
+  },
+  beforeDestroy(){
+    try {
+      document.body.removeEventListener('touchmove')
+    } catch (error) {
+      
+    }
   }
 }
 </script>
