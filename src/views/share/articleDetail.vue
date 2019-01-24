@@ -266,7 +266,7 @@ export default {
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.friendShareData = {
         title: 'AW大师写一写',
-        desc: '测试',
+        desc: encodeURI(this.info.title),
         imgUrl: this.info.image,
         link: host
       }
