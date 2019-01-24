@@ -637,8 +637,8 @@ export default {
     delHandler() {
       this.$dialog
         .confirm({
-          title: '提示',
-          message: '是否确认删除?'
+          title: '是否删除下架',
+          message: '删除下架文章会导致已发布出去的文章失效'
         })
         .then(async () => {
           const res = await cpInformationService.updateEnableByInfoId(this.info.agentId, this.info.id)
