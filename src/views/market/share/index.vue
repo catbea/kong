@@ -120,7 +120,7 @@ export default {
         this.buildingInfo = result
       }
     },
-   async savaReport() {
+    async savaReport() {
       let dd = new Date().getTime()
       if (dd - this.lastOpTimer < 3000) return
       this.lastOpTimer = dd
@@ -161,7 +161,7 @@ export default {
 
       let img = document.getElementById('imgcard')
       let _that = this
-       h2c(document.querySelector('#share-top'), {
+      h2c(document.querySelector('#share-top'), {
         backgroundColor: null,
         scale: 3,
         useCORS: true,

@@ -183,7 +183,7 @@ export default {
       width: 100%;
       border: none;
       height: 44px;
-      background: #EA4D2E;
+      background: #ea4d2e;
       border-radius: 4px;
       color: #fff;
       font-size: 16px;

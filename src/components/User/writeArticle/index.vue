@@ -99,10 +99,10 @@ export default {
     }
 
     > .share-bottom {
-      position:absolute;
+      position: absolute;
       width: 100%;
       bottom: 0;
-     
+
       > .share-time {
         font-size: 12px;
         color: #969ea8;

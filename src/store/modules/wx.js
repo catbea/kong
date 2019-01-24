@@ -15,7 +15,7 @@ const actions = {
     const url = window.location.href.split('#')[0]
     // alert('wxTicket get url:'+url)
     let result = ''
-    if(data.agentId) {
+    if (data.agentId) {
       result = await commonService.wxTicketByAgentid(url, data.agentId)
     } else {
       result = await commonService.wxTicket(url)

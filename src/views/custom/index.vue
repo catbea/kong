@@ -70,8 +70,8 @@ export default {
     sortShow: false,
     sort: 'intention', // intention：意向度（默认选项）， createTime：时间
     activeIcon: false,
-    pitch:false,
-    Linkerok:false,
+    pitch: false,
+    Linkerok: false
   }),
   mounted() {
     this.getLinker()
@@ -141,9 +141,9 @@ export default {
     async getLinker() {
       const res = await CustomService.getLinker()
       this.Linkerok = res
-      if(this.Linkerok != ''){
-          this.Linkerok = true
-      }else{
+      if (this.Linkerok != '') {
+        this.Linkerok = true
+      } else {
         this.Linkerok = false
       }
     },

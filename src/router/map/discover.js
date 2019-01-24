@@ -15,7 +15,7 @@ export default [
     name: 'discover-detail',
     component: resolve => require(['@/views/discover/detail.vue'], resolve),
     meta: {
-      title: 'AW大师写一写',
+      title: 'AW大师写一写'
     }
   },
   {
@@ -52,7 +52,7 @@ export default [
     name: 'analysis',
     component: resolve => require(['@/views/discover/newlyAdded/analysis.vue'], resolve),
     meta: {
-      title: '文章数据爬取',
+      title: '文章数据爬取'
     }
   }
 ]

@@ -48,7 +48,7 @@ export default {
   height: 80px;
   .user-avatar {
     margin: 15px;
-    margin-right:12px;
+    margin-right: 12px;
     width: 50px;
     height: 50px;
   }
@@ -61,16 +61,16 @@ export default {
   }
   .baseinfo-box {
     margin: 15px;
-    margin-left:0px;
+    margin-left: 0px;
     flex: 1;
     width: calc(100%-160px);
     width: -webkit-calc(100%-160px);
-    font-family:PingFangSC-Semibold;
+    font-family: PingFangSC-Semibold;
     .username {
       font-size: 16px;
       font-weight: 600;
       color: #333333;
-      padding-top:5px;
+      padding-top: 5px;
       padding-bottom: 10px;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -80,12 +80,12 @@ export default {
       font-size: 13px;
       font-weight: 400;
       color: #666666;
-      font-family:PingFangSC-Regular;
+      font-family: PingFangSC-Regular;
     }
   }
   .intention-box {
     margin: 15px 0;
-    margin-top:9px;
+    margin-top: 9px;
     text-align: center;
     width: 80px;
     .intention-value {
@@ -93,7 +93,7 @@ export default {
       font-weight: 500;
       color: #007ae6;
       padding: 6px 0 10px 0;
-      font-family:PingFangSC-Semibold;
+      font-family: PingFangSC-Semibold;
     }
     .intention-title {
       font-size: 12px;

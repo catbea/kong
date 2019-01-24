@@ -12,7 +12,7 @@ class CommonService {
     })
   }
 
-  wxTicketByAgentid(url,agentId) {
+  wxTicketByAgentid(url, agentId) {
     return xhr({
       url: '/cp/oauth2/signature/passSignature',
       body: {

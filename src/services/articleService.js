@@ -64,8 +64,8 @@ class ArticleService {
    */
   queryLikeArticleList(current, userId, userType, size = 10) {
     return xhr({
-      url:'/cpInformation/queryLikeArticleList',
-      body:{
+      url: '/cpInformation/queryLikeArticleList',
+      body: {
         current,
         userId,
         userType
@@ -75,16 +75,15 @@ class ArticleService {
 
   /**
    * 文章解析
-   * @param {*} data 
+   * @param {*} data
    */
-  articleAnalysis(data){
+  articleAnalysis(data) {
     return xhr({
       method: 'post',
-      url:'/cpInformationShare/articleAnalysis',
-      body:data
+      url: '/cpInformationShare/articleAnalysis',
+      body: data
     })
   }
-  
 }
 
 export default new ArticleService()

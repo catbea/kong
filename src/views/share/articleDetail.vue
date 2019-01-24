@@ -207,7 +207,7 @@ export default {
     cardQrInfo: null,
     marketQrInfo: null,
     articleQrInfo: null,
-    shareUuid: '', // 分享ID
+    shareUuid: '' // 分享ID
     // startY: '',
     // endY: ''
   }),
@@ -458,10 +458,10 @@ export default {
       //   desc: this.friendShareData.desc,
       //   link: this.friendShareData.link, // 分享链接,将当前登录用户转为puid,以便于发展下线
       //   imgUrl: this.friendShareData.imgUrl, // 分享图标
-      //   success: function () { 
+      //   success: function () {
       //     alert('分享成功');
       //   },
-      //   cancel: function () { 
+      //   cancel: function () {
       //     alert('分享取消');
       //   }
       // });
@@ -481,7 +481,7 @@ export default {
     $route() {
       location.reload()
     }
-  },
+  }
   /*
   mounted () {
     document.querySelector('.discover-detail-container').addEventListener('touchstart', (e) => {
