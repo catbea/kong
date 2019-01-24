@@ -453,6 +453,7 @@ export default {
       // this.timelineShareData.success = this.articleShare
       window.awHelper.wechatHelper.init(this.agentId).then(()=>{
         window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+        console.log('======')
       })
 
       // setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2000)
