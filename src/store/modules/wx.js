@@ -14,7 +14,12 @@ const actions = {
   async setJssdkConfig({ commit }, data) {
     const url = window.location.href.split('#')[0]
     // alert('wxTicket get url:'+url)
-    const result = await commonService.wxTicket(url)
+    let result = ''
+    if(data.agentId) {
+      result = await commonService.wxTicketByAgentid(url, data.agentId)
+    } else {
+      result = await commonService.wxTicket(url)
+    }
     // alert('wxTicket get done'+result.appId)
     const conf = {
       beta: true, // 必须这么写，否则wx.invoke调用形式的jsapi会有问题
@@ -23,7 +28,7 @@ const actions = {
       timestamp: result.timestamp, // 必填，生成签名的时间戳
       nonceStr: result.nonceStr, // 必填，生成签名的随机串
       signature: result.signature, // 必填，签名，见附录1
-      jsApiList: data
+      jsApiList: data.jsApiList
     }
     commit(types.WX_JSSDK, conf)
   },
