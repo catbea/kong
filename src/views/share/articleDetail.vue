@@ -392,9 +392,9 @@ export default {
     // 处理楼盘标签
     handleLinkerTags(obj) {
       let statusArr = ['热销中', '即将发售', '', '售罄']
-      let tempArr = []
       if (Array.isArray(obj)) {
         for (var i in obj) {
+          let tempArr = []
           var item = obj[i]
           tempArr.push(statusArr[item.saleStatus])
           if (item.linkerTags) {
@@ -409,6 +409,7 @@ export default {
           }
         }
       } else {
+        let tempArr = []
         tempArr.push(statusArr[obj.saleStatus])
         if (obj.linkerTags) {
           tempArr = tempArr.concat(obj.linkerTags)
@@ -451,7 +452,7 @@ export default {
 */
       // this.friendShareData.success = this.articleShare
       // this.timelineShareData.success = this.articleShare
-      await window.awHelper.wechatHelper.init()
+      await window.awHelper.wechatHelper.init(this.agentId)
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       
     //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
