@@ -105,13 +105,13 @@ class WechatHelper {
     this.wx.config(store.state.wx.jssdkConfig)
     this.wx.ready(function () {
       var shareData = conf
-      wx.onMenuShareAppMessage(shareData); // 分享给朋友
-      wx.onMenuShareTimeline(shareData); // 分享到朋友圈
+      this.wx.onMenuShareAppMessage(shareData); // 分享给朋友
+      this.wx.onMenuShareTimeline(shareData); // 分享到朋友圈
       alert('ready')
     });
     var shareData = conf
-    wx.onMenuShareAppMessage(shareData); // 分享给朋友
-    wx.onMenuShareTimeline(shareData); // 分享到朋友圈
+    this.wx.onMenuShareAppMessage(shareData); // 分享给朋友
+    this.wx.onMenuShareTimeline(shareData); // 分享到朋友圈
   }
 }
 export default new WechatHelper()
