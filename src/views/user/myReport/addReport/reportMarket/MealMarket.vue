@@ -17,7 +17,7 @@
           <li>
             {{dataArr.linkerName}}
           </li>
-          <li>{{dataArr.city}} {{dataArr.district}} {{dataArr.price}} {{dataArr.priceUnit}}111</li>
+          <li>{{dataArr.city}} {{dataArr.district}} {{dataArr.price}} {{dataArr.priceUnit}}</li>
           <li>
             <div
               class="tag-item-statu blue"

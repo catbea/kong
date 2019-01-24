@@ -170,15 +170,8 @@ export default {
         return this.swipeList
       }
     }
-    // swiper() {
-    //   return this.$refs.mySwiper.swiper
-    // }
   }
-  // updated(){
-  //   this.swiper.update();
-  //   // this.swiper.autoplay.start();
-  //   console.log(11111111)
-  // }
+
 }
 </script>
 <style lang="less">

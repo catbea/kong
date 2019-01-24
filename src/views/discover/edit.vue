@@ -28,7 +28,7 @@
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
         <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
-        <p class="open-pormpt" v-if="info&&!previewFlag&&info.linkerCount<3">{{info.linkerCount==0?'您暂未开通任何楼盘，建议开通更多楼盘':'当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用'}}</p>
+        <p class="open-pormpt" v-if="info&&!previewFlag&&parseInt(info.linkerCount)<3">{{info.linkerCount==0?'您暂未开通任何楼盘，建议开通更多楼盘':'当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用'}}</p>
       </div>
     </div>
     <!-- 删除段落操作弹窗 -->
@@ -399,8 +399,8 @@ export default {
   }
   > .recommend-house-container {
     background: #fff;
-    margin-bottom: 50px;
-    padding-bottom: 20px;
+    margin-bottom: 60px;
+    padding-bottom: 30px;
     padding-top: 10px;
     > .recommend-house-box {
       margin: 0 15px;

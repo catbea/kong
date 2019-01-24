@@ -135,10 +135,8 @@ export default {
       document.querySelector('.router-view').scrollTop = current.offsetHeight
     },
     handlerCollection() {
-      console.log('111111111111')
     },
     handlerEdit() {
-      console.log('222222222222')
     },
     enterDetail(val) {
       this.$router.push({ name: 'discover-detail', params: { id: val.id, city: val.city }, query: { agentId: val.agentId, enterpriseId: val.enterpriseId } })

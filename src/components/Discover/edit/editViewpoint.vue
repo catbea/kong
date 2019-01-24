@@ -74,7 +74,7 @@ export default {
     padding: 16px;
     position: relative;
     box-sizing: border-box;
-    border: 1px solid #969ea8;
+    border: 1px dashed #969ea8;
     > .viewpoint-line {
       width: 2px;
       height: 13px;
