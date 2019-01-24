@@ -119,6 +119,7 @@ export default {
     color: #333333;
     margin-top: 27px;
     margin-left: 16px;
+    font-weight: bolder;
   }
 
   > .notice-view {
