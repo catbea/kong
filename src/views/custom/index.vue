@@ -63,7 +63,7 @@
       </div>
       
     </div>
-     <custom-activity @click="goactivitDetaily"v-show="Linkerok"></custom-activity>
+     <custom-activity @click="goactivitDetaily" v-show="Linkerok"></custom-activity>
   </div>
 </template>
 <script>
@@ -96,7 +96,7 @@ export default {
     sort: 'intention', // intention：意向度（默认选项）， createTime：时间
     activeIcon: false,
     pitch:false,
-    Linkerok:[]
+    Linkerok:false,
   }),
   mounted() {
     this.getLinker()
@@ -164,6 +164,11 @@ export default {
     async getLinker(){
       const res = await CustomService.getLinker()
       this.Linkerok = res
+      if(this.Linkerok != ''){
+          this.Linkerok = true
+      }else{
+        this.Linkerok = false
+      }
     },
     
     // 获取当前serviec处理方法
