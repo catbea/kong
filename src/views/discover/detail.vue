@@ -302,6 +302,9 @@ export default {
     // 好看列表
     async getLikeList() {
       const res = await discoverService.queryLikeListByToken(this.id)
+      if (this.easylookList && this.easylookList.length > 0) {
+        this.easylookList = []
+      }
       if (res && res.length > 0) {
         for (var index in res) {
           let item = res[index]
