@@ -66,7 +66,7 @@ class WechatHelper {
    * @param {*} friendConf 
    * @param {*} timelineConf
    */
-  async setShare(conf) {
+  async setShare(friendConf, timelineConf) {
     const defaultConf = {
       title: '',
       desc: '',
@@ -74,17 +74,17 @@ class WechatHelper {
       imgUrl: '',
       success: () => { }
     }
-    // this._universalShare(friendConf, timelineConf)
-    this._universalShare(conf)
+    this._universalShare(friendConf, timelineConf)
+    // this._universalShare(conf)
   }
   /**
    * 设置分享泛方法
    * @param {*} friendConf
    * @param {*} timelineConf
    */
-  _universalShare(conf) {
-    this.wx.onMenuShareAppMessage(conf)
-    this.wx.onMenuShareTimeline(conf)
+  _universalShare(friendConf, timelineConf) {
+    this.wx.onMenuShareAppMessage(friendConf)
+    this.wx.onMenuShareTimeline(timelineConf)
     // this.shareAppMessage(friendConf)
     // this.shareTimeline(timelineConf)
     this.wx.showOptionMenu()

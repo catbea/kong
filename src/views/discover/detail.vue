@@ -613,8 +613,9 @@ export default {
     },
     // 设置分享
     async setShare() {
-      this.shareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.friendShareData)
+      this.friendShareData.success = this.articleShare
+      this.timelineShareData.success = this.articleShare
+      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
     async articleShare() {
@@ -636,8 +637,8 @@ export default {
     delHandler() {
       this.$dialog
         .confirm({
-          title: '提示',
-          message: '是否确认删除?'
+          title: '是否删除下架',
+          message: '删除下架文章会导致已发布出去的文章失效'
         })
         .then(async () => {
           const res = await cpInformationService.updateEnableByInfoId(this.info.agentId, this.info.id)
