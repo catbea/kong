@@ -747,7 +747,7 @@ export default {
       'touchmove',
       function(e) {
         that.endY = e.changedTouches[0].pageY
-        if (that.endY - that.startY > 10) {
+        if (that.endY - that.startY > 15) {
           e.preventDefault()
         }
       },
