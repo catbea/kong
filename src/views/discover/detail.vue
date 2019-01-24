@@ -182,7 +182,7 @@ import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
 import Null from 'COMP/Null'
 import { uuid } from '@/utils/tool'
-import { remove } from 'lodash'
+import { remove, uniq } from 'lodash'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
@@ -428,6 +428,7 @@ export default {
             return n !== this.agentInfo.agentName
           })
       }
+      this.easylookList = uniq(this.easylookList)
       console.log(this.easylookList)
     },
     // 展开更多好看
