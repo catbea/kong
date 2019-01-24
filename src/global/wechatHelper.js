@@ -75,7 +75,6 @@ class WechatHelper {
       success: () => { }
     }
     this._universalShare(friendConf, timelineConf)
-    // this._universalShare(conf)
   }
   /**
    * 设置分享泛方法
