@@ -224,7 +224,8 @@ export default {
       link: ''
     },
     qrcodeInfo: {},
-    shareData: null,
+    friendShareData: null, // 好友分享数据
+    timelineShareData: null, // 朋友圈分享数据
     virtualDom: null,
     isMoreLike: false, // 是否有更多好看
     easylookList: [], // 好看列表
@@ -294,9 +295,15 @@ export default {
       }
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
-      this.shareData = {
+      this.friendShareData = {
+        title: 'AW大师写一写',
+        desc: this.info.title,
+        imgUrl: this.info.image,
+        link: host
+      }
+      this.timelineShareData = {
         title: this.info.title,
-        // desc: this.info.title,
+        desc: '',
         imgUrl: this.info.image,
         link: host
       }
@@ -607,7 +614,7 @@ export default {
     // 设置分享
     async setShare() {
       this.shareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.shareData)
+      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
     async articleShare() {
@@ -622,8 +629,8 @@ export default {
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
-      // 分享成功之后刷新当前页面
-      location.reload()
+      // 分享成功之后获取最新好看列表
+      this.getLikeList()
     },
     // 文章删除
     delHandler() {
@@ -649,26 +656,29 @@ export default {
     }
   },
   mounted () {
-    document.querySelector('body').addEventListener('touchstart', (e) => {
-      this.startY = e.changedTouches[0].pageY
-    })
-    document.querySelector('body').addEventListener('touchmove', (e) => {
-      this.endY = e.changedTouches[0].pageY
-      let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
-      let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
-      let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
-      if (scrollTop===0 && this.endY - this.startY > 10) {
-         e.preventDefault()
-      }
-      if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
-        e.preventDefault()
-      }
-    }, { passive: false })
+    // document.querySelector('body').addEventListener('touchstart', (e) => {
+    //   this.startY = e.changedTouches[0].pageY
+    // })
+    // document.querySelector('body').addEventListener('touchmove', (e) => {
+    //   this.endY = e.changedTouches[0].pageY
+    //   let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
+    //   let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
+    //   let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
+    //   if (scrollTop===0 && this.endY - this.startY > 10) {
+    //      e.preventDefault()
+    //   }
+    //   if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
+    //     e.preventDefault()
+    //   }
+    // }, { passive: false })
     document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
        e.preventDefault()
     }, { passive: false })
     
     
+  },
+  beforeDestroy(){
+    document.querySelector('.tools-bar').removeEventListener('touchmove')
   }
 }
 </script>

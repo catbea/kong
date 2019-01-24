@@ -1,5 +1,5 @@
 <template>
-  <div class="discover-edit-page">
+  <div class="discover-edit-page" v-if="info">
     <div class="discover-detail-container">
       <h5 class="discover-title">{{info&&info.title}}</h5>
       <div class="discover-view-info">
@@ -141,6 +141,7 @@ export default {
       } else {
         this.getMyHouseRecommend()
       }
+      document.scrollingElement.scrollTop = 0
     },
     // 若出来editData,还原数据
     async restoreData(editData) {
