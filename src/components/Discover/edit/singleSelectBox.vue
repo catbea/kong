@@ -138,7 +138,6 @@ export default {
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
-          // isChecked: this.existCheck(item.linkerId) !== -1,
           disabled: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`,
@@ -179,8 +178,6 @@ export default {
       if (e.target.tagName !== 'LI') return
 
       this.scrollHander(e.target.innerText)
-      window.addEventListener('touchmove', this.handleTouchMove, false)
-      window.addEventListener('touchend', this.handleTouchEnd)
 
       if (e.target.innerText == '热') {
         document.getElementById('hot-city-box').scrollIntoView()
@@ -218,6 +215,12 @@ export default {
     },
     'searchInfo.siteText'(val) {
       this.reset()
+    },
+    projectFilters:{
+      handler(val){
+        this.reset()
+      },
+      deep: true
     }
   },
   computed: {

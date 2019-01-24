@@ -1,16 +1,8 @@
 <template>
   <div class="custom-page">
     <form action="/">
-      <van-search
-        class="search-container"
-        v-model="searchVal"
-        placeholder="请输入客户名称"
-        show-action
-        @search="onSearchHandler"
-        @click="onFocusHandler"
-        background="#fff"
-      >
-        <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon"/>
+      <van-search class="search-container" v-model="searchVal" placeholder="请输入客户名称" show-action @search="onSearchHandler" @click="onFocusHandler" background="#fff">
+        <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
         <div slot="action" @click="onSortHandler">
           <i class="icon iconfont icon-Clientlist_screenin" :style="{color: activeIcon ? '#1989fa' : ''}"></i>
         </div>
@@ -30,13 +22,7 @@
     </div>
 
     <div class="tab-container">
-      <van-tabs
-        v-model="activeIndex"
-        color="#007AE6"
-        :line-width="15"
-        :swipe-threshold="6"
-        @click="onClick"
-      >
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" @click="onClick">
         <van-tab title="全部"></van-tab>
         <van-tab title="关注"></van-tab>
         <van-tab title="访客"></van-tab>
@@ -45,23 +31,12 @@
       </van-tabs>
     </div>
     <div class="list-continer">
-      <van-list
-        v-model="loading"
-        :finished="currentData.finished"
-        @load="onLoad"
-        v-if="currentData.haveData"
-      >
-        <my-custom-item
-          v-for="(item,index) in currentData.list"
-          :key="index"
-          :info="item"
-          @click="itemClickHandler"
-        ></my-custom-item>
+      <van-list v-model="loading" :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData">
+        <my-custom-item v-for="(item,index) in currentData.list" :key="index" :info="item" @click="itemClickHandler"></my-custom-item>
       </van-list>
       <div v-if="!currentData.haveData">
         <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
       </div>
-      
     </div>
      <custom-activity @click="goactivitDetaily" v-show="Linkerok"></custom-activity>
   </div>
@@ -104,7 +79,9 @@ export default {
       'touchmove',
       function(e) {
         e.preventDefault()
-      },{ passive: false })
+      },
+      { passive: false }
+    )
   },
   methods: {
     goactivitDetaily() {
@@ -126,7 +103,7 @@ export default {
       this.activeIcon = true
       this.sortShow = false
       this.sort = val
-      this.pitch=val
+      this.pitch = val
       this.cleanCurrentData()
       this.onLoad()
     },
@@ -161,7 +138,7 @@ export default {
         this.currentData.page++
       }
     },
-    async getLinker(){
+    async getLinker() {
       const res = await CustomService.getLinker()
       this.Linkerok = res
       if(this.Linkerok != ''){
@@ -170,7 +147,7 @@ export default {
         this.Linkerok = false
       }
     },
-    
+
     // 获取当前serviec处理方法
     getServeceFunc() {
       switch (this.activeIndex) {
@@ -208,6 +185,12 @@ export default {
     currentData() {
       return this.data[this.activeIndex]
     }
+  },
+  beforeDestroy() {
+    try {
+      document.querySelector('.sort-container').removeEventListener('touchmove')
+      document.removeEventListener('touchmove')
+    } catch (error) {}
   }
 }
 </script>
@@ -264,12 +247,12 @@ export default {
       font-size: 15px;
       box-shadow: inset 0px -1px 1px -1px #c8c7cc;
     }
-    .active{
-        color:#1989fa
-      }
-      span {
-        color: #999;
-      }
+    .active {
+      color: #1989fa;
+    }
+    span {
+      color: #999;
+    }
   }
 }
 </style>

@@ -79,7 +79,9 @@ export default {
       'touchmove',
       function(e) {
         e.preventDefault()
-      },{ passive: false })
+      },
+      { passive: false }
+    )
   },
   methods: {
     areaColorHandle() {
@@ -165,6 +167,14 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo', 'userArea'])
+  },
+  beforeDestroy(){
+    try {
+      document.querySelector('.prevent').removeEventListener(
+      'touchmove')
+    } catch (error) {
+      
+    }
   }
 }
 </script>
@@ -180,13 +190,13 @@ export default {
     justify-content: space-between;
     width: 100%;
     height: 32px;
-    padding-top:9px;
+    padding-top: 9px;
     background: rgba(255, 255, 255, 1);
     background-position: center;
     background-repeat: no-repeat;
     padding-left: 18px;
     margin-bottom: 5px;
-    line-height:23px;
+    line-height: 23px;
     li {
       display: flex;
       > .value-content {
@@ -203,7 +213,7 @@ export default {
       span:nth-child(3) {
         width: 16px;
         height: 16px;
-        margin-top:3px;
+        margin-top: 3px;
       }
     }
     .sort {
@@ -220,8 +230,8 @@ export default {
     background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
     overflow: hidden;
-    .prevent{
-      height:3000px;
+    .prevent {
+      height: 3000px;
     }
   }
 }

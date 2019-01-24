@@ -50,12 +50,15 @@
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span>
+            <img src="../../assets/img/article/like1.png" alt="">
+            <!-- <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span> -->
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
-            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span>
+            <!-- <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
+            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span> -->
+            <img src="../../assets/img/article/like2.png" alt="" v-if="likeFlag"> 
+           <img src="../../assets/img/article/like1.png" alt="" v-else>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
@@ -657,21 +660,6 @@ export default {
     }
   },
   mounted () {
-    // document.querySelector('body').addEventListener('touchstart', (e) => {
-    //   this.startY = e.changedTouches[0].pageY
-    // })
-    // document.querySelector('body').addEventListener('touchmove', (e) => {
-    //   this.endY = e.changedTouches[0].pageY
-    //   let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
-    //   let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
-    //   let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
-    //   if (scrollTop===0 && this.endY - this.startY > 10) {
-    //      e.preventDefault()
-    //   }
-    //   if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
-    //     e.preventDefault()
-    //   }
-    // }, { passive: false })
     document.querySelector('.tools-bar').addEventListener('touchmove', (e) => {
        e.preventDefault()
     }, { passive: false })
@@ -679,7 +667,12 @@ export default {
     
   },
   beforeDestroy(){
-    document.querySelector('.tools-bar').removeEventListener('touchmove')
+    try {
+      document.querySelector('.tools-bar').removeEventListener('touchmove')
+    } catch (error) {
+      
+    }
+    
   }
 }
 </script>
@@ -810,10 +803,18 @@ export default {
         > .easy-look-left {
           display: flex;
           flex-direction: row;
+          img{
+            width:16px;
+            height:16px;
+          }
         }
         > .easy-look-right {
           display: flex;
           flex-direction: row;
+          img{
+            width:16px;
+            height:16px;
+          }
         }
         .easy-look-icon {
           width: 16px;
@@ -851,6 +852,7 @@ export default {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 1.5;
+          font-weight: 600;
         }
         > .easy-look-fold {
           color: #969ea8;
