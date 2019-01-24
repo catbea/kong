@@ -1,7 +1,7 @@
 <template>
   <div class="edit-paragraph" :class="preview?'':'box_border'">
     <div class="paragraph-container" v-if="!(preview && this.info.status === 'del')" v-html="info.text"></div>
-    <i v-if="this.info.status === 'edit' && !preview" class="icon iconfont icon-search_empty del-icon" @click.stop="delClickHandler"/>
+    <i v-if="this.info.status === 'edit' && !preview" class="icon iconfont icon-write_empty del-icon" @click.stop="delClickHandler"/>
     <div v-if="this.info.status === 'del'&& !preview" class="repeal-del-container">
       <div class="del-btn" @click="repealClickHandler">撤销删除</div>
     </div>
