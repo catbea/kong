@@ -419,7 +419,7 @@ export default {
         width: 80px;
         justify-content: center;
         align-items: center;
-
+        padding-left:12px;
         > .help-text {
           font-size: 10px;
           font-size: 10px;
@@ -474,6 +474,7 @@ export default {
         }
         &.save-btn {
           background: #007ae6;
+          margin-right:17px;
         }
       }
     }
