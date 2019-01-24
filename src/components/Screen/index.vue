@@ -139,7 +139,6 @@ export default {
     },
     sortChangeHandler() {
       this.currentIndex = -1
-      console.log(111111111111111)
     }
   },
   watch: {
