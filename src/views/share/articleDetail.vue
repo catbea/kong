@@ -470,9 +470,10 @@ export default {
       // });
 
       // window.awHelper.wechatHelper.wx.showOptionMenu()
-      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-
-      //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
+      setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2000)
+      
+      
+    //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
     }
   },
   watch: {
