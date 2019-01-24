@@ -59,8 +59,8 @@ export default {
 .edit-viewpoint-container {
   margin: 0 -5px 27px;
   font-size: 14px;
-  color: #969ea8;
-  padding: 7px 9px;
+  color:#13294F;
+  // padding: 7px 9px;
   
   > .viewpoint-container {
     width: 100%;
