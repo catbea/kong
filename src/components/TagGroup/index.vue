@@ -22,11 +22,11 @@ export default {
   display: flex;
   overflow: hidden;
   padding: 2px 0;
-  .tag-item:nth-child(1){
-    margin-left:0;
+  .tag-item:nth-child(1) {
+    margin-left: 0;
   }
-  .tag-item:nth-child(3){
-    margin-left:-6px;
+  .tag-item:nth-child(3) {
+    margin-left: -6px;
   }
 }
 </style>

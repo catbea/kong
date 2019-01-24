@@ -212,7 +212,7 @@ export default {
       if (result.returnCode == 21103 || result.returnCode == 21105) {
         this.clickDisabled = false
         this.$toast(result.msg)
-      }else {
+      } else {
         this.clickDisabled = true
         let params = {
           enterpriseId: this.enterpriseId

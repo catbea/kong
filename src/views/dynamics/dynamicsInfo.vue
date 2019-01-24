@@ -142,7 +142,7 @@ export default {
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       ovalIcon: require('IMG/marketDetail/Oval@2x.png'),
       avgStayLinkerTime: 0,
-      linkerByDistributor:true//是否当前所属分销商楼盘
+      linkerByDistributor: true //是否当前所属分销商楼盘
     }
   },
   created() {
@@ -161,9 +161,9 @@ export default {
       const res = await dynamicsService.getSingleHouseDynamicCount(this.itemDynamiclist)
       this.dynamicCount = res.houseDynamicCountReturnVO
       this.linkerVO = res.linkerVO
-      console.log(res,'单个楼盘数据');
-      
-      this.linkerByDistributor=res.linkerByDistributor
+      console.log(res, '单个楼盘数据')
+
+      this.linkerByDistributor = res.linkerByDistributor
       this.avgStayLinkerTime = parseInt(this.dynamicCount.avgStayLinkerTime / 1000)
     },
     //關注
@@ -195,10 +195,10 @@ export default {
     },
     //续费开通
     gopay(item) {
-      if(this.linkerByDistributor){
+      if (this.linkerByDistributor) {
         this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
-      }else{
-        this.$toast('非当前所属公司下楼盘无法开通或续费');
+      } else {
+        this.$toast('非当前所属公司下楼盘无法开通或续费')
       }
     }
   }
@@ -244,7 +244,7 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width:36px;
+          max-width: 36px;
           text-align: center;
           width: 36px;
           height: 22px;

@@ -22,9 +22,7 @@ export default {
     //   this.flag=true
     // }
   },
-    mounted() {
-    
-  },
+  mounted() {},
   props: {
     show: { type: Boolean, default: false },
     value: Object

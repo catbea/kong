@@ -187,7 +187,7 @@ export default {
       font-size: 12px;
       color: #999999;
       text-align: center;
-      padding-top:10px;
+      padding-top: 10px;
     }
   }
   .report-confirm {

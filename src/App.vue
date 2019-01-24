@@ -47,7 +47,7 @@ export default {
         //当前在聊天页
         return
       }
-      if(msgContent.desc == 6 && this.$route.path == '/write-article') {
+      if (msgContent.desc == 6 && this.$route.path == '/write-article') {
         // console.log(this.$store.getters.newMsgContent, 'this.$store.getters.newMsgContent')
         return
       }

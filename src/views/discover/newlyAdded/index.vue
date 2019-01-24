@@ -99,12 +99,10 @@ export default {
       }
     }
   },
-  beforeDestroy(){
+  beforeDestroy() {
     try {
       document.body.removeEventListener('touchmove')
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 }
 </script>
