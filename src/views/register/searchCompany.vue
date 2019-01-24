@@ -101,21 +101,21 @@ export default {
 }
 </script>
 <style lang="less">
-.search-container{
-.search-icon {
-      width:24px;
-      height:24px;
-    }
+.search-container {
+  .search-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
 .van-field {
   background-color: #f2f2f2;
   align-items: center;
 }
 .van-search {
-  .van-cell{
-  padding-left:5px;
+  .van-cell {
+    padding-left: 5px;
   }
-  }
+}
 .search-content {
   margin: 15px;
   .search-tips {
@@ -131,7 +131,7 @@ export default {
       margin-left: 8px;
       height: 17px;
       line-height: 17px;
-      padding-top:1px;
+      padding-top: 1px;
     }
   }
   .search-list {

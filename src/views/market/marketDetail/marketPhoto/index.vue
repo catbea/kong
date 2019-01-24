@@ -22,7 +22,7 @@ export default {
     one: 0,
     two: 0,
     three: 0,
-    arr:null,
+    arr: null,
     linkerId: null,
     photoData: null,
     show: false,
@@ -44,20 +44,20 @@ export default {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
       this.photoData = res
     },
-    previewHandle(listBannerVO,inde) {
+    previewHandle(listBannerVO, inde) {
       //预览图片
-      this.arr=[]
+      this.arr = []
       for (let i = 0; i < listBannerVO.length; i++) {
-        const element = listBannerVO[i].imgUrl;
+        const element = listBannerVO[i].imgUrl
         this.arr.push(element)
       }
-      this.arr=ImagePreview({
-          images:this.arr,
-          startPosition: inde,
-          onClose() {
-            // do something
-          }
-        })
+      this.arr = ImagePreview({
+        images: this.arr,
+        startPosition: inde,
+        onClose() {
+          // do something
+        }
+      })
     }
   }
 }

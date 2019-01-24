@@ -135,7 +135,7 @@ export default [
   {
     path: '/user/articles/easyLookList',
     name: 'easyLookList',
-    component: resolve => require(['@/views/user/articles/easyLookList.vue'], resolve),
+    component: resolve => require(['@/views/user/articles/easyLookList.vue'], resolve)
   },
   {
     path: '/user/articles/updateArticles',

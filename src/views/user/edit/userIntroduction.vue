@@ -33,7 +33,7 @@ export default {
   created() {
     let signature = this.$route.query.signature
     this.signature = signature
-    this.inputSize= this.signature.length
+    this.inputSize = this.signature.length
   },
 
   computed: {

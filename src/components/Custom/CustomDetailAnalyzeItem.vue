@@ -165,7 +165,7 @@ export default {
         .analyze-info {
           // white-space: nowrap;
           margin-top: -5px;
-        //  display: flex;
+          //  display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;

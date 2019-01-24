@@ -88,9 +88,9 @@ export default {
         this.show1 = true
       }
     },
-    async subFeedback(){
+    async subFeedback() {
       this.show1 = false
-       history.go(-1); 
+      history.go(-1)
     }
   }
 }
@@ -149,7 +149,7 @@ export default {
     .conten-textarea {
       font-size: 14px;
       font-weight: 400;
-      color: #13294F;
+      color: #13294f;
       line-height: 20px;
       padding: 9px 16px;
       width: 100%;
@@ -212,8 +212,8 @@ export default {
       }
     }
   }
-   .van-popup {
-        border-radius: 12px;
-      }
+  .van-popup {
+    border-radius: 12px;
+  }
 }
 </style>

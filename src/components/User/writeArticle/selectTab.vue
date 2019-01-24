@@ -30,9 +30,9 @@ export default {
       this.shareFontSize = '24px'
       this.editFontSize = '14px'
       this.collectionFontSize = '14px'
-      this.shareStyle='bold'
-      this.editStyle='normal'
-      this.collectionStyle='normal'
+      this.shareStyle = 'bold'
+      this.editStyle = 'normal'
+      this.collectionStyle = 'normal'
 
       this.$emit('clickShare', '2')
     },
@@ -41,9 +41,9 @@ export default {
       this.editFontSize = '24px'
       this.collectionFontSize = '14px'
 
-      this.shareStyle='normal'
-      this.editStyle='bold'
-      this.collectionStyle='normal'
+      this.shareStyle = 'normal'
+      this.editStyle = 'bold'
+      this.collectionStyle = 'normal'
 
       this.$emit('clickEdit', '3')
     },
@@ -52,9 +52,9 @@ export default {
       this.editFontSize = '14px'
       this.collectionFontSize = '24px'
 
-      this.shareStyle='normal'
-      this.editStyle='normal'
-      this.collectionStyle='bold'
+      this.shareStyle = 'normal'
+      this.editStyle = 'normal'
+      this.collectionStyle = 'bold'
 
       this.$emit('clickCollection', '1')
     }
@@ -64,7 +64,7 @@ export default {
     return {
       shareFontSize: '24px',
       editFontSize: '14px',
-      editStyle:'bold',
+      editStyle: 'bold',
       collectionFontSize: '14px'
     }
   }

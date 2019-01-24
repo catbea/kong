@@ -96,10 +96,11 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
-    relationHandle(){//分享插件
-    let host = process.env.VUE_APP_APP_URL
-    window.location.href = host+`panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
-    // window.location.href = 'https://sit.zooming-data.com/panorama-helper/static/customerAnalysis.html?agentId=705&enterpriseId=90'
+    relationHandle() {
+      //分享插件
+      let host = process.env.VUE_APP_APP_URL
+      window.location.href = host + `panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
+      // window.location.href = 'https://sit.zooming-data.com/panorama-helper/static/customerAnalysis.html?agentId=705&enterpriseId=90'
     },
     enterSharePage() {
       this.$router.push({ path: '/user/share-card', query: { agentId: this.userInfo.agentId } })
@@ -181,7 +182,9 @@ export default {
   fill: currentColor;
   overflow: hidden;
 }
-.user-page{height:auto!important;}
+.user-page {
+  height: auto !important;
+}
 .popup-view {
   width: 280px;
   height: 417px;
@@ -266,7 +269,7 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 17px;
-        margin-top:8px;
+        margin-top: 8px;
       }
       .politeness {
         position: absolute;
