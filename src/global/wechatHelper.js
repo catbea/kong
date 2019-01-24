@@ -40,7 +40,7 @@ class WechatHelper {
   async init(agentId='') {
     await store.dispatch('setJssdkConfig', {jsApiList: jsApiList, agentId: agentId})
     await this.wx.config(store.state.wx.jssdkConfig)
-    await this.getUserArea()
+    if(agentId.length > 0) await this.getUserArea()
   }
 
   /**
@@ -86,6 +86,9 @@ class WechatHelper {
     this.wx.onMenuShareAppMessage(friendConf)
     this.wx.onMenuShareTimeline(timelineConf)
     this.wx.showOptionMenu()
+    this.wx.hideMenuItems({
+      menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email']
+    })
     this.wx.showMenuItems({
       menuList: ['menuItem:refresh', 'menuItem:share:appMessage', "menuItem:share:timeline"] // 要隐藏的菜单项，所有menu项见附录3
     })
