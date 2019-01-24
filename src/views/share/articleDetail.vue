@@ -212,7 +212,6 @@ export default {
     // endY: ''
   }),
   created() {
-    window.awHelper.wechatHelper.wx.showOptionMenu()
     this.infoId = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
@@ -453,6 +452,7 @@ export default {
       // this.friendShareData.success = this.articleShare
       // this.timelineShareData.success = this.articleShare
       await window.awHelper.wechatHelper.init(this.agentId)
+      window.awHelper.wechatHelper.wx.showOptionMenu()
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       
     //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
