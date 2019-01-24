@@ -186,17 +186,15 @@
           <p v-else>{{replayItem.senderName}}: {{replayItem.content}}</p>
         </div>
         <div class="replay-box">
-          <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span>
+          <!-- <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span> -->
           <textarea
-            placeholder="最多输入140个字"
+            :placeholder="replayStatus===2 ? `回复${replayItem.senderName}` : '分享你的想法'"
             class="textarea"
-            :class="{'placeholder': replayStatus===2 && system==='IOS'}"
             name=""
             id=""
             ref="replaybox"
             maxlength="140"
             v-model="replayCnt"
-            :style="{'text-indent': (replayStatus===2 ? '75px' : '')}"
             @blur="blur"
           ></textarea>
         </div>
@@ -1165,11 +1163,6 @@ export default {
           &::-webkit-input-placeholder {
             font-size: 14px;
             color: #999;
-          }
-        }
-        .placeholder {
-          &::-webkit-input-placeholder {
-            padding-left: 75px;
           }
         }
       }
