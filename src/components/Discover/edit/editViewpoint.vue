@@ -60,7 +60,8 @@ export default {
   margin: 0 -5px 27px;
   font-size: 14px;
   color: #969ea8;
-  // padding: 7px 9px;
+  padding: 7px 9px;
+  
   > .viewpoint-container {
     width: 100%;
     min-height: 140px;
@@ -73,6 +74,7 @@ export default {
     padding: 16px;
     position: relative;
     box-sizing: border-box;
+    border: 1px solid #969ea8;
     > .viewpoint-line {
       width: 2px;
       height: 13px;

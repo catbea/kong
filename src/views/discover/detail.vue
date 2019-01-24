@@ -50,7 +50,7 @@
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <img src="../../assets/img/article/like1.png" alt="">
+            <img src="../../assets/img/article/leftLike1.png" alt="">
             <!-- <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span> -->
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
@@ -126,7 +126,7 @@
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar">
       <div class="tool-item" @click="editClickHandler">
-        <i class="icon iconfont icon-me_opinion"></i>
+        <i class="icon iconfont icon-found_editor"></i>
         <p>{{info&&(info.source == 0 || info.source == 1)&&info.belongeder === '' ? '编辑' : '更新编辑'}}</p>
       </div>
       <div
@@ -182,7 +182,7 @@ import OpenArticle from 'COMP//Guidance/OpenArticle'
 import CommentAlert from 'COMP//Discover/CommentAlert'
 import Null from 'COMP/Null'
 import { uuid } from '@/utils/tool'
-import { remove } from 'lodash'
+import { remove, uniq } from 'lodash'
 import { mapGetters } from 'vuex'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
@@ -428,6 +428,7 @@ export default {
             return n !== this.agentInfo.agentName
           })
       }
+      this.easylookList = uniq(this.easylookList)
       console.log(this.easylookList)
     },
     // 展开更多好看
@@ -752,6 +753,7 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
+      // padding-bottom:0px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
@@ -786,12 +788,13 @@ export default {
     .van-icon {
     }
     > .easy-look-container {
-      padding: 10px 16px 30px 16px;
+      padding: 10px 16px 24px 16px;
       // border-bottom: 10px solid #f7f9fa;
       > .easy-look-top {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        margin-bottom:4px;
         > .easy-look-left {
           display: flex;
           flex-direction: row;
@@ -818,6 +821,7 @@ export default {
           font-size: 14px;
           margin-left: 4px;
           margin-top: 1px;
+          font-weight: 600;
         }
       }
       > .easy-look-list {
@@ -981,6 +985,9 @@ export default {
         width: 100%;
         height: 24px;
         margin-bottom: 4px;
+      }
+      p{
+        transform:scale(0.84)
       }
     }
     // > div {

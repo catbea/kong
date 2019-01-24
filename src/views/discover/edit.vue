@@ -356,13 +356,17 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
+      padding-bottom:0;
       padding-top: 34px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
       line-height: 28px;
-      .edit-box:nth-child(3) {
+      .edit-box{
         margin-top: 24px;
+        .edit-houses{
+          margin-top:24px;
+        }
       }
       > .disclaimer-box {
         font-size: 14px;
@@ -383,6 +387,7 @@ export default {
     background: #fff;
     margin-bottom: 50px;
     padding-bottom: 20px;
+    padding-top:10px;
     > .recommend-house-box {
       margin: 0 15px;
       > .open-pormpt {
