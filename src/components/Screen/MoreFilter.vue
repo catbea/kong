@@ -224,10 +224,10 @@ export default {
             color: #ffffff;
           }
         }
-        div:first-child,
-        div:nth-child(5) {
-          margin-left: 0px;
-        }
+        // div:first-child,
+        // div:nth-child(5) {
+        //   margin-left: 0px;
+        // }
       }
     }
     > .op-box {
