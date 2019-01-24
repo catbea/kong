@@ -451,12 +451,10 @@ export default {
 */
       // this.friendShareData.success = this.articleShare
       // this.timelineShareData.success = this.articleShare
-      window.awHelper.wechatHelper.init(this.agentId).then(()=>{
-        window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-        console.log('======')
-      })
+      window.awHelper.wechatHelper.init(this.agentId)
 
-      // setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2000)
+      // window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2500)
     }
   },
   watch: {
