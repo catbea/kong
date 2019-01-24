@@ -2,7 +2,7 @@
   <van-popup class="single-select-box" v-model="singleShow">
     <div v-if="status===1" class="search-container">
       <div class="search-box">
-        <search :conf="searchInfo" @getContent="searchChangeHandle" @areaClick="areaClickHandle"/>
+        <search :conf="searchInfo" @getContent="searchChangeHandle" @areaClick="areaClickHandle" @focus="focusHandler"/>
         <screen v-model="projectFilters" :local="this.searchInfo.siteText"/>
       </div>
       <div class="house-box">
@@ -14,7 +14,7 @@
     <div v-else class="city-select-container">
       <div class="area-selection-page" ref="content">
         <div class="search-box van-hairline--bottom">
-          <search :conf="searchInfo "></search>
+          <search :conf="searchInfo " @areaClick="areaClickHandle" @focus="focusHandler"/>
         </div>
         <div class="area-selection-box">
           <div class="current-location">
@@ -85,7 +85,7 @@ export default {
     projectFilters: {},
     searchInfo: {
       siteText: '',
-      placeholderText: '请输入楼盘'
+      placeholder: '请输入楼盘'
     },
     searchTimer: null,
     loading: false,
@@ -103,10 +103,11 @@ export default {
     },
     searchInfo: {
       siteText: '',
-      placeholderText: '请输入楼盘名称'
+      placeholder: '请输入楼盘名称'
     },
     navOffsetX: 0,
-    moving: false
+    moving: false,
+    areaQueryFlag: false
   }),
   created() {
     this.searchInfo.siteText = this.userInfo.majorCity
@@ -159,8 +160,19 @@ export default {
     },
     // 切换到地域切换
     areaClickHandle() {
-      this.$store.dispatch('getAllCity')
-      this.status = 2
+      debugger
+      if (this.status == 1) {
+        this.status = 2
+        if (!this.areaQueryFlag) {
+          this.$store.dispatch('getAllCity')
+          this.areaQueryFlag = true
+        }
+      } else {
+        this.status = 1
+      }
+    },
+    focusHandler() {
+      if (this.status == 2) this.status = 1
     },
     // item点击
     selectHandle(item) {
@@ -216,8 +228,8 @@ export default {
     'searchInfo.siteText'(val) {
       this.reset()
     },
-    projectFilters:{
-      handler(val){
+    projectFilters: {
+      handler(val) {
         this.reset()
       },
       deep: true

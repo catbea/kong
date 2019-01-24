@@ -278,7 +278,7 @@ class CustomService {
   }
   /**
    * 查询楼盘报名活动
-   * @param {*} linkerId 
+   * @param {*} linkerId
    */
   getLinker() {
     return xhr({

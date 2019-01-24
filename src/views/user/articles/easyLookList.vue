@@ -84,7 +84,7 @@ export default {
         this.loading = false
         this.finished = true
       }
-      
+
       // if (result.records.length > 0) {
       //   let parentArr = result.records
       //   let lastGrounpTime = ''
@@ -129,7 +129,7 @@ export default {
   display: flex;
   background: #ffffff;
   flex-direction: column;
-  
+
   > .easy-look-time {
     display: flex;
     width: 100%;
@@ -141,7 +141,7 @@ export default {
       font-size: 16px;
       margin-left: 15px;
       margin-bottom: 7px;
-      font-weight:bold;
+      font-weight: bold;
     }
   }
 
@@ -150,7 +150,7 @@ export default {
     height: 122px;
     display: flex;
     justify-content: space-between;
-    border-bottom: #E2E2E3 1px solid;
+    border-bottom: #e2e2e3 1px solid;
     margin-left: 5%;
 
     > .easy-look-item-left {
@@ -200,11 +200,11 @@ export default {
     }
   }
 
-  > .easy-line{
+  > .easy-line {
     width: 90%;
     margin-left: 5%;
     height: 1px;
-    background-color: #E2E2E3;
+    background-color: #e2e2e3;
   }
 }
 </style>

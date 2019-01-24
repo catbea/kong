@@ -168,13 +168,10 @@ export default {
   computed: {
     ...mapGetters(['userInfo', 'userArea'])
   },
-  beforeDestroy(){
+  beforeDestroy() {
     try {
-      document.querySelector('.prevent').removeEventListener(
-      'touchmove')
-    } catch (error) {
-      
-    }
+      document.querySelector('.prevent').removeEventListener('touchmove')
+    } catch (error) {}
   }
 }
 </script>

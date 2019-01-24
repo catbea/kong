@@ -31,8 +31,8 @@ import TagGroup from 'COMP/TagGroup'
 export default {
   props: {
     info: { type: Object },
-    showRules:{type:Boolean, default: true},
-    itemBorder:{type:Boolean,default:false},
+    showRules: { type: Boolean, default: true },
+    itemBorder: { type: Boolean, default: false },
     conf: {
       type: Object,
       default: () => {
@@ -90,7 +90,7 @@ export default {
       flex-basis: 225px;
       margin: 16px 16px 16px 0;
       > .estate-name {
-        font-family:PingFangSC-Semibold;
+        font-family: PingFangSC-Semibold;
         font-size: 16px;
         font-weight: 600;
         color: #333333;
@@ -100,7 +100,7 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: #666666;
-        padding-top:1px;
+        padding-top: 1px;
         padding-bottom: 3px;
       }
       > .tag-box {
@@ -120,21 +120,21 @@ export default {
           font-size: 15px;
           font-weight: 600;
           padding-right: 12px;
-          font-family:PingFangSC-Semibold;
+          font-family: PingFangSC-Semibold;
         }
         > .estate-area {
           font-size: 12px;
           font-weight: 400;
           color: #999999;
           flex: 1;
-          font-family:PingFangSC-Regular;
+          font-family: PingFangSC-Regular;
         }
       }
     }
   }
   > .operate-box {
     position: absolute;
-    top:8px;
+    top: 8px;
     right: 10px;
     > .share-icon {
       width: 100%;
@@ -160,7 +160,7 @@ export default {
       color: #333333;
       font-size: 13px;
       margin-left: 8px;
-      font-family:PingFangSC-Regular;
+      font-family: PingFangSC-Regular;
     }
   }
 }

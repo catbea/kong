@@ -66,12 +66,12 @@ export default {
       nullIcon: require('IMG/user/collection/Article@2x.png'),
       nullcontent: '暂还没有文章记录',
       haveData: true,
-      shareFontSize : '24px',
-      editFontSize : '14px',
-      collectionFontSize : '14px',
-      shareStyle : 'bold',
-      editStyle : 'normal',
-      collectionStyle : 'normal',
+      shareFontSize: '24px',
+      editFontSize: '14px',
+      collectionFontSize: '14px',
+      shareStyle: 'bold',
+      editStyle: 'normal',
+      collectionStyle: 'normal'
     }
   },
   computed: {

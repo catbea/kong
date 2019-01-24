@@ -37,7 +37,7 @@ export default {
       this.viewpointEditShow = false
       this.currentValue = this.tempValue
     },
-    blurHandler(){
+    blurHandler() {
       document.activeElement.scrollIntoViewIfNeeded(true)
     }
   },
@@ -59,8 +59,9 @@ export default {
 .edit-viewpoint-container {
   margin: 0 -5px 27px;
   font-size: 14px;
-  color: #969ea8;
+  color: #13294f;
   // padding: 7px 9px;
+
   > .viewpoint-container {
     width: 100%;
     min-height: 140px;
@@ -73,6 +74,7 @@ export default {
     padding: 16px;
     position: relative;
     box-sizing: border-box;
+    border: 1px solid #969ea8;
     > .viewpoint-line {
       width: 2px;
       height: 13px;

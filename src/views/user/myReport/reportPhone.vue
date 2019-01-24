@@ -88,7 +88,7 @@ export default {
 
     > .edit-phone-conter {
       margin-bottom: 24px;
-      .material-input{
+      .material-input {
         color: #757575;
       }
       > .edit-phone-input {

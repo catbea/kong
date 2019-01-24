@@ -36,36 +36,38 @@ export default {
       }
     }
   },
-  mounted () {
-    document.getElementById('tabbar').addEventListener('touchmove', (e) => {
-      e.preventDefault()
-    }, { passive: false })
+  mounted() {
+    document.getElementById('tabbar').addEventListener(
+      'touchmove',
+      e => {
+        e.preventDefault()
+      },
+      { passive: false }
+    )
   },
-  beforeDestroy(){
+  beforeDestroy() {
     try {
       document.getElementById('tabbar').removeEventListener('touchmove')
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   }
 }
 </script>
 <style lang="less" scoped>
-#tabbar{
-.tabbar {
-  z-index: 999;
-  width: 100%;
-  position: relative;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  img {
-    width: 23px;
-    height: 23px;
+#tabbar {
+  .tabbar {
+    z-index: 999;
+    width: 100%;
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    img {
+      width: 23px;
+      height: 23px;
+    }
+    span {
+      font-size: 12px;
+    }
   }
-  span {
-    font-size: 12px;
-  }
-}
 }
 </style>

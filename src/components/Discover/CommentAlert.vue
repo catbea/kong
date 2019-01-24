@@ -1,6 +1,7 @@
 <template>
   <div class="comment-alert-container" v-if="show">
-    <div class="comment-alert" :style="{height:info.contentHeight + 'px'}">
+    <!-- <div class="comment-alert" :style="{height:info.contentHeight + 'px'}"> -->
+    <div class="comment-alert">
       <div class="comment-top">
         <div class="comment-cancel" @click="cancelHandler">取消</div>
         <div class="comment-publish" @click="publishHandler">发布</div>
@@ -11,15 +12,7 @@
         <div class="comment-content">{{info&&info.title}}</div>
       </div>
       <div class="comment-input-wrap">
-        <textarea
-          class="comment-textarea"
-          :placeholder="info&&info.placeholder"
-          maxlength="140"
-          rows="5"
-          v-model="commentContent"
-          @input="inputHandler"
-          @blur="blur"
-        ></textarea>
+        <textarea class="comment-textarea" :placeholder="info&&info.placeholder" maxlength="140" rows="5" v-model="commentContent" @input="inputHandler" @blur="blur"></textarea>
       </div>
     </div>
   </div>
@@ -48,7 +41,7 @@ export default {
       this.commentContent = ''
       this.$emit('publish')
     },
-    blur () {
+    blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
     }
   }
@@ -63,9 +56,9 @@ export default {
   background-color: rgba(0, 0, 0, 0.65);
   z-index: 10;
   > .comment-alert {
-    position: absolute;
-    // bottom: 0;
-    top: 64px;
+    position: fixed;
+    bottom: 0;
+    // top: 64px;
     background-color: #ffffff;
     padding: 20px 16px;
     width: 100%;

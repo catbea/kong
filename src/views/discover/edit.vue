@@ -197,7 +197,7 @@ export default {
         if (count > 1) {
           this.currentDelDom.status = 'del'
         } else {
-          this.$toast('请至少保留一个段落!');
+          this.$toast('请至少保留一个段落!')
         }
       }
       this.delActionsheetShow = false
@@ -316,6 +316,20 @@ export default {
         return null
       }
     }
+  },
+  mounted() {
+    document.querySelector('.fixed-bar').addEventListener(
+      'touchmove',
+      e => {
+        e.preventDefault()
+      },
+      { passive: false }
+    )
+  },
+  beforeDestroy() {
+    try {
+      document.querySelector('.fixed-bar').removeEventListener('touchmove')
+    } catch (error) {}
   }
 }
 </script>
@@ -356,13 +370,17 @@ export default {
     }
     > .discover-detail-content {
       padding: 15px;
+      padding-bottom: 0;
       padding-top: 34px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
       line-height: 28px;
-      .edit-box:nth-child(3) {
+      .edit-box {
         margin-top: 24px;
+        .edit-houses {
+          margin-top: 24px;
+        }
       }
       > .disclaimer-box {
         font-size: 14px;
@@ -383,6 +401,7 @@ export default {
     background: #fff;
     margin-bottom: 50px;
     padding-bottom: 20px;
+    padding-top: 10px;
     > .recommend-house-box {
       margin: 0 15px;
       > .open-pormpt {
@@ -414,7 +433,7 @@ export default {
         width: 80px;
         justify-content: center;
         align-items: center;
-
+        padding-left:22px;
         > .help-text {
           font-size: 10px;
           font-size: 10px;
@@ -469,6 +488,7 @@ export default {
         }
         &.save-btn {
           background: #007ae6;
+          margin-right: 17px;
         }
       }
     }

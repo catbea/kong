@@ -22,9 +22,7 @@ export default {
     //   this.flag=true
     // }
   },
-    mounted() {
-    
-  },
+  mounted() {},
   props: {
     show: { type: Boolean, default: false },
     value: Object
@@ -224,10 +222,10 @@ export default {
             color: #ffffff;
           }
         }
-        div:first-child,
-        div:nth-child(5) {
-          margin-left: 0px;
-        }
+        // div:first-child,
+        // div:nth-child(5) {
+        //   margin-left: 0px;
+        // }
       }
     }
     > .op-box {

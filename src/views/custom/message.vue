@@ -232,7 +232,7 @@ export default {
     setToAccount('')
   },
   methods: {
-    blur () {
+    blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
     },
     /**
