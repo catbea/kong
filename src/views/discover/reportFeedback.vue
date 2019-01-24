@@ -149,7 +149,7 @@ export default {
     .conten-textarea {
       font-size: 14px;
       font-weight: 400;
-      color: rgba(150, 158, 168, 1);
+      color: #13294F;
       line-height: 20px;
       padding: 9px 16px;
       width: 100%;
@@ -212,5 +212,8 @@ export default {
       }
     }
   }
+   .van-popup {
+        border-radius: 12px;
+      }
 }
 </style>
