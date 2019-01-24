@@ -565,11 +565,16 @@ export default {
     },
     // 分享成功之后
     async articleShare() {
+      let linkerIds = ''
+      if (this.editData && this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
+        linkerIds = this.editData.recommendHouse.join(',')
+      }
       let params = {
         agentId: this.agentId,
         deleteType: 0, // 1-删除，0-未删除
         enterpriseId: this.enterpriseId,
         infoId: this.infoId,
+        linkerIds: linkerIds,
         shareUuid: this.shareUuid,
         sourceType: 0 // 经纪人-0，客户-1
       }
