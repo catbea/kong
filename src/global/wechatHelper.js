@@ -93,7 +93,7 @@ class WechatHelper {
   }
 
   shareAppMessage(option) {
-    wx.onMenuShareAppMessage({
+    this.wx.onMenuShareAppMessage({
       title: option.title, // 分享标题
       desc: option.desc, // 分享描述
       link: option.link, // 分享链接
@@ -109,7 +109,7 @@ class WechatHelper {
     })
   }
   shareTimeline(option) {
-    wx.onMenuShareTimeline({
+    this.wx.onMenuShareTimeline({
       title: option.title, // 分享标题
       desc: option.desc, // 分享描述
       link: option.link, // 分享链接
