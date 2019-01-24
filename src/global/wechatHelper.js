@@ -66,7 +66,7 @@ class WechatHelper {
    * @param {*} friendConf 
    * @param {*} timelineConf
    */
-  async setShare(friendConf, timelineConf) {
+  async setShare(conf) {
     const defaultConf = {
       title: '',
       desc: '',
@@ -74,18 +74,19 @@ class WechatHelper {
       imgUrl: '',
       success: () => { }
     }
-    this._universalShare(friendConf, timelineConf)
+    // this._universalShare(friendConf, timelineConf)
+    this._universalShare(conf)
   }
   /**
    * 设置分享泛方法
    * @param {*} friendConf
    * @param {*} timelineConf
    */
-  _universalShare(friendConf, timelineConf) {
-    // this.wx.onMenuShareAppMessage(friendConf)
-    // this.wx.onMenuShareTimeline(timelineConf)
-    this.shareAppMessage(friendConf)
-    this.shareTimeline(timelineConf)
+  _universalShare(conf) {
+    this.wx.onMenuShareAppMessage(conf)
+    this.wx.onMenuShareTimeline(conf)
+    // this.shareAppMessage(friendConf)
+    // this.shareTimeline(timelineConf)
     this.wx.showOptionMenu()
     this.wx.showMenuItems({
       menuList: ['menuItem:refresh', 'menuItem:share:appMessage', "menuItem:share:timeline"] // 要隐藏的菜单项，所有menu项见附录3
