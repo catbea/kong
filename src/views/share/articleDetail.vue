@@ -470,7 +470,7 @@ export default {
       // });
 
       // window.awHelper.wechatHelper.wx.showOptionMenu()
-      setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2000)
+      setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 1500)
       
       
     //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
