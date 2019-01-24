@@ -224,7 +224,8 @@ export default {
       link: ''
     },
     qrcodeInfo: {},
-    shareData: null,
+    friendShareData: null, // 好友分享数据
+    timelineShareData: null, // 朋友圈分享数据
     virtualDom: null,
     isMoreLike: false, // 是否有更多好看
     easylookList: [], // 好看列表
@@ -294,7 +295,13 @@ export default {
       }
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
-      this.shareData = {
+      this.friendShareData = {
+        title: 'AW大师写一写',
+        desc: this.info.title,
+        imgUrl: this.info.image,
+        link: host
+      }
+      this.timelineShareData = {
         title: this.info.title,
         desc: '',
         imgUrl: this.info.image,
@@ -607,7 +614,7 @@ export default {
     // 设置分享
     async setShare() {
       this.shareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.shareData)
+      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
     async articleShare() {
