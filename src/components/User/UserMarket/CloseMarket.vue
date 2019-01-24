@@ -446,9 +446,9 @@ export default {
   //弹窗
   .van-popup--bottom {
     background: rgba(255, 255, 255, 1);
-    width:100%;
-    height:150px;
-    border-radius:0;
+    width: 100%;
+    height: 150px;
+    border-radius: 0;
     ul {
       li {
         width: 375px;

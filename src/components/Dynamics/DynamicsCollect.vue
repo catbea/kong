@@ -157,7 +157,7 @@ export default {
     position: relative;
     margin: 0 15px;
     padding: 10px;
-    padding-bottom:20px;
+    padding-bottom: 20px;
     line-height: 1;
     > .data-container {
       padding: 14px 5px 16px 5px;
@@ -168,7 +168,7 @@ export default {
         display: inline-block;
         position: relative;
         width: 70px;
-        height:50px;
+        height: 50px;
         > .data-title {
           position: absolute;
           bottom: 0;
@@ -183,7 +183,7 @@ export default {
           font-size: 20px;
           font-weight: 500;
           color: #333333;
-          font-family:PingFangSC-Semibold;
+          font-family: PingFangSC-Semibold;
           > .data-change {
             position: absolute;
             font-size: 12px;
@@ -212,7 +212,7 @@ export default {
       color: #8b9198;
       font-weight: bolder;
       right: 15px;
-      top:47px;
+      top: 47px;
     }
     > .bottom-line {
       margin: auto;
@@ -233,13 +233,13 @@ export default {
           text-align: left;
           display: flex;
           height: 50px;
-          justify-content:left;
+          justify-content: left;
           font-size: 12px;
           line-height: 24px;
-          padding-left:14px;
-          font-family:PingFangSC-Regular;
-          .avatar{
-            margin-right:8px;
+          padding-left: 14px;
+          font-family: PingFangSC-Regular;
+          .avatar {
+            margin-right: 8px;
           }
           .card-tips {
             // padding-left: 5px;
@@ -251,24 +251,24 @@ export default {
           }
         }
       }
-      .carousel-swipe{
+      .carousel-swipe {
         height: 30px;
         overflow: hidden;
         margin: 10px 0;
-        .van-swipe{
+        .van-swipe {
           font-size: 12px;
           height: 30px;
           padding: 0 10px;
-          .van-swipe-item{
+          .van-swipe-item {
             height: 24px;
             display: flex;
-            .avatar{
+            .avatar {
               width: 24px;
               height: 24px;
               border-radius: 50%;
               margin-right: 5px;
             }
-            p{
+            p {
               flex: 1;
               height: 24px;
               line-height: 24px;
@@ -277,8 +277,7 @@ export default {
               white-space: nowrap;
             }
           }
-          
-        } 
+        }
       }
     }
     > .no-carousel-tips {

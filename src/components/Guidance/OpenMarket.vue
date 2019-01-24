@@ -29,7 +29,7 @@ export default {
     }
   },
   data: () => ({
-    currentShow:false,
+    currentShow: false,
     bgImg: require('IMG/guidance/marketGuidance.jpg'),
     aiImg: require('IMG/guidance/guidance_ai.png'),
     closeImg: require('IMG/guidance/closeBtn.png')
@@ -74,7 +74,7 @@ export default {
     height: 200px;
     border-radius: 3px;
     margin: 15px;
-    margin-bottom:0;
+    margin-bottom: 0;
     position: relative;
   }
   > .img-ai {
@@ -83,21 +83,21 @@ export default {
     position: absolute;
     left: 30px;
     top: 15px;
-    font-size:13px;
-    text-align:center;
-    line-height:24px;
-    color:#FFFFFF;
-    border-bottom-left-radius:5px;
-    border-bottom-right-radius:5px;
-    font-family:PingFangSC-Regular;
-    font-weight:500;
-    background-color:#ee7158;
+    font-size: 13px;
+    text-align: center;
+    line-height: 24px;
+    color: #ffffff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-family: PingFangSC-Regular;
+    font-weight: 500;
+    background-color: #ee7158;
   }
   > .tag-content {
     height: 30px;
     margin: 15px;
-    margin-left:12px;
-    margin-top:8px;
+    margin-left: 12px;
+    margin-top: 8px;
     > .tag-item {
       color: #333333;
       font-size: 14px;
@@ -107,7 +107,7 @@ export default {
   }
   > .desc-content {
     margin: 15px;
-    margin-left:18px;
+    margin-left: 18px;
     font-size: 16px;
     color: #007ae6;
     font-weight: 600;

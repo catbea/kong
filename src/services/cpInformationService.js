@@ -1,6 +1,5 @@
 import xhr from './xhr'
 class CpInformationService {
-
   /**
    * 文章保存
    * @param {*} sourceInfoId 源文章id
@@ -39,25 +38,21 @@ class CpInformationService {
 
   /**
    * 文章状态修改 - 主要用于文章删除
-   * @param {*} agentId 
-   * @param {*} infoId 
-   * @param {*} enable  
+   * @param {*} agentId
+   * @param {*} infoId
+   * @param {*} enable
    */
-  updateEnableByInfoId(agentId, infoId, enable=1){
+  updateEnableByInfoId(agentId, infoId, enable = 1) {
     return xhr({
-      method:'post',
-      url:'/cpInformation/updateEnableByInfoId',
-      body:{
+      method: 'post',
+      url: '/cpInformation/updateEnableByInfoId',
+      body: {
         agentId,
         infoId,
         enable
       }
     })
   }
-
-
-  
-  
 }
 
 export default new CpInformationService()

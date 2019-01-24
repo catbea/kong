@@ -43,10 +43,10 @@ export default {
     }
   }
   > .del-icon {
-    width:16px;
-    height:16px;
+    width: 16px;
+    height: 16px;
     position: absolute;
-    top:0;
+    top: 0;
     right: -15px;
     transform: translate(-50%, -50%);
   }

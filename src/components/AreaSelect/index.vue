@@ -53,29 +53,29 @@ export default {
 }
 </script>
 <style lang="less">
-.select-city{
-  padding:0 0 0 15px;
-  width:100%;
-  height:40px;
-  font-size:14px;
-  font-family:PingFangSC-Regular;
-  font-weight:400;
-  color:rgba(153,153,153,1);
+.select-city {
+  padding: 0 0 0 15px;
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
   display: flex;
   align-items: center;
-  .search-icon{
-    width:16px;
-    height:16px;
-    margin-right:7px;
+  .search-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 7px;
   }
 }
-.van-area{
+.van-area {
   // .van-ellipsis{
   //   color:#999999;
   // }
-  .van-picker__toolbar{
-    border-top:2px solid #999999;
-    border-bottom:2px solid #999999;
+  .van-picker__toolbar {
+    border-top: 2px solid #999999;
+    border-bottom: 2px solid #999999;
   }
 }
 </style>

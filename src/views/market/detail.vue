@@ -207,7 +207,7 @@ export default {
       tagGroupArr: [],
       mapTab: 0,
       openStatus: false,
-      relationShow:false,//立即联系
+      relationShow: false, //立即联系
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -264,9 +264,10 @@ export default {
     }
   },
   methods: {
-    relationHandle(){//立即联系弹窗
-        window.location.href = 'tel://400-0904-999'
-        this.relationShow=false
+    relationHandle() {
+      //立即联系弹窗
+      window.location.href = 'tel://400-0904-999'
+      this.relationShow = false
     },
     async getMarketDetailPhotoInfo() {
       //判断该楼盘有无图片列表
@@ -508,7 +509,7 @@ export default {
         color: #333333;
         font-size: 26px;
         font-weight: 600;
-        font-family:PingFangSC-Semibold;
+        font-family: PingFangSC-Semibold;
       }
       > .house-feature {
         padding-top: 10px;
@@ -600,38 +601,38 @@ export default {
       }
     }
   }
- > .marker-relation-box{
-   padding:40px 0 0 15px;
-   p{
-     font-size:20px;
-     font-family:PingFangSC-Medium;
-     font-weight:600;
-   }
-   ol{
-     position: relative;
-     margin-top:12px;
-     width:343px;
-     height:114px;
-     li:nth-child(1){
-       border-radius:50%;
-       position:absolute;
-      top:48px;
-      left:153px;
-       width:23px;
-       height:23px;
-     }
-     li:nth-child(2){
-       text-align: center;
-       position:absolute;
-      top:73px;
-      left:135px;
-       width:60px;
-      font-size:8px;
-      font-family:PingFangSC-Semibold;
-      font-weight:600;
-     }
-   }
- }
+  > .marker-relation-box {
+    padding: 40px 0 0 15px;
+    p {
+      font-size: 20px;
+      font-family: PingFangSC-Medium;
+      font-weight: 600;
+    }
+    ol {
+      position: relative;
+      margin-top: 12px;
+      width: 343px;
+      height: 114px;
+      li:nth-child(1) {
+        border-radius: 50%;
+        position: absolute;
+        top: 48px;
+        left: 153px;
+        width: 23px;
+        height: 23px;
+      }
+      li:nth-child(2) {
+        text-align: center;
+        position: absolute;
+        top: 73px;
+        left: 135px;
+        width: 60px;
+        font-size: 8px;
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+      }
+    }
+  }
   > .house-type {
     margin-top: 28px;
     .type-swipe-content {
@@ -757,7 +758,7 @@ export default {
     background: #f7f9fa;
     color: #8a9299;
     font-size: 12px;
-    line-height:1.5;
+    line-height: 1.5;
     .feedback {
       color: #525c66;
     }
@@ -839,61 +840,61 @@ export default {
     opacity: 0;
   }
 }
-.van-popup{
-  border-radius:12px;
-  width:311px;
-  height:231px;
+.van-popup {
+  border-radius: 12px;
+  width: 311px;
+  height: 231px;
   // padding-top:45px;
-  .relationName{
-  width:311px;
-  height:231px;
-  background:rgba(255,255,255,1);
-  border-radius:12px;
-  position: relative;
-  p:nth-child(1){
-    width:12px;
-    height:12px;
-    position:absolute;
-    right:15px;
-    top:15px;
-  }
-  ul{
-    padding-top:45px;
-    margin:0px 25px 32px 32px;
-    li:nth-child(1){
-      font-size:20px;
-      font-family:PingFangSC-Semibold;
-      font-weight:600;
-      color:rgba(51,51,51,1);
+  .relationName {
+    width: 311px;
+    height: 231px;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 12px;
+    position: relative;
+    p:nth-child(1) {
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      right: 15px;
+      top: 15px;
     }
-    li:nth-child(2){
-      margin:12px 0;
-    font-size:16px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(51,51,51,1);
+    ul {
+      padding-top: 45px;
+      margin: 0px 25px 32px 32px;
+      li:nth-child(1) {
+        font-size: 20px;
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
+      }
+      li:nth-child(2) {
+        margin: 12px 0;
+        font-size: 16px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+      }
+      li:nth-child(3) {
+        width: 248px;
+        font-size: 26px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+      }
     }
-    li:nth-child(3){
-      width:248px;
-      font-size:26px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(51,51,51,1);
+    .immediately {
+      text-align: center;
+      margin-left: 32px;
+      width: 247px;
+      height: 44px;
+      background: rgba(0, 122, 230, 1);
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 44px;
     }
-  }
-  .immediately{
-    text-align: center;
-    margin-left:32px;
-    width:247px;
-    height:44px;
-    background:rgba(0,122,230,1);
-    border-radius:6px;
-    font-size:16px;
-    font-family:PingFangSC-Regular;
-    font-weight:400;
-    color:rgba(255,255,255,1);
-    line-height:44px;
-  }
   }
 }
 .marketShareHint {

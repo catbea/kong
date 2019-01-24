@@ -125,17 +125,17 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width:36px;
+          max-width: 36px;
           width: 36px;
-          height:20px;
+          height: 20px;
           position: absolute;
-          top:6px;
+          top: 6px;
           left: -4px;
           font-size: 11px;
           font-weight: 500;
-          text-align:center;
+          text-align: center;
           color: rgba(255, 255, 255, 1);
-          line-height:18px;
+          line-height: 18px;
         }
         .icon-play {
           width: 32px;
@@ -145,14 +145,13 @@ export default {
       ul {
         width: 181px;
         li:nth-of-type(1) {
-
           font-size: 16px;
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width:172px;
+          max-width: 172px;
         }
         li:nth-of-type(2) {
           font-size: 12px;
@@ -162,7 +161,7 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          max-width:172px;
+          max-width: 172px;
         }
         li:nth-of-type(3) {
           display: flex;
@@ -198,11 +197,11 @@ export default {
         }
         li:nth-of-type(4) {
           font-size: 12px;
-          height:14px;
+          height: 14px;
           font-weight: 400;
           color: rgba(153, 153, 153, 1);
           line-height: 11px;
-          margin-top:10px;
+          margin-top: 10px;
           display: flex;
           justify-content: space-between;
         }
