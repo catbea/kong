@@ -87,6 +87,7 @@ class WechatHelper {
     this.wx.onMenuShareTimeline(timelineConf)
     // this.shareAppMessage(friendConf)
     // this.shareTimeline(timelineConf)
+    // 
     this.wx.showOptionMenu()
     this.wx.hideMenuItems({
       menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email']
