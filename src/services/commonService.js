@@ -12,6 +12,16 @@ class CommonService {
     })
   }
 
+  wxTicketByAgentid(url,agentId) {
+    return xhr({
+      url: '/cp/oauth2/signature/passSignature',
+      body: {
+        url,
+        agentId
+      }
+    })
+  }
+
   /**
    * 通过code获取企业微信账户信息
    * @param code 微信跳转地址截取code

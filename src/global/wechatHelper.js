@@ -37,8 +37,8 @@ class WechatHelper {
     this.wx.hideOptionMenu()
   }
 
-  async init() {
-    await store.dispatch('setJssdkConfig', jsApiList)
+  async init(agentId='') {
+    await store.dispatch('setJssdkConfig', {jsApiList: jsApiList, agentId: agentId})
     await this.wx.config(store.state.wx.jssdkConfig)
     await this.getUserArea()
   }
@@ -63,42 +63,94 @@ class WechatHelper {
 
   /**
    * 设置分享设置
-   * @param {*} conf
+   * @param {*} friendConf 
+   * @param {*} timelineConf
    */
-  async setShare(conf) {
+  async setShare(friendConf, timelineConf) {
     const defaultConf = {
       title: '',
       desc: '',
       link: '',
       imgUrl: '',
-      success: () => {}
+      success: () => { }
     }
-    this._universalShare(conf)
+    this._universalShare(friendConf, timelineConf)
+    // this._universalShare(conf)
   }
   /**
    * 设置分享泛方法
-   * @param {*} conf
+   * @param {*} friendConf
+   * @param {*} timelineConf
    */
-  _universalShare(conf) {
-    this.wx.onMenuShareAppMessage(conf)
-    this.wx.onMenuShareTimeline(conf)
+  _universalShare(friendConf, timelineConf) {
+    this.wx.onMenuShareAppMessage(friendConf)
+    this.wx.onMenuShareTimeline(timelineConf)
+    // this.shareAppMessage(friendConf)
+    // this.shareTimeline(timelineConf)
     this.wx.showOptionMenu()
     this.wx.hideMenuItems({
       menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email']
     })
     this.wx.showMenuItems({
-      menuList: ['menuItem:refresh','menuItem:share:appMessage',"menuItem:share:timeline"] // 要隐藏的菜单项，所有menu项见附录3
-  })
+      menuList: ['menuItem:refresh', 'menuItem:share:appMessage', "menuItem:share:timeline"] // 要隐藏的菜单项，所有menu项见附录3
+    })
   }
 
+  shareAppMessage(option) {
+    this.wx.onMenuShareAppMessage({
+      title: option.title, // 分享标题
+      desc: option.desc, // 分享描述
+      link: option.link, // 分享链接
+      imgUrl: option.imgUrl, // 分享图标
+      success () {
+        // 用户成功分享后执行的回调函数
+        option.success()
+      },
+      cancel () {
+        // 用户取消分享后执行的回调函数
+        option.error()
+      }
+    })
+  }
+  shareTimeline(option) {
+    this.wx.onMenuShareTimeline({
+      title: option.title, // 分享标题
+      desc: option.desc, // 分享描述
+      link: option.link, // 分享链接
+      imgUrl: option.imgUrl, // 分享图标
+      success () {
+        // 用户成功分享后执行的回调函数
+        option.success()
+      },
+      cancel () {
+        // 用户取消分享后执行的回调函数
+        option.error()
+      }
+    })
+  }
+ 
   _apiCheck() {
     this.wx.checkJsApi({
       jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-      success: function(res) {
+      success: function (res) {
         // 以键值对的形式返回，可用的api值true，不可用为false
         // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
       }
     })
+  }
+
+  shareWechat(conf) {
+    store.dispatch('setJssdkConfig', jsApiList)
+    this.wx.config(store.state.wx.jssdkConfig)
+    this.wx.ready(function () {
+      var shareData = conf
+      this.wx.onMenuShareAppMessage(shareData); // 分享给朋友
+      this.wx.onMenuShareTimeline(shareData); // 分享到朋友圈
+      alert('ready')
+    });
+    var shareData = conf
+    this.wx.onMenuShareAppMessage(shareData); // 分享给朋友
+    this.wx.onMenuShareTimeline(shareData); // 分享到朋友圈
   }
 }
 export default new WechatHelper()

@@ -38,7 +38,7 @@ export default {
 <style lang="less">
 .sortWay-page {
   width: 375px;
-  height: 100%;
+  // height: 100%;
   display: flex;
   flex-direction: column;
   // position: fixed;

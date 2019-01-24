@@ -1,5 +1,5 @@
 <template>
- <div class="more-page" v-show="show">
+ <div class="more-page" v-if="show">
   <div class="van-hairline--top more-filter" :class="{act:flag}" ref="moreFilter">
     <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
       <h5 class="item-title">{{group.name}}</h5>

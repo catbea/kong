@@ -184,7 +184,8 @@ export default {
     inlayHouseInfo: null, // 文章插入楼盘信息
     agentInfo: null,
     guidanceShow: false,
-    shareData: null,
+    friendShareData: null, // 好友分享数据
+    timelineShareData: null, // 朋友圈分享数据
     renderDom: [],
     easylookList: [], // 好看列表
     commentCur: 1,
@@ -264,11 +265,15 @@ export default {
 
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
-      let desc = res.title
-      alert(desc)
-      this.shareData = {
+      this.friendShareData = {
         title: 'AW大师写一写',
-        desc: desc,
+        desc: this.info.title,
+        imgUrl: this.info.image,
+        link: host
+      }
+      this.timelineShareData = {
+        title: this.info.title,
+        desc: '',
         imgUrl: this.info.image,
         link: host
       }
@@ -387,9 +392,9 @@ export default {
     // 处理楼盘标签
     handleLinkerTags(obj) {
       let statusArr = ['热销中', '即将发售', '', '售罄']
-      let tempArr = []
       if (Array.isArray(obj)) {
         for (var i in obj) {
+          let tempArr = []
           var item = obj[i]
           tempArr.push(statusArr[item.saleStatus])
           if (item.linkerTags) {
@@ -404,6 +409,7 @@ export default {
           }
         }
       } else {
+        let tempArr = []
         tempArr.push(statusArr[obj.saleStatus])
         if (obj.linkerTags) {
           tempArr = tempArr.concat(obj.linkerTags)
@@ -433,8 +439,8 @@ export default {
     },
     // 分享
     async shareHandler() {
-      console.log(this.shareData, 'shareData')
-      // await window.awHelper.wechatHelper.init()
+      console.log(this.friendShareData, this.timelineShareData, 'shareData')
+      /*
       if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {
         //分享点进去，没有签名信息，从新签名
         try {
@@ -443,9 +449,13 @@ export default {
           console.log('[error:window.awHelper.wechatHelper]')
         }
       }
-
-      // this.shareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.shareData)
+*/
+      // this.friendShareData.success = this.articleShare
+      // this.timelineShareData.success = this.articleShare
+      await window.awHelper.wechatHelper.init(this.agentId)
+      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      
+    //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
     }
   },
   watch: {

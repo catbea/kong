@@ -1,5 +1,4 @@
 <template>
- <div class="van-Area-page">
   <van-popup v-model="isShow" position="bottom" @click-overlay="closeHandler">
     <div class="select-city">
       <span class="bg_img search-icon" :style="{backgroundImage:'url(' + searchIcon + ')'}"></span>
@@ -7,7 +6,6 @@
     </div>
     <van-area :area-list="areaList" :value="code" :title="title" @cancel="cancelHandler" @confirm="confirmHandler" />
   </van-popup>
-  </div>
 </template>
 <script>
 import { fullArea } from '@/utils/fullArea'
@@ -55,7 +53,6 @@ export default {
 }
 </script>
 <style lang="less">
-.van-Area-page{
 .select-city{
   padding:0 0 0 15px;
   width:100%;
@@ -80,6 +77,5 @@ export default {
     border-top:2px solid #999999;
     border-bottom:2px solid #999999;
   }
-}
 }
 </style>

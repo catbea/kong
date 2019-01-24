@@ -24,7 +24,7 @@
           <div class="tag-item" v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</div>
         </div> -->
       </van-cell>
-      <van-cell class="cell-item user-signature" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature"/>
+      <van-cell class="cell-item" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature | textOver(10)"/>
     </van-cell-group>
     <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu" :code="cityCode"/>
   </div>
@@ -243,7 +243,7 @@ export default {
       }
     }
     .user-signature {
-      overflow: auto;
+      // overflow: auto;  
       // text-align: left;
       .van-cell__value {
         position: absolute;
@@ -257,11 +257,6 @@ export default {
           overflow: auto;
           font-size: 14px;
           text-align: left;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
         }
       }
     }

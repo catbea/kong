@@ -186,17 +186,15 @@
           <p v-else>{{replayItem.senderName}}: {{replayItem.content}}</p>
         </div>
         <div class="replay-box">
-          <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span>
+          <!-- <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span> -->
           <textarea
-            placeholder="最多输入140个字"
+            :placeholder="replayStatus===2 ? `回复${replayItem.senderName}` : '分享你的想法'"
             class="textarea"
-            :class="{'placeholder': replayStatus===2 && system==='IOS'}"
             name=""
             id=""
             ref="replaybox"
             maxlength="140"
             v-model="replayCnt"
-            :style="{'text-indent': (replayStatus===2 ? '75px' : '')}"
             @blur="blur"
           ></textarea>
         </div>
@@ -637,6 +635,7 @@ export default {
       this.current = 1
       // this.articleData = []
       this.showNewArticle = false
+      window.sessionStorage.setItem('scrollTop', 0)
       await this.getArticleList()
       this.isLoading = false
     },
@@ -704,23 +703,23 @@ export default {
         },
         { passive: false }
       )
-      document.querySelector('body').addEventListener(
-        'touchend',
-        function(e) {
-          if (!document.querySelector('.article-list')) {
-            return false
-          }
-          that.endY = e.changedTouches[0].pageY
-          let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-          if (that.finished && that.startY - that.endY > 10) {
-            e.preventDefault()
-          }
-          if (that.endY > that.startY && scrollTop === 0) {
-            e.preventDefault()
-          }
-        },
-        { passive: false }
-      )
+      // document.querySelector('body').addEventListener(
+      //   'touchend',
+      //   function(e) {
+      //     if (!document.querySelector('.article-list')) {
+      //       return false
+      //     }
+      //     that.endY = e.changedTouches[0].pageY
+      //     let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
+      //     if (that.finished && that.startY - that.endY > 10) {
+      //       e.preventDefault()
+      //     }
+      //     if (that.endY > that.startY && scrollTop === 0) {
+      //       e.preventDefault()
+      //     }
+      //   },
+      //   { passive: false }
+      // )
       document.querySelector('.replay').addEventListener(
         'touchmove',
         function(e) {
@@ -747,7 +746,7 @@ export default {
       'touchmove',
       function(e) {
         that.endY = e.changedTouches[0].pageY
-        if (that.endY - that.startY > 5) {
+        if (that.endY - that.startY > 15) {
           e.preventDefault()
         }
       },
@@ -1165,11 +1164,6 @@ export default {
           &::-webkit-input-placeholder {
             font-size: 14px;
             color: #999;
-          }
-        }
-        .placeholder {
-          &::-webkit-input-placeholder {
-            padding-left: 75px;
           }
         }
       }

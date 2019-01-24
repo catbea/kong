@@ -50,12 +50,15 @@
       <div class="easy-look-container">
         <div class="easy-look-top">
           <div class="easy-look-left">
-            <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span>
+            <img src="../../assets/img/article/like1.png" alt="">
+            <!-- <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span> -->
             <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
           </div>
           <div class="easy-look-right" @click="easyLookClickHandler">
-            <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
-            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span>
+            <!-- <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
+            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span> -->
+            <img src="../../assets/img/article/like2.png" alt="" v-if="likeFlag"> 
+           <img src="../../assets/img/article/like1.png" alt="" v-else>
             <div class="easy-look-text">好看</div>
           </div>
         </div>
@@ -224,7 +227,8 @@ export default {
       link: ''
     },
     qrcodeInfo: {},
-    shareData: null,
+    friendShareData: null, // 好友分享数据
+    timelineShareData: null, // 朋友圈分享数据
     virtualDom: null,
     isMoreLike: false, // 是否有更多好看
     easylookList: [], // 好看列表
@@ -294,7 +298,13 @@ export default {
       }
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
-      this.shareData = {
+      this.friendShareData = {
+        title: 'AW大师写一写',
+        desc: this.info.title,
+        imgUrl: this.info.image,
+        link: host
+      }
+      this.timelineShareData = {
         title: this.info.title,
         desc: '',
         imgUrl: this.info.image,
@@ -606,8 +616,9 @@ export default {
     },
     // 设置分享
     async setShare() {
-      this.shareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.shareData)
+      this.friendShareData.success = this.articleShare
+      this.timelineShareData.success = this.articleShare
+      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
     async articleShare() {
@@ -629,8 +640,8 @@ export default {
     delHandler() {
       this.$dialog
         .confirm({
-          title: '提示',
-          message: '是否确认删除?'
+          title: '是否删除下架',
+          message: '删除下架文章会导致已发布出去的文章失效'
         })
         .then(async () => {
           const res = await cpInformationService.updateEnableByInfoId(this.info.agentId, this.info.id)
@@ -802,10 +813,18 @@ export default {
         > .easy-look-left {
           display: flex;
           flex-direction: row;
+          img{
+            width:16px;
+            height:16px;
+          }
         }
         > .easy-look-right {
           display: flex;
           flex-direction: row;
+          img{
+            width:16px;
+            height:16px;
+          }
         }
         .easy-look-icon {
           width: 16px;
@@ -843,6 +862,7 @@ export default {
           -webkit-box-orient: vertical;
           overflow: hidden;
           line-height: 1.5;
+          font-weight: 600;
         }
         > .easy-look-fold {
           color: #969ea8;
@@ -865,7 +885,7 @@ export default {
             width: 100%;
             display: flex;
             flex-direction: row;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             > .comment-right {
               width: 85%;
               margin-left: 8px;
