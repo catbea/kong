@@ -873,7 +873,7 @@ export default {
             width: 100%;
             display: flex;
             flex-direction: row;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             > .comment-right {
               width: 85%;
               margin-left: 8px;
