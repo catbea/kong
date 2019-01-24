@@ -615,7 +615,7 @@ export default {
     async setShare() {
       this.friendShareData.success = this.articleShare
       this.timelineShareData.success = this.articleShare
-      window.awHelper.wechatHelper.setShare(this.friendShareData)
+      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
     async articleShare() {
