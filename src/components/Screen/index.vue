@@ -152,7 +152,7 @@ export default {
     },
     currentIndex(val) {
       if (val !== -1) {
-        // document.getElementsByClassName('choose-container')[0].style.height = this.height
+        document.getElementsByClassName('choose-container')[0].style.height = this.height
         this.$emit('sor', true)
       } else {
         document.getElementsByClassName('choose-container')[0].style.height = 0

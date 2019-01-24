@@ -51,7 +51,7 @@ export default {
 <style lang="less">
 .popularity-filter {
   width: 100%;
-  height: 82%;
+  // height: 82%;
   display: flex;
   flex-direction: column;
   // position: fixed;
