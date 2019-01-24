@@ -635,6 +635,7 @@ export default {
       this.current = 1
       // this.articleData = []
       this.showNewArticle = false
+      window.sessionStorage.setItem('scrollTop', 0)
       await this.getArticleList()
       this.isLoading = false
     },
