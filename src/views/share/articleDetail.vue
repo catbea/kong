@@ -451,7 +451,7 @@ export default {
 */
       // this.friendShareData.success = this.articleShare
       // this.timelineShareData.success = this.articleShare
-      await window.awHelper.wechatHelper.init()
+      await window.awHelper.wechatHelper.init(this.agentId)
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       
     //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
