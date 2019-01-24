@@ -203,6 +203,9 @@ export default {
     currentData() {
       return this.data[this.activeIndex]
     }
+  },
+  beforeDestroy(){
+  document.querySelector('.sort-container').removeEventListener('touchmove')
   }
 }
 </script>

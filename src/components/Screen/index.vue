@@ -165,6 +165,9 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo', 'userArea'])
+  },
+  beforeDestroy(){
+  document.querySelector('.prevent').removeEventListener('touchmove')
   }
 }
 </script>
