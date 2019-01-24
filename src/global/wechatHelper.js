@@ -83,7 +83,7 @@ class WechatHelper {
    */
   _universalShare(friendConf, timelineConf) {
     this.wx.onMenuShareAppMessage(friendConf)
-    this.wx.onMenuShareTimeline(timelineConf)
+    this.wx.onMenuShareTimeline(friendConf)
     this.wx.showOptionMenu()
     this.wx.showMenuItems({
       menuList: ['menuItem:refresh', 'menuItem:share:appMessage', "menuItem:share:timeline"] // 要隐藏的菜单项，所有menu项见附录3
