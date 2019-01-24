@@ -613,7 +613,8 @@ export default {
     },
     // 设置分享
     async setShare() {
-      this.shareData.success = this.articleShare
+      this.friendShareData.success = this.articleShare
+      this.timelineShareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.friendShareData)
     },
     // 分享成功之后

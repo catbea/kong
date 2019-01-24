@@ -448,10 +448,11 @@ export default {
         }
       }
 
-      // this.shareData.success = this.articleShare
+      // this.friendShareData.success = this.articleShare
+      // this.timelineShareData.success = this.articleShare
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       
-    //  window.awHelper.wechatHelper.shareWechat(this.shareData)
+    //  window.awHelper.wechatHelper.shareWechat(this.friendShareData)
     }
   },
   watch: {
