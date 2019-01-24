@@ -87,10 +87,10 @@ class WechatHelper {
     this.wx.onMenuShareTimeline(timelineConf)
     this.wx.showOptionMenu()
     this.wx.hideMenuItems({
-      menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone', 'menuItem:copyUrl', 'menuItem:openWithSafari', 'menuItem:share:email']
+      menuList: ['menuItem:share:qq', 'menuItem:share:weiboApp', 'menuItem:share:facebook', 'menuItem:share:QZone',  'menuItem:openWithSafari', 'menuItem:share:email']
     })
     this.wx.showMenuItems({
-      menuList: ['menuItem:refresh', 'menuItem:share:appMessage', "menuItem:share:timeline"] // 要隐藏的菜单项，所有menu项见附录3
+      menuList: ['menuItem:refresh', 'menuItem:share:appMessage', "menuItem:share:timeline", 'menuItem:copyUrl'] // 要隐藏的菜单项，所有menu项见附录3
     })
   }
 
