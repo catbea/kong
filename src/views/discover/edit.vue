@@ -475,9 +475,8 @@ export default {
   }
   > .help-box {
     width: 80%;
-    height: 70%;
+    padding: 20px 10px;
     border-radius: 12px;
-    // position: relative;
     > .close {
       width: 14px;
       height: 14px;
