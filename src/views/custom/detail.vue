@@ -20,6 +20,15 @@
         </van-tab>
         <van-tab title="分析">
           <custom-detail-analyze :baseInfo="customAnalyzeInfo" :tempTagData="intentionProjectTag" v-if="isPieDataReqOk" :pieChartHidden="pieChartHidden" :pieData="pieData" :lineChartHidden="lineChartHidden" :lineData="lineData" :barChartHidden="barChartHidden" :barData="barData" :analysisListData="analysisListData" @renew="renewHandler"/>
+          <van-list
+              v-model="loading"
+              :finished="finished"
+              :finished-text="'没有更多了'"
+              @load="getCustomerBuildingAnalysisList">
+            <div class="list">
+              <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item" :progress="analysisListData.progress" :color="analysisListData.color" :textColor="analysisListData.textColor" @renew="renewHandler(item)"></analyze-item>
+            </div>
+          </van-list>
         </van-tab>
         <van-tab title="资料">
           <custom-detail-info @onClick="onClickHandler" :customerInfoList="customerInfoList" :areaShow="areaShow" :areaTitle="areaTitle" :pickerShow="pickerShow" :columns="pickerList" @cancel="cancelHandler" @confirm="confirmHandler"/>
@@ -38,6 +47,7 @@ import CustomDetailTrack from 'COMP/Custom/CustomDetailTrack'
 import CustomDetailInfo from 'COMP/Custom/CustomDetailInfo'
 import CustomOperation from 'COMP/Custom/CustomOperation.vue'
 import CustomService from 'SERVICE/customService'
+import AnalyzeItem from 'COMP/Custom/CustomDetailAnalyzeItem'
 import { ImagePreview } from 'vant'
 export default {
   components: {
@@ -45,7 +55,8 @@ export default {
     CustomDetailAnalyze,
     CustomDetailTrack,
     CustomDetailInfo,
-    CustomOperation
+    CustomOperation,
+    AnalyzeItem
   },
   data: () => ({
     attentionImg: require('IMG/user/icon_attention@2x.png'),
@@ -119,7 +130,7 @@ export default {
         this.getCustomPieChart(this.clientId)
         this.getCustomerSevenDayTrendChart(this.clientId)
         this.getCustomerBarChart(this.clientId)
-        this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
+        // this.getCustomerBuildingAnalysisList(this.clientId, this.current, this.size)
         this.isSecondReq = true
       } else if (this.activeIndex == 2 && this.isThirdReq == false) {
         // 资料
@@ -332,10 +343,13 @@ export default {
     /**
      * 客户详情-楼盘分析分页列表
      */
-    async getCustomerBuildingAnalysisList(id, current, size) {
+    async getCustomerBuildingAnalysisList() {
+      let id = this.clientId
+      let current = this.current
+      let size = this.size
       const result = await CustomService.getCustomerBuildingAnalysisList(id, current, size)
       if (this.current > 1) {
-        this.analysisListData = this.analysisListData.concat(result.records)
+        this.analysisListData =  this.analysisListData.concat(result.records)
       } else {
         this.analysisListData = result.records
       }

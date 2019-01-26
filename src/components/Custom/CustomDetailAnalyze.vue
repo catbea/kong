@@ -52,9 +52,9 @@
         </div>
       </div>
     </div>
-    <div class="list">
+    <!-- <div class="list">
       <analyze-item v-for="(item,index) in analysisListData" :key="index" :info="item" :progress="analysisListData.progress" :color="analysisListData.color" :textColor="analysisListData.textColor" @renew="renewHandler(item)"></analyze-item>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
