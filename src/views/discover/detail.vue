@@ -120,6 +120,9 @@
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <!-- <open-article :show.sync="guidanceShow"></open-article> -->
     <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+    <div class="loading" v-show="!renderDom.length">
+      <van-loading type="spinner" color="white" class="van-loading"/>
+    </div>
   </div>
   <div v-else>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
@@ -954,6 +957,26 @@ export default {
     //   padding: 8px 20px;
     //   opacity: 0.7;
     // }
+  }
+  .loading {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 50px;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 5;
+    .van-loading {
+      display: inline-block;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 50px;
+      height: 50px;
+      z-index: 5;
+      margin-left: -25px;
+      margin-top: -25px;
+    }
   }
 }
 </style>
