@@ -363,7 +363,7 @@ export default {
               justify-content: space-around;
               flex-wrap: wrap;
               > .hot-item {
-                width: 100px;
+                width: 25%;
                 height: 30px;
                 background-color: rgba(0, 122, 230, 0.05);
                 border-radius: 6px;
