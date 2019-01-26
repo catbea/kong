@@ -217,6 +217,7 @@ export default {
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = this.$route.query.shareUuid
+    window.awHelper.wechatHelper.init(this.agentId)
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
@@ -451,13 +452,7 @@ export default {
 */
       // this.friendShareData.success = this.articleShare
       // this.timelineShareData.success = this.articleShare
-      console.log(3)
-      window.awHelper.wechatHelper.init(this.agentId).then(() => {
-        console.log(6)
-      })
-      console.log(4)
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      console.log(5)
       // window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       // setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2500)
     }
@@ -467,6 +462,7 @@ export default {
     $route() {
       location.reload()
     }
+
   }
   /*
   mounted () {

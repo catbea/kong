@@ -39,9 +39,7 @@ class WechatHelper {
 
   async init(agentId = '') {
     await store.dispatch('setJssdkConfig', { jsApiList: jsApiList, agentId: agentId })
-    console.log(1)
     await this.wx.config(store.state.wx.jssdkConfig)
-    console.log(2)
     if (agentId.length == 0) await this.getUserArea()
   }
 
@@ -93,7 +91,6 @@ class WechatHelper {
     this.wx.showMenuItems({
       menuList: ['menuItem:refresh', 'menuItem:share:appMessage', 'menuItem:share:timeline'] // 要隐藏的菜单项，所有menu项见附录3
     })
-    console.log(7)
   }
 
   _apiCheck() {
