@@ -212,6 +212,7 @@ export default {
           display: flex;
           justify-content: space-around;
           flex-wrap: wrap;
+          padding-right: 10px;
           > .hot-item {
             width: 25%;
             height: 30px;
