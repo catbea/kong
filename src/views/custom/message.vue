@@ -998,6 +998,7 @@ export default {
   border: none;
   height: 36px;
   position: relative;
+  font-size: 16px;
 }
 .massage-info-lower-cen input:after {
   content: '';
