@@ -110,7 +110,7 @@ export default {
 
         if (result.returnCode == '31106') {
           errorMsg = '该文章已经存在,请勿重复爬取'
-        } else if (result.returnCode == '10500' || result.returnCode == '31102') {
+        } else if (result.returnCode == '10500' || result.returnCode == '31102'||result.returnCode == '31100') {
           errorMsg = result.msg
         } else {
           errorMsg = '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试'
