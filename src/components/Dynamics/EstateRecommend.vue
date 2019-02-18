@@ -77,7 +77,7 @@ export default {
       border-radius: 5px;
       padding: 5px 15px;
       height: 32px;
-      line-height: 25px;
+      line-height: 20px;
     }
   }
 }
