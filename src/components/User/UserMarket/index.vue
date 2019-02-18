@@ -42,7 +42,7 @@
       </div>
     </div>
     <div style="padding-left:16px">
-      <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay>
+      <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay :class="{pastStyle:!pastShow}">
         <ul>
           <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
           <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
@@ -107,6 +107,9 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
+  },
+  mounted() {
+    
   },
   methods: {
     recommendNumHandle() {
@@ -571,6 +574,9 @@ export default {
       }
     }
   }
+  .pastStyle{
+      height: 106px;
+    }
   .van-modal {
     width: 100%;
   }
