@@ -308,8 +308,10 @@ export default {
   color: rgba(161, 100, 78, 1);
   line-height: 16px;
   position: absolute;
-  // left: 15%;
-  padding-left:44px;
+  width:100%;
+  text-align: center;
+  // left:15%;
+  // padding-left:44px;
   bottom: 107px;
 }
 .register-rule-box-close {

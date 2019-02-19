@@ -77,7 +77,7 @@ export default {
       //   bottom: 200px;
       //   left: 50%;
       //   transform: translate(-50%, -50%);
-      margin: 20px auto;
+      margin: 20px auto 10px;
       width: 162px;
       height: 162px;
     }
