@@ -367,11 +367,11 @@ export default {
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
       }
-      this.stop()
+      // this.stop()
     },
     popupShowControl(val) {
       this.overlayClose()
-      this.move()
+      // this.move()
     },
     // 关闭弹出框
     overlayClose() {
