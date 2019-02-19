@@ -140,8 +140,16 @@
       :info="cardQrInfo"
       @close="popupShowControl()"
     ></card-dialog>
-    <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
-    <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
+    <market-dialog
+      :show.sync="openMarketPopup"
+      :info="marketQrInfo"
+      @close="popupShowControl()"
+    ></market-dialog>
+    <article-dialog
+      :show.sync="openArticlePopup"
+      :info="articleQrInfo"
+      @close="popupShowControl()"
+    ></article-dialog>
     <div class="loading" v-show="!renderDom.length">
       <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
@@ -269,7 +277,7 @@ export default {
       host = host + '#/article/' + this.infoId + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       this.friendShareData = {
         title: this.info.title,
-        desc: '内容来源：AW大师写一写', 
+        desc: '内容来源：AW大师写一写',
         imgUrl: this.info.image,
         link: host
       }
@@ -364,7 +372,22 @@ export default {
       const result = await discoverService.queryArticleQrcodeForH5(this.agentId, infoId, this.enterpriseId)
       this.articleQrInfo = result
     },
-
+    /***滑动限制***/
+    stop() {
+      var mo = function(e) {
+        e.preventDefault()
+      }
+      document.body.style.overflow = 'hidden'
+      document.addEventListener('touchmove', mo, false) //禁止页面滑动
+    },
+    /***取消滑动限制***/
+    move() {
+      var mo = function(e) {
+        e.preventDefault()
+      }
+      document.body.style.overflow = '' //出现滚动条
+      document.removeEventListener('touchmove', mo, false)
+    },
     // 弹出框
     popHandler(val, item) {
       if (val == 1) {
@@ -379,9 +402,11 @@ export default {
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
       }
+      this.stop()
     },
     popupShowControl(val) {
       this.overlayClose()
+      this.move()
     },
     // 关闭弹出框
     overlayClose() {
@@ -456,7 +481,9 @@ export default {
       // this.timelineShareData.success = this.articleShare
       await window.awHelper.wechatHelper.init(this.agentId)
       // window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      setTimeout(()=>{window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)}, 2500)
+      setTimeout(() => {
+        window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      }, 2500)
     }
   },
   watch: {
@@ -464,7 +491,6 @@ export default {
     $route() {
       location.reload()
     }
-
   }
   /*
   mounted () {
