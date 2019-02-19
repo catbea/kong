@@ -29,11 +29,7 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item
-            v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)"
-            :info="inlayHouseInfo"
-            @click="popHandler(2, inlayHouseInfo)"
-          ></estate-item>
+          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
         </div>
       </div>
       <p class="discover-extra-info" v-show="renderDom.length">
@@ -41,9 +37,7 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer" v-show="renderDom.length">
-        <span
-          class="disclaimer-text"
-        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -62,29 +56,18 @@
           <title-bar :conf="{title: '精彩评论'}"/>
           <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-              <div
-                class="bg_img"
-                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
-                style="width:40px;height:40px;border-radius:50%;"
-              ></div>
+              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span
-                    v-if="item.receiverName"
-                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
-                  >回复</span>
+                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
                 <div></div>
               </div>
             </div>
-            <div
-              class="comment-list-more"
-              v-if="isMoreComment"
-              @click.stop="moreCommentHandler"
-            >查看更多评论</div>
+            <div class="comment-list-more" v-if="isMoreComment" @click.stop="moreCommentHandler">查看更多评论</div>
           </div>
         </div>
       </div>
@@ -92,23 +75,13 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item
-            v-for="(item,index) in recommendHouseList"
-            :key="index"
-            :info="item"
-            @click="popHandler(2, item)"
-          ></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
       <div class="recommend-article" v-if="articleList.length>0">
         <title-bar :conf="{title: 'TA的写一写'}"/>
-        <div
-          class="recommend-article-list"
-          v-for="(item, index) in articleList"
-          :key="index"
-          @click="popHandler(3, item)"
-        >
+        <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index" @click="popHandler(3, item)">
           <div class="recommend-article-name">{{item.title}}</div>
         </div>
       </div>
@@ -134,22 +107,9 @@
       </div>
     </div>
     <!-- <open-article :show.sync="guidanceShow"/> -->
-    <card-dialog
-      class="agent-card"
-      :show.sync="openCardPopup"
-      :info="cardQrInfo"
-      @close="popupShowControl()"
-    ></card-dialog>
-    <market-dialog
-      :show.sync="openMarketPopup"
-      :info="marketQrInfo"
-      @close="popupShowControl()"
-    ></market-dialog>
-    <article-dialog
-      :show.sync="openArticlePopup"
-      :info="articleQrInfo"
-      @close="popupShowControl()"
-    ></article-dialog>
+    <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
+    <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
+    <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
     <div class="loading" v-show="!renderDom.length">
       <van-loading type="spinner" color="white" class="van-loading"/>
     </div>

@@ -48,6 +48,12 @@ export default {
   }
 }
 </script>
+<style lang="less">
+.router-view{
+  overflow-y: hidden !important;
+}
+</style>
+
 <style lang="less" scoped>
 .dialog-container {
   width: 100%;
