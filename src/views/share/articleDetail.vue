@@ -139,9 +139,10 @@
       :show.sync="openCardPopup"
       :info="cardQrInfo"
       @close="popupShowControl()"
+      @touchmove.prevent
     ></card-dialog>
-    <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
-    <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
+    <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()" @touchmove.prevent></market-dialog>
+    <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()" @touchmove.prevent></article-dialog>
     <div class="loading" v-show="!renderDom.length">
       <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
