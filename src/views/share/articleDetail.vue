@@ -334,19 +334,24 @@ export default {
     },
     /***滑动限制***/
     stop() {
-      var mo = function(e) {
+      //禁止页面滑动
+      document.querySelector('.discover-detail-container').addEventListener(
+      'touchmove',
+      function(e) {
         e.preventDefault()
-      }
-      document.body.style.overflow = 'hidden'
-      document.addEventListener('touchmove', mo, false) //禁止页面滑动
+      },
+      { passive: false }
+    )
     },
     /***取消滑动限制***/
     move() {
-      var mo = function(e) {
+      document.querySelector('.discover-detail-container').removeEventListener(
+      'touchmove',
+      function(e) {
         e.preventDefault()
-      }
-      document.body.style.overflow = '' //出现滚动条
-      document.removeEventListener('touchmove', mo, false)
+      },
+      { passive: false }
+    )
     },
     // 弹出框
     popHandler(val, item) {
@@ -451,27 +456,22 @@ export default {
     $route() {
       location.reload()
     }
-  }
-  /*
+  },
   mounted () {
-    document.querySelector('.discover-detail-container').addEventListener('touchstart', (e) => {
-      this.startY = e.changedTouches[0].pageY
-    })
-    document.querySelector('.discover-detail-container').addEventListener('touchmove', (e) => {
-      this.endY = e.changedTouches[0].pageY
-      let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight // 元素高度
-      let scrollTop = document.querySelector('.discover-detail-container').scrollTop // 滚动高度
-      let clientHeight = document.querySelector('.discover-detail-container').clientHeight // 可视高度
-      if (scrollTop===0 && this.endY - this.startY > 10) {
-         e.preventDefault()
-      }
-      if (scrollHeight <= scrollTop + clientHeight && this.startY - this.endY > 10) {
-        e.preventDefault()
-      }
-    }, { passive: false })
-    
+    // document.querySelector('.discover-detail-container').addEventListener(
+    //   'touchmove',
+    //   function(e) {
+    //     e.preventDefault()
+    //   },
+    //   { passive: false }
+    // )
+  },
+  beforeDestroy() {
+    try {
+      document.querySelector('.discover-detail-container').removeEventListener('touchmove')
+      document.removeEventListener('touchmove')
+    } catch (error) {}
   }
-  */
 }
 </script>
 <style lang="less">
