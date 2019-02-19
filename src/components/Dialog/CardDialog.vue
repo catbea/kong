@@ -43,17 +43,17 @@ export default {
       this.currentShow = val
     },
     currentShow(val) {
+      if(val){
+document.querySelector('.router-view').style['overflow-y'] = 'hidden'
+      }else{
+        document.querySelector('.router-view').style['overflow-y'] = 'auto'
+      }
       this.$emit('update:show', val)
+
     }
   }
 }
 </script>
-<style lang="less">
-.router-view{
-  overflow-y: hidden !important;
-}
-</style>
-
 <style lang="less" scoped>
 .dialog-container {
   width: 100%;
