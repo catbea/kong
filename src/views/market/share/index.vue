@@ -161,7 +161,7 @@ export default {
 
       let img = document.getElementById('imgcard')
       let _that = this
-      h2c(document.querySelector('#share-top'), {
+      h2c(document.querySelector('#share-top'), {//两个参数：所需要截图的元素id，截图后要执行的函数， canvas为截图后返回的最后一个canvas
         backgroundColor: null,
         scale: 3,
         useCORS: true,
