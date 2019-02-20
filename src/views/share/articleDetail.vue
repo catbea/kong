@@ -194,13 +194,13 @@ export default {
     } else {
       this.$store.commit('SHARE_PROMPT', false)
     }
+    // 先初始化分享
+    window.awHelper.wechatHelper.init(this.agentId)
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
     this.getArticleList()
     this.getCardQrCode()
-    // 先初始化分享
-    window.awHelper.wechatHelper.init(this.agentId)
   },
   methods: {
     async getDetail() {
