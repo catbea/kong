@@ -431,21 +431,8 @@ export default {
     },
     // 分享
     async shareHandler() {
-      console.log(this.friendShareData, this.timelineShareData, 'shareData')
-      /*
-      if (!this.$store.getters.jssdkConfig || !this.$store.getters.jssdkConfig.signature) {
-        //分享点进去，没有签名信息，从新签名
-        try {
-          await window.awHelper.wechatHelper.init()
-        } catch (e) {
-          console.log('[error:window.awHelper.wechatHelper]')
-        }
-      }
-*/
-      // this.friendShareData.success = this.articleShare
-      // this.timelineShareData.success = this.articleShare
       await window.awHelper.wechatHelper.init(this.agentId)
-      // window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       setTimeout(() => {
         window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       }, 2500)
@@ -456,15 +443,6 @@ export default {
     $route() {
       location.reload()
     }
-  },
-  mounted () {
-    // document.querySelector('.discover-detail-container').addEventListener(
-    //   'touchmove',
-    //   function(e) {
-    //     e.preventDefault()
-    //   },
-    //   { passive: false }
-    // )
   },
   beforeDestroy() {
     try {
