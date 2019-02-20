@@ -407,12 +407,17 @@ export default {
       const result = await discoverService.articleShare(params)
     },
     // 分享
-    async shareHandler() {
-      await window.awHelper.wechatHelper.init(this.agentId)
-      await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      setTimeout(() => {
-        window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      }, 2500)
+    shareHandler() {
+      window.awHelper.wechatHelper.init(this.agentId).then(() => {
+        setTimeout(() => {
+          window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+        }, 0)
+      })
+      // await window.awHelper.wechatHelper.init(this.agentId)
+      // await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      // setTimeout(() => {
+      //   window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      // }, 2500)
     }
   },
   watch: {
