@@ -194,8 +194,6 @@ export default {
     } else {
       this.$store.commit('SHARE_PROMPT', false)
     }
-    // 先初始化分享
-    window.awHelper.wechatHelper.init(this.agentId)
     this.getDetail()
     this.getLikeList()
     this.getCommentList()
@@ -410,12 +408,11 @@ export default {
     },
     // 分享
     async shareHandler() {
-      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      // await window.awHelper.wechatHelper.init(this.agentId)
-      // await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      // setTimeout(() => {
-      //   window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      // }, 2500)
+      await window.awHelper.wechatHelper.init(this.agentId)
+      await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      setTimeout(() => {
+        window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      }, 2500)
     }
   },
   watch: {
