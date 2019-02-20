@@ -199,6 +199,8 @@ export default {
     this.getCommentList()
     this.getArticleList()
     this.getCardQrCode()
+    // 先初始化分享
+    window.awHelper.wechatHelper.init(this.agentId)
   },
   methods: {
     async getDetail() {
@@ -408,11 +410,12 @@ export default {
     },
     // 分享
     async shareHandler() {
-      await window.awHelper.wechatHelper.init(this.agentId)
-      await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      setTimeout(() => {
-        window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
-      }, 2500)
+      window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      // await window.awHelper.wechatHelper.init(this.agentId)
+      // await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      // setTimeout(() => {
+      //   window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
+      // }, 2500)
     }
   },
   watch: {
