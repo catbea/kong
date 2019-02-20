@@ -332,27 +332,6 @@ export default {
       const result = await discoverService.queryArticleQrcodeForH5(this.agentId, infoId, this.enterpriseId)
       this.articleQrInfo = result
     },
-    /***滑动限制***/
-    stop() {
-      //禁止页面滑动
-      document.querySelector('.discover-detail-container').addEventListener(
-      'touchmove',
-      function(e) {
-        e.preventDefault()
-      },
-      { passive: false }
-    )
-    },
-    /***取消滑动限制***/
-    move() {
-      document.querySelector('.discover-detail-container').removeEventListener(
-      'touchmove',
-      function(e) {
-        e.preventDefault()
-      },
-      { passive: false }
-    )
-    },
     // 弹出框
     popHandler(val, item) {
       if (val == 1) {
@@ -367,11 +346,9 @@ export default {
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
       }
-      this.stop()
     },
     popupShowControl(val) {
       this.overlayClose()
-      this.move()
     },
     // 关闭弹出框
     overlayClose() {
@@ -444,11 +421,14 @@ export default {
       location.reload()
     }
   },
-  beforeDestroy() {
-    try {
-      document.querySelector('.discover-detail-container').removeEventListener('touchmove')
-      document.removeEventListener('touchmove')
-    } catch (error) {}
+  mounted () {
+    // document.querySelector('.discover-detail-container').addEventListener(
+    //   'touchmove',
+    //   function(e) {
+    //     e.preventDefault()
+    //   },
+    //   { passive: false }
+    // )
   }
 }
 </script>

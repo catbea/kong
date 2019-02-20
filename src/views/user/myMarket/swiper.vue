@@ -1,109 +1,94 @@
 <template>
-    <div class="public">
-        <div id="carousel" ref="el" >
-          <ul id="touchLog" class="touchLog" ref="ritem">
-            <li  v-for="(e, i) in imgs" :style="{backgroundImage: 'url('+ e.src +')'}" :key="i">{{i}}</li>
-          </ul>
-        </div>
-    </div>
+ <div class="page positer">
+   <!-- <m-header>
+			<span slot="left"></span>
+			<span slot="title" class="title">店铺海报</span>
+		</m-header> -->
+   <div class="page-content page_positer" id="pagecontent">
+     <img class="img" :src=uesrUrl alt=""/>
+     <div class="btn_bottom">保存</div>
+   </div>
+ </div>
 </template>
+
 <script>
 export default {
-  data() {
-    return {
-      startX: '',
-      moveX: '',
-      timer: '',
-      sliderItem: '',
-      distance: '',
-      isMove: false,
-      currentIndex: '',
-      imgs: [
-        { src: 'http://chzflive.caihome.cn/web/o_1c7390v9q1al1rak17g2v3uhc438?x-oss-process=image/resize,m_fill,h_240,w_320' },
-        { src: 'http://chzflive.caihome.cn/web/o_1c7390v9q1al1rak17g2v3uhc438?x-oss-process=image/resize,m_fill,h_240,w_320' },
-        { src: 'http://chzflive.caihome.cn/web/o_1c7390v9q1al1rak17g2v3uhc438?x-oss-process=image/resize,m_fill,h_240,w_320' },
-        { src: 'http://chzflive.caihome.cn/web/o_1c7390v9q1al1rak17g2v3uhc438?x-oss-process=image/resize,m_fill,h_240,w_320' },
-        { src: 'http://chzflive.caihome.cn/web/o_1c7390v9q1al1rak17g2v3uhc438?x-oss-process=image/resize,m_fill,h_240,w_320' },
-        { src: 'http://chzflive.caihome.cn/web/o_1c7390v9q1al1rak17g2v3uhc438?x-oss-process=image/resize,m_fill,h_240,w_320' }
-      ]
-    }
-  },
-  mounted() {
-    let divBox = document.getElementById('carousel')
-    let ulBox = document.getElementById('touchLog')
-    let width = this.$refs.el.offsetWidth
-    const _this = this
-    let index = 0
-    let distanceX = 0
-    divBox.addEventListener('touchstart', function(e) {
-      //记录触发这个事件的时间
-      this.startX = e.touches[0].clientX //记录起始X
-      console.log(e, 1111111, e.touches[0].clientX, 99999, this.startX)
-    })
-    divBox.addEventListener('touchmove', function(e) {
-      this.isMove = true //证明滑动过
-      //记录触发这个事件的时间
-      this.moveX = e.touches[0].clientX
-      distanceX = this.moveX - this.startX //计算移动的距离
-      _this.setTranslateX(-index * width + distanceX) //实时的定位
-    })
-    divBox.addEventListener('touchend', function(e) {
-      //记录触发这个事件的时间
-      console.log(33333333, _this.$refs.el.offsetWidth, distanceX)
-      if (this.isMove && Math.abs(distanceX) > width / 3) {
-        // 5.当滑动超过了一定的距离  需要 跳到 下一张或者上一张  （滑动的方向）*/
-        if (distanceX > 0) {
-          //上一张
-          index--
-        } else {
-          //下一张
-          index++
-        }
-        console.log(index, 6666666)
-        _this.addTransition() //加过渡动画
-        _this.setTranslateX(-index * width) //定位
-      }
-    })
-  },
-  computed: {},
-  methods: {
-    addTransition() {
-      //   let ulBox =this.$refs.ritem
-      let ulBox = document.getElementById('touchLog')
-      ulBox.style.transition = 'all 0.3s'
-      ulBox.style.webkitTransition = 'all 0.3s' /*做兼容*/
-    },
-    setTranslateX(translateX) {
-      let ulBox = document.getElementById('touchLog')
-      ulBox.style.transform = 'translateX(' + translateX + 'px)'
-      ulBox.style.webkitTransform = 'translateX(' + translateX + 'px)'
-    }
+ data() {
+  return {
+    uesrUrl:"",
+    img:[
+      'http://img5.imgtn.bdimg.com/it/u=751826005,3935524154&fm=11&gp=0.jpg',
+      'http://img5.imgtn.bdimg.com/it/u=751826005,3935524154&fm=11&gp=0.jpg',
+      'http://img5.imgtn.bdimg.com/it/u=751826005,3935524154&fm=11&gp=0.jpg'
+      ],
   }
+ },
+ components: {
+
+ },
+ activated(){
+   this.getpoister()
+ },
+ methods: {
+   getpoister(){
+      let canvas = document.createElement('canvas')
+      document.getElementById('pagecontent').appendChild(canvas);
+      canvas.width = "750"
+      canvas.height = "1126" //创建画布，并设置宽高
+      //注意canvas元素本身并没有绘制能力（它仅仅是图形的容器
+      //getContext()方法可返回一个对象，该对象提供了用于在画布上绘图的方法和属性
+      let ctx = canvas.getContext("2d")
+      ctx.rect(0,0, 750, 1126) //矩形坐标，大小 (距离左上角x坐标,距离左上角y坐标,宽度,高度)
+      ctx.fillStyle = "#f7f7f7" //矩形的颜色
+      ctx.fill() //填充
+    
+      this.loadImg(this.img).then(([img1, img2,img3])=> {
+          ctx.drawImage(img1, 0, 0, 750, 760) //画布上先绘制人物图`
+          ctx.drawImage(img2, 500, 833, 173, 173) //再绘制二维码图，根据设计图设置好坐标。`
+          ctx.drawImage(img3, 90, 833, 173, 173) //再绘制头像图，根据设计图设置好坐标。`
+          ctx.font="24px 微软雅黑 ";//字体大小和字体名字
+          ctx.fillStyle = "#000";//字体颜色
+          ctx.fillText("小白",155,833+210);
+          ctx.fillText("扫码/长按可进入店铺",465,833+210);
+          canvas.style.display = "none"
+          this.uesrUrl=canvas.toDataURL("image/png")
+      });
+   },
+   loadImg(src) {
+      let paths = Array.isArray(src) ? src : [src]
+      let promise = paths.map((path) => {
+        return new Promise((resolve, reject) => {
+            let img = new Image()
+            img.setAttribute("crossOrigin", 'anonymous')
+            img.src = path//只是更新了DOM对象,图片数据信息还未加载完成，加载资源是异步执行的,需要监听load事件的,事件发生后,就能获取资源
+            img.onload = () => {
+                resolve(img)
+            }
+            img.onerror = (err) => {
+                alert('图片加载失败')
+            }
+        })
+      })
+      return Promise.all(promise)
+	  },
+ },
 }
 </script>
-<style lang="less">
-.public {
-  #carousel {
-    width: 343px;
-    height: 193px;
-    overflow: hidden;
-    position: relative;
-    ul {
-      //  display: flex;
-      // display: -webkit-flex;
-      // display: -webkit-box;
-      position: absolute;
-      white-space: nowrap;
-      li {
-        width: 343px;
-        height: 193px;
-        top: 0;
-        left: 0;
-        // transform: translateX(100%);
-        border-radius: 10px;
-        display: inline-block;
-      }
+
+<style scoped lang="less">
+  .page_positer{
+    background: #f7f7f7;
+    .btn_bottom{
+      width: 100%;
+      height: 0.8rem;
+      font-size: 0.26rem;
+      line-height: 0.8rem;
+      text-align: center;
+      background: #ed832f;
+      color: #fff;
     }
   }
-}
+  .img{
+    width: 100%;
+  }
 </style>
