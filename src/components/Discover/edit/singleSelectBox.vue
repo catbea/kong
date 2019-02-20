@@ -2,7 +2,8 @@
   <van-popup class="single-select-box" v-model="singleShow">
     <div v-if="status===1" class="search-container">
       <div class="search-box">
-        <search :conf="searchInfo" @getContent="searchChangeHandle" @areaClick="areaClickHandle" @focus="focusHandler"/>
+        <!-- @getContent="searchChangeHandle" -->
+        <search :conf="searchInfo" v-model="projectName" @input="searchChangeHandle"  @areaClick="areaClickHandle" @focus="focusHandler"/>
         <screen v-model="projectFilters" :local="this.searchInfo.siteText"/>
       </div>
       <div class="house-box">
@@ -14,7 +15,7 @@
     <div v-else class="city-select-container">
       <div class="area-selection-page" ref="content">
         <div class="search-box van-hairline--bottom">
-          <search :conf="searchInfo " @areaClick="areaClickHandle" @focus="focusHandler"/>
+          <search :conf="searchInfo" v-model="projectName" @areaClick="areaClickHandle" @focus="focusHandler"/>
         </div>
         <div class="area-selection-box">
           <div class="current-location">
@@ -160,19 +161,23 @@ export default {
     },
     // 切换到地域切换
     areaClickHandle() {
-      debugger
       if (this.status == 1) {
         this.status = 2
         if (!this.areaQueryFlag) {
           this.$store.dispatch('getAllCity')
           this.areaQueryFlag = true
+          this.searchInfo.placeholder = '点击返回楼盘搜索'
         }
       } else {
         this.status = 1
+        this.searchInfo.placeholder = '请输入楼盘名称'
       }
     },
     focusHandler() {
-      if (this.status == 2) this.status = 1
+      if (this.status == 2){
+         this.status = 1
+        this.searchInfo.placeholder = '请输入楼盘名称'
+      }
     },
     // item点击
     selectHandle(item) {
@@ -188,9 +193,7 @@ export default {
     },
     keyTouchStartHandler(e) {
       if (e.target.tagName !== 'LI') return
-
       this.scrollHander(e.target.innerText)
-
       if (e.target.innerText == '热') {
         document.getElementById('hot-city-box').scrollIntoView()
       } else {
@@ -209,6 +212,7 @@ export default {
     itemClick(val) {
       this.searchInfo.siteText = val
       this.status = 1
+      this.searchInfo.placeholder = '请输入楼盘名称'
       this.reset(this.maxSelect <= 1)
     },
     retryLocation() {

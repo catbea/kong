@@ -98,8 +98,8 @@ export default {
       // canvas.style.height = '466px'
       // canvas.style.zIndex = 99
       // document.getElementById('card-result').appendChild(canvas)
-      let imgW = document.body.clientWidth * 0.75
-      let imgH = document.body.clientHeight * 0.78
+      let imgW = 284
+      let imgH = 466
       let box = document.getElementById('card-result')
       box.style.overflow = 'hidden'
       box.style.width = imgW + 'px'
@@ -110,7 +110,6 @@ export default {
       image.style.width = imgW + 1 + 'px'
       image.style.maxWidth = imgW + 1 + 'px'
       image.style.height = imgH + 1 + 'px'
-
       this.status = 2
     },
     async goteammateList() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog-container" v-if="currentShow">
+  <van-popup class="dialog-container" v-model="currentShow">
     <div class="shadow_box dialog-box">
       <div class="dialog-title">长按识别查看更多</div>
       <!-- <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div> -->
@@ -20,7 +20,7 @@
         @click="popupShowControl(false)"
       ></div>
     </div>
-  </div>
+  </van-popup>
 </template>
 <script>
 import * as types from '@/store/mutation-types'
@@ -56,8 +56,8 @@ export default {
   width: 100%;
   height: 100%;
   position: fixed;
-  top: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  // top: 0;
+  background-color: rgba(0, 0, 0, 0.1);
   z-index: 50;
   display: flex;
   justify-content: center;
@@ -80,7 +80,7 @@ export default {
       //   bottom: 200px;
       //   left: 50%;
       //   transform: translate(-50%, -50%);
-      margin: 20px auto;
+      margin: 20px auto 10px;
       width: 162px;
       height: 162px;
     }
