@@ -154,7 +154,6 @@ export default {
     // }
 
     async handleDate() {
-      console.log('99999999999999')
       this.showLoading = true
       this.pointerEvents = 'none'
       this.status = 2
@@ -163,8 +162,8 @@ export default {
       let _that = this
       h2c(document.querySelector('#share-top'), {//两个参数：所需要截图的元素id，截图后要执行的函数， canvas为截图后返回的最后一个canvas
         backgroundColor: null,
-        scale: 3,
-        useCORS: true,
+        scale: 3,//用于渲染的比例。默认为浏览器设备像素比率。
+        useCORS: true,//是否尝试使用CORS从服务器加载图像
         allowTaint: false,
         logging: false,
         width: '300px',

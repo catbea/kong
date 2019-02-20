@@ -17,16 +17,16 @@ export default {
   return {
     uesrUrl:"",
     img:[
-      'http://img5.imgtn.bdimg.com/it/u=751826005,3935524154&fm=11&gp=0.jpg',
-      'http://img5.imgtn.bdimg.com/it/u=751826005,3935524154&fm=11&gp=0.jpg',
-      'http://img5.imgtn.bdimg.com/it/u=751826005,3935524154&fm=11&gp=0.jpg'
+      'http://img5.imgtn.bdimg.com/it/u=2767762500,409213559&fm=26&gp=0.jpg',
+      'http://img0.imgtn.bdimg.com/it/u=926388866,3484051118&fm=26&gp=0.jpg',
+      'http://img5.imgtn.bdimg.com/it/u=3048825819,2029164636&fm=26&gp=0.jpg'
       ],
   }
  },
  components: {
 
  },
- activated(){
+ mounted(){
    this.getpoister()
  },
  methods: {
