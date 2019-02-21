@@ -363,14 +363,15 @@ export default {
     > .avatar-view {
       position: absolute;
       z-index: 2;
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       left: 20px;
       bottom: 43px;
+      border-radius: 50%;
+      overflow: hidden;
       img {
         width: 40px;
-        height: 40px;
-        border-radius: 50%;
+        height: auto;
       }
     }
 
