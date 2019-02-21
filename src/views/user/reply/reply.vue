@@ -5,7 +5,7 @@
                 <div class="text-context">{{editMsg|textOver()}}</div>
                 <div class="select-icon">1</div>
             </div>
-            <div class="edit-relpy">编辑自动回复</div>
+            <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
         </div>
         <div class="reply-save">保存选择</div>
     </div>
@@ -17,6 +17,12 @@ export default {
   data() {
     return {
       editMsg: '手机号会计师福克斯地方手机号会计师福克斯地方开始福克斯电话费康师傅开始福克斯电话费康师傅'
+    }
+  },
+
+  methods: {
+    goToReplyContent() {
+      this.$router.push('/user/reply/replyContent')
     }
   }
 }
@@ -49,7 +55,7 @@ export default {
         align-items: center;
         padding-left: 16px;
         size: 16px;
-        color: #333333
+        color: #333333;
       }
 
       .select-icon {

@@ -317,6 +317,17 @@ export default [
     }
   },
   {
+    path: '/user/reply',
+    name: 'replyContent',
+    component: resolve => require(['@/views/user/reply/replyContent.vue'], resolve),
+    meta: {
+      title: '编辑内容',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/opinionFeedback',
     name: 'opinionFeedback',
     component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),
