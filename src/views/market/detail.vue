@@ -128,7 +128,7 @@
           <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
         </van-tabs>
       </div>
-      <div class="map-box">
+      <div class="map-box" @click="mapClickHandler">
         <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
       </div>
     </div>
@@ -152,16 +152,18 @@
       </div>
     </div>
     <div class="m-statement">
-        <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-        <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
-      </div>
+      <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
+      <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
+    </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
       <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
       <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
-      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'"> <p>售罄</p> </div>
+      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
+        <p>售罄</p>
+      </div>
     </div>
   </div>
 </template>
@@ -178,6 +180,7 @@ import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import isEmpty from 'lodash/isEmpty'
+import qs from 'qs'
 import { ImagePreview } from 'vant'
 export default {
   components: {
@@ -231,7 +234,7 @@ export default {
         spaceBetween: 12
       },
       mapConf: {
-        draggable: false,
+        draggable: true,
         scrollwheel: false,
         disableDoubleClickZoom: false
       },
@@ -385,6 +388,11 @@ export default {
     // 其他楼盘
     itemClickHandler(id) {
       this.$router.push(`/market/${id}`)
+    },
+    // 地图点击
+    mapClickHandler() {
+      this.$router.push({ path: '/public/map-Search', query: { latitude: this.info.latitude, longitude: this.info.longitude } })
+      // console.log(this.$router.push);
     }
   },
   computed: {
