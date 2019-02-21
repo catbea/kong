@@ -234,7 +234,7 @@ export default {
         spaceBetween: 12
       },
       mapConf: {
-        draggable: true,
+        draggable: false,
         scrollwheel: false,
         disableDoubleClickZoom: false
       },
@@ -388,7 +388,7 @@ export default {
     },
     // 地图点击
     mapClickHandler() {
-      this.$router.push({ path: '/public/map-Search', query: { id:this.info.linkerId ,mapTab: this.mapTab, latitude: this.info.latitude, longitude: this.info.longitude } })
+      this.$router.push({ path: '/public/map-Search', query: { id:this.info.linkerId ,mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
     }
   },
   computed: {
