@@ -306,6 +306,17 @@ export default [
     }
   },
   {
+    path: '/user/reply',
+    name: 'reply',
+    component: resolve => require(['@/views/user/reply/reply.vue'], resolve),
+    meta: {
+      title: '请选择自动回复',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/opinionFeedback',
     name: 'opinionFeedback',
     component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),

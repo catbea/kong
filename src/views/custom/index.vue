@@ -32,13 +32,16 @@
     </div>
     <div class="list-continer">
       <van-list v-model="loading" :finished="currentData.finished" @load="onLoad" v-if="currentData.haveData">
-        <my-custom-item v-for="(item,index) in currentData.list" :key="index" :info="item" @click="itemClickHandler"></my-custom-item>
+        <my-custom-item v-for="(item,index) in currentData.list" :key="index" :info="item" :num="index" @click="itemClickHandler" @delete="itemDelete"></my-custom-item>
       </van-list>
       <div v-if="!currentData.haveData">
         <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
       </div>
     </div>
-     <custom-activity @click="goactivitDetaily" v-show="Linkerok"></custom-activity>
+    <custom-activity @click="goactivitDetaily" v-show="Linkerok"></custom-activity>
+    <div class="delCoustomerGuide" @click="hideGuide" v-show="showGuide">
+      <img src="../../assets/img/custom/guide.png" alt="">
+    </div>
   </div>
 </template>
 <script>
@@ -71,8 +74,15 @@ export default {
     sort: 'intention', // intention：意向度（默认选项）， createTime：时间
     activeIcon: false,
     pitch: false,
-    Linkerok: false
+    Linkerok: false,
+    showGuide: false // 显示引导
   }),
+  created () {
+    let showDeleteGuide = window.localStorage.getItem('showDeleteGuide')
+    if (!showDeleteGuide) {
+      this.showGuide = true
+    }
+  },
   mounted() {
     this.getLinker()
     document.querySelector('.sort-container').addEventListener(
@@ -82,6 +92,9 @@ export default {
       },
       { passive: false }
     )
+   document.querySelector('.delCoustomerGuide').addEventListener('touchmove', (e) => {
+      e.preventDefault()
+    }, { passive: false })
   },
   methods: {
     goactivitDetaily() {
@@ -166,6 +179,20 @@ export default {
     itemClickHandler(e) {
       this.$router.push(`/custom/${e.clientId}`)
     },
+
+    // 删除客户
+    async itemDelete (index) {
+      let item = this.currentData.list[index]
+      let result = await CustomService.deleteCustomer({clientId: item.clientId, clientDelFlag: 2})
+      if (result) {
+        this.currentData.list.splice(index, 1)
+      }
+    },
+    // 隐藏引导页面
+    hideGuide () {
+      this.showGuide = false
+      window.localStorage.setItem('showDeleteGuide', true)
+    },
     touchHandler(e) {
       return e.preventDefault()
     }
@@ -190,6 +217,7 @@ export default {
     try {
       document.querySelector('.sort-container').removeEventListener('touchmove')
       document.removeEventListener('touchmove')
+      document.querySelector('.delCoustomerGuide').removeEventListener('touchmove')
     } catch (error) {}
   }
 }
@@ -253,6 +281,15 @@ export default {
     span {
       color: #999;
     }
+  }
+  .delCoustomerGuide{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    background-color: #4c4c4c;
+    z-index: 999;
   }
 }
 </style>

@@ -1,12 +1,30 @@
 <template>
   <div class="user-edit-phone-page">
     <div class="user-edit-phone">
-      <p class="edit-phone-title">手机号</p>
       <p class="edit-phone-conter">
         <!-- <input type="number" class="edit-phone-input" maxlength="11" placeholder="请输入手机号码" v-model.trim="Cphone"> -->
         <material-input placeholder="请输入手机号码" :type="'number'" :maxlength="11" v-model="Cphone"></material-input>
       </p>
-      <button class='edit-phone-query' @click="godSub">确认</button>
+      <div class="edit-phone-way">
+        <p class="edit-phone-tip">号码显示方式</p>
+        <div class="edit-phone-list">
+          <div class="edit-phone-star" @click="selectHandler('star')">
+            <div class="edit-phone-left" :style="{color:phoneType === 'star'?'#007AE6':'#333333'}">前三后四显示</div>
+            <div
+              class="bg_img edit-phone-right"
+              :style="{backgroundImage:'url('+(phoneType === 'star'?checkSelImg:checkImg)+')'}"
+            ></div>
+          </div>
+          <div class="edit-phone-all" @click="selectHandler('all')">
+            <div class="edit-phone-left" :style="{color:phoneType === 'all'?'#007AE6':'#333333'}">全号码显示</div>
+            <div
+              class="bg_img edit-phone-right"
+              :style="{backgroundImage:'url('+(phoneType === 'all'?checkSelImg:checkImg)+')'}"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <button class="edit-phone-query" @click="godSub">确认</button>
     </div>
   </div>
 </template>
@@ -20,17 +38,24 @@ export default {
   },
   data() {
     return {
-      Cphone: ''
+      Cphone: '',
+      phoneType: '',
+      checkSelImg: require('IMG/user/check_sel.png'),
+      checkImg: require('IMG/user/check_nor.png')
     }
   },
   created() {
     this.Cphone = this.reportAddInfo.clientPhone
+    this.phoneType = this.reportAddInfo.clientPhoneType
   },
   computed: {
     ...mapGetters(['reportAddInfo'])
   },
   methods: {
-    godSub() {
+    selectHandler(val){
+      this.phoneType = val
+    },
+     godSub() {
       if (Number(this.Cphone).length == 0) {
         this.$dialog
           .alert({
@@ -52,7 +77,8 @@ export default {
         return
       }
       let _reportAddInfo = {
-        clientPhone: this.Cphone
+        clientPhone: this.Cphone,
+        clientPhoneType: this.phoneType
       }
       this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.back(-1)
@@ -74,10 +100,13 @@ export default {
   font-size: 18px;
   color: rgba(0, 122, 230, 1);
 }
+.material-input__component .material-input {
+  padding-left: 16px;
+}
 .user-edit-phone-page {
-  background: #ffffff;
+  background: #f7f9fa;
   > .user-edit-phone {
-    margin: 27px 16px;
+    // margin: 27px 16px;
     > .edit-phone-title {
       font-size: 20px;
       font-weight: 600;
@@ -87,7 +116,8 @@ export default {
     }
 
     > .edit-phone-conter {
-      margin-bottom: 24px;
+      margin-bottom: 30px;
+      line-height: 30px;
       .material-input {
         color: #757575;
       }
@@ -105,6 +135,42 @@ export default {
       }
     }
 
+    > .edit-phone-way {
+      width: 100%;
+      // margin: 16px;
+      > .edit-phone-tip {
+        color: #969ea8;
+        font-size: 12px;
+        height: 20px;
+        padding-left: 16px;
+      }
+      > .edit-phone-list {
+        background-color: white;
+        border-top: 1px solid #e2e2e3;
+        border-bottom: 1px solid #e2e2e3;
+        > .edit-phone-all,
+        .edit-phone-star {
+          height: 50px;
+          line-height: 50px;
+          margin-left: 16px;
+          position: relative;
+          > .edit-phone-left {
+            font-size: 16px;
+          }
+          > .edit-phone-right {
+            width: 22px;
+            height: 20px;
+            position: absolute;
+            right: 16px;
+            top: 20px;
+          }
+        }
+        > .edit-phone-star {
+          border-bottom: 1px solid #e2e2e3;
+        }
+      }
+    }
+
     > .edit-phone-query {
       font-size: 16px;
       font-weight: 400;
@@ -113,9 +179,9 @@ export default {
       height: 44px;
       background: rgba(0, 122, 230, 1);
       border-radius: 4px;
-      width: 100%;
+      width: 90%;
       border: 0;
-      margin-top: 35px;
+      margin: 35px 16px;
     }
   }
 }

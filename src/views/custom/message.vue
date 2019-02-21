@@ -233,7 +233,8 @@ export default {
   },
   methods: {
     blur() {
-      document.activeElement.scrollIntoViewIfNeeded(true)
+      // document.activeElement.scrollIntoViewIfNeeded(true)
+      setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
     },
     /**
      * 客户基本信息以及购房意向度
@@ -298,7 +299,7 @@ export default {
       this.isShowEmjie = false
       setTimeout(() => {
         document.body.scrollTop = document.body.scrollHeight
-      }, 100)
+      }, 500)
 
       this.pyzmaoviwe()
     },
@@ -643,6 +644,9 @@ export default {
       if (msg) {
         this.$toast(msg)
       }
+
+      document.getElementById('message').focus()
+
     } /*  切换语音输入*/,
     switchMsg() {
       var msgType = this.msgType
