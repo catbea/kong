@@ -1,34 +1,20 @@
 <template>
   <div class="map-search">
-    <div id="map-container"></div>
-    <!-- <t-map :latLng="{lat:this.latitude,lng:this.longitude}" :conf="mapConf"></t-map> -->
-    <!-- <div class="bottom-bar dev">
+    <!-- <div id="map-container"></div> -->
+    <t-map :latLng="{lat:this.userArea.latitude,lng:this.userArea.longitude}" :conf="mapConf"></t-map>
+    <div class="bottom-bar dev">
       <div class="bar-item" v-for="item in list" :key="item.index" @click="itemClickHandler(item.index)">
         <div class="bg_img item-img" :style="{backgroundImage:'url('+ (item.index === current ? item.aIcon:item.dIcon) +')'}"></div>
         <p class="item-title" :class="item.index === current&&'active'">{{item.name}}</p>
       </div>
-    </div>-->
+    </div>
   </div>
 </template>
 <script>
-import TMap from '@/utils/tMap'
-// import TMap from 'COMP/TMap'
+import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import { mapGetters } from 'vuex'
 export default {
-  props: {
-    // conf: {
-    //   type: Object,
-    //   default: () => {
-    //     return {
-    //       draggable: true, // 设置是否可以拖拽
-    //       scrollwheel: true, // 通过滚轮缩放地图的功能
-    //       disableDoubleClickZoom: true, // 双击鼠标左键时时放大地图
-    //       keyboardShortcuts: false // 通过键盘控制地图
-    //     }
-    //   }
-    // }
-  },
   components: {
     TMap
   },
@@ -38,10 +24,9 @@ export default {
     map: null,
     current: 0,
     mapConf: {
-      draggable: true, // 设置是否可以拖拽
-      scrollwheel: true, // 通过滚轮缩放地图的功能
-      disableDoubleClickZoom: true, // 双击鼠标左键时时放大地图
-      keyboardShortcuts: false // 通过键盘控制地图
+      draggable: false,
+      scrollwheel: false,
+      disableDoubleClickZoom: false
     },
     // tabbar icon mIcon-地图标注图标 dIcon-bar未激活图标 aIcon-bar激活图标
     list: {
@@ -111,24 +96,30 @@ export default {
     }
   }),
   created() {
-    this.latitude = this.$route.query.latitude || 39.916527
-    this.longitude = this.$route.query.longitude || 116.397128
-    this.initMap(this.latitude, this.longitude)
+    // this.getAou
+    // this.latitude = this.$route.query.latitude || 39.916527
+    // this.longitude = this.$route.params.longitude || 116.397128
+    // this.initMap()
   },
   methods: {
-    async initMap(lat, lng) {
+    async initMap() {
       await TMap()
-      debugger
       this.map = new qq.maps.Map(document.getElementById('map-container'), {
-        center: new qq.maps.LatLng(lat, lng), // 地图的中心地理坐标
-        zoom: 14,
-        disableDefaultUI: true, // 禁止所有的默认控件
-        draggable: this.mapConf.draggable,
-        scrollwheel: this.mapConf.scrollwheel,
-        disableDoubleClickZoom: this.mapConf.disableDoubleClickZoom,
-        keyboardShortcuts: this.mapConf.keyboardShortcuts
+        center: new qq.maps.LatLng(this.latitude, this.longitude), // 地图的中心地理坐标
+        zoom: 14, // 缩放级别，原本缩放级别是16，后期暂时改成了14
+        disableDefaultUI: true // 禁止所有的默认控件
       })
-      // this.markIcon()
+
+      // let anchor = new qq.maps.Point(0, 36),
+      //   size = new qq.maps.Size(36, 36),
+      //   origin = new qq.maps.Point(0, 0),
+      //   icon = new qq.maps.MarkerImage(this.centerMarkerIconUrl, size, origin, anchor)
+      // var centerMarker = new qq.maps.Marker({
+      //   map: this.map,
+      //   position: centerLatLng
+      // })
+      // centerMarker.setIcon(icon)
+      this.markIcon()
     },
     markIcon() {
       let currentItem
