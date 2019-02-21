@@ -606,6 +606,13 @@ export default {
         this.no = true
       }
     }
+  },
+  beforeDestroy(){
+    try {
+      document.querySelector('.router-view').removeEventListener('scroll')
+    } catch (error) {
+      
+    }
   }
 }
 </script>
