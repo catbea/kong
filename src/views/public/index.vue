@@ -24,7 +24,10 @@ export default {
     } else {
       if (!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
         this.$router.replace('/public/complete-info')
-      } else {
+      } else if(this.userInfo.jumpToDynamicDetail == 1) {
+        console.log('jumpToDynamicDetail')
+        this.$router.replace('/dynamics/allDynamics?allDynamicsNum=0')
+      }else {
         this.$router.replace('/dynamics')
       }
     }
