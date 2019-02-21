@@ -48,6 +48,8 @@ export default {
         display: flex;
         align-items: center;
         padding-left: 16px;
+        size: 16px;
+        color: #333333
       }
 
       .select-icon {
