@@ -27,6 +27,14 @@ export default [
     }
   },
   {
+    path: '/market/map-surround/:id',
+    name: 'market-map-surround',
+    component: resolve => require(['@/views/market/mapSurround.vue'], resolve),
+    meta: {
+      title: '楼盘周边'
+    }
+  },
+  {
     path: '/market/marketDetail/:id',
     name: 'marketDetail',
     component: resolve => require(['@/views/market/marketDetail/index.vue'], resolve),
