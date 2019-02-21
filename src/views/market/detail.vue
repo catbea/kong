@@ -3,7 +3,7 @@
     <!-- 新手引导 -->
     <hint-tire></hint-tire>
     <!-- 顶部swipe -->
-    <div class="top-swipe-container">
+    <div class="top-swipe-container" @click="photoHandle">
       <div class="swipe-content">
         <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
         <van-swipe @change="swipeChange">
@@ -16,12 +16,12 @@
       <div class="operate-content">
         <!-- 收藏/分享 -->
         <div class="operate-1">
-          <div class="operate-collect" @click="collectHandler">
+          <div class="operate-collect" @click.stop="collectHandler">
             <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
             <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
-          <div class="operate-share" @click="shareHandler" v-if="info.saleStatus!=='售罄'">
+          <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
             <i class="icon iconfont icon-article_share"></i>
             分享
           </div>
@@ -280,7 +280,9 @@ export default {
     },
     photoHandle() {
       //进入相册页面
-      this.$router.push({ name: 'photoList', params: { id: this.id } })
+      if(this.photoButton){
+        this.$router.push({ name: 'photoList', params: { id: this.id } })
+      }
     },
     commission() {
       //进入佣金详情
