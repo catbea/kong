@@ -1,7 +1,5 @@
 export default function TMap(key) {
-  debugger
   return new Promise(function(resolve, reject) {
-    debugger
     window.init = function() {
       resolve(qq) //注意这里
     }

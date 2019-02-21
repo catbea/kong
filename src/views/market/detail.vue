@@ -295,8 +295,6 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(res, '楼盘详情kkkk')
-
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -380,7 +378,6 @@ export default {
     // 全景点击
     ifPanoramaClickHandler() {
       window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
-      console.log(this.info.linkerUrl)
     },
     competeOpenStatus() {
       this.openStatus = this.info.openStatus == 0
@@ -391,8 +388,7 @@ export default {
     },
     // 地图点击
     mapClickHandler() {
-      this.$router.push({ path: '/public/map-Search', query: { latitude: this.info.latitude, longitude: this.info.longitude } })
-      // console.log(this.$router.push);
+      this.$router.push({ path: '/public/map-Search', query: { id:this.info.linkerId ,mapTab: this.mapTab, latitude: this.info.latitude, longitude: this.info.longitude } })
     }
   },
   computed: {

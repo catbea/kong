@@ -509,7 +509,6 @@ export default {
     // },
     // 过滤评论(自己回复的评论前端处理,不取后台的数据)
     filterComment() {
-      debugger
       for (var index in this.commentIds) {
         let commentId = this.commentIds[index]
         this.commentList = this.removeObject(this.commentList, commentId)

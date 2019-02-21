@@ -23,8 +23,6 @@ export default {
     userId: ''
   }),
   created() {
-    console.log(131312)
-
     if (this.$route.query.token) {
       this.token = this.$route.query.token
       this.mockLoginByToken()
