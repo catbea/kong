@@ -3,7 +3,7 @@
     <!-- 新手引导 -->
     <hint-tire></hint-tire>
     <!-- 顶部swipe -->
-    <div class="top-swipe-container">
+    <div class="top-swipe-container" @click="photoHandle">
       <div class="swipe-content">
         <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
         <van-swipe @change="swipeChange">
@@ -16,12 +16,12 @@
       <div class="operate-content">
         <!-- 收藏/分享 -->
         <div class="operate-1">
-          <div class="operate-collect" @click="collectHandler">
+          <div class="operate-collect" @click.stop="collectHandler">
             <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
             <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
             收藏
           </div>
-          <div class="operate-share" @click="shareHandler" v-if="info.saleStatus!=='售罄'">
+          <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
             <i class="icon iconfont icon-article_share"></i>
             分享
           </div>
@@ -86,7 +86,7 @@
         <ul>
           <li>联系客服</li>
           <li>查看楼盘分享关系详情 请联系</li>
-          <li>400-0904-999</li>
+          <li>{{info&&info.contatctTel?info.contatctTel:'400-0904-999'}}</li>
         </ul>
         <p class="immediately" @click="relationHandle">立即联系</p>
       </div>
@@ -128,7 +128,7 @@
           <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
         </van-tabs>
       </div>
-      <div class="map-box">
+      <div class="map-box" @click="mapClickHandler">
         <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
       </div>
     </div>
@@ -152,16 +152,18 @@
       </div>
     </div>
     <div class="m-statement">
-        <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-        <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
-      </div>
+      <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
+      <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
+    </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
       <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
       <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
-      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'"> <p>售罄</p> </div>
+      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
+        <p>售罄</p>
+      </div>
     </div>
   </div>
 </template>
@@ -178,6 +180,7 @@ import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import isEmpty from 'lodash/isEmpty'
+import qs from 'qs'
 import { ImagePreview } from 'vant'
 export default {
   components: {
@@ -280,7 +283,9 @@ export default {
     },
     photoHandle() {
       //进入相册页面
-      this.$router.push({ name: 'photoList', params: { id: this.id } })
+      if(this.photoButton){
+        this.$router.push({ name: 'photoList', params: { id: this.id } })
+      }
     },
     commission() {
       //进入佣金详情
@@ -290,8 +295,6 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(res, '楼盘详情kkkk')
-
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -375,7 +378,6 @@ export default {
     // 全景点击
     ifPanoramaClickHandler() {
       window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
-      console.log(this.info.linkerUrl)
     },
     competeOpenStatus() {
       this.openStatus = this.info.openStatus == 0
@@ -383,6 +385,10 @@ export default {
     // 其他楼盘
     itemClickHandler(id) {
       this.$router.push(`/market/${id}`)
+    },
+    // 地图点击
+    mapClickHandler() {
+      this.$router.push({ path: '/public/map-Search', query: { id:this.info.linkerId ,mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
     }
   },
   computed: {

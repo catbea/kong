@@ -6,6 +6,7 @@ const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userStatus: 0,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
+    jumpToDynamicDetail: 0, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0,
     devMode: true,
     agentId: '4626',
@@ -84,6 +85,7 @@ const state = {
     clientId: '',
     clientName: '',
     clientPhone: '',
+    clientPhoneType: 'all', // all/star
     distributorId: '',
     institutionId: ''
   },

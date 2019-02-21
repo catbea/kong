@@ -509,7 +509,6 @@ export default {
     // },
     // 过滤评论(自己回复的评论前端处理,不取后台的数据)
     filterComment() {
-      debugger
       for (var index in this.commentIds) {
         let commentId = this.commentIds[index]
         this.commentList = this.removeObject(this.commentList, commentId)
@@ -567,10 +566,13 @@ export default {
     async setShare() {
       this.friendShareData.success = this.articleShare
       this.timelineShareData.success = this.articleShare
+      this.friendShareData.cancel = this.articleShare
+      this.timelineShareData.cancel = this.articleShare
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
     async articleShare() {
+      alert('share')
       let linkerIds = []
       if (this.editData && this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
         linkerIds = this.editData.recommendHouse

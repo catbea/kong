@@ -105,7 +105,6 @@ export default {
         if (msgContent.clientId == cid) {
           let msgShow = {}
           item.unreadMsgCount = parseInt(item.unreadMsgCount) + 1
-          // console.log(msgContent, 'msgContent+++++=')
           if (msgContent.desc == 1) {
             item.Desc = 1
             item.msgType == 'TIMTextElem'
@@ -124,7 +123,6 @@ export default {
             msgShow.Text = msgContent.data
           }
           item.msgShow = JSON.stringify(msgShow)
-          // console.log(item, '===========')
         }
       }
     },

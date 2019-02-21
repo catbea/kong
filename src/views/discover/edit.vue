@@ -145,7 +145,6 @@ export default {
     },
     // 若出来editData,还原数据
     async restoreData(editData) {
-      debugger
       if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
       if (editData.hasOwnProperty('inlayHouse') && editData.inlayHouse !== '') this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
       if (editData.hasOwnProperty('recommendHouse') && editData.recommendHouse.length > 0) this.recommendList = await this.getLinkerInfo(editData.recommendHouse.join(','))
@@ -193,7 +192,6 @@ export default {
         for (let temp of this.renderDom) {
           if (temp.status !== 'del') count++
         }
-        console.log(count)
         if (count > 1) {
           this.currentDelDom.status = 'del'
         } else {

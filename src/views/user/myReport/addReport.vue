@@ -3,7 +3,7 @@
     <van-cell-group>
       <van-cell title="报备楼盘" is-link :value="reportAddInfo.linkerName" :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"/>
       <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomerEdit"/>
-      <van-cell title="手机号" is-link :value="reportAddInfo.clientPhone" to="reportPhone"/>
+      <van-cell title="手机号" is-link :value="valueComputed" to="reportPhone"/>
     </van-cell-group>
     <p class="addReport-remarks">注：客户手机号只提供前三后四给分销商使用，请放心填写。</p>
     <div class="addReport-botton">
@@ -17,9 +17,19 @@ import { mapGetters } from 'vuex'
 import reportService from 'SERVICE/reportService'
 export default {
   computed: {
-    ...mapGetters(['reportAddInfo', 'userInfo'])
+    ...mapGetters(['reportAddInfo', 'userInfo']),
+    valueComputed(){
+      return this.reportAddInfo.clientPhoneType === 'all' ? this.reportAddInfo.clientPhone : this.privacyPhone(this.reportAddInfo.clientPhone)
+    }
+  },
+  created() {
+    
   },
   methods: {
+    privacyPhone(value) {
+      value = String(value)
+      return value.length > 7 ? value.substr(0, 3) + '****' + value.substr(7) : ''
+    },
     async addReportInfo(current) {
       let params = {
         clientId: this.reportAddInfo.clientId,

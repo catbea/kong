@@ -262,7 +262,6 @@ export default {
   methods: {
     handleScroll() {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      console.log(scrollTop)
     },
     screenHandle(index) {
       this.$nextTick(() => {
@@ -605,6 +604,13 @@ export default {
       if (this.notShowMarketList.length == 0) {
         this.no = true
       }
+    }
+  },
+  beforeDestroy(){
+    try {
+      document.querySelector('.router-view').removeEventListener('scroll')
+    } catch (error) {
+      
     }
   }
 }
