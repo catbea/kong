@@ -296,5 +296,14 @@ class CustomService {
       body: data
     })
   }
+   /**
+   *  客户关系查询
+   */
+  queryClientFlag (param) {
+    return xhr({
+      url: '/customer/queryClientDelFlag',
+      body: param
+    })
+  }
 }
 export default new CustomService()
