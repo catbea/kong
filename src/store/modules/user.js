@@ -84,6 +84,7 @@ const state = {
     clientId: '',
     clientName: '',
     clientPhone: '',
+    clientPhoneType: 'all', // all/star
     distributorId: '',
     institutionId: ''
   },

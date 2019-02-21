@@ -567,10 +567,13 @@ export default {
     async setShare() {
       this.friendShareData.success = this.articleShare
       this.timelineShareData.success = this.articleShare
+      this.friendShareData.cancel = this.articleShare
+      this.timelineShareData.cancel = this.articleShare
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
     async articleShare() {
+      alert('share')
       let linkerIds = []
       if (this.editData && this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
         linkerIds = this.editData.recommendHouse
