@@ -371,6 +371,7 @@ export default {
       overflow: hidden;
       img {
         width: 40px;
+        max-width: none;
         height: auto;
       }
     }
