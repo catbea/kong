@@ -262,7 +262,6 @@ export default {
   methods: {
     handleScroll() {
       var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      console.log(scrollTop)
     },
     screenHandle(index) {
       this.$nextTick(() => {

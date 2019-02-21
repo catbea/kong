@@ -86,7 +86,7 @@
         <ul>
           <li>联系客服</li>
           <li>查看楼盘分享关系详情 请联系</li>
-          <li>{{info&&info.contatctTel}}</li>
+          <li>{{info&&info.contatctTel?info.contatctTel:'400-0904-999'}}</li>
         </ul>
         <p class="immediately" @click="relationHandle">立即联系</p>
       </div>
@@ -128,7 +128,7 @@
           <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
         </van-tabs>
       </div>
-      <div class="map-box">
+      <div class="map-box" @click="mapClickHandler">
         <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
       </div>
     </div>
@@ -152,16 +152,18 @@
       </div>
     </div>
     <div class="m-statement">
-        <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-        <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
-      </div>
+      <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
+      <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
+    </div>
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
       <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
         <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
       </div>
       <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
-      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'"> <p>售罄</p> </div>
+      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
+        <p>售罄</p>
+      </div>
     </div>
   </div>
 </template>
@@ -178,6 +180,7 @@ import TitleBar from 'COMP/TitleBar'
 import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import isEmpty from 'lodash/isEmpty'
+import qs from 'qs'
 import { ImagePreview } from 'vant'
 export default {
   components: {
@@ -292,8 +295,6 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(res, '楼盘详情kkkk')
-
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -377,7 +378,6 @@ export default {
     // 全景点击
     ifPanoramaClickHandler() {
       window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
-      console.log(this.info.linkerUrl)
     },
     competeOpenStatus() {
       this.openStatus = this.info.openStatus == 0
@@ -385,6 +385,10 @@ export default {
     // 其他楼盘
     itemClickHandler(id) {
       this.$router.push(`/market/${id}`)
+    },
+    // 地图点击
+    mapClickHandler() {
+      this.$router.push({ path: '/public/map-Search', query: { id:this.info.linkerId ,mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
     }
   },
   computed: {

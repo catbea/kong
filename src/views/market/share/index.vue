@@ -27,10 +27,9 @@
           v-else
         >价格：{{buildingInfo.linkerPrice}}{{buildingInfo.priceUnit}}</span>
         <!-- <img class="avatar-view" :src="buildingInfo.avatarMediaid"> -->
-        <div
-          class="avatar-view"
-          :style="{backgroundImage:'url(' + buildingInfo.avatarMediaid + ')'}"
-        ></div>
+        <div class="avatar-view">
+          <img :src="buildingInfo.avatarMediaid">
+        </div>
         <span class="username-view">{{buildingInfo.agentName}}</span>
         <span class="mobile-view">{{buildingInfo.agentMobile}}</span>
         <span class="canpamy-view">授权开发商：{{buildingInfo.developer}}</span>
@@ -364,13 +363,15 @@ export default {
     > .avatar-view {
       position: absolute;
       z-index: 2;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       left: 20px;
       bottom: 43px;
-      border-radius: 50%;
-      object-fit: cover;
-      background-size: cover;
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
     }
 
     > .username-view {

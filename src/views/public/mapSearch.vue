@@ -1,11 +1,10 @@
 <template>
-  <div class="map-search">
-    <!-- <div id="map-container"></div> -->
-    <t-map :latLng="{lat:this.userArea.latitude,lng:this.userArea.longitude}" :conf="mapConf"></t-map>
-    <div class="bottom-bar dev">
-      <div class="bar-item" v-for="item in list" :key="item.index" @click="itemClickHandler(item.index)">
-        <div class="bg_img item-img" :style="{backgroundImage:'url('+ (item.index === current ? item.aIcon:item.dIcon) +')'}"></div>
-        <p class="item-title" :class="item.index === current&&'active'">{{item.name}}</p>
+  <div class="map-search" v-if="info">
+    <t-map :latLng="{lat:this.latitude,lng:this.longitude}" :data="mapData" :conf="mapConf"/>
+    <div class="bottom-bar">
+      <div class="bar-item" v-for="item in info.houseAroundType" :key="item.category" @click="itemClickHandler(item.category)">
+        <div class="bg_img item-img" :style="{backgroundImage:'url('+ (getIcon(item.category, item.category == current)) +')'}"></div>
+        <p class="item-title" :class="item.category == current&&'active'">{{item.name}}</p>
       </div>
     </div>
   </div>
@@ -19,37 +18,40 @@ export default {
     TMap
   },
   data: () => ({
+    id: -1,
+    info: null,
     latitude: 39.916527,
     longitude: 116.397128,
     map: null,
     current: 0,
     mapConf: {
-      draggable: false,
-      scrollwheel: false,
-      disableDoubleClickZoom: false
+      draggable: true, // 设置是否可以拖拽
+      scrollwheel: true, // 通过滚轮缩放地图的功能
+      disableDoubleClickZoom: true, // 双击鼠标左键时时放大地图
+      keyboardShortcuts: false // 通过键盘控制地图
     },
     // tabbar icon mIcon-地图标注图标 dIcon-bar未激活图标 aIcon-bar激活图标
     list: {
-      bank: {
-        index: 0,
-        name: '银行',
-        mIcon: require('IMG/mapSearch/bankMarkIcon.png'),
-        dIcon: require('IMG/mapSearch/bankDefaultIcon.png'),
-        aIcon: require('IMG/mapSearch/bankActiveIcon.png')
-      },
       bus: {
-        index: 1,
+        index: 0,
         name: '公交',
         mIcon: require('IMG/mapSearch/busMarkIcon.png'),
         dIcon: require('IMG/mapSearch/busDefaultIcon.png'),
         aIcon: require('IMG/mapSearch/busActiveIcon.png')
       },
-      metro: {
+      market: {
+        index: 1,
+        name: '购物',
+        mIcon: require('IMG/mapSearch/marketMarkIcon.png'),
+        dIcon: require('IMG/mapSearch/marketDefaultIcon.png'),
+        aIcon: require('IMG/mapSearch/marketActiveIcon.png')
+      },
+      hospital: {
         index: 2,
-        name: '地铁',
-        mIcon: require('IMG/mapSearch/metroMarkIcon.png'),
-        dIcon: require('IMG/mapSearch/metroDefaultIcon.png'),
-        aIcon: require('IMG/mapSearch/metroActiveIcon.png')
+        name: '医院',
+        mIcon: require('IMG/mapSearch/hospitalMarkIcon.png'),
+        dIcon: require('IMG/mapSearch/hospitalDefaultIcon.png'),
+        aIcon: require('IMG/mapSearch/hospitalActiveIcon.png')
       },
       school: {
         index: 3,
@@ -58,86 +60,76 @@ export default {
         dIcon: require('IMG/mapSearch/schoolDefaultIcon.png'),
         aIcon: require('IMG/mapSearch/schoolActiveIcon.png')
       },
-      hospital: {
+      food: {
         index: 4,
-        name: '医院',
-        mIcon: require('IMG/mapSearch/hospitalMarkIcon.png'),
-        dIcon: require('IMG/mapSearch/hospitalDefaultIcon.png'),
-        aIcon: require('IMG/mapSearch/hospitalActiveIcon.png')
+        name: '美食',
+        mIcon: require('IMG/mapSearch/foodMarkIcon.png'),
+        dIcon: require('IMG/mapSearch/foodDefaultIcon.png'),
+        aIcon: require('IMG/mapSearch/foodActiveIcon.png')
+      },
+      metro: {
+        index: 5,
+        name: '地铁',
+        mIcon: require('IMG/mapSearch/metroMarkIcon.png'),
+        dIcon: require('IMG/mapSearch/metroDefaultIcon.png'),
+        aIcon: require('IMG/mapSearch/metroActiveIcon.png')
+      },
+      bank: {
+        index: 6,
+        name: '银行',
+        mIcon: require('IMG/mapSearch/bankMarkIcon.png'),
+        dIcon: require('IMG/mapSearch/bankDefaultIcon.png'),
+        aIcon: require('IMG/mapSearch/bankActiveIcon.png')
       },
       relax: {
-        index: 5,
+        index: 7,
         name: '休闲',
         mIcon: require('IMG/mapSearch/relaxMarkIcon.png'),
         dIcon: require('IMG/mapSearch/relaxDefaultIcon.png'),
         aIcon: require('IMG/mapSearch/relaxActiveIcon.png')
       },
-      market: {
-        index: 6,
-        name: '购物',
-        mIcon: require('IMG/mapSearch/marketMarkIcon.png'),
-        dIcon: require('IMG/mapSearch/marketDefaultIcon.png'),
-        aIcon: require('IMG/mapSearch/marketActiveIcon.png')
-      },
       gym: {
-        index: 7,
+        index: 8,
         name: '健身',
         mIcon: require('IMG/mapSearch/gymMarkIcon.png'),
         dIcon: require('IMG/mapSearch/gymDefaultIcon.png'),
         aIcon: require('IMG/mapSearch/gymActiveIcon.png')
-      },
-      food: {
-        index: 8,
-        name: '美食',
-        mIcon: require('IMG/mapSearch/foodMarkIcon.png'),
-        dIcon: require('IMG/mapSearch/foodDefaultIcon.png'),
-        aIcon: require('IMG/mapSearch/foodActiveIcon.png')
       }
     }
   }),
   created() {
-    // this.getAou
-    // this.latitude = this.$route.query.latitude || 39.916527
-    // this.longitude = this.$route.params.longitude || 116.397128
-    // this.initMap()
+    this.id = this.$route.query.id
+    this.latitude = this.$route.query.latitude || 39.916527
+    this.longitude = this.$route.query.longitude || 116.397128
+    this.current = this.$route.query.mapTab
+    this.getHouseInfo()
   },
   methods: {
-    async initMap() {
-      await TMap()
-      this.map = new qq.maps.Map(document.getElementById('map-container'), {
-        center: new qq.maps.LatLng(this.latitude, this.longitude), // 地图的中心地理坐标
-        zoom: 14, // 缩放级别，原本缩放级别是16，后期暂时改成了14
-        disableDefaultUI: true // 禁止所有的默认控件
-      })
-
-      // let anchor = new qq.maps.Point(0, 36),
-      //   size = new qq.maps.Size(36, 36),
-      //   origin = new qq.maps.Point(0, 0),
-      //   icon = new qq.maps.MarkerImage(this.centerMarkerIconUrl, size, origin, anchor)
-      // var centerMarker = new qq.maps.Marker({
-      //   map: this.map,
-      //   position: centerLatLng
-      // })
-      // centerMarker.setIcon(icon)
-      this.markIcon()
-    },
-    markIcon() {
-      let currentItem
-      for (let temp of this.list) {
-        if (this.current === temp.index) return (currentItem = temp)
-      }
-      //地图中心点回到楼盘坐标
-      this.map.panTo(new qq.maps.LatLng(this.latitude, this.longitude))
-      //控制缩放级别
-      this.map.zoomTo(14)
+    async getHouseInfo() {
+      const res = await marketService.getLinkerDetail(this.id)
+      this.info = res
     },
     itemClickHandler(val) {
-      if (val === this.current) return
+      console.log('current', val)
+
+      if (val == this.current) return
       this.current = val
+    },
+    getIcon(index, status) {
+      for (let temp of Object.keys(this.list)) {
+        if (this.list[temp].index == index) {
+          return status ? this.list[temp].aIcon : this.list[temp].dIcon
+        }
+      }
     }
   },
   computed: {
-    ...mapGetters(['userArea'])
+    ...mapGetters(['userArea']),
+    mapData() {
+      for(let temp of this.info.houseAroundType){
+        if(temp.category == this.current) return temp
+      }
+    }
   }
 }
 </script>
@@ -146,6 +138,7 @@ export default {
   display: flex;
   flex-direction: column;
   #map-container {
+    position: absolute;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -159,7 +152,6 @@ export default {
     background-color: #fff;
     display: flex;
     overflow: scroll;
-    /*padding: 0 25px 0 0;*/
     &::-webkit-scrollbar {
       display: none;
     }
