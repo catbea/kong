@@ -693,7 +693,7 @@ export default {
             color: #fff;
             border-bottom: 2px solid #0069ca;
             padding-bottom: 5px;
-            max-width: 140px;
+            max-width: 160px;
             z-index: 4;
             text-shadow: 0 0 5px #000;
             h3 {
