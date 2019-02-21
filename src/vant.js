@@ -32,7 +32,8 @@ import {
   CellGroup,
   CheckboxGroup,
   SubmitBar,
-  Actionsheet
+  Actionsheet,
+  SwipeCell
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -64,3 +65,5 @@ Vue.use(CheckboxGroup)
 
 Vue.use(SubmitBar)
 Vue.use(Actionsheet)
+
+Vue.use(SwipeCell)

@@ -285,5 +285,16 @@ class CustomService {
       url: '/activity/linker'
     })
   }
+  /**
+   * 删除我的客户
+   * @param {*} clientId
+   */
+  deleteCustomer(data) {
+    return xhr({
+      method: 'post',
+      url: '/userCustomer/updateClientDelFlag',
+      body: data
+    })
+  }
 }
 export default new CustomService()
