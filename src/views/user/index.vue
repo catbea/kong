@@ -83,7 +83,7 @@ export default {
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }
       // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
     ],
-    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
+    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '自动回复', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_night' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
     openPopup: false,
     qrcodeImg: ''
   }),
@@ -165,9 +165,12 @@ export default {
           this.$router.push('/user/noDisturb')
           break
         case 1:
-          window.location = 'https://support.qq.com/product/31776'
+          this.$router.push('/user/reply')
           break
         case 2:
+          window.location = 'https://support.qq.com/product/31776'
+          break
+        case 3:
           break
       }
     }
