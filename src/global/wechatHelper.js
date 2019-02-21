@@ -72,7 +72,8 @@ class WechatHelper {
       desc: '',
       link: '',
       imgUrl: '',
-      success: () => {}
+      success: () => {},
+      cancel: () => {}
     }
     this._universalShare(friendConf, timelineConf)
   }
