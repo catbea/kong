@@ -86,7 +86,7 @@
         <ul>
           <li>联系客服</li>
           <li>查看楼盘分享关系详情 请联系</li>
-          <li>400-0904-999</li>
+          <li>{{info&&info.contatctTel?info.contatctTel:'400-0904-999'}}</li>
         </ul>
         <p class="immediately" @click="relationHandle">立即联系</p>
       </div>
