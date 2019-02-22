@@ -185,6 +185,7 @@ export default {
       let item = this.currentData.list[index]
       let result = await CustomService.deleteCustomer({clientId: item.clientId, clientDelFlag: 2})
       this.currentData.list.splice(index, 1)
+      this.$toast('删除成功！')
     },
     // 隐藏引导页面
     hideGuide () {
