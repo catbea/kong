@@ -1,7 +1,6 @@
 <template>
-  <div class="content-body">
+  <div class="replys-body">
     <div class="reply-body">
-      <!-- v-for="(times,index) in trackList" :key="index" -->
       <div class="relpy-list" v-for="item in relpyList" :key="index">
         <div class="text-context">{{item.content|textOver()}}</div>
         <div class="select-icon">1</div>
@@ -46,8 +45,8 @@ export default {
 }
 </script>
 
-<style lang="less">
-.content-body {
+<style lang="less" scoped>
+.replys-body {
   width: 100%;
   height: 100%;
   display: flex;
@@ -90,7 +89,7 @@ export default {
       align-items: center;
       padding-left: 16px;
       color: #445166;
-      size: 16px;
+      size: 12px;
       background-color: white;
     }
   }
