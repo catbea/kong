@@ -328,6 +328,16 @@ export default [
     }
   },
   {
+    path: '/user/reply/editReply',
+    name: 'editReply',
+    component: resolve => require(['@/views/user/reply/editReply.vue'], resolve),
+    meta: {
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/opinionFeedback',
     name: 'opinionFeedback',
     component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),
