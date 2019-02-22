@@ -7,7 +7,7 @@
     </div>
     <div class="search-input-box">
       <img src="../../assets/img/market/Group 3@2x.png" class="search-icon">
-      <input type="search" :placeholder="conf.placeholder" @focus="focusHandler" v-on:input="inputContent" v-model="currentValue">
+      <input type="search" :placeholder="conf.placeholder" @focus="focusHandler" v-on:input="inputContent" v-model="currentValue" @blur="blur">
     </div>
   </div>
 </template>
@@ -27,6 +27,11 @@ export default {
     currentValue: ''
   }),
   methods: {
+    blur(){
+      setTimeout(() => {
+        document.activeElement.scrollIntoViewIfNeeded(true)
+      },10)
+    },
     siteClickHandler() {
       if (this.$route.name === 'area-select') {
         // 在地区选择页面,直接返回上个

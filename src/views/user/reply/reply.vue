@@ -1,24 +1,31 @@
 <template>
   <div class="replys-body">
     <div class="reply-body">
-      <div class="relpy-list" v-for="(item,index) in relpyList" :key="index">
+      <div
+        class="relpy-list"
+        v-for="(item,index) in relpyList"
+        :key="index"
+        @click="clickToSave(item)"
+      >
         <div class="text-context">{{item.content|textOver()}}</div>
         <div class="select-icon">1</div>
       </div>
       <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
     </div>
-    <div class="reply-save">保存选择</div>
+    <div class="reply-save" @click="saveMySelect">保存选择</div>
   </div>
 </template>
 
 
 <script>
 import userService from 'SERVICE/userService'
+import { Toast } from 'vant'
 
 export default {
   data() {
     return {
-      relpyList: []
+      relpyList: [],
+      selectItemInfo: {}
     }
   },
 
@@ -39,6 +46,26 @@ export default {
       if (result) {
         this.relpyList = result
       }
+    },
+
+    clickToSave(data) {
+      this.selectItemInfo = data
+    },
+
+    /**
+     * 保存选择
+     */
+    async saveMySelect() {
+      let params = this.selectItemInfo
+
+      let obj = {}
+      obj.content = params.content
+      obj.status = 1
+
+      const result = await userService.updataReplyInfo(obj)
+      if (result) {
+        Toast('设置成功')
+      }
     }
   }
 }
@@ -47,7 +74,6 @@ export default {
 <style lang="less" scoped>
 .replys-body {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,13 +81,13 @@ export default {
 
   > .reply-body {
     width: 100%;
-    height: 90%;
 
     > .relpy-list {
       background: white;
       display: flex;
       align-items: center;
-      border-bottom: 1px #EEEEEE solid;
+      border-bottom: 1px #eeeeee solid;
+     
 
       .text-context {
         width: 87%;

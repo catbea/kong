@@ -28,6 +28,7 @@ export default {
 
     if (params.status === 0 && params.content.length > 0) {
       document.title = '编辑内容'
+      this.replyContent = params.content
     } else {
       document.title = '新增回复'
     }
