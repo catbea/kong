@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       replyContent: '',
-      statusFirst: 1
+      statusFirst: this.$route.query.status
     }
   },
 
@@ -50,9 +50,8 @@ export default {
           let obj = {}
           obj.content = this.replyContent
           obj.status = this.statusFirst
+          this.setReplyInfo(obj)
         }
-
-        this.setReplyInfo(obj)
       } else {
         this.showDialogErrMsg()
       }
@@ -61,7 +60,7 @@ export default {
     showDialogErrMsg() {
       Dialog.alert({
         title: '保存失败',
-        message: '弹窗内容'
+        message: '自动回复内容不可为空'
       }).then(() => {
         // on close
       })
