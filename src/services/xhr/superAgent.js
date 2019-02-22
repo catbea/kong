@@ -10,7 +10,12 @@ const xhr = ({ url, body = {}, method = 'get', headers = {}, codeHandleList = nu
   // 参数处理
   url = url.replace(/\s+/g, '') // 去掉首尾空格
   method = method.toLowerCase()
-  const host = process.env.VUE_APP_BASE_API_URL
+  let host = ''
+  if (url.indexOf('miniapp') > 0) {
+    host = process.env.VUE_APP_APP_URL + 'helper-rest'
+  }else {
+    host = process.env.VUE_APP_BASE_API_URL
+  }
 
   let head = Object.assign(
     {
