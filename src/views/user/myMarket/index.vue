@@ -619,12 +619,6 @@ export default {
 .user-mymarket-page {
   height: auto !important;
   background: #ffffff;
-  // .fixed {
-  //   position: fixed;
-  //   width: 100%;
-  //   background: #ffffff;
-  //   z-index: 3;
-  // }
   .screen {
     overflow: hidden;
     height: 580px;
