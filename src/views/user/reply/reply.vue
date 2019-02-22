@@ -8,7 +8,7 @@
         @click="clickToSave(item)"
       >
         <div class="text-context">{{item.content|textOver()}}</div>
-        <div class="select-icon">1</div>
+        <div class="select-icon" :style="{backgroundImage:'url(' + arrowIcon + ')'}"></div>
       </div>
       <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
     </div>
@@ -25,7 +25,8 @@ export default {
   data() {
     return {
       relpyList: [],
-      selectItemInfo: {}
+      selectItemInfo: {},
+      arrowIcon: require('IMG/user/check_reply.png'),
     }
   },
 
@@ -57,14 +58,20 @@ export default {
      */
     async saveMySelect() {
       let params = this.selectItemInfo
+      var arr = Object.keys(this.selectItemInfo)
+      if (arr.length == 0) {
+        Toast('请选择要设置......')
+      } else {
+        let obj = {}
+        obj.content = params.content
+        obj.status = 1
 
-      let obj = {}
-      obj.content = params.content
-      obj.status = 1
-
-      const result = await userService.updataReplyInfo(obj)
-      if (result) {
-        Toast('设置成功')
+        const result = await userService.updataReplyInfo(obj)
+        if (result) {
+          Toast('设置成功')
+        } else {
+          Toast('请选择要设置......')
+        }
       }
     }
   }
@@ -87,22 +94,22 @@ export default {
       display: flex;
       align-items: center;
       border-bottom: 1px #eeeeee solid;
-     
 
-      .text-context {
+      > .text-context {
         width: 87%;
         height: 96px;
         display: flex;
         align-items: center;
         padding-left: 16px;
-        size: 16px;
+        font-size: 16px;
         color: #333333;
       }
 
-      .select-icon {
-        width: 22px;
-        height: 22px;
+      > .select-icon {
+        width: 50px;
+        height: 50px;
         margin-left: 15px;
+        line-height: 22px;
       }
     }
 
@@ -112,7 +119,7 @@ export default {
       align-items: center;
       padding-left: 16px;
       color: #445166;
-      size: 12px;
+      font-size: 12px;
       background-color: white;
       margin-top: 20px;
     }
@@ -129,7 +136,7 @@ export default {
     margin-top: 10px;
     display: flex;
     justify-content: center;
-    size: 16px;
+    font-size: 16px;
   }
 }
 </style>
