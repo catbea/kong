@@ -88,7 +88,7 @@
                       <span>{{item.totalTime / 1000}}s</span>
                     </p>
                   </div>
-                  <div class="dynamics-list-btn">
+                  <div class="dynamics-list-btn"  v-show="item.clientDelFlag !== 2">
                     <span></span>
                     <span class="list-btn-right">
                       <button

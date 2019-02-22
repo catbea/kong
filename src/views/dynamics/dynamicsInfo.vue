@@ -97,7 +97,7 @@
               <p>累计浏览<span>{{item.todayClickCount}}次</span>该楼盘，平均停留<span>{{item.totalTime / 1000}}s</span></p>
             </div>
 
-            <div class="dynamics-list-btn">
+            <div class="dynamics-list-btn"  v-show="item.clientDelFlag !== 2">
               <span></span>
               <div class="dynamicsInfo-list-btn-right">
                <button class="dynamicsInfo-list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
