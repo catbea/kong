@@ -529,5 +529,15 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 获取欢迎语列表
+   */
+  queryReplyList(){
+    return xhr({
+      method:'GET',
+      url:'/welcomeSetting/getWelComeListByAgentId'
+    })
+  }
 }
 export default new UserService()

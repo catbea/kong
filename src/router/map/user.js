@@ -317,7 +317,7 @@ export default [
     }
   },
   {
-    path: '/user/reply',
+    path: '/user/reply/replyContent',
     name: 'replyContent',
     component: resolve => require(['@/views/user/reply/replyContent.vue'], resolve),
     meta: {
