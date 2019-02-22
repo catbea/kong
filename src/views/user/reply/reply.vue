@@ -1,7 +1,7 @@
 <template>
   <div class="replys-body">
     <div class="reply-body">
-      <div class="relpy-list" v-for="item in relpyList" :key="index">
+      <div class="relpy-list" v-for="(item,index) in relpyList" :key="index">
         <div class="text-context">{{item.content|textOver()}}</div>
         <div class="select-icon">1</div>
       </div>
@@ -18,7 +18,6 @@ import userService from 'SERVICE/userService'
 export default {
   data() {
     return {
-      editMsg: '手机号会计师福克斯地方手机号会计师福克斯地方开始福克斯电话费康师傅开始福克斯电话费康师傅',
       relpyList: []
     }
   },
@@ -38,7 +37,7 @@ export default {
     async getRelpyList() {
       const result = await userService.queryReplyList()
       if (result) {
-        console.log(result)
+        this.relpyList = result
       }
     }
   }
@@ -59,15 +58,14 @@ export default {
     height: 90%;
 
     > .relpy-list {
-      margin-bottom: 20px;
       background: white;
       display: flex;
       align-items: center;
+      border-bottom: 1px #EEEEEE solid;
 
       .text-context {
         width: 87%;
         height: 96px;
-        background: green;
         display: flex;
         align-items: center;
         padding-left: 16px;
@@ -78,7 +76,6 @@ export default {
       .select-icon {
         width: 22px;
         height: 22px;
-        background: red;
         margin-left: 15px;
       }
     }
@@ -91,6 +88,7 @@ export default {
       color: #445166;
       size: 12px;
       background-color: white;
+      margin-top: 20px;
     }
   }
 

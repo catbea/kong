@@ -1,8 +1,13 @@
 <template>
   <div class="replys-body">
     <div class="reply-body">
-      <div class="relpy-list">
-        <div class="text-context">123</div>
+      <div
+        class="relpy-list"
+        v-for="(item,index) in relpyList"
+        :key="index"
+        @click="enterEditPage(item.id,item.content)"
+      >
+        <div class="text-context">{{item.content|textOver()}}</div>
         <img class="select-icon" :src="arrowIcon">
       </div>
       <div class="edit-relpy" @click="goToReplyContent">
@@ -10,15 +15,17 @@
         <span>新增自动回复</span>
       </div>
     </div>
-    <div class="reply-save">
+    <!-- <div class="reply-save">
       <div class="cancel-view">取消</div>
       <div class="sure-view">确定</div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 
 <script>
+import userService from 'SERVICE/userService'
+
 export default {
   data() {
     return {
@@ -28,9 +35,40 @@ export default {
     }
   },
 
+  mounted() {
+    this.getRelpyList()
+  },
+
   methods: {
     goToReplyContent() {
-      this.$router.push('/user/reply/editReply')
+      if (this.relpyList.length > 0) {
+        let params = {}
+        params.id = -1
+        params.status = 1
+        params.content = ''
+        this.$router.push({ path: '/user/reply/editReply', query: params })
+      } else {
+        let params = {}
+        params.id = -1
+        params.status = 0
+        params.content = ''
+        this.$router.push({ path: '/user/reply/editReply', query: params })
+      }
+    },
+
+    async getRelpyList() {
+      const result = await userService.queryReplyList()
+      if (result) {
+        this.relpyList = result
+      }
+    },
+
+    enterEditPage(id, content) {
+      let params = {}
+      params.id = id
+      params.status = 0
+      params.content = content
+      this.$router.push({ path: '/user/reply/editReply', query: params })
     }
   }
 }
@@ -50,10 +88,10 @@ export default {
     height: 90%;
 
     > .relpy-list {
-      margin-bottom: 20px;
       background: white;
       display: flex;
       align-items: center;
+      border-bottom: 1px #eeeeee solid;
 
       .text-context {
         width: 87%;
@@ -79,6 +117,7 @@ export default {
       color: #445166;
       size: 16px;
       background-color: white;
+      margin-top: 20px;
 
       > .add-img {
         width: 22px;
