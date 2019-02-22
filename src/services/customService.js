@@ -292,8 +292,17 @@ class CustomService {
   deleteCustomer(data) {
     return xhr({
       method: 'post',
-      url: '/userCustomer/updateClientDelFlag',
+      url: '/customer/updateClientDelFlag',
       body: data
+    })
+  }
+   /**
+   *  客户关系查询
+   */
+  queryClientFlag (param) {
+    return xhr({
+      url: '/customer/queryClientDelFlag',
+      body: param
     })
   }
 }

@@ -172,19 +172,19 @@
       <div class="form">
         <div class="group-item">
           <span>姓名</span>
-          <input type="text" v-model="editData.agentName" maxlength="16" placeholder="请输入姓名">
+          <input type="text" v-model="editData.agentName" maxlength="16" placeholder="请输入姓名" @blur="blur">
         </div>
         <div class="group-item">
           <span>经纪人电话</span>
-          <input type="text" v-model="editData.mobile" maxlength="16" placeholder="请输入电话号码">
+          <input type="text" v-model="editData.mobile" maxlength="16" placeholder="请输入电话号码" @blur="blur">
         </div>
         <div class="group-item">
           <span>机构地址</span>
-          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址">
+          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址" @blur="blur">
         </div>
         <div class="group-item">
           <span>宣传语</span>
-          <input type="text" v-model="editData.signature" maxlength="48" placeholder="请输入宣传语">
+          <input type="text" v-model="editData.signature" maxlength="48" placeholder="请输入宣传语" @blur="blur">
         </div>
         <div class="group-upload">
           <p class="title">选择名片封面</p>
@@ -644,6 +644,10 @@ export default {
           ctx.drawImage(img, -width, 0)
           break
       }
+    },
+    // 键盘遮挡
+    blur() {
+      document.activeElement.scrollIntoViewIfNeeded(true)
     }
   }
 }
@@ -689,7 +693,7 @@ export default {
             color: #fff;
             border-bottom: 2px solid #0069ca;
             padding-bottom: 5px;
-            max-width: 140px;
+            max-width: 160px;
             z-index: 4;
             text-shadow: 0 0 5px #000;
             h3 {

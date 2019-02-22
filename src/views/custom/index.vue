@@ -184,9 +184,7 @@ export default {
     async itemDelete (index) {
       let item = this.currentData.list[index]
       let result = await CustomService.deleteCustomer({clientId: item.clientId, clientDelFlag: 2})
-      if (result) {
-        this.currentData.list.splice(index, 1)
-      }
+      this.currentData.list.splice(index, 1)
     },
     // 隐藏引导页面
     hideGuide () {
