@@ -50,7 +50,6 @@ import CustomActivity from 'COMP/Custom/CustomActivity'
 import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
 import marketService from 'SERVICE/marketService'
-import { mapGetters } from 'vuex'
 export default {
   components: {
     Null,
@@ -184,10 +183,8 @@ export default {
     // 删除客户
     async itemDelete (index) {
       let item = this.currentData.list[index]
-      let result = await CustomService.deleteCustomer({clientId: item.clientId, clientDelFlag: 2, agentId: this.userInfo.agentId})
-      if (result) {
-        this.currentData.list.splice(index, 1)
-      }
+      let result = await CustomService.deleteCustomer({clientId: item.clientId, clientDelFlag: 2})
+      this.currentData.list.splice(index, 1)
     },
     // 隐藏引导页面
     hideGuide () {
@@ -212,8 +209,7 @@ export default {
   computed: {
     currentData() {
       return this.data[this.activeIndex]
-    },
-    ...mapGetters(['userInfo'])
+    }
   },
   beforeDestroy() {
     try {

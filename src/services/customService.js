@@ -292,7 +292,7 @@ class CustomService {
   deleteCustomer(data) {
     return xhr({
       method: 'post',
-      url: '/userCustomer/updateClientDelFlag',
+      url: '/customer/updateClientDelFlag',
       body: data
     })
   }

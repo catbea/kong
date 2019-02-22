@@ -111,16 +111,16 @@ export default {
     window.localStorage.setItem('activeIndex', 0)
     this.onClick()
     window.localStorage.removeItem('activeIndex')
-    this.queryClientFlag()
+    // this.queryClientFlag()
   },
   methods: {
     // 查询客户关系
-    async queryClientFlag () {
-      let result = await CustomService.queryClientFlag({clientId: this.clientId})
-      if (result) {
-        this.showActionBar = result.clientDelFlag === 0
-      }
-    },
+    // async queryClientFlag () {
+    //   let result = await CustomService.queryClientFlag({clientId: this.clientId})
+    //   if (result) {
+    //     this.showActionBar = result.clientDelFlag !== 2
+    //   }
+    // },
     /**
      * 切换tab
      */
@@ -472,7 +472,7 @@ export default {
       this.customBaseInfo = result
       this.attentionFlag = result.isFollow == 1 ? false : true
       this.clientMobile = result.phone
-
+      this.showActionBar = result.clientDelFlag !== 2
       let info = {
         remarkName: '备注名称',
         sex: '性别',
