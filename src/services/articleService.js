@@ -84,6 +84,23 @@ class ArticleService {
       body: data
     })
   }
+
+  /**
+   * 数据埋点上报
+   * @param {*} data 
+   * @param {*} sources H5/miniApp
+   * @param {*} action 统计停留时间 REPORTED_BEGIN/REPORTED_END
+   * @param {*} userActionType viewCard/viewHouse/viewNews/intention
+   * @param {*} userActionCode HFCKLP
+   */
+  dataReport(data) {
+    return xhr({
+      method: 'POST',
+      url: '/miniapp/common/data/report',
+      body: data,
+      headers: {}
+    })
+  }
 }
 
 export default new ArticleService()

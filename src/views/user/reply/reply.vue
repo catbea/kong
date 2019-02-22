@@ -1,25 +1,31 @@
 <template>
   <div class="replys-body">
     <div class="reply-body">
-      <div class="relpy-list" v-for="item in relpyList" :key="index">
+      <div
+        class="relpy-list"
+        v-for="(item,index) in relpyList"
+        :key="index"
+        @click="clickToSave(item)"
+      >
         <div class="text-context">{{item.content|textOver()}}</div>
         <div class="select-icon">1</div>
       </div>
       <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
     </div>
-    <div class="reply-save">保存选择</div>
+    <div class="reply-save" @click="saveMySelect">保存选择</div>
   </div>
 </template>
 
 
 <script>
 import userService from 'SERVICE/userService'
+import { Toast } from 'vant'
 
 export default {
   data() {
     return {
-      editMsg: '手机号会计师福克斯地方手机号会计师福克斯地方开始福克斯电话费康师傅开始福克斯电话费康师傅',
-      relpyList: []
+      relpyList: [],
+      selectItemInfo: {}
     }
   },
 
@@ -38,7 +44,27 @@ export default {
     async getRelpyList() {
       const result = await userService.queryReplyList()
       if (result) {
-        console.log(result)
+        this.relpyList = result
+      }
+    },
+
+    clickToSave(data) {
+      this.selectItemInfo = data
+    },
+
+    /**
+     * 保存选择
+     */
+    async saveMySelect() {
+      let params = this.selectItemInfo
+
+      let obj = {}
+      obj.content = params.content
+      obj.status = 1
+
+      const result = await userService.updataReplyInfo(obj)
+      if (result) {
+        Toast('设置成功')
       }
     }
   }
@@ -48,7 +74,6 @@ export default {
 <style lang="less" scoped>
 .replys-body {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,18 +81,17 @@ export default {
 
   > .reply-body {
     width: 100%;
-    height: 90%;
 
     > .relpy-list {
-      margin-bottom: 20px;
       background: white;
       display: flex;
       align-items: center;
+      border-bottom: 1px #eeeeee solid;
+     
 
       .text-context {
         width: 87%;
         height: 96px;
-        background: green;
         display: flex;
         align-items: center;
         padding-left: 16px;
@@ -78,7 +102,6 @@ export default {
       .select-icon {
         width: 22px;
         height: 22px;
-        background: red;
         margin-left: 15px;
       }
     }
@@ -91,6 +114,7 @@ export default {
       color: #445166;
       size: 12px;
       background-color: white;
+      margin-top: 20px;
     }
   }
 

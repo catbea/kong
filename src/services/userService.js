@@ -539,5 +539,18 @@ class UserService {
       url:'/welcomeSetting/getWelComeListByAgentId'
     })
   }
+
+
+  /**
+   * 更新欢迎语信息
+   * @param {*} data 
+   */
+  updataReplyInfo(data){
+    return xhr({
+      method:'POST',
+      url:'/welcomeSetting/insertOrUpdateWelCome',
+      body:data
+    })
+  }
 }
 export default new UserService()

@@ -1,19 +1,80 @@
 <template>
     <div class="edit-body">
         <div class="input-body">
-            <textarea class="input-content-body" placeholder="请输入自动回复内容"></textarea>
+            <textarea class="input-content-body" placeholder="请输入自动回复内容" v-model="replyContent"></textarea>
         </div>
         <div class="bottom-body">
             <div class="cancel-view">取消</div>
-            <div class="sure-view">保存</div>
+            <div class="sure-view" @click="saveReply">保存</div>
         </div>
     </div>
 </template>
 
 <script>
+import userService from 'SERVICE/userService'
+
+import { Dialog, Toast } from 'vant'
+
 export default {
   data() {
-    return {}
+    return {
+      replyContent: '',
+      statusFirst: this.$route.query.status
+    }
+  },
+
+  created() {
+    let params = this.$route.query
+
+    if (params.status === 0 && params.content.length > 0) {
+      document.title = '编辑内容'
+      this.replyContent = params.content
+    } else {
+      document.title = '新增回复'
+    }
+  },
+
+  methods: {
+    async setReplyInfo(data) {
+      const result = await userService.updataReplyInfo(data)
+      if (result) {
+        this.showDialogSuccessMsg()
+      }
+    },
+
+    saveReply() {
+      let editContent = this.replyContent
+      if (editContent.length > 0) {
+        if (editContent.length > 50) {
+          Toast('输入内容不得超过50个字')
+        } else {
+          let obj = {}
+          obj.content = this.replyContent
+          obj.status = this.statusFirst
+          this.setReplyInfo(obj)
+        }
+      } else {
+        this.showDialogErrMsg()
+      }
+    },
+
+    showDialogErrMsg() {
+      Dialog.alert({
+        title: '保存失败',
+        message: '自动回复内容不可为空'
+      }).then(() => {
+        // on close
+      })
+    },
+
+    showDialogSuccessMsg() {
+      Dialog.alert({
+        message: '保存成功'
+      }).then(() => {
+        // on close
+        this.$router.back(-1)
+      })
+    }
   }
 }
 </script>
@@ -33,11 +94,10 @@ export default {
     padding-left: 16px;
     padding-right: 16px;
 
-     > .input-content-body {
+    > .input-content-body {
       font-size: 15px;
       font-weight: 500;
       color: rgba(153, 153, 153, 1);
-      line-height: 21px;
       border: 0;
       height: 42px;
     }
@@ -48,8 +108,6 @@ export default {
     justify-content: center;
     align-items: center;
     margin-top: 40px;
-
-   
 
     > .cancel-view {
       display: flex;
