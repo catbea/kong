@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       replyContent: '',
-      statusFirst: 1
+      statusFirst: this.$route.query.status
     }
   },
 
