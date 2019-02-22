@@ -317,6 +317,27 @@ export default [
     }
   },
   {
+    path: '/user/reply/replyContent',
+    name: 'replyContent',
+    component: resolve => require(['@/views/user/reply/replyContent.vue'], resolve),
+    meta: {
+      title: '编辑内容',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/reply/editReply',
+    name: 'editReply',
+    component: resolve => require(['@/views/user/reply/editReply.vue'], resolve),
+    meta: {
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/opinionFeedback',
     name: 'opinionFeedback',
     component: resolve => require(['@/views/user/opinionFeedback/index.vue'], resolve),
