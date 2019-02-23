@@ -179,17 +179,19 @@ export default {
     cardQrInfo: null,
     marketQrInfo: null,
     articleQrInfo: null,
+    urlParm: {},
     shareUuid: '' // 分享ID
     // startY: '',
     // endY: ''
   }),
   created() {
+    this.urlParm = this.getUrlQueryParams(location.href)
     this.checkAuth()
     this.infoId = this.$route.params.id
     this.city = this.$route.params.city
-    this.agentId = this.$route.query.agentId
-    this.enterpriseId = this.$route.query.enterpriseId
-    this.shareUuid = this.$route.query.shareUuid
+    this.agentId = this.urlParm.agentId
+    this.enterpriseId = this.urlParm.enterpriseId
+    this.shareUuid = this.urlParm.shareUuid
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
@@ -205,15 +207,15 @@ export default {
   methods: {
     checkAuth() {
       let wxredirecturl = window.location.href.replace('?from=singlemessage', '')//.split('?')[0]
-      let parm = this.getUrlQueryParams(location.href)
+      let parm = this.urlParm
       console.log(parm)
       if(parm.code) {
-        alert(window.location.href + ' - parm.code')
+        // alert(window.location.href + ' - parm.code')
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-        console.log(wxredirecturl)
+        // console.log(wxredirecturl)
         window.location.href = wxurl
       }
       
