@@ -204,7 +204,7 @@ export default {
   },
   methods: {
     checkAuth() {
-      let wxredirecturl = window.location.href.replace('?from=singlemessage', '').split('?')[0]
+      let wxredirecturl = 'https://sit2.zooming-data.com'//window.location.href.replace('?from=singlemessage', '').split('?')[0]
       let parm = this.getUrlQueryParams(location.href)
       console.log(parm)
       if(parm.code) {
