@@ -216,7 +216,7 @@ export default {
         this.agentId = parm.agentId
         this.enterpriseId = parm.enterpriseId
         this.shareUuid = parm.shareUuid
-        alert(window.location.href + ' - ' + this.enterpriseId + ' - ' + parm.enterpriseId)
+        alert(window.location.href + ' - ' + this.enterpriseId + ' - ' + location.href.split('?')[2])
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
