@@ -78,9 +78,7 @@ export default {
         const result = await userService.updataReplyInfo(obj)
         if (result) {
           Toast('设置成功')
-        } else {
-          Toast('请选择要设置......')
-        }
+        } 
       }
     }
   }
@@ -94,9 +92,11 @@ export default {
   flex-direction: column;
   align-items: center;
   background: rgba(247, 249, 250, 1);
+  position: relative;
 
   > .reply-body {
     width: 100%;
+    max-height: 90%;
 
     > .relpy-list {
       background: white;
