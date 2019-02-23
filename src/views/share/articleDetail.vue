@@ -204,7 +204,7 @@ export default {
   },
   methods: {
     checkAuth() {
-      let wxredirecturl = window.location.href.split('?')[0]
+      let wxredirecturl = 'https://sit2.zooming-data.com'//window.location.href.replace('?from=singlemessage', '').split('?')[0]
       let parm = this.getUrlQueryParams(location.href)
       console.log(parm)
       if(parm.code) {
@@ -213,7 +213,7 @@ export default {
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
-        // console.log(encodeURIComponent(wxredirecturl))
+        console.log(wxredirecturl)
         window.location.href = wxurl
       }
       
