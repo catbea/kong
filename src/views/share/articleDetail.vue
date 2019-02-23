@@ -208,7 +208,7 @@ export default {
       let parm = this.getUrlQueryParams(location.href)
       console.log(parm)
       if(parm.code) {
-        alert(parm.code + ' - parm.code')
+        alert(window.location.href + ' - parm.code')
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
