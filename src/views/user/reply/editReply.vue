@@ -1,7 +1,7 @@
 <template>
     <div class="edit-body">
         <div class="input-body">
-            <textarea class="input-content-body" placeholder="请输入自动回复内容" v-model="replyContent"></textarea>
+            <textarea class="input-content-body" placeholder="请输入自动回复内容" maxlength="50" v-model="replyContent"></textarea>
         </div>
         <div class="bottom-body">
             <div class="cancel-view">取消</div>
@@ -95,11 +95,14 @@ export default {
     padding-right: 16px;
 
     > .input-content-body {
-      font-size: 15px;
+      width: 100%;
+      font-size: 16px;
       font-weight: 500;
       color: rgba(153, 153, 153, 1);
       border: 0;
       height: 42px;
+      color: #333333;
+
     }
   }
 
