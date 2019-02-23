@@ -186,12 +186,12 @@ export default {
   }),
   created() {
     this.urlParm = this.getUrlQueryParams(location.href)
-    this.checkAuth()
     this.infoId = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.urlParm.agentId
     this.enterpriseId = this.urlParm.enterpriseId
     this.shareUuid = this.urlParm.shareUuid
+    this.checkAuth()
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
@@ -210,7 +210,7 @@ export default {
       let parm = this.urlParm
       console.log(parm)
       if(parm.code) {
-        alert(window.location.href + ' - parm.code')
+        alert(window.location.href + ' - ' + parm.enterpriseId + ' - ' + parm.code)
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
