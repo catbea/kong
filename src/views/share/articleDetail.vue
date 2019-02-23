@@ -188,9 +188,9 @@ export default {
     this.urlParm = this.getUrlQueryParams(location.href)
     this.infoId = this.$route.params.id
     this.city = this.$route.params.city
-    this.agentId = this.urlParm.agentId
-    this.enterpriseId = this.urlParm.enterpriseId
-    this.shareUuid = this.urlParm.shareUuid
+    this.agentId = this.$route.query.agentId
+    this.enterpriseId = this.$route.query.enterpriseId
+    this.shareUuid = this.$route.query.shareUuid
     this.checkAuth()
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
@@ -206,11 +206,17 @@ export default {
   },
   methods: {
     checkAuth() {
-      let wxredirecturl = window.location.href.replace('?from=singlemessage', '')//.split('?')[0]
+      let wxredirecturl = window.location.href.replace('?from=singlemessage', '')
       let parm = this.urlParm
-      console.log(parm)
+      
       if(parm.code) {
-        alert(window.location.href + ' - ' + parm.enterpriseId + ' - ' + parm.code)
+        console.log(location.href.split('?'))
+        parm = this.getUrlQueryParams(location.href.split('?')[0]+'?'+location.href.split('?')[2])
+        console.log(parm)
+        this.agentId = parm.agentId
+        this.enterpriseId = parm.enterpriseId
+        this.shareUuid = parm.shareUuid
+        alert(window.location.href + ' - ' + this.enterpriseId + ' - ' + location.href.split('?')[2])
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
