@@ -24,12 +24,15 @@ export default {
   data() {
     return {
       replyContent: '',
-      statusFirst: this.$route.query.status
+      statusFirst: this.$route.query.status,
+      replyId: -1
     }
   },
 
   created() {
     let params = this.$route.query
+
+    this.replyId = params.id
 
     if (params.status === 0 && params.content.length > 0) {
       document.title = '编辑内容'
@@ -56,6 +59,7 @@ export default {
           let obj = {}
           obj.content = this.replyContent
           obj.status = this.statusFirst
+          obj.id = this.replyId
           this.setReplyInfo(obj)
         }
       } else {
