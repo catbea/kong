@@ -44,13 +44,13 @@ export default {
       if (this.relpyList.length > 0) {
         let params = {}
         params.id = -1
-        params.status = 1
+        params.status = 0
         params.content = ''
         this.$router.push({ path: '/user/reply/editReply', query: params })
       } else {
         let params = {}
         params.id = -1
-        params.status = 0
+        params.status = 1
         params.content = ''
         this.$router.push({ path: '/user/reply/editReply', query: params })
       }
