@@ -37,6 +37,9 @@ export default {
     if (params.status === 0 && params.content.length > 0) {
       document.title = '编辑内容'
       this.replyContent = params.content
+    } else if (params.status === 1 && params.content.length > 0) {
+      document.title = '编辑内容'
+      this.replyContent = params.content
     } else {
       document.title = '新增回复'
     }
@@ -56,6 +59,8 @@ export default {
         if (editContent.length > 50) {
           Toast('输入内容不得超过50个字')
         } else {
+          console.log(this.statusFirst)
+
           let obj = {}
           obj.content = this.replyContent
           obj.status = this.statusFirst
@@ -106,6 +111,7 @@ export default {
     padding-bottom: 24px;
     padding-left: 16px;
     padding-right: 16px;
+    height: 80px;
 
     > .input-content-body {
       width: 100%;
@@ -113,8 +119,8 @@ export default {
       font-weight: 500;
       color: rgba(153, 153, 153, 1);
       border: 0;
-      height: 42px;
       color: #333333;
+      height: 80px;
     }
   }
 
