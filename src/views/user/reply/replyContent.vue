@@ -66,7 +66,7 @@ export default {
     enterEditPage(id, content) {
       let params = {}
       params.id = id
-      params.status = 0
+      params.status = 1
       params.content = content
       this.$router.push({ path: '/user/reply/editReply', query: params })
     }

@@ -419,14 +419,14 @@ export default {
       if (!checkStrType(name)) {
         return this.$toast('姓名只支持中文、英文和数字')
       }
-      if (mobile.length == 11) {
-        if (!checkPhoneNum(mobile)) {
-          return this.$toast('电话号码输入有误')
-        }
-      }
-      if (mobile.length < 11) {
-        return this.$toast('电话号码输入有误')
-      }
+      // if (mobile.length == 11) {
+      //   if (!checkPhoneNum(mobile)) {
+      //     return this.$toast('电话号码输入有误')
+      //   }
+      // }
+      // if (mobile.length < 11) {
+      //   return this.$toast('电话号码输入有误')
+      // }
       let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？\'\"\’\‘\“\”]+$/g
       if (!reg.test(slogan)) {
         return this.$toast('宣传语只支持中文、英文和数字')
