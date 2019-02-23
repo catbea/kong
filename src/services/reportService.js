@@ -38,7 +38,7 @@ class reportService {
    * @param {*} distributorId 分销商Id
    * @param {*} institutionId 所属机构Id
    */
-  addReportInfo(clientId, clientName, clientMobile, linkerId, linkerName, distributorId, institutionId) {
+  addReportInfo(clientId, clientName, clientMobile, linkerId, linkerName, distributorId, institutionId,hideClientMobile) {
     return xhr({
       method: 'POST',
       url: '/customerFilling/addFilingInfo',
@@ -49,7 +49,8 @@ class reportService {
         linkerId,
         linkerName,
         distributorId,
-        institutionId
+        institutionId,
+        hideClientMobile
       }
     })
   }
