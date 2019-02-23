@@ -1,13 +1,18 @@
 <template>
-    <div class="edit-body">
-        <div class="input-body">
-            <textarea class="input-content-body" placeholder="请输入自动回复内容" maxlength="50" v-model="replyContent"></textarea>
-        </div>
-        <div class="bottom-body">
-            <div class="cancel-view">取消</div>
-            <div class="sure-view" @click="saveReply">保存</div>
-        </div>
+  <div class="edit-body">
+    <div class="input-body">
+      <textarea
+        class="input-content-body"
+        placeholder="请输入自动回复内容"
+        maxlength="50"
+        v-model="replyContent"
+      ></textarea>
     </div>
+    <div class="bottom-body">
+      <div class="cancel-view" @click="cancelReply">取消</div>
+      <div class="sure-view" @click="saveReply">保存</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -58,6 +63,10 @@ export default {
       }
     },
 
+    cancelReply() {
+      this.$router.back(-1)
+    },
+
     showDialogErrMsg() {
       Dialog.alert({
         title: '保存失败',
@@ -102,7 +111,6 @@ export default {
       border: 0;
       height: 42px;
       color: #333333;
-
     }
   }
 
