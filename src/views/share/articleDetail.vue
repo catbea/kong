@@ -210,7 +210,7 @@ export default {
       let parm = this.urlParm
       console.log(parm)
       if(parm.code) {
-        alert(window.location.href + ' - ' + this.enterpriseId)
+        alert(window.location.href + ' - ' + parm.enterpriseId + ' - ' + parm.code)
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
