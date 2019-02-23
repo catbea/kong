@@ -128,10 +128,8 @@ import Null from 'COMP/Null'
 import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
 import ArticleDialog from 'COMP/Dialog/ArticleDialog'
-import timeUtils from '@/utils/timeUtils'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
-import articleService from 'SERVICE/articleService'
 export default {
   components: {
     Avatar,
@@ -145,6 +143,7 @@ export default {
     Null
   },
   data: () => ({
+    appId: 'wx29a6a87b38695e87',
     haveData: true,
     nullIcon: require('IMG/article/empty_article@2x.png'),
     nullcontent: '该文章已被下架删除',
@@ -185,6 +184,7 @@ export default {
     // endY: ''
   }),
   created() {
+    this.checkAuth()
     this.infoId = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
@@ -203,6 +203,31 @@ export default {
     this.getCardQrCode()
   },
   methods: {
+    checkAuth() {
+      let wxredirecturl = window.location.href
+      let parm = this.getUrlQueryParams(location.href)
+      console.log(parm)
+      if(parm.code) {
+        console.log(parm.code, 'parm.code')
+        return
+      } else {
+        let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
+        + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+        // console.log(encodeURIComponent(wxredirecturl))
+        window.location.href = wxurl
+      }
+      
+    },
+    getUrlQueryParams(_url) {
+      let params = {},
+        results = null,
+        url = _url || location.href
+      let regex = /[?&]([\w]+)=([^&#]*)/g
+      while ((results = regex.exec(url)) != null) {
+        params[decodeURIComponent(results[1])] = decodeURIComponent(results[2])
+      }
+      return params
+    },
     async getDetail() {
       const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId)
       if (res.returnCode == 10028) {
@@ -339,17 +364,14 @@ export default {
       if (val == 1) {
         // 名片
         this.openCardPopup = true
-        this.dataReport({userActionType: 'viewCard', userActionCode: 'HMPCK'})
       } else if (val == 2) {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
-        this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP'})
       } else {
         // 文章
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
-        this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK'})
       }
     },
     popupShowControl(val) {
@@ -362,21 +384,6 @@ export default {
       this.openArticlePopup = false
       this.marketQrInfo = null
       this.articleQrInfo = null
-    },
-    // 数据埋点上报
-    async dataReport(data) {
-      let params = {
-        enterpriseId: this.enterpriseId,
-        agentId: this.agentId,
-        userActionType: data.userActionType,
-        userActionCode: data.userActionCode,
-        viewTime: timeUtils.getNowDay(),
-        action: '',
-        articleId: this.infoId,
-        articleTitle: this.info.title,
-        sources: 'H5'
-      }
-      const result = await articleService.dataReport(params)
     },
     // 处理楼盘标签
     handleLinkerTags(obj) {
@@ -440,6 +447,9 @@ export default {
     $route() {
       location.reload()
     }
+  },
+  beforeCreate() {
+    
   },
   mounted () {
     // document.querySelector('.discover-detail-container').addEventListener(
