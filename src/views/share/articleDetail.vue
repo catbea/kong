@@ -143,6 +143,7 @@ export default {
     Null
   },
   data: () => ({
+    mpUser: {},
     appId: 'wx29a6a87b38695e87',
     haveData: true,
     nullIcon: require('IMG/article/empty_article@2x.png'),
@@ -205,19 +206,20 @@ export default {
     this.getCardQrCode()
   },
   methods: {
-    checkAuth() {
+    async checkAuth() {
       let wxredirecturl = window.location.href.replace('?from=singlemessage', '')
       let parm = this.urlParm
       
       if(parm.code) {
-        // console.log(location.href.split('?'))
         let parmStr = location.href.split('?')[2]
-        // console.log(parm)
         this.agentId = parmStr.split('&')[0].split("=")[1]
         this.enterpriseId = parmStr.split('&')[1].split("=")[1]
         this.shareUuid = parmStr.split('&')[2].split("=")[1]
-        // alert(window.location.href + ' - ' + this.enterpriseId + ' - ' + location.href.split('?')[2])
-        return
+
+        const res = await userService.getUserByCode(parm.code, this.enterpriseId)
+        this.mpUser = res
+        alert(this.mpUser.appid)
+
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
