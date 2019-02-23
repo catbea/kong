@@ -216,7 +216,7 @@ export default {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
         // console.log(wxredirecturl)
-        // window.location.href = wxurl
+        window.location.href = wxurl
       }
       
     },
