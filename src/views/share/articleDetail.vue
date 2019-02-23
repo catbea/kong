@@ -210,13 +210,13 @@ export default {
       let parm = this.urlParm
       
       if(parm.code) {
-        console.log(location.href.split('?'))
-        parm = this.getUrlQueryParams(location.href.split('?')[0]+'?'+location.href.split('?')[2])
-        console.log(parm)
-        this.agentId = parm.agentId
-        this.enterpriseId = parm.enterpriseId
-        this.shareUuid = parm.shareUuid
-        alert(window.location.href + ' - ' + this.enterpriseId + ' - ' + location.href.split('?')[2])
+        // console.log(location.href.split('?'))
+        let parmStr = location.href.split('?')[2]
+        // console.log(parm)
+        this.agentId = parmStr.split('&')[0].split("=")[1]
+        this.enterpriseId = parmStr.split('&')[1].split("=")[1]
+        this.shareUuid = parmStr.split('&')[2].split("=")[1]
+        // alert(window.location.href + ' - ' + this.enterpriseId + ' - ' + location.href.split('?')[2])
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
