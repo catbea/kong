@@ -10,7 +10,7 @@
         <div class="text-context">{{item.content|textOver()}}</div>
         <div
           class="select-icon"
-          :style="{backgroundImage:'url(' + (item.isChecked==true?check_pass:check_nor) + ')'}"
+          :style="{backgroundImage:'url(' + (item.status===1 ? check_pass : check_nor) + ')'}"
         ></div>
       </div>
       <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
@@ -49,24 +49,16 @@ export default {
     async getRelpyList() {
       const result = await userService.queryReplyList()
       if (result) {
-        this.relpyList = result
-
-        for (var i = 0; i < result.length; i++) {
-          if (this.relpyList[i].status === 1) {
-            this.relpyList[i].isChecked = true
-          } else {
-            this.relpyList[i].isChecked = false
-          }
-        }
+        this.relpyList =  JSON.parse(JSON.stringify(result)) 
       }
     },
 
     clickToSave(data, index) {
       this.selectItemInfo = data
       for (var i = 0; i < this.relpyList.length; i++) {
-        this.relpyList[i].isChecked = false
+        this.relpyList[i].status = 0
       }
-      this.relpyList[index].isChecked = true
+      this.relpyList[index].status = 1
     },
 
     /**
