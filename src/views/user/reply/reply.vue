@@ -88,6 +88,7 @@ export default {
 <style lang="less" scoped>
 .reply-body {
   background: rgba(247, 249, 250, 1);
+  
   .reply-list {
     position: absolute;
     width: 100%;
@@ -124,7 +125,7 @@ export default {
   .reply-edit {
     position: absolute;
     width: 100%;
-    bottom: 60px;
+    bottom: 65px;
     height: 56px;
     display: flex;
     align-items: center;
@@ -138,7 +139,8 @@ export default {
   .reply-save {
     position: absolute;
     bottom: 10px;
-    width: 343px;
+    width: 90%;
+    margin-left: 5%;
     height: 44px;
     background: rgba(0, 122, 230, 1);
     border-radius: 6px;
