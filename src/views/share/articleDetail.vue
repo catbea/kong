@@ -186,12 +186,12 @@ export default {
   }),
   created() {
     this.urlParm = this.getUrlQueryParams(location.href)
-    this.checkAuth()
     this.infoId = this.$route.params.id
     this.city = this.$route.params.city
     this.agentId = this.urlParm.agentId
     this.enterpriseId = this.urlParm.enterpriseId
     this.shareUuid = this.urlParm.shareUuid
+    this.checkAuth()
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
@@ -210,13 +210,13 @@ export default {
       let parm = this.urlParm
       console.log(parm)
       if(parm.code) {
-        alert(window.location.href + ' - parm.code')
+        alert(window.location.href + ' - ' + this.enterpriseId)
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
         + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
         // console.log(wxredirecturl)
-        window.location.href = wxurl
+        // window.location.href = wxurl
       }
       
     },
