@@ -47,9 +47,11 @@ export default {
         if (phoneType == null) {
           this.Cphone = ''
           this.$toast('请输入数字')
-        } else if (this.Cphone.length < 11) {
-          this.$toast('手机号长度有误')
-        } else {
+        } 
+        // else if (this.Cphone.length < 11) {
+        //   this.$toast('手机号长度有误')
+        // }
+         else {
           let date = {
             tempPhone: this.Cphone
           }
