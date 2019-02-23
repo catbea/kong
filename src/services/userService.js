@@ -552,5 +552,20 @@ class UserService {
       body:data
     })
   }
+
+  /**
+   * 根据code获取小程序用户详情
+   * @param {*} data 
+   */
+  getUserByCode(code, enterpriseId){
+    return xhr({
+      method:'GET',
+      url:'/user/login',
+      body: {
+        code,
+        enterpriseId
+      }
+    })
+  }
 }
 export default new UserService()
