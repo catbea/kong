@@ -118,6 +118,7 @@ export default {
       border-radius: 6px;
       border: 1px solid rgba(0, 122, 230, 1);
       color: #007ae6;
+      font-size: 16px;
       margin-right: 8.5px;
     }
 
@@ -131,6 +132,7 @@ export default {
       border-radius: 6px;
       color: white;
       margin-left: 8.5px;
+      font-size: 16px;
     }
   }
 }
