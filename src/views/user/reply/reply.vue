@@ -5,12 +5,15 @@
         class="relpy-list"
         v-for="(item,index) in relpyList"
         :key="index"
-        @click="clickToSave(item)"
+        @click="clickToSave(item,index)"
       >
         <div class="text-context">{{item.content|textOver()}}</div>
-        <div class="select-icon" :style="{backgroundImage:'url(' + arrowIcon + ')'}"></div>
+        <div
+          class="select-icon"
+          :style="{backgroundImage:'url(' + (item.isChecked==true?check_pass:check_nor) + ')'}"
+        ></div>
       </div>
-      <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
+      <!-- <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div> -->
     </div>
     <div class="reply-save" @click="saveMySelect">保存选择</div>
   </div>
@@ -26,7 +29,8 @@ export default {
     return {
       relpyList: [],
       selectItemInfo: {},
-      arrowIcon: require('IMG/user/check_reply.png'),
+      check_pass: require('IMG/user/check_reply.png'),
+      check_nor: require('IMG/user/check_nor.png')
     }
   },
 
@@ -46,11 +50,23 @@ export default {
       const result = await userService.queryReplyList()
       if (result) {
         this.relpyList = result
+
+        for (var i = 0; i < result.length; i++) {
+          if (this.relpyList[i].status === 1) {
+            this.relpyList[i].isChecked = true
+          } else {
+            this.relpyList[i].isChecked = false
+          }
+        }
       }
     },
 
-    clickToSave(data) {
+    clickToSave(data, index) {
       this.selectItemInfo = data
+      for (var i = 0; i < this.relpyList.length; i++) {
+        this.relpyList[i].isChecked = false
+      }
+      this.relpyList[index].isChecked = true
     },
 
     /**
@@ -65,6 +81,7 @@ export default {
         let obj = {}
         obj.content = params.content
         obj.status = 1
+        obj.id = params.id
 
         const result = await userService.updataReplyInfo(obj)
         if (result) {
@@ -94,6 +111,8 @@ export default {
       display: flex;
       align-items: center;
       border-bottom: 1px #eeeeee solid;
+      overflow: auto;
+      
 
       > .text-context {
         width: 87%;
@@ -137,6 +156,7 @@ export default {
     display: flex;
     justify-content: center;
     font-size: 16px;
+    
   }
 }
 </style>
