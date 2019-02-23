@@ -13,7 +13,7 @@
           :style="{backgroundImage:'url(' + (item.isChecked==true?check_pass:check_nor) + ')'}"
         ></div>
       </div>
-      <!-- <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div> -->
+      <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
     </div>
     <div class="reply-save" @click="saveMySelect">保存选择</div>
   </div>
