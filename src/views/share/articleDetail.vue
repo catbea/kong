@@ -204,11 +204,11 @@ export default {
   },
   methods: {
     checkAuth() {
-      let wxredirecturl = 'https://sit2.zooming-data.com'//window.location.href.replace('?from=singlemessage', '').split('?')[0]
+      let wxredirecturl = window.location.href.replace('?from=singlemessage', '').split('?')[0]
       let parm = this.getUrlQueryParams(location.href)
       console.log(parm)
       if(parm.code) {
-        console.log(parm.code, 'parm.code')
+        alert(parm.code + ' - parm.code')
         return
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
