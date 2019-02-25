@@ -299,7 +299,7 @@ export default {
       this.isShowEmjie = false
       setTimeout(() => {
         document.body.scrollTop = document.body.scrollHeight
-      }, 500)
+      }, 1000)
 
       this.pyzmaoviwe()
     },
