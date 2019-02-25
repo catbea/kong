@@ -347,4 +347,7 @@ export default {
     }
   }
 }
+.van-dialog__message{
+  line-height: 1.5;
+}
 </style>
