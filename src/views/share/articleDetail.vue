@@ -378,17 +378,17 @@ export default {
       if (val == 1) {
         // 名片
         this.openCardPopup = true
-        this.dataReport({userActionType: 'viewCard', userActionCode: 'HMPCK'})
+        this.dataReport({userActionType: 'viewCard', userActionCode: 'HMPCK', action: ''})
       } else if (val == 2) {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
-        this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP'})
+        this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP', action: ''})
       } else {
         // 文章
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
-        this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK'})
+        this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
       }
     },
     popupShowControl(val) {
@@ -410,7 +410,7 @@ export default {
         userActionType: data.userActionType,
         userActionCode: data.userActionCode,
         viewTime: timeUtils.getNowDay(),
-        action: '',
+        action: data.action,
         articleId: this.infoId,
         articleTitle: this.info.title,
         sources: 'H5'
@@ -492,6 +492,14 @@ export default {
     //   },
     //   { passive: false }
     // )
+    window.addEventListener('pageshow', ()=>{
+      alert('show')
+      this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
+    })
+    window.addEventListener('pagehide', ()=>{
+      alert('hide')
+      this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
+    })
   }
 }
 </script>
