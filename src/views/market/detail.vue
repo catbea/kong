@@ -269,7 +269,7 @@ export default {
   methods: {
     relationHandle() {
       //立即联系弹窗
-      window.location.href = 'tel://400-0904-999'
+      window.location.href = 'tel://'+this.info.contatctTel
       this.relationShow = false
     },
     async getMarketDetailPhotoInfo() {
@@ -622,8 +622,8 @@ export default {
       li:nth-child(1) {
         border-radius: 50%;
         position: absolute;
-        top: 48px;
-        left: 153px;
+        top: 47.5px;
+        left: 153.5px;
         width: 23px;
         height: 23px;
       }
