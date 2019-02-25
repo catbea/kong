@@ -300,7 +300,6 @@ export default {
       setTimeout(() => {
         document.body.scrollTop = document.body.scrollHeight
       }, 1000)
-
       this.pyzmaoviwe()
     },
 
