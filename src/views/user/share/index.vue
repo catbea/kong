@@ -697,7 +697,7 @@ export default {
             z-index: 4;
             text-shadow: 0 0 5px #000;
             h3 {
-              font-size: 24px;
+              font-size: 22px;
             }
 
             span {
