@@ -217,11 +217,11 @@ export default {
         this.enterpriseId = parmStr.split('&')[1].split("=")[1]
         this.shareUuid = parmStr.split('&')[2].split("=")[1]
 
-        const res = await userService.getUserByCode(parm.code, this.enterpriseId)
-        this.mpUser = res
-        console.log(res, 'getUserByCode')
-        alert(this.mpUser.appId+' - '+this.enterpriseId)
-        // this.codetest = parm.code
+        // const res = await userService.getUserByCode(parm.code, this.enterpriseId)
+        // this.mpUser = res
+        // console.log(res, 'getUserByCode')
+        // alert(parm.code+' - '+this.enterpriseId)
+        this.codetest = parm.code
 
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
