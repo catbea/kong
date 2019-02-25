@@ -224,6 +224,7 @@ export default {
         // console.log(res, 'getUserByCode')
         // alert(this.mpUser.appid+' - '+this.enterpriseId)
         // this.codetest = parm.code
+        this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
 
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
@@ -495,7 +496,7 @@ export default {
     // )
     window.addEventListener('pageshow', ()=>{
       alert('show')
-      this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
+      // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
     })
     window.addEventListener('pagehide', ()=>{
       alert('hide')
