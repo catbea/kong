@@ -217,10 +217,10 @@ export default {
         this.enterpriseId = parmStr.split('&')[1].split("=")[1]
         this.shareUuid = parmStr.split('&')[2].split("=")[1]
 
-        // const res = await userService.getUserByCode(parm.code, this.enterpriseId)
-        // this.mpUser = res
-        // console.log(res, 'getUserByCode')
-        // alert(parm.code+' - '+this.enterpriseId)
+        const res = await userService.getUserByCode('081qQ17i1VFEDu0Xho4i1OT67i1qQ17U', this.enterpriseId)
+        this.mpUser = res
+        console.log(res, 'getUserByCode')
+        alert(res.appid+' - '+this.enterpriseId)
         this.codetest = parm.code
 
       } else {
@@ -462,7 +462,7 @@ export default {
     }
   },
   beforeCreate() {
-    
+
   },
   mounted () {
     // document.querySelector('.discover-detail-container').addEventListener(
