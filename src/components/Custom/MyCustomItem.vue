@@ -143,8 +143,43 @@ export default {
   text-align: center;
 }
 .delete-dialog{
+  &.van-dialog{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 85%;
+    font-size: 16px;
+    overflow: hidden;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    border-radius: 4px;
+    background-color: #fff;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
   .van-dialog__confirm{
     color: #EA4D2E;
+  }
+  .van-dialog__header {
+    font-weight: 500;
+    padding-top: 25px;
+    text-align: center;
+  }
+  .van-dialog__message--has-title{
+    padding-top: 12px;
+    color: #7d7e80;
+  }
+  .van-dialog__message{
+    padding: 25px;
+    font-size: 14px;
+    line-height: 1.5;
+    max-height: 60vh;
+    overflow-y: auto;
+    text-align: center;
+    -webkit-overflow-scrolling: touch;
+    white-space: pre-wrap;
   }
 }
 </style>
