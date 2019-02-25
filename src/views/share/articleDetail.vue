@@ -502,6 +502,15 @@ export default {
       alert('hide')
       this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
     })
+    window.onload = function() {
+      alert('onload')
+    }
+    window.onunload = function() {
+      alert('onunload')
+    }
+  },
+  beforeDestory() {
+      alert('beforeDestory')
   }
 }
 </script>
