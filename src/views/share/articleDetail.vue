@@ -218,7 +218,8 @@ export default {
 
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
-        alert(this.mpUser+' - '+this.appId+' - '+parm.code+' - '+this.enterpriseId)
+        console.log(res, 'getUserByCode')
+        alert(this.mpUser.appid+' - '+this.appId+' - '+parm.code+' - '+this.enterpriseId)
 
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
