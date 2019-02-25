@@ -59,7 +59,7 @@ export default {
   data: () => ({
     activeIndex: 0,
     nullIcon: require('IMG/user/empty_custom@2x.png'),
-    nullcontent: '暂无客户，快去分享你的名片吧！',
+    nullcontent: '未找到客户，快去分享你的名片吧!',
     data: {
       0: { finished: false, list: [], page: 1, haveData: true },
       1: { finished: false, list: [], page: 1, haveData: true },
