@@ -144,7 +144,7 @@ export default {
   },
   data: () => ({
     mpUser: {},
-    appId: 'wx29a6a87b38695e87',
+    appId: process.env.VUE_APP_MP_APPID,
     haveData: true,
     nullIcon: require('IMG/article/empty_article@2x.png'),
     nullcontent: '该文章已被下架删除',
@@ -218,7 +218,7 @@ export default {
 
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
-        alert(this.mpUser+' - '+process.env.MP_APPID)
+        alert(this.mpUser+' - '+this.appId+' - '+parm.code+' - '+this.enterpriseId)
 
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
