@@ -37,7 +37,7 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer" v-show="renderDom.length">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="disclaimer-text">{{codetest}} 免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -143,6 +143,7 @@ export default {
     Null
   },
   data: () => ({
+    codetest: '',
     mpUser: {},
     appId: process.env.VUE_APP_MP_APPID,
     haveData: true,
@@ -216,9 +217,11 @@ export default {
         this.enterpriseId = parmStr.split('&')[1].split("=")[1]
         this.shareUuid = parmStr.split('&')[2].split("=")[1]
 
-        const res = await userService.getUserByCode(parm.code, this.enterpriseId)
-        this.mpUser = res
-        alert(this.mpUser+' - '+this.appId+' - '+parm.code+' - '+this.enterpriseId)
+        // const res = await userService.getUserByCode(parm.code, this.enterpriseId)
+        // this.mpUser = res
+        // console.log(res, 'getUserByCode')
+        // alert(parm.code+' - '+this.enterpriseId)
+        this.codetest = parm.code
 
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
