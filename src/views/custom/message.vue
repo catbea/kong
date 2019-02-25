@@ -198,8 +198,7 @@ export default {
         '您什么时候有时间，我这边好提前安排。',
         '非常抱歉，我现在不方便打字，您有任何事情都可以给我留言，我会在方便的时候第一时间给您回复。'
       ],
-      isShowOption: false,
-      timer: ''
+      isShowOption: false
     }
   },
   computed: {
@@ -234,7 +233,6 @@ export default {
   },
   methods: {
     blur() {
-      clearInterval(this.timer)
       // document.activeElement.scrollIntoViewIfNeeded(true)
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
     },
@@ -299,9 +297,9 @@ export default {
     hideface(event) {
       //关闭表情
       this.isShowEmjie = false
-      this.timer = setInterval(() => {
+      setTimeout(() => {
         document.body.scrollTop = document.body.scrollHeight
-      }, 500)
+      }, 1000)
       this.pyzmaoviwe()
     },
 
