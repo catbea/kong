@@ -6,11 +6,23 @@
         <span class="edit-phone-remark">(不可更改)</span>
       </p>
       <p class="edit-phone-conter">
-        <input type="text" class="edit-phone-input" placeholder disabled="disabled" :value="userInfo.registerMobile">
+        <input
+          type="text"
+          class="edit-phone-input"
+          placeholder=""
+          disabled="disabled"
+          :value="userInfo.registerMobile"
+        >
       </p>
       <p class="edit-phone-card">名片展示联系电话</p>
       <p class="edit-phone-card-conter">
-        <input type="tel" class="edit-phone-card-input" autofocus="autofocus" maxlength="16" v-model="Cphone">
+        <input
+          type="tel"
+          class="edit-phone-card-input"
+          autofocus="autofocus"
+          maxlength="16"
+          v-model="Cphone"
+        >
       </p>
       <button class="edit-phone-query" @click="godSub">确认修改</button>
     </div>
@@ -43,20 +55,25 @@ export default {
       if (this.Cphone == '') {
         this.$toast('名片展示手机号不可为空')
       } else {
-        let phoneType = strFormat.fmtNum(this.Cphone)
-        if (phoneType == null) {
-          this.Cphone = ''
-          this.$toast('请输入数字')
-        } 
-        // else if (this.Cphone.length < 11) {
-        //   this.$toast('手机号长度有误')
+        // let phoneType = strFormat.fmtNum(this.Cphone)
+        // if (phoneType == null) {
+        //   this.Cphone = ''
+        //   this.$toast('请输入数字')
         // }
-         else {
-          let date = {
-            tempPhone: this.Cphone
-          }
-          this.upDatePhoneNum(date)
+        // // else if (this.Cphone.length < 11) {
+        // //   this.$toast('手机号长度有误')
+        // // }
+        //  else {
+        //   let date = {
+        //     tempPhone: this.Cphone
+        //   }
+        //   this.upDatePhoneNum(date)
+        // }
+
+        let date = {
+          tempPhone: this.Cphone
         }
+        this.upDatePhoneNum(date)
       }
     },
 

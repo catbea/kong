@@ -128,8 +128,10 @@ import Null from 'COMP/Null'
 import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
 import ArticleDialog from 'COMP/Dialog/ArticleDialog'
+import timeUtils from '@/utils/timeUtils'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
+import articleService from 'SERVICE/articleService'
 export default {
   components: {
     Avatar,
@@ -377,14 +379,17 @@ export default {
       if (val == 1) {
         // 名片
         this.openCardPopup = true
+        this.dataReport({userActionType: 'viewCard', userActionCode: 'HMPCK'})
       } else if (val == 2) {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
+        this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP'})
       } else {
         // 文章
         this.getArticleQrcode(item.id)
         this.openArticlePopup = true
+        this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK'})
       }
     },
     popupShowControl(val) {
@@ -398,6 +403,22 @@ export default {
       this.marketQrInfo = null
       this.articleQrInfo = null
     },
+    // 数据埋点上报
+    async dataReport(data) {
+      let params = {
+        enterpriseId: this.enterpriseId,
+        agentId: this.agentId,
+        userActionType: data.userActionType,
+        userActionCode: data.userActionCode,
+        viewTime: timeUtils.getNowDay(),
+        action: '',
+        articleId: this.infoId,
+        articleTitle: this.info.title,
+        sources: 'H5'
+      }
+      const result = await articleService.dataReport(params, {appId: this.mpUser.appid})
+    },
+
     // 处理楼盘标签
     handleLinkerTags(obj) {
       let statusArr = ['热销中', '即将发售', '', '售罄']
