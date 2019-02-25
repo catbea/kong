@@ -44,13 +44,13 @@ export default {
       if (this.relpyList.length > 0) {
         let params = {}
         params.id = -1
-        params.status = 1
+        params.status = 0
         params.content = ''
         this.$router.push({ path: '/user/reply/editReply', query: params })
       } else {
         let params = {}
         params.id = -1
-        params.status = 0
+        params.status = 1
         params.content = ''
         this.$router.push({ path: '/user/reply/editReply', query: params })
       }
@@ -66,7 +66,7 @@ export default {
     enterEditPage(id, content) {
       let params = {}
       params.id = id
-      params.status = 0
+      params.status = 1
       params.content = content
       this.$router.push({ path: '/user/reply/editReply', query: params })
     }
@@ -93,17 +93,17 @@ export default {
       align-items: center;
       border-bottom: 1px #eeeeee solid;
 
-      .text-context {
+      > .text-context {
         width: 87%;
         height: 96px;
         display: flex;
         align-items: center;
         padding-left: 16px;
-        size: 16px;
+        font-size: 16px;
         color: #333333;
       }
 
-      .select-icon {
+      > .select-icon {
         width: 22px;
         height: 22px;
         margin-left: 15px;
@@ -115,7 +115,7 @@ export default {
       display: flex;
       align-items: center;
       color: #445166;
-      size: 16px;
+      font-size: 16px;
       background-color: white;
       margin-top: 20px;
 
@@ -149,7 +149,7 @@ export default {
       border: 1px solid rgba(0, 122, 230, 1);
       color: #007ae6;
       margin-right: 10px;
-      size: 14px;
+      font-size: 14px;
     }
 
     > .sure-view {
@@ -162,7 +162,7 @@ export default {
       border-radius: 6px;
       color: white;
       margin-left: 10px;
-      size: 14px;
+      font-size: 14px;
     }
   }
 }

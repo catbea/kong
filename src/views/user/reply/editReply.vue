@@ -1,13 +1,18 @@
 <template>
-    <div class="edit-body">
-        <div class="input-body">
-            <textarea class="input-content-body" placeholder="请输入自动回复内容" v-model="replyContent"></textarea>
-        </div>
-        <div class="bottom-body">
-            <div class="cancel-view">取消</div>
-            <div class="sure-view" @click="saveReply">保存</div>
-        </div>
+  <div class="edit-body">
+    <div class="input-body">
+      <textarea
+        class="input-content-body"
+        placeholder="请输入自动回复内容"
+        maxlength="50"
+        v-model="replyContent"
+      ></textarea>
     </div>
+    <div class="bottom-body">
+      <div class="cancel-view" @click="cancelReply">取消</div>
+      <div class="sure-view" @click="saveReply">保存</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -19,14 +24,20 @@ export default {
   data() {
     return {
       replyContent: '',
-      statusFirst: this.$route.query.status
+      statusFirst: this.$route.query.status,
+      replyId: -1
     }
   },
 
   created() {
     let params = this.$route.query
 
+    this.replyId = params.id
+
     if (params.status === 0 && params.content.length > 0) {
+      document.title = '编辑内容'
+      this.replyContent = params.content
+    } else if (params.status === 1 && params.content.length > 0) {
       document.title = '编辑内容'
       this.replyContent = params.content
     } else {
@@ -48,14 +59,21 @@ export default {
         if (editContent.length > 50) {
           Toast('输入内容不得超过50个字')
         } else {
+          console.log(this.statusFirst)
+
           let obj = {}
           obj.content = this.replyContent
           obj.status = this.statusFirst
+          obj.id = this.replyId
           this.setReplyInfo(obj)
         }
       } else {
         this.showDialogErrMsg()
       }
+    },
+
+    cancelReply() {
+      this.$router.back(-1)
     },
 
     showDialogErrMsg() {
@@ -93,13 +111,16 @@ export default {
     padding-bottom: 24px;
     padding-left: 16px;
     padding-right: 16px;
+    height: 80px;
 
     > .input-content-body {
-      font-size: 15px;
+      width: 100%;
+      font-size: 16px;
       font-weight: 500;
       color: rgba(153, 153, 153, 1);
       border: 0;
-      height: 42px;
+      color: #333333;
+      height: 80px;
     }
   }
 
@@ -118,6 +139,7 @@ export default {
       border-radius: 6px;
       border: 1px solid rgba(0, 122, 230, 1);
       color: #007ae6;
+      font-size: 16px;
       margin-right: 8.5px;
     }
 
@@ -131,6 +153,7 @@ export default {
       border-radius: 6px;
       color: white;
       margin-left: 8.5px;
+      font-size: 16px;
     }
   }
 }

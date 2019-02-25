@@ -1,17 +1,20 @@
 <template>
-  <div class="replys-body">
-    <div class="reply-body">
+  <div class="reply-body">
+    <div class="reply-list">
       <div
-        class="relpy-list"
+        class="reply-item"
         v-for="(item,index) in relpyList"
         :key="index"
-        @click="clickToSave(item)"
+        @click="clickToSave(item,index)"
       >
         <div class="text-context">{{item.content|textOver()}}</div>
-        <div class="select-icon">1</div>
+        <div
+          class="select-icon"
+          :style="{backgroundImage:'url(' + (item.status===1 ? check_pass : check_nor) + ')'}"
+        ></div>
       </div>
-      <div class="edit-relpy" @click="goToReplyContent">编辑自动回复</div>
     </div>
+    <div class="reply-edit" @click="goToReplyContent">编辑自动回复</div>
     <div class="reply-save" @click="saveMySelect">保存选择</div>
   </div>
 </template>
@@ -25,7 +28,9 @@ export default {
   data() {
     return {
       relpyList: [],
-      selectItemInfo: {}
+      selectItemInfo: {},
+      check_pass: require('IMG/user/check_reply.png'),
+      check_nor: require('IMG/user/check_nor.png')
     }
   },
 
@@ -44,12 +49,16 @@ export default {
     async getRelpyList() {
       const result = await userService.queryReplyList()
       if (result) {
-        this.relpyList = result
+        this.relpyList = JSON.parse(JSON.stringify(result))
       }
     },
 
-    clickToSave(data) {
+    clickToSave(data, index) {
       this.selectItemInfo = data
+      for (var i = 0; i < this.relpyList.length; i++) {
+        this.relpyList[i].status = 0
+      }
+      this.relpyList[index].status = 1
     },
 
     /**
@@ -57,14 +66,19 @@ export default {
      */
     async saveMySelect() {
       let params = this.selectItemInfo
+      var arr = Object.keys(this.selectItemInfo)
+      if (arr.length == 0) {
+        Toast('请选择要设置......')
+      } else {
+        let obj = {}
+        obj.content = params.content
+        obj.status = 1
+        obj.id = params.id
 
-      let obj = {}
-      obj.content = params.content
-      obj.status = 1
-
-      const result = await userService.updataReplyInfo(obj)
-      if (result) {
-        Toast('设置成功')
+        const result = await userService.updataReplyInfo(obj)
+        if (result) {
+          Toast('设置成功')
+        }
       }
     }
   }
@@ -72,22 +86,22 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.replys-body {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.reply-body {
   background: rgba(247, 249, 250, 1);
-
-  > .reply-body {
+  
+  .reply-list {
+    position: absolute;
     width: 100%;
+    bottom: 80px;
+    top: 0px;
+    overflow: auto;
 
-    > .relpy-list {
+    .reply-item {
       background: white;
       display: flex;
       align-items: center;
       border-bottom: 1px #eeeeee solid;
-     
+      overflow: auto;
 
       .text-context {
         width: 87%;
@@ -95,31 +109,38 @@ export default {
         display: flex;
         align-items: center;
         padding-left: 16px;
-        size: 16px;
+        font-size: 16px;
         color: #333333;
       }
 
       .select-icon {
-        width: 22px;
-        height: 22px;
+        width: 50px;
+        height: 50px;
         margin-left: 15px;
+        line-height: 22px;
       }
-    }
-
-    > .edit-relpy {
-      height: 56px;
-      display: flex;
-      align-items: center;
-      padding-left: 16px;
-      color: #445166;
-      size: 12px;
-      background-color: white;
-      margin-top: 20px;
     }
   }
 
-  > .reply-save {
-    width: 343px;
+  .reply-edit {
+    position: absolute;
+    width: 100%;
+    bottom: 65px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    color: #445166;
+    font-size: 12px;
+    background-color: white;
+    margin-top: 20px;
+  }
+
+  .reply-save {
+    position: absolute;
+    bottom: 10px;
+    width: 90%;
+    margin-left: 5%;
     height: 44px;
     background: rgba(0, 122, 230, 1);
     border-radius: 6px;
@@ -129,7 +150,7 @@ export default {
     margin-top: 10px;
     display: flex;
     justify-content: center;
-    size: 16px;
+    font-size: 16px;
   }
 }
 </style>

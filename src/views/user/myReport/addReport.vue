@@ -1,7 +1,12 @@
 <template>
   <div class="addReport-page">
     <van-cell-group>
-      <van-cell title="报备楼盘" is-link :value="reportAddInfo.linkerName" :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"/>
+      <van-cell
+        title="报备楼盘"
+        is-link
+        :value="reportAddInfo.linkerName"
+        :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"
+      />
       <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomerEdit"/>
       <van-cell title="手机号" is-link :value="valueComputed" to="reportPhone"/>
     </van-cell-group>
@@ -16,21 +21,33 @@
 import { mapGetters } from 'vuex'
 import reportService from 'SERVICE/reportService'
 export default {
+  data() {
+    return {
+      hideClientMobile: ''
+    }
+  },
+
   computed: {
     ...mapGetters(['reportAddInfo', 'userInfo']),
-    valueComputed(){
+    valueComputed() {
       return this.reportAddInfo.clientPhoneType === 'all' ? this.reportAddInfo.clientPhone : this.privacyPhone(this.reportAddInfo.clientPhone)
     }
   },
-  created() {
-    
-  },
+  created() {},
   methods: {
     privacyPhone(value) {
       value = String(value)
       return value.length > 7 ? value.substr(0, 3) + '****' + value.substr(7) : ''
     },
     async addReportInfo(current) {
+      console.log(this.reportAddInfo.clientPhoneType)
+
+      if (this.reportAddInfo.clientPhoneType == 'all') {
+        this.hideClientMobile = '0'
+      } else {
+        this.hideClientMobile = '1'
+      }
+
       let params = {
         clientId: this.reportAddInfo.clientId,
         clientName: this.reportAddInfo.clientName,
@@ -38,11 +55,11 @@ export default {
         linkerId: this.reportAddInfo.linkerId,
         linkerName: this.reportAddInfo.linkerName,
         distributorId: this.userInfo.distributorId,
-        institutionId: this.userInfo.institutionId
+        institutionId: this.userInfo.institutionId,
+        hideClientMobile: this.hideClientMobile
       }
 
-      const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId)
-
+      const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId,params.hideClientMobile)
       this.$toast('提交报备成功')
       this.$router.replace('/user/myReport')
     },
