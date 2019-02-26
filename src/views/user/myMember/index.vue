@@ -24,7 +24,7 @@
       <div class="open-and-renew-left">
         合计：<p>{{payValue | priceFormart}}元</p>
       </div>
-      <div v-show="!isPayLoading" class="open-and-renew-right" @click="paySubmit">
+      <div v-show="!isPayLoading" class="open-and-renew-right" @click="confirmFun">
         立即支付
       </div>
       <div v-show="isPayLoading" class="pay-loadding">
@@ -90,6 +90,15 @@ export default {
     }
   },
   methods: {
+    // 确认支付
+    confirmFun () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '是否确认开通？'
+      }).then(() => {
+        this.paySubmit()
+      }).catch()
+    },
     async paySubmit() {
       let param = {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
