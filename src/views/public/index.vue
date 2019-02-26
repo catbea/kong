@@ -19,14 +19,16 @@ export default {
     }
     let defaultPath = localStorage.getItem('defaultPath')
     if (defaultPath) {
-      localStorage.removeItem('defaultPath')
+      // localStorage.removeItem('defaultPath')
+      alert(defaultPath)
       this.$router.replace({ path: defaultPath })
     } else {
       if (!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
         this.$router.replace('/public/complete-info')
       } else if(this.userInfo.jumpToDynamicDetail == 1) {
+        // alert(this.userInfo.jumpToDynamicDetail)
         console.log('jumpToDynamicDetail')
-        this.$router.replace('/dynamics/allDynamics?allDynamicsNum=0')
+        this.$router.push('/dynamics/allDynamics?allDynamicsNum=0')
       }else {
         this.$router.replace('/dynamics')
       }

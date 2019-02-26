@@ -129,6 +129,7 @@ import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
 import ArticleDialog from 'COMP/Dialog/ArticleDialog'
 import timeUtils from '@/utils/timeUtils'
+import { uuid } from '@/utils/tool'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
@@ -224,6 +225,8 @@ export default {
         // console.log(res, 'getUserByCode')
         // alert(this.mpUser.appid+' - '+this.enterpriseId)
         // this.codetest = parm.code
+        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
+        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
 
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
@@ -379,17 +382,19 @@ export default {
       if (val == 1) {
         // 名片
         this.openCardPopup = true
-        this.dataReport({userActionType: 'viewCard', userActionCode: 'HMPCK'})
+        this.dataReport({userActionType: 'viewCard', userActionCode: 'HMPCK', action: ''})
       } else if (val == 2) {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
-        this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP'})
+        this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP', action: ''})
       } else {
         // 文章
-        this.getArticleQrcode(item.id)
-        this.openArticlePopup = true
-        this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK'})
+        // this.getArticleQrcode(item.id)
+        // this.openArticlePopup = true
+        this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
+        this.shareUuid = uuid()
+        this.$router.push(`/article/${this.infoId}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${this.shareUuid}`)
       }
     },
     popupShowControl(val) {
@@ -411,7 +416,7 @@ export default {
         userActionType: data.userActionType,
         userActionCode: data.userActionCode,
         viewTime: timeUtils.getNowDay(),
-        action: '',
+        action: data.action,
         articleId: this.infoId,
         articleTitle: this.info.title,
         sources: 'H5'
@@ -493,6 +498,23 @@ export default {
     //   },
     //   { passive: false }
     // )
+    window.addEventListener('pageshow', ()=>{
+      // alert('show')
+      // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
+    })
+    window.addEventListener('pagehide', ()=>{
+      // alert('hide')
+      this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
+    })
+    window.onload = function() {
+      // alert('onload')
+    }
+    window.onunload = function() {
+      // alert('onunload')
+    }
+  },
+  beforeDestory() {
+      // alert('beforeDestory')
   }
 }
 </script>
