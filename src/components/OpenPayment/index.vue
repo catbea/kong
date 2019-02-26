@@ -6,7 +6,7 @@
       <li>已优惠 {{payInfo.coupon | priceFormart}}</li>
     </ul>
     <ol>
-      <li v-show="!isPayLoading" @click="payClickHandler">立即支付</li>
+      <li v-show="!isPayLoading" @click="confirmFun">立即支付</li>
       <li v-show="isPayLoading" class="pay-loading">支付中...</li>
     </ol>
     </div>
@@ -32,6 +32,15 @@ export default {
   methods: {
     vant() {
       this.show = true
+    },
+    // 确认支付
+    confirmFun () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '是否确认开通？'
+      }).then(() => {
+        this.payClickHandler()
+      }).catch()
     },
     payClickHandler() {
       this.$emit('paySubmit')

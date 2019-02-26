@@ -29,7 +29,11 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
+          <estate-item
+            v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)"
+            :info="inlayHouseInfo"
+            @click="popHandler(2, inlayHouseInfo)"
+          ></estate-item>
         </div>
       </div>
       <p class="discover-extra-info" v-show="renderDom.length">
@@ -37,7 +41,9 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer" v-show="renderDom.length">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span
+          class="disclaimer-text"
+        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
@@ -56,18 +62,29 @@
           <title-bar :conf="{title: '精彩评论'}"/>
           <div class="comment-list-wrap" @click="popHandler(1)">
             <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
+              <div
+                class="bg_img"
+                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
+                style="width:40px;height:40px;border-radius:50%;"
+              ></div>
               <div class="comment-right">
                 <div class="comment-name-wrap">
                   <span class="comment-name">{{item.senderName}}</span>
-                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                  <span
+                    v-if="item.receiverName"
+                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
+                  >回复</span>
                   <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
                 </div>
                 <div class="comment-content">{{item.content}}</div>
                 <div></div>
               </div>
             </div>
-            <div class="comment-list-more" v-if="isMoreComment" @click.stop="moreCommentHandler">查看更多评论</div>
+            <div
+              class="comment-list-more"
+              v-if="isMoreComment"
+              @click.stop="moreCommentHandler"
+            >查看更多评论</div>
           </div>
         </div>
       </div>
@@ -75,13 +92,23 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
+          <estate-item
+            v-for="(item,index) in recommendHouseList"
+            :key="index"
+            :info="item"
+            @click="popHandler(2, item)"
+          ></estate-item>
         </div>
       </div>
       <!-- TA的写一写 -->
       <div class="recommend-article" v-if="articleList.length>0">
         <title-bar :conf="{title: 'TA的写一写'}"/>
-        <div class="recommend-article-list" v-for="(item, index) in articleList" :key="index" @click="popHandler(3, item)">
+        <div
+          class="recommend-article-list"
+          v-for="(item, index) in articleList"
+          :key="index"
+          @click="popHandler(3, item)"
+        >
           <div class="recommend-article-name">{{item.title}}</div>
         </div>
       </div>
@@ -107,7 +134,12 @@
       </div>
     </div>
     <!-- <open-article :show.sync="guidanceShow"/> -->
-    <card-dialog class="agent-card" :show.sync="openCardPopup" :info="cardQrInfo" @close="popupShowControl()"></card-dialog>
+    <card-dialog
+      class="agent-card"
+      :show.sync="openCardPopup"
+      :info="cardQrInfo"
+      @close="popupShowControl()"
+    ></card-dialog>
     <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
     <div class="loading" v-show="!renderDom.length">
@@ -183,11 +215,12 @@ export default {
     marketQrInfo: null,
     articleQrInfo: null,
     urlParm: {},
-    shareUuid: '' // 分享ID
-    // startY: '',
-    // endY: ''
+    shareUuid: '', // 分享ID
+    scrollHeight: 0,
+    clientHeight: 0,
+    scrollPercent: '' // 页面滚动百分比
   }),
-  created() {
+  async created() {
     this.urlParm = this.getUrlQueryParams(location.href)
     this.infoId = this.$route.params.id
     this.city = this.$route.params.city
@@ -195,45 +228,59 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = this.$route.query.shareUuid
     this.checkAuth()
+    // this.mpUser.appid = 'wx6c6423c9efb44c75'
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
     } else {
       this.$store.commit('SHARE_PROMPT', false)
     }
-    this.getDetail()
-    this.getLikeList()
-    this.getCommentList()
-    this.getArticleList()
+
+    let nousedata = await Promise.all([this.getDetail(),this.getLikeList(),this.getCommentList(),this.getArticleList()])
+    console.log(123, document.querySelector('.router-view').children[0].offsetHeight);
+    this.scrollHeight = document.querySelector('.router-view').children[0].offsetHeight
+    this.clientHeight = document.querySelector('.router-view').clientHeight
+    this.scrollPercent = this.clientHeight / (this.scrollHeight - this.clientHeight) * 100.0
+    this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: Number(this.scrollPercent).toFixed(2) + '%' })
+    
+    // this.getDetail()
+    // this.getLikeList()
+    // this.getCommentList()
+    // this.getArticleList()
     this.getCardQrCode()
   },
   methods: {
     async checkAuth() {
-      let wxredirecturl = window.location.href.replace('?from=singlemessage', '').replace('?from=from=groupmessage', '').replace('?from=from=timeline', '')
+      let wxredirecturl = window.location.href
+        .replace('?from=singlemessage', '')
+        .replace('?from=from=groupmessage', '')
+        .replace('?from=from=timeline', '')
       wxredirecturl = wxredirecturl.replace('&isappinstalled=0', '')
       let parm = this.urlParm
-      
-      if(parm.code) {
+
+      if (parm.code) {
         let parmStr = location.href.split('?')[2]
-        this.agentId = parmStr.split('&')[0].split("=")[1]
-        this.enterpriseId = parmStr.split('&')[1].split("=")[1]
-        this.shareUuid = parmStr.split('&')[2].split("=")[1]
+        this.agentId = parmStr.split('&')[0].split('=')[1]
+        this.enterpriseId = parmStr.split('&')[1].split('=')[1]
+        this.shareUuid = parmStr.split('&')[2].split('=')[1]
 
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
         // console.log(res, 'getUserByCode')
         // alert(this.mpUser.appid+' - '+this.enterpriseId)
         // this.codetest = parm.code
-        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
-        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
 
+        this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
       } else {
-        let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
-        + '&redirect_uri=' + encodeURIComponent(wxredirecturl).toLowerCase() + '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+        let wxurl =
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+          this.appId +
+          '&redirect_uri=' +
+          encodeURIComponent(wxredirecturl).toLowerCase() +
+          '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
         // console.log(wxredirecturl)
         window.location.href = wxurl
       }
-      
     },
     getUrlQueryParams(_url) {
       let params = {},
@@ -381,18 +428,21 @@ export default {
       if (val == 1) {
         // 名片
         this.openCardPopup = true
-        this.dataReport({userActionType: 'viewCard', userActionCode: 'HMPCK', action: ''})
+        this.dataReport({ userActionType: 'viewCard', userActionCode: 'HMPCK', userActionData: '' })
       } else if (val == 2) {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
-        this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP', action: ''})
+        this.dataReport({ userActionType: 'viewHouse', userActionCode: 'HFCKLP', userActionData: '' })
       } else {
         // 文章
         // this.getArticleQrcode(item.id)
         // this.openArticlePopup = true
-        this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
-        this.$router.push(`/article/${item.infoId}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${item.shareUuid}`)
+        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
+        let host =
+          process.env.VUE_APP_APP_URL + '#/article/' + item.id + '/' + encodeURI(this.city) + '?agentId=' + this.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + item.shareUuid
+        location.href = host
+        // this.$router.push(`/article/${item.id}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${item.shareUuid}`)
       }
     },
     popupShowControl(val) {
@@ -414,12 +464,12 @@ export default {
         userActionType: data.userActionType,
         userActionCode: data.userActionCode,
         viewTime: timeUtils.getNowDay(),
-        action: data.action,
+        userActionData: data.userActionData,
         articleId: this.infoId,
         articleTitle: this.info.title,
         sources: 'H5'
       }
-      const result = await articleService.dataReport(params, {appId: this.mpUser.appid})
+      const result = await articleService.dataReport(params, { appId: this.mpUser.appid })
     },
 
     // 处理楼盘标签
@@ -485,10 +535,8 @@ export default {
       location.reload()
     }
   },
-  beforeCreate() {
-
-  },
-  mounted () {
+  beforeCreate() {},
+  mounted() {
     // document.querySelector('.discover-detail-container').addEventListener(
     //   'touchmove',
     //   function(e) {
@@ -496,13 +544,19 @@ export default {
     //   },
     //   { passive: false }
     // )
-    window.addEventListener('pageshow', ()=>{
+    window.addEventListener('pageshow', () => {
       // alert('show')
       // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
     })
-    window.addEventListener('visibilitychange', ()=>{
-      // alert('hide')
-      // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
+    window.addEventListener('visibilitychange', () => {
+      if (window.visibilityState === 'hidden') {
+        // alert('hide')
+        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
+      }
+      if (window.visibilityState === 'visible') {
+        // alert('show')
+        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
+      }
     })
     window.onload = function() {
       // alert('onload')
@@ -510,9 +564,34 @@ export default {
     window.onunload = function() {
       // alert('onunload')
     }
+    
+    document.querySelector('.router-view').addEventListener('scroll', e => {
+      let scrollTop = e.target.scrollTop + this.clientHeight
+      console.log(scrollTop)
+      if (scrollTop && this.scrollHeight) {
+        let percent = Number(scrollTop / (this.scrollHeight - this.clientHeight)).toFixed(2) * 100.0
+        if (this.scrollPercent < percent) {
+          this.scrollPercent = percent
+          this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: this.scrollPercent + '%' })
+        } 
+      }
+    })
+    // window.addEventListener('scroll', ()=> {
+    //   let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight
+    //   // let scrollHeight = document.body.scrollHeight
+    //   let scrollTop = document.querySelector('.router-view').scrollTop
+    // }, true)
+
+    // document.body.onscroll = function() {
+    //   let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight
+    //   // let scrollHeight = document.body.scrollHeight
+    //   let clientHeight = document.body.clientHeight
+    //   let scrollTop = document.documentElement.scrollTop
+    //   let innerHeight = window.innerHeight
+    // }
   },
   beforeDestory() {
-      // alert('beforeDestory')
+    // alert('beforeDestory')
   }
 }
 </script>

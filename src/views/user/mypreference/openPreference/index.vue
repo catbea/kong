@@ -25,7 +25,7 @@
       <div class="open-and-renew-left">
         合计：<p>{{payValue | priceFormart}}元</p>
       </div>
-      <div v-show="!isPayLoading" class="open-and-renew-right" @click="payClickHandle">
+      <div v-show="!isPayLoading" class="open-and-renew-right" @click="confirmFun">
         立即支付
       </div>
       <div v-show="isPayLoading" class="pay-loadding">
@@ -91,7 +91,15 @@ export default {
       const res = await marketService.queryLastInfoByAgentId()
       this.$router.push({ path: '/user/myMember/selectedDisk', query: { packageId: res.id, type: 'package' } })
     },
-
+    // 确认支付
+    confirmFun () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '是否确认开通？'
+      }).then(() => {
+        this.payClickHandle()
+      }).catch()
+    },
     async payClickHandle() {
       if (this.packageCount >= 3) {
         this.$toast('最多能开通3个套餐')

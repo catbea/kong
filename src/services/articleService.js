@@ -93,6 +93,7 @@ class ArticleService {
    * @param {*} action 统计停留时间 REPORTED_BEGIN/REPORTED_END
    * @param {*} userActionType viewCard/viewHouse/viewNews/intention
    * @param {*} userActionCode HFCKLP
+   * @param {*} userActionData 50%
    */
   dataReport(data, headers) {
     return xhr({
