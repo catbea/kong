@@ -503,9 +503,16 @@ export default {
       // alert('show')
       // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
     })
-    window.addEventListener('visibilitychange', ()=>{
-      alert('hide')
-      this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
+    document.addEventListener('visibilitychange', ()=>{
+      if (document.visibilityState === 'hidden') {
+        alert('hide')
+        this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
+      }
+      if (document.visibilityState === 'visible') {
+        alert('show')
+        this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
+      }
+      
     })
     window.onload = function() {
       // alert('onload')
