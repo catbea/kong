@@ -2,7 +2,7 @@
   <div class="list-body">
     <div class="write-item-body" @click="enterDetail(itemInfo.id)">
       <div class="write-item-left">
-        <span class="article-title">{{itemInfo.title | textOver(25)}}</span>
+        <span class="article-title">{{itemInfo.title | textOver(23)}}</span>
         <div class="label-view">
           <span class="label-text">原文章</span>
         </div>
@@ -36,7 +36,7 @@
           @click="enterArticleDetail(item.id)"
         >
           <div class="write-item-left">
-            <span class="article-title">{{item.title | textOver(25) }}</span>
+            <span class="article-title">{{item.title | textOver(23) }}</span>
             <span class="time-view" v-if="itemInfo.selectType=='2'">分享时间 {{item.createTimeStamp  | dateTimeFormatter(2,'/')}}</span>
             <span class="time-view" v-if="itemInfo.selectType=='3'">编辑时间 {{item.createTimeStamp  | dateTimeFormatter(2,'/')}}</span>
           </div>
