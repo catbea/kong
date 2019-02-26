@@ -393,7 +393,7 @@ export default {
         // this.getArticleQrcode(item.id)
         // this.openArticlePopup = true
         this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
-        this.shareUuid = uuid()
+        // this.shareUuid = uuid()
         this.$router.push(`/article/${this.infoId}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${this.shareUuid}`)
       }
     },
