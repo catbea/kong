@@ -501,8 +501,8 @@ export default {
       // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
     })
     window.addEventListener('visibilitychange', ()=>{
-      alert('hide')
-      this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
+      // alert('hide')
+      // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
     })
     window.onload = function() {
       // alert('onload')
