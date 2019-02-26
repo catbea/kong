@@ -28,7 +28,7 @@ export default {
       } else if(this.userInfo.jumpToDynamicDetail == 1) {
         // alert(this.userInfo.jumpToDynamicDetail)
         console.log('jumpToDynamicDetail')
-        this.$router.replace('/dynamics/allDynamics?allDynamicsNum=0')
+        this.$router.push('/dynamics/allDynamics?allDynamicsNum=0')
       }else {
         this.$router.replace('/dynamics')
       }
