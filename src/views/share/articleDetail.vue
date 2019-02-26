@@ -129,7 +129,6 @@ import CardDialog from 'COMP/Dialog/CardDialog'
 import MarketDialog from 'COMP/Dialog/MarketDialog'
 import ArticleDialog from 'COMP/Dialog/ArticleDialog'
 import timeUtils from '@/utils/timeUtils'
-import { uuid } from '@/utils/tool'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
@@ -393,8 +392,7 @@ export default {
         // this.getArticleQrcode(item.id)
         // this.openArticlePopup = true
         this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
-        // this.shareUuid = uuid()
-        this.$router.push(`/article/${this.infoId}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${this.shareUuid}`)
+        this.$router.push(`/article/${item.infoId}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${item.shareUuid}`)
       }
     },
     popupShowControl(val) {
