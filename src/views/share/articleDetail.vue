@@ -225,6 +225,7 @@ export default {
         // alert(this.mpUser.appid+' - '+this.enterpriseId)
         // this.codetest = parm.code
         // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
+        // this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
 
       } else {
         let wxurl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.appId 
@@ -388,9 +389,10 @@ export default {
         this.dataReport({userActionType: 'viewHouse', userActionCode: 'HFCKLP', action: ''})
       } else {
         // 文章
-        this.getArticleQrcode(item.id)
-        this.openArticlePopup = true
+        // this.getArticleQrcode(item.id)
+        // this.openArticlePopup = true
         this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
+        this.$router.push(`/article/${item.infoId}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${item.shareUuid}`)
       }
     },
     popupShowControl(val) {
