@@ -570,6 +570,7 @@ export default {
       console.log(scrollTop)
       if (scrollTop && this.scrollHeight) {
         let percent = Number(scrollTop / (this.scrollHeight - this.clientHeight)).toFixed(2) * 100.0
+        percent = percent >= 100 ? 100 : percent
         if (this.scrollPercent < percent) {
           this.scrollPercent = percent
           this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: this.scrollPercent + '%' })
