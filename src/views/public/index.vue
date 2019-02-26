@@ -19,8 +19,8 @@ export default {
     }
     let defaultPath = localStorage.getItem('defaultPath')
     if (defaultPath) {
-      // localStorage.removeItem('defaultPath')
-      alert(defaultPath)
+      localStorage.removeItem('defaultPath')
+      // alert(defaultPath)
       this.$router.replace({ path: defaultPath })
     } else {
       if (!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
