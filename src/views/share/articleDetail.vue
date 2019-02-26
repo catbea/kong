@@ -195,6 +195,7 @@ export default {
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = this.$route.query.shareUuid
     this.checkAuth()
+    // this.mpUser.appid = 'wx6c6423c9efb44c75'
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
@@ -392,7 +393,9 @@ export default {
         // this.getArticleQrcode(item.id)
         // this.openArticlePopup = true
         this.dataReport({userActionType: 'viewNews', userActionCode: 'HTWZFXCK', action: ''})
-        this.$router.push(`/article/${item.infoId}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${item.shareUuid}`)
+        let host = process.env.VUE_APP_APP_URL + '#/article/' + item.id + '/' + encodeURI(this.city) + '?agentId=' + this.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + item.shareUuid
+        location.href = host
+        // this.$router.push(`/article/${item.id}/${encodeURI(this.city)}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&shareUuid=${item.shareUuid}`)
       }
     },
     popupShowControl(val) {
