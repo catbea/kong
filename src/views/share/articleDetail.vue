@@ -500,8 +500,8 @@ export default {
       // alert('show')
       // this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_BEGIN'})
     })
-    window.addEventListener('pagehide', ()=>{
-      // alert('hide')
+    window.addEventListener('visibilitychange', ()=>{
+      alert('hide')
       this.dataReport({userActionType: 'viewNews', userActionCode: 'HFFWZCK', action: 'REPORTED_END'})
     })
     window.onload = function() {
