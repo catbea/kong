@@ -471,7 +471,7 @@ export default {
     },
     // 数据埋点上报
     async dataReport(data) {
-      
+      alert(this.mpUser.appid+'---alert(this.mpUser.appid)')
       if (this.mpUser.appid) {
         if (data.userActionData) {
           this.preTime = timeUtils.getNowDay()
