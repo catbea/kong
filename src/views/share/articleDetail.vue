@@ -272,7 +272,7 @@ export default {
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
         // console.log(res, 'getUserByCode')
-        // alert(this.mpUser.appid+' - '+this.enterpriseId)
+        alert(this.mpUser.clientId+' - '+this.enterpriseId)
         // this.codetest = parm.code
 
         this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
@@ -298,6 +298,7 @@ export default {
       return params
     },
     async getDetail() {
+      alert(this.mpUser.clientId+'---')
       const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId, this.mpUser.clientId)
       if (res.returnCode == 10028) {
         this.haveData = false
