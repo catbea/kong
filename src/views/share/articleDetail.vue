@@ -228,8 +228,8 @@ export default {
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = this.$route.query.shareUuid
-    // this.checkAuth()
-    this.mpUser.appid = 'wx6c6423c9efb44c75'
+    this.checkAuth()
+    // this.mpUser.appid = 'wx6c6423c9efb44c75'
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
