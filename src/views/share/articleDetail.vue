@@ -236,13 +236,13 @@ export default {
       this.$store.commit('SHARE_PROMPT', false)
     }
 
-    let nousedata = await Promise.all([this.getDetail(),this.getLikeList(),this.getCommentList(),this.getArticleList()])
-    console.log(123, document.querySelector('.router-view').children[0].offsetHeight);
+    let nousedata = await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList()])
+    console.log(123, document.querySelector('.router-view').children[0].offsetHeight)
     this.scrollHeight = document.querySelector('.router-view').children[0].offsetHeight
     this.clientHeight = document.querySelector('.router-view').clientHeight
-    this.scrollPercent = this.clientHeight / (this.scrollHeight - this.clientHeight) * 100.0
+    this.scrollPercent = (this.clientHeight / (this.scrollHeight - this.clientHeight)) * 100.0
     this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: Number(this.scrollPercent).toFixed(2) + '%' })
-    
+
     // this.getDetail()
     // this.getLikeList()
     // this.getCommentList()
@@ -458,19 +458,22 @@ export default {
     },
     // 数据埋点上报
     async dataReport(data) {
-      if (!this.mpUser.appid) return
-      let params = {
-        enterpriseId: this.enterpriseId,
-        agentId: this.agentId,
-        userActionType: data.userActionType,
-        userActionCode: data.userActionCode,
-        viewTime: timeUtils.getNowDay(),
-        userActionData: data.userActionData,
-        articleId: this.infoId,
-        articleTitle: this.info.title,
-        sources: 'H5'
+      if (this.mpUser.appid) {
+        let params = {
+          enterpriseId: this.enterpriseId,
+          agentId: this.agentId,
+          clientId: this.mpUser.clientId,
+          clientName: this.mpUser.clientName,
+          userActionType: data.userActionType,
+          userActionCode: data.userActionCode,
+          viewTime: timeUtils.getNowDay(),
+          userActionData: data.userActionData,
+          articleId: this.infoId,
+          articleTitle: this.info.title,
+          sources: 'H5'
+        }
+        const result = await articleService.dataReport(params, { appId: this.mpUser.appid })
       }
-      const result = await articleService.dataReport(params, { appId: this.mpUser.appid })
     },
 
     // 处理楼盘标签
@@ -565,7 +568,7 @@ export default {
     window.onunload = function() {
       // alert('onunload')
     }
-    
+
     document.querySelector('.router-view').addEventListener('scroll', e => {
       let scrollTop = e.target.scrollTop + this.clientHeight
       console.log(scrollTop)
@@ -575,7 +578,7 @@ export default {
         if (this.scrollPercent < percent) {
           this.scrollPercent = percent
           this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: this.scrollPercent + '%' })
-        } 
+        }
       }
     })
     // window.addEventListener('scroll', ()=> {
