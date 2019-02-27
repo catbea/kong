@@ -34,7 +34,7 @@
           <custom-detail-info @onClick="onClickHandler" :customerInfoList="customerInfoList" :areaShow="areaShow" :areaTitle="areaTitle" :pickerShow="pickerShow" :columns="pickerList" @cancel="cancelHandler" @confirm="confirmHandler"/>
         </van-tab>
       </van-tabs>
-      <custom-operation v-show="showActionBar" :h5Flag="customBaseInfo.h5Flag" :attentionFlag="attentionFlag" :clientMobile="clientMobile" @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"/>
+      <custom-operation v-show="showActionBar" :h5Flag="customBaseInfo&&customBaseInfo.h5Flag" :attentionFlag="attentionFlag" :clientMobile="clientMobile" @onattention="attentionHandler" @onreport="reportHandler" @onphone="phoneHandler" @onconsult="consultHandler"/>
     </div>
   </div>
 </template>
