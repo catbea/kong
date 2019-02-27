@@ -5,7 +5,7 @@
         class="reply-item"
         v-for="(item,index) in relpyList"
         :key="index"
-        @click="clickToSave(item,index)"
+        @click="clickToSave(index)"
       >
         <div class="text-context">{{item.content|textOver()}}</div>
         <div
@@ -51,10 +51,15 @@ export default {
       if (result) {
         this.relpyList = JSON.parse(JSON.stringify(result))
       }
+      for(let item of this.relpyList) {
+        if(item.status == 1) {
+          this.selectItemInfo = item
+        }
+      }
     },
 
-    clickToSave(data, index) {
-      this.selectItemInfo = data
+    clickToSave(index) {
+      this.selectItemInfo = this.relpyList[index]
       for (var i = 0; i < this.relpyList.length; i++) {
         this.relpyList[i].status = 0
       }
