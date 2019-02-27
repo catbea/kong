@@ -303,7 +303,7 @@ export default {
       return params
     },
     async getDetail() {
-      alert(this.mpUser.clientId+'---')
+      // alert(this.mpUser.clientId+'---')
       const res = await discoverService.getDiscoverDetailForH5(this.infoId, this.enterpriseId, this.agentId, this.mpUser.clientId)
       if (res.returnCode == 10028) {
         this.haveData = false
