@@ -288,7 +288,7 @@ export default {
           this.appId +
           '&redirect_uri=' +
           encodeURIComponent(wxredirecturl).toLowerCase() +
-          '&response_type=code&scope=snsapi_base&state=062882#wechat_redirect'
+          '&response_type=code&scope=snsapi_userinfo&state=062882#wechat_redirect'
         // console.log(wxredirecturl)
         window.location.href = wxurl
       }
