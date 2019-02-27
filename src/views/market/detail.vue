@@ -361,9 +361,9 @@ export default {
     async openHandler() {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.info.city === this.userInfo.vipInfo.city) {
-        const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
+        const res = await marketService.addHouseByVip(this.info.linkerId)
         if (res.returnCode == 21801) {
-          this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+          this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
           return
         }
         await this.getDetailInfo(this.id)
