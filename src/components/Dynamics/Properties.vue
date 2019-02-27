@@ -78,7 +78,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .van-dialog__confirm,
 .van-dialog__confirm:active {
   color: #007ae6;

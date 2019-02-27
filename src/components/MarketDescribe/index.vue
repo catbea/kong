@@ -17,7 +17,7 @@
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
-              <span class="dredge" :style="style" v-if="dredge" @click.stop="openHandle">{{openStatus}}</span>
+              <span class="dredge" :style="style" v-if="dredge" @click.stop="confirmFun">{{openStatus}}</span>
             </li>
             <li class="site">
               {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
@@ -119,6 +119,19 @@ export default {
     },
     dredgeColor() {
       this.style = conf(this.openStatus)
+    },
+    // 确认支付
+    confirmFun () {
+      if (this.status == 0) {
+        this.$dialog.confirm({
+          title: '提示',
+          message: '是否确认开通？'
+        }).then(() => {
+          this.openHandle()
+        }).catch()
+      } else {
+        this.openHandle()
+      }
     },
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市

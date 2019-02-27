@@ -458,6 +458,7 @@ export default {
     },
     // 数据埋点上报
     async dataReport(data) {
+      if (!this.mpUser.appid) return
       let params = {
         enterpriseId: this.enterpriseId,
         agentId: this.agentId,
