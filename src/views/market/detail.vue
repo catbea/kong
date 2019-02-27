@@ -5,7 +5,7 @@
     <!-- 顶部swipe -->
     <div class="top-swipe-container" @click="photoHandle">
       <div class="swipe-content">
-        <div class="swipe-photo" @click.stop="photoHandle" v-show="info.bannerList.length>0">相册</div>
+        <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
             <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
