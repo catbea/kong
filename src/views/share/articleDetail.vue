@@ -271,7 +271,7 @@ export default {
 
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
-        alert(this.mpUser.appid)
+        // alert(this.mpUser.appid)
         // console.log(res, 'getUserByCode')
         // this.codetest = parm.code
 
@@ -472,15 +472,17 @@ export default {
     // 数据埋点上报
     async dataReport(data) {
       
+      this.mpUser.appid = 'wx6c6423c9efb44c75'
       if (this.mpUser.appid) {
         if (data.userActionData) {
           this.preTime = timeUtils.getNowDay()
         }
+        let title = this.info ? this.info.title : ''
         let params = {
           enterpriseId: this.enterpriseId,
           agentId: this.agentId,
           clientId: this.mpUser.clientId,
-          clientName: this.mpUser.clientName,
+          clientName: this.mpUser.clientName || '',
           userActionType: data.userActionType || '',
           userActionCode: data.userActionCode || '',
           viewTime: timeUtils.getNowDay(),
@@ -488,12 +490,12 @@ export default {
           houseId: data.houseId || '',
           houseName: data.houseName || '',
           articleId: this.infoId,
-          articleTitle: this.info.title,
+          articleTitle: title,
           sources: 'H5'
         }
-        alert(this.mpUser.appid+'---'+params.userActionData)
+        // alert(this.mpUser.appid+'---'+params.userActionData)
         const result = await articleService.dataReport(params, { appId: this.mpUser.appid })
-        alert(result+'---')
+        // alert(result+'---')
       }
     },
 
