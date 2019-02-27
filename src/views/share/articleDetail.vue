@@ -276,13 +276,12 @@ export default {
         // this.codetest = parm.code
 
         // await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList(), this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })])
-
-        this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
-        this.getDetail()
-        this.getLikeList()
-        this.getCommentList()
-        this.getArticleList()
-        this.getCardQrCode()
+        await this.getDetail()
+        await this.getLikeList()
+        await this.getCommentList()
+        await this.getArticleList()
+        await this.getCardQrCode()
+        await this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
       } else {
         let wxurl =
           'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
