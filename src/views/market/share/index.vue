@@ -155,7 +155,7 @@ export default {
     async handleDate() {
       this.showLoading = true
       this.pointerEvents = 'none'
-      this.status = 2
+      // this.status = 2
 
       let img = document.getElementById('imgcard')
       let _that = this
@@ -171,6 +171,7 @@ export default {
         let dataURL = canvas.toDataURL()
         img.src = dataURL
         this.showLoading = false
+        this.status = 2
       })
     }
   },
