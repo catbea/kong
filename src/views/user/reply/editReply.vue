@@ -59,12 +59,10 @@ export default {
         if (editContent.length > 50) {
           Toast('输入内容不得超过50个字')
         } else {
-          console.log(this.statusFirst)
-
           let obj = {}
           obj.content = this.replyContent
           obj.status = this.statusFirst
-          if(this.replyId && this.replyId.length>0) obj.id = this.replyId
+          if(this.replyId) obj.id = this.replyId
           this.setReplyInfo(obj)
         }
       } else {
