@@ -22,7 +22,8 @@
 export default {
   props: {
     attentionFlag: { type: Boolean, default: false },
-    clientMobile: { type: String, default: '' }
+    clientMobile: { type: String, default: '' },
+    h5Flag: { type: Boolean, default: false }
   },
   data: () => ({
     attentionImg: require('IMG/custom/attention@2x.png'),
@@ -42,7 +43,14 @@ export default {
       this.$emit('onphone')
     },
     consultHandler() {
-      this.$emit('onconsult')
+      if (this.h5Flag) {
+        this.$dialog.alert({
+          title: '提示',
+          message: '该用户未使用小程序登录，无法收到您的消息!'
+        })
+      } else {
+        this.$emit('onconsult')
+      } 
     }
   }
 }
