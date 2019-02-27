@@ -271,6 +271,7 @@ export default {
 
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
+        alert(this.mpUser.appid)
         // console.log(res, 'getUserByCode')
         // this.codetest = parm.code
 
