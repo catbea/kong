@@ -52,14 +52,16 @@ class DiscoverService {
    * @param {*} infoId
    * @param {*} enterpriseId
    * @param {*} agentId
+   * @param {*} clientId
    */
-  getDiscoverDetailForH5(infoId, enterpriseId, agentId) {
+  getDiscoverDetailForH5(infoId, enterpriseId, agentId, clientId) {
     return xhr({
       url: '/cpInformation/informationPreview',
       body: {
         infoId,
         enterpriseId,
-        agentId
+        agentId,
+        clientId
       }
     })
   }
