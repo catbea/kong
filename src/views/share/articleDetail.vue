@@ -471,7 +471,7 @@ export default {
     },
     // 数据埋点上报
     async dataReport(data) {
-      alert(this.mpUser.appid+'---alert(this.mpUser.appid)')
+      
       if (this.mpUser.appid) {
         if (data.userActionData) {
           this.preTime = timeUtils.getNowDay()
@@ -491,7 +491,9 @@ export default {
           articleTitle: this.info.title,
           sources: 'H5'
         }
+        alert(this.mpUser.appid+'---'+params.userActionData)
         const result = await articleService.dataReport(params, { appId: this.mpUser.appid })
+        alert(result+'---')
       }
     },
 
