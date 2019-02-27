@@ -25,7 +25,7 @@ export default {
     return {
       replyContent: '',
       statusFirst: this.$route.query.status,
-      replyId: -1
+      replyId: ''
     }
   },
 
@@ -64,7 +64,7 @@ export default {
           let obj = {}
           obj.content = this.replyContent
           obj.status = this.statusFirst
-          obj.id = this.replyId
+          if(this.replyId && this.replyId.length>0) obj.id = this.replyId
           this.setReplyInfo(obj)
         }
       } else {
