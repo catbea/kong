@@ -237,7 +237,7 @@ export default {
       this.$store.commit('SHARE_PROMPT', false)
     }
 
-    let nousedata = await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList()])
+    // let nousedata = await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList()])
     console.log(123, document.querySelector('.router-view').children[0].offsetHeight)
     this.scrollHeight = document.querySelector('.router-view').children[0].offsetHeight
     this.clientHeight = document.querySelector('.router-view').clientHeight
@@ -272,8 +272,13 @@ export default {
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
         // console.log(res, 'getUserByCode')
-        alert(this.mpUser.clientId+' - '+this.enterpriseId)
+        // alert(this.mpUser.clientId+' - '+this.enterpriseId)
         // this.codetest = parm.code
+
+        this.getDetail()
+        this.getLikeList()
+        this.getCommentList()
+        this.getArticleList()
 
         this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
       } else {
