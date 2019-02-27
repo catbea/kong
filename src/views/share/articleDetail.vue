@@ -218,6 +218,7 @@ export default {
     shareUuid: '', // 分享ID
     scrollHeight: 0,
     clientHeight: 0,
+    preTime: 0, // 数据上报时间
     scrollPercent: '' // 页面滚动百分比
   }),
   async created() {
@@ -240,8 +241,12 @@ export default {
     console.log(123, document.querySelector('.router-view').children[0].offsetHeight)
     this.scrollHeight = document.querySelector('.router-view').children[0].offsetHeight
     this.clientHeight = document.querySelector('.router-view').clientHeight
+    // 获取元素高度
+    let offsetHeight = document.getElementsByClassName('tools-bar')[0].offsetHeight
+    console.log('offsetHeight====' + offsetHeight)
     this.scrollPercent = (this.clientHeight / (this.scrollHeight - this.clientHeight)) * 100.0
-    this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: Number(this.scrollPercent).toFixed(2) + '%' })
+    // 篇幅初始化数据上报
+    // this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: Number(this.scrollPercent).toFixed(2) + '%' })
 
     // this.getDetail()
     // this.getLikeList()
@@ -459,6 +464,9 @@ export default {
     // 数据埋点上报
     async dataReport(data) {
       if (this.mpUser.appid) {
+        if (data.userActionData) {
+          this.preTime = timeUtils.getNowDay()
+        }
         let params = {
           enterpriseId: this.enterpriseId,
           agentId: this.agentId,
@@ -577,7 +585,13 @@ export default {
         percent = percent >= 100 ? 100 : percent
         if (this.scrollPercent < percent) {
           this.scrollPercent = percent
-          this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: this.scrollPercent + '%' })
+          let curTime = new Date()
+          let interval = curTime.getTime() - new Date(this.preTime).getTime()
+          // if (interval >= 1000) {
+            this.preTime = curTime
+            // 滑动页面篇幅数据上报
+            // this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: this.scrollPercent + '%' })
+          // }
         }
       }
     })
