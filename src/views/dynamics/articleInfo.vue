@@ -256,6 +256,11 @@ export default {
         line-height: 24px;
         margin-right: 60px;
         padding-right: 70px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
       }
       > .list-left-time {
         font-size: 12px;
