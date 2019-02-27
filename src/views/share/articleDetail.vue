@@ -228,8 +228,8 @@ export default {
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
     this.shareUuid = this.$route.query.shareUuid
-    this.checkAuth()
-    // this.mpUser.appid = 'wx6c6423c9efb44c75'
+    // this.checkAuth()
+    this.mpUser.appid = 'wx6c6423c9efb44c75'
     if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
       this.$store.commit('SHARE_PROMPT', true)
       window.localStorage.setItem('isFirst', true)
@@ -438,7 +438,7 @@ export default {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
-        this.dataReport({ userActionType: 'viewHouse', userActionCode: 'HFCKLP', userActionData: '' })
+        this.dataReport({ userActionType: 'viewHouse', userActionCode: 'HFCKLP', userActionData: '', houseId: item.linkerId, houseName: item.linkerName })
       } else {
         // 文章
         // this.getArticleQrcode(item.id)
@@ -476,6 +476,8 @@ export default {
           userActionCode: data.userActionCode,
           viewTime: timeUtils.getNowDay(),
           userActionData: data.userActionData,
+          houseId: data.houseId,
+          houseName: data.houseName,
           articleId: this.infoId,
           articleTitle: this.info.title,
           sources: 'H5'
