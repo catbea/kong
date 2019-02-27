@@ -137,7 +137,11 @@ export default {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.status == 0) {
         if (this.itemInfo.city === this.userInfo.vipInfo.city) {
-          await marketService.addHouseByVip(this.itemInfo.linkerId)
+          const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
+          if (res.returnCode == 21801) {
+            this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+            return
+          }
           this.status = 2
           this.dredgeColor()
           this.$toast({
