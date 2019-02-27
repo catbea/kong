@@ -272,16 +272,16 @@ export default {
         const res = await userService.getUserByCode(parm.code, this.enterpriseId)
         this.mpUser = res
         // console.log(res, 'getUserByCode')
-        alert(this.mpUser.appid+' - '+this.enterpriseId)
         // this.codetest = parm.code
 
-        this.getDetail()
-        this.getLikeList()
-        this.getCommentList()
-        this.getArticleList()
-        this.getCardQrCode()
+        await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList(), this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })])
 
-        this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
+        // this.getDetail()
+        // this.getLikeList()
+        // this.getCommentList()
+        // this.getArticleList()
+        // this.getCardQrCode()
+        // this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
       } else {
         let wxurl =
           'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
