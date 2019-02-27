@@ -252,7 +252,7 @@ export default {
     // this.getLikeList()
     // this.getCommentList()
     // this.getArticleList()
-    this.getCardQrCode()
+    // this.getCardQrCode()
   },
   methods: {
     async checkAuth() {
@@ -274,14 +274,14 @@ export default {
         // console.log(res, 'getUserByCode')
         // this.codetest = parm.code
 
-        await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList(), this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })])
+        // await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList(), this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })])
 
-        // this.getDetail()
-        // this.getLikeList()
-        // this.getCommentList()
-        // this.getArticleList()
-        // this.getCardQrCode()
-        // this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
+        this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
+        this.getDetail()
+        this.getLikeList()
+        this.getCommentList()
+        this.getArticleList()
+        this.getCardQrCode()
       } else {
         let wxurl =
           'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
@@ -470,6 +470,7 @@ export default {
     },
     // 数据埋点上报
     async dataReport(data) {
+      
       if (this.mpUser.appid) {
         if (data.userActionData) {
           this.preTime = timeUtils.getNowDay()
