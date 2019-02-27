@@ -438,7 +438,7 @@ export default {
         // 楼盘
         this.getLinkerQrcode(item.linkerId)
         this.openMarketPopup = true
-        this.dataReport({ userActionType: 'viewHouse', userActionCode: 'HFCKLP', userActionData: '' })
+        this.dataReport({ userActionType: 'viewHouse', userActionCode: 'HFCKLP', userActionData: '', houseId: item.linkerId, houseName: item.linkerName })
       } else {
         // 文章
         // this.getArticleQrcode(item.id)
@@ -476,6 +476,8 @@ export default {
           userActionCode: data.userActionCode,
           viewTime: timeUtils.getNowDay(),
           userActionData: data.userActionData,
+          houseId: data.houseId,
+          houseName: data.houseName,
           articleId: this.infoId,
           articleTitle: this.info.title,
           sources: 'H5'
