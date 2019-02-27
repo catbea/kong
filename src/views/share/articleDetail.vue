@@ -253,8 +253,8 @@ export default {
     async checkAuth() {
       let wxredirecturl = window.location.href
         .replace('?from=singlemessage', '')
-        .replace('?from=from=groupmessage', '')
-        .replace('?from=from=timeline', '')
+        .replace('?from=groupmessage', '')
+        .replace('?from=timeline', '')
       wxredirecturl = wxredirecturl.replace('&isappinstalled=0', '')
       let parm = this.urlParm
 
