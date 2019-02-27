@@ -279,6 +279,7 @@ export default {
         this.getLikeList()
         this.getCommentList()
         this.getArticleList()
+        this.getCardQrCode()
 
         this.dataReport({ userActionType: 'viewNews', userActionCode: 'HTWZFXCK', userActionData: '' })
       } else {
