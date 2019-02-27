@@ -103,7 +103,7 @@
                <button class="dynamicsInfo-list-btn-follow" v-show="item.attentionStatus   == 1" @click="getupdateCustomerInfo(item,key)">
                    <img :src="gzImg" class="agent-gzImg">关注</button>
                 <button class="dynamicsInfo-list-btn-followOK" v-show="item.attentionStatus   == 0" @click="getupdateCustomerInfo(item,key)">已关注</button>
-                <button class="dynamicsInfo-list-btn-contact" @click="goalldynamics(item)">
+                <button class="dynamicsInfo-list-btn-contact" @click="dialogHandle(item)">
                   <img :src="lxImg" class="btn-contact-userImg">
                   联系
                 </button>
@@ -179,6 +179,17 @@ export default {
     //楼盘详情
     godynamicsInfo(linkerId) {
       this.$router.push({ name: 'market-detail', params: { id: linkerId } })
+    },
+    // 联系前确认
+    dialogHandle (item) {
+      if (item.h5Flag) {
+        this.$dialog.alert({
+          title: '提示',
+          message: '该用户未使用小程序登录，无法收到您的消息!'
+        })
+      } else {
+        this.goalldynamics(item)
+      }
     },
     //联系
     goalldynamics(item) {

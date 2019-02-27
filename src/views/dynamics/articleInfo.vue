@@ -104,7 +104,7 @@
                         v-show="item.attentionStatus   == 0"
                         @click="getupdateCustomerInfo(item,key)"
                       >已关注</button>
-                      <button class="list-btn-contact" @click="goalldynamics(item)">
+                      <button class="list-btn-contact" @click="dialogHandle(item)">
                         <img :src="lxImg" class="btn-contact-userImg">
                         联系
                       </button>
@@ -192,7 +192,16 @@ export default {
     godynamicsInfo(item) {
       this.$router.push(`/custom/${item.clientId}`)
     },
-
+    dialogHandle (item) {
+      if (item.h5Flag) {
+        this.$dialog.alert({
+          title: '提示',
+          message: '该用户未使用小程序登录，无法收到您的消息!'
+        })
+      } else {
+        this.goalldynamics(item)
+      }
+    },
     //联系
     goalldynamics(item) {
       this.$router.push({
