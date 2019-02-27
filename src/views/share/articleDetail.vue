@@ -484,7 +484,7 @@ export default {
           userActionType: data.userActionType,
           userActionCode: data.userActionCode,
           viewTime: timeUtils.getNowDay(),
-          userActionData: data.userActionData,
+          userActionData: data.userActionData || '',
           houseId: data.houseId,
           houseName: data.houseName,
           articleId: this.infoId,
