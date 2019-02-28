@@ -382,6 +382,17 @@ export default [
     }
   },
   {
+    path: '/user/talk',
+    name: 'talk',
+    component: resolve => require(['@/views/user/Talk.vue'], resolve),
+    meta: {
+      title: '拓客关系',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/edit/cutImg',
     name: 'cutImg',
     component: resolve => require(['@/views/user/edit/cutImg.vue'], resolve),
