@@ -86,8 +86,7 @@ export default {
     btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '自动回复', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
     openPopup: false,
     qrcodeImg: '',
-    oldUrl:0,
-    host: process.env.VUE_APP_APP_URL
+    oldUrl:0
   }),
   created() {
     this.getUserInfo()
