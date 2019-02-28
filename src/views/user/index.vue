@@ -22,13 +22,15 @@
           <p class="politeness">有礼</p>
         </div>
         <!-- 拓客关系 -->
-        <div class="relation head-img" @click="relationHandle">
+        <a :href="`${this.host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`" target="_blank">
+        <div class="relation head-img">
           <!-- <img :src="item.Icon"> -->
            <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-mi_data"></use>
            </svg>
           <p class="grou1Icon-p">拓客关系</p>
         </div>
+        </a>
       </div>
     </div>
     <div class="business-status-tow">
@@ -86,7 +88,8 @@ export default {
     btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '自动回复', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
     openPopup: false,
     qrcodeImg: '',
-    oldUrl:0
+    oldUrl:0,
+    host: process.env.VUE_APP_APP_URL
   }),
   created() {
     this.getUserInfo()
