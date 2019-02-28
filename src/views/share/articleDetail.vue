@@ -470,8 +470,6 @@ export default {
     },
     // 数据埋点上报
     async dataReport(data) {
-      
-      this.mpUser.appid = 'wx6c6423c9efb44c75'
       if (this.mpUser.appid) {
         if (data.userActionData) {
           this.preTime = timeUtils.getNowDay()
