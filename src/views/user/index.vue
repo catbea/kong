@@ -85,13 +85,20 @@ export default {
     ],
     btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '自动回复', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
     openPopup: false,
-    qrcodeImg: ''
+    qrcodeImg: '',
+    oldUrl:0
   }),
   created() {
     this.getUserInfo()
     this.getQrCode(this.userInfo.agentId)
     this.getVipAndPackage()
+    
   },
+  // watch: {
+  //   '$route' () {
+  //     window.location.reload()
+  //   }
+  // },
   computed: {
     ...mapGetters(['userInfo'])
   },
@@ -99,8 +106,9 @@ export default {
     relationHandle() {
       //分享插件
       let host = process.env.VUE_APP_APP_URL
-      window.location.href = host + `panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
-      // window.location.href = 'https://sit.zooming-data.com/panorama-helper/static/customerAnalysis.html?agentId=705&enterpriseId=90'
+      // // window.open(`${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`,'_blank') 
+      // window.location.href = `${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
+      this.$router.push({path: '/user/talk'})
     },
     enterSharePage() {
       this.$router.push({ path: '/user/share-card', query: { agentId: this.userInfo.agentId } })
