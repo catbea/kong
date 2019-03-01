@@ -128,6 +128,7 @@ export default {
      * 切换tab方法
      */
     onClick() {
+      this.cleanCurrentData()
       this.onLoad()
     },
     async onLoad() {
