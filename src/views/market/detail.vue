@@ -360,7 +360,7 @@ export default {
               this.$router.push({ name: 'marketDetail-open', params: { id: this.id } })
             })
         } else {
-          this.$router.push({ name: 'market-share', params: { id: this.id } })
+          this.$router.push({ name: 'market-poster', params: { id: this.id } })
         }
       }
     },
