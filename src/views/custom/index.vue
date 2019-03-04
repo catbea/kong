@@ -1,7 +1,7 @@
 <template>
   <div class="custom-page">
     <form action="/">
-      <van-search class="search-container" v-model="searchVal" placeholder="请输入客户名称" show-action @search="onSearchHandler" @click="onFocusHandler" background="#fff">
+      <van-search class="search-container" v-model.trim="searchVal" placeholder="请输入客户名称" show-action @search="onSearchHandler" @click="onFocusHandler" background="#fff">
         <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
         <div slot="action" @click="onSortHandler">
           <i class="icon iconfont icon-Clientlist_screenin" :style="{color: activeIcon ? '#1989fa' : ''}"></i>
