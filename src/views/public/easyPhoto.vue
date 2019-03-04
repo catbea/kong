@@ -1,13 +1,17 @@
 <template>
-  <div class="comp-page">
-
+  <div class="easy-photo-page">
+    woshi paiiypai
   </div>
 </template>
 <script>
 export default {
-  data: () => ({})
+  
 }
 </script>
-
 <style lang="less">
+.easy-photo-page{
+
+}
 </style>
+
+

@@ -22,5 +22,13 @@ export default [
     meta: {
       title: '请完善信息'
     }
+  },
+  {
+    path: '/public/easy-photo',
+    name: 'easy-photo',
+    component: resolve => require(['@/views/public/easyPhoto.vue'], resolve),
+    meta: {
+      title: '拍一拍'
+    }
   }
 ]
