@@ -47,13 +47,13 @@
           <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
           <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
           <div v-if="pastShow">
-            <li class="borderDottom" @click="masterHandle(marketIndex)">
+            <!-- <li class="borderDottom" @click="masterHandle(marketIndex)">
               <span v-show="dataArr.masterRecommand != 1">大师推荐</span>
               <span v-show="dataArr.masterRecommand == 1">取消大师推荐</span>
-            </li>
+            </li> -->
             <li @click="commonHandle(marketIndex)">
-              <span v-show="dataArr.masterRecommand != 2">普通推荐</span>
-              <span v-show="dataArr.masterRecommand == 2">取消普通推荐</span>
+              <span v-show="dataArr.masterRecommand != 2">推荐</span>
+              <span v-show="dataArr.masterRecommand == 2">取消推荐</span>
             </li>
             <li class="color" @click="stickHandle(marketIndex)">
               <span v-show="dataArr.recommand==0">置顶</span>
@@ -549,7 +549,7 @@ export default {
   .van-popup--bottom {
     background: rgba(255, 255, 255, 1);
     width: 100%;
-    height: 300px;
+    height: 250px;
     border-radius: 0;
     ul {
       li {

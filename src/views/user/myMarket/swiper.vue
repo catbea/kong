@@ -1,9 +1,6 @@
 <template>
  <div class="page positer">
-   <!-- <m-header>
-			<span slot="left"></span>
-			<span slot="title" class="title">店铺海报</span>
-		</m-header> -->
+   <!-- 这个组件没用-->
    <div class="page-content page_positer" id="pagecontent">
      <img class="img" :src=uesrUrl alt=""/>
      <div class="btn_bottom">保存</div>

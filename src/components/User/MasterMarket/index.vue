@@ -3,9 +3,6 @@
     <div class="master-market-box">
       <p class="master-recommend">大师推荐</p>
       <div class="vanSWipe-box">
-       <!-- <div class="bg_img hint" v-if="!swipeShow" :style="{backgroundImage:'url('+hintImg+')'}">
-        <span>您还没有任何推荐楼盘</span> 
-        </div> -->
         <!-- <van-swipe
           :touchable="true"
           :loop="true"
@@ -29,7 +26,7 @@
                 :style="{backgroundImage:'url('+item.linkerUrl+')'}"
               >
               </div>
-              <ol>
+              <ol class="bg_img" :style="{backgroundImage:'url('+gradualImg+')'}">
                 <li><span v-show="item.masterRecommand==1">它</span><span v-show="item.masterRecommand==2">{{item.linkerName}}</span></li>
                 <li>{{item.linkerTags | linkerTags}}</li>
                 <li>{{item.city}} <span v-show="item.masterRecommand==2">{{item.county}}{{item.openTimes}}人开通{{item.price}}{{item.priceUnit}}</span> <span v-show="item.masterRecommand==1">{{item.scanTimes}} 人关注了它</span></li>
@@ -96,7 +93,7 @@ export default {
       changeshow: true,
       masterSave: null,
       img: require('IMG/user/Combined Shape@2x.png'),
-      hintImg: require('IMG/dev/timg.jpg'),
+      gradualImg: require('IMG/user/gradual@2x.png'),
       masterList: [],
       commonList: []
     }
@@ -271,14 +268,20 @@ export default {
       }
       ol {
         position: absolute;
-        left: 19px;
-        bottom: 29px;
+        // left: 19px;
+        top: 29px;
+        
+        width:343px;
+        height:164px;
+        li{
+          padding-left:19px;
+        }
         li:nth-child(1) {
           font-size: 16px;
-
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           line-height: 22px;
+          padding-top:25px;
         }
         li:nth-child(2) {
           width: 300px;

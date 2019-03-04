@@ -5,7 +5,7 @@
     <!-- 顶部swipe -->
     <div class="top-swipe-container" @click="photoHandle">
       <div class="swipe-content">
-        <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
+        <div class="swipe-photo" @click.stop="photoHandle">相册</div>
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
             <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
@@ -197,7 +197,7 @@ export default {
     return {
       instance: 0,
       status: null, // 0-未收藏 1-已收藏
-      photoButton: true, //是否存在相册
+      photoButton: false, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
       siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
@@ -275,6 +275,7 @@ export default {
     async getMarketDetailPhotoInfo() {
       //判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
+      console.log(res,'相册数据')
       if (res.length > 0) {
         this.photoButton = true
       } else if (res.length <= 0) {
@@ -285,6 +286,11 @@ export default {
       //进入相册页面
       if(this.photoButton){
         this.$router.push({ name: 'photoList', params: { id: this.id } })
+      }else{
+        this.$toast({
+          duration: 1000,
+          message: '该楼盘暂无图片'
+        })
       }
     },
     commission() {
