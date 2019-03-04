@@ -6,7 +6,7 @@
       <p class="middle-desc">手机连接 | 操作简单 | 预置点位 | 快速合成</p>
     </div>
     <div class="bottom-box">
-      <div class="bg_img bottom-img"></div>
+      <div class="bg_img bottom-img" :style="{backgroundImage:'url(' + qrUrl + ')'}"></div>
       <p class="bottom-desc">长按识别二维码 下载APP进行体验</p>
     </div>
   </div>
@@ -14,9 +14,15 @@
 <script>
 export default {
   data: () => ({
+    qrUrl:'',
     headImg: require('IMG/easyPhoto/headImg.png'),
     middleImg: require('IMG/easyPhoto/middleImg.png')
-  })
+  }),
+  created(){
+    if(this.$route.query.qr){
+      this.qrUrl = this.$route.query.qr
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -45,14 +51,14 @@ export default {
       margin: 60px auto 10px;
       width: 120px;
       height: 120px;
-      background: #dddddd;
+      background-color: #dddddd;
     }
     .bottom-desc {
       text-align: center;
       font-size: 12px;
       font-weight: 400;
       color: #fff;
-      opacity: .6;
+      opacity: 0.6;
     }
   }
 }
