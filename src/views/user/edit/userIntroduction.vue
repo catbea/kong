@@ -92,7 +92,7 @@ export default {
       > .edit-wechat-input {
         font-size: 15px;
         font-weight: 500;
-        color: rgba(153, 153, 153, 1);
+        color: rgba(51, 51, 51, 1);
         line-height: 21px;
         width: 99%;
         border: 0;

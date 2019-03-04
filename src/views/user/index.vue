@@ -83,7 +83,7 @@ export default {
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }
       // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
     ],
-    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '自动回复', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
+    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '欢迎语设置', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
     openPopup: false,
     qrcodeImg: ''
   }),
