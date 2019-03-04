@@ -1,28 +1,24 @@
 <template>
- <div class="more-page" v-if="show">
-  <div class="van-hairline--top more-filter" :class="{act:flag}" ref="moreFilter">
-    <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
-      <h5 class="item-title">{{group.name}}</h5>
-      <div class="item-list-container">
-        <div class="item" :class="activeCheck(mainKey, index)" v-for="(item,index) in group.node" :key="index" @click="itemClickHandler(mainKey,index)">{{item}}</div>
+  <div class="more-page" v-if="show">
+    <div class="van-hairline--top more-filter" :class="{act:flag}" ref="moreFilter">
+      <div class="scroll-container">
+        <div class="item-container" v-for="(group,mainKey) in conf" :key="mainKey">
+          <h5 class="item-title">{{group.name}}</h5>
+          <div class="item-list-container">
+            <div class="item" :class="activeCheck(mainKey, index)" v-for="(item,index) in group.node" :key="index" @click="itemClickHandler(mainKey,index)">{{item}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="van-hairline--top op-box">
+        <div class="reset-btn" @click="resetHandler">重置</div>
+        <div class="confirm-btn" @click="confirmHandler">确定</div>
       </div>
     </div>
-    <div class="van-hairline--top op-box">
-      <div class="reset-btn" @click="resetHandler">重置</div>
-      <div class="confirm-btn" @click="confirmHandler">确定</div>
-    </div>
-  </div>
   </div>
 </template>
 <script>
 import cloneDeep from 'lodash/cloneDeep'
 export default {
-  created() {
-    // if(this.$route.name==='mymarket'){
-    //   this.flag=true
-    // }
-  },
-  mounted() {},
   props: {
     show: { type: Boolean, default: false },
     value: Object
@@ -174,6 +170,9 @@ export default {
   watch: {
     value(val) {
       this.currentValue = cloneDeep(val)
+    },
+    show(){
+      this.currentValue = cloneDeep(this.value)
     }
   }
 }
@@ -188,55 +187,46 @@ export default {
     background-color: #fff;
     padding: 15px;
     padding-bottom: 0px;
-    overflow: scroll;
-    > .item-container {
-      margin-bottom: 30px;
-      > .item-title {
-        font-size: 15px;
-        font-weight: 400;
-        color: #333333;
-      }
-      > .item-list-container {
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 16px;
-        margin-bottom: 20px;
-        // justify-content: space-between;
-        > .item {
-          // display: flex;
-          // align-items: center;
-          // justify-content: center;
-          width: 75px;
-          height: 30px;
-          text-align: center;
-          line-height: 33px;
-          font-size: 13px;
-          color: #445166;
-          background-color: #f2f5f9;
-          border-radius: 6px;
-          // padding: 5px 10px;
-          margin: 7px 0px;
-          margin-left: 15px;
-          &.active {
-            background-color: #017fff;
-            color: #ffffff;
+    > .scroll-container {
+      height: 360px;
+      overflow: scroll;
+      > .item-container {
+        margin-bottom: 30px;
+        > .item-title {
+          font-size: 15px;
+          font-weight: 400;
+          color: #333333;
+        }
+        > .item-list-container {
+          display: flex;
+          flex-wrap: wrap;
+          margin-top: 16px;
+          margin-bottom: 20px;
+          > .item {
+            width: 75px;
+            height: 30px;
+            text-align: center;
+            line-height: 33px;
+            font-size: 13px;
+            color: #445166;
+            background-color: #f2f5f9;
+            border-radius: 6px;
+            margin: 7px 0px;
+            margin-left: 15px;
+            &.active {
+              background-color: #017fff;
+              color: #ffffff;
+            }
           }
         }
-        // div:first-child,
-        // div:nth-child(5) {
-        //   margin-left: 0px;
-        // }
       }
     }
     > .op-box {
       background: #ffffff;
-      // position: fixed;
       display: flex;
       justify-content: space-around;
       width: 100%;
-      // top: 477px;
       padding: 7px 0;
-      // left: 0;
       margin: 0;
       z-index: 30;
       > div {
