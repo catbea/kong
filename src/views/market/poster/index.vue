@@ -126,27 +126,35 @@
         </div>
         <div class="group-item">
           <span>经纪人电话</span>
-          <input type="number" v-model="editData.mobile" maxlength="16" placeholder="请输入电话号码" @blur="blur">
-        </div>
-        <div class="group-item">
-          <span>宣传语</span>
-          <input type="text" v-model="editData.signature" maxlength="24" placeholder="请输入宣传语" @blur="blur">
+          <input type="number" v-model="editData.agentMobile" maxlength="16" placeholder="请输入电话号码" @blur="blur">
         </div>
         <div class="group-upload">
           <p class="title">选择楼盘封面</p>
           <div class="img-box">
-            <div class="img-item" @click="editData.avatarUrl = shareBaseInfo.avatarUrl">
-              <img :src="shareBaseInfo.avatarUrl" alt="">
-              <van-icon name="success" v-show="editData.avatarUrl === shareBaseInfo.avatarUrl" />
+            <div class="img-item" @click="avatarUrl = editData.postersUrl">
+              <img :src="editData.postersUrl" alt="">
+              <van-icon name="success" v-show="avatarUrl === editData.postersUrl" />
             </div>
           </div>
         </div>
       </div>
       <div class="action-box scale-1px">
-        <button @click="updateAgentCard" class="cancle">重置</button>
+        <button @click="reset" class="cancle">重置</button>
         <button @click="updateAgentCard">保存</button>
       </div>
     </div>
+
+    <!-- 名片海报预览 -->
+    <div class="share-cover-img" v-show="showView">
+      <p class="img-box">
+        <img src="" alt="" id="share-cover-img">
+      </p>
+      <p class="btn">
+        <span>长按图片保存，分享给好友或朋友圈</span>
+        <button class="save" style="width:100%" @click="closeView">返回</button>
+      </p>
+    </div>
+
     <div class="loading"  v-show="showLoading" >
        <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
@@ -166,12 +174,13 @@ export default {
       agentId: 1,
       shareBaseInfo: {}, // 默认数据
       shareInfo: {}, // 用户修改数据
-      activeIndex: 3, // 初始化模板索引
+      activeIndex: 1, // 初始化模板索引
       editData: {}, // 编辑数据
       showView: false, // 图片预览
       showEdit: false, // 显示编辑信息
       creatCover: false, // 生成海报
-      showLoading: false // 加载中
+      showLoading: false, // 加载中
+      avatarUrl: ''
     }
   },
   created() {
@@ -226,6 +235,7 @@ export default {
       await this.getPosterInfo(this.linkedId)
       // await this.getAgentCard()
       this.editData = Object.assign({}, this.shareBaseInfo)
+      this.avatarUrl = this.shareBaseInfo.postersUrl
       // 合并两个接口参数
       this.showLoading = false
     },
@@ -250,8 +260,8 @@ export default {
         useCORS: true,
         allowTaint: false,
         logging: false,
-        width: '260px',
-        heigt: '420px'
+        width: '300px',
+        heigt: '480px'
       }).then(canvas => {
         let dataURL = canvas.toDataURL()
         img.src = dataURL
@@ -259,16 +269,18 @@ export default {
         _that.showLoading = false
       })
     },
+    // 关闭预览
+    closeView() {
+      this.showView = false
+    },
     // 重置数据
     reset() {
-      this.initData()
+      this.editData = Object.assign({}, this.shareBaseInfo)
     },
     // 保存名片信息
     async updateAgentCard() {
       let name = this.editData.agentName
-      let mobile = this.editData.mobile
-      let slogan = this.editData.signature
-      let mojarRegion = this.editData.mojarRegion
+      let mobile = this.editData.agentMobile
       if (!name) {
         return this.$toast('姓名不能为空')
       }
@@ -278,6 +290,12 @@ export default {
       if (!checkStrType(name)) {
         return this.$toast('姓名只支持中文、英文和数字')
       }
+      if (!mobile) {
+        return this.$toast('经纪人电话不能为空')
+      }
+      if (!/[\d|\-]{11,16}/.test(mobile)) {
+        return this.$toast('经纪人电话不正确')
+      }
       // if (mobile.length == 11) {
       //   if (!checkPhoneNum(mobile)) {
       //     return this.$toast('电话号码输入有误')
@@ -286,38 +304,17 @@ export default {
       // if (mobile.length < 11) {
       //   return this.$toast('电话号码输入有误')
       // }
-      let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？\'\"\’\‘\“\”]+$/g
-      if (!reg.test(slogan)) {
-        return this.$toast('宣传语只支持中文、英文和数字')
-      }
-      if (!checkStrLength(slogan, 48)) {
-        return this.$toast('宣传语最多为24个汉字')
-      }
-      let reg2 = /^[\u4E00-\u9FA5A-Za-z0-9\/\\]+$/g
-      if (!reg2.test(mojarRegion)) {
-        return this.$toast('机构地址只支持中文、英文和数字')
-      }
-      if (!checkStrLength(mojarRegion, 48)) {
-        return this.$toast('机构地址最多为24个汉字')
-      }
-
-      let result = await userService.updateAgentCard({
-        // agentId: this.agentId,
-        imageUrl: this.editData.avatarUrl,
-        slogan: this.editData.signature,
-        institutionalAddress: this.editData.mojarRegion,
-        agentMobile: this.editData.mobile,
-        agentName: this.editData.agentName
-      })
-      if (result) {
+      // let result = await marketService.updateAgentCard({
+      //   agentMobile: this.editData.agentMobile,
+      //   agentName: this.editData.agentName
+      // })
+      // if (result) {
         let toast = this.$toast('保存成功')
-        // this.initData()
         setTimeout(() => {
           toast.clear()
-          this.showView = false
           this.showEdit = false
         }, 500)
-      }
+      // }
     },
     // 键盘遮挡
     blur() {
@@ -685,7 +682,7 @@ export default {
         margin: 0 10px;
         border: #007ae6 1px solid;
         &.edit {
-          background: linear-gradient(46deg, rgba(37, 39, 55, 1) 0%, rgba(72, 76, 98, 1) 100%);
+          background: linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
           color: #fff;
           border-color: #fff;
         }
@@ -753,6 +750,9 @@ export default {
       }
       .img-box {
         margin: 15px 0 0 0;
+        overflow-x:scroll; 
+        height: 75px;
+        white-space: nowrap;
         .img-item {
           vertical-align: middle;
           position: relative;
@@ -813,7 +813,52 @@ export default {
       }
     }
   }
-
+  // 预览名片
+  .share-cover-img {
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(37, 39, 55, 1);
+    .img-box {
+      height: 480px;
+      width: 300px;
+      margin: 20px auto;
+    }
+    .btn {
+      width: 300px;
+      margin: auto;
+      font-size: 14px;
+      color: #fff;
+      text-align: center;
+      span {
+        display: block;
+        padding-bottom: 25px;
+        font-size: 12px;
+        opacity: 0.5;
+      }
+      button {
+        height: 44px;
+        width: 120px;
+        border-radius: 6px;
+        border: none;
+        border: 1px solid #007ae6;
+        &.close {
+          margin-right: 20px;
+          background: linear-gradient(46deg, rgba(37, 39, 55, 1) 0%, rgba(72, 76, 98, 1) 100%);
+          color: #007ae6;
+        }
+        &.save {
+          background-color: #007ae6;
+        }
+      }
+      &.btnview {
+        margin-top: 30px;
+      }
+    }
+  }
   // loading
   .loading {
     position: fixed;
