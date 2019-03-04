@@ -375,7 +375,7 @@ export default {
       if (articleInfo.enable == 1 || articleInfo.status == 0) {
         this.$dialog.alert({
           title: '',
-          message: '删除下架文章，无法查看详细数据'
+          message: '该文章已删除下架，无法查看详细数据'
         })
         return
       }
