@@ -12,15 +12,22 @@
   </div>
 </template>
 <script>
+import { isIOS } from '@/utils/uaCheck'
 export default {
   data: () => ({
-    qrUrl:'',
+    qrUrl: '',
     headImg: require('IMG/easyPhoto/headImg.png'),
     middleImg: require('IMG/easyPhoto/middleImg.png')
   }),
-  created(){
-    if(this.$route.query.qr){
+  created() {
+    if (this.$route.query.qr) {
       this.qrUrl = this.$route.query.qr
+    } else {
+      if (isIOS()) {
+        this.qrUrl = 'http://static-1251474741.file.myqcloud.com/qrcode/ios.png'
+      } else {
+        this.qrUrl = 'http://static-1251474741.file.myqcloud.com/qrcode/android.png'
+      }
     }
   }
 }
