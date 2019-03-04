@@ -47,6 +47,7 @@ export default {
       const corpId = process.env.VUE_APP_AW_ENV === 'sit' ? 'ww8f6801ba5fd2a112' : 'ww8f6801ba5fd2a112'
       const res = await userService.getTokenById(this.userId, corpId)
       this.token = res.token
+      console.log(this.token);
       this.mockLoginByToken()
     }
   },

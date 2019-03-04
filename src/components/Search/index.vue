@@ -129,6 +129,8 @@ export default {
       background-color: #f5f5f5;
       border: none;
       border-radius: 4px;
+      height:24px;
+      line-height:24px;
     }
   }
 }
