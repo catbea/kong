@@ -82,7 +82,7 @@ export default {
 
         const result = await userService.updataReplyInfo(obj)
         if (result) {
-          Toast('设置成功')
+          Toast('欢迎语设置成功')
 
           setTimeout(() => {
             this.$router.back(-1)

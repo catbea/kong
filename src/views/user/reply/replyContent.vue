@@ -71,7 +71,7 @@ export default {
     deleReply(index, item) {
       if (this.relpyList[index].status === 1) {
         //表示当前选择的是被设置成默认的欢迎语的选项,不可用于删除
-        Toast('无法删除默认的欢迎语')
+        Toast('无法删除选中欢迎语')
         return
       } else {
         //执行清除操作
