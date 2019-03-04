@@ -533,10 +533,25 @@ class UserService {
   /**
    * 获取欢迎语列表
    */
-  queryReplyList(){
+  queryReplyList() {
     return xhr({
-      method:'GET',
-      url:'/welcomeSetting/getWelComeListByAgentId'
+      method: 'GET',
+      url: '/welcomeSetting/getWelComeListByAgentId'
+    })
+  }
+
+
+  /**
+   * 删除选定的欢迎语
+   * @param {} id 
+   */
+  deleReply(id) {
+    return xhr({
+      method: 'GET',
+      url: '/welcomeSetting/deleteWelComeById',
+      body: {
+        id
+      }
     })
   }
 
@@ -545,11 +560,11 @@ class UserService {
    * 更新欢迎语信息
    * @param {*} data 
    */
-  updataReplyInfo(data){
+  updataReplyInfo(data) {
     return xhr({
-      method:'POST',
-      url:'/welcomeSetting/insertOrUpdateWelCome',
-      body:data
+      method: 'POST',
+      url: '/welcomeSetting/insertOrUpdateWelCome',
+      body: data
     })
   }
 
@@ -557,10 +572,10 @@ class UserService {
    * 根据code获取小程序用户详情
    * @param {*} data 
    */
-  getUserByCode(code, enterpriseId){
+  getUserByCode(code, enterpriseId) {
     return xhr({
-      method:'GET',
-      url:'/user/login',
+      method: 'GET',
+      url: '/user/login',
       body: {
         code,
         enterpriseId
