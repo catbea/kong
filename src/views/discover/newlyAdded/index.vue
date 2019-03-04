@@ -1,5 +1,5 @@
 <template>
-  <div class="page-body" :style="{marginTop:offesTop}">
+  <div class="page-body" id="page-body" :style="{marginTop:offesTop}">
     <div class="copyTitle">请复制原文链接</div>
     <div class="notice-view">目前仅支持爬取微信公众号内容，如有侵权行为，发布人将承担相关责任</div>
     <!-- <textarea class="linker-input" :placeholder="defaultText" v-model="linkerText"></textarea> -->
@@ -37,6 +37,12 @@ export default {
   //     },
   //     { passive: false }
   //   ) // passive 参数不能省略，用来兼容ios和android
+  // },
+
+  // beforeDestroy() {
+  //   document.getElementById('page-body').removeEventListener('touchmove', function(e) {
+  //     e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
+  //   })
   // },
 
   methods: {
