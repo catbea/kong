@@ -252,6 +252,7 @@ export default {
   }
   .van-cell {
     background-color: #f5f5f5;
+    line-height: 0;
   }
   .search-icon {
     width: 24px;
