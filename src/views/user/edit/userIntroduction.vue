@@ -103,7 +103,12 @@ export default {
         border: 0;
         border-bottom: 1px solid #eeeeee;
         height: 42px;
-        resize:none 
+        resize: none;
+      }
+
+      > .edit-wechat-input::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #cccccc;
       }
     }
     > .edit-wechat-number {
