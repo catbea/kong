@@ -16,7 +16,6 @@
       >
         <div :class="{isFixed:searchBar}">
           <search
-            :conf="searchInfo"
             v-model="showProjectName"
             @areaClick="areaClickHandler"
           ></search>
@@ -74,7 +73,6 @@
           :class="{isFixed:searchBar}"
         >
           <search
-            :conf="searchInfo"
             v-model="notShowProjectName"
             @areaClick="areaClickHandler"
           ></search>
