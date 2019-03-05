@@ -329,7 +329,7 @@ export default {
     .swiper-container {
       width: 100%;
       height: 480px;
-      padding-top: 20px;
+      padding-top: 15px;
       box-sizing: content-box;
       .card-info {
         width: 300px;
@@ -663,11 +663,11 @@ export default {
     }
 
     .share-card-action {
-      position: absolute;
+      // position: absolute;
       width: 100%;
-      bottom: 15px;
+      // bottom: 15px;
       text-align: center;
-
+      margin-top: 15px;
       button {
         width: 144px;
         height: 44px;
@@ -820,7 +820,7 @@ export default {
     .img-box {
       height: 480px;
       width: 300px;
-      margin: 20px auto;
+      margin: 5px auto;
     }
     .btn {
       width: 300px;
@@ -830,7 +830,7 @@ export default {
       text-align: center;
       span {
         display: block;
-        padding-bottom: 25px;
+        padding-bottom: 10px;
         font-size: 12px;
         opacity: 0.5;
       }
