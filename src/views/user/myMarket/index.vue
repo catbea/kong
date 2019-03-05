@@ -144,7 +144,6 @@ export default {
       },
       false
     )
-    // document.querySelector('.choose-container').setAttribute('style', 'position: absolute !important');
   },
   data: () => ({
     searchBar: false, //是否吸顶
