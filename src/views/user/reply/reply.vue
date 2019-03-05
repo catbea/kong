@@ -113,8 +113,10 @@ export default {
       overflow: auto;
 
       .text-context {
-        width: 87%;
-        height: 96px;
+        width: 85%;
+        max-height: 96px;
+        margin-top: 24px;
+        margin-bottom: 24px;
         display: flex;
         align-items: center;
         padding-left: 16px;
@@ -123,10 +125,11 @@ export default {
       }
 
       .select-icon {
-        width: 50px;
-        height: 50px;
-        margin-left: 15px;
-        line-height: 22px;
+        width: 25px;
+        height: 25px;
+        margin-left: 8px;
+        line-height: 30px;
+        background-size:cover;
       }
     }
   }

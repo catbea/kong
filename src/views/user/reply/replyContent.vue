@@ -171,7 +171,6 @@ export default {
     background: white;
     width: 100%;
     border-bottom: 1px #eeeeee solid;
-    height: 96px;
     display: flex;
     align-items: center;
     padding-left: 16px;
@@ -185,6 +184,7 @@ export default {
     > .arrowIcon {
       width: 18px;
       height: 18px;
+      background-size: cover;
     }
 
     > .text-context {
@@ -192,6 +192,9 @@ export default {
       font-size: 16px;
       color: #333333;
       width: 85%;
+      max-height: 96px;
+      margin-top: 24px;
+      margin-bottom: 24px;
     }
   }
 

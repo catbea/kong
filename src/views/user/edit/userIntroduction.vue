@@ -44,13 +44,18 @@ export default {
     toUpDateSignature() {
       let signature = this.signature
       if (signature.length == 0) {
-        this.$dialog
-          .alert({
-            message: '个人介绍不可为空'
-          })
-          .then(() => {
-            // on close
-          })
+        // this.$dialog
+        //   .alert({
+        //     message: '个人介绍不可为空'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
+        let obj = {
+          signature: '别问我是谁,请叫我AW大师'
+        }
+        this.signature = '别问我是谁,请叫我AW大师'
+        this.upDateSignature(obj)
       } else {
         let obj = {
           signature: signature
@@ -98,6 +103,7 @@ export default {
         border: 0;
         border-bottom: 1px solid #eeeeee;
         height: 42px;
+        resize:none 
       }
     }
     > .edit-wechat-number {
