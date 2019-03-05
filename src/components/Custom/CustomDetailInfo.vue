@@ -94,12 +94,18 @@ export default {
       line-height: 22px;
     }
     .van-cell__right-icon {
-      margin-bottom: 1.5px;
+      // margin-bottom: 1.5px;
     }
   }
   .cell-item:nth-child(6) {
     .van-cell__value {
       color: #dddddd;
+    }
+    .van-icon-arrow:before {
+      content: ''
+    }
+    .van-cell__right-icon {
+      margin-left: -10px;
     }
   }
 }
