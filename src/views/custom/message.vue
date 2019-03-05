@@ -297,6 +297,10 @@ export default {
     hideface(event) {
       //关闭表情
       this.isShowEmjie = false
+      // 关闭option
+      this.isShowOption = false
+      document.querySelector('.massage-info-list').style.bottom = 0
+
       setTimeout(() => {
         document.body.scrollTop = document.body.scrollHeight
       }, 1000)
