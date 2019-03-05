@@ -198,15 +198,16 @@ export default {
           }
           .label {
             position: absolute;
+            padding:0 3px;
             left: -4px;
             top: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: 36px;
+            // white-space: nowrap;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            // width: 36px;
             height: 24px;
             text-align: center;
-            line-height: 20px;
+            line-height: 22px;
             font-size: 11px;
             font-family: PingFangSC-Regular;
             font-weight: 500;
@@ -214,20 +215,24 @@ export default {
           }
         }
         .market-describe {
-          flex: 1;
+          // flex: 1;
+          height:93px;
+          width:227px;
           padding-right: 12px;
           .market-name {
             display: flex;
             justify-content: space-between;
             margin-bottom: 5px;
+            height:24px;
             .box {
               display: flex;
               align-items: center;
               .title {
+                display:inline-block;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                max-width: 120px;
+                max-width: 110px;
                 font-size: 16px;
                 font-family: PingFangSC-Semibold;
                 font-weight: 600;
@@ -235,13 +240,15 @@ export default {
                 line-height: normal;
               }
               .past {
+                display: inline-block;
                 font-size: 12px;
                 transform: scale(0.84);
                 font-weight: 400;
                 line-height: normal;
-                height: 18px;
+                height: 20px;
+                width:47px;
                 color: rgba(234, 77, 46, 1);
-                padding: 0 4px;
+                padding: 0px 3px 1px 3px;
                 border-radius: 3px;
                 // &::after{
                 //   border-color: rgba(234,77,46,1);

@@ -33,7 +33,7 @@
               </ol>
             </div>
           </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
+          <div class="swiper-pagination" slot="pagination" v-show="slotShow"></div>
         </swiper>
                   <!-- </van-swipe-item>
                   </van-swipe> -->
@@ -91,6 +91,7 @@ export default {
     return {
       swiperOption: {},
       changeshow: true,
+      slotShow:true,
       masterSave: null,
       img: require('IMG/user/Combined Shape@2x.png'),
       gradualImg: require('IMG/user/gradual@2x.png'),
@@ -164,6 +165,11 @@ export default {
         return this.swipeList.slice(0, 5)
       } else {
         let _this = this
+        if(this.swipeList.length>1){
+          this.slotShow=true
+          }else{
+            this.slotShow=false
+          }
         return this.swipeList
       }
     }
