@@ -150,7 +150,6 @@ export default {
   }
   .intention-box {
     margin: 15px 0;
-    margin-top: 9px;
     text-align: center;
     width: 80px;
     .intention-value {

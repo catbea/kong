@@ -11,7 +11,7 @@
                 <p class="sub">GUAN JUN PIN ZHI CHENG SHI JING YANG</p>
               </div>
               <div class="cover">
-                <img :src="editData.postersUrl" alt="">
+                <img :src="avatarUrl" alt="">
               </div>
               <div class="name">
                 <h3>{{editData.linkerName}}</h3>
@@ -29,7 +29,7 @@
           <div class="swiper-slide">
             <div class="card-info card2"  v-if="editData.tagList">
               <div class="cover">
-                <img :src="editData.postersUrl" alt="">
+                <img :src="avatarUrl" alt="">
               </div>
               <div class="data-info">
                 <img class="bg" src="../../../assets/img/market/poster/card2.png" alt="">
@@ -65,7 +65,7 @@
                 
               </div>
               <div class="cover">
-                 <img :src="editData.postersUrl" alt="">
+                 <img :src="avatarUrl" alt="">
               </div>
               <div class="agent-box">
                 <div class="name">
@@ -89,7 +89,7 @@
           <div class="swiper-slide">
             <div class="card-info card4" v-if="editData.tagList">
               <div class="cover">
-                <img :src="editData.postersUrl" alt="">
+                <img :src="avatarUrl" alt="">
               </div>
               <div class="tag-box">
                 <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
@@ -131,9 +131,9 @@
         <div class="group-upload">
           <p class="title">选择楼盘封面</p>
           <div class="img-box">
-            <div class="img-item" @click="avatarUrl = editData.postersUrl">
-              <img :src="editData.postersUrl" alt="">
-              <van-icon name="success" v-show="avatarUrl === editData.postersUrl" />
+            <div class="img-item" @click="avatarUrl = item" v-for="(item,index) in editData.postersUrlList" :key='index'>
+              <img :src="item" alt="">
+              <van-icon name="success" v-show="avatarUrl === item" />
             </div>
           </div>
         </div>
@@ -224,8 +224,8 @@ export default {
       }
     },
     // 获取代理商海报信息
-    async getAgentCard() {
-      let result = await userService.getAgentCard()
+    async getAgentLinkerPoster(agentId) {
+      let result = await marketService.getAgentLinkerPoster({agentId: agentId})
       if (result) {
         this.shareInfo = result
       }
@@ -233,9 +233,9 @@ export default {
     // 初始化数据
     async initData() {
       await this.getPosterInfo(this.linkedId)
-      // await this.getAgentCard()
-      this.editData = Object.assign({}, this.shareBaseInfo)
-      this.avatarUrl = this.shareBaseInfo.postersUrl
+      await this.getAgentLinkerPoster(this.shareBaseInfo.agentId)
+      this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+      this.avatarUrl = this.shareInfo && this.shareInfo.imageUrl || this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0]
       // 合并两个接口参数
       this.showLoading = false
     },
@@ -296,25 +296,19 @@ export default {
       if (!/[\d|\-]{11,16}/.test(mobile)) {
         return this.$toast('经纪人电话不正确')
       }
-      // if (mobile.length == 11) {
-      //   if (!checkPhoneNum(mobile)) {
-      //     return this.$toast('电话号码输入有误')
-      //   }
-      // }
-      // if (mobile.length < 11) {
-      //   return this.$toast('电话号码输入有误')
-      // }
-      // let result = await marketService.updateAgentCard({
-      //   agentMobile: this.editData.agentMobile,
-      //   agentName: this.editData.agentName
-      // })
-      // if (result) {
+      let result = await marketService.updateAgentLinkerPoster({
+        agentMobile: this.editData.agentMobile,
+        agentName: this.editData.agentName,
+        imageUrl: this.avatarUrl,
+        agentId: this.editData.agentId
+      })
+      if (result) {
         let toast = this.$toast('保存成功')
         setTimeout(() => {
           toast.clear()
           this.showEdit = false
         }, 500)
-      // }
+      }
     },
     // 键盘遮挡
     blur() {
