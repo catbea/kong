@@ -13,7 +13,7 @@
               <img :src="arrowIcon" class="arrowIcon">
             </div>
           </van-cell-group>
-          <span slot="right" class="dele-item" @click="deleReply(index,item)">删除</span>
+          <span slot="right" class="dele-item" @click="deleReply(index,item)"><span>删除</span></span>
         </van-swipe-cell>
       </div>
       <div class="edit-relpy" @click="goToReplyContent">
@@ -32,6 +32,7 @@
 <script>
 import userService from 'SERVICE/userService'
 import { Toast } from 'vant'
+import { timeout } from 'q'
 
 export default {
   data() {
@@ -72,7 +73,10 @@ export default {
       if (this.relpyList[index].status === 1) {
         //表示当前选择的是被设置成默认的欢迎语的选项,不可用于删除
         Toast('无法删除选中欢迎语')
-        return
+
+        setTimeout(() => {
+          this.$router.back(-1)
+        }, 2000)
       } else {
         //执行清除操作
         var id = this.relpyList[index].id
@@ -223,11 +227,15 @@ export default {
     display: block;
     height: 96px;
     width: 80px;
-    line-height: 96px;
     color: #fff;
     font-size: 16px;
     background-color: #ea4d2e;
     text-align: center;
+
+    span{
+      vertical-align: middle;
+      line-height: 65px;
+    }
   }
 }
 </style>
