@@ -44,7 +44,7 @@
                 </div>
                 <div class="agent">
                   <div class="agent-info">
-                    <img class="pic" :src="editData.avatarMediaid" alt="">
+                    <img class="pic" :src="editData.avatarMediaidTwo" alt="">
                     <div class="text">
                       <p class="agentName">{{editData.agentName}}</p>
                       <p>{{editData.agentMobile}}</p>
@@ -75,7 +75,7 @@
               </div>
               <div class="developer-box">
                 <div class="developer">
-                  <img class="pic" :src="editData.avatarMediaid" alt="">
+                  <img class="pic" :src="editData.avatarMediaidTwo" alt="">
                   <p class="agentName">{{editData.agentName}} | {{editData.agentMobile}}</p>
                   <p class="company">授权开发商：{{editData.developer}}</p>
                 </div>
@@ -329,7 +329,7 @@ export default {
     .swiper-container {
       width: 100%;
       height: 480px;
-      padding-top: 30px;
+      padding-top: 20px;
       box-sizing: content-box;
       .card-info {
         width: 300px;
@@ -665,7 +665,7 @@ export default {
     .share-card-action {
       position: absolute;
       width: 100%;
-      bottom: 24px;
+      bottom: 15px;
       text-align: center;
 
       button {
