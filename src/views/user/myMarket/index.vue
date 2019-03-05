@@ -268,6 +268,7 @@ export default {
           this.flag = false
         }
       })
+      document.querySelector('.router-view').scrollTop=document.querySelector('.user-market-box').offsetTop-4
     },
     sortHandle(n) {
       //筛选中排序滚动条操作
