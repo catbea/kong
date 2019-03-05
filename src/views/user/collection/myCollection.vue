@@ -38,7 +38,7 @@
                     v-for="(its,key) in item.linkerTags"
                     :key="key"
                   >{{its}}</button>-->
-                  <tag-group :arr="item.linkerTags ? item.linkerTags.slice(0,3) : []"></tag-group>
+                  <div class="list-tag"><tag-group :arr="item.linkerTags ? item.linkerTags.slice(0,3) : []"></tag-group></div>
                 </p>
                 <p class="list-right-price">
                   <span class="right-price right-price-open" @click="gomarketDetail(item)">
@@ -252,6 +252,12 @@ export default {
     > .dynamicsInfo-list-right {
       border-radius: 6px;
       margin-left: 12px;
+
+      > .list-tag{
+        width: 100%;
+        height: 20px;
+      }
+
       > .list-right-title {
         font-size: 16px;
         font-weight: 600;
