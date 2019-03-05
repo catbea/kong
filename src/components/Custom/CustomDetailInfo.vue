@@ -104,9 +104,6 @@ export default {
     .van-icon-arrow:before {
       content: ''
     }
-    .van-cell__right-icon {
-      margin-left: -10px;
-    }
   }
 }
 </style>
