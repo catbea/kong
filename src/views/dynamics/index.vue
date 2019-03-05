@@ -201,7 +201,7 @@ export default {
             this.$router.push({ name: 'user-edit' })
           })
       } else {
-        this.$router.push({ name: 'market-share', params: { id: info.linkerId } })
+        this.$router.push({ name: 'market-poster', params: { id: info.linkerId } })
       }
     },
     openHandler(info) {

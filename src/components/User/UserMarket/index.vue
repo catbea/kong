@@ -343,7 +343,7 @@ export default {
           })
       } else {
         //去分享
-        this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
+        this.$router.push({ name: 'market-poster', params: { id: this.linkerId } })
       }
     }
   }
