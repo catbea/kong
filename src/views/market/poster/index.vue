@@ -433,8 +433,9 @@ export default {
               border-bottom: 1px dotted  rgba(243, 216, 186,0.3);
               padding-bottom: 10px;
               .name{
-                font-size: 30px;
-                margin-right: 100px;
+                font-size: 28px;
+                margin-right: 95px;
+                overflow: hidden;
               }
               .tag{
                 padding: 8px 0;
