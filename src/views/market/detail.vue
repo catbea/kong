@@ -10,7 +10,7 @@
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
             <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
           </van-swipe-item>
-          <div class="custom-indicator dev" slot="indicator">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+          <div class="custom-indicator dev" slot="indicator" v-show="photoButton">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
         </van-swipe>
       </div>
       <div class="operate-content">

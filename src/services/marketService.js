@@ -339,5 +339,15 @@ class MarketService {
       body: data
     })
   }
+
+  /**
+   * 查询经纪人海报
+   */
+  getAgentLinkerPoster(data) {
+    return xhr({
+      url: '/linkerDetail/getAgentLinkerPoster',
+      body: data
+    })
+  }
 }
 export default new MarketService()

@@ -257,14 +257,14 @@ export default {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
         this.$toast({
           duration: 800,
-          message: '普通推荐成功'
+          message: '推荐成功'
         })
         this.$emit('pushCommon', this.dataArr)
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
         this.$toast({
           duration: 800,
-          message: '取消普通推荐成功'
+          message: '取消推荐成功'
         })
         this.$emit('spliceCommon', this.dataArr)
       }
