@@ -31,6 +31,7 @@
           <p class="btn-right-time">{{item.createTime | dateTimeFormatter}}</p>
         </div>
       </div>
+      <div class="report-bottom">{{reportInfo.expiryTime | dateTimeFormatter(2, '/')}}前有效</div>
     </div>
   </div>
 </template>
@@ -58,7 +59,7 @@ export default {
         '105': '已放弃'
       },
       nullIcon: require('IMG/user/empty_report@2x.png'),
-      nullcontent: '您还没有任何报备信息'
+      nullcontent: '您还没有任何报备信息',
     }
   },
   created() {
@@ -189,6 +190,16 @@ export default {
           line-height: 17px;
         }
       }
+    }
+    > .report-bottom {
+      width: 200px;
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      margin-left: -100px;
+      text-align: center;
+      color: #EA4D2E;
+      font-size: 12px;
     }
   }
 }

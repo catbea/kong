@@ -5,7 +5,7 @@
     <!-- 顶部swipe -->
     <div class="top-swipe-container" @click="photoHandle">
       <div class="swipe-content">
-        <div class="swipe-photo" @click.stop="photoHandle" v-show="photoButton">相册</div>
+        <div class="swipe-photo" @click.stop="photoHandle">相册</div>
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
             <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
@@ -360,7 +360,7 @@ export default {
               this.$router.push({ name: 'marketDetail-open', params: { id: this.id } })
             })
         } else {
-          this.$router.push({ name: 'market-share', params: { id: this.id } })
+          this.$router.push({ name: 'market-poster', params: { id: this.id } })
         }
       }
     },

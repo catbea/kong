@@ -5,7 +5,7 @@
     <form action="/">
       <van-search
         class="search-container"
-        v-model="searchVal"
+        v-model.trim="searchVal"
         placeholder="请输入楼盘名称"
         show-action
         @search="onSearchHandler"

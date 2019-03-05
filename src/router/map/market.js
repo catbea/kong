@@ -207,5 +207,16 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/market/poster/:id',
+    name: 'market-poster',
+    component: resolve => require(['@/views/market/poster/index.vue'], resolve),
+    meta: {
+      title: '楼盘海报',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]

@@ -36,6 +36,7 @@
         class="bg_img van-hairline--surround discover-list-right"
         :style="{'backgroundImage':'url('+ item.articleImgUrl +')'}"
       ></div>
+      <div class="bg_img sold" :style="{backgroundImage:'url(' + soldIcon + ')'}" v-if="item.enable==1 || item.status==0"></div>
     </div>
     </div>
   </div>
@@ -57,6 +58,7 @@ export default {
   },
   data() {
     return {
+      soldIcon: require('IMG/article/bg_sold.png')
       // articleDynamicList:[
       //   { id: '4', articleTitle: '治污染纳入考核 河长制延伸到村', articleTime: '', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
       //   { id: '5', articleTitle: '碧桂园凤凰国际', articleTime: '0', dynamicCount: '14', articleSource: '南山 深圳湾', price: '0' },
@@ -91,6 +93,7 @@ export default {
     margin: 15px;
     display: flex;
     height: 110px;
+    position: relative;
     > .discover-list-left {
       position: relative;
       flex: 1;
@@ -108,6 +111,7 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
+        width: 100%;
         .left-time-nub {
           font-size: 12px;
           font-family: PingFangSC-Regular;
@@ -115,6 +119,8 @@ export default {
           color: rgba(0, 122, 230, 1);
           line-height: 17px;
           padding-left: 25px;
+          position: absolute;
+          right: 20px;
         }
       }
     }
@@ -125,6 +131,13 @@ export default {
       background-color: #999999;
       // margin-right: 16px;
       // margin-top: 10px;
+    }
+    > .sold {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      right: 105px;
+      top: 24px;
     }
   }
 }

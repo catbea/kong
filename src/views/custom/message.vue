@@ -307,8 +307,10 @@ export default {
     displayOption() {
       if (this.isShowOption == false && this.msgType == 1) {
         this.isShowOption = true
+        document.querySelector('.massage-info-list').style.bottom='200px'
       } else {
         this.isShowOption = false
+        document.querySelector('.massage-info-list').style.bottom='0'
       }
       this.isShowEmjie = false
     },

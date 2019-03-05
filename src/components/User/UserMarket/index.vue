@@ -42,7 +42,7 @@
       </div>
     </div>
     <div style="padding-left:16px">
-      <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay :class="{pastStyle:!pastShow}">
+      <van-popup v-model="show" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
         <ul>
           <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
           <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
