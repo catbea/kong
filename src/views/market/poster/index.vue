@@ -224,16 +224,15 @@ export default {
       }
     },
     // 获取代理商海报信息
-    async getAgentCard() {
-      let result = await userService.getAgentCard()
-      if (result) {
-        this.shareInfo = result
-      }
-    },
+    // async getAgentCard() {
+    //   let result = await userService.getAgentCard()
+    //   if (result) {
+    //     this.shareInfo = result
+    //   }
+    // },
     // 初始化数据
     async initData() {
       await this.getPosterInfo(this.linkedId)
-      // await this.getAgentCard()
       this.editData = Object.assign({}, this.shareBaseInfo)
       this.avatarUrl = this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0]
       // 合并两个接口参数
