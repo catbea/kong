@@ -52,7 +52,7 @@
                     class="right-price-lab"
                     @click="godynamics(item,key)"
                     id="rightno"
-                    v-bind:style="{'color':item.status==1?'#AFB2C3':'#007AE6'}"
+                    v-bind:style="{'color':item.status==1?'#AFB2C3':'#007AE6', 'border':item.status==1?'1px #AFB2C3 solid': '1px #007AE6 solid'}"
                   >{{item.status == 1 ? '取消收藏':'收藏'}}</button>
                   <!-- <button
                     class="right-price-lab"
@@ -307,21 +307,21 @@ export default {
         padding-top: 5px;
         //  margin-bottom: 16px;
         > .right-price-lab-ok {
-          color: rgba(0, 122, 230, 1);
+          // color: rgba(0, 122, 230, 1);
           font-size: 10px;
           font-weight: 400;
           line-height: 20px;
           width: 60px;
           height: 20px;
           border-radius: 16px;
-          border: 1px solid;
+          // border: 1px #007AE6 solid;
           right: 0;
           position: absolute;
           text-align: center;
           margin-top: 5px;
         }
         > .right-price-lab {
-          color: rgba(175, 178, 195, 1);
+          // color: rgba(175, 178, 195, 1);
           background: #ffffff;
           font-size: 10px;
           font-weight: 400;
@@ -329,7 +329,7 @@ export default {
           width: 60px;
           height: 20px;
           border-radius: 16px;
-          border: 1px solid;
+          // border: 1px solid;
           right: 0;
           position: absolute;
           text-align: center;
