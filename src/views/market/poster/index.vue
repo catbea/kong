@@ -224,17 +224,18 @@ export default {
       }
     },
     // 获取代理商海报信息
-    // async getAgentCard() {
-    //   let result = await userService.getAgentCard()
-    //   if (result) {
-    //     this.shareInfo = result
-    //   }
-    // },
+    async getAgentLinkerPoster(agentId) {
+      let result = await marketService.getAgentLinkerPoster({agentId: agentId})
+      if (result) {
+        this.shareInfo = result
+      }
+    },
     // 初始化数据
     async initData() {
       await this.getPosterInfo(this.linkedId)
-      this.editData = Object.assign({}, this.shareBaseInfo)
-      this.avatarUrl = this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0]
+      await this.getAgentLinkerPoster(this.shareBaseInfo.agentId)
+      this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+      this.avatarUrl = this.shareInfo && this.shareInfo.imageUrl || this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0]
       // 合并两个接口参数
       this.showLoading = false
     },
@@ -297,7 +298,9 @@ export default {
       }
       let result = await marketService.updateAgentLinkerPoster({
         agentMobile: this.editData.agentMobile,
-        agentName: this.editData.agentName
+        agentName: this.editData.agentName,
+        imageUrl: this.avatarUrl,
+        agentId: this.editData.agentId
       })
       if (result) {
         let toast = this.$toast('保存成功')
