@@ -17,12 +17,15 @@
         <!-- 收藏/分享 -->
         <div class="operate-1">
           <div class="operate-collect" @click.stop="collectHandler">
-            <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
-            <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
+            <!-- <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
+            <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i> -->
+            <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
+            <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
             收藏
           </div>
           <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
-            <i class="icon iconfont icon-article_share"></i>
+            <!-- <i class="icon iconfont icon-article_share"></i> -->
+            <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
             分享
           </div>
         </div>
@@ -200,6 +203,9 @@ export default {
       photoButton: false, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
       siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
+      collectImg: require('IMG/marketDetail/collect@2x.png'),
+      collectColorImg: require('IMG/marketDetail/collectColor@2x.png'),
+      shareImg: require('IMG/marketDetail/share@2x.png'),
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       drawingImg: require('IMG/marketDetail/drawing@2x.png'),
       closeImg: require('IMG/marketDetail/close@2x.png'),
@@ -474,6 +480,8 @@ export default {
           font-size: 12px;
           color: #fff;
           > i {
+            width:24px;
+            height:24px;
             font-size: 24px;
             display: block;
           }
