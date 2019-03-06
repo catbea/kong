@@ -6,7 +6,10 @@
       <p class="middle-desc">手机连接 | 操作简单 | 预置点位 | 快速合成</p>
     </div>
     <div class="bottom-box">
-      <div class="bg_img bottom-img" :style="{backgroundImage:'url(' + qrUrl + ')'}"></div>
+      <div class="bottom-img">
+        <img :src="qrUrl">
+      </div>
+      
       <p class="bottom-desc">长按识别二维码 下载APP进行体验</p>
     </div>
   </div>
@@ -59,6 +62,12 @@ export default {
       width: 120px;
       height: 120px;
       background-color: #dddddd;
+      padding: 6px;
+      background: #FFF;
+    }
+    img {
+      width: 100%;
+      height: 100%;
     }
     .bottom-desc {
       text-align: center;

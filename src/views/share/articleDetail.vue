@@ -540,15 +540,25 @@ export default {
 
     // 分享之后调用
     async articleShare() {
+      /*
       let params = {
         deleteType: 0,
         infoId: this.infoId
       }
       const result = await discoverService.articleShare(params)
+      */
+     // h5分享添加数据埋点
+    //  this.dataReport({ userActionType: 'viewNews', userActionCode: 'HMPCK', userActionData: '' })
     },
     // 分享
     async shareHandler() {
       await window.awHelper.wechatHelper.init(this.agentId)
+
+      this.friendShareData.success = this.articleShare
+      this.timelineShareData.success = this.articleShare
+      this.friendShareData.cancel = this.articleShare
+      this.timelineShareData.cancel = this.articleShare
+      
       await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       setTimeout(() => {
         window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
