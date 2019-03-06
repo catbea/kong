@@ -548,7 +548,7 @@ export default {
       const result = await discoverService.articleShare(params)
       */
      // h5分享添加数据埋点
-    //  this.dataReport({ userActionType: 'viewNews', userActionCode: 'HMPCK', userActionData: '' })
+     this.dataReport({ userActionType: '', userActionCode: 'HFFXWZ', userActionData: '' })
     },
     // 分享
     async shareHandler() {
