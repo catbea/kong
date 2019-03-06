@@ -10,7 +10,7 @@
                 class="text-context"
                 @click="enterEditPage(item.id,item.content)"
               >{{item.content|textOver()}}</div>
-              <img :src="arrowIcon" class="arrowIcon">
+              <img :src="arrowIcon" class="arrowIcon" @click="enterEditPage(item.id,item.content)">
             </div>
           </van-cell-group>
           <span slot="right" class="dele-item" @click="deleReply(index,item)"><span>删除</span></span>
