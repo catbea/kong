@@ -140,8 +140,7 @@ export default {
         this.errColor = '#445166'
 
         if (this.parseType == '1') {
-          this.$toast('文章添加成功9999999999999999999999')
-
+          var int = setInterval(this.aa, 1500)
           // setTimeout(async () => {
           //   // this.goToEditDetail()
           //   this.$toast('文章添加成功9999999999999999999999')
@@ -154,6 +153,10 @@ export default {
       }
     },
 
+    aaa() {
+      this.goToEditDetail()
+    },
+
     goToMyWrite() {
       this.$toast('文章添加成功')
       this.$router.push({ name: 'historicalArticles', query: { typeCode: '3' } })
@@ -164,7 +167,8 @@ export default {
       this.showLoading = 'none'
       let city = '全国'
 
-      // Toast('文章解析成功')
+      clearInterval(int)
+
       this.$toast('文章解析成功')
       this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
     },
