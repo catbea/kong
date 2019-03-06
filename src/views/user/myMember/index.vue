@@ -187,7 +187,6 @@ export default {
       if (res.vipFlag && !res.city) {
         this.unselectedPopup()
       }
-      this.unselectedPopup()
 
       if (this.vipList.length > 0) {
         this.currPriceIndex = 0
