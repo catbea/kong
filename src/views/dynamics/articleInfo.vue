@@ -85,7 +85,7 @@
                     <p>
                       累计浏览
                       <span>{{item.todayClickCount}}次</span>该文章，平均停留
-                      <span>{{item.avgTime / 1000}}s</span>
+                      <span>{{item.avgTime / 1000 | numberFormatter(1)}}s</span>
                     </p>
                   </div>
                   <div class="dynamics-list-btn"  v-show="item.clientDelFlag !== 2">
