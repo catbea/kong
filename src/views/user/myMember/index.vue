@@ -52,7 +52,7 @@ export default {
     Avatar
   },
   created() {
-    this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userArea.city
+    this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userInfo.majorCity ||  this.userArea.city
     this.getVipInfo()
   },
   data: () => ({
@@ -187,7 +187,6 @@ export default {
       if (res.vipFlag && !res.city) {
         this.unselectedPopup()
       }
-      this.unselectedPopup()
 
       if (this.vipList.length > 0) {
         this.currPriceIndex = 0

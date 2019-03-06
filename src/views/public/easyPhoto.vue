@@ -6,7 +6,7 @@
       <p class="middle-desc">手机连接 | 操作简单 | 预置点位 | 快速合成</p>
     </div>
     <div class="bottom-box">
-      <div class="bottom-img" :style="{backgroundImage:'url(' + qrUrl + ')'}">
+      <div class="bottom-img">
         <img :src="qrUrl">
       </div>
       
@@ -62,6 +62,8 @@ export default {
       width: 120px;
       height: 120px;
       background-color: #dddddd;
+      padding: 6px;
+      background: #FFF;
     }
     img {
       width: 100%;
