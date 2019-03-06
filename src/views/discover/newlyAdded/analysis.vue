@@ -77,7 +77,7 @@ export default {
       errColor: '',
       show: true,
       closeImg: require('IMG/user/close_popup.png'),
-      canAnalysis: true
+      canAnalysis: true,
     }
   },
 
@@ -89,6 +89,10 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
+
+  beforeDestroy () {
+      clearInterval(this.intMethods)
+    },
 
   methods: {
     async commitInfo(data) {
@@ -140,11 +144,15 @@ export default {
         this.errColor = '#445166'
 
         if (this.parseType == '1') {
-          var int = setInterval(this.aa, 1500)
+          
+           this.intMethods = setInterval(this.aaa, 1500)
+
           // setTimeout(async () => {
           //   // this.goToEditDetail()
           //   this.$toast('文章添加成功9999999999999999999999')
           // }, 1500)
+          // clearInterval(intMethods)
+
         } else if (this.parseType == '2') {
           setTimeout(() => {
             this.goToMyWrite()
@@ -166,8 +174,7 @@ export default {
       this.analysisText = '解析成功'
       this.showLoading = 'none'
       let city = '全国'
-
-      clearInterval(int)
+      
 
       this.$toast('文章解析成功')
       this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
