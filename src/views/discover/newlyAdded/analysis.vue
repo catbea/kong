@@ -33,7 +33,6 @@
       position="center"
       :overlay="true"
       class="popup-view"
-      :lock-scroll='true'
       :close-on-click-overlay="false"
     >
       <div class="popup-top">
