@@ -403,7 +403,7 @@ export default {
       window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
     },
     competeOpenStatus() {
-      this.openStatus = this.info.openStatus == 0
+      this.openStatus =  this.info.openStatus == 0
     },
     // 其他楼盘
     itemClickHandler(id) {
@@ -414,7 +414,7 @@ export default {
       this.$router.push({ path: '/public/map-Search', query: { id: this.info.linkerId, mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
     },
     posterCheck() {
-      this.posterShow = openStatus && this.info && this.info.posterImgUrl != '' 
+      this.posterShow = this.openStatus && this.info && this.info.posterImgUrl != '' 
     },
     posterClosedHandler() {
       this.posterShow = false
