@@ -52,7 +52,7 @@ export default {
     Avatar
   },
   created() {
-    this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userArea.city
+    this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userInfo.majorCity ||  this.userArea.city
     this.getVipInfo()
   },
   data: () => ({
