@@ -187,6 +187,7 @@ export default {
       if (res.vipFlag && !res.city) {
         this.unselectedPopup()
       }
+      this.unselectedPopup()
 
       if (this.vipList.length > 0) {
         this.currPriceIndex = 0
@@ -202,8 +203,8 @@ export default {
     unselectedPopup() {
       this.$dialog
         .confirm({
-          title: this.title,
-          message: '是否选择' + this.selectCity + '作为VIP开通城市',
+          title: '是否选择“' + this.selectCity + '”作为VIP开通城市',
+          message: '<font color="#EA4D2E">vip仅针对生效城市下所有楼盘免费，请谨慎选择</font>',
           cancelButtonText: '其他城市'
         })
         .then(() => {
@@ -234,6 +235,10 @@ export default {
 }
 </script>
 <style lang="less">
+.van-dialog__message {
+  // text-align: left;
+  line-height: 24px;
+}
 .unselect {
   width: 280px;
   height: 146px;
