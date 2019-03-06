@@ -45,7 +45,7 @@
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join("|")}}</p>
+        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join(" | ")}}</p>
         <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
           <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
           <span class="commission-text">{{info&&info.divisionRules}}</span>

@@ -52,7 +52,7 @@ export default {
     Avatar
   },
   created() {
-    this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userArea.city
+    this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userInfo.majorCity ||  this.userArea.city
     this.getVipInfo()
   },
   data: () => ({
@@ -202,8 +202,8 @@ export default {
     unselectedPopup() {
       this.$dialog
         .confirm({
-          title: this.title,
-          message: '<font color="red">vip仅针对生效城市下所有楼盘免费，请谨慎选择</font><br />是否选择 <font color="red">' + this.selectCity + '</font> 作为VIP开通城市',
+          title: '是否选择“' + this.selectCity + '”作为VIP开通城市',
+          message: '<font color="#EA4D2E">vip仅针对生效城市下所有楼盘免费，请谨慎选择</font>',
           cancelButtonText: '其他城市'
         })
         .then(() => {
@@ -235,7 +235,7 @@ export default {
 </script>
 <style lang="less">
 .van-dialog__message {
-  text-align: left;
+  // text-align: left;
   line-height: 24px;
 }
 .unselect {

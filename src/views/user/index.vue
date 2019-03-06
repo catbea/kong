@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
+    <van-popup class="popup-view" v-model="openPopup" :click-overlay="overlayClose">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
       </div>
