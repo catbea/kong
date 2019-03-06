@@ -18,6 +18,7 @@
 </template>
 <script>
 import cloneDeep from 'lodash/cloneDeep'
+import isEmpty from 'lodash/isEmpty'
 export default {
   props: {
     show: { type: Boolean, default: false },
@@ -96,7 +97,6 @@ export default {
     itemClickHandler(type, value) {
       switch (type) {
         case 'areaSize':
-          // this.currentValue.areaSize = this.currentValue.areaSize === value ? '-1,-1' : value
           if (this.currentValue.areaSize === value) {
             this.currentValue.areaSize = '-1,-1'
           } else {
@@ -171,8 +171,8 @@ export default {
     value(val) {
       this.currentValue = cloneDeep(val)
     },
-    show(){
-      this.currentValue = cloneDeep(this.value)
+    show() {
+      if (!isEmpty(this.value)) this.currentValue = cloneDeep(this.value)
     }
   }
 }
