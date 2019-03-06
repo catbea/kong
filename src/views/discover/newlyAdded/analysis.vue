@@ -164,7 +164,8 @@ export default {
       this.showLoading = 'none'
       let city = '全国'
 
-      this.$toast('文章解析成功')
+      Toast('文章解析成功')
+      // this.$toast('文章解析成功')
       this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
     },
 
