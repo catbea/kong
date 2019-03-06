@@ -414,7 +414,7 @@ export default {
       this.$router.push({ path: '/public/map-Search', query: { id: this.info.linkerId, mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
     },
     posterCheck() {
-      this.posterShow = !this.posterClosed && this.info && this.info.posterImgUrl != ''
+      this.posterShow = openStatus && this.info && this.info.posterImgUrl != '' 
     },
     posterClosedHandler() {
       this.posterShow = false
@@ -425,18 +425,18 @@ export default {
     mapData() {
       return this.info.houseAroundType[this.mapTab]
     },
-    poster: {
-      get: function() {
-        return !window.localStorage.getItem('POSTER_REMIND') && this.info && this.info.posterImgUrl != ''
-      },
-      set: function(val) {
-        // 触发poster重新计算,设置localStorage不会触发
-        const tempposterImgUrl = this.info.posterImgUrl
-        this.info.posterImgUrl = ''
-        this.info.posterImgUrl = tempposterImgUrl
-        // window.localStorage.setItem('POSTER_REMIND',true) // 每次进入都弹,暂时屏蔽
-      }
-    }
+    // poster: {
+    //   get: function() {
+    //     return !window.localStorage.getItem('POSTER_REMIND') && this.info && this.info.posterImgUrl != ''
+    //   },
+    //   set: function(val) {
+    //     // 触发poster重新计算,设置localStorage不会触发
+    //     const tempposterImgUrl = this.info.posterImgUrl
+    //     this.info.posterImgUrl = ''
+    //     this.info.posterImgUrl = tempposterImgUrl
+    //     // window.localStorage.setItem('POSTER_REMIND',true) // 每次进入都弹,暂时屏蔽
+    //   }
+    // }
   },
   beforeDestroy() {
     clearInterval(this.rd.headSlideTimer)

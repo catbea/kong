@@ -64,6 +64,7 @@ import * as types from '@/store/mutation-types'
 export default {
   data() {
     return {
+      articleId:'',
       noticeFirst: ' 我们尊重原创，也注重分享。有部分内容来自互联网，版权归原作者所有，仅供学习参考之用，禁止用于商业用途，如无意侵犯了权利人的知识产权，请联系删除。 ',
       noticeSecond: ' 本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。',
       cancelCollection: require('IMG/user/myWrite/cancelCollection.png'),
