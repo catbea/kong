@@ -145,7 +145,7 @@ export default {
 
         if (this.parseType == '1') {
           
-           this.intMethods = setInterval(this.aaa, 1500)
+           this.intMethods = setInterval(this.goToEditDetail, 1500)
 
           // setTimeout(async () => {
           //   // this.goToEditDetail()
@@ -161,9 +161,6 @@ export default {
       }
     },
 
-    aaa() {
-      this.goToEditDetail()
-    },
 
     goToMyWrite() {
       this.$toast('文章添加成功')
