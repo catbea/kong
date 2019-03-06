@@ -314,7 +314,7 @@ export default {
           this.easylookList.push(item.userName)
         }
         this.$nextTick(() => {
-          let height = this.$refs.easyLook.offsetHeight
+          let height = this.$refs.easyLook&&this.$refs.easyLook.offsetHeight || 0
           if (height <= 85) {
             this.isMoreLike = false
           } else {
