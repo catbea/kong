@@ -31,7 +31,7 @@
           <p class="btn-right-time">{{item.createTime | dateTimeFormatter}}</p>
         </div>
       </div>
-      <div class="report-bottom">{{reportInfo.expiryTime | dateTimeFormatter(2, '/')}}前有效</div>
+      <div class="report-bottom">{{reportInfo.expiryTime | dateTimeFormatter}}前有效</div>
     </div>
   </div>
 </template>
