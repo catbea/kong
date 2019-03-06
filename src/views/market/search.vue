@@ -266,6 +266,9 @@ export default {
     .van-field__body {
       height: 100%;
     }
+    .van-field__left-icon{
+      display: flex;
+    }
     .van-cell {
       background-color: #f5f5f5;
     }
@@ -275,7 +278,8 @@ export default {
     }
     .van-field__control {
       height: 24px;
-      line-height: 24px;
+      // line-height:24px;
+      padding-top: 2px;
     }
   }
   > .history-words-content {

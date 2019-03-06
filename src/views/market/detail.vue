@@ -17,12 +17,12 @@
         <!-- 收藏/分享 -->
         <div class="operate-1">
           <div class="operate-collect" @click.stop="collectHandler">
-            <i v-if="status == 0" class="icon iconfont icon-article_collection"></i>
-            <i v-else class="icon iconfont icon-Building_details_col" style="color:#2f7bdf;"></i>
+            <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
+            <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
             收藏
           </div>
           <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
-            <i class="icon iconfont icon-article_share"></i>
+            <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
             分享
           </div>
         </div>
@@ -165,6 +165,12 @@
         <p>售罄</p>
       </div>
     </div>
+    <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
+    <van-popup class="poster-container" v-model="posterShow" @click-overlay="posterClosedHandler">
+      <div class="bg_img poster-img" :style="{backgroundImage:'url(' + info.posterImgUrl + ')'}">
+        <div class="bg_img close-icon" @click="posterClosedHandler" :style="{backgroundImage:'url(' + closeIcon + ')'}"></div>
+      </div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -200,9 +206,13 @@ export default {
       photoButton: false, //是否存在相册
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
       siteDetailImg: require('IMG/marketDetail/hun@2x.png'),
+      collectImg: require('IMG/marketDetail/collect@2x.png'),
+      collectColorImg: require('IMG/marketDetail/collectColor@2x.png'),
+      shareImg: require('IMG/marketDetail/share@2x.png'),
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       drawingImg: require('IMG/marketDetail/drawing@2x.png'),
       closeImg: require('IMG/marketDetail/close@2x.png'),
+      closeIcon: require('IMG/market/closeIcon@2x.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -241,6 +251,8 @@ export default {
       rd: {
         headSlideTimer: null
       },
+      posterShow: false,
+      posterClosed: false,
       playIcon: require('IMG/market/view720.png')
     }
   },
@@ -269,13 +281,13 @@ export default {
   methods: {
     relationHandle() {
       //立即联系弹窗
-      window.location.href = 'tel://'+this.info.contatctTel
+      window.location.href = 'tel://' + this.info.contatctTel
       this.relationShow = false
     },
     async getMarketDetailPhotoInfo() {
       //判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
-      console.log(res,'相册数据')
+      console.log(res, '相册数据')
       if (res.length > 0) {
         this.photoButton = true
       } else if (res.length <= 0) {
@@ -284,9 +296,9 @@ export default {
     },
     photoHandle() {
       //进入相册页面
-      if(this.photoButton){
+      if (this.photoButton) {
         this.$router.push({ name: 'photoList', params: { id: this.id } })
-      }else{
+      } else {
         this.$toast({
           duration: 1000,
           message: '该楼盘暂无图片'
@@ -309,6 +321,7 @@ export default {
       // 浏览者头像动画
       this.headSlide()
       this.competeOpenStatus()
+      this.posterCheck()
     },
     swipeChange(val) {
       this.swipeCurrent = val
@@ -398,13 +411,31 @@ export default {
     },
     // 地图点击
     mapClickHandler() {
-      this.$router.push({ path: '/public/map-Search', query: { id:this.info.linkerId ,mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
+      this.$router.push({ path: '/public/map-Search', query: { id: this.info.linkerId, mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
+    },
+    posterCheck() {
+      this.posterShow = !this.posterClosed && this.info && this.info.posterImgUrl != ''
+    },
+    posterClosedHandler() {
+      this.posterShow = false
     }
   },
   computed: {
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
+    },
+    poster: {
+      get: function() {
+        return !window.localStorage.getItem('POSTER_REMIND') && this.info && this.info.posterImgUrl != ''
+      },
+      set: function(val) {
+        // 触发poster重新计算,设置localStorage不会触发
+        const tempposterImgUrl = this.info.posterImgUrl
+        this.info.posterImgUrl = ''
+        this.info.posterImgUrl = tempposterImgUrl
+        // window.localStorage.setItem('POSTER_REMIND',true) // 每次进入都弹,暂时屏蔽
+      }
     }
   },
   beforeDestroy() {
@@ -413,7 +444,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .market-detail-page {
   > .top-swipe-container {
     position: relative;
@@ -474,6 +505,8 @@ export default {
           font-size: 12px;
           color: #fff;
           > i {
+            width: 24px;
+            height: 24px;
             font-size: 24px;
             display: block;
           }
@@ -563,27 +596,6 @@ export default {
           width: 130px;
         }
       }
-      // > .commission-view {
-      //   display: flex;
-      //   align-items: center;
-      //   height: 34px;
-      //   width: 95%;
-      //   margin-left: 2.5%;
-      //   background: rgba(247, 249, 250, 1);
-      //   border-radius: 4px;
-      //   margin-top: 5px;
-
-      //   img {
-      //     width: 16px;
-      //     height: 16px;
-      //   }
-
-      //   span {
-      //     color: #ea4d2e;
-      //     font-size: 15px;
-      //     margin-left: 8px;
-      //   }
-      // }
       > .house-info-form {
         padding-top: 20px;
         line-height: 1.5;
@@ -934,6 +946,23 @@ export default {
   }
   .van-dialog__footer {
     border-top: 1px solid #e5e5e5;
+  }
+}
+.poster-container {
+  width: 290px;
+  height: 500px;
+  border-radius: 3px;
+  > .poster-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    >.close-icon{
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+    }
   }
 }
 </style>
