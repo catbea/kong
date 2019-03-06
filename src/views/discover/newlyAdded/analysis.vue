@@ -60,6 +60,7 @@
 import articleService from 'SERVICE/articleService'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import { Toast } from 'vant'
 
 export default {
   data() {
@@ -144,7 +145,10 @@ export default {
 
         if (this.parseType == '1') {
           setTimeout(async () => {
-            this.goToEditDetail()
+            // this.goToEditDetail()
+
+            this.$toast('文章添加成功9999999999999999999999')
+
           }, 1500)
         } else if (this.parseType == '2') {
           setTimeout(() => {
@@ -164,6 +168,7 @@ export default {
       this.showLoading = 'none'
       let city = '全国'
 
+      // Toast('文章解析成功')
       this.$toast('文章解析成功')
       this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
     },
