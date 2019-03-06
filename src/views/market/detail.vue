@@ -413,7 +413,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .market-detail-page {
   > .top-swipe-container {
     position: relative;
