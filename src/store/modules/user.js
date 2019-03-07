@@ -51,7 +51,7 @@ const state = {
     leavingStatus: 0,
     token:
       'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ0NnRneGQiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTkzIiwiZXhwIjoxNTUyNTQ3NjM0LCJpYXQiOjE1NTE5NDI4MzR9.ZBimAtgWFs4nV0BfzVU5YH_AEXdaUqwDlGtWnw9b_adTS4eeRxjAVLyGXvVOxMRZhU03JE3BR5JmdKXdOdVjng',
-    majorCity: '太原市',
+    majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
     nickName: '周丹Nike',
