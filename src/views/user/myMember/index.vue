@@ -230,6 +230,9 @@ export default {
     checkCityHandle() {
       this.$router.push({ path: '/public/area-select/', query: { fromPage: 'myMember' } })
     }
+  },
+  beforeDestroy () {
+    this.$dialog.close()
   }
 }
 </script>
