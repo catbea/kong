@@ -1,7 +1,7 @@
 <template>
   <div class="user-page">
     <!-- 顶部个人信息及vip信息 -->
-    <business-card @showPopup="this.showPopp" @shareUserCard="this.enterSharePage"/>
+    <business-card @showPopup="this.showPopp" @shareUserCard="enterSharePage"/>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
       <div class="modify-child">
