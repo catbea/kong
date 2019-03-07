@@ -954,11 +954,14 @@ export default {
 .poster-container {
   width: 290px;
   height: 500px;
-  border-radius: 3px;
   > .poster-img {
     position: relative;
     width: 100%;
     height: 100%;
+    border-radius: 5px;
+    img{
+      border-radius: 5px;
+    }
     >.close-icon{
       position: absolute;
       right: 2px;
