@@ -148,6 +148,8 @@ export default {
             duration: 1000,
             message: '已开通成功，请到我的楼盘查看'
           })
+          this.$parent.$parent.agentIdInfo++
+          console.log(333333333)
         } else {
           this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
         }
