@@ -170,7 +170,7 @@
       <div class="cnt">
         <div class="bg_img poster-img">
           <img :src="info.activityImgUrl" alt="" srcset="" @click.stop="">
-          <div class="bg_img close-icon" @click.stop="posterClosedHandler">
+          <div class="bg_img close-icon" @click="posterClosedHandler">
             <img :src="closeIcon" alt="">
           </div>
         </div>
