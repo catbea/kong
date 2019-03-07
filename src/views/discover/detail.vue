@@ -711,6 +711,7 @@ export default {
         font-size: 16px;
         margin-top: 20px;
         line-height: 1.5;
+        word-wrap: break-word;
       }
     }
     > .discover-detail-content {
