@@ -186,8 +186,8 @@ export default {
     }
 
     > .arrowIcon {
-      width: 18px;
-      height: 18px;
+      width: 12px;
+      height: 12px;
       background-size: cover;
     }
 
