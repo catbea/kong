@@ -34,11 +34,11 @@ export default {
       finished: false, //是否已加载完所有数据
       size: 10,
       current: 1,
-      pages: null
+      pages: 1
     }
   },
   created() {
-    this.getSystemMessageList()
+    // this.getSystemMessageList()
   },
   methods: {
     async getSystemMessageList() {
