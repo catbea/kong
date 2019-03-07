@@ -94,7 +94,7 @@
               <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
               <samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
               <span>{{item.currentArticleLength}}%</span></p>
-              <p>累计浏览<span>{{item.todayClickCount}}次</span>该楼盘，平均停留<span>{{(item.avgTime / 1000) | numberFormatter(1)}}s</span></p>
+              <p>累计浏览<span>{{item.todayClickCount}}次</span>该楼盘，平均停留<span>{{(item.avgTime / 1000).toFixed(1)}}s</span></p>
             </div>
 
             <div class="dynamics-list-btn"  v-show="item.clientDelFlag !== 2">
@@ -164,7 +164,7 @@ export default {
       console.log(res, '单个楼盘数据')
 
       this.linkerByDistributor = res.linkerByDistributor
-      this.avgStayLinkerTime = parseInt(this.dynamicCount.avgStayLinkerTime / 1000)
+      this.avgStayLinkerTime = (this.dynamicCount.avgStayLinkerTime / 1000).toFixed(1)
     },
     //關注
     getupdateCustomerInfo(item) {

@@ -15,14 +15,11 @@
           </p>
           <p class="container-list">
             电话号码
-            <span
-              class="container-list-title container-spec"
-              v-if="this.reportInfo.hideClientTel===1"
-            >{{this.reportInfo.hideClientTel===1?this.reportInfo.hideNumber:this.reportInfo.clientMobile}}</span>
+            <span class="container-list-title container-spec">{{this.phoneNum}}</span>
             <span
               class="container-list-show-phone"
-              @click="judePhoneNum(statusPhone)"
-            >{{this.reportInfo.hideClientTel===1? '显示':'隐藏'}}</span>
+              @click="judePhoneNum(clientMobileStatus)"
+            >{{this.clientMobileStatus}}</span>
             <span class="container-list-call-phone" @click="callUp(reportInfo.clientMobile)">拨打电话</span>
           </p>
           <p class="container-list container-list-left">
@@ -73,24 +70,29 @@ export default {
       },
       nullIcon: require('IMG/user/empty_report@2x.png'),
       nullcontent: '您还没有任何报备信息',
-      statusPhone: ''
+      statusPhone: '',
+      phoneNum: '',
+      clientMobileStatus: ''
     }
   },
   created() {
     this.distClientId = this.$route.query.id
-    this.reportInfo = this.$route.query
+    let info = this.$route.query
+    this.reportInfo = info
 
-    this.phoneNum = this.reportInfo.clientMobile
+    this.phoneNum = this.reportInfo.clientMobile //获取电话号码
 
-    this.reportInfo.hideNumber = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
-
-    if (this.reportInfo.hideClientTel === 0) {
-      this.reportInfo.showText = '隐藏'
-      this.statusPhone = 'hide'
+    if (info.hideClientTel === 1) {
+      // 0：不隐藏 1：隐藏 ,
+      this.clientMobileStatus = '显示'
+      let phone = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
+      this.phoneNum = phone
     } else {
-      this.reportInfo.showText = '显示'
-      this.statusPhone = 'show'
+      this.clientMobileStatus = '隐藏'
+      this.phoneNum = this.reportInfo.clientMobile
     }
+
+    // this.reportInfo.hideNumber = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
 
     this.getReportAuditList(this.distClientId)
   },
@@ -135,21 +137,15 @@ export default {
         })
     },
 
+    //做号码的显示隐藏问题
     judePhoneNum(status) {
-      if (status == 'show') {
-        this.reportInfo.showText = '隐藏'
-        this.statusPhone = 'hide'
-        this.reportInfo.hideClientTel == 0
-
-        console.log(this.reportInfo)
-        console.log('99999999999999')
-      } else if (status == 'hide') {
-        this.reportInfo.showText = '显示'
-        this.statusPhone = 'show'
-        this.reportInfo.hideClientTel == 1
-
-        console.log(this.reportInfo)
-        console.log('000000000000000')
+      if (status == '显示') {
+        this.clientMobileStatus = '隐藏'
+        this.phoneNum = this.reportInfo.clientMobile
+      } else if (status == '隐藏') {
+        this.clientMobileStatus = '显示'
+        let phone = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
+        this.phoneNum = phone
       }
     }
   }
