@@ -954,10 +954,11 @@ export default {
 .poster-container {
   width: 290px;
   height: 500px;
+  overflow: hidden;
   > .poster-img {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 101%;
+    height: 101%;
     border-radius: 5px;
     img{
       border-radius: 5px;
