@@ -982,14 +982,15 @@ export default {
       }
       .close-icon{
         position: absolute;
-        right: 8px;
-        top: 5px;
+        right: 0;
+        top: 0;
         width: 100px;
         height: 100px;
         text-align: right;
         img{
           width: 24px;
           height: 24px;
+          margin: 5px 10px;
         }
       }
     }
