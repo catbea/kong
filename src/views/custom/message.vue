@@ -57,7 +57,7 @@
                 </div>
                 <div class="msg-customer-con-me-status" v-show="!item.cardDelFlag">
                   <p v-if="item.msgStatus==1" style="color: #333">未读</p>
-                  <p v-else>已读</p>
+                  <p v-else>{{item.fromType==2 ? '已读' : ''}}</p>
                 </div>
               </div>
             </div>

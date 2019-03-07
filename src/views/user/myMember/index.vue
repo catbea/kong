@@ -351,7 +351,7 @@ export default {
     .open-and-renew-left {
       display: flex;
       flex: 1;
-      padding-left: 24px;
+      padding-left: 16px;
       line-height: 56px;
       font-size: 14px;
 
