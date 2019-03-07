@@ -13,7 +13,7 @@
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
-            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share" @click.stop="skipShare"></span>
+            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share iconShare" @click.stop="skipShare"></span>
           </li>
           <li v-if="dataArr.price===0">{{dataArr.city}} {{dataArr.county}} 价格待定</li>
           <li v-else>{{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}</li>
@@ -404,6 +404,9 @@ export default {
           line-height: 16px;
           display: flex;
           justify-content: space-between;
+          .iconShare{
+          font-weight:500 !important;
+           }
           .text {
             white-space: nowrap;
             overflow: hidden;
@@ -558,7 +561,6 @@ export default {
         line-height: 50px;
         text-align: center;
         font-size: 16px;
-
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }

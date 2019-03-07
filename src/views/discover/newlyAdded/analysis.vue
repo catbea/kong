@@ -155,7 +155,7 @@ export default {
 
     toJudeData() {
       this.$toast('文章解析成功')
-      setInterval(this.goToEditDetail, 1500)
+      this.intMethod = setInterval(this.goToEditDetail, 1500)
     },
 
     goToMyWrite() {
@@ -169,7 +169,7 @@ export default {
       let city = '全国'
 
       this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
-      clearInterval(this.intMethods)
+      clearInterval(this.intMethod)
     },
 
     //关闭弹窗
