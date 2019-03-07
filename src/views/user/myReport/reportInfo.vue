@@ -125,16 +125,17 @@ export default {
      * 拨打电话
      */
     callUp(phoneNum) {
-      Dialog.confirm({
-        message: phoneNum
-      })
-        .then(() => {
-          // on confirm
-          window.location.href = 'tel:' + phoneNum
-        })
-        .catch(() => {
-          // on cancel
-        })
+      // Dialog.confirm({
+      //   message: phoneNum
+      // })
+      //   .then(() => {
+      //     // on confirm
+      //     window.location.href = 'tel:' + phoneNum
+      //   })
+      //   .catch(() => {
+      //     // on cancel
+      //   })
+      window.location.href = 'tel:' + phoneNum
     },
 
     //做号码的显示隐藏问题
