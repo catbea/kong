@@ -72,7 +72,7 @@ export default {
       nullcontent: '您还没有任何报备信息',
       statusPhone: '',
       phoneNum: '',
-      clientMobileStatus: ''
+      clientMobileStatus: '显示'
     }
   },
   created() {
@@ -82,17 +82,18 @@ export default {
 
     this.phoneNum = this.reportInfo.clientMobile //获取电话号码
 
-    if (info.hideClientTel === 1) {
-      // 0：不隐藏 1：隐藏 ,
-      this.clientMobileStatus = '显示'
-      let phone = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
-      this.phoneNum = phone
-    } else {
-      this.clientMobileStatus = '隐藏'
-      this.phoneNum = this.reportInfo.clientMobile
-    }
+    let phone = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
+    this.phoneNum = phone
 
-    // this.reportInfo.hideNumber = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
+    // if (info.hideClientTel === 1) {
+    //   // 0：不隐藏 1：隐藏 ,
+    //   this.clientMobileStatus = '显示'
+    //   let phone = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
+    //   this.phoneNum = phone
+    // } else {
+    //   this.clientMobileStatus = '隐藏'
+    //   this.phoneNum = this.reportInfo.clientMobile
+    // }
 
     this.getReportAuditList(this.distClientId)
   },
