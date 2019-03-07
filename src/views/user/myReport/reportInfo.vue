@@ -13,6 +13,18 @@
             报备客户
             <span class="container-list-title container-spec">{{reportInfo.clientName}}</span>
           </p>
+          <p class="container-list">
+            电话号码
+            <span
+              class="container-list-title container-spec"
+              v-if="this.reportInfo.hideClientTel===1"
+            >{{this.reportInfo.hideClientTel===1?this.reportInfo.hideNumber:this.reportInfo.clientMobile}}</span>
+            <span
+              class="container-list-show-phone"
+              @click="judePhoneNum(statusPhone)"
+            >{{this.reportInfo.hideClientTel===1? '显示':'隐藏'}}</span>
+            <span class="container-list-call-phone" @click="callUp(reportInfo.clientMobile)">拨打电话</span>
+          </p>
           <p class="container-list container-list-left">
             代理商
             <span class="container-list-title">{{reportInfo.distributorName}}</span>
@@ -37,6 +49,7 @@
 </template>
 <script>
 import reportService from 'SERVICE/reportService'
+import { Dialog } from 'vant'
 export default {
   data() {
     return {
@@ -60,11 +73,25 @@ export default {
       },
       nullIcon: require('IMG/user/empty_report@2x.png'),
       nullcontent: '您还没有任何报备信息',
+      statusPhone: ''
     }
   },
   created() {
     this.distClientId = this.$route.query.id
     this.reportInfo = this.$route.query
+
+    this.phoneNum = this.reportInfo.clientMobile
+
+    this.reportInfo.hideNumber = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
+
+    if (this.reportInfo.hideClientTel === 0) {
+      this.reportInfo.showText = '隐藏'
+      this.statusPhone = 'hide'
+    } else {
+      this.reportInfo.showText = '显示'
+      this.statusPhone = 'show'
+    }
+
     this.getReportAuditList(this.distClientId)
   },
   methods: {
@@ -90,6 +117,40 @@ export default {
         .catch(() => {
           // on cancel
         })
+    },
+
+    /**
+     * 拨打电话
+     */
+    callUp(phoneNum) {
+      Dialog.confirm({
+        message: phoneNum
+      })
+        .then(() => {
+          // on confirm
+          window.location.href = 'tel:' + phoneNum
+        })
+        .catch(() => {
+          // on cancel
+        })
+    },
+
+    judePhoneNum(status) {
+      if (status == 'show') {
+        this.reportInfo.showText = '隐藏'
+        this.statusPhone = 'hide'
+        this.reportInfo.hideClientTel == 0
+
+        console.log(this.reportInfo)
+        console.log('99999999999999')
+      } else if (status == 'hide') {
+        this.reportInfo.showText = '显示'
+        this.statusPhone = 'show'
+        this.reportInfo.hideClientTel == 1
+
+        console.log(this.reportInfo)
+        console.log('000000000000000')
+      }
     }
   }
 }
@@ -143,6 +204,20 @@ export default {
           color: #666666;
           line-height: 20px;
           padding-left: 12px;
+        }
+
+        .container-list-show-phone {
+          font-size: 14px;
+          color: #007ae6;
+          margin-left: 8px;
+        }
+
+        .container-list-call-phone {
+          position: absolute;
+          font-size: 14px;
+          color: #007ae6;
+          margin-right: 16px;
+          right: 0;
         }
       }
       .container-list-left {
@@ -198,7 +273,7 @@ export default {
       left: 50%;
       margin-left: -100px;
       text-align: center;
-      color: #EA4D2E;
+      color: #ea4d2e;
       font-size: 12px;
     }
   }
