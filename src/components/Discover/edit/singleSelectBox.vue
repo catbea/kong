@@ -190,6 +190,8 @@ export default {
       this.page = 1
       this.projectList = []
       this.finished = false
+      this.projectName = ''
+      this.getLinkerList()
     },
     keyTouchStartHandler(e) {
       if (e.target.tagName !== 'LI') return

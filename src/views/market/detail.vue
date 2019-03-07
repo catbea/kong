@@ -167,8 +167,11 @@
     </div>
     <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
     <van-popup class="poster-container" v-model="posterShow" @click-overlay="posterClosedHandler">
-      <div class="bg_img poster-img" :style="{backgroundImage:'url(' + info.posterImgUrl + ')'}">
-        <div class="bg_img close-icon" @click="posterClosedHandler" :style="{backgroundImage:'url(' + closeIcon + ')'}"></div>
+      <div class="bg_img poster-img">
+        <img :src="info.activityImgUrl" alt="" srcset="" @click.stop="">
+        <div class="bg_img close-icon" @click="posterClosedHandler">
+          <img :src="closeIcon" alt="">
+        </div>
       </div>
     </van-popup>
   </div>
@@ -414,7 +417,7 @@ export default {
       this.$router.push({ path: '/public/map-Search', query: { id: this.info.linkerId, mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
     },
     posterCheck() {
-      this.posterShow = this.openStatus && this.info && this.info.posterImgUrl != '' 
+      this.posterShow = !!(this.info && this.info.activityImgUrl)
     },
     posterClosedHandler() {
       this.posterShow = false
@@ -951,17 +954,26 @@ export default {
 .poster-container {
   width: 290px;
   height: 500px;
-  border-radius: 3px;
+  overflow: hidden;
   > .poster-img {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 101%;
+    height: 101%;
+    border-radius: 5px;
+    img{
+      border-radius: 5px;
+    }
     >.close-icon{
       position: absolute;
-      right: 5px;
+      right: 2px;
       top: 5px;
-      width: 16px;
-      height: 16px;
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      img{
+        width: 24px;
+        height: 24px;
+      }
     }
   }
 }
