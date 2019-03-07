@@ -186,19 +186,21 @@ export default {
     }
 
     > .arrowIcon {
-      width: 18px;
-      height: 18px;
+      width: 12px;
+      height: 12px;
       background-size: cover;
+      
     }
 
     > .text-context {
       padding-left: 16px;
       font-size: 16px;
       color: #333333;
-      width: 85%;
+      width: 84%;
       max-height: 96px;
       margin-top: 24px;
       margin-bottom: 24px;
+      margin-right: 5px;
     }
   }
 
