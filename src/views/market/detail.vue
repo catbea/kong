@@ -166,14 +166,16 @@
       </div>
     </div>
     <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
-    <van-popup class="poster-container" v-model="posterShow" @click-overlay="posterClosedHandler">
-      <div class="bg_img poster-img">
-        <img :src="info.activityImgUrl" alt="" srcset="" @click.stop="">
-        <div class="bg_img close-icon" @click="posterClosedHandler">
-          <img :src="closeIcon" alt="">
+    <div class="poster-container" v-show="posterShow" @click="posterClosedHandler">
+      <div class="cnt">
+        <div class="bg_img poster-img">
+          <img :src="info.activityImgUrl" alt="" srcset="" @click.stop="">
+          <div class="bg_img close-icon" @click="posterClosedHandler">
+            <img :src="closeIcon" alt="">
+          </div>
         </div>
       </div>
-    </van-popup>
+    </div>
   </div>
 </template>
 <script>
@@ -952,29 +954,48 @@ export default {
   }
 }
 .poster-container {
-  width: 290px;
-  height: 500px;
-  overflow: hidden;
-  > .poster-img {
-    position: relative;
-    width: 101%;
-    height: 101%;
-    border-radius: 5px;
-    img{
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.6);
+  .cnt{
+    width: 290px;
+    height: 500px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -145px;
+    margin-top: -250px;
+    .poster-img {
+      position: relative;
+      width: 101%;
+      height: 101%;
       border-radius: 5px;
-    }
-    >.close-icon{
-      position: absolute;
-      right: 2px;
-      top: 5px;
-      width: 32px;
-      height: 32px;
-      text-align: center;
       img{
-        width: 24px;
-        height: 24px;
+        width: 290px;
+        height: 500px;
+        border-radius: 5px;
+      }
+      .close-icon{
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100px;
+        height: 100px;
+        text-align: right;
+        img{
+          width: 24px;
+          height: 24px;
+          margin: 5px 10px;
+        }
       }
     }
   }
+  
+  
 }
 </style>
