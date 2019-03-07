@@ -170,7 +170,7 @@
       <div class="cnt">
         <div class="bg_img poster-img">
           <img :src="info.activityImgUrl" alt="" srcset="" @click.stop="">
-          <div class="bg_img close-icon" @click.stop="posterClosedHandler">
+          <div class="bg_img close-icon" @click="posterClosedHandler">
             <img :src="closeIcon" alt="">
           </div>
         </div>
@@ -982,14 +982,15 @@ export default {
       }
       .close-icon{
         position: absolute;
-        right: 8px;
-        top: 5px;
+        right: 0;
+        top: 0;
         width: 100px;
         height: 100px;
         text-align: right;
         img{
           width: 24px;
           height: 24px;
+          margin: 5px 10px;
         }
       }
     }
