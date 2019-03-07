@@ -167,7 +167,7 @@
     </div>
     <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
     <van-popup class="poster-container" v-model="posterShow" @click-overlay="posterClosedHandler">
-      <div class="bg_img poster-img" :style="{backgroundImage:'url(' + info.posterImgUrl + ')'}">
+      <div class="bg_img poster-img" :style="{backgroundImage:'url(' + info.activityImgUrl + ')'}">
         <div class="bg_img close-icon" @click="posterClosedHandler" :style="{backgroundImage:'url(' + closeIcon + ')'}"></div>
       </div>
     </van-popup>
@@ -414,7 +414,7 @@ export default {
       this.$router.push({ path: '/public/map-Search', query: { id: this.info.linkerId, mapTab: this.mapData.category, latitude: this.info.latitude, longitude: this.info.longitude } })
     },
     posterCheck() {
-      this.posterShow = this.openStatus && this.info && this.info.posterImgUrl != '' 
+      this.posterShow = this.info && this.info.activityImgUrl
     },
     posterClosedHandler() {
       this.posterShow = false
