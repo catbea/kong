@@ -137,7 +137,9 @@ export default {
     document.querySelector('.router-view').addEventListener(
       'scroll',
       () => {
-        if (document.querySelector('.router-view').scrollTop > document.querySelector('.user-market-box').offsetTop) {
+        let r = document.querySelector('.router-view') && document.querySelector('.router-view').scrollTop || 0
+        let u = document.querySelector('.user-market-box') && document.querySelector('.user-market-box').offsetTop || 0
+        if (r > u) {
           this.searchBar = true
         } else {
           this.searchBar = false

@@ -182,6 +182,9 @@ export default {
           break
       }
     }
+  },
+  beforeDestroy () {
+    qimosdk.closeChatBox();
   }
 }
 </script>
