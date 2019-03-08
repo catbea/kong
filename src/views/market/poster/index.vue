@@ -369,14 +369,16 @@ export default {
             text-align: center;
             padding-top: 15px;
             h3{
-              width: 60%;
+              display: inline-block;
+              min-width: 60%;
+              max-width: 80%;
               margin: auto;
               font-size: 16px;
               padding-bottom: 5px;
               border-bottom: 1px solid  #BF9667;
-              overflow:hidden;
-              text-overflow:ellipsis;
-              white-space:nowrap;
+              // overflow:hidden;
+              // text-overflow:ellipsis;
+              // white-space:nowrap;
             }
             p{
               font-size: 12px;
@@ -433,8 +435,8 @@ export default {
               border-bottom: 1px dotted  rgba(243, 216, 186,0.3);
               padding-bottom: 10px;
               .name{
-                font-size: 28px;
-                margin-right: 95px;
+                font-size: 22px;
+                // margin-right: 20px;
                 overflow: hidden;
               }
               .tag{
@@ -447,7 +449,7 @@ export default {
             }
             .qrcode{
               position: absolute;
-              top: 10px;
+              top: 100px;
               right: 15px;
               img{
                 width: 80px;
