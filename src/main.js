@@ -20,7 +20,17 @@ if (process.env.NODE_ENV === 'development') {
   Vue.config.devtools = false
 }
 
-// if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
+router.beforeEach((to, from, next) => {    
+  // chrome
+  document.querySelector('.router-view').scrollTop = 0
+  // firefox
+  document.querySelector('.router-view').scrollTop = 0
+  // safari
+  window.pageYOffset = 0
+  next()
+})
+
+if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
 
 window.vue = new Vue({
   router,

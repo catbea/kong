@@ -372,6 +372,13 @@ export default {
     //文章跳转
     itemArticleInfo(articlelist) {
       let articleInfo = articlelist.item
+      if (articleInfo.enable == 1 || articleInfo.status == 0) {
+        this.$dialog.alert({
+          title: '',
+          message: '该文章已删除下架，无法查看详细数据'
+        })
+        return
+      }
       this.$router.push({
         path: '/Dynamics/articleInfo',
         query: {

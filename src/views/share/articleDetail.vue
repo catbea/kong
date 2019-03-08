@@ -6,7 +6,7 @@
       <div class="discover-views">
         <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
         <div class="reprint-source">
-          <span>分享源自</span>
+          <span>分享源自&nbsp;</span>
           <span style="color:#445166">AW大师写一写</span>
         </div>
       </div>
@@ -44,7 +44,7 @@
         <span
           class="disclaimer-text"
         >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
+        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">&nbsp;举报反馈</span>
       </p>
       <!-- 好看 -->
       <div class="easy-look-container" v-if="easylookList.length>0" @click="popHandler(1)">
@@ -237,6 +237,7 @@ export default {
       this.$store.commit('SHARE_PROMPT', false)
     }
 
+    /*
     // let nousedata = await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList()])
     console.log(123, document.querySelector('.router-view').children[0].offsetHeight)
     this.scrollHeight = document.querySelector('.router-view').children[0].offsetHeight
@@ -247,12 +248,13 @@ export default {
     this.scrollPercent = (this.clientHeight / (this.scrollHeight - this.clientHeight)) * 100.0
     // 篇幅初始化数据上报
     // this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: Number(this.scrollPercent).toFixed(2) + '%' })
-
+    
     // this.getDetail()
     // this.getLikeList()
     // this.getCommentList()
     // this.getArticleList()
     // this.getCardQrCode()
+    */
   },
   methods: {
     async checkAuth() {
@@ -538,15 +540,25 @@ export default {
 
     // 分享之后调用
     async articleShare() {
+      /*
       let params = {
         deleteType: 0,
         infoId: this.infoId
       }
       const result = await discoverService.articleShare(params)
+      */
+     // h5分享添加数据埋点
+     this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFXWZ', userActionData: '' })
     },
     // 分享
     async shareHandler() {
       await window.awHelper.wechatHelper.init(this.agentId)
+
+      this.friendShareData.success = this.articleShare
+      this.timelineShareData.success = this.articleShare
+      this.friendShareData.cancel = this.articleShare
+      this.timelineShareData.cancel = this.articleShare
+      
       await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       setTimeout(() => {
         window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
@@ -589,6 +601,7 @@ export default {
       // alert('onunload')
     }
 
+    /*
     document.querySelector('.router-view').addEventListener('scroll', e => {
       let scrollTop = e.target.scrollTop + this.clientHeight
       console.log(scrollTop)
@@ -607,6 +620,7 @@ export default {
         }
       }
     })
+    */
     // window.addEventListener('scroll', ()=> {
     //   let scrollHeight = document.querySelector('.discover-detail-container').scrollHeight
     //   // let scrollHeight = document.body.scrollHeight

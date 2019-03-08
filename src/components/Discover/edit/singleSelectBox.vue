@@ -3,8 +3,8 @@
     <div v-if="status===1" class="search-container">
       <div class="search-box">
         <!-- @getContent="searchChangeHandle" -->
-        <search :conf="searchInfo" v-model="projectName" @input="searchChangeHandle"  @areaClick="areaClickHandle" @focus="focusHandler"/>
-        <screen v-model="projectFilters" :local="this.searchInfo.siteText"/>
+        <search :conf="searchInfo" v-model.trim="projectName" @input="searchChangeHandle"  @areaClick="areaClickHandle" @focus="focusHandler"/>
+        <screen v-model.trim="projectFilters" :local="this.searchInfo.siteText"/>
       </div>
       <div class="house-box">
         <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
@@ -15,7 +15,7 @@
     <div v-else class="city-select-container">
       <div class="area-selection-page" ref="content">
         <div class="search-box van-hairline--bottom">
-          <search :conf="searchInfo" v-model="projectName" @areaClick="areaClickHandle" @focus="focusHandler"/>
+          <search :conf="searchInfo" v-model.trim="projectName" @areaClick="areaClickHandle" @focus="focusHandler"/>
         </div>
         <div class="area-selection-box">
           <div class="current-location">
@@ -118,7 +118,7 @@ export default {
     searchChangeHandle(name) {
       this.finished = false
       this.page = 1
-      this.projectName = name
+      this.projectName = name.trim()
       this.projectList = []
     },
     // 加载数据方法 整合加载更多和重新搜索
@@ -190,6 +190,7 @@ export default {
       this.page = 1
       this.projectList = []
       this.finished = false
+      this.projectName = ''
     },
     keyTouchStartHandler(e) {
       if (e.target.tagName !== 'LI') return

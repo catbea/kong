@@ -33,17 +33,12 @@
       position="center"
       :overlay="true"
       class="popup-view"
-      :lock-scroll='true'
       :close-on-click-overlay="false"
     >
       <div class="popup-top">
         <span class="popup-title">免责声明</span>
         <!-- :style="{backgroundImage:'url(' + closeImg + ')'}" -->
-        <img
-          class="closePopup"
-          @click="closeDefaultMsg"
-          :src="closeImg"          
-        />
+        <img class="closePopup" @click="closeDefaultMsg" :src="closeImg">
       </div>
       <div class="notice-body">
         <span class="notice-first">版权声明</span>
@@ -61,10 +56,13 @@
 import articleService from 'SERVICE/articleService'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import { Toast } from 'vant'
 
 export default {
   data() {
     return {
+      parseType: '',
+      articleId: '',
       noticeFirst: ' 我们尊重原创，也注重分享。有部分内容来自互联网，版权归原作者所有，仅供学习参考之用，禁止用于商业用途，如无意侵犯了权利人的知识产权，请联系删除。 ',
       noticeSecond: ' 本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。',
       cancelCollection: require('IMG/user/myWrite/cancelCollection.png'),
@@ -92,6 +90,10 @@ export default {
     ...mapGetters(['userInfo'])
   },
 
+  beforeDestroy() {
+    clearInterval(this.intMethods)
+  },
+
   methods: {
     async commitInfo(data) {
       const result = await articleService.articleAnalysis(data)
@@ -110,7 +112,7 @@ export default {
 
         if (result.returnCode == '31106') {
           errorMsg = '该文章已经存在,请勿重复爬取'
-        } else if (result.returnCode == '10500' || result.returnCode == '31102'||result.returnCode == '31100') {
+        } else if (result.returnCode == '10500' || result.returnCode == '31102' || result.returnCode == '31100') {
           errorMsg = result.msg
         } else {
           errorMsg = '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试'
@@ -142,15 +144,18 @@ export default {
         this.errColor = '#445166'
 
         if (this.parseType == '1') {
-          setTimeout(async () => {
-            this.goToEditDetail()
-          }, 1500)
+          this.intMethods = this.toJudeData()
         } else if (this.parseType == '2') {
           setTimeout(() => {
             this.goToMyWrite()
           }, 3000)
         }
       }
+    },
+
+    toJudeData() {
+      this.$toast('文章解析成功')
+      this.intMethod = setInterval(this.goToEditDetail, 1500)
     },
 
     goToMyWrite() {
@@ -163,8 +168,8 @@ export default {
       this.showLoading = 'none'
       let city = '全国'
 
-      this.$toast('文章解析成功')
       this.$router.replace({ path: `/discover/edit/${this.articleId}/${city}`, query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId, classify: '0' } })
+      clearInterval(this.intMethod)
     },
 
     //关闭弹窗

@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model="isShow" position="bottom" @click-overlay="closeHandler">
+  <van-popup v-model="isShow" position="bottom" @click-overlay="closeHandler" class="area-popup">
     <div class="select-city">
       <span class="bg_img search-icon" :style="{backgroundImage:'url(' + searchIcon + ')'}"></span>
      <span>请慎重选择主营区域</span> 
@@ -53,6 +53,9 @@ export default {
 }
 </script>
 <style lang="less">
+.area-popup {
+  overflow-y: scroll;
+}
 .select-city {
   padding: 0 0 0 15px;
   width: 100%;

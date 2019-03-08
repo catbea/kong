@@ -222,6 +222,7 @@ export default {
         margin-left: 5px;
         background-color: rgba(143, 159, 177, 0.15) !important;
         color: rgba(92, 95, 102, 1);
+        font-size: 14px;
       }
       .van-cell__right-icon {
         position: absolute;

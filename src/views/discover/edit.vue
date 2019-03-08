@@ -124,7 +124,7 @@ export default {
 
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
-      virtualDom.innerHTML = this.info.content
+      virtualDom.innerHTML = this.info.content.replace('div', 'p')
       for (let dom of virtualDom.children) {
         this.renderDom.push({
           text: dom.innerHTML,

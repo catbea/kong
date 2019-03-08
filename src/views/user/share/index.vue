@@ -1416,7 +1416,7 @@ export default {
     .img-box {
       height: 420px;
       width: 260px;
-      margin: 48px auto 15px auto;
+      margin: 20px auto;
     }
     .btn {
       width: 260px;

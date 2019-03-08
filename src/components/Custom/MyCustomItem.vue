@@ -1,14 +1,15 @@
 <template>
   <swipe-cell ref="swipecell">
     <div class="content" slot="content">
-      <div class="van-hairline--bottom my-custom-item" @click="clickHandler">
-        <avatar class="user-avatar" :avatar="info.avatarUrl"></avatar>
+      <div class="van-hairline--bottom my-custom-item">
+        <avatar class="user-avatar" :avatar="info.avatarUrl"  @click.native="clickHandler"></avatar>
         <div
           class="bg_img user-attention"
           :style="{backgroundImage:'url('+attentionImg+')'}"
           v-if="info.attentionStatus==0"
+          @click="clickHandler"
         ></div>
-        <div class="baseinfo-box">
+        <div class="baseinfo-box"  @click="clickHandler">
           <p class="username">{{info.clientName}}</p>
           <p class="base-focus">{{focusInfo}}</p>
         </div>
@@ -150,7 +151,6 @@ export default {
   }
   .intention-box {
     margin: 15px 0;
-    margin-top: 9px;
     text-align: center;
     width: 80px;
     .intention-value {

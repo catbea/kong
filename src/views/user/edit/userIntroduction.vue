@@ -44,13 +44,18 @@ export default {
     toUpDateSignature() {
       let signature = this.signature
       if (signature.length == 0) {
-        this.$dialog
-          .alert({
-            message: '个人介绍不可为空'
-          })
-          .then(() => {
-            // on close
-          })
+        // this.$dialog
+        //   .alert({
+        //     message: '个人介绍不可为空'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
+        let obj = {
+          signature: '别问我是谁,请叫我AW大师'
+        }
+        this.signature = '别问我是谁,请叫我AW大师'
+        this.upDateSignature(obj)
       } else {
         let obj = {
           signature: signature
@@ -92,12 +97,18 @@ export default {
       > .edit-wechat-input {
         font-size: 15px;
         font-weight: 500;
-        color: rgba(153, 153, 153, 1);
+        color: rgba(51, 51, 51, 1);
         line-height: 21px;
         width: 99%;
         border: 0;
         border-bottom: 1px solid #eeeeee;
         height: 42px;
+        resize: none;
+      }
+
+      > .edit-wechat-input::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #cccccc;
       }
     }
     > .edit-wechat-number {

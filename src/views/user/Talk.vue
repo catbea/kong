@@ -13,19 +13,20 @@ export default {
   computed: {
     ...mapGetters(['userInfo'])
   },
-  // mounted() {
+  created() {
     // let host=process.env.VUE_APP_APP_URL
     // window.location.href = `${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
-  // },
+  },
 //   beforeRouteEnter (to, from, next) {
     
 //   next(vm => {
 //     if(from.name==='user'){
-//       console.log(window)
+//       console.log(window,222222222)
 //       let host=process.env.VUE_APP_APP_URL
 //     window.location.href = `${host}panorama-helper/static/customerAnalysis.html?agentId=${vm.userInfo.agentId}&enterpriseId=${vm.userInfo.enterpriseId}`
 //     }else{
-//       window.history.back(-1); 
+//       alert(1111111111)
+//       window.history.back(); 
 //     }
 //   })
 // }

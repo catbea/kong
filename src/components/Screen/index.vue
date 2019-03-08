@@ -8,13 +8,13 @@
       </li>
       <li class="bg_img sort" @click="sortHandle" :style="{'backgroundImage':'url('+(sortFlage?sortColorImg:sortImg)+')'}"></li>
     </ul>
-    <div class="van-hairline--top choose-container" @click="coverClickHandler">
+    <div class="van-hairline--top choose-container">
       <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @activeHandle="areaColorHandle" @checkedText="areaStrChange"></area-filter>
       <price-filter :show="currentIndex===1" v-model="filters.baseFilters.aveprice" @activeHandle="priceColorHandle" @checkedText="priceStrChange"></price-filter>
       <popularity-filter :show="currentIndex===2" v-model="filters.baseFilters.popularity" @activeHandle="popularityColorHandle" @checkedText="popularityStrChange"></popularity-filter>
       <more-filter :show="currentIndex===3" v-model="filters.moreFilters" @resetNum="resetNumHandle" @numHandle="numHandle" @confirm="confirmHandler"></more-filter>
       <sort-way :show="currentIndex===4" v-model="filters.baseFilters.sort" @activeHandle="sortHandle" @input="sortChangeHandler"></sort-way>
-      <div class="prevent" v-show="currentIndex>=0"></div>
+      <div class="prevent" v-show="currentIndex>=0" @click="coverClickHandler"></div>
     </div>
   </div>
 </template>
@@ -116,7 +116,9 @@ export default {
       this.$emit('screen', val.index)
     },
     coverClickHandler() {
-      // this.currentIndex = -1
+      this.currentIndex = -1
+      // console.log(123);
+      
     },
     // 区域文字修改
     areaStrChange(val) {

@@ -314,7 +314,7 @@ export default {
           this.easylookList.push(item.userName)
         }
         this.$nextTick(() => {
-          let height = this.$refs.easyLook.offsetHeight
+          let height = this.$refs.easyLook&&this.$refs.easyLook.offsetHeight || 0
           if (height <= 85) {
             this.isMoreLike = false
           } else {
@@ -711,6 +711,7 @@ export default {
         font-size: 16px;
         margin-top: 20px;
         line-height: 1.5;
+        word-wrap: break-word;
       }
     }
     > .discover-detail-content {

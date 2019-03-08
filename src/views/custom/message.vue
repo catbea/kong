@@ -2,7 +2,7 @@
   <div class="massage-info-body">
     <div class="massage-info-list">
       <!--消息-->
-      <div class style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
+      <div class="msg-box" style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
         <van-pull-refresh v-model="loading" pulling-text="下拉加载下一页" loosing-text="释放加载下一页" @refresh="getmsgListnext">
           <div style="height: auto">
             <div class="massage-info-msg" v-for="(items,index) in msgList" v-bind:key="index">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="msg-customer-con-me-status" v-show="!item.cardDelFlag">
                   <p v-if="item.msgStatus==1" style="color: #333">未读</p>
-                  <p v-else>已读</p>
+                  <p v-else>{{item.fromType==2 ? '已读' : ''}}</p>
                 </div>
               </div>
             </div>
@@ -297,6 +297,10 @@ export default {
     hideface(event) {
       //关闭表情
       this.isShowEmjie = false
+      // 关闭option
+      this.isShowOption = false
+      document.querySelector('.massage-info-list').style.bottom = 0
+
       setTimeout(() => {
         document.body.scrollTop = document.body.scrollHeight
       }, 1000)
@@ -307,8 +311,11 @@ export default {
     displayOption() {
       if (this.isShowOption == false && this.msgType == 1) {
         this.isShowOption = true
+        document.querySelector('.massage-info-list').style.bottom='200px'
+        document.querySelector('.msg-box').scrollTop += 200
       } else {
         this.isShowOption = false
+        document.querySelector('.massage-info-list').style.bottom='0'
       }
       this.isShowEmjie = false
     },

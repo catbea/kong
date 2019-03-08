@@ -51,8 +51,8 @@ export default {
       if (result) {
         this.relpyList = JSON.parse(JSON.stringify(result))
       }
-      for(let item of this.relpyList) {
-        if(item.status == 1) {
+      for (let item of this.relpyList) {
+        if (item.status == 1) {
           this.selectItemInfo = item
         }
       }
@@ -73,7 +73,7 @@ export default {
       let params = this.selectItemInfo
       var arr = Object.keys(this.selectItemInfo)
       if (arr.length == 0) {
-        Toast('请选择要设置......')
+        Toast('请选择要设置默认的欢迎语')
       } else {
         let obj = {}
         obj.content = params.content
@@ -82,7 +82,11 @@ export default {
 
         const result = await userService.updataReplyInfo(obj)
         if (result) {
-          Toast('设置成功')
+          Toast('欢迎语设置成功')
+
+          setTimeout(() => {
+            this.$router.back(-1)
+          }, 1000)
         }
       }
     }
@@ -93,7 +97,7 @@ export default {
 <style lang="less" scoped>
 .reply-body {
   background: rgba(247, 249, 250, 1);
-  
+
   .reply-list {
     position: absolute;
     width: 100%;
@@ -109,8 +113,10 @@ export default {
       overflow: auto;
 
       .text-context {
-        width: 87%;
-        height: 96px;
+        width: 85%;
+        max-height: 96px;
+        margin-top: 24px;
+        margin-bottom: 24px;
         display: flex;
         align-items: center;
         padding-left: 16px;
@@ -119,10 +125,11 @@ export default {
       }
 
       .select-icon {
-        width: 50px;
-        height: 50px;
-        margin-left: 15px;
-        line-height: 22px;
+        width: 25px;
+        height: 25px;
+        margin-left: 8px;
+        line-height: 30px;
+        background-size:cover;
       }
     }
   }

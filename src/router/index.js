@@ -6,7 +6,11 @@ import MtaH5 from 'mta-h5-analysis'
 
 Vue.use(Router)
 const router = new Router({
-  routes: routesMap
+  routes: routesMap,
+  // scrollBehavior (to, from, savedPosition) {
+  //   // return 期望滚动到哪个的位置
+  //   return { x: 0, y: 0 }
+  // }
 })
 if (process.env.VUE_APP_QQ_MTA_SID) { // sid为必填,cid开启自定义事件才需要,所以主要判断sid
   MtaH5.init({

@@ -5,7 +5,7 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userStatus: 0,
-  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || {
+  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || ((process.env.VUE_APP_AW_ENV=='uat' || process.env.VUE_APP_AW_ENV=='prod') ? null : {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0,
     devMode: true,
@@ -50,8 +50,8 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJvc2drNGoiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTUxODYwMjM2LCJpYXQiOjE1NTEyNTU0MzZ9.jd_7i-RdpnITzPpedkquL1k_3PIBYhHc9bMpyfRyTkH-9KMt4E3zSipXNCU01p7PxsFtVW8staHyni3d1gkh9g',
-    majorCity: '深圳市',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJoYnhnZTYiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjI2IiwiZXhwIjoxNTUyNDcxODQyLCJpYXQiOjE1NTE4NjcwNDJ9.IHaxeBzAxqb9c3rpZqS-z0z-sa276RQQ-APjWXa9qdqL1xVVAcWZIIgYlO4h1PYtKCj2AckwO8Jgo7_4TtLQlA',
+    majorCity: '太原市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
     nickName: '周丹Nike',
@@ -65,7 +65,7 @@ const state = {
     vipDefaultCity: '',
     vipInfo: '',
     wechatAccount: ''
-  },
+  }),
   userVipInfo: {},
   userArea: {
     longitude: '', // 经度

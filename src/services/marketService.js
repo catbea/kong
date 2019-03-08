@@ -328,5 +328,26 @@ class MarketService {
       }
     })
   }
+
+  /**
+   * 楼盘海报编辑
+   */
+  updateAgentLinkerPoster(data) {
+    return xhr({
+      url: '/linkerDetail/updateAgentLinkerPoster',
+      method: 'post',
+      body: data
+    })
+  }
+
+  /**
+   * 查询经纪人海报
+   */
+  getAgentLinkerPoster(data) {
+    return xhr({
+      url: '/linkerDetail/getAgentLinkerPoster',
+      body: data
+    })
+  }
 }
 export default new MarketService()

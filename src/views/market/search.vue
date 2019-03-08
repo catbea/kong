@@ -1,7 +1,7 @@
 <template>
   <div class="market-search-page">
     <div class="search-box">
-      <van-search v-model="searchValue" placeholder="请输入楼盘名称" show-action @keypress="onKeypressHandler" @search="onSearchHandler" background="#fff">
+      <van-search v-model.trim="searchValue" placeholder="请输入楼盘名称" show-action @keypress="onKeypressHandler" @search="onSearchHandler" background="#fff">
         <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
         <div slot="action" @click="onCancelHandler">取消</div>
       </van-search>
@@ -266,6 +266,9 @@ export default {
     .van-field__body {
       height: 100%;
     }
+    .van-field__left-icon{
+      display: flex;
+    }
     .van-cell {
       background-color: #f5f5f5;
     }
@@ -275,7 +278,8 @@ export default {
     }
     .van-field__control {
       height: 24px;
-      line-height: 24px;
+      // line-height:24px;
+      padding-top: 2px;
     }
   }
   > .history-words-content {

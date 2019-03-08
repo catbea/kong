@@ -85,7 +85,7 @@
                     <p>
                       累计浏览
                       <span>{{item.todayClickCount}}次</span>该文章，平均停留
-                      <span>{{item.totalTime / 1000}}s</span>
+                      <span>{{(item.avgTime / 1000).toFixed(1)}}s</span>
                     </p>
                   </div>
                   <div class="dynamics-list-btn"  v-show="item.clientDelFlag !== 2">
@@ -176,7 +176,7 @@ export default {
     async getSingleArticleDynamicCount() {
       const res = await dynamicsService.getSingleArticleCount(this.articleId)
       this.articleDynamicCount = res
-      this.avgStayArticleTime = parseInt(this.articleDynamicCount.avgStayArticleTime / 1000)
+      this.avgStayArticleTime = (this.articleDynamicCount.avgStayArticleTime / 1000).toFixed(1)
     },
     //關注
     getupdateCustomerInfo(item) {

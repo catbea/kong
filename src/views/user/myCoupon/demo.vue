@@ -420,7 +420,7 @@ export default {
       this.$emit('apostropheReturn', 1)
     },
     skipShare() {
-      this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
+      this.$router.push({ name: 'market-poster', params: { id: this.linkerId } })
     },
     skipMarketRetuen() {
       this.$emit('skipMarketRetuen', 1)

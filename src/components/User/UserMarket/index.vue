@@ -13,7 +13,7 @@
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
-            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share" @click.stop="skipShare"></span>
+            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share iconShare" @click.stop="skipShare"></span>
           </li>
           <li v-if="dataArr.price===0">{{dataArr.city}} {{dataArr.county}} 价格待定</li>
           <li v-else>{{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}</li>
@@ -42,18 +42,18 @@
       </div>
     </div>
     <div style="padding-left:16px">
-      <van-popup v-model="show" position="bottom" :close-on-click-overlay="false" overlay :class="{pastStyle:!pastShow}">
+      <van-popup v-model="show" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
         <ul>
           <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
           <li @click="goRenew(dataArr.linkerId)" v-show="stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
           <div v-if="pastShow">
-            <li class="borderDottom" @click="masterHandle(marketIndex)">
+            <!-- <li class="borderDottom" @click="masterHandle(marketIndex)">
               <span v-show="dataArr.masterRecommand != 1">大师推荐</span>
               <span v-show="dataArr.masterRecommand == 1">取消大师推荐</span>
-            </li>
+            </li> -->
             <li @click="commonHandle(marketIndex)">
-              <span v-show="dataArr.masterRecommand != 2">普通推荐</span>
-              <span v-show="dataArr.masterRecommand == 2">取消普通推荐</span>
+              <span v-show="dataArr.masterRecommand != 2">推荐</span>
+              <span v-show="dataArr.masterRecommand == 2">取消推荐</span>
             </li>
             <li class="color" @click="stickHandle(marketIndex)">
               <span v-show="dataArr.recommand==0">置顶</span>
@@ -257,14 +257,14 @@ export default {
         this.changeUserStatus(this.linkerId, 20, 2) //改为普通推荐
         this.$toast({
           duration: 800,
-          message: '普通推荐成功'
+          message: '推荐成功'
         })
         this.$emit('pushCommon', this.dataArr)
       } else {
         this.changeUserStatus(this.linkerId, 20, 0) //改为未推荐
         this.$toast({
           duration: 800,
-          message: '取消普通推荐成功'
+          message: '取消推荐成功'
         })
         this.$emit('spliceCommon', this.dataArr)
       }
@@ -343,7 +343,7 @@ export default {
           })
       } else {
         //去分享
-        this.$router.push({ name: 'market-share', params: { id: this.linkerId } })
+        this.$router.push({ name: 'market-poster', params: { id: this.linkerId } })
       }
     }
   }
@@ -404,6 +404,9 @@ export default {
           line-height: 16px;
           display: flex;
           justify-content: space-between;
+          .iconShare{
+          font-weight:500 !important;
+           }
           .text {
             white-space: nowrap;
             overflow: hidden;
@@ -549,7 +552,7 @@ export default {
   .van-popup--bottom {
     background: rgba(255, 255, 255, 1);
     width: 100%;
-    height: 300px;
+    height: 250px;
     border-radius: 0;
     ul {
       li {
@@ -558,7 +561,6 @@ export default {
         line-height: 50px;
         text-align: center;
         font-size: 16px;
-
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
       }

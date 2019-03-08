@@ -84,7 +84,7 @@ export default {
     await this.getqueryInvitationUrl()
     setTimeout(() => {
       this.savaReport()
-    }, 200)
+    }, 500)
   },
   methods: {
     async savaReport() {
@@ -126,7 +126,7 @@ export default {
       this.goyInvitationUrlCode(this.invitationUrl)
     },
     async goyInvitationUrlCode(url) {
-      let qrcode = new QRCode('qrcode', {
+      let qrcode = await new QRCode('qrcode', {
         width: 100,
         height: 100, // 高度
         text: this.invitationUrl, // 二维码内容

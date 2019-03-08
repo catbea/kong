@@ -1,7 +1,7 @@
 <template>
   <div class="user-page">
     <!-- 顶部个人信息及vip信息 -->
-    <business-card @showPopup="this.showPopp" @shareUserCard="this.enterSharePage"/>
+    <business-card @showPopup="this.showPopp" @shareUserCard="enterSharePage"/>
     <div class="business-status-con">
       <div class="business-status-title">个人中心</div>
       <div class="modify-child">
@@ -50,7 +50,7 @@
         </div>
       </div>
     </div>
-    <van-popup class="popup-view" v-model="openPopup" :overlay="true" :lock-scroll="true" :close-on-click-overlay="true" :click-overlay="overlayClose">
+    <van-popup class="popup-view" v-model="openPopup" :click-overlay="overlayClose">
       <div class="close-titile">
         <img class="closePopup" :src="this.closeImg" @click="overlayClose">
       </div>
@@ -83,7 +83,7 @@ export default {
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }
       // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
     ],
-    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '自动回复', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
+    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '欢迎语设置', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
     openPopup: false,
     qrcodeImg: '',
     oldUrl:0
