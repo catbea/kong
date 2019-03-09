@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
+// if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
 
 window.vue = new Vue({
   router,
