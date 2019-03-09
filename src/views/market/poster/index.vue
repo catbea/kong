@@ -15,7 +15,7 @@
               </div>
               <div class="name">
                 <h3>{{editData.linkerName}}</h3>
-                <p v-if="editData.linkerPrice">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
                 <p v-else>价格待定</p>
               </div>
               <div class="qrcode">
@@ -37,7 +37,7 @@
                 <div class="name-box">
                   <p class="name">{{editData.linkerName}}</p>
                   <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                  <p class="price" v-if="editData.linkerPrice">价格：{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                  <p class="price" v-if="editData.linkerPrice-0">价格：{{editData.linkerPrice}} {{editData.priceUnit}}</p>
                   <p v-else>价格待定</p>
                 </div>
                 <div class="qrcode">
@@ -73,7 +73,7 @@
                 <div class="name">
                   <sup>“</sup>{{editData.linkerName}}<sub>”</sub>
                 </div>
-                <p class="price" v-if="editData.linkerPrice">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p class="price" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
                 <p v-else>价格待定</p>
               </div>
               <div class="developer-box">
@@ -96,7 +96,7 @@
               </div>
               <div class="tag-box">
                 <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                <p class="price" v-if="editData.linkerPrice">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p class="price" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
                 <p v-else>价格待定</p>
                 <p class="pic"><img src="../../../assets/img/market/poster/card4.png" alt=""></p>
               </div>
