@@ -18,6 +18,7 @@
           <search
             v-model="showProjectName"
             @areaClick="areaClickHandler"
+            :conf="searchContent"
           ></search>
           <screen
             v-model="showProjectFilters"
@@ -136,7 +137,9 @@ export default {
     document.querySelector('.router-view').addEventListener(
       'scroll',
       () => {
-        if (document.querySelector('.router-view').scrollTop > document.querySelector('.user-market-box').offsetTop) {
+        let r = document.querySelector('.router-view') && document.querySelector('.router-view').scrollTop || 0
+        let u = document.querySelector('.user-market-box') && document.querySelector('.user-market-box').offsetTop || 0
+        if (r > u) {
           this.searchBar = true
         } else {
           this.searchBar = false
@@ -188,21 +191,21 @@ export default {
     myMarketShowList: [],
     myMarketNotShowList: [],
     myMarketShow: true,
+    searchContent: {
+      siteText: '深圳市',
+      placeholder: '请输入楼盘名称'
+    },
     titleInfo: {
       title: '我的楼盘',
       linkText: '切换关闭展示楼盘',
       link: ''
-    },
-    searchInfo: {
-      siteText: '全国',
-      placeholderText: '请输入楼盘'
     },
     dataArr: [],
     sortShow: false
   }),
   async created() {
     this.selectedCity = this.userArea.myMarketSelectedCity
-    this.searchInfo.siteText = this.selectedCity ? this.selectedCity : '全国'
+    this.searchContent.siteText = this.selectedCity ? this.selectedCity : '全国'
     // await this.showGetMyMarketInfo()//请求展示楼盘
     // await this.notShowGetMyMarketInfo()//请求不展示楼盘
     await this.getRecommendInfo() //请求轮播图数据
@@ -212,7 +215,7 @@ export default {
     this.notShowGetMyMarketInfo()
   },
   computed: {
-    ...mapGetters(['userArea'])
+    ...mapGetters(['userArea', 'userInfo'])
   },
   watch: {
     showProjectName(val) {
