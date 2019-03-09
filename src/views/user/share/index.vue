@@ -427,6 +427,13 @@ export default {
       // if (mobile.length < 11) {
       //   return this.$toast('电话号码输入有误')
       // }
+      if (!mobile) {
+        return this.$toast('电话号码不能为空')
+      }
+      if (!/[\d|\-]{11,16}/.test(mobile)) {
+        return this.$toast('电话号码输入有误')
+      }
+      
       let reg = /^[\u4E00-\u9FA5A-Za-z0-9\！\.\,\，\。\!\?\？\'\"\’\‘\“\”]+$/g
       if (!reg.test(slogan)) {
         return this.$toast('宣传语只支持中文、英文和数字')

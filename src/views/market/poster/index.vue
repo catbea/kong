@@ -234,7 +234,7 @@ export default {
     async initData() {
       await this.getPosterInfo(this.linkedId)
       await this.getAgentLinkerPoster(this.shareBaseInfo.agentId)
-      this.editData = Object.assign({}, this.shareBaseInfo, this.shareInfo)
+      this.editData = Object.assign({}, this.shareBaseInfo)
       this.avatarUrl = this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0] || ''
       // 合并两个接口参数
       this.showLoading = false
