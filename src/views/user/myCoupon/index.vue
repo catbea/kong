@@ -140,7 +140,7 @@ export default {
 .user-myCoupon-page {
   .list-wrap {
     width: 100%;
-    height: 623px;
+    height:500px;
     overflow: auto;
   }
   .user-myCoupon-page-top {

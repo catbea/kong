@@ -29,8 +29,7 @@ export default async (to, from, next) => {
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
   wxredirecturl = wxredirecturl.substr(0, wxredirecturl.length - 1)
 
-  if (parm.cropId) {
-    // 为了查找签名token错误，写了一大堆alert，还是查不出原因...
+  if (parm.cropId) {//
     store.dispatch('getUserInfo', null)
     store.commit(types.WX_JSSDK, null)
     let cropId = parm.cropId
@@ -79,14 +78,6 @@ export default async (to, from, next) => {
         store.dispatch('getUserInfo', userInfo)
         next()
       } else {
-        // let userInfo = store.getters.userInfo
-        // console.log(userInfo.pcOpenid, 'userInfo')
-        // if(userInfo && userInfo.pcOpenid) {
-        //   console.log(userInfo.pcOpenid, 'userInfo.pcOpenid')
-        //   next()
-        //   return
-        // }
-
         const wxAuthObject = await commonService.wxUserInfo(parm.code, cropId)
         console.log(wxAuthObject, 'wxAuthObject')
         payCorpId = wxAuthObject.payCorpId
