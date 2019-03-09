@@ -5,17 +5,18 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <div class="card-info card1" v-if="editData.tagList">
+            <div class="card-info card1" v-if="editData">
               <div class="tag-box">
                 <p><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                <p class="sub">GUAN JUN PIN ZHI CHENG SHI JING YANG</p>
+                <p class="sub" v-if="editData.tagList">GUAN JUN PIN ZHI CHENG SHI JING YANG</p>
               </div>
               <div class="cover">
                 <img :src="avatarUrl" alt="">
               </div>
               <div class="name">
                 <h3>{{editData.linkerName}}</h3>
-                <p>{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p v-if="editData.linkerPrice">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p v-else>价格待定</p>
               </div>
               <div class="qrcode">
                 <img :src="editData.qrCode" alt="">
@@ -27,7 +28,7 @@
             </div>
           </div>
           <div class="swiper-slide">
-            <div class="card-info card2"  v-if="editData.tagList">
+            <div class="card-info card2"  v-if="editData">
               <div class="cover">
                 <img :src="avatarUrl" alt="">
               </div>
@@ -36,7 +37,8 @@
                 <div class="name-box">
                   <p class="name">{{editData.linkerName}}</p>
                   <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                  <p class="price">价格：{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                  <p class="price" v-if="editData.linkerPrice">价格：{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                  <p v-else>价格待定</p>
                 </div>
                 <div class="qrcode">
                   <img :src="editData.qrCode" alt="">
@@ -56,11 +58,11 @@
             </div>
           </div>
           <div class="swiper-slide">
-            <div class="card-info card3" v-if="editData.tagList">
+            <div class="card-info card3" v-if="editData">
               <div class="tag-box">
                 <div class="info">
                   <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                  <p class="sub">GUAN JUN PIN ZHI CHENG SHI JING YANG</p>
+                  <p class="sub" v-if="editData.tagList">GUAN JUN PIN ZHI CHENG SHI JING YANG</p>
                 </div>
                 
               </div>
@@ -71,7 +73,8 @@
                 <div class="name">
                   <sup>“</sup>{{editData.linkerName}}<sub>”</sub>
                 </div>
-                <p class="price">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p class="price" v-if="editData.linkerPrice">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p v-else>价格待定</p>
               </div>
               <div class="developer-box">
                 <div class="developer">
@@ -87,13 +90,14 @@
             </div>
           </div>
           <div class="swiper-slide">
-            <div class="card-info card4" v-if="editData.tagList">
+            <div class="card-info card4" v-if="editData">
               <div class="cover">
                 <img :src="avatarUrl" alt="">
               </div>
               <div class="tag-box">
                 <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                <p class="price">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p class="price" v-if="editData.linkerPrice">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                <p v-else>价格待定</p>
                 <p class="pic"><img src="../../../assets/img/market/poster/card4.png" alt=""></p>
               </div>
               <div class="name">
@@ -175,7 +179,7 @@ export default {
       shareBaseInfo: {}, // 默认数据
       shareInfo: {}, // 用户修改数据
       activeIndex: 1, // 初始化模板索引
-      editData: {}, // 编辑数据
+      editData: '', // 编辑数据
       showView: false, // 图片预览
       showEdit: false, // 显示编辑信息
       creatCover: false, // 生成海报
