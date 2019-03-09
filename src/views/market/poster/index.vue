@@ -126,7 +126,7 @@
         </div>
         <div class="group-item">
           <span>经纪人电话</span>
-          <input type="number" v-model="editData.agentMobile" maxlength="16" placeholder="请输入电话号码" @blur="blur">
+          <input type="text" v-model="editData.agentMobile" maxlength="16" placeholder="请输入电话号码" @blur="blur">
         </div>
         <div class="group-upload">
           <p class="title">选择楼盘封面</p>

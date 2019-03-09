@@ -166,11 +166,11 @@
       </div>
     </div>
     <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
-    <div class="poster-container" v-show="posterShow" @click="posterClosedHandler">
+    <div class="poster-container" v-show="posterShow">
       <div class="cnt">
         <div class="bg_img poster-img">
-          <img :src="info.activityImgUrl" alt="" srcset="" @click.stop="">
-          <div class="bg_img close-icon" @click="posterClosedHandler">
+          <img :src="info.activityImgUrl" alt="" srcset="">
+          <div class="bg_img close-icon" @click="posterShow=false">
             <img :src="closeIcon" alt="">
           </div>
         </div>
