@@ -54,7 +54,7 @@ export default {
     },
 
     saveReply() {
-      let editContent = this.replyContent
+      let editContent = this.replyContent.replace(/(^\s*)/g, "");
       if (editContent.length > 0) {
         if (editContent.length > 50) {
           Toast('输入内容不得超过50个字')
