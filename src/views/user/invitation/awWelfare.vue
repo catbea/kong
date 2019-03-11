@@ -82,11 +82,20 @@ export default {
   },
   async mounted() {
     await this.getqueryInvitationUrl()
-    setTimeout(() => {
-      this.savaReport()
-    }, 500)
+    this.toImg()
   },
   methods: {
+    // 遍历 二维码是否生成
+    toImg () {
+      let t = setTimeout(() => {
+        if (document.getElementById("qrcode").getElementsByTagName("img")) {
+          this.savaReport()
+          clearTimeout(t)
+        } else {
+          this.toImg()
+        }
+      }, 500) 
+    },
     async savaReport() {
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
@@ -125,8 +134,8 @@ export default {
       this.invitationUrl = res.invitationUrl
       this.goyInvitationUrlCode(this.invitationUrl)
     },
-    async goyInvitationUrlCode(url) {
-      let qrcode = await new QRCode('qrcode', {
+    goyInvitationUrlCode(url) {
+      let qrcode = new QRCode('qrcode', {
         width: 100,
         height: 100, // 高度
         text: this.invitationUrl, // 二维码内容
