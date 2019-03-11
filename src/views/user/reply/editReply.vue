@@ -118,6 +118,7 @@ export default {
       border: 0;
       color: #333333;
       height: 80px;
+      resize:none;
     }
   }
 
