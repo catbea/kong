@@ -91,7 +91,7 @@ export default {
   },
 
   beforeDestroy() {
-    clearInterval(this.intMethods)
+    // clearInterval(this.intMethod)
   },
 
   methods: {
