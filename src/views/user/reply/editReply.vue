@@ -54,7 +54,7 @@ export default {
     },
 
     saveReply() {
-      let editContent = this.replyContent.replace(/(^\s*)/g, "");
+      let editContent = this.replyContent.replace(/(^\s*)/g, '')
       if (editContent.length > 0) {
         if (editContent.length > 50) {
           Toast('输入内容不得超过50个字')
@@ -62,7 +62,7 @@ export default {
           let obj = {}
           obj.content = this.replyContent
           obj.status = this.statusFirst
-          if(this.replyId > 0) obj.id = this.replyId
+          if (this.replyId > 0) obj.id = this.replyId
           this.setReplyInfo(obj)
         }
       } else {
@@ -104,12 +104,11 @@ export default {
 
   > .input-body {
     width: 100%;
-    background: white;
     padding-top: 24px;
-    padding-bottom: 24px;
+    background: white;
     padding-left: 16px;
     padding-right: 16px;
-    height: 80px;
+    height: 120px;
 
     > .input-content-body {
       width: 100%;
