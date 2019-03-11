@@ -1031,6 +1031,7 @@ export default {
             margin-bottom: 8px;
             .replay-cnt {
               margin-left: 8px;
+              word-break: break-all;
             }
             .text {
               margin: 0 5px;
