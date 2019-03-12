@@ -18,7 +18,7 @@
       </div>
       <div class="edit-relpy" @click="goToReplyContent">
         <img class="add-img" :src="addReplyIcon">
-        <span>新增自动回复</span>
+        <span>新增欢迎语</span>
       </div>
     </div>
     <!-- <div class="reply-save">
