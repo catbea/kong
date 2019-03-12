@@ -14,7 +14,7 @@
         ></div>
       </div>
     </div>
-    <div class="reply-edit" @click="goToReplyContent">编辑自动回复</div>
+    <div class="reply-edit" @click="goToReplyContent">编辑欢迎语</div>
     <div class="reply-save" @click="saveMySelect">保存选择</div>
   </div>
 </template>

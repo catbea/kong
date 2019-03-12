@@ -3,7 +3,7 @@
     <div class="input-body">
       <textarea
         class="input-content-body"
-        placeholder="请输入自动回复内容"
+        placeholder="请输入要设置的欢迎语"
         maxlength="50"
         v-model="replyContent"
       ></textarea>
