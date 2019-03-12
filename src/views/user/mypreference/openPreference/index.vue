@@ -98,7 +98,7 @@ export default {
         message: '是否确认开通？'
       }).then(() => {
         this.payClickHandle()
-      }).catch()
+      }).catch(() => {})
     },
     async payClickHandle() {
       if (this.packageCount >= 3) {

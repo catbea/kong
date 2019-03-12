@@ -40,7 +40,7 @@ export default {
         message: '是否确认开通？'
       }).then(() => {
         this.payClickHandler()
-      }).catch()
+      }).catch(() => {})
     },
     payClickHandler() {
       this.$emit('paySubmit')

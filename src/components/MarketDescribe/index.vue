@@ -128,7 +128,7 @@ export default {
           message: '是否确认开通？'
         }).then(() => {
           this.openHandle()
-        }).catch()
+        }).catch(() => {})
       } else {
         this.openHandle()
       }

@@ -97,7 +97,7 @@ export default {
         message: '是否确认开通？'
       }).then(() => {
         this.paySubmit()
-      }).catch()
+      }).catch(() => {})
     },
     async paySubmit() {
       let param = {

@@ -17,7 +17,7 @@
                 <li>
                   <div class="tag-item"  :class="styleColor[indexA]"  ref="text">{{saleStatus[itemA.saleStatus]}}</div>
                 </li>
-                <li>{{itemA.price}}</li>
+                <li>约{{itemA.price}}</li>
               </ul>
               </div>
               <div class="family-list-page-box-right">
