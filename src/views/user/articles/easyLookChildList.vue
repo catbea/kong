@@ -16,7 +16,8 @@
         >编辑时间 {{itemInfo.createTimeStamp | dateTimeFormatter(2,'/')}}</span>
       </div>
       <div class="write-item-right">
-        <img class="article-img" :src="itemInfo.image">
+        <!-- <img class="article-img" :src="itemInfo.image"> -->
+        <div class="article-img" :style="{backgroundImage:'url(' + itemInfo.image + ')'}"></div>  
       </div>
     </div>
     <span class="totalNum" v-if="itemInfo.selectType=='2'">总计{{total}}条分享记录</span>
@@ -41,7 +42,8 @@
             <span class="time-view" v-if="itemInfo.selectType=='3'">编辑时间 {{item.createTimeStamp  | dateTimeFormatter(2,'/')}}</span>
           </div>
           <div class="write-item-right">
-            <img class="article-img" :src="item.image">
+            <!-- <img class="article-img" :src="item.image"> -->
+            <div class="article-img" :style="{backgroundImage:'url(' + item.image + ')'}"></div>  
           </div>
         </div>
       </van-list>
@@ -196,6 +198,7 @@ export default {
         width: 120px;
         height: 90px;
         border-radius: 6px;
+        background-size: cover;
       }
     }
   }

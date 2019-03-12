@@ -310,7 +310,7 @@ export default [
     name: 'reply',
     component: resolve => require(['@/views/user/reply/reply.vue'], resolve),
     meta: {
-      title: '请选择自动回复',
+      title: '请选择欢迎语',
       tabbar: {
         show: false
       }

@@ -77,7 +77,7 @@ export default {
     showDialogErrMsg() {
       Dialog.alert({
         title: '保存失败',
-        message: '自动回复内容不可为空'
+        message: '欢迎语不可为空'
       }).then(() => {
         // on close
       })
