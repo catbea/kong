@@ -134,8 +134,8 @@ export default {
           this.openHandle()
         }).catch(() => {})
       } else {
-        let invalidTime = +new Date(this.itemInfo.invalidTime) // 楼盘到期时间
-        let expireTimestamp = +this.vipInfo.expireTimestamp // vip到期时间
+        let invalidTime = +new Date(this.itemInfo.invalidTime.replace(/-/g,'/'))// 楼盘到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
         if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.itemInfo.city === this.vipInfo.city) {
           const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
           this.$toast({
