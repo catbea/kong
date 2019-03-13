@@ -5,7 +5,10 @@
     <!-- 顶部swipe -->
     <div class="top-swipe-container" @click="photoHandle">
       <div class="swipe-content">
-        <div class="swipe-photo" @click.stop="photoHandle">相册</div>
+        <div class="btn-box">
+          <div class="swipe-photo" @click.stop="photoHandle">相册</div>
+          <div class="swipe-photo" @click.stop="photoHandle">视频</div>
+        </div>
         <van-swipe @change="swipeChange">
           <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
             <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
@@ -460,22 +463,27 @@ export default {
       position: relative;
       width: 100%;
       height: 100%;
-      > .swipe-photo {
+      .btn-box{
         position: absolute;
         z-index: 1;
-        left: 155px;
+        left: 0;
         bottom: 15px;
+        width: 100%;
         text-align: center;
-        width: 60px;
         height: 24px;
-        background: rgba(255, 255, 255, 1);
-        border-radius: 12px;
         font-size: 12px;
-
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 24px;
+        > .swipe-photo {
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 1);
+          display: inline-block;
+          width: 60px;
+          margin: 0 5px;
+        }
       }
+      
       > .van-swipe {
         position: relative;
         width: 100;
