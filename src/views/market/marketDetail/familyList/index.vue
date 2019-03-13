@@ -17,7 +17,7 @@
                 <li>
                   <div class="tag-item"  :class="styleColor[indexA]"  ref="text">{{saleStatus[itemA.saleStatus]}}</div>
                 </li>
-                <li>约{{itemA.price}}</li>
+                <li><span v-if="itemA.price.indexOf('起')=== -1">约</span>{{itemA.price}}</li>
               </ul>
               </div>
               <div class="family-list-page-box-right">
