@@ -147,7 +147,9 @@ export default {
           let mou = time.getMonth() + 1
           let date = time.getDate()
           this.itemInfo.invalidTimeStr = `${mou}/${date}`
-          this.itemInfo.invalidTime = this.vipInfo.expireDate 
+          this.itemInfo.invalidTime = this.vipInfo.expireDate
+          this.itemInfo.openStatus = 2
+          this.dredgeColor()
         } else {
           this.openHandle()
         }
