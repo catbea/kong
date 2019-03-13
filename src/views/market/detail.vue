@@ -189,7 +189,8 @@
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
       <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
-        <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
+        <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
+        <div class="open-btn" @click="openHandler">开通楼盘</div>
       </div>
       <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
       <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
