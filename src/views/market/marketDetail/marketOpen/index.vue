@@ -1,6 +1,6 @@
 <template>
   <div class="market-open-page">
-   <market-describe class="project-info" v-if="projectInfo" :itemInfo="projectInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
+   <market-describe class="project-info" v-if="projectInfo" :itemInfo="projectInfo" :vipInfo="vipInfo" :dredge="dredge" :borderBottom="borderBottom"></market-describe>
    <market-priceSurface :priceList="priceList" :payInfo="priceSurfacePayInfo" :currAct='currPriceAct'
     @onVipClick="vipClickHandle"
     @couponClick="couponClickHandle"
@@ -37,6 +37,7 @@ export default {
       return
     }
     this.init()
+    this.getVipInfo()
   },
   data: () => ({
     currPriceAct: 0,
@@ -52,12 +53,18 @@ export default {
     show: false,
     dredge: false,
     userPrice: 0,
-    borderBottom: false
+    borderBottom: false,
+    vipInfo: ''
   }),
   computed: {
     ...mapGetters(['userInfo', 'marketOpenCache', 'currSelectedCoupon'])
   },
   methods: {
+    // 获取VIP详情
+    async getVipInfo() {
+      let res = await marketService.vipInfo()
+      this.vipInfo = res
+    },
     async init() {
       this.userPrice = this.userInfo.price
       this.getUserInfo()
