@@ -72,6 +72,37 @@
         <div class="more-info" @click="moreInfoHandler">更多信息</div>
       </div>
     </div>
+    <!-- 预约看房 -->
+    <!-- <div class="appointment-box">
+      <div class="appointment-content">
+      <p>预约看房&nbsp;&nbsp;免费接送<i></i>
+      </p>
+      <p><span></span>
+      1V1专属顾问 随时看房
+      </p>
+      <p @click="appointmentHandle">立即预约</p>
+      </div>
+    </div>
+    <van-popup v-model="appointmentShow" class="applyBox" @close="emptyContent">
+      <div class="apply-content">
+        <span class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="appointmentShow=false;nameContent='';phoneContent='';codeContent=''"></span>
+        <ul>
+          <li>预约看房</li>
+          <li>派驻您的专属顾问 随时看房</li>
+          <li class="van-hairline--bottom">
+            <input type="text" name="name" id="name" v-model="nameContent" placeholder="请输入姓名">
+          </li>
+          <li class="van-hairline--bottom">
+            <input type="number" oninput="if(value.length > 11)value = value.slice(0, 11)" name="phone" id="phone" v-model="phoneContent" placeholder="请输入手机号">
+            <p>获取验证码</p>
+          </li>
+          <li class="van-hairline--bottom">
+            <input type="number" name="code" id="code" v-model="codeContent" placeholder="请输入验证码">
+          </li>
+          <li @click="submitHandle">提交申请</li>
+        </ul>
+      </div>
+    </van-popup> -->
     <!-- 楼盘分享关系图谱 -->
     <div class="marker-relation-box">
       <p>楼盘分享关系图谱</p>
@@ -226,6 +257,10 @@ export default {
       mapTab: 0,
       openStatus: false,
       relationShow: false, //立即联系
+      appointmentShow:false,//预约看房
+      nameContent:'',//预约姓名
+      phoneContent:'',//预约手机号码
+      codeContent:'',//预约验证码
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -284,6 +319,18 @@ export default {
     }
   },
   methods: {
+    appointmentHandle(){//预约看房弹窗
+    this.appointmentShow=true
+    },
+    emptyContent(){//预约看房弹窗内容清空
+    this.appointmentShow=false;
+    this.nameContent='';
+    this.phoneContent='';
+    this.codeContent=''
+    },
+    submitHandle(){//提交预约信息
+    this.emptyContent()
+    },
     relationHandle() {
       //立即联系弹窗
       window.location.href = 'tel://' + this.info.contatctTel
@@ -631,6 +678,167 @@ export default {
         font-size: 16px;
         text-align: center;
         border-radius: 4px;
+      }
+    }
+  }
+  .appointment-box{
+    padding-left:15px;
+    margin-top:19px;
+    .appointment-content{
+      padding-left:21px;
+      padding-top:24px;
+      width:335px;
+      height:100px;
+      border-radius:6px;
+      position: relative;
+      background:linear-gradient(53deg,rgba(243,97,94,1) 0%,rgba(255,195,124,1) 100%);
+    P:nth-child(1){
+      width:156px;
+      font-size:18px;
+      font-family:PingFang-SC-Medium;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      position: relative;
+      i{
+        position: absolute;
+        bottom:0;
+        left:0;
+        display: inline-block;
+        background:rgba(255,255,255,1);
+        opacity:0.19920000000000002;
+        width:100%;
+        height:6px;
+      }
+    }
+    p:nth-child(2){
+      margin-top:16px;
+      font-size:13px;
+      font-family:PingFang-SC-Regular;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      span{
+        display:inline-block;
+        width:41px;
+        height:12px;
+      }
+    }
+    p:nth-child(3){
+      position:absolute;
+      top:38px;
+      right:24px;
+      width:67px;
+      height:24px;
+      font-size:12px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(244,101,95,1);
+      border-radius:12px;
+      background-color:#FFFFFF;
+      text-align: center;
+      line-height: 24px;
+    }
+    }
+  }
+  .applyBox{
+    width:311px;
+    height:368px;
+    .apply-content{
+      position: relative;
+      height:100%;
+      span{
+        display:inline-block;
+        height:15px;
+        width:15px;
+        position:absolute;
+        top: 15px;
+        right:15px;
+      }
+      ul{
+        padding-left:32px;
+        padding-top:26px;
+        input{
+          width:100%;
+          border:none;
+        }
+        input::-webkit-input-placeholder {
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:500;
+          color:rgba(150,158,168,1);
+        }
+        input:-moz-placeholder {
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:500;
+          color:rgba(150,158,168,1);
+        }
+        input:-ms-input-placeholder {
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:500;
+          color:rgba(150,158,168,1);
+        }
+        li:nth-child(1){
+          font-size:20px;
+          font-family:PingFangSC-Semibold;
+          font-weight:600;
+          color:rgba(51,51,51,1);
+        }
+        li:nth-child(2){
+          margin-top:10px;
+          font-size:13px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(102,102,102,1);
+        }
+        li:nth-child(3){
+          height:64px;
+          width:247px;
+          display: flex;
+          align-items: center;
+        }
+        li:nth-child(4){
+          display: flex;
+          align-items: center;
+          height:64px;
+          width:247px;
+          position: relative;
+          p{
+            position:absolute;
+            top:20px;
+            right:0;
+            width:88px;
+            height:28px;
+            background:rgba(0,122,230,1);
+            border-radius:16px;
+            opacity:0.5;
+            font-size:12px;
+            font-family:PingFang-SC-Regular;
+            font-weight:400;
+            color:rgba(255,255,255,1);
+            line-height:28px;
+            text-align: center;
+          }
+        }
+        li:nth-child(5){
+          display: flex;
+          align-items: center;
+          height:64px;
+          width:247px;
+        }
+        li:nth-child(6){
+          width:247px;
+          height:44px;
+          margin-top:20px;
+          background:rgba(0,122,230,1);
+          border-radius:6px;
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(255,255,255,1);
+          line-height:44px;
+          text-align:center;
+        }
       }
     }
   }
