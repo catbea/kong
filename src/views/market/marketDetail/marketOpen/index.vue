@@ -209,7 +209,8 @@ export default {
 
     paySuss() {
       let _pirce = this.userPrice - this.priceSurfacePayInfo.balancePay
-      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { price: _pirce }))
+      let data = Object.assign({},this.userInfo,{ price: _pirce })
+      this.$store.commit(types.USER_INFO, data)
       this.getMarketDescribeInfo()
       this.getLinkerAmountList()
       this.$dialog
