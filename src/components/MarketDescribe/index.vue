@@ -142,7 +142,6 @@ export default {
             duration: 1000,
             message: '续费成功！'
           })
-          // this.$emit('vipOpen')
           let time = new Date(+this.vipInfo.expireTimestamp)
           let mou = time.getMonth() + 1
           let date = time.getDate()
@@ -158,13 +157,19 @@ export default {
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.status == 0) {
-        if (this.itemInfo.city === this.userInfo.vipInfo.city) {
+        if (this.itemInfo.city === this.vipInfo.city) {
           const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
           if (res.returnCode == 21801) {
             this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
             return
           }
-          this.status = 2
+          // this.status = 2
+          this.itemInfo.openStatus = 2
+          let time = new Date(+this.vipInfo.expireTimestamp)
+          let mou = time.getMonth() + 1
+          let date = time.getDate()
+          this.itemInfo['invalidTimeStr'] = `${mou}/${date}`
+          this.itemInfo['invalidTime'] = this.vipInfo.expireDate
           this.dredgeColor()
           this.$toast({
             duration: 1000,
