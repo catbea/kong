@@ -148,6 +148,7 @@ export default {
           this.itemInfo.invalidTimeStr = `${mou}/${date}`
           this.itemInfo.invalidTime = this.vipInfo.expireDate
           this.itemInfo.openStatus = 2
+          this.status = 2
           this.dredgeColor()
         } else {
           this.openHandle()
@@ -163,7 +164,7 @@ export default {
             this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
             return
           }
-          // this.status = 2
+          this.status = 2
           this.itemInfo.openStatus = 2
           let time = new Date(+this.vipInfo.expireTimestamp)
           let mou = time.getMonth() + 1
