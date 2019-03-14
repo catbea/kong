@@ -492,7 +492,7 @@ export default {
           let year =time.getFullYear();
           let mou = time.getMonth() + 1
           let date = time.getDate()
-          this.info.expireTime = `${year}/${mou}/${date}`
+          this.info.expireTime = `0${mou}/0${date}`
           // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
           this.info.openStatus = 2
           // await this.getDetailInfo(this.id)
