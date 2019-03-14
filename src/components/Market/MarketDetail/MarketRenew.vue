@@ -19,6 +19,7 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
+import marketService from 'SERVICE/marketService'
 export default {
   created() {
     this.flagTjHandle()
@@ -191,7 +192,7 @@ export default {
           break
       }
     },
-    renewHandle(n) {
+   async renewHandle(n) {
       
       if (this.renewInfo.thisDistributor === false) {
         this.$dialog
@@ -204,12 +205,22 @@ export default {
           })
           
       } else {
-        
-        if(this.vipInfo.vipValid){
-          
-          this.$emit('vipRenew')
+        let invalidTime = +new Date(this.renewInfo.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.renewInfo.city === this.vipInfo.city) {
+          const res = await marketService.addHouseByVip(this.renewInfo.linkerId)
+          this.$toast({
+            duration: 1000,
+            message: '续费成功！'
+          })
+          let time = new Date(+this.vipInfo.expireTimestamp)
+          let year =time.getFullYear();
+          let mou = time.getMonth() + 1
+          let date = time.getDate()
+          this.renewInfo.expireTime = `0${mou}/0${date}`
+          // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
+          this.renewInfo.openStatus = 2
       }else{
-        
         this.$router.push({ name: 'marketDetail-open', params: { id: n } })
       }
     }
