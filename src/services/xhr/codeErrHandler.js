@@ -13,7 +13,7 @@ export default (msg, url) => {
     case 21105: // 注册
     case 21103: // 验证码错误
     case 21801: // 开通楼盘vip到期
-    case 10028: // 文章被下架或被删除--待处理
+    case 10028: // 文章被下架或被删除
       return true
     default:
       console.error(msg)
