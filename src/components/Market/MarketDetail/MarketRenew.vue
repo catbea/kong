@@ -37,7 +37,8 @@ export default {
     flagZd: false
   }),
   props: {
-    renewInfo: { type: Object }
+    renewInfo: { type: Object },
+    vipInfo: { type: Object }
   },
   // computed: {
   //   flagTj:{
@@ -201,7 +202,9 @@ export default {
             // on close
           })
       } else {
-        this.$router.push({ name: 'marketDetail-open', params: { id: n } })
+        if(this.vipInfo.vipValid){
+          this.$emit('vipRenew')
+        }else{this.$router.push({ name: 'marketDetail-open', params: { id: n } })}
       }
     }
   }

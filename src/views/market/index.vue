@@ -166,7 +166,7 @@ export default {
       this.agentIdInfo = res
     },
     skipDetail(item) {
-      this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
+      this.$router.push({ name: 'market-detail', params: { id: item.linkerId} })
     },
     opClickHandler(item) {
       this.$router.push(`/marketDetail/open/${item.linkerId}`)

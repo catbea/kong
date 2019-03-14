@@ -11,6 +11,10 @@
               <div class="sys-shadowBox">
                 <p class="sys-shadowBox-title">{{item.title}}</p>
                 <p class="sys-shadowBox-time" v-html="item.content.replace(/(\r+\n+)|(\n+)/g,'<br>')"></p>
+                <div style="display:flex;" v-show="true">
+                  <p class="client-detail">客户详情</p>
+                  <p class="go-report">立即报备</p>
+                </div>
                 <!-- <p class="sys-shadowBox-remarks">本次主要更新内容有： 1.增加勿扰模式 2.VIP功能优化调整 3.我的楼盘增加关闭展示功能</p> -->
               </div>
             </div>
@@ -98,6 +102,31 @@ export default {
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
+      }
+      .client-detail{
+        width:143px;
+        height:40px;
+        background:rgba(242,244,245,1);
+        border-radius:4px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium;
+        font-weight:600;
+        color:rgba(51,51,51,1);
+        line-height:40px;
+        text-align:center;
+      }
+      .go-report{
+        margin-left:24px;
+        width:143px;
+        height:40px;
+        background:rgba(242,244,245,1);
+        border-radius:4px;
+        font-size:14px;
+        font-family:PingFang-SC-Medium;
+        font-weight:500;
+        color:rgba(7,125,230,1);
+        line-height:40px;
+        text-align:center;
       }
     }
   }

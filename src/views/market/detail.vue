@@ -75,37 +75,6 @@
         <div class="more-info" @click="moreInfoHandler">更多信息</div>
       </div>
     </div>
-    <!-- 预约看房 -->
-    <div class="appointment-box">
-       <div class="bg_img appointment-content" @click="appointmentHandle" :style="{backgroundImage:'url('+appointmentImg+')'}">
-      <!-- <p>预约看房&nbsp;&nbsp;免费接送<i></i>
-      </p>
-      <p><span></span>
-      1V1专属顾问 随时看房
-      </p>
-      <p @click="appointmentHandle">立即预约</p> -->
-      </div>
-    </div>
-    <van-popup v-model="appointmentShow" class="applyBox" @close="emptyContent">
-      <div class="apply-content">
-        <span class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="appointmentShow=false;nameContent='';phoneContent='';codeContent=''"></span>
-        <ul>
-          <li>预约看房</li>
-          <li>派驻您的专属顾问 随时看房</li>
-          <li class="van-hairline--bottom">
-            <input type="text" name="name" id="name" v-model="nameContent" placeholder="请输入姓名">
-          </li>
-          <li class="van-hairline--bottom">
-            <input type="number" oninput="if(value.length > 11)value = value.slice(0, 11)" name="phone" id="phone" v-model="phoneContent" placeholder="请输入手机号">
-            <p>获取验证码</p>
-          </li>
-          <li class="van-hairline--bottom">
-            <input type="number" name="code" id="code" v-model="codeContent" placeholder="请输入验证码">
-          </li>
-          <li @click="submitHandle">提交申请</li>
-        </ul>
-      </div>
-    </van-popup>
     <!-- 楼盘分享关系图谱 -->
     <div class="marker-relation-box">
       <p>楼盘分享关系图谱</p>
@@ -195,7 +164,7 @@
         <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
         <div class="open-btn" @click="openHandler">开通楼盘</div>
       </div>
-      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
+      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" @vipRenew="vipRenewHandle" :renewInfo="info" :vipInfo="vipInfo"/>
       <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
         <p>售罄</p>
       </div>
@@ -241,6 +210,7 @@ export default {
   },
   data() {
     return {
+      vipInfo:'',
       instance: 0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: false, //是否存在相册
@@ -301,12 +271,13 @@ export default {
       appointmentImg:require('IMG/market/appointment@2x.png')
     }
   },
-  created() {
+ async created() {
     this.id = this.$route.params.id
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
+    await this.getVipInfo()
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -370,6 +341,9 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      console.log(res,'楼盘数据')
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))
+    console.log(invalidTime,2222222)
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -435,7 +409,7 @@ export default {
       }
     },
     async openHandler() {
-      //VIP用户选择城市与VIP开通楼盘同城市
+      //VIP用户选择城市与VIP开通楼盘同城市 
       if (this.info.city === this.userInfo.vipInfo.city) {
         const res = await marketService.addHouseByVip(this.info.linkerId)
         if (res.returnCode == 21801) {
@@ -475,6 +449,31 @@ export default {
     },
     posterClosedHandler() {
       this.posterShow = false
+    },
+    // 获取VIP详情
+    async getVipInfo() {
+      let res = await marketService.vipInfo()
+      this.vipInfo = res
+      console.log(res,'vip数据')
+    },
+   async vipRenewHandle(){//vip续费操作
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+          const res = await marketService.addHouseByVip(this.info.linkerId)
+          this.$toast({
+            duration: 1000,
+            message: '续费成功！'
+          })
+          let time = new Date(+this.vipInfo.expireTimestamp)
+          let mou = time.getMonth() + 1
+          let date = time.getDate()
+          this.info.expireTime = `${mou}/${date}`
+          // this.info.invalidTime = this.vipInfo.expireDate
+          this.info.openStatus = 2
+        } else {
+          this.openHandler()
+        }
     }
   },
   computed: {

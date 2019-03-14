@@ -85,7 +85,6 @@ export default {
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
-    
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
