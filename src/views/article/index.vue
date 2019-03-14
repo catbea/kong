@@ -311,7 +311,10 @@ export default {
       if (this.articleData.length) {
         this.$nextTick(function() {
           let top = window.sessionStorage.getItem('scrollTop') || 0
-          document.querySelector('.article-list').scrollTop = top
+          if (top > 0) {
+            document.querySelector('.article-list').scrollTop = top
+            window.sessionStorage.removeItem('scrollTop')
+          }
         })
       }
     }
@@ -428,7 +431,8 @@ export default {
           classify: this.classify,
           classifyName: this.classifyName,
           current: this.current,
-          articleData: this.articleData
+          articleData: this.articleData,
+          pages: this.pages
         }
         window.sessionStorage.setItem('cacheData', JSON.stringify(cacheData))
       }
@@ -438,6 +442,7 @@ export default {
         this.classifyName = data.classifyName
         this.current = data.current
         this.articleData = data.articleData
+        this.pages = data.pages
       } else {
         this.classify = item.itemCode
         this.classifyName = item.itemName
@@ -640,6 +645,7 @@ export default {
     // 下拉刷新
     async onRefresh() {
       this.current = 1
+      this.pages = 0
       // this.articleData = []
       this.showNewArticle = false
       window.sessionStorage.setItem('scrollTop', 0)
