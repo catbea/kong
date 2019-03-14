@@ -20,9 +20,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import QRCode from 'qrcodejs2'
+import userService from 'SERVICE/userService'
 export default {
   data: () => ({
-    companyBg: require('IMG/user/invitation/invitition_bg.png')
+    companyBg: require('IMG/user/invitation/invitition_bg.png'),
+    invitationUrl: ''
   }),
   computed: {
     ...mapGetters(['userInfo'])
@@ -50,8 +52,8 @@ export default {
     },
     goyInvitationUrlCode(url) {
       let qrcode = new QRCode('qrcode', {
-        width: 100,
-        height: 100, // 高度
+        width: 170,
+        height: 170, // 高度
         text: this.invitationUrl, // 二维码内容
         image: '',
         render: 'table' // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas） // background: '#f0f' // foreground: '#ff0'
@@ -117,10 +119,10 @@ export default {
     flex-direction: column;
 
     > .code-bg {
-      width: 184px;
-      height: 184px;
-      background: red;
+      width: 170px;
+      height: 170px;
       margin-top: -100px;
+
     }
 
     .code-text {
