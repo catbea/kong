@@ -3,32 +3,43 @@
     <!-- 新手引导 -->
     <hint-tire></hint-tire>
     <!-- 顶部swipe -->
-    <div class="top-swipe-container" @click="photoHandle">
-      <div class="swipe-content">
-        <div class="swipe-photo" @click.stop="photoHandle">相册</div>
-        <van-swipe @change="swipeChange">
-          <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
-            <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
-          </van-swipe-item>
-          <div class="custom-indicator dev" slot="indicator" v-show="photoButton">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
-        </van-swipe>
-      </div>
-      <div class="operate-content">
-        <!-- 收藏/分享 -->
-        <div class="operate-1">
-          <div class="operate-collect" @click.stop="collectHandler">
-            <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
-            <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
-            收藏
+    <div class="top-swipe-container">
+      <div class="swipe-outer" @click="photoHandle">
+        <div class="swipe-content">
+          <div class="btn-box" v-show="!showControls">
+            <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
+            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle">视频</div>
           </div>
-          <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
-            <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
-            分享
-          </div>
+          <van-swipe @change="swipeChange">
+            <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
+              <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
+            </van-swipe-item>
+            <div class="custom-indicator dev" slot="indicator" v-show="photoButton">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+          </van-swipe>
         </div>
-        <!-- 存在全景时全景播放 -->
+        <div class="operate-content">
+          <!-- 收藏/分享 -->
+          <div class="operate-1">
+            <div class="operate-collect" @click.stop="collectHandler">
+              <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
+              <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
+              收藏
+            </div>
+            <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
+              <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
+              分享
+            </div>
+          </div>
+          <!-- 存在全景时全景播放 -->
+        </div>
+        <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
       </div>
-      <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
+      <!-- 视频 -->
+      <div class="video-box" v-show="showVideo">
+        <video width="100%" height="281" ref="videoplay" @click="showControls=!showControls" autoplay="true" :controls="showControls" muted="true" :poster="info.headImgUrl"  webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow">
+          <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
     <!-- 楼盘基础信息 -->
     <div class="base-info-container">
@@ -158,9 +169,10 @@
     <!-- 开通提示及开通状态 -->
     <div class="van-hairline--top house-status">
       <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
-        <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div>
+        <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
+        <div class="open-btn" @click="openHandler">开通楼盘</div>
       </div>
-      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info"/>
+      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info" :vipInfo="vipInfo"/>
       <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
         <p>售罄</p>
       </div>
@@ -206,6 +218,7 @@ export default {
   },
   data() {
     return {
+      vipInfo:'',
       instance: 0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: false, //是否存在相册
@@ -226,6 +239,10 @@ export default {
       mapTab: 0,
       openStatus: false,
       relationShow: false, //立即联系
+      appointmentShow:false,//预约看房
+      nameContent:'',//预约姓名
+      phoneContent:'',//预约手机号码
+      codeContent:'',//预约验证码
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -258,15 +275,19 @@ export default {
       },
       posterShow: false,
       posterClosed: false,
-      playIcon: require('IMG/market/view720.png')
+      playIcon: require('IMG/market/view720.png'),
+      showVideo: false,
+      showControls: false,
+      appointmentImg:require('IMG/market/appointment@2x.png')
     }
   },
-  created() {
+ async created() {
     this.id = this.$route.params.id
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
+    await this.getVipInfo()
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -284,6 +305,18 @@ export default {
     }
   },
   methods: {
+    appointmentHandle(){//预约看房弹窗
+    this.appointmentShow=true
+    },
+    emptyContent(){//预约看房弹窗内容清空
+    this.appointmentShow=false;
+    this.nameContent='';
+    this.phoneContent='';
+    this.codeContent=''
+    },
+    submitHandle(){//提交预约信息
+    this.emptyContent()
+    },
     relationHandle() {
       //立即联系弹窗
       window.location.href = 'tel://' + this.info.contatctTel
@@ -300,6 +333,9 @@ export default {
       }
     },
     photoHandle() {
+      if (this.showVideo) {
+        return this.videoHide()
+      }
       //进入相册页面
       if (this.photoButton) {
         this.$router.push({ name: 'photoList', params: { id: this.id } })
@@ -310,6 +346,16 @@ export default {
         })
       }
     },
+    // 进入视频
+    videoHandle() {
+      this.$refs.videoplay.play()
+      this.showVideo = true
+    },
+    // 关闭视频
+    videoHide() {
+      this.$refs.videoplay.pause()
+      this.showVideo = false
+    },
     commission() {
       //进入佣金详情
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
@@ -318,6 +364,9 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      console.log(res,'楼盘数据')
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))
+    console.log(invalidTime,2222222)
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -383,7 +432,7 @@ export default {
       }
     },
     async openHandler() {
-      //VIP用户选择城市与VIP开通楼盘同城市
+      //VIP用户选择城市与VIP开通楼盘同城市 
       if (this.info.city === this.userInfo.vipInfo.city) {
         const res = await marketService.addHouseByVip(this.info.linkerId)
         if (res.returnCode == 21801) {
@@ -423,6 +472,33 @@ export default {
     },
     posterClosedHandler() {
       this.posterShow = false
+    },
+    // 获取VIP详情
+    async getVipInfo() {
+      let res = await marketService.vipInfo()
+      this.vipInfo = res
+      console.log(res,'vip数据')
+    },
+   async vipRenewHandle(){//vip续费操作
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+          const res = await marketService.addHouseByVip(this.info.linkerId)
+          this.$toast({
+            duration: 1000,
+            message: '续费成功！'
+          })
+          let time = new Date(+this.vipInfo.expireTimestamp)
+          let year =time.getFullYear();
+          let mou = time.getMonth() + 1
+          let date = time.getDate()
+          this.info.expireTime = `0${mou}/0${date}`
+          // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
+          this.info.openStatus = 2
+          // await this.getDetailInfo(this.id)
+        } else {
+          this.openHandler()
+        }
     }
   },
   computed: {
@@ -451,80 +527,104 @@ export default {
 </script>
 <style lang="less" scoped>
 .market-detail-page {
-  > .top-swipe-container {
+  .top-swipe-container {
     position: relative;
     width: 100%;
     height: 281px;
-    > .swipe-content {
-      position: relative;
-      width: 100%;
+    .swipe-outer{
       height: 100%;
-      > .swipe-photo {
-        position: absolute;
-        z-index: 1;
-        left: 155px;
-        bottom: 15px;
-        text-align: center;
-        width: 60px;
-        height: 24px;
-        background: rgba(255, 255, 255, 1);
-        border-radius: 12px;
-        font-size: 12px;
-
-        font-weight: 400;
-        color: rgba(51, 51, 51, 1);
-        line-height: 24px;
-      }
-      > .van-swipe {
+      width: 100%;
+      .swipe-content {
         position: relative;
-        width: 100;
+        width: 100%;
         height: 100%;
-        > .custom-indicator {
+        .btn-box{
           position: absolute;
-          color: #fff;
-          background: rgba(0, 0, 0, 0.6);
-          border-radius: 10px;
-          z-index: 5;
-          right: 20px;
+          z-index: 10;
+          left: 0;
           bottom: 15px;
-          font-size: 12px;
-          padding: 3px 15px;
-          border: none;
-        }
-        .swipe-item {
           width: 100%;
-          height: 100%;
-          background-color: #999999;
-          border: none;
-        }
-      }
-    }
-    > .operate-content {
-      position: absolute;
-      top: 0;
-      right: 10px;
-      > .operate-1 {
-        display: flex;
-        > div {
-          padding: 10px;
+          text-align: center;
+          height: 24px;
           font-size: 12px;
-          color: #fff;
-          > i {
-            width: 24px;
-            height: 24px;
-            font-size: 24px;
-            display: block;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
+          line-height: 24px;
+          .swipe-photo {
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 1);
+            display: inline-block;
+            width: 70px;
+            margin: 0 5px;
+            &.photo{
+              background-color: #007AE6;
+              color: #fff;
+            }
+          }
+        }
+        .van-swipe {
+          position: relative;
+          width: 100;
+          height: 100%;
+          .custom-indicator {
+            position: absolute;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            z-index: 5;
+            right: 20px;
+            bottom: 15px;
+            font-size: 12px;
+            padding: 3px 15px;
+            border: none;
+          }
+          .swipe-item {
+            width: 100%;
+            height: 100%;
+            background-color: #999999;
+            border: none;
           }
         }
       }
+      .operate-content {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        .operate-1 {
+          display: flex;
+          div {
+            padding: 10px;
+            font-size: 12px;
+            color: #fff;
+            i {
+              width: 24px;
+              height: 24px;
+              font-size: 24px;
+              display: block;
+            }
+          }
+        }
+      }
+      .operate-2 {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px;
+        height: 64px;
+      }
     }
-    > .operate-2 {
+    .video-box{
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9;
+      background-color: #000;
+      video{
+        width: 100%;
+        height: 281px;
+      }
     }
   }
   > .base-info-container {
@@ -631,6 +731,166 @@ export default {
         font-size: 16px;
         text-align: center;
         border-radius: 4px;
+      }
+    }
+  }
+  .appointment-box{
+    padding-left:15px;
+    margin-top:19px;
+    .appointment-content{
+      padding-left:21px;
+      padding-top:24px;
+      width:335px;
+      height:100px;
+      border-radius:6px;
+      position: relative;
+    P:nth-child(1){
+      width:156px;
+      font-size:18px;
+      font-family:PingFang-SC-Medium;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      position: relative;
+      i{
+        position: absolute;
+        bottom:0;
+        left:0;
+        display: inline-block;
+        background:rgba(255,255,255,1);
+        opacity:0.19920000000000002;
+        width:100%;
+        height:6px;
+      }
+    }
+    p:nth-child(2){
+      margin-top:16px;
+      font-size:13px;
+      font-family:PingFang-SC-Regular;
+      font-weight:400;
+      color:rgba(255,255,255,1);
+      span{
+        display:inline-block;
+        width:41px;
+        height:12px;
+      }
+    }
+    p:nth-child(3){
+      position:absolute;
+      top:38px;
+      right:24px;
+      width:67px;
+      height:24px;
+      font-size:12px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(244,101,95,1);
+      border-radius:12px;
+      background-color:#FFFFFF;
+      text-align: center;
+      line-height: 24px;
+    }
+    }
+  }
+  .applyBox{
+    width:311px;
+    height:368px;
+    .apply-content{
+      position: relative;
+      height:100%;
+      span{
+        display:inline-block;
+        height:15px;
+        width:15px;
+        position:absolute;
+        top: 15px;
+        right:15px;
+      }
+      ul{
+        padding-left:32px;
+        padding-top:26px;
+        input{
+          width:100%;
+          border:none;
+        }
+        input::-webkit-input-placeholder {
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:500;
+          color:rgba(150,158,168,1);
+        }
+        input:-moz-placeholder {
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:500;
+          color:rgba(150,158,168,1);
+        }
+        input:-ms-input-placeholder {
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:500;
+          color:rgba(150,158,168,1);
+        }
+        li:nth-child(1){
+          font-size:20px;
+          font-family:PingFangSC-Semibold;
+          font-weight:600;
+          color:rgba(51,51,51,1);
+        }
+        li:nth-child(2){
+          margin-top:10px;
+          font-size:13px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(102,102,102,1);
+        }
+        li:nth-child(3){
+          height:64px;
+          width:247px;
+          display: flex;
+          align-items: center;
+        }
+        li:nth-child(4){
+          display: flex;
+          align-items: center;
+          height:64px;
+          width:247px;
+          position: relative;
+          p{
+            position:absolute;
+            top:20px;
+            right:0;
+            width:88px;
+            height:28px;
+            background:rgba(0,122,230,1);
+            border-radius:16px;
+            opacity:0.5;
+            font-size:12px;
+            font-family:PingFang-SC-Regular;
+            font-weight:400;
+            color:rgba(255,255,255,1);
+            line-height:28px;
+            text-align: center;
+          }
+        }
+        li:nth-child(5){
+          display: flex;
+          align-items: center;
+          height:64px;
+          width:247px;
+        }
+        li:nth-child(6){
+          width:247px;
+          height:44px;
+          margin-top:20px;
+          background:rgba(0,122,230,1);
+          border-radius:6px;
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(255,255,255,1);
+          line-height:44px;
+          text-align:center;
+        }
       }
     }
   }

@@ -1,4 +1,23 @@
 <template>
+  <!-- <div class="content" slot="content">
+    <div class="van-hairline--bottom my-custom-item">
+      <avatar class="user-avatar" :avatar="info.avatarUrl"  @click.native="clickHandler"></avatar>
+      <div
+        class="bg_img user-attention"
+        :style="{backgroundImage:'url('+attentionImg+')'}"
+        v-if="info.attentionStatus==0"
+        @click="clickHandler"
+      ></div>
+      <div class="baseinfo-box"  @click="clickHandler">
+        <p class="username">{{info.clientName}}</p>
+        <p class="base-focus">{{focusInfo}}</p>
+      </div>
+      <div class="intention-box">
+        <p class="intention-value" v-bind:style="{'color':Number(this.info.intentionality*100) >70?'#007AE6':'#999999'}">{{Number(this.info.intentionality*100).toFixed(1)}}%</p>
+        <p class="intention-title">意向度</p>
+      </div>
+    </div>
+  </div> -->
   <swipe-cell ref="swipecell">
     <div class="content" slot="content">
       <div class="van-hairline--bottom my-custom-item">

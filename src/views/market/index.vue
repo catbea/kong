@@ -14,7 +14,7 @@
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getProjectList">
-        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" @skipDetail="skipDetail(item)" :borderBottom="borderBottom"></market-describe>
+        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="borderBottom"></market-describe>
       </van-list>
     </div>
     <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
@@ -73,7 +73,8 @@ export default {
     agentIdInfo: null,
     resInfo: null,
     borderBottom: true,
-    containerHeight: '0'
+    containerHeight: '0',
+    vipInfo: ''
   }),
   watch: {
     projectFilters: {
@@ -91,6 +92,7 @@ export default {
   },
   mounted() {},
   async created() {
+    await this.getVipInfo()
     this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
     this.searchContent.siteText = this.selectedCity || '全国'
     this.getBrokerInfo()
@@ -164,7 +166,7 @@ export default {
       this.agentIdInfo = res
     },
     skipDetail(item) {
-      this.$router.push({ name: 'market-detail', params: { id: item.linkerId } })
+      this.$router.push({ name: 'market-detail', params: { id: item.linkerId} })
     },
     opClickHandler(item) {
       this.$router.push(`/marketDetail/open/${item.linkerId}`)
@@ -184,6 +186,11 @@ export default {
       }
       const hotRes = await userService.getHotLinker(hotParams)
       this.hotResult = hotRes
+    },
+    // 获取VIP详情
+    async getVipInfo() {
+      let res = await marketService.vipInfo()
+      this.vipInfo = res
     }
   }
 }

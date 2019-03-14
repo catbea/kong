@@ -61,6 +61,9 @@ export default {
     dredge: {
       type: Boolean,
       default: true
+    },
+    vipInfo: {
+      type: Object
     }
   },
   data() {
@@ -121,8 +124,8 @@ export default {
       this.style = conf(this.openStatus)
     },
     // 确认支付
-    confirmFun () {
-      if (this.status == 0) {
+    async confirmFun () {
+      if (!this.status) {
         this.$dialog.confirm({
           title: '提示',
           message: '是否确认开通？'
@@ -130,26 +133,50 @@ export default {
           this.openHandle()
         }).catch(() => {})
       } else {
-        this.openHandle()
+        
+        let invalidTime = +new Date(this.itemInfo.invalidTime.replace(/-/g,'/'))// 楼盘到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.itemInfo.city === this.vipInfo.city) {
+          const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
+          this.$toast({
+            duration: 1000,
+            message: '续费成功！'
+          })
+          let time = new Date(+this.vipInfo.expireTimestamp)
+          let mou = time.getMonth() + 1
+          let date = time.getDate()
+          this.itemInfo.invalidTimeStr = `${mou}/${date}`
+          this.itemInfo.invalidTime = this.vipInfo.expireDate
+          this.itemInfo.openStatus = 2
+          this.status = 2
+          this.dredgeColor()
+        } else {
+          this.openHandle()
+        }
       }
     },
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市
       if (this.status == 0) {
-        if (this.itemInfo.city === this.userInfo.vipInfo.city) {
+        if (this.itemInfo.city === this.vipInfo.city) {
           const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
           if (res.returnCode == 21801) {
             this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
             return
           }
           this.status = 2
+          this.itemInfo.openStatus = 2
+          let time = new Date(+this.vipInfo.expireTimestamp)
+          let mou = time.getMonth() + 1
+          let date = time.getDate()
+          this.itemInfo['invalidTimeStr'] = `${mou}/${date}`
+          this.itemInfo['invalidTime'] = this.vipInfo.expireDate
           this.dredgeColor()
           this.$toast({
             duration: 1000,
             message: '已开通成功，请到我的楼盘查看'
           })
           this.$parent.$parent.agentIdInfo++
-          console.log(333333333)
         } else {
           this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
         }

@@ -679,7 +679,10 @@ export default {
         margin: auto;
         height: 100%;
         position: relative;
-
+        pointer-events:none;
+        -webkit-pointer-events:none;
+        -ms-pointer-events:none;
+        -moz-pointer-events:none;
         &.card1 {
           background-color: #113460;
           .avat {

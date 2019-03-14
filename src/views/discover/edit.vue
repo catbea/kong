@@ -257,7 +257,7 @@ export default {
       }
       let res, targetid
       // 存在这个字段,说明是再次编辑
-      if ((this.info.source == 2 || this.info.source == 3) && this.info.belongeder !== '') {
+      if (this.info && this.info.source && (this.info.source == 2 || this.info.source == 3) && this.info.belongeder !== '') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = this.info.id
       } else {
