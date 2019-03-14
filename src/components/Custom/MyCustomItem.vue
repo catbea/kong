@@ -1,5 +1,5 @@
 <template>
-  <div class="content" slot="content">
+  <!-- <div class="content" slot="content">
     <div class="van-hairline--bottom my-custom-item">
       <avatar class="user-avatar" :avatar="info.avatarUrl"  @click.native="clickHandler"></avatar>
       <div
@@ -17,8 +17,8 @@
         <p class="intention-title">意向度</p>
       </div>
     </div>
-  </div>
-  <!-- <swipe-cell ref="swipecell">
+  </div> -->
+  <swipe-cell ref="swipecell">
     <div class="content" slot="content">
       <div class="van-hairline--bottom my-custom-item">
         <avatar class="user-avatar" :avatar="info.avatarUrl"  @click.native="clickHandler"></avatar>
@@ -39,7 +39,7 @@
       </div>
     </div>
     <button @click="onClose" style="background:#EA4D2E">删除</button>
-  </swipe-cell> -->
+  </swipe-cell>
   <!-- <van-swipe-cell :right-width="80" :on-close="onClose">          
     <van-cell-group>      
       <div class="van-hairline--bottom my-custom-item" @click="clickHandler">
@@ -64,11 +64,11 @@
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
-// import swipeCell from 'vue-swipe-cell'
+import swipeCell from 'vue-swipe-cell'
 export default {
   components: {
     Avatar,
-    // swipeCell
+    swipeCell
   },
   props: {
     info: Object,
