@@ -3,35 +3,43 @@
     <!-- 新手引导 -->
     <hint-tire></hint-tire>
     <!-- 顶部swipe -->
-    <div class="top-swipe-container" @click="photoHandle">
-      <div class="swipe-content">
-        <div class="btn-box">
-          <div class="swipe-photo" @click.stop="photoHandle">相册</div>
-          <div class="swipe-photo" @click.stop="photoHandle">视频</div>
-        </div>
-        <van-swipe @change="swipeChange">
-          <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
-            <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
-          </van-swipe-item>
-          <div class="custom-indicator dev" slot="indicator" v-show="photoButton">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
-        </van-swipe>
-      </div>
-      <div class="operate-content">
-        <!-- 收藏/分享 -->
-        <div class="operate-1">
-          <div class="operate-collect" @click.stop="collectHandler">
-            <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
-            <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
-            收藏
+    <div class="top-swipe-container">
+      <div class="swipe-outer" @click="photoHandle">
+        <div class="swipe-content">
+          <div class="btn-box" v-show="!showControls">
+            <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
+            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle">视频</div>
           </div>
-          <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
-            <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
-            分享
-          </div>
+          <van-swipe @change="swipeChange">
+            <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
+              <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
+            </van-swipe-item>
+            <div class="custom-indicator dev" slot="indicator" v-show="photoButton">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+          </van-swipe>
         </div>
-        <!-- 存在全景时全景播放 -->
+        <div class="operate-content">
+          <!-- 收藏/分享 -->
+          <div class="operate-1">
+            <div class="operate-collect" @click.stop="collectHandler">
+              <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
+              <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
+              收藏
+            </div>
+            <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
+              <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
+              分享
+            </div>
+          </div>
+          <!-- 存在全景时全景播放 -->
+        </div>
+        <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
       </div>
-      <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
+      <!-- 视频 -->
+      <div class="video-box" v-show="showVideo">
+        <video width="100%" height="281" ref="videoplay" @click="showControls=!showControls" autoplay="true" :controls="showControls" muted="true" :poster="info.headImgUrl"  webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow">
+          <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
     <!-- 楼盘基础信息 -->
     <div class="base-info-container">
@@ -268,6 +276,8 @@ export default {
       posterShow: false,
       posterClosed: false,
       playIcon: require('IMG/market/view720.png'),
+      showVideo: false,
+      showControls: false,
       appointmentImg:require('IMG/market/appointment@2x.png')
     }
   },
@@ -323,6 +333,9 @@ export default {
       }
     },
     photoHandle() {
+      if (this.showVideo) {
+        return this.videoHide()
+      }
       //进入相册页面
       if (this.photoButton) {
         this.$router.push({ name: 'photoList', params: { id: this.id } })
@@ -332,6 +345,16 @@ export default {
           message: '该楼盘暂无图片'
         })
       }
+    },
+    // 进入视频
+    videoHandle() {
+      this.$refs.videoplay.play()
+      this.showVideo = true
+    },
+    // 关闭视频
+    videoHide() {
+      this.$refs.videoplay.pause()
+      this.showVideo = false
     },
     commission() {
       //进入佣金详情
@@ -502,85 +525,104 @@ export default {
 </script>
 <style lang="less" scoped>
 .market-detail-page {
-  > .top-swipe-container {
+  .top-swipe-container {
     position: relative;
     width: 100%;
     height: 281px;
-    > .swipe-content {
-      position: relative;
-      width: 100%;
+    .swipe-outer{
       height: 100%;
-      .btn-box{
-        position: absolute;
-        z-index: 1;
-        left: 0;
-        bottom: 15px;
-        width: 100%;
-        text-align: center;
-        height: 24px;
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(51, 51, 51, 1);
-        line-height: 24px;
-        > .swipe-photo {
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 1);
-          display: inline-block;
-          width: 60px;
-          margin: 0 5px;
-        }
-      }
-      
-      > .van-swipe {
+      width: 100%;
+      .swipe-content {
         position: relative;
-        width: 100;
+        width: 100%;
         height: 100%;
-        > .custom-indicator {
+        .btn-box{
           position: absolute;
-          color: #fff;
-          background: rgba(0, 0, 0, 0.6);
-          border-radius: 10px;
-          z-index: 5;
-          right: 20px;
+          z-index: 10;
+          left: 0;
           bottom: 15px;
-          font-size: 12px;
-          padding: 3px 15px;
-          border: none;
-        }
-        .swipe-item {
           width: 100%;
-          height: 100%;
-          background-color: #999999;
-          border: none;
-        }
-      }
-    }
-    > .operate-content {
-      position: absolute;
-      top: 0;
-      right: 10px;
-      > .operate-1 {
-        display: flex;
-        > div {
-          padding: 10px;
+          text-align: center;
+          height: 24px;
           font-size: 12px;
-          color: #fff;
-          > i {
-            width: 24px;
-            height: 24px;
-            font-size: 24px;
-            display: block;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
+          line-height: 24px;
+          .swipe-photo {
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 1);
+            display: inline-block;
+            width: 70px;
+            margin: 0 5px;
+            &.photo{
+              background-color: #007AE6;
+              color: #fff;
+            }
+          }
+        }
+        .van-swipe {
+          position: relative;
+          width: 100;
+          height: 100%;
+          .custom-indicator {
+            position: absolute;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            z-index: 5;
+            right: 20px;
+            bottom: 15px;
+            font-size: 12px;
+            padding: 3px 15px;
+            border: none;
+          }
+          .swipe-item {
+            width: 100%;
+            height: 100%;
+            background-color: #999999;
+            border: none;
           }
         }
       }
+      .operate-content {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        .operate-1 {
+          display: flex;
+          div {
+            padding: 10px;
+            font-size: 12px;
+            color: #fff;
+            i {
+              width: 24px;
+              height: 24px;
+              font-size: 24px;
+              display: block;
+            }
+          }
+        }
+      }
+      .operate-2 {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px;
+        height: 64px;
+      }
     }
-    > .operate-2 {
+    .video-box{
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9;
+      background-color: #000;
+      video{
+        width: 100%;
+        height: 281px;
+      }
     }
   }
   > .base-info-container {
