@@ -117,6 +117,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: -10px;
 
     > .code-bg {
       width: 170px;
