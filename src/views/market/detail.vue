@@ -85,13 +85,13 @@
     </div>
     <!-- 预约看房 -->
     <div class="appointment-box">
-      <div class="appointment-content">
-      <p>预约看房&nbsp;&nbsp;免费接送<i></i>
+       <div class="bg_img appointment-content" @click="appointmentHandle" :style="{backgroundImage:'url('+appointmentImg+')'}">
+      <!-- <p>预约看房&nbsp;&nbsp;免费接送<i></i>
       </p>
       <p><span></span>
       1V1专属顾问 随时看房
       </p>
-      <p @click="appointmentHandle">立即预约</p>
+      <p @click="appointmentHandle">立即预约</p> -->
       </div>
     </div>
     <van-popup v-model="appointmentShow" class="applyBox" @close="emptyContent">
@@ -307,7 +307,8 @@ export default {
       posterClosed: false,
       playIcon: require('IMG/market/view720.png'),
       showVideo: false,
-      showControls: false
+      showControls: false,
+      appointmentImg:require('IMG/market/appointment@2x.png')
     }
   },
   created() {
@@ -742,7 +743,6 @@ export default {
       height:100px;
       border-radius:6px;
       position: relative;
-      background:linear-gradient(53deg,rgba(243,97,94,1) 0%,rgba(255,195,124,1) 100%);
     P:nth-child(1){
       width:156px;
       font-size:18px;
