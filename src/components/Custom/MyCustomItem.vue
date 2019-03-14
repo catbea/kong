@@ -64,11 +64,11 @@
 </template>
 <script>
 import Avatar from 'COMP/Avatar'
-import swipeCell from 'vue-swipe-cell'
+// import swipeCell from 'vue-swipe-cell'
 export default {
   components: {
     Avatar,
-    swipeCell
+    // swipeCell
   },
   props: {
     info: Object,
