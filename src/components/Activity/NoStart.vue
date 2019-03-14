@@ -2,30 +2,29 @@
   <div class="activity-no-start">
     <div class="no-start-container">
       <div class="bg_img no-start-girl" :style="{backgroundImage:'url(' + girlIconImg + ')'}"></div>
+      <div class="bg_img no-start-icon" :style="{backgroundImage:'url(' + startIconImg + ')'}"></div>
       <p class="no-start-title">活动倒计时中…</p>
       <p class="no-start-title">敬请关注</p>
     </div>
   </div>
 </template>
 <script>
-import Avatar from 'COMP/Avatar'
 export default {
   components: {
-    Avatar
+    
   },
   props: {
-    info: Object
+    
   },
   data() {
     return {
-      girlIconImg: require('IMG/activity/activity_girl.png')
+      girlIconImg: require('IMG/activity/activity_girl.png'),
+      startIconImg: require('IMG/activity/icon_start.png')
     }
   },
 
   methods: {
-    showQRCodeView() {
-      this.$emit('showQRCode', '')
-    }
+    
   }
 }
 </script>
@@ -40,6 +39,7 @@ export default {
   border-radius: 8px;
   margin: 0 auto;
   text-align: center;
+  padding: 50px 0;
   position: relative;
   > .no-start-girl {
     position: absolute;
@@ -48,9 +48,17 @@ export default {
     left: 22px;
     top: -36px;
   }
+  > .no-start-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto;
+    margin-bottom: 15px;
+  }
   > .no-start-title {
     color: #f55130;
     font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
   }
 }
 </style>
