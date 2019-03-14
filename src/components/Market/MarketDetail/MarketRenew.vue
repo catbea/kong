@@ -192,6 +192,7 @@ export default {
       }
     },
     renewHandle(n) {
+      
       if (this.renewInfo.thisDistributor === false) {
         this.$dialog
           .alert({
@@ -201,13 +202,19 @@ export default {
           .then(() => {
             // on close
           })
+          
       } else {
-        // if(this.vipInfo.vipValid){
-          // this.$emit('vipRenew')
+        
+        if(this.vipInfo.vipValid){
+          
+          this.$emit('vipRenew')
+      }else{
+        
         this.$router.push({ name: 'marketDetail-open', params: { id: n } })
       }
     }
   }
+}
 }
 </script>
 <style lang="less">

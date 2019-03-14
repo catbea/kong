@@ -172,7 +172,7 @@
         <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
         <div class="open-btn" @click="openHandler">开通楼盘</div>
       </div>
-      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info" :vipInfo="vipInfo"/>
+      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" @vipRenew="vipRenewHandle" :renewInfo="info" :vipInfo="vipInfo"/>
       <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
         <p>售罄</p>
       </div>
@@ -489,11 +489,13 @@ export default {
             message: '续费成功！'
           })
           let time = new Date(+this.vipInfo.expireTimestamp)
+          let year =time.getFullYear();
           let mou = time.getMonth() + 1
           let date = time.getDate()
-          this.info.expireTime = `${mou}/${date}`
-          // this.info.invalidTime = this.vipInfo.expireDate
+          this.info.expireTime = `${year}/${mou}/${date}`
+          // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
           this.info.openStatus = 2
+          // await this.getDetailInfo(this.id)
         } else {
           this.openHandler()
         }
