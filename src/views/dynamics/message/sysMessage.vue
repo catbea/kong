@@ -58,7 +58,7 @@ export default {
     },
 
     enterActivityDetail() {
-      this.$router.push('/activity/partake')
+      this.$router.push('/huiwan-activity/partake')
     },
 
     // 加载更多

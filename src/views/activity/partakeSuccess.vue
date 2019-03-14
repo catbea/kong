@@ -7,7 +7,7 @@
     <span class="success-notice">恭喜你参与了惠湾联盟试运营活动获得奖励如下</span>
     <div class="build-box">
       <div class="build-list">
-        <div class="build-card" v-for="(item,index) in buildList" :key="index">
+        <div class="build-card" v-for="(item,index) in firstBuild" :key="index">
           <div class="build-img" :style="{backgroundImage:'url(' + item.buildImg + ')'}"></div>
           <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
           <div class="build-name">{{item.buidlingNanme}}</div>
