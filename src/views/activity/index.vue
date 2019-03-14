@@ -23,7 +23,7 @@
               </div>
               <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
             </div>
-            <div class="bg_img form-bottom" :style="{backgroundImage:'url(' + btnBgImg + ')'}"></div>
+            <div class="bg_img form-bottom" :style="{backgroundImage:'url(' + btnBgImg + ')'}" @click="nextHandler"></div>
             <div class="form-click-title">立即领取</div>
             <div class="form-tip">填写信息参与活动领大奖</div>
           </div>
@@ -162,6 +162,7 @@ export default {
       }, 1000)
     },
     nextHandler() {
+      /*
       if (this.mobile.length == 0) {
         return this.$toast('请输入微信绑定手机号')
       }
@@ -172,7 +173,8 @@ export default {
         return
       }
       this.clickDisabled = true
-      this.register()
+      */   
+     this.$router.push({ path: '/huiwan-activity/qrcode', query: {} })
     },
   }
 }
