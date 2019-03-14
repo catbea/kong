@@ -164,7 +164,7 @@
         <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
         <div class="open-btn" @click="openHandler">开通楼盘</div>
       </div>
-      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" @vipRenew="vipRenewHandle" :renewInfo="info" :vipInfo="vipInfo"/>
+      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info" :vipInfo="vipInfo"/>
       <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
         <p>售罄</p>
       </div>

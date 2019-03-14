@@ -202,9 +202,9 @@ export default {
             // on close
           })
       } else {
-        if(this.vipInfo.vipValid){
-          this.$emit('vipRenew')
-        }else{this.$router.push({ name: 'marketDetail-open', params: { id: n } })}
+        // if(this.vipInfo.vipValid){
+          // this.$emit('vipRenew')
+        this.$router.push({ name: 'marketDetail-open', params: { id: n } })
       }
     }
   }
