@@ -1,5 +1,5 @@
 <template>
-  <div class="body-content">
+  <div class="" id="partake-body">
     <div class="body-title">
       <img class="success-icon" :src="joinSuccess">
       <p class="success-text">参加成功</p>
@@ -8,13 +8,19 @@
     <div class="build-box">
       <div class="build-list">
         <div class="build-card">
-          <div class="build-img" :style="{backgroundImage:'url(' + joinSuccess + ')'}"></div>
+          <div class="build-img" :style="{backgroundImage:'url(' + buildImg + ')'}"></div>
+          <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
+          <div class="build-name">碧桂园·千禧庄园</div>
+          <div class="build-price">3800元/㎡起</div>
         </div>
         <div class="build-card"></div>
         <div class="build-card"></div>
         <div class="build-card"></div>
       </div>
-      <div class="check-more">展开更多</div>
+      <div class="check-more">
+        <a>展开更多</a>
+        <img :src="arrowDown">
+      </div>
     </div>
     <div class="notice-bottom">
       <p>您获得的楼盘如已开通</p>
@@ -29,18 +35,20 @@
 export default {
   data: () => ({
     joinSuccess: require('IMG/activity/join_success.png'),
-    joinBtn: require('IMG/activity/join_btn.png'),
-    feelLabel: require('IMG/activity/feel_label.png')
+    joinBtn: require('IMG/activity/activity_bg_btn.png'),
+    feelLabel: require('IMG/activity/feel_label.png'),
+    buildImg: require('IMG/easyPhoto/middleImg.png'),
+    arrowDown: require('IMG/activity/arrow_down.png'),
+    arrowUp: require('IMG/activity/arrow_up.png')
   })
 }
 </script>
 
 
 <style lang="less">
-.body-content {
-  background: linear-gradient(90deg, rgba(255, 156, 56, 1) 0%, rgba(235, 93, 42, 1) 100%);
+#partake-body {
+  background: linear-gradient(90deg, rgba(255, 156, 56, 1) 0%, rgba(235, 93, 42, 1));
   width: 100%;
-  height: 100%;
 
   .body-title {
     width: 100%;
@@ -69,10 +77,9 @@ export default {
 
   .build-box {
     margin-top: 27px;
-    margin-bottom: 21px;
     width: 80%;
     min-height: 398px;
-    max-height: 80%;
+    max-height: 100%;
     background: linear-gradient(137deg, rgba(255, 170, 45, 1) 0%, rgba(255, 113, 20, 1) 100%);
     border-radius: 8px;
     margin-left: 10%;
@@ -82,6 +89,7 @@ export default {
       flex-wrap: wrap;
       display: flex;
       padding-top: 19px;
+      padding-bottom: 21px;
 
       .build-card {
         height: 157px;
@@ -90,24 +98,60 @@ export default {
         background-color: white;
         border-radius: 8px;
         margin-bottom: 12px;
+        position: relative;
 
         .build-img {
           width: 100%;
           height: 104px;
+          background-size: cover;
         }
 
         .feel-label {
+          position: absolute;
+          top: 0;
+          right: 0;
+          border-top-right-radius: 8px;
+          font-size: 10px;
+          color: white;
+          width: 45px;
+          height: 17px;
+          line-height: 17px;
+          text-align: center;
+          background-size: 45px 17px;
+        }
+
+        .build-name {
+          color: #333333;
+          font-size: 14px;
+          margin-left: 8px;
+          margin-top: 4px;
+        }
+
+        .build-price {
+          color: #ea4d2e;
+          font-size: 10px;
+          margin-left: 8px;
+          margin-top: 4px;
         }
       }
     }
 
     .check-more {
-      font-size: 12px;
-      color: white;
       display: flex;
       justify-content: center;
-      margin-bottom: 21px;
-      margin-top: 15px;
+      height: 30px;
+
+      a {
+        font-size: 12px;
+        color: white;
+      }
+
+      img {
+        width: 12px;
+        height: 12px;
+        margin-left: 6px;
+        margin-top: 2px;
+      }
     }
   }
 
@@ -133,6 +177,7 @@ export default {
     color: white;
     line-height: 44px;
     text-align: center;
+    margin-bottom: 30px;
   }
 }
 </style>
