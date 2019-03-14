@@ -11,13 +11,13 @@ export default [
         }
     },
     {
-        path: '/partake',
+        path: '/activity/partakeSuccess',
         name: 'partake',
         component: resolve => require(['@/views/activity/partakeSuccess.vue'], resolve),
         meta: {
             title: '恭喜获得',
             tabbar: {
-                show: true
+                show: false
             }
         }
     }

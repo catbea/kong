@@ -173,7 +173,8 @@ export default {
           this.$router.push('/user/noDisturb')
           break
         case 1:
-          this.$router.push('/user/reply')
+          // this.$router.push('/user/reply')
+          this.$router.push('/activity/partakeSuccess')
           break
         case 2:
           window.location = 'https://support.qq.com/product/31776'
