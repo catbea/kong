@@ -8,12 +8,6 @@
     <div class="build-box">
       <div class="build-list">
         <build-card v-for="(item ,index) in firstBuild" :key="index" :data="item"></build-card>
-        <!-- <div class="build-card" v-for="(item,index) in firstBuild" :key="index">
-          <div class="build-img" :style="{backgroundImage:'url(' + item.buildImg + ')'}"></div>
-          <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
-          <div class="build-name">{{item.buidlingNanme}}</div>
-          <div class="build-price">{{item.price}}</div>
-        </div>-->
       </div>
       <div class="check-more" @click="showMoreData()">
         <a>展开更多</a>
@@ -24,7 +18,7 @@
       <p>您获得的楼盘如已开通</p>
       <p>会在现有的剩余时间上叠加楼盘的活动赠送时间</p>
     </div>
-    <div class="join-btn" :style="{backgroundImage:'url(' + joinBtn + ')'}">管理楼盘</div>
+    <div class="join-btn"  @click="enterBuilding" :style="{backgroundImage:'url(' + joinBtn + ')'}">管理楼盘</div>
   </div>
 </template>
 
@@ -50,7 +44,7 @@ export default {
 
     buildList: [
       {
-        buidlingNanme: '碧桂园·百禧庄园',
+        buidlingNanme: '碧桂园·百禧庄园99',
         price: '3800元/㎡起',
         buildImg: require('IMG/easyPhoto/middleImg.png')
       },
@@ -97,7 +91,11 @@ export default {
         }
       }
       this.firstBuild = firstList
-    }
+    },
+
+    enterBuilding(){
+        this.$router.push('/user/myMarket')
+    },
   },
   created() {
     let _that = this
@@ -239,12 +237,12 @@ export default {
   .join-btn {
     width: 84%;
     margin-left: 8%;
-    height: 44px;
-    background-size: 320px 50px;
+    height: 50px;
+    background-size: 320px 55px;
     margin-top: 16px;
     font-size: 15px;
     color: white;
-    line-height: 44px;
+    line-height: 50px;
     text-align: center;
     margin-bottom: 30px;
   }

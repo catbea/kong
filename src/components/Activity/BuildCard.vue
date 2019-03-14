@@ -2,7 +2,7 @@
     <div class="build-card">
         <div class="build-img" :style="{backgroundImage:'url(' + data.buildImg + ')'}"></div>
         <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
-        <div class="build-name">{{data.buidlingNanme}}</div>
+        <div class="build-name">{{data.buidlingNanme | textOver(8)}}</div>
         <div class="build-price">{{data.price}}</div>
     </div>
 </template>
