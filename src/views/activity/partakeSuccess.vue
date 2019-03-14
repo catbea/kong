@@ -7,19 +7,16 @@
     <span class="success-notice">恭喜你参与了惠湾联盟试运营活动获得奖励如下</span>
     <div class="build-box">
       <div class="build-list">
-        <div class="build-card">
-          <div class="build-img" :style="{backgroundImage:'url(' + buildImg + ')'}"></div>
+        <div class="build-card" v-for="(item,index) in buildList" :key="index">
+          <div class="build-img" :style="{backgroundImage:'url(' + item.buildImg + ')'}"></div>
           <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
-          <div class="build-name">碧桂园·千禧庄园</div>
-          <div class="build-price">3800元/㎡起</div>
+          <div class="build-name">{{item.buidlingNanme}}</div>
+          <div class="build-price">{{item.price}}</div>
         </div>
-        <div class="build-card"></div>
-        <div class="build-card"></div>
-        <div class="build-card"></div>
       </div>
-      <div class="check-more">
+      <div class="check-more" @click="showMoreData()">
         <a>展开更多</a>
-        <img :src="arrowDown">
+        <img :src="this.showMore==false?arrowDown:arrowUp">
       </div>
     </div>
     <div class="notice-bottom">
@@ -39,8 +36,73 @@ export default {
     feelLabel: require('IMG/activity/feel_label.png'),
     buildImg: require('IMG/easyPhoto/middleImg.png'),
     arrowDown: require('IMG/activity/arrow_down.png'),
-    arrowUp: require('IMG/activity/arrow_up.png')
-  })
+    arrowUp: require('IMG/activity/arrow_up.png'),
+    showMore: false,
+
+    firstBuild: [],
+
+    buildList: [
+      {
+        buidlingNanme: '碧桂园·百禧庄园',
+        price: '3800元/㎡起',
+        buildImg: require('IMG/easyPhoto/middleImg.png')
+      },
+      {
+        buidlingNanme: '碧桂园·千禧庄园',
+        price: '3900元/㎡起',
+        buildImg: require('IMG/easyPhoto/middleImg.png')
+      },
+      {
+        buidlingNanme: '碧桂园·万禧庄园',
+        price: '4000元/㎡起',
+        buildImg: require('IMG/easyPhoto/middleImg.png')
+      },
+      {
+        buidlingNanme: '碧桂园·亿禧庄园',
+        price: '4100元/㎡起',
+        buildImg: require('IMG/easyPhoto/middleImg.png')
+      },
+      {
+        buidlingNanme: '碧桂园·兆禧庄园',
+        price: '4200元/㎡起',
+        buildImg: require('IMG/easyPhoto/middleImg.png')
+      }
+    ]
+  }),
+
+  methods: {
+    showMoreData() {
+      let _that = this
+      let firstList = []
+
+      this.showMore = !this.showMore
+      let infoNum = _that.buildList.length
+
+      if (this.showMore == false) {
+        for (let i = 0; i < _that.buildList.length; i++) {
+          if (i <= 3) {
+            firstList.push(_that.buildList[i])
+          }
+        }
+      } else {
+        for (let i = 0; i < _that.buildList.length; i++) {
+          firstList.push(_that.buildList[i])
+        }
+      }
+      this.firstBuild = firstList
+    }
+  },
+  created() {
+    let _that = this
+    let firstList = []
+    let infoNum = _that.buildList.length
+    for (let i = 0; i < _that.buildList.length; i++) {
+      if (i <= 3) {
+        firstList.push(_that.buildList[i])
+      }
+    }
+    this.firstBuild = firstList
+  }
 }
 </script>
 
@@ -124,7 +186,7 @@ export default {
           color: #333333;
           font-size: 14px;
           margin-left: 8px;
-          margin-top: 4px;
+          margin-top: 8px;
         }
 
         .build-price {
