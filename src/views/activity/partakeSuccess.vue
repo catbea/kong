@@ -18,13 +18,18 @@
       <p>您获得的楼盘如已开通</p>
       <p>会在现有的剩余时间上叠加楼盘的活动赠送时间</p>
     </div>
-    <div class="join-btn"  @click="enterBuilding" :style="{backgroundImage:'url(' + joinBtn + ')'}">管理楼盘</div>
+    <div
+      class="join-btn"
+      @click="enterBuilding"
+      :style="{backgroundImage:'url(' + joinBtn + ')'}"
+    >管理楼盘</div>
   </div>
 </template>
 
 
 <script>
 import BuildCard from 'COMP/Activity/BuildCard'
+import ActivityService from 'SERVICE/activityService'
 
 export default {
   components: {
@@ -93,20 +98,32 @@ export default {
       this.firstBuild = firstList
     },
 
-    enterBuilding(){
-        this.$router.push('/user/myMarket')
+    enterBuilding() {
+      this.$router.push('/user/myMarket')
     },
+
+    async getActivityInfo(activityId) {
+      const result = await ActivityService.getActivityList('1', 40, activityId)
+
+      console.log(result)
+      if (result.records.length != 0) {
+        this.buildList = result.records
+      }
+      let _that = this
+      let firstList = []
+      let infoNum = _that.buildList.length
+      for (let i = 0; i < _that.buildList.length; i++) {
+        if (i <= 3) {
+          firstList.push(_that.buildList[i])
+        }
+      }
+      this.firstBuild = firstList
+    }
   },
   created() {
-    let _that = this
-    let firstList = []
-    let infoNum = _that.buildList.length
-    for (let i = 0; i < _that.buildList.length; i++) {
-      if (i <= 3) {
-        firstList.push(_that.buildList[i])
-      }
-    }
-    this.firstBuild = firstList
+    let activityId = this.$route.query.activityId
+
+    this.getActivityInfo(activityId)
   }
 }
 </script>

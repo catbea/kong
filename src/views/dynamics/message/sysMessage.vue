@@ -17,7 +17,12 @@
                   <div class="left-button">客户详情</div>
                   <div class="right-button">立即报备</div>
                 </div>-->
-                <div class="button-detail" @click="enterActivityDetail">查看详情
+                <div
+                  class="button-detail"
+                  v-if="item.type==''"
+                  @click="enterActivityDetail(item.activityId)"
+                >
+                  查看详情
                   <img :src="detailIcon">
                 </div>
               </div>
@@ -57,8 +62,8 @@ export default {
       this.current += 1
     },
 
-    enterActivityDetail() {
-      this.$router.push('/huiwan-activity/partake')
+    enterActivityDetail(id) {
+      this.$router.push({ path: '/huiwan-activity/partake', query: { activityId: '555' } })
     },
 
     // 加载更多

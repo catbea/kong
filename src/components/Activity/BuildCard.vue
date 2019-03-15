@@ -1,10 +1,10 @@
 <template>
-    <div class="build-card">
-        <div class="build-img" :style="{backgroundImage:'url(' + data.buildImg + ')'}"></div>
-        <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
-        <div class="build-name">{{data.buidlingNanme | textOver(8)}}</div>
-        <div class="build-price">{{data.price}}</div>
-    </div>
+  <div class="build-card">
+    <div class="build-img" :style="{backgroundImage:'url(' + data.linkerImg  + ')'}"></div>
+    <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
+    <div class="build-name">{{data.linkerName | textOver(8)}}</div>
+    <div class="build-price">{{data.linkerPrice }}{{data.priceUnit }}</div>
+  </div>
 </template>
 
 
@@ -12,7 +12,7 @@
 export default {
   props: ['data'],
   data: () => ({
-      feelLabel: require('IMG/activity/feel_label.png'),
+    feelLabel: require('IMG/activity/feel_label.png')
   })
 }
 </script>
