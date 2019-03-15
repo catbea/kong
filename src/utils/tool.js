@@ -174,6 +174,6 @@ export function checkIOSVersion() {
   let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
   let ver = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)
   let iOSVersion = parseInt(ver[1], 10)
-  console.log(iOSVersion)
-  return iOSVersion
+  console.log(ver)
+  return ver
 }
