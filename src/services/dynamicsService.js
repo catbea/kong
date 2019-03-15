@@ -86,6 +86,20 @@ class DynamicsService {
     })
   }
   /**
+   * 系统消息列表中预约看房信息
+   * @param {*} clientId//客户ID
+   * @param {*} linkerId//楼盘ID
+   */
+  getReportClient(clientId,linkerId) {
+    return xhr({
+      url: '/customerInfo/getReportClientInfo',
+      body: {
+        clientId,
+        linkerId
+      }
+    })
+  }
+  /**
    * 【企业微信】全部数据动态统计
    */
   getAllDynamicCount() {
