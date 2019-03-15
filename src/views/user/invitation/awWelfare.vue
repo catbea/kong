@@ -1,6 +1,6 @@
 <template>
   <div class="invitation-bg">
-    <div class="invitation-top">
+    <div class="invitation-top" :style="{backgroundImage:'url(' + starBg + ')'}">
       <div class="invitation-title">邀请有礼</div>
       <img class="romptingLabel" :src="romptingLabel">
       <div class="invitation-info">
@@ -36,6 +36,7 @@ export default {
   data: () => ({
     companyBg: require('IMG/user/invitation/invitition_bg.png'),
     romptingLabel: require('IMG/user/invitation/rompting_label.png'),
+    starBg: require('IMG/user/invitation/star_bg.png'),
 
     invitationUrl: '',
     status: 1,
@@ -95,6 +96,7 @@ export default {
       box.style.overflow = 'hidden'
       box.style.width = imgW + 'px'
       box.style.height = imgH + 'px'
+      box.style.border='none'
 
       let image = document.getElementById('imgcard')
       image.src = canvas.toDataURL('image/png')
@@ -116,6 +118,9 @@ export default {
     width: 80%;
     height: 100px;
     margin-left: 10%;
+    background-size: 299px 89px;
+    border: none;
+    
 
     > .romptingLabel {
       width: 122px;
@@ -198,6 +203,7 @@ export default {
     margin-top: -10px;
     border-color: transparent;
     margin-left: 7%;
+    border: none;
 
     > .imgcard-img {
       width: 100%;
