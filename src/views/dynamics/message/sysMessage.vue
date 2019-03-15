@@ -38,9 +38,7 @@ export default {
       finished: false, //是否已加载完所有数据
       size: 10,
       current: 1,
-      pages: 1,
-      clientId:'',//预约客户时客户id
-      linkerId:''//预约客户时楼盘id
+      pages: 1
     }
   },
   created() {

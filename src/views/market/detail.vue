@@ -305,18 +305,6 @@ export default {
     }
   },
   methods: {
-    appointmentHandle(){//预约看房弹窗
-    this.appointmentShow=true
-    },
-    emptyContent(){//预约看房弹窗内容清空
-    this.appointmentShow=false;
-    this.nameContent='';
-    this.phoneContent='';
-    this.codeContent=''
-    },
-    submitHandle(){//提交预约信息
-    this.emptyContent()
-    },
     relationHandle() {
       //立即联系弹窗
       window.location.href = 'tel://' + this.info.contatctTel
@@ -433,18 +421,33 @@ export default {
     },
     async openHandler() {
       //VIP用户选择城市与VIP开通楼盘同城市 
-      if (this.info.city === this.userInfo.vipInfo.city) {
-        const res = await marketService.addHouseByVip(this.info.linkerId)
-        if (res.returnCode == 21801) {
-          this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
-          return
-        }
-        await this.getDetailInfo(this.id)
-        this.openStatus = false
-        this.$toast({
-          duration: 1000,
-          message: '已开通成功，请到我的楼盘查看'
-        })
+      // if (this.info.city === this.userInfo.vipInfo.city) {
+      //   const res = await marketService.addHouseByVip(this.info.linkerId)
+      //   if (res.returnCode == 21801) {
+      //     this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
+      //     return
+      //   }
+      //   await this.getDetailInfo(this.id)
+      //   this.openStatus = false
+      //   this.$toast({
+      //     duration: 1000,
+      //     message: '已开通成功，请到我的楼盘查看'
+      //   })
+        let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+        if(this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city){
+          const res = await marketService.addHouseByVip(this.info.linkerId)
+          await this.getDetailInfo(this.id)
+          this.openStatus = false
+          this.$toast({
+            duration: 1000,
+            message: '已开通成功，请到我的楼盘查看'
+          })
+          let time = new Date(+this.vipInfo.expireTimestamp)
+          let year =time.getFullYear();
+          let mou = time.getMonth() + 1
+          let date = time.getDate()
+          this.info.expireTime = `0${mou}/0${date}`
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
       }
