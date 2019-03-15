@@ -32,7 +32,7 @@ export default {
 .activity-no-start {
 }
 .no-start-container {
-  width: 304px;
+  width: 310px;
   height: 291px;
   background: linear-gradient(180deg, rgba(253, 245, 225, 1) 0%, rgba(253, 245, 225, 1) 100%);
   box-shadow: 0px 0px 6px 0px rgba(253, 83, 1, 0.75);
@@ -45,7 +45,7 @@ export default {
     position: absolute;
     width: 30px;
     height: 71px;
-    left: 22px;
+    left: 10px;
     top: -36px;
   }
   > .no-start-icon {

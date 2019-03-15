@@ -7,7 +7,7 @@
         <p class="activity-top">全景看房 - AI拓客 - 裂变传播 - 监控意向</p>
         <p class="activity-title">惠湾联盟试运营</p>
         <p class="activity-time">活动时间：2019年3月18日—2019年3月31日</p>
-        <div class="activity-content" v-if="true">
+        <div class="activity-content">
           <div class="form-container">
             <div class="bg_img icon-girl" :style="{backgroundImage:'url(' + girlIconImg + ')'}"></div>
             <div class="bg_img activity-content-top" :style="{backgroundImage:'url(' + topIconImg + ')'}"></div>
@@ -23,15 +23,22 @@
               </div>
               <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
             </div>
-            <div class="bg_img form-bottom" :style="{backgroundImage:'url(' + btnBgImg + ')'}" @click="nextHandler"></div>
-            <div class="form-click-title">立即领取</div>
+            <div class="bg_img form-bottom" :style="{backgroundImage:'url(' + btnBgImg + ')'}" @click="nextHandler">
+              <div class="form-click-title">立即领取</div>
+            </div>
+            
             <div class="form-tip">填写信息参与活动领大奖</div>
           </div>
           <div class="activity-tip">*仅惠湾联盟下经纪人可参与</div>
         </div>
+        <!-- 活动未开始 -->
+        <!-- <no-start class="activity-no-start"></no-start> -->
+        <!-- 活动结束 -->
+        <!-- <ended class="activity-ended"></ended> -->
+
       </div>
       </div>
-      <div class="activity-page-bottom">
+      <div class="activity-page-bottom" v-if="true">
         <!-- 楼盘列表 -->
           <div class="project-wrap">
             <div class="project-title">以下楼盘免费开通至3月31日</div>
@@ -40,10 +47,6 @@
             </div>
           </div>
       </div>
-      
-      
-      <!-- <no-start class="activity-no-start"></no-start> -->
-      <!-- <ended class="activity-ended"></ended> -->
     </div>
 </template>
 
@@ -144,7 +147,7 @@ export default {
     sendCodeHandler() {
       if (this.disabled == false) {
         this.disabled = !this.disabled
-        const result = RegisterService.sendMsgRegister(this.mobile)
+        // const result = RegisterService.sendMsgRegister(this.mobile)
         this.countDown()
       }
     },
@@ -238,14 +241,14 @@ export default {
 }
 .activity-no-start, .activity-ended {
     margin: 0 auto;
-    margin-top: 177px;
+    margin-top: 10px;
   }
 
 .activity-content {
   margin-top: 10px;
   text-align: center;
   > .form-container {
-    width: 320px;
+    width: 310px;
     height: 291px;
     background: linear-gradient(180deg, rgba(253, 245, 225, 1) 0%, rgba(253, 245, 225, 1) 100%);
     box-shadow: 0px 0px 6px 0px rgba(253, 83, 1, 0.75);
@@ -294,24 +297,27 @@ export default {
       background-color: #F67931;
     }
     .code-input-line {
-      width: 140px;
+      width: 100%;
       height: 1px;
-      margin-left: 10px;
       background-color: #F67931;
     }
 
     > .phone-cell {
-        margin: 20px 15px 10px 15px;
-        > .phone-input {
-          background-color: transparent;
-        }
+        margin: 20px 15px;
+        
       }
     > .code-cell {
         position: relative;
         margin: 10px 15px;
-        > .code-input {
+        > .code-wrap {
           width: 140px;
+          margin-left: 4px;
+          > .code-input {
+            width: 100%;
+            padding-left: 10px;
+          }
         }
+        
         > .send-btn {
           position: absolute;
           width: 120px;
@@ -336,15 +342,16 @@ export default {
         height: 60px;
         margin: 0 auto;
         margin-top: 30px;
-      }
-      > .form-click-title {
+        > .form-click-title {
         color: #ffffff;
         font-size: 15px;
         position: absolute;
         left: 50%;
         transform: translate(-50%, -50%);
-        top: 212px;
+        top: 220px;
+        }
       }
+      
       > .form-tip {
         color: #F98731;
         font-size: 12px;
@@ -357,7 +364,7 @@ export default {
   }
 }
 .project-wrap {
-    width: 320px;
+    width: 310px;
     height: 748px;
     overflow-y: scroll;
     background: linear-gradient(137deg,rgba(255,170,45,1) 0%,rgba(255,113,20,1) 100%);
