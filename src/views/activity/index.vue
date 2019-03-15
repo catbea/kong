@@ -1,8 +1,8 @@
 <template>
-    <div class="activity-page">
-      <div class="activity-page-top">
-        <div class="bg_img activity-wave" :style="{backgroundImage:'url(' + waveImg + ')'}"></div>
-        <div class="activity-container">
+  <div class="activity-page">
+    <div class="activity-page-top">
+      <div class="bg_img activity-wave" :style="{backgroundImage:'url(' + waveImg + ')'}"></div>
+      <div class="activity-container">
         <div class="bg_img activity-logo" :style="{backgroundImage:'url(' + logoImg + ')'}"></div>
         <p class="activity-top">全景看房 - AI拓客 - 裂变传播 - 监控意向</p>
         <p class="activity-title">惠湾联盟试运营</p>
@@ -10,9 +10,11 @@
         <div class="activity-content">
           <div class="form-container">
             <div class="bg_img icon-girl" :style="{backgroundImage:'url(' + girlIconImg + ')'}"></div>
-            <div class="bg_img activity-content-top" :style="{backgroundImage:'url(' + topIconImg + ')'}"></div>
+            <div
+              class="bg_img activity-content-top"
+              :style="{backgroundImage:'url(' + topIconImg + ')'}"
+            ></div>
             <div class="phone-cell">
-              <!-- <div class="phone-tip" v-if="phoneFocus">请使用当前微信绑定号码进行注册</div> -->
               <input class="phone-input" placeholder="请使用当前微信绑定手机号" type="number" :maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler" @input="inputHandler"></input>
               <div class="mobile-input-line"></div>
             </div>
@@ -23,10 +25,13 @@
               </div>
               <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
             </div>
-            <div class="bg_img form-bottom" :style="{backgroundImage:'url(' + btnBgImg + ')'}" @click="nextHandler">
+            <div
+              class="bg_img form-bottom"
+              :style="{backgroundImage:'url(' + btnBgImg + ')'}"
+              @click="nextHandler"
+            >
               <div class="form-click-title">立即领取</div>
             </div>
-            
             <div class="form-tip">填写信息参与活动领大奖</div>
           </div>
           <div class="activity-tip">*仅惠湾联盟下经纪人可参与</div>
@@ -35,19 +40,18 @@
         <!-- <no-start class="activity-no-start"></no-start> -->
         <!-- 活动结束 -->
         <!-- <ended class="activity-ended"></ended> -->
-
-      </div>
-      </div>
-      <div class="activity-page-bottom" v-if="true">
-        <!-- 楼盘列表 -->
-          <div class="project-wrap">
-            <div class="project-title">以下楼盘免费开通至3月31日</div>
-            <div class="project-list">
-              <build-card v-for="(item ,index) in buildList" :key="index" :data="item"></build-card>
-            </div>
-          </div>
       </div>
     </div>
+    <div class="activity-page-bottom" v-if="true">
+      <!-- 楼盘列表 -->
+      <div class="project-wrap">
+        <div class="project-title">以下楼盘免费开通至3月31日</div>
+        <div class="project-list">
+          <build-card v-for="(item ,index) in buildList" :key="index" :data="item"></build-card>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 
@@ -176,9 +180,10 @@ export default {
         return
       }
       this.clickDisabled = true
-      */   
-     this.$router.push({ path: '/huiwan-activity/qrcode', query: {} })
-    },
+      */
+
+      this.$router.push({ path: '/huiwan-activity/qrcode', query: {} })
+    }
   }
 }
 </script>
@@ -187,25 +192,24 @@ export default {
 <style lang="less" scoped>
 .activity-page {
   > .activity-page-top {
-  width: 100%;
-  height: 604px;
-  background: linear-gradient(180deg,rgba(255,145,0,1) 0%,rgba(254,91,1,1) 38%,rgba(255,62,0,1) 73%,rgba(250,115,2,1) 100%);
-  position: relative;
-  > .activity-wave {
     width: 100%;
-    height: 54px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    height: 604px;
+    background: linear-gradient(180deg, rgba(255, 145, 0, 1) 0%, rgba(254, 91, 1, 1) 38%, rgba(255, 62, 0, 1) 73%, rgba(250, 115, 2, 1) 100%);
+    position: relative;
+    > .activity-wave {
+      width: 100%;
+      height: 54px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
     }
   }
-}
-
-.activity-page-bottom {
-  width: 100%;
-  height: 700px;
-  background: #FFA200;
-  position: relative;
+  > .activity-page-bottom {
+    width: 100%;
+    height: 700px;
+    background: #ffa200;
+    position: relative;
+  }
 }
 
 .activity-container {
@@ -228,7 +232,7 @@ export default {
     font-weight: 400;
     height: 62px;
     line-height: 62px;
-    text-shadow: 0px 0px 6px rgba(254,52,0,1);
+    text-shadow: 0px 0px 6px rgba(254, 52, 0, 1);
   }
   > .activity-time {
     color: #ffffff;
@@ -236,14 +240,13 @@ export default {
     height: 17px;
     margin-top: 8px;
   }
-
-  
 }
-.activity-no-start, .activity-ended {
-    margin: 0 auto;
-    margin-top: 10px;
-  }
 
+.activity-no-start,
+.activity-ended {
+  margin: 0 auto;
+  margin-top: 10px;
+}
 .activity-content {
   margin-top: 10px;
   text-align: center;
@@ -256,134 +259,133 @@ export default {
     margin: 0 auto;
     padding-top: 26px;
     position: relative;
-    .phone-input, .code-input {
+    > .icon-girl {
+      position: absolute;
+      width: 30px;
+      height: 71px;
+      left: 12px;
+      top: -36px;
+    }
+    > .activity-content-top {
+      width: 172px;
+      height: 26px;
+      margin-left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .phone-input,
+    .code-input {
       border: 0;
       background-color: transparent;
       padding-bottom: 8px;
-      color: #EB5D2A;
+      color: #eb5d2a;
       // font-size: 16px;
+      width: 100%;
+      padding-left: 10px;
     }
-    .phone-input::-webkit-input-placeholder, .code-input::-webkit-input-placeholder {
-      color: #F67931;
+    .phone-input::-webkit-input-placeholder,
+    .code-input::-webkit-input-placeholder {
+      color: #f67931;
       font-size: 16px;
     }
-    .phone-input:-moz-placeholder, .code-input::-webkit-input-placeholder {
-      color: #F67931;
+    .phone-input:-moz-placeholder,
+    .code-input::-webkit-input-placeholder {
+      color: #f67931;
       font-size: 16px;
     }
-    .phone-input:-ms-input-placeholder, .code-input::-webkit-input-placeholder {
-      color: #F67931;
+    .phone-input:-ms-input-placeholder,
+    .code-input::-webkit-input-placeholder {
+      color: #f67931;
       font-size: 16px;
     }
-    // margin-top: 20px;
-    > .icon-girl {
-    position: absolute;
-    width: 30px;
-    height: 71px;
-    left: 12px;
-    top: -36px;
-    }
-  > .activity-content-top {
-    width: 172px;
-    height: 26px;
-    margin-left: 50%;
-    transform: translateX(-50%);
-  }
-    
-    .mobile-input-line {
-      margin: 0 auto;
-      width: 270px;
-      height: 1px;
-      background-color: #F67931;
-    }
-    .code-input-line {
+    .mobile-input-line, .code-input-line {
       width: 100%;
       height: 1px;
-      background-color: #F67931;
+      background-color: #f67931;
     }
 
     > .phone-cell {
-        margin: 20px 15px;
-        
-      }
+      margin: 20px;
+    }
     > .code-cell {
-        position: relative;
-        margin: 10px 15px;
-        > .code-wrap {
-          width: 140px;
-          margin-left: 4px;
-          > .code-input {
-            width: 100%;
-            padding-left: 10px;
-          }
-        }
-        
-        > .send-btn {
-          position: absolute;
-          width: 120px;
-          height: 32px;
-          // background: #F79A60;
-          border: 1px solid rgba(247,154,96,1);
-          border-radius: 16px;
-          font-size: 15px;
-          font-weight: 400;
-          line-height: 32px;
-          right: -19%;
-          top: 60%;
-          transform: translate(-50%, -50%);
-          color: rgba(246,121,49,1);
-          &.disabled {
-            opacity: 0.5;
-          }
+      position: relative;
+      margin: 0 15px;
+      > .code-wrap {
+        width: 140px;
+        margin-left: 4px;
+        > .code-input {
+          width: 100%;
+          padding-left: 10px;
         }
       }
-      > .form-bottom {
-        width: 280px;
-        height: 60px;
-        margin: 0 auto;
-        margin-top: 30px;
-        > .form-click-title {
+
+      > .send-btn {
+        position: absolute;
+        width: 120px;
+        height: 32px;
+        // background: #F79A60;
+        border: 1px solid rgba(247, 154, 96, 1);
+        border-radius: 16px;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 32px;
+        right: -19%;
+        top: 60%;
+        transform: translate(-50%, -50%);
+        color: rgba(246, 121, 49, 1);
+        &.disabled {
+          opacity: 0.5;
+        }
+      }
+    }
+    > .form-bottom {
+      width: 280px;
+      height: 60px;
+      margin: 0 auto;
+      margin-top: 30px;
+      position: relative;
+      > .form-click-title {
         color: #ffffff;
         font-size: 15px;
         position: absolute;
         left: 50%;
         transform: translate(-50%, -50%);
-        top: 220px;
-        }
+        top: 26px;
       }
-      
-      > .form-tip {
-        color: #F98731;
-        font-size: 12px;
-      }
+    }
+
+    > .form-tip {
+      color: #f98731;
+      font-size: 12px;
+    }
   }
   > .activity-tip {
-    color: #FF9100;
+    color: #ff9100;
     font-size: 12px;
     margin-top: 10px;
   }
 }
 .project-wrap {
-    width: 310px;
-    height: 748px;
-    overflow-y: scroll;
-    background: linear-gradient(137deg,rgba(255,170,45,1) 0%,rgba(255,113,20,1) 100%);
-    border-radius: 8px;
-    // margin-top: 10px;
-    padding: 25px 8px 0 0;
-    position: relative;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    top: 285px;
-    text-align: center;
-    > .project-title {
-      color: #ffffff;
-      font-size: 16px;
-      margin-bottom: 25px;
-    }
-    > .project-list {
-      display: flex;
-      flex-wrap: wrap;
-    }
+  width: 310px;
+  height: 748px;
+  overflow-y: scroll;
+  background: linear-gradient(137deg, rgba(255, 170, 45, 1) 0%, rgba(255, 113, 20, 1) 100%);
+  border-radius: 8px;
+  // margin-top: 10px;
+  padding: 25px 8px 0 0;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 285px;
+  text-align: center;
+  > .project-title {
+    color: #ffffff;
+    font-size: 16px;
+    margin-bottom: 25px;
   }
+  > .project-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 </style>
