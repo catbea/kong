@@ -15,12 +15,12 @@
               :style="{backgroundImage:'url(' + topIconImg + ')'}"
             ></div>
             <div class="phone-cell">
-              <input class="phone-input" placeholder="请使用当前微信绑定手机号" type="number" maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler" @input="inputHandler"></input>
+              <input class="phone-input" placeholder="请使用当前微信绑定手机号" type="text" oninput="value=value.replace(/[^0-9]/g,'')" maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler" @input="inputHandler"></input>
               <div class="mobile-input-line"></div>
             </div>
             <div class="code-cell">
               <div class="code-wrap">
-                <input class="code-input" placeholder="请输入验证码" type="number" maxlength="6" v-model="code" @blur="blurHandler"></input>
+                <input class="code-input" placeholder="请输入验证码" type="text" oninput="value=value.replace(/[^0-9]/g,'')" maxlength="6" v-model="code" @blur="blurHandler"></input>
                 <div class="code-input-line"></div>
               </div>
               <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
@@ -279,7 +279,7 @@ export default {
       background-color: transparent;
       padding-bottom: 8px;
       color: #eb5d2a;
-      // font-size: 16px;
+      font-size: 16px;
       width: 100%;
       padding-left: 10px;
       line-height: 40px;
@@ -307,11 +307,11 @@ export default {
     }
 
     > .phone-cell {
-      margin: 10px 20px 0px 20px; 
+      margin: 15px 20px 10px 20px; 
     }
     > .code-cell {
       position: relative;
-      margin-top: 10px;
+      // margin-top: 10px;
       margin-left: 15px;
       margin-right: 15px;
       > .code-wrap {
