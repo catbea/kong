@@ -88,7 +88,7 @@ export default {
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true,
-        backgroundColor: null
+        backgroundColor: transparent
       })
       let imgW = 321
       let imgH = 397
