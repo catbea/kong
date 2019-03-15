@@ -20,7 +20,7 @@
             </div>
             <div class="code-cell">
               <div class="code-wrap">
-                <input class="code-input" placeholder="请输入验证码" type="text" oninput="value=value.replace(/[^0-9]/g,'')" maxlength="6" v-model="code" @blur="blurHandler"></input>
+                <input class="code-input" placeholder="请输入验证码" type="text" oninput="value=value.replace(/[^0-9]/g,'')" maxlength="6" v-model="code" @focus="focusHandler" @blur="blurHandler"></input>
                 <div class="code-input-line"></div>
               </div>
               <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
@@ -136,8 +136,13 @@ export default {
     // })
   },
   methods: {
-    focusHandler() {},
-    blurHandler() {},
+    focusHandler(val, $event) {
+      var body = document.querySelector('.router-view')
+      body.scrollTop = body.scrollHeight
+    },
+    blurHandler(val, $event) {
+      window.scroll(0, 0)
+    },
     inputHandler() {
       if (this.mobile.length == 11) {
         this.disabled = false
