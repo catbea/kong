@@ -11,6 +11,7 @@
       class="company-card"
       :style="{backgroundImage:'url(' + companyBg + ')'}"
       v-show="status === 1"
+      id="share-top"
     >
       <div class="code-bg" id="qrcode" ref="qrCodeUrl"></div>
       <span class="code-text">扫描二维码</span>
@@ -34,7 +35,8 @@ export default {
   data: () => ({
     companyBg: require('IMG/user/invitation/invitition_bg.png'),
     invitationUrl: '',
-    status: 1
+    status: 1,
+    registrationRules: '',
   }),
   computed: {
     ...mapGetters(['userInfo'])
@@ -42,6 +44,10 @@ export default {
   async mounted() {
     await this.getqueryInvitationUrl()
     this.toImg()
+  },
+
+  created() {
+    this.getregisrules()
   },
 
   methods: {
@@ -69,15 +75,20 @@ export default {
         render: 'table' // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas） // background: '#f0f' // foreground: '#ff0'
       })
     },
+    async getregisrules() {
+      const regis = await userService.getrules(1)
+      this.registrationRules = regis.rule.split('#')
+    },
     async savaReport() {
+
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true,
         backgroundColor: null
       })
-      let imgW = 327
-      let imgH = 412
+      let imgW = 321
+      let imgH = 397
       let box = document.getElementById('card-result')
       box.style.overflow = 'hidden'
       box.style.width = imgW + 'px'
@@ -176,7 +187,6 @@ export default {
     width: 86%;
     margin: 0 auto;
     border: none;
-    padding: 0px 5x 2px 0px;
     border-color: transparent;
 
     > .imgcard-img {
