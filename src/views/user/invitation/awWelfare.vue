@@ -7,10 +7,17 @@
         <p class="awWelfare-info-right-remak">{{userInfo.name}} 邀请你加入AW大师</p>
       </div>
     </div>
-    <div class="company-card" :style="{backgroundImage:'url(' + companyBg + ')'}">
+    <div
+      class="company-card"
+      :style="{backgroundImage:'url(' + companyBg + ')'}"
+      v-show="status === 1"
+    >
       <div class="code-bg" id="qrcode" ref="qrCodeUrl"></div>
       <span class="code-text">扫描二维码</span>
       <span class="campany-text">关注企业公众号</span>
+    </div>
+    <div class="imgcard" id="card-result" v-show="status === 2">
+      <img class="imgcard-img" id="imgcard">
     </div>
     <span class="notice-text">请长按保存邀请图片</span>
   </div>
@@ -21,10 +28,13 @@
 import { mapGetters } from 'vuex'
 import QRCode from 'qrcodejs2'
 import userService from 'SERVICE/userService'
+import h2c from 'html2canvas'
+
 export default {
   data: () => ({
     companyBg: require('IMG/user/invitation/invitition_bg.png'),
-    invitationUrl: ''
+    invitationUrl: '',
+    status: 1
   }),
   computed: {
     ...mapGetters(['userInfo'])
@@ -38,8 +48,8 @@ export default {
     toImg() {
       let t = setTimeout(() => {
         if (document.getElementById('qrcode').getElementsByTagName('img')) {
-          // this.savaReport()
-          // clearTimeout(t)
+          this.savaReport()
+          clearTimeout(t)
         } else {
           this.toImg()
         }
@@ -58,6 +68,27 @@ export default {
         image: '',
         render: 'table' // render: 'canvas' // 设置渲染方式（有两种方式 table和canvas，默认是canvas） // background: '#f0f' // foreground: '#ff0'
       })
+    },
+    async savaReport() {
+      const dpr = window.devicePixelRatio
+      const canvas = await h2c(document.querySelector('#share-top'), {
+        logging: false,
+        useCORS: true,
+        backgroundColor: null
+      })
+      let imgW = 327
+      let imgH = 412
+      let box = document.getElementById('card-result')
+      box.style.overflow = 'hidden'
+      box.style.width = imgW + 'px'
+      box.style.height = imgH + 'px'
+
+      let image = document.getElementById('imgcard')
+      image.src = canvas.toDataURL('image/png')
+      image.style.width = imgW + 1 + 'px'
+      image.style.maxWidth = imgW + 1 + 'px'
+      image.style.height = imgH + 1 + 'px'
+      this.status = 2
     }
   }
 }
@@ -69,9 +100,9 @@ export default {
   background: linear-gradient(220deg, rgba(0, 158, 230, 1) 0%, rgba(0, 122, 230, 1) 100%);
 
   > .invitation-top {
-    width: 86%;
+    width: 80%;
     height: 100px;
-    margin-left: 7%;
+    margin-left: 10%;
 
     > .invitation-title {
       height: 40px;
@@ -123,7 +154,6 @@ export default {
       width: 170px;
       height: 170px;
       margin-top: -100px;
-
     }
 
     .code-text {
@@ -138,6 +168,22 @@ export default {
       font-size: 14px;
       line-height: 10px;
       margin-top: 5px;
+    }
+  }
+
+  .imgcard {
+    height: 66%;
+    width: 86%;
+    margin: 0 auto;
+    border: none;
+    padding: 0px 5x 2px 0px;
+    border-color: transparent;
+
+    > .imgcard-img {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-color: transparent;
     }
   }
 
