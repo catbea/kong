@@ -1,6 +1,7 @@
 import store from '@/store/'
 import * as types from '@/store/mutation-types'
 import commonService from '@/services/commonService'
+import { checkIOSVersion } from '@/utils/tool'
 import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 
 const getUrlQueryParams = url => {
@@ -21,6 +22,7 @@ const isIOS = () => {
 }
 
 export default async (to, from, next) => {
+  checkIOSVersion()
   setTimeout(() => {
     next()
   }, 3000)
