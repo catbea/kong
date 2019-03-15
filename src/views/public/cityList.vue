@@ -76,12 +76,6 @@ import * as types from '@/store/mutation-types'
 import { IndexList, IndexSection, Cell } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 export default {
-   props: {
-     category: {
-      type: Number,
-      default: 0
-     }
-   },
   components: {
    'mt-index-list': IndexList,
    'mt-index-section': IndexSection,
@@ -89,6 +83,7 @@ export default {
   },
   data () {
     return {
+      category: '',
       keywords: '',
       activeTab: 0,
       cityListData: '',
@@ -105,6 +100,7 @@ export default {
   created () {
     this.fromPage = this.$route.query.fromPage
     this.usercity = this.$route.query.searchContent || '深圳市'
+    this.category = this.$route.query.category || 0
     this.getCityList(this.category)
   },
   watch: {

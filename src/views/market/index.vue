@@ -189,7 +189,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'city-list', query: { fromPage: 'market', searchContent: this.searchContent.siteText } })
+      this.$router.push({ name: 'city-list', query: { fromPage: 'market', searchContent: this.searchContent.siteText, category: 0 } })
     },
     focusHandler() {
       this.$router.push({ name: 'market-search' })
