@@ -5,7 +5,7 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userStatus: 0,
-  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || ((process.env.VUE_APP_AW_ENV=='uat' || process.env.VUE_APP_AW_ENV=='prod') ? {} : {
+  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || ((process.env.VUE_APP_AW_ENV=='prod') ? {} : {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0,
     devMode: true,
@@ -50,7 +50,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJwNzlkdXkiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NzQ2IiwiZXhwIjoxNTUyODk2OTAwLCJpYXQiOjE1NTIyOTIxMDB9.YAuts_7ys3z_hLnhqxL_TnNToi3lIYDYvrCL66GCYsWY7grfMpzyUeB9bAq-UXWZNcJvU_nPAs7xXq1sAt0a-A',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ0ejZ5ZWIiLCJzdWIiOiJhZ2VudElkOnd3NWVlYjcyNDBiY2JhZDI4YTo2MTMiLCJleHAiOjE1NTMxNTkxNjIsImlhdCI6MTU1MjU1NDM2Mn0.7zTlubfVIqdRzCjQ8PQs7bE6khxcZ-vLKTc9V-W54NfPloDVfkgGPNnLjiLI1LIWeSXbEj_Qt0nFj64uEZLdvg',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',

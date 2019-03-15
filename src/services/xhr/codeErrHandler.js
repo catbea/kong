@@ -15,6 +15,8 @@ export default (msg, url) => {
     case 21801: // 开通楼盘vip到期
     case 10028: // 文章被下架或被删除
       return true
+    case 21600: // 无分享记录的时候调的接口错误，不提示
+      return false
     default:
       console.error(msg)
       window.vue.$toast(msg.msg)

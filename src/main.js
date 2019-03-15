@@ -30,6 +30,10 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
+setTimeout(function(){
+  console.log('0')
+}, 2000)
+
 if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
 
 window.vue = new Vue({
