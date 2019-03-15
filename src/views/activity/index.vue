@@ -85,6 +85,11 @@ export default {
     activityEnd: '',
     activityState: 2, // 1-未开始 2-活动中 3-已结束
     isHasProject: true,
+    registerType: '',
+    enterpriseId: '',
+    parentUserId: '',
+    distributorId: '',
+    activityId: '',
     query: null,
   }),
   created() {
@@ -146,7 +151,7 @@ export default {
       }
       const res = await ActivityService.activityRegister(vo)
       this.clickDisabled = true
-      this.$router.push({ path: '/huiwan-activity/qrcode', query: {} })
+      this.$router.push({ path: '/huiwan-activity/qrcode', query: {enterpriseId: this.enterpriseId} })
     },
     focusHandler(val, $event) {
       var body = document.querySelector('.phone-cell')
