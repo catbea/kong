@@ -344,6 +344,10 @@ export default {
         overflow:hidden;
         text-overflow:ellipsis;
         white-space:nowrap;
+        pointer-events:none;
+        -webkit-pointer-events:none;
+        -ms-pointer-events:none;
+        -moz-pointer-events:none;
         &.card1 {
           background-color: #030303;
           color: #BF9667;

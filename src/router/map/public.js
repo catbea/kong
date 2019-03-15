@@ -8,6 +8,14 @@ export default [
     }
   },
   {
+    path: '/public/city-list',
+    name: 'city-list',
+    component: resolve => require(['@/views/public/cityList.vue'], resolve),
+    meta: {
+      title: '城市选择'
+    }
+  },
+  {
     path: '/public/map-Search',
     name: 'map-Search',
     component: resolve => require(['@/views/public/mapSearch.vue'], resolve),
