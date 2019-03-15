@@ -11,9 +11,9 @@
               <div class="sys-shadowBox">
                 <p class="sys-shadowBox-title">{{item.title}}</p>
                 <p class="sys-shadowBox-time" v-html="item.content.replace(/(\r+\n+)|(\n+)/g,'<br>')"></p>
-                <div style="display:flex;" v-show="true">
-                  <p class="client-detail">客户详情</p>
-                  <p class="go-report">立即报备</p>
+                <div style="display:flex;" v-show="item.type!==''&&item.type==10">
+                  <p class="client-detail" @click="goDetail(item.clientId)">客户详情</p>
+                  <p class="go-report" @click="goReport(item.clientId,item.linkerId)">立即报备</p>
                 </div>
                 <!-- <p class="sys-shadowBox-remarks">本次主要更新内容有： 1.增加勿扰模式 2.VIP功能优化调整 3.我的楼盘增加关闭展示功能</p> -->
               </div>
@@ -47,6 +47,7 @@ export default {
   methods: {
     async getSystemMessageList() {
       const res = await dynamicsService.getSystemMessage({current: this.current, size: this.size})
+      console.log(res,'数据')
       this.pages = res.pages
       this.sysMessage.push(...res.records)
       this.current += 1
@@ -62,6 +63,22 @@ export default {
         this.loading = false
       }
     },
+    goDetail(clientId){//查看客户详情
+    this.$router.push(`/custom/${clientId}`)
+    },
+   async goReport(clientId,linkerId){//立即报备
+    const res = await dynamicsService.getReportClient({clientId:clientId, linkerId:linkerId})
+    console.log(res,'报备数据')
+    let _reportAddInfo = {
+        clientId:res.clientId,//客户id
+        clientName:res.clientName,//客户姓名
+        clientPhone: res.mobile,//客户号码
+        distributorId:res.distributorId,// 经纪人所属分销商平台id 
+        institutionId:res.institutionId//经纪人所属分销商机构id 
+      }
+      this.$store.commit(types.REPORT_INFO, _reportAddInfo)
+      this.$router.push('/user/myReport/addReport')
+    }
   }
 }
 </script>
