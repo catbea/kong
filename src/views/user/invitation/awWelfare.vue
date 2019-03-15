@@ -88,7 +88,7 @@ export default {
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
         useCORS: true,
-        backgroundColor: transparent
+        backgroundColor: null
       })
       let imgW = 321
       let imgH = 397
@@ -96,7 +96,7 @@ export default {
       box.style.overflow = 'hidden'
       box.style.width = imgW + 'px'
       box.style.height = imgH + 'px'
-      box.style.border='none'
+      box.style.border = 'none'
 
       let image = document.getElementById('imgcard')
       image.src = canvas.toDataURL('image/png')
@@ -120,7 +120,6 @@ export default {
     margin-left: 10%;
     background-size: 299px 89px;
     border: none;
-    
 
     > .romptingLabel {
       width: 122px;
@@ -201,9 +200,9 @@ export default {
     height: 66%;
     width: 86%;
     margin-top: -10px;
-    border-color: transparent;
+    border: 1px #0098e6 solid;
+    padding-top: 2px;
     margin-left: 7%;
-    border: none;
 
     > .imgcard-img {
       width: 100%;
