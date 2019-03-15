@@ -2,6 +2,7 @@
   <div class="invitation-bg">
     <div class="invitation-top">
       <div class="invitation-title">邀请有礼</div>
+      <img class="romptingLabel" :src="romptingLabel">
       <div class="invitation-info">
         <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
         <p class="awWelfare-info-right-remak">{{userInfo.name}} 邀请你加入AW大师</p>
@@ -34,9 +35,11 @@ import h2c from 'html2canvas'
 export default {
   data: () => ({
     companyBg: require('IMG/user/invitation/invitition_bg.png'),
+    romptingLabel: require('IMG/user/invitation/rompting_label.png'),
+
     invitationUrl: '',
     status: 1,
-    registrationRules: '',
+    registrationRules: ''
   }),
   computed: {
     ...mapGetters(['userInfo'])
@@ -80,7 +83,6 @@ export default {
       this.registrationRules = regis.rule.split('#')
     },
     async savaReport() {
-
       const dpr = window.devicePixelRatio
       const canvas = await h2c(document.querySelector('#share-top'), {
         logging: false,
@@ -114,6 +116,14 @@ export default {
     width: 80%;
     height: 100px;
     margin-left: 10%;
+
+    > .romptingLabel {
+      width: 122px;
+      height: 40px;
+      position: absolute;
+      right: 10%;
+      top: 60px;
+    }
 
     > .invitation-title {
       height: 40px;
@@ -185,9 +195,9 @@ export default {
   .imgcard {
     height: 66%;
     width: 86%;
-    margin: 0 auto;
-    border: none;
+    margin-top: -10px;
     border-color: transparent;
+    margin-left: 7%;
 
     > .imgcard-img {
       width: 100%;
