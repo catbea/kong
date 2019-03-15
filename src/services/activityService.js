@@ -2,12 +2,25 @@
 import xhr from './xhr'
 
 class ActivityService {
-    // getArticleList(data) {
-    //     return xhr({
-    //       url: '/cpInformation/getBaseArticleList',
-    //       body: data
-    //     })
-    //   }
+
+    /**
+     * 活动楼盘的信息列表
+     * @param {*} current 
+     * @param {*} size 
+     * @param {*} couponsActivityId 
+     */
+    getActivityList(current, size, couponsActivityId) {
+        return xhr({
+            url: '/userReceive/getActivityAwardList',
+            body: {
+                current,
+                size,
+                couponsActivityId
+            }
+        })
+    }
+
+
 }
 
 
