@@ -74,7 +74,8 @@ export default {
     resInfo: null,
     borderBottom: true,
     containerHeight: '0',
-    vipInfo: ''
+    vipInfo: '',
+    historyCity: ''
   }),
   watch: {
     projectFilters: {
@@ -93,7 +94,13 @@ export default {
   mounted() {},
   async created() {
     await this.getVipInfo()
-    this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
+    let data = window.localStorage.getItem('historyCity') ? JSON.parse(window.localStorage.getItem('historyCity')) : ''
+    if (data) {
+      this.historyCity = data
+      this.selectedCity = data.city || this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
+    } else {
+      this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
+    }
     this.searchContent.siteText = this.selectedCity || '全国'
     this.getBrokerInfo()
     await this.hotMarketHandle()
@@ -106,7 +113,16 @@ export default {
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let _filters = screenFilterHelper(this.projectName, mergeFilters)
       param = Object.assign(param, _filters)
-      param.city = this.selectedCity
+      let data = window.localStorage.getItem('historyCity') ? JSON.parse(window.localStorage.getItem('historyCity')) : ''
+      if(data) {
+        if(data.type===1) {
+          param['province'] = data.city
+        } else {
+          param['city'] = data.city
+        }
+      } else {
+        param.city = this.selectedCity
+      }
       const res = await marketService.getHouseList(param)
 
       if (this.projectFilters.baseFilters) {
@@ -173,7 +189,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select', query: { fromPage: 'market', searchContent: this.searchContent.siteText } })
+      this.$router.push({ name: 'city-list', query: { fromPage: 'market', searchContent: this.searchContent.siteText } })
     },
     focusHandler() {
       this.$router.push({ name: 'market-search' })

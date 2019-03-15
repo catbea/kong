@@ -22,6 +22,7 @@
     "es6-promise": "^4.2.6",
     "html2canvas": "^1.0.0-alpha.12",
     "lodash": "^4.17.11",
+    "mint-ui": "^2.2.13",
     "mta-h5-analysis": "^2.0.15",
     "normalize.css": "^8.0.1",
     "qrcodejs2": "^0.0.2",
