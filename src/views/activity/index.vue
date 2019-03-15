@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     focusHandler(val, $event) {
-      var body = document.querySelector('.router-view')
+      var body = document.querySelector('.phone-cell')
       body.scrollTop = body.scrollHeight
     },
     blurHandler(val, $event) {
