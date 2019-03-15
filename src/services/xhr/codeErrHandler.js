@@ -14,6 +14,10 @@ export default (msg, url) => {
     case 21103: // 验证码错误
     case 21801: // 开通楼盘vip到期
     case 10028: // 文章被下架或被删除--待处理
+    case 44006: // 您暂无权限参与该活动
+    case 44007: // 该活动已结束，谢谢参与
+    case 44009: // 该活动未开始，敬请关注
+    case 44011: // 手机号码已领取奖励，请勿重复参加
       return true
     default:
       console.error(msg)

@@ -7,7 +7,9 @@ export default [
             title: '活动券',
             tabbar: {
                 show: false
-            }
+            },
+            skipIM: true,
+            skipAuth: true
         }
     },
     {
@@ -18,7 +20,9 @@ export default [
             title: '恭喜获得',
             tabbar: {
                 show: false
-            }
+            },
+            skipIM: true,
+            skipAuth: true
         }
     },
     {
@@ -29,7 +33,9 @@ export default [
             title: '识别二维码',
             tabbar: {
                 show: false
-            }
+            },
+            skipIM: true,
+            skipAuth: true
         }
     }
 ]
