@@ -47,33 +47,33 @@ export default {
 
     firstBuild: [],
 
-    buildList: [
-      {
-        buidlingNanme: '碧桂园·百禧庄园99',
-        price: '3800元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·千禧庄园',
-        price: '3900元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·万禧庄园',
-        price: '4000元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·亿禧庄园',
-        price: '4100元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·兆禧庄园',
-        price: '4200元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      }
-    ]
+    // buildList: [
+    //   {
+    //     buidlingNanme: '碧桂园·百禧庄园99',
+    //     price: '3800元/㎡起',
+    //     buildImg: require('IMG/easyPhoto/middleImg.png')
+    //   },
+    //   {
+    //     buidlingNanme: '碧桂园·千禧庄园',
+    //     price: '3900元/㎡起',
+    //     buildImg: require('IMG/easyPhoto/middleImg.png')
+    //   },
+    //   {
+    //     buidlingNanme: '碧桂园·万禧庄园',
+    //     price: '4000元/㎡起',
+    //     buildImg: require('IMG/easyPhoto/middleImg.png')
+    //   },
+    //   {
+    //     buidlingNanme: '碧桂园·亿禧庄园',
+    //     price: '4100元/㎡起',
+    //     buildImg: require('IMG/easyPhoto/middleImg.png')
+    //   },
+    //   {
+    //     buidlingNanme: '碧桂园·兆禧庄园',
+    //     price: '4200元/㎡起',
+    //     buildImg: require('IMG/easyPhoto/middleImg.png')
+    //   }
+    // ]
   }),
 
   methods: {
