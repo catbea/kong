@@ -8,7 +8,7 @@
         <div class="swipe-content">
           <div class="btn-box">
             <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
-            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle">视频</div>
+            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle" v-if="info.fyVideo">视频</div>
           </div>
           <van-swipe @change="swipeChange">
             <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
@@ -34,10 +34,10 @@
         </div>
         <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
       </div>
-      <!-- 视频 -->
+      <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400 -->
       <div class="video-box" v-show="showVideo">
         <video width="100%" height="281px"  ref="videoplay" preload="true" controls="showControls"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5">
-          <source src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" type="video/mp4">
+          <source :src="info.fyVideo" type="video/mp4">
         </video>
         <div class="close-video" @click="videoHide">退出视频</div>
       </div>
