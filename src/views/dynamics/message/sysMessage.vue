@@ -63,7 +63,7 @@ export default {
     },
 
     enterActivityDetail(id) {
-      this.$router.push({ path: '/huiwan-activity/partake', query: { activityId: '555' } })
+      this.$router.push({ path: '/huiwan-activity/partake', query: { activityId: id } })
     },
 
     // 加载更多

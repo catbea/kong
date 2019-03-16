@@ -4,7 +4,7 @@
       <img class="success-icon" :src="joinSuccess">
       <p class="success-text">参加成功</p>
     </div>
-    <span class="success-notice">恭喜你参与了惠湾联盟试运营活动获得奖励如下</span>
+    <span class="success-notice">恭喜你参与了{{activityName}}获得奖励如下</span>
     <div class="build-box">
       <div class="build-list">
         <build-card v-for="(item ,index) in firstBuild" :key="index" :data="item"></build-card>
@@ -46,6 +46,7 @@ export default {
     showMore: false,
 
     firstBuild: [],
+    activityName: ''
 
     // buildList: [
     //   {
@@ -105,25 +106,41 @@ export default {
     async getActivityInfo(activityId) {
       const result = await ActivityService.getActivityList('1', 40, activityId)
 
-      console.log(result)
-      if (result.records.length != 0) {
-        this.buildList = result.records
-      }
+      this.buildList = result.records
+
       let _that = this
       let firstList = []
       let infoNum = _that.buildList.length
       for (let i = 0; i < _that.buildList.length; i++) {
+        if (_that.buildList[i].linkerPrice == '0' || _that.buildList[i].linkerPrice == '') {
+          _that.buildList[i].linkerPrice = '价格待定'
+          _that.buildList[i].priceUnit = ''
+        } else {
+          if (_that.buildList[i].priceUnit == '万元/每套') {
+            _that.buildList[i].linkerPrice = '约' + _that.buildList[i].linkerPrice
+          } else if (_that.buildList[i].priceUnit == '元/㎡') {
+            _that.buildList[i].priceUnit = '元/㎡起'
+          }
+        }
+
         if (i <= 3) {
           firstList.push(_that.buildList[i])
         }
       }
       this.firstBuild = firstList
+    },
+
+    //获取活动名字
+    async getActivityName(id) {
+      const result = await ActivityService.getActivityName(id)
+      this.activityName = result.activityName
     }
   },
   created() {
     let activityId = this.$route.query.activityId
 
     this.getActivityInfo(activityId)
+    this.getActivityName(activityId)
   }
 }
 </script>
@@ -189,7 +206,7 @@ export default {
           height: 104px;
           background-size: cover;
           border-top-right-radius: 8px;
-          border-top-left-radius:8px; 
+          border-top-left-radius: 8px;
         }
 
         .feel-label {

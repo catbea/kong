@@ -21,6 +21,19 @@ class ActivityService {
     }
 
     /**
+     * 查询活动名字
+     * @param {*} activityInd 
+     */
+    getActivityName(activityInd){  ///qywx/userReceive/getCouponsActivityInfo
+        return xhr({
+            url: '/userReceive/getCouponsActivityInfo',
+            body: {
+                activityInd
+            }
+        })
+    }
+
+    /**
      * 根据活动Id查询活动信息
      * @param {*} enterpriseId 
      * @param {*} activityId 
