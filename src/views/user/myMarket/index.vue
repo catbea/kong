@@ -633,7 +633,7 @@ export default {
   background: #ffffff;
   .screen {
     overflow: hidden;
-    height: 580px;
+    // height: 580px;
   }
   .search-container {
     margin-left: 18px;

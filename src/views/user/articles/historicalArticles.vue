@@ -187,7 +187,7 @@ export default {
       if (this.typeCode == '1') {
         this.$router.push({ name: 'discover-detail', query: { agentId: this.userInfo.agentId, enterpriseId: this.userInfo.enterpriseId }, params: { id: val.id, city: '全国' } })
       } else {
-        this.$router.push({ name: 'easyLookChildList', query: val })
+        this.$router.push({ path: '/user/articles/easyLookChildList', query: val })
       }
     },
 
