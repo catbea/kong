@@ -119,6 +119,7 @@ export default {
       if (this.type == 'package') {
         param.city = this.searchInfo.siteText
         res = await marketService.packageLinkerList(param)
+        console.log(res,'楼盘数据')
       } else {
         res = await marketService.vipLinkerList(param)
       }
@@ -130,7 +131,7 @@ export default {
           linkerUrl: item.linkerUrl,
           sale: item.sale,
           linkerName: item.linkerName,
-          site: `${item.city ? item.city : ''} ${item.county ? item.county : ''} ${item.price ? item.price : ''} ${item.priceUnit ? item.priceUnit : ''}`, //'深圳 南山 120000元/㎡',
+          site: `${item.city ? item.city : ''} ${item.county ? item.county : ''} ${item.price ? item.price : '价格待定'} ${item.priceUnit&&item.price ? item.priceUnit : ''}`, //'深圳 南山 120000元/㎡',
           condition: item.linkerTags,
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
