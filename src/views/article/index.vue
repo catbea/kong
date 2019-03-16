@@ -347,6 +347,8 @@ export default {
     // 更新新手引导标志位
     updateUserExpandInfo() {
       commonService.updateUserExpandInfo({articleEditFlag: 1})
+      let data = Object.assign({}, this.userInfo, { articleEditFlag: 1})
+      this.$store.commit(types.USER_INFO, data)
     },
     // 隐藏引导页
     hideStep() {

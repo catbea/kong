@@ -51,6 +51,7 @@ import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
 import marketService from 'SERVICE/marketService'
 import commonService from 'SERVICE/commonService'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Null,
@@ -102,6 +103,8 @@ export default {
     // 更新新手引导标志位
     updateUserExpandInfo() {
       commonService.updateUserExpandInfo({delClientFlag: 1})
+      let data = Object.assign({}, this.userInfo, { delClientFlag: 1})
+      this.$store.commit(types.USER_INFO, data)
     },
     goactivitDetaily() {
       this.$router.push('/custom/message/activityDetail')
@@ -216,6 +219,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['userInfo']),
     currentData() {
       return this.data[this.activeIndex]
     }
