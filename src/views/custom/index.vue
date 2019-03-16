@@ -50,6 +50,8 @@ import CustomActivity from 'COMP/Custom/CustomActivity'
 import Null from 'COMP/Null'
 import CustomService from 'SERVICE/customService'
 import marketService from 'SERVICE/marketService'
+import commonService from 'SERVICE/commonService'
+import { mapGetters } from 'vuex'
 export default {
   components: {
     Null,
@@ -78,10 +80,11 @@ export default {
     showGuide: false // 显示引导
   }),
   created () {
-    let showDeleteGuide = window.localStorage.getItem('showDeleteGuide')
-    if (!showDeleteGuide) {
-      this.showGuide = true
-    }
+    // let showDeleteGuide = window.localStorage.getItem('showDeleteGuide')
+    // if (!showDeleteGuide) {
+    //   this.showGuide = true
+    // }
+    this.showGuide = this.userInfo.delClientFlag !== 1
   },
   mounted() {
     this.getLinker()
@@ -97,6 +100,12 @@ export default {
     }, { passive: false })
   },
   methods: {
+    // 更新新手引导标志位
+    updateUserExpandInfo() {
+      commonService.updateUserExpandInfo({delClientFlag: 1})
+      let data = Object.assign({}, this.userInfo, { delClientFlag: 1})
+      this.$store.dispatch('getUserInfo', data)
+    },
     goactivitDetaily() {
       this.$router.push('/custom/message/activityDetail')
     },
@@ -191,7 +200,8 @@ export default {
     // 隐藏引导页面
     hideGuide () {
       this.showGuide = false
-      window.localStorage.setItem('showDeleteGuide', true)
+      this.updateUserExpandInfo()
+      // window.localStorage.setItem('showDeleteGuide', true)
     },
     touchHandler(e) {
       return e.preventDefault()
@@ -209,6 +219,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['userInfo']),
     currentData() {
       return this.data[this.activeIndex]
     }

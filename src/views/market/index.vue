@@ -94,7 +94,7 @@ export default {
   mounted() {},
   async created() {
     await this.getVipInfo()
-    let data = window.localStorage.getItem('historyCity') ? JSON.parse(window.localStorage.getItem('historyCity')) : ''
+    let data = window.localStorage.getItem('marketCity') ? JSON.parse(window.localStorage.getItem('marketCity')) : ''
     if (data) {
       this.historyCity = data
       this.selectedCity = data.city || this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
@@ -113,7 +113,7 @@ export default {
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
       let _filters = screenFilterHelper(this.projectName, mergeFilters)
       param = Object.assign(param, _filters)
-      let data = window.localStorage.getItem('historyCity') ? JSON.parse(window.localStorage.getItem('historyCity')) : ''
+      let data = window.localStorage.getItem('marketCity') ? JSON.parse(window.localStorage.getItem('marketCity')) : ''
       if(data) {
         if(data.type===1) {
           param['province'] = data.city
