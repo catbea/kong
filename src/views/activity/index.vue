@@ -6,8 +6,8 @@
         <div class="bg_img activity-logo" :style="{backgroundImage:'url(' + logoImg + ')'}"></div>
         <p class="activity-top">全景看房 - AI拓客 - 裂变传播 - 监控意向</p>
         <p class="activity-title">惠湾联盟试运营</p>
-        <p class="activity-time">活动时间：2019年3月18日—2019年3月31日</p>
-        <div class="activity-content">
+        <p class="activity-time">活动时间：{{activityStart}}—{{activityEnd}}</p>
+        <div class="activity-content" v-if="activityState===2">
           <div class="form-container">
             <div class="bg_img icon-girl" :style="{backgroundImage:'url(' + girlIconImg + ')'}"></div>
             <div
@@ -42,10 +42,10 @@
         <!-- <ended class="activity-ended"></ended> -->
       </div>
     </div>
-    <div class="activity-page-bottom" v-if="true">
+    <div class="activity-page-bottom" v-if="isHasProject">
       <!-- 楼盘列表 -->
       <div class="project-wrap">
-        <div class="project-title">以下楼盘免费开通至3月31日</div>
+        <div class="project-title">以下楼盘免费开通至{{activityEnd}}</div>
         <div class="project-list">
           <build-card v-for="(item ,index) in buildList" :key="index" :data="item"></build-card>
         </div>
@@ -60,6 +60,7 @@ import MaterialInput from 'COMP/MaterialInput'
 import NoStart from 'COMP/Activity/NoStart'
 import Ended from 'COMP/Activity/Ended'
 import BuildCard from 'COMP/Activity/BuildCard'
+import ActivityService from 'SERVICE/activityService'
 export default {
   components: {
     MaterialInput,
@@ -79,63 +80,79 @@ export default {
     codeTime: 60,
     disabled: true,
     clickDisabled: false,
-    buildList: [
-      {
-        buidlingNanme: '碧桂园·百禧庄园99',
-        price: '3800元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·千禧庄园',
-        price: '3900元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·万禧庄园',
-        price: '4000元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·亿禧庄园',
-        price: '4100元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·兆禧庄园',
-        price: '4200元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·兆禧庄园',
-        price: '4200元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·兆禧庄园',
-        price: '4200元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·兆禧庄园',
-        price: '4200元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      },
-      {
-        buidlingNanme: '碧桂园·兆禧庄园',
-        price: '4200元/㎡起',
-        buildImg: require('IMG/easyPhoto/middleImg.png')
-      }
-    ]
+    buildList: [],
+    activityStart: '',
+    activityEnd: '',
+    activityState: 2, // 1-未开始 2-活动中 3-已结束
+    isHasProject: true,
+    registerType: '',
+    enterpriseId: '',
+    parentUserId: '',
+    distributorId: '',
+    activityId: '',
+    query: null,
   }),
   created() {
-    // this.$toast.fail({
-    //   duration: 0,
-    //   forbidClick: true,
-    //   mask: true,
-    //   message: '手机号码已经领取奖励请勿重复参加'
-    // })
+    this.query = this.$route.query
+    this.registerType = this.query.registerType
+    this.enterpriseId = this.query.enterpriseId
+    this.parentUserId = this.query.parentUserId
+    this.distributorId = this.query.distributorId
+    this.activityId = this.query.activityId
+    this.queryActivityInfo()
+   
+    
   },
   methods: {
+    async queryActivityInfo() {
+      const res = await ActivityService.queryActivityInfo(this.enterpriseId, this.activityId, this.distributorId)
+      if (res.returnCode == 44007) {
+        this.activityState = 3
+      }else if (res.returnCode == 44009) {
+        this.activityState = 1
+      }else {
+        this.activityStart = res.couponsActivity.activityStart
+        this.activityEnd = res.couponsActivity.activityEnd
+        if (res.cpLinkerListVO && res.cpLinkerListVO.length ==0) {
+          this.isHasProject = false
+        }
+      }
+      
+    },
+    async activitySendMsg() {
+      const res = await ActivityService.activitySendMsg(this.enterpriseId, this.activityId, this.distributorId, this.mobile)
+      if (res.returnCode == 44006) {
+        this.$dialog.alert({
+          title: '很抱歉',
+          message: '该活动仅支持特定分销商下经纪人可参与，您当前手机账户无法参与该活动',
+          confirmButtonText: '知道了'
+        })
+      }else if (res.returnCode == 44011) {
+         this.$toast.fail({
+          duration: 0,
+          forbidClick: true,
+          mask: true,
+          message: '手机号码已经领取奖励请勿重复参加'
+        })
+      }else {
+        this.countDown()
+      }
+    },
+    async activityRegister() {
+      let vo = {
+        activityId: this.activityId,
+        mobile: this.mobile,
+        code: this.code,
+        agentName: this.mobile.substring(0, 3) + '****' + this.mobile.substring(7, 11),
+        registerType: this.registerType,
+        enterpriseId: this.enterpriseId,
+        parentUserId: this.parentUserId,
+        distributorId: this.distributorId,
+      }
+      const res = await ActivityService.activityRegister(vo)
+      this.clickDisabled = true
+      this.$router.push({ path: '/huiwan-activity/qrcode', query: {enterpriseId: this.enterpriseId} })
+    },
     focusHandler(val, $event) {
       var body = document.querySelector('.phone-cell')
       body.scrollTop = body.scrollHeight
@@ -156,8 +173,7 @@ export default {
     sendCodeHandler() {
       if (this.disabled == false) {
         this.disabled = !this.disabled
-        // const result = RegisterService.sendMsgRegister(this.mobile)
-        this.countDown()
+        this.activitySendMsg()
       }
     },
     countDown() {
@@ -174,7 +190,6 @@ export default {
       }, 1000)
     },
     nextHandler() {
-      /*
       if (this.mobile.length == 0) {
         return this.$toast('请输入微信绑定手机号')
       }
@@ -185,9 +200,7 @@ export default {
         return
       }
       this.clickDisabled = true
-      */
-
-      this.$router.push({ path: '/huiwan-activity/qrcode', query: {} })
+      this.activityRegister()
     }
   }
 }

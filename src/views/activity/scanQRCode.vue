@@ -14,12 +14,24 @@
   </div>
 </template>
 <script>
+import RegisterService from 'SERVICE/registService'
 export default {
     data: () => ({
         grilIconImg: require('IMG/activity/activity_girl.png'),
         starIconImg: require('IMG/activity/activity_star.png'),
-        qrcodeImg: ''
+        enterpriseId: '',
+        qrcodeImg: '',
     }),
+    created() {
+        this.enterpriseId = this.$route.query.enterpriseId
+        this.queryByRegister(this.enterpriseId)
+    },
+    methods: {
+        async queryByRegister(enterpriseId) {
+            const result = await RegisterService.queryByRegister(enterpriseId)
+            this.qrcodeImg = result.qrCode
+        }
+    }
 }
 </script>
 <style lang="less" scoped>
