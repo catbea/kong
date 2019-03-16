@@ -1,6 +1,7 @@
 import store from '@/store/'
 import * as types from '@/store/mutation-types'
 import commonService from '@/services/commonService'
+import { checkIOSVersion } from '@/utils/tool'
 import { webimLogin, callbackaddMsgCount } from '@/utils/im/receive_new_msg.js'
 
 const getUrlQueryParams = url => {
@@ -21,6 +22,13 @@ const isIOS = () => {
 }
 
 export default async (to, from, next) => {
+  let version = checkIOSVersion()
+  if (parseFloat(version) < parseFloat('10.3')) {
+    this.$dialog.alert({
+      message: '当前操作系统无法正常使用AW大师，请升级iOS系统后再次尝试'
+    })
+    return
+  }
   setTimeout(() => {
     next()
   }, 3000)

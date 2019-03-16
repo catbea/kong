@@ -41,44 +41,6 @@ export default {
     renewInfo: { type: Object },
     vipInfo: { type: Object }
   },
-  // computed: {
-  //   flagTj:{
-  //     get:function() {
-  //       if (this.renewInfo.masterRecommand==0) {
-  //       return false
-  //     }else{
-  //       return true
-  //     }
-  //     },
-  //     set:function (newValue) {
-
-  //     }
-  //   },
-  //   flagZs:{
-  //     get:function() {
-  //       if (this.renewInfo.displayFlag==1) {
-  //       return false
-  //     }else{
-  //       return true
-  //     }
-  //     },
-  //     set:function (newValue) {
-
-  //     }
-  //   },
-  //   flagZd:{
-  //     get:function() {
-  //       if (this.renewInfo.isRecommand==0) {
-  //       return false
-  //     }else{
-  //       return true
-  //     }
-  //     },
-  //     set:function (newValue) {
-
-  //     }
-  //   }
-  // },
   methods: {
     flagTjHandle() {
       if (this.renewInfo.masterRecommand == 0) {

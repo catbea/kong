@@ -169,3 +169,16 @@ export function uuid() {
   var uuid = s.join('')
   return uuid
 }
+
+export function checkIOSVersion() {
+  let ua = navigator.userAgent.toLowerCase()
+  let version = ''
+  if (ua.indexOf("like mac os x") > 0) {
+    var reg = /os [\d._]+/gi;
+    var v_info = ua.match(reg);
+    version = (v_info + "").replace(/[^0-9|_.]/ig, "").replace(/_/ig, "."); //得到版本号9.3.2或者9.0
+    // version = parseInt(version.split('.')[0]); // 得到版本号第一位
+}
+  console.log(version)
+  return version
+}

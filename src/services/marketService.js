@@ -349,5 +349,16 @@ class MarketService {
       body: data
     })
   }
+
+  /**
+   * 查询城市列表
+   * type: 0-用于楼盘列表，1-用于我的楼盘
+   */
+  getCityList(data) {
+    return xhr({
+      url: '/common/getCityListByType',
+      body: data
+    })
+  }
 }
 export default new MarketService()
