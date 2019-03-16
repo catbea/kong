@@ -4,7 +4,7 @@
       <div class="cnt">
         <div class="info">
           <img class="search" src="../../assets/img/public/citylist/search.png" alt="">
-          <input type="text" name="" id="" v-model.trim="keywords" placeholder="请输入城市名称">
+          <input type="text" name="" id="" v-model.trim="keywords" placeholder="请输入城市名称" v-focus>
           <img class="clear" src="../../assets/img/public/citylist/clear.png" alt="" srcset="" v-show="keywords" @click="keywords=''">
         </div>
         <div class="cancle" v-show="keywords" @click="keywords=''">取消</div>
@@ -178,6 +178,14 @@ export default {
     retryLocation() {
       this.$wechatHelper.getUserArea() // awHelper.wechatHelper.getUserArea()
     },
+  },
+  directives: {
+    // 指令的定义
+    focus: {
+      inserted: function (el) {
+        el.focus()
+      }
+    }
   }
 }
 </script>

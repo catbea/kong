@@ -171,9 +171,14 @@ export function uuid() {
 }
 
 export function checkIOSVersion() {
-  let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-  let ver = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)
-  let iOSVersion = parseInt(ver[1], 10)
-  console.log(ver)
-  return ver
+  let ua = navigator.userAgent.toLowerCase()
+  let version = ''
+  if (ua.indexOf("like mac os x") > 0) {
+    var reg = /os [\d._]+/gi;
+    var v_info = ua.match(reg);
+    version = (v_info + "").replace(/[^0-9|_.]/ig, "").replace(/_/ig, "."); //得到版本号9.3.2或者9.0
+    // version = parseInt(version.split('.')[0]); // 得到版本号第一位
+}
+  console.log(version)
+  return version
 }
