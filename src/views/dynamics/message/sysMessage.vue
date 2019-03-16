@@ -19,7 +19,7 @@
                 </div>-->
                 <div
                   class="button-detail"
-                  v-if="item.type==''"
+                  v-if="item.type=='11'"
                   @click="enterActivityDetail(item.activityId)"
                 >
                   查看详情

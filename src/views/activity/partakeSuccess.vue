@@ -188,6 +188,8 @@ export default {
           width: 100%;
           height: 104px;
           background-size: cover;
+          border-top-right-radius: 8px;
+          border-top-left-radius:8px; 
         }
 
         .feel-label {
