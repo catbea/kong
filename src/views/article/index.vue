@@ -348,7 +348,7 @@ export default {
     updateUserExpandInfo() {
       commonService.updateUserExpandInfo({articleEditFlag: 1})
       let data = Object.assign({}, this.userInfo, { articleEditFlag: 1})
-      this.$store.commit(types.USER_INFO, data)
+      this.$store.dispatch('getUserInfo', data)
     },
     // 隐藏引导页
     hideStep() {
