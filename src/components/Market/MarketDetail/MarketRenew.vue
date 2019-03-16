@@ -168,7 +168,8 @@ export default {
           
       } else {
         let invalidTime = +new Date(this.renewInfo.expireTime.replace(/-/g,'/'))// 楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
+         console.log(expireTimestamp,'前vip后楼盘',invalidTime)
         if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.renewInfo.city === this.vipInfo.city) {
           const res = await marketService.addHouseByVip(this.renewInfo.linkerId)
           this.$toast({
