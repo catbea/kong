@@ -87,7 +87,7 @@ export default {
       // params.city = this.userArea.myReportCity
       params.city = this.searchInfo.siteText == '全国' ? '' : this.searchInfo.siteText
       const result = await reportServer.getReportBuildingList(params)
-
+      console.log(result,'报备楼盘数据')
       if (result.records.length > 0) {
         this.dataArr = page === 1 ? result.records : this.dataArr.concat(result.records)
         for (let i = 0; i < this.dataArr.length; i++) {
