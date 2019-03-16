@@ -27,6 +27,7 @@
 <script>
 import ShadowBox from 'COMP/ShadowBox'
 import dynamicsService from 'SERVICE/dynamicsService'
+import * as types from '@/store/mutation-types'
 export default {
   components: {
     ShadowBox
@@ -67,12 +68,14 @@ export default {
     this.$router.push(`/custom/${clientId}`)
     },
    async goReport(clientId,linkerId){//立即报备
-    const res = await dynamicsService.getReportClient({clientId:clientId, linkerId:linkerId})
+    const res = await dynamicsService.getReportClient(clientId,linkerId)
     console.log(res,'报备数据')
     let _reportAddInfo = {
         clientId:res.clientId,//客户id
         clientName:res.clientName,//客户姓名
         clientPhone: res.mobile,//客户号码
+        linkerId:linkerId,
+        linkerName:res.linkerName,//楼盘ID
         distributorId:res.distributorId,// 经纪人所属分销商平台id 
         institutionId:res.institutionId//经纪人所属分销商机构id 
       }

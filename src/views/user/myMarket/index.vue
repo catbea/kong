@@ -473,7 +473,7 @@ export default {
         return item.masterRecommand == '2'
       })
     },
-    async showGetMyMarketInfo() {
+    async showGetMyMarketInfo() {//请求展示的楼盘列表数据
       let name = this.showProjectName
       let filters = this.showProjectFilters
       let page = this.showPage
@@ -485,6 +485,7 @@ export default {
       obj.displayFlag = 0
       obj.city = this.selectedCity
       const resShow = await userService.getMyMarket(obj)
+      console.log(resShow,'展示的楼盘数据')
       // 数据重复加载
       if (page == 1) {
         this.showMarketList = resShow.records
