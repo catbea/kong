@@ -213,6 +213,8 @@ export default {
       this.singleShow = true
     },
     multiAddClickHandler() {
+      console.log(this.recommendList,'有多少',this.info)
+      
       if (this.recommendList.length >= this.info.linkerCount) {
         this.$toast('暂无更多开通楼盘')
         return

@@ -92,15 +92,15 @@
         <li>{{info.linkerName}}</li>
       </ol>
     </div>
-    <van-popup v-model="relationShow">
+    <van-popup v-model="relationShow" class="relationPopup">
       <div class="relationName">
         <p class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="relationShow=false"></p>
         <ul>
-          <li>联系客服</li>
-          <li>查看楼盘分享关系详情 请联系</li>
-          <li>{{info&&info.contatctTel}}</li>
+          <li>请联系经纪人</li>
+          <li>了解更多楼盘分享关系详情，请联系经纪人</li>
+          <!-- <li>{{info&&info.contatctTel}}</li> -->
         </ul>
-        <p class="immediately" @click="relationHandle">立即联系</p>
+        <p class="van-hairline--top immediately" @click="relationHandle">知道了</p>
       </div>
     </van-popup>
     <!-- 户型 -->
@@ -308,7 +308,7 @@ export default {
   methods: {
     relationHandle() {
       //立即联系弹窗
-      window.location.href = 'tel://' + this.info.contatctTel
+      // window.location.href = 'tel://' + this.info.contatctTel
       this.relationShow = false
     },
     async getMarketDetailPhotoInfo() {
@@ -1156,14 +1156,14 @@ export default {
     opacity: 0;
   }
 }
-.van-popup {
+.relationPopup {
   border-radius: 12px;
   width: 311px;
-  height: 231px;
+  height:198px;
   // padding-top:45px;
   .relationName {
     width: 311px;
-    height: 231px;
+    height: 168px;
     background: rgba(255, 255, 255, 1);
     border-radius: 12px;
     position: relative;
@@ -1200,16 +1200,16 @@ export default {
     }
     .immediately {
       text-align: center;
-      margin-left: 32px;
-      width: 247px;
-      height: 44px;
-      background: rgba(0, 122, 230, 1);
+      // margin-left: 32px;
+      width:100%;
+      height:50px;
+      // background: rgba(0, 122, 230, 1);
       border-radius: 6px;
-      font-size: 16px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 1);
-      line-height: 44px;
+      font-size:18px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(1,127,255,1);
+      line-height:50px;
     }
   }
 }
