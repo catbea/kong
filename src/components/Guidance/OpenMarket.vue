@@ -1,16 +1,18 @@
 <template>
   <van-popup class="popup-container" v-model="currentShow">
     <img class="close-btn" :src="closeImg" @click="closeHandler">
+    <div class="title">恭喜您</div>
+    <div class="desc">免费为您开通一个楼盘</div>
     <div class="bg_img img-content" :style="{backgroundImage:'url(' + bgImg + ')'}"></div>
     <!-- <div class="bg_img img-ai" :style="{backgroundImage:'url(' + aiImg + ')'}"></div> -->
-    <div class="img-ai">AI荐盘</div>
+    <!-- <div class="img-ai">AI荐盘</div> -->
+    <p class="text">{{`${this.conf&&this.conf.city||''}${this.conf&&this.conf.openTimes||0}人都在关注它`}}</p>
     <div class="tag-content">
-      <div class="tag-item">地铁房</div>
-      <div class="tag-item">商业潜力</div>
-      <div class="tag-item">优质小区</div>
+      <div class="tag-item">资深中介</div>
+      <div class="tag-item">高端社区</div>
+      <div class="tag-item">商务区</div>
     </div>
-    <p class="desc-content">{{`${this.conf&&this.conf.city||''}${this.conf&&this.conf.openTimes||0}人都在看`}}</p>
-    <div class="open-btn" @click="openHandler">0元开通</div>
+    <div class="open-btn" @click="openHandler">立即体验</div>
   </van-popup>
 </template>
 <script>
@@ -58,8 +60,8 @@ export default {
 // .guidance-open-market {
 .popup-container {
   width: 295px;
-  height: 376px;
-  background-color: #fff;
+  height: 408px;
+  background-color: #007AE6;
   border-radius: 10px;
   overflow: unset;
   > .close-btn {
@@ -71,8 +73,8 @@ export default {
   }
   > .img-content {
     width: 265px;
-    height: 200px;
-    border-radius: 3px;
+    height: 150px;
+    border-radius: 10px;
     margin: 15px;
     margin-bottom: 0;
     position: relative;
@@ -93,16 +95,33 @@ export default {
     font-weight: 500;
     background-color: #ee7158;
   }
+  > .title {
+    color: #fff;
+    font-size: 28px;  
+    font-weight: bold;
+    margin: 30px 15px 0 15px;
+  }
+  > .desc {
+    color: #fff;
+    font-size: 14px;
+    margin: 10px 15px;
+  }
+  .text {
+    color: #fff;
+    font-size: 14px;  
+    font-weight: bold;
+    margin: 24px 15px 0 15px;
+  }
   > .tag-content {
     height: 30px;
-    margin: 15px;
-    margin-left: 12px;
-    margin-top: 8px;
+    // margin: 15px;
+    margin-left: 8px;
+    // margin-top: 8px;
     > .tag-item {
-      color: #333333;
-      font-size: 14px;
-      border: 1px solid #dddddd;
-      border-radius: 6px;
+      color: #fff;
+      font-size: 10px;
+      // border: 1px solid #dddddd;
+      // border-radius: 6px;
     }
   }
   > .desc-content {
@@ -113,13 +132,14 @@ export default {
     font-weight: 600;
   }
   > .open-btn {
-    margin: 15px;
+    margin: 20px 15px;
     width: 265px;
     height: 44px;
-    background-color: #ee7158;
+    background-color: #fff;
     border-radius: 4px;
     font-size: 16px;
-    color: #fff;
+    color: #007AE6;
+    font-weight: bold;
     line-height: 44px;
     text-align: center;
   }
