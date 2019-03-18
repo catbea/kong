@@ -166,12 +166,12 @@ export default {
           this.$store.commit(types['USER_AREA'], { selectedCity: val })
           break
       }
-      let value = type ? type :  window.localStorage.getItem('cityType')? window.localStorage.getItem('cityType'): 2
+      let value = type ? type : 2
       let data = {
         city: val, 
         type: value
       }
-      window.localStorage.setItem('historyCity', JSON.stringify(data))
+      window.localStorage.setItem(`${this.fromPage || 'default'}City`, JSON.stringify(data))
       this.$router.go(-1)
     },
     // 重新定位
@@ -244,7 +244,7 @@ export default {
   .tab-box{
   }
   .list-box{
-    height: 200%;
+    // max-height: 200%;
     width: 100%;
     overflow-y: scroll;
     .city-box{

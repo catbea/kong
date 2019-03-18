@@ -63,7 +63,14 @@ export default {
       default: true
     },
     vipInfo: {
-      type: Object
+      type: Object,
+      default: () => {
+        return {
+          expireTimestamp: '',
+          expireDate: '',
+          vipValid: ''
+        }
+      }
     }
   },
   data() {
@@ -143,9 +150,10 @@ export default {
             message: '续费成功！'
           })
           let time = new Date(+this.vipInfo.expireTimestamp)
-          let mou = time.getMonth() + 1
-          let date = time.getDate()
-          this.itemInfo.invalidTimeStr = `${mou}/${date}`
+          let year = time.getFullYear()
+          let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
+          let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+          this.itemInfo.invalidTimeStr = `${year}/${mou}/${date}`
           this.itemInfo.invalidTime = this.vipInfo.expireDate
           this.itemInfo.openStatus = 2
           this.status = 2
@@ -167,9 +175,10 @@ export default {
           this.status = 2
           this.itemInfo.openStatus = 2
           let time = new Date(+this.vipInfo.expireTimestamp)
-          let mou = time.getMonth() + 1
-          let date = time.getDate()
-          this.itemInfo['invalidTimeStr'] = `${mou}/${date}`
+          let year = time.getFullYear()
+          let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
+          let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+          this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
           this.itemInfo['invalidTime'] = this.vipInfo.expireDate
           this.dredgeColor()
           this.$toast({

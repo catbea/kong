@@ -41,14 +41,11 @@ class CommonService {
    * @param articleEditFlag: 随手编新手引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
    * @param articleShareFlag: 文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
    */
-  updateUserExpandInfo(articleShareFlag, articleEditFlag) {
+  updateUserExpandInfo(data) {
     return xhr({
       url: '/user/updateUserExpandInfo',
       method: 'post',
-      body: {
-        articleShareFlag,
-        articleEditFlag
-      }
+      body: data
     })
   }
 

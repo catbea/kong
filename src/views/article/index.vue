@@ -237,6 +237,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Guide from './guide'
+import commonService from 'SERVICE/commonService'
 import ArticleService from 'SERVICE/articleService'
 import { formatTime, parseTime, checkStrLength } from '@/utils/tool'
 export default {
@@ -320,7 +321,7 @@ export default {
     }
   },
   async created() {
-    this.showGuide = !JSON.parse(window.localStorage.getItem('guideStatus'))
+    this.showGuide = this.userInfo.articleEditFlag !== 1 // !JSON.parse(window.localStorage.getItem('guideStatus'))
     let storage = JSON.parse(window.sessionStorage.getItem('tab')) || { itemCode: '', itemName: '推荐' }
     this.classifyName = storage.itemName
     this.classify = storage.itemCode
@@ -343,10 +344,17 @@ export default {
     }
   },
   methods: {
+    // 更新新手引导标志位
+    updateUserExpandInfo() {
+      commonService.updateUserExpandInfo({articleEditFlag: 1})
+      let data = Object.assign({}, this.userInfo, { articleEditFlag: 1})
+      this.$store.dispatch('getUserInfo', data)
+    },
     // 隐藏引导页
     hideStep() {
       this.showGuide = false
-      window.localStorage.setItem('guideStatus', true)
+      this.updateUserExpandInfo()
+      // window.localStorage.setItem('guideStatus', true)
     },
     // 获取文章分类
     async getArticleType() {

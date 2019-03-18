@@ -42,7 +42,7 @@ export default {
     async addReportInfo(current) {
       console.log(this.reportAddInfo.clientPhoneType)
 
-      if (this.reportAddInfo.clientPhoneType == 'all') {
+      if (this.reportAddInfo.clientPhoneType === 'all') {
         this.hideClientMobile = '0'
       } else {
         this.hideClientMobile = '1'
