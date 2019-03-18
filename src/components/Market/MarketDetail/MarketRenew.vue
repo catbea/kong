@@ -167,8 +167,8 @@ export default {
           })
           
       } else {
-        let invalidTime = +new Date(this.renewInfo.expireTime.replace(/-/g,'/'))// 楼盘到期时间
-        // let invalidTime = +new Date(this.renewInfo.invalidTime.replace(/-/g,'/'))// 含时分秒的楼盘到期时间
+        // let invalidTime = +new Date(this.renewInfo.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let invalidTime = this.renewInfo.expireDate-0// 含时分秒的楼盘到期时间
         let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
          console.log(expireTimestamp,'前vip后楼盘',invalidTime)
         if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.renewInfo.city === this.vipInfo.city) {
