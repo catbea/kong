@@ -106,7 +106,7 @@
     <!-- 楼盘分享关系图谱 -->
     <div class="marker-relation-box">
       <p>楼盘分享关系图谱</p>
-      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}" @click="relationShow=true">
+      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}" @click="relationShowFn">
         <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
         <li>{{info.linkerName}}</li>
       </ol>
@@ -330,6 +330,15 @@ export default {
     },
     submitHandle(){//提交预约信息
     this.emptyContent()
+    },
+    // 点击客户关系弹框
+    relationShowFn() {
+      this.$dialog.confirm({
+        title: '联系经纪人',
+        message: '了解更多楼盘分享关系详情，请联系经纪人。',
+        confirmButtonText: '知道了',
+        showCancelButton: false
+      })
     },
     relationHandle() {
       //立即联系弹窗
