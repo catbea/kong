@@ -435,7 +435,8 @@ export default {
       //     duration: 1000,
       //     message: '已开通成功，请到我的楼盘查看'
       //   })
-        let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let invalidTime = this.renewInfo.expireDate-0// 含时分秒的楼盘到期时间
         let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
         if(this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city){
           const res = await marketService.addHouseByVip(this.info.linkerId)
