@@ -19,7 +19,8 @@ const state = {
     institutionName: 'test',
     isOne: 0, // 1新用户 0老用户
     articleShareFlag: 1, //文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
-    isVip: '',
+    articleEditFlag: 1, // 随手编新手引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    delClientFlag: 1, //删除用户引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
     vipDefaultCity: '深圳市',
     ifView: 1, //是否展示邀请有礼
     labelList: [

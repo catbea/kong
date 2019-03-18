@@ -4,7 +4,7 @@
       <div class="cnt">
         <div class="info">
           <img class="search" src="../../assets/img/public/citylist/search.png" alt="">
-          <input type="text" name="" id="" v-model.trim="keywords" placeholder="请输入城市名称">
+          <input type="text" name="" id="" v-model.trim="keywords" placeholder="请输入城市名称" v-focus>
           <img class="clear" src="../../assets/img/public/citylist/clear.png" alt="" srcset="" v-show="keywords" @click="keywords=''">
         </div>
         <div class="cancle" v-show="keywords" @click="keywords=''">取消</div>
@@ -166,18 +166,26 @@ export default {
           this.$store.commit(types['USER_AREA'], { selectedCity: val })
           break
       }
-      let value = type ? type :  window.localStorage.getItem('cityType')? window.localStorage.getItem('cityType'): 2
+      let value = type ? type : 2
       let data = {
         city: val, 
         type: value
       }
-      window.localStorage.setItem('historyCity', JSON.stringify(data))
+      window.localStorage.setItem(`${this.fromPage || 'default'}City`, JSON.stringify(data))
       this.$router.go(-1)
     },
     // 重新定位
     retryLocation() {
       this.$wechatHelper.getUserArea() // awHelper.wechatHelper.getUserArea()
     },
+  },
+  directives: {
+    // 指令的定义
+    focus: {
+      inserted: function (el) {
+        el.focus()
+      }
+    }
   }
 }
 </script>
@@ -236,7 +244,7 @@ export default {
   .tab-box{
   }
   .list-box{
-    height: 200%;
+    // max-height: 200%;
     width: 100%;
     overflow-y: scroll;
     .city-box{

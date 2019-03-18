@@ -204,8 +204,9 @@ export default {
     sortShow: false
   }),
   async created() {
-    this.selectedCity = this.userArea.myMarketSelectedCity
-    this.searchContent.siteText = this.selectedCity ? this.selectedCity : '全国'
+    let data = window.localStorage.getItem('myMarketCity') ? JSON.parse(window.localStorage.getItem('myMarketCity')) : ''
+    this.selectedCity = data&&data.city || this.userArea.myMarketSelectedCity || ''
+    this.searchContent.siteText = this.selectedCity || '全国'
     // await this.showGetMyMarketInfo()//请求展示楼盘
     // await this.notShowGetMyMarketInfo()//请求不展示楼盘
     await this.getRecommendInfo() //请求轮播图数据
@@ -311,7 +312,7 @@ export default {
     },
     // 搜索区域点击处理
     areaClickHandler() {
-      this.$router.push({ name: 'area-select', query: { fromPage: 'myMarket' } })
+      this.$router.push({ name: 'city-list', query: { fromPage: 'myMarket', searchContent: this.searchContent.siteText,  category: 1 } })
     },
     operationSearch() {
       //根据展示/不展示楼盘数量来显示搜索
@@ -473,7 +474,7 @@ export default {
         return item.masterRecommand == '2'
       })
     },
-    async showGetMyMarketInfo() {
+    async showGetMyMarketInfo() {//请求展示的楼盘列表数据
       let name = this.showProjectName
       let filters = this.showProjectFilters
       let page = this.showPage
@@ -483,8 +484,18 @@ export default {
       obj.current = page
       obj.size = this.pageSize
       obj.displayFlag = 0
-      obj.city = this.selectedCity
+      let data = window.localStorage.getItem('myMarketCity') ? JSON.parse(window.localStorage.getItem('myMarketCity')) : ''
+      if(data) {
+        if(data.type===1) {
+          obj['province'] = data.city
+        } else {
+          obj['city'] = data.city
+        }
+      } else {
+        obj.city = this.selectedCity
+      }
       const resShow = await userService.getMyMarket(obj)
+      console.log(resShow,'展示的楼盘数据')
       // 数据重复加载
       if (page == 1) {
         this.showMarketList = resShow.records
@@ -622,7 +633,7 @@ export default {
   background: #ffffff;
   .screen {
     overflow: hidden;
-    height: 580px;
+    // height: 580px;
   }
   .search-container {
     margin-left: 18px;

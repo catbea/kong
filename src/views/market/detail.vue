@@ -4,11 +4,11 @@
     <hint-tire></hint-tire>
     <!-- 顶部swipe -->
     <div class="top-swipe-container">
-      <div class="swipe-outer" @click="photoHandle">
+      <div class="swipe-outer" >
         <div class="swipe-content">
-          <div class="btn-box" v-show="!showControls">
+          <div class="btn-box">
             <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
-            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle">视频</div>
+            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle" v-if="info.fyVideo">视频</div>
           </div>
           <van-swipe @change="swipeChange">
             <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
@@ -34,11 +34,12 @@
         </div>
         <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
       </div>
-      <!-- 视频 -->
+      <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400 -->
       <div class="video-box" v-show="showVideo">
-        <video width="100%" height="281" ref="videoplay" @click="showControls=!showControls" autoplay="true" :controls="showControls" muted="true" :poster="info.headImgUrl"  webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow">
-          <source src="http://www.w3school.com.cn/i/movie.mp4" type="video/mp4">
+        <video width="100%" height="281px"  ref="videoplay" preload="true" controls="showControls"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5">
+          <source :src="info.fyVideo" type="video/mp4">
         </video>
+        <div class="close-video" @click="videoHide">退出视频</div>
       </div>
     </div>
     <!-- 楼盘基础信息 -->
@@ -277,7 +278,7 @@ export default {
       posterClosed: false,
       playIcon: require('IMG/market/view720.png'),
       showVideo: false,
-      showControls: false,
+      showControls: true,
       appointmentImg:require('IMG/market/appointment@2x.png')
     }
   },
@@ -336,7 +337,8 @@ export default {
     },
     // 进入视频
     videoHandle() {
-      this.$refs.videoplay.play()
+      // this.$refs.videoplay.play()
+      this.$refs.videoplay.muted = true
       this.showVideo = true
     },
     // 关闭视频
@@ -433,8 +435,9 @@ export default {
       //     duration: 1000,
       //     message: '已开通成功，请到我的楼盘查看'
       //   })
-        let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+        // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let invalidTime = this.renewInfo.expireDate-0// 含时分秒的楼盘到期时间
+        let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
         if(this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city){
           const res = await marketService.addHouseByVip(this.info.linkerId)
           await this.getDetailInfo(this.id)
@@ -484,6 +487,7 @@ export default {
     },
    async vipRenewHandle(){//vip续费操作
       let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+      // let invalidTime = +new Date(this.info.invalidTime.replace(/-/g,'/'))// 含时分秒的楼盘到期时间
         let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
         if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
           const res = await marketService.addHouseByVip(this.info.linkerId)
@@ -543,7 +547,7 @@ export default {
         height: 100%;
         .btn-box{
           position: absolute;
-          z-index: 10;
+          z-index: 2;
           left: 0;
           bottom: 15px;
           width: 100%;
@@ -622,11 +626,27 @@ export default {
       top: 0;
       width: 100%;
       height: 100%;
-      z-index: 9;
       background-color: #000;
+      overflow:hidden;
+      z-index: 9;
       video{
         width: 100%;
         height: 281px;
+        object-fit: none;
+      }
+      .close-video{
+        position: absolute;
+        top: 45px;
+        right: 5px;
+        font-size: 12px;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 64px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 12px;
+        text-align: center;
+        z-index: 9999;
       }
     }
   }
