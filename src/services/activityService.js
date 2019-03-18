@@ -11,7 +11,7 @@ class ActivityService {
      */
     getActivityList(current, size, couponsActivityId) {
         return xhr({
-            url: '/userReceive/getActivityAwardList',
+            url: '/activity/getActivityAwardList',
             body: {
                 current,
                 size,
@@ -26,7 +26,7 @@ class ActivityService {
      */
     getActivityName(activityInd){  ///qywx/userReceive/getCouponsActivityInfo
         return xhr({
-            url: '/userReceive/getCouponsActivityInfo',
+            url: '/activity/getCouponsActivityInfo',
             body: {
                 activityInd
             }
