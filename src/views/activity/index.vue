@@ -15,15 +15,38 @@
               :style="{backgroundImage:'url(' + topIconImg + ')'}"
             ></div>
             <div class="phone-cell">
-              <input class="phone-input" placeholder="请使用当前微信绑定手机号" type="text" oninput="value=value.replace(/[^0-9]/g,'')" maxlength="11" v-model="mobile" @focus="focusHandler" @blur="blurHandler" @input="inputHandler"></input>
+              <input
+                class="phone-input"
+                placeholder="请使用当前微信绑定手机号"
+                type="text"
+                oninput="value=value.replace(/[^0-9]/g,'')"
+                maxlength="11"
+                v-model="mobile"
+                @focus="focusHandler"
+                @blur="blurHandler"
+                @input="inputHandler"
+              >
               <div class="mobile-input-line"></div>
             </div>
             <div class="code-cell">
               <div class="code-wrap">
-                <input class="code-input" placeholder="请输入验证码" type="text" oninput="value=value.replace(/[^0-9]/g,'')" maxlength="6" v-model="code" @focus="focusHandler" @blur="blurHandler"></input>
+                <input
+                  class="code-input"
+                  placeholder="请输入验证码"
+                  type="text"
+                  oninput="value=value.replace(/[^0-9]/g,'')"
+                  maxlength="6"
+                  v-model="code"
+                  @focus="focusHandler"
+                  @blur="blurHandler"
+                >
                 <div class="code-input-line"></div>
               </div>
-              <div class="send-btn" :class="disabled&&'disabled'" @click="sendCodeHandler">{{sendCodeText}}</div>
+              <div
+                class="send-btn"
+                :class="disabled&&'disabled'"
+                @click="sendCodeHandler"
+              >{{sendCodeText}}</div>
             </div>
             <div
               class="bg_img form-bottom"
@@ -90,7 +113,7 @@ export default {
     parentUserId: '',
     distributorId: '',
     activityId: '',
-    query: null,
+    query: null
   }),
   created() {
     this.query = this.$route.query
@@ -100,24 +123,36 @@ export default {
     this.distributorId = this.query.distributorId
     this.activityId = this.query.activityId
     this.queryActivityInfo()
-   
-    
   },
   methods: {
     async queryActivityInfo() {
       const res = await ActivityService.queryActivityInfo(this.enterpriseId, this.activityId, this.distributorId)
       if (res.returnCode == 44007) {
         this.activityState = 3
-      }else if (res.returnCode == 44009) {
+      } else if (res.returnCode == 44009) {
         this.activityState = 1
-      }else {
-        this.activityStart = res.couponsActivity.activityStart
-        this.activityEnd = res.couponsActivity.activityEnd
-        if (res.cpLinkerListVO && res.cpLinkerListVO.length ==0) {
+      } else {
+        this.activityStart = res.couponsActivity.activityStartDay
+        this.activityEnd = res.couponsActivity.activityEndDay
+        if (res.cpLinkerListVO && res.cpLinkerListVO.length == 0) {
           this.isHasProject = false
+        } else {
+          let lists = res.cpLinkerListVO
+          for (let i = 0; i < lists.length; i++) {
+            if (lists[i].linkerPrice == '0' || lists[i].linkerPrice == '') {
+              lists[i].linkerPrice = '价格待定'
+              lists[i].priceUnit = ''
+            } else {
+              if (lists[i].priceUnit == '万元/每套') {
+                lists[i].linkerPrice = '约' + lists[i].linkerPrice
+              } else if (lists[i].priceUnit == '元/㎡') {
+                lists[i].priceUnit = '元/㎡起'
+              }
+            }
+          }
+          this.buildList = lists
         }
       }
-      
     },
     async activitySendMsg() {
       const res = await ActivityService.activitySendMsg(this.enterpriseId, this.activityId, this.distributorId, this.mobile)
@@ -127,14 +162,14 @@ export default {
           message: '该活动仅支持特定分销商下经纪人可参与，您当前手机账户无法参与该活动',
           confirmButtonText: '知道了'
         })
-      }else if (res.returnCode == 44011) {
-         this.$toast.fail({
+      } else if (res.returnCode == 44011) {
+        this.$toast.fail({
           duration: 0,
           forbidClick: true,
           mask: true,
           message: '手机号码已经领取奖励请勿重复参加'
         })
-      }else {
+      } else {
         this.countDown()
       }
     },
@@ -147,11 +182,11 @@ export default {
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
         parentUserId: this.parentUserId,
-        distributorId: this.distributorId,
+        distributorId: this.distributorId
       }
       const res = await ActivityService.activityRegister(vo)
       this.clickDisabled = true
-      this.$router.push({ path: '/huiwan-activity/qrcode', query: {enterpriseId: this.enterpriseId} })
+      this.$router.push({ path: '/huiwan-activity/qrcode', query: { enterpriseId: this.enterpriseId } })
     },
     focusHandler(val, $event) {
       var body = document.querySelector('.phone-cell')
@@ -318,14 +353,15 @@ export default {
       color: #f67931;
       font-size: 16px;
     }
-    .mobile-input-line, .code-input-line {
+    .mobile-input-line,
+    .code-input-line {
       width: 100%;
       height: 1px;
       background-color: #f67931;
     }
 
     > .phone-cell {
-      margin: 15px 20px 10px 20px; 
+      margin: 15px 20px 10px 20px;
     }
     > .code-cell {
       position: relative;
