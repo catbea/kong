@@ -1,9 +1,10 @@
 <template>
   <div class="build-card">
-    <div class="build-img" :style="{backgroundImage:'url(' + data.linkerImg  + ')'}"></div>
-    <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
-    <div class="build-name">{{data.linkerName | textOver(8)}}</div>
-    <div class="build-price">{{data.linkerPrice }}{{data.priceUnit }}</div>
+    <div class="build-img" :style="{backgroundImage:'url(' + data.linkerImg  + ')'}">
+      <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
+    </div>
+    <div class="building-name">{{data.linkerName | textOver(8)}}</div>
+    <div class="building-price">{{data.linkerPrice }}{{data.priceUnit }}</div>
   </div>
 </template>
 
@@ -18,50 +19,54 @@ export default {
 </script>
 
 
-<style lang="less">
+<style lang="less" scoped>
 .build-card {
   height: 157px;
   width: 42%;
-  margin-left: 5%;
+  margin-left: 6%;
   background-color: white;
   border-radius: 8px;
   margin-bottom: 12px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 
-  .build-img {
+  > .build-img {
     width: 100%;
     height: 104px;
     background-size: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    position: relative;
+
+    > .feel-label {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-top-right-radius: 8px;
+      font-size: 10px;
+      color: white;
+      width: 45px;
+      height: 17px;
+      line-height: 17px;
+      text-align: center;
+      background-size: 45px 17px;
+    }
   }
 
-  .feel-label {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-top-right-radius: 8px;
-    font-size: 10px;
-    color: white;
-    width: 45px;
-    height: 17px;
-    line-height: 17px;
-    text-align: center;
-    background-size: 45px 17px;
-  }
-
-  .build-name {
+  > .building-name {
+    display: flex;
     color: #333333;
     font-size: 14px;
     margin-left: 8px;
     margin-top: 8px;
   }
 
-  .build-price {
+  > .building-price {
+    display: flex;
     color: #ea4d2e;
     font-size: 10px;
     margin-left: 8px;
-    margin-top: 4px;
+    margin-top: 8px;
   }
 }
 </style>
