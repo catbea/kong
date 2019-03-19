@@ -18,9 +18,9 @@
       <span class="code-text">扫描二维码</span>
       <span class="campany-text">关注企业公众号</span>
     </div>
-    <!-- <div class="imgcard" id="card-result" v-show="status === 2">
+    <div class="imgcard" id="card-result" v-show="status === 2">
       <img class="imgcard-img" id="imgcard">
-    </div>-->
+    </div>
     <span class="notice-text">请长按保存邀请图片</span>
   </div>
 </template>
