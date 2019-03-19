@@ -5,66 +5,73 @@
       <p class="top-title">AW大师</p>
       <p class="top-text">全景看房 - AI拓客 - 裂变传播 - 监控意向</p>
       <p class="top-text top-desc">连接客户更简单</p>
-      <div class="box-shadow top-form-container">
-        <div class="top-invite-info">
-          <div class="bg_img invite-head" :style="{backgroundImage:'url(' + borderImg + ')'}"/>
-          <span class="invite-name">张佳玮&nbsp;&nbsp;</span>
-          <span class="invite-desc">邀请您加入aw大师</span>
-        </div>
-        <div class="top-phone-cell">
-          <input
-            class="phone-input"
-            placeholder="请使用当前微信绑定手机号"
-            type="text"
-            oninput="value=value.replace(/[^0-9]/g,'')"
-            maxlength="11"
-            v-model="mobile"
-            @focus="focusHandler"
-            @blur="blurHandler"
-            @input="inputHandler"
-          >
-        </div>
-        <div class="top-code-cell">
-          <div class="top-code-wrap">
+      <div class="top-content" v-if="!registSuccess">
+        <div class="box-shadow top-form-container">
+          <div class="top-invite-info">
+            <div class="bg_img invite-head" :style="{backgroundImage:'url(' + borderImg + ')'}"/>
+            <span class="invite-name">张佳玮&nbsp;&nbsp;</span>
+            <span class="invite-desc">邀请您加入aw大师</span>
+          </div>
+          <div class="top-phone-cell">
             <input
-              class="code-input"
-              placeholder="请输入验证码"
+              class="phone-input"
+              placeholder="请使用当前微信绑定手机号"
               type="text"
               oninput="value=value.replace(/[^0-9]/g,'')"
-              maxlength="6"
-              v-model="code"
+              maxlength="11"
+              v-model="mobile"
               @focus="focusHandler"
               @blur="blurHandler"
+              @input="inputHandler"
             >
           </div>
-          <div
-            class="top-send-btn"
-            :class="disabled&&'disabled'"
-            @click="sendCodeHandler"
-          >{{sendCodeText}}</div>
+          <div class="top-code-cell">
+            <div class="top-code-wrap">
+              <input
+                class="code-input"
+                placeholder="请输入验证码"
+                type="text"
+                oninput="value=value.replace(/[^0-9]/g,'')"
+                maxlength="6"
+                v-model="code"
+                @focus="focusHandler"
+                @blur="blurHandler"
+              >
+            </div>
+            <div
+              class="top-send-btn"
+              :class="disabled&&'disabled'"
+              @click="sendCodeHandler"
+            >{{sendCodeText}}</div>
+          </div>
+          <div class="top-name-cell">
+            <input
+              class="name-input"
+              placeholder="请输入你的昵称"
+              type="text"
+              maxlength="6"
+              v-model="name"
+              @focus="focusHandler"
+              @blur="blurHandler"
+              @input="inputHandler"
+            >
+          </div>
         </div>
-        <div class="top-name-cell">
-          <input
-            class="name-input"
-            placeholder="请输入你的昵称"
-            type="text"
-            maxlength="6"
-            v-model="name"
-            @focus="focusHandler"
-            @blur="blurHandler"
-            @input="inputHandler"
-          >
-        </div>
+        <!-- <router-link :to="params"> -->
+        <div class="reg-btn" :class="registDisabled&&'registDisabled'" @click="nextHandler">立即注册</div>
+        <!-- </router-link> -->
+        <p class="top-protocol">注册代表您同意
+          <router-link
+            style="color:#fff;font-size:12px;font-weight:bold;"
+            to="/register/agreement?name=AW大师"
+          >注册协议</router-link>
+        </p>
       </div>
-      <!-- <router-link :to="params"> -->
-      <div class="reg-btn" :class="registDisabled&&'registDisabled'" @click="nextHandler">立即注册</div>
-      <!-- </router-link> -->
-      <p class="top-protocol">注册代表您同意
-        <router-link
-          style="color:#fff;font-size:12px;font-weight:bold;"
-          to="/register/agreement?name=AW大师"
-        >注册协议</router-link>
-      </p>
+      <div v-else class="box-shadow qrcode-content">
+        <img class="bg_img register-qrcode" :src="qrcodeImg"></img>
+        <div class="register-desc">提交成功，请扫描二维码 </div>
+        <div class="register-desc">关注企业微信 即完成注册</div>
+      </div>
     </div>
     <div class="info-container">
       <h5>我们是AW大师</h5>
@@ -100,27 +107,41 @@ export default {
     name: '',
     sendCodeText: '获取验证码',
     codeTime: 60,
-    disabled: true,
-    registDisabled: true,
-    clickDisabled: false,
+    disabled: true, // 获取验证码是否可点击
+    registDisabled: true, // 注册按钮是否可点击
+    clickDisabled: false,  // 注册按钮防多次点击
+    registSuccess: false, // 是否成功注册
+    registerType: '',
+    enterpriseId: '',
+    parentUserId: '',
+    distributorId: '',
     params: null,
     query: null
   }),
   created() {
     this.query = this.$route.query
     // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
+    // registerType=10&parentUserId=113&enterpriseId=91
+    // registerType=20&parentUserId=113&distributorId=120&enterpriseId=91
+    // registerType=30&enterpriseId=91
     if (this.query.registerType == '30') {
       this.params = `/register/step1?${qs.stringify(this.$route.query)}`
     } else {
       this.params = `/register/step3?${qs.stringify(this.$route.query)}`
     }
     this.enterpriseId = this.$route.query.enterpriseId
+    this.registerType = this.$route.query.registerType
+    this.parentUserId = this.$route.query.parentUserId
+    this.distributorId = this.$route.query.distributorId
     this.queryByRegister(this.enterpriseId)
   },
   methods: {
     async queryByRegister(enterpriseId) {
       const result = await RegisterService.queryByRegister(enterpriseId)
       this.qrcodeImg = result.qrCode
+    },
+    async queryRegisterRecommendInfo() {
+      const result = await RegisterService.queryRegisterRecommendInfo(this.enterpriseId, this.registerType, this.parentUserId)
     },
     focusHandler(val, $event) {
       var body = document.querySelector('.top-phone-cell .top-code-cell .top-name-cell')
@@ -135,9 +156,9 @@ export default {
       } else {
         this.disabled = true
       }
-      if (this.code.length >0 && this.name.length > 0) {
+      if (this.code.length > 0 && this.name.length > 0) {
         this.registDisabled = false
-      }else {
+      } else {
         this.registDisabled = true
       }
     },
@@ -165,6 +186,8 @@ export default {
       }, 1000)
     },
     nextHandler() {
+      if (this.registDisabled == true) return
+
       if (this.mobile.length == 0) {
         return this.$toast('请输入微信绑定手机号')
       }
@@ -198,13 +221,15 @@ export default {
       console.log(result)
       if (result.returnCode == 21103 || result.returnCode == 21105) {
         this.clickDisabled = false
+        this.registSuccess = false
         this.$toast(result.msg)
       } else {
         this.clickDisabled = true
-        let params = {
-          enterpriseId: this.enterpriseId
-        }
-        this.$router.push({ path: '/register/step2', query: params })
+        this.registSuccess = true
+        // let params = {
+        //   enterpriseId: this.enterpriseId
+        // }
+        // this.$router.push({ path: '/register/step2', query: params })
       }
     }
   }
@@ -325,36 +350,64 @@ export default {
           right: 0;
           &.disabled {
             opacity: 0.5;
+            background-color: #b6c0cc;
           }
         }
       }
     }
 
     .reg-btn {
-      position: absolute;
+      // position: absolute;
       width: 324px;
       height: 45px;
       border-radius: 8px;
-      border: 1px solid #fff;
+      border: 0;
       color: #fff;
       font-size: 16px;
       line-height: 45px;
       text-align: center;
-      top: 482px;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      // top: 482px;
+      // left: 50%;
+      // transform: translate(-50%, -50%);
+      margin-top: 29px;
+      background-color: #0dc868;
       &.registDisabled {
         opacity: 0.5;
+        border: 1px solid #fff;
+        background-color: transparent;
       }
     }
     .top-protocol {
       color: #fff;
       font-size: 12px;
-      position: absolute;
-      top: 514px;
-      left: 26px;
+      // position: absolute;
+      // top: 514px;
+      // left: 26px;
+      margin-top: 8px;
     }
   }
+
+  .qrcode-content {
+    width: 324px;
+    height: 324px;
+    background-color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 24px;
+    > .register-qrcode {
+    margin-top: 50px;
+    width: 200px;
+    height: 200px;
+    }
+    > .register-desc {
+    height: 24px;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+  }
+
   .info-container {
     padding-top: 30px;
     text-align: center;
