@@ -36,7 +36,7 @@
       </div>
       <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400 -->
       <div class="video-box" v-show="showVideo">
-        <video width="100%" height="281px"  ref="videoplay" preload="true" controls="showControls"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5">
+        <video width="100%" height="281px"  ref="videoplay" preload="true" controls="showControls" style="object-fit:fill"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5" x5-video-player-fullscreen="true">
           <source :src="info.fyVideo" type="video/mp4">
         </video>
         <div class="close-video" @click="videoHide">退出视频</div>
@@ -92,15 +92,15 @@
         <li>{{info.linkerName}}</li>
       </ol>
     </div>
-    <van-popup v-model="relationShow">
+    <van-popup v-model="relationShow" class="relationPopup">
       <div class="relationName">
         <p class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="relationShow=false"></p>
         <ul>
-          <li>联系客服</li>
-          <li>查看楼盘分享关系详情 请联系</li>
-          <li>{{info&&info.contatctTel}}</li>
+          <li>请联系经纪人</li>
+          <li>了解更多楼盘分享关系详情，请联系经纪人</li>
+          <!-- <li>{{info&&info.contatctTel}}</li> -->
         </ul>
-        <p class="immediately" @click="relationHandle">立即联系</p>
+        <p class="van-hairline--top immediately" @click="relationHandle">知道了</p>
       </div>
     </van-popup>
     <!-- 户型 -->
@@ -116,7 +116,7 @@
                 <p class="house-type-area" v-if="item.orientations=='暂无信息'">{{`建面${item.area} 暂无朝向信息`}}</p>
                 <p class="house-type-area" v-else>{{`建面${item.area}${item.orientations}朝向`}}</p>
                 <p class="house-type-price" v-if="item.price=='价格待定'">{{item.price}}</p>
-                <p class="house-type-price" v-else>约{{item.price}}</p>
+                <p class="house-type-price" v-else><span v-if="item.price.indexOf('起')=== -1">约</span>{{item.price}}</p>
               </div>
             </div>
           </swiper-slide>
@@ -308,13 +308,12 @@ export default {
   methods: {
     relationHandle() {
       //立即联系弹窗
-      window.location.href = 'tel://' + this.info.contatctTel
+      // window.location.href = 'tel://' + this.info.contatctTel
       this.relationShow = false
     },
     async getMarketDetailPhotoInfo() {
       //判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
-      console.log(res, '相册数据')
       if (res.length > 0) {
         this.photoButton = true
       } else if (res.length <= 0) {
@@ -354,9 +353,7 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(res,'楼盘数据')
       let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))
-    console.log(invalidTime,2222222)
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -435,7 +432,8 @@ export default {
       //     duration: 1000,
       //     message: '已开通成功，请到我的楼盘查看'
       //   })
-        let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+        let invalidTime = this.renewInfo.expireDate-0// 含时分秒的楼盘到期时间
         let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
         if(this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city){
           const res = await marketService.addHouseByVip(this.info.linkerId)
@@ -482,7 +480,6 @@ export default {
     async getVipInfo() {
       let res = await marketService.vipInfo()
       this.vipInfo = res
-      console.log(res,'vip数据')
     },
    async vipRenewHandle(){//vip续费操作
       let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
@@ -1085,7 +1082,7 @@ export default {
     left: 0;
     bottom: 0;
     background-color: #fff;
-    z-index: 999;
+    z-index: 8;
     > .unopen-status-box {
       position: relative;
       width: 100%;
@@ -1155,14 +1152,14 @@ export default {
     opacity: 0;
   }
 }
-.van-popup {
+.relationPopup {
   border-radius: 12px;
   width: 311px;
-  height: 231px;
+  height:198px;
   // padding-top:45px;
   .relationName {
     width: 311px;
-    height: 231px;
+    height: 168px;
     background: rgba(255, 255, 255, 1);
     border-radius: 12px;
     position: relative;
@@ -1199,16 +1196,16 @@ export default {
     }
     .immediately {
       text-align: center;
-      margin-left: 32px;
-      width: 247px;
-      height: 44px;
-      background: rgba(0, 122, 230, 1);
+      // margin-left: 32px;
+      width:100%;
+      height:50px;
+      // background: rgba(0, 122, 230, 1);
       border-radius: 6px;
-      font-size: 16px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 1);
-      line-height: 44px;
+      font-size:18px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(1,127,255,1);
+      line-height:50px;
     }
   }
 }
