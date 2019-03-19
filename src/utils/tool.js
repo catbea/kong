@@ -179,6 +179,5 @@ export function checkIOSVersion() {
     version = (v_info + "").replace(/[^0-9|_.]/ig, "").replace(/_/ig, "."); //得到版本号9.3.2或者9.0
     // version = parseInt(version.split('.')[0]); // 得到版本号第一位
 }
-  console.log(version)
   return version
 }
