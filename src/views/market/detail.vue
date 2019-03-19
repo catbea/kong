@@ -36,7 +36,7 @@
       </div>
       <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400 -->
       <div class="video-box" v-show="showVideo">
-        <video width="100%" height="281px"  ref="videoplay" preload="true" controls="showControls"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5">
+        <video width="100%" height="281px"  ref="videoplay" preload="true" controls="showControls" style="object-fit:fill"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x5-playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5" x5-video-player-fullscreen="true">
           <source :src="info.fyVideo" type="video/mp4">
         </video>
         <div class="close-video" @click="videoHide">退出视频</div>
@@ -314,7 +314,6 @@ export default {
     async getMarketDetailPhotoInfo() {
       //判断该楼盘有无图片列表
       const res = await marketService.getMarketDetailPhoto(this.id)
-      console.log(res, '相册数据')
       if (res.length > 0) {
         this.photoButton = true
       } else if (res.length <= 0) {
@@ -354,9 +353,7 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      console.log(res,'楼盘数据')
       let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))
-    console.log(invalidTime,2222222)
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -483,7 +480,6 @@ export default {
     async getVipInfo() {
       let res = await marketService.vipInfo()
       this.vipInfo = res
-      console.log(res,'vip数据')
     },
    async vipRenewHandle(){//vip续费操作
       let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
@@ -1086,7 +1082,7 @@ export default {
     left: 0;
     bottom: 0;
     background-color: #fff;
-    z-index: 999;
+    z-index: 8;
     > .unopen-status-box {
       position: relative;
       width: 100%;
