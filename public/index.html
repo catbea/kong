@@ -17,7 +17,7 @@
   <script src="./iconfont.js" type="text/javascript"></script>
   <script>
     if (window.navigator.userAgent) {
-      let ua = navigator.userAgent.toLowerCase()
+      let ua = window.navigator.userAgent.toLowerCase()
       let version = ''
       if (ua.indexOf("like mac os x") > 0) {
         var reg = /os [\d._]+/gi;
@@ -27,7 +27,6 @@
         console.log(version)
         if (parseFloat(version) < parseFloat('10.3')) {
           alert('当前操作系统无法正常使用AW大师，请升级iOS系统后再次尝试')
-          return
         }
       }
     } else {
