@@ -5,13 +5,13 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userStatus: 0,
-  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || ((process.env.VUE_APP_AW_ENV=='uat' || process.env.VUE_APP_AW_ENV=='prod') ? {} : {
+  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || (( process.env.VUE_APP_AW_ENV=='prod') ? {} : {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0,
     devMode: true,
     agentId: '4626',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
-    distributorId: '124',
+    distributorId: '169',
     distributorName: '广佛分公司',
     enterpriseId: '90',
     institutionId: '82',
@@ -50,7 +50,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJwNzlkdXkiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NzQ2IiwiZXhwIjoxNTUyODk2OTAwLCJpYXQiOjE1NTIyOTIxMDB9.YAuts_7ys3z_hLnhqxL_TnNToi3lIYDYvrCL66GCYsWY7grfMpzyUeB9bAq-UXWZNcJvU_nPAs7xXq1sAt0a-A',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI4NDN1a2oiLCJzdWIiOiJhZ2VudElkOnd3NWVlYjcyNDBiY2JhZDI4YToxMDAwMDI2NTEiLCJleHAiOjE1NTM1ODczMDQsImlhdCI6MTU1Mjk4MjUwNH0.UXCkttXp2T15I53KRS6h5ScnDn4GfZ-Mi8ceA3inbgt_lrvJE8jeC3mYibnyXMJh1-LD7f8-fLGy_WMAGRzRlw',
     majorCity: '太原市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',

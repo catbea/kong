@@ -104,10 +104,10 @@ export default {
     },
 
     async getActivityInfo(activityId) {
+
       const result = await ActivityService.getActivityList(activityId)
-
-      this.buildList = result.records
-
+      this.buildList = result
+       
       let _that = this
       let firstList = []
       let infoNum = _that.buildList.length
