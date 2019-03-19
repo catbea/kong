@@ -9,12 +9,10 @@ class ActivityService {
      * @param {*} size 
      * @param {*} couponsActivityId 
      */
-    getActivityList(current, size, couponsActivityId) {
+    getActivityList(couponsActivityId) {
         return xhr({
             url: '/activity/getActivityAwardList',
             body: {
-                current,
-                size,
                 couponsActivityId
             }
         })

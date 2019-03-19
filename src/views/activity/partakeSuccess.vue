@@ -104,7 +104,7 @@ export default {
     },
 
     async getActivityInfo(activityId) {
-      const result = await ActivityService.getActivityList('1', '', activityId)
+      const result = await ActivityService.getActivityList(activityId)
 
       this.buildList = result.records
 
