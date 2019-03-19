@@ -34,7 +34,7 @@
     <!-- 删除段落操作弹窗 -->
     <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect"/>
     <!-- 浮动栏 -->
-    <div class="fixed-bar">
+    <div class="fixed-bar" v-show="!loaddingStatus">
       <div class="left-operation">
         <div class="left-first" @click="helpClickHandler">
           <i class="icon iconfont icon-write_help" style="fontSize:26px;margin-bottom:3px"></i>
@@ -47,7 +47,8 @@
       </div>
       <div class="right-operation">
         <div class="preview-btn" @click="previewClickHandler">{{previewFlag? '编辑':'预览'}}</div>
-        <div class="save-btn" @click="saveClickHandler">保存并分享</div>
+        <div class="save-btn" v-show="!pushFlag" @click="saveClickHandler">保存并分享</div>
+        <div class="save-btn" v-show="pushFlag">{{loaddingTxt}}...</div>
       </div>
     </div>
     <!-- 楼盘选择 -->
@@ -89,6 +90,8 @@ export default {
     SingleSelectBox
   },
   data: () => ({
+    loaddingTxt: '加载中',
+    loaddingStatus: true,
     id: '',
     city: '', // 所属地
     agentId: '', // 经纪人id
@@ -121,6 +124,17 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
+
+      console.log(Number(this.info.source), 'this.info.source')
+
+      if(!this.info || isNaN(Number(this.info.source))) {
+        // this.pushFlag = true
+        this.loaddingStatus = true
+        return
+      } else {
+        this.loaddingStatus = false
+        this.loaddingTxt = '保存中'
+      }
 
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
@@ -213,6 +227,8 @@ export default {
       this.singleShow = true
     },
     multiAddClickHandler() {
+      console.log(this.recommendList,'有多少',this.info)
+      
       if (this.recommendList.length >= this.info.linkerCount) {
         this.$toast('暂无更多开通楼盘')
         return
@@ -256,8 +272,8 @@ export default {
         if (temp.status === 'edit') content += `<p>${temp.text}</p>`
       }
       let res, targetid
-      // 存在这个字段,说明是再次编辑
-      if ((this.info.source == 2 || this.info.source == 3) && this.info.belongeder !== '') {
+      // 存在这个字段,说明是再次编辑 source:0 1系统原文章 2:经纪人文章 3:小程序
+      if (this.info && this.info.source && (this.info.source == 2 || this.info.source == 3) && this.info.belongeder !== '') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
         targetid = this.info.id
       } else {
