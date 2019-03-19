@@ -8,5 +8,6 @@ export default async (to, from, next) => {
         })
         return
     }
+    next()
     console.log(version)
 }
