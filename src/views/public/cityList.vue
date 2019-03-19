@@ -176,7 +176,20 @@ export default {
     },
     // 重新定位
     retryLocation() {
-      this.$wechatHelper.getUserArea() // awHelper.wechatHelper.getUserArea()
+      this.wx.getLocation({
+        type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+        success: res => {
+          store.dispatch('setWxLocation', res)
+        },
+        fail: () => {
+          console.log('wx location fail')
+          this.$toast('定位失败')
+        },
+        cancel: res => {
+          console.log(res, 'wx location cancel')
+          this.$toast('定位取消')
+        }
+      })
     },
   },
   directives: {
