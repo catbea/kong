@@ -6,7 +6,7 @@
         <div class="bg_img activity-logo" :style="{backgroundImage:'url(' + logoImg + ')'}"></div>
         <p class="activity-top">全景看房 - AI拓客 - 裂变传播 - 监控意向</p>
         <p class="activity-title">惠湾联盟试运营</p>
-        <p class="activity-time">活动时间：{{activityStart}}—{{activityEnd}}</p>
+        <p class="activity-time">活动时间：{{activityStart | dateTimeFormatter(5)}}—{{activityEnd | dateTimeFormatter(5)}}</p>
         <div class="activity-content" v-if="activityState===2">
           <div class="form-container">
             <div class="bg_img icon-girl" :style="{backgroundImage:'url(' + girlIconImg + ')'}"></div>
@@ -68,7 +68,7 @@
     <div class="activity-page-bottom" v-if="isHasProject">
       <!-- 楼盘列表 -->
       <div class="project-wrap">
-        <div class="project-title">以下楼盘免费开通至{{activityEnd}}</div>
+        <div class="project-title">以下楼盘免费开通至{{activityEnd | dateTimeFormatter(5)}}</div>
         <div class="project-list">
           <build-card v-for="(item ,index) in buildList" :key="index" :data="item"></build-card>
         </div>
@@ -139,7 +139,7 @@ export default {
         } else {
           let lists = res.cpLinkerListVO
           for (let i = 0; i < lists.length; i++) {
-            if (lists[i].linkerPrice == '0' || lists[i].linkerPrice == '') {
+            if (parseInt(lists[i].linkerPrice) === 0 || lists[i].linkerPrice == '') {
               lists[i].linkerPrice = '价格待定'
               lists[i].priceUnit = ''
             } else {
