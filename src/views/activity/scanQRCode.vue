@@ -7,7 +7,7 @@
           <p class="scan-code-title">领取成功！</p>
           <p class="scan-code-detail">礼品已经躺在你的账号了哦</p>
           <p class="scan-code-detail">请使用参与活动手机号绑定的微信登录查看奖品</p>
-          <p class="scan-code-detail">有效期：2019年3月22日前</p>
+          <p class="scan-code-detail">有效期：{{endTime | dateTimeFormatter(5)}}前</p>
           <img class="bg_img scan-qrcode" :src="qrcodeImg"></img>
           <p class="scan-code-bottom">长按识别关注企业微信点击经纪人端领取奖品</p>
       </div>
@@ -20,10 +20,12 @@ export default {
         grilIconImg: require('IMG/activity/activity_girl.png'),
         starIconImg: require('IMG/activity/activity_star.png'),
         enterpriseId: '',
+        endTime: '',
         qrcodeImg: '',
     }),
     created() {
         this.enterpriseId = this.$route.query.enterpriseId
+        this.endTime = this.$route.query.endTime
         this.queryByRegister(this.enterpriseId)
     },
     methods: {

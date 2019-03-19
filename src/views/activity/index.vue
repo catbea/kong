@@ -60,9 +60,9 @@
           <div class="activity-tip">*仅惠湾联盟下经纪人可参与</div>
         </div>
         <!-- 活动未开始 -->
-        <!-- <no-start class="activity-no-start"></no-start> -->
+        <no-start class="activity-no-start" v-if="activityState===1"></no-start>
         <!-- 活动结束 -->
-        <!-- <ended class="activity-ended"></ended> -->
+        <ended class="activity-ended" v-if="activityState===3"></ended>
       </div>
     </div>
     <div class="activity-page-bottom" v-if="isHasProject">
@@ -116,6 +116,7 @@ export default {
     query: null
   }),
   created() {
+    // registerType=20&enterpriseId=91&distributorId=120&parentUserId=492&activityId=22
     this.query = this.$route.query
     this.registerType = this.query.registerType
     this.enterpriseId = this.query.enterpriseId
@@ -129,8 +130,10 @@ export default {
       const res = await ActivityService.queryActivityInfo(this.enterpriseId, this.activityId, this.distributorId)
       if (res.returnCode == 44007) {
         this.activityState = 3
+        this.isHasProject = false
       } else if (res.returnCode == 44009) {
         this.activityState = 1
+        this.isHasProject = false
       } else {
         this.activityStart = res.couponsActivity.activityStartDay
         this.activityEnd = res.couponsActivity.activityEndDay
@@ -185,8 +188,14 @@ export default {
         distributorId: this.distributorId
       }
       const res = await ActivityService.activityRegister(vo)
-      this.clickDisabled = true
-      this.$router.push({ path: '/huiwan-activity/qrcode', query: { enterpriseId: this.enterpriseId } })
+      if (res.returnCode == 21103 || res.returnCode == 21105) {
+        this.clickDisabled = false
+        this.$toast(res.msg)
+      } else {
+        // this.clickDisabled = true
+        this.$router.push({ path: '/huiwan-activity/qrcode', query: { enterpriseId: this.enterpriseId, endTime: this.activityEnd } })
+      }
+      
     },
     focusHandler(val, $event) {
       var body = document.querySelector('.phone-cell')
@@ -234,7 +243,7 @@ export default {
       if (this.clickDisabled) {
         return
       }
-      this.clickDisabled = true
+      // this.clickDisabled = true
       this.activityRegister()
     }
   }
