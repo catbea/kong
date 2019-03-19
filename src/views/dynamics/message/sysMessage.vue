@@ -13,7 +13,7 @@
                 <p class="sys-shadowBox-time" v-html="item.content.replace(/(\r+\n+)|(\n+)/g,'<br>')"></p>
                 <div style="display:flex;" v-show="item.type!==''&&item.type==10">
                   <p class="client-detail" @click="goDetail(item.clientId)">客户详情</p>
-                  <p class="go-report" @click="goReport(item.clientId,item.linkerId)">立即报备</p>
+                  <p class="go-report" @click="goReport(item.clientId,item.linkerId,item.clientName)">立即报备</p>
                 </div>
                 <!-- <p class="sys-shadowBox-remarks">本次主要更新内容有： 1.增加勿扰模式 2.VIP功能优化调整 3.我的楼盘增加关闭展示功能</p> -->
               </div>
@@ -67,12 +67,12 @@ export default {
     goDetail(clientId){//查看客户详情
     this.$router.push(`/custom/${clientId}`)
     },
-   async goReport(clientId,linkerId){//立即报备
+   async goReport(clientId,linkerId,clientName){//立即报备
     const res = await dynamicsService.getReportClient(clientId,linkerId)
     console.log(res,'报备数据')
     let _reportAddInfo = {
         clientId:res.clientId,//客户id
-        clientName:res.clientName,//客户姓名
+        clientName:clientName,//客户姓名
         clientPhone: res.mobile,//客户号码
         linkerId:linkerId,
         linkerName:res.linkerName,//楼盘ID
