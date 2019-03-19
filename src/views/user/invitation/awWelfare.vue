@@ -164,35 +164,38 @@ export default {
     }
   }
   > .company-card {
-    height: 66%;
-    width: 86%;
-    margin-left: 7%;
-    min-height: 397px;
-    background-size: 321px 397px;
+    height: 75%;
+    width: 80%;
+    background: green;
+    margin-left: 10%;
+    border-color: transparent;
+    background-size: cover;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: 380px;
     flex-direction: column;
-    margin-top: -10px;
 
     > .code-bg {
-      width: 170px;
-      height: 170px;
-      margin-top: -100px;
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
     }
 
-    .code-text {
+    > .code-text {
+      display: flex;
+      justify-content: center;
       color: #333333;
       font-size: 14px;
       line-height: 10px;
       margin-top: 20px;
     }
 
-    .campany-text {
+    > .campany-text {
+      display: flex;
+      justify-content: center;
       color: #333333;
       font-size: 14px;
       line-height: 10px;
-      margin-top: 5px;
+      margin-top: 10px;
     }
   }
 
