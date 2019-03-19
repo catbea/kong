@@ -16,11 +16,11 @@ export default router => {
   if (process.env.VUE_APP_QQ_MTA_SID) {
     router.afterEach(analyze)
   }
+
   router.beforeEach(authCheck)
   router.beforeEach(imSigCheck)
   router.afterEach(routerMetaHandler)
   router.afterEach(promptClear)
   router.afterEach(routeConf)
   router.afterEach(wechatSet)
-
 }
