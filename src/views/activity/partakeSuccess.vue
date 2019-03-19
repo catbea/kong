@@ -10,7 +10,7 @@
         <build-card v-for="(item ,index) in firstBuild" :key="index" :data="item"></build-card>
       </div>
       <div class="check-more" @click="showMoreData()">
-        <a>展开更多</a>
+        <a>{{this.showMore==false?'展开更多':'收起'}}</a>
         <img :src="this.showMore==false?arrowDown:arrowUp">
       </div>
     </div>
