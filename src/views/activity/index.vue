@@ -106,7 +106,7 @@ export default {
     buildList: [],
     activityStart: '', // 活动开始时间
     activityEnd: '', // 活动结束时间
-    activityState: 2, // 1-未开始 2-活动中 3-已结束
+    activityState: 0, // 1-未开始 2-活动中 3-已结束
     isHasProject: true,
     registerType: '',
     enterpriseId: '',
@@ -134,9 +134,13 @@ export default {
       if (res.returnCode == 44007) {
         this.activityState = 3
         this.isHasProject = false
+        this.activityStart = res.data.activityStartDay
+        this.activityEnd = res.data.activityEndDay
       } else if (res.returnCode == 44009) {
         this.activityState = 1
         this.isHasProject = false
+        this.activityStart = res.data.activityStartDay
+        this.activityEnd = res.data.activityEndDay
       } else {
         this.activityStart = res.couponsActivity.activityStartDay
         this.activityEnd = res.couponsActivity.activityEndDay
@@ -176,7 +180,8 @@ export default {
           duration: 0,
           forbidClick: true,
           mask: true,
-          message: '手机号码已经领取奖励请勿重复参加'
+          message: '手机号码已经领取奖励请勿重复参加',
+          className: 'activity-toast'
         })
       } else {
         this.countDown()
@@ -258,6 +263,12 @@ export default {
 }
 </script>
 
+<style lang="less">
+.activity-toast {
+  width: 150px!important;
+  text-align: center!important;
+}
+</style>
 
 <style lang="less" scoped>
 .activity-page {
