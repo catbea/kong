@@ -256,7 +256,7 @@ export default {
   .tab-box{
   }
   .list-box{
-    // max-height: 200%;
+    height: 200%;
     width: 100%;
     overflow-y: scroll;
     .city-box{
@@ -332,7 +332,6 @@ export default {
         }
       }
       .city-index{
-        
       }
     }
     .province-box{}
