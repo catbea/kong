@@ -1,25 +1,34 @@
 <template>
   <div class="teammateList-page">
-      <div >
-          <div class="teammateList-top" :style="{'backgroundImage':'url('+teammateListBackIcon+')'}">
-            <img :src="couponIcon" class="teammateList-top-icon">
-            <div class="teammateList-top-center">
-              <p class="teammateList-top-price"><span class="teammateList-top-price-num">{{registerRewardsPrice | priceFormart}}</span>元</p>
-              <p class="teammateList-top-num">已邀请：{{ registerRewardsTotal == 0 ? 0 : registerRewardsTotal}}人</p>
-            </div>
-          </div>
-          <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getregisterRewards">
-          <div class="teammateList-center" v-for="(registerItem,key) in registerRewards" :key="key">
-              <div class="teammateList-center-left">
-                <p class="teammateList-center-left-text">成功邀请用户</p>
-                <p class="teammateList-center-left-tell">{{registerItem.mobile}}</p>
-              </div>
-              <div class="teammateList-center-right">
-                <p class="teammateList-center-right-time">{{registerItem.rewardsTime | dateTimeFormatter(2,'/')}}</p>
-              </div>
-          </div>
-          </van-list>
+    <div>
+      <div class="teammateList-top" :style="{'backgroundImage':'url('+teammateListBackIcon+')'}">
+        <img :src="couponIcon" class="teammateList-top-icon">
+        <div class="teammateList-top-center">
+          <p class="teammateList-top-price">
+            <span class="teammateList-top-price-num">{{registerRewardsPrice | priceFormart}}</span>元
+          </p>
+          <p
+            class="teammateList-top-num"
+          >已邀请：{{ registerRewardsTotal == 0 ? 0 : registerRewardsTotal}}人</p>
+        </div>
       </div>
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        :finished-text="'没有更多了'"
+        @load="getregisterRewards"
+      >
+        <div class="teammateList-center" v-for="(registerItem,key) in registerRewards" :key="key">
+          <div class="teammateList-center-left">
+            <p class="teammateList-center-left-text">成功邀请用户</p>
+            <p class="teammateList-center-left-tell">{{registerItem.mobile}}</p>
+          </div>
+          <div class="teammateList-center-right">
+            <p class="teammateList-center-right-time">收货 ¥{{registerItem.price| priceFormart}}元代金券</p>
+          </div>
+        </div>
+      </van-list>
+    </div>
   </div>
 </template>
 
@@ -35,7 +44,7 @@ export default {
       finished: false,
       teammateListBackIcon: require('IMG/user/invitation/aw-banner@2x.png'),
       kaitBackIcon: require('IMG/user/invitation/aw-banner1@2x.png'),
-      couponIcon: require('IMG/user/invitation/aw-coupon@2x.png'),
+      couponIcon: require('IMG/user/invitation/coupon_label.png'),
       registerRewards: [],
       registerRewardsTotal: 0,
       registerRewardsPrice: 0,
@@ -120,21 +129,21 @@ export default {
     }
     .teammateList-top-center {
       text-align: center;
-      padding-top: 10px;
+      padding-top: 50px;
       .teammateList-top-price {
         font-size: 20px;
         font-weight: 500;
-        color: rgba(255, 227, 162, 1);
+        color: white;
         .teammateList-top-price-num {
           font-size: 48px;
           font-weight: 600;
-          color: rgba(255, 227, 162, 1);
+          color: white;
         }
       }
       .teammateList-top-num {
         font-size: 12px;
         font-weight: 400;
-        color: rgba(255, 227, 162, 1);
+        color: white;
         line-height: 17px;
       }
     }
@@ -190,7 +199,7 @@ export default {
       .teammateList-center-right-time {
         font-size: 14px;
         font-weight: 400;
-        color: rgba(235, 93, 42, 1);
+        color: #007ae6;
         line-height: 20px;
         align-self: center;
         padding-right: 23px;
