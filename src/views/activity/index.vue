@@ -100,12 +100,12 @@ export default {
     mobile: '',
     code: '',
     sendCodeText: '获取验证码',
-    codeTime: 60,
-    disabled: true,
-    clickDisabled: false,
+    codeTime: 60, // 获取验证码倒计时时间
+    disabled: true, // 获取验证码是否可点击
+    clickFlag: true, // 防多次点击,默认可点击
     buildList: [],
-    activityStart: '',
-    activityEnd: '',
+    activityStart: '', // 活动开始时间
+    activityEnd: '', // 活动结束时间
     activityState: 2, // 1-未开始 2-活动中 3-已结束
     isHasProject: true,
     registerType: '',
@@ -126,6 +126,9 @@ export default {
     this.queryActivityInfo()
   },
   methods: {
+    /**
+     * 查询活动信息
+     */
     async queryActivityInfo() {
       const res = await ActivityService.queryActivityInfo(this.enterpriseId, this.activityId, this.distributorId)
       if (res.returnCode == 44007) {
@@ -157,6 +160,9 @@ export default {
         }
       }
     },
+    /**
+     * 发送活动验证码
+     */
     async activitySendMsg() {
       const res = await ActivityService.activitySendMsg(this.enterpriseId, this.activityId, this.distributorId, this.mobile)
       if (res.returnCode == 44006) {
@@ -176,6 +182,9 @@ export default {
         this.countDown()
       }
     },
+    /**
+     * 活动注册领取楼盘
+     */
     async activityRegister() {
       let vo = {
         activityId: this.activityId,
@@ -189,10 +198,10 @@ export default {
       }
       const res = await ActivityService.activityRegister(vo)
       if (res.returnCode == 21103 || res.returnCode == 21105) {
-        this.clickDisabled = false
+        this.clickFlag = true
         this.$toast(res.msg)
       } else {
-        // this.clickDisabled = true
+        this.clickFlag = false
         this.$router.push({ path: '/huiwan-activity/qrcode', query: { enterpriseId: this.enterpriseId, endTime: this.activityEnd } })
       }
       
@@ -240,10 +249,9 @@ export default {
       if (this.code.length == 0) {
         return this.$toast('请输入验证码')
       }
-      if (this.clickDisabled) {
+      if (!this.clickFlag) {
         return
       }
-      // this.clickDisabled = true
       this.activityRegister()
     }
   }
