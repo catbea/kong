@@ -31,8 +31,7 @@ router.beforeEach((to, from, next) => {
   window.pageYOffset = 0
   next()
 })
-
-if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
+if (process.env.VUE_APP_TOOL_VCONSOLE === 'true') new vconsole()
 
 window.vue = new Vue({
   router,

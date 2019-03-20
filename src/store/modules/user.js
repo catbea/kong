@@ -9,7 +9,7 @@ const state = {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0,
     devMode: true,
-    agentId: '4746',
+    agentId: '4626',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',
@@ -19,8 +19,7 @@ const state = {
     institutionName: 'test',
     isOne: 0, // 1新用户 0老用户
     articleShareFlag: 1, //文章分享引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
-    articleEditFlag: 1, // 随手编新手引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
-    delClientFlag: 1, //删除用户引导标志位，默认为0，0：未完成指引；1：已完成指引 ,
+    isVip: '',
     vipDefaultCity: '深圳市',
     ifView: 1, //是否展示邀请有礼
     labelList: [
@@ -51,8 +50,8 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJkcnk1ZHkiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxNjE0NSIsImV4cCI6MTU1MzQ5ODEyNywiaWF0IjoxNTUyODkzMzI3fQ.HZ74Uguq6suJLrhRY3tnk-hLEiTCXHJjDBB143epp-E8jkOmGca2xkeCGhf0OZU7-E5cgrUcIzR8VOvKVCUTXg',
-    majorCity: '深圳市',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJtd2Y1eTYiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTUzNTcyMDI4LCJpYXQiOjE1NTI5NjcyMjh9.Dz9jGboky8ma13eU201c7JRH4G5nyqvH55IXxEHsgx2ofcT3X_uwB-eZJW9C-2t_72FIn0Nn0DS3Ymqt_1-Rug',
+    majorCity: '太原市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
     nickName: '周丹Nike',
