@@ -8,7 +8,7 @@
       <div class="top-content" v-if="!registSuccess">
         <div class="box-shadow top-form-container">
           <div class="top-invite-info">
-            <div class="bg_img invite-head" :style="{backgroundImage:'url(' + referLogo + ')'}"/>
+            <div class="bg_img invite-head" :style="{backgroundImage:'url(' + (referLogo || defaultLogo) + ')'}"/>
             <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
             <span class="invite-desc">邀请您加入{{registerName ? registerName : 'AW大师'}}</span>
           </div>
@@ -96,6 +96,7 @@ export default {
   data: () => ({
     bgImg: require('IMG/register/registerBg.png'),
     borderImg: require('IMG/register/register_border.png'),
+    defaultLogo: require('IMG/system/default_logo.png'),
     data: [
       { title: '实拍全景', desc: '高保真分享不错过任何细节', icon: require('IMG/register/regIcon1.png') },
       { title: '提高转化率', desc: '改变传统分享被踢出群的尴尬', icon: require('IMG/register/regIcon2.png') },
@@ -130,9 +131,9 @@ export default {
   created() {
     this.query = this.$route.query
     // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
-    // registerType=10&parentUserId=113&enterpriseId=91
-    // registerType=20&enterpriseId=91&parentUserId=14469&distributorId=268
-    // registerType=30&enterpriseId=91
+    // registerType=10&parentUserId=4746&enterpriseId=90
+    // registerType=20&enterpriseId=90&parentUserId=14469&distributorId=268
+    // registerType=30&enterpriseId=90
     if (this.query.registerType == '30') {
       this.params = `/register/step1?${qs.stringify(this.$route.query)}`
     } else {
@@ -156,7 +157,7 @@ export default {
   methods: {
     async queryByRegister(enterpriseId) {
       const result = await RegisterService.queryByRegister(enterpriseId)
-      this.registerName = result.registerAgreementName
+      this.registerName = result.registerTitle
       this.qrcodeImg = result.qrCode
       let _userRegistInfo = {
         distributorId: result.defaultDistributorId,
@@ -322,6 +323,7 @@ export default {
         width: 90%;
         height: 40px;
         padding-left: 10px;
+        border: 0;
       }
       .phone-input::-webkit-input-placeholder,
       .code-input::-webkit-input-placeholder,
@@ -404,7 +406,7 @@ export default {
       height: 45px;
       border-radius: 8px;
       border: 0;
-      color: #fff;
+      color: #AC2A01;
       font-size: 16px;
       line-height: 45px;
       text-align: center;
@@ -412,9 +414,11 @@ export default {
       // left: 50%;
       // transform: translate(-50%, -50%);
       margin-top: 29px;
-      background-color: #0dc868;
+      background-color: #FEB757;
+      font-weight: bold;
       &.registDisabled {
         opacity: 0.5;
+        color: #fff;
         border: 1px solid #fff;
         background-color: transparent;
       }
