@@ -1003,6 +1003,8 @@ export default {
   > .house-circum {
     margin-top: 15px;
     .tab-box {
+      position: relative;
+      z-index:1;
       > .van-tabs {
         .van-tabs__line {
           display: none;
