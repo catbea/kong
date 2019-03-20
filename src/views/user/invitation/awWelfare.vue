@@ -22,6 +22,28 @@
       <img class="imgcard-img" id="imgcard">
     </div>
     <span class="notice-text">请长按保存邀请图片</span>
+    <div class="cloud-bg" :style="{backgroundImage:'url(' + cloud + ')'}"></div>
+    <div class="recode-box">
+      <div class="check-record" @click="goteammateList">
+        <span>查看邀请记录</span>
+        <div class="right-body">
+          <img class="img-label" :src="coupon">
+          <img class="img-arrow" :src="rightArrow">
+        </div>
+      </div>
+      <div class="rule-body">
+        <span class="rule-text">活动规则</span>
+        <div class="rule-line">
+          <li>成功邀请1个好友注册可获得1张代金券。</li>
+          <li>第1次获得5元券</li>
+          <li>第2次获得10元券</li>
+          <li>第3次获得15元券</li>
+          <li>第4次及以上均获得20元券</li>
+        </div>
+      </div>
+      <div class="activity-text-first">本活动最终解释权归</div>
+      <div class="activity-text-second">深圳尊豪网络科技股份有限公司所有</div>
+    </div>
   </div>
 </template>
 
@@ -37,6 +59,9 @@ export default {
     companyBg: require('IMG/user/invitation/invitition_bg.png'),
     romptingLabel: require('IMG/user/invitation/rompting_label.png'),
     starBg: require('IMG/user/invitation/star_bg.png'),
+    cloud: require('IMG/user/invitation/cloud_invition.png'),
+    coupon: require('IMG/user/invitation/coupon_label.png'),
+    rightArrow: require('IMG/user/invitation/arrow.png'),
 
     invitationUrl: '',
     status: 1,
@@ -58,12 +83,15 @@ export default {
     toImg() {
       let t = setTimeout(() => {
         if (document.getElementById('qrcode').getElementsByTagName('img')) {
-          this.savaReport()
-          clearTimeout(t)
+          // this.savaReport()
+          // clearTimeout(t)
         } else {
           this.toImg()
         }
       }, 500)
+    },
+    async goteammateList() {
+      this.$router.push({ name: 'teammateList' })
     },
     async getqueryInvitationUrl() {
       const res = await userService.getqueryInvitationUrl()
@@ -164,35 +192,37 @@ export default {
     }
   }
   > .company-card {
-    height: 66%;
-    width: 86%;
-    margin-left: 7%;
-    min-height: 397px;
-    background-size: 321px 397px;
+    height: 75%;
+    width: 80%;
+    margin-left: 10%;
+    border-color: transparent;
+    background-size: cover;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: 380px;
     flex-direction: column;
-    margin-top: -10px;
 
     > .code-bg {
-      width: 170px;
-      height: 170px;
-      margin-top: -100px;
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
     }
 
-    .code-text {
+    > .code-text {
+      display: flex;
+      justify-content: center;
       color: #333333;
       font-size: 14px;
       line-height: 10px;
       margin-top: 20px;
     }
 
-    .campany-text {
+    > .campany-text {
+      display: flex;
+      justify-content: center;
       color: #333333;
       font-size: 14px;
       line-height: 10px;
-      margin-top: 5px;
+      margin-top: 10px;
     }
   }
 
@@ -218,6 +248,96 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 10px;
+  }
+
+  .cloud-bg {
+    background-size: cover;
+    width: 100%;
+    height: 64px;
+    margin-top: 30px;
+  }
+
+  .recode-box {
+    background: white;
+    width: 100%;
+    height: 350px;
+
+    > .check-record {
+      width: 86%;
+      margin-left: 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+      border-bottom: 1px #e2e2e3 solid;
+      border-top: 1px #e2e2e3 solid;
+
+      span {
+        color: #333333;
+        font-size: 16px;
+      }
+
+      .right-body {
+        width: 53px;
+        height: 16px;
+        display: flex;
+
+        > .img-label {
+          width: 35px;
+          height: 16px;
+        }
+
+        > .img-arrow {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+    > .rule-body {
+      width: 86%;
+      margin-left: 7%;
+      margin-top: 28px;
+      margin-bottom: 54px;
+
+      > .rule-text {
+        font-size: 24px;
+        font-family: PingFangSC-Semibold;
+        font-weight: 600;
+        color: rgba(68, 81, 102, 1);
+        line-height: 33px;
+      }
+
+      .rule-line {
+        margin-top: 14px;
+
+        li {
+          font-size: 14px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(68, 81, 102, 1);
+          line-height: 24px;
+        }
+      }
+    }
+
+    > .activity-text-first {
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(150, 158, 168, 1);
+      display: flex;
+      justify-content: center;
+    }
+
+    > .activity-text-second {
+      font-size: 12px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(150, 158, 168, 1);
+      display: flex;
+      line-height: 25px;
+      justify-content: center;
+    }
   }
 }
 </style>
