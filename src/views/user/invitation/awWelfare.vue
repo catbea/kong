@@ -129,7 +129,7 @@ export default {
       image.style.width = imgW + '%'
       image.style.maxWidth = imgW + '%'
       image.style.height = imgH + '%'
-      image.style.marginTop='-6%'
+      image.style.marginTop='-3%'
       this.status = 2
     }
   }
@@ -143,7 +143,7 @@ export default {
 
   > .save-card {
     width: 100%;
-    // background: linear-gradient(220deg, rgba(0, 158, 230, 1) 0%, rgba(0, 122, 230, 1) 100%);
+    background: linear-gradient(220deg, rgba(0, 158, 230, 1) 0%, rgba(0, 122, 230, 1) 100%);
     
     > .invitation-top {
       width: 80%;
