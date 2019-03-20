@@ -41,7 +41,7 @@
 
         </div>
         <div class="city-index">
-          <mt-index-list>
+          <mt-index-list :height="1000">
             <mt-index-section :index="item.character" v-for="(item,index) in cityListData.cityList" :key="index">
               <mt-cell :title="option" @click.native="chooseItem(option,2)" v-for="(option,num) in item.city" :key="num"></mt-cell>
             </mt-index-section>
@@ -201,6 +201,12 @@ export default {
   }
 }
 </script>
+<style>
+.mint-indexlist-nav{
+  position: fixed;
+  top: 130px;
+}
+</style>
 
 <style lang="less" scoped>
 .citylist-cnt{
@@ -256,9 +262,7 @@ export default {
   .tab-box{
   }
   .list-box{
-    height: 200%;
     width: 100%;
-    overflow-y: scroll;
     .city-box{
       .city-late{
         height: 40px;
@@ -307,6 +311,7 @@ export default {
             width: 60px;
             float: right;
             text-align: center;
+            margin-right: 15px;
           }
         }
         .city-hot{
