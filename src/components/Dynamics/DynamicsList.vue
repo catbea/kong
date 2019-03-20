@@ -13,7 +13,7 @@
                       <img :src="item.clientAvatarUrl" class="agent-userImg">
                     </span>
                     <span class="agent-left-right">
-                      <p class="left-right-name">{{item.clientName}}我的快乐健康就立刻离开家偶偶爱据了解拉开距离就来了</p>
+                      <p class="left-right-name">{{item.clientName}}</p>
                       <p class="left-right-time">{{item.timeStr | dateTimeFormatter()}}</p>
                     </span>
                   </span>
