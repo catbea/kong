@@ -24,7 +24,7 @@
     <span class="notice-text">请长按保存邀请图片</span>
     <div class="cloud-bg" :style="{backgroundImage:'url(' + cloud + ')'}"></div>
     <div class="recode-box">
-      <div class="check-record">
+      <div class="check-record" @click="goteammateList">
         <span>查看邀请记录</span>
         <div class="right-body">
           <img class="img-label" :src="coupon">
@@ -89,6 +89,9 @@ export default {
           this.toImg()
         }
       }, 500)
+    },
+    async goteammateList() {
+      this.$router.push({ name: 'teammateList' })
     },
     async getqueryInvitationUrl() {
       const res = await userService.getqueryInvitationUrl()
