@@ -13,7 +13,7 @@
                       <img :src="item.clientAvatarUrl" class="agent-userImg">
                     </span>
                     <span class="agent-left-right">
-                      <p class="left-right-name">{{item.clientName }}</p>
+                      <p class="left-right-name">{{item.clientName}}</p>
                       <p class="left-right-time">{{item.timeStr | dateTimeFormatter()}}</p>
                     </span>
                   </span>
@@ -123,7 +123,8 @@ export default {
   .dynamics-list {
     padding: 20px 16px 27px;
     > .dynamics-list-agent {
-      // display: flex;
+      display: flex;
+      justify-content: space-between;
       > .list-agent-left {
         display: flex;
         > .agent-left-left {
@@ -136,6 +137,7 @@ export default {
         > .agent-left-right {
           padding-left: 12px;
           > .left-right-name {
+            width:200px;
             font-size: 15px;
             font-weight: 600;
             color: rgba(41, 46, 51, 1);
@@ -154,10 +156,10 @@ export default {
         // right: 16px;
         // margin-top: -6px;
         // padding-right: 16px;
-        right: 0.42667rem;
-        margin-top: -55px;
-        padding-right: 0;
-        float: right;
+        // right: 0.42667rem;
+        // margin-top: -55px;
+        // padding-right: 0;
+        // float: right;
         > .agent-right-num {
           font-size: 20px;
           font-weight: 500;
