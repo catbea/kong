@@ -323,7 +323,7 @@ export default {
         width: 90%;
         height: 40px;
         padding-left: 10px;
-        border: 0;
+        border: none;
       }
       .phone-input::-webkit-input-placeholder,
       .code-input::-webkit-input-placeholder,
