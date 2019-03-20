@@ -19,6 +19,8 @@ export default (msg, url) => {
     case 44009: // 该活动未开始，敬请关注
     case 44011: // 手机号码已领取奖励，请勿重复参加
       return true
+    case 21600: // 无分享记录的时候调的接口错误，不提示
+      return false
     default:
       console.error(msg)
       window.vue.$toast(msg.msg)
