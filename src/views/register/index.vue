@@ -2,15 +2,15 @@
   <div class="register-page">
     <div class="bg_img top-container" :style="{backgroundImage:'url(' + bgImg + ')'}">
       <div class="bg_img top-right" :style="{backgroundImage:'url(' + borderImg + ')'}"/>
-      <p class="top-title">AW大师</p>
+      <p class="top-title">{{registerName ? registerName : 'AW大师'}}</p>
       <p class="top-text">全景看房 - AI拓客 - 裂变传播 - 监控意向</p>
       <p class="top-text top-desc">连接客户更简单</p>
       <div class="top-content" v-if="!registSuccess">
         <div class="box-shadow top-form-container">
           <div class="top-invite-info">
-            <div class="bg_img invite-head" :style="{backgroundImage:'url(' + borderImg + ')'}"/>
-            <span class="invite-name">张佳玮&nbsp;&nbsp;</span>
-            <span class="invite-desc">邀请您加入aw大师</span>
+            <div class="bg_img invite-head" :style="{backgroundImage:'url(' + referLogo + ')'}"/>
+            <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
+            <span class="invite-desc">邀请您加入{{registerName ? registerName : 'AW大师'}}</span>
           </div>
           <div class="top-phone-cell">
             <input
@@ -64,7 +64,7 @@
           <router-link
             style="color:#fff;font-size:12px;font-weight:bold;"
             to="/register/agreement?name=AW大师"
-          >注册协议</router-link>
+          >{{registerName ? registerName : 'AW大师'}}注册协议</router-link>
         </p>
       </div>
       <div v-else class="box-shadow qrcode-content">
@@ -88,6 +88,8 @@
 </template>
 <script>
 import qs from 'qs'
+import { mapGetters } from 'vuex'
+import * as types from '@/store/mutation-types'
 import { checkStrLength, checkStrType } from '@/utils/tool'
 import RegisterService from 'SERVICE/registService'
 export default {
@@ -114,7 +116,14 @@ export default {
     registerType: '',
     enterpriseId: '',
     parentUserId: '',
-    distributorId: '',
+    distributorId: null,
+    registerName: '',
+    referLogo: '',
+    referName: '',
+    distributorName: '',
+    institutionId: null,
+    institutionName: '',
+    majorRegion: '',
     params: null,
     query: null
   }),
@@ -122,7 +131,7 @@ export default {
     this.query = this.$route.query
     // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
     // registerType=10&parentUserId=113&enterpriseId=91
-    // registerType=20&parentUserId=113&distributorId=120&enterpriseId=91
+    // registerType=20&enterpriseId=91&parentUserId=14469&distributorId=268
     // registerType=30&enterpriseId=91
     if (this.query.registerType == '30') {
       this.params = `/register/step1?${qs.stringify(this.$route.query)}`
@@ -133,22 +142,77 @@ export default {
     this.registerType = this.$route.query.registerType
     this.parentUserId = this.$route.query.parentUserId
     this.distributorId = this.$route.query.distributorId
+    this.mobile = this.userRegistInfo.registerMobile
+    this.code = this.userRegistInfo.registerCode
+    this.name = this.userRegistInfo.name
     this.queryByRegister(this.enterpriseId)
+    if (this.registerType === '10' || this.registerType === '20') {
+      this.queryRegisterRecommendInfo()
+    }
+  },
+  computed: {
+    ...mapGetters(['userRegistInfo'])
   },
   methods: {
     async queryByRegister(enterpriseId) {
       const result = await RegisterService.queryByRegister(enterpriseId)
+      this.registerName = result.registerAgreementName
       this.qrcodeImg = result.qrCode
+      let _userRegistInfo = {
+        distributorId: result.defaultDistributorId,
+        distributorName: result.defaultDistributorName,
+        institutionId: result.defaultInstitutionId,
+        institutionName: result.defaultInstitutionName
+      }
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
     async queryRegisterRecommendInfo() {
       const result = await RegisterService.queryRegisterRecommendInfo(this.enterpriseId, this.registerType, this.parentUserId)
+      this.referLogo = result.logo
+      this.referName = result.name
+    },
+    async register() {
+      let vo = {
+        mobile: this.mobile,
+        code: this.code,
+        agentName: this.name,
+        registerType: this.registerType,
+        enterpriseId: this.enterpriseId,
+        majorRegion: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.majorRegion : '',
+        parentUserId: this.registerType === '10' || this.registerType === '20' ? this.parentUserId : '',
+        distributorId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.distributorId : '',
+        institutionId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.institutionId: ''
+      }
+      const result = await RegisterService.register(vo)
+      console.log(result)
+      if (result.returnCode == 21103 || result.returnCode == 21105) {
+        this.clickDisabled = false
+        this.registSuccess = false
+        this.$toast(result.msg)
+      } else {
+        this.clickDisabled = true
+        this.registSuccess = true
+        // let params = {
+        //   enterpriseId: this.enterpriseId
+        // }
+        // this.$router.push({ path: '/register/step2', query: params })
+      }
     },
     focusHandler(val, $event) {
-      var body = document.querySelector('.top-phone-cell .top-code-cell .top-name-cell')
-      body.scrollTop = body.scrollHeight
+      let className = val.currentTarget.className
+      var body = document.querySelector('.' + className)
+      if (body.scrollHeight) {
+        body.scrollTop = body.scrollHeight
+      }
     },
     blurHandler(val, $event) {
       window.scroll(0, 0)
+      let _userRegistInfo = {
+        registerMobile: this.mobile,
+        registerCode: this.code,
+        name: this.name
+      }
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
     inputHandler() {
       if (this.mobile.length == 11) {
@@ -205,33 +269,8 @@ export default {
       }
       this.clickDisabled = true
       this.register()
-    },
-    async register() {
-      let vo = {
-        mobile: this.mobile,
-        code: this.code,
-        agentName: this.name,
-        registerType: this.registerType,
-        enterpriseId: this.enterpriseId,
-        majorRegion: this.majorRegion,
-        distributorId: this.userRegistInfo.distributorId,
-        institutionId: this.userRegistInfo.institutionId
-      }
-      const result = await RegisterService.register(vo)
-      console.log(result)
-      if (result.returnCode == 21103 || result.returnCode == 21105) {
-        this.clickDisabled = false
-        this.registSuccess = false
-        this.$toast(result.msg)
-      } else {
-        this.clickDisabled = true
-        this.registSuccess = true
-        // let params = {
-        //   enterpriseId: this.enterpriseId
-        // }
-        // this.$router.push({ path: '/register/step2', query: params })
-      }
     }
+    
   }
 }
 </script>
@@ -305,9 +344,12 @@ export default {
 
       > .top-invite-info {
         display: flex;
+        align-items: center;
         > .invite-head {
           width: 24px;
           height: 24px;
+          border-radius: 50%;
+          margin-right: 8px;
         }
         > .invite-name {
           color: #666;
