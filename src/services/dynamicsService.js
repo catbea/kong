@@ -90,12 +90,11 @@ class DynamicsService {
    * @param {*} clientId//客户ID
    * @param {*} linkerId//楼盘ID
    */
-  getReportClient(clientId,linkerId) {
+  getReportClient(appointmentId) {
     return xhr({
       url: '/customerInfo/getReportClientInfo',
       body: {
-        clientId,
-        linkerId
+        appointmentId
       }
     })
   }
