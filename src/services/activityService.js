@@ -20,13 +20,13 @@ class ActivityService {
 
     /**
      * 查询活动名字
-     * @param {*} activityInd 
+     * @param {*} couponsActivityId 
      */
-    getActivityName(activityInd){  ///qywx/userReceive/getCouponsActivityInfo
+    getActivityName(couponsActivityId){  ///qywx/userReceive/getCouponsActivityInfo
         return xhr({
             url: '/activity/getCouponsActivityInfo',
             body: {
-                activityInd
+                couponsActivityId
             }
         })
     }

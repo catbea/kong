@@ -355,18 +355,22 @@ export default {
     },
     // 查询所属城市是否有文章
     async getCityArticle() {
+      // if (this.userInfo.majorCity) {
+      //   let result = await ArticleService.getArticleList({
+      //     current: this.current,
+      //     size: this.size,
+      //     city: this.userInfo.majorCity,
+      //     classify: '',
+      //     sortType: 2
+      //   })
+      //   if (result.records && result.records.length) {
+      //     // this.showCity = true
+      //     this.articleType.push({ itemCode: '', itemName: this.userInfo.majorCity })
+      //   }
+      // }
+      // 需求修改，城市和大佬说下没有内容就空着
       if (this.userInfo.majorCity) {
-        let result = await ArticleService.getArticleList({
-          current: this.current,
-          size: this.size,
-          city: this.userInfo.majorCity,
-          classify: '',
-          sortType: 2
-        })
-        if (result.records && result.records.length) {
-          // this.showCity = true
-          this.articleType.push({ itemCode: '', itemName: this.userInfo.majorCity })
-        }
+        this.articleType.push({ itemCode: '', itemName: this.userInfo.majorCity })
       }
       this.getArticleType()
     },

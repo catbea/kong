@@ -3,7 +3,7 @@
     <div class="build-img" :style="{backgroundImage:'url(' + data.linkerImg  + ')'}">
       <div class="feel-label" :style="{backgroundImage:'url(' + feelLabel + ')'}">免费送</div>
     </div>
-    <div class="building-name">{{data.linkerName | textOver(8)}}</div>
+    <div class="building-name">{{data.linkerName | textOver(7)}}</div>
     <div class="building-price">{{data.linkerPrice }}{{data.priceUnit }}</div>
   </div>
 </template>
@@ -55,9 +55,10 @@ export default {
 
   > .building-name {
     display: flex;
+    width: 95%;
     color: #333333;
     font-size: 14px;
-    margin-left: 8px;
+    padding-left: 8px;
     margin-top: 8px;
   }
 

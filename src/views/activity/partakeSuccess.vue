@@ -10,7 +10,7 @@
         <build-card v-for="(item ,index) in firstBuild" :key="index" :data="item"></build-card>
       </div>
       <div class="check-more" @click="showMoreData()">
-        <a>展开更多</a>
+        <a>{{this.showMore==false?'展开更多':'收起'}}</a>
         <img :src="this.showMore==false?arrowDown:arrowUp">
       </div>
     </div>
@@ -104,10 +104,10 @@ export default {
     },
 
     async getActivityInfo(activityId) {
+
       const result = await ActivityService.getActivityList(activityId)
-
-      this.buildList = result.records
-
+      this.buildList = result
+       
       let _that = this
       let firstList = []
       let infoNum = _that.buildList.length
