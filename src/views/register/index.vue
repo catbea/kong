@@ -146,6 +146,7 @@ export default {
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
     this.name = this.userRegistInfo.name
+    this.registDisabled = this.userRegistInfo.registDisabled
     this.queryByRegister(this.enterpriseId)
     if (this.registerType === '10' || this.registerType === '20') {
       this.queryRegisterRecommendInfo()
@@ -211,7 +212,8 @@ export default {
       let _userRegistInfo = {
         registerMobile: this.mobile,
         registerCode: this.code,
-        name: this.name
+        name: this.name,
+        registDisabled: this.registDisabled
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
@@ -322,9 +324,9 @@ export default {
         font-size: 16px;
         width: 90%;
         height: 40px;
-        line-height: 40px;
         padding-left: 10px;
         border: none;
+        background-color: transparent;
       }
       .phone-input::-webkit-input-placeholder,
       .code-input::-webkit-input-placeholder,
@@ -368,6 +370,7 @@ export default {
       > .top-name-cell {
         width: 100%;
         height: 44px;
+        line-height: 20px;
         border: 1px solid rgba(150, 158, 168, 0.2);
         box-shadow: 0px 2px 4px 0px rgba(150, 158, 168, 0.15);
         margin-top: 20px;
@@ -378,6 +381,7 @@ export default {
         > .top-code-wrap {
           width: 174px;
           height: 44px;
+          line-height: 20px;
           border: 1px solid rgba(150, 158, 168, 0.2);
           box-shadow: 0px 2px 4px 0px rgba(150, 158, 168, 0.15);
         }
