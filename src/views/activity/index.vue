@@ -142,6 +142,7 @@ export default {
         this.activityStart = res.data.activityStartDay
         this.activityEnd = res.data.activityEndDay
       } else {
+        this.activityState = 2
         this.activityStart = res.couponsActivity.activityStartDay
         this.activityEnd = res.couponsActivity.activityEndDay
         if (res.cpLinkerListVO && res.cpLinkerListVO.length == 0) {
