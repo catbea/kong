@@ -16,7 +16,7 @@
             <input
               class="phone-input"
               placeholder="请使用当前微信绑定手机号"
-              type="text"
+              type="number"
               oninput="value=value.replace(/[^0-9]/g,'')"
               maxlength="11"
               v-model="mobile"
@@ -30,7 +30,7 @@
               <input
                 class="code-input"
                 placeholder="请输入验证码"
-                type="text"
+                type="number"
                 oninput="value=value.replace(/[^0-9]/g,'')"
                 maxlength="6"
                 v-model="code"
@@ -224,7 +224,7 @@ export default {
       } else {
         this.disabled = true
       }
-      if (this.code.length > 0 && this.name.length > 0) {
+      if (this.mobile.length == 11 && this.code.length > 0 && this.name.length > 0) {
         this.registDisabled = false
       } else {
         this.registDisabled = true
