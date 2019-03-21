@@ -98,6 +98,7 @@ const state = {
     registerMobile: '', // 注册手机号
     registerCode: '', // 注册验证码
     name: '',
+    registDisabled: true, // 默认注册按钮不可点击
     majorRegion: '广东省/深圳市/南山区',
     city: '深圳市',
     area: '南山区',
