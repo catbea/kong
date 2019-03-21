@@ -49,7 +49,6 @@
               class="name-input"
               placeholder="请输入你的昵称"
               type="text"
-              maxlength="6"
               v-model="name"
               @focus="focusHandler"
               @blur="blurHandler"
@@ -220,7 +219,7 @@ export default {
     },
     inputHandler() {
       if (this.mobile.length == 11) {
-        this.disabled = false
+        this.disabled = this.codeTime === 60 ? false : true
       } else {
         this.disabled = true
       }
@@ -361,6 +360,10 @@ export default {
           color: #666;
           font-size: 14px;
           font-weight: bold;
+          width: 70px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         > .invite-desc {
           color: #666;
