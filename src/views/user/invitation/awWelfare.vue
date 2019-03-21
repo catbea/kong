@@ -1,27 +1,25 @@
 <template>
   <div class="invitation-bg">
-    <div class="invitation-top" :style="{backgroundImage:'url(' + starBg + ')'}">
-      <div class="invitation-title">邀请有礼</div>
-      <img class="romptingLabel" :src="romptingLabel">
-      <div class="invitation-info">
-        <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
-        <p class="awWelfare-info-right-remak">{{userInfo.name}} 邀请你加入AW大师</p>
+    <div class="save-card" v-show="status === 1" id="share-top">
+      <div style="width:100%;height:30px;"></div>
+      <div class="invitation-top" :style="{backgroundImage:'url(' + starBg + ')'}">
+        <div class="invitation-title">邀请有礼</div>
+        <img class="romptingLabel" :src="romptingLabel">
+        <div class="invitation-info">
+          <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="info-left-icon">
+          <p class="awWelfare-info-right-remak">{{userInfo.name}} 邀请你加入AW大师</p>
+        </div>
       </div>
-    </div>
-    <div
-      class="company-card"
-      :style="{backgroundImage:'url(' + companyBg + ')'}"
-      v-show="status === 1"
-      id="share-top"
-    >
-      <div class="code-bg" id="qrcode" ref="qrCodeUrl"></div>
-      <span class="code-text">扫描二维码</span>
-      <span class="campany-text">关注企业公众号</span>
+      <div class="company-card" :style="{backgroundImage:'url(' + companyBg + ')'}">
+        <div class="code-bg" id="qrcode" ref="qrCodeUrl"></div>
+        <span class="code-text">扫描二维码</span>
+        <span class="campany-text">关注企业公众号</span>
+      </div>
+      <span class="notice-text">请长按保存邀请图片</span>
     </div>
     <div class="imgcard" id="card-result" v-show="status === 2">
       <img class="imgcard-img" id="imgcard">
     </div>
-    <span class="notice-text">请长按保存邀请图片</span>
     <div class="cloud-bg" :style="{backgroundImage:'url(' + cloud + ')'}"></div>
     <div class="recode-box">
       <div class="check-record" @click="goteammateList">
@@ -83,8 +81,8 @@ export default {
     toImg() {
       let t = setTimeout(() => {
         if (document.getElementById('qrcode').getElementsByTagName('img')) {
-          // this.savaReport()
-          // clearTimeout(t)
+          this.savaReport()
+          clearTimeout(t)
         } else {
           this.toImg()
         }
@@ -118,19 +116,20 @@ export default {
         useCORS: true,
         backgroundColor: null
       })
-      let imgW = 321
-      let imgH = 397
+      let imgW = 100
+      let imgH = 100
       let box = document.getElementById('card-result')
       box.style.overflow = 'hidden'
-      box.style.width = imgW + 'px'
-      box.style.height = imgH + 'px'
+      box.style.width = imgW + '%'
+      box.style.height = imgH + '%'
       box.style.border = 'none'
 
       let image = document.getElementById('imgcard')
       image.src = canvas.toDataURL('image/png')
-      image.style.width = imgW + 1 + 'px'
-      image.style.maxWidth = imgW + 1 + 'px'
-      image.style.height = imgH + 1 + 'px'
+      image.style.width = imgW + '%'
+      image.style.maxWidth = imgW + '%'
+      image.style.height = imgH + '%'
+      image.style.marginTop='-3%'
       this.status = 2
     }
   }
@@ -142,119 +141,125 @@ export default {
 .invitation-bg {
   background: linear-gradient(220deg, rgba(0, 158, 230, 1) 0%, rgba(0, 122, 230, 1) 100%);
 
-  > .invitation-top {
-    width: 80%;
-    height: 100px;
-    margin-left: 10%;
-    background-size: 299px 89px;
-    border: none;
+  > .save-card {
+    width: 100%;
+    background: linear-gradient(220deg, rgba(0, 158, 230, 1) 0%, rgba(0, 122, 230, 1) 100%);
+    
+    > .invitation-top {
+      width: 80%;
+      height: 100px;
+      margin-left: 10%;
+      background-size: 299px 89px;
+      border: none;
 
-    > .romptingLabel {
-      width: 122px;
-      height: 40px;
-      position: absolute;
-      right: 10%;
-      top: 60px;
-    }
+      > .romptingLabel {
+        width: 122px;
+        height: 40px;
+        position: absolute;
+        right: 10%;
+        top: 60px;
+      }
 
-    > .invitation-title {
-      height: 40px;
-      font-size: 40px;
-      font-family: FZY4JW--GB1-0;
-      font-weight: normal;
-      color: rgba(255, 255, 255, 1);
-      line-height: 46px;
-      margin-top: 50px;
-    }
+      > .invitation-title {
+        height: 40px;
+        font-size: 40px;
+        font-family: FZY4JW--GB1-0;
+        font-weight: normal;
+        color: rgba(255, 255, 255, 1);
+        line-height: 46px;
+        margin-top: 50px;
+      }
 
-    > .invitation-info {
-      width: 100%;
-      height: 24px;
-      display: flex;
-      margin-top: 8px;
-
-      > .info-left-icon {
-        width: 24px;
+      > .invitation-info {
+        width: 100%;
         height: 24px;
-        border-radius: 50%;
+        display: flex;
+        margin-top: 8px;
+
+        > .info-left-icon {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          margin-top: 10px;
+        }
+
+        > .awWelfare-info-right-remak {
+          font-family: PingFangSC-Semibold;
+          font-weight: 600;
+          color: rgba(255, 255, 255, 1);
+          line-height: 20px;
+          font-size: 14px;
+          margin-top: 12px;
+          margin-left: 10px;
+        }
+      }
+    }
+
+    > .company-card {
+      height: 75%;
+      width: 80%;
+      margin-left: 10%;
+      border-color: transparent;
+      background-size: cover;
+      display: flex;
+      min-height: 380px;
+      flex-direction: column;
+
+      > .code-bg {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
+      }
+
+      > .code-text {
+        display: flex;
+        justify-content: center;
+        color: #333333;
+        font-size: 14px;
+        line-height: 10px;
+        margin-top: 20px;
+      }
+
+      > .campany-text {
+        display: flex;
+        justify-content: center;
+        color: #333333;
+        font-size: 14px;
+        line-height: 10px;
         margin-top: 10px;
       }
+    }
 
-      > .awWelfare-info-right-remak {
-        font-family: PingFangSC-Semibold;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 1);
-        line-height: 20px;
-        font-size: 14px;
-        margin-top: 12px;
-        margin-left: 10px;
+    .imgcard {
+      height: 66%;
+      width: 86%;
+      margin-top: -10px;
+      border: 1px #0098e6 solid;
+      padding-top: 2px;
+      margin-left: 7%;
+
+      > .imgcard-img {
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-color: transparent;
       }
     }
-  }
-  > .company-card {
-    height: 75%;
-    width: 80%;
-    margin-left: 10%;
-    border-color: transparent;
-    background-size: cover;
-    display: flex;
-    min-height: 380px;
-    flex-direction: column;
 
-    > .code-bg {
-      display: flex;
-      justify-content: center;
-      margin-top: 40px;
-    }
-
-    > .code-text {
-      display: flex;
-      justify-content: center;
-      color: #333333;
+    .notice-text {
+      color: #ffffff;
       font-size: 14px;
-      line-height: 10px;
+      display: flex;
+      justify-content: center;
       margin-top: 20px;
+      height: 35px;
     }
-
-    > .campany-text {
-      display: flex;
-      justify-content: center;
-      color: #333333;
-      font-size: 14px;
-      line-height: 10px;
-      margin-top: 10px;
-    }
-  }
-
-  .imgcard {
-    height: 66%;
-    width: 86%;
-    margin-top: -10px;
-    border: 1px #0098e6 solid;
-    padding-top: 2px;
-    margin-left: 7%;
-
-    > .imgcard-img {
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-color: transparent;
-    }
-  }
-
-  .notice-text {
-    color: #ffffff;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
   }
 
   .cloud-bg {
     background-size: cover;
     width: 100%;
     height: 64px;
-    margin-top: 30px;
   }
 
   .recode-box {

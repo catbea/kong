@@ -84,10 +84,41 @@
         <div class="more-info" @click="moreInfoHandler">更多信息</div>
       </div>
     </div>
+    <!-- 预约看房 -->
+    <!-- <div class="appointment-box">
+      <div class="appointment-content">
+      <p>预约看房&nbsp;&nbsp;免费接送<i></i>
+      </p>
+      <p><span></span>
+      1V1专属顾问 随时看房
+      </p>
+      <p @click="appointmentHandle">立即预约</p>
+      </div>
+    </div>
+    <van-popup v-model="appointmentShow" class="applyBox" @close="emptyContent">
+      <div class="apply-content">
+        <span class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="appointmentShow=false;nameContent='';phoneContent='';codeContent=''"></span>
+        <ul>
+          <li>预约看房</li>
+          <li>派驻您的专属顾问 随时看房</li>
+          <li class="van-hairline--bottom">
+            <input type="text" name="name" id="name" v-model="nameContent" placeholder="请输入姓名">
+          </li>
+          <li class="van-hairline--bottom">
+            <input type="number" oninput="if(value.length > 11)value = value.slice(0, 11)" name="phone" id="phone" v-model="phoneContent" placeholder="请输入手机号">
+            <p>获取验证码</p>
+          </li>
+          <li class="van-hairline--bottom">
+            <input type="number" name="code" id="code" v-model="codeContent" placeholder="请输入验证码">
+          </li>
+          <li @click="submitHandle">提交申请</li>
+        </ul>
+      </div>
+    </van-popup> -->
     <!-- 楼盘分享关系图谱 -->
     <div class="marker-relation-box">
       <p>楼盘分享关系图谱</p>
-      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}" @click="relationShow=true">
+      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}" @click="relationShowFn">
         <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
         <li>{{info.linkerName}}</li>
       </ol>
@@ -306,6 +337,27 @@ export default {
     }
   },
   methods: {
+    appointmentHandle(){//预约看房弹窗
+    this.appointmentShow=true
+    },
+    emptyContent(){//预约看房弹窗内容清空
+    this.appointmentShow=false;
+    this.nameContent='';
+    this.phoneContent='';
+    this.codeContent=''
+    },
+    submitHandle(){//提交预约信息
+    this.emptyContent()
+    },
+    // 点击客户关系弹框
+    relationShowFn() {
+      this.$dialog.confirm({
+        title: '联系经纪人',
+        message: '了解更多楼盘分享关系详情，请联系经纪人。',
+        confirmButtonText: '知道了',
+        showCancelButton: false
+      })
+    },
     relationHandle() {
       //立即联系弹窗
       // window.location.href = 'tel://' + this.info.contatctTel

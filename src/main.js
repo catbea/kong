@@ -20,21 +20,18 @@ if (process.env.NODE_ENV === 'development') {
   Vue.config.devtools = false
 }
 
-router.beforeEach((to, from, next) => {    
-  // chrome
-  document.querySelector('.router-view').scrollTop = 0
-  // firefox
-  document.querySelector('.router-view').scrollTop = 0
+router.beforeEach((to, from, next) => {
+  if (document.querySelector('.router-view')) {
+    // chrome
+    document.querySelector('.router-view').scrollTop = 0
+    // firefox
+    document.querySelector('.router-view').scrollTop = 0
+  }
   // safari
   window.pageYOffset = 0
   next()
 })
-
-setTimeout(function(){
-  console.log('0')
-}, 2000)
-
-if (process.env.VUE_APP_TOOL_VCONSOLE) new vconsole()
+if (process.env.VUE_APP_TOOL_VCONSOLE === 'true') new vconsole()
 
 window.vue = new Vue({
   router,

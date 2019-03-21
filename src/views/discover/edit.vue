@@ -48,7 +48,7 @@
       <div class="right-operation">
         <div class="preview-btn" @click="previewClickHandler">{{previewFlag? '编辑':'预览'}}</div>
         <div class="save-btn" v-show="!pushFlag" @click="saveClickHandler">保存并分享</div>
-        <div class="save-btn" v-show="pushFlag">加载中...</div>
+        <div class="save-btn" v-show="pushFlag">{{loaddingTxt}}...</div>
       </div>
     </div>
     <!-- 楼盘选择 -->
@@ -90,6 +90,7 @@ export default {
     SingleSelectBox
   },
   data: () => ({
+    loaddingTxt: '加载中',
     loaddingStatus: true,
     id: '',
     city: '', // 所属地
@@ -132,6 +133,7 @@ export default {
         return
       } else {
         this.loaddingStatus = false
+        this.loaddingTxt = '保存中'
       }
 
       // 创建虚拟dom解析html结构
