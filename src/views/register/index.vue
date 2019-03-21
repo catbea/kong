@@ -16,7 +16,7 @@
             <input
               class="phone-input"
               placeholder="请使用当前微信绑定手机号"
-              type="text"
+              type="number"
               oninput="value=value.replace(/[^0-9]/g,'')"
               maxlength="11"
               v-model="mobile"
@@ -30,7 +30,7 @@
               <input
                 class="code-input"
                 placeholder="请输入验证码"
-                type="text"
+                type="number"
                 oninput="value=value.replace(/[^0-9]/g,'')"
                 maxlength="6"
                 v-model="code"
@@ -49,7 +49,6 @@
               class="name-input"
               placeholder="请输入你的昵称"
               type="text"
-              maxlength="6"
               v-model="name"
               @focus="focusHandler"
               @blur="blurHandler"
@@ -220,11 +219,11 @@ export default {
     },
     inputHandler() {
       if (this.mobile.length == 11) {
-        this.disabled = false
+        this.disabled = this.codeTime === 60 ? false : true
       } else {
         this.disabled = true
       }
-      if (this.code.length > 0 && this.name.length > 0) {
+      if (this.mobile.length == 11 && this.code.length > 0 && this.name.length > 0) {
         this.registDisabled = false
       } else {
         this.registDisabled = true
@@ -361,6 +360,10 @@ export default {
           color: #666;
           font-size: 14px;
           font-weight: bold;
+          width: 70px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         > .invite-desc {
           color: #666;

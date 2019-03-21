@@ -228,6 +228,9 @@ export default {
     },
     singleShow(val) {
       this.$emit('input', val)
+      if (val === true) {
+        this.getLinkerList()
+      }
     },
     'searchInfo.siteText'(val) {
       this.reset()
