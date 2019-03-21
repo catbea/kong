@@ -5,7 +5,7 @@
       <div class="activity-container">
         <div class="bg_img activity-logo" :style="{backgroundImage:'url(' + logoImg + ')'}"></div>
         <p class="activity-top">全景看房 - AI拓客 - 裂变传播 - 监控意向</p>
-        <p class="activity-title">惠湾联盟试运营</p>
+        <p class="activity-title">{{activityName}}</p>
         <p class="activity-time">活动时间：{{activityStart | dateTimeFormatter(5)}}—{{activityEnd | dateTimeFormatter(5)}}</p>
         <div class="activity-content" v-if="activityState===2">
           <div class="form-container">
@@ -104,9 +104,10 @@ export default {
     disabled: true, // 获取验证码是否可点击
     clickFlag: true, // 防多次点击,默认可点击
     buildList: [],
+    activityName: '',
     activityStart: '', // 活动开始时间
     activityEnd: '', // 活动结束时间
-    activityState: 0, // 1-未开始 2-活动中 3-已结束
+    activityState: 0, // 0-初始状态 1-未开始 2-活动中 3-已结束
     isHasProject: true,
     registerType: '',
     enterpriseId: '',
@@ -134,14 +135,18 @@ export default {
       if (res.returnCode == 44007) {
         this.activityState = 3
         this.isHasProject = false
+        this.activityName = res.data.activityName
         this.activityStart = res.data.activityStartDay
         this.activityEnd = res.data.activityEndDay
       } else if (res.returnCode == 44009) {
         this.activityState = 1
         this.isHasProject = false
+        this.activityName = res.data.activityName
         this.activityStart = res.data.activityStartDay
         this.activityEnd = res.data.activityEndDay
       } else {
+        this.activityState = 2
+        this.activityName = res.couponsActivity.activityName
         this.activityStart = res.couponsActivity.activityStartDay
         this.activityEnd = res.couponsActivity.activityEndDay
         if (res.cpLinkerListVO && res.cpLinkerListVO.length == 0) {
