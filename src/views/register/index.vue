@@ -60,7 +60,8 @@
         <!-- <router-link :to="params"> -->
         <div class="reg-btn" :class="registDisabled&&'registDisabled'" @click="nextHandler">立即注册</div>
         <!-- </router-link> -->
-        <p class="top-protocol">注册代表您同意
+        <p class="top-protocol">
+          <span style="opacity:0.6">注册代表您同意&nbsp;&nbsp;</span>
           <router-link
             style="color:#fff;font-size:12px;font-weight:bold;"
             to="/register/agreement?name=AW大师"
