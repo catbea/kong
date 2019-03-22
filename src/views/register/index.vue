@@ -10,7 +10,7 @@
           <div class="top-invite-info">
             <div class="bg_img invite-head" :style="{backgroundImage:'url(' + (referLogo || defaultLogo) + ')'}"/>
             <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
-            <span class="invite-desc">邀请您加入{{registerName ? registerName : 'AW大师'}}</span>
+            <span class="invite-desc">邀请您加入</span>
           </div>
           <div class="top-phone-cell">
             <input
@@ -360,10 +360,10 @@ export default {
           color: #666;
           font-size: 14px;
           font-weight: bold;
-          width: 70px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
+          // width: 70px;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
         }
         > .invite-desc {
           color: #666;
