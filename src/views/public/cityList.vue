@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="tab-box" v-show="!keywords">
-      <van-tabs  @click="changeTab" color="#007AE6">
+      <van-tabs  @click="changeTab" color="#007AE6" v-model="activeTab" :line-width="20">
         <van-tab title="城市"></van-tab>
         <van-tab title="省份"></van-tab>
       </van-tabs>
@@ -41,7 +41,7 @@
 
         </div>
         <div class="city-index">
-          <mt-index-list :height="1000">
+          <mt-index-list :height="mtIndexHeight">
             <mt-index-section :index="item.character" v-for="(item,index) in cityListData.cityList" :key="index">
               <mt-cell :title="option" @click.native="chooseItem(option,2)" v-for="(option,num) in item.city" :key="num"></mt-cell>
             </mt-index-section>
@@ -91,7 +91,8 @@ export default {
       location: '',
       fromPage: '',
       searchType: '',
-      searchList: ''
+      searchList: '',
+      mtIndexHeight: null
     }
   },
   computed: {
@@ -99,9 +100,15 @@ export default {
   },
   created () {
     this.fromPage = this.$route.query.fromPage
+    this.mtIndexHeight = (this.fromPage === 'market') ? window.innerHeight : 0
     this.usercity = this.$route.query.searchContent || '深圳市'
     this.category = this.$route.query.category || 0
     this.getCityList(this.category)
+    let data = window.localStorage.getItem(`${this.fromPage || 'default'}City`)
+    if (data) {
+      data = JSON.parse(data)
+      this.activeTab = data.type === 1 ? 1 : 0
+    }
   },
   watch: {
     keywords () {
@@ -198,13 +205,30 @@ export default {
         el.focus()
       }
     }
+  },
+  mounted () {
+    document.querySelector('.citylist-cnt').addEventListener('touchend', () => {
+      let h = document.querySelector('.router-view').scrollTop
+      if (h > 50) {
+        document.querySelector('.search-box').style.position = 'fixed'
+      } else {
+        document.querySelector('.search-box').style.position = 'absolute'
+      }
+      
+    })
+  },
+  beforeDestroy () {
+    document.querySelector('.citylist-cnt').removeEventListener('touchmove', () => {
+    },false)
   }
 }
 </script>
-<style>
-.mint-indexlist-nav{
-  position: fixed;
-  top: 130px;
+<style lang="less">
+.citylist-cnt {
+  .mint-indexlist-nav{
+    position: fixed;
+    top: 130px;
+  }
 }
 </style>
 
@@ -212,10 +236,15 @@ export default {
 .citylist-cnt{
   font-size: 12px;
   .search-box{
-    margin: 8px 15px;
-    height: 30px;
-    line-height: 30px;
+    padding: 8px 15px;
+    height: 46px;
+    line-height: 46px;
     vertical-align: middle;
+    position: absolute;
+    top:0;
+    width: 100%;
+    z-index: 9999;
+    background-color: #fff;
     .cnt{
       display: flex;
       background-color: #F2F6F7;
@@ -240,19 +269,21 @@ export default {
         }
         input {
           flex: 1;
-          height: 30px;
+          height: 16px;
           border: none;
           padding: 0 5px;
-          line-height: 30px;
+          line-height: 16px;
           background-color: transparent;
+          margin-top: 7px;
         }
       }
       .cancle{
         width: 50px;
         text-align: center;
         background-color: #fff;
-        height: 30px;
         font-size: 14px;
+        height: 30px;
+        line-height: 30px;
         color: #666;
       }
     }
@@ -260,9 +291,11 @@ export default {
     
   }
   .tab-box{
+    margin-top: 46px;
   }
   .list-box{
     width: 100%;
+    height: 100%;
     .city-box{
       .city-late{
         height: 40px;
@@ -327,7 +360,7 @@ export default {
               width: 100px;
               height: 32px;
               line-height: 32px;
-              margin: 0 16px 16px 0;
+              margin: 0 16px 8px 0;
               display: inline-block;
               &:nth-child(3n+3){
                 margin-right: 0;

@@ -135,15 +135,15 @@ export default {
       if (res.returnCode == 44007) {
         this.activityState = 3
         this.isHasProject = false
-        this.activityName = res.data.activityName
-        this.activityStart = res.data.activityStartDay
-        this.activityEnd = res.data.activityEndDay
+        this.activityName = res.data.couponsActivity.activityName
+        this.activityStart = res.data.couponsActivity.activityStartDay
+        this.activityEnd = res.data.couponsActivity.activityEndDay
       } else if (res.returnCode == 44009) {
         this.activityState = 1
         this.isHasProject = false
-        this.activityName = res.data.activityName
-        this.activityStart = res.data.activityStartDay
-        this.activityEnd = res.data.activityEndDay
+        this.activityName = res.data.couponsActivity.activityName
+        this.activityStart = res.data.couponsActivity.activityStartDay
+        this.activityEnd = res.data.couponsActivity.activityEndDay
       } else {
         this.activityState = 2
         this.activityName = res.couponsActivity.activityName

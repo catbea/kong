@@ -10,7 +10,7 @@
                 <p class="sys-shadowBox-title">{{item.title}}</p>
                 <p class="sys-shadowBox-time" v-html="item.content.replace(/(\r+\n+)|(\n+)/g,'<br>')"></p>
                 <div style="display:flex;" v-show="item.type!==''&&item.type==10">
-                  <p class="client-detail" @click="goDetail(item.clientId)">客户详情</p>
+                  <p class="client-detail" @click="goDetail(item.appointmentId)">客户详情</p>
                   <p class="go-report" @click="goReport(item.appointmentId)">立即报备</p>
                 </div>
                 <!-- <p class="sys-shadowBox-remarks">本次主要更新内容有： 1.增加勿扰模式 2.VIP功能优化调整 3.我的楼盘增加关闭展示功能</p> -->
@@ -80,8 +80,9 @@ export default {
         this.loading = false
       }
     },
-    goDetail(clientId){//查看客户详情
-    this.$router.push(`/custom/${clientId}`)
+   async goDetail(appointmentId){//查看客户详情
+    const res = await dynamicsService.getReportClient(appointmentId)
+    this.$router.push(`/custom/${res.clientId}`)
     },
    async goReport(appointmentId){//立即报备
     const res = await dynamicsService.getReportClient(appointmentId)

@@ -10,10 +10,12 @@
           <p class="awWelfare-info-right-remak">{{userInfo.name}} 邀请你加入AW大师</p>
         </div>
       </div>
-      <div class="company-card" :style="{backgroundImage:'url(' + companyBg + ')'}">
+      <div class="company-card">
+        <img class="company-card-bg" :src="companyBg">
         <div class="code-bg" id="qrcode" ref="qrCodeUrl"></div>
         <span class="code-text">扫描二维码</span>
         <span class="campany-text">关注企业公众号</span>
+        <div class="mongolia-view" v-show="showMongolia===1"></div>
       </div>
       <span class="notice-text">请长按保存邀请图片</span>
     </div>
@@ -63,7 +65,8 @@ export default {
 
     invitationUrl: '',
     status: 1,
-    registrationRules: ''
+    registrationRules: '',
+    showMongolia: 1
   }),
   computed: {
     ...mapGetters(['userInfo'])
@@ -129,8 +132,9 @@ export default {
       image.style.width = imgW + '%'
       image.style.maxWidth = imgW + '%'
       image.style.height = imgH + '%'
-      image.style.marginTop='-3%'
+      image.style.marginTop = '-3%'
       this.status = 2
+      this.showMongolia = 2
     }
   }
 }
@@ -144,7 +148,8 @@ export default {
   > .save-card {
     width: 100%;
     background: linear-gradient(220deg, rgba(0, 158, 230, 1) 0%, rgba(0, 122, 230, 1) 100%);
-    
+    position: relative;
+
     > .invitation-top {
       width: 80%;
       height: 100px;
@@ -201,33 +206,57 @@ export default {
       margin-left: 10%;
       border-color: transparent;
       background-size: cover;
-      display: flex;
+      display: block;
       min-height: 380px;
       flex-direction: column;
+      position: relative;
+
+      > .company-card-bg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
 
       > .code-bg {
+        position: absolute;
         display: flex;
         justify-content: center;
         margin-top: 40px;
+        left: 21%;
+        width: 58%;
       }
 
       > .code-text {
-        display: flex;
-        justify-content: center;
+        position: absolute;
         color: #333333;
         font-size: 14px;
         line-height: 10px;
-        margin-top: 20px;
+        top: 60%;
+        left: 38%;
       }
 
       > .campany-text {
-        display: flex;
-        justify-content: center;
+        position: absolute;
         color: #333333;
         font-size: 14px;
         line-height: 10px;
-        margin-top: 10px;
+        top: 65%;
+        left: 33%;
       }
+
+      > .mongolia-view {
+        position: absolute;
+        height: 75%;
+        width: 100%;
+        border-color: transparent;
+        min-height: 380px;
+        flex-direction: column;
+      }
+    }
+
+    > .code-bg {
+      position: absolute;
+      top: 0;
     }
 
     .imgcard {

@@ -1,5 +1,6 @@
 <template>
   <van-popup class="single-select-box" v-model="singleShow">
+    <img class="close-btn" :src="closeImg" @click="closeHandler">
     <div v-if="status===1" class="search-container">
       <div class="search-box">
         <!-- @getContent="searchChangeHandle" -->
@@ -81,6 +82,7 @@ export default {
     } // 已经选中的
   },
   data: () => ({
+    closeImg: require('IMG/guidance/closeBtn.png'),
     singleShow: false,
     status: 1,
     projectFilters: {},
@@ -179,6 +181,9 @@ export default {
         this.searchInfo.placeholder = '请输入楼盘名称'
       }
     },
+    closeHandler() {
+      this.singleShow = false
+    },
     // item点击
     selectHandle(item) {
       this.$emit('submit', item)
@@ -228,6 +233,9 @@ export default {
     },
     singleShow(val) {
       this.$emit('input', val)
+      if (val === true) {
+        this.getLinkerList()
+      }
     },
     'searchInfo.siteText'(val) {
       this.reset()
@@ -264,9 +272,17 @@ export default {
 
 <style lang="less">
 .single-select-box {
-  width: 90%;
-  height: 94%;
+  width: 84%;
+  height: 84%;
   border-radius: 4px;
+  overflow: unset;
+  > .close-btn {
+    position: absolute;
+    width: 24px;
+    height: 46px;
+    top: -45px;
+    right: 15px;
+  }
   > .search-container {
     width: 100%;
     height: 100%;

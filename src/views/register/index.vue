@@ -10,13 +10,13 @@
           <div class="top-invite-info">
             <div class="bg_img invite-head" :style="{backgroundImage:'url(' + (referLogo || defaultLogo) + ')'}"/>
             <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
-            <span class="invite-desc">邀请您加入{{registerName ? registerName : 'AW大师'}}</span>
+            <span class="invite-desc">邀请您加入</span>
           </div>
           <div class="top-phone-cell">
             <input
               class="phone-input"
               placeholder="请使用当前微信绑定手机号"
-              type="text"
+              type="number"
               oninput="value=value.replace(/[^0-9]/g,'')"
               maxlength="11"
               v-model="mobile"
@@ -30,7 +30,7 @@
               <input
                 class="code-input"
                 placeholder="请输入验证码"
-                type="text"
+                type="number"
                 oninput="value=value.replace(/[^0-9]/g,'')"
                 maxlength="6"
                 v-model="code"
@@ -49,7 +49,6 @@
               class="name-input"
               placeholder="请输入你的昵称"
               type="text"
-              maxlength="6"
               v-model="name"
               @focus="focusHandler"
               @blur="blurHandler"
@@ -60,7 +59,8 @@
         <!-- <router-link :to="params"> -->
         <div class="reg-btn" :class="registDisabled&&'registDisabled'" @click="nextHandler">立即注册</div>
         <!-- </router-link> -->
-        <p class="top-protocol">注册代表您同意
+        <p class="top-protocol">
+          <span style="opacity:0.6">注册代表您同意&nbsp;&nbsp;</span>
           <router-link
             style="color:#fff;font-size:12px;font-weight:bold;"
             to="/register/agreement?name=AW大师"
@@ -146,6 +146,7 @@ export default {
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
     this.name = this.userRegistInfo.name
+    this.disabled = this.userRegistInfo.disabled
     this.registDisabled = this.userRegistInfo.registDisabled
     this.queryByRegister(this.enterpriseId)
     if (this.registerType === '10' || this.registerType === '20') {
@@ -213,17 +214,18 @@ export default {
         registerMobile: this.mobile,
         registerCode: this.code,
         name: this.name,
+        disabled: this.disabled,
         registDisabled: this.registDisabled
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
     },
     inputHandler() {
       if (this.mobile.length == 11) {
-        this.disabled = false
+        this.disabled = this.codeTime === 60 ? false : true
       } else {
         this.disabled = true
       }
-      if (this.code.length > 0 && this.name.length > 0) {
+      if (this.mobile.length == 11 && this.code.length > 0 && this.name.length > 0) {
         this.registDisabled = false
       } else {
         this.registDisabled = true
@@ -360,6 +362,10 @@ export default {
           color: #666;
           font-size: 14px;
           font-weight: bold;
+          // width: 70px;
+          // overflow: hidden;
+          // text-overflow: ellipsis;
+          // white-space: nowrap;
         }
         > .invite-desc {
           color: #666;
