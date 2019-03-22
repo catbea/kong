@@ -41,7 +41,7 @@
 
         </div>
         <div class="city-index">
-          <mt-index-list :height="1000">
+          <mt-index-list :height="mtIndexHeight">
             <mt-index-section :index="item.character" v-for="(item,index) in cityListData.cityList" :key="index">
               <mt-cell :title="option" @click.native="chooseItem(option,2)" v-for="(option,num) in item.city" :key="num"></mt-cell>
             </mt-index-section>
@@ -91,7 +91,8 @@ export default {
       location: '',
       fromPage: '',
       searchType: '',
-      searchList: ''
+      searchList: '',
+      mtIndexHeight: null
     }
   },
   computed: {
@@ -99,6 +100,7 @@ export default {
   },
   created () {
     this.fromPage = this.$route.query.fromPage
+    this.mtIndexHeight = (this.fromPage === 'market') ? 2000 : 0
     this.usercity = this.$route.query.searchContent || '深圳市'
     this.category = this.$route.query.category || 0
     this.getCityList(this.category)
@@ -263,6 +265,7 @@ export default {
   }
   .list-box{
     width: 100%;
+    height: 100%;
     .city-box{
       .city-late{
         height: 40px;
