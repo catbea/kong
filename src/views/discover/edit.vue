@@ -77,7 +77,6 @@ import EditViewpoint from 'COMP/Discover/edit/editViewpoint'
 import EditHouses from 'COMP/Discover/edit/editHouses'
 import TitleBar from 'COMP/TitleBar'
 import SingleSelectBox from 'COMP/Discover/edit/singleSelectBox'
-
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import cpInformationService from 'SERVICE/cpInformationService'
@@ -139,7 +138,26 @@ export default {
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content.replace('div', 'p')
+      // console.log(virtualDom.children, 'virtualDom')
+      
       for (let dom of virtualDom.children) {
+        // console.log(dom.tagName, 'dom')
+        if(dom.tagName == 'META') {
+          continue
+        }
+        if(dom.tagName == 'STYLE' || dom.tagName == 'LINK') {
+          // console.log(dom, dom.tagName)
+          let head = document.getElementsByTagName("head")[0]
+          if(dom.tagName == 'STYLE') {
+            let style = document.createElement("style");
+            style.type = "text/css";
+            style.appendChild(document.createTextNode(dom.innerHTML))
+            head.appendChild(style)
+          } else {
+            head.appendChild(dom)
+          }
+          continue
+        }
         this.renderDom.push({
           text: dom.innerHTML,
           status: 'edit'
