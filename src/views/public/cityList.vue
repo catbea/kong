@@ -4,7 +4,7 @@
       <div class="cnt">
         <div class="info">
           <img class="search" src="../../assets/img/public/citylist/search.png" alt="">
-          <input type="text" name="" id="" v-model.trim="keywords" placeholder="请输入省份或城市名称" v-focus>
+          <input type="text" name="" id="" v-model.trim="keywords" placeholder="请输入省份或城市名称">
           <img class="clear" src="../../assets/img/public/citylist/clear.png" alt="" srcset="" v-show="keywords" @click="keywords=''">
         </div>
         <div class="cancle" v-show="keywords" @click="keywords=''">取消</div>
@@ -229,6 +229,9 @@ export default {
     position: fixed;
     top: 130px;
   }
+  .mint-indexlist-indicator{
+    top: 30%!important;
+  }
 }
 </style>
 
@@ -374,6 +377,7 @@ export default {
     }
     .province-box{}
     .keywords-box{
+      margin-top: 46px;
       .nodata{
         margin-top: 120px;
         text-align: center;

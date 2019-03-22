@@ -18,8 +18,8 @@
   <script>
     try {
       if (window.navigator.userAgent) {
-        let ua = window.navigator.userAgent.toLowerCase()
-        let version = ''
+        var ua = window.navigator.userAgent.toLowerCase()
+        var version = ''
         if (ua.indexOf("like mac os x") > 0) {
           var reg = /os [\d._]+/gi;
           var v_info = ua.match(reg);
