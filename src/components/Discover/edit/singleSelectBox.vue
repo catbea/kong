@@ -155,10 +155,11 @@ export default {
         _list.push(obj)
       }
       this.projectList = this.page <= 1 ? _list : this.projectList.concat(_list)
-      if (res.pages === 0 || this.page >= res.pages) {
+      if (res.pages === 1 || this.page >= res.pages) {
         this.finished = true
+      }else {
+        this.page++
       }
-      this.page++
       this.loading = false
     },
     // 切换到地域切换
@@ -233,6 +234,7 @@ export default {
     },
     singleShow(val) {
       this.$emit('input', val)
+      this.reset()
       if (val === true) {
         this.getLinkerList()
       }
@@ -273,14 +275,14 @@ export default {
 <style lang="less">
 .single-select-box {
   width: 84%;
-  height: 84%;
+  height: 86%;
   border-radius: 4px;
   overflow: unset;
   > .close-btn {
     position: absolute;
     width: 24px;
     height: 46px;
-    top: -45px;
+    top: -40px;
     right: 15px;
   }
   > .search-container {

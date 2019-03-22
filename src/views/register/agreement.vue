@@ -71,7 +71,7 @@ export default {
     name: ''
   }),
   created() {
-    this.name = this.$route.query.name
+    // this.name = this.$route.query.name
   }
 }
 </script>
