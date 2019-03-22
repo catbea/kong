@@ -135,7 +135,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
-        line-height: 16px;
+        line-height: 20px;
         display: flex;
         justify-content: space-between;
         width: 98%;
