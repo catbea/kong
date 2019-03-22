@@ -24,7 +24,10 @@
             <p class="teammateList-center-left-tell">{{registerItem.mobile}}</p>
           </div>
           <div class="teammateList-center-right">
-            <p class="teammateList-center-right-time">收获 ¥{{registerItem.price| priceFormart}}元代金券</p>
+            <p
+              class="teammateList-center-right-time"
+            >{{registerItem.rewardsTime | dateTimeFormatter(2,'/')}}</p>
+            <!-- 收获 ¥{{registerItem.price| priceFormart}}元代金券 -->
           </div>
         </div>
       </van-list>
