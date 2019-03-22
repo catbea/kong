@@ -229,6 +229,9 @@ export default {
     position: fixed;
     top: 130px;
   }
+  .mint-indexlist-indicator{
+    top: 30%!important;
+  }
 }
 </style>
 
