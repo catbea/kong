@@ -205,6 +205,21 @@ export default {
         el.focus()
       }
     }
+  },
+  mounted () {
+    document.querySelector('.citylist-cnt').addEventListener('touchend', () => {
+      let h = document.querySelector('.router-view').scrollTop
+      if (h > 50) {
+        document.querySelector('.search-box').style.position = 'fixed'
+      } else {
+        document.querySelector('.search-box').style.position = 'absolute'
+      }
+      
+    })
+  },
+  beforeDestroy () {
+    document.querySelector('.citylist-cnt').removeEventListener('touchmove', () => {
+    },false)
   }
 }
 </script>
@@ -225,7 +240,7 @@ export default {
     height: 46px;
     line-height: 46px;
     vertical-align: middle;
-    position: fixed;
+    position: absolute;
     top:0;
     width: 100%;
     z-index: 9999;
