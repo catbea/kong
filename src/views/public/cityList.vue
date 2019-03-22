@@ -266,8 +266,9 @@ export default {
         width: 50px;
         text-align: center;
         background-color: #fff;
-        height: 30px;
         font-size: 14px;
+        height: 30px;
+        line-height: 30px;
         color: #666;
       }
     }
