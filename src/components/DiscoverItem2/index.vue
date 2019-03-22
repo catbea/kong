@@ -131,22 +131,30 @@ export default {
     ul {
       width: 181px;
       li:nth-of-type(1) {
+        height: 20px;
         font-size: 16px;
         font-weight: 600;
         color: rgba(51, 51, 51, 1);
         line-height: 16px;
         display: flex;
         justify-content: space-between;
+        width: 98%;
+        div {
+          width: 98%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
       li:nth-of-type(2) {
         font-size: 12px;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 15px;
-        margin: 10px 0 7px 0;
+        margin: 6px 0 4px 0;
       }
       li:nth-of-type(3) {
-        height: 15px;
+        height: 18px;
         display: flex;
         flex-wrap: wrap;
         .blue {
@@ -170,8 +178,8 @@ export default {
           margin: 2px 4px 0px -6px;
           padding: 1px 5px;
           border-radius: 3px;
-          height: 15px;
-          line-height: 15px;
+          height: 18px;
+          // line-height: 18px;
         }
         .tag-item {
           background: rgba(143, 159, 177, 0.15);

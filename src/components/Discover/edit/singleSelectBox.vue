@@ -273,14 +273,14 @@ export default {
 <style lang="less">
 .single-select-box {
   width: 84%;
-  height: 84%;
+  height: 86%;
   border-radius: 4px;
   overflow: unset;
   > .close-btn {
     position: absolute;
     width: 24px;
     height: 46px;
-    top: -45px;
+    top: -40px;
     right: 15px;
   }
   > .search-container {
