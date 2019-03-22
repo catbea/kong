@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="tab-box" v-show="!keywords">
-      <van-tabs  @click="changeTab" color="#007AE6">
+      <van-tabs  @click="changeTab" color="#007AE6" v-model="activeTab">
         <van-tab title="城市"></van-tab>
         <van-tab title="省份"></van-tab>
       </van-tabs>
@@ -104,6 +104,11 @@ export default {
     this.usercity = this.$route.query.searchContent || '深圳市'
     this.category = this.$route.query.category || 0
     this.getCityList(this.category)
+    let data = window.localStorage.getItem(`${this.fromPage || 'default'}City`)
+    if (data) {
+      data = JSON.parse(data)
+      this.activeTab = data.type === 1 ? 1 : 0
+    }
   },
   watch: {
     keywords () {
