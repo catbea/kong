@@ -36,6 +36,7 @@
                 v-model="code"
                 @focus="focusHandler"
                 @blur="blurHandler"
+                @input="inputHandler"
               >
             </div>
             <div
