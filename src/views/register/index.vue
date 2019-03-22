@@ -146,6 +146,7 @@ export default {
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
     this.name = this.userRegistInfo.name
+    this.disabled = this.userRegistInfo.disabled
     this.registDisabled = this.userRegistInfo.registDisabled
     this.queryByRegister(this.enterpriseId)
     if (this.registerType === '10' || this.registerType === '20') {
@@ -213,6 +214,7 @@ export default {
         registerMobile: this.mobile,
         registerCode: this.code,
         name: this.name,
+        disabled: this.disabled,
         registDisabled: this.registDisabled
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
