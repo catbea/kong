@@ -100,7 +100,7 @@ export default {
   },
   created () {
     this.fromPage = this.$route.query.fromPage
-    this.mtIndexHeight = (this.fromPage === 'market') ? 2000 : 0
+    this.mtIndexHeight = (this.fromPage === 'market') ? window.innerHeight - 80 : 0
     this.usercity = this.$route.query.searchContent || '深圳市'
     this.category = this.$route.query.category || 0
     this.getCityList(this.category)
@@ -335,7 +335,7 @@ export default {
               width: 100px;
               height: 32px;
               line-height: 32px;
-              margin: 0 16px 16px 0;
+              margin: 0 16px 8px 0;
               display: inline-block;
               &:nth-child(3n+3){
                 margin-right: 0;
