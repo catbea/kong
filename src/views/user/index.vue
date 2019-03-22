@@ -41,13 +41,12 @@
            </svg>
           <p class="grou1Icon-p">{{img.title}}</p>
         </div>
-        <div class="head-img" onclick="qimoChatClick();">
-          <!-- <img :src="consultImg"> -->
+        <!-- <div class="head-img" onclick="qimoChatClick();">
           <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-me_Customer"></use>
            </svg>
           <p class="grou1Icon-p">在线咨询</p>
-        </div>
+        </div> -->
       </div>
     </div>
     <van-popup class="popup-view" v-model="openPopup" :click-overlay="overlayClose">
@@ -184,7 +183,7 @@ export default {
     }
   },
   beforeDestroy () {
-    qimosdk.closeChatBox();
+    // qimosdk.closeChatBox();
   }
 }
 </script>
