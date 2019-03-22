@@ -100,7 +100,7 @@ export default {
   },
   created () {
     this.fromPage = this.$route.query.fromPage
-    this.mtIndexHeight = (this.fromPage === 'market') ? (window.innerHeight - 80) : 0
+    this.mtIndexHeight = (this.fromPage === 'market') ? window.innerHeight : 0
     this.usercity = this.$route.query.searchContent || '深圳市'
     this.category = this.$route.query.category || 0
     this.getCityList(this.category)
@@ -221,10 +221,15 @@ export default {
 .citylist-cnt{
   font-size: 12px;
   .search-box{
-    margin: 8px 15px;
-    height: 30px;
-    line-height: 30px;
+    padding: 8px 15px;
+    height: 46px;
+    line-height: 46px;
     vertical-align: middle;
+    position: fixed;
+    top:0;
+    width: 100%;
+    z-index: 9999;
+    background-color: #fff;
     .cnt{
       display: flex;
       background-color: #F2F6F7;
@@ -270,6 +275,7 @@ export default {
     
   }
   .tab-box{
+    margin-top: 46px;
   }
   .list-box{
     width: 100%;
