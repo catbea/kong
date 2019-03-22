@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="tab-box" v-show="!keywords">
-      <van-tabs  @click="changeTab" color="#007AE6" v-model="activeTab">
+      <van-tabs  @click="changeTab" color="#007AE6" v-model="activeTab" :line-width="20">
         <van-tab title="城市"></van-tab>
         <van-tab title="省份"></van-tab>
       </van-tabs>
@@ -100,7 +100,7 @@ export default {
   },
   created () {
     this.fromPage = this.$route.query.fromPage
-    this.mtIndexHeight = (this.fromPage === 'market') ? 2000 : 0
+    this.mtIndexHeight = (this.fromPage === 'market') ? (window.innerHeight - 80) : 0
     this.usercity = this.$route.query.searchContent || '深圳市'
     this.category = this.$route.query.category || 0
     this.getCityList(this.category)
@@ -208,10 +208,12 @@ export default {
   }
 }
 </script>
-<style>
-.mint-indexlist-nav{
-  position: fixed;
-  top: 130px;
+<style lang="less">
+.citylist-cnt {
+  .mint-indexlist-nav{
+    position: fixed;
+    top: 130px;
+  }
 }
 </style>
 
@@ -247,11 +249,12 @@ export default {
         }
         input {
           flex: 1;
-          height: 30px;
+          height: 16px;
           border: none;
           padding: 0 5px;
-          line-height: 30px;
+          line-height: 16px;
           background-color: transparent;
+          margin-top: 7px;
         }
       }
       .cancle{
@@ -335,7 +338,7 @@ export default {
               width: 100px;
               height: 32px;
               line-height: 32px;
-              margin: 0 16px 16px 0;
+              margin: 0 16px 8px 0;
               display: inline-block;
               &:nth-child(3n+3){
                 margin-right: 0;
