@@ -355,6 +355,7 @@ export default {
         title: '联系经纪人',
         message: '了解更多楼盘分享关系详情，请联系经纪人。',
         confirmButtonText: '知道了',
+        closeOnClickOverlay: true,
         showCancelButton: false
       })
     },
