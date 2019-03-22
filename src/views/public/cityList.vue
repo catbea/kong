@@ -377,6 +377,7 @@ export default {
     }
     .province-box{}
     .keywords-box{
+      margin-top: 46px;
       .nodata{
         margin-top: 120px;
         text-align: center;
