@@ -766,13 +766,13 @@ export default {
     let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     try {
       if (isiOS) {
-        document.querySelector('body').removeEventListener('touchstart', ()=>{},false)
-        document.querySelector('body').removeEventListener('touchmove', ()=>{},false)
-        document.querySelector('.replay').removeEventListener('touchmove', ()=>{},false)
-        document.querySelector('.submenu').removeEventListener('touchmove', ()=>{},false)
+        document.querySelector('body').removeEventListener('touchstart')
+        document.querySelector('body').removeEventListener('touchmove')
+        document.querySelector('.replay').removeEventListener('touchmove')
+        document.querySelector('.submenu').removeEventListener('touchmove')
       } else {
-        document.querySelector('.tab-bar').removeEventListener('touchstart', ()=>{},false)
-        document.querySelector('.tab-bar').removeEventListener('touchmove', ()=>{},false)
+        document.querySelector('.tab-bar').removeEventListener('touchstart')
+        document.querySelector('.tab-bar').removeEventListener('touchmove')
       }
     } catch (error) {}
   }
