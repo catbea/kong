@@ -218,8 +218,6 @@ export default {
     })
   },
   beforeDestroy () {
-    document.querySelector('.citylist-cnt').removeEventListener('touchmove', () => {
-    },false)
   }
 }
 </script>
