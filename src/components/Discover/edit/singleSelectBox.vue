@@ -82,7 +82,7 @@ export default {
     } // 已经选中的
   },
   data: () => ({
-    closeImg: require('IMG/guidance/closeBtn.png'),
+    closeImg: require('IMG/article/bg_close.png'),
     singleShow: false,
     status: 1,
     projectFilters: {},
@@ -281,9 +281,11 @@ export default {
   > .close-btn {
     position: absolute;
     width: 24px;
-    height: 46px;
-    top: -40px;
-    right: 15px;
+    height: 32px;
+    left: 50%;
+    bottom: -48px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); 
   }
   > .search-container {
     width: 100%;

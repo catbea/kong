@@ -5,7 +5,7 @@
       <!-- <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div> -->
       <img class="mini-qrcode" :src="info&&info.qrCode"></img>
       <div class="dialog-content">
-        <p class="dialog-name">{{info&&info.linkerName}}</p>
+        <p class="dialog-name" :style="{'fontSize':info.linkerName.length>7?'15px':'20px'}">{{info&&info.linkerName}}</p>
         <p class="dialog-tag">{{info&&info.tagList&&info.tagList.join(' ')}}</p>
         <p class="dialog-price" v-if="info&&info.linkerPrice&&info.linkerPrice==='0'">价格待定</p>
         <p class="dialog-price" v-else>
@@ -43,6 +43,7 @@ export default {
   },
   watch: {
     show(val) {
+      console.log('你是真的吗:'+val)
       this.currentShow = val
     },
     currentShow(val) {
@@ -88,7 +89,6 @@ export default {
       padding: 0 36px;
       > .dialog-name {
         color: #333;
-        font-size: 20px;
         font-weight: bold;
         height: 28px;
         text-align: center;

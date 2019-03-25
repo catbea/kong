@@ -763,7 +763,7 @@ export default {
   beforeDestroy() {
     // 缓存数据
     this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
-
+    let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     try {
       if (isiOS) {
         document.querySelector('body').removeEventListener('touchstart')
