@@ -461,6 +461,7 @@ export default {
     },
     popupShowControl(val) {
       this.overlayClose()
+      console.log('我来了:'+val)
     },
     // 关闭弹出框
     overlayClose() {
