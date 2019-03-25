@@ -39,7 +39,16 @@ export default {
   }),
   props: {
     renewInfo: { type: Object },
-    vipInfo: { type: Object }
+    vipInfo: { 
+      type: Object,
+      default: () => {
+        return {
+          expireTimestamp: '',
+          expireDate: '',
+          vipValid: ''
+        }
+      }
+     }
   },
   methods: {
     flagTjHandle() {
