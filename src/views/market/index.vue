@@ -121,6 +121,7 @@ export default {
           param['city'] = data.city
         }
       } else {
+        this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
         param.city = this.selectedCity
       }
       const res = await marketService.getHouseList(param)
