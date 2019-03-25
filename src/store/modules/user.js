@@ -5,7 +5,7 @@ import commonService from 'SERVICE/commonService'
 const state = {
   // jssdkConfig: JSON.parse(localStorage.getItem('awMasterJssdkConfig')) || null,
   userStatus: 0,
-  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || ((process.env.VUE_APP_AW_ENV=='prod') ? {} : {
+  userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || ((process.env.VUE_APP_AW_ENV=='prod' || process.env.VUE_APP_AW_ENV=='uat') ? {} : {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0,
     devMode: true,
