@@ -553,13 +553,12 @@ export default {
     // 分享
     async shareHandler() {
       await window.awHelper.wechatHelper.init(this.agentId)
-      /*
+
       this.friendShareData.success = this.articleShare
       this.timelineShareData.success = this.articleShare
       this.friendShareData.cancel = this.articleShare
       this.timelineShareData.cancel = this.articleShare
-      */
-     this.articleShare()
+      
       await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       setTimeout(() => {
         window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)

@@ -5,7 +5,7 @@
       <!-- <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div> -->
       <img class="mini-qrcode" :src="info&&info.qrCode"></img>
       <div class="dialog-content">
-        <p class="dialog-name">{{info&&info.linkerName}}</p>
+        <p class="dialog-name">{{info&&info.linkerName|textOver(7)}}</p>
         <p class="dialog-tag">{{info&&info.tagList&&info.tagList.join(' ')}}</p>
         <p class="dialog-price" v-if="info&&info.linkerPrice&&info.linkerPrice==='0'">价格待定</p>
         <p class="dialog-price" v-else>
