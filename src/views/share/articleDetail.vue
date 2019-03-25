@@ -468,11 +468,15 @@ export default {
     // 关闭弹出框
     overlayClose() {
       this.openCardPopup = false
-      this.openMarketPopup = !this.openMarketPopup
+      this.openMarketPopup = false
       this.openArticlePopup = false
       this.marketQrInfo = null
       this.articleQrInfo = null
+
+      console.log('垃圾问题:'+this.openMarketPopup)
+
     },
+
     // 数据埋点上报
     async dataReport(data) {
       if (this.mpUser.appid) {
