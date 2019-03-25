@@ -43,6 +43,7 @@ export default {
   },
   watch: {
     show(val) {
+      console.log('你是真的吗:'+val)
       this.currentShow = val
     },
     currentShow(val) {
