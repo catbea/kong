@@ -44,7 +44,11 @@
         <span
           class="disclaimer-text"
         >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">&nbsp;举报反馈</span>
+        <span
+          class="discover-feedback"
+          style="color:#445166"
+          @click="feedbackClickHandler"
+        >&nbsp;举报反馈</span>
       </p>
       <!-- 好看 -->
       <div class="easy-look-container" v-if="easylookList.length>0" @click="popHandler(1)">
@@ -113,7 +117,6 @@
         </div>
       </div>
     </div>
-
     <!-- 悬浮工具栏 -->
     <div class="van-hairline--top tools-bar" @click="popHandler(1)">
       <div class="tool-box">
@@ -461,12 +464,11 @@ export default {
     },
     popupShowControl(val) {
       this.overlayClose()
-      console.log('我来了:'+val)
     },
     // 关闭弹出框
     overlayClose() {
       this.openCardPopup = false
-      this.openMarketPopup = false
+      this.openMarketPopup = !this.openMarketPopup
       this.openArticlePopup = false
       this.marketQrInfo = null
       this.articleQrInfo = null
@@ -548,8 +550,8 @@ export default {
       }
       const result = await discoverService.articleShare(params)
       */
-     // h5分享添加数据埋点
-     this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFXWZ', userActionData: '' })
+      // h5分享添加数据埋点
+      this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFXWZ', userActionData: '' })
     },
     // 分享
     async shareHandler() {
@@ -559,7 +561,7 @@ export default {
       this.timelineShareData.success = this.articleShare
       this.friendShareData.cancel = this.articleShare
       this.timelineShareData.cancel = this.articleShare
-      
+
       await window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
       setTimeout(() => {
         window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
