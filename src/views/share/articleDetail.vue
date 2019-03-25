@@ -472,9 +472,6 @@ export default {
       this.openArticlePopup = false
       this.marketQrInfo = null
       this.articleQrInfo = null
-
-      console.log('垃圾问题:'+this.openMarketPopup)
-
     },
 
     // 数据埋点上报
