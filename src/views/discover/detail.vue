@@ -564,10 +564,13 @@ export default {
     },
     // 设置分享
     async setShare() {
+      /*
       this.friendShareData.success = this.articleShare
       this.timelineShareData.success = this.articleShare
       this.friendShareData.cancel = this.articleShare
       this.timelineShareData.cancel = this.articleShare
+      */
+      this.articleShare()
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
     // 分享成功之后
