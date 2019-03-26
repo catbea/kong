@@ -83,6 +83,7 @@ class WechatHelper {
    * @param {*} timelineConf
    */
   _universalShare(friendConf, timelineConf) {
+    console.log('share share share')
     this.wx.onMenuShareAppMessage(friendConf)
     this.wx.onMenuShareTimeline(timelineConf)
     this.wx.showOptionMenu()
