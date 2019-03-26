@@ -49,29 +49,6 @@ class UserService {
     })
   }
   /**
-   * 新增经纪人标签基础信息
- 
-   */
-  // getupdateByUser() {
-  //   return xhr({
-  //     method:'POST',
-  //     url: '/user/updateAgentByUserId',
-  //   })
-  // }
-  /**
-   * 获取经纪人个性签名列表
-   * @param {*} Authorization
-   * @param {*} current
-   * @param {*} size
-   */
-
-  getupdateByUser() {
-    return xhr({
-      method: 'POST',
-      url: '/user/updateAgentByUserId'
-    })
-  }
-  /**
    * 获取经纪人个性签名列表
    * @param {*} Authorization
    * @param {*} current

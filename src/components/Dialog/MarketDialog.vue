@@ -1,5 +1,5 @@
 <template>
-  <van-popup class="dialog-container" v-model="currentShow">
+  <van-popup class="dialog-container" v-if='this.currentShow!=false'  v-model="currentShow">
     <div class="shadow_box dialog-box">
       <div class="dialog-title">长按识别查看更多</div>
       <!-- <div class="bg_img mini-qrcode" :style="{backgroundImage:'url('+(info&&info.qrCode)+')'}"></div> -->
@@ -39,7 +39,7 @@ export default {
     popupShowControl(val) {
       this.currentShow = false
       this.$emit('close', val)
-    }
+    },
   },
   watch: {
     show(val) {
