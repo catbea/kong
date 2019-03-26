@@ -45,11 +45,11 @@ export default {
       let msgContent = this.$store.getters.newMsgContent
       if (this.$route.path == '/custom/message/message') {
         //当前在聊天页
-        return
+        return this.newMsgPop = false
       }
       if (msgContent.desc == 6 && this.$route.path == '/write-article') {
         // console.log(this.$store.getters.newMsgContent, 'this.$store.getters.newMsgContent')
-        return
+        return this.newMsgPop = false
       }
       if (msgContent.desc == 1 || msgContent.desc == 2 || msgContent.desc == 3) {
         this.newMsgPop = v
