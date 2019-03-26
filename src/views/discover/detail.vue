@@ -574,7 +574,12 @@ export default {
     },
     // 分享成功之后
     async articleShare() {
-      alert('share')
+
+      setTimeout(function(){
+        //回调要执行的代码
+        alert('share')
+      }, 500)
+      
       let linkerIds = []
       if (this.editData && this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
         linkerIds = this.editData.recommendHouse
