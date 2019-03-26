@@ -39,7 +39,11 @@ export default {
     popupShowControl(val) {
       this.currentShow = false
       this.$emit('close', val)
-    }
+    },
+    
+    show(val) {
+      this.currentShow = val
+    },
   },
   watch: {
     show(val) {
