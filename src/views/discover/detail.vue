@@ -588,6 +588,7 @@ export default {
         shareUuid: this.shareUuid,
         sourceType: 0 // 经纪人-0，客户-1
       }
+      alert('share'+this.agentId+' '+this.enterpriseId+' '+this.infoId+' '+this.shareUuid+' ')
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
