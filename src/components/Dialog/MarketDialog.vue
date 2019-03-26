@@ -40,17 +40,20 @@ export default {
       this.currentShow = false
       this.$emit('close', val)
     },
-    
+
     show(val) {
       this.currentShow = val
+      console.log('不要拦我1:'+val)
     },
   },
   watch: {
     show(val) {
       this.currentShow = val
+      console.log('不要拦我2:'+val)
     },
     currentShow(val) {
       this.$emit('update:show', val)
+      console.log('不要拦我3:'+val)
     }
   }
 }

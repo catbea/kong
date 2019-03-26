@@ -143,7 +143,7 @@
       :info="cardQrInfo"
       @close="popupShowControl()"
     ></card-dialog>
-    <market-dialog :show.sync="openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
+    <market-dialog :show.sync="this.openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
     <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
     <div class="loading" v-show="!renderDom.length">
       <van-loading type="spinner" color="white" class="van-loading"/>
