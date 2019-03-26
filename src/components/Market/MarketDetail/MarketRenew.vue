@@ -13,7 +13,7 @@
       <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
     <div :class="{marketRenewBoxButton:true,color:renewInfo.openStatus==1}" @click="renewHandle(renewInfo.linkerId)">
-      续费<span v-show="renewInfo.openStatus==2">({{renewInfo.expireTime}}到期)</span><span v-show="renewInfo.openStatus==1">（楼盘已过期）</span>
+      续费<span v-if="renewInfo.openStatus==2">({{renewInfo.expireTime}}到期)</span><span v-if="renewInfo.openStatus==1">（楼盘已过期）</span>
       </div>
 </ul>
 </template>
@@ -164,7 +164,6 @@ export default {
       }
     },
    async renewHandle(n) {
-      
       if (this.renewInfo.thisDistributor === false) {
         this.$dialog
           .alert({
@@ -285,13 +284,14 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 14px;
-
+    border-color: #007ae6;
     font-weight: 400;
     color: #007ae6;
     margin-left: 7px;
   }
   .color {
     color: #ea4d2e;
+    border-color: #ea4d2e;
   }
 }
 </style>
