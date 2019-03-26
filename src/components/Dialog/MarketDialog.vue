@@ -37,9 +37,14 @@ export default {
   }),
   methods: {
     popupShowControl(val) {
+      console.log('测试:'+val)
       this.currentShow = false
       this.$emit('close', val)
-    }
+    },
+
+    show(val) {
+      this.currentShow = val
+    },
   },
   watch: {
     show(val) {
