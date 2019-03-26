@@ -574,7 +574,7 @@ export default {
     },
     // 分享成功之后
     async articleShare() {
-      // alert('share')
+      alert('share')
       let linkerIds = []
       if (this.editData && this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
         linkerIds = this.editData.recommendHouse
