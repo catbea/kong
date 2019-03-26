@@ -264,7 +264,7 @@ export default {
       }
       if (this.info.editData !== '') this.editData = JSON.parse(this.info.editData)
       this.handleLinkerInfo()
-      // this.setShare()
+      this.setShare()
       this.virtualDom = document.createElement('div')
       this.virtualDom.innerHTML = this.info.content
 
