@@ -236,7 +236,7 @@ export default {
           // right: 16px;
           // margin-top: -6px;
           right: 0.42667rem;
-          margin-top: -55px;
+          // margin-top: -55px;
           padding-right: 0;
           float: right;
           > .agent-right-num {
