@@ -42,10 +42,8 @@ export default {
 .estate-recommend {
   position: relative;
   > .recommend-box {
-    width: 345px;
-    height: 125px;
-    margin: 0 15px;
-    border-radius: 10px;
+    width:100%;
+    height: 122px;
   }
   > .recommend-info {
     position: absolute;
