@@ -291,7 +291,8 @@ export default {
       nodataStatus: false,
       updateLikeItem: '', //点赞数据
       startY: '',
-      endY: ''
+      endY: '',
+      getDataStatus: false
     }
   },
   watch: {
@@ -394,6 +395,7 @@ export default {
       if (!sortType) {
         sortType = this.classifyName === '推荐' ? 1 : 2
       }
+      this.getDataStatus = true
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
@@ -417,6 +419,7 @@ export default {
       }
       this.nodataStatus = true
       this.showLoading = false
+      this.getDataStatus = false
     },
     // 重新获取位置
     async getLocation() {
@@ -424,6 +427,10 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify(item, e) {
+      // 数据请求禁止切换
+      if (this.getDataStatus) {
+        return false
+      }
       if (e && e.currentTarget) {
         e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'end' })
       }
