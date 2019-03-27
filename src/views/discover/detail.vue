@@ -572,14 +572,7 @@ export default {
 
       window.awHelper.wechatHelper.setShare(this.friendShareData, this.timelineShareData)
     },
-    // 分享成功之后
-    async articleShare() {
-
-      setTimeout(function(){
-        //回调要执行的代码
-        alert('share')
-      }, 500)
-      
+    async insertShareInfo() {
       let linkerIds = []
       if (this.editData && this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
         linkerIds = this.editData.recommendHouse
@@ -593,12 +586,18 @@ export default {
         shareUuid: this.shareUuid,
         sourceType: 0 // 经纪人-0，客户-1
       }
-      alert('share'+this.agentId+' '+this.enterpriseId+' '+this.infoId+' '+this.shareUuid+' ')
+      // alert('share'+this.agentId+' '+this.enterpriseId+' '+this.infoId+' '+this.shareUuid+' ')
       const result = await discoverService.articleShare(params)
       // 分享成功之后重新获取新的UUID
       this.shareUuid = uuid()
       // 分享成功之后获取最新好看列表
       this.getLikeList()
+    },
+    // 分享成功之后
+    async articleShare() {
+      setTimeout(()=>{// 成功回调后500毫秒再调接口
+        this.insertShareInfo()
+      }, 500)
     },
     // 文章删除
     delHandler() {

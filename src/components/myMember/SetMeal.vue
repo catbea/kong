@@ -6,7 +6,7 @@
         <div v-show="setMealInfo.isVip" class="meal-site" @click="checkCityhandle">
           <p v-show="!setMealInfo.vipCity">选择城市</p>
           <p v-show="setMealInfo.vipCity">{{setMealInfo.vipCity}}</p>
-          <span class="site-icon bg_img" :style="{backgroundImage:'url('+siteImg+')'}"></span>
+          <!-- <span class="bg_img site-icon" :style="{backgroundImage:'url('+siteImg+')'}"></span> -->
         </div>
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
