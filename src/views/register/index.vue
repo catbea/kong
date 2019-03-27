@@ -326,7 +326,7 @@ export default {
         color: #445166;
         font-size: 16px;
         width: 90%;
-        height: 40px;
+        height: 44px;
         padding-left: 10px;
         border: none;
         background-color: transparent;
