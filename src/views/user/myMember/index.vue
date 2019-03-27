@@ -4,7 +4,7 @@
       <div class="background-content">
       <div class="headImg" :style="isVip ? borderStyle : ''">
         <avatar class="avatar" :avatar="userInfo.avatarUrl"></avatar>
-        <span class="head-icon bg_img" v-show="isVip" :style="{backgroundImage:'url('+(isExpire ? headImgB : headImgA)+')'}"></span>
+        <span class="bg_img head-icon" v-show="isVip" :style="{backgroundImage:'url('+(isExpire ? headImgB : headImgA)+')'}"></span>
       </div>
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
         <li>{{userInfo.name}}</li>

@@ -1,5 +1,5 @@
 <template>
-  <van-popup class="single-select-box" v-model="singleShow">
+  <van-popup class="single-select-box" v-model="singleShow" :close-on-click-overlay="false">
     <img class="close-btn" :src="closeImg" @click="closeHandler">
     <div v-if="status===1" class="search-container">
       <div class="search-box">
