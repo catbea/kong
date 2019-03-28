@@ -218,5 +218,39 @@ export default [
         show: false
       }
     }
+  },
+  // 买房问问
+  {
+    path: '/marketDetail/ask/:id',
+    name: 'market-ask-list',
+    component: resolve => require(['@/views/market/marketDetail/marketAsk/index.vue'], resolve),
+    meta: {
+      title: '买房问问',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/marketDetail/askDetail/:id',
+    name: 'market-ask-detail',
+    component: resolve => require(['@/views/market/marketDetail/marketAsk/detail.vue'], resolve),
+    meta: {
+      title: '问答详情',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/marketDetail/ask/toask/:id',
+    name: 'market-ask-toask',
+    component: resolve => require(['@/views/market/marketDetail/marketAsk/toask.vue'], resolve),
+    meta: {
+      title: '提问',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
