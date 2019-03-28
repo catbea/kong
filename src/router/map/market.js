@@ -220,8 +220,8 @@ export default [
     }
   },
   {
-    path: '/market/comment/list',
-    name: 'market-comment',
+    path: '/market/comment/list/:id',
+    name: 'market-comment-list',
     component: resolve => require(['@/views/market/comment/list.vue'], resolve),
     meta: {
       title: '楼盘评论',
@@ -229,5 +229,28 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/market/comment/write/:id',
+    name: 'market-comment-write',
+    component: resolve => require(['@/views/market/comment/write.vue'], resolve),
+    meta: {
+      title: '评论楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/market/comment/detail/:id',
+    name: 'market-comment-detail',
+    component: resolve => require(['@/views/market/comment/detail.vue'], resolve),
+    meta: {
+      title: '评论详情',
+      tabbar: {
+        show: false
+      }
+    }
   }
+
 ]

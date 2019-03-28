@@ -33,7 +33,8 @@ import {
   CheckboxGroup,
   SubmitBar,
   Actionsheet,
-  SwipeCell
+  SwipeCell,
+  Rate
 } from 'vant'
 Vue.use(Toast)
 Vue.use(Icon)
@@ -67,3 +68,4 @@ Vue.use(SubmitBar)
 Vue.use(Actionsheet)
 
 Vue.use(SwipeCell)
+Vue.use(Rate)

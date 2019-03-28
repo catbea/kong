@@ -50,6 +50,10 @@
           </div>
         </van-list>
       </div>
+      <div class="nodata">
+        <img src="../../../assets/img/market/comment/nodata.png" alt="">
+        <p>该楼盘没有评论哦，快来抢先一步评论吧！</p> 
+      </div>
       <div class="comment-btn">
         写点评 分享心得
       </div>
@@ -139,6 +143,9 @@ export default {
 
 <style lang="less" scoped>
 .market-list{
+   display: flex;
+   flex-direction: column;
+   font-size: 12px;
   .tags{
     margin: 12px 16px 20px;
     display: flex;
@@ -161,6 +168,7 @@ export default {
     }
   }
   .list-box{
+    flex: 1;
     display: flex;
     flex-direction: column;
     .wrapper{
@@ -184,10 +192,11 @@ export default {
                 vertical-align: middle;
               }
               span{
-                background-color: #8F9FB1;
-                color: #5C5F66;
+                background-color: rgba(143, 159, 177, 0.15);
+                color: rgba(92, 95, 102, 1);
                 line-height: 15px;
                 padding: 0 5px;
+                font-size: 10px;
               }
             }
           }
@@ -202,6 +211,7 @@ export default {
           -webkit-line-clamp:3;
           -webkit-box-orient:vertical;
           overflow:hidden;
+          margin-top: 10px;
         }
         .comment-more{
           font-size: 14px;
@@ -212,6 +222,7 @@ export default {
         .comment-pic{
           display: flex;
           justify-content: space-between;
+          margin-top: 10px;
           .pic-box{
             flex: 0 1 80px;
             height: 60px;
@@ -240,9 +251,19 @@ export default {
         }
       }
     }
+    .nodata{
+      flex: 1;
+      color: #999;
+      text-align: center;
+      align-self: center;
+      font-size: 12px;
+      img{
+        width: 88px;
+      }
+    }
     .comment-btn{
       height: 44px;
-      margin: 16px;
+      margin: 20px 16px;
       border-radius: 6px;
       background-color: #007AE6;
       color: #fff;
