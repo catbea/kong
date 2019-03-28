@@ -253,12 +253,12 @@
     <!-- 买房问问 -->
     <div class="buy-ask">
       <title-bar :conf="buyAskTitleConf"/>
-      <ol class="van-hairline--bottom ask-content">
+      <ol class="ask-content">
         <li>
          <div><span>问</span>首付比例是多少呢？</div>
          <p>20人回复</p>
         </li>
-        <li>
+        <li class="van-hairline--bottom">
          <div>
            <span>答</span>
            <img :src="panoramaIcon" alt="" srcset="">
@@ -1150,13 +1150,14 @@ export default {
               margin-bottom:18px;
               span{
                 display: inline-block;
-                width:50px;
-                height:15px;
+                width:60px;
+                height:20px;
                 text-align: center;
-                line-height:15px;
+                line-height:20px;
                 background:rgba(143,159,177,0.15);
                 border-radius:2px;
                 font-size:10px;
+                transform: scale(.8);
                 font-family:PingFangSC-Regular;
                 font-weight:400;
                 color:rgba(92,95,102,1);
@@ -1212,7 +1213,6 @@ export default {
       margin-top:16px;
       padding: 0 15px;
       width:100%;
-      padding-bottom:16px;
       li:nth-child(1){
         display: flex;
         justify-content:space-between;
@@ -1244,6 +1244,7 @@ export default {
         }
       }
       li:nth-child(2){
+        padding-bottom:16px;
         span{
           display: inline-block;
           text-align: center;
