@@ -218,5 +218,16 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/market/comment/list',
+    name: 'market-comment',
+    component: resolve => require(['@/views/market/comment/list.vue'], resolve),
+    meta: {
+      title: '楼盘评论',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
