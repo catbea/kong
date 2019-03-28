@@ -3,7 +3,7 @@
         <div class="asking-header" v-if="this.noData===false">共有12个问题，300个回答</div>
         <div class="asking-center" v-if="this.noData===false">
             <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-                <div class="asking-item">
+                <div class="asking-item" @click="enterDetails">
                     <div class="question-view">
                         <div class="question-icon">问</div>
                         <div class="question-body">
@@ -49,7 +49,14 @@ export default {
   }),
 
   methods: {
-    onLoad() {}
+    onLoad() {},
+
+    /**
+     * 进入评测
+     */
+    enterDetails(){
+        this.$router.push({name: 'market-marketEvaluating'})
+    }
   }
 }
 </script>
