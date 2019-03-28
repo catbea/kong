@@ -219,6 +219,17 @@ export default [
       }
     }
   },
+  {
+    path: '/evaluate/standard',
+    name: 'evaluate-standard',
+    component: resolve => require(['@/views/market/evaluateStandard.vue'], resolve),
+    meta: {
+      title: '用户点评行为规范',
+      tabbar: {
+        show: false
+      }
+    }
+  },
   // 买房问问
   {
     path: '/marketDetail/asking/:id',
