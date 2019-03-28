@@ -754,9 +754,6 @@ export default {
       margin-top: 8px;
       margin-bottom: 10px;
     }
-    // 好看
-    .van-icon {
-    }
     > .easy-look-container {
       padding: 10px 16px 24px 16px;
       // border-bottom: 10px solid #f7f9fa;
