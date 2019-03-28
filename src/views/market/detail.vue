@@ -258,7 +258,7 @@
       <title-bar :conf="buyAskTitleConf"/>
       <ol class="ask-content">
         <li>
-         <div><span>问</span>首付比例是多少呢？</div>
+         <div><span>问</span><span>首付比例是多少呢？</span></div>
          <p>20人回复</p>
         </li>
         <li class="van-hairline--bottom">
@@ -1221,12 +1221,11 @@ export default {
         display: flex;
         justify-content:space-between;
         width:100%;
-        font-size:16px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(51,51,51,1);
         margin-bottom:16px;
-        span{
+        div{
+          display: flex;
+        }
+        span:nth-of-type(1){
           display: inline-block;
           width:22px;
           height:22px;
@@ -1239,6 +1238,14 @@ export default {
           font-weight:500;
           color:rgba(255,255,255,1);
           margin-right:8px;
+        }
+        span:nth-of-type(2){
+          display: inline-block;
+          font-size:16px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+        width:225px;
         }
         p{
           font-size:13px;
