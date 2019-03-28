@@ -263,8 +263,6 @@ export default {
   }
   > .bottom-container {
     margin: 10px 16px;
-    > .name-cell {
-    }
     > .major-cell {
       display: flex;
       margin: 30px 0;

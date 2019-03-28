@@ -4,17 +4,29 @@
     <hint-tire></hint-tire>
     <!-- 顶部swipe -->
     <div class="top-swipe-container">
-      <div class="swipe-outer" >
+      <div class="swipe-outer">
         <div class="swipe-content">
           <div class="btn-box">
             <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
-            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle" v-if="info.fyVideo">视频</div>
+            <div
+              class="swipe-photo"
+              :class="{'photo': showVideo}"
+              @click.stop="videoHandle"
+              v-if="info.fyVideo"
+            >视频</div>
           </div>
           <van-swipe @change="swipeChange">
             <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
-              <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
+              <div
+                class="bg_img swipe-item dev"
+                :style="{backgroundImage:'url(' + item.imgUrl + ')'}"
+              ></div>
             </van-swipe-item>
-            <div class="custom-indicator dev" slot="indicator" v-show="photoButton">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+            <div
+              class="custom-indicator dev"
+              slot="indicator"
+              v-show="photoButton"
+            >{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
           </van-swipe>
         </div>
         <div class="operate-content">
@@ -32,11 +44,29 @@
           </div>
           <!-- 存在全景时全景播放 -->
         </div>
-        <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
+        <div
+          class="bg_img operate-2"
+          v-if="info.ifPanorama===1"
+          :style="{backgroundImage:'url(' + playIcon + ')'}"
+          @click.stop="ifPanoramaClickHandler"
+        ></div>
       </div>
       <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400  x5-playsinline="true" -->
       <div class="video-box" v-show="showVideo">
-        <video width="100%" height="100%"  ref="videoplay" preload="true" controls="showControls" style="object-fit:fill"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5" x5-video-player-fullscreen="true">
+        <video
+          width="100%"
+          height="100%"
+          ref="videoplay"
+          preload="true"
+          controls="showControls"
+          style="object-fit:fill"
+          :poster="info.headImgUrl"
+          webkit-playsinline="true"
+          playsinline="true"
+          x-webkit-airplay="allow"
+          x5-video-player-type="h5"
+          x5-video-player-fullscreen="true"
+        >
           <source :src="info.fyVideo" type="video/mp4">
         </video>
         <div class="close-video" @click="videoHide">退出视频</div>
@@ -50,23 +80,38 @@
           <span>{{info.browsCount}}</span>人浏览过
           <div class="head-portrait-box">
             <transition name="show">
-              <avatar :avatar="item.clientImg" v-for="(item,index) in info.customerList" :key="index" v-if="index===headCurrent"/>
+              <avatar
+                :avatar="item.clientImg"
+                v-for="(item,index) in info.customerList"
+                :key="index"
+                v-if="index===headCurrent"
+              />
             </transition>
           </div>
         </div>
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join(" | ")}}</p>
+        <p
+          class="house-feature"
+        >{{ info.projectTagList === '' ? null : info.projectTagList.join(" | ")}}</p>
         <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
           <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
           <span class="commission-text">{{info&&info.divisionRules}}</span>
-          <div class="bg_img commission-detail" @click="commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
+          <div
+            class="bg_img commission-detail"
+            @click="commission"
+            :style="{backgroundImage:'url('+siteDetailImg+')'}"
+          ></div>
         </div>
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
             {{info.averagePrice}}
+            <span class="calculation-view" @click="goCalculation">
+              <img :src="calculationIcon">
+              <span>房贷计算器</span>
+            </span>
           </p>
           <p>
             <span>开盘时间:</span>
@@ -87,14 +132,22 @@
     <!-- 楼盘分享关系图谱 -->
     <div class="marker-relation-box">
       <p>楼盘分享关系图谱</p>
-      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}" @click="relationShowFn">
+      <ol
+        class="bg_img relation-drawing"
+        :style="{backgroundImage:'url('+drawingImg+')'}"
+        @click="relationShowFn"
+      >
         <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
         <li>{{info.linkerName}}</li>
       </ol>
     </div>
     <van-popup v-model="relationShow" class="relationPopup">
       <div class="relationName">
-        <p class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="relationShow=false"></p>
+        <p
+          class="bg_img"
+          :style="{backgroundImage:'url('+closeImg+')'}"
+          @click="relationShow=false"
+        ></p>
         <ul>
           <li>请联系经纪人</li>
           <li>了解更多楼盘分享关系详情，请联系经纪人</li>
@@ -110,13 +163,23 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
             <div class="house-type">
-              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}" @click.stop="houseTypeHandle(item.imgUrl)"></div>
+              <div
+                class="bg_img house-type-img"
+                :style="{backgroundImage:'url('+item.imgUrl+')'}"
+                @click.stop="houseTypeHandle(item.imgUrl)"
+              ></div>
               <div class="house-type-info">
                 <p class="house-type-name">{{item.householdDesc}}</p>
-                <p class="house-type-area" v-if="item.orientations=='暂无信息'">{{`建面${item.area} 暂无朝向信息`}}</p>
+                <p
+                  class="house-type-area"
+                  v-if="item.orientations=='暂无信息'"
+                >{{`建面${item.area} 暂无朝向信息`}}</p>
                 <p class="house-type-area" v-else>{{`建面${item.area}${item.orientations}朝向`}}</p>
                 <p class="house-type-price" v-if="item.price=='价格待定'">{{item.price}}</p>
-                <p class="house-type-price" v-else><span v-if="item.price.indexOf('起')=== -1">约</span>{{item.price}}</p>
+                <p class="house-type-price" v-else>
+                  <span v-if="item.price.indexOf('起')=== -1">约</span>
+                  {{item.price}}
+                </p>
               </div>
             </div>
           </swiper-slide>
@@ -137,7 +200,12 @@
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
-          <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
+          <van-tab
+            v-for="item in info.houseAroundType"
+            :key="item.name"
+            :title="item.name"
+            :line-width="0"
+          />
         </van-tabs>
       </div>
       <div class="map-box" @click="mapClickHandler">
@@ -206,10 +274,21 @@
       <title-bar :conf="othersTitleConf"/>
       <div class="recommend-swipe-content">
         <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index" @click.native="itemClickHandler(item.linkerId)">
+          <swiper-slide
+            v-for="(item,index) in info.linkerOtherList"
+            :key="index"
+            @click.native="itemClickHandler(item.linkerId)"
+          >
             <div class="recommend-house-item">
-              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
-                <p class="bg_img panorama-icon" v-if="item.ifPanorama==1" :style="{backgroundImage:'url('+panoramaIcon+')'}"></p>
+              <div
+                class="bg_img recommend-house-img"
+                :style="{backgroundImage:'url('+item.headImgUrl+')'}"
+              >
+                <p
+                  class="bg_img panorama-icon"
+                  v-if="item.ifPanorama==1"
+                  :style="{backgroundImage:'url('+panoramaIcon+')'}"
+                ></p>
               </div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
@@ -230,7 +309,11 @@
         <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
         <div class="open-btn" @click="openHandler">开通楼盘</div>
       </div>
-      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info" :vipInfo="vipInfo"/>
+      <market-renew
+        v-if="!openStatus&&info.saleStatus!=='售罄'"
+        :renewInfo="info"
+        :vipInfo="vipInfo"
+      />
       <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
         <p>售罄</p>
       </div>
@@ -276,7 +359,7 @@ export default {
   },
   data() {
     return {
-      vipInfo:'',
+      vipInfo: '',
       instance: 0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: false, //是否存在相册
@@ -291,6 +374,7 @@ export default {
       closeIcon: require('IMG/market/closeIcon@2x.png'),
       levelColorImg: require('IMG/marketDetail/levelColor@2x.png'),
       levelImg: require('IMG/marketDetail/level@2x.png'),
+      calculationIcon: require('IMG/market/calculation_icon.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -299,10 +383,10 @@ export default {
       mapTab: 0,
       openStatus: false,
       relationShow: false, //立即联系
-      appointmentShow:false,//预约看房
-      nameContent:'',//预约姓名
-      phoneContent:'',//预约手机号码
-      codeContent:'',//预约验证码
+      appointmentShow: false, //预约看房
+      nameContent: '', //预约姓名
+      phoneContent: '', //预约手机号码
+      codeContent: '', //预约验证码
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -353,10 +437,10 @@ export default {
       playIcon: require('IMG/market/view720.png'),
       showVideo: false,
       showControls: true,
-      appointmentImg:require('IMG/market/appointment@2x.png')
+      appointmentImg: require('IMG/market/appointment@2x.png')
     }
   },
- async created() {
+  async created() {
     this.id = this.$route.params.id
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
@@ -380,17 +464,25 @@ export default {
     }
   },
   methods: {
-    appointmentHandle(){//预约看房弹窗
-    this.appointmentShow=true
+    goCalculation() {
+      //进入计算器页面
+      this.$router.push({ name: 'market-asking-list' })
     },
-    emptyContent(){//预约看房弹窗内容清空
-    this.appointmentShow=false;
-    this.nameContent='';
-    this.phoneContent='';
-    this.codeContent=''
+
+    appointmentHandle() {
+      //预约看房弹窗
+      this.appointmentShow = true
     },
-    submitHandle(){//提交预约信息
-    this.emptyContent()
+    emptyContent() {
+      //预约看房弹窗内容清空
+      this.appointmentShow = false
+      this.nameContent = ''
+      this.phoneContent = ''
+      this.codeContent = ''
+    },
+    submitHandle() {
+      //提交预约信息
+      this.emptyContent()
     },
     // 点击客户关系弹框
     relationShowFn() {
@@ -449,7 +541,7 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g, '/'))
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -515,7 +607,7 @@ export default {
       }
     },
     async openHandler() {
-      //VIP用户选择城市与VIP开通楼盘同城市 
+      //VIP用户选择城市与VIP开通楼盘同城市
       // if (this.info.city === this.userInfo.vipInfo.city) {
       //   const res = await marketService.addHouseByVip(this.info.linkerId)
       //   if (res.returnCode == 21801) {
@@ -528,22 +620,22 @@ export default {
       //     duration: 1000,
       //     message: '已开通成功，请到我的楼盘查看'
       //   })
-        // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
-        let invalidTime = this.info.expireDate-0// 含时分秒的楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
-        if(this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city){
-          const res = await marketService.addHouseByVip(this.info.linkerId)
-          await this.getDetailInfo(this.id)
-          this.openStatus = false
-          this.$toast({
-            duration: 1000,
-            message: '已开通成功，请到我的楼盘查看'
-          })
-          let time = new Date(+this.vipInfo.expireTimestamp)
-          let year =time.getFullYear();
-          let mou = time.getMonth() + 1
-          let date = time.getDate()
-          this.info.expireTime = `0${mou}/0${date}`
+      // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+      let invalidTime = this.info.expireDate - 0 // 含时分秒的楼盘到期时间
+      let expireTimestamp = this.vipInfo.expireTimestamp - 0 // vip到期时间
+      if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+        const res = await marketService.addHouseByVip(this.info.linkerId)
+        await this.getDetailInfo(this.id)
+        this.openStatus = false
+        this.$toast({
+          duration: 1000,
+          message: '已开通成功，请到我的楼盘查看'
+        })
+        let time = new Date(+this.vipInfo.expireTimestamp)
+        let year = time.getFullYear()
+        let mou = time.getMonth() + 1
+        let date = time.getDate()
+        this.info.expireTime = `0${mou}/0${date}`
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
       }
@@ -556,7 +648,7 @@ export default {
       window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
     },
     competeOpenStatus() {
-      this.openStatus =  this.info.openStatus == 0
+      this.openStatus = this.info.openStatus == 0
     },
     // 其他楼盘
     itemClickHandler(id) {
@@ -577,34 +669,35 @@ export default {
       let res = await marketService.vipInfo()
       this.vipInfo = res
     },
-   async vipRenewHandle(){//vip续费操作
-      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+    async vipRenewHandle() {
+      //vip续费操作
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g, '/')) // 楼盘到期时间
       // let invalidTime = +new Date(this.info.invalidTime.replace(/-/g,'/'))// 含时分秒的楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
-        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
-          const res = await marketService.addHouseByVip(this.info.linkerId)
-          this.$toast({
-            duration: 1000,
-            message: '续费成功！'
-          })
-          let time = new Date(+this.vipInfo.expireTimestamp)
-          let year =time.getFullYear();
-          let mou = time.getMonth() + 1
-          let date = time.getDate()
-          this.info.expireTime = `0${mou}/0${date}`
-          // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
-          this.info.openStatus = 2
-          // await this.getDetailInfo(this.id)
-        } else {
-          this.openHandler()
-        }
+      let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+      if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+        const res = await marketService.addHouseByVip(this.info.linkerId)
+        this.$toast({
+          duration: 1000,
+          message: '续费成功！'
+        })
+        let time = new Date(+this.vipInfo.expireTimestamp)
+        let year = time.getFullYear()
+        let mou = time.getMonth() + 1
+        let date = time.getDate()
+        this.info.expireTime = `0${mou}/0${date}`
+        // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
+        this.info.openStatus = 2
+        // await this.getDetailInfo(this.id)
+      } else {
+        this.openHandler()
+      }
     }
   },
   computed: {
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
-    },
+    }
     // poster: {
     //   get: function() {
     //     return !window.localStorage.getItem('POSTER_REMIND') && this.info && this.info.posterImgUrl != ''
@@ -630,14 +723,14 @@ export default {
     position: relative;
     width: 100%;
     height: 281px;
-    .swipe-outer{
+    .swipe-outer {
       height: 100%;
       width: 100%;
       .swipe-content {
         position: relative;
         width: 100%;
         height: 100%;
-        .btn-box{
+        .btn-box {
           position: absolute;
           z-index: 2;
           left: 0;
@@ -655,8 +748,8 @@ export default {
             display: inline-block;
             width: 70px;
             margin: 0 5px;
-            &.photo{
-              background-color: #007AE6;
+            &.photo {
+              background-color: #007ae6;
               color: #fff;
             }
           }
@@ -713,20 +806,20 @@ export default {
         height: 64px;
       }
     }
-    .video-box{
+    .video-box {
       position: absolute;
       top: 0;
       width: 100%;
       height: 281px;
       background-color: #000;
-      overflow:hidden;
+      overflow: hidden;
       z-index: 9;
-      video{
+      video {
         width: 100%;
         height: 100%;
         object-fit: none;
       }
-      .close-video{
+      .close-video {
         position: absolute;
         top: 45px;
         right: 5px;
@@ -827,10 +920,24 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 343px;
-          > span {
-            display: inline-block;
-            color: #8a8f99;
-            width: 80px;
+
+          > .calculation-view {
+            float: right;
+            display: flex;
+            align-items: center;
+
+            > img {
+              width: 16px;
+              height: 16px;
+              margin-top: 3px;
+            }
+
+            > span {
+              display: inline-block;
+              color: #007ae6;
+              font-size: 12px;
+              margin-left: 2px;
+            }
           }
         }
       }
@@ -940,7 +1047,7 @@ export default {
     margin-top: 15px;
     .tab-box {
       position: relative;
-      z-index:1;
+      z-index: 1;
       > .van-tabs {
         .van-tabs__line {
           display: none;
@@ -1342,7 +1449,7 @@ export default {
 .relationPopup {
   border-radius: 12px;
   width: 311px;
-  height:198px;
+  height: 198px;
   // padding-top:45px;
   .relationName {
     width: 311px;
@@ -1384,15 +1491,15 @@ export default {
     .immediately {
       text-align: center;
       // margin-left: 32px;
-      width:100%;
-      height:50px;
+      width: 100%;
+      height: 50px;
       // background: rgba(0, 122, 230, 1);
       border-radius: 6px;
-      font-size:18px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(1,127,255,1);
-      line-height:50px;
+      font-size: 18px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(1, 127, 255, 1);
+      line-height: 50px;
     }
   }
 }
@@ -1427,7 +1534,7 @@ export default {
   right: 0;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.6);
-  .cnt{
+  .cnt {
     width: 290px;
     height: 500px;
     overflow: hidden;
@@ -1441,19 +1548,19 @@ export default {
       width: 101%;
       height: 101%;
       border-radius: 5px;
-      img{
+      img {
         width: 290px;
         height: 500px;
         border-radius: 5px;
       }
-      .close-icon{
+      .close-icon {
         position: absolute;
         right: 0;
         top: 0;
         width: 100px;
         height: 100px;
         text-align: right;
-        img{
+        img {
           width: 24px;
           height: 24px;
           margin: 5px 10px;
@@ -1461,7 +1568,5 @@ export default {
       }
     }
   }
-  
-  
 }
 </style>
