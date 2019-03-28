@@ -219,6 +219,17 @@ export default [
       }
     }
   },
+  {
+    path: '/evaluate/standard',
+    name: 'evaluate-standard',
+    component: resolve => require(['@/views/market/evaluateStandard.vue'], resolve),
+    meta: {
+      title: '用户点评行为规范',
+      tabbar: {
+        show: false
+      }
+    }
+  },
   // 买房问问
   {
     path: '/marketDetail/asking/:id',
@@ -248,6 +259,18 @@ export default [
     component: resolve => require(['@/views/market/marketDetail/marketAsking/ask.vue'], resolve),
     meta: {
       title: '提问',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+
+  {
+    path: '/marketDetail/marketEvaluating',
+    name: 'market-marketEvaluating',
+    component: resolve => require(['@/views/market/marketDetail/marketEvaluating/index.vue'], resolve),
+    meta: {
+      title: '楼盘评测',
       tabbar: {
         show: false
       }

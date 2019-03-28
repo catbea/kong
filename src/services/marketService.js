@@ -360,5 +360,14 @@ class MarketService {
       body: data
     })
   }
+
+  /**
+   * 买房问问列表
+   */
+  getAskingList(){
+
+  }
+
+
 }
 export default new MarketService()
