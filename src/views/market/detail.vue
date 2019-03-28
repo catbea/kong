@@ -227,7 +227,10 @@
     <div class="evaluate-box">
       <title-bar :conf="evaluateTitleConf"/>
       <div class="evaluate-content">
-        <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p>
+        <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
+        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
+        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
+        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
         <ul class="evaluate-detail">
           <li class="van-hairline--bottom">
             <div class="top">
@@ -247,7 +250,7 @@
             </div>
           </li>
         </ul>
-        <span class="hint">在这里，说出楼盘的一切</span><span class="go-evaluate">我要评论</span>
+        <span class="hint">在这里，说出楼盘的一切</span><router-link class="go-evaluate" tag="span" to="/">我要评论</router-link>
       </div>
     </div>
     <!-- 买房问问 -->
@@ -267,7 +270,7 @@
          <p>时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价</p>
         </li>
       </ol>
-      <span class="hint">在这里，问关于房子的一切</span><span class="go-evaluate">我要提问</span>
+      <span class="hint">在这里，问关于房子的一切</span><router-link class="go-evaluate" tag="span" to="/">我要提问</router-link>
     </div>
     <!-- 其他楼盘 -->
     <div class="house-recommend" v-if="info.linkerOtherList.length>0">
