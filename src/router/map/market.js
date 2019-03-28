@@ -218,5 +218,16 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/evaluate/standard',
+    name: 'evaluate-standard',
+    component: resolve => require(['@/views/market/evaluateStandard.vue'], resolve),
+    meta: {
+      title: '用户点评行为规范',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
