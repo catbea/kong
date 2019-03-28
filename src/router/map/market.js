@@ -221,9 +221,9 @@ export default [
   },
   // 买房问问
   {
-    path: '/marketDetail/ask/:id',
-    name: 'market-ask-list',
-    component: resolve => require(['@/views/market/marketDetail/marketAsk/index.vue'], resolve),
+    path: '/marketDetail/asking/:id',
+    name: 'market-asking-list',
+    component: resolve => require(['@/views/market/marketDetail/marketAsking/index.vue'], resolve),
     meta: {
       title: '买房问问',
       tabbar: {
@@ -232,9 +232,9 @@ export default [
     }
   },
   {
-    path: '/marketDetail/askDetail/:id',
-    name: 'market-ask-detail',
-    component: resolve => require(['@/views/market/marketDetail/marketAsk/detail.vue'], resolve),
+    path: '/marketDetail/askingDetail/:id',
+    name: 'market-asking-detail',
+    component: resolve => require(['@/views/market/marketDetail/marketAsking/detail.vue'], resolve),
     meta: {
       title: '问答详情',
       tabbar: {
@@ -243,9 +243,9 @@ export default [
     }
   },
   {
-    path: '/marketDetail/ask/toask/:id',
-    name: 'market-ask-toask',
-    component: resolve => require(['@/views/market/marketDetail/marketAsk/toask.vue'], resolve),
+    path: '/marketDetail/ask/:id',
+    name: 'market-askging-ask',
+    component: resolve => require(['@/views/market/marketDetail/marketAsking/ask.vue'], resolve),
     meta: {
       title: '提问',
       tabbar: {
