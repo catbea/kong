@@ -6,7 +6,7 @@
         <div class="comment-cancel" @click="cancelHandler">取消</div>
         <div class="comment-publish" @click="publishHandler">发布</div>
       </div>
-      <div class="comment-title">
+      <div class="comment-title" :style="{margin:(info&&info.title) ? '16px 0' : '20px 0 0 0'}">
         <!-- <span class="comment-name" v-if="info.receiverName">{{info&&info.receiverName}}：</span> -->
         <!-- <div class="comment-content">{{info&&info.title}}</div> -->
         <div class="comment-content">{{info&&info.title}}</div>
@@ -85,7 +85,7 @@ export default {
     }
     > .comment-title {
       display: flex;
-      margin: 16px 0;
+      // margin: 16px 0;
       > .comment-name {
         font-size: 16px;
         color: #666666;

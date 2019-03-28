@@ -4,17 +4,29 @@
     <hint-tire></hint-tire>
     <!-- 顶部swipe -->
     <div class="top-swipe-container">
-      <div class="swipe-outer" >
+      <div class="swipe-outer">
         <div class="swipe-content">
           <div class="btn-box">
             <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
-            <div class="swipe-photo" :class="{'photo': showVideo}" @click.stop="videoHandle" v-if="info.fyVideo">视频</div>
+            <div
+              class="swipe-photo"
+              :class="{'photo': showVideo}"
+              @click.stop="videoHandle"
+              v-if="info.fyVideo"
+            >视频</div>
           </div>
           <van-swipe @change="swipeChange">
             <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
-              <div class="bg_img swipe-item dev" :style="{backgroundImage:'url(' + item.imgUrl + ')'}"></div>
+              <div
+                class="bg_img swipe-item dev"
+                :style="{backgroundImage:'url(' + item.imgUrl + ')'}"
+              ></div>
             </van-swipe-item>
-            <div class="custom-indicator dev" slot="indicator" v-show="photoButton">{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+            <div
+              class="custom-indicator dev"
+              slot="indicator"
+              v-show="photoButton"
+            >{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
           </van-swipe>
         </div>
         <div class="operate-content">
@@ -32,11 +44,29 @@
           </div>
           <!-- 存在全景时全景播放 -->
         </div>
-        <div class="bg_img operate-2" v-if="info.ifPanorama===1" :style="{backgroundImage:'url(' + playIcon + ')'}" @click.stop="ifPanoramaClickHandler"></div>
+        <div
+          class="bg_img operate-2"
+          v-if="info.ifPanorama===1"
+          :style="{backgroundImage:'url(' + playIcon + ')'}"
+          @click.stop="ifPanoramaClickHandler"
+        ></div>
       </div>
       <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400  x5-playsinline="true" -->
       <div class="video-box" v-show="showVideo">
-        <video width="100%" height="100%"  ref="videoplay" preload="true" controls="showControls" style="object-fit:fill"  :poster="info.headImgUrl" webkit-playsinline="true"  playsinline="true" x-webkit-airplay="allow" x5-video-player-type="h5" x5-video-player-fullscreen="true">
+        <video
+          width="100%"
+          height="100%"
+          ref="videoplay"
+          preload="true"
+          controls="showControls"
+          style="object-fit:fill"
+          :poster="info.headImgUrl"
+          webkit-playsinline="true"
+          playsinline="true"
+          x-webkit-airplay="allow"
+          x5-video-player-type="h5"
+          x5-video-player-fullscreen="true"
+        >
           <source :src="info.fyVideo" type="video/mp4">
         </video>
         <div class="close-video" @click="videoHide">退出视频</div>
@@ -50,23 +80,38 @@
           <span>{{info.browsCount}}</span>人浏览过
           <div class="head-portrait-box">
             <transition name="show">
-              <avatar :avatar="item.clientImg" v-for="(item,index) in info.customerList" :key="index" v-if="index===headCurrent"/>
+              <avatar
+                :avatar="item.clientImg"
+                v-for="(item,index) in info.customerList"
+                :key="index"
+                v-if="index===headCurrent"
+              />
             </transition>
           </div>
         </div>
       </div>
       <div class="info-content">
         <h5 class="house-name">{{info.linkerName}}</h5>
-        <p class="house-feature">{{ info.projectTagList === '' ? null : info.projectTagList.join(" | ")}}</p>
+        <p
+          class="house-feature"
+        >{{ info.projectTagList === '' ? null : info.projectTagList.join(" | ")}}</p>
         <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
           <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
           <span class="commission-text">{{info&&info.divisionRules}}</span>
-          <div class="bg_img commission-detail" @click="commission" :style="{backgroundImage:'url('+siteDetailImg+')'}"></div>
+          <div
+            class="bg_img commission-detail"
+            @click="commission"
+            :style="{backgroundImage:'url('+siteDetailImg+')'}"
+          ></div>
         </div>
         <div class="house-info-form">
           <p>
             <span>平均价格:</span>
             {{info.averagePrice}}
+            <span class="calculation-view" @click="goCalculation">
+              <img :src="calculationIcon">
+              <span>房贷计算器</span>
+            </span>
           </p>
           <p>
             <span>开盘时间:</span>
@@ -87,14 +132,22 @@
     <!-- 楼盘分享关系图谱 -->
     <div class="marker-relation-box">
       <p>楼盘分享关系图谱</p>
-      <ol class="bg_img relation-drawing" :style="{backgroundImage:'url('+drawingImg+')'}" @click="relationShowFn">
+      <ol
+        class="bg_img relation-drawing"
+        :style="{backgroundImage:'url('+drawingImg+')'}"
+        @click="relationShowFn"
+      >
         <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
         <li>{{info.linkerName}}</li>
       </ol>
     </div>
     <van-popup v-model="relationShow" class="relationPopup">
       <div class="relationName">
-        <p class="bg_img" :style="{backgroundImage:'url('+closeImg+')'}" @click="relationShow=false"></p>
+        <p
+          class="bg_img"
+          :style="{backgroundImage:'url('+closeImg+')'}"
+          @click="relationShow=false"
+        ></p>
         <ul>
           <li>请联系经纪人</li>
           <li>了解更多楼盘分享关系详情，请联系经纪人</li>
@@ -110,13 +163,23 @@
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
             <div class="house-type">
-              <div class="bg_img house-type-img" :style="{backgroundImage:'url('+item.imgUrl+')'}" @click.stop="houseTypeHandle(item.imgUrl)"></div>
+              <div
+                class="bg_img house-type-img"
+                :style="{backgroundImage:'url('+item.imgUrl+')'}"
+                @click.stop="houseTypeHandle(item.imgUrl)"
+              ></div>
               <div class="house-type-info">
                 <p class="house-type-name">{{item.householdDesc}}</p>
-                <p class="house-type-area" v-if="item.orientations=='暂无信息'">{{`建面${item.area} 暂无朝向信息`}}</p>
+                <p
+                  class="house-type-area"
+                  v-if="item.orientations=='暂无信息'"
+                >{{`建面${item.area} 暂无朝向信息`}}</p>
                 <p class="house-type-area" v-else>{{`建面${item.area}${item.orientations}朝向`}}</p>
                 <p class="house-type-price" v-if="item.price=='价格待定'">{{item.price}}</p>
-                <p class="house-type-price" v-else><span v-if="item.price.indexOf('起')=== -1">约</span>{{item.price}}</p>
+                <p class="house-type-price" v-else>
+                  <span v-if="item.price.indexOf('起')=== -1">约</span>
+                  {{item.price}}
+                </p>
               </div>
             </div>
           </swiper-slide>
@@ -137,22 +200,98 @@
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
         <van-tabs v-model="mapTab" color="#007AE6" swipeable>
-          <van-tab v-for="item in info.houseAroundType" :key="item.name" :title="item.name" :line-width="0"/>
+          <van-tab
+            v-for="item in info.houseAroundType"
+            :key="item.name"
+            :title="item.name"
+            :line-width="0"
+          />
         </van-tabs>
       </div>
       <div class="map-box" @click="mapClickHandler">
         <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
       </div>
     </div>
+    <!-- 楼盘评测 -->
+    <div class="evaluating-box">
+      <title-bar :conf="evaluatingTitleConf"/>
+      <div class="evaluating-content">
+        <img class="bg_img" :src="panoramaIcon" alt="" srcset="">
+        <div class="right">
+          <p>新华联广场：80万㎡湾区大城 享都会生活</p>
+          <p>新华联集团于 1992 年开始涉猎房地产业，先后在广西、湖南、北京、河北新华联集团于 1992 年开始涉猎房地产业，先后在广西、湖南、北京、河北</p>
+        </div>
+      </div>
+    </div>
+    <!-- 楼盘评价 -->
+    <div class="evaluate-box">
+      <title-bar :conf="evaluateTitleConf"/>
+      <div class="evaluate-content">
+        <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
+        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
+        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
+        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
+        <ul class="evaluate-detail">
+          <li class="van-hairline--bottom">
+            <div class="top">
+              <img :src="panoramaIcon" alt="" srcset="">
+              <div class="message">
+               <p>用***2 &nbsp;&nbsp;&nbsp;<span>是看用户</span></p>
+             <p> <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(false ? levelColorImg:levelImg)+')'}"></i>
+             </p>
+              </div>
+            </div>
+            <div class="bottom">
+              时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，
+            </div>
+          </li>
+        </ul>
+        <span class="hint">在这里，说出楼盘的一切</span><router-link class="go-evaluate" tag="span" to="/">我要评论</router-link>
+      </div>
+    </div>
+    <!-- 买房问问 -->
+    <div class="buy-ask">
+      <title-bar :conf="buyAskTitleConf"/>
+      <ol class="ask-content">
+        <li>
+         <div><span>问</span><span>首付比例是多少呢？</span></div>
+         <p>20人回复</p>
+        </li>
+        <li class="van-hairline--bottom">
+         <div>
+           <span>答</span>
+           <img :src="panoramaIcon" alt="" srcset="">
+           <i>王试试</i>&nbsp;&nbsp;<i>2109年2月18日</i>
+         </div>
+         <p>时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价</p>
+        </li>
+      </ol>
+      <span class="hint">在这里，问关于房子的一切</span><router-link class="go-evaluate" tag="span" to="/">我要提问</router-link>
+    </div>
     <!-- 其他楼盘 -->
     <div class="house-recommend" v-if="info.linkerOtherList.length>0">
       <title-bar :conf="othersTitleConf"/>
       <div class="recommend-swipe-content">
         <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in info.linkerOtherList" :key="index" @click.native="itemClickHandler(item.linkerId)">
+          <swiper-slide
+            v-for="(item,index) in info.linkerOtherList"
+            :key="index"
+            @click.native="itemClickHandler(item.linkerId)"
+          >
             <div class="recommend-house-item">
-              <div class="bg_img recommend-house-img" :style="{backgroundImage:'url('+item.headImgUrl+')'}">
-                <p class="bg_img panorama-icon" v-if="item.ifPanorama==1" :style="{backgroundImage:'url('+panoramaIcon+')'}"></p>
+              <div
+                class="bg_img recommend-house-img"
+                :style="{backgroundImage:'url('+item.headImgUrl+')'}"
+              >
+                <p
+                  class="bg_img panorama-icon"
+                  v-if="item.ifPanorama==1"
+                  :style="{backgroundImage:'url('+panoramaIcon+')'}"
+                ></p>
               </div>
               <div class="recommend-house-info">
                 <p class="house-name">{{item.linkerName}}</p>
@@ -173,7 +312,11 @@
         <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
         <div class="open-btn" @click="openHandler">开通楼盘</div>
       </div>
-      <market-renew v-if="!openStatus&&info.saleStatus!=='售罄'" :renewInfo="info" :vipInfo="vipInfo"/>
+      <market-renew
+        v-if="!openStatus&&info.saleStatus!=='售罄'"
+        :renewInfo="info"
+        :vipInfo="vipInfo"
+      />
       <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
         <p>售罄</p>
       </div>
@@ -219,7 +362,7 @@ export default {
   },
   data() {
     return {
-      vipInfo:'',
+      vipInfo: '',
       instance: 0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: false, //是否存在相册
@@ -232,6 +375,9 @@ export default {
       drawingImg: require('IMG/marketDetail/drawing@2x.png'),
       closeImg: require('IMG/marketDetail/close@2x.png'),
       closeIcon: require('IMG/market/closeIcon@2x.png'),
+      levelColorImg: require('IMG/marketDetail/levelColor@2x.png'),
+      levelImg: require('IMG/marketDetail/level@2x.png'),
+      calculationIcon: require('IMG/market/calculation_icon.png'),
       id: -1,
       info: null,
       swipeCurrent: 0,
@@ -240,10 +386,10 @@ export default {
       mapTab: 0,
       openStatus: false,
       relationShow: false, //立即联系
-      appointmentShow:false,//预约看房
-      nameContent:'',//预约姓名
-      phoneContent:'',//预约手机号码
-      codeContent:'',//预约验证码
+      appointmentShow: false, //预约看房
+      nameContent: '', //预约姓名
+      phoneContent: '', //预约手机号码
+      codeContent: '', //预约验证码
       typeTitleConf: {
         title: '户型',
         linkText: '全部户型'
@@ -262,6 +408,21 @@ export default {
         linkText: '全部楼盘',
         link: '/market'
       },
+      evaluatingTitleConf:{
+        title: '楼盘评测',
+        linkText: '立即查看',
+        link: '/'
+      },
+      evaluateTitleConf:{
+        title: '楼盘评价',
+        linkText: '查看全部',
+        link: '/'
+      },
+      buyAskTitleConf:{
+        title: '买房看看',
+        linkText: '查看全部',
+        link: '/'
+      },
       swiperOption: {
         slidesPerView: 2,
         spaceBetween: 12
@@ -279,10 +440,10 @@ export default {
       playIcon: require('IMG/market/view720.png'),
       showVideo: false,
       showControls: true,
-      appointmentImg:require('IMG/market/appointment@2x.png')
+      appointmentImg: require('IMG/market/appointment@2x.png')
     }
   },
- async created() {
+  async created() {
     this.id = this.$route.params.id
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
@@ -306,17 +467,25 @@ export default {
     }
   },
   methods: {
-    appointmentHandle(){//预约看房弹窗
-    this.appointmentShow=true
+    goCalculation() {
+      //进入计算器页面
+      this.$router.push({ name: 'market-asking-list' })
     },
-    emptyContent(){//预约看房弹窗内容清空
-    this.appointmentShow=false;
-    this.nameContent='';
-    this.phoneContent='';
-    this.codeContent=''
+
+    appointmentHandle() {
+      //预约看房弹窗
+      this.appointmentShow = true
     },
-    submitHandle(){//提交预约信息
-    this.emptyContent()
+    emptyContent() {
+      //预约看房弹窗内容清空
+      this.appointmentShow = false
+      this.nameContent = ''
+      this.phoneContent = ''
+      this.codeContent = ''
+    },
+    submitHandle() {
+      //提交预约信息
+      this.emptyContent()
     },
     // 点击客户关系弹框
     relationShowFn() {
@@ -375,7 +544,7 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
-      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g, '/'))
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''
       }
@@ -441,7 +610,7 @@ export default {
       }
     },
     async openHandler() {
-      //VIP用户选择城市与VIP开通楼盘同城市 
+      //VIP用户选择城市与VIP开通楼盘同城市
       // if (this.info.city === this.userInfo.vipInfo.city) {
       //   const res = await marketService.addHouseByVip(this.info.linkerId)
       //   if (res.returnCode == 21801) {
@@ -454,22 +623,22 @@ export default {
       //     duration: 1000,
       //     message: '已开通成功，请到我的楼盘查看'
       //   })
-        // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
-        let invalidTime = this.info.expireDate-0// 含时分秒的楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
-        if(this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city){
-          const res = await marketService.addHouseByVip(this.info.linkerId)
-          await this.getDetailInfo(this.id)
-          this.openStatus = false
-          this.$toast({
-            duration: 1000,
-            message: '已开通成功，请到我的楼盘查看'
-          })
-          let time = new Date(+this.vipInfo.expireTimestamp)
-          let year =time.getFullYear();
-          let mou = time.getMonth() + 1
-          let date = time.getDate()
-          this.info.expireTime = `0${mou}/0${date}`
+      // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+      let invalidTime = this.info.expireDate - 0 // 含时分秒的楼盘到期时间
+      let expireTimestamp = this.vipInfo.expireTimestamp - 0 // vip到期时间
+      if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+        const res = await marketService.addHouseByVip(this.info.linkerId)
+        await this.getDetailInfo(this.id)
+        this.openStatus = false
+        this.$toast({
+          duration: 1000,
+          message: '已开通成功，请到我的楼盘查看'
+        })
+        let time = new Date(+this.vipInfo.expireTimestamp)
+        let year = time.getFullYear()
+        let mou = time.getMonth() + 1
+        let date = time.getDate()
+        this.info.expireTime = `0${mou}/0${date}`
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
       }
@@ -482,7 +651,7 @@ export default {
       window.location.href = `${this.info.linkerUrl}?enterpriseId=${this.userInfo.enterpriseId}`
     },
     competeOpenStatus() {
-      this.openStatus =  this.info.openStatus == 0
+      this.openStatus = this.info.openStatus == 0
     },
     // 其他楼盘
     itemClickHandler(id) {
@@ -503,34 +672,35 @@ export default {
       let res = await marketService.vipInfo()
       this.vipInfo = res
     },
-   async vipRenewHandle(){//vip续费操作
-      let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
+    async vipRenewHandle() {
+      //vip续费操作
+      let invalidTime = +new Date(this.info.expireTime.replace(/-/g, '/')) // 楼盘到期时间
       // let invalidTime = +new Date(this.info.invalidTime.replace(/-/g,'/'))// 含时分秒的楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
-        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
-          const res = await marketService.addHouseByVip(this.info.linkerId)
-          this.$toast({
-            duration: 1000,
-            message: '续费成功！'
-          })
-          let time = new Date(+this.vipInfo.expireTimestamp)
-          let year =time.getFullYear();
-          let mou = time.getMonth() + 1
-          let date = time.getDate()
-          this.info.expireTime = `0${mou}/0${date}`
-          // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
-          this.info.openStatus = 2
-          // await this.getDetailInfo(this.id)
-        } else {
-          this.openHandler()
-        }
+      let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
+      if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+        const res = await marketService.addHouseByVip(this.info.linkerId)
+        this.$toast({
+          duration: 1000,
+          message: '续费成功！'
+        })
+        let time = new Date(+this.vipInfo.expireTimestamp)
+        let year = time.getFullYear()
+        let mou = time.getMonth() + 1
+        let date = time.getDate()
+        this.info.expireTime = `0${mou}/0${date}`
+        // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
+        this.info.openStatus = 2
+        // await this.getDetailInfo(this.id)
+      } else {
+        this.openHandler()
+      }
     }
   },
   computed: {
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
-    },
+    }
     // poster: {
     //   get: function() {
     //     return !window.localStorage.getItem('POSTER_REMIND') && this.info && this.info.posterImgUrl != ''
@@ -556,14 +726,14 @@ export default {
     position: relative;
     width: 100%;
     height: 281px;
-    .swipe-outer{
+    .swipe-outer {
       height: 100%;
       width: 100%;
       .swipe-content {
         position: relative;
         width: 100%;
         height: 100%;
-        .btn-box{
+        .btn-box {
           position: absolute;
           z-index: 2;
           left: 0;
@@ -581,8 +751,8 @@ export default {
             display: inline-block;
             width: 70px;
             margin: 0 5px;
-            &.photo{
-              background-color: #007AE6;
+            &.photo {
+              background-color: #007ae6;
               color: #fff;
             }
           }
@@ -639,20 +809,20 @@ export default {
         height: 64px;
       }
     }
-    .video-box{
+    .video-box {
       position: absolute;
       top: 0;
       width: 100%;
       height: 281px;
       background-color: #000;
-      overflow:hidden;
+      overflow: hidden;
       z-index: 9;
-      video{
+      video {
         width: 100%;
         height: 100%;
         object-fit: none;
       }
-      .close-video{
+      .close-video {
         position: absolute;
         top: 45px;
         right: 5px;
@@ -753,10 +923,24 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 343px;
-          > span {
-            display: inline-block;
-            color: #8a8f99;
-            width: 80px;
+
+          > .calculation-view {
+            float: right;
+            display: flex;
+            align-items: center;
+
+            > img {
+              width: 16px;
+              height: 16px;
+              margin-top: 3px;
+            }
+
+            > span {
+              display: inline-block;
+              color: #007ae6;
+              font-size: 12px;
+              margin-left: 2px;
+            }
           }
         }
       }
@@ -866,7 +1050,7 @@ export default {
     margin-top: 15px;
     .tab-box {
       position: relative;
-      z-index:1;
+      z-index: 1;
       > .van-tabs {
         .van-tabs__line {
           display: none;
@@ -888,6 +1072,264 @@ export default {
       border-radius: 10px;
       overflow: hidden;
     }
+  }
+  > .evaluating-box{
+    margin-top:15px;
+    .evaluating-content{
+      margin-top:15px;
+      height:90px;
+      padding: 0 15px;
+      width:100%;
+      display: flex;
+      img{
+        width:120px;
+        height:90px;
+        margin-right:8px;
+      }
+      .right{
+        p:nth-child(1){
+          width:216px;
+          line-height:22px;
+          font-size:16px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(51,51,51,1);
+          margin-bottom:10px;
+        }
+        p:nth-child(2){
+          line-height:17px;
+          font-size:12px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(153,153,153,1);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          width:216px;
+        }
+      }
+    }
+  }
+  > .evaluate-box{
+    margin-top:40px;
+    .evaluate-content{
+      margin-top:16px;
+      padding: 0 15px;
+      width:100%;
+      .evaluate-label{
+        display: inline-block;
+        width:108px;
+        height:30px;
+        text-align: center;
+        line-height:30px;
+        background:rgba(242,245,249,1);
+        border-radius:4px;
+        font-size:13px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(139,151,167,1);
+      }
+      .evaluate-label:nth-child(2){
+        margin:0 9px;
+      }
+      .evaluate-detail{
+        margin-top:20px;
+        li{
+          padding-bottom:17px;
+          .top{
+            img{
+              width:36px;
+              height:36px;
+              border-radius:18px;
+              margin-right:15px;
+            }
+            .message{
+              display: inline-block;
+              font-size:16px;
+              font-family:PingFangSC-Medium;
+              font-weight:500;
+              color:rgba(51,51,51,1);
+              margin-bottom:18px;
+              span{
+                display: inline-block;
+                width:60px;
+                height:20px;
+                text-align: center;
+                line-height:20px;
+                background:rgba(143,159,177,0.15);
+                border-radius:2px;
+                font-size:10px;
+                transform: scale(.8);
+                font-family:PingFangSC-Regular;
+                font-weight:400;
+                color:rgba(92,95,102,1);
+              }
+              i{
+                display:inline-block;
+                width:10px;
+                height:10px;
+                margin-right:5px;
+              }
+            }
+          }
+          .bottom{
+              font-size:15px;
+              font-family:PingFangSC-Regular;
+              font-weight:400;
+              color:rgba(102,102,102,1);
+              line-height:21px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp:3;
+              -webkit-box-orient: vertical;
+            }
+        }
+      }
+      .hint{
+        margin-top:18px;
+        font-size:13px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(153,153,153,1);}
+      .go-evaluate{
+        margin-top:12px;
+        margin-left:118px;
+        display: inline-block;
+        width:82px;
+        height:30px;
+        border-radius:4px;
+        border:1px solid rgba(68,81,102,1);
+        font-size:13px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(68,81,102,1);
+        line-height:30px;
+        text-align: center;
+      }
+    }
+  }
+  > .buy-ask{
+    margin-top:41px;
+    .ask-content{
+      margin-top:16px;
+      padding: 0 15px;
+      width:100%;
+      li:nth-child(1){
+        display: flex;
+        justify-content:space-between;
+        width:100%;
+        margin-bottom:16px;
+        div{
+          display: flex;
+        }
+        span:nth-of-type(1){
+          display: inline-block;
+          width:22px;
+          height:22px;
+          background:rgba(235,108,82,1);
+          border-radius:6px;
+          text-align: center;
+          line-height:22px;
+          font-size:12px;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          color:rgba(255,255,255,1);
+          margin-right:8px;
+        }
+        span:nth-of-type(2){
+          display: inline-block;
+          font-size:16px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(51,51,51,1);
+        width:225px;
+        }
+        p{
+          font-size:13px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(153,153,153,1);
+        }
+      }
+      li:nth-child(2){
+        padding-bottom:16px;
+        span{
+          display: inline-block;
+          text-align: center;
+          line-height:22px;
+          width:22px;
+          height:22px;
+          background:rgba(0,122,230,1);
+          border-radius:6px;
+          font-size:12px;
+          font-family:PingFangSC-Medium;
+          font-weight:500;
+          color:rgba(255,255,255,1);
+        }
+        div{
+          display:flex;
+          align-items: center;
+          img{
+          width:24px;
+          height:24px;
+          margin:0 8px;
+          }
+          i:nth-of-type(1){
+          font-size:12px;
+          font-style: normal;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(51,51,51,1);
+        }
+        i:nth-of-type(2){
+          font-size:12px;
+          font-style: normal;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(153,153,153,1);
+        }
+        }
+        p{
+          font-size:15px;
+          font-family:PingFangSC-Regular;
+          font-weight:400;
+          color:rgba(102,102,102,1);
+          line-height:21px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp:3;
+          -webkit-box-orient: vertical;
+          margin:8px 0 0 31px;
+        }
+      }
+    }
+    .hint{
+        margin-top:18px;
+        font-size:13px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(153,153,153,1);
+        padding-left:15px;
+        }
+      .go-evaluate{
+        margin-top:12px;
+        margin-left:105px;
+        display: inline-block;
+        width:82px;
+        height:30px;
+        border-radius:4px;
+        border:1px solid rgba(68,81,102,1);
+        font-size:13px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(68,81,102,1);
+        line-height:30px;
+        text-align: center;
+      }
   }
   > .house-recommend {
     margin-top: 28px;
@@ -1019,7 +1461,7 @@ export default {
 .relationPopup {
   border-radius: 12px;
   width: 311px;
-  height:198px;
+  height: 198px;
   // padding-top:45px;
   .relationName {
     width: 311px;
@@ -1061,15 +1503,15 @@ export default {
     .immediately {
       text-align: center;
       // margin-left: 32px;
-      width:100%;
-      height:50px;
+      width: 100%;
+      height: 50px;
       // background: rgba(0, 122, 230, 1);
       border-radius: 6px;
-      font-size:18px;
-      font-family:PingFangSC-Regular;
-      font-weight:400;
-      color:rgba(1,127,255,1);
-      line-height:50px;
+      font-size: 18px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(1, 127, 255, 1);
+      line-height: 50px;
     }
   }
 }
@@ -1104,7 +1546,7 @@ export default {
   right: 0;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.6);
-  .cnt{
+  .cnt {
     width: 290px;
     height: 500px;
     overflow: hidden;
@@ -1118,19 +1560,19 @@ export default {
       width: 101%;
       height: 101%;
       border-radius: 5px;
-      img{
+      img {
         width: 290px;
         height: 500px;
         border-radius: 5px;
       }
-      .close-icon{
+      .close-icon {
         position: absolute;
         right: 0;
         top: 0;
         width: 100px;
         height: 100px;
         text-align: right;
-        img{
+        img {
           width: 24px;
           height: 24px;
           margin: 5px 10px;
@@ -1138,7 +1580,5 @@ export default {
       }
     }
   }
-  
-  
 }
 </style>

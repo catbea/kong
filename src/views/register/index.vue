@@ -338,14 +338,14 @@ export default {
         font-size: 16px;
       }
       .phone-input:-moz-placeholder,
-      .code-input::-webkit-input-placeholder,
-      .name-input::-webkit-input-placeholder {
+      .code-input:-moz-placeholder,
+      .name-input:-moz-placeholder {
         color: #969ea8;
         font-size: 16px;
       }
       .phone-input:-ms-input-placeholder,
-      .code-input::-webkit-input-placeholder,
-      .name-input::-webkit-input-placeholder {
+      .code-input:-ms-input-placeholder,
+      .name-input:-ms-input-placeholder {
         color: #969ea8;
         font-size: 16px;
       }
