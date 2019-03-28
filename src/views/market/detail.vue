@@ -392,7 +392,7 @@ export default {
   methods: {
     goCalculation() {
       //进入计算器页面
-      console.log('9999999999999')
+      this.$router.push({ name: 'market-asking-list' })
     },
 
     appointmentHandle() {
