@@ -234,11 +234,11 @@
               <img :src="panoramaIcon" alt="" srcset="">
               <div class="message">
                <p>用***2 &nbsp;&nbsp;&nbsp;<span>是看用户</span></p>
-             <p> <i class="bg_img" :style="{backgroundImage:'url('+levelColorImg+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+levelColorImg+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+levelColorImg+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+levelColorImg+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+levelColorImg+')'}"></i>
+             <p> <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
+                <i class="bg_img" :style="{backgroundImage:'url('+(false ? levelColorImg:levelImg)+')'}"></i>
              </p>
               </div>
             </div>
