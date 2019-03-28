@@ -1110,6 +1110,7 @@ export default {
     }
   }
   > .evaluate-box{
+    margin-top:40px;
     .evaluate-content{
       margin-top:16px;
       padding: 0 15px;
