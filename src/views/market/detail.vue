@@ -225,7 +225,7 @@
     </div>
     <!-- 楼盘评价 -->
     <div class="evaluate-box">
-      <title-bar :conf="evaluateTitleConf"/>
+      <title-bar :conf="evaluateTitleConf" @click="enterEvaluation"/>
       <div class="evaluate-content">
         <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
         <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
@@ -236,41 +236,63 @@
             <div class="top">
               <img :src="panoramaIcon" alt="" srcset="">
               <div class="message">
-               <p>用***2 &nbsp;&nbsp;&nbsp;<span>是看用户</span></p>
-             <p> <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"></i>
-                <i class="bg_img" :style="{backgroundImage:'url('+(false ? levelColorImg:levelImg)+')'}"></i>
-             </p>
+                <p>用***2 &nbsp;&nbsp;&nbsp;
+                  <span>是看用户</span>
+                </p>
+                <p>
+                  <i
+                    class="bg_img"
+                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
+                  ></i>
+                  <i
+                    class="bg_img"
+                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
+                  ></i>
+                  <i
+                    class="bg_img"
+                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
+                  ></i>
+                  <i
+                    class="bg_img"
+                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
+                  ></i>
+                  <i
+                    class="bg_img"
+                    :style="{backgroundImage:'url('+(false ? levelColorImg:levelImg)+')'}"
+                  ></i>
+                </p>
               </div>
             </div>
-            <div class="bottom">
-              时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，
-            </div>
+            <div class="bottom">时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，</div>
           </li>
         </ul>
-        <span class="hint">在这里，说出楼盘的一切</span><router-link class="go-evaluate" tag="span" to="/">我要评论</router-link>
+        <span class="hint">在这里，说出楼盘的一切</span>
+        <router-link class="go-evaluate" tag="span" to="/">我要评论</router-link>
       </div>
     </div>
     <!-- 买房问问 -->
     <div class="buy-ask">
-      <title-bar :conf="buyAskTitleConf"/>
+      <title-bar :conf="buyAskTitleConf" @click="enterAskingList"/>
       <ol class="ask-content">
         <li>
-         <div><span>问</span><span>首付比例是多少呢？</span></div>
-         <p>20人回复</p>
+          <div>
+            <span>问</span>
+            <span>首付比例是多少呢？</span>
+          </div>
+          <p>20人回复</p>
         </li>
         <li class="van-hairline--bottom">
-         <div>
-           <span>答</span>
-           <img :src="panoramaIcon" alt="" srcset="">
-           <i>王试试</i>&nbsp;&nbsp;<i>2109年2月18日</i>
-         </div>
-         <p>时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价</p>
+          <div>
+            <span>答</span>
+            <img :src="panoramaIcon" alt="" srcset="">
+            <i>王试试</i>&nbsp;&nbsp;
+            <i>2109年2月18日</i>
+          </div>
+          <p>时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价</p>
         </li>
       </ol>
-      <span class="hint">在这里，问关于房子的一切</span><router-link class="go-evaluate" tag="span" to="/">我要提问</router-link>
+      <span class="hint">在这里，问关于房子的一切</span>
+      <router-link class="go-evaluate" tag="span" to="/">我要提问</router-link>
     </div>
     <!-- 其他楼盘 -->
     <div class="house-recommend" v-if="info.linkerOtherList.length>0">
@@ -408,17 +430,17 @@ export default {
         linkText: '全部楼盘',
         link: '/market'
       },
-      evaluatingTitleConf:{
+      evaluatingTitleConf: {
         title: '楼盘评测',
         linkText: '立即查看',
         link: '/'
       },
-      evaluateTitleConf:{
+      evaluateTitleConf: {
         title: '楼盘评价',
         linkText: '查看全部',
         link: '/'
       },
-      buyAskTitleConf:{
+      buyAskTitleConf: {
         title: '买房看看',
         linkText: '查看全部',
         link: '/'
@@ -469,7 +491,21 @@ export default {
   methods: {
     goCalculation() {
       //进入计算器页面
+      alert('进入计算器')
+    },
+
+    /**
+     * 进入问问列表
+     */
+    enterAskingList() {
       this.$router.push({ name: 'market-asking-list' })
+    },
+
+    /**
+     * 进入楼盘评测页面
+     */
+    enterEvaluation() {
+      this.$router.push({ name: 'market-marketEvaluating' })
     },
 
     appointmentHandle() {
@@ -1073,263 +1109,264 @@ export default {
       overflow: hidden;
     }
   }
-  > .evaluating-box{
-    margin-top:15px;
-    .evaluating-content{
-      margin-top:15px;
-      height:90px;
+  > .evaluating-box {
+    margin-top: 15px;
+    .evaluating-content {
+      margin-top: 15px;
+      height: 90px;
       padding: 0 15px;
-      width:100%;
+      width: 100%;
       display: flex;
-      img{
-        width:120px;
-        height:90px;
-        margin-right:8px;
+      img {
+        width: 120px;
+        height: 90px;
+        margin-right: 8px;
       }
-      .right{
-        p:nth-child(1){
-          width:216px;
-          line-height:22px;
-          font-size:16px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(51,51,51,1);
-          margin-bottom:10px;
+      .right {
+        p:nth-child(1) {
+          width: 216px;
+          line-height: 22px;
+          font-size: 16px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
+          margin-bottom: 10px;
         }
-        p:nth-child(2){
-          line-height:17px;
-          font-size:12px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(153,153,153,1);
+        p:nth-child(2) {
+          line-height: 17px;
+          font-size: 12px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
-          width:216px;
+          width: 216px;
         }
       }
     }
   }
-  > .evaluate-box{
-    margin-top:40px;
-    .evaluate-content{
-      margin-top:16px;
+  > .evaluate-box {
+    margin-top: 40px;
+    .evaluate-content {
+      margin-top: 16px;
       padding: 0 15px;
-      width:100%;
-      .evaluate-label{
+      width: 100%;
+      .evaluate-label {
         display: inline-block;
-        width:108px;
-        height:30px;
+        width: 108px;
+        height: 30px;
         text-align: center;
-        line-height:30px;
-        background:rgba(242,245,249,1);
-        border-radius:4px;
-        font-size:13px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(139,151,167,1);
+        line-height: 30px;
+        background: rgba(242, 245, 249, 1);
+        border-radius: 4px;
+        font-size: 13px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(139, 151, 167, 1);
       }
-      .evaluate-label:nth-child(2){
-        margin:0 9px;
+      .evaluate-label:nth-child(2) {
+        margin: 0 9px;
       }
-      .evaluate-detail{
-        margin-top:20px;
-        li{
-          padding-bottom:17px;
-          .top{
-            img{
-              width:36px;
-              height:36px;
-              border-radius:18px;
-              margin-right:15px;
+      .evaluate-detail {
+        margin-top: 20px;
+        li {
+          padding-bottom: 17px;
+          .top {
+            img {
+              width: 36px;
+              height: 36px;
+              border-radius: 18px;
+              margin-right: 15px;
             }
-            .message{
+            .message {
               display: inline-block;
-              font-size:16px;
-              font-family:PingFangSC-Medium;
-              font-weight:500;
-              color:rgba(51,51,51,1);
-              margin-bottom:18px;
-              span{
+              font-size: 16px;
+              font-family: PingFangSC-Medium;
+              font-weight: 500;
+              color: rgba(51, 51, 51, 1);
+              margin-bottom: 18px;
+              span {
                 display: inline-block;
-                width:60px;
-                height:20px;
+                width: 60px;
+                height: 20px;
                 text-align: center;
-                line-height:20px;
-                background:rgba(143,159,177,0.15);
-                border-radius:2px;
-                font-size:10px;
-                transform: scale(.8);
-                font-family:PingFangSC-Regular;
-                font-weight:400;
-                color:rgba(92,95,102,1);
+                line-height: 20px;
+                background: rgba(143, 159, 177, 0.15);
+                border-radius: 2px;
+                font-size: 10px;
+                transform: scale(0.8);
+                font-family: PingFangSC-Regular;
+                font-weight: 400;
+                color: rgba(92, 95, 102, 1);
               }
-              i{
-                display:inline-block;
-                width:10px;
-                height:10px;
-                margin-right:5px;
+              i {
+                display: inline-block;
+                width: 10px;
+                height: 10px;
+                margin-right: 5px;
               }
             }
           }
-          .bottom{
-              font-size:15px;
-              font-family:PingFangSC-Regular;
-              font-weight:400;
-              color:rgba(102,102,102,1);
-              line-height:21px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              display: -webkit-box;
-              -webkit-line-clamp:3;
-              -webkit-box-orient: vertical;
-            }
+          .bottom {
+            font-size: 15px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(102, 102, 102, 1);
+            line-height: 21px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+          }
         }
       }
-      .hint{
-        margin-top:18px;
-        font-size:13px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(153,153,153,1);}
-      .go-evaluate{
-        margin-top:12px;
-        margin-left:118px;
+      .hint {
+        margin-top: 18px;
+        font-size: 13px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+      }
+      .go-evaluate {
+        margin-top: 12px;
+        margin-left: 118px;
         display: inline-block;
-        width:82px;
-        height:30px;
-        border-radius:4px;
-        border:1px solid rgba(68,81,102,1);
-        font-size:13px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(68,81,102,1);
-        line-height:30px;
+        width: 82px;
+        height: 30px;
+        border-radius: 4px;
+        border: 1px solid rgba(68, 81, 102, 1);
+        font-size: 13px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(68, 81, 102, 1);
+        line-height: 30px;
         text-align: center;
       }
     }
   }
-  > .buy-ask{
-    margin-top:41px;
-    .ask-content{
-      margin-top:16px;
+  > .buy-ask {
+    margin-top: 41px;
+    .ask-content {
+      margin-top: 16px;
       padding: 0 15px;
-      width:100%;
-      li:nth-child(1){
+      width: 100%;
+      li:nth-child(1) {
         display: flex;
-        justify-content:space-between;
-        width:100%;
-        margin-bottom:16px;
-        div{
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 16px;
+        div {
           display: flex;
         }
-        span:nth-of-type(1){
+        span:nth-of-type(1) {
           display: inline-block;
-          width:22px;
-          height:22px;
-          background:rgba(235,108,82,1);
-          border-radius:6px;
+          width: 22px;
+          height: 22px;
+          background: rgba(235, 108, 82, 1);
+          border-radius: 6px;
           text-align: center;
-          line-height:22px;
-          font-size:12px;
-          font-family:PingFangSC-Medium;
-          font-weight:500;
-          color:rgba(255,255,255,1);
-          margin-right:8px;
+          line-height: 22px;
+          font-size: 12px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 1);
+          margin-right: 8px;
         }
-        span:nth-of-type(2){
+        span:nth-of-type(2) {
           display: inline-block;
-          font-size:16px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(51,51,51,1);
-        width:225px;
+          font-size: 16px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(51, 51, 51, 1);
+          width: 225px;
         }
-        p{
-          font-size:13px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(153,153,153,1);
+        p {
+          font-size: 13px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
         }
       }
-      li:nth-child(2){
-        padding-bottom:16px;
-        span{
+      li:nth-child(2) {
+        padding-bottom: 16px;
+        span {
           display: inline-block;
           text-align: center;
-          line-height:22px;
-          width:22px;
-          height:22px;
-          background:rgba(0,122,230,1);
-          border-radius:6px;
-          font-size:12px;
-          font-family:PingFangSC-Medium;
-          font-weight:500;
-          color:rgba(255,255,255,1);
+          line-height: 22px;
+          width: 22px;
+          height: 22px;
+          background: rgba(0, 122, 230, 1);
+          border-radius: 6px;
+          font-size: 12px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 1);
         }
-        div{
-          display:flex;
+        div {
+          display: flex;
           align-items: center;
-          img{
-          width:24px;
-          height:24px;
-          margin:0 8px;
+          img {
+            width: 24px;
+            height: 24px;
+            margin: 0 8px;
           }
-          i:nth-of-type(1){
-          font-size:12px;
-          font-style: normal;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(51,51,51,1);
+          i:nth-of-type(1) {
+            font-size: 12px;
+            font-style: normal;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(51, 51, 51, 1);
+          }
+          i:nth-of-type(2) {
+            font-size: 12px;
+            font-style: normal;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+          }
         }
-        i:nth-of-type(2){
-          font-size:12px;
-          font-style: normal;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(153,153,153,1);
-        }
-        }
-        p{
-          font-size:15px;
-          font-family:PingFangSC-Regular;
-          font-weight:400;
-          color:rgba(102,102,102,1);
-          line-height:21px;
+        p {
+          font-size: 15px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(102, 102, 102, 1);
+          line-height: 21px;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp:3;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
-          margin:8px 0 0 31px;
+          margin: 8px 0 0 31px;
         }
       }
     }
-    .hint{
-        margin-top:18px;
-        font-size:13px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(153,153,153,1);
-        padding-left:15px;
-        }
-      .go-evaluate{
-        margin-top:12px;
-        margin-left:105px;
-        display: inline-block;
-        width:82px;
-        height:30px;
-        border-radius:4px;
-        border:1px solid rgba(68,81,102,1);
-        font-size:13px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(68,81,102,1);
-        line-height:30px;
-        text-align: center;
-      }
+    .hint {
+      margin-top: 18px;
+      font-size: 13px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(153, 153, 153, 1);
+      padding-left: 15px;
+    }
+    .go-evaluate {
+      margin-top: 12px;
+      margin-left: 105px;
+      display: inline-block;
+      width: 82px;
+      height: 30px;
+      border-radius: 4px;
+      border: 1px solid rgba(68, 81, 102, 1);
+      font-size: 13px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(68, 81, 102, 1);
+      line-height: 30px;
+      text-align: center;
+    }
   }
   > .house-recommend {
     margin-top: 28px;

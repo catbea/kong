@@ -8,7 +8,7 @@
                         <div class="question-icon">问</div>
                         <div class="question-body">
                             <span class="question-title">
-                                #满京华#首付比例是多少呢？首付比例是多少呢？首付比例是多少呢？
+                                #满京华#首付比例是多少呢？
                                 <span class="question-num">20人回复</span>
                             </span>
                         </div>
@@ -28,7 +28,7 @@
             </van-list>
         </div>
         <null :nullIcon="noAskingIcon" :nullcontent="nullcontent" v-if="this.noData===true"></null>
-        <div class="asking-foot">立即提问</div>
+        <div class="asking-foot"  @click="enterAskPage">立即提问</div>
     </div>
 </template>
 
@@ -55,7 +55,11 @@ export default {
      * 进入评测
      */
     enterDetails(){
-        this.$router.push({name: 'market-marketEvaluating'})
+        this.$router.push({name: 'market-asking-detail'})
+    },
+
+    enterAskPage(){
+       this.$router.push({name: 'market-askging-ask'})
     }
   }
 }
