@@ -252,5 +252,17 @@ export default [
         show: false
       }
     }
+  },
+
+  {
+    path: '/marketDetail/marketEvaluating',
+    name: 'market-marketEvaluating',
+    component: resolve => require(['@/views/market/marketDetail/marketEvaluating/index.vue'], resolve),
+    meta: {
+      title: '楼盘评测',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
