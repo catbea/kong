@@ -325,6 +325,7 @@ export default {
         }
         .gps{
           margin-top: 5px;
+          padding-bottom: 5px;
           .gps-city{
             border: 1px solid #ddd;
             border-radius: 4px;
