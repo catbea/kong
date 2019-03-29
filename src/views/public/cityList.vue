@@ -188,18 +188,17 @@ export default {
     },
     // 重新定位
     retryLocation() {
-      let _this = this
       wx.getLocation({
         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
         success: res => {
           console.log('11111',res)
-          _this.getCity(res)
+          this.getCity(res)
         },
         fail: () => {
-          _this.$toast('定位失败')
+          this.$toast('定位失败')
         },
         cancel: res => {
-          _this.$toast('定位取消')
+          this.$toast('定位取消')
         }
       })
     },
