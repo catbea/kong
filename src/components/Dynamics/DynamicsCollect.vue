@@ -90,7 +90,7 @@ export default {
     msgIcon: require('IMG/dynamics/listArrowUp.png')
   }),
   created() {
-      console.log(this.data,111111111111)
+      // console.log(this.data,111111111111)
     },
   methods: {
     goMessage() {
