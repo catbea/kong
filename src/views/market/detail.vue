@@ -272,7 +272,7 @@
     </div>
     <!-- 买房问问 -->
     <div class="buy-ask">
-      <title-bar :conf="buyAskTitleConf" @click="enterAskingList"/>
+      <title-bar :conf="buyAskTitleConf"/>
       <ol class="ask-content">
         <li>
           <div>
@@ -433,7 +433,7 @@ export default {
       evaluatingTitleConf: {
         title: '楼盘评测',
         linkText: '立即查看',
-        link: '/'
+        link: '/marketDetail/marketEvaluating'
       },
       evaluateTitleConf: {
         title: '楼盘评价',
@@ -443,7 +443,7 @@ export default {
       buyAskTitleConf: {
         title: '买房看看',
         linkText: '查看全部',
-        link: '/'
+        link: '/marketDetail/asking/:id'
       },
       swiperOption: {
         slidesPerView: 2,
@@ -498,7 +498,8 @@ export default {
      * 进入问问列表
      */
     enterAskingList() {
-      this.$router.push({ name: 'market-asking-list' })
+      console.log('999999999999')
+      // this.$router.push({ name: 'market-asking-list' })
     },
 
     /**
@@ -506,6 +507,8 @@ export default {
      */
     enterEvaluation() {
       this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
+      console.log('888888888888')
+      // this.$router.push({ name: 'market-marketEvaluating' })
     },
 
     appointmentHandle() {
