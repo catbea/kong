@@ -203,13 +203,13 @@ export default {
         }
       })
     },
-  },
-  // 获取定位
-  async getCity (data) {
-    const result = await commonService.getLocation(data.longitude, data.latitude)
-    console.log('2222', result)
-    this.$store.commit(types['USER_AREA'], {city: result})
-    this.$toast('定位成功')
+    // 获取定位
+    async getCity (data) {
+      const result = await commonService.getLocation(data.longitude, data.latitude)
+      console.log('2222', result)
+      this.$store.commit(types['USER_AREA'], {city: result})
+      this.$toast('定位成功')
+    }
   },
   directives: {
     // 指令的定义
