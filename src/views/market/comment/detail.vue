@@ -96,6 +96,8 @@ import { ImagePreview } from 'vant'
 export default {
   data () {
     return {
+      marketId: '',
+      commentId: '',
       commnetInfo: null,
       replayList: [],
       loading: false,
@@ -108,8 +110,21 @@ export default {
       showDialog: false
     }
   },
-  created () {},
+  created () {
+    this.marketId = this.$router.query.marketId
+    this.commentId = this.$router.params.id
+    this.getLinkerComment()
+  },
   methods: {
+    // 获取评论详情
+    async getLinkerComment () {
+      let result = await marketService.getLinkerComment({
+        commentId: this.commentId
+      })
+      if (result) {
+        this.commnetInfo = result
+      }
+    },
     // 预览图片
     imagePreview (index) {
       let imgs = this.commnetInfo.imgList
@@ -133,17 +148,23 @@ export default {
         this.loading = false
       }
     },
-    // 获取评论列表
+    // 获取评论回复列表
     async getReplyList () {
+      if (!this.commentId) {
+        this.commentId = this.$router.params.id
+      }
       let result = await marketService.getReplyList({
+        current: this.current,
+        size: this.size,
+        commentId: this.commentId
       })
       if (result) {
         this.pages = result.pages
-        let replayList = result.replayList
+        let replayList = result.records
         if (this.current === 1) {
           this.replayList = replayList
         } else {
-          this.commnetList.push(...commnetList)
+          this.replayList.push(...replayList)
         }
         this.current += 1
       }

@@ -1,62 +1,66 @@
 <template>
   <div class="market-list">
-    <div class="tags">
-      <span 
-        v-for="(item, index) in tagList"
-        :key="index" :class="{'active': activeType === index}"
-        @click="cahngeTag(index)"
-        >
-        {{item}}({{formatCount(item)}})
-      </span>
-    </div>
-    <div class="list-box">
-      <div class="wrapper" v-if="commnetList.length">
-        <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text="没有更多了"
-          @load="onLoad"
-        >
-          <div 
-            v-for="(item, index) in commnetList"
-            :key="index"
-            class="comment-item" :class="{'scale-1px-bottom': index !== commnetList.length-1}"
-            @click=""
-            >
-              <div class="comment-user">
-                <img class="usre-img" src="" alt="" srcset="">
-                <div class="user-info">
-                  <p class="name">
-                    <b>{{'用户名' | formatName}}</b>
-                    <span>实看用户</span>
+    <div class="market-list-box">
+      <div class="tags">
+        <span 
+          v-for="(item, index) in tagList"
+          :key="index" :class="{'active': activeType === index}"
+          @click="cahngeTag(index)"
+          v-if="formatCount(item)"
+          >
+          {{item}}({{formatCount(item)}})
+        </span>
+      </div>
+
+      <div class="list-box">
+        <div class="wrapper" v-if="commnetList.length">
+          <van-list
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="onLoad"
+          >
+            <div 
+              v-for="(item, index) in commnetList"
+              :key="index"
+              class="comment-item" :class="{'scale-1px-bottom': index !== commnetList.length-1}"
+              >
+                <div class="comment-user"  @click="goDetail(item)">
+                  <img class="usre-img" :src="item.avatarUrl" alt="" srcset="">
+                  <div class="user-info">
+                    <p class="name">
+                      <b>{{item.nickName | formatName}}</b>
+                      <span v-show="item.userTag">{{item.userTag | formatTag}}</span>
+                    </p>
+                    <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" /></div>
+                  </div>
+                </div>
+                <div class="comment-info"  @click="goDetail(item)" :style="{'-webkit-line-clamp': item.showMore? 10: 5}">{{item.content}}</div>
+                <div class="comment-more" v-show="!item.showMore && item.content.length > 100" @click.stop="item.showMore=true">全文</div>
+                <div class="comment-more" v-show="item.showMore" @click.stop="item.showMore=false">收起</div>
+                <div class="comment-pic" v-if="item.imgList.length">
+                  <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)">
+                    <img  :src="option" alt="">
+                  </div>
+                </div>
+                <div class="comment-action">
+                  <p class="time">{{item.createTimeStamp | formatData}}</p>
+                  <p class="btn">
+                    <span @click="showDialogFn"><img src="../../../assets/img/market/comment/msg.png" alt=""> ({{item.replyNum}})</span>
+                    <span><img src="../../../assets/img/market/comment/zan.png" alt="" v-if="false"><img src="../../../assets/img/market/comment/zan2.png" alt="" v-else> ({{item.likeNum}})</span>
                   </p>
-                  <div class="star"><van-rate v-model="star" :size="10" :count="5" :readonly="true" color="#ED8147" /></div>
                 </div>
-              </div>
-              <div class="comment-info"></div>
-              <div class="comment-more">全文</div>
-              <div class="comment-pic">
-                <div class="pic-box"  @click="imagePreview(index,i)">
-                  <img src="" alt="">
-                </div>
-              </div>
-              <div class="comment-action">
-                <p class="time">2018年07月27日</p>
-                <p class="btn">
-                  <span><img src="../../../assets/img/market/comment/msg.png" alt=""> (3)</span>
-                  <span><img src="../../../assets/img/market/comment/zan.png" alt="" v-if="false"><img src="../../../assets/img/market/comment/zan2.png" alt="" v-else> (6)</span>
-                </p>
-              </div>
-          </div>
-        </van-list>
+            </div>
+          </van-list>
+        </div>
+        <div class="nodata" v-else>
+          <img src="../../../assets/img/market/comment/nodata.png" alt="">
+          <p>该楼盘没有评论哦，快来抢先一步评论吧！</p> 
+        </div>
       </div>
-      <div class="nodata" v-else>
-        <img src="../../../assets/img/market/comment/nodata.png" alt="">
-        <p>该楼盘没有评论哦，快来抢先一步评论吧！</p> 
-      </div>
-      <div class="comment-btn" @click="goWrite">
-        写点评 分享心得
-      </div>
+    </div>
+    <div class="comment-btn" @click="goWrite">
+      写点评 分享心得
     </div>
     <div class="replay-cnt-dialog" v-show="showDialog" @click="hideDialogFn">
       <div class="replay-cnt" @click.stop="">
@@ -106,7 +110,7 @@ export default {
   },
   created () {
     this.marketId = this.$route.params.id
-    this.activeType = this.$route.query.type || 0
+    this.activeType = +this.$route.query.type || 0
     this.getCommentCount()
     this.getCommentList()
   },
@@ -146,7 +150,9 @@ export default {
       })
       if (result) {
         this.pages = result.pages
-        let commnetList = result.records
+        let commnetList = result.records.map(item => {
+          return Object.assign(item, { showMore: false })
+        })
         if (this.current === 1) {
           this.commnetList = commnetList
         } else {
@@ -182,6 +188,10 @@ export default {
     goWrite () {
       this.$router.push(`/market/comment/write/${this.marketId}`)
     },
+    // 跳转评论详情
+    goDetail (item) {
+      this.$router.push(`/market/comment/detail/${item.commentId}?marketId=${this.marketId}`)
+    },
     // 键盘遮挡
     blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
@@ -214,6 +224,26 @@ export default {
       } else {
         return `${val[0]}***${val[len-1]}`
       }
+    },
+    // 格式化用户标签
+    formatTag (val) {
+      if (!val) {
+        return ''
+      }
+      let tag = {
+        1: '实看用户',
+        2: '未实看用户',
+        3: '管理员'
+      }
+      return tag[val]
+    },
+    // 格式化时间
+    formatData (time) {
+      let date =  new Date(+time)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      return `${y}年${m}月${d}日`
     }
   }
 }
@@ -221,137 +251,153 @@ export default {
 
 <style lang="less" scoped>
 .market-list{
-   display: flex;
-   flex-direction: column;
-   font-size: 12px;
-  .tags{
-    margin: 12px 16px 20px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    span{
-      flex: 0 1 108px;
-      font-size: 12px;
-      text-align: center;
-      color: #8B97A7;
-      background-color: #F2F5F9;
-      height: 30px;
-      line-height: 30px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      &.active{
-        background-color: #007AE6;
-        color: #fff;
-      }
-    }
-  }
-  .list-box{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  .market-list-box{
     flex: 1;
     display: flex;
     flex-direction: column;
-    .wrapper{
+    .tags{
+      max-height: 80px;
+      margin: 12px 16px 20px;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+      span{
+        flex: 0 1 108px;
+        font-size: 12px;
+        text-align: center;
+        color: #8B97A7;
+        background-color: #F2F5F9;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        &.active{
+          background-color: #007AE6;
+          color: #fff;
+        }
+      }
+    }
+    .list-box{
       flex: 1;
       overflow-y: scroll;
-      .comment-item{
-        .comment-user{
-          display: flex;
-          .usre-img{
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            margin-right: 15px;
-          }
-          .user-info{
-            .name{
-              b{
-                font-size: 16px;
-                margin-right: 8px;
-                line-height: 20px;
-                vertical-align: middle;
-              }
-              span{
-                background-color: rgba(143, 159, 177, 0.15);
-                color: rgba(92, 95, 102, 1);
-                line-height: 15px;
-                padding: 0 5px;
-                font-size: 10px;
+      .wrapper{
+        .comment-item{
+          margin: 0 16px 20px;
+          .comment-user{
+            display: flex;
+            .usre-img{
+              width: 36px;
+              height: 36px;
+              border-radius: 50%;
+              margin-right: 15px;
+            }
+            .user-info{
+              .name{
+                b{
+                  font-size: 16px;
+                  margin-right: 8px;
+                  line-height: 20px;
+                  vertical-align: middle;
+                }
+                span{
+                  background-color: rgba(143, 159, 177, 0.15);
+                  color: rgba(92, 95, 102, 1);
+                  line-height: 15px;
+                  padding: 0 5px;
+                  font-size: 10px;
+                }
               }
             }
+            .star{
+              margin-top: 5px;
+            }
           }
-        }
-        .comment-info{
-          font-size: 14px;
-          color: #666;
-          line-height: 1.5;
-          // 3行省略
-          word-break:break-all;
-          display:-webkit-box;
-          -webkit-line-clamp:3;
-          -webkit-box-orient:vertical;
-          overflow:hidden;
-          margin-top: 10px;
-        }
-        .comment-more{
-          font-size: 14px;
-          color: #007AE6;
-          line-height: 20px;
-          margin: 5px 0;
-        }
-        .comment-pic{
-          display: flex;
-          justify-content: space-between;
-          margin-top: 10px;
-          .pic-box{
-            flex: 0 1 80px;
-            height: 60px;
-            overflow: hidden;
-            border-radius: 6px;
-            img{
-              min-height: 60px;
-              min-width: 80px;
+          .comment-info{
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            // 5行省略
+            word-break:break-all;
+            display:-webkit-box;
+            -webkit-line-clamp:5;
+            -webkit-box-orient:vertical;
+            overflow:hidden;
+            margin-top: 10px;
+          }
+          .comment-more{
+            font-size: 14px;
+            color: #007AE6;
+            line-height: 20px;
+            margin: 5px 0;
+          }
+          .comment-pic{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            .pic-box{
+              flex: 0 1 80px;
+              height: 60px;
+              overflow: hidden;
               border-radius: 6px;
+              img{
+                min-height: 60px;
+                min-width: 80px;
+                border-radius: 6px;
+              }
             }
           }
-        }
-        .comment-action{
-          margin: 10px 0;
-          color: #999;
-          display: flex;
-          font-size: 12px;
-          .time{
-            flex: 1;
-          }
-          .btn{
-            span{
-              margin-left: 10px;
+          .comment-action{
+            margin: 10px 0;
+            color: #999;
+            display: flex;
+            font-size: 12px;
+            padding-bottom: 10px;
+            .time{
+              flex: 1;
+            }
+            .btn{
+              span{
+                margin-left: 10px;
+                vertical-align: middle;
+                img{
+                  width: 12px;
+                  height: 12px;
+                  vertical-align: middle;
+                }
+              }
             }
           }
         }
       }
-    }
-    .nodata{
-      flex: 1;
-      color: #999;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      font-size: 12px;
-      img{
-        width: 88px;
+      .nodata{
+        flex: 1;
+        color: #999;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 12px;
+        img{
+          width: 88px;
+        }
       }
     }
-    .comment-btn{
-      height: 44px;
-      margin: 20px 16px;
-      border-radius: 6px;
-      background-color: #007AE6;
-      color: #fff;
-      font-size: 16px;
-      line-height: 44px;
-      text-align: center;
-    }
+  }
+  .comment-btn{
+    height: 44px;
+    margin: 20px 16px;
+    border-radius: 6px;
+    background-color: #007AE6;
+    color: #fff;
+    font-size: 16px;
+    line-height: 44px;
+    text-align: center;
   }
   .replay-cnt-dialog {
     background-color: rgba(0, 0, 0, 0.7);

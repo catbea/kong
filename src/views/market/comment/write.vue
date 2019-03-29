@@ -86,11 +86,9 @@ export default {
         linkerId: this.marketId,
         userTag: this.userTag + 1
       })
-      if (result) {
-        let toast = this.$toast('楼盘评论成功！')
-        this.$router.go(-1)
-        toast.clear()
-      }
+      let toast = this.$toast('楼盘评论成功！')
+      this.$router.go(-1)
+      toast.clear()
     },
     // 图片上传组件
     onRead(file) {
