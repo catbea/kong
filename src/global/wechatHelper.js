@@ -39,8 +39,10 @@ class WechatHelper {
 
   async init(agentId = '') {
     await store.dispatch('setJssdkConfig', { jsApiList: jsApiList, agentId: agentId })
-    await this.wx.config(store.state.wx.jssdkConfig)
-    if (agentId.length == 0) await this.getUserArea()
+    await this.wx.config(store.state.wx.jssdkConfig).then(()=>{
+      if (agentId.length == 0) await this.getUserArea()
+    })
+    // if (agentId.length == 0) await this.getUserArea()
   }
 
   /**
