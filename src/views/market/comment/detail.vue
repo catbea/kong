@@ -65,7 +65,6 @@
         <input type="text" placeholder="写回复 与楼主分享心得" ref="inputbox" @blur="blur" @focus="showDialogFn">
       </div>
     </div>
-
     <div class="replay-cnt-dialog" v-show="showDialog" @click="hideDialogFn">
       <div class="replay-cnt" @click.stop="">
         <div class="top-action">

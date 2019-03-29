@@ -3,14 +3,14 @@
     <div class="tags">
       <span 
         v-for="(item, index) in tagList"
-        :key="index" :class="{'active': activeTag === index}"
+        :key="index" :class="{'active': activeType === index}"
         @click="cahngeTag(index)"
         >
-        {{item}}{{`(2)`}}
+        {{item}}({{formatCount(item)}})
       </span>
     </div>
     <div class="list-box">
-      <div class="wrapper">
+      <div class="wrapper" v-if="commnetList.length">
         <van-list
           v-model="loading"
           :finished="finished"
@@ -50,14 +50,35 @@
           </div>
         </van-list>
       </div>
-      <div class="nodata">
+      <div class="nodata" v-else>
         <img src="../../../assets/img/market/comment/nodata.png" alt="">
         <p>该楼盘没有评论哦，快来抢先一步评论吧！</p> 
       </div>
-      <div class="comment-btn">
+      <div class="comment-btn" @click="goWrite">
         写点评 分享心得
       </div>
-      
+    </div>
+    <div class="replay-cnt-dialog" v-show="showDialog" @click="hideDialogFn">
+      <div class="replay-cnt" @click.stop="">
+        <div class="top-action">
+          <p class="cancle" @click.stop="hideDialogFn">取消</p>
+          <p class="publish">
+            <span @click.stop="replyFn">发布</span>
+          </p>
+        </div>
+        <div class="replay-box">
+          <textarea
+            placeholder="请输入回复内容（1-150字）"
+            class="textarea"
+            name=""
+            id=""
+            ref="replaybox"
+            maxlength="150"
+            v-model="replayCnt"
+            @blur="blur"
+          ></textarea>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +91,7 @@ export default {
     return {
       marketId: '',
       tagList: ['全部', '有图', '实看', '好评'],
+      commentCount: null,
       activeTag: 0,
       commnetList: [],
       loading: false,
@@ -77,30 +99,54 @@ export default {
       size: 10,
       current: 1,
       pages: null,
-      star: 5
+      star: 5,
+      replayCnt: '',
+      showDialog: false
     }
   },
   created () {
     this.marketId = this.$route.params.id
-    this.activeTag = this.$route.query.type || 0
+    this.activeType = this.$route.query.type || 0
+    this.getCommentCount()
+    this.getCommentList()
   },
   methods: {
     // 楼盘评论分类统计
-    getCommentCount () {
-
+    async getCommentCount () {
+      let result = await marketService.getCommentCount({linkerId: this.marketId})
+      if (result) {
+        this.commentCount = result
+      }
+    },
+    // 格式化统计数
+    formatCount (val) {
+      if (!this.commentCount) {
+        return 0
+      }
+      let status = {
+        '全部': this.commentCount.all,
+        '有图': this.commentCount.withPicture ,
+        '实看': this.commentCount.authUserNum,
+        '好评': this.commentCount.goodReputation
+      }
+      return status[val]
     },
     // 切换标签
     cahngeTag (index) {
-      this.activeTag = index
+      this.activeType = index
       this.getCommentList()
     },
     // 获取评论列表
     async getCommentList () {
       let result = await marketService.getCommentList({
+        current: this.current,
+        size: this.size,
+        linkerId: this.marketId,
+        type: this.activeType
       })
       if (result) {
         this.pages = result.pages
-        let commnetList = result.commnetList
+        let commnetList = result.records
         if (this.current === 1) {
           this.commnetList = commnetList
         } else {
@@ -131,9 +177,33 @@ export default {
           // do something
         }
       })
+    },
+    // 写点评
+    goWrite () {
+      this.$router.push(`/market/comment/write/${this.marketId}`)
+    },
+    // 键盘遮挡
+    blur() {
+      document.activeElement.scrollIntoViewIfNeeded(true)
+    },
+    // 展示回复框
+    showDialogFn () {
+      this.$refs.inputbox.blur()
+      this.showDialog = true
+      this.$refs.replaybox.focus()
+    },
+    // 隐藏回复框
+    hideDialogFn () {
+      this.showDialog = false
+    },
+    // 回复
+    replyFn () {
+      this.$refs.replaybox.blur()
+      this.hideDialogFn()
     }
   },
   filters: {
+    // 格式化名称
     formatName (val) {
       let str = val + ''
       let len = val.length
@@ -263,7 +333,10 @@ export default {
       flex: 1;
       color: #999;
       text-align: center;
-      align-self: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       font-size: 12px;
       img{
         width: 88px;
@@ -278,6 +351,100 @@ export default {
       font-size: 16px;
       line-height: 44px;
       text-align: center;
+    }
+  }
+  .replay-cnt-dialog {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    z-index: 3;
+    .replay-cnt {
+      // margin-top: 50px;
+      width: 100%;
+      padding: 0 16px 30px 13px;
+      box-sizing: border-box;
+      position: absolute;
+      bottom: 0;
+      background-color: #fff;
+      .top-action {
+        display: flex;
+        padding: 10px 0;
+        .cancle {
+          width: 80px;
+          height: 32px;
+          line-height: 32px;
+          font-size: 16px;
+          color: #333;
+          margin-right: 50px;
+          box-sizing: content-box;
+        }
+        .publish {
+          flex: 1;
+          text-align: right;
+          span {
+            display: inline-block;
+            width: 56px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            border-radius: 6px;
+            border: none;
+            background-color: #007ae6;
+            color: #fff;
+            font-size: 14px;
+          }
+        }
+      }
+      .replay-title {
+        margin: 16px 0;
+        font-size: 16px;
+        p {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          color: #666;
+        }
+      }
+      .replay-box {
+        position: relative;
+        font-size: 16px;
+        height: 130px;
+        overflow-y: auto;
+        background-color: #f7f8f8;
+        .name {
+          color: #969ea8;
+          position: absolute;
+          left: 10px;
+          top: 5px;
+          line-height: 1.5;
+          font-size: 14px;
+          max-width: 75px;
+          z-index: 2;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: inline-block;
+        }
+        .textarea {
+          width: 100%;
+          height: 100%;
+          box-sizing: boder-box;
+          border: none;
+          background-color: #f7f8f8;
+          line-height: 1.5;
+          padding: 5px 10px;
+          font-size: 14px;
+          z-index: 1;
+          &::-webkit-input-placeholder {
+            font-size: 14px;
+            color: #999;
+          }
+        }
+      }
     }
   }
 }
