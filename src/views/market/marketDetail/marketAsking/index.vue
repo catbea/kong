@@ -23,7 +23,7 @@
             <div class="answer-top">
               <div class="answer-icon">答</div>
               <img class="header-img" :src="item.replyVO.avatarUrl">
-              <div class="user-name">{{item.replyVO.nickName}}</div>
+              <div class="user-name">{{item.replyVO.nickName|privacyName() }}</div>
               <div class="reply-time">{{item.replyVO.createTimeStamp}}</div>
             </div>
             <div class="answer-bottom">{{item.replyVO.content}}</div>
