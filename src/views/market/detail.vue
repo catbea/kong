@@ -227,7 +227,7 @@
       </div>
     </div>
     <!-- 楼盘评价 -->
-    <div class="evaluate-box">
+    <div class="evaluate-box" @click="enterEvaluation">
       <title-bar :conf="evaluateTitleConf"/>
       <div class="evaluate-content">
         <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
@@ -510,6 +510,7 @@ export default {
      * 进入楼盘评测页面
      */
     enterEvaluation() {
+      this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
       console.log('888888888888')
       // this.$router.push({ name: 'market-marketEvaluating' })
     },

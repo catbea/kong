@@ -289,7 +289,7 @@ export default [
   },
   {
     path: '/marketDetail/ask/:id',
-    name: 'market-askging-ask',
+    name: 'market-asking-ask',
     component: resolve => require(['@/views/market/marketDetail/marketAsking/ask.vue'], resolve),
     meta: {
       title: '提问',

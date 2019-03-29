@@ -1,35 +1,33 @@
 <template>
-    <div class="asking-body">
-        <div class="asking-header" v-if="this.noData===false">共有12个问题，300个回答</div>
-        <div class="asking-center" v-if="this.noData===false">
-            <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-                <div class="asking-item" @click="enterDetails">
-                    <div class="question-view">
-                        <div class="question-icon">问</div>
-                        <div class="question-body">
-                            <span class="question-title">
-                                #满京华#首付比例是多少呢？首付比例是多少呢？首付比例是多少呢？
-                                <span class="question-num">20人回复</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="answer-view">
-                        <div class="answer-top">
-                            <div class="answer-icon">答</div>
-                            <img class="header-img" :src="noAskingIcon">
-                            <div class="user-name">李***</div>
-                            <div class="reply-time">2019年2月18日</div>
-                        </div>
-                        <div
-                            class="answer-bottom"
-                        >时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价…</div>
-                    </div>
-                </div>
-            </van-list>
+  <div class="asking-body">
+    <div class="asking-header" v-if="this.noData===false">共有12个问题，300个回答</div>
+    <div class="asking-center" v-if="this.noData===false">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <div class="asking-item" @click="enterDetails">
+          <div class="question-view">
+            <div class="question-icon">问</div>
+            <div class="question-body">
+              <span class="question-title">
+                #满京华#首付比例是多少呢？
+                <span class="question-num">20人回复</span>
+              </span>
+            </div>
+          </div>
+          <div class="answer-view">
+            <div class="answer-top">
+              <div class="answer-icon">答</div>
+              <img class="header-img" :src="noAskingIcon">
+              <div class="user-name">李***</div>
+              <div class="reply-time">2019年2月18日</div>
+            </div>
+            <div class="answer-bottom">时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价…</div>
+          </div>
         </div>
-        <null :nullIcon="noAskingIcon" :nullcontent="nullcontent" v-if="this.noData===true"></null>
-        <div class="asking-foot"  @click="enterAskPage">立即提问</div>
+      </van-list>
     </div>
+    <null :nullIcon="noAskingIcon" :nullcontent="nullcontent" v-if="this.noData===true"></null>
+    <div class="asking-foot" @click="enterAskPage">立即提问</div>
+  </div>
 </template>
 
 
@@ -47,19 +45,22 @@ export default {
     nullcontent: '该楼盘没有问答哦，快来抢先一步提问吧！',
     noData: false
   }),
-
+  created() {
+    this.id = this.$route.params.id
+  },
   methods: {
     onLoad() {},
 
     /**
      * 进入评测
      */
-    enterDetails(){
-        this.$router.push({name: 'market-asking-detail'})
+    enterDetails() {
+      // this.$router.push({name: 'market-asking-detail', params: {id: this.id}})
+      this.$router.push(`/marketDetail/askingDetail/${this.id}`)
     },
 
-    enterAskPage(){
-       this.$router.push({name: 'market-askging-ask'})
+    enterAskPage() {
+      this.$router.push({ name: 'market-asking-ask', params: {id: this.id}})
     }
   }
 }
@@ -191,12 +192,11 @@ export default {
           }
         }
 
-
-        > .answer-bottom{
-           color:rgba(102,102,102,1);
-           font-size: 15px;
-           margin-top: 10px;
-           margin-left: 6%;
+        > .answer-bottom {
+          color: rgba(102, 102, 102, 1);
+          font-size: 15px;
+          margin-top: 10px;
+          margin-left: 6%;
         }
       }
     }

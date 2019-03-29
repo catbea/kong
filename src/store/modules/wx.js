@@ -35,8 +35,8 @@ const actions = {
   async setWxLocation({ commit }, data) {
     const result = await commonService.getLocation(data.longitude, data.latitude)
     commit(types.USER_AREA, {
-      longitude: log,
-      latitude: lat,
+      longitude: data.longitude,
+      latitude: data.latitude,
       city: result
     })
   }
