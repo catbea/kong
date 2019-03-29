@@ -188,7 +188,9 @@ const mutations = {
     state.userVipInfo = data
   },
   [types.USER_AREA](state, data) {
+    console.log('111',state.userArea, data)
     state.userArea = Object.assign(state.userArea, data)
+    console.log('222',state.userArea)
   },
   [types.REPORT_INFO](state, data) {
     state.reportAddInfo = Object.assign(state.reportAddInfo, data)
