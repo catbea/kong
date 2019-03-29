@@ -3,24 +3,30 @@
     <div class="asking-header" v-if="this.noData===false">共有12个问题，300个回答</div>
     <div class="asking-center" v-if="this.noData===false">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <div class="asking-item" @click="enterDetails">
+        <div
+          class="asking-item"
+          @click="enterDetails(item.questionId)"
+          v-for="(item, index) in this.askingList"
+          :key="index"
+        >
           <div class="question-view">
             <div class="question-icon">问</div>
             <div class="question-body">
               <span class="question-title">
-                #满京华#首付比例是多少呢？
-                <span class="question-num">20人回复</span>
+                {{item.content}}
+                <span class="question-num">{{item.replyNum}}人回复</span>
               </span>
             </div>
           </div>
-          <div class="answer-view">
+          <!--  -->
+          <div class="answer-view" v-if="item.replyVO!=''">
             <div class="answer-top">
               <div class="answer-icon">答</div>
-              <img class="header-img" :src="noAskingIcon">
-              <div class="user-name">李***</div>
-              <div class="reply-time">2019年2月18日</div>
+              <img class="header-img" :src="item.replyVO.avatarUrl">
+              <div class="user-name">{{item.replyVO.nickName|privacyName() }}</div>
+              <div class="reply-time">{{item.replyVO.createTimeStamp|dateTimeFormatter(5) }}</div>
             </div>
-            <div class="answer-bottom">时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价…</div>
+            <div class="answer-bottom">{{item.replyVO.content}}</div>
           </div>
         </div>
       </van-list>
@@ -33,6 +39,8 @@
 
 <script>
 import Null from 'COMP/Null'
+import marketService from 'SERVICE/marketService'
+import timeUtils from '@/utils/timeUtils'
 
 export default {
   components: {
@@ -43,24 +51,59 @@ export default {
     finished: false,
     noAskingIcon: require('IMG/market/no_asking.png'),
     nullcontent: '该楼盘没有问答哦，快来抢先一步提问吧！',
-    noData: false
+    noData: false,
+    current: 1,
+    askingList: []
   }),
   created() {
     this.id = this.$route.params.id
   },
   methods: {
-    onLoad() {},
+    onLoad() {
+      this.getAskingList(this.current, '488cbcde9fd5463bbe2ed1724a93f77c')
+    },
+
+    async getAskingList(current, id) {
+      const result = await marketService.getAskingList(current, id)
+      if (result.records.length > 0) {
+        this.askingList = this.askingList.concat(result.records)
+        if (this.askingList.length > 0) {
+          this.noData = false
+        } else {
+          this.noData = true
+        }
+
+        // for (var i = 0; i < this.askingList.length; i++) {
+        //   if (this.askingList[i].replyVO) {
+        //     this.askingList[i].replyVO.createTimeStamp = timeUtils.fmtDate(this.askingList[i].replyVO.createTimeStamp)
+        //   }
+        // }
+
+        if (result.pages === 0 || this.page === result.pages) {
+          this.finished = true
+        }
+        this.current++
+        this.loading = false
+      } else {
+        if (current == 1) {
+          this.noData = true
+        }
+        this.loading = false
+        this.finished = true
+      }
+    },
 
     /**
-     * 进入评测
+     * 进入详情
      */
-    enterDetails() {
+    enterDetails(questionId) {
       // this.$router.push({name: 'market-asking-detail', params: {id: this.id}})
-      this.$router.push(`/marketDetail/askingDetail/${this.id}`)
+      // this.$router.push(`/marketDetail/askingDetail/${this.id}`)
+      this.$router.push({ path: '/marketDetail/askingDetail', query: { questionId: questionId } })
     },
 
     enterAskPage() {
-      this.$router.push({ name: 'market-asking-ask', params: {id: this.id}})
+      this.$router.push({ name: 'market-asking-ask', params: { id: this.id } })
     }
   }
 }
@@ -110,7 +153,7 @@ export default {
 
     .asking-item {
       width: 92%;
-      height: 163px;
+      max-height: 163px;
       margin-left: 4%;
       margin-right: 4%;
       border-bottom: 1px solid #cccccc;
@@ -120,6 +163,7 @@ export default {
         padding-left: 16px;
         padding-top: 16px;
         display: flex;
+        margin-bottom: 16px;
 
         > .question-icon {
           width: 22px;
@@ -143,6 +187,12 @@ export default {
             margin-left: 5px;
             float: left;
             width: 100%;
+            // word-break: break-all;
+            // text-overflow: ellipsis; //显示为省略号
+            // display: -webkit-box; //对象作为伸缩盒子模型显示
+            // -webkit-box-orient: vertical; //设置或检索伸缩盒对象的子元素的排列方式
+            // -webkit-line-clamp: 2; //显示行数## 标题文字 ##
+            // overflow: hidden;
 
             > .question-num {
               color: #999999;
@@ -156,7 +206,6 @@ export default {
       > .answer-view {
         width: 100%;
         padding-left: 16px;
-        padding-top: 16px;
 
         > .answer-top {
           display: flex;
@@ -178,6 +227,7 @@ export default {
             width: 24px;
             height: 24px;
             margin-left: 5px;
+            border-radius: 50%;
           }
 
           .user-name {
@@ -189,6 +239,7 @@ export default {
           .reply-time {
             font-size: 12px;
             color: #999999;
+            margin-left: 10px;
           }
         }
 
@@ -197,6 +248,13 @@ export default {
           font-size: 15px;
           margin-top: 10px;
           margin-left: 6%;
+          margin-bottom: 10px;
+          word-break: break-all;
+          text-overflow: ellipsis; //显示为省略号
+          display: -webkit-box; //对象作为伸缩盒子模型显示
+          -webkit-box-orient: vertical; //设置或检索伸缩盒对象的子元素的排列方式
+          -webkit-line-clamp: 3; //显示行数## 标题文字 ##
+          overflow: hidden;
         }
       }
     }

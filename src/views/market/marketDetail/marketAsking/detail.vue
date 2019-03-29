@@ -11,9 +11,9 @@
       <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
         <div class="asking-list" v-for="(item, index) in lists" :key="index">
           <div class="asking-list-top">
-            <avatar :avatar="item.clientImg"/>
-            <span class="asking-list-top-name">{{item.name | privacyName() }}</span>
-            <span class="asking-list-top-time">{{item.time | dateTimeFormatter(5) }}</span>
+            <avatar :avatar="item.avatarUrl"/>
+            <span class="asking-list-top-name">{{item.nickName | privacyName() }}</span>
+            <span class="asking-list-top-time">{{item.createTimeStamp | dateTimeFormatter(5) }}</span>
           </div>
           <div class="asking-list-bottom">{{item.content}}</div>
         </div>
@@ -49,6 +49,7 @@ export default {
     size: 10,
     current: 1,
     pages: null,
+    questionId: null,
     showCommentAlert: false,
     commentInfo: {
       placeholder: '请输入回复内容（1-150字）',
@@ -58,39 +59,29 @@ export default {
     contentHeight: 0,
     // commentContent: '', // 评论内容
     time: '',
-    answerCount: 23,
-    lists: [
-      {
-        avatar: '',
-        name: '',
-        time: '2019年2月18日',
-        content: '时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价…'
-      },
-      {
-        avatar: '',
-        name: '李',
-        time: '2019年2月18日',
-        content: '时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价…'
-      },
-      {
-        avatar: '',
-        name: '李林',
-        time: '2019年2月18日',
-        content: '时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价…'
-      }
-    ]
+    answerCount: 0,
+    lists: []
   }),
+  created() {
+      this.questionId = this.$route.query.questionId
+  },
   methods: {
     // 加载更多
     async onLoad() {
-      if (this.current > this.pages) {
-        // 加载状态结束
-        this.finished = true
-        this.loading = false
-      } else {
-        await this.getArticleList()
-        this.loading = false
-      }
+      this.queryAskingDetail()
+    },
+    async queryAskingDetail() {
+        const res = await marketService.queryAskingDetail(this.current, this.size, this.questionId)
+        this.answerCount = res.total
+        this.lists = this.current == 1 ? res.records : this.lists.concat(res.records)
+        if (this.current >= res.pages) {
+            this.finished = true
+            this.loading = false
+        }else {
+            this.current ++
+            this.finished = false
+            this.loading = false
+        }
     },
     // 新增评论
     async insertComment(receiver) {
@@ -160,6 +151,7 @@ export default {
   > .asking-content {
     width: 100%;
     padding: 16px;
+    margin-bottom: 100px;
     .asking-list:first-child {
       padding-top: 0;
     }
@@ -194,6 +186,7 @@ export default {
     width: 100%;
     height: 62px;
     border-top: 1px solid #dedede;
+    background-color: #fff;
     position: fixed;
     bottom: 0;
     left: 0;

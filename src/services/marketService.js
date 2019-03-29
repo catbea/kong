@@ -367,13 +367,13 @@ class MarketService {
    * @param {*} size 
    * @param {*} linkerId 
    */
-  getAskingList(current, size=10, linkerId){
+  getAskingList(current, linkerId, size = 10) {
     return xhr({
       url: '/linkerInterlocution/queryList',
       body: {
         current,
-        size,
-        linkerId
+        linkerId,
+        size
       }
     })
   }
@@ -384,7 +384,7 @@ class MarketService {
    * @param {*} size 
    * @param {*} questionId 
    */
-  queryAskingDetail(current, size=10, questionId) {
+  queryAskingDetail(current, size = 10, questionId) {
     return xhr({
       url: '/linkerInterlocution/queryReplyList',
       body: {
