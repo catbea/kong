@@ -277,7 +277,7 @@ export default [
     }
   },
   {
-    path: '/marketDetail/askingDetail/:id',
+    path: '/marketDetail/askingDetail',
     name: 'market-asking-detail',
     component: resolve => require(['@/views/market/marketDetail/marketAsking/detail.vue'], resolve),
     meta: {

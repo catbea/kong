@@ -96,10 +96,10 @@ export default {
     /**
      * 进入详情
      */
-    enterDetails(questionid) {
+    enterDetails(questionId) {
       // this.$router.push({name: 'market-asking-detail', params: {id: this.id}})
       // this.$router.push(`/marketDetail/askingDetail/${this.id}`)
-      this.$router.push({ path: '/marketDetail/askingDetail', query: { questionid: questionid } })
+      this.$router.push({ path: '/marketDetail/askingDetail', query: { questionId: questionId } })
     },
 
     enterAskPage() {
