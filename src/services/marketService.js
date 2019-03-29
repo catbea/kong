@@ -414,6 +414,16 @@ class MarketService {
       body: data
     })
   }
+  /**
+   * 新增楼盘评论
+   */
+  insertLinkerComment(data) {
+    return xhr({
+      url: '/linkerComment/insertLinkerComment',
+      method: 'post',
+      body: data
+    })
+  }
 
 }
 export default new MarketService()
