@@ -49,7 +49,7 @@ export default {
       contentHeight: window.screen.height - 64
     },
     contentHeight: 0,
-    commentContent: '', // 评论内容
+    // commentContent: '', // 评论内容
     time: '',
     answerCount: 23,
     lists: [
