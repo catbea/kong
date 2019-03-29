@@ -108,7 +108,10 @@
           <p>
             <span>平均价格:</span>
             {{info.averagePrice}}
-            <span class="calculation-view" @click="goCalculation">
+            <span
+              class="calculation-view"
+              @click="goCalculation(info.linkerName)"
+            >
               <img :src="calculationIcon">
               <span>房贷计算器</span>
             </span>
@@ -236,7 +239,8 @@
             <div class="top">
               <img :src="panoramaIcon" alt="" srcset="">
               <div class="message">
-                <p>用***2 &nbsp;&nbsp;&nbsp;
+                <p>
+                  用***2 &nbsp;&nbsp;&nbsp;
                   <span>是看用户</span>
                 </p>
                 <p>
@@ -490,9 +494,9 @@ export default {
     }
   },
   methods: {
-    goCalculation() {
+    goCalculation(e) {
       //进入计算器页面
-      alert('进入计算器')
+      window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama/linker/toNewcalculator?linkerName='+e
     },
 
     /**

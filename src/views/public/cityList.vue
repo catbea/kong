@@ -75,6 +75,7 @@
 
 <script>
 import marketService from 'SERVICE/marketService'
+import commonService from '@/services/commonService'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import { IndexList, IndexSection, Cell } from 'mint-ui'
@@ -190,9 +191,7 @@ export default {
       wx.getLocation({
         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
         success: res => {
-          console.log(res)
-          this.$store.dispatch('setWxLocation', res)
-          this.$toast('定位成功')
+          this.getCity(res)
         },
         fail: () => {
           this.$toast('定位失败')
@@ -202,6 +201,12 @@ export default {
         }
       })
     },
+    // 获取定位
+    async getCity (data) {
+      const result = await commonService.getLocation(data.longitude, data.latitude)
+      this.$store.commit(types['USER_AREA'], {city: result})
+      this.$toast('定位成功')
+    }
   },
   directives: {
     // 指令的定义
