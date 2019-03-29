@@ -61,6 +61,7 @@ export default {
         color: #333;
         font-size: 14px;
         line-height: 22px;
+        border: none;
       }
       .ask-textarea::-webkit-input-placeholder {
         color: #999;
