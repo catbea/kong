@@ -447,7 +447,7 @@ export default {
       buyAskTitleConf: {
         title: '买房看看',
         linkText: '查看全部',
-        link: '/marketDetail/asking/:id'
+        // link: '/marketDetail/asking/:id'
       },
       swiperOption: {
         slidesPerView: 2,
@@ -475,6 +475,7 @@ export default {
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
+    this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
     await this.getVipInfo()
   },
   beforeRouteLeave(to, from, next) {

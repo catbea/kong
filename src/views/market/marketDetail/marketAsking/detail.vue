@@ -8,14 +8,16 @@
       </div>
     </div>
     <div class="asking-content">
-      <div class="asking-list" v-for="(item, index) in lists" :key="index">
-        <div class="asking-list-top">
-          <avatar :avatar="item.clientImg"/>
-          <span class="asking-list-top-name">{{item.name | privacyName() }}</span>
-          <span class="asking-list-top-time">{{item.time | dateTimeFormatter(5) }}</span>
+      <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
+        <div class="asking-list" v-for="(item, index) in lists" :key="index">
+          <div class="asking-list-top">
+            <avatar :avatar="item.clientImg"/>
+            <span class="asking-list-top-name">{{item.name | privacyName() }}</span>
+            <span class="asking-list-top-time">{{item.time | dateTimeFormatter(5) }}</span>
+          </div>
+          <div class="asking-list-bottom">{{item.content}}</div>
         </div>
-        <div class="asking-list-bottom">{{item.content}}</div>
-      </div>
+      </van-list>
     </div>
     <div class="asking-bottom">
       <div class="asking-input" @click="answerHandler">写回复，与楼主分享观点</div>
@@ -42,6 +44,11 @@ export default {
     CommentAlert
   },
   data: () => ({
+    loading: false, //是否处于加载状态
+    finished: false, //是否已加载完所有数据
+    size: 10,
+    current: 1,
+    pages: null,
     showCommentAlert: false,
     commentInfo: {
       placeholder: '请输入回复内容（1-150字）',
@@ -74,6 +81,17 @@ export default {
     ]
   }),
   methods: {
+    // 加载更多
+    async onLoad() {
+      if (this.current > this.pages) {
+        // 加载状态结束
+        this.finished = true
+        this.loading = false
+      } else {
+        await this.getArticleList()
+        this.loading = false
+      }
+    },
     // 新增评论
     async insertComment(receiver) {
       let param = {
@@ -145,7 +163,7 @@ export default {
     .asking-list:first-child {
       padding-top: 0;
     }
-    > .asking-list {
+    .asking-list {
       border-bottom: 1px solid #dedede;
       padding-top: 16px;
       padding-bottom: 16px;

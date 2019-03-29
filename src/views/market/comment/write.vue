@@ -3,7 +3,7 @@
     <div class="comment-write-info">
       <div class="house">
         <h3>你看过该楼盘啊吗？</h3>
-        <p><span v-for="(item,index) in houseTag" :key="index" :class="{'active': activeHouse === index}" @click="activeHouse=index">{{item}}</span></p>
+        <p><span v-for="(item,index) in houseTag" :key="index" :class="{'active': userTag === index}" @click="userTag=index">{{item}}</span></p>
       </div>
       <div class="star-box">
         <b>楼盘点评</b>
@@ -13,7 +13,7 @@
       </div>
       <div class="info">
         <div class="textarea">
-          <textarea class="" name="" id="" cols="30" rows="10" v-model.trim="textarea" maxlength="150" @blur="blur" placeholder="你觉得该楼盘的位置如何，环境怎样，配套规划满意吗？（1-150字）"></textarea>
+          <textarea class="" name="" id="" cols="30" rows="10" v-model.trim="content" maxlength="150" @blur="blur" placeholder="你觉得该楼盘的位置如何，环境怎样，配套规划满意吗？（1-150字）"></textarea>
         </div>
         <div class="img-box">
           <div class="img-item" v-for="(item,index) in imgList" :key="index">
@@ -30,7 +30,7 @@
       </div>
       <div class="agrees">查看 《用户点评行为规范》</div>
     </div>
-    <div class="comment-submit">
+    <div class="comment-submit" @click="saveComment">
       提交点评
     </div>
     <div class="loading"  v-show="showLoading" >
@@ -47,8 +47,9 @@ import userService from 'SERVICE/userService'
 export default {
   data () {
     return {
-      houseTag: ['未实地看房', '实地看房'],
-      activeHouse: 0,
+      marketId: '',
+      houseTag: ['实地看房', '未实地看房'],
+      userTag: 0,
       star: 5,
       cos: null,
       appId: '10037467',
@@ -56,13 +57,41 @@ export default {
       region: 'sh',
       imgList: [],
       showLoading: false,
-      textarea: ''
+      content: ''
     }
   },
   created () {
     this.initCos()
+    this.marketId = this.$route.params.id
   },
   methods: {
+    // 提交评论
+    saveComment () {
+      let content = this.content.trim()
+      if (!content) {
+        return this.$toast('楼盘评论不能为空！')
+      }
+      if (content.length > 150) {
+        return this.$toast('楼盘评论不能超过150个字！')
+      }
+      this.insertLinkerComment()
+    },
+    // 新增楼盘评论
+    async insertLinkerComment () {
+      let result = await marketService.insertLinkerComment({
+        commentType: 1,
+        content: this.content,
+        imgList: this.imgList,
+        starLevel: this.star,
+        linkerId: this.marketId,
+        userTag: this.userTag + 1
+      })
+      if (result) {
+        let toast = this.$toast('楼盘评论成功！')
+        this.$router.go(-1)
+        toast.clear()
+      }
+    },
     // 图片上传组件
     onRead(file) {
       let data = file.content
