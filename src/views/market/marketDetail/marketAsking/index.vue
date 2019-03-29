@@ -142,6 +142,7 @@ export default {
             font-size: 13px;
             margin-left: 5px;
             float: left;
+            width: 100%;
 
             > .question-num {
               color: #999999;
