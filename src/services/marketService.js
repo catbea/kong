@@ -363,9 +363,36 @@ class MarketService {
 
   /**
    * 买房问问列表
+   * @param {*} current 
+   * @param {*} size 
+   * @param {*} linkerId 
    */
-  getAskingList(){
+  getAskingList(current, size=10, linkerId){
+    return xhr({
+      url: '/linkerInterlocution/queryList',
+      body: {
+        current,
+        size,
+        linkerId
+      }
+    })
+  }
 
+  /**
+   * 买房问问问题回复详情
+   * @param {*} current 
+   * @param {*} size 
+   * @param {*} questionId 
+   */
+  queryAskingDetail(current, size=10, questionId) {
+    return xhr({
+      url: '/linkerInterlocution/queryReplyList',
+      body: {
+        current,
+        size,
+        questionId
+      }
+    })
   }
 
   /**
