@@ -68,6 +68,7 @@ import { ImagePreview } from 'vant'
 export default {
   data () {
     return {
+      marketId: '',
       tagList: ['全部', '有图', '实看', '好评'],
       activeTag: 0,
       commnetList: [],
@@ -79,8 +80,15 @@ export default {
       star: 5
     }
   },
-  created () {},
+  created () {
+    this.marketId = this.$route.params.id
+    this.activeTag = this.$route.query.type || 0
+  },
   methods: {
+    // 楼盘评论分类统计
+    getCommentCount () {
+
+    },
     // 切换标签
     cahngeTag (index) {
       this.activeTag = index

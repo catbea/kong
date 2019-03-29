@@ -350,7 +350,7 @@ export default {
         line-height: 30px;
         width: 90%;
         box-sizing: content-box;
-        border: 1px solid #B7B7B7;
+        border: 1px solid rgba(183, 183, 183, 1);
         border-radius: 4px;
         outline: none;
         -webkit-appearance: none; 

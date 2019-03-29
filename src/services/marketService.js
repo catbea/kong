@@ -368,6 +368,25 @@ class MarketService {
 
   }
 
+  /**
+   * 楼盘评论列表
+   */
+  getCommentList(data) {
+    return xhr({
+      url: '/linkerComment/queryList',
+      body: data
+    })
+  }
+
+  /**
+   * 楼盘评论分类统计
+   */
+  getCommentCount(data) {
+    return xhr({
+      url: '/linkerComment/getLinkerCommentCount',
+      body: data
+    })
+  }
 
 }
 export default new MarketService()
