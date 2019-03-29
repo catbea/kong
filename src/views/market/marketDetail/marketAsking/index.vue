@@ -8,7 +8,7 @@
                         <div class="question-icon">问</div>
                         <div class="question-body">
                             <span class="question-title">
-                                #满京华#首付比例是多少呢？
+                                #满京华#首付比例是多少呢？首付比例是多少呢？首付比例是多少呢？
                                 <span class="question-num">20人回复</span>
                             </span>
                         </div>
@@ -141,6 +141,7 @@ export default {
             font-size: 13px;
             margin-left: 5px;
             float: left;
+            width: 100%;
 
             > .question-num {
               color: #999999;
