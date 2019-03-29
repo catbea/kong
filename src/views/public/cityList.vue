@@ -187,14 +187,12 @@ export default {
       this.$router.go(-1)
     },
     // 重新定位
-    async retryLocation() {
+    retryLocation() {
       wx.getLocation({
         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
         success: res => {
           console.log('11111',res)
-          const result = await commonService.getLocation(data.longitude, data.latitude)
-          this.$store.commit(types['USER_AREA'], {city: result})
-          this.$toast('定位成功')
+          this.getCity(res)
         },
         fail: () => {
           this.$toast('定位失败')
@@ -204,6 +202,13 @@ export default {
         }
       })
     },
+  },
+  // 获取定位
+  async getCity (data) {
+    const result = await commonService.getLocation(data.longitude, data.latitude)
+    console.log('2222', result)
+    this.$store.commit(types['USER_AREA'], {city: result})
+    this.$toast('定位成功')
   },
   directives: {
     // 指令的定义
