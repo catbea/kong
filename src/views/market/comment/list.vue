@@ -262,7 +262,7 @@ export default {
     flex-direction: column;
     .tags{
       max-height: 80px;
-      margin: 12px 16px 20px;
+      margin: 12px 16px 10px;
       display: flex;
       flex-flow: row wrap;
       justify-content: space-between;
@@ -391,7 +391,7 @@ export default {
   }
   .comment-btn{
     height: 44px;
-    margin: 20px 16px;
+    margin: 10px 16px;
     border-radius: 6px;
     background-color: #007AE6;
     color: #fff;
