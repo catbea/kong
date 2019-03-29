@@ -71,7 +71,7 @@ const state = {
     longitude: '', // 经度
     latitude: '', // 纬度
     province: '', // 省
-    city: '', // 市
+    city: '深圳市', // 市
     selectedCity: null,
     marketSelectedCity: null, //楼盘列表城市选择
     vipSelectedCity: null,

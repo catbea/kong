@@ -207,6 +207,7 @@ export default {
       const result = await commonService.getLocation(data.longitude, data.latitude)
       console.log('2222', result)
       this.$store.commit(types['USER_AREA'], {city: result})
+      console.log('3333', this.userArea.city)
       this.$toast('定位成功')
     }
   },
