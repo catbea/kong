@@ -18,6 +18,7 @@
               </span>
             </div>
           </div>
+          <!--  -->
           <div class="answer-view" v-if="item.replyVO!=''">
             <div class="answer-top">
               <div class="answer-icon">答</div>
@@ -186,6 +187,12 @@ export default {
             margin-left: 5px;
             float: left;
             width: 100%;
+            // word-break: break-all;
+            // text-overflow: ellipsis; //显示为省略号
+            // display: -webkit-box; //对象作为伸缩盒子模型显示
+            // -webkit-box-orient: vertical; //设置或检索伸缩盒对象的子元素的排列方式
+            // -webkit-line-clamp: 2; //显示行数## 标题文字 ##
+            // overflow: hidden;
 
             > .question-num {
               color: #999999;
@@ -242,6 +249,12 @@ export default {
           margin-top: 10px;
           margin-left: 6%;
           margin-bottom: 10px;
+          word-break: break-all;
+          text-overflow: ellipsis; //显示为省略号
+          display: -webkit-box; //对象作为伸缩盒子模型显示
+          -webkit-box-orient: vertical; //设置或检索伸缩盒对象的子元素的排列方式
+          -webkit-line-clamp: 3; //显示行数## 标题文字 ##
+          overflow: hidden;
         }
       }
     }
