@@ -24,7 +24,7 @@
               <div class="answer-icon">答</div>
               <img class="header-img" :src="item.replyVO.avatarUrl">
               <div class="user-name">{{item.replyVO.nickName|privacyName() }}</div>
-              <div class="reply-time">{{item.replyVO.createTimeStamp}}</div>
+              <div class="reply-time">{{item.replyVO.createTimeStamp|dateTimeFormatter(5) }}</div>
             </div>
             <div class="answer-bottom">{{item.replyVO.content}}</div>
           </div>
@@ -73,11 +73,11 @@ export default {
           this.noData = true
         }
 
-        for (var i = 0; i < this.askingList.length; i++) {
-          if (this.askingList[i].replyVO) {
-            this.askingList[i].replyVO.createTimeStamp = timeUtils.fmtDate(this.askingList[i].replyVO.createTimeStamp)
-          }
-        }
+        // for (var i = 0; i < this.askingList.length; i++) {
+        //   if (this.askingList[i].replyVO) {
+        //     this.askingList[i].replyVO.createTimeStamp = timeUtils.fmtDate(this.askingList[i].replyVO.createTimeStamp)
+        //   }
+        // }
 
         if (result.pages === 0 || this.page === result.pages) {
           this.finished = true
