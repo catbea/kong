@@ -12,7 +12,7 @@
         <div class="comment-content">{{info&&info.title}}</div>
       </div>
       <div class="comment-input-wrap">
-        <textarea class="comment-textarea" :placeholder="info&&info.placeholder" maxlength="140" rows="5" v-model="commentContent" @input="inputHandler" @blur="blur"></textarea>
+        <textarea class="comment-textarea" :placeholder="info&&info.placeholder" :maxlength="maxlength" rows="5" v-model="commentContent" @input="inputHandler" @blur="blur"></textarea>
       </div>
     </div>
   </div>
@@ -24,9 +24,13 @@ export default {
     show: { type: Boolean, default: false },
     info: {
       type: Object
+    },
+    maxlength: {
+      type: Number
     }
   },
   data: () => ({
+    maxlength: 140,
     commentContent: ''
   }),
   methods: {

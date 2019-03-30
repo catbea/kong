@@ -56,15 +56,15 @@ export default {
     askingList: []
   }),
   created() {
-    this.id = this.$route.params.id
+    this.linkerId = this.$route.params.id
   },
   methods: {
     onLoad() {
-      this.getAskingList(this.current, '488cbcde9fd5463bbe2ed1724a93f77c')
+      this.getAskingList(this.current, this.linkerId)
     },
 
-    async getAskingList(current, id) {
-      const result = await marketService.getAskingList(current, id)
+    async getAskingList(current, linkerId) {
+      const result = await marketService.getAskingList(current, linkerId)
       if (result.records.length > 0) {
         this.askingList = this.askingList.concat(result.records)
         if (this.askingList.length > 0) {
@@ -99,11 +99,11 @@ export default {
     enterDetails(questionId) {
       // this.$router.push({name: 'market-asking-detail', params: {id: this.id}})
       // this.$router.push(`/marketDetail/askingDetail/${this.id}`)
-      this.$router.push({ path: '/marketDetail/askingDetail', query: { questionId: questionId } })
+      this.$router.push({ path: '/marketDetail/askingDetail', query: { linkerId: this.linkerId, questionId: questionId } })
     },
 
     enterAskPage() {
-      this.$router.push({ name: 'market-asking-ask', params: { id: this.id } })
+      this.$router.push({ name: 'market-asking-ask', params: { id: this.linkerId } })
     }
   }
 }

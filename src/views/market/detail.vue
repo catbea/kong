@@ -405,6 +405,7 @@ export default {
       levelImg: require('IMG/marketDetail/level@2x.png'),
       calculationIcon: require('IMG/market/calculation_icon.png'),
       id: -1,
+      linkerName: '',
       info: null,
       swipeCurrent: 0,
       headCurrent: 0,
@@ -445,7 +446,7 @@ export default {
         link: '/'
       },
       buyAskTitleConf: {
-        title: '买房看看',
+        title: '买房问问',
         linkText: '查看全部',
         // link: '/marketDetail/asking/:id'
       },
@@ -491,6 +492,7 @@ export default {
       this.getMarketDetailPhotoInfo()
       this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
       this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
+      this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
     }
   },
   methods: {
@@ -588,6 +590,7 @@ export default {
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
+      this.linkerName = res.linkerName
       let invalidTime = +new Date(this.info.expireTime.replace(/-/g, '/'))
       if (!this.info.linkerOtherList) {
         this.othersTitleConf.title = ''

@@ -7,27 +7,55 @@
       <div class="ask-input-wrap">
         <textarea
           class="ask-textarea"
-          placeholder="详细描述你买房的问题，描述的越清晰，越容易获得 专家的解答（1-150字）"
+          placeholder="详细描述你买房的问题，描述的越清晰，越容易获得专家的解答（1-150字）"
           maxlength="150"
           rows="7"
-          v-model="commentContent"
+          v-model="questionContent"
           @input="inputHandler"
           @blur="blurHandler"
         ></textarea>
       </div>
-      <div class="ask-project-name">#碧桂园·山水江南#</div>
+      <div class="ask-project-name">#{{linkerName}}#</div>
     </div>
-    <div class="ask-bottom">发布</div>
+    <div class="ask-bottom" @click="publishHandler">发布</div>
   </div>
 </template>
 
 <script>
+import marketService from 'SERVICE/marketService'
 export default {
   components: {},
-  data: () => ({}),
+  data: () => ({
+    linkerId: '',
+    linkerName: '',
+    questionContent: ''
+  }),
+  created() {
+    this.linkerId = this.$route.params.id
+    this.linkerName = this.$route.query.linkerName
+  },
   methods: {
-    inputHandler() {},
-    blurHandler() {}
+    // 新增回复
+    async insertQuestion() {
+      let param = {
+        interlocutionType: '1', // 1-评论、2-普通回复、3-管理员回复
+        linkerId: this.linkerId,
+        parentId: '',
+        content: this.questionContent
+      }
+      const res = await marketService.insertQuestion(param)
+      this.$router.go(-1)
+    },
+    inputHandler(val) {},
+    blurHandler() {},
+    publishHandler() {
+      if (this.questionContent.length == 0) {
+        this.$dialog.alert({ message: '请输入您要提的买房问题' })
+        return
+      }
+      this.insertQuestion()
+      this.questionContent = ''
+    }
   }
 }
 </script>
