@@ -1,69 +1,73 @@
 <template>
   <div class="comment-detail">
-    <div class="comment-detail-box">
-      <div class="title scale-1px-bottom">
-        <h3>碧桂园.山水江南</h3>
-        <div class="arrow">
-          <img src="../../../assets/img/market/comment/arrow.png" alt="" srcset="">
-        </div>
+    <div class="title scale-1px-bottom">
+      <h3>碧桂园.山水江南</h3>
+      <div class="arrow" @click="goMarket">
+        <img src="../../../assets/img/market/comment/arrow.png" alt="" srcset="">
       </div>
-      <div class="comment-item">
+    </div>
+    <div class="comment-detail-box">
+      <div class="comment-item" v-if="commnetInfo">
         <div class="comment-user">
-          <img class="usre-img" src="http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg" alt="" srcset="">
+          <img class="usre-img" :src="commnetInfo.avatarUrl" alt="" srcset="">
           <div class="user-info">
             <p class="name">
-              <b>{{'用户名' | formatName}}</b>
-              <span>实看用户</span>
+              <b>{{commnetInfo.nickName | formatName}}</b>
+              <span v-show="commnetInfo.userTag">{{commnetInfo.userTag | formatTag}}</span>
             </p>
-            <div class="star"><van-rate v-model="star" :size="10" :count="5" :readonly="true" color="#ED8147" /></div>
+            <div class="star"><van-rate v-model="commnetInfo.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" /></div>
           </div>
         </div>
-        <div class="comment-info">时代天镜附近有挺多综合商场，星美国际嘉荣阿斯蒂芬房东是沙发的个人防护进口量是的发发大师的方式发</div>
+        <div class="comment-info">{{commnetInfo.content}}</div>
         <div class="comment-pic">
-          <div class="pic-box"  @click="imagePreview(index)">
-            <img src="http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg" alt="">
+          <div class="pic-box"  v-for="(item,index) in commnetInfo.imgList" :key="index"   @click="imagePreview(index)">
+            <img :src="item.imgUrl" alt="">
           </div>
         </div>
         <div class="comment-action">
-          <p class="time">2018年07月27日</p>
+          <p class="time">{{commnetInfo.createTimeStamp | formatData}}</p>
           <p class="btn">
-            <span><img src="../../../assets/img/market/comment/msg.png" alt=""> (3)</span>
-            <span><img src="../../../assets/img/market/comment/zan.png" alt="" v-if="false"><img src="../../../assets/img/market/comment/zan2.png" alt="" v-else> (6)</span>
+            <span @click="showDialogFn"><img src="../../../assets/img/market/comment/msg.png" alt=""> ({{commnetInfo.replyNum}})</span>
+            <span @click="updateLinkeStatus"><img src="../../../assets/img/market/comment/zan2.png" alt="" v-if="commnetInfo.likeFlag"><img src="../../../assets/img/market/comment/zan.png" alt="" v-else> ({{commnetInfo.likeNum}})</span>
           </p>
         </div>
       </div>
-      <div class="reply">
-        <div class="reply-title">全部回复（85）</div>
-        <div class="reply-box">
-          <van-list
-            v-model="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad"
-          >
-            <div class="reply-item scale-1px-bottom" v-for="(item,index) in ">
-              <div class="reply-user">
-                <img class="usre-img" src="http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg" alt="" srcset="">
-                <div class="user-info">
-                  <p class="name">
-                    <b>{{'用户名' | formatName}}</b>
-                    <span>实看用户</span>
-                  </p>
-                  <div class="star">2019年07月27日</div>
+      <div class="list-box">
+        <div class="reply" v-if="replayList.length">
+          <div class="reply-title">全部回复（{{this.total}}）</div>
+          <div class="reply-box">
+            <van-list
+              v-model="loading"
+              :finished="finished"
+              finished-text="没有更多了"
+              @load="onLoad"
+            >
+              <div class="reply-item scale-1px-bottom" v-for="(item,index) in replayList" :key="index">
+                <div class="reply-user">
+                  <img class="usre-img" :src="item.avatarUrl" alt="" srcset="">
+                  <div class="user-info">
+                    <p class="name">
+                      <b>{{item.nickName | formatName}}</b>
+                      <span v-show="item.userTag">{{item.userTag | formatTag}}</span>
+                    </p>
+                    <div class="star">{{item.createTimeStamp | formatData}}</div>
+                  </div>
+                </div>
+                <div class="reply-info">
+                  {{item.content}}
                 </div>
               </div>
-              <div class="reply-info">
-                时代天镜附近有挺多综合商场，星美国际嘉荣阿斯蒂芬房东是沙发的个人防护进口量是的发发大师的方式发
-              </div>
-            </div>
-          </van-list>
+            </van-list>
+          </div>
+        </div>
+        <div class="nodata" v-if="showNodata && !replayList.length">
+          <img src="../../../assets/img/market/comment/nodata.png" alt="">
+          <p>该评论还没有回复，快来抢先一步回复吧！</p> 
         </div>
       </div>
     </div>
     <div class="reply-cnt-input scale-1px">
-      <div class="input-box">
-        <input type="text" placeholder="写回复 与楼主分享心得" ref="inputbox" @blur="blur" @focus="showDialogFn">
-      </div>
+      <div class="input-box" @click="showDialogFn">写回复 与楼主分享心得</div>
     </div>
     <div class="replay-cnt-dialog" v-show="showDialog" @click="hideDialogFn">
       <div class="replay-cnt" @click.stop="">
@@ -105,15 +109,18 @@ export default {
       size: 10,
       current: 1,
       pages: null,
+      total: '',
       star: 5,
       replayCnt: '',
-      showDialog: false
+      showDialog: false,
+      showNodata: false
     }
   },
   created () {
-    this.marketId = this.$router.query.marketId
-    this.commentId = this.$router.params.id
+    this.marketId = this.$route.query.marketId
+    this.commentId = this.$route.params.id
     this.getLinkerComment()
+    this.getReplyList()
   },
   methods: {
     // 获取评论详情
@@ -127,7 +134,9 @@ export default {
     },
     // 预览图片
     imagePreview (index) {
-      let imgs = this.commnetInfo.imgList
+      let imgs = this.commnetInfo.imgList.map(item => {
+        return item.imgUrl
+      })
       ImagePreview({
         images: imgs,
         startPosition: index,
@@ -150,16 +159,15 @@ export default {
     },
     // 获取评论回复列表
     async getReplyList () {
-      if (!this.commentId) {
-        this.commentId = this.$router.params.id
-      }
       let result = await marketService.getReplyList({
         current: this.current,
         size: this.size,
         commentId: this.commentId
       })
       if (result) {
+        this.showNodata = true
         this.pages = result.pages
+        this.total = result.total
         let replayList = result.records
         if (this.current === 1) {
           this.replayList = replayList
@@ -167,29 +175,74 @@ export default {
           this.replayList.push(...replayList)
         }
         this.current += 1
+        
       }
     },
     // 键盘遮挡
     blur() {
-      document.activeElement.scrollIntoViewIfNeeded(true)
+      setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
     },
     // 展示回复框
     showDialogFn () {
-      this.$refs.inputbox.blur()
       this.showDialog = true
-      this.$refs.replaybox.focus()
+      this.$nextTick(function() {
+        this.$refs.replaybox.focus()
+      })
     },
     // 隐藏回复框
     hideDialogFn () {
       this.showDialog = false
+      this.replayCnt = ''
+    },
+    // 点赞
+    async updateLinkeStatus () {
+      let item = this.commnetInfo
+       let result = await marketService.updateLinkeStatus({
+        commentId: item.commentId,
+        likeStatus: item.likeFlag ? 0 : 1
+      })
+      item.likeFlag = item.likeFlag ? 0 : 1
+      item.likeNum = item.likeFlag ? item.likeNum + 1 : item.likeNum - 1
+      // if (result.result) {
+      //   item.likeFlag = item.likeFlag ? 0 : 1
+      //   item.likeNum = item.likeFlag ? item.likeNum + 1 : item.likeNum - 1
+      // } else {
+      //   this.$toast('点赞失败')
+      // } 
+    },
+    // 回复评论
+    replyFn () {
+      let data = this.replayCnt.trim()
+      if (!data) {
+        return this.$toast('回复内容不能为空')
+      }
+      if (data > 150) {
+        return this.$toast('回复内容不超过150个字')
+      }
+      this.insertLinkerComment()
     },
     // 回复
-    replyFn () {
-      this.$refs.replaybox.blur()
+    async insertLinkerComment () {
+      this.showLoading = true
+      let result = await marketService.insertLinkerComment({
+        commentType: 2,
+        content: this.replayCnt.trim(),
+        linkerId: this.marketId,
+        parentId: this.commnetInfo.commentId
+      })
+      this.showLoading = false
       this.hideDialogFn()
+      this.commnetInfo.replyNum += 1
+      this.current = 1
+      this.getReplyList()
+    },
+    // goMarket跳转楼盘详情
+    goMarket () {
+      this.$router.push(`/market/${this.marketId}`)
     }
   },
   filters: {
+    // 格式化名称
     formatName (val) {
       let str = val + ''
       let len = val.length
@@ -200,6 +253,26 @@ export default {
       } else {
         return `${val[0]}***${val[len-1]}`
       }
+    },
+    // 格式化用户标签
+    formatTag (val) {
+      if (!val) {
+        return ''
+      }
+      let tag = {
+        1: '实看用户',
+        2: '未实看用户',
+        3: '管理员'
+      }
+      return tag[val]
+    },
+    // 格式化时间
+    formatData (time) {
+      let date =  new Date(+time)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      return `${y}年${m}月${d}日`
     }
   }
 }
@@ -207,12 +280,9 @@ export default {
 
 <style lang="less" scoped>
 .comment-detail{
+  height: 100%;
   display: flex;
   flex-direction: column;
-  .comment-detail-box{
-    flex: 1;
-    overflow-y: scroll;
-  }
   .title{
     height: 45px;
     line-height: 45px;
@@ -232,99 +302,21 @@ export default {
       }
     }
   }
-  .comment-item{
-    font-size: 12px;
-    margin: 15px 16px;
-    .comment-user{
-      display: flex;
-      .usre-img{
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        margin-right: 15px;
-      }
-      .user-info{
-        .name{
-          b{
-            font-size: 16px;
-            margin-right: 8px;
-            line-height: 20px;
-            vertical-align: middle;
-          }
-          span{
-            background-color: rgba(143, 159, 177, 0.15);
-            color: rgba(92, 95, 102, 1);
-            line-height: 15px;
-            padding: 0 5px;
-            font-size: 10px;
-          }
-        }
-        .star{
-          margin-top: 5px;
-        }
-      }
-    }
-    .comment-info{
-      font-size: 14px;
-      color: #666;
-      line-height: 1.5;
-      margin-top: 10px;
-    }
-    .comment-pic{
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      .pic-box{
-        flex: 0 1 80px;
-        height: 60px;
-        overflow: hidden;
-        border-radius: 6px;
-        img{
-          min-height: 60px;
-          min-width: 80px;
-          border-radius: 6px;
-        }
-      }
-    }
-    .comment-action{
-      margin: 10px 0;
-      color: #999;
-      display: flex;
+  .comment-detail-box{
+    flex: 1;
+    overflow-y: scroll;
+    .comment-item{
       font-size: 12px;
-      .time{
-        flex: 1;
-      }
-      .btn{
-        span{
-          margin-left: 10px;
-          vertical-align: middle;
-          img{
-            width: 12px;
-            height: 12px;
-            vertical-align: middle;
-          }
-        }
-      }
-    }
-  }
-  .reply{
-    margin: 20px 16px;
-    .reply-title{
-      font-size: 18px;
-    }
-    .reply-box{
-      margin-top: 15px;
-      .reply-user{
+      margin: 15px 16px;
+      .comment-user{
         display: flex;
         .usre-img{
           width: 36px;
           height: 36px;
           border-radius: 50%;
           margin-right: 15px;
-          margin-top: 5px;
         }
         .user-info{
-          flex: 1;
           .name{
             b{
               font-size: 16px;
@@ -338,22 +330,119 @@ export default {
               line-height: 15px;
               padding: 0 5px;
               font-size: 10px;
-              vertical-align: middle;
             }
           }
           .star{
-            margin-top: 2px;
-            font-size: 12px;
-            color: #999;
+            margin-top: 5px;
           }
         }
       }
-      .reply-info{
-        margin-top: 16px;
+      .comment-info{
         font-size: 14px;
         color: #666;
         line-height: 1.5;
-        padding-bottom: 15px;
+        margin-top: 10px;
+      }
+      .comment-pic{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        .pic-box{
+          flex: 0 1 80px;
+          height: 60px;
+          overflow: hidden;
+          border-radius: 6px;
+          img{
+            min-height: 60px;
+            min-width: 80px;
+            border-radius: 6px;
+          }
+        }
+      }
+      .comment-action{
+        margin: 10px 0;
+        color: #999;
+        display: flex;
+        font-size: 12px;
+        .time{
+          flex: 1;
+        }
+        .btn{
+          span{
+            margin-left: 10px;
+            vertical-align: middle;
+            img{
+              width: 12px;
+              height: 12px;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
+    }
+    .reply{
+      margin: 20px 16px;
+      .reply-title{
+        font-size: 18px;
+      }
+      .reply-box{
+        margin-top: 15px;
+        .reply-user{
+          display: flex;
+          .usre-img{
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 15px;
+            margin-top: 5px;
+          }
+          .user-info{
+            flex: 1;
+            .name{
+              b{
+                font-size: 16px;
+                margin-right: 8px;
+                line-height: 20px;
+                vertical-align: middle;
+              }
+              span{
+                background-color: rgba(143, 159, 177, 0.15);
+                color: rgba(92, 95, 102, 1);
+                line-height: 15px;
+                padding: 0 5px;
+                font-size: 10px;
+                vertical-align: middle;
+              }
+            }
+            .star{
+              margin-top: 2px;
+              font-size: 12px;
+              color: #999;
+            }
+          }
+        }
+        .reply-info{
+          margin-top: 16px;
+          font-size: 14px;
+          color: #666;
+          line-height: 1.5;
+          padding-bottom: 15px;
+        }
+      }
+    }
+    .nodata{
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      color: #999;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 12px;
+      img{
+        width: 88px;
       }
     }
   }
@@ -363,22 +452,15 @@ export default {
     margin-bottom: 10px;
     .input-box{
       margin: 16px 20px;
-      text-align: center;
-      input{
-        font-size: 14px;
-        height: 30px;
-        line-height: 30px;
-        width: 90%;
-        box-sizing: content-box;
-        border: 1px solid rgba(183, 183, 183, 1);
-        border-radius: 4px;
-        outline: none;
-        -webkit-appearance: none; 
-        ::-webkit-input-placeholder{
-          color: #999;
-          font-size: 12px;
-        }
-      }
+      padding: 0 5px;
+      color: #999;
+      font-size: 12px;
+      height: 30px;
+      line-height: 30px;
+      width: 90%;
+      box-sizing: content-box;
+      border: 1px solid rgba(183, 183, 183, 1);
+      border-radius: 4px;
     }
   }
   .replay-cnt-dialog {

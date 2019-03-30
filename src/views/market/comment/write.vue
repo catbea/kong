@@ -78,6 +78,7 @@ export default {
     },
     // 新增楼盘评论
     async insertLinkerComment () {
+      this.showLoading = true
       let result = await marketService.insertLinkerComment({
         commentType: 1,
         content: this.content,
@@ -86,9 +87,12 @@ export default {
         linkerId: this.marketId,
         userTag: this.userTag + 1
       })
-      let toast = this.$toast('楼盘评论成功！')
-      this.$router.go(-1)
-      toast.clear()
+      this.showLoading = false
+      this.$toast('楼盘评论成功！')
+      setTimeout(()=>{
+        this.$router.go(-1)
+      }, 1000)
+
     },
     // 图片上传组件
     onRead(file) {
@@ -267,7 +271,7 @@ export default {
     },
     // 键盘遮挡
     blur() {
-      document.activeElement.scrollIntoViewIfNeeded(true)
+      setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
     }
   }
 }

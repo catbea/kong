@@ -445,5 +445,14 @@ class MarketService {
     })
   }
 
+  // 楼盘评论点赞
+  updateLinkeStatus(data) {
+    return xhr({
+      url: '/linkerComment/updateLinkerCommentLikeStatus',
+      body: data
+    })
+  }
+  
+
 }
 export default new MarketService()

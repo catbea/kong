@@ -40,20 +40,20 @@
                 <div class="comment-more" v-show="item.showMore" @click.stop="item.showMore=false">收起</div>
                 <div class="comment-pic" v-if="item.imgList.length">
                   <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)">
-                    <img  :src="option" alt="">
+                    <img  :src="option.imgUrl" alt="">
                   </div>
                 </div>
                 <div class="comment-action">
                   <p class="time">{{item.createTimeStamp | formatData}}</p>
                   <p class="btn">
-                    <span @click="showDialogFn"><img src="../../../assets/img/market/comment/msg.png" alt=""> ({{item.replyNum}})</span>
-                    <span><img src="../../../assets/img/market/comment/zan.png" alt="" v-if="false"><img src="../../../assets/img/market/comment/zan2.png" alt="" v-else> ({{item.likeNum}})</span>
+                    <span @click="showDialogFn(index)"><img src="../../../assets/img/market/comment/msg.png" alt=""> ({{item.replyNum}})</span>
+                    <span @click="updateLinkeStatus(item)"><img src="../../../assets/img/market/comment/zan2.png" alt="" v-if="item.likeFlag"><img src="../../../assets/img/market/comment/zan.png" alt="" v-else> ({{item.likeNum}})</span>
                   </p>
                 </div>
             </div>
           </van-list>
         </div>
-        <div class="nodata" v-else>
+        <div class="nodata" v-if="!commnetList.length && showNodata">
           <img src="../../../assets/img/market/comment/nodata.png" alt="">
           <p>该楼盘没有评论哦，快来抢先一步评论吧！</p> 
         </div>
@@ -78,7 +78,7 @@
             id=""
             ref="replaybox"
             maxlength="150"
-            v-model="replayCnt"
+            v-model.trim="replayCnt"
             @blur="blur"
           ></textarea>
         </div>
@@ -105,7 +105,9 @@ export default {
       pages: null,
       star: 5,
       replayCnt: '',
-      showDialog: false
+      showDialog: false,
+      replayIndex: '',
+      showNodata: false
     }
   },
   created () {
@@ -138,6 +140,7 @@ export default {
     // 切换标签
     cahngeTag (index) {
       this.activeType = index
+      this.current = 1
       this.getCommentList()
     },
     // 获取评论列表
@@ -149,6 +152,7 @@ export default {
         type: this.activeType
       })
       if (result) {
+        this.showNodata = true
         this.pages = result.pages
         let commnetList = result.records.map(item => {
           return Object.assign(item, { showMore: false })
@@ -174,7 +178,9 @@ export default {
     },
     // 预览图片
     imagePreview (index,i) {
-      let imgs = this.commnetList[index].imgList
+      let imgs = this.commnetList[index].imgList.map(item => {
+        return item.imgUrl
+      })
       ImagePreview({
         images: imgs,
         startPosition: i,
@@ -184,7 +190,7 @@ export default {
         }
       })
     },
-    // 写点评
+    // 跳转写点评
     goWrite () {
       this.$router.push(`/market/comment/write/${this.marketId}`)
     },
@@ -192,25 +198,64 @@ export default {
     goDetail (item) {
       this.$router.push(`/market/comment/detail/${item.commentId}?marketId=${this.marketId}`)
     },
-    // 键盘遮挡
+    // 评论弹框
     blur() {
-      document.activeElement.scrollIntoViewIfNeeded(true)
+      setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
+    },
+    // 点赞
+    async updateLinkeStatus (item) {
+       let result = await marketService.updateLinkeStatus({
+        commentId: item.commentId,
+        likeStatus: item.likeFlag ? 0 : 1
+      })
+      item.likeFlag = item.likeFlag ? 0 : 1
+      item.likeNum = item.likeFlag ? item.likeNum + 1 : item.likeNum - 1
+      // if (result.result) {
+      //   item.likeFlag = item.likeFlag ? 0 : 1
+      //   item.likeNum = item.likeFlag ? item.likeNum + 1 : item.likeNum - 1
+      // }  else {
+      //   this.$toast('点赞失败')
+      // } 
     },
     // 展示回复框
-    showDialogFn () {
-      this.$refs.inputbox.blur()
+    showDialogFn (index) {
+      this.replayIndex = index
       this.showDialog = true
-      this.$refs.replaybox.focus()
+      this.$nextTick(function() {
+        this.$refs.replaybox.focus()
+      })
     },
     // 隐藏回复框
     hideDialogFn () {
       this.showDialog = false
+      this.replayCnt = ''
+    },
+    // 回复评论
+    replyFn () {
+      let data = this.replayCnt.trim()
+      if (!data) {
+        return this.$toast('回复内容不能为空')
+      }
+      if (data > 150) {
+        return this.$toast('回复内容不超过150个字')
+      }
+      this.insertLinkerComment()
     },
     // 回复
-    replyFn () {
-      this.$refs.replaybox.blur()
+    async insertLinkerComment () {
+      let item = this.commnetList[this.replayIndex]
+      this.showLoading = true
+      let result = await marketService.insertLinkerComment({
+        commentType: 2,
+        content: this.replayCnt.trim(),
+        linkerId: this.marketId,
+        parentId: item.commentId
+      })
+      this.showLoading = false
+      item.replyNum += 1
+      this.$toast('回复评论成功！')
       this.hideDialogFn()
-    }
+    },
   },
   filters: {
     // 格式化名称
@@ -262,7 +307,7 @@ export default {
     flex-direction: column;
     .tags{
       max-height: 80px;
-      margin: 12px 16px 10px;
+      margin: 12px 16px 0;
       display: flex;
       flex-flow: row wrap;
       justify-content: space-between;
@@ -287,7 +332,7 @@ export default {
       overflow-y: scroll;
       .wrapper{
         .comment-item{
-          margin: 0 16px 20px;
+          margin: 20px 16px 0;
           .comment-user{
             display: flex;
             .usre-img{
@@ -340,14 +385,15 @@ export default {
             justify-content: space-between;
             margin-top: 10px;
             .pic-box{
-              flex: 0 1 80px;
-              height: 60px;
+              flex: 0 1 82px;
+              height: 62px;
               overflow: hidden;
               border-radius: 6px;
               img{
                 min-height: 60px;
                 min-width: 80px;
                 border-radius: 6px;
+                border:1px solid #eee;
               }
             }
           }
@@ -375,7 +421,7 @@ export default {
         }
       }
       .nodata{
-        flex: 1;
+        height: 400px;
         color: #999;
         text-align: center;
         display: flex;
