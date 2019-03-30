@@ -1,9 +1,9 @@
 <template>
   <div class="asking-detail-page">
     <div class="asking-top">
-      <div class="asking-title">#满京华#满京华云楼盘现在还有什么户型在卖啊？周边配套怎样，有幼儿园么？</div>
+      <div class="asking-title">#{{linkerName}}#{{questionContent}}</div>
       <div class="asking-desc">
-        <span class="asking-time">2019年2月18日</span>
+        <span class="asking-time">{{timestamp | dateTimeFormatter(5)}}</span>
         <span class="asking-count">共{{answerCount}}个回复</span>
       </div>
     </div>
@@ -25,6 +25,7 @@
     <comment-alert
       :show.sync="showCommentAlert"
       :info="commentInfo"
+      :maxlength="150"
       @cancel="cancelHandler"
       @publish="publishHandler"
       @input="inputHandler"
@@ -57,48 +58,55 @@ export default {
       contentHeight: window.screen.height - 64
     },
     contentHeight: 0,
-    // commentContent: '', // 评论内容
+    commentContent: '', // 评论内容
     time: '',
     answerCount: 0,
-    lists: []
+    lists: [],
+    linkerId: '',
+    linkerName: '',
+    questionContent: '',
+    timestamp: ''
   }),
   created() {
-      this.questionId = this.$route.query.questionId
+    this.questionId = this.$route.query.questionId
+    this.linkerId = this.$route.query.linkerId
+    this.queryLinkerQuestion(this.questionId)
   },
   methods: {
+    async queryLinkerQuestion(questionId) {
+      const res = await marketService.queryLinkerQuestion(questionId)
+      this.linkerName = res.linkerName
+      this.questionContent = res.content
+      this.timestamp = res.createTimeStamp
+    },
     // 加载更多
     async onLoad() {
       this.queryAskingDetail()
     },
     async queryAskingDetail() {
-        const res = await marketService.queryAskingDetail(this.current, this.size, this.questionId)
-        this.answerCount = res.total
-        this.lists = this.current == 1 ? res.records : this.lists.concat(res.records)
-        if (this.current >= res.pages) {
-            this.finished = true
-            this.loading = false
-        }else {
-            this.current ++
-            this.finished = false
-            this.loading = false
-        }
-    },
-    // 新增评论
-    async insertComment(receiver) {
-      let param = {
-        enterpriseId: this.enterpriseId,
-        infoId: this.infoId,
-        parentId: receiver ? receiver.parentId : '',
-        content: this.commentContent,
-        senderId: this.agentId,
-        senderSource: 0, // 0-企业微信；1-小程序
-        receiverId: receiver ? receiver.receiverId : '',
-        receiverSource: receiver ? receiver.receiverSource : '',
-        type: receiver.type // 0-评论，1-回复
+      const res = await marketService.queryAskingDetail(this.current, this.size, this.questionId)
+      this.answerCount = res.total
+      this.lists = this.current == 1 ? res.records : this.lists.concat(res.records)
+      if (this.current >= res.pages) {
+        this.finished = true
+        this.loading = false
+      } else {
+        this.current++
+        this.finished = false
+        this.loading = false
       }
-      //   const res = await discoverService.insertComment(param)
-      //   this.commentIds.push(res.id)
-      //   this.commentList.push(res)
+    },
+    // 新增回复
+    async insertQuestion() {
+      let param = {
+        interlocutionType: '2', // 1-评论、2-普通回复、3-管理员回复
+        linkerId: this.linkerId,
+        parentId: this.questionId,
+        content: this.commentContent
+      }
+      const res = await marketService.insertQuestion(param)
+      this.lists.unshift(res)
+      this.answerCount++
     },
     answerHandler() {
       this.showCommentAlert = true
@@ -111,8 +119,12 @@ export default {
       this.commentContent = ''
     },
     publishHandler() {
+      if (this.commentContent.length == 0) {
+        this.$dialog.alert({ message: '请输入回复内容' })
+        return
+      }
       this.showCommentAlert = false
-      // this.insertComment(this.commentInfo)
+      this.insertQuestion()
       this.commentContent = ''
     }
   }

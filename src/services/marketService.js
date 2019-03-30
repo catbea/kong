@@ -379,6 +379,19 @@ class MarketService {
   }
 
   /**
+   * 查询楼盘买房问问详情
+   * @param {*} questionId 
+   */
+  queryLinkerQuestion(questionId) {
+    return xhr({
+      url: '/linkerInterlocution/queryLinkerQuestion',
+      body: {
+        questionId
+      }
+    })
+  }
+
+  /**
    * 买房问问问题回复详情
    * @param {*} current 
    * @param {*} size 
@@ -392,6 +405,18 @@ class MarketService {
         size,
         questionId
       }
+    })
+  }
+
+  /**
+   * 新增提问/回复
+   * @param {} data 
+   */
+  insertQuestion(data) {
+    return xhr({
+      method: 'post',
+      url: '/linkerInterlocution/insertQuestion',
+      body: data
     })
   }
 
