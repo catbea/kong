@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-      <div class="agrees">查看 《用户点评行为规范》</div>
+      <div class="agrees" @click="goStandard">查看 《用户点评行为规范》</div>
     </div>
     <div class="comment-submit" @click="saveComment">
       提交点评
@@ -272,6 +272,10 @@ export default {
     // 键盘遮挡
     blur() {
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
+    },
+    // 跳转评论详情页面
+    goStandard () {
+      this.$router.push('/market/comment/standard')
     }
   }
 }

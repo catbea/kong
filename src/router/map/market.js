@@ -220,9 +220,9 @@ export default [
     }
   },
   {
-    path: '/evaluate/standard',
-    name: 'evaluate-standard',
-    component: resolve => require(['@/views/market/evaluateStandard.vue'], resolve),
+    path: '/market/comment/standard',
+    name: 'market-comment-standard',
+    component: resolve => require(['@/views/market/comment/evaluateStandard.vue'], resolve),
     meta: {
       title: '用户点评行为规范',
       tabbar: {
