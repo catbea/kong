@@ -228,9 +228,9 @@
     </div>
     <!-- 楼盘评价 -->
     <div class="evaluate-box">
-      <title-bar :conf="evaluateTitleConf" @click.native="enterEvaluation"/>
-      <div class="evaluate-content">
-        <div v-if="commentCount">
+      <title-bar :conf="evaluateTitleConf" @click.native="goComment"/>
+      <div class="evaluate-content" v-if="commnetList.length">
+        <div>
           <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
           <router-link
             class="evaluate-label"
@@ -257,7 +257,7 @@
             v-if="commentCount.goodReputation"
           >好评 ({{commentCount.goodReputation}})</router-link>
         </div>
-        <ul class="evaluate-detail" @click="enterEvaluation" v-if="commnetList.length">
+        <ul class="evaluate-detail" @click="goComment">
           <li class="van-hairline--bottom" v-for="(item,index) in commnetList">
             <div class="top">
               <img :src="item.avatarUrl" alt="" srcset="">
@@ -286,6 +286,10 @@
           tag="span"
           :to="`/market/comment/write/${this.info.linkerId}`"
         >我要评论</router-link>
+      </div>
+      <div class="evaluate-content-nodata" v-else>
+        <p>该楼盘没有评论哦，快来抢先一步评论吧</p>
+        <button @click="goCommentWrite">我要评论</button>
       </div>
     </div>
     <!-- 买房问问 -->
@@ -534,7 +538,13 @@ export default {
       })
       if (result) {
         let commnetList = result.records
-        this.commnetList = commnetList
+        if (commnetList && commnetList.length) {
+          this.commnetList = commnetList
+          this.evaluateTitleConf.title = `楼盘评价（${result.total}）`
+        } else {
+          this.evaluateTitleConf.title = '楼盘评价（0）'
+        }
+        
       }
     },
     // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
@@ -562,10 +572,16 @@ export default {
      * 进入楼盘评测页面
      */
     enterEvaluation() {
-      // this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
       this.$router.push({ name: 'market-marketEvaluating' })
     },
-
+    // 进入楼盘评价列表页面
+    goComment () {
+      this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
+    },
+    // 进入楼盘评价页面
+    goCommentWrite () {
+      this.$router.push(`/market/comment/write/${this.info.linkerId}`)
+    },
     appointmentHandle() {
       //预约看房弹窗
       this.appointmentShow = true
@@ -1339,6 +1355,26 @@ export default {
         color: rgba(68, 81, 102, 1);
         line-height: 30px;
         text-align: center;
+      }
+    }
+    .evaluate-content-nodata{
+      font-size: 12px;
+      background-color:rgba(205, 214, 225, 0.5);
+      border: 1px dashed rgba(205, 214, 225, 0.8);
+      text-align: center;
+      padding: 20px;
+      margin: 16px;
+      p{
+        padding-bottom: 20px;
+        color: #969EA8;
+      }
+      button{
+        border:1px solid #445166;
+        border-radius: 4px;
+        color: #445166;
+        height: 30px;
+        padding: 6px 16px;
+        background-color: rgba(205, 214, 225, 0.5);
       }
     }
   }
