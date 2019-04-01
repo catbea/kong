@@ -228,7 +228,7 @@
     </div>
     <!-- 楼盘评价 -->
     <div class="evaluate-box">
-      <title-bar :conf="evaluateTitleConf"/>
+      <title-bar :conf="evaluateTitleConf" @click.native="enterEvaluation"/>
       <div class="evaluate-content">
         <div v-if="commentCount">
           <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
@@ -457,7 +457,7 @@ export default {
       evaluateTitleConf: {
         title: '楼盘评价',
         linkText: '查看全部',
-        link: `/market/comment/list/${this.id}?type=0`
+        link: `/`
       },
       buyAskTitleConf: {
         title: '买房问问',
