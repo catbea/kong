@@ -501,8 +501,22 @@ class MarketService {
       }
     })
   }
-  
-  
+
+  /**
+   * 评测点赞
+   * @param {*} reviewId 
+   * @param {*} likeFlag 
+   */
+  thumbsLike(reviewId,likeFlag){
+    return xhr({
+      url: '/review/like',
+      body: {
+        reviewId,
+        likeFlag
+      }
+    })
+  }
+
 
 }
 export default new MarketService()
