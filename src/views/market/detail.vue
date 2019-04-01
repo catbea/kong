@@ -216,13 +216,13 @@
       </div>
     </div>
     <!-- 楼盘评测 -->
-    <div class="evaluating-box">
+    <div class="evaluating-box" v-if="evaluatingInfo">
       <title-bar :conf="evaluatingTitleConf"/>
       <div class="evaluating-content" @click="enterEvaluation">
-        <img class="bg_img" :src="evaluatingInfo.cover" alt="" srcset="">
+        <img class="bg_img" :src="evaluatingInfo&&evaluatingInfo.cover" alt="" srcset="">
         <div class="right">
-          <p>{{evaluatingInfo.title}}</p>
-          <p>{{evaluatingInfo.content}}</p>
+          <p>{{evaluatingInfo&&evaluatingInfo.title}}</p>
+          <p>{{evaluatingInfo&&evaluatingInfo.content}}</p>
         </div>
       </div>
     </div>
@@ -263,7 +263,7 @@
               <img :src="item.avatarUrl" alt="" srcset="">
               <div class="message">
                 <p>
-                  {{item.nickName | formatName}} &nbsp;&nbsp;&nbsp;
+                  {{item.nickName | privacyName() }}
                   <span
                     v-if="item.userTag"
                   >{{item.userTag | formatTag}}</span>
@@ -295,7 +295,7 @@
       </div>
     </div>
     <!-- 买房问问 -->
-    <div class="buy-ask">
+    <div class="buy-ask" v-if="linkerInfo">
       <title-bar :conf="buyAskTitleConf"/>
       <ol class="ask-content">
         <li>
@@ -528,10 +528,7 @@ export default {
   methods: {
     async getEvaluatingInfo(linkerId) {
       let result = await marketService.getEvaluatingInfo(linkerId)
-
-      if (result) {
-        this.evaluatingInfo = result
-      }
+      this.evaluatingInfo = result
     },
 
     // 楼盘评论分类统计
