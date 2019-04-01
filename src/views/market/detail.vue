@@ -264,7 +264,9 @@
               <div class="message">
                 <p>
                   {{item.nickName | formatName}} &nbsp;&nbsp;&nbsp;
-                  <span v-if="item.userTag">{{item.userTag | formatTag}}</span>
+                  <span
+                    v-if="item.userTag"
+                  >{{item.userTag | formatTag}}</span>
                 </p>
                 <p>
                   <van-rate
@@ -574,14 +576,14 @@ export default {
 
     goCalculation(e) {
       //进入计算器页面
-      window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama-helper/linker/toNewcalculator?linkerName=' +encodeURI(e)
+      window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama-helper/linker/toNewcalculator?linkerName=' + encodeURI(e)
     },
 
     /**
      * 进入楼盘评测页面
      */
     enterEvaluation() {
-      this.$router.push({ name: 'market-marketEvaluating' })
+      this.$router.push({ name: 'market-marketEvaluating', query: { reviewId: '1', userInfo: this.userInfo.agentId, userType: '1', enterpriseId: this.userInfo.enterpriseId } })
     },
     // 进入楼盘评价列表页面
     goComment() {
