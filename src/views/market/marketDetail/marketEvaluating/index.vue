@@ -75,17 +75,14 @@ export default {
       if (result == '') {
         //表示已经请求成功
         if (likeFlag == '0') {
-          console.log('9999999999999')
-
+          this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum - 1
           this.backgroundColor = '#FA8548'
           this.likeFlag = '1'
-          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum + 1
+          
         } else if (likeFlag == '1') {
-          console.log('1111111111111')
-
+           this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum + 1
           this.backgroundColor = '#FABE9E'
           this.likeFlag = '0'
-          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum - 1
         }
       }
     }
