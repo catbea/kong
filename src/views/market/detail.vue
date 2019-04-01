@@ -457,7 +457,7 @@ export default {
       evaluateTitleConf: {
         title: '楼盘评价',
         linkText: '查看全部',
-        link: '/'
+        link: `/market/comment/list/${this.id}?type=0`
       },
       buyAskTitleConf: {
         title: '买房问问',
