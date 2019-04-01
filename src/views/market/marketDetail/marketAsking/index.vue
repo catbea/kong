@@ -67,11 +67,10 @@ export default {
     this.questionNum = jsonInfo.questionNum
     this.buildingName = jsonInfo.linkerName
 
-    console.log(this.buildingName)
   },
   methods: {
     onLoad() {
-      this.getAskingList(this.current, '488cbcde9fd5463bbe2ed1724a93f77c')
+      this.getAskingList(this.current, this.linkerId)
     },
 
     async getAskingList(current, linkerId) {

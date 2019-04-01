@@ -495,6 +495,7 @@ export default {
   },
   async created() {
     this.id = this.$route.params.id
+
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
@@ -503,8 +504,8 @@ export default {
     await this.getVipInfo()
     this.getCommentCount()
     this.getCommentList()
-    this.getQuestionDetail('488cbcde9fd5463bbe2ed1724a93f77c')
-    this.getEvaluatingInfo('57671002a4be4befa37648bb177867cd')
+    this.getQuestionDetail(this.id)
+    this.getEvaluatingInfo(this.id)
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -583,7 +584,7 @@ export default {
      * 进入楼盘评测页面
      */
     enterEvaluation() {
-      this.$router.push({ name: 'market-marketEvaluating', query: { reviewId: '1', userInfo: this.userInfo.agentId, userType: '1', enterpriseId: this.userInfo.enterpriseId } })
+      this.$router.push({ name: 'market-marketEvaluating', query: { reviewId: '1', userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId } })
     },
     // 进入楼盘评价列表页面
     goComment() {
