@@ -16,7 +16,7 @@
             <div class="question-icon">问</div>
             <div class="question-body">
               <span class="question-title">
-               #{{buildingName}}#  {{item.content}}
+               #{{linkerName}}#  {{item.content}}
                 <span class="question-num">{{item.replyNum}}人回复</span>
               </span>
             </div>
@@ -57,7 +57,7 @@ export default {
     noData: false,
     current: 1,
     askingList: [],
-    buildingName: ''
+    linkerName: ''
   }),
   created() {
     var jsonInfo = JSON.parse(this.$route.query.infos)
@@ -65,7 +65,7 @@ export default {
     this.linkerId = jsonInfo.id
     this.replyNum = jsonInfo.replyNum
     this.questionNum = jsonInfo.questionNum
-    this.buildingName = jsonInfo.linkerName
+    this.linkerName = jsonInfo.linkerName
 
   },
   methods: {
