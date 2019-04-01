@@ -303,7 +303,7 @@
           </div>
           <p>{{this.linkerInfo&&this.linkerInfo.replyNum}}人回复</p>
         </li>
-        <li class="van-hairline--bottom" v-if="this.linkerInfo.replyVO!=''">
+        <li class="van-hairline--bottom" v-if="this.linkerInfo&&this.linkerInfo.replyVO!=''">
           <div>
             <span>答</span>
             <img :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
