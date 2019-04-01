@@ -521,6 +521,17 @@ class MarketService {
     })
   }
 
-
+  /**
+   * 楼盘详情的评测信息
+   * @param {*} linkerId 
+   */
+  getEvaluatingInfo(linkerId){
+    return xhr({
+      url: '/review/linker/info',
+      body: {
+        linkerId
+      }
+    })
+  }
 }
 export default new MarketService()

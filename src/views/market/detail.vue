@@ -219,10 +219,10 @@
     <div class="evaluating-box">
       <title-bar :conf="evaluatingTitleConf"/>
       <div class="evaluating-content" @click="enterEvaluation">
-        <img class="bg_img" :src="panoramaIcon" alt="" srcset="">
+        <img class="bg_img" :src="evaluatingInfo.cover" alt="" srcset="">
         <div class="right">
-          <p>新华联广场：80万㎡湾区大城 享都会生活</p>
-          <p>新华联集团于 1992 年开始涉猎房地产业，先后在广西、湖南、北京、河北新华联集团于 1992 年开始涉猎房地产业，先后在广西、湖南、北京、河北</p>
+          <p>{{evaluatingInfo.title}}</p>
+          <p>{{evaluatingInfo.content}}</p>
         </div>
       </div>
     </div>
@@ -501,6 +501,7 @@ export default {
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail('488cbcde9fd5463bbe2ed1724a93f77c')
+    this.getEvaluatingInfo('57671002a4be4befa37648bb177867cd')
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -521,6 +522,14 @@ export default {
     }
   },
   methods: {
+    async getEvaluatingInfo(linkerId) {
+      let result = await marketService.getEvaluatingInfo(linkerId)
+
+      if (result) {
+        this.evaluatingInfo = result
+      }
+    },
+
     // 楼盘评论分类统计
     async getCommentCount() {
       let result = await marketService.getCommentCount({ linkerId: this.marketId })
@@ -544,7 +553,6 @@ export default {
         } else {
           this.evaluateTitleConf.title = '楼盘评价（0）'
         }
-        
       }
     },
     // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
@@ -575,11 +583,11 @@ export default {
       this.$router.push({ name: 'market-marketEvaluating' })
     },
     // 进入楼盘评价列表页面
-    goComment () {
+    goComment() {
       this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
     },
     // 进入楼盘评价页面
-    goCommentWrite () {
+    goCommentWrite() {
       this.$router.push(`/market/comment/write/${this.info.linkerId}`)
     },
     appointmentHandle() {
@@ -1357,19 +1365,19 @@ export default {
         text-align: center;
       }
     }
-    .evaluate-content-nodata{
+    .evaluate-content-nodata {
       font-size: 12px;
-      background-color:rgba(205, 214, 225, 0.5);
+      background-color: rgba(205, 214, 225, 0.5);
       border: 1px dashed rgba(205, 214, 225, 0.8);
       text-align: center;
       padding: 20px;
       margin: 16px;
-      p{
+      p {
         padding-bottom: 20px;
-        color: #969EA8;
+        color: #969ea8;
       }
-      button{
-        border:1px solid #445166;
+      button {
+        border: 1px solid #445166;
         border-radius: 4px;
         color: #445166;
         height: 30px;
