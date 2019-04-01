@@ -477,6 +477,19 @@ class MarketService {
       body: data
     })
   }
+  /**
+   * 楼盘详情中的买房问问详情
+   * @param {*} linkerId 
+   */
+  getBuildQuestionDetail(linkerId){
+    return xhr({
+      url: '/linkerInterlocution/getQuestionForLinkerDetail',
+      body: {
+        linkerId
+      }
+    })
+  }
+  
   
 
 }

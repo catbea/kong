@@ -1,6 +1,9 @@
 <template>
   <div class="asking-body">
-    <div class="asking-header" v-if="this.noData===false">共有12个问题，300个回答</div>
+    <div
+      class="asking-header"
+      v-if="this.noData===false"
+    >共有{{this.questionNum}}个问题，{{this.replyNum}}个回答</div>
     <div class="asking-center" v-if="this.noData===false">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div
@@ -13,7 +16,7 @@
             <div class="question-icon">问</div>
             <div class="question-body">
               <span class="question-title">
-                {{item.content}}
+               #{{buildingName}}#  {{item.content}}
                 <span class="question-num">{{item.replyNum}}人回复</span>
               </span>
             </div>
@@ -53,14 +56,22 @@ export default {
     nullcontent: '该楼盘没有问答哦，快来抢先一步提问吧！',
     noData: false,
     current: 1,
-    askingList: []
+    askingList: [],
+    buildingName: ''
   }),
   created() {
-    this.linkerId = this.$route.params.id
+    var jsonInfo = JSON.parse(this.$route.query.infos)
+
+    this.linkerId = jsonInfo.id
+    this.replyNum = jsonInfo.replyNum
+    this.questionNum = jsonInfo.questionNum
+    this.buildingName = jsonInfo.linkerName
+
+    console.log(this.buildingName)
   },
   methods: {
     onLoad() {
-      this.getAskingList(this.current, this.linkerId)
+      this.getAskingList(this.current, '488cbcde9fd5463bbe2ed1724a93f77c')
     },
 
     async getAskingList(current, linkerId) {
@@ -73,13 +84,7 @@ export default {
           this.noData = true
         }
 
-        // for (var i = 0; i < this.askingList.length; i++) {
-        //   if (this.askingList[i].replyVO) {
-        //     this.askingList[i].replyVO.createTimeStamp = timeUtils.fmtDate(this.askingList[i].replyVO.createTimeStamp)
-        //   }
-        // }
-
-        if (result.pages === 0 || this.page === result.pages) {
+        if (result.pages === 0 || this.current === result.pages) {
           this.finished = true
         }
         this.current++
@@ -97,9 +102,13 @@ export default {
      * 进入详情
      */
     enterDetails(questionId) {
-      // this.$router.push({name: 'market-asking-detail', params: {id: this.id}})
-      // this.$router.push(`/marketDetail/askingDetail/${this.id}`)
-      this.$router.push({ path: '/marketDetail/askingDetail', query: { linkerId: this.linkerId, questionId: questionId } })
+      var obj = {}
+      obj.linkerId = this.linkerId
+      obj.questionId = questionId
+      obj.linkerName = this.buildingName
+
+      let questionInfo = JSON.stringify(obj)
+      this.$router.push({ path: '/marketDetail/askingDetail', query: { questionInfo: questionInfo } })
     },
 
     enterAskPage() {

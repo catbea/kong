@@ -232,13 +232,32 @@
       <div class="evaluate-content">
         <div v-if="commentCount">
           <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
-          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=0`" v-if="commentCount.all">全部 ({{commentCount.all}})</router-link>
-          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=3`" v-if="commentCount.withPicture">有图 ({{commentCount.withPicture}})</router-link>
-          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=1`" v-if="commentCount.authUserNum">实看 ({{commentCount.authUserNum}})</router-link>
-          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=2`" v-if="commentCount.goodReputation">好评 ({{commentCount.goodReputation}})</router-link>
+          <router-link
+            class="evaluate-label"
+            tag="p"
+            :to="`/market/comment/list/${this.info.linkerId}?type=0`"
+            v-if="commentCount.all"
+          >全部 ({{commentCount.all}})</router-link>
+          <router-link
+            class="evaluate-label"
+            tag="p"
+            :to="`/market/comment/list/${this.info.linkerId}?type=3`"
+            v-if="commentCount.withPicture"
+          >有图 ({{commentCount.withPicture}})</router-link>
+          <router-link
+            class="evaluate-label"
+            tag="p"
+            :to="`/market/comment/list/${this.info.linkerId}?type=1`"
+            v-if="commentCount.authUserNum"
+          >实看 ({{commentCount.authUserNum}})</router-link>
+          <router-link
+            class="evaluate-label"
+            tag="p"
+            :to="`/market/comment/list/${this.info.linkerId}?type=2`"
+            v-if="commentCount.goodReputation"
+          >好评 ({{commentCount.goodReputation}})</router-link>
         </div>
-        
-        <ul class="evaluate-detail"  @click="enterEvaluation" v-if="commnetList.length">
+        <ul class="evaluate-detail" @click="enterEvaluation" v-if="commnetList.length">
           <li class="van-hairline--bottom" v-for="(item,index) in commnetList">
             <div class="top">
               <img :src="item.avatarUrl" alt="" srcset="">
@@ -248,7 +267,13 @@
                   <span>{{item.userTag | formatTag}}</span>
                 </p>
                 <p>
-                  <van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" />
+                  <van-rate
+                    v-model="item.starLevel"
+                    :size="10"
+                    :count="5"
+                    :readonly="true"
+                    color="#ED8147"
+                  />
                 </p>
               </div>
             </div>
@@ -256,7 +281,11 @@
           </li>
         </ul>
         <span class="hint">在这里，说出楼盘的一切</span>
-        <router-link class="go-evaluate" tag="span" :to="`/market/comment/write/${this.info.linkerId}`">我要评论</router-link>
+        <router-link
+          class="go-evaluate"
+          tag="span"
+          :to="`/market/comment/write/${this.info.linkerId}`"
+        >我要评论</router-link>
       </div>
     </div>
     <!-- 买房问问 -->
@@ -266,18 +295,18 @@
         <li>
           <div>
             <span>问</span>
-            <span>首付比例是多少呢？</span>
+            <span>{{this.linkerInfo.content}}</span>
           </div>
-          <p>20人回复</p>
+          <p>{{this.linkerInfo.replyNum}}人回复</p>
         </li>
-        <li class="van-hairline--bottom">
+        <li class="van-hairline--bottom" v-if="this.linkerInfo.replyVO!=''">
           <div>
             <span>答</span>
-            <img :src="panoramaIcon" alt="" srcset="">
-            <i>王试试</i>&nbsp;&nbsp;
-            <i>2109年2月18日</i>
+            <img :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
+            <i>{{this.linkerInfo.replyVO.nickName}}</i>&nbsp;&nbsp;
+            <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
           </div>
-          <p>时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价</p>
+          <p>{{this.linkerInfo.replyVO.content}}</p>
         </li>
       </ol>
       <span class="hint">在这里，问关于房子的一切</span>
@@ -432,7 +461,7 @@ export default {
       },
       buyAskTitleConf: {
         title: '买房问问',
-        linkText: '查看全部',
+        linkText: '查看全部'
         // link: '/marketDetail/asking/:id'
       },
       swiperOption: {
@@ -463,10 +492,11 @@ export default {
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
-    this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
+    // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
     await this.getVipInfo()
     this.getCommentCount()
     this.getCommentList()
+    this.getQuestionDetail('488cbcde9fd5463bbe2ed1724a93f77c')
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -488,14 +518,14 @@ export default {
   },
   methods: {
     // 楼盘评论分类统计
-    async getCommentCount () {
-      let result = await marketService.getCommentCount({linkerId: this.marketId})
+    async getCommentCount() {
+      let result = await marketService.getCommentCount({ linkerId: this.marketId })
       if (result) {
         this.commentCount = result
       }
     },
     // 获取评论列表
-    async getCommentList () {
+    async getCommentList() {
       let result = await marketService.getCommentList({
         current: 1,
         size: 2,
@@ -507,6 +537,22 @@ export default {
         this.commnetList = commnetList
       }
     },
+    // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
+    async getQuestionDetail(linkerId) {
+      //获取买房问问的详情
+      const result = await marketService.getBuildQuestionDetail(linkerId)
+
+      if (result.linkerQuestionVO) {
+        this.linkerInfo = result.linkerQuestionVO
+        if (this.linkerInfo.replyNum == 0 || this.linkerInfo.replyNum == '') {
+          this.linkerInfo.replyNum = 0
+        }
+      }
+
+      this.questionNum = result.questionNum
+      this.replyNum = result.replyNum
+    },
+
     goCalculation(e) {
       //进入计算器页面
       window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama/linker/toNewcalculator?linkerName=' + e
@@ -612,6 +658,15 @@ export default {
       this.headSlide()
       this.competeOpenStatus()
       this.posterCheck()
+
+      //楼盘详情中的买房问问模块
+      var parameterInfo = {
+        id: this.id,
+        replyNum: this.replyNum,
+        questionNum: this.questionNum,
+        linkerName: this.info.linkerName
+      }
+      this.buyAskTitleConf.link = { name: 'market-asking-list', query: { infos: JSON.stringify(parameterInfo) } }
     },
     swipeChange(val) {
       this.swipeCurrent = val
@@ -774,7 +829,7 @@ export default {
   },
   filters: {
     // 格式化名称
-    formatName (val) {
+    formatName(val) {
       let str = val + ''
       let len = val.length
       if (!len) {
@@ -782,11 +837,11 @@ export default {
       } else if (len === 1) {
         return val + '***'
       } else {
-        return `${val[0]}***${val[len-1]}`
+        return `${val[0]}***${val[len - 1]}`
       }
     },
     // 格式化用户标签
-    formatTag (val) {
+    formatTag(val) {
       if (!val) {
         return ''
       }
