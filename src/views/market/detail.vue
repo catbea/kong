@@ -581,7 +581,7 @@ export default {
      * 进入楼盘评测页面
      */
     enterEvaluation() {
-      this.$router.push({ name: 'market-marketEvaluating', query: { reviewId: '1', userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId } })
+      this.$router.push({ name: 'market-marketEvaluating', query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId } })
     },
     // 进入楼盘评价列表页面
     goComment() {
