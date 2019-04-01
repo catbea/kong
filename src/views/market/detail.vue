@@ -217,7 +217,7 @@
     </div>
     <!-- 楼盘评测 -->
     <div class="evaluating-box" v-if="evaluatingInfo">
-      <title-bar :conf="evaluatingTitleConf"  @click="enterEvaluation"/>
+      <title-bar :conf="evaluatingTitleConf" @click="enterEvaluation"/>
       <div class="evaluating-content" @click="enterEvaluation">
         <img class="bg_img" :src="evaluatingInfo&&evaluatingInfo.cover" alt="" srcset="">
         <div class="right">
@@ -295,9 +295,9 @@
       </div>
     </div>
     <!-- 买房问问 -->
-    <div class="buy-ask" v-if="linkerInfo">
+    <div class="buy-ask">
       <title-bar :conf="buyAskTitleConf"/>
-      <ol class="ask-content">
+      <ol class="ask-content" v-if="linkerInfo">
         <li>
           <div>
             <span>问</span>
@@ -315,8 +315,10 @@
           <p>{{this.linkerInfo.replyVO.content}}</p>
         </li>
       </ol>
-      <span class="hint">在这里，问关于房子的一切</span>
-      <router-link class="go-evaluate" tag="span" to="/">我要提问</router-link>
+      <div class="not-question" v-else>
+        <span class="hint">在这里，问关于房子的一切</span>
+        <span class="go-evaluate" @click="commitQuestion">我要提问</span>
+      </div>
     </div>
     <!-- 其他楼盘 -->
     <div class="house-recommend" v-if="info.linkerOtherList.length>0">
@@ -457,7 +459,7 @@ export default {
       },
       evaluatingTitleConf: {
         title: '楼盘评测',
-        linkText: '立即查看',
+        linkText: '立即查看'
         // link: '/marketDetail/marketEvaluating'
       },
       evaluateTitleConf: {
@@ -526,6 +528,10 @@ export default {
     }
   },
   methods: {
+    commitQuestion(){
+      this.$router.push({ name: 'market-asking-ask', params: { id: this.id}, query: {linkerName: this.linkerName} })
+    },
+
     async getEvaluatingInfo(linkerId) {
       let result = await marketService.getEvaluatingInfo(linkerId)
       this.evaluatingInfo = result
@@ -581,7 +587,10 @@ export default {
      * 进入楼盘评测页面
      */
     enterEvaluation() {
-      this.$router.push({ name: 'market-marketEvaluating', query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId } })
+      this.$router.push({
+        name: 'market-marketEvaluating',
+        query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
+      })
     },
     // 进入楼盘评价列表页面
     goComment() {
@@ -1343,28 +1352,6 @@ export default {
           }
         }
       }
-      .hint {
-        margin-top: 18px;
-        font-size: 13px;
-        font-family: PingFangSC-Regular;
-        font-weight: 400;
-        color: rgba(153, 153, 153, 1);
-      }
-      .go-evaluate {
-        margin-top: 12px;
-        margin-left: 118px;
-        display: inline-block;
-        width: 82px;
-        height: 30px;
-        border-radius: 4px;
-        border: 1px solid rgba(68, 81, 102, 1);
-        font-size: 13px;
-        font-family: PingFangSC-Regular;
-        font-weight: 400;
-        color: rgba(68, 81, 102, 1);
-        line-height: 30px;
-        text-align: center;
-      }
     }
     .evaluate-content-nodata {
       font-size: 12px;
@@ -1389,6 +1376,45 @@ export default {
   }
   > .buy-ask {
     margin-top: 41px;
+
+    .not-question {
+      width: 92%;
+      margin-left: 4%;
+      height: 103px;
+      background: rgba(248, 250, 252, 1);
+      border: 1px solid rgba(205, 214, 225, 1);
+      margin-top: 5px;
+      display: flex;
+      flex-direction: column;
+
+      .hint {
+        margin-top: 18px;
+        font-size: 13px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        text-align: center;
+        justify-content: center;
+      }
+      .go-evaluate {
+        display: flex;
+        margin-top: 12px;
+        display: inline-block;
+        width: 82px;
+        height: 30px;
+        border-radius: 4px;
+        border: 1px solid rgba(68, 81, 102, 1);
+        font-size: 13px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(68, 81, 102, 1);
+        line-height: 30px;
+        text-align: center;
+        justify-content: center;
+        margin-left: 40%;
+      }
+    }
+
     .ask-content {
       margin-top: 16px;
       padding: 0 15px;
