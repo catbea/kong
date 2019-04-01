@@ -39,7 +39,7 @@
                 <div class="comment-more" v-show="!item.showMore && item.content.length > 100" @click.stop="item.showMore=true">全文</div>
                 <div class="comment-more" v-show="item.showMore" @click.stop="item.showMore=false">收起</div>
                 <div class="comment-pic" v-if="item.imgList.length">
-                  <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)">
+                  <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)" v-show="i < 4">
                     <img  :src="option.imgUrl" alt="">
                   </div>
                 </div>
