@@ -289,7 +289,7 @@
       </div>
       <div class="evaluate-content-nodata" v-else>
         <p>该楼盘没有评论哦，快来抢先一步评论吧</p>
-        <button @click="goComment">我要评论</button>
+        <button @click="goCommentWrite">我要评论</button>
       </div>
     </div>
     <!-- 买房问问 -->
@@ -574,9 +574,13 @@ export default {
     enterEvaluation() {
       this.$router.push({ name: 'market-marketEvaluating' })
     },
-    // 进入楼盘评价页面
+    // 进入楼盘评价列表页面
     goComment () {
       this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
+    },
+    // 进入楼盘评价页面
+    goCommentWrite () {
+      this.$router.push(`/market/comment/write/${this.info.linkerId}`)
     },
     appointmentHandle() {
       //预约看房弹窗
