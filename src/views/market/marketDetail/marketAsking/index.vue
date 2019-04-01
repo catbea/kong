@@ -30,6 +30,7 @@
               <div class="reply-time">{{item.replyVO.createTimeStamp|dateTimeFormatter(5) }}</div>
             </div>
             <div class="answer-bottom">{{item.replyVO.content}}</div>
+            <!--  -->
           </div>
         </div>
       </van-list>
@@ -257,6 +258,7 @@ export default {
           -webkit-box-orient: vertical; //设置或检索伸缩盒对象的子元素的排列方式
           -webkit-line-clamp: 3; //显示行数## 标题文字 ##
           overflow: hidden;
+          line-height: 21px;
         }
       }
     }
