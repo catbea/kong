@@ -10,7 +10,11 @@
     <div class="html-style" v-html="htmlContent"></div>
     <div class="thumbs-body">
       <!-- <p class="dialog-name" :style="{'fontSize':info.linkerName.length>7?'15px':'20px'}">{{info&&info.linkerName}}</p> -->
-      <div class="thumbs-up" :style="{'background':backgroundColor}">
+      <div
+        class="thumbs-up"
+        :style="{'background':backgroundColor}"
+        @click="setThumbsLike('1',likeFlag)"
+      >
         <img class="thumb-img" :src="thumbImg">
         <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
       </div>
@@ -22,9 +26,17 @@
 
 <script>
 import marketService from 'SERVICE/marketService'
+import { mapGetters } from 'vuex'
 
 export default {
+  components: {
+    ...mapGetters(['userInfo'])
+  },
+  computed: {
+    ...mapGetters(['userInfo'])
+  },
   data: () => ({
+    likeFlag: '', //点赞或者取消点赞
     backgroundColor: '#FABE9E',
     EvaluatingInfo: '',
     thumbImg: require('IMG/market/thumb.png'),
@@ -33,13 +45,13 @@ export default {
   }),
 
   created() {
-    this.getEvaluatingDetail('1')
+    this.getEvaluatingDetail('1', this.userInfo.agentId, '1')
   },
 
   methods: {
-    async getEvaluatingDetail(reviewId) {
+    async getEvaluatingDetail(reviewId, userInfo, userType) {
       //获取评测详情
-      const result = await marketService.getEvaluatingDetail(reviewId)
+      const result = await marketService.getEvaluatingDetail(reviewId,userInfo,userType)
 
       var data = {}
       var arr = Object.keys(result)
@@ -48,21 +60,35 @@ export default {
 
         if (result.isLike === false) {
           this.backgroundColor = '#FABE9E'
+          this.likeFlag = '0' //可以进行点赞
         } else {
           this.backgroundColor = '#FA8548'
+          this.likeFlag = '1' //取消点赞
         }
       }
     },
 
-   async setThumbsLike(reviewId,likeFlag){
+    async setThumbsLike(reviewId, likeFlag) {
       //点赞和取消点赞
-       const result = await marketService.thumbsLike(reviewId,likeFlag)
+      const result = await marketService.thumbsLike(reviewId, likeFlag)
 
-       
+      if (result == '') {
+        //表示已经请求成功
+        if (likeFlag == '0') {
+          console.log('9999999999999')
+
+          this.backgroundColor = '#FA8548'
+          this.likeFlag = '1'
+          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum + 1
+        } else if (likeFlag == '1') {
+          console.log('1111111111111')
+
+          this.backgroundColor = '#FABE9E'
+          this.likeFlag = '0'
+          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum - 1
+        }
+      }
     }
-
-
-
   }
 }
 </script>

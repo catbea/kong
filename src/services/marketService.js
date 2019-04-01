@@ -493,11 +493,13 @@ class MarketService {
   /**
    * 获取评测详情
    */
-  getEvaluatingDetail(reviewId){
+  getEvaluatingDetail(reviewId,userId,userType){
     return xhr({
-      url: '/review/info',
+      url: '/miniapp/common/review/info',
       body: {
-        reviewId
+        reviewId,
+        userId,
+        userType
       }
     })
   }
@@ -507,11 +509,13 @@ class MarketService {
    * @param {*} reviewId 
    * @param {*} likeFlag 
    */
-  thumbsLike(reviewId,likeFlag){
+  thumbsLike(reviewId,userId,userType,likeFlag){
     return xhr({
-      url: '/review/like',
+      url: '/miniapp/common/review/like',
       body: {
         reviewId,
+        userId,
+        userType,
         likeFlag
       }
     })
