@@ -264,7 +264,7 @@
               <div class="message">
                 <p>
                   {{item.nickName | formatName}} &nbsp;&nbsp;&nbsp;
-                  <span>{{item.userTag | formatTag}}</span>
+                  <span v-if="item.userTag">{{item.userTag | formatTag}}</span>
                 </p>
                 <p>
                   <van-rate
