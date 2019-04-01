@@ -26,11 +26,11 @@ export default {
       type: Object
     },
     maxlength: {
-      type: Number
+      type: Number,
+      default: 140
     }
   },
   data: () => ({
-    maxlength: 140,
     commentContent: ''
   }),
   methods: {

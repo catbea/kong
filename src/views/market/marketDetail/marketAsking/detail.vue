@@ -68,18 +68,14 @@ export default {
     timestamp: ''
   }),
   created() {
-
-    var questionInfo= JSON.parse(this.$route.query.questionInfo)
-
-    this.questionId = questionInfo.questionId
-    this.linkerId = questionInfo.linkerId
-    this.linkerName=questionInfo.buildingName
+    this.questionId = this.$route.query.questionId
+    this.linkerId = this.$route.query.linkerId
     this.queryLinkerQuestion(this.questionId)
   },
   methods: {
     async queryLinkerQuestion(questionId) {
       const res = await marketService.queryLinkerQuestion(questionId)
-      // this.linkerName = res.linkerName
+      this.linkerName = res.linkerName
       this.questionContent = res.content
       this.timestamp = res.createTimeStamp
     },
@@ -194,6 +190,7 @@ export default {
         font-size: 15px;
         margin-top: 12px;
         line-height: 21px;
+        word-break: break-all;
       }
     }
   }

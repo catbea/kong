@@ -299,9 +299,9 @@
         <li>
           <div>
             <span>问</span>
-            <span>{{this.linkerInfo.content}}</span>
+            <span>{{this.linkerInfo&&this.linkerInfo.content}}</span>
           </div>
-          <p>{{this.linkerInfo.replyNum}}人回复</p>
+          <p>{{this.linkerInfo&&this.linkerInfo.replyNum}}人回复</p>
         </li>
         <li class="van-hairline--bottom" v-if="this.linkerInfo.replyVO!=''">
           <div>
@@ -487,7 +487,8 @@ export default {
       showControls: true,
       appointmentImg: require('IMG/market/appointment@2x.png'),
       commentCount: null,
-      commnetList: []
+      commnetList: [],
+      linkerInfo: null
     }
   },
   async created() {

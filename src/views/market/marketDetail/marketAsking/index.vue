@@ -102,17 +102,11 @@ export default {
      * 进入详情
      */
     enterDetails(questionId) {
-      var obj = {}
-      obj.linkerId = this.linkerId
-      obj.questionId = questionId
-      obj.linkerName = this.buildingName
-
-      let questionInfo = JSON.stringify(obj)
-      this.$router.push({ path: '/marketDetail/askingDetail', query: { questionInfo: questionInfo } })
+      this.$router.push({ path: '/marketDetail/askingDetail', query: { linkerId: this.linkerId, questionId: questionId } })
     },
 
     enterAskPage() {
-      this.$router.push({ name: 'market-asking-ask', params: { id: this.linkerId } })
+      this.$router.push({ name: 'market-asking-ask', params: { id: this.linkerId}, query: {linkerName: this.linkerName} })
     }
   }
 }
