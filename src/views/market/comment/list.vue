@@ -94,7 +94,7 @@ export default {
   data () {
     return {
       marketId: '',
-      tagList: ['全部', '有图', '实看', '好评'],
+      tagList: ['全部', '实看', '好评', '有图'],
       commentCount: null,
       activeTag: 0,
       commnetList: [],
@@ -141,6 +141,9 @@ export default {
     cahngeTag (index) {
       this.activeType = index
       this.current = 1
+      this.finished = false
+      this.loading = false
+      document.querySelector('.list-box').scrollTop = 0
       this.getCommentList()
     },
     // 获取评论列表

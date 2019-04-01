@@ -227,51 +227,36 @@
       </div>
     </div>
     <!-- 楼盘评价 -->
-    <div class="evaluate-box" @click="enterEvaluation">
+    <div class="evaluate-box">
       <title-bar :conf="evaluateTitleConf"/>
       <div class="evaluate-content">
-        <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
-        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
-        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
-        <router-link class="evaluate-label" tag="p" to="/">实看用户 (8)</router-link>
-        <ul class="evaluate-detail">
-          <li class="van-hairline--bottom">
+        <div v-if="commentCount">
+          <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
+          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=0`" v-if="commentCount.all">全部 ({{commentCount.all}})</router-link>
+          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=3`" v-if="commentCount.withPicture">有图 ({{commentCount.withPicture}})</router-link>
+          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=1`" v-if="commentCount.authUserNum">实看 ({{commentCount.authUserNum}})</router-link>
+          <router-link class="evaluate-label" tag="p" :to="`/market/comment/list/${this.info.linkerId}?type=2`" v-if="commentCount.goodReputation">好评 ({{commentCount.goodReputation}})</router-link>
+        </div>
+        
+        <ul class="evaluate-detail"  @click="enterEvaluation" v-if="commnetList.length">
+          <li class="van-hairline--bottom" v-for="(item,index) in commnetList">
             <div class="top">
-              <img :src="panoramaIcon" alt="" srcset="">
+              <img :src="item.avatarUrl" alt="" srcset="">
               <div class="message">
                 <p>
-                  用***2 &nbsp;&nbsp;&nbsp;
-                  <span>是看用户</span>
+                  {{item.nickName | formatName}} &nbsp;&nbsp;&nbsp;
+                  <span>{{item.userTag | formatTag}}</span>
                 </p>
                 <p>
-                  <i
-                    class="bg_img"
-                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
-                  ></i>
-                  <i
-                    class="bg_img"
-                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
-                  ></i>
-                  <i
-                    class="bg_img"
-                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
-                  ></i>
-                  <i
-                    class="bg_img"
-                    :style="{backgroundImage:'url('+(true ? levelColorImg:levelImg)+')'}"
-                  ></i>
-                  <i
-                    class="bg_img"
-                    :style="{backgroundImage:'url('+(false ? levelColorImg:levelImg)+')'}"
-                  ></i>
+                  <van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" />
                 </p>
               </div>
             </div>
-            <div class="bottom">时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，</div>
+            <div class="bottom">{{item.content}}</div>
           </li>
         </ul>
         <span class="hint">在这里，说出楼盘的一切</span>
-        <router-link class="go-evaluate" tag="span" to="/">我要评论</router-link>
+        <router-link class="go-evaluate" tag="span" :to="`/market/comment/write/${this.info.linkerId}`">我要评论</router-link>
       </div>
     </div>
     <!-- 买房问问 -->
@@ -467,7 +452,9 @@ export default {
       playIcon: require('IMG/market/view720.png'),
       showVideo: false,
       showControls: true,
-      appointmentImg: require('IMG/market/appointment@2x.png')
+      appointmentImg: require('IMG/market/appointment@2x.png'),
+      commentCount: null,
+      commnetList: []
     }
   },
   async created() {
@@ -478,6 +465,8 @@ export default {
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
     this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
     await this.getVipInfo()
+    this.getCommentCount()
+    this.getCommentList()
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -493,9 +482,31 @@ export default {
       this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
       this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
       this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
+      this.getCommentCount()
+      this.getCommentList()
     }
   },
   methods: {
+    // 楼盘评论分类统计
+    async getCommentCount () {
+      let result = await marketService.getCommentCount({linkerId: this.marketId})
+      if (result) {
+        this.commentCount = result
+      }
+    },
+    // 获取评论列表
+    async getCommentList () {
+      let result = await marketService.getCommentList({
+        current: 1,
+        size: 2,
+        linkerId: this.id,
+        type: 0
+      })
+      if (result) {
+        let commnetList = result.records
+        this.commnetList = commnetList
+      }
+    },
     goCalculation(e) {
       //进入计算器页面
       window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama/linker/toNewcalculator?linkerName=' + e
@@ -760,6 +771,32 @@ export default {
     //     // window.localStorage.setItem('POSTER_REMIND',true) // 每次进入都弹,暂时屏蔽
     //   }
     // }
+  },
+  filters: {
+    // 格式化名称
+    formatName (val) {
+      let str = val + ''
+      let len = val.length
+      if (!len) {
+        return ''
+      } else if (len === 1) {
+        return val + '***'
+      } else {
+        return `${val[0]}***${val[len-1]}`
+      }
+    },
+    // 格式化用户标签
+    formatTag (val) {
+      if (!val) {
+        return ''
+      }
+      let tag = {
+        1: '实看用户',
+        2: '未实看用户',
+        3: '管理员'
+      }
+      return tag[val]
+    }
   },
   beforeDestroy() {
     clearInterval(this.rd.headSlideTimer)
