@@ -489,6 +489,18 @@ class MarketService {
       }
     })
   }
+
+  /**
+   * 获取评测详情
+   */
+  getEvaluatingDetail(reviewId){
+    return xhr({
+      url: '/review/info',
+      body: {
+        reviewId
+      }
+    })
+  }
   
   
 

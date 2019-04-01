@@ -218,7 +218,7 @@
     <!-- 楼盘评测 -->
     <div class="evaluating-box">
       <title-bar :conf="evaluatingTitleConf"/>
-      <div class="evaluating-content">
+      <div class="evaluating-content" @click="enterEvaluation">
         <img class="bg_img" :src="panoramaIcon" alt="" srcset="">
         <div class="right">
           <p>新华联广场：80万㎡湾区大城 享都会生活</p>
@@ -559,20 +559,11 @@ export default {
     },
 
     /**
-     * 进入问问列表
-     */
-    enterAskingList() {
-      console.log('999999999999')
-      // this.$router.push({ name: 'market-asking-list' })
-    },
-
-    /**
      * 进入楼盘评测页面
      */
     enterEvaluation() {
-      this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
-      console.log('888888888888')
-      // this.$router.push({ name: 'market-marketEvaluating' })
+      // this.$router.push(`/market/comment/list/${this.info.linkerId}?type=0`)
+      this.$router.push({ name: 'market-marketEvaluating' })
     },
 
     appointmentHandle() {
