@@ -35,7 +35,7 @@ export default {
     this.linkerName = this.$route.query.linkerName
   },
   methods: {
-    // 新增回复
+    // 新增问题
     async insertQuestion() {
       let param = {
         interlocutionType: '1', // 1-评论、2-普通回复、3-管理员回复
