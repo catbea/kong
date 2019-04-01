@@ -1,6 +1,6 @@
 <template>
   <div class="asking-body">
-    <div class="asking-header" v-if="this.noData===false">共有12个问题，300个回答</div>
+    <div class="asking-header" v-if="this.noData===false">共有{{this.questionNum}}个问题，{{this.replyNum}}个回答</div>
     <div class="asking-center" v-if="this.noData===false">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div
@@ -53,14 +53,22 @@ export default {
     nullcontent: '该楼盘没有问答哦，快来抢先一步提问吧！',
     noData: false,
     current: 1,
-    askingList: []
+    askingList: [],
+    buildingName:''
   }),
   created() {
-    this.linkerId = this.$route.params.id
+    var jsonInfo=  JSON.parse(this.$route.query.infos)
+
+    this.id = jsonInfo.id
+    this.replyNum=jsonInfo.replyNum
+    this.questionNum=jsonInfo.questionNum
+    this.buildingName=jsonInfo.linkerName
+
+    console.log(this.buildingName)
   },
   methods: {
     onLoad() {
-      this.getAskingList(this.current, this.linkerId)
+      this.getAskingList(this.current, "488cbcde9fd5463bbe2ed1724a93f77c")
     },
 
     async getAskingList(current, linkerId) {
@@ -72,12 +80,6 @@ export default {
         } else {
           this.noData = true
         }
-
-        // for (var i = 0; i < this.askingList.length; i++) {
-        //   if (this.askingList[i].replyVO) {
-        //     this.askingList[i].replyVO.createTimeStamp = timeUtils.fmtDate(this.askingList[i].replyVO.createTimeStamp)
-        //   }
-        // }
 
         if (result.pages === 0 || this.page === result.pages) {
           this.finished = true
