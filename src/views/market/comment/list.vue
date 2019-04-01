@@ -392,11 +392,11 @@ export default {
               height: 62px;
               overflow: hidden;
               border-radius: 6px;
+              border:1px solid #eee;
               img{
                 min-height: 60px;
                 min-width: 80px;
                 border-radius: 6px;
-                border:1px solid #eee;
               }
             }
           }
