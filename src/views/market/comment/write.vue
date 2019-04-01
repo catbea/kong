@@ -90,7 +90,7 @@ export default {
       this.showLoading = false
       this.$toast('楼盘评论成功！')
       setTimeout(()=>{
-        this.$router.go(-1)
+        this.$router.push(`/market/comment/list/${this.marketId}`)
       }, 1000)
 
     },
