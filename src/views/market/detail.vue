@@ -455,11 +455,11 @@ export default {
         linkText: '全部楼盘',
         link: '/market'
       },
-      // evaluatingTitleConf: {
-      //   title: '楼盘评测',
-      //   linkText: '立即查看',
-      //   link: '/marketDetail/marketEvaluating'
-      // },
+      evaluatingTitleConf: {
+        title: '楼盘评测',
+        linkText: '立即查看',
+        // link: '/marketDetail/marketEvaluating'
+      },
       evaluateTitleConf: {
         title: '楼盘评价',
         linkText: '查看全部',
