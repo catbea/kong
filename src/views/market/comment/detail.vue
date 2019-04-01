@@ -1,7 +1,7 @@
 <template>
   <div class="comment-detail">
     <div class="title scale-1px-bottom">
-      <h3 v-if="commnetInfo.linkerName">{{commnetInfo.linkerName}}</h3>
+      <h3 v-if="commnetInfo">{{commnetInfo.linkerName}}</h3>
       <div class="arrow" @click="goMarket">
         <img src="../../../assets/img/market/comment/arrow.png" alt="" srcset="">
       </div>

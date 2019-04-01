@@ -1294,7 +1294,7 @@ export default {
       .evaluate-detail {
         margin-top: 20px;
         li {
-          padding-bottom: 17px;
+          padding-top: 17px;
           .top {
             img {
               width: 36px;
