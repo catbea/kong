@@ -296,8 +296,8 @@
     </div>
     <!-- 买房问问 -->
     <div class="buy-ask">
+      <title-bar :conf="buyAskTitleConf"/>
       <div v-if="linkerInfo">
-        <title-bar :conf="buyAskTitleConf"/>
         <ol class="ask-content">
           <li>
             <div>
@@ -317,12 +317,12 @@
           </li>
         </ol>
         <span class="hint">在这里，说出楼盘的一切</span>
-        <span
-          class="go-evaluate"
-          @click="commitQuestion"
-        >我要提问</span>
+        <span class="go-evaluate" @click="commitQuestion">我要提问</span>
       </div>
-      
+      <div class="evaluate-content-nodata" v-else>
+        <p>该楼盘没有问答哦，快来抢先一步提问吧</p>
+        <button @click="commitQuestion">我要提问</button>
+      </div>
     </div>
     <!-- 其他楼盘 -->
     <div class="house-recommend" v-if="info.linkerOtherList.length>0">
@@ -580,6 +580,8 @@ export default {
 
       this.questionNum = result.questionNum
       this.replyNum = result.replyNum
+
+      this.buyAskTitleConf.title = `买房问问（${result.questionNum}）`
     },
 
     goCalculation(e) {
@@ -1378,11 +1380,10 @@ export default {
         line-height: 30px;
         text-align: center;
       }
-
     }
     .evaluate-content-nodata {
       font-size: 12px;
-      background-color:#f8fafc;
+      background-color: #f8fafc;
       border: 1px dashed rgba(205, 214, 225, 0.8);
       text-align: center;
       padding: 20px;
@@ -1397,7 +1398,7 @@ export default {
         color: #445166;
         height: 30px;
         padding: 6px 16px;
-        background-color:#f8fafc;
+        background-color: #f8fafc;
       }
     }
   }
