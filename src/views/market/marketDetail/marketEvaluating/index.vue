@@ -13,7 +13,7 @@
       <div
         class="thumbs-up"
         :style="{'background':backgroundColor}"
-        @click="setThumbsLike('1',this.agentId,'1',likeFlag,this.enterpriseId)"
+        @click="setThumbsLike(this.reviewId,this.agentId,this.userType,likeFlag,this.enterpriseId)"
       >
         <img class="thumb-img" :src="thumbImg">
         <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
@@ -21,6 +21,8 @@
     </div>
   </div>
 </template>
+
+ 
 
 
 
@@ -48,7 +50,12 @@ export default {
     this.userType = this.$route.query.userType
     this.enterpriseId = this.$route.query.enterpriseId
 
-    this.getEvaluatingDetail(this.reviewId, this.userInfo, this.userType, this.enterpriseId)
+    console.log('1:'+this.agentId)
+    console.log('2:'+this.agentId)
+    console.log('3:'+this.userType)
+    console.log('4:'+this.enterpriseId)
+
+    this.getEvaluatingDetail(this.reviewId, this.agentId, this.userType, this.enterpriseId)
   },
 
   methods: {
