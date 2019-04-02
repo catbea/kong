@@ -219,10 +219,15 @@
     <div class="evaluating-box" v-if="this.evaluatingInfo">
       <title-bar :conf="evaluatingTitleConf" @click="enterEvaluation"/>
       <div class="evaluating-content" @click="enterEvaluation">
-        <img class="bg_img" :src="evaluatingInfo&&evaluatingInfo.cover" alt="" srcset="">
+        <img
+          class="bg_img evaluating-img"
+          :src="evaluatingInfo&&evaluatingInfo.cover"
+          alt=""
+          srcset=""
+        >
         <div class="right">
-          <p>{{evaluatingInfo&&evaluatingInfo.title}}</p>
-          <p>{{evaluatingInfo&&evaluatingInfo.content}}</p>
+          <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
+          <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
         </div>
       </div>
     </div>
@@ -279,7 +284,12 @@
                 </p>
               </div>
             </div>
-            <div class="bottom">{{item.content}}<span v-if="item.imgList.length"><img src="../../assets/img/market/comment/pic.png" alt=""></span></div>
+            <div class="bottom">
+              {{item.content}}
+              <span v-if="item.imgList.length">
+                <img src="../../assets/img/market/comment/pic.png" alt="">
+              </span>
+            </div>
           </li>
         </ul>
         <span class="hint">在这里，说出楼盘的一切</span>
@@ -496,7 +506,8 @@ export default {
       appointmentImg: require('IMG/market/appointment@2x.png'),
       commentCount: null,
       commnetList: [],
-      linkerInfo: null
+      linkerInfo: null,
+      evaluatingInfo: null
     }
   },
   async created() {
@@ -511,7 +522,7 @@ export default {
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo(this.id)
+    this.getEvaluatingInfo(this.id)  //1d98425ff63940fdba3939beb5dc7d98
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -596,7 +607,7 @@ export default {
     enterEvaluation() {
       this.$router.push({
         name: 'market-marketEvaluating',
-        query: { reviewId: this.evaluatingInfo.reviewId, agentId: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
+        query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
       })
     },
     // 进入楼盘评价列表页面
@@ -1252,13 +1263,19 @@ export default {
       padding: 0 15px;
       width: 100%;
       display: flex;
+
       img {
         width: 120px;
         height: 90px;
         margin-right: 8px;
+        border-radius: 6px;
       }
       .right {
-        p:nth-child(1) {
+        display: flex;
+        flex-direction: column;
+
+
+       > .aa {
           width: 216px;
           line-height: 22px;
           font-size: 16px;
@@ -1267,7 +1284,8 @@ export default {
           color: rgba(51, 51, 51, 1);
           margin-bottom: 10px;
         }
-        p:nth-child(2) {
+
+       > .bb {
           line-height: 17px;
           font-size: 12px;
           font-family: PingFangSC-Regular;
@@ -1279,7 +1297,32 @@ export default {
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           width: 216px;
+          align-content: flex-end;
         }
+
+        // p:nth-child(1) {
+        //   width: 216px;
+        //   line-height: 22px;
+        //   font-size: 16px;
+        //   font-family: PingFangSC-Regular;
+        //   font-weight: 400;
+        //   color: rgba(51, 51, 51, 1);
+        //   margin-bottom: 10px;
+        // }
+        // p:nth-child(2) {
+        //   line-height: 17px;
+        //   font-size: 12px;
+        //   font-family: PingFangSC-Regular;
+        //   font-weight: 400;
+        //   color: rgba(153, 153, 153, 1);
+        //   overflow: hidden;
+        //   text-overflow: ellipsis;
+        //   display: -webkit-box;
+        //   -webkit-line-clamp: 2;
+        //   -webkit-box-orient: vertical;
+        //   width: 216px;
+        //   align-content: flex-end
+        // }
       }
     }
   }
@@ -1358,7 +1401,7 @@ export default {
             -webkit-box-orient: vertical;
             vertical-align: top;
             vertical-align: middle;
-            img{
+            img {
               width: 15px;
               height: 12px;
               vertical-align: middle;

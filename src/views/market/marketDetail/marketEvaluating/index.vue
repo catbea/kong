@@ -13,7 +13,7 @@
       <div
         class="thumbs-up"
         :style="{'background':backgroundColor}"
-        @click="setThumbsLike('1',userInfo.agentId,'1',likeFlag,userInfo.enterpriseId)"
+        @click="setThumbsLike('1',this.agentId,'1',likeFlag,this.enterpriseId)"
       >
         <img class="thumb-img" :src="thumbImg">
         <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
@@ -44,11 +44,11 @@ export default {
 
   created() {
     this.reviewId = this.$route.query.reviewId
-    this.agentId = this.$route.query.agentId
+    this.agentId = this.$route.query.userInfo
     this.userType = this.$route.query.userType
     this.enterpriseId = this.$route.query.enterpriseId
 
-    this.getEvaluatingDetail(this.reviewId, this.agentId, this.userType, this.enterpriseId)
+    this.getEvaluatingDetail(this.reviewId, this.userInfo, this.userType, this.enterpriseId)
   },
 
   methods: {
