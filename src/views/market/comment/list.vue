@@ -30,13 +30,13 @@
                   <div class="user-info">
                     <p class="name">
                       <b>{{item.nickName | formatName}}</b>
-                      <span v-show="item.userTag">{{item.userTag | formatTag}}</span>
+                      <span v-show="item.userTag === 1">{{item.userTag | formatTag}}</span>
                     </p>
                     <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
                   </div>
                 </div>
-                <div class="comment-info"  @click="goDetail(item)" :style="{'-webkit-line-clamp': item.showMore? 10: 5}">{{item.content}}</div>
-                <div class="comment-more" v-show="!item.showMore && item.content.length > 100" @click.stop="item.showMore=true">全文</div>
+                <div class="comment-info"  @click="goDetail(item)" :style="{'-webkit-line-clamp': item.showMore? 10: 3}">{{item.content}}</div>
+                <div class="comment-more" v-show="!item.showMore && item.content.length > 60" @click.stop="item.showMore=true">全文</div>
                 <div class="comment-more" v-show="item.showMore" @click.stop="item.showMore=false">收起</div>
                 <div class="comment-pic" v-if="item.imgList.length">
                   <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)" v-show="i < 4">
@@ -375,7 +375,7 @@ export default {
             // 5行省略
             word-break:break-all;
             display:-webkit-box;
-            -webkit-line-clamp:5;
+            -webkit-line-clamp:3;
             -webkit-box-orient:vertical;
             overflow:hidden;
             margin-top: 10px;

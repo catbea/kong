@@ -17,7 +17,9 @@
         </div>
         <div class="img-box">
           <div class="img-item" v-for="(item,index) in imgList" :key="index">
-            <img class="pic" :src="item" alt="">
+            <div class="pic-box">
+              <img class="pic" :src="item" alt="">
+            </div>
             <van-icon name="clear"  @click="deleteImg(index)"/>
           </div>
           <div class="uploader-box" v-show="imgList.length < 12">
@@ -49,7 +51,7 @@ export default {
     return {
       marketId: '',
       houseTag: ['实地看房', '未实地看房'],
-      userTag: 0,
+      userTag: 1,
       star: 5,
       cos: null,
       appId: '10037467',
@@ -370,16 +372,26 @@ export default {
       .img-box{
         margin-top: 20px;
         display: flex;
+        flex-wrap: wrap;
+        // justify-content: space-between;
         .img-item{
-          flex: 0 1 80px;
+          flex: 0 1 78px;
           position: relative;
-          margin-right: 15px;
-          border: 1px solid #E2E2E2;
-          border-radius: 6px;
+          margin-right: 8px;
           height: 60px;
-          .pic{
-            width: 80px;
+          margin-bottom: 10px;
+          &:nth-child(4n+4) {
+            margin-right: 0;
+          }
+          .pic-box{
+            width: 78px;
             height: 60px;
+            overflow: hidden;
+            border-radius: 6px;
+          }
+          .pic{
+            min-width: 80px;
+            min-height: 60px;
             border-radius: 6px;
           }
           .van-icon-clear{
