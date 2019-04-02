@@ -310,7 +310,7 @@
             <div>
               <span>答</span>
               <img :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
-              <i>{{this.linkerInfo.replyVO.nickName}}</i>&nbsp;&nbsp;
+              <i>{{this.linkerInfo.replyVO.nickName | privacyName()}}</i>&nbsp;&nbsp;
               <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
             </div>
             <p>{{this.linkerInfo.replyVO.content}}</p>
