@@ -16,7 +16,7 @@
             <div class="question-icon">问</div>
             <div class="question-body">
               <span class="question-title">
-               #{{linkerName}}#  {{item.content}}
+               #{{linkerName}}#  {{item.content | textOver(30)}}
                 <span class="question-num">{{item.replyNum}}人回复</span>
               </span>
             </div>
