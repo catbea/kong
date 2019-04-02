@@ -13,7 +13,7 @@
       <div
         class="thumbs-up"
         :style="{'background':backgroundColor}"
-        @click="setThumbsLike(this.reviewId,this.agentId,this.userType,likeFlag,this.enterpriseId)"
+        @click="setThumbsLike(likeFlag)"
       >
         <img class="thumb-img" :src="thumbImg">
         <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
@@ -50,7 +50,7 @@ export default {
     this.userType = this.$route.query.userType
     this.enterpriseId = this.$route.query.enterpriseId
 
-    console.log('1:'+this.agentId)
+    console.log('1:'+this.reviewId)
     console.log('2:'+this.agentId)
     console.log('3:'+this.userType)
     console.log('4:'+this.enterpriseId)
@@ -78,10 +78,9 @@ export default {
       }
     },
 
-    async setThumbsLike(reviewId, userId, userType, likeFlag, enterpriseId) {
+    async setThumbsLike(likeFlag) {
       //点赞和取消点赞
-      const result = await marketService.thumbsLike(reviewId, userId, userType, likeFlag, enterpriseId)
-
+      const result = await marketService.thumbsLike(this.reviewId,this.agentId,this.userType,likeFlag,this.enterpriseId)
       if (result == '') {
         //表示已经请求成功
         if (likeFlag == '0') {
