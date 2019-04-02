@@ -216,7 +216,7 @@
       </div>
     </div>
     <!-- 楼盘评测 -->
-    <div class="evaluating-box" v-if="evaluatingInfo">
+    <div class="evaluating-box" v-if="this.evaluatingInfo">
       <title-bar :conf="evaluatingTitleConf" @click="enterEvaluation"/>
       <div class="evaluating-content" @click="enterEvaluation">
         <img class="bg_img" :src="evaluatingInfo&&evaluatingInfo.cover" alt="" srcset="">
@@ -296,29 +296,33 @@
     </div>
     <!-- 买房问问 -->
     <div class="buy-ask">
-      <title-bar :conf="buyAskTitleConf"/>
-      <ol class="ask-content" v-if="linkerInfo">
-        <li>
-          <div>
-            <span>问</span>
-            <span>{{this.linkerInfo&&this.linkerInfo.content}}</span>
-          </div>
-          <p>{{this.linkerInfo&&this.linkerInfo.replyNum}}人回复</p>
-        </li>
-        <li class="van-hairline--bottom" v-if="this.linkerInfo&&this.linkerInfo.replyVO!=''">
-          <div>
-            <span>答</span>
-            <img :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
-            <i>{{this.linkerInfo.replyVO.nickName}}</i>&nbsp;&nbsp;
-            <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
-          </div>
-          <p>{{this.linkerInfo.replyVO.content}}</p>
-        </li>
-      </ol>
-      <div class="not-question" v-else>
-        <span class="hint">在这里，问关于房子的一切</span>
-        <span class="go-evaluate" @click="commitQuestion">我要提问</span>
+      <div v-if="linkerInfo">
+        <title-bar :conf="buyAskTitleConf"/>
+        <ol class="ask-content">
+          <li>
+            <div>
+              <span>问</span>
+              <span>{{this.linkerInfo&&this.linkerInfo.content}}</span>
+            </div>
+            <p>{{this.linkerInfo&&this.linkerInfo.replyNum}}人回复</p>
+          </li>
+          <li class="van-hairline--bottom" v-if="this.linkerInfo&&this.linkerInfo.replyVO!=''">
+            <div>
+              <span>答</span>
+              <img :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
+              <i>{{this.linkerInfo.replyVO.nickName}}</i>&nbsp;&nbsp;
+              <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
+            </div>
+            <p>{{this.linkerInfo.replyVO.content}}</p>
+          </li>
+        </ol>
+        <span class="hint">在这里，说出楼盘的一切</span>
+        <span
+          class="go-evaluate"
+          @click="commitQuestion"
+        >我要提问</span>
       </div>
+      
     </div>
     <!-- 其他楼盘 -->
     <div class="house-recommend" v-if="info.linkerOtherList.length>0">
@@ -528,8 +532,8 @@ export default {
     }
   },
   methods: {
-    commitQuestion(){
-      this.$router.push({ name: 'market-asking-ask', params: { id: this.id}, query: {linkerName: this.linkerName} })
+    commitQuestion() {
+      this.$router.push({ name: 'market-asking-ask', params: { id: this.id }, query: { linkerName: this.linkerName } })
     },
 
     async getEvaluatingInfo(linkerId) {
@@ -1442,6 +1446,7 @@ export default {
       margin-top: 16px;
       padding: 0 15px;
       width: 100%;
+
       li:nth-child(1) {
         display: flex;
         justify-content: space-between;
@@ -1532,6 +1537,28 @@ export default {
         }
       }
     }
+
+    .evaluate-content-nodata {
+      font-size: 12px;
+      background-color: rgba(205, 214, 225, 0.5);
+      border: 1px dashed rgba(205, 214, 225, 0.8);
+      text-align: center;
+      padding: 20px;
+      margin: 16px;
+      p {
+        padding-bottom: 20px;
+        color: #969ea8;
+      }
+      button {
+        border: 1px solid #445166;
+        border-radius: 4px;
+        color: #445166;
+        height: 30px;
+        padding: 6px 16px;
+        background-color: rgba(205, 214, 225, 0.5);
+      }
+    }
+
     .hint {
       margin-top: 18px;
       font-size: 13px;
