@@ -57,7 +57,8 @@ export default {
       region: 'sh',
       imgList: [],
       showLoading: false,
-      content: ''
+      content: '',
+      debounce: false // 重复提交
     }
   },
   created () {
@@ -78,6 +79,8 @@ export default {
     },
     // 新增楼盘评论
     async insertLinkerComment () {
+      if (this.debounce) {return false}
+      this.debounce = true
       this.showLoading = true
       let result = await marketService.insertLinkerComment({
         commentType: 1,
@@ -88,7 +91,8 @@ export default {
         userTag: this.userTag + 1
       })
       this.showLoading = false
-      this.$toast('楼盘评论成功！')
+      this.$toast('提交成功！')
+      this.debounce = false
       setTimeout(()=>{
         this.$router.push(`/market/comment/list/${this.marketId}`)
       }, 1000)

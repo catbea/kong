@@ -113,7 +113,8 @@ export default {
       star: 5,
       replayCnt: '',
       showDialog: false,
-      showNodata: false
+      showNodata: false,
+      debounce: false // 重复提交
     }
   },
   created () {
@@ -223,6 +224,8 @@ export default {
     },
     // 回复
     async insertLinkerComment () {
+      if (this.debounce) {return false}
+      this.debounce = true
       this.showLoading = true
       let result = await marketService.insertLinkerComment({
         commentType: 2,
@@ -232,6 +235,7 @@ export default {
       })
       this.showLoading = false
       this.hideDialogFn()
+      this.debounce = false
       this.commnetInfo.replyNum += 1
       this.current = 1
       this.getReplyList()

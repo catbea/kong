@@ -107,7 +107,8 @@ export default {
       replayCnt: '',
       showDialog: false,
       replayIndex: '',
-      showNodata: false
+      showNodata: false,
+      debounce: false // 重复提交
     }
   },
   created () {
@@ -246,6 +247,8 @@ export default {
     },
     // 回复
     async insertLinkerComment () {
+      if (this.debounce) {return false}
+      this.debounce = true
       let item = this.commnetList[this.replayIndex]
       this.showLoading = true
       let result = await marketService.insertLinkerComment({
@@ -258,6 +261,7 @@ export default {
       item.replyNum += 1
       this.$toast('回复评论成功！')
       this.hideDialogFn()
+      this.debounce = false
     },
   },
   filters: {
