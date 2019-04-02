@@ -32,7 +32,7 @@
                       <b>{{item.nickName | formatName}}</b>
                       <span v-show="item.userTag">{{item.userTag | formatTag}}</span>
                     </p>
-                    <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" /></div>
+                    <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
                   </div>
                 </div>
                 <div class="comment-info"  @click="goDetail(item)" :style="{'-webkit-line-clamp': item.showMore? 10: 5}">{{item.content}}</div>

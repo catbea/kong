@@ -15,7 +15,7 @@
               <b>{{commnetInfo.nickName | formatName}}</b>
               <span v-show="commnetInfo.userTag">{{commnetInfo.userTag | formatTag}}</span>
             </p>
-            <div class="star"><van-rate v-model="commnetInfo.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" /></div>
+            <div class="star"><van-rate v-model="commnetInfo.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
           </div>
         </div>
         <div class="comment-info">{{commnetInfo.content}}</div>

@@ -8,7 +8,7 @@
       <div class="star-box">
         <b>楼盘点评</b>
         <div class="star">
-          <van-rate v-model="star" :size="24" :count="5"  color="#ED8147" />
+          <van-rate v-model="star" :size="24" :count="5"  color="#ED8147"  void-icon="star" />
         </div>
       </div>
       <div class="info">
