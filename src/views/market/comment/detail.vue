@@ -349,6 +349,7 @@ export default {
       }
       .comment-pic{
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         margin-top: 10px;
         .pic-box{
@@ -356,6 +357,7 @@ export default {
           height: 60px;
           overflow: hidden;
           border-radius: 6px;
+          margin-bottom: 10px;
           img{
             min-height: 60px;
             min-width: 80px;
