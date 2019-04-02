@@ -522,7 +522,7 @@ export default {
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo('1d98425ff63940fdba3939beb5dc7d98') //1d98425ff63940fdba3939beb5dc7d98
+    this.getEvaluatingInfo(this.id) //1d98425ff63940fdba3939beb5dc7d98
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -1297,6 +1297,7 @@ export default {
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           width: 216px;
+          display: -webkit-box;
         }
 
         // p:nth-child(1) {
