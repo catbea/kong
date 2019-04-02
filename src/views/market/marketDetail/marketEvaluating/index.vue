@@ -44,7 +44,7 @@ export default {
 
   created() {
     this.reviewId = this.$route.query.reviewId
-    this.agentId = this.$route.query.reviewId
+    this.agentId = this.$route.query.agentId
     this.userType = this.$route.query.userType
     this.enterpriseId = this.$route.query.enterpriseId
 

@@ -156,10 +156,10 @@ export default {
 
     .asking-item {
       width: 92%;
-      max-height: 163px;
+      max-height: 180px;
       margin-left: 4%;
       margin-right: 4%;
-      border-bottom: 1px solid #cccccc;
+      border-bottom: 1px solid #DEDEDE;
 
       > .question-view {
         width: 100%;
@@ -186,10 +186,11 @@ export default {
 
           > .question-title {
             color: #333333;
-            font-size: 13px;
+            font-size: 16px;
             margin-left: 5px;
             float: left;
             width: 100%;
+            line-height: 22px;
             // word-break: break-all;
             // text-overflow: ellipsis; //显示为省略号
             // display: -webkit-box; //对象作为伸缩盒子模型显示

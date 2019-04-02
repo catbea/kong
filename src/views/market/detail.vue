@@ -595,7 +595,7 @@ export default {
     enterEvaluation() {
       this.$router.push({
         name: 'market-marketEvaluating',
-        query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
+        query: { reviewId: this.evaluatingInfo.reviewId, agentId: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
       })
     },
     // 进入楼盘评价列表页面
