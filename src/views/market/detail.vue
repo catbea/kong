@@ -467,7 +467,7 @@ export default {
         // link: '/marketDetail/marketEvaluating'
       },
       evaluateTitleConf: {
-        title: '楼盘评价',
+        title: '楼盘评论',
         linkText: '查看全部',
         link: `/`
       },
