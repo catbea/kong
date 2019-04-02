@@ -543,7 +543,7 @@ export default {
 
     // 楼盘评论分类统计
     async getCommentCount() {
-      let result = await marketService.getCommentCount({ linkerId: this.marketId })
+      let result = await marketService.getCommentCount({ linkerId: this.id })
       if (result) {
         this.commentCount = result
       }
