@@ -233,7 +233,7 @@
     </div>
     <!-- 楼盘评价 -->
     <div class="evaluate-box">
-      <title-bar :conf="evaluateTitleConf" @click.native="goComment"/>
+      <title-bar :conf="evaluateTitleConf"/>
       <div class="evaluate-content" v-if="commnetList.length">
         <div>
           <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
@@ -478,8 +478,8 @@ export default {
       },
       evaluateTitleConf: {
         title: '楼盘评论',
-        linkText: '查看全部',
-        link: `/`
+        linkText: '查看全部'
+        // link: `/market/comment/list/${this.id}?type=0`
       },
       buyAskTitleConf: {
         title: '买房问问',
@@ -576,6 +576,7 @@ export default {
           this.evaluateTitleConf.title = '楼盘评价（0）'
         }
       }
+      this.evaluateTitleConf.link = `/market/comment/list/${this.id}?type=0`
     },
     // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
     async getQuestionDetail(linkerId) {
