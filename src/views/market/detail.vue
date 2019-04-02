@@ -1352,6 +1352,29 @@ export default {
           }
         }
       }
+      .hint {
+        margin-top: 18px;
+        font-size: 13px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+      }
+      .go-evaluate {
+        margin-top: 12px;
+        margin-left: 118px;
+        display: inline-block;
+        width: 82px;
+        height: 30px;
+        border-radius: 4px;
+        border: 1px solid rgba(68, 81, 102, 1);
+        font-size: 13px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(68, 81, 102, 1);
+        line-height: 30px;
+        text-align: center;
+      }
+
     }
     .evaluate-content-nodata {
       font-size: 12px;
