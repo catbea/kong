@@ -145,7 +145,6 @@ export default {
       this.finished = false
       this.loading = false
       document.querySelector('.list-box').scrollTop = 0
-      this.getCommentList()
     },
     // 获取评论列表
     async getCommentList () {

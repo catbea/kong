@@ -279,7 +279,7 @@
                 </p>
               </div>
             </div>
-            <div class="bottom">{{item.content}}</div>
+            <div class="bottom">{{item.content}}<span v-if="item.imgList.length"><img src="../../assets/img/market/comment/pic.png" alt=""></span></div>
           </li>
         </ul>
         <span class="hint">在这里，说出楼盘的一切</span>
@@ -543,7 +543,7 @@ export default {
 
     // 楼盘评论分类统计
     async getCommentCount() {
-      let result = await marketService.getCommentCount({ linkerId: this.marketId })
+      let result = await marketService.getCommentCount({ linkerId: this.id })
       if (result) {
         this.commentCount = result
       }
@@ -1307,7 +1307,7 @@ export default {
       .evaluate-detail {
         margin-top: 20px;
         li {
-          padding-top: 17px;
+          padding: 10px 0;
           .top {
             img {
               width: 36px;
@@ -1355,6 +1355,14 @@ export default {
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
+            vertical-align: top;
+            vertical-align: middle;
+            img{
+              width: 15px;
+              height: 12px;
+              vertical-align: middle;
+              margin-left: 5px;
+            }
           }
         }
       }

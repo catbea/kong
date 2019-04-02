@@ -64,6 +64,16 @@ export default {
   created () {
     this.initCos()
     this.marketId = this.$route.params.id
+    // 获取缓存数据
+    let data = window.sessionStorage.getItem('commentData')
+    if (data) {
+      let item = JSON.parse(data)
+      this.userTag = item.userTag,
+      this.star = item.star,
+      this.content = item.content,
+      this.imgList = item.imgList
+      window.sessionStorage.removeItem('commentData')
+    }
   },
   methods: {
     // 提交评论
@@ -277,8 +287,19 @@ export default {
     blur() {
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
     },
+    // 缓存数据
+    cacheData () {
+      let cacheData = {
+        userTag: this.userTag,
+        star: this.star,
+        content: this.content,
+        imgList: this.imgList
+      }
+      window.sessionStorage.setItem('commentData', JSON.stringify(cacheData))
+    },
     // 跳转评论详情页面
     goStandard () {
+      this.cacheData()
       this.$router.push('/market/comment/standard')
     }
   }
