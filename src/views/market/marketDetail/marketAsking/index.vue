@@ -16,7 +16,7 @@
             <div class="question-icon">问</div>
             <div class="question-body">
               <span class="question-title">
-               #{{buildingName}}#  {{item.content}}
+               #{{linkerName}}#  {{item.content}}
                 <span class="question-num">{{item.replyNum}}人回复</span>
               </span>
             </div>
@@ -30,6 +30,7 @@
               <div class="reply-time">{{item.replyVO.createTimeStamp|dateTimeFormatter(5) }}</div>
             </div>
             <div class="answer-bottom">{{item.replyVO.content}}</div>
+            <!--  -->
           </div>
         </div>
       </van-list>
@@ -57,7 +58,7 @@ export default {
     noData: false,
     current: 1,
     askingList: [],
-    buildingName: ''
+    linkerName: ''
   }),
   created() {
     var jsonInfo = JSON.parse(this.$route.query.infos)
@@ -65,13 +66,12 @@ export default {
     this.linkerId = jsonInfo.id
     this.replyNum = jsonInfo.replyNum
     this.questionNum = jsonInfo.questionNum
-    this.buildingName = jsonInfo.linkerName
+    this.linkerName = jsonInfo.linkerName
 
-    console.log(this.buildingName)
   },
   methods: {
     onLoad() {
-      this.getAskingList(this.current, '488cbcde9fd5463bbe2ed1724a93f77c')
+      this.getAskingList(this.current, this.linkerId)
     },
 
     async getAskingList(current, linkerId) {
@@ -258,6 +258,7 @@ export default {
           -webkit-box-orient: vertical; //设置或检索伸缩盒对象的子元素的排列方式
           -webkit-line-clamp: 3; //显示行数## 标题文字 ##
           overflow: hidden;
+          line-height: 21px;
         }
       }
     }
