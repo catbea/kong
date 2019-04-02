@@ -1378,7 +1378,7 @@ export default {
     }
     .evaluate-content-nodata {
       font-size: 12px;
-      background-color: rgba(205, 214, 225, 0.5);
+      background-color:#f8fafc;
       border: 1px dashed rgba(205, 214, 225, 0.8);
       text-align: center;
       padding: 20px;
@@ -1393,7 +1393,7 @@ export default {
         color: #445166;
         height: 30px;
         padding: 6px 16px;
-        background-color: rgba(205, 214, 225, 0.5);
+        background-color:#f8fafc;
       }
     }
   }
