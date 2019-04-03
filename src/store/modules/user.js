@@ -7,7 +7,7 @@ const state = {
   userStatus: 0,
   userInfo: JSON.parse(localStorage.getItem('awMasterUserInfo')) || ((process.env.VUE_APP_AW_ENV=='uat') ? {} : {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
-    userStatus: 0,
+    userStatus: 0, // 0启用 1禁用
     devMode: true,
     agentId: '4626',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
