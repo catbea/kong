@@ -217,7 +217,7 @@
     </div>
     <!-- 楼盘评测 -->
     <div class="evaluating-box" v-if="this.evaluatingInfo">
-      <title-bar :conf="evaluatingTitleConf" @click="enterEvaluation"/>
+      <title-bar :conf="evaluatingTitleConf"/>
       <div class="evaluating-content" @click="enterEvaluation">
         <img
           class="bg_img evaluating-img"
@@ -522,7 +522,7 @@ export default {
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo(this.id) //1d98425ff63940fdba3939beb5dc7d98
+    this.getEvaluatingInfo('1d98425ff63940fdba3939beb5dc7d98') //1d98425ff63940fdba3939beb5dc7d98
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -550,6 +550,11 @@ export default {
     async getEvaluatingInfo(linkerId) {
       let result = await marketService.getEvaluatingInfo(linkerId)
       this.evaluatingInfo = result
+
+      this.evaluatingTitleConf.link = {
+        name: 'market-marketEvaluating',
+        query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
+      }
     },
 
     // 楼盘评论分类统计
@@ -1116,7 +1121,6 @@ export default {
             > img {
               width: 16px;
               height: 16px;
-              margin-top: 3px;
             }
 
             > span {
