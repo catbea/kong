@@ -36,9 +36,8 @@
 <script>
 import Avatar from 'COMP/Avatar'
 import CommentAlert from 'COMP//Discover/CommentAlert'
+import { trim } from '@/utils/tool'
 import marketService from 'SERVICE/marketService'
-import * as types from '@/store/mutation-types'
-import { mapGetters } from 'vuex'
 export default {
   components: {
     Avatar,
@@ -119,7 +118,11 @@ export default {
       this.commentContent = ''
     },
     publishHandler() {
-      if (this.commentContent.length == 0) {
+      if (this.commentContent.length === 0) {
+        this.$dialog.alert({ message: '请输入回复内容' })
+        return
+      }
+      if (trim(this.commentContent).length === 0) {
         this.$dialog.alert({ message: '请输入回复内容' })
         return
       }
