@@ -36,7 +36,6 @@
 <script>
 import Avatar from 'COMP/Avatar'
 import CommentAlert from 'COMP//Discover/CommentAlert'
-import { trim } from '@/utils/tool'
 import marketService from 'SERVICE/marketService'
 export default {
   components: {
@@ -122,7 +121,7 @@ export default {
         this.$dialog.alert({ message: '请输入回复内容' })
         return
       }
-      if (trim(this.commentContent).length === 0) {
+      if (this.commentContent.trim().length === 0) {
         this.$dialog.alert({ message: '请输入回复内容' })
         return
       }
