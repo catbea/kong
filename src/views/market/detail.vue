@@ -578,9 +578,9 @@ export default {
         let commnetList = result.records
         if (commnetList && commnetList.length) {
           this.commnetList = commnetList
-          this.evaluateTitleConf.title = `楼盘评价（${result.total}）`
+          this.evaluateTitleConf.title = `楼盘评论（${result.total}）`
         } else {
-          this.evaluateTitleConf.title = '楼盘评价（0）'
+          this.evaluateTitleConf.title = '楼盘评论（0）'
         }
       }
       this.evaluateTitleConf.link = `/market/comment/list/${this.id}?type=0`
