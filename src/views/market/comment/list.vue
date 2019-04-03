@@ -213,7 +213,7 @@ export default {
     async updateLinkeStatus (item) {
        let result = await marketService.updateLinkeStatus({
         commentId: item.commentId,
-        likeStatus: item.likeFlag ? 0 : 1
+        likeStatus: item.likeFlag ? 1 : 0
       })
       item.likeFlag = item.likeFlag ? 0 : 1
       item.likeNum = item.likeFlag ? item.likeNum + 1 : item.likeNum - 1
