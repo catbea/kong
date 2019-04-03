@@ -48,7 +48,7 @@
                   <div class="user-info">
                     <p class="name">
                       <b>{{item.nickName | formatName}}</b>
-                      <span v-show="item.userTag !== 2">{{item.userTag | formatTag}}</span>
+                      <span v-show="item.userTag && item.userTag !== 2">{{item.userTag | formatTag}}</span>
                     </p>
                     <div class="star">{{item.createTimeStamp | formatData}}</div>
                   </div>
