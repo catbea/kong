@@ -8,7 +8,7 @@
       <div class="star-box">
         <b>楼盘点评</b>
         <div class="star">
-          <van-rate v-model="star" :size="24" :count="5"  color="#ED8147" />
+          <van-rate v-model="star" :size="24" :count="5"  color="#ED8147"  void-icon="star" />
         </div>
       </div>
       <div class="info">
@@ -17,7 +17,9 @@
         </div>
         <div class="img-box">
           <div class="img-item" v-for="(item,index) in imgList" :key="index">
-            <img class="pic" :src="item" alt="">
+            <div class="pic-box">
+              <img class="pic" :src="item" alt="">
+            </div>
             <van-icon name="clear"  @click="deleteImg(index)"/>
           </div>
           <div class="uploader-box" v-show="imgList.length < 12">
@@ -48,7 +50,7 @@ export default {
   data () {
     return {
       marketId: '',
-      houseTag: ['实地看房', '未实地看房'],
+      houseTag: ['未实地看房', '实地看房'],
       userTag: 0,
       star: 5,
       cos: null,
@@ -64,6 +66,16 @@ export default {
   created () {
     this.initCos()
     this.marketId = this.$route.params.id
+    // 获取缓存数据
+    let data = window.sessionStorage.getItem('commentData')
+    if (data) {
+      let item = JSON.parse(data)
+      this.userTag = item.userTag,
+      this.star = item.star,
+      this.content = item.content,
+      this.imgList = item.imgList
+      window.sessionStorage.removeItem('commentData')
+    }
   },
   methods: {
     // 提交评论
@@ -88,7 +100,7 @@ export default {
         imgList: this.imgList,
         starLevel: this.star,
         linkerId: this.marketId,
-        userTag: this.userTag + 1
+        userTag: (this.userTag === 1) ? 1 : 2 // 1-实看用户、2-未实看用户、3-管理员
       })
       this.showLoading = false
       this.$toast('提交成功！')
@@ -277,8 +289,19 @@ export default {
     blur() {
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
     },
+    // 缓存数据
+    cacheData () {
+      let cacheData = {
+        userTag: this.userTag,
+        star: this.star,
+        content: this.content,
+        imgList: this.imgList
+      }
+      window.sessionStorage.setItem('commentData', JSON.stringify(cacheData))
+    },
     // 跳转评论详情页面
     goStandard () {
+      this.cacheData()
       this.$router.push('/market/comment/standard')
     }
   }
@@ -349,16 +372,26 @@ export default {
       .img-box{
         margin-top: 20px;
         display: flex;
+        flex-wrap: wrap;
+        // justify-content: space-between;
         .img-item{
-          flex: 0 1 80px;
+          flex: 0 1 78px;
           position: relative;
-          margin-right: 15px;
-          border: 1px solid #E2E2E2;
-          border-radius: 6px;
+          margin-right: 8px;
           height: 60px;
-          .pic{
-            width: 80px;
+          margin-bottom: 10px;
+          &:nth-child(4n+4) {
+            margin-right: 0;
+          }
+          .pic-box{
+            width: 78px;
             height: 60px;
+            overflow: hidden;
+            border-radius: 6px;
+          }
+          .pic{
+            min-width: 80px;
+            min-height: 60px;
             border-radius: 6px;
           }
           .van-icon-clear{

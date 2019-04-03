@@ -30,13 +30,13 @@
                   <div class="user-info">
                     <p class="name">
                       <b>{{item.nickName | formatName}}</b>
-                      <span v-show="item.userTag">{{item.userTag | formatTag}}</span>
+                      <span v-show="item.userTag === 1">{{item.userTag | formatTag}}</span>
                     </p>
-                    <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" /></div>
+                    <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
                   </div>
                 </div>
-                <div class="comment-info"  @click="goDetail(item)" :style="{'-webkit-line-clamp': item.showMore? 10: 5}">{{item.content}}</div>
-                <div class="comment-more" v-show="!item.showMore && item.content.length > 100" @click.stop="item.showMore=true">全文</div>
+                <div class="comment-info"  @click="goDetail(item)" :style="{'-webkit-line-clamp': item.showMore? 10: 3}">{{item.content}}</div>
+                <div class="comment-more" v-show="!item.showMore && item.content.length > 60" @click.stop="item.showMore=true">全文</div>
                 <div class="comment-more" v-show="item.showMore" @click.stop="item.showMore=false">收起</div>
                 <div class="comment-pic" v-if="item.imgList.length">
                   <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)" v-show="i < 4">
@@ -145,7 +145,6 @@ export default {
       this.finished = false
       this.loading = false
       document.querySelector('.list-box').scrollTop = 0
-      this.getCommentList()
     },
     // 获取评论列表
     async getCommentList () {
@@ -317,9 +316,9 @@ export default {
       margin: 12px 16px 0;
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-between;
+      // justify-content: space-between;
       span{
-        flex: 0 1 108px;
+        flex: 0 1 100px;
         font-size: 12px;
         text-align: center;
         color: #8B97A7;
@@ -328,9 +327,13 @@ export default {
         line-height: 30px;
         border-radius: 4px;
         margin-bottom: 10px;
+        margin-right: 15px;
         &.active{
           background-color: #007AE6;
           color: #fff;
+        }
+        &:nth-child(3n+3){
+          margin-right: 0;
         }
       }
     }
@@ -376,7 +379,7 @@ export default {
             // 5行省略
             word-break:break-all;
             display:-webkit-box;
-            -webkit-line-clamp:5;
+            -webkit-line-clamp:3;
             -webkit-box-orient:vertical;
             overflow:hidden;
             margin-top: 10px;
@@ -389,18 +392,20 @@ export default {
           }
           .comment-pic{
             display: flex;
-            justify-content: space-between;
+            // justify-content: space-between;
             margin-top: 10px;
             .pic-box{
-              flex: 0 1 82px;
-              height: 62px;
+              flex: 0 0 80px;
+              height: 60px;
               overflow: hidden;
               border-radius: 6px;
-              border:1px solid #eee;
+              margin-right: 10px;
               img{
                 min-height: 60px;
                 min-width: 80px;
-                border-radius: 6px;
+              }
+              &:nth-child(4n+4){
+                margin-right: 0;
               }
             }
           }
