@@ -50,8 +50,8 @@ export default {
   data () {
     return {
       marketId: '',
-      houseTag: ['实地看房', '未实地看房'],
-      userTag: 1,
+      houseTag: ['未实地看房', '实地看房'],
+      userTag: 0,
       star: 5,
       cos: null,
       appId: '10037467',
@@ -100,7 +100,7 @@ export default {
         imgList: this.imgList,
         starLevel: this.star,
         linkerId: this.marketId,
-        userTag: this.userTag + 1
+        userTag: (this.userTag === 1) ? 1 : 2 // 1-实看用户、2-未实看用户、3-管理员
       })
       this.showLoading = false
       this.$toast('提交成功！')

@@ -13,7 +13,7 @@
           <div class="user-info">
             <p class="name">
               <b>{{commnetInfo.nickName | formatName}}</b>
-              <span v-show="commnetInfo.userTag">{{commnetInfo.userTag | formatTag}}</span>
+              <span v-show="commnetInfo.userTag === 1">{{commnetInfo.userTag | formatTag}}</span>
             </p>
             <div class="star"><van-rate v-model="commnetInfo.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
           </div>
