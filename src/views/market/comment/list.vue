@@ -316,9 +316,9 @@ export default {
       margin: 12px 16px 0;
       display: flex;
       flex-flow: row wrap;
-      justify-content: space-between;
+      // justify-content: space-between;
       span{
-        flex: 0 1 108px;
+        flex: 0 1 100px;
         font-size: 12px;
         text-align: center;
         color: #8B97A7;
@@ -327,9 +327,13 @@ export default {
         line-height: 30px;
         border-radius: 4px;
         margin-bottom: 10px;
+        margin-right: 15px;
         &.active{
           background-color: #007AE6;
           color: #fff;
+        }
+        &:nth-child(3n+3){
+          margin-right: 0;
         }
       }
     }
@@ -388,7 +392,7 @@ export default {
           }
           .comment-pic{
             display: flex;
-            justify-content: space-between;
+            // justify-content: space-between;
             margin-top: 10px;
             .pic-box{
               flex: 0 1 82px;
@@ -396,6 +400,7 @@ export default {
               overflow: hidden;
               border-radius: 6px;
               border:1px solid #eee;
+              margin-right: 10px;
               img{
                 min-height: 60px;
                 min-width: 80px;
