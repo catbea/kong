@@ -112,7 +112,7 @@ export default {
     },
     // 图片上传组件
     onRead(file) {
-      if(file.length > 12) {
+      if(file.length > 12 || file.length + this.imgList.length > 12) {
         return this.$toast('最多只能上传12张图片！')
       }
       if (file.length) {
