@@ -66,11 +66,24 @@ export default {
     var jsonInfo = JSON.parse(this.$route.query.infos)
 
     this.linkerId = jsonInfo.id
-    this.replyNum = jsonInfo.replyNum
-    this.questionNum = jsonInfo.questionNum
     this.linkerName = jsonInfo.linkerName
+
+     // this.replyNum = jsonInfo.replyNum
+    // this.questionNum = jsonInfo.questionNum
+
+    this.getQuestionDetail(jsonInfo.id)
+
   },
   methods: {
+    async getQuestionDetail(linkerId) {
+      //获取买房问问的详情
+      const result = await marketService.getBuildQuestionDetail(linkerId)
+      this.questionNum = result.questionNum
+      this.replyNum = result.replyNum
+
+    },
+
+
     onLoad() {
       this.getAskingList(this.current, this.linkerId)
     },
