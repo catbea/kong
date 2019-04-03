@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="market-detail-page" v-if="info">
     <!-- 新手引导 -->
     <hint-tire></hint-tire>
@@ -395,6 +396,12 @@
       </div>
     </div>
   </div>
+  <!-- loading -->
+  <div class="loading"  v-show="showLoading">
+    <van-loading type="spinner" color="white" class="van-loading"/>
+  </div>
+</div>
+  
 </template>
 <script>
 import 'swiper/dist/css/swiper.css'
@@ -424,7 +431,7 @@ export default {
   },
   data() {
     return {
-      vipInfo: '',
+      vipInfo: {},
       instance: 0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: false, //是否存在相册
@@ -507,18 +514,18 @@ export default {
       commentCount: null,
       commnetList: [],
       linkerInfo: null,
-      evaluatingInfo: null
+      evaluatingInfo: null,
+      showLoading: false
     }
   },
   async created() {
     this.id = this.$route.params.id
-
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
     // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
-    await this.getVipInfo()
+    this.getVipInfo()
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail(this.id)
@@ -687,6 +694,7 @@ export default {
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
     async getDetailInfo(id) {
+      this.showLoading = true
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
@@ -710,6 +718,7 @@ export default {
         linkerName: this.info.linkerName
       }
       this.buyAskTitleConf.link = { name: 'market-asking-list', query: { infos: JSON.stringify(parameterInfo) } }
+      this.showLoading = false
     },
     swipeChange(val) {
       this.swipeCurrent = val
@@ -1884,6 +1893,27 @@ export default {
         }
       }
     }
+  }
+}
+// loading
+.loading {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 3;
+  .van-loading {
+    display: inline-block;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    z-index: 5;
+    margin-left: -25px;
+    margin-top: -25px;
   }
 }
 </style>
