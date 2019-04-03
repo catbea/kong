@@ -271,7 +271,7 @@
                 <p>
                   {{item.nickName | privacyName() }}
                   <span
-                    v-if="item.userTag"
+                    v-if="item.userTag===1"
                   >{{item.userTag | formatTag}}</span>
                 </p>
                 <p>
@@ -1340,7 +1340,7 @@ export default {
   > .evaluate-box {
     margin-top: 40px;
     .evaluate-content {
-      margin-top: 16px;
+      margin-top: 10px;
       padding: 0 15px;
       width: 100%;
       .evaluate-label {
@@ -1355,12 +1355,13 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(139, 151, 167, 1);
+        margin-bottom: 5px;
       }
       .evaluate-label:nth-child(2) {
         margin: 0 9px;
       }
       .evaluate-detail {
-        margin-top: 20px;
+        margin-top: 10px;
         li {
           padding: 10px 0;
           .top {
@@ -1376,7 +1377,8 @@ export default {
               font-family: PingFangSC-Medium;
               font-weight: 500;
               color: rgba(51, 51, 51, 1);
-              margin-bottom: 18px;
+              margin-bottom: 10px;
+              vertical-align: middle;
               span {
                 display: inline-block;
                 width: 60px;
@@ -1390,6 +1392,7 @@ export default {
                 font-family: PingFangSC-Regular;
                 font-weight: 400;
                 color: rgba(92, 95, 102, 1);
+                vertical-align: middle;
               }
               i {
                 display: inline-block;
@@ -1435,7 +1438,7 @@ export default {
         width: 82px;
         height: 30px;
         border-radius: 4px;
-        border: 1px solid rgba(68, 81, 102, 1);
+        border: 1px solid rgba(68, 81, 102, 0.5);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;

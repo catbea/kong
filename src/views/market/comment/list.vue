@@ -342,7 +342,7 @@ export default {
       overflow-y: scroll;
       .wrapper{
         .comment-item{
-          margin: 20px 16px 0;
+          margin: 10px 16px 10px;
           .comment-user{
             display: flex;
             .usre-img{
@@ -365,6 +365,7 @@ export default {
                   line-height: 15px;
                   padding: 0 5px;
                   font-size: 10px;
+                  border-radius: 2px;
                 }
               }
             }
@@ -393,7 +394,7 @@ export default {
           .comment-pic{
             display: flex;
             // justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 6px;
             .pic-box{
               flex: 0 0 80px;
               height: 60px;
