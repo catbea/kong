@@ -41,6 +41,7 @@
                 <div class="comment-pic" v-if="item.imgList.length">
                   <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)" v-show="i < 4">
                     <img  :src="option.imgUrl" alt="">
+                    <div class="pic-num" v-show="i===item.imgList.length-1 || i===3">共{{item.imgList.length}}张</div>
                   </div>
                 </div>
                 <div class="comment-action">
@@ -401,12 +402,25 @@ export default {
               overflow: hidden;
               border-radius: 6px;
               margin-right: 10px;
+              position: relative;
               img{
                 min-height: 60px;
                 min-width: 80px;
               }
               &:nth-child(4n+4){
                 margin-right: 0;
+              }
+              .pic-num{
+                position: absolute;
+                right: -1px;
+                bottom: 5px;
+                padding: 0 6px;
+                height:16px;
+                line-height: 16px;
+                background:rgba(51,51,51,1);
+                border-radius:2px;
+                color: #fff;
+                font-size: 10px;
               }
             }
           }
