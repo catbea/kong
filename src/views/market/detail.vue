@@ -528,11 +528,15 @@ export default {
     this.getVipInfo()
     this.getCommentCount()
     this.getCommentList()
-    this.getQuestionDetail('488cbcde9fd5463bbe2ed1724a93f77c')
-    this.getEvaluatingInfo('1d98425ff63940fdba3939beb5dc7d98') //1d98425ff63940fdba3939beb5dc7d98
+    // this.getQuestionDetail('488cbcde9fd5463bbe2ed1724a93f77c')
+    // this.getEvaluatingInfo('1d98425ff63940fdba3939beb5dc7d98')
 
     // this.getQuestionDetail('')
     // this.getEvaluatingInfo('')
+
+    
+    this.getQuestionDetail(this.id)
+    this.getEvaluatingInfo(this.id)
 
   },
   beforeRouteLeave(to, from, next) {
