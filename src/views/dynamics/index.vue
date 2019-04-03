@@ -167,7 +167,7 @@ export default {
       this.recommendData = res.aiLinkerVO
       if (this.userInfo.isOne && !this.userGuidance.dynamics) {
         this.guidanceConf = res.aiLinkerVO
-        this.guidanceShow = true
+        if(this.guidanceConf.linkerId) this.guidanceShow = true
       }
     },
     async queryVersion(type, timeStamp) {

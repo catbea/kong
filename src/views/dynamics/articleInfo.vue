@@ -214,7 +214,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .articleInfo-page {
   background: #ffffff;
   margin: 16px 0;
@@ -347,7 +347,7 @@ export default {
           // margin-top: -6px;
           // padding-right: 16px;
           right: 0.42667rem;
-          margin-top: -55px;
+          // margin-top: -55px;
           padding-right: 0;
           float: right;
           > .agent-right-num {
