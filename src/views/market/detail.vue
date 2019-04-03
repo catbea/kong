@@ -314,13 +314,14 @@
             <div>
               <span>问</span>
               <span>{{this.linkerInfo&&this.linkerInfo.content}}</span>
+              <!-- {{this.linkerInfo&&this.linkerInfo.content}} -->
             </div>
             <p>{{this.linkerInfo&&this.linkerInfo.replyNum}}人回复</p>
           </li>
           <li class="van-hairline--bottom" v-if="this.linkerInfo&&this.linkerInfo.replyVO!=''">
             <div>
               <span>答</span>
-              <img :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
+              <img class="header-img" :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
               <i>{{this.linkerInfo.replyVO.nickName | privacyName()}}</i>&nbsp;&nbsp;
               <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
             </div>
@@ -1531,6 +1532,7 @@ export default {
         justify-content: space-between;
         width: 100%;
         margin-bottom: 16px;
+        margin-top: -4px;
         div {
           display: flex;
         }
@@ -1555,6 +1557,7 @@ export default {
           font-weight: 400;
           color: rgba(51, 51, 51, 1);
           width: 225px;
+          line-height: 23px;
         }
         p {
           font-size: 13px;
@@ -1585,6 +1588,7 @@ export default {
             width: 24px;
             height: 24px;
             margin: 0 8px;
+            border-radius: 50%;
           }
           i:nth-of-type(1) {
             font-size: 12px;
@@ -1629,11 +1633,11 @@ export default {
         color: #969ea8;
       }
       button {
-        border: 1px solid #445166;
+        border: 0.5px solid #445166;
         border-radius: 4px;
         height: 30px;
         padding: 6px 16px;
-         background:rgba(248,250,252,1);
+        background:rgba(248,250,252,1);
       }
     }
 
