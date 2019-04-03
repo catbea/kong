@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { trim } from '@/utils/tool'
 import marketService from 'SERVICE/marketService'
 export default {
   components: {},
@@ -49,7 +50,11 @@ export default {
     inputHandler(val) {},
     blurHandler() {},
     publishHandler() {
-      if (this.questionContent.length == 0) {
+      if (this.questionContent.length ===  0) {
+        this.$dialog.alert({ message: '请输入您要提的买房问题' })
+        return
+      }
+      if (trim(this.questionContent).length === 0) {
         this.$dialog.alert({ message: '请输入您要提的买房问题' })
         return
       }
