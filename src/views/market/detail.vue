@@ -528,8 +528,12 @@ export default {
     this.getVipInfo()
     this.getCommentCount()
     this.getCommentList()
-    this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo(this.id) //1d98425ff63940fdba3939beb5dc7d98
+    this.getQuestionDetail('488cbcde9fd5463bbe2ed1724a93f77c')
+    this.getEvaluatingInfo('1d98425ff63940fdba3939beb5dc7d98') //1d98425ff63940fdba3939beb5dc7d98
+
+    // this.getQuestionDetail('')
+    // this.getEvaluatingInfo('')
+
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -1454,7 +1458,7 @@ export default {
     .evaluate-content-nodata {
       font-size: 12px;
       background-color: #f8fafc;
-      border: 1px dashed rgba(205, 214, 225, 0.8);
+      border: 1px dashed rgba(248,250,252,1);
       text-align: center;
       padding: 20px;
       margin: 16px;
@@ -1611,8 +1615,8 @@ export default {
 
     .evaluate-content-nodata {
       font-size: 12px;
-      background-color: rgba(205, 214, 225, 0.5);
-      border: 1px dashed rgba(205, 214, 225, 0.8);
+      background:rgba(248,250,252,1);
+      border: 1px dashed rgba(205,214,225,1);
       text-align: center;
       padding: 20px;
       margin: 16px;
@@ -1623,10 +1627,9 @@ export default {
       button {
         border: 1px solid #445166;
         border-radius: 4px;
-        color: #445166;
         height: 30px;
         padding: 6px 16px;
-        background-color: rgba(205, 214, 225, 0.5);
+         background:rgba(248,250,252,1);
       }
     }
 
