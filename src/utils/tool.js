@@ -30,7 +30,7 @@ export function checkPhoneNum(str) {
 // 防抖动方法 fn: 回调方法 wait：延迟时间 immediate: 第一次是否立即执行
 export function debounce(fn, wait = 500, immediate = false) {
   let timeout = null
-  return function(...args) {
+  return function (...args) {
     let content = this
     if (timeout) {
       clearTimeout(timeout)
@@ -79,7 +79,7 @@ export function dataURLtoBlob(dataurl) {
 
 // base64图片下载
 export function downloadFile(content, fileName) {
-  var base64ToBlob = function(code) {
+  var base64ToBlob = function (code) {
     let parts = code.split(';base64,')
     let contentType = parts[0].split(':')[1]
     let raw = window.atob(parts[1])
@@ -178,6 +178,17 @@ export function checkIOSVersion() {
     var v_info = ua.match(reg);
     version = (v_info + "").replace(/[^0-9|_.]/ig, "").replace(/_/ig, "."); //得到版本号9.3.2或者9.0
     // version = parseInt(version.split('.')[0]); // 得到版本号第一位
-}
+  }
   return version
+}
+
+export function trim(str) {
+  str = str.replace(/^(\s|\u00A0)+/, '');
+  for (var i = str.length - 1; i >= 0; i--) {
+    if (/\S/.test(str.charAt(i))) {
+      str = str.substring(0, i + 1);
+      break;
+    }
+  }
+  return str;
 }

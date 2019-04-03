@@ -12,7 +12,7 @@
         <div class="comment-content">{{info&&info.title}}</div>
       </div>
       <div class="comment-input-wrap">
-        <textarea class="comment-textarea" :placeholder="info&&info.placeholder" :maxlength="maxlength" rows="5" v-model="commentContent" @input="inputHandler" @blur="blur"></textarea>
+        <textarea class="comment-textarea" :placeholder="info&&info.placeholder" :maxlength="maxlength" rows="5" v-model.trim="commentContent" @input="inputHandler" @blur="blur"></textarea>
       </div>
     </div>
   </div>

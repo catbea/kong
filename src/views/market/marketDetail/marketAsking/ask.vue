@@ -10,7 +10,7 @@
           placeholder="详细描述你买房的问题，描述的越清晰，越容易获得专家的解答（1-150字）"
           maxlength="150"
           rows="7"
-          v-model="questionContent"
+          v-model.trim="questionContent"
           @input="inputHandler"
           @blur="blurHandler"
         ></textarea>
@@ -49,7 +49,11 @@ export default {
     inputHandler(val) {},
     blurHandler() {},
     publishHandler() {
-      if (this.questionContent.length == 0) {
+      if (this.questionContent.length ===  0) {
+        this.$dialog.alert({ message: '请输入您要提的买房问题' })
+        return
+      }
+      if (this.questionContent.trim().length === 0) {
         this.$dialog.alert({ message: '请输入您要提的买房问题' })
         return
       }

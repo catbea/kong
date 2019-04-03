@@ -13,7 +13,7 @@
           <div class="user-info">
             <p class="name">
               <b>{{commnetInfo.nickName | formatName}}</b>
-              <span v-show="commnetInfo.userTag === 1">{{commnetInfo.userTag | formatTag}}</span>
+              <span v-show="commnetInfo.userTag !== 2">{{commnetInfo.userTag | formatTag}}</span>
             </p>
             <div class="star"><van-rate v-model="commnetInfo.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
           </div>
@@ -47,8 +47,8 @@
                   <img class="usre-img" :src="item.avatarUrl" alt="" srcset="">
                   <div class="user-info">
                     <p class="name">
-                      <b>{{item.nickName | formatName}}</b>
-                      <span v-show="item.userTag">{{item.userTag | formatTag}}</span>
+                      <b>{{item.nickName | formatName(item)}}</b>
+                      <span v-show="item.userTag && item.userTag !== 2">{{item.userTag | formatTag}}</span>
                     </p>
                     <div class="star">{{item.createTimeStamp | formatData}}</div>
                   </div>
@@ -141,7 +141,7 @@ export default {
       ImagePreview({
         images: imgs,
         startPosition: index,
-        loop: true,
+        loop: false,
         onClose() {
           // do something
         }
@@ -247,12 +247,15 @@ export default {
   },
   filters: {
     // 格式化名称
-    formatName (val) {
+    formatName (val,item) {
       let str = val + ''
       let len = val.length
       if (!len) {
         return ''
-      } else if (len === 1) {
+      } else if (item&&item.userTag === 3) {
+        return val
+      }
+      else if (len === 1) {
         return val + '***'
       } else {
         return `${val[0]}***${val[len-1]}`
@@ -266,7 +269,7 @@ export default {
       let tag = {
         1: '实看用户',
         2: '未实看用户',
-        3: '管理员'
+        3: '系统客服'
       }
       return tag[val]
     },
@@ -350,14 +353,17 @@ export default {
       .comment-pic{
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
         margin-top: 10px;
         .pic-box{
-          flex: 0 1 80px;
+          flex: 0 0 80px;
           height: 60px;
           overflow: hidden;
           border-radius: 6px;
           margin-bottom: 10px;
+          margin-right: 6px;
+          &:nth-child(4n+4){
+            margin-right: 0;
+          }
           img{
             min-height: 60px;
             min-width: 80px;
@@ -566,3 +572,8 @@ export default {
 }
 </style>
 
+<style>
+.van-image-preview__image{
+    max-height: 90%!important;
+  }
+</style>

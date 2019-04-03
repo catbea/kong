@@ -16,8 +16,10 @@
             <div class="question-icon">问</div>
             <div class="question-body">
               <span class="question-title">
-               #{{linkerName}}#  {{item.content | textOver(30)}}
-                <span class="question-num">{{item.replyNum}}人回复</span>
+                #{{linkerName}}# {{item.content | textOver(30)}}
+                <span
+                  class="question-num"
+                >{{item.replyNum}}人回复</span>
               </span>
             </div>
           </div>
@@ -64,12 +66,24 @@ export default {
     var jsonInfo = JSON.parse(this.$route.query.infos)
 
     this.linkerId = jsonInfo.id
-    this.replyNum = jsonInfo.replyNum
-    this.questionNum = jsonInfo.questionNum
     this.linkerName = jsonInfo.linkerName
+
+     // this.replyNum = jsonInfo.replyNum
+    // this.questionNum = jsonInfo.questionNum
+
+    this.getQuestionDetail(jsonInfo.id)
 
   },
   methods: {
+    async getQuestionDetail(linkerId) {
+      //获取买房问问的详情
+      const result = await marketService.getBuildQuestionDetail(linkerId)
+      this.questionNum = result.questionNum
+      this.replyNum = result.replyNum
+
+    },
+
+
     onLoad() {
       this.getAskingList(this.current, this.linkerId)
     },
@@ -106,7 +120,7 @@ export default {
     },
 
     enterAskPage() {
-      this.$router.push({ name: 'market-asking-ask', params: { id: this.linkerId}, query: {linkerName: this.linkerName} })
+      this.$router.push({ name: 'market-asking-ask', params: { id: this.linkerId }, query: { linkerName: this.linkerName } })
     }
   }
 }
@@ -123,12 +137,13 @@ export default {
     width: 100%;
     height: 61px;
     background: #f2f5f9;
-    line-height: 61px;
+    line-height: 65px;
     font-size: 14px;
     text-align: center;
     position: fixed;
     left: 0;
     top: 0;
+    color: #666666;
   }
 
   > .asking-foot {
@@ -159,11 +174,11 @@ export default {
       max-height: 180px;
       margin-left: 4%;
       margin-right: 4%;
-      border-bottom: 1px solid #DEDEDE;
+      border-bottom: 1px solid #dedede;
 
       > .question-view {
         width: 100%;
-        padding-left: 16px;
+        padding-left: 2px;
         padding-top: 16px;
         display: flex;
         margin-bottom: 16px;
@@ -187,7 +202,7 @@ export default {
           > .question-title {
             color: #333333;
             font-size: 16px;
-            margin-left: 5px;
+            margin-left: 8px;
             float: left;
             width: 100%;
             line-height: 22px;
@@ -202,6 +217,7 @@ export default {
               color: #999999;
               font-size: 13px;
               float: right;
+              margin-right: -7px;
             }
           }
         }
@@ -209,7 +225,7 @@ export default {
 
       > .answer-view {
         width: 100%;
-        padding-left: 16px;
+        padding-left: 2px;
 
         > .answer-top {
           display: flex;
@@ -230,7 +246,7 @@ export default {
           .header-img {
             width: 24px;
             height: 24px;
-            margin-left: 5px;
+            margin-left: 8px;
             border-radius: 50%;
           }
 
@@ -250,8 +266,8 @@ export default {
         > .answer-bottom {
           color: rgba(102, 102, 102, 1);
           font-size: 15px;
-          margin-top: 10px;
-          margin-left: 6%;
+          margin-top: 6px;
+          margin-left: 8%;
           margin-bottom: 10px;
           word-break: break-all;
           text-overflow: ellipsis; //显示为省略号

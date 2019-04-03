@@ -30,7 +30,7 @@
                   <div class="user-info">
                     <p class="name">
                       <b>{{item.nickName | formatName}}</b>
-                      <span v-show="item.userTag === 1">{{item.userTag | formatTag}}</span>
+                      <span v-show="item.userTag !== 2">{{item.userTag | formatTag}}</span>
                     </p>
                     <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
                   </div>
@@ -41,6 +41,7 @@
                 <div class="comment-pic" v-if="item.imgList.length">
                   <div class="pic-box" v-for="(option,i) in item.imgList" :key="i"  @click="imagePreview(index,i)" v-show="i < 4">
                     <img  :src="option.imgUrl" alt="">
+                    <div class="pic-num" v-show="i===item.imgList.length-1 || i===3">共{{item.imgList.length}}张</div>
                   </div>
                 </div>
                 <div class="comment-action">
@@ -144,7 +145,10 @@ export default {
       this.current = 1
       this.finished = false
       this.loading = false
+      this.showNodata = false
       document.querySelector('.list-box').scrollTop = 0
+      this.commnetList = []
+      this.getCommentList()
     },
     // 获取评论列表
     async getCommentList () {
@@ -187,7 +191,7 @@ export default {
       ImagePreview({
         images: imgs,
         startPosition: i,
-        loop: true,
+        loop: false,
         onClose() {
           // do something
         }
@@ -209,7 +213,7 @@ export default {
     async updateLinkeStatus (item) {
        let result = await marketService.updateLinkeStatus({
         commentId: item.commentId,
-        likeStatus: item.likeFlag ? 0 : 1
+        likeStatus: item.likeFlag ? 1 : 0
       })
       item.likeFlag = item.likeFlag ? 0 : 1
       item.likeNum = item.likeFlag ? item.likeNum + 1 : item.likeNum - 1
@@ -265,12 +269,15 @@ export default {
   },
   filters: {
     // 格式化名称
-    formatName (val) {
+    formatName (val,item) {
       let str = val + ''
       let len = val.length
       if (!len) {
         return ''
-      } else if (len === 1) {
+      } else if (item&&item.userTag === 3) {
+        return val
+      }
+      else if (len === 1) {
         return val + '***'
       } else {
         return `${val[0]}***${val[len-1]}`
@@ -284,7 +291,7 @@ export default {
       let tag = {
         1: '实看用户',
         2: '未实看用户',
-        3: '管理员'
+        3: '系统客服'
       }
       return tag[val]
     },
@@ -342,7 +349,7 @@ export default {
       overflow-y: scroll;
       .wrapper{
         .comment-item{
-          margin: 20px 16px 0;
+          margin: 10px 16px 10px;
           .comment-user{
             display: flex;
             .usre-img{
@@ -365,6 +372,7 @@ export default {
                   line-height: 15px;
                   padding: 0 5px;
                   font-size: 10px;
+                  border-radius: 2px;
                 }
               }
             }
@@ -393,19 +401,32 @@ export default {
           .comment-pic{
             display: flex;
             // justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 6px;
             .pic-box{
               flex: 0 0 80px;
               height: 60px;
               overflow: hidden;
               border-radius: 6px;
               margin-right: 10px;
+              position: relative;
               img{
                 min-height: 60px;
                 min-width: 80px;
               }
               &:nth-child(4n+4){
                 margin-right: 0;
+              }
+              .pic-num{
+                position: absolute;
+                right: -1px;
+                bottom: 5px;
+                padding: 0 6px;
+                height:16px;
+                line-height: 16px;
+                background:rgba(51,51,51,1);
+                border-radius:2px;
+                color: #fff;
+                font-size: 10px;
               }
             }
           }
@@ -552,4 +573,10 @@ export default {
     }
   }
 }
+</style>
+
+<style>
+.van-image-preview__image{
+    max-height: 90%!important;
+  }
 </style>
