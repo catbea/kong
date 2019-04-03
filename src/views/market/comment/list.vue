@@ -572,6 +572,5 @@ export default {
 <style>
 .van-image-preview__image{
     max-height: 90%!important;
-    max-width: 90%!important;
   }
 </style>
