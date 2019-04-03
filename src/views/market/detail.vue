@@ -225,7 +225,7 @@
           alt=""
           srcset=""
         >
-        <div class="right">
+        <div class="right-body">
           <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
           <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
         </div>
@@ -522,7 +522,7 @@ export default {
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo(this.id)  //1d98425ff63940fdba3939beb5dc7d98
+    this.getEvaluatingInfo(this.id) //1d98425ff63940fdba3939beb5dc7d98
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -1270,12 +1270,11 @@ export default {
         margin-right: 8px;
         border-radius: 6px;
       }
-      .right {
-        display: flex;
-        flex-direction: column;
 
+      .right-body {
+        position: relative;
 
-       > .aa {
+        > .aa {
           width: 216px;
           line-height: 22px;
           font-size: 16px;
@@ -1285,7 +1284,9 @@ export default {
           margin-bottom: 10px;
         }
 
-       > .bb {
+        > .bb {
+          position: absolute;
+          bottom: 0;
           line-height: 17px;
           font-size: 12px;
           font-family: PingFangSC-Regular;
@@ -1293,11 +1294,10 @@ export default {
           color: rgba(153, 153, 153, 1);
           overflow: hidden;
           text-overflow: ellipsis;
-          display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           width: 216px;
-          align-content: flex-end;
+          display: -webkit-box;
         }
 
         // p:nth-child(1) {
