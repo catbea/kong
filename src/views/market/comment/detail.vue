@@ -47,7 +47,7 @@
                   <img class="usre-img" :src="item.avatarUrl" alt="" srcset="">
                   <div class="user-info">
                     <p class="name">
-                      <b>{{item.nickName | formatName}}</b>
+                      <b>{{item.nickName | formatName(item)}}</b>
                       <span v-show="item.userTag && item.userTag !== 2">{{item.userTag | formatTag}}</span>
                     </p>
                     <div class="star">{{item.createTimeStamp | formatData}}</div>
@@ -247,12 +247,15 @@ export default {
   },
   filters: {
     // 格式化名称
-    formatName (val) {
+    formatName (val,item) {
       let str = val + ''
       let len = val.length
       if (!len) {
         return ''
-      } else if (len === 1) {
+      } else if (item&&item.userTag === 3) {
+        return val
+      }
+      else if (len === 1) {
         return val + '***'
       } else {
         return `${val[0]}***${val[len-1]}`

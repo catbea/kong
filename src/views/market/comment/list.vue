@@ -269,12 +269,15 @@ export default {
   },
   filters: {
     // 格式化名称
-    formatName (val) {
+    formatName (val,item) {
       let str = val + ''
       let len = val.length
       if (!len) {
         return ''
-      } else if (len === 1) {
+      } else if (item&&item.userTag === 3) {
+        return val
+      }
+      else if (len === 1) {
         return val + '***'
       } else {
         return `${val[0]}***${val[len-1]}`
