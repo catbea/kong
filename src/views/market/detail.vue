@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="market-detail-page" v-if="info">
     <!-- 新手引导 -->
     <hint-tire></hint-tire>
@@ -219,16 +220,21 @@
     <div class="evaluating-box" v-if="this.evaluatingInfo">
       <title-bar :conf="evaluatingTitleConf" @click="enterEvaluation"/>
       <div class="evaluating-content" @click="enterEvaluation">
-        <img class="bg_img" :src="evaluatingInfo&&evaluatingInfo.cover" alt="" srcset="">
-        <div class="right">
-          <p>{{evaluatingInfo&&evaluatingInfo.title}}</p>
-          <p>{{evaluatingInfo&&evaluatingInfo.content}}</p>
+        <img
+          class="bg_img evaluating-img"
+          :src="evaluatingInfo&&evaluatingInfo.cover"
+          alt=""
+          srcset=""
+        >
+        <div class="right-body">
+          <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
+          <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
         </div>
       </div>
     </div>
     <!-- 楼盘评价 -->
     <div class="evaluate-box">
-      <title-bar :conf="evaluateTitleConf" @click.native="goComment"/>
+      <title-bar :conf="evaluateTitleConf"/>
       <div class="evaluate-content" v-if="commnetList.length">
         <div>
           <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
@@ -279,7 +285,12 @@
                 </p>
               </div>
             </div>
-            <div class="bottom">{{item.content}}<span v-if="item.imgList.length"><img src="../../assets/img/market/comment/pic.png" alt=""></span></div>
+            <div class="bottom">
+              {{item.content}}
+              <span v-if="item.imgList.length">
+                <img src="../../assets/img/market/comment/pic.png" alt="">
+              </span>
+            </div>
           </li>
         </ul>
         <span class="hint">在这里，说出楼盘的一切</span>
@@ -385,6 +396,12 @@
       </div>
     </div>
   </div>
+  <!-- loading -->
+  <div class="loading"  v-show="showLoading">
+    <van-loading type="spinner" color="white" class="van-loading"/>
+  </div>
+</div>
+  
 </template>
 <script>
 import 'swiper/dist/css/swiper.css'
@@ -414,7 +431,7 @@ export default {
   },
   data() {
     return {
-      vipInfo: '',
+      vipInfo: {},
       instance: 0,
       status: null, // 0-未收藏 1-已收藏
       photoButton: false, //是否存在相册
@@ -468,8 +485,8 @@ export default {
       },
       evaluateTitleConf: {
         title: '楼盘评论',
-        linkText: '查看全部',
-        link: `/`
+        linkText: '查看全部'
+        // link: `/market/comment/list/${this.id}?type=0`
       },
       buyAskTitleConf: {
         title: '买房问问',
@@ -496,22 +513,23 @@ export default {
       appointmentImg: require('IMG/market/appointment@2x.png'),
       commentCount: null,
       commnetList: [],
-      linkerInfo: null
+      linkerInfo: null,
+      evaluatingInfo: null,
+      showLoading: false
     }
   },
   async created() {
     this.id = this.$route.params.id
-
     this.getDetailInfo(this.id)
     this.getMarketDetailPhotoInfo()
     this.typeTitleConf.link = `/marketDetail/FamilyList/${this.id}`
     this.newsTitleConf.link = `/marketDetail/marketAllDynamic/${this.id}`
     // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
-    await this.getVipInfo()
+    this.getVipInfo()
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo(this.id)
+    this.getEvaluatingInfo(this.id) //1d98425ff63940fdba3939beb5dc7d98
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -565,6 +583,7 @@ export default {
           this.evaluateTitleConf.title = '楼盘评价（0）'
         }
       }
+      this.evaluateTitleConf.link = `/market/comment/list/${this.id}?type=0`
     },
     // this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
     async getQuestionDetail(linkerId) {
@@ -586,7 +605,9 @@ export default {
 
     goCalculation(e) {
       //进入计算器页面
-      window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama-helper/linker/toNewcalculator?linkerName=' + encodeURI(e)
+      // window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama-helper/linker/toNewcalculator?linkerName=' + encodeURI(e)
+
+      window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'mobile/calculator.html'
     },
 
     /**
@@ -675,6 +696,7 @@ export default {
       this.$router.push({ name: 'marketDetail-commission', params: { id: this.info.linkerId } })
     },
     async getDetailInfo(id) {
+      this.showLoading = true
       // 获取楼盘详情
       const res = await marketService.getLinkerDetail(id)
       this.info = res
@@ -698,6 +720,7 @@ export default {
         linkerName: this.info.linkerName
       }
       this.buyAskTitleConf.link = { name: 'market-asking-list', query: { infos: JSON.stringify(parameterInfo) } }
+      this.showLoading = false
     },
     swipeChange(val) {
       this.swipeCurrent = val
@@ -1251,13 +1274,18 @@ export default {
       padding: 0 15px;
       width: 100%;
       display: flex;
+
       img {
         width: 120px;
         height: 90px;
         margin-right: 8px;
+        border-radius: 6px;
       }
-      .right {
-        p:nth-child(1) {
+
+      .right-body {
+        position: relative;
+
+        > .aa {
           width: 216px;
           line-height: 22px;
           font-size: 16px;
@@ -1266,7 +1294,10 @@ export default {
           color: rgba(51, 51, 51, 1);
           margin-bottom: 10px;
         }
-        p:nth-child(2) {
+
+        > .bb {
+          position: absolute;
+          bottom: 0;
           line-height: 17px;
           font-size: 12px;
           font-family: PingFangSC-Regular;
@@ -1274,11 +1305,35 @@ export default {
           color: rgba(153, 153, 153, 1);
           overflow: hidden;
           text-overflow: ellipsis;
-          display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           width: 216px;
+          display: -webkit-box;
         }
+
+        // p:nth-child(1) {
+        //   width: 216px;
+        //   line-height: 22px;
+        //   font-size: 16px;
+        //   font-family: PingFangSC-Regular;
+        //   font-weight: 400;
+        //   color: rgba(51, 51, 51, 1);
+        //   margin-bottom: 10px;
+        // }
+        // p:nth-child(2) {
+        //   line-height: 17px;
+        //   font-size: 12px;
+        //   font-family: PingFangSC-Regular;
+        //   font-weight: 400;
+        //   color: rgba(153, 153, 153, 1);
+        //   overflow: hidden;
+        //   text-overflow: ellipsis;
+        //   display: -webkit-box;
+        //   -webkit-line-clamp: 2;
+        //   -webkit-box-orient: vertical;
+        //   width: 216px;
+        //   align-content: flex-end
+        // }
       }
     }
   }
@@ -1357,7 +1412,7 @@ export default {
             -webkit-box-orient: vertical;
             vertical-align: top;
             vertical-align: middle;
-            img{
+            img {
               width: 15px;
               height: 12px;
               vertical-align: middle;
@@ -1840,6 +1895,27 @@ export default {
         }
       }
     }
+  }
+}
+// loading
+.loading {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 3;
+  .van-loading {
+    display: inline-block;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    z-index: 5;
+    margin-left: -25px;
+    margin-top: -25px;
   }
 }
 </style>

@@ -13,7 +13,7 @@
           <div class="user-info">
             <p class="name">
               <b>{{commnetInfo.nickName | formatName}}</b>
-              <span v-show="commnetInfo.userTag">{{commnetInfo.userTag | formatTag}}</span>
+              <span v-show="commnetInfo.userTag === 1">{{commnetInfo.userTag | formatTag}}</span>
             </p>
             <div class="star"><van-rate v-model="commnetInfo.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
           </div>
@@ -349,6 +349,7 @@ export default {
       }
       .comment-pic{
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         margin-top: 10px;
         .pic-box{
@@ -356,6 +357,7 @@ export default {
           height: 60px;
           overflow: hidden;
           border-radius: 6px;
+          margin-bottom: 10px;
           img{
             min-height: 60px;
             min-width: 80px;

@@ -93,7 +93,6 @@ export default {
   },
   mounted() {},
   async created() {
-    await this.getVipInfo()
     let data = window.localStorage.getItem('marketCity') ? JSON.parse(window.localStorage.getItem('marketCity')) : ''
     if (data) {
       this.historyCity = data
@@ -102,6 +101,7 @@ export default {
       this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
     }
     this.searchContent.siteText = this.selectedCity || '全国'
+    await this.getVipInfo()
     this.getBrokerInfo()
     await this.hotMarketHandle()
   },
