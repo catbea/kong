@@ -598,7 +598,9 @@ export default {
 
     goCalculation(e) {
       //进入计算器页面
-      window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama-helper/linker/toNewcalculator?linkerName=' + encodeURI(e)
+      // window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'panorama-helper/linker/toNewcalculator?linkerName=' + encodeURI(e)
+
+      window.location.href = process.env.VUE_APP_AW_SIT_CALCU + 'mobile/calculator.html'
     },
 
     /**
