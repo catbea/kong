@@ -30,7 +30,7 @@
                   <div class="user-info">
                     <p class="name">
                       <b>{{item.nickName | formatName}}</b>
-                      <span v-show="item.userTag === 1">{{item.userTag | formatTag}}</span>
+                      <span v-show="item.userTag !== 2">{{item.userTag | formatTag}}</span>
                     </p>
                     <div class="star"><van-rate v-model="item.starLevel" :size="10" :count="5" :readonly="true" color="#ED8147" void-icon="star" /></div>
                   </div>
@@ -285,7 +285,7 @@ export default {
       let tag = {
         1: '实看用户',
         2: '未实看用户',
-        3: '管理员'
+        3: '系统客服'
       }
       return tag[val]
     },
