@@ -20,7 +20,7 @@ export default [
     name: 'map-Search',
     component: resolve => require(['@/views/public/mapSearch.vue'], resolve),
     meta: {
-      title: '地图看房'
+      title: '位置周边'
     }
   },
   {
