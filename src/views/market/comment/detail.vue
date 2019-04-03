@@ -141,7 +141,7 @@ export default {
       ImagePreview({
         images: imgs,
         startPosition: index,
-        loop: true,
+        loop: false,
         onClose() {
           // do something
         }
@@ -566,3 +566,9 @@ export default {
 }
 </style>
 
+<style>
+.van-image-preview__image{
+    max-height: 90%!important;
+    max-width: 90%!important;
+  }
+</style>

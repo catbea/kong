@@ -2,7 +2,7 @@
   <div class="comment-write">
     <div class="comment-write-info">
       <div class="house">
-        <h3>你看过该楼盘啊吗？</h3>
+        <h3>你看过该楼盘吗？</h3>
         <p><span v-for="(item,index) in houseTag" :key="index" :class="{'active': userTag === index}" @click="userTag=index">{{item}}</span></p>
       </div>
       <div class="star-box">

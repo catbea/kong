@@ -203,7 +203,7 @@
     <div class="house-circum" v-if="info.houseAroundType&&info.houseAroundType.length>0">
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
-        <van-tabs v-model="mapTab" color="#007AE6" swipeable>
+        <van-tabs v-model="mapTab" color="#007ae6" title-active-color="#007ae6" :line-height="0" swipeable>
           <van-tab
             v-for="item in info.houseAroundType"
             :key="item.name"
@@ -218,7 +218,7 @@
     </div>
     <!-- 楼盘评测 -->
     <div class="evaluating-box" v-if="this.evaluatingInfo">
-      <title-bar :conf="evaluatingTitleConf" @click="enterEvaluation"/>
+      <title-bar :conf="evaluatingTitleConf"/>
       <div class="evaluating-content" @click="enterEvaluation">
         <img
           class="bg_img evaluating-img"
@@ -271,7 +271,7 @@
                 <p>
                   {{item.nickName | privacyName() }}
                   <span
-                    v-if="item.userTag"
+                    v-if="item.userTag===1"
                   >{{item.userTag | formatTag}}</span>
                 </p>
                 <p>
@@ -528,8 +528,16 @@ export default {
     this.getVipInfo()
     this.getCommentCount()
     this.getCommentList()
+    // this.getQuestionDetail('488cbcde9fd5463bbe2ed1724a93f77c')
+    // this.getEvaluatingInfo('1d98425ff63940fdba3939beb5dc7d98')
+
+    // this.getQuestionDetail('')
+    // this.getEvaluatingInfo('')
+
+    
     this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo(this.id) //1d98425ff63940fdba3939beb5dc7d98
+    this.getEvaluatingInfo(this.id)
+
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -557,6 +565,11 @@ export default {
     async getEvaluatingInfo(linkerId) {
       let result = await marketService.getEvaluatingInfo(linkerId)
       this.evaluatingInfo = result
+
+      this.evaluatingTitleConf.link = {
+        name: 'market-marketEvaluating',
+        query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
+      }
     },
 
     // 楼盘评论分类统计
@@ -1125,7 +1138,6 @@ export default {
             > img {
               width: 16px;
               height: 16px;
-              margin-top: 3px;
             }
 
             > span {
@@ -1259,7 +1271,7 @@ export default {
       }
     }
     .map-box {
-      margin: 15px 15px;
+      margin: 0 15px;
       width: 345px;
       height: 190px;
       border-radius: 10px;
@@ -1340,7 +1352,7 @@ export default {
   > .evaluate-box {
     margin-top: 40px;
     .evaluate-content {
-      margin-top: 16px;
+      margin-top: 10px;
       padding: 0 15px;
       width: 100%;
       .evaluate-label {
@@ -1355,12 +1367,13 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(139, 151, 167, 1);
+        margin-bottom: 5px;
       }
       .evaluate-label:nth-child(2) {
         margin: 0 9px;
       }
       .evaluate-detail {
-        margin-top: 20px;
+        margin-top: 10px;
         li {
           padding: 10px 0;
           .top {
@@ -1376,7 +1389,8 @@ export default {
               font-family: PingFangSC-Medium;
               font-weight: 500;
               color: rgba(51, 51, 51, 1);
-              margin-bottom: 18px;
+              margin-bottom: 10px;
+              vertical-align: middle;
               span {
                 display: inline-block;
                 width: 60px;
@@ -1390,6 +1404,7 @@ export default {
                 font-family: PingFangSC-Regular;
                 font-weight: 400;
                 color: rgba(92, 95, 102, 1);
+                vertical-align: middle;
               }
               i {
                 display: inline-block;
@@ -1435,7 +1450,7 @@ export default {
         width: 82px;
         height: 30px;
         border-radius: 4px;
-        border: 1px solid rgba(68, 81, 102, 1);
+        border: 1px solid rgba(68, 81, 102, 0.5);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
@@ -1447,7 +1462,7 @@ export default {
     .evaluate-content-nodata {
       font-size: 12px;
       background-color: #f8fafc;
-      border: 1px dashed rgba(205, 214, 225, 0.8);
+      border: 1px dashed rgba(248,250,252,1);
       text-align: center;
       padding: 20px;
       margin: 16px;
@@ -1604,8 +1619,8 @@ export default {
 
     .evaluate-content-nodata {
       font-size: 12px;
-      background-color: rgba(205, 214, 225, 0.5);
-      border: 1px dashed rgba(205, 214, 225, 0.8);
+      background:rgba(248,250,252,1);
+      border: 1px dashed rgba(205,214,225,1);
       text-align: center;
       padding: 20px;
       margin: 16px;
@@ -1616,10 +1631,9 @@ export default {
       button {
         border: 1px solid #445166;
         border-radius: 4px;
-        color: #445166;
         height: 30px;
         padding: 6px 16px;
-        background-color: rgba(205, 214, 225, 0.5);
+         background:rgba(248,250,252,1);
       }
     }
 
@@ -1918,4 +1932,16 @@ export default {
     margin-top: -25px;
   }
 }
+</style>
+
+<style lang="less">
+.house-circum{
+  .van-tab--active {
+    color: #007ae6;
+  }
+  .van-hairline--top-bottom::after{
+    border-width: 0;
+  }
+}
+  
 </style>
