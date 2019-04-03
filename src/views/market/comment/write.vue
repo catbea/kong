@@ -2,7 +2,7 @@
   <div class="comment-write">
     <div class="comment-write-info">
       <div class="house">
-        <h3>你看过该楼盘啊吗？</h3>
+        <h3>你看过该楼盘吗？</h3>
         <p><span v-for="(item,index) in houseTag" :key="index" :class="{'active': userTag === index}" @click="userTag=index">{{item}}</span></p>
       </div>
       <div class="star-box">
@@ -23,7 +23,7 @@
             <van-icon name="clear"  @click="deleteImg(index)"/>
           </div>
           <div class="uploader-box" v-show="imgList.length < 12">
-            <van-uploader :after-read="onRead" accept="image/*">
+            <van-uploader :after-read="onRead" accept="image/*" multiple>
                 <img class="photo" src="../../../assets/img/market/comment/photo.png" alt="">
                 <p class="tips">添加照片</p>
             </van-uploader>
@@ -112,8 +112,18 @@ export default {
     },
     // 图片上传组件
     onRead(file) {
-      let data = file.content
-      this.uploadCropperImg(data)
+      if(file.length > 12) {
+        return this.$toast('最多只能上传12张图片！')
+      }
+      if (file.length) {
+        file.forEach(element => {
+          let data = element.content
+          this.uploadCropperImg(data)
+        })
+      } else {
+        let data = file.content
+        this.uploadCropperImg(data)
+      }
     },
     // 图片压缩上传
     uploadCropperImg(imgData) {
