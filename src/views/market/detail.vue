@@ -529,7 +529,7 @@ export default {
     this.getCommentCount()
     this.getCommentList()
     this.getQuestionDetail(this.id)
-    this.getEvaluatingInfo('1d98425ff63940fdba3939beb5dc7d98') //1d98425ff63940fdba3939beb5dc7d98
+    this.getEvaluatingInfo(this.id) //1d98425ff63940fdba3939beb5dc7d98
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
