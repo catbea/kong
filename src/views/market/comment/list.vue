@@ -188,7 +188,7 @@ export default {
       ImagePreview({
         images: imgs,
         startPosition: i,
-        loop: true,
+        loop: false,
         onClose() {
           // do something
         }

@@ -203,7 +203,7 @@
     <div class="house-circum" v-if="info.houseAroundType&&info.houseAroundType.length>0">
       <title-bar :conf="aroundTitleConf"/>
       <div class="tab-box">
-        <van-tabs v-model="mapTab" color="#007AE6" swipeable>
+        <van-tabs v-model="mapTab" color="#007ae6" title-active-color="#007ae6" :line-height="0" swipeable>
           <van-tab
             v-for="item in info.houseAroundType"
             :key="item.name"
@@ -1271,7 +1271,7 @@ export default {
       }
     }
     .map-box {
-      margin: 15px 15px;
+      margin: 0 15px;
       width: 345px;
       height: 190px;
       border-radius: 10px;
@@ -1932,4 +1932,16 @@ export default {
     margin-top: -25px;
   }
 }
+</style>
+
+<style lang="less">
+.house-circum{
+  .van-tab--active {
+    color: #007ae6;
+  }
+  .van-hairline--top-bottom::after{
+    border-width: 0;
+  }
+}
+  
 </style>
