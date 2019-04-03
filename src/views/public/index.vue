@@ -21,7 +21,12 @@ export default {
     if (defaultPath) {
       localStorage.removeItem('defaultPath')
       // alert(defaultPath)
-      this.$router.replace({ path: defaultPath })
+      if (defaultPath === '/write-article') {
+        this.$router.replace({ path: defaultPath })
+      }else {
+        this.$router.push({ path: defaultPath })
+      }
+      
     } else {
       if (!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
         this.$router.replace('/public/complete-info')
