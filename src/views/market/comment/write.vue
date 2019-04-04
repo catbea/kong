@@ -65,13 +65,13 @@ export default {
       showLoading: false,
       content: '',
       debounce: false, // 重复提交
-      localIds: [],
-      localData: []
+      isAndroid: false
     }
   },
   created () {
     this.initCos()
     this.marketId = this.$route.params.id
+    this.isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1
     // 获取缓存数据
     let data = window.sessionStorage.getItem('commentData')
     if (data) {
@@ -92,6 +92,9 @@ export default {
       }
       if (content.length > 150) {
         return this.$toast('楼盘评论不能超过150个字！')
+      }
+      if (this.imgList.length > 12) {
+         return this.$toast('最多只能上传12张图片！')
       }
       this.insertLinkerComment()
     },
@@ -118,18 +121,14 @@ export default {
     },
     // 微信选择图片
     chooseImg () {
-      alert(wx)
       let _this = this
-      let num = 12 - this.imgList.length
-      alert(num)
       wx.chooseImage({
         count: 9, // 默认9
         sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
-          console.log(' res.localIds',  res.localIds)
-          _this.localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-          _this.localIds.forEach(ele => {
+          let localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          localIds.forEach(ele => {
             _this.getLocalImgData(ele)
           })
         }
@@ -137,13 +136,16 @@ export default {
     },
     // 获取微信图片base64
     getLocalImgData (localId) {
-      alert(wx)
       let _this = this
       wx.getLocalImgData({
         localId: localId, // 图片的localID
         success: function (res) {
-          console.log('_this.localData', res.localData)
-          _this.localData.push(res.localData) // localData是图片的base64数据，可以用img标签显示
+          let data = res.localData
+          if(this.isAndroid) {
+            data = 'data:image/png;base64,' + data
+          }
+          console.log('data', data)
+          _this.uploadCropperImg(data)
         }
       })
     },
