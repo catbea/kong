@@ -121,8 +121,9 @@ export default {
       alert(wx)
       let _this = this
       let num = 12 - this.imgList.length
+      alert(num)
       wx.chooseImage({
-        count: num, // 默认9
+        count: 12, // 默认9
         sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
