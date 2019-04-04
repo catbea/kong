@@ -60,7 +60,9 @@ export default {
     noData: false,
     current: 1,
     askingList: [],
-    linkerName: ''
+    linkerName: '',
+    questionNum:'',
+    replyNum:''
   }),
   created() {
     var jsonInfo = JSON.parse(this.$route.query.infos)
