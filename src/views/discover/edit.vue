@@ -124,8 +124,6 @@ export default {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
 
-      console.log(Number(this.info.source), 'this.info.source')
-
       if(!this.info || isNaN(Number(this.info.source))) {
         // this.pushFlag = true
         this.loaddingStatus = true
@@ -151,7 +149,8 @@ export default {
           if(dom.tagName == 'STYLE') {
             let style = document.createElement("style");
             style.type = "text/css";
-            style.appendChild(document.createTextNode(dom.innerHTML))
+            let styleStr = dom.innerHTML.replace(/body\{[^\}]*\}/g,"").replace(/\*\{[^\}]*\}/g,"")
+            style.appendChild(document.createTextNode(styleStr))
             head.appendChild(style)
           } else {
             head.appendChild(dom)
@@ -163,6 +162,7 @@ export default {
           status: 'edit'
         })
       }
+      
       if (this.info.editData !== '') {
         try {
           let editData = JSON.parse(this.info.editData)
