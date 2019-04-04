@@ -118,6 +118,7 @@ export default {
     },
     // 微信选择图片
     chooseImg () {
+      alert(wx)
       let _this = this
       let num = 12 - this.imgList.length
       wx.chooseImage({
@@ -135,6 +136,7 @@ export default {
     },
     // 获取微信图片base64
     getLocalImgData (localId) {
+      alert(wx)
       let _this = this
       wx.getLocalImgData({
         localId: localId, // 图片的localID
