@@ -28,7 +28,7 @@
                 <p class="tips">添加照片</p>
             </van-uploader>
           </div> -->
-          <div class="uploader-box" @click="chooseImg">
+          <div class="uploader-box" @click="chooseImg"  v-show="imgList.length < 12">
             <img class="photo" src="../../../assets/img/market/comment/photo.png" alt="">
             <p class="tips">添加照片</p>
           </div>

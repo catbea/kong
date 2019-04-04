@@ -114,7 +114,8 @@ export default {
       replayCnt: '',
       showDialog: false,
       showNodata: false,
-      debounce: false // 重复提交
+      debounce: false, // 重复提交
+      imagePreviewObj: ''
     }
   },
   created () {
@@ -138,7 +139,7 @@ export default {
       let imgs = this.commnetInfo.imgList.map(item => {
         return item.imgUrl
       })
-      ImagePreview({
+      this.imagePreviewObj = ImagePreview({
         images: imgs,
         startPosition: index,
         loop: false,
@@ -281,6 +282,9 @@ export default {
       let d = date.getDate()
       return `${y}年${m}月${d}日`
     }
+  },
+  beforeDestroy () {
+    this.imagePreviewObj.close()
   }
 }
 </script>
