@@ -236,7 +236,7 @@
     <div class="evaluate-box">
       <title-bar :conf="evaluateTitleConf"/>
       <div class="evaluate-content" v-if="commnetList.length">
-        <div>
+        <div v-if="commentCount">
           <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
           <router-link
             class="evaluate-label"
@@ -866,11 +866,12 @@ export default {
         })
         let time = new Date(+this.vipInfo.expireTimestamp)
         let year = time.getFullYear()
-        let mou = time.getMonth() + 1
-        let date = time.getDate()
-        this.info.expireTime = `0${mou}/0${date}`
+        let mou = (time.getMonth() + 1) < 10 ? '0' + (time.getMonth() + 1) : (time.getMonth() + 1)
+        let date = time.getDate() < 10 ? '0' + time.getDate() : time.getDate()
+        this.info.expireTime = `${mou}/${date}`
         // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
         this.info.openStatus = 2
+        this.info.expireFlag = 1
         // await this.getDetailInfo(this.id)
       } else {
         this.openHandler()
