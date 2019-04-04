@@ -119,13 +119,14 @@ export default {
     // 微信选择图片
     chooseImg () {
       let _this = this
+      let num = 12 - this.imgList.length
       wx.chooseImage({
-        count: 12 - _this.imgList.length, // 默认9
+        count: num, // 默认9
         sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
         success: function (res) {
-          _this.localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           console.log(' res.localIds',  res.localIds)
+          _this.localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
           _this.localIds.forEach(ele => {
             _this.getLocalImgData(ele)
           })
@@ -138,8 +139,8 @@ export default {
       wx.getLocalImgData({
         localId: localId, // 图片的localID
         success: function (res) {
+          console.log('_this.localData', res.localData)
           _this.localData.push(res.localData) // localData是图片的base64数据，可以用img标签显示
-          console.log('_this.localData', _this.localData)
         }
       })
     },
