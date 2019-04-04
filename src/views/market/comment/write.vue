@@ -22,12 +22,12 @@
             </div>
             <van-icon name="clear"  @click="deleteImg(index)"/>
           </div>
-          <div class="uploader-box" v-show="imgList.length < 12">
+          <!-- <div class="uploader-box" v-show="imgList.length < 12">
             <van-uploader :after-read="onRead" accept="image/*" multiple="multiple">
                 <img class="photo" src="../../../assets/img/market/comment/photo.png" alt="">
                 <p class="tips">添加照片</p>
             </van-uploader>
-          </div>
+          </div> -->
           <div class="uploader-box" @click="chooseImg">
             <img class="photo" src="../../../assets/img/market/comment/photo.png" alt="">
             <p class="tips">添加照片</p>
@@ -141,7 +141,7 @@ export default {
         localId: localId, // 图片的localID
         success: function (res) {
           let data = res.localData
-          if(this.isAndroid) {
+          if(_this.isAndroid) {
             data = 'data:image/png;base64,' + data
           }
           console.log('data', data)
