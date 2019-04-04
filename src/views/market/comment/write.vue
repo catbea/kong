@@ -28,6 +28,10 @@
                 <p class="tips">添加照片</p>
             </van-uploader>
           </div>
+          <div class="uploader-box" @click="chooseImg">
+            <img class="photo" src="../../../assets/img/market/comment/photo.png" alt="">
+            <p class="tips">添加照片</p>
+          </div>
         </div>
       </div>
       <div class="agrees" @click="goStandard">查看 《用户点评行为规范》</div>
@@ -60,7 +64,9 @@ export default {
       imgList: [],
       showLoading: false,
       content: '',
-      debounce: false // 重复提交
+      debounce: false, // 重复提交
+      localIds: [],
+      localData: []
     }
   },
   created () {
@@ -109,6 +115,33 @@ export default {
         this.$router.push(`/market/comment/list/${this.marketId}`)
       }, 1000)
 
+    },
+    // 微信选择图片
+    chooseImg () {
+      let _this = this
+      wx.chooseImage({
+        count: 12 - this.imgList.length, // 默认9
+        sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          _this.localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          console.log(' res.localIds',  res.localIds)
+          _this.localIds.forEach(ele => {
+            _this.getLocalImgData(ele)
+          })
+        }
+      })
+    },
+    // 获取微信图片base64
+    getLocalImgData (localId) {
+      let _this = this
+      wx.getLocalImgData({
+        localId: localId, // 图片的localID
+        success: function (res) {
+          _this.localData.push(res.localData) // localData是图片的base64数据，可以用img标签显示
+          console.log('_this.localData', _this.localData)
+        }
+      })
     },
     // 图片上传组件
     onRead(file) {
