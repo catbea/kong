@@ -361,6 +361,7 @@ export default {
               height: 36px;
               border-radius: 50%;
               margin-right: 15px;
+              object-fit: cover;
             }
             .user-info{
               .name{

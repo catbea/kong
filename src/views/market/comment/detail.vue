@@ -326,6 +326,7 @@ export default {
           height: 36px;
           border-radius: 50%;
           margin-right: 15px;
+          object-fit: cover;
         }
         .user-info{
           .name{
@@ -411,6 +412,7 @@ export default {
             border-radius: 50%;
             margin-right: 15px;
             margin-top: 5px;
+            object-fit: cover;
           }
           .user-info{
             flex: 1;
