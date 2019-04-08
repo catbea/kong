@@ -99,7 +99,7 @@ export default {
       this.scrollHander(e.target.innerText)
 
       window.addEventListener('touchmove', this.handleTouchMove, false)
-      window.addEventListener('touchend', this.handleTouchEnd)
+      window.addEventListener('touchend', this.handleTouchEnd, false)
 
       if (e.target.innerText == '热') {
         document.getElementById('hot-city-box').scrollIntoView()
@@ -156,8 +156,8 @@ export default {
   },
   beforeDestroy() {
     try {
-      window.removeEventListener('touchmove')
-      window.removeEventListener('touchend')
+      window.removeEventListener('touchmove', this.handleTouchMove, false)
+      window.removeEventListener('touchend', this.handleTouchEnd,false)
     } catch (error) {}
   }
 }

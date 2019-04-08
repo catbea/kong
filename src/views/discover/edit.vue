@@ -329,6 +329,9 @@ export default {
     },
     closeHelp() {
       this.helpShow = false
+    },
+    touchHandler(e) {
+      return e.preventDefault()
     }
   },
   computed: {
@@ -352,15 +355,13 @@ export default {
   mounted() {
     document.querySelector('.fixed-bar').addEventListener(
       'touchmove',
-      e => {
-        e.preventDefault()
-      },
+      this.touchHandler,
       { passive: false }
     )
   },
   beforeDestroy() {
     try {
-      document.querySelector('.fixed-bar').removeEventListener('touchmove')
+      document.querySelector('.fixed-bar').removeEventListener('touchmove',this.touchHandler,false)
     } catch (error) {}
   }
 }

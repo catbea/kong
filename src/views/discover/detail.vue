@@ -614,6 +614,9 @@ export default {
             this.$router.go(-1)
           }, 1000)
         })
+    },
+    touchHandler(e) {
+      return e.preventDefault()
     }
   },
   watch: {
@@ -625,15 +628,13 @@ export default {
   mounted() {
     document.querySelector('.tools-bar').addEventListener(
       'touchmove',
-      e => {
-        e.preventDefault()
-      },
+      this.touchHandler,
       { passive: false }
     )
   },
   beforeDestroy() {
     try {
-      document.querySelector('.tools-bar').removeEventListener('touchmove')
+      document.querySelector('.tools-bar').removeEventListener('touchmove',this.touchHandler,false)
     } catch (error) {}
   }
 }
