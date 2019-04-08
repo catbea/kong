@@ -166,8 +166,8 @@ export default {
     // 图片压缩上传
     uploadCropperImg(imgData) {
       this.showLoading = true
-      let image = new Image()
-      image.src = imgData
+      // let image = new Image()
+      // image.src = imgData
       // if (imgData.length > 100 * 1024) {
       //   let that = this
       //   image.onload = function() {
