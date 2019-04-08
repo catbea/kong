@@ -220,12 +220,15 @@
     <div class="evaluating-box" v-if="this.evaluatingInfo">
       <title-bar :conf="evaluatingTitleConf"/>
       <div class="evaluating-content" @click="enterEvaluation">
-        <img
-          class="bg_img evaluating-img"
-          :src="evaluatingInfo&&evaluatingInfo.cover"
-          alt=""
-          srcset=""
-        >
+        <div class="pic-box">
+          <img
+            class="bg_img evaluating-img"
+            :src="evaluatingInfo&&evaluatingInfo.cover"
+            alt=""
+            srcset=""
+          >
+        </div>
+        
         <div class="right-body">
           <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
           <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
@@ -1288,17 +1291,19 @@ export default {
       padding: 0 15px;
       width: 100%;
       display: flex;
-
-      img {
+      .pic-box{
         width: 120px;
         height: 90px;
-        margin-right: 8px;
+        overflow: hidden;
         border-radius: 6px;
+        margin-right: 8px;
+        img {
+          min-width: 120px;
+          min-height: 90px; 
+        }
       }
-
       .right-body {
         position: relative;
-
         > .aa {
           width: 216px;
           line-height: 22px;
