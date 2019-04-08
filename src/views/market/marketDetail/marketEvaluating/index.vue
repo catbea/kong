@@ -14,6 +14,7 @@
         class="thumbs-up"
         :style="{'background':backgroundColor}"
         @click="setThumbsLike(likeFlag)"
+        v-if="showThumb===true"
       >
         <img class="thumb-img" :src="thumbImg">
         <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
@@ -41,7 +42,8 @@ export default {
     likeFlag: '', //点赞或者取消点赞
     backgroundColor: '#FABE9E',
     EvaluatingInfo: '',
-    thumbImg: require('IMG/market/thumb.png')
+    thumbImg: require('IMG/market/thumb.png'),
+    showThumb: false
   }),
 
   created() {
@@ -49,11 +51,6 @@ export default {
     this.agentId = this.$route.query.userInfo
     this.userType = this.$route.query.userType
     this.enterpriseId = this.$route.query.enterpriseId
-
-    console.log('1:'+this.reviewId)
-    console.log('2:'+this.agentId)
-    console.log('3:'+this.userType)
-    console.log('4:'+this.enterpriseId)
 
     this.getEvaluatingDetail(this.reviewId, this.agentId, this.userType, this.enterpriseId)
   },
@@ -67,6 +64,7 @@ export default {
       var arr = Object.keys(result)
       if (arr.length != 0) {
         this.EvaluatingInfo = result
+        this.showThumb = true
 
         if (result.isLike === false) {
           this.backgroundColor = '#FABE9E'
@@ -75,12 +73,14 @@ export default {
           this.backgroundColor = '#FA8548'
           this.likeFlag = '1' //取消点赞
         }
+      } else {
+        this.showThumb = false
       }
     },
 
     async setThumbsLike(likeFlag) {
       //点赞和取消点赞
-      const result = await marketService.thumbsLike(this.reviewId,this.agentId,this.userType,likeFlag,this.enterpriseId)
+      const result = await marketService.thumbsLike(this.reviewId, this.agentId, this.userType, likeFlag, this.enterpriseId)
       if (result == '') {
         //表示已经请求成功
         if (likeFlag == '0') {
