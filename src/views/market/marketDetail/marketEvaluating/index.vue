@@ -1,27 +1,27 @@
 <template>
-  <div class="html-body">
-    <div class="title-bar">
-      <div class="title-text">{{this.EvaluatingInfo.title}}</div>
-      <div class="evaluating-bottom">
-        <span>作者：{{this.EvaluatingInfo.author}}</span>
-        <span>发布时间：{{this.EvaluatingInfo.createTime|dateTimeFormatter(5)}}</span>
+  <div>
+    <div class="html-body" v-if="this.showThumb===true">
+      <div class="title-bar">
+        <div class="title-text">{{this.EvaluatingInfo.title}}</div>
+        <div class="evaluating-bottom">
+          <span>作者：{{this.EvaluatingInfo.author}}</span>
+          <span>发布时间：{{this.EvaluatingInfo.createTime|dateTimeFormatter(5)}}</span>
+        </div>
       </div>
-    </div>
-    <div class="html-style" v-html="this.EvaluatingInfo.content"></div>
-    <div class="thumbs-body">
-      <div
-        class="thumbs-up"
-        :style="{'background':backgroundColor}"
-        @click="setThumbsLike(likeFlag)"
-        v-if="this.showThumb===true"
-      >
-        <img class="thumb-img" :src="thumbImg">
-        <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
+      <div class="html-style" v-html="this.EvaluatingInfo.content"></div>
+      <div class="thumbs-body">
+        <div
+          class="thumbs-up"
+          :style="{'background':backgroundColor}"
+          @click="setThumbsLike(likeFlag)"
+        >
+          <img class="thumb-img" :src="thumbImg">
+          <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
+        </div>
       </div>
     </div>
 
-    <van-loading class="loading-style"  v-if="this.showThumb===false" />
-
+    <van-loading class="loading-style" size="20" v-else/>
   </div>
 </template>
 
@@ -32,7 +32,6 @@
 <script>
 import marketService from 'SERVICE/marketService'
 import { mapGetters } from 'vuex'
-
 
 export default {
   components: {
@@ -109,7 +108,7 @@ export default {
   margin-top: 32px;
   flex-direction: column;
 
-  > .loading-style{
+  > .loading-style {
     display: flex;
     width: 50px;
     height: 50px;
@@ -118,7 +117,6 @@ export default {
     margin-left: 45%;
     margin-top: 45%;
   }
-
 
   > .title-bar {
     display: flex;
