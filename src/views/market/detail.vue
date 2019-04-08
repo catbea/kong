@@ -1641,7 +1641,7 @@ export default {
         color: #969ea8;
       }
       button {
-        border: 0.5px solid #445166;
+        border: 1px solid #445166;
         border-radius: 4px;
         height: 30px;
         padding: 6px 16px;
