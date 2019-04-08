@@ -14,7 +14,7 @@
         class="thumbs-up"
         :style="{'background':backgroundColor}"
         @click="setThumbsLike(likeFlag)"
-        v-if="showThumb===true"
+        v-if="this.showThumb===true"
       >
         <img class="thumb-img" :src="thumbImg">
         <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
