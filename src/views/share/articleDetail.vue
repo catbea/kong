@@ -333,8 +333,25 @@ export default {
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content
-
       for (let dom of virtualDom.children) {
+        if(dom.tagName == 'META') {
+          continue
+        }
+        if(dom.tagName == 'STYLE' || dom.tagName == 'LINK') {
+          // console.log(dom, dom.tagName)
+          let head = document.getElementsByTagName("head")[0]
+          if(dom.tagName == 'STYLE') {
+            let style = document.createElement("style");
+            style.type = "text/css";
+            let styleStr = dom.innerHTML.replace(/body\{[^\}]*\}/g,"").replace(/\*\{[^\}]*\}/g,"")
+            style.appendChild(document.createTextNode(styleStr))
+            head.appendChild(style)
+          } else {
+            head.appendChild(dom)
+          }
+          continue
+        }
+        
         this.renderDom.push({
           text: dom.innerHTML,
           status: 'view'

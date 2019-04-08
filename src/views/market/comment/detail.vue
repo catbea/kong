@@ -47,7 +47,7 @@
                   <img class="usre-img" :src="item.avatarUrl" alt="" srcset="">
                   <div class="user-info">
                     <p class="name">
-                      <b>{{item.nickName | formatName}}</b>
+                      <b>{{item.nickName | formatName(item)}}</b>
                       <span v-show="item.userTag && item.userTag !== 2">{{item.userTag | formatTag}}</span>
                     </p>
                     <div class="star">{{item.createTimeStamp | formatData}}</div>
@@ -114,7 +114,8 @@ export default {
       replayCnt: '',
       showDialog: false,
       showNodata: false,
-      debounce: false // 重复提交
+      debounce: false, // 重复提交
+      imagePreviewObj: ''
     }
   },
   created () {
@@ -138,7 +139,7 @@ export default {
       let imgs = this.commnetInfo.imgList.map(item => {
         return item.imgUrl
       })
-      ImagePreview({
+      this.imagePreviewObj = ImagePreview({
         images: imgs,
         startPosition: index,
         loop: false,
@@ -247,12 +248,15 @@ export default {
   },
   filters: {
     // 格式化名称
-    formatName (val) {
+    formatName (val,item) {
       let str = val + ''
       let len = val.length
       if (!len) {
         return ''
-      } else if (len === 1) {
+      } else if (item&&item.userTag === 3) {
+        return val
+      }
+      else if (len === 1) {
         return val + '***'
       } else {
         return `${val[0]}***${val[len-1]}`
@@ -278,6 +282,9 @@ export default {
       let d = date.getDate()
       return `${y}年${m}月${d}日`
     }
+  },
+  beforeDestroy () {
+    this.imagePreviewObj&&this.imagePreviewObj.close()
   }
 }
 </script>
@@ -319,6 +326,7 @@ export default {
           height: 36px;
           border-radius: 50%;
           margin-right: 15px;
+          object-fit: cover;
         }
         .user-info{
           .name{
@@ -404,6 +412,7 @@ export default {
             border-radius: 50%;
             margin-right: 15px;
             margin-top: 5px;
+            object-fit: cover;
           }
           .user-info{
             flex: 1;

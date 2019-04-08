@@ -214,7 +214,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .articleInfo-page {
   background: #ffffff;
   margin: 16px 0;

@@ -220,12 +220,15 @@
     <div class="evaluating-box" v-if="this.evaluatingInfo">
       <title-bar :conf="evaluatingTitleConf"/>
       <div class="evaluating-content" @click="enterEvaluation">
-        <img
-          class="bg_img evaluating-img"
-          :src="evaluatingInfo&&evaluatingInfo.cover"
-          alt=""
-          srcset=""
-        >
+        <div class="pic-box">
+          <img
+            class="bg_img evaluating-img"
+            :src="evaluatingInfo&&evaluatingInfo.cover"
+            alt=""
+            srcset=""
+          >
+        </div>
+        
         <div class="right-body">
           <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
           <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
@@ -236,7 +239,7 @@
     <div class="evaluate-box">
       <title-bar :conf="evaluateTitleConf"/>
       <div class="evaluate-content" v-if="commnetList.length">
-        <div>
+        <div v-if="commentCount">
           <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
           <router-link
             class="evaluate-label"
@@ -866,11 +869,12 @@ export default {
         })
         let time = new Date(+this.vipInfo.expireTimestamp)
         let year = time.getFullYear()
-        let mou = time.getMonth() + 1
-        let date = time.getDate()
-        this.info.expireTime = `0${mou}/0${date}`
+        let mou = (time.getMonth() + 1) < 10 ? '0' + (time.getMonth() + 1) : (time.getMonth() + 1)
+        let date = time.getDate() < 10 ? '0' + time.getDate() : time.getDate()
+        this.info.expireTime = `${mou}/${date}`
         // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
         this.info.openStatus = 2
+        this.info.expireFlag = 1
         // await this.getDetailInfo(this.id)
       } else {
         this.openHandler()
@@ -1287,17 +1291,18 @@ export default {
       padding: 0 15px;
       width: 100%;
       display: flex;
-
-      img {
+      .pic-box{
         width: 120px;
         height: 90px;
-        margin-right: 8px;
+        overflow: hidden;
         border-radius: 6px;
+        margin-right: 8px;
+        img {
+          object-fit:  contain;
+        }
       }
-
       .right-body {
         position: relative;
-
         > .aa {
           width: 216px;
           line-height: 22px;

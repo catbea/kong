@@ -70,12 +70,18 @@ export default {
           margin: 9px 0 4px 0;
         }
         h2 {
+          width: 100%;
           font-size: 14px;
-
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 20px;
           margin-bottom: 30px;
+         
+         word-wrap:break-word;
+    word-break:break-all;
+    overflow: hidden;
+
+
         }
       }
     }

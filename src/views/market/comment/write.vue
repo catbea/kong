@@ -22,11 +22,15 @@
             </div>
             <van-icon name="clear"  @click="deleteImg(index)"/>
           </div>
-          <div class="uploader-box" v-show="imgList.length < 12">
-            <van-uploader :after-read="onRead" accept="image/*" multiple>
+          <!-- <div class="uploader-box" v-show="imgList.length < 12">
+            <van-uploader :after-read="onRead" accept="image/*" multiple="multiple">
                 <img class="photo" src="../../../assets/img/market/comment/photo.png" alt="">
                 <p class="tips">添加照片</p>
             </van-uploader>
+          </div> -->
+          <div class="uploader-box" @click="chooseImg"  v-show="imgList.length < 12">
+            <img class="photo" src="../../../assets/img/market/comment/photo.png" alt="">
+            <p class="tips">添加照片</p>
           </div>
         </div>
       </div>
@@ -60,12 +64,14 @@ export default {
       imgList: [],
       showLoading: false,
       content: '',
-      debounce: false // 重复提交
+      debounce: false, // 重复提交
+      isAndroid: false
     }
   },
   created () {
     this.initCos()
     this.marketId = this.$route.params.id
+    this.isAndroid = navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1
     // 获取缓存数据
     let data = window.sessionStorage.getItem('commentData')
     if (data) {
@@ -87,6 +93,9 @@ export default {
       if (content.length > 150) {
         return this.$toast('楼盘评论不能超过150个字！')
       }
+      if (this.imgList.length > 12) {
+         return this.$toast('最多只能上传12张图片！')
+      }
       this.insertLinkerComment()
     },
     // 新增楼盘评论
@@ -106,9 +115,38 @@ export default {
       this.$toast('提交成功！')
       this.debounce = false
       setTimeout(()=>{
-        this.$router.push(`/market/comment/list/${this.marketId}`)
+        this.$router.replace(`/market/comment/list/${this.marketId}`)
       }, 1000)
 
+    },
+    // 微信选择图片
+    chooseImg () {
+      let _this = this
+      wx.chooseImage({
+        count: 9, // 默认9
+        sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          let localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+          localIds.forEach(ele => {
+            _this.getLocalImgData(ele)
+          })
+        }
+      })
+    },
+    // 获取微信图片base64
+    getLocalImgData (localId) {
+      let _this = this
+      wx.getLocalImgData({
+        localId: localId, // 图片的localID
+        success: function (res) {
+          let data = res.localData
+          if(_this.isAndroid) {
+            data = 'data:image/png;base64,' + data
+          }
+          _this.uploadCropperImg(data)
+        }
+      })
     },
     // 图片上传组件
     onRead(file) {
@@ -128,14 +166,14 @@ export default {
     // 图片压缩上传
     uploadCropperImg(imgData) {
       this.showLoading = true
-      let image = new Image()
-      image.src = imgData
-      if (imgData.length > 100 * 1024) {
-        let that = this
-        image.onload = function() {
-          imgData = that.compress(image, '')
-        }
-      }
+      // let image = new Image()
+      // image.src = imgData
+      // if (imgData.length > 100 * 1024) {
+      //   let that = this
+      //   image.onload = function() {
+      //     imgData = that.compress(image, '')
+      //   }
+      // }
       this.postImg(imgData)
     },
     //图片的上传
@@ -309,7 +347,7 @@ export default {
       }
       window.sessionStorage.setItem('commentData', JSON.stringify(cacheData))
     },
-    // 跳转评论详情页面
+    // 跳转评论规范
     goStandard () {
       this.cacheData()
       this.$router.push('/market/comment/standard')

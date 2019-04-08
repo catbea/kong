@@ -215,7 +215,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .dynamicsInfo-page {
   background: #ffffff;
   margin: 20px 0;

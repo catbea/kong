@@ -109,7 +109,8 @@ export default {
       showDialog: false,
       replayIndex: '',
       showNodata: false,
-      debounce: false // 重复提交
+      debounce: false, // 重复提交
+      imagePreviewObj: ''
     }
   },
   created () {
@@ -188,7 +189,7 @@ export default {
       let imgs = this.commnetList[index].imgList.map(item => {
         return item.imgUrl
       })
-      ImagePreview({
+      this.imagePreviewObj = ImagePreview({
         images: imgs,
         startPosition: i,
         loop: false,
@@ -199,7 +200,7 @@ export default {
     },
     // 跳转写点评
     goWrite () {
-      this.$router.push(`/market/comment/write/${this.marketId}`)
+      this.$router.replace(`/market/comment/write/${this.marketId}`)
     },
     // 跳转评论详情
     goDetail (item) {
@@ -269,12 +270,15 @@ export default {
   },
   filters: {
     // 格式化名称
-    formatName (val) {
+    formatName (val,item) {
       let str = val + ''
       let len = val.length
       if (!len) {
         return ''
-      } else if (len === 1) {
+      } else if (item&&item.userTag === 3) {
+        return val
+      }
+      else if (len === 1) {
         return val + '***'
       } else {
         return `${val[0]}***${val[len-1]}`
@@ -300,6 +304,9 @@ export default {
       let d = date.getDate()
       return `${y}年${m}月${d}日`
     }
+  },
+  beforeDestroy () {
+    this.imagePreviewObj&&this.imagePreviewObj.close()
   }
 }
 </script>
@@ -354,6 +361,7 @@ export default {
               height: 36px;
               border-radius: 50%;
               margin-right: 15px;
+              object-fit: cover;
             }
             .user-info{
               .name{
