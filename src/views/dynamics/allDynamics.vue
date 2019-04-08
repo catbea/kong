@@ -113,7 +113,7 @@ export default {
   },
   created() {
     //动态未读状态变为0
-    this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { jumpToDynamicDetail: 0}))
+    this.$store.dispatch('getUserInfo', Object.assign({},this.userInfo, { jumpToDynamicDetail: 0}))
 
     this.active = this.currDataDynamicsTab
     this.allDynamicsNum = this.$route.query.allDynamicsNum
