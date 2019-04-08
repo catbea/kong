@@ -1456,7 +1456,7 @@ export default {
         width: 82px;
         height: 30px;
         border-radius: 4px;
-        border: 1px solid rgba(68, 81, 102, 0.5);
+        border: 1px solid rgba(68, 81, 102, 1);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
@@ -1643,6 +1643,7 @@ export default {
         height: 30px;
         padding: 6px 16px;
         background:rgba(248,250,252,1);
+        background-color: #f8fafc
       }
     }
 
@@ -1656,7 +1657,7 @@ export default {
     }
     .go-evaluate {
       margin-top: 12px;
-      margin-left: 105px;
+      margin-left: 118px;
       display: inline-block;
       width: 82px;
       height: 30px;
