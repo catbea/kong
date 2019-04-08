@@ -44,7 +44,8 @@ export default {
     backgroundColor: '#FABE9E',
     EvaluatingInfo: '',
     thumbImg: require('IMG/market/thumb.png'),
-    showThumb: false
+    showThumb: false,
+    canClick: true
   }),
 
   created() {
@@ -81,20 +82,27 @@ export default {
     },
 
     async setThumbsLike(likeFlag) {
-      //点赞和取消点赞
-      const result = await marketService.thumbsLike(this.reviewId, this.agentId, this.userType, likeFlag, this.enterpriseId)
-      if (result == '') {
-        //表示已经请求成功
-        if (likeFlag == '0') {
-          this.likeNum = this.likeNum + 1
-          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum + 1
-          this.backgroundColor = '#FA8548'
-          this.likeFlag = '1'
-        } else if (likeFlag == '1') {
-          this.likeNum = this.likeNum - 1
-          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum - 1
-          this.backgroundColor = '#FABE9E'
-          this.likeFlag = '0'
+      if (this.canClick === false) {
+        return
+      } else {
+        this.canClick = false
+        //点赞和取消点赞
+        const result = await marketService.thumbsLike(this.reviewId, this.agentId, this.userType, likeFlag, this.enterpriseId)
+        if (result == '') {
+          //表示已经请求成功
+          if (likeFlag == '0') {
+            this.likeNum = this.likeNum + 1
+            this.backgroundColor = '#FA8548'
+            this.likeFlag = '1'
+            this.canClick = true
+          } else if (likeFlag == '1') {
+            this.likeNum = this.likeNum - 1
+            this.backgroundColor = '#FABE9E'
+            this.likeFlag = '0'
+            this.canClick = true
+          }
+        } else {
+          this.canClick = false
         }
       }
     }
