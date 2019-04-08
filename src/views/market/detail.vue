@@ -232,6 +232,7 @@
         <div class="right-body">
           <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
           <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
+           <!-- <div class="bb" v-html='evaluatingInfo&&evaluatingInfo.content'></div>  -->
         </div>
       </div>
     </div>
@@ -569,6 +570,8 @@ export default {
     async getEvaluatingInfo(linkerId) {
       let result = await marketService.getEvaluatingInfo(linkerId)
       this.evaluatingInfo = result
+
+      this.evaluatingInfo.content=this.evaluatingInfo.content.replace(/<[^>]+>/g,"");
 
       this.evaluatingTitleConf.link = {
         name: 'market-marketEvaluating',
