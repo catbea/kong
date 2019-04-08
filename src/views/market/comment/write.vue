@@ -144,7 +144,6 @@ export default {
           if(_this.isAndroid) {
             data = 'data:image/png;base64,' + data
           }
-          console.log('data', data)
           _this.uploadCropperImg(data)
         }
       })
