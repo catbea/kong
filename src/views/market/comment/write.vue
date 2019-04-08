@@ -168,12 +168,12 @@ export default {
       this.showLoading = true
       let image = new Image()
       image.src = imgData
-      if (imgData.length > 100 * 1024) {
-        let that = this
-        image.onload = function() {
-          imgData = that.compress(image, '')
-        }
-      }
+      // if (imgData.length > 100 * 1024) {
+      //   let that = this
+      //   image.onload = function() {
+      //     imgData = that.compress(image, '')
+      //   }
+      // }
       this.postImg(imgData)
     },
     //图片的上传
