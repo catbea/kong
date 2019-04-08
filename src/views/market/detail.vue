@@ -1298,7 +1298,10 @@ export default {
         border-radius: 6px;
         margin-right: 8px;
         img {
-          object-fit:  contain;
+          height: 90px;
+          width: 120px;
+          object-fit:  cover;
+          object-position: center;
         }
       }
       .right-body {
