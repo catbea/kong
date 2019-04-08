@@ -115,7 +115,7 @@ export default {
       this.$toast('提交成功！')
       this.debounce = false
       setTimeout(()=>{
-        this.$router.push(`/market/comment/list/${this.marketId}`)
+        this.$router.replace(`/market/comment/list/${this.marketId}`)
       }, 1000)
 
     },

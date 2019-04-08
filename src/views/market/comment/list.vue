@@ -200,7 +200,7 @@ export default {
     },
     // 跳转写点评
     goWrite () {
-      this.$router.push(`/market/comment/write/${this.marketId}`)
+      this.$router.replace(`/market/comment/write/${this.marketId}`)
     },
     // 跳转评论详情
     goDetail (item) {
@@ -306,7 +306,7 @@ export default {
     }
   },
   beforeDestroy () {
-    this.imagePreviewObj.close()
+    this.imagePreviewObj&&this.imagePreviewObj.close()
   }
 }
 </script>
