@@ -2,13 +2,15 @@
   <div class="dynamic-page">
     <ul>
       <li v-for="(item,index) in list" :key="index">
-        <p>
-          <span></span>
-          {{item.houseDynamicList[0].dynamicTime}}
-        </p>
-        <div class="dynamic-page-box">
-          <h1>{{item.houseDynamicList[0].title}}</h1>
-          <h2>{{item.houseDynamicList[0].content}}</h2>
+        <div v-for="(option ,i) in item.houseDynamicList">
+          <p>
+            <span></span>
+            {{option.dynamicTime}}
+          </p>
+          <div class="dynamic-page-box">
+            <h1>{{option.title}}</h1>
+            <h2>{{option.content}}</h2>
+          </div>
         </div>
       </li>
     </ul>
@@ -61,13 +63,14 @@ export default {
         padding-left: 15px;
         margin-left: 3px;
         border-left: 1px solid rgba(229, 229, 229, 1);
+        padding-bottom: 30px;
         h1 {
           font-size: 18px;
 
           font-weight: 500;
           color: rgba(51, 51, 51, 1);
           line-height: 25px;
-          margin: 9px 0 4px 0;
+          padding: 9px 0 4px 0;
         }
         h2 {
           width: 100%;
@@ -75,7 +78,6 @@ export default {
           font-weight: 400;
           color: rgba(102, 102, 102, 1);
           line-height: 20px;
-          margin-bottom: 30px;
          
          word-wrap:break-word;
     word-break:break-all;

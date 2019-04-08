@@ -74,7 +74,7 @@ export default {
     resInfo: null,
     borderBottom: true,
     containerHeight: '0',
-    vipInfo: '',
+    vipInfo: {},
     historyCity: ''
   }),
   watch: {
