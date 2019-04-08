@@ -16,11 +16,10 @@
           @click="setThumbsLike(likeFlag)"
         >
           <img class="thumb-img" :src="thumbImg">
-          <span class="thumb-num">赞({{this.EvaluatingInfo.likeNum}})</span>
+          <span class="thumb-num">赞({{this.likeNum}})</span>
         </div>
       </div>
     </div>
-
     <van-loading class="loading-style" size="20" v-else/>
   </div>
 </template>
@@ -67,6 +66,7 @@ export default {
       if (arr.length != 0) {
         this.EvaluatingInfo = result
         this.showThumb = true
+        this.likeNum = this.EvaluatingInfo.likeNum
 
         if (result.isLike === false) {
           this.backgroundColor = '#FABE9E'
@@ -86,11 +86,13 @@ export default {
       if (result == '') {
         //表示已经请求成功
         if (likeFlag == '0') {
-          this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum + 1
+          this.likeNum = this.likeNum + 1
+          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum + 1
           this.backgroundColor = '#FA8548'
           this.likeFlag = '1'
         } else if (likeFlag == '1') {
-          this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum - 1
+          this.likeNum = this.likeNum - 1
+          // this.EvaluatingInfo.likeNum = this.EvaluatingInfo.likeNum - 1
           this.backgroundColor = '#FABE9E'
           this.likeFlag = '0'
         }
