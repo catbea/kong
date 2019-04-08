@@ -284,7 +284,7 @@ export default {
     }
   },
   beforeDestroy () {
-    this.imagePreviewObj.close()
+    this.imagePreviewObj&&this.imagePreviewObj.close()
   }
 }
 </script>

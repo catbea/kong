@@ -347,7 +347,7 @@ export default {
       }
       window.sessionStorage.setItem('commentData', JSON.stringify(cacheData))
     },
-    // 跳转评论详情页面
+    // 跳转评论规范
     goStandard () {
       this.cacheData()
       this.$router.push('/market/comment/standard')
