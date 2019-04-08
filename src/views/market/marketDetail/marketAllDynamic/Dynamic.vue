@@ -13,6 +13,7 @@
           </div>
         </div>
       </li>
+      <li class="nomore">-- 没有更多动态了 --</li>
     </ul>
   </div>
 </template>
@@ -96,6 +97,13 @@ export default {
         }
       }
     }
+  }
+  .nomore{
+    font-size: 12px; 
+    line-height: 20px;
+    text-align: center;
+    color: #999; 
+    padding-bottom: 20px;
   }
 }
 </style>
