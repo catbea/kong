@@ -269,6 +269,7 @@ export default {
             display: flex;
             justify-content: center;
             align-content: center;
+            padding-top: 2px;
 
             span {
               width: 50px;

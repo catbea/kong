@@ -200,6 +200,7 @@ export default {
           color: rgba(92, 95, 102, 1);
           line-height: 15px;
           text-align: center;
+          padding-top: 2px;
         }
 
         > .asking-list-top-time {

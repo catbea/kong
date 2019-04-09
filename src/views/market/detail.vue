@@ -1563,6 +1563,9 @@ export default {
       width: 100%;
 
       .admin-label {
+        display: flex;
+        align-content: center;
+        justify-content: center;
         width: 50px;
         height: 15px;
         background: rgba(143, 159, 177, 0.15);
@@ -1571,10 +1574,9 @@ export default {
         font-family:PingFangSC-Regular;
         font-weight:400;
         color:rgba(92,95,102,1);
-        line-height:15px;
         margin-left: 13px;
         margin-top: 2px;
-        text-align: center;
+        padding-top: 2px;
       }
 
       li:nth-child(1) {
