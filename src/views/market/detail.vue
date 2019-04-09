@@ -1362,7 +1362,7 @@ export default {
     }
   }
   > .evaluate-box {
-    margin-top: 40px;
+    margin-top: 30px;
     .evaluate-content {
       margin-top: 10px;
       padding: 0 15px;
@@ -1474,10 +1474,10 @@ export default {
     .evaluate-content-nodata {
       font-size: 12px;
       background-color: #f8fafc;
-      border: 1px dashed rgba(248,250,252,1);
+      border: 1px dashed #cdd6e1;
       text-align: center;
       padding: 20px;
-      margin: 16px;
+      margin: 12px 16px;
       p {
         padding-bottom: 20px;
         color: #969ea8;
@@ -1493,8 +1493,7 @@ export default {
     }
   }
   > .buy-ask {
-    margin-top: 41px;
-
+    margin-top: 30px;
     .not-question {
       width: 92%;
       margin-left: 4%;
@@ -1678,7 +1677,7 @@ export default {
     }
   }
   > .house-recommend {
-    margin-top: 28px;
+    margin-top: 30px;
     margin-bottom: 10px;
     > .recommend-swipe-content {
       margin: 0 15px;
