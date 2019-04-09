@@ -237,7 +237,7 @@ export default {
           .label {
             position: absolute;
             padding:0 3px;
-            left: -4px;
+            left: -3px;
             top: 4px;
             // white-space: nowrap;
             // overflow: hidden;
