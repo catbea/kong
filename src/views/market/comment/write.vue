@@ -113,6 +113,7 @@ export default {
       })
       this.showLoading = false
       this.$toast('提交成功！')
+      this.content = ''
       this.debounce = false
       setTimeout(()=>{
         this.$router.replace(`/market/comment/list/${this.marketId}`)

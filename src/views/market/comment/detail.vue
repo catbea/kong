@@ -237,6 +237,7 @@ export default {
       this.showLoading = false
       this.hideDialogFn()
       this.debounce = false
+      this.replayCnt = ''
       this.commnetInfo.replyNum += 1
       this.current = 1
       this.getReplyList()
