@@ -266,6 +266,7 @@ export default {
       this.$toast('回复评论成功！')
       this.hideDialogFn()
       this.debounce = false
+      this.replayCnt = ''
     },
   },
   filters: {
