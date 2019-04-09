@@ -1487,7 +1487,7 @@ export default {
         width: 82px;
         height: 30px;
         border-radius: 4px;
-        border: 0.5px solid rgba(68, 81, 102, 1);
+        border: 1px solid rgba(68, 81, 102, 1);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
@@ -1710,7 +1710,7 @@ export default {
       width: 82px;
       height: 30px;
       border-radius: 4px;
-      border: 0.5px solid rgba(68, 81, 102, 1);
+      border: 1px solid rgba(68, 81, 102, 1);
       font-size: 13px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
