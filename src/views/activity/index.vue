@@ -377,12 +377,12 @@ export default {
       font-size: 16px;
     }
     .phone-input:-moz-placeholder,
-    .code-input::-webkit-input-placeholder {
+    .code-input:-moz-placeholder {
       color: #f67931;
       font-size: 16px;
     }
     .phone-input:-ms-input-placeholder,
-    .code-input::-webkit-input-placeholder {
+    .code-input:-ms-input-placeholder {
       color: #f67931;
       font-size: 16px;
     }

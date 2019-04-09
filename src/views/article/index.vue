@@ -1,218 +1,227 @@
 <template>
   <div class="article-box">
     <Guide v-if="showGuide" @hideGuide="hideStep"/>
-    <div class="tab-bar scale-1px-bottom">
-      <div class="classify-box">
-        <div class="classify">
-          <span
-            :class="{'recommend': item.itemCode===classify && item.itemName === classifyName}"
-            v-for="(item, index) in articleType"
-            :key="index"
-            @click="changeClassify(item,$event)"
-          >{{item.itemName}}</span>
+    <div class="article-box-warpper">
+      <div class="top">
+        <div class="tab-bar scale-1px-bottom">
+        <div class="classify-box">
+          <div class="classify">
+            <span
+              :class="{'recommend': item.itemCode===classify && item.itemName === classifyName}"
+              v-for="(item, index) in articleType"
+              :key="index"
+              @click="changeClassify(item,$event)"
+            >{{item.itemName}}</span>
+          </div>
+        </div>
+        <span class="icon" @click="showSubFn">
+          <img v-show="!showSub" src="../../assets/img/article/tabicon.png" alt="">
+          <img v-show="showSub" src="../../assets/img/article/tabicon2.png" alt="">
+        </span>
+        </div>
+        <div class="submenu" v-show="showSub" @click="hideSubMenu">
+          <ul>
+            <li :class="[{'active': sortType === 2},'scale-1px-bottom']" @click="sortTypeFn(2)">按时间排序</li>
+            <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
+          </ul>
         </div>
       </div>
-      <span class="icon" @click="showSubFn">
-        <img v-show="!showSub" src="../../assets/img/article/tabicon.png" alt="">
-        <img v-show="showSub" src="../../assets/img/article/tabicon2.png" alt="">
-      </span>
-    </div>
-    <div class="submenu" v-show="showSub" @click="hideSubMenu">
-      <ul>
-        <li :class="[{'active': sortType === 2},'scale-1px-bottom']" @click="sortTypeFn(2)">按时间排序</li>
-        <li :class="{'active': sortType === 1}" @click="sortTypeFn(1)">按活跃度排序</li>
-      </ul>
-    </div>
-    <div
-      class="article-list"
-      v-if="articleData.length"
-      :class="{'bottom': !articleData[articleData.length-1].discussVOS.length}"
-    >
-      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-        <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
-          <div
-            class="article-item"
-            v-for="(item,index) in articleData"
-            :key="index"
-            :class="{'noborder': index === articleData.length-1}"
-          >
-            <div class="content scale-1px-bottom">
-              <div class="left-cnt">
-                <h3 class="title" @click="goInfo(item)">{{item.articleTitle}}</h3>
-                <div class="attr">
-                  <p class="source">
-                    <span class="name">{{item.publisher}}</span>
-                    <span class="time">{{item.createTime | formatData}}</span>
-                  </p>
-                  <span class="read">{{item.scanNum}}次阅读</span>
-                </div>
-              </div>
-              <div class="img" @click="goInfo(item)">
-                <img :src="item.articleImg" alt="">
-              </div>
-            </div>
-            <div class="comment">
-              <div class="like-count">
-                <span class="icon" v-show="item.praiseAndShareUserVOS.length">
-                  <img src="../../assets/img/article/like1.png" alt="">
-                </span>
-                <span
-                  v-show="item.praiseAndShareUserVOS.length"
-                >{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
-              </div>
-              <div class="action">
-                <span
-                  class="like-icon"
-                  v-if="item.praiseStatus===1"
-                  @click="updateLike(item, 0, index)"
-                >
-                  <img src="../../assets/img/article/like2.png" alt="">
-                </span>
-                <span class="like-icon" v-else @click="updateLike(item, 1, index)">
-                  <img src="../../assets/img/article/like1.png" alt="">
-                </span>
-                <span class="comment-icon">
-                  <img
-                    src="../../assets/img/article/dis1.png"
-                    alt=""
-                    @click="showReplayFn(item,index,1)"
-                  >
-                </span>
-              </div>
-            </div>
-            <div
-              class="like-cnt"
-              v-if="item.praiseAndShareUserVOS.length || item.discussVOS.length"
-              :style="{'paddingBottom':item.discussVOS.length ? '' : '0'}"
-            >
-              <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
-                <span class="icon">
-                  <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
-                </span>
-                <div class="list">
-                  <div
-                    class="cnt-box-like"
-                    :style="{'marginBottom':item.praiseAndShareUserVOS.length < 16 ? '10px' : ''}"
-                  >
-                    <span
-                      class="name"
-                      :class="{'active': data===activeLikeItem}"
-                      v-for="(data,num) in item.praiseAndShareUserVOS"
-                      :key="num"
-                      @click.stop="showLike(data)"
-                      v-show="num < item.likeCount"
-                    >
-                      {{data.userName}}
-                      <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
-                    </span>
-                  </div>
-                  <span
-                    class="more"
-                    v-show="item.praiseAndShareUserVOS.length > item.likeCount"
-                    @click="item.likeCount += 15"
-                  >展开查看
-                    <van-icon name="arrow-down"/>
-                  </span>
-                  <span
-                    class="more"
-                    v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
-                    @click="item.likeCount=15"
-                  >收起
-                    <van-icon name="arrow-up"/>
-                  </span>
-                </div>
-              </div>
-              <div class="comment-box" v-show="item.discussVOS.length">
-                <span class="icon">
-                  <!-- <img src="../../assets/img/article/dis1.png" alt=""> -->
-                </span>
-                <div class="list">
-                  <div class="cnt-box-replay">
-                    <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
-                      <p
-                        v-show="num < item.replayCount"
-                        @click="showReplayFn(item, index,2,data,num)"
-                      >
-                        <!--  @click.stop="replayLike(data,1)" -->
-                        <span class="name">{{data.senderName}}</span>
-                        <span class="text" v-if="data.receiverName">回复</span>
-                        <!--  @click.stop="replayLike(data,2)" -->
-                        <span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:
-                        <span class="replay-cnt">{{data.content}}</span>
+      <div class="cnt">
+        <div
+          class="article-list"
+          v-if="articleData.length"
+          :class="{'bottom': !articleData[articleData.length-1].discussVOS.length}"
+        >
+          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+            <van-list v-model="loading" :finished="finished" finished-text="--没有更多了--" @load="onLoad">
+              <div
+                class="article-item"
+                v-for="(item,index) in articleData"
+                :key="index"
+                :class="{'noborder': index === articleData.length-1}"
+              >
+                <div class="content scale-1px-bottom">
+                  <div class="left-cnt">
+                    <h3 class="title" @click="goInfo(item)">{{item.articleTitle}}</h3>
+                    <div class="attr">
+                      <p class="source">
+                        <span class="name">{{item.publisher}}</span>
+                        <span class="time">{{item.createTime | formatData}}</span>
                       </p>
+                      <span class="read">{{item.scanNum}}次阅读</span>
                     </div>
                   </div>
-                  <span
-                    class="more"
-                    v-show="item.discussVOS.length > item.replayCount"
-                    @click="item.replayCount += 10"
-                  >展开查看
-                    <van-icon name="arrow-down"/>
-                  </span>
-                  <span
-                    class="more"
-                    v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
-                    @click="item.replayCount=5"
-                  >收起
-                    <van-icon name="arrow-up"/>
-                  </span>
+                  <div class="img" @click="goInfo(item)">
+                    <img :src="item.articleImg" alt="">
+                  </div>
+                </div>
+                <div class="comment">
+                  <div class="like-count">
+                    <span class="icon" v-show="item.praiseAndShareUserVOS.length">
+                      <img src="../../assets/img/article/like1.png" alt="">
+                    </span>
+                    <span
+                      v-show="item.praiseAndShareUserVOS.length"
+                    >{{item.praiseAndShareUserVOS.length}}人觉得好看</span>
+                  </div>
+                  <div class="action">
+                    <span
+                      class="like-icon"
+                      v-if="item.praiseStatus===1"
+                      @click="updateLike(item, 0, index)"
+                    >
+                      <img src="../../assets/img/article/like2.png" alt="">
+                    </span>
+                    <span class="like-icon" v-else @click="updateLike(item, 1, index)">
+                      <img src="../../assets/img/article/like1.png" alt="">
+                    </span>
+                    <span class="comment-icon">
+                      <img
+                        src="../../assets/img/article/dis1.png"
+                        alt=""
+                        @click="showReplayFn(item,index,1)"
+                      >
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="like-cnt"
+                  v-if="item.praiseAndShareUserVOS.length || item.discussVOS.length"
+                  :style="{'paddingBottom':item.discussVOS.length ? '' : '0'}"
+                >
+                  <div class="like-box" v-show="item.praiseAndShareUserVOS.length">
+                    <span class="icon">
+                      <!-- <img src="../../assets/img/article/like1.png" alt=""> -->
+                    </span>
+                    <div class="list">
+                      <div
+                        class="cnt-box-like"
+                        :style="{'marginBottom':item.praiseAndShareUserVOS.length < 16 ? '10px' : ''}"
+                      >
+                        <span
+                          class="name"
+                          :class="{'active': data===activeLikeItem}"
+                          v-for="(data,num) in item.praiseAndShareUserVOS"
+                          :key="num"
+                          @click.stop="showLike(data)"
+                          v-show="num < item.likeCount"
+                        >
+                          {{data.userName}}
+                          <label v-show="num !== item.praiseAndShareUserVOS.length-1">、</label>
+                        </span>
+                      </div>
+                      <span
+                        class="more"
+                        v-show="item.praiseAndShareUserVOS.length > item.likeCount"
+                        @click="item.likeCount += 15"
+                      >展开查看
+                        <van-icon name="arrow-down"/>
+                      </span>
+                      <span
+                        class="more"
+                        v-show="item.praiseAndShareUserVOS.length <= item.likeCount && item.praiseAndShareUserVOS.length > 15"
+                        @click="item.likeCount=15"
+                      >收起
+                        <van-icon name="arrow-up"/>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="comment-box" v-show="item.discussVOS.length">
+                    <span class="icon">
+                      <!-- <img src="../../assets/img/article/dis1.png" alt=""> -->
+                    </span>
+                    <div class="list">
+                      <div class="cnt-box-replay">
+                        <div class="comment-item" v-for="(data,num) in item.discussVOS" :key="num">
+                          <p
+                            v-show="num < item.replayCount"
+                            @click="showReplayFn(item, index,2,data,num)"
+                          >
+                            <!--  @click.stop="replayLike(data,1)" -->
+                            <span class="name">{{data.senderName}}</span>
+                            <span class="text" v-if="data.receiverName">回复</span>
+                            <!--  @click.stop="replayLike(data,2)" -->
+                            <span class="name" v-if="data.receiverName">{{data.receiverName }}</span>:
+                            <span class="replay-cnt">{{data.content}}</span>
+                          </p>
+                        </div>
+                      </div>
+                      <span
+                        class="more"
+                        v-show="item.discussVOS.length > item.replayCount"
+                        @click="item.replayCount += 10"
+                      >展开查看
+                        <van-icon name="arrow-down"/>
+                      </span>
+                      <span
+                        class="more"
+                        v-show="item.discussVOS.length <= item.replayCount && item.discussVOS.length > 5"
+                        @click="item.replayCount=5"
+                      >收起
+                        <van-icon name="arrow-up"/>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </van-list>
-      </van-pull-refresh>
-    </div>
-    <div class="nodata" v-show="!articleData.length && nodataStatus" @click="onRefresh">
-      <img src="../../assets/img/article/noarticle.png" alt="">
-      <p>对不起，没有查询到相关文章！</p>
-    </div>
-    <div class="artcle-tips" v-show="showNewArticle" @click="onRefresh">
-      {{newArticelCount}}条新内容
-      <van-icon name="arrow-down"/>
-    </div>
-    <div class="write">
-      <p @click="goAdd">
-        <img src="../../assets/img/article/plus.png" alt="">
-      </p>
-      <p @click="goWrite">
-        <img src="../../assets/img/article/write.png" alt="">
-      </p>
-    </div>
-    <div class="replay" v-show="showReplay">
-      <div class="replay-cnt">
-        <div class="top-action">
-          <p class="cancle" @click.stop="hideReplayFn">取消</p>
-          <p class="publish">
-            <span @click.stop="insertCommentFn">发布</span>
+            </van-list>
+          </van-pull-refresh>
+        </div>
+        <div class="nodata" v-show="!articleData.length && nodataStatus" @click="onRefresh">
+          <img src="../../assets/img/article/noarticle.png" alt="">
+          <p>对不起，没有查询到相关文章！</p>
+        </div>
+        <div class="artcle-tips" v-show="showNewArticle" @click="onRefresh">
+          {{newArticelCount}}条新内容
+          <van-icon name="arrow-down"/>
+        </div>
+        <div class="write">
+          <p @click="goAdd">
+            <img src="../../assets/img/article/plus.png" alt="">
+          </p>
+          <p @click="goWrite">
+            <img src="../../assets/img/article/write.png" alt="">
           </p>
         </div>
-        <div class="replay-title">
-          <p v-if="replayStatus===1">{{commentItem.articleTitle}}</p>
-          <p v-else>{{replayItem.senderName}}: {{replayItem.content}}</p>
-        </div>
-        <div class="replay-box">
-          <!-- <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span> -->
+        <div class="replay" v-show="showReplay">
+          <div class="replay-cnt">
+            <div class="top-action">
+              <p class="cancle" @click.stop="hideReplayFn">取消</p>
+              <p class="publish">
+                <span @click.stop="insertCommentFn">发布</span>
+              </p>
+            </div>
+            <div class="replay-title">
+              <p v-if="replayStatus===1">{{commentItem.articleTitle}}</p>
+              <p v-else>{{replayItem.senderName}}: {{replayItem.content}}</p>
+            </div>
+            <div class="replay-box">
+              <!-- <span class="name" v-if="replayStatus===2">回复{{replayItem.senderName}}</span> -->
 
-          <textarea
-            :placeholder="replayStatus===2 ? `回复${replayItem.senderName}` : '分享你的想法'"
-            class="textarea"
-            name=""
-            id=""
-            ref="replaybox"
-            maxlength="140"
-            v-model="replayCnt"
-            @blur="blur"
-          ></textarea>
+              <textarea
+                :placeholder="replayStatus===2 ? `回复${replayItem.senderName}` : '分享你的想法'"
+                class="textarea"
+                name=""
+                id=""
+                ref="replaybox"
+                maxlength="140"
+                v-model="replayCnt"
+                @blur="blur"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="loading" v-show="showLoading">
+          <van-loading type="spinner" color="white" class="van-loading"/>
+        </div>
+        <div class="delete-replay">
+          <van-actionsheet v-model="showDelete" :actions="actions" @select="onSelect"/>
         </div>
       </div>
     </div>
-    <div class="loading" v-show="showLoading">
-      <van-loading type="spinner" color="white" class="van-loading"/>
-    </div>
-    <div class="delete-replay">
-      <van-actionsheet v-model="showDelete" :actions="actions" @select="onSelect"/>
-    </div>
+    
+    
+    
     <!-- <div
       class="comment-like-dialog"
       v-show="showLikeDialog"
@@ -291,7 +300,8 @@ export default {
       nodataStatus: false,
       updateLikeItem: '', //点赞数据
       startY: '',
-      endY: ''
+      endY: '',
+      getDataStatus: false
     }
   },
   watch: {
@@ -394,6 +404,7 @@ export default {
       if (!sortType) {
         sortType = this.classifyName === '推荐' ? 1 : 2
       }
+      this.getDataStatus = true
       let result = await ArticleService.getArticleList({
         current: this.current,
         size: this.size,
@@ -417,6 +428,7 @@ export default {
       }
       this.nodataStatus = true
       this.showLoading = false
+      this.getDataStatus = false
     },
     // 重新获取位置
     async getLocation() {
@@ -424,6 +436,10 @@ export default {
     },
     // tab切换 文章分类查询
     changeClassify(item, e) {
+      // 数据请求禁止切换
+      if (this.getDataStatus) {
+        return false
+      }
       if (e && e.currentTarget) {
         e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'end' })
       }
@@ -702,93 +718,108 @@ export default {
       this.getCityArticle()
     }
     // 防止ios弹簧效果
-    let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-    if (isiOS) {
-      document.querySelector('body').addEventListener('touchstart', e => {
-        this.startY = e.changedTouches[0].pageY
-      })
-      document.querySelector('body').addEventListener(
-        'touchmove',
-        e => {
-          if (!document.querySelector('.article-list')) {
-            return false
-          }
-          this.endY = e.changedTouches[0].pageY
-          let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
-          let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-          let clientHeight = document.querySelector('.article-list').clientHeight // 可视高度
-          let endStatus = scrollHeight <= scrollTop + clientHeight // 是否滚到底了
-          if (this.finished && endStatus && this.startY - this.endY > 10) {
-            e.preventDefault()
-          }
-          if (this.endY > this.startY && scrollTop === 0) {
-            e.preventDefault()
-          }
-        },
-        { passive: false }
-      )
-      document.querySelector('.replay').addEventListener(
-        'touchmove',
-        e => {
-          e.preventDefault()
-        },
-        { passive: false }
-      )
-      document.querySelector('.submenu').addEventListener(
-        'touchmove',
-        e => {
-          e.preventDefault()
-        },
-        { passive: false }
-      )
-    }
-    document.querySelector('.tab-bar').addEventListener(
-      'touchstart',
-      e => {
-        this.startY = e.changedTouches[0].pageY
-      },
-      { passive: false }
-    )
-    document.querySelector('.tab-bar').addEventListener(
-      'touchmove',
-      e => {
-        this.endY = e.changedTouches[0].pageY
-        if (this.endY - this.startY > 15) {
-          e.preventDefault()
-        }
-      },
-      { passive: false }
-    )
+    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    // if (isiOS) {
+    //   document.querySelector('body').addEventListener('touchstart', e => {
+    //     this.startY = e.changedTouches[0].pageY
+    //   })
+    //   document.querySelector('body').addEventListener(
+    //     'touchmove',
+    //     e => {
+    //       if (!document.querySelector('.article-list')) {
+    //         return false
+    //       }
+    //       this.endY = e.changedTouches[0].pageY
+    //       let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
+    //       let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
+    //       let clientHeight = document.querySelector('.article-list').clientHeight // 可视高度
+    //       let endStatus = scrollHeight <= scrollTop + clientHeight // 是否滚到底了
+    //       if (this.finished && endStatus && this.startY - this.endY > 10) {
+    //         e.preventDefault()
+    //       }
+    //       if (this.endY > this.startY && scrollTop === 0) {
+    //         e.preventDefault()
+    //       }
+    //     },
+    //     { passive: false }
+    //   )
+    //   document.querySelector('.replay').addEventListener(
+    //     'touchmove',
+    //     e => {
+    //       e.preventDefault()
+    //     },
+    //     { passive: false }
+    //   )
+    //   document.querySelector('.submenu').addEventListener(
+    //     'touchmove',
+    //     e => {
+    //       e.preventDefault()
+    //     },
+    //     { passive: false }
+    //   )
+    // }
+    // document.querySelector('.tab-bar').addEventListener(
+    //   'touchstart',
+    //   e => {
+    //     this.startY = e.changedTouches[0].pageY
+    //   },
+    //   { passive: false }
+    // )
+    // document.querySelector('.tab-bar').addEventListener(
+    //   'touchmove',
+    //   e => {
+    //     this.endY = e.changedTouches[0].pageY
+    //     if (this.endY - this.startY > 15) {
+    //       e.preventDefault()
+    //     }
+    //   },
+    //   { passive: false }
+    // )
   },
   beforeDestroy() {
     // 缓存数据
     this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
-    let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-    try {
-      if (isiOS) {
-        document.querySelector('body').removeEventListener('touchstart')
-        document.querySelector('body').removeEventListener('touchmove')
-        document.querySelector('.replay').removeEventListener('touchmove')
-        document.querySelector('.submenu').removeEventListener('touchmove')
-      } else {
-        document.querySelector('.tab-bar').removeEventListener('touchstart')
-        document.querySelector('.tab-bar').removeEventListener('touchmove')
-      }
-    } catch (error) {}
+    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    // try {
+    //   if (isiOS) {
+    //     document.querySelector('body').removeEventListener('touchstart')
+    //     document.querySelector('body').removeEventListener('touchmove')
+    //     document.querySelector('.replay').removeEventListener('touchmove')
+    //     document.querySelector('.submenu').removeEventListener('touchmove')
+    //   } else {
+    //     document.querySelector('.tab-bar').removeEventListener('touchstart')
+    //     document.querySelector('.tab-bar').removeEventListener('touchmove')
+    //   }
+    // } catch (error) {}
   }
 }
 </script>
 
 <style lang="less" scoped>
 .article-box {
+  height: 100%;
+  display: flex;
   overflow: auto;
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
   font-size: 16px;
+  .article-box-warpper{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    .top{
+      height: 54px;
+    }
+    .cnt{
+      flex: 1;
+      overflow-y: scroll;
+    }
+  }
   .tab-bar {
     padding: 0 16px;
     height: 54px;
     box-sizing: border-box;
     overflow: hidden;
+    background-color: #fff;
     .classify-box {
       margin-top: 15px;
       height: 32px;
@@ -862,11 +893,11 @@ export default {
     }
   }
   .article-list {
-    position: fixed;
-    top: 54px;
-    width: 100%;
-    bottom: 50px;
-    overflow-y: auto;
+    // position: fixed;
+    // top: 54px;
+    // width: 100%;
+    // bottom: 50px;
+    // overflow-y: auto;
     z-index: 1;
     padding-bottom: 40px;
     &.bottom {

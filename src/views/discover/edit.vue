@@ -124,8 +124,6 @@ export default {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
 
-      console.log(Number(this.info.source), 'this.info.source')
-
       if(!this.info || isNaN(Number(this.info.source))) {
         // this.pushFlag = true
         this.loaddingStatus = true
@@ -137,7 +135,7 @@ export default {
 
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
-      virtualDom.innerHTML = this.info.content.replace('div', 'p')
+      virtualDom.innerHTML = this.info.content.replace('div', 'p').replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
       // console.log(virtualDom.children, 'virtualDom')
       
       for (let dom of virtualDom.children) {
@@ -151,7 +149,8 @@ export default {
           if(dom.tagName == 'STYLE') {
             let style = document.createElement("style");
             style.type = "text/css";
-            style.appendChild(document.createTextNode(dom.innerHTML))
+            let styleStr = dom.innerHTML.replace(/body\{[^\}]*\}/g,"").replace(/\*\{[^\}]*\}/g,"")
+            style.appendChild(document.createTextNode(styleStr))
             head.appendChild(style)
           } else {
             head.appendChild(dom)
@@ -163,6 +162,7 @@ export default {
           status: 'edit'
         })
       }
+      
       if (this.info.editData !== '') {
         try {
           let editData = JSON.parse(this.info.editData)
@@ -329,6 +329,9 @@ export default {
     },
     closeHelp() {
       this.helpShow = false
+    },
+    touchHandler(e) {
+      return e.preventDefault()
     }
   },
   computed: {
@@ -352,15 +355,13 @@ export default {
   mounted() {
     document.querySelector('.fixed-bar').addEventListener(
       'touchmove',
-      e => {
-        e.preventDefault()
-      },
+      this.touchHandler,
       { passive: false }
     )
   },
   beforeDestroy() {
     try {
-      document.querySelector('.fixed-bar').removeEventListener('touchmove')
+      document.querySelector('.fixed-bar').removeEventListener('touchmove',this.touchHandler,false)
     } catch (error) {}
   }
 }

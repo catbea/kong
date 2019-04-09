@@ -77,13 +77,14 @@ export default {
   mounted() {
     document.querySelector('.prevent').addEventListener(
       'touchmove',
-      function(e) {
-        e.preventDefault()
-      },
+      this.touchHandler,
       { passive: false }
     )
   },
   methods: {
+    touchHandler(e) {
+      return e.preventDefault()
+    },
     areaColorHandle() {
       this.conf[0].flag = true
     },
@@ -171,7 +172,7 @@ export default {
   },
   beforeDestroy() {
     try {
-      document.querySelector('.prevent').removeEventListener('touchmove')
+      document.querySelector('.prevent').removeEventListener('touchmove',this.touchHandler,false)
     } catch (error) {}
   }
 }

@@ -360,5 +360,180 @@ class MarketService {
       body: data
     })
   }
+
+  /**
+   * 买房问问列表
+   * @param {*} current 
+   * @param {*} size 
+   * @param {*} linkerId 
+   */
+  getAskingList(current, linkerId, size = 10) {
+    return xhr({
+      url: '/linkerInterlocution/queryList',
+      body: {
+        current,
+        linkerId,
+        size
+      }
+    })
+  }
+
+  /**
+   * 查询楼盘买房问问详情
+   * @param {*} questionId 
+   */
+  queryLinkerQuestion(questionId) {
+    return xhr({
+      url: '/linkerInterlocution/queryLinkerQuestion',
+      body: {
+        questionId
+      }
+    })
+  }
+
+  /**
+   * 买房问问问题回复详情
+   * @param {*} current 
+   * @param {*} size 
+   * @param {*} questionId 
+   */
+  queryAskingDetail(current, size = 10, questionId) {
+    return xhr({
+      url: '/linkerInterlocution/queryReplyList',
+      body: {
+        current,
+        size,
+        questionId
+      }
+    })
+  }
+
+  /**
+   * 新增提问/回复
+   * @param {} data 
+   */
+  insertQuestion(data) {
+    return xhr({
+      method: 'post',
+      url: '/linkerInterlocution/insertQuestion',
+      body: data
+    })
+  }
+
+  /**
+   * 楼盘评论列表
+   */
+  getCommentList(data) {
+    return xhr({
+      url: '/linkerComment/queryList',
+      body: data
+    })
+  }
+
+  /**
+   * 楼盘评论分类统计
+   */
+  getCommentCount(data) {
+    return xhr({
+      url: '/linkerComment/getLinkerCommentCount',
+      body: data
+    })
+  }
+  /**
+   * 新增楼盘评论
+   */
+  insertLinkerComment(data) {
+    return xhr({
+      url: '/linkerComment/insertLinkerComment',
+      method: 'post',
+      body: data
+    })
+  }
+
+  /**
+   * 楼盘评论回复列表
+   */
+  getReplyList(data) {
+    return xhr({
+      url: '/linkerComment/queryReplyList',
+      body: data
+    })
+  }
+
+  /**
+   * 查询楼盘评论详情
+   */
+  getLinkerComment(data) {
+    return xhr({
+      url: '/linkerComment/queryLinkerComment',
+      body: data
+    })
+  }
+
+  // 楼盘评论点赞
+  updateLinkeStatus(data) {
+    return xhr({
+      url: '/linkerComment/updateLinkerCommentLikeStatus',
+      body: data
+    })
+  }
+  /**
+   * 楼盘详情中的买房问问详情
+   * @param {*} linkerId 
+   */
+  getBuildQuestionDetail(linkerId){
+    return xhr({
+      url: '/linkerInterlocution/getQuestionForLinkerDetail',
+      body: {
+        linkerId
+      }
+    })
+  }
+
+  /**
+   * 获取评测详情
+   */
+  getEvaluatingDetail(reviewId,userId,userType,enterpriseId){
+    return xhr({
+      url: '/common/review/info',
+      body: {
+        reviewId,
+        userId,
+        userType,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 评测点赞
+   * @param {*} reviewId 
+   * @param {*} likeFlag 
+   */
+  thumbsLike(reviewId,userId,userType,likeFlag,enterpriseId){
+    return xhr({
+      url: '/common/review/like',
+      body: {
+        reviewId,
+        userId,
+        userType,
+        likeFlag,
+        enterpriseId
+      }
+    })
+  }
+
+  /**
+   * 楼盘详情的评测信息
+   * @param {*} linkerId 
+   */
+  getEvaluatingInfo(linkerId){
+    return xhr({
+      url: '/review/linker/info',
+      body: {
+        linkerId
+      }
+    })
+  }
 }
 export default new MarketService()

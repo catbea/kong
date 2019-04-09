@@ -54,7 +54,7 @@ export default {
     dredge: false,
     userPrice: 0,
     borderBottom: false,
-    vipInfo: ''
+    vipInfo: {}
   }),
   computed: {
     ...mapGetters(['userInfo', 'marketOpenCache', 'currSelectedCoupon'])
@@ -63,7 +63,7 @@ export default {
     // 获取VIP详情
     async getVipInfo() {
       let res = await marketService.vipInfo()
-      this.vipInfo = res
+      this.vipInfo = res || {}
     },
     async init() {
       this.userPrice = this.userInfo.price

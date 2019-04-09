@@ -90,14 +90,10 @@ export default {
     this.getLinker()
     document.querySelector('.sort-container').addEventListener(
       'touchmove',
-      function(e) {
-        e.preventDefault()
-      },
+      this.touchHandler,
       { passive: false }
     )
-   document.querySelector('.delCoustomerGuide').addEventListener('touchmove', (e) => {
-      e.preventDefault()
-    }, { passive: false })
+   document.querySelector('.delCoustomerGuide').addEventListener('touchmove',this.touchHandle, { passive: false })
   },
   methods: {
     // 更新新手引导标志位
@@ -226,9 +222,9 @@ export default {
   },
   beforeDestroy() {
     try {
-      document.querySelector('.sort-container').removeEventListener('touchmove')
-      document.removeEventListener('touchmove')
-      document.querySelector('.delCoustomerGuide').removeEventListener('touchmove')
+      document.querySelector('.sort-container').removeEventListener('touchmove', this.touchHandler, false)
+      document.removeEventListener('touchmove',this.touchHandler, false)
+      document.querySelector('.delCoustomerGuide').removeEventListener('touchmove', this.touchHandler, false)
     } catch (error) {}
   }
 }

@@ -24,6 +24,9 @@ export default {
       } else {
         return val
       }
+    },
+    touchHandler(e) {
+      return e.preventDefault()
     }
   },
   computed: {
@@ -39,15 +42,13 @@ export default {
   mounted() {
     document.getElementById('tabbar').addEventListener(
       'touchmove',
-      e => {
-        e.preventDefault()
-      },
+      this.touchHandler,
       { passive: false }
     )
   },
   beforeDestroy() {
     try {
-      document.getElementById('tabbar').removeEventListener('touchmove')
+      document.getElementById('tabbar').removeEventListener('touchmove',this.touchHandler, false)
     } catch (error) {}
   }
 }

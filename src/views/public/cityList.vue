@@ -32,16 +32,20 @@
               <div class="location" @click="retryLocation">重新定位</div>
             </div>
           </div>
-          <div class="city-hot" v-if="cityListData.hotCityList">
+          <!-- <div class="city-hot" v-if="cityListData.hotCityList">
             <p class="tips">热门城市</p>
             <ul class="list">
               <li  class="hot-item" v-for="(item,index) in cityListData.hotCityList" :key="index" @click="chooseItem(item.city,2)">{{item.city}}</li>
             </ul>
-          </div>
+          </div> -->
 
         </div>
         <div class="city-index">
-          <mt-index-list :height="mtIndexHeight">
+          <!-- <mt-index-list :height="mtIndexHeight"> -->
+          <mt-index-list>
+            <mt-index-section index="热">
+              <mt-cell :title="item.city" v-for="(item,i) in cityListData.hotCityList" :key="i" @click.native="chooseItem(item.city,2)"></mt-cell>
+            </mt-index-section>
             <mt-index-section :index="item.character" v-for="(item,index) in cityListData.cityList" :key="index">
               <mt-cell :title="option" @click.native="chooseItem(option,2)" v-for="(option,num) in item.city" :key="num"></mt-cell>
             </mt-index-section>
@@ -71,6 +75,7 @@
 
 <script>
 import marketService from 'SERVICE/marketService'
+import commonService from '@/services/commonService'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import { IndexList, IndexSection, Cell } from 'mint-ui'
@@ -186,8 +191,7 @@ export default {
       wx.getLocation({
         type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
         success: res => {
-          this.$store.dispatch('setWxLocation', res)
-          this.$toast('定位成功')
+          this.getCity(res)
         },
         fail: () => {
           this.$toast('定位失败')
@@ -197,6 +201,12 @@ export default {
         }
       })
     },
+    // 获取定位
+    async getCity (data) {
+      const result = await commonService.getLocation(data.longitude, data.latitude)
+      this.$store.commit(types['USER_AREA'], {city: result})
+      this.$toast('定位成功')
+    }
   },
   directives: {
     // 指令的定义
@@ -321,6 +331,7 @@ export default {
         }
         .gps{
           margin-top: 5px;
+          padding-bottom: 5px;
           .gps-city{
             border: 1px solid #ddd;
             border-radius: 4px;

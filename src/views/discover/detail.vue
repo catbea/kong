@@ -119,7 +119,7 @@
     </div>
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
     <!-- <open-article :show.sync="guidanceShow"></open-article> -->
-    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" :maxlength="140" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
     <div class="loading" v-show="!renderDom.length">
       <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
@@ -270,7 +270,7 @@ export default {
 
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
-      virtualDom.innerHTML = this.info.content
+      virtualDom.innerHTML = this.info.content.replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
 
       for (let dom of virtualDom.children) {
         this.renderDom.push({
@@ -614,6 +614,9 @@ export default {
             this.$router.go(-1)
           }, 1000)
         })
+    },
+    touchHandler(e) {
+      return e.preventDefault()
     }
   },
   watch: {
@@ -625,15 +628,13 @@ export default {
   mounted() {
     document.querySelector('.tools-bar').addEventListener(
       'touchmove',
-      e => {
-        e.preventDefault()
-      },
+      this.touchHandler,
       { passive: false }
     )
   },
   beforeDestroy() {
     try {
-      document.querySelector('.tools-bar').removeEventListener('touchmove')
+      document.querySelector('.tools-bar').removeEventListener('touchmove',this.touchHandler,false)
     } catch (error) {}
   }
 }
@@ -753,9 +754,6 @@ export default {
     > .agent-card {
       margin-top: 8px;
       margin-bottom: 10px;
-    }
-    // 好看
-    .van-icon {
     }
     > .easy-look-container {
       padding: 10px 16px 24px 16px;

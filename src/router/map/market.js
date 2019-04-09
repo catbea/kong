@@ -218,5 +218,97 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/market/comment/standard',
+    name: 'market-comment-standard',
+    component: resolve => require(['@/views/market/comment/evaluateStandard.vue'], resolve),
+    meta: {
+      title: '用户点评行为规范',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  // 楼盘评论
+  {
+    path: '/market/comment/list/:id',
+    name: 'market-comment-list',
+    component: resolve => require(['@/views/market/comment/list.vue'], resolve),
+    meta: {
+      title: '楼盘评论',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/market/comment/write/:id',
+    name: 'market-comment-write',
+    component: resolve => require(['@/views/market/comment/write.vue'], resolve),
+    meta: {
+      title: '评论楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/market/comment/detail/:id',
+    name: 'market-comment-detail',
+    component: resolve => require(['@/views/market/comment/detail.vue'], resolve),
+    meta: {
+      title: '评论详情',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  // 买房问问
+  {
+    path: '/marketDetail/asking/:id',
+    name: 'market-asking-list',
+    component: resolve => require(['@/views/market/marketDetail/marketAsking/index.vue'], resolve),
+    meta: {
+      title: '买房问问',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/marketDetail/askingDetail',
+    name: 'market-asking-detail',
+    component: resolve => require(['@/views/market/marketDetail/marketAsking/detail.vue'], resolve),
+    meta: {
+      title: '问答详情',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/marketDetail/ask/:id',
+    name: 'market-asking-ask',
+    component: resolve => require(['@/views/market/marketDetail/marketAsking/ask.vue'], resolve),
+    meta: {
+      title: '提问',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+
+  {
+    path: '/marketDetail/marketEvaluating',
+    name: 'market-marketEvaluating',
+    component: resolve => require(['@/views/market/marketDetail/marketEvaluating/index.vue'], resolve),
+    meta: {
+      title: '楼盘评测',
+      tabbar: {
+        show: false
+      }
+    }
   }
+
 ]

@@ -600,7 +600,9 @@ export default {
           var dict = {}
           var listf = []
           var time = new Date(dats)
-          var timeStr = time.getHours().toString() + ':' + time.getMinutes().toString()
+          let h = time.getHours() < 10 ? '0' + time.getHours() : time.getHours().toString()
+          let m = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes().toString()
+          var timeStr = h + ':' + m
           listf.push(item)
           dict['timeLong'] = dats
           dict['timeStr'] = timeStr

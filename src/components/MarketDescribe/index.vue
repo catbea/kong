@@ -237,7 +237,7 @@ export default {
           .label {
             position: absolute;
             padding:0 3px;
-            left: -4px;
+            left: -3px;
             top: 4px;
             // white-space: nowrap;
             // overflow: hidden;
@@ -264,7 +264,7 @@ export default {
             height:24px;
             .box {
               display: flex;
-              align-items: center;
+              // align-items: center;
               .title {
                 display:inline-block;
                 white-space: nowrap;
@@ -275,14 +275,13 @@ export default {
                 font-family: PingFangSC-Semibold;
                 font-weight: 600;
                 color: rgba(51, 51, 51, 1);
-                line-height: normal;
               }
               .past {
                 display: inline-block;
                 font-size: 12px;
                 transform: scale(0.84);
                 font-weight: 400;
-                line-height: normal;
+                line-height:20px;
                 height: 20px;
                 width:47px;
                 color: rgba(234, 77, 46, 1);
@@ -305,6 +304,7 @@ export default {
               color: rgba(255, 255, 255, 1);
               line-height: 24px;
               text-align: center;
+              margin-top: -3px;
             }
           }
           .site {
@@ -323,7 +323,7 @@ export default {
           }
           .unit-price {
             height: 15px;
-            margin-top: 4px;
+            margin-top:5px;
             display: flex;
             span:nth-child(1) {
               line-height: 15px;

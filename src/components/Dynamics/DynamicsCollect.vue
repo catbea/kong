@@ -42,12 +42,12 @@
             <van-swipe-item v-for="(item,index) in data.simpleDynamic" :key="index">
               <img class="avatar" :src="item.avatarUrl" />
               <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
-              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName | textOver(6)}}{{item.timeStr}}浏览了你的{{item.markedWords | textOver(9)}}</p>
+              <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName}}{{item.timeStr}}浏览了你的{{item.markedWords}}</p>
               <p class="house-tips" v-if="item.dynamicType == 2">
-                {{item.clientName | textOver(6)}}{{item.timeStr}}浏览楼盘
-                <span>{{item.markedWords | textOver(9)}}</span>
+                {{item.clientName}}{{item.timeStr}}浏览楼盘
+                <span>{{item.markedWords}}</span>
               </p>
-              <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName | textOver(6)}}{{item.timeStr}}浏览了{{item.markedWords | textOver(9)}}</p>
+              <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName}}{{item.timeStr}}浏览了{{item.markedWords}}</p>
             </van-swipe-item>
           </van-swipe>
         </div>
@@ -89,6 +89,9 @@ export default {
     bgImg: require('IMG/dynamics/collectBottom.png'),
     msgIcon: require('IMG/dynamics/listArrowUp.png')
   }),
+  created() {
+      // console.log(this.data,111111111111)
+    },
   methods: {
     goMessage() {
       this.$router.push('/dynamics/message/messageList')
@@ -269,12 +272,12 @@ export default {
               margin-right: 5px;
             }
             p {
-              flex: 1;
               height: 24px;
               line-height: 24px;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
+              width:290px;
             }
           }
         }
