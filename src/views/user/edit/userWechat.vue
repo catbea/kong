@@ -3,7 +3,13 @@
     <div class="user-edit-wechat">
       <p class="edit-wechat-title">微信号</p>
       <p class="edit-wechat-conter">
-        <input type="text" class="edit-wechat-input" placeholder v-model="weChatNum" maxlength="20">
+        <input
+          type="text"
+          class="edit-wechat-input"
+          placeholder=""
+          v-model="weChatNum"
+          maxlength="20"
+        >
       </p>
       <p class="edit-wechat-berak">该微信号仅作为客户添加使用</p>
       <button class="edit-wechat-query" @click="upDataWeChat">确认修改</button>
@@ -59,7 +65,7 @@ export default {
               this.$toast('微信号需以字母开头')
             } else {
               let date = {
-                wechatAccount: this.weChatNum
+                wechatAccount: this.weChatNum.replace(/\s*/g, '')
               }
               this.upDateWeChat(date)
             }
