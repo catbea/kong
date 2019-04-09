@@ -197,8 +197,8 @@ export default {
       .portrait-select-add {
         font-size: 44px;
         color: rgba(177, 194, 222, 1);
-        line-height: 50px;
-        margin-left: 16px;
+        line-height: 55px;
+        margin-left: 14px;
       }
     }
   }
