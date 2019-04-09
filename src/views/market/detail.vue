@@ -335,7 +335,7 @@
                   v-if="this.linkerInfo.replyVO.userId!='-1'"
                 >{{this.linkerInfo.replyVO.nickName | privacyName()}}</i>
                 <i v-else>{{this.linkerInfo.replyVO.nickName}}</i>
-                <a class="admin-label">系统客服</a>
+                <a class="admin-label" v-if="this.linkerInfo.replyVO.userId==='-1'">系统客服</a>
                 <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
               </div>
               <p>{{this.linkerInfo.replyVO.content}}</p>
@@ -1574,6 +1574,7 @@ export default {
         line-height:15px;
         margin-left: 13px;
         margin-top: 2px;
+        text-align: center;
       }
 
       li:nth-child(1) {
