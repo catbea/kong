@@ -1563,19 +1563,18 @@ export default {
       width: 100%;
 
       .admin-label {
-        display: flex;
-        align-content: center;
-        justify-content: center;
         width: 50px;
         height: 15px;
         background: rgba(143, 159, 177, 0.15);
         border-radius: 2px;
-        font-size:10px;
-        font-family:PingFangSC-Regular;
-        font-weight:400;
-        color:rgba(92,95,102,1);
+        font-size: 10px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(92, 95, 102, 1);
         margin-left: 13px;
         margin-top: 2px;
+        line-height: 15px;
+        text-align: center;
         padding-top: 2px;
       }
 
@@ -1620,7 +1619,7 @@ export default {
       }
       li:nth-child(2) {
         padding-bottom: 16px;
-       
+
         span {
           display: inline-block;
           text-align: center;
@@ -1633,7 +1632,6 @@ export default {
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
-          
         }
         div {
           display: flex;

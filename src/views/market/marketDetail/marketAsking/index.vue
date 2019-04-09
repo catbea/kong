@@ -28,12 +28,9 @@
             <div class="answer-top">
               <div class="answer-icon">答</div>
               <img class="header-img" :src="item.replyVO.avatarUrl">
-              <div
-                class="user-name"
-                v-if="item.replyVO.userId==='-1'"
-              >{{item.replyVO.nickName}}</div>
+              <div class="user-name" v-if="item.replyVO.userId==='-1'">{{item.replyVO.nickName}}</div>
               <div class="user-name" v-else>{{item.replyVO.nickName|privacyName() }}</div>
-              <div class="user-lable" v-if="item.replyVO.userId==='-1'"><span>系统客服</span></div>
+              <div class="user-lable" v-if="item.replyVO.userId==='-1'">系统客服</div>
               <div class="reply-time">{{item.replyVO.createTimeStamp|dateTimeFormatter(5) }}</div>
             </div>
             <div class="answer-bottom">{{item.replyVO.content}}</div>
@@ -266,18 +263,14 @@ export default {
             background: rgba(143, 159, 177, 0.15);
             border-radius: 2px;
             margin-left: 13px;
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            padding-top: 2px;
 
-            span {
-              width: 50px;
-              height: 15px;
-              font-size: 10px;
-              color: #5c5f66;
-              text-align: center;
-            }
+            font-size: 10px;
+            font-family: PingFangSC-Regular;
+            font-weight: 400;
+            color: rgba(92, 95, 102, 1);
+            line-height: 15px;
+            text-align: center;
+            padding-top: 2px;
           }
 
           .reply-time {
