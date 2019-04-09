@@ -331,7 +331,11 @@
               <div>
                 <span>答</span>
                 <img class="header-img" :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
-                <i>{{this.linkerInfo.replyVO.nickName | privacyName()}}</i>&nbsp;&nbsp;
+                <i
+                  v-if="this.linkerInfo.replyVO.userId!='-1'"
+                >{{this.linkerInfo.replyVO.nickName | privacyName()}}</i>
+                <i v-else>{{this.linkerInfo.replyVO.nickName}}</i>
+                <a class="admin-label">系统客服</a>
                 <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
               </div>
               <p>{{this.linkerInfo.replyVO.content}}</p>
@@ -749,7 +753,6 @@ export default {
      * 进入详情
      */
     enterAskingDetails() {
-
       var parameterInfo = {
         id: this.id,
         replyNum: this.replyNum,
@@ -757,7 +760,7 @@ export default {
         linkerName: this.info.linkerName
       }
 
-      this.$router.push({ name: 'market-asking-list',query: { infos: JSON.stringify(parameterInfo) } })
+      this.$router.push({ name: 'market-asking-list', query: { infos: JSON.stringify(parameterInfo) } })
     },
 
     swipeChange(val) {
@@ -1407,7 +1410,7 @@ export default {
         li {
           padding: 10px 0 16px;
           margin-bottom: 10px;
-          &:nth-child(2){
+          &:nth-child(2) {
             margin-bottom: 0;
           }
           .top {
@@ -1559,6 +1562,20 @@ export default {
       padding: 0 15px;
       width: 100%;
 
+      .admin-label {
+        width: 50px;
+        height: 15px;
+        background: rgba(143, 159, 177, 0.15);
+        border-radius: 2px;
+        font-size:10px;
+        font-family:PingFangSC-Regular;
+        font-weight:400;
+        color:rgba(92,95,102,1);
+        line-height:15px;
+        margin-left: 13px;
+        margin-top: 2px;
+      }
+
       li:nth-child(1) {
         display: flex;
         justify-content: space-between;
@@ -1600,6 +1617,7 @@ export default {
       }
       li:nth-child(2) {
         padding-bottom: 16px;
+       
         span {
           display: inline-block;
           text-align: center;
@@ -1612,6 +1630,7 @@ export default {
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(255, 255, 255, 1);
+          
         }
         div {
           display: flex;
@@ -1635,6 +1654,7 @@ export default {
             font-family: PingFangSC-Regular;
             font-weight: 400;
             color: rgba(153, 153, 153, 1);
+            margin-left: 5px;
           }
         }
         p {
