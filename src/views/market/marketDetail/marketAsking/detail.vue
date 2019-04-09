@@ -12,7 +12,12 @@
         <div class="asking-list" v-for="(item, index) in lists" :key="index">
           <div class="asking-list-top">
             <avatar :avatar="item.avatarUrl"/>
-            <span class="asking-list-top-name">{{item.nickName | privacyName() }}</span>
+            <span
+              class="asking-list-top-name"
+              v-if="item.userId!='-1'"
+            >{{item.nickName | privacyName() }}</span>
+            <span class="asking-list-top-name" v-else>{{item.nickName}}</span>
+            <span class="admin-label"  v-if="item.userId==='-1'">系统客服</span>
             <span class="asking-list-top-time">{{item.createTimeStamp | dateTimeFormatter(5) }}</span>
           </div>
           <div class="asking-list-bottom">{{item.content}}</div>
@@ -182,10 +187,28 @@ export default {
           margin-left: 8px;
           margin-right: 8px;
         }
+
+        > .admin-label {
+          width: 50px;
+          height: 15px;
+          background: rgba(143, 159, 177, 0.15);
+          border-radius: 2px;
+
+          font-size: 10px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(92, 95, 102, 1);
+          line-height: 15px;
+          text-align: center;
+          padding-top: 2px;
+        }
+
         > .asking-list-top-time {
           color: #999;
           font-size: 12px;
+          margin-left: 5px;
         }
+
       }
       > .asking-list-bottom {
         color: #666;

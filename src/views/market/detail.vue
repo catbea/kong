@@ -1,412 +1,420 @@
 <template>
-<div>
-  <div class="market-detail-page" v-if="info">
-    <!-- 新手引导 -->
-    <hint-tire></hint-tire>
-    <!-- 顶部swipe -->
-    <div class="top-swipe-container">
-      <div class="swipe-outer">
-        <div class="swipe-content">
-          <div class="btn-box">
-            <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
-            <div
-              class="swipe-photo"
-              :class="{'photo': showVideo}"
-              @click.stop="videoHandle"
-              v-if="info.fyVideo"
-            >视频</div>
-          </div>
-          <van-swipe @change="swipeChange">
-            <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
+  <div>
+    <div class="market-detail-page" v-if="info">
+      <!-- 新手引导 -->
+      <hint-tire></hint-tire>
+      <!-- 顶部swipe -->
+      <div class="top-swipe-container">
+        <div class="swipe-outer">
+          <div class="swipe-content">
+            <div class="btn-box">
+              <div class="swipe-photo" :class="{'photo': !showVideo}" @click.stop="photoHandle">相册</div>
               <div
-                class="bg_img swipe-item dev"
-                :style="{backgroundImage:'url(' + item.imgUrl + ')'}"
-              ></div>
-            </van-swipe-item>
-            <div
-              class="custom-indicator dev"
-              slot="indicator"
-              v-show="photoButton"
-            >{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
-          </van-swipe>
-        </div>
-        <div class="operate-content">
-          <!-- 收藏/分享 -->
-          <div class="operate-1">
-            <div class="operate-collect" @click.stop="collectHandler">
-              <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
-              <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
-              收藏
+                class="swipe-photo"
+                :class="{'photo': showVideo}"
+                @click.stop="videoHandle"
+                v-if="info.fyVideo"
+              >视频</div>
             </div>
-            <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
-              <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
-              分享
+            <van-swipe @change="swipeChange">
+              <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
+                <div
+                  class="bg_img swipe-item dev"
+                  :style="{backgroundImage:'url(' + item.imgUrl + ')'}"
+                ></div>
+              </van-swipe-item>
+              <div
+                class="custom-indicator dev"
+                slot="indicator"
+                v-show="photoButton"
+              >{{ swipeCurrent + 1 }}/{{info.bannerList.length}}</div>
+            </van-swipe>
+          </div>
+          <div class="operate-content">
+            <!-- 收藏/分享 -->
+            <div class="operate-1">
+              <div class="operate-collect" @click.stop="collectHandler">
+                <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
+                <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
+                收藏
+              </div>
+              <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
+                <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
+                分享
+              </div>
             </div>
+            <!-- 存在全景时全景播放 -->
           </div>
-          <!-- 存在全景时全景播放 -->
-        </div>
-        <div
-          class="bg_img operate-2"
-          v-if="info.ifPanorama===1"
-          :style="{backgroundImage:'url(' + playIcon + ')'}"
-          @click.stop="ifPanoramaClickHandler"
-        ></div>
-      </div>
-      <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400  x5-playsinline="true" -->
-      <div class="video-box" v-show="showVideo">
-        <video
-          width="100%"
-          height="100%"
-          ref="videoplay"
-          preload="true"
-          controls="showControls"
-          style="object-fit:fill"
-          :poster="info.headImgUrl"
-          webkit-playsinline="true"
-          playsinline="true"
-          x-webkit-airplay="allow"
-          x5-video-player-type="h5"
-          x5-video-player-fullscreen="true"
-        >
-          <source :src="info.fyVideo" type="video/mp4">
-        </video>
-        <div class="close-video" @click="videoHide">退出视频</div>
-      </div>
-    </div>
-    <!-- 楼盘基础信息 -->
-    <div class="base-info-container">
-      <div class="info-top-bar">
-        <tag-group :arr="tagGroupArr&&tagGroupArr.slice(0,3)"/>
-        <div class="browser-info">
-          <span>{{info.browsCount}}</span>人浏览过
-          <div class="head-portrait-box">
-            <transition name="show">
-              <avatar
-                :avatar="item.clientImg"
-                v-for="(item,index) in info.customerList"
-                :key="index"
-                v-if="index===headCurrent"
-              />
-            </transition>
-          </div>
-        </div>
-      </div>
-      <div class="info-content">
-        <h5 class="house-name">{{info.linkerName}}</h5>
-        <p
-          class="house-feature"
-        >{{ info.projectTagList === '' ? null : info.projectTagList.join(" | ")}}</p>
-        <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
-          <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
-          <span class="commission-text">{{info&&info.divisionRules}}</span>
           <div
-            class="bg_img commission-detail"
-            @click="commission"
-            :style="{backgroundImage:'url('+siteDetailImg+')'}"
+            class="bg_img operate-2"
+            v-if="info.ifPanorama===1"
+            :style="{backgroundImage:'url(' + playIcon + ')'}"
+            @click.stop="ifPanoramaClickHandler"
           ></div>
         </div>
-        <div class="house-info-form">
-          <p>
-            <span>平均价格:</span>
-            {{info.averagePrice}}
-            <span
-              class="calculation-view"
-              @click="goCalculation(info.linkerName)"
-            >
-              <img :src="calculationIcon">
-              <span>房贷计算器</span>
-            </span>
-          </p>
-          <p>
-            <span>开盘时间:</span>
-            {{info.openTime}}
-          </p>
-          <p>
-            <span>楼盘地址:</span>
-            {{info.detailAddress}}
-          </p>
-          <p>
-            <span>开发商:</span>
-            {{info.developer}}
-          </p>
-        </div>
-        <div class="more-info" @click="moreInfoHandler">更多信息</div>
-      </div>
-    </div>
-    <!-- 楼盘分享关系图谱 -->
-    <div class="marker-relation-box">
-      <p>楼盘分享关系图谱</p>
-      <ol
-        class="bg_img relation-drawing"
-        :style="{backgroundImage:'url('+drawingImg+')'}"
-        @click="relationShowFn"
-      >
-        <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
-        <li>{{info.linkerName}}</li>
-      </ol>
-    </div>
-    <van-popup v-model="relationShow" class="relationPopup">
-      <div class="relationName">
-        <p
-          class="bg_img"
-          :style="{backgroundImage:'url('+closeImg+')'}"
-          @click="relationShow=false"
-        ></p>
-        <ul>
-          <li>请联系经纪人</li>
-          <li>了解更多楼盘分享关系详情，请联系经纪人</li>
-          <!-- <li>{{info&&info.contatctTel}}</li> -->
-        </ul>
-        <p class="van-hairline--top immediately" @click="relationHandle">知道了</p>
-      </div>
-    </van-popup>
-    <!-- 户型 -->
-    <div class="house-type" v-if="info.houseTypeList&&info.houseTypeList.length>0">
-      <title-bar :conf="typeTitleConf"/>
-      <div class="type-swipe-content">
-        <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
-            <div class="house-type">
-              <div
-                class="bg_img house-type-img"
-                :style="{backgroundImage:'url('+item.imgUrl+')'}"
-                @click.stop="houseTypeHandle(item.imgUrl)"
-              ></div>
-              <div class="house-type-info">
-                <p class="house-type-name">{{item.householdDesc}}</p>
-                <p
-                  class="house-type-area"
-                  v-if="item.orientations=='暂无信息'"
-                >{{`建面${item.area} 暂无朝向信息`}}</p>
-                <p class="house-type-area" v-else>{{`建面${item.area}${item.orientations}朝向`}}</p>
-                <p class="house-type-price" v-if="item.price=='价格待定'">{{item.price}}</p>
-                <p class="house-type-price" v-else>
-                  <span v-if="item.price.indexOf('起')=== -1">约</span>
-                  {{item.price}}
-                </p>
-              </div>
-            </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>
-    <!-- 动态 -->
-    <div class="house-news" v-if="info.houseDynamicList&&info.houseDynamicList.length>0">
-      <title-bar :conf="newsTitleConf"/>
-      <div class="news-container">
-        <p class="news-title">{{info.houseDynamicList[0].title}}</p>
-        <p class="news-content">{{info.houseDynamicList[0].content | textOver(48)}}</p>
-        <p class="news-time">{{info.houseDynamicList[0].dynamicTime}}</p>
-      </div>
-    </div>
-    <!-- 位置周边 -->
-    <div class="house-circum" v-if="info.houseAroundType&&info.houseAroundType.length>0">
-      <title-bar :conf="aroundTitleConf"/>
-      <div class="tab-box">
-        <van-tabs v-model="mapTab" color="#007ae6" title-active-color="#007ae6" :line-height="0" swipeable>
-          <van-tab
-            v-for="item in info.houseAroundType"
-            :key="item.name"
-            :title="item.name"
-            :line-width="0"
-          />
-        </van-tabs>
-      </div>
-      <div class="map-box" @click="mapClickHandler">
-        <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
-      </div>
-    </div>
-    <!-- 楼盘评测 -->
-    <div class="evaluating-box" v-if="this.evaluatingInfo">
-      <title-bar :conf="evaluatingTitleConf"/>
-      <div class="evaluating-content" @click="enterEvaluation">
-        <div class="pic-box">
-          <img
-            class="bg_img evaluating-img"
-            :src="evaluatingInfo&&evaluatingInfo.cover"
-            alt=""
-            srcset=""
+        <!-- 视频  http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400  x5-playsinline="true" -->
+        <div class="video-box" v-show="showVideo">
+          <video
+            width="100%"
+            height="100%"
+            ref="videoplay"
+            preload="true"
+            controls="showControls"
+            style="object-fit:fill"
+            :poster="info.headImgUrl"
+            webkit-playsinline="true"
+            playsinline="true"
+            x-webkit-airplay="allow"
+            x5-video-player-type="h5"
+            x5-video-player-fullscreen="true"
           >
-        </div>
-        
-        <div class="right-body">
-          <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
-          <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
-           <!-- <div class="bb" v-html='evaluatingInfo&&evaluatingInfo.content'></div>  -->
+            <source :src="info.fyVideo" type="video/mp4">
+          </video>
+          <div class="close-video" @click="videoHide">退出视频</div>
         </div>
       </div>
-    </div>
-    <!-- 楼盘评价 -->
-    <div class="evaluate-box">
-      <title-bar :conf="evaluateTitleConf"/>
-      <div class="evaluate-content" v-if="commnetList.length">
-        <div v-if="commentCount">
-          <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
-          <router-link
-            class="evaluate-label"
-            tag="p"
-            :to="`/market/comment/list/${this.info.linkerId}?type=0`"
-            v-if="commentCount.all"
-          >全部 ({{commentCount.all}})</router-link>
-          <router-link
-            class="evaluate-label"
-            tag="p"
-            :to="`/market/comment/list/${this.info.linkerId}?type=3`"
-            v-if="commentCount.withPicture"
-          >有图 ({{commentCount.withPicture}})</router-link>
-          <router-link
-            class="evaluate-label"
-            tag="p"
-            :to="`/market/comment/list/${this.info.linkerId}?type=1`"
-            v-if="commentCount.authUserNum"
-          >实看 ({{commentCount.authUserNum}})</router-link>
-          <router-link
-            class="evaluate-label"
-            tag="p"
-            :to="`/market/comment/list/${this.info.linkerId}?type=2`"
-            v-if="commentCount.goodReputation"
-          >好评 ({{commentCount.goodReputation}})</router-link>
+      <!-- 楼盘基础信息 -->
+      <div class="base-info-container">
+        <div class="info-top-bar">
+          <tag-group :arr="tagGroupArr&&tagGroupArr.slice(0,3)"/>
+          <div class="browser-info">
+            <span>{{info.browsCount}}</span>人浏览过
+            <div class="head-portrait-box">
+              <transition name="show">
+                <avatar
+                  :avatar="item.clientImg"
+                  v-for="(item,index) in info.customerList"
+                  :key="index"
+                  v-if="index===headCurrent"
+                />
+              </transition>
+            </div>
+          </div>
         </div>
-        <ul class="evaluate-detail" @click="goComment">
-          <li class="van-hairline--bottom" v-for="(item,index) in commnetList">
-            <div class="top">
-              <img :src="item.avatarUrl" alt="" srcset="">
-              <div class="message">
-                <p>
-                  {{item.nickName | privacyName() }}
-                  <span
-                    v-if="item.userTag===1"
-                  >{{item.userTag | formatTag}}</span>
-                </p>
-                <p>
-                  <van-rate
-                    v-model="item.starLevel"
-                    :size="10"
-                    :count="5"
-                    :readonly="true"
-                    color="#ED8147"
-                  />
-                </p>
-              </div>
-            </div>
-            <div class="bottom">
-              {{item.content}}
-              <span v-if="item.imgList.length">
-                <img src="../../assets/img/market/comment/pic.png" alt="">
-              </span>
-            </div>
-          </li>
-        </ul>
-        <span class="hint">在这里，说出楼盘的一切</span>
-        <router-link
-          class="go-evaluate"
-          tag="span"
-          :to="`/market/comment/write/${this.info.linkerId}`"
-        >我要评论</router-link>
-      </div>
-      <div class="evaluate-content-nodata" v-else>
-        <p>该楼盘没有评论哦，快来抢先一步评论吧</p>
-        <button @click="goCommentWrite">我要评论</button>
-      </div>
-    </div>
-    <!-- 买房问问 -->
-    <div class="buy-ask">
-      <title-bar :conf="buyAskTitleConf"/>
-      <div v-if="linkerInfo">
-        <ol class="ask-content">
-          <li>
-            <div>
-              <span>问</span>
-              <span>{{this.linkerInfo&&this.linkerInfo.content}}</span>
-              <!-- {{this.linkerInfo&&this.linkerInfo.content}} -->
-            </div>
-            <p>{{this.linkerInfo&&this.linkerInfo.replyNum}}人回复</p>
-          </li>
-          <li class="van-hairline--bottom" v-if="this.linkerInfo&&this.linkerInfo.replyVO!=''">
-            <div>
-              <span>答</span>
-              <img class="header-img" :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
-              <i>{{this.linkerInfo.replyVO.nickName | privacyName()}}</i>&nbsp;&nbsp;
-              <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
-            </div>
-            <p>{{this.linkerInfo.replyVO.content}}</p>
-          </li>
-        </ol>
-        <span class="hint">在这里，说出楼盘的一切</span>
-        <span class="go-evaluate" @click="commitQuestion">我要提问</span>
-      </div>
-      <div class="evaluate-content-nodata" v-else>
-        <p>该楼盘没有问答哦，快来抢先一步提问吧</p>
-        <button @click="commitQuestion">我要提问</button>
-      </div>
-    </div>
-    <!-- 其他楼盘 -->
-    <div class="house-recommend" v-if="info.linkerOtherList.length>0">
-      <title-bar :conf="othersTitleConf"/>
-      <div class="recommend-swipe-content">
-        <swiper :options="swiperOption">
-          <swiper-slide
-            v-for="(item,index) in info.linkerOtherList"
-            :key="index"
-            @click.native="itemClickHandler(item.linkerId)"
-          >
-            <div class="recommend-house-item">
-              <div
-                class="bg_img recommend-house-img"
-                :style="{backgroundImage:'url('+item.headImgUrl+')'}"
+        <div class="info-content">
+          <h5 class="house-name">{{info.linkerName}}</h5>
+          <p
+            class="house-feature"
+          >{{ info.projectTagList === '' ? null : info.projectTagList.join(" | ")}}</p>
+          <div class="specific-market-detail-commission" v-if="info&&info.divisionRules">
+            <span class="bg_img" :style="{backgroundImage:'url('+commissionImg+')'}"></span>
+            <span class="commission-text">{{info&&info.divisionRules}}</span>
+            <div
+              class="bg_img commission-detail"
+              @click="commission"
+              :style="{backgroundImage:'url('+siteDetailImg+')'}"
+            ></div>
+          </div>
+          <div class="house-info-form">
+            <p>
+              <span>平均价格:</span>
+              {{info.averagePrice}}
+              <span
+                class="calculation-view"
+                @click="goCalculation(info.linkerName)"
               >
-                <p
-                  class="bg_img panorama-icon"
-                  v-if="item.ifPanorama==1"
-                  :style="{backgroundImage:'url('+panoramaIcon+')'}"
-                ></p>
+                <img :src="calculationIcon">
+                <span>房贷计算器</span>
+              </span>
+            </p>
+            <p>
+              <span>开盘时间:</span>
+              {{info.openTime}}
+            </p>
+            <p>
+              <span>楼盘地址:</span>
+              {{info.detailAddress}}
+            </p>
+            <p>
+              <span>开发商:</span>
+              {{info.developer}}
+            </p>
+          </div>
+          <div class="more-info" @click="moreInfoHandler">更多信息</div>
+        </div>
+      </div>
+      <!-- 楼盘分享关系图谱 -->
+      <div class="marker-relation-box">
+        <p>楼盘分享关系图谱</p>
+        <ol
+          class="bg_img relation-drawing"
+          :style="{backgroundImage:'url('+drawingImg+')'}"
+          @click="relationShowFn"
+        >
+          <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
+          <li>{{info.linkerName}}</li>
+        </ol>
+      </div>
+      <van-popup v-model="relationShow" class="relationPopup">
+        <div class="relationName">
+          <p
+            class="bg_img"
+            :style="{backgroundImage:'url('+closeImg+')'}"
+            @click="relationShow=false"
+          ></p>
+          <ul>
+            <li>请联系经纪人</li>
+            <li>了解更多楼盘分享关系详情，请联系经纪人</li>
+            <!-- <li>{{info&&info.contatctTel}}</li> -->
+          </ul>
+          <p class="van-hairline--top immediately" @click="relationHandle">知道了</p>
+        </div>
+      </van-popup>
+      <!-- 户型 -->
+      <div class="house-type" v-if="info.houseTypeList&&info.houseTypeList.length>0">
+        <title-bar :conf="typeTitleConf"/>
+        <div class="type-swipe-content">
+          <swiper :options="swiperOption">
+            <swiper-slide v-for="(item,index) in info.houseTypeList" :key="index">
+              <div class="house-type">
+                <div
+                  class="bg_img house-type-img"
+                  :style="{backgroundImage:'url('+item.imgUrl+')'}"
+                  @click.stop="houseTypeHandle(item.imgUrl)"
+                ></div>
+                <div class="house-type-info">
+                  <p class="house-type-name">{{item.householdDesc}}</p>
+                  <p
+                    class="house-type-area"
+                    v-if="item.orientations=='暂无信息'"
+                  >{{`建面${item.area} 暂无朝向信息`}}</p>
+                  <p class="house-type-area" v-else>{{`建面${item.area}${item.orientations}朝向`}}</p>
+                  <p class="house-type-price" v-if="item.price=='价格待定'">{{item.price}}</p>
+                  <p class="house-type-price" v-else>
+                    <span v-if="item.price.indexOf('起')=== -1">约</span>
+                    {{item.price}}
+                  </p>
+                </div>
               </div>
-              <div class="recommend-house-info">
-                <p class="house-name">{{item.linkerName}}</p>
-                <p class="house-location">{{item.district}}</p>
+            </swiper-slide>
+          </swiper>
+        </div>
+      </div>
+      <!-- 动态 -->
+      <div class="house-news" v-if="info.houseDynamicList&&info.houseDynamicList.length>0">
+        <title-bar :conf="newsTitleConf"/>
+        <div class="news-container">
+          <p class="news-title">{{info.houseDynamicList[0].title}}</p>
+          <p class="news-content">{{info.houseDynamicList[0].content | textOver(48)}}</p>
+          <p class="news-time">{{info.houseDynamicList[0].dynamicTime}}</p>
+        </div>
+      </div>
+      <!-- 位置周边 -->
+      <div class="house-circum" v-if="info.houseAroundType&&info.houseAroundType.length>0">
+        <title-bar :conf="aroundTitleConf"/>
+        <div class="tab-box">
+          <van-tabs
+            v-model="mapTab"
+            color="#007ae6"
+            title-active-color="#007ae6"
+            :line-height="0"
+            swipeable
+          >
+            <van-tab
+              v-for="item in info.houseAroundType"
+              :key="item.name"
+              :title="item.name"
+              :line-width="0"
+            />
+          </van-tabs>
+        </div>
+        <div class="map-box" @click="mapClickHandler">
+          <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
+        </div>
+      </div>
+      <!-- 楼盘评测 -->
+      <div class="evaluating-box" v-if="this.evaluatingInfo">
+        <title-bar :conf="evaluatingTitleConf"/>
+        <div class="evaluating-content" @click="enterEvaluation">
+          <div class="pic-box">
+            <img
+              class="bg_img evaluating-img"
+              :src="evaluatingInfo&&evaluatingInfo.cover"
+              alt=""
+              srcset=""
+            >
+          </div>
+          <div class="right-body">
+            <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
+            <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
+            <!-- <div class="bb" v-html='evaluatingInfo&&evaluatingInfo.content'></div>  -->
+          </div>
+        </div>
+      </div>
+      <!-- 楼盘评价 -->
+      <div class="evaluate-box">
+        <title-bar :conf="evaluateTitleConf"/>
+        <div class="evaluate-content" v-if="commnetList.length">
+          <div v-if="commentCount">
+            <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
+            <router-link
+              class="evaluate-label"
+              tag="p"
+              :to="`/market/comment/list/${this.info.linkerId}?type=0`"
+              v-if="commentCount.all"
+            >全部 ({{commentCount.all}})</router-link>
+            <router-link
+              class="evaluate-label"
+              tag="p"
+              :to="`/market/comment/list/${this.info.linkerId}?type=3`"
+              v-if="commentCount.withPicture"
+            >有图 ({{commentCount.withPicture}})</router-link>
+            <router-link
+              class="evaluate-label"
+              tag="p"
+              :to="`/market/comment/list/${this.info.linkerId}?type=1`"
+              v-if="commentCount.authUserNum"
+            >实看 ({{commentCount.authUserNum}})</router-link>
+            <router-link
+              class="evaluate-label"
+              tag="p"
+              :to="`/market/comment/list/${this.info.linkerId}?type=2`"
+              v-if="commentCount.goodReputation"
+            >好评 ({{commentCount.goodReputation}})</router-link>
+          </div>
+          <ul class="evaluate-detail" @click="goComment">
+            <li class="van-hairline--bottom" v-for="(item,index) in commnetList">
+              <div class="top">
+                <img :src="item.avatarUrl" alt="" srcset="">
+                <div class="message">
+                  <p>
+                    {{item.nickName | privacyName() }}
+                    <span
+                      v-if="item.userTag===1"
+                    >{{item.userTag | formatTag}}</span>
+                  </p>
+                  <p>
+                    <van-rate
+                      v-model="item.starLevel"
+                      :size="10"
+                      :count="5"
+                      :readonly="true"
+                      color="#ED8147"
+                    />
+                  </p>
+                </div>
               </div>
+              <div class="bottom">
+                {{item.content}}
+                <span v-if="item.imgList.length">
+                  <img src="../../assets/img/market/comment/pic.png" alt="">
+                </span>
+              </div>
+            </li>
+          </ul>
+          <span class="hint">在这里，说出楼盘的一切</span>
+          <router-link
+            class="go-evaluate"
+            tag="span"
+            :to="`/market/comment/write/${this.info.linkerId}`"
+          >我要评论</router-link>
+        </div>
+        <div class="evaluate-content-nodata" v-else>
+          <p>该楼盘没有评论哦，快来抢先一步评论吧</p>
+          <button @click="goCommentWrite">我要评论</button>
+        </div>
+      </div>
+      <!-- 买房问问 -->
+      <div class="buy-ask">
+        <title-bar :conf="buyAskTitleConf"/>
+        <div v-if="linkerInfo">
+          <ol class="ask-content" @click="enterAskingDetails">
+            <li>
+              <div>
+                <span>问</span>
+                <span>{{this.linkerInfo&&this.linkerInfo.content}}</span>
+                <!-- {{this.linkerInfo&&this.linkerInfo.content}} -->
+              </div>
+              <p>{{this.linkerInfo&&this.linkerInfo.replyNum}}人回复</p>
+            </li>
+            <li class="van-hairline--bottom" v-if="this.linkerInfo&&this.linkerInfo.replyVO!=''">
+              <div>
+                <span>答</span>
+                <img class="header-img" :src="this.linkerInfo.replyVO.avatarUrl " alt="" srcset="">
+                <i
+                  v-if="this.linkerInfo.replyVO.userId!='-1'"
+                >{{this.linkerInfo.replyVO.nickName | privacyName()}}</i>
+                <i v-else>{{this.linkerInfo.replyVO.nickName}}</i>
+                <a class="admin-label" v-if="this.linkerInfo.replyVO.userId==='-1'">系统客服</a>
+                <i>{{this.linkerInfo.replyVO.createTimeStamp | dateTimeFormatter(5)}}</i>
+              </div>
+              <p>{{this.linkerInfo.replyVO.content}}</p>
+            </li>
+          </ol>
+          <span class="hint">在这里，说出楼盘的一切</span>
+          <span class="go-evaluate" @click="commitQuestion">我要提问</span>
+        </div>
+        <div class="evaluate-content-nodata" v-else>
+          <p>该楼盘没有问答哦，快来抢先一步提问吧</p>
+          <button @click="commitQuestion">我要提问</button>
+        </div>
+      </div>
+      <!-- 其他楼盘 -->
+      <div class="house-recommend" v-if="info.linkerOtherList.length>0">
+        <title-bar :conf="othersTitleConf"/>
+        <div class="recommend-swipe-content">
+          <swiper :options="swiperOption">
+            <swiper-slide
+              v-for="(item,index) in info.linkerOtherList"
+              :key="index"
+              @click.native="itemClickHandler(item.linkerId)"
+            >
+              <div class="recommend-house-item">
+                <div
+                  class="bg_img recommend-house-img"
+                  :style="{backgroundImage:'url('+item.headImgUrl+')'}"
+                >
+                  <p
+                    class="bg_img panorama-icon"
+                    v-if="item.ifPanorama==1"
+                    :style="{backgroundImage:'url('+panoramaIcon+')'}"
+                  ></p>
+                </div>
+                <div class="recommend-house-info">
+                  <p class="house-name">{{item.linkerName}}</p>
+                  <p class="house-location">{{item.district}}</p>
+                </div>
+              </div>
+            </swiper-slide>
+          </swiper>
+        </div>
+      </div>
+      <div class="m-statement">
+        <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
+        <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
+      </div>
+      <!-- 开通提示及开通状态 -->
+      <div class="van-hairline--top house-status">
+        <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
+          <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
+          <div class="open-btn" @click="openHandler">开通楼盘</div>
+        </div>
+        <market-renew
+          v-if="!openStatus&&info.saleStatus!=='售罄'"
+          :renewInfo="info"
+          :vipInfo="vipInfo"
+        />
+        <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
+          <p>售罄</p>
+        </div>
+      </div>
+      <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
+      <div class="poster-container" v-show="posterShow">
+        <div class="cnt">
+          <div class="bg_img poster-img">
+            <img :src="info.activityImgUrl" alt="" srcset="">
+            <div class="bg_img close-icon" @click="posterShow=false">
+              <img :src="closeIcon" alt="">
             </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>
-    <div class="m-statement">
-      <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-      <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
-    </div>
-    <!-- 开通提示及开通状态 -->
-    <div class="van-hairline--top house-status">
-      <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
-        <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
-        <div class="open-btn" @click="openHandler">开通楼盘</div>
-      </div>
-      <market-renew
-        v-if="!openStatus&&info.saleStatus!=='售罄'"
-        :renewInfo="info"
-        :vipInfo="vipInfo"
-      />
-      <div class="saleStatusFlag" v-if="info.saleStatus==='售罄'">
-        <p>售罄</p>
-      </div>
-    </div>
-    <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
-    <div class="poster-container" v-show="posterShow">
-      <div class="cnt">
-        <div class="bg_img poster-img">
-          <img :src="info.activityImgUrl" alt="" srcset="">
-          <div class="bg_img close-icon" @click="posterShow=false">
-            <img :src="closeIcon" alt="">
           </div>
         </div>
       </div>
     </div>
+    <!-- loading -->
+    <div class="loading" v-show="showLoading">
+      <van-loading type="spinner" color="white" class="van-loading"/>
+    </div>
   </div>
-  <!-- loading -->
-  <div class="loading"  v-show="showLoading">
-    <van-loading type="spinner" color="white" class="van-loading"/>
-  </div>
-</div>
-  
 </template>
 <script>
 import 'swiper/dist/css/swiper.css'
@@ -539,10 +547,8 @@ export default {
     // this.getQuestionDetail('')
     // this.getEvaluatingInfo('')
 
-    
     this.getQuestionDetail(this.id)
     this.getEvaluatingInfo(this.id)
-
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -571,7 +577,7 @@ export default {
       let result = await marketService.getEvaluatingInfo(linkerId)
       this.evaluatingInfo = result
       if (result) {
-        this.evaluatingInfo.content=this.evaluatingInfo.content.replace(/<[^>]+>/g,"")
+        this.evaluatingInfo.content = this.evaluatingInfo.content.replace(/<[^>]+>/g, '')
       }
       this.evaluatingTitleConf.link = {
         name: 'market-marketEvaluating',
@@ -598,9 +604,9 @@ export default {
         let commnetList = result.records
         if (commnetList && commnetList.length) {
           this.commnetList = commnetList
-          this.evaluateTitleConf.title = `楼盘评论（${result.total}）`
+          this.evaluateTitleConf.title = `楼盘评论(${result.total})`
         } else {
-          this.evaluateTitleConf.title = '楼盘评论（0）'
+          this.evaluateTitleConf.title = '楼盘评论(0)'
         }
       }
       this.evaluateTitleConf.link = `/market/comment/list/${this.id}?type=0`
@@ -742,6 +748,21 @@ export default {
       this.buyAskTitleConf.link = { name: 'market-asking-list', query: { infos: JSON.stringify(parameterInfo) } }
       this.showLoading = false
     },
+
+    /**
+     * 进入详情
+     */
+    enterAskingDetails() {
+      var parameterInfo = {
+        id: this.id,
+        replyNum: this.replyNum,
+        questionNum: this.questionNum,
+        linkerName: this.info.linkerName
+      }
+
+      this.$router.push({ name: 'market-asking-list', query: { infos: JSON.stringify(parameterInfo) } })
+    },
+
     swipeChange(val) {
       this.swipeCurrent = val
     },
@@ -872,7 +893,7 @@ export default {
         })
         let time = new Date(+this.vipInfo.expireTimestamp)
         let year = time.getFullYear()
-        let mou = (time.getMonth() + 1) < 10 ? '0' + (time.getMonth() + 1) : (time.getMonth() + 1)
+        let mou = time.getMonth() + 1 < 10 ? '0' + (time.getMonth() + 1) : time.getMonth() + 1
         let date = time.getDate() < 10 ? '0' + time.getDate() : time.getDate()
         this.info.expireTime = `${mou}/${date}`
         // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
@@ -1294,7 +1315,7 @@ export default {
       padding: 0 15px;
       width: 100%;
       display: flex;
-      .pic-box{
+      .pic-box {
         width: 120px;
         height: 90px;
         overflow: hidden;
@@ -1303,7 +1324,7 @@ export default {
         img {
           height: 90px;
           width: 120px;
-          object-fit:  cover;
+          object-fit: cover;
           object-position: center;
         }
       }
@@ -1362,7 +1383,7 @@ export default {
     }
   }
   > .evaluate-box {
-    margin-top: 40px;
+    margin-top: 30px;
     .evaluate-content {
       margin-top: 10px;
       padding: 0 15px;
@@ -1387,7 +1408,11 @@ export default {
       .evaluate-detail {
         margin-top: 10px;
         li {
-          padding: 10px 0;
+          padding: 10px 0 16px;
+          margin-bottom: 10px;
+          &:nth-child(2) {
+            margin-bottom: 0;
+          }
           .top {
             img {
               width: 36px;
@@ -1402,7 +1427,7 @@ export default {
               font-weight: 500;
               color: rgba(51, 51, 51, 1);
               margin-bottom: 10px;
-              vertical-align: middle;
+              vertical-align: top;
               span {
                 display: inline-block;
                 width: 60px;
@@ -1462,7 +1487,7 @@ export default {
         width: 82px;
         height: 30px;
         border-radius: 4px;
-        border: 1px solid rgba(68, 81, 102, 1);
+        border: 0.5px solid rgba(68, 81, 102, 1);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
@@ -1474,10 +1499,10 @@ export default {
     .evaluate-content-nodata {
       font-size: 12px;
       background-color: #f8fafc;
-      border: 1px dashed rgba(248,250,252,1);
+      border: 1px dashed #cdd6e1;
       text-align: center;
       padding: 20px;
-      margin: 16px;
+      margin: 12px 16px;
       p {
         padding-bottom: 20px;
         color: #969ea8;
@@ -1493,8 +1518,7 @@ export default {
     }
   }
   > .buy-ask {
-    margin-top: 41px;
-
+    margin-top: 30px;
     .not-question {
       width: 92%;
       margin-left: 4%;
@@ -1538,6 +1562,22 @@ export default {
       padding: 0 15px;
       width: 100%;
 
+      .admin-label {
+        width: 50px;
+        height: 15px;
+        background: rgba(143, 159, 177, 0.15);
+        border-radius: 2px;
+        font-size: 10px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(92, 95, 102, 1);
+        margin-left: 13px;
+        margin-top: 2px;
+        line-height: 15px;
+        text-align: center;
+        padding-top: 2px;
+      }
+
       li:nth-child(1) {
         display: flex;
         justify-content: space-between;
@@ -1579,6 +1619,7 @@ export default {
       }
       li:nth-child(2) {
         padding-bottom: 16px;
+
         span {
           display: inline-block;
           text-align: center;
@@ -1614,6 +1655,7 @@ export default {
             font-family: PingFangSC-Regular;
             font-weight: 400;
             color: rgba(153, 153, 153, 1);
+            margin-left: 5px;
           }
         }
         p {
@@ -1634,8 +1676,8 @@ export default {
 
     .evaluate-content-nodata {
       font-size: 12px;
-      background:rgba(248,250,252,1);
-      border: 1px dashed rgba(205,214,225,1);
+      background: rgba(248, 250, 252, 1);
+      border: 1px dashed rgba(205, 214, 225, 1);
       text-align: center;
       padding: 20px;
       margin: 16px;
@@ -1648,8 +1690,8 @@ export default {
         border-radius: 4px;
         height: 30px;
         padding: 6px 16px;
-        background:rgba(248,250,252,1);
-        background-color: #f8fafc
+        background: rgba(248, 250, 252, 1);
+        background-color: #f8fafc;
       }
     }
 
@@ -1668,7 +1710,7 @@ export default {
       width: 82px;
       height: 30px;
       border-radius: 4px;
-      border: 1px solid rgba(68, 81, 102, 1);
+      border: 0.5px solid rgba(68, 81, 102, 1);
       font-size: 13px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
@@ -1678,7 +1720,7 @@ export default {
     }
   }
   > .house-recommend {
-    margin-top: 28px;
+    margin-top: 30px;
     margin-bottom: 10px;
     > .recommend-swipe-content {
       margin: 0 15px;
@@ -1951,13 +1993,12 @@ export default {
 </style>
 
 <style lang="less">
-.house-circum{
+.house-circum {
   .van-tab--active {
     color: #007ae6;
   }
-  .van-hairline--top-bottom::after{
+  .van-hairline--top-bottom::after {
     border-width: 0;
   }
 }
-  
 </style>

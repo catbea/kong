@@ -78,6 +78,7 @@ export default {
     position: relative;
     font-size: 12px;
     color: #666666;
+    height: 30px;
     line-height: 30px;
     height: 100%;
     padding: 0 0 0 10px;
@@ -117,20 +118,24 @@ export default {
     font-size: 12px;
     align-items: center;
     justify-content: center;
+    vertical-align: middle;
     > i {
       padding: 3px 4px 3px 8px;
     }
-    > .search-icon {
+    .search-icon {
       width: 24px;
       height: 24px;
+      vertical-align: middle;
+      margin-right: -4px;
     }
-    > input {
+    input {
       width: 100%;
       background-color: #f5f5f5;
       border: none;
       border-radius: 4px;
       height:24px;
       line-height:24px;
+      margin-top: 3px;
     }
   }
 }

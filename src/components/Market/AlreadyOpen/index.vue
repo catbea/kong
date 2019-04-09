@@ -41,7 +41,6 @@ export default {
     padding: 0 16px 0 16px;
     li:nth-child(1) {
       font-size: 15px;
-
       font-weight: 400;
       color: rgba(51, 51, 51, 1);
       line-height: 22px;
@@ -59,7 +58,7 @@ export default {
       width: 68px;
       height: 24px;
       border-radius: 25px;
-      border: 0.8px solid rgba(0, 122, 230, 1);
+      border: 1px solid rgba(0, 122, 230, 1);
     }
   }
 }
