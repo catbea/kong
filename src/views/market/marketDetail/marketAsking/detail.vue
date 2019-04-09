@@ -199,6 +199,7 @@ export default {
           font-weight: 400;
           color: rgba(92, 95, 102, 1);
           line-height: 15px;
+          text-align: center;
         }
 
         > .asking-list-top-time {
