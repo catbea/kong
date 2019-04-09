@@ -275,7 +275,6 @@ export default {
                 font-family: PingFangSC-Semibold;
                 font-weight: 600;
                 color: rgba(51, 51, 51, 1);
-                line-height:20px;
               }
               .past {
                 display: inline-block;
@@ -305,6 +304,7 @@ export default {
               color: rgba(255, 255, 255, 1);
               line-height: 24px;
               text-align: center;
+              margin-top: -3px;
             }
           }
           .site {
