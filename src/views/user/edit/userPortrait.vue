@@ -189,16 +189,18 @@ export default {
         width: 100%;
         height: 100%;
         opacity: 0;
+        
       }
       .portrait-select-Icon {
         width: 64px;
         height: 48px;
       }
       .portrait-select-add {
+        display: flex;
+        justify-content: center;
+        align-content: center;
         font-size: 44px;
         color: rgba(177, 194, 222, 1);
-        line-height: 55px;
-        margin-left: 14px;
       }
     }
   }
