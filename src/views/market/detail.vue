@@ -598,9 +598,9 @@ export default {
         let commnetList = result.records
         if (commnetList && commnetList.length) {
           this.commnetList = commnetList
-          this.evaluateTitleConf.title = `楼盘评论（${result.total}）`
+          this.evaluateTitleConf.title = `楼盘评论(${result.total})`
         } else {
-          this.evaluateTitleConf.title = '楼盘评论（0）'
+          this.evaluateTitleConf.title = '楼盘评论(0)'
         }
       }
       this.evaluateTitleConf.link = `/market/comment/list/${this.id}?type=0`
@@ -1387,7 +1387,11 @@ export default {
       .evaluate-detail {
         margin-top: 10px;
         li {
-          padding: 10px 0;
+          padding: 10px 0 16px;
+          margin-bottom: 10px;
+          &:nth-child(2){
+            margin-bottom: 0;
+          }
           .top {
             img {
               width: 36px;
@@ -1402,7 +1406,7 @@ export default {
               font-weight: 500;
               color: rgba(51, 51, 51, 1);
               margin-bottom: 10px;
-              vertical-align: middle;
+              vertical-align: top;
               span {
                 display: inline-block;
                 width: 60px;
@@ -1462,7 +1466,7 @@ export default {
         width: 82px;
         height: 30px;
         border-radius: 4px;
-        border: 1px solid rgba(68, 81, 102, 1);
+        border: 0.5px solid rgba(68, 81, 102, 1);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
@@ -1667,7 +1671,7 @@ export default {
       width: 82px;
       height: 30px;
       border-radius: 4px;
-      border: 1px solid rgba(68, 81, 102, 1);
+      border: 0.5px solid rgba(68, 81, 102, 1);
       font-size: 13px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
