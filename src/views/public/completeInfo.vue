@@ -128,7 +128,7 @@ export default {
         //   setTimeout(() => {
         //     this.name = inputStr
         //   }, 1)
-        this.$store.dispatch('userInfo', Object.assign(this.userInfo, { name: this.name }))
+        this.$store.dispatch('userInfo', Object.assign({},this.userInfo, { name: this.name }))
       }
     },
     focusHandler(focus) {},
@@ -153,7 +153,7 @@ export default {
         this.city = val[1].name
         this.area = ''
       }
-      this.$store.dispatch('userInfo', Object.assign(this.userInfo, { majorRegion: this.majorRegion }))
+      this.$store.dispatch('userInfo', Object.assign({},this.userInfo, { majorRegion: this.majorRegion }))
     },
     /**
      * 搜索公司
@@ -234,8 +234,9 @@ export default {
         institutionId: res.institutionId,
         institutionName: res.institutionName
       }
-      this.$store.dispatch('userInfo', Object.assign(this.userInfo, params))
-      this.$router.back(-1)
+      this.$store.dispatch('userInfo', Object.assign({},this.userInfo, params))
+      this.$router.push('/dynamics')
+      // this.$router.back(-1)
       // location.reload()
     }
   },
