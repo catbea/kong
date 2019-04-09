@@ -364,13 +364,14 @@ export default {
   .comment-write-info{
     flex: 1;
     overflow-y: scroll;
-    margin: 20px 16px 0;
+    margin: 16px 16px 0;
     .house{
       h3{
         font-size: 24px;
+        font-weight: 600;
       }
       p{
-        margin-top: 15px;
+        margin-top: 12px;
         display: flex;
         span{
           width: 108px;
@@ -402,7 +403,7 @@ export default {
       }
     }
     .info{
-      margin-top: 15px;
+      margin-top: 12px;
       .textarea{
         border:1px solid #E4E4E4;
       }
@@ -460,6 +461,10 @@ export default {
           img{
             width: 32px;
             height: 32px;
+            margin-top: 5px;
+          }
+          p{
+            margin-top: -3px;
           }
         }
       }
@@ -503,4 +508,13 @@ export default {
   }
 }
 </style>
+
+<style lang="less">
+.comment-write{
+  .van-rate__item{
+    margin-right: 5px;
+  }
+}
+</style>
+
 
