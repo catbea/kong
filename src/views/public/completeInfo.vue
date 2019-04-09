@@ -235,7 +235,8 @@ export default {
         institutionName: res.institutionName
       }
       this.$store.dispatch('userInfo', Object.assign({},this.userInfo, params))
-      this.$router.back(-1)
+      this.$router.push('/dynamics')
+      // this.$router.back(-1)
       // location.reload()
     }
   },
