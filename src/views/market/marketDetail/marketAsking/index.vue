@@ -28,7 +28,12 @@
             <div class="answer-top">
               <div class="answer-icon">答</div>
               <img class="header-img" :src="item.replyVO.avatarUrl">
-              <div class="user-name">{{item.replyVO.nickName|privacyName() }}</div>
+              <div
+                class="user-name"
+                v-if="item.replyVO.nickName.userId==='-1'"
+              >{{item.replyVO.nickName}}</div>
+              <div class="user-name" v-else>{{item.replyVO.nickName|privacyName() }}</div>
+              <div class="user-lable" v-if="item.replyVO.nickName.userId==='-1'"><span>系统客服</span></div>
               <div class="reply-time">{{item.replyVO.createTimeStamp|dateTimeFormatter(5) }}</div>
             </div>
             <div class="answer-bottom">{{item.replyVO.content}}</div>
@@ -61,8 +66,8 @@ export default {
     current: 1,
     askingList: [],
     linkerName: '',
-    questionNum:'',
-    replyNum:''
+    questionNum: '',
+    replyNum: ''
   }),
   created() {
     var jsonInfo = JSON.parse(this.$route.query.infos)
@@ -70,11 +75,10 @@ export default {
     this.linkerId = jsonInfo.id
     this.linkerName = jsonInfo.linkerName
 
-     // this.replyNum = jsonInfo.replyNum
+    // this.replyNum = jsonInfo.replyNum
     // this.questionNum = jsonInfo.questionNum
 
     this.getQuestionDetail(jsonInfo.id)
-
   },
   methods: {
     async getQuestionDetail(linkerId) {
@@ -82,9 +86,7 @@ export default {
       const result = await marketService.getBuildQuestionDetail(linkerId)
       this.questionNum = result.questionNum
       this.replyNum = result.replyNum
-
     },
-
 
     onLoad() {
       this.getAskingList(this.current, this.linkerId)
@@ -256,6 +258,25 @@ export default {
             font-size: 12px;
             color: #333333;
             margin-left: 5px;
+          }
+
+          .user-lable {
+            width: 50px;
+            height: 15px;
+            background: rgba(143, 159, 177, 0.15);
+            border-radius: 2px;
+            margin-left: 13px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+
+            span {
+              width: 50px;
+              height: 15px;
+              font-size: 10px;
+              color: #5c5f66;
+              text-align: center;
+            }
           }
 
           .reply-time {
