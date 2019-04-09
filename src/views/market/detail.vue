@@ -570,9 +570,9 @@ export default {
     async getEvaluatingInfo(linkerId) {
       let result = await marketService.getEvaluatingInfo(linkerId)
       this.evaluatingInfo = result
-
-      this.evaluatingInfo.content=this.evaluatingInfo.content.replace(/<[^>]+>/g,"");
-
+      if (result) {
+        this.evaluatingInfo.content=this.evaluatingInfo.content.replace(/<[^>]+>/g,"")
+      }
       this.evaluatingTitleConf.link = {
         name: 'market-marketEvaluating',
         query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
