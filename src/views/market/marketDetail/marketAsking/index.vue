@@ -30,10 +30,10 @@
               <img class="header-img" :src="item.replyVO.avatarUrl">
               <div
                 class="user-name"
-                v-if="item.replyVO.nickName.userId==='-1'"
+                v-if="item.replyVO.userId==='-1'"
               >{{item.replyVO.nickName}}</div>
               <div class="user-name" v-else>{{item.replyVO.nickName|privacyName() }}</div>
-              <div class="user-lable" v-if="item.replyVO.nickName.userId==='-1'"><span>系统客服</span></div>
+              <div class="user-lable" v-if="item.replyVO.userId==='-1'"><span>系统客服</span></div>
               <div class="reply-time">{{item.replyVO.createTimeStamp|dateTimeFormatter(5) }}</div>
             </div>
             <div class="answer-bottom">{{item.replyVO.content}}</div>
