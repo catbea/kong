@@ -204,12 +204,8 @@ export default {
     // 获取定位
     async getCity (data) {
       const result = await commonService.getLocation(data.longitude, data.latitude)
-      if (result.returnCode == '10500') {
-        return this.$toast('定位失败')
-      } else {
-        this.$store.commit(types['USER_AREA'], {city: result})
-        this.$toast('定位成功')
-      }
+      this.$store.commit(types['USER_AREA'], {city: result})
+      this.$toast('定位成功')
       
     }
   },
