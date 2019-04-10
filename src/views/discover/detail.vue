@@ -643,7 +643,7 @@ export default {
 .discover-detail-page {
   box-sizing: border-box;
   background-color: #f7f9fa;
-  -webkit-overflow-scrolling: touch;
+  // -webkit-overflow-scrolling: touch;
   > .discover-detail-container {
     background-color: #fff;
     padding-bottom: 20px;
