@@ -391,6 +391,7 @@ export default {
 </script>
 <style lang="less">
 .no-disturb-page {
+  position: relative!important;
   background: rgba(247, 249, 250, 1);
   .van-switch--on {
     background: #007ae6;

@@ -149,7 +149,7 @@ export default {
   width: 100%;
   height: 100%;
   background: #f2f5f9;
-
+  position: relative!important;
   > .user-base-info,
   > .user-advance-info {
     background: #fff;
