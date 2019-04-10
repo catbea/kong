@@ -247,12 +247,12 @@
         <div class="evaluate-content" v-if="commnetList.length">
           <div v-if="commentCount">
             <!-- <p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p><p class="evaluate-label">实看用户 (8)</p> -->
-            <router-link
+            <!-- <router-link
               class="evaluate-label"
               tag="p"
               :to="`/market/comment/list/${this.info.linkerId}?type=0`"
               v-if="commentCount.all"
-            >全部 ({{commentCount.all}})</router-link>
+            >全部 ({{commentCount.all}})</router-link> -->
             <router-link
               class="evaluate-label"
               tag="p"
