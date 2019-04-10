@@ -7,7 +7,7 @@
     <div class="asking-center" v-if="this.noData===false">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <div
-          class="asking-item"
+          class="asking-item scale-1px-bottom"
           @click="enterDetails(item.questionId)"
           v-for="(item, index) in this.askingList"
           :key="index"
@@ -172,10 +172,12 @@ export default {
 
     .asking-item {
       width: 92%;
+      height: auto;
       max-height: 180px;
       margin-left: 4%;
       margin-right: 4%;
-      border-bottom: 1px solid #dedede;
+      padding-bottom: 1px;
+      // border-bottom: 1px solid #dedede;
 
       > .question-view {
         width: 100%;
