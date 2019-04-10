@@ -231,7 +231,6 @@ export default {
 </script>
 <style lang="less">
 .custom-page {
-  position: relative!important;
   > .search-container {
     .van-field__body {
       height: 100%;
