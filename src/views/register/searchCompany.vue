@@ -93,7 +93,7 @@ export default {
       }
       this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
       // 完善经纪人信息时使用,完善信息从userInfo中取值
-      this.$store.dispatch('userInfo', Object.assign(this.userInfo, _userRegistInfo))
+      this.$store.dispatch('getUserInfo', Object.assign({},this.userInfo, _userRegistInfo))
       window.localStorage.setItem('distributorDisabled', false)
       this.$router.back(-1)
     }
