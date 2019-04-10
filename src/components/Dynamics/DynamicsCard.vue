@@ -158,7 +158,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .article-container {
   background: #ffffff;
   .shadow-box {

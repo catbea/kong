@@ -57,7 +57,7 @@
             </div>
             <div class="form-tip">填写信息参与活动领大奖</div>
           </div>
-          <div class="activity-tip">*仅惠湾联盟下经纪人可参与</div>
+          <!-- <div class="activity-tip">*仅惠湾联盟下经纪人可参与</div> -->
         </div>
         <!-- 活动未开始 -->
         <no-start class="activity-no-start" v-if="activityState===1"></no-start>

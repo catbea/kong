@@ -956,6 +956,20 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.setLine(@c: #C7C7C7, @r:0rem) {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200%;
+    border: 1px solid @c;
+    color: @c;
+    height: 200%;
+    border-radius:@r;
+    transform-origin: left top;
+    transform: scale(0.5);
+}
+
 .market-detail-page {
   .top-swipe-container {
     position: relative;
@@ -1480,14 +1494,18 @@ export default {
         font-weight: 400;
         color: rgba(153, 153, 153, 1);
       }
+      .go-evaluate::before {
+        .setLine(rgba(68, 81, 102, 1), 8px);
+      }
       .go-evaluate {
+        position: relative;
         margin-top: 12px;
         margin-left: 118px;
         display: inline-block;
         width: 82px;
         height: 30px;
-        border-radius: 4px;
-        border: 0.5px solid rgba(68, 81, 102, 1);
+        // border-radius: 4px;
+        // border: 1px solid rgba(68, 81, 102, 1);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
@@ -1538,14 +1556,18 @@ export default {
         text-align: center;
         justify-content: center;
       }
+      .go-evaluate::before {
+        .setLine(rgba(68, 81, 102, 1), 8px);
+      }
       .go-evaluate {
+        position: relative;
         display: flex;
         margin-top: 12px;
         display: inline-block;
         width: 82px;
         height: 30px;
-        border-radius: 4px;
-        border: 1px solid rgba(68, 81, 102, 1);
+        // border-radius: 4px;
+        // border: 1px solid rgba(68, 81, 102, 1);
         font-size: 13px;
         font-family: PingFangSC-Regular;
         font-weight: 400;
@@ -1703,14 +1725,18 @@ export default {
       color: rgba(153, 153, 153, 1);
       padding-left: 15px;
     }
+    .go-evaluate::before {
+      .setLine(rgba(68, 81, 102, 1), 8px);
+    }
     .go-evaluate {
+      position: relative;
       margin-top: 12px;
       margin-left: 118px;
       display: inline-block;
       width: 82px;
       height: 30px;
-      border-radius: 4px;
-      border: 0.5px solid rgba(68, 81, 102, 1);
+      // border-radius: 4px;
+      // border: 1px solid rgba(68, 81, 102, 1);
       font-size: 13px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
