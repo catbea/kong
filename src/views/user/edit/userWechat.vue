@@ -77,7 +77,7 @@ export default {
     async upDateWeChat(obj) {
       const result = await userService.upDateUserInfo(obj)
       if (result) {
-        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { wechatAccount: this.weChatNum }))
+        this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { wechatAccount: this.weChatNum.replace(/\s*/g, '') }))
         this.$router.go(-1)
       }
     }

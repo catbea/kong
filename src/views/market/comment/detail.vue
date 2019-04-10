@@ -470,7 +470,7 @@ export default {
     height: 60px;
     margin-bottom: 10px;
     .input-box{
-      margin: 16px 20px;
+      margin: 16px auto;
       padding: 0 5px;
       color: #999;
       font-size: 12px;
