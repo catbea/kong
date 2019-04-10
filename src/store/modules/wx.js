@@ -34,6 +34,9 @@ const actions = {
   },
   async setWxLocation({ commit }, data) {
     const result = await commonService.getLocation(data.longitude, data.latitude)
+    if(result.returnCode == '10500') {
+      result = '深圳'
+    }
     commit(types.USER_AREA, {
       longitude: data.longitude,
       latitude: data.latitude,
