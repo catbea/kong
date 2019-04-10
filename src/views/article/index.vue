@@ -831,7 +831,7 @@ export default {
       overflow: scroll;
       overflow-y: hidden;
       white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
+      // -webkit-overflow-scrolling: touch;
       height: 40px;
       &::-webkit-scrollbar {
         display: none;
