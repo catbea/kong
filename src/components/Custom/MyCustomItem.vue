@@ -232,7 +232,7 @@ export default {
     max-height: 60vh;
     overflow-y: auto;
     text-align: center;
-    // -webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
     white-space: pre-wrap;
   }
 }
