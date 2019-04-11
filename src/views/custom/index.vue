@@ -85,7 +85,6 @@ export default {
     //   this.showGuide = true
     // }
     window.sessionStorage.clear()
-    window.localStorage.clear()
     this.showGuide = this.userInfo.delClientFlag !== 1
   },
   mounted() {
