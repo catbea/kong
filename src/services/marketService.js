@@ -535,5 +535,15 @@ class MarketService {
       }
     })
   }
+
+  /**
+   * 宣传海报
+   */
+  getPosterList(data) {
+    return xhr({
+      url: '/review/linker/info',
+      body: data
+    })
+  }
 }
 export default new MarketService()
