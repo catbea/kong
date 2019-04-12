@@ -1,7 +1,7 @@
 <template>
   <div class="page-body" id="page-body" :style="{marginTop:offesTop}">
     <div class="copyTitle">请复制原文链接</div>
-    <div class="notice-view">目前仅支持爬取微信公众号内容，如有侵权行为，发布人将承担相关责任</div>
+    <div class="notice-view">目前仅支持：微信公众号、今日头条、腾讯新闻、AW大师分享内容，如有侵权行为，发布人将承担相关责任</div>
     <!-- <textarea class="linker-input" :placeholder="defaultText" v-model="linkerText"></textarea> -->
     <div class="linker-input">
       <textarea
@@ -15,6 +15,7 @@
     <div class="start-edit" @click="startEdit">开始编辑</div>
     <div class="clear-address" @click="clearAddress">清空地址</div>
     <div class="add-article" @click="addArticle">添加文章</div>
+    <div class="tips" @click='goAgreement'>点击开始编辑即为同意<b>责任声明及解析文章协议</b></div>
   </div>
 </template>
 
@@ -22,7 +23,7 @@
 import articleService from 'SERVICE/articleService'
 export default {
   data: () => ({
-    defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制。并粘贴到这里',
+    defaultText: '请点击喜欢的文章右上角更多进行复制链接地址，并粘贴到这里。目前仅支持：微信公众号、今日头条、腾讯新闻、AW大师分享内容解析',
     linkerText: '',
     addButtonClick: true,
     editButtonClick: true,
@@ -46,17 +47,34 @@ export default {
   // },
 
   methods: {
+    // 跳转规则页面
+    goAgreement () {
+      this.$router.push('/discover/agreement')
+    },
     //开始编辑
     startEdit() {
-      if (this.linkerText.length > 0) {
-        this.linkerText = this.linkerText.replace(' ', '')
-        if (this.editButtonClick == true) {
-          this.$router.push({ name: 'analysis', params: { url: this.linkerText, parseType: '1' } })
-        }
-      } else {
-        this.editButtonClick = true
-        this.$toast('您尚未填写原文链接')
+      if (!this.editButtonClick) {
+        return false
       }
+      this.editButtonClick == false
+      if (!this.linkerText.length) {
+        return this.$toast('您尚未填写原文链接')
+      }
+      let reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
+      if (!reg.test(this.linkerText)) {
+        return this.$toast('原文链接填写不正确，请检查!')
+      }
+      this.linkerText = this.linkerText.replace(/\s+/g, '')
+      this.$router.push({ name: 'analysis', query: { url: this.linkerText, parseType: '1' } })
+      // if (this.linkerText.length > 0) {
+      //   this.linkerText = this.linkerText.replace(/\s+/g, '')
+      //   if (this.editButtonClick == true) {
+      //     this.$router.push({ name: 'analysis', query: { url: this.linkerText, parseType: '1' } })
+      //   }
+      // } else {
+      //   this.editButtonClick = true
+      //   this.$toast('您尚未填写原文链接')
+      // }
     },
 
     //清除输入框地址信息
@@ -132,6 +150,7 @@ export default {
     margin-left: 16px;
     margin-top: 5px;
     margin-right: 16px;
+    line-height: 1.2;
   }
 
   > .linker-input {
@@ -149,6 +168,10 @@ export default {
       width: 100%;
       height: 100%;
       border: none;
+      &::placeholder{
+        font-size: 12px;
+        line-height: 1.2;
+      }
     }
   }
 
@@ -191,6 +214,17 @@ export default {
     font-size: 16px;
     text-align: center;
     line-height: 44px;
+  }
+  .tips{
+    margin: 20px auto;
+    width: 90%;
+    color: #969EA8;
+    font-size: 12px;
+    b{
+      margin-left: 5px;
+      color: #445166;
+      font-weight: 500;
+    }
   }
 }
 </style>
