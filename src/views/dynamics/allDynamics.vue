@@ -108,19 +108,43 @@ export default {
       estateViews: this.$route.query.estateViews,
       articleCount: this.$route.query.articleCount,
       allDynamicsNum: this.$route.query.allDynamicsNum,
-      showDynamics: false
+      showDynamics: false,
+      scrollTop: 0
     }
   },
   created() {
     //动态未读状态变为0
     this.$store.dispatch('getUserInfo', Object.assign({},this.userInfo, { jumpToDynamicDetail: 0}))
-
-    this.active = this.currDataDynamicsTab
+    this.active = this.$store.state.dynamics.currDataDynamicsTab || 0
     this.allDynamicsNum = this.$route.query.allDynamicsNum
-    this.updateDynamicsCollect()
-    this.getAllDynamicCount()
-    this.goList(this.active)
-    this.govallDynamicsNum()
+    let data = window.sessionStorage.getItem('dynamics')
+    if (data) {
+      let item = JSON.parse(data)
+      this.allDynamicCount = item.allDynamicCount
+      this.allDynamicList = item.allDynamicList
+      this.cardDynamicCount = item.cardDynamicCount
+      this.cardDynamicList = item.cardDynamicList
+      this.houseDynamicCount = item.houseDynamicCount
+      this.houseDynamicList = item.houseDynamicList
+      this.articleDynamicCount = item.articleDynamicCount
+      this.articleDynamicList = item.articleDynamicList
+      this.attentionStatus = item.attentionStatus
+      this.cardDynamicListCount = item.cardDynamicListCount
+      this.avgStayArticleTime = item.avgStayArticleTime
+      this.avgStayLinkerTime = item.avgStayLinkerTime
+      this.loading = item.loading
+      this.finished = item.finished
+      this.current = item.current
+      this.page = item.page
+      this.scrollTop = item.scrollTop
+      window.sessionStorage.removeItem('dynamics')
+    } else {
+      this.updateDynamicsCollect()
+      this.getAllDynamicCount()
+      this.goList(this.active)
+      this.govallDynamicsNum()
+    }
+    
   },
   computed: {
     ...mapGetters(['userInfo'])
@@ -390,6 +414,17 @@ export default {
         }
       })
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    this.scrollTop = document.querySelector('.router-view').scrollTop
+    next()
+  },
+  beforeDestroy () {
+    let data = this.$data
+    window.sessionStorage.setItem('dynamics',JSON.stringify(data))
+  },
+  mounted () {
+    document.querySelector('.router-view').scrollTop = this.scrollTop
   }
 }
 </script>
