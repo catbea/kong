@@ -8,7 +8,7 @@
         </div>
       </div>
     </div>
-    <div class="image-preview" v-show="showPreview" @click="hidePreview">
+    <div class="image-preview" v-if="showPreview" @click="hidePreview">
       <div class="img-box">
         <van-swipe @change="onChange" :initial-swipe="current" :loop="false">
           <van-swipe-item v-for="(item,index) in posterList" :key="index">
