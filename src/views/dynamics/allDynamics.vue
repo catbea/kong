@@ -138,6 +138,9 @@ export default {
       this.page = item.page
       this.scrollTop = item.scrollTop
       window.sessionStorage.removeItem('dynamics')
+      this.$nextTick(() => {
+        document.querySelector('.router-view').scrollTop = this.scrollTop
+      })
     } else {
       this.updateDynamicsCollect()
       this.getAllDynamicCount()
@@ -422,9 +425,6 @@ export default {
   beforeDestroy () {
     let data = this.$data
     window.sessionStorage.setItem('dynamics',JSON.stringify(data))
-  },
-  mounted () {
-    document.querySelector('.router-view').scrollTop = this.scrollTop
   }
 }
 </script>

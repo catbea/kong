@@ -75,7 +75,8 @@ export default {
     borderBottom: true,
     containerHeight: '0',
     vipInfo: {},
-    historyCity: ''
+    historyCity: '',
+    scrollTop: 0
   }),
   watch: {
     projectFilters: {
@@ -104,10 +105,26 @@ export default {
     await this.getVipInfo()
     this.getBrokerInfo()
     await this.hotMarketHandle()
+    let markList = window.sessionStorage.getItem('marketList')
+    if (markList) {
+      let item = JSON.parse(markList)
+      this.loading = item.loading
+      this.finished = item.finished
+      this.marketList = item.marketList
+      this.page = item.page
+      this.scrollTop = item.scrollTop
+      window.sessionStorage.removeItem('marketList')
+      this.$nextTick(() => {
+        document.querySelector('.router-view').scrollTop = this.scrollTop
+      })
+    }
   },
   methods: {
     touchmove() {},
     async getProjectList() {
+      if ( window.sessionStorage.getItem('marketList')) {
+        return this.loading = false
+      }
       let param = { current: this.page, size: this.pageSize }
       //组装检索条件
       let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
@@ -209,6 +226,20 @@ export default {
       let res = await marketService.vipInfo()
       this.vipInfo = res
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    this.scrollTop = document.querySelector('.router-view').scrollTop
+    next()
+  },
+  beforeDestroy () {
+    let data = {
+      loading: this.loading,
+      finished: this.finished,
+      marketList: this.marketList,
+      scrollTop: this.scrollTop,
+      page: this.page
+    }
+    window.sessionStorage.setItem('marketList',JSON.stringify(data))
   }
 }
 </script>
