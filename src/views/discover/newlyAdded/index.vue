@@ -60,7 +60,7 @@ export default {
       if (!this.linkerText.length) {
         return this.$toast('您尚未填写原文链接')
       }
-      let reg = /^([hH][tT]{2}[pP]:\/\/|[hH][tT]{2}[pP][sS]:\/\/)(([A-Za-z0-9-~]+)\.)+([A-Za-z0-9-~\/])+$/
+      let reg = /(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?/
       if (!reg.test(this.linkerText)) {
         return this.$toast('原文链接填写不正确，请检查!')
       }
