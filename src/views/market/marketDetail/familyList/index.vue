@@ -1,13 +1,14 @@
 <template>
   <div class="family-list-page">
-    <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated class='wrap'>
+    <div v-show="!showPreview">
+      <van-tabs v-model="activeIndex" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated class='wrap'>
           <van-tab v-for="(item,index) in tabs" :key="index" :title="item.houseType" >
            <div class="list-wrap">
              <keep-alive>
               <div class="family-list-page-box">
-              <div class="content" v-for="(itemA,indexA) in item.cpHouseTypeDetail" :key="indexA">
+              <div class="content" v-for="(itemA,indexA) in item.cpHouseTypeDetail" :key="indexA"  @click.stop="photoHandle(itemA.imgUrl)">
               <div class="big-box">
-              <div class="bg_img family-list-page-box-left" :style="{backgroundImage:'url('+itemA.imgUrl+')'}" @click.stop="photoHandle(itemA.imgUrlList)">
+              <div class="bg_img family-list-page-box-left" :style="{backgroundImage:'url('+itemA.imgUrl+')'}">
                     
               </div>
               <ul class="family-list-page-box-center">
@@ -30,6 +31,21 @@
            </div>
           </van-tab>
       </van-tabs>
+    </div>
+    
+      <div class="img-preview" v-if="showPreview" @click="hidePreview">
+        <div class="title">{{imgData.householdDesc}}</div>
+        <div class="img-box">
+          <van-swipe @change="onChange" :initial-swipe="current" :loop="false" :show-indicators="false">
+            <van-swipe-item v-for="(item,index) in imgList" :key="index">
+              <img :src="item" alt="" srcset="">
+            </van-swipe-item>
+          </van-swipe>
+        </div>
+        <div class="custom-indicator">
+          {{ current + 1 }}/{{imgList.length}}
+        </div>
+      </div>
   </div>
 </template>
 <script>
@@ -57,7 +73,9 @@ export default {
     finished: false,
     panorama: require('IMG/marketDetail/quanj@2x.png'),
     leave: require('IMG/marketDetail/arrow2.png'),
-    info: ['热销中', '全景看房']
+    info: ['热销中', '全景看房'],
+    current: 0,
+    showPreview: false
   }),
   computed: {
     styleColor() {
@@ -72,6 +90,20 @@ export default {
           }
         })
       }
+    },
+    imgList() {
+      let imgs = []
+      this.tabs.length && this.tabs[0].cpHouseTypeDetail.forEach(item => {
+        imgs.push(...item.imgUrlList)
+      })
+      return imgs
+    },
+    imgData() {
+      if(this.tabs.length){
+        return this.tabs.length && this.tabs[0].cpHouseTypeDetail[this.current]
+      } else {
+        return {}
+      }
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -81,17 +113,31 @@ export default {
     next()
   },
   methods: {
-    photoHandle(n) {
+    // 预览图片切换
+    onChange (index) {
+      this.current  = index 
+    },
+    // 显示图片预览
+    showPreviewFn () {
+      this.showPreview = true
+    },
+    // 隐藏预览
+    hidePreview () {
+      this.showPreview = false
+    },
+    photoHandle(url) {
+      this.current = this.imgList.indexOf(url) || 0
+      this.showPreviewFn()
       //查看户型相册
-      for (let index = 0; index < n.length; index++) {
-        const element = n[index]
-        this.photoList.push(element)
-      }
-      this.instance = ImagePreview({
-        images: this.photoList,
-        startPosition: 0
-      })
-      this.photoList = []
+      // for (let index = 0; index < n.length; index++) {
+      //   const element = n[index]
+      //   this.photoList.push(element)
+      // }
+      // this.instance = ImagePreview({
+      //   images: this.photoList,
+      //   startPosition: 0
+      // })
+      // this.photoList = []
     },
     async getHouseTypeInfo(n) {
       const res = await marketService.getHouseType(n)
@@ -197,6 +243,33 @@ export default {
         width: 12px;
         height: 12px;
       }
+    }
+  }
+  .img-preview{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .title{
+      height: 30px;
+      margin: 30px 20px;
+      font-size:24px;
+      color:rgba(51,51,51,1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .img-box{
+      flex: 1;
+      margin: 0 20px;
+    }
+    .custom-indicator{
+      height: 20px;
+      margin: 20px 20px 30px;
+      text-align: center;
+      font-size:16px;
+      color:rgba(51,51,51,1);
     }
   }
 }

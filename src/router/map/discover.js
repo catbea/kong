@@ -54,5 +54,16 @@ export default [
     meta: {
       title: '文章数据爬取'
     }
+  },
+  {
+    path: '/discover/agreement',
+    name: 'agreement',
+    component: resolve => require(['@/views/discover/newlyAdded/agreement.vue'], resolve),
+    meta: {
+      title: '责任声明及解析规则',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]

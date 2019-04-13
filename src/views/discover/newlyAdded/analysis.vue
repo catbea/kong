@@ -48,7 +48,31 @@
       </div>
       <div class="read-button" @click="goToAnalysis">
         <span class="text">已阅读并同意</span>
+        <span class="tips">下次不再提示</span>
       </div>
+      <div class="know-btn" @click="goToAnalysis">我知道了</div>
+    </van-popup>
+
+    <van-popup
+      v-model="showErr"
+      position="center"
+      :overlay="true"
+      class="popup-view2"
+      :close-on-click-overlay="false"
+    > 
+      <div class="err-icon">
+        <van-icon name="clear" color="#f98435" size="58px"/>
+      </div>
+      <img class="closePopup" @click="closeDefaultMsg2" :src="closeImg">
+      <p class="title">解析失败</p>
+      <p class="err-res">文章解析失败，可能由于以下问题导致</p>
+      <ul class="err-text">
+        <li>1.不支持该解析文章地址 </li>
+        <li>2.不支持该内容类型</li>
+        <li>3.网络状况不佳</li>
+      </ul>
+      <p class="tips" @click="goAgreement">建议查看规则了解详细情况 <b>责任声明及解析规则</b></p>
+      <div class="know-btn"  @click="closeDefaultMsg2">我知道了</div>
     </van-popup>
   </div>
 </template>
@@ -77,13 +101,14 @@ export default {
       errColor: '',
       show: true,
       closeImg: require('IMG/user/close_popup.png'),
-      canAnalysis: true
+      canAnalysis: true,
+      showErr: false
     }
   },
 
   created() {
-    this.articleUrl = this.$route.params.url
-    this.parseType = this.$route.params.parseType
+    this.articleUrl = this.$route.query.url
+    this.parseType = this.$route.query.parseType
   },
 
   computed: {
@@ -117,17 +142,17 @@ export default {
         } else {
           errorMsg = '请确认内容是否为微信公众号内容，并检查网络环境后再次尝试'
         }
-
-        this.$dialog
-          .alert({
-            title: '爬取失败',
-            message: errorMsg,
-            confirmButtonText: '我知道了'
-          })
-          .then(() => {
-            // on close
-            this.$router.go(-2)
-          })
+        this.showErr = true
+        // this.$dialog
+        //   .alert({
+        //     title: '爬取失败',
+        //     message: errorMsg,
+        //     confirmButtonText: '我知道了'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //     this.$router.go(-2)
+        //   })
       } else {
         this.$store.commit(types.MYWRITE_TAB, '3')
 
@@ -177,7 +202,15 @@ export default {
       this.show = false
       this.$router.go(-1)
     },
-
+    //关闭弹窗2
+    closeDefaultMsg2() {
+      this.showErr = false
+      this.$router.go(-1)
+    },
+    // 跳转解析协议
+    goAgreement () {
+      this.$router.push('/discover/agreement')
+    },
     //阅读并同意 进行解析文章操作
     goToAnalysis() {
       this.show = false
@@ -230,7 +263,8 @@ export default {
       padding-right: 16px;
       display: flex;
       flex-direction: column;
-
+      height: 250px;
+      overflow-y: scroll;
       > .notice-first {
         font-family: PingFangSC-Semibold;
         font-size: 15px;
@@ -248,24 +282,97 @@ export default {
     }
 
     > .read-button {
-      position: absolute;
-      width: 279px;
-      height: 40px;
+      // position: absolute;
+      width: 280px;
+      height: 44px;
       background: rgba(0, 122, 230, 1);
       border-radius: 6px;
-      bottom: 16px;
-      left: 16px;
+      margin: 20px auto 12px;
+      // bottom: 16px;
+      // left: 16px;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      // justify-content: center;
+      // align-items: center;
 
       > .text {
         color: #ffffff;
         font-size: 14px;
+        padding: 5px 0;
+      }
+      .tips{
+        font-size: 10px;
+        color: rgba(255,255,255,0.5);
       }
     }
+    .know-btn{
+      width: 280px;
+      height: 44px;
+      line-height: 44px;
+      color: #445166;
+      font-size: 14px;
+      text-align: center;
+      background-color: #F2F8FE;
+      border-radius: 6px;
+      margin: 12px auto;
+    }
   }
-
+  .popup-view2{
+    width: 311px;
+    height: 443px;
+    background: #ffffff;
+    border-radius: 12px;
+    position: absolute;
+    font-size: 14px;
+    .err-icon{
+      text-align: center;
+      margin: 40px auto 15px;
+    }
+    .closePopup {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: 20px;
+      top: 16px;
+    }
+    .title{
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .err-res{
+      padding-left: 16px;
+    }
+    .err-text{
+      padding: 16px;
+      li{
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+    }
+    .tips{
+      font-size: 12px;
+      color: #969EA8;
+      padding: 0 16px 16px;
+      b{
+        font-weight: normal;
+        color: #445166;
+        margin-left: 5px;
+      }
+    }
+    .know-btn{
+      width: 280px;
+      height: 44px;
+      line-height: 44px;
+      color: #445166;
+      font-size: 14px;
+      text-align: center;
+      background-color: #F2F8FE;
+      border-radius: 6px;
+      margin: 12px auto;
+    }
+  }
   .analysis-body {
     width: 100%;
     height: 100%;

@@ -30,6 +30,10 @@
             报备时间
             <span class="container-list-title">{{reportInfo.fillingTime}}</span>
           </p>
+          <p class="container-list container-list-left">
+            &nbsp;&nbsp;&nbsp;佣金
+            <span class="container-list-title">{{reportInfo.price || '请联系案场'}}</span>
+          </p>
         </div>
       </div>
       <div class="report-btn" v-for="(item, index) in auditList" :key="index">

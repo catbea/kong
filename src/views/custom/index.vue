@@ -77,7 +77,8 @@ export default {
     activeIcon: false,
     pitch: false,
     Linkerok: false,
-    showGuide: false // 显示引导
+    showGuide: false, // 显示引导
+    scrollTop: 0
   }),
   created () {
     // let showDeleteGuide = window.localStorage.getItem('showDeleteGuide')
@@ -85,6 +86,18 @@ export default {
     //   this.showGuide = true
     // }
     this.showGuide = this.userInfo.delClientFlag !== 1
+    let data = window.sessionStorage.getItem('custom')
+    if (data) {
+      let item = JSON.parse(data)
+      this.data = item.data
+      this.activeIndex = item.activeIndex
+      this.loading = item.loading
+      this.scrollTop = item.scrollTop
+      window.sessionStorage.removeItem('custom')
+      this.$nextTick(() => {
+        document.querySelector('.router-view').scrollTop = this.scrollTop
+      })
+    }
   },
   mounted() {
     this.getLinker()
@@ -137,6 +150,9 @@ export default {
       this.onLoad()
     },
     async onLoad() {
+      if ( window.sessionStorage.getItem('custom')) {
+        return this.loading = false
+      }
       // this.loading = true
       const result = await CustomService[this.getServeceFunc()](this.searchVal, this.currentData.page, this.pageSize, this.sort)
       if (this.currentData.page > 1) {
@@ -221,11 +237,22 @@ export default {
     }
   },
   beforeDestroy() {
+    let data = {
+      activeIndex: this.activeIndex,
+      data: this.data,
+      loading: this.loading,
+      scrollTop: this.scrollTop
+    }
+    window.sessionStorage.setItem('custom',JSON.stringify(data))
     try {
       document.querySelector('.sort-container').removeEventListener('touchmove', this.touchHandler, false)
       document.removeEventListener('touchmove',this.touchHandler, false)
       document.querySelector('.delCoustomerGuide').removeEventListener('touchmove', this.touchHandler, false)
     } catch (error) {}
+  },
+  beforeRouteLeave (to, from, next) {
+    this.scrollTop = document.querySelector('.router-view').scrollTop
+    next()
   }
 }
 </script>
