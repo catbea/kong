@@ -349,6 +349,34 @@
           <button @click="commitQuestion">我要提问</button>
         </div>
       </div>
+      <!-- 宣传海报 -->
+      <div class="house-poster">
+        <title-bar :conf="posterConf"/>
+        <div class="poster-box">
+          <div class="one-poster" v-if="false">
+            <img src="https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/06ab4a8b7e4242eea92b22708cfe9a8e.jpg" alt="">
+            <div class="tips">
+              <h3 class="title">这是宣传海报标题文字</h3>
+              <p class="time">2019/08/12</p>
+            </div>
+          </div>
+          <div class="other-poster" v-else>
+            <swiper :options="swiperOption">
+              <swiper-slide>
+                <div class="other-poster-item">
+                  <div class="other-poster-img">
+                    <img src="https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/06ab4a8b7e4242eea92b22708cfe9a8e.jpg" alt="" srcset="">
+                  </div>
+                  <div class="other-poster-info">
+                    <p class="house-name">前海铂寓</p>
+                    <p class="house-location">深圳市-罗湖区</p>
+                  </div>
+                </div>
+              </swiper-slide>
+            </swiper>
+          </div>
+        </div>
+      </div>
       <!-- 其他楼盘 -->
       <div class="house-recommend" v-if="info.linkerOtherList.length>0">
         <title-bar :conf="othersTitleConf"/>
@@ -506,6 +534,11 @@ export default {
         linkText: '查看全部'
         // link: '/marketDetail/asking/:id'
       },
+      posterConf: {
+        title: '宣传海报',
+        linkText: '查看全部'
+        // link: `/market/comment/list/${this.id}?type=0`
+      },
       swiperOption: {
         slidesPerView: 2,
         spaceBetween: 12
@@ -528,7 +561,8 @@ export default {
       commnetList: [],
       linkerInfo: null,
       evaluatingInfo: null,
-      showLoading: false
+      showLoading: false,
+      posterList: []
     }
   },
   async created() {
@@ -583,6 +617,20 @@ export default {
         name: 'market-marketEvaluating',
         query: { reviewId: this.evaluatingInfo.reviewId, userInfo: this.userInfo.agentId, userType: '2', enterpriseId: this.userInfo.enterpriseId }
       }
+    },
+    // 获取楼盘宣传海报
+    getPosterList () {
+      marketService.getPosterList({marketId: this.marketId}).then((result) => {
+        this.posterList = result.posterList
+        this.posterConf.link = `/market/activity/poster/${this.id}`
+        if (result.posterList&&result.posterList.length) {
+            this.posterConf.title = `宣传海报(${result.total})`
+        } else {
+          this.posterConf.title = `宣传海报(0)`
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     },
 
     // 楼盘评论分类统计
@@ -1838,6 +1886,71 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
+      }
+    }
+  }
+  .house-poster{
+    margin-top: 20px;
+    .poster-box{
+      margin: 16px;
+      .one-poster{
+        height: 190px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        border-radius: 10px;
+        img{
+          min-width: 100%;
+          min-height: 190px;
+          object-fit: cover;
+        }
+        .tips{
+          position: absolute;
+          left: 10px;
+          bottom: 10px;
+          text-shadow: 0 1px 2px #000;
+          h3{
+            color: #fff;
+            font-size: 18px;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            white-space:nowrap;
+          }
+          .time{
+            font-weight:400;
+            font-size: 12px;
+            color: #fff;
+            margin-top: 5px;
+          }
+        }
+      }
+      .other-poster{
+        .other-poster-item{
+          line-height: 1.5;
+          .other-poster-img{
+            img{
+              width: 160px;
+              height: 90px;
+              object-fit: cover;
+              border-radius: 6px;
+            }
+          }
+          .other-poster-info {
+            .house-name {
+              font-size: 16px;
+              font-weight: 600;
+              color: #333;
+              overflow:hidden;
+              text-overflow:ellipsis;
+              white-space:nowrap;
+            }
+            .house-location {
+              font-size: 12px;
+              font-weight: 400;
+              color: #999;
+            }
+          }
+        }
       }
     }
   }
