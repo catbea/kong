@@ -28,9 +28,27 @@
               <use xlink:href="#icon-mi_data"></use>
            </svg>
           <p class="grou1Icon-p">拓客关系</p>
-        </div>
-      </div>
+        </div> 
+      </div>  
     </div>
+    <!--3.0.9迭代-->
+    <div class="modify-childs">
+        <!-- 我的点评 -->
+        <div class="head-imgs" @click="jumpToRemark">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-mi_data"></use>
+          </svg>
+          <p class="grou1Icon-p">我的点评</p>
+        </div>
+        <!-- 我的问答 -->  
+        <div class="head-imgs" @click="jumpToAnswers">
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-mi_data"></use>
+          </svg>
+          <p class="grou1Icon-p">我的问答</p>
+        </div>
+    </div>
+    <!---->
     <div class="business-status-tow">
       <div class="business-status-title">我的服务</div>
       <div class="modify-child">
@@ -79,7 +97,7 @@ export default {
       { title: '我的写一写', Img: require('IMG/user/Group3@2x.png'), Icon: '#icon-me_write' },
       { title: '我的报备', Img: require('IMG/user/Group6@2x.png'), Icon: '#icon-me_Reported' },
       { title: '我的优惠券', Img: require('IMG/user/Group5@2x.png'), Icon: '#icon-me_coupons' },
-      { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }
+      { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }, 
       // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
     ],
     btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '欢迎语设置', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
@@ -166,6 +184,12 @@ export default {
     invitationHead() {
       this.$router.push('/user/invitation/awWelfare')
     },
+    jumpToRemark () {
+      this.$router.push('/user/remark')
+    },
+    jumpToAnswers () {
+      this.$router.push('/user/questionAnswers')
+    },
     selectedHeads(index, type, itemCode) {
       switch (index) {
         case 0:
@@ -251,7 +275,7 @@ export default {
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
     line-height: 28px;
-    padding: 20px 16px 18px;
+    padding: 20px 16px 18px; 
   }
   .business-status-con {
     background: #fff;
@@ -298,6 +322,30 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
+      }
+    }
+  }
+  .modify-childs {
+    display: flex;
+    flex-direction: row;
+    .head-imgs {
+      margin-left: 16px;
+      margin-bottom: 16px;
+      height: 60px;
+      width: 65px;
+      position: relative;
+      margin-right: 10px;
+      text-align: center;
+      img {
+        height: 24px;
+        width: 24px;
+      }
+      > .grou1Icon-p {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(102, 102, 102, 1);
+        line-height: 17px;
+        margin-top: 8px;
       }
     }
   }
