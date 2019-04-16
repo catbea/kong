@@ -81,7 +81,7 @@ import articleService from 'SERVICE/articleService'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import { Toast } from 'vant'
-
+import commonService from 'SERVICE/commonService'
 export default {
   data() {
     return {
