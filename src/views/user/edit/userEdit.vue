@@ -26,7 +26,7 @@
       </van-cell>
       <van-cell class="cell-item" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature | textOver(10)"/>
     </van-cell-group>
-    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu" :code="cityCode"/>
+    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu" :code="cityCode" :areaList="areaList"/>
   </div>
 </template>
 <script>
@@ -41,15 +41,29 @@ export default {
   },
   created() {
     this.fullArea = fullArea
+    this.getAreaList(fullArea)
   },
   data() {
     return {
       userEditIcon: require('IMG/user/collection/Article@2x.png'),
       isOpen: false,
-      fullArea: ''
+      fullArea: '',
+      areaList: {}
     }
   },
   methods: {
+    // areaList 获取
+    getAreaList () {
+      let keys =  Object.keys(this.fullArea.city_list)
+      let data = {}
+      keys.forEach(ele => {
+        data[ele] = '不限'
+      })
+      let county_list = Object.assign({},this.fullArea.county_list, data)
+      this.areaList = Object.assign({},this.fullArea,{county_list: county_list})
+     
+
+    },
     goEdit() {
       if (!this.userInfo.institutionName) {
         this.$router.push({ path: '/user/edit/userMechanism', query: { distributorId: this.userInfo.distributorId, enterpriseId: this.userInfo.enterpriseId } })
@@ -93,11 +107,15 @@ export default {
         majorRegion: obj
       }
       const result = await userService.upDateUserInfo(nameObj)
-      this.userInfo.majorRegion = this.majorRegion
-      this.userInfo.majorCity = this.majorCity
+      // this.userInfo.majorRegion = this.majorRegion
+      // this.userInfo.majorCity = this.majorCity
       if (result) {
         // this.$store.getUserInfo(types.USER_INFO, this.userInfo)
-        this.$store.dispatch('getUserInfo', this.userInfo)
+        let data =  Object.assign({},this.userInfo,{
+          majorRegion: this.majorRegion,
+          majorCity: this.majorCity
+        })
+        this.$store.dispatch('getUserInfo', data)
       }
     }
   },
