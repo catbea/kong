@@ -391,5 +391,21 @@ export default [
         show: false
       }
     }
-  }
+  },
+  {
+    path: '/user/remark',
+    name: 'remark',
+    component: resolve => require(['@/views/user/remark/index.vue'], resolve),
+    meta: {
+      title: '我的点评'
+    }
+  },
+  {
+    path: '/user/questionAnswers',
+    name: 'questionAnswers',
+    component: resolve => require(['@/views/user/questionAnswers/index.vue'], resolve),
+    meta: {
+      title: '我的问答'
+    }
+  },
 ]
