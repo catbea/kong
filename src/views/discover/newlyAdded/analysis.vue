@@ -46,7 +46,7 @@
         <span class="notice-first">免责声明</span>
         <span class="notice-first-content">{{noticeSecond}}</span>
       </div>
-      <div class="read-button" @click="goToAnalysis">
+      <div class="read-button" @click="goToAnalysisFlag">
         <span class="text">已阅读并同意</span>
         <span class="tips">下次不再提示</span>
       </div>
@@ -109,6 +109,9 @@ export default {
   created() {
     this.articleUrl = this.$route.query.url
     this.parseType = this.$route.query.parseType
+    if (this.userInfo.analysisTipsFlag) {
+      this.goToAnalysis()
+    }
   },
 
   computed: {
@@ -120,6 +123,12 @@ export default {
   },
 
   methods: {
+    // 更新引导标志位
+    updateUserExpandInfo() {
+      commonService.updateUserExpandInfo({analysisTipsFlag : 1})
+      let data = Object.assign({}, this.userInfo, {analysisTipsFlag: 1})
+      this.$store.dispatch('getUserInfo', data)
+    },
     async commitInfo(data) {
       const result = await articleService.articleAnalysis(data)
 
@@ -210,6 +219,11 @@ export default {
     // 跳转解析协议
     goAgreement () {
       this.$router.push('/discover/agreement')
+    },
+    // 同意解析文章
+    goToAnalysisFlag () {
+      this.updateUserExpandInfo()
+      this.goToAnalysis()
     },
     //阅读并同意 进行解析文章操作
     goToAnalysis() {
