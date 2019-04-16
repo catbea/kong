@@ -32,7 +32,7 @@
           </p>
           <p class="container-list container-list-left">
             &nbsp;&nbsp;&nbsp;佣金
-            <span class="container-list-title">{{reportInfo.price || '请联系案场'}}</span>
+            <span class="container-list-title">{{reportInfo.ommission || '请联系案场'}}</span>
           </p>
         </div>
       </div>
