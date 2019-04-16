@@ -250,9 +250,11 @@ export default {
       }
       let host = process.env.VUE_APP_APP_URL
       host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
+      let content = this.info.content.replace(/<[^>]+>/g, '').replace(/\s+/g, '')
+      content = res.subTitle? res.subTitle : content? content.substr(0,32) : '我正在AW大师看文章，你也快来看看吧。'
       this.friendShareData = {
         title: this.info.title,
-        desc: '内容来源：AW大师写一写',
+        desc: content,
         imgUrl: this.info.image,
         link: host
       }
