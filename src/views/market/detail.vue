@@ -350,26 +350,26 @@
         </div>
       </div>
       <!-- 宣传海报 -->
-      <div class="house-poster">
+      <div class="house-poster" v-if="posterNum">
         <title-bar :conf="posterConf"/>
-        <div class="poster-box">
-          <div class="one-poster" v-if="false">
-            <img src="https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/06ab4a8b7e4242eea92b22708cfe9a8e.jpg" alt="">
+        <div class="poster-box" @click="goPosterList">
+          <div class="one-poster" v-if="posterNum.length === 1">
+            <img :src="posterListArr[0].posterImage" alt="">
             <div class="tips">
-              <h3 class="title">这是宣传海报标题文字</h3>
-              <p class="time">2019/08/12</p>
+              <h3 class="title">{{posterListArr[0].title}}</h3>
+              <p class="time">{{posterListArr[0].createTimeStamp | formatData}}</p>
             </div>
           </div>
           <div class="other-poster" v-else>
             <swiper :options="swiperOption">
-              <swiper-slide>
+              <swiper-slide v-for="(item,index) in posterListArr" :key="index" v-if="index < 5">
                 <div class="other-poster-item">
                   <div class="other-poster-img">
-                    <img src="https://720ljq2-10037467.file.myqcloud.com/linker/administrator/image/06ab4a8b7e4242eea92b22708cfe9a8e.jpg" alt="" srcset="">
+                    <img :src="item.posterImage" alt="" srcset="">
                   </div>
                   <div class="other-poster-info">
-                    <p class="house-name">前海铂寓</p>
-                    <p class="house-location">深圳市-罗湖区</p>
+                    <p class="house-name">{{item.title}}</p>
+                    <p class="house-location">{{item.createTimeStamp | formatData}}</p>
                   </div>
                 </div>
               </swiper-slide>
@@ -562,7 +562,8 @@ export default {
       linkerInfo: null,
       evaluatingInfo: null,
       showLoading: false,
-      posterList: []
+      posterNum: 0,
+      posterListArr: []
     }
   },
   async created() {
@@ -583,6 +584,7 @@ export default {
 
     this.getQuestionDetail(this.id)
     this.getEvaluatingInfo(this.id)
+    this.getPosterList()
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -620,17 +622,29 @@ export default {
     },
     // 获取楼盘宣传海报
     getPosterList () {
-      marketService.getPosterList({marketId: this.marketId}).then((result) => {
-        this.posterList = result.posterList
+      marketService.getPosterList({linkerId: this.id}).then((result) => {
         this.posterConf.link = `/market/activity/poster/${this.id}`
-        if (result.posterList&&result.posterList.length) {
-            this.posterConf.title = `宣传海报(${result.total})`
+        if (result&&result.length) {
+            let arr = []
+            let num = 0
+            result.forEach(ele => {
+              num += ele.posterList.length
+              arr.push(...ele.posterList)
+            })
+            this.posterNum = num
+            this.posterListArr = arr
+            this.posterConf.title = `宣传海报(${num})`
         } else {
           this.posterConf.title = `宣传海报(0)`
         }
       }).catch((err) => {
         console.log(err)
       })
+    },
+
+    // 跳转海报列表页面
+    goPosterList () {
+      this.$router.push(`/market/activity/poster/${this.id}`)
     },
 
     // 楼盘评论分类统计
@@ -995,6 +1009,14 @@ export default {
         3: '管理员'
       }
       return tag[val]
+    },
+    // 格式化时间
+    formatData (time) {
+      let date =  new Date(+time)
+      let y = date.getFullYear()
+      let m = date.getMonth() + 1
+      let d = date.getDate()
+      return `${y}/${m}/${d}`
     }
   },
   beforeDestroy() {

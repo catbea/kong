@@ -541,7 +541,7 @@ class MarketService {
    */
   getPosterList(data) {
     return xhr({
-      url: '/review/linker/info',
+      url: '/poster/list',
       body: data
     })
   }
