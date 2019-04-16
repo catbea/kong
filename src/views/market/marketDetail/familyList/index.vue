@@ -263,6 +263,15 @@ export default {
     .img-box{
       flex: 1;
       margin: 0 20px;
+      text-align: center;
+      .van-swipe-item{
+        img{
+          min-width: 100%;
+          min-height: 100%;
+          object-fit: cover;
+        }
+      }
+      
     }
     .custom-indicator{
       height: 20px;

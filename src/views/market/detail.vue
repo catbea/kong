@@ -836,11 +836,16 @@ export default {
     houseTypeHandle(n) {
       //查看户型图片预览
       let data = []
-      data.push(n)
+      this.info.houseTypeList.forEach(ele => {
+        data.push(...ele.imgUrlList)
+      })
+      debugger
+      let num = data.indexOf(n)
+      // data.push(n)
       // this.$router.push({ name: 'Preview-Picture', query: { arr: data }})
       this.instance = ImagePreview({
         images: data,
-        startPosition: 0
+        startPosition: num
       })
     },
     async collectHandler() {
