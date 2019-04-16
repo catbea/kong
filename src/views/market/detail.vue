@@ -353,7 +353,7 @@
       <div class="house-poster" v-if="posterNum">
         <title-bar :conf="posterConf"/>
         <div class="poster-box" @click="goPosterList">
-          <div class="one-poster" v-if="posterNum.length === 1">
+          <div class="one-poster" v-if="posterNum === 1">
             <img :src="posterListArr[0].posterImage" alt="">
             <div class="tips">
               <h3 class="title">{{posterListArr[0].title}}</h3>
