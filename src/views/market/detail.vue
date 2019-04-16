@@ -839,7 +839,6 @@ export default {
       this.info.houseTypeList.forEach(ele => {
         data.push(...ele.imgUrlList)
       })
-      debugger
       let num = data.indexOf(n)
       // data.push(n)
       // this.$router.push({ name: 'Preview-Picture', query: { arr: data }})
