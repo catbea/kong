@@ -1,156 +1,5 @@
 <template>
-  <div class="discover-detail-page" v-if="haveData">
-    <!-- 文章详情和经纪人信息 -->
-    <div class="discover-detail-container">
-      <h5 class="discover-title">{{info&&info.title}}</h5>
-      <div class="discover-views">
-        <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
-        <div class="reprint-source">
-          <span>分享源自&nbsp;</span>
-          <span style="color:#445166">AW大师写一写</span>
-        </div>
-      </div>
-      <!-- 观点 -->
-      <div class="discover-viewpoint" v-if="editData&&editData.viewpoint" @click="popHandler(1)">
-        <div class="viewpoint-line"></div>
-        <div class="viewpoint-top">
-          <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
-          <div class="viewpoint-right">
-            <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
-            <div class="viewpoint-name">
-              <span style="color:#333;font-size:14px">{{agentInfo.agentName}}</span>
-              <span style="color:#969EA8;font-size:14px">点评</span>
-            </div>
-          </div>
-        </div>
-        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
-      </div>
-      <!-- 文章详情 -->
-      <div class="discover-detail-content">
-        <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
-          <paragraph :info="paragraph"/>
-          <estate-item
-            v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)"
-            :info="inlayHouseInfo"
-            @click="popHandler(2, inlayHouseInfo)"
-          ></estate-item>
-        </div>
-      </div>
-      <p class="discover-extra-info" v-show="renderDom.length">
-        <span class="reprint-from">{{info&&info.publisher}}</span>
-        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
-      </p>
-      <p class="discover-disclaimer" v-show="renderDom.length">
-        <span
-          class="disclaimer-text"
-        >免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
-        <span
-          class="discover-feedback"
-          style="color:#445166"
-          @click="feedbackClickHandler"
-        >&nbsp;举报反馈</span>
-      </p>
-      <!-- 好看 -->
-      <div class="easy-look-container" v-if="easylookList.length>0" @click="popHandler(1)">
-        <div class="easy-look-top">
-          <div class="easy-look-left">
-            <span class="icon iconfont icon-found_like"></span>
-            <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
-          </div>
-        </div>
-        <div class="easy-look-list">{{easylookList && easylookList.join('、')}}</div>
-      </div>
-      <!-- 评论 -->
-      <div class="comment-container">
-        <div class="comment-box" v-if="commentList.length">
-          <title-bar :conf="{title: '精彩评论'}"/>
-          <div class="comment-list-wrap" @click="popHandler(1)">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index">
-              <div
-                class="bg_img"
-                :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}"
-                style="width:40px;height:40px;border-radius:50%;"
-              ></div>
-              <div class="comment-right">
-                <div class="comment-name-wrap">
-                  <span class="comment-name">{{item.senderName}}</span>
-                  <span
-                    v-if="item.receiverName"
-                    style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;"
-                  >回复</span>
-                  <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
-                </div>
-                <div class="comment-content">{{item.content}}</div>
-                <div></div>
-              </div>
-            </div>
-            <div
-              class="comment-list-more"
-              v-if="isMoreComment"
-              @click.stop="moreCommentHandler"
-            >查看更多评论</div>
-          </div>
-        </div>
-      </div>
-      <!-- 推荐房源 -->
-      <div class="recommend-houses" v-if="recommendHouseList.length>0">
-        <title-bar :conf="{title: '推荐房源'}"/>
-        <div class="recommend-houses-content">
-          <estate-item
-            v-for="(item,index) in recommendHouseList"
-            :key="index"
-            :info="item"
-            @click="popHandler(2, item)"
-          ></estate-item>
-        </div>
-      </div>
-      <!-- TA的写一写 -->
-      <div class="recommend-article" v-if="articleList.length>0">
-        <title-bar :conf="{title: 'TA的写一写'}"/>
-        <div
-          class="recommend-article-list"
-          v-for="(item, index) in articleList"
-          :key="index"
-          @click="popHandler(3, item)"
-        >
-          <div class="recommend-article-name">{{item.title}}</div>
-        </div>
-      </div>
-    </div>
-    <!-- 悬浮工具栏 -->
-    <div class="van-hairline--top tools-bar" @click="popHandler(1)">
-      <div class="tool-box">
-        <div class="tool-left">
-          <div class="share-image">
-            <img :src="shareImage">
-          </div>
-          <div class="share-desc">
-            <img :src="shareDesc">
-          </div>
-          <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
-          <div class="tool-content">
-            <div class="tool-name">{{agentInfo&&agentInfo.agentName}}</div>
-            <div class="tool-institution">{{agentInfo&&agentInfo.institutionName}}</div>
-          </div>
-        </div>
-        <div class="tool-right">在线咨询</div>
-      </div>
-    </div>
-    <!-- <open-article :show.sync="guidanceShow"/> -->
-    <card-dialog
-      class="agent-card"
-      :show.sync="openCardPopup"
-      :info="cardQrInfo"
-      @close="popupShowControl()"
-    ></card-dialog>
-    <market-dialog :show.sync="this.openMarketPopup" :info="marketQrInfo" @close="popupShowControl()"></market-dialog>
-    <article-dialog :show.sync="openArticlePopup" :info="articleQrInfo" @close="popupShowControl()"></article-dialog>
-    <div class="loading" v-show="!renderDom.length">
-      <van-loading type="spinner" color="white" class="van-loading"/>
-    </div>
-  </div>
-  <div v-else>
-    <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
+  <div class="discover-detail-page">
   </div>
 </template>
 <script>
@@ -180,84 +29,69 @@ export default {
     Null
   },
   data: () => ({
-    mpUser: {},
-    appId: process.env.VUE_APP_MP_APPID,
-    haveData: true,
-    nullIcon: require('IMG/article/empty_article@2x.png'),
-    nullcontent: '该文章已被下架删除',
-    shareImage: '',
-    shareDesc: '',
-    infoId: '', //文章的id
-    city: '',
-    info: null,
-    editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
-    inlayHouseInfo: null, // 文章插入楼盘信息
-    agentInfo: null,
-    guidanceShow: false,
-    friendShareData: null, // 好友分享数据
-    timelineShareData: null, // 朋友圈分享数据
-    renderDom: [],
-    easylookList: [], // 好看列表
-    commentCur: 1,
-    commentSize: 5,
-    isMoreComment: false,
-    commentList: [], // 评论列表
-    selectCommentId: '', // 选中的评论ID
-    commentContent: '', // 评论内容
-    isShowDeleteComment: false, // 是否显示删除评论上拉菜单
-    actions: [{ name: '删除评论', className: 'comment-delete' }],
-    showCommentAlert: false, // 是否显示评论输入框
-    commentInfo: null,
-    commentIds: [], // 评论Ids
-    recommendHouseList: [], // 推荐房源列表
-    articleList: [], // 文章列表
-    openCardPopup: false,
-    openMarketPopup: false,
-    openArticlePopup: false,
-    cardQrInfo: null,
-    marketQrInfo: null,
-    articleQrInfo: null,
-    urlParm: {},
-    shareUuid: '', // 分享ID
-    scrollHeight: 0,
-    clientHeight: 0,
-    preTime: 0, // 数据上报时间
-    scrollPercent: '' // 页面滚动百分比
+    // mpUser: {},
+    // appId: process.env.VUE_APP_MP_APPID,
+    // haveData: true,
+    // nullIcon: require('IMG/article/empty_article@2x.png'),
+    // nullcontent: '该文章已被下架删除',
+    // shareImage: '',
+    // shareDesc: '',
+    // infoId: '', //文章的id
+    // city: '',
+    // info: null,
+    // editData: null, // 经纪人文章编辑json数据，包括评论，插入楼盘等内容
+    // inlayHouseInfo: null, // 文章插入楼盘信息
+    // agentInfo: null,
+    // guidanceShow: false,
+    // friendShareData: null, // 好友分享数据
+    // timelineShareData: null, // 朋友圈分享数据
+    // renderDom: [],
+    // easylookList: [], // 好看列表
+    // commentCur: 1,
+    // commentSize: 5,
+    // isMoreComment: false,
+    // commentList: [], // 评论列表
+    // selectCommentId: '', // 选中的评论ID
+    // commentContent: '', // 评论内容
+    // isShowDeleteComment: false, // 是否显示删除评论上拉菜单
+    // actions: [{ name: '删除评论', className: 'comment-delete' }],
+    // showCommentAlert: false, // 是否显示评论输入框
+    // commentInfo: null,
+    // commentIds: [], // 评论Ids
+    // recommendHouseList: [], // 推荐房源列表
+    // articleList: [], // 文章列表
+    // openCardPopup: false,
+    // openMarketPopup: false,
+    // openArticlePopup: false,
+    // cardQrInfo: null,
+    // marketQrInfo: null,
+    // articleQrInfo: null,
+    // urlParm: {},
+    // shareUuid: '', // 分享ID
+    // scrollHeight: 0,
+    // clientHeight: 0,
+    // preTime: 0, // 数据上报时间
+    // scrollPercent: '' // 页面滚动百分比
   }),
   async created() {
-    this.urlParm = this.getUrlQueryParams(location.href)
-    this.infoId = this.$route.params.id
-    this.city = this.$route.params.city
-    this.agentId = this.$route.query.agentId
-    this.enterpriseId = this.$route.query.enterpriseId
-    this.shareUuid = this.$route.query.shareUuid
-    this.checkAuth()
-    // this.mpUser.appid = 'wx6c6423c9efb44c75'
-    if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
-      this.$store.commit('SHARE_PROMPT', true)
-      window.localStorage.setItem('isFirst', true)
-    } else {
-      this.$store.commit('SHARE_PROMPT', false)
-    }
-
-    /*
-    // let nousedata = await Promise.all([this.getDetail(), this.getLikeList(), this.getCommentList(), this.getArticleList()])
-    console.log(123, document.querySelector('.router-view').children[0].offsetHeight)
-    this.scrollHeight = document.querySelector('.router-view').children[0].offsetHeight
-    this.clientHeight = document.querySelector('.router-view').clientHeight
-    // 获取元素高度
-    let offsetHeight = document.getElementsByClassName('tools-bar')[0].offsetHeight
-    console.log('offsetHeight====' + offsetHeight)
-    this.scrollPercent = (this.clientHeight / (this.scrollHeight - this.clientHeight)) * 100.0
-    // 篇幅初始化数据上报
-    // this.dataReport({ userActionType: 'viewNews', userActionCode: 'HFFWZCK', userActionData: Number(this.scrollPercent).toFixed(2) + '%' })
-    
-    // this.getDetail()
-    // this.getLikeList()
-    // this.getCommentList()
-    // this.getArticleList()
-    // this.getCardQrCode()
-    */
+    let host = location.href
+    let hostArr = host.split('#')
+    let to = hostArr[0]+'aw-h5/#'+hostArr[1]
+    location.href = to
+    // this.urlParm = this.getUrlQueryParams(location.href)
+    // this.infoId = this.$route.params.id
+    // this.city = this.$route.params.city
+    // this.agentId = this.$route.query.agentId
+    // this.enterpriseId = this.$route.query.enterpriseId
+    // this.shareUuid = this.$route.query.shareUuid
+    // this.checkAuth()
+    // // this.mpUser.appid = 'wx6c6423c9efb44c75'
+    // if (window.localStorage.getItem('isFirst') == null || window.localStorage.getItem('isFirst') === 'false') {
+    //   this.$store.commit('SHARE_PROMPT', true)
+    //   window.localStorage.setItem('isFirst', true)
+    // } else {
+    //   this.$store.commit('SHARE_PROMPT', false)
+    // }
   },
   methods: {
     async checkAuth() {

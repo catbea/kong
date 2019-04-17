@@ -249,7 +249,7 @@ export default {
         institutionName: this.info.institutionName
       }
       let host = process.env.VUE_APP_APP_URL
-      host = host + '#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
+      host = host + 'aw-h5/#/article/' + this.id + '/' + encodeURI(this.city) + '?agentId=' + this.info.agentId + '&enterpriseId=' + this.enterpriseId + '&shareUuid=' + this.shareUuid
       let content = this.info.content.replace(/<[^>]+>/g, '').replace(/\s+/g, '')
       content = res.subTitle? res.subTitle : content? content.substr(0,32) : '我正在AW大师看文章，你也快来看看吧。'
       this.friendShareData = {
