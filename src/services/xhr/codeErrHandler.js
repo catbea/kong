@@ -8,7 +8,7 @@ export default (msg, url) => {
     // 以下为特殊处理,需要放到控制层处理的错误code,必须注释使用页面和错误行为
     case 31100:
     case 31102:
-    case 10500: //文章解析异常(一个输入框填写一个具有正确域名地址却不是正确的文章地址问题)
+    // case 10500: //文章解析异常(一个输入框填写一个具有正确域名地址却不是正确的文章地址问题)
     case 31106: //同个人不可解析同一篇文章
     case 21105: // 注册
     case 21103: // 验证码错误
@@ -20,6 +20,9 @@ export default (msg, url) => {
     case 44011: // 手机号码已领取奖励，请勿重复参加
       return true
     case 21600: // 无分享记录的时候调的接口错误，不提示
+      return false
+    case 40029: //通过code获取用户信息失败
+      window.vue.$toast(msg.msg)
       return false
     default:
       console.error(msg)
