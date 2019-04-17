@@ -78,8 +78,8 @@ export default {
     let host = location.href
     let hostArr = host.split(domain)
     let to = domain+'aw-h5/'+hostArr[1]
-    console.log(to)
-    // location.href = to
+    // console.log(to)
+    location.href = to
     // this.urlParm = this.getUrlQueryParams(location.href)
     // this.infoId = this.$route.params.id
     // this.city = this.$route.params.city
