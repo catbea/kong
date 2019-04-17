@@ -74,11 +74,12 @@ export default {
     // scrollPercent: '' // 页面滚动百分比
   }),
   async created() {
-    let domain = process.env.VUE_APP_APP_URL
+    let domain = 'http://192.168.17.238:1024/'//process.env.VUE_APP_APP_URL
     let host = location.href
     let hostArr = host.split(domain)
-    let to = domain+'aw-h5/#'+hostArr[1]
-    location.href = to
+    let to = domain+'aw-h5/'+hostArr[1]
+    console.log(to)
+    // location.href = to
     // this.urlParm = this.getUrlQueryParams(location.href)
     // this.infoId = this.$route.params.id
     // this.city = this.$route.params.city
