@@ -114,7 +114,8 @@ export default {
       } else if (this.itemInfo.saleStatus == 3) {
         return '售罄'
       } else {
-        return this.itemInfo.saleStatus
+        // return this.itemInfo.saleStatus
+        return '热销中'
       }
     }
   },

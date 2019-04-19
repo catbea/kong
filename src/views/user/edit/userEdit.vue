@@ -61,8 +61,6 @@ export default {
       })
       let county_list = Object.assign({},this.fullArea.county_list, data)
       this.areaList = Object.assign({},this.fullArea,{county_list: county_list})
-     
-
     },
     goEdit() {
       if (!this.userInfo.institutionName) {
