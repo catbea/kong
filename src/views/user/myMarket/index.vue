@@ -7,7 +7,7 @@
     <!-- <title-bar :conf="titleInfo" @return="returnHandle"></title-bar> -->
     <div class="tabbar van-hairline--bottom">
       <div :class="['item',{'active': active===1}]"  @click="changeTab(1)">我的楼盘<div class="line" v-if="active===1"></div></div>
-      <div :class="['item',{'active': active===2}]"  @click="changeTab(2)">免费楼盘<div class="line" v-if="active===2"></div></div>
+      <div :class="['item',{'active': active===2}]"  @click="changeTab(2)">免费楼盘 <span class="hot">HOT</span><div class="line" v-if="active===2"></div></div>
       <div :class="['item',{'active': active===3}]"  @click="changeTab(3)">已关闭盘<div class="line" v-if="active===3"></div></div>
     </div>
     <div class="user-market-box">
@@ -782,6 +782,17 @@ export default {
         bottom: 4px;
         left: 50%;
         margin-left: -8px;
+      }
+      .hot{
+        position: absolute;
+        width: 30px;
+        height: 14px;
+        line-height: 14px;
+        text-align: center;
+        background-color: #EA4D2E;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 10px;
       }
     }
   }
