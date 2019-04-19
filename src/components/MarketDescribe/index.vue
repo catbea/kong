@@ -133,6 +133,9 @@ export default {
     },
     // 确认支付
     async confirmFun () {
+      if (this.itemInfo.city !== this.vipInfo.city) {
+        return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      }
       if (!this.status) {
         this.$dialog.confirm({
           title: '提示',

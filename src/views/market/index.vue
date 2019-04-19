@@ -76,7 +76,8 @@ export default {
     containerHeight: '0',
     vipInfo: {},
     historyCity: '',
-    scrollTop: 0
+    scrollTop: 0,
+    changeCity: false
   }),
   watch: {
     projectFilters: {
@@ -106,7 +107,7 @@ export default {
     this.getBrokerInfo()
     await this.hotMarketHandle()
     let markList = window.sessionStorage.getItem('marketList')
-    if (markList) {
+    if (markList && !this.changeCity) {
       let item = JSON.parse(markList)
       this.loading = item.loading
       this.finished = item.finished
@@ -122,7 +123,7 @@ export default {
   methods: {
     touchmove() {},
     async getProjectList() {
-      if ( window.sessionStorage.getItem('marketList')) {
+      if ( window.sessionStorage.getItem('marketList') && !this.changeCity) {
         return this.loading = false
       }
       let param = { current: this.page, size: this.pageSize }
@@ -226,6 +227,11 @@ export default {
       let res = await marketService.vipInfo()
       this.vipInfo = res
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.changeCity = (from.path === '/public/city-list')
+    })
   },
   beforeRouteLeave (to, from, next) {
     this.scrollTop = document.querySelector('.router-view').scrollTop

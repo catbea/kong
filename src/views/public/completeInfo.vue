@@ -48,10 +48,11 @@
     <div class="bottom-bar" @click="sureHandler">确定</div>
     <area-select
       :show.sync="areaShow"
-      :code.sync="areaCode"
+      :code.sync="cityCode"
       :title="areaTitle"
       @cancel="cancelHandler"
       @confirm="confirmHandler"
+      :areaList="areaList"
     ></area-select>
   </div>
 </template>
@@ -64,6 +65,7 @@ import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import DynamicsService from 'SERVICE/dynamicsService'
 import UserService from 'SERVICE/userService'
+import { fullArea } from '@/utils/fullArea'
 export default {
   components: {
     MaterialInput,
@@ -80,13 +82,16 @@ export default {
     areaCode: '440305',
     enterpriseId: '',
     distributorId: '',
-    institutionId: ''
+    institutionId: '',
+    fullArea: '',
+    areaList: {}
   }),
   created() {
     this.name = this.userInfo.name
     this.majorRegion = this.userInfo.majorRegion
     this.enterpriseId = this.userInfo.enterpriseId
-
+    this.fullArea = fullArea
+    this.getAreaList(fullArea)
     if (this.userInfo.majorRegion) {
       var arr = this.majorRegion.split('/')
       if (arr && arr.length > 2) {
@@ -117,6 +122,16 @@ export default {
     }
   },
   methods: {
+    // areaList 获取
+    getAreaList () {
+      let keys =  Object.keys(this.fullArea.city_list)
+      let data = {}
+      keys.forEach(ele => {
+        data[ele] = '不限'
+      })
+      let county_list = Object.assign({},this.fullArea.county_list, data)
+      this.areaList = Object.assign({},this.fullArea,{county_list: county_list})
+    },
     inputHandler(event) {
       console.log(event)
       if (event && event.length > 0) {
@@ -241,7 +256,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userInfo'])
+    ...mapGetters(['userInfo']),
+    cityCode() {
+      let codes = Object.keys(this.fullArea.city_list)
+      let cityList = Object.values(this.fullArea.city_list)
+      let i = ''
+      cityList.forEach((el, index) => {
+        if (el === this.userInfo.majorCity) {
+          return (i = index)
+        }
+      })
+      return codes[i]
+    }
   }
 }
 </script>

@@ -117,7 +117,7 @@ export default {
         projectName: this.searchValue,
         orderBy: 1,
         current: 1,
-        size: 5
+        size: 100
       }
       const res = await marketService.getHouseList(payload)
       this.searchBirefList = res.records
