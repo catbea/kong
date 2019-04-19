@@ -99,11 +99,15 @@ export default {
       return imgs
     },
     imgData() {
+      let data = {}
       if(this.tabs.length){
-        return this.tabs.length && this.tabs[0].cpHouseTypeDetail[this.current]
-      } else {
-        return {}
+        this.tabs.length && this.tabs[0].cpHouseTypeDetail.forEach(item => {
+          if(item.imgUrlList.indexOf(this.imgList[this.current]) > -1) {
+            data = item
+          }
+        })
       }
+      return data
     }
   },
   beforeRouteLeave(to, from, next) {
