@@ -36,14 +36,14 @@
         <!-- 我的点评 -->
         <div class="head-imgs" @click="jumpToRemark">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-me_opinion"></use>
+            <use xlink:href="#icon-me_review"></use>
           </svg>
           <p class="grou1Icon-p">我的点评</p>
         </div>
         <!-- 我的问答 -->  
         <div class="head-imgs" @click="jumpToAnswers">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-write_help"></use>
+            <use xlink:href="#icon-me_ask"></use>
           </svg>
           <p class="grou1Icon-p">我的问答</p>
         </div>
