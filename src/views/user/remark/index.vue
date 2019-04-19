@@ -1,28 +1,31 @@
 <template>
     <div class="remark_pages">
-        <div class="pages_content" v-if="remarkData">
+        <div class="pages_content" v-if="remarkData" @mousewheel="imgScroll" @touchmove="imgScroll">
             <ul class="cart-list">
                 <li class="list-item" v-for="(item,index) in remarkData " data-type="0">
                     <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
                         <div class="details">
                             <div class="details_title">
-                                <p>{{item.linkerName}}</p><p>{{item.circuseeNum}}</p>    
+                                <p>{{item.linkerName}}</p><p>{{item.createTime}}</p>    
                             </div> 
-                            <div>{{item.district}}</div>
+                            <div>{{item.content}}</div>
                         </div>
                         <div>
                             <swiper :options="swiperOption">
                                 <swiper-slide
-                                
+                                v-for="(a,index) in item.list"
+                                class="swiper-slide"
                                 > 
                                     <div>
-                                        <img :src="item.headImgUrl" alt=""  style="height:60px;margin-top:12px;margin-bottom:0px;" @click.stop="houseTypeHandle(item.headImgUrl)">   
+                                        <img :src="a.imgUrl" alt=""  style="height:60px;margin-top:12px;margin-bottom:0px;width:80px;border-radius:6px;" @click.stop="houseTypeHandle(a.imgUrl)">   
                                     </div>
                                 </swiper-slide>
                             </swiper>
                         </div>
                     </div>
-                    <div class="delete" @click="deleteItem" :data-index="index">删除</div>
+                    <div class="delete" @click="deleteItem(item,index)" :data-index="index">
+                        <p>删除</p>
+                    </div>
                 </li>
             </ul> 
         </div>
@@ -43,53 +46,36 @@ export default {
         swiper,
         swiperSlide
     },
-    data () {
+    data () { 
         return { 
             startX : 0 ,
             endX : 0 ,
-            remarkData: [
-                // {title:"时代天镜附近有挺多综合商场，星美国际嘉荣，吃的还挺多的，来个朋友也有地方可玩，未来松山湖发展号了，应会产生溢价…？",
-                // header:"碧桂园·山水江南",
-                // time:"2019年5月20日",
-                // imgUrl: [
-                //         {url:'../../../assets/img/user/GroupCopy@2x.png'},
-                //         // {url:require('../../../assets/img/user/GroupCopy@2x.png')},
-                //         // {url:require('../../../assets/img/user/GroupCopy@2x.png')},
-                //         // {url:require('../../../assets/img/user/GroupCopy@2x.png')},
-                //         // {url:require('../../../assets/img/user/GroupCopy@2x.png')},
-                //     ]
-                // },
-                // {title:"#满京华#满京华云楼盘现在还有什么户型在卖啊？周边配套怎样，有幼儿园么？",
-                // header:"nininin;;;;;;",
-                // time:"2019年5月20日"
-                // },
-                // {title:"#满京华#满京华云楼盘现在还有什么户型在卖啊？周边配套怎样，有幼儿园么？",
-                // header:"nininin;;;;;;",
-                // time:"2019年5月20日"
-                // },
-                // {title:"#满京华#满京华云楼盘现在还有什么户型在卖啊？周边配套怎样，有幼儿园么？",
-                // header:"nininin;;;;;;",
-                // time:"2019年5月20日"
-                // }, 
-            ],
+            moveX:0,
+            moveY:0,
+            remarkData: [],
+            img:[],
             swiperOption: {
                 slidesPerView: 2,
-                spaceBetween: 12
-            },
-            id:"03a2f91783954fc4b8aa9d43f90c32cd", 
+                // spaceBetween: 12
+            },  
         }
-    },
-    mounted () {
-        this.getDetailInfo(this.id)
+    },   
+    mounted () { 
+        this.getList();  
+        window.addEventListener('scroll',this.hide)
     },
     methods : { 
+        imgScroll() {
+            this.restSlide();   
+        },
         houseTypeHandle(n) {
         //查看户型图片预览
         let data = []
         data.push(n) 
         this.instance = ImagePreview({
             images: data,
-            startPosition: 0
+            startPosition: 0,
+            showIndex:false
         })
         },
         async getDetailInfo(id) {
@@ -107,15 +93,14 @@ export default {
             if( this.checkSlide() ){
                 this.restSlide();
             }
-        },
-        //滑动开始
-        touchStart(e){
+        }, 
+        touchStart(e){  
             // 记录初始位置
             this.startX = e.touches[0].clientX;
         },
         //滑动结束
         touchEnd(e){  
-            // 当前滑动的父级元素
+            // 当前滑动的父级元素 
             let parentElement = e.currentTarget.parentElement;
             // 记录结束位置
             this.endX = e.changedTouches[0].clientX;
@@ -151,21 +136,35 @@ export default {
             }
         },
         //删除
-        deleteItem(e){
+        deleteItem(item,index){ 
             // 当前索引
-            let index = e.currentTarget.dataset.index; 
+            // let index = e.currentTarget.dataset.index;  
             // 删除
             this.$dialog.confirm({
                 title: '确认删除？', 
             }).then(() => { 
-                // 复位
-                this.restSlide();
-                // 删除            
-                this.remarkData.splice(index,1);
+                marketService.getdelComment({commentId:item.commentId,linkerId:item.linkerId})
+                .then((result) => {  
+                        // 复位
+                        this.restSlide();
+                        // 删除            
+                        this.remarkData.splice(index,1); 
+                })
+                .catch((err) => {
+                    this.restSlide();                     
+                }) 
 
             }).catch(() => { 
                 this.restSlide(); 
             }) 
+        } ,
+        getList (index) {
+            marketService.getlinkerList({
+            }).then((result) => {
+                this.remarkData = result.records  
+            }).catch((err) => {
+                console.log(err)
+            })
         } 
     }
 }
@@ -188,8 +187,10 @@ export default {
                     background: #EA4D2E;
                     font-size: 16px;
                     line-height: 133px;
-                    color: #fff;
-                    text-align: center;
+                    color: #fff; 
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     position: absolute;
                     top:0;
                     right: -80px;
@@ -259,4 +260,8 @@ export default {
         }
     }
 } 
+.swiper-slide {
+    width: 80px !important;
+    margin-right: 8px;
+}
 </style>

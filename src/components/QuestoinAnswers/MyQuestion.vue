@@ -1,14 +1,14 @@
 <template>
     <div class="question_pages">
-        <div class="pages_content" v-if="questionData"> 
+        <div class="pages_content" v-if="questionData" @mousewheel="imgScroll" @touchmove="imgScroll"> 
             <ul class="cart-list">
                 <li class="list-item" v-for="(item,index) in questionData " data-type="0">
                     <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
                         <div class="details">
-                            {{item.labelName}}
+                            {{item.content}}
                         </div>
                     </div>
-                    <div class="delete" @click="deleteItem" :data-index="index">删除</div>
+                    <div class="delete" @click="deleteItem(item.interlocutionId,index)" :data-index="index">删除</div>
                 </li>
             </ul> 
         </div> 
@@ -21,6 +21,7 @@
 
 
 <script>
+import marketService from 'SERVICE/marketService'
 export default {
     props: {
         questionData: { type: Array }, 
@@ -29,10 +30,14 @@ export default {
         return {   
             startX : 0 ,
             endX : 0 ,
+            id:"" //问答id
         }
     },
     methods : { 
-          calc(item, minusOrPlus,index) {
+            imgScroll() {
+                this.restSlide();   
+            },
+            calc(item, minusOrPlus,index) {
                 if (minusOrPlus === 1) {
                     item.num++;
                 } else if (minusOrPlus === 0) {
@@ -87,20 +92,27 @@ export default {
                 }
             },
             //删除
-            deleteItem(e){
-                // 当前索引
-                let index = e.currentTarget.dataset.index; 
+            deleteItem(item,index){
+                // 当前索引 
+                // let index = e.currentTarget.dataset.index;  
                 this.$dialog.confirm({
                     title: '确认删除？', 
                 }).then(() => { 
-                    // 复位
-                    this.restSlide();
-                    // 删除
-                    this.questionData.splice(index,1);
+                    marketService.getqueryDelete({interlocutionId:item})
+                    .then ((result) => {
+                        // 复位
+                        this.restSlide();
+                        // 删除
+                        this.questionData.splice(index,1);
+                    })                    
+                    
                 }).catch(() => { 
                     this.restSlide(); 
                 }) 
-            }
+            },
+            // getList () { 
+
+            // }
         
     }
 }
