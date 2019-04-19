@@ -559,5 +559,16 @@ class UserService {
       }
     })
   }
+
+  /**
+   * 免费楼盘列表
+   */
+  getFreeLinkerList(data) {
+    return xhr({
+      url: '/linker/freeLinkerList',
+      body: data
+    })
+  }
+  
 }
 export default new UserService()

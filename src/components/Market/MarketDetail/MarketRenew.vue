@@ -1,9 +1,9 @@
 <template>
   <ul class="market-renew-box">
-      <li class="market-renew-box-recommend" @click="recommendHandle">
+      <!-- <li class="market-renew-box-recommend" @click="recommendHandle">
       <span class="bg_img" :style="{'backgroundImage':'url('+ (flagTj?recommendColor:recommend)+')'}"></span>
       <p :class="{recommend:true,active:flagTj}" >推荐</p>
-      </li>
+      </li> -->
     <li class="market-renew-box-show" @click="showHandle">
       <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZs?showColor:show)+')'}"></span>
       <p :class="{marketShow:true,active:flagZs}">展示</p>
@@ -12,7 +12,8 @@
       <span class="bg_img" :style="{'backgroundImage':'url('+ (flagZd?stickColor:stick)+')'}"></span>
       <p :class="{stickText:true,active:flagZd}">置顶</p>
     </li>
-    <div :class="{marketRenewBoxButton:true,color:renewInfo.openStatus==1}" @click="renewHandle(renewInfo.linkerId)">
+    <div class="free" v-if="+renewInfo.isFree">已免费添加<span v-if="renewInfo.openStatus==2">({{renewInfo.expireTime}}到期)</span></div>
+    <div v-else :class="{marketRenewBoxButton:true,color:renewInfo.openStatus==1}" @click="renewHandle(renewInfo.linkerId)">
       续费<span v-if="renewInfo.openStatus==2">({{renewInfo.expireTime}}到期)</span><span v-if="renewInfo.openStatus==1">（楼盘已过期）</span>
       </div>
 </ul>
@@ -226,10 +227,11 @@ export default {
   display: flex;
   width: 375px;
   height: 57px;
-  padding-top: 10px;
-  margin-bottom: 5px;
+  padding-top: 12px;
+  // margin-bottom: 5px;
   background: rgba(255, 255, 255, 1);
   border-top: 1px solid #e6e6e6;
+  justify-content: space-around;
   .active {
     color: rgba(0, 122, 230, 1) !important;
   }
@@ -246,7 +248,7 @@ export default {
     }
   }
   .market-renew-box-recommend {
-    margin: 0 34px 0 25px;
+    // margin: 0 34px 0 25px;
     .recommend {
       font-size: 11px;
 
@@ -256,7 +258,7 @@ export default {
     }
   }
   .market-renew-box-show {
-    margin-right: 34px;
+    // margin-right: 34px;
     .marketShow {
       font-size: 11px;
 
@@ -266,7 +268,7 @@ export default {
     }
   }
   .market-renew-box-stick {
-    margin-right: 34px;
+    // margin-right: 34px;
     .stickText {
       font-size: 11px;
 
@@ -276,7 +278,7 @@ export default {
     }
   }
   .marketRenewBoxButton {
-    width: 156px;
+    // width: 156px;
     height: 44px;
     border-radius: 6px;
     border: 1px solid;
@@ -287,7 +289,18 @@ export default {
     border-color: #007ae6;
     font-weight: 400;
     color: #007ae6;
-    margin-left: 7px;
+    // margin-left: 7px;
+    padding: 0 20px;
+  }
+  .free{
+    background-color: rgba(204, 204, 204, 1);
+    color: #fff;
+    font-size: 14px;
+    border-radius: 6px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    width: 200px;
   }
   .color {
     color: #ea4d2e;

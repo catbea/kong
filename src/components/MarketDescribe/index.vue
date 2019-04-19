@@ -14,10 +14,14 @@
           <ul class="market-describe">
             <li class="market-name">
               <div class="box">
+                <span class="free" v-if="+itemInfo.isFree">免费</span>
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
-              <span class="dredge" :style="style" v-if="dredge" @click.stop="confirmFun">{{openStatus}}</span>
+              <!-- v-if="+itemInfo.isFree" -->
+              <span class="dredge no"  v-if="+itemInfo.isFree && itemInfo.openStatus != 2"  @click.stop="freeConfirmFun">添加</span>
+              <span class="dredge add" v-if="+itemInfo.isFree && itemInfo.openStatus == 2">已添加</span>
+              <span class="dredge" :style="style" v-if="!(+itemInfo.isFree)" @click.stop="confirmFun">{{openStatus}}</span>
             </li>
             <li class="site">
               {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
@@ -131,6 +135,15 @@ export default {
     dredgeColor() {
       this.style = conf(this.openStatus)
     },
+    // 免费楼盘
+    freeConfirmFun () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '是否确认添加楼盘？'
+      }).then(() => {
+        this.freeOpenHandle()
+      }).catch(() => {})
+    },
     // 确认支付
     async confirmFun () {
       if (this.itemInfo.city !== this.vipInfo.city) {
@@ -166,6 +179,24 @@ export default {
           this.openHandle()
         }
       }
+    },
+    // 免费楼盘开通
+    freeOpenHandle () {
+      marketService.newOpenLinker({linkerId: this.itemInfo.linkerId}).then(res => {
+        this.itemInfo.openStatus = 2
+        let time = new Date(+this.vipInfo.expireTimestamp)
+        let year = time.getFullYear()
+        let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
+        let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+        this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
+        this.itemInfo['invalidTime'] = this.vipInfo.expireDate
+        this.dredgeColor()
+        this.$toast({
+          duration: 1000,
+          message: '已添加成功，请到我的楼盘查看'
+        })
+        this.$parent.$parent.agentIdInfo++
+      }).catch(()=>{})
     },
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市
@@ -269,6 +300,19 @@ export default {
             .box {
               display: flex;
               // align-items: center;
+              .free{
+                font-size: 10px;
+                width:28px;
+                height:15px;
+                text-align: center;
+                line-height: 15px;
+                background:rgba(234,77,46,1);
+                border-radius:2px;
+                color: #fff;
+                border-radius: 2px;
+                margin-right: 2px;
+                margin-top: 1px;
+              }
               .title {
                 display:inline-block;
                 white-space: nowrap;
@@ -309,6 +353,20 @@ export default {
               line-height: 24px;
               text-align: center;
               margin-top: -3px;
+            }
+            .no {
+              background-color: rgba(0, 122, 230, 1);
+            }
+            .add{
+              border:1px solid rgba(204, 204, 204, 1);
+              color: rgba(204, 204, 204, 1);
+              background-color: transparent;
+              font-size: 10px;
+              height: 22px;
+              line-height: 22px;
+            }
+            .open{
+              background:linear-gradient(119deg,rgba(234,77,46,1) 0%,rgba(255,156,56,1) 100%);
             }
           }
           .site {

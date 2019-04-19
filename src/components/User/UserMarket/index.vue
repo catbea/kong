@@ -9,6 +9,7 @@
         <ul>
           <li>
             <div style="display:flex;">
+              <span class="free" v-if="+dataArr.isFree">免费</span>
               <span class="text">{{dataArr.linkerName}}</span>
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
@@ -51,10 +52,10 @@
               <span v-show="dataArr.masterRecommand != 1">大师推荐</span>
               <span v-show="dataArr.masterRecommand == 1">取消大师推荐</span>
             </li> -->
-            <li @click="commonHandle(marketIndex)">
+            <!-- <li @click="commonHandle(marketIndex)">
               <span v-show="dataArr.masterRecommand != 2">推荐</span>
               <span v-show="dataArr.masterRecommand == 2">取消推荐</span>
-            </li>
+            </li> -->
             <li class="color" @click="stickHandle(marketIndex)">
               <span v-show="dataArr.recommand==0">置顶</span>
               <span v-show="dataArr.recommand==10">取消置顶</span>
@@ -414,6 +415,19 @@ export default {
             max-width: 103px;
             line-height: 21px;
           }
+          .free{
+            font-size: 10px;
+            width:28px;
+            height:15px;
+            text-align: center;
+            line-height: 15px;
+            background:rgba(234,77,46,1);
+            border-radius:2px;
+            color: #fff;
+            border-radius: 2px;
+            margin-right: 2px;
+            margin-top: 1px;
+          }
           // align-items: center;
           .stick {
             padding: 2px 4px 1px 4px;
@@ -552,7 +566,7 @@ export default {
   .van-popup--bottom {
     background: rgba(255, 255, 255, 1);
     width: 100%;
-    height: 250px;
+    // height: 250px;
     border-radius: 0;
     ul {
       li {

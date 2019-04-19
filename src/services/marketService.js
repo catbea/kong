@@ -575,5 +575,16 @@ class MarketService {
       body: data
     })
   }
+
+  /**
+   * 新商业模式开通楼盘
+   */
+  newOpenLinker(data) {
+    return xhr({
+      url: '/linker/newOpenLinker',
+      method: 'post',
+      body: data
+    })
+  }
 }
 export default new MarketService()

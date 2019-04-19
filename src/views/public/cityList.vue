@@ -175,7 +175,11 @@ export default {
           this.$store.commit(types['USER_AREA'], { marketSelectedCity: val })
           break
         case 'myMarket':
-          this.$store.commit(types['USER_AREA'], { myMarketSelectedCity: val })
+          if (window.sessionStorage.getItem('myMarketTab')) {
+            this.$store.commit(types['USER_AREA'], { myMarketFreeCity: val })
+          } else {
+            this.$store.commit(types['USER_AREA'], { myMarketSelectedCity: val })
+          }
           break
         default:
           this.$store.commit(types['USER_AREA'], { selectedCity: val })
@@ -186,7 +190,11 @@ export default {
         city: val, 
         type: value
       }
-      window.localStorage.setItem(`${this.fromPage || 'default'}City`, JSON.stringify(data))
+      if (window.sessionStorage.getItem('myMarketTab')) {
+        window.localStorage.setItem(`${this.fromPage || 'default'}FreeCity`, JSON.stringify(data))
+      } else {
+        window.localStorage.setItem(`${this.fromPage || 'default'}City`, JSON.stringify(data))
+      }
       this.$router.go(-1)
     },
     // 重新定位

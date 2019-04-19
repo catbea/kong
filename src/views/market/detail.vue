@@ -412,7 +412,23 @@
         <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
       </div>
       <!-- 开通提示及开通状态 -->
-      <div class="van-hairline--top house-status">
+       <div class="van-hairline--top house-status" v-if="+info.isFree">
+          <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
+            <div class="open-btn" @click="newOpenLinker">免费添加</div>
+          </div>
+          <market-renew
+            v-if="!openStatus&&info.saleStatus!=='售罄'"
+            :renewInfo="info"
+            :vipInfo="vipInfo"
+          />
+          <div class="sale-vip"  v-if="info.openStatus==1" >
+            <div class="open-btn">楼盘已过期</div>
+         </div>
+          <div class="sale-vip"  v-if="info.saleStatus!=='热销中'" >
+            <div class="open-btn">{{info.saleStatus}}</div>
+         </div>
+       </div>
+      <div class="van-hairline--top house-status" v-else>
         <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
           <!-- <div class="open-btn" @click="openHandler">开通({{info.subscribePrice}}元/天起)</div> -->
           <div class="open-btn" @click="openHandler">开通楼盘</div>
@@ -605,6 +621,16 @@ export default {
     }
   },
   methods: {
+    // 新商业模式开通楼盘
+    newOpenLinker () {
+      marketService.newOpenLinker({linkerId: this.id}).then(res => {
+        this.getDetailInfo(this.id)
+        this.$toast({
+          duration: 2000,
+          message: '已添加成功，请到我的楼盘查看'
+        })
+      }).catch(()=>{})
+    },
     commitQuestion() {
       this.$router.push({ name: 'market-asking-ask', params: { id: this.id }, query: { linkerName: this.linkerName } })
     },
@@ -1914,6 +1940,26 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
       }
+    }
+    .no-vip,.off-vip,.sale-vip{
+      font-size: 14px;
+      height:44px;
+      margin: 14px 16px;
+      line-height: 44px;
+      border-radius:6px;
+      text-align: center;
+    }
+    .no-vip{
+      background:linear-gradient(227deg,rgba(193,158,101,1) 0%,rgba(193,158,101,1) 100%);
+      color: rgba(115, 69, 0, 1);
+    }
+    .off-vip{
+      background:rgba(64,68,87,1);
+      color: #fff;
+    }
+    .sale-vip{
+      background-color: rgba(204, 204, 204, 1);
+      color: #fff;
     }
   }
   .house-poster{

@@ -1,11 +1,11 @@
 <template>
   <div class=" estate-item" :class="itemBorder&&'van-hairline--bottom'" :style="{paddingBottom:(info&&info.divisionRules)&&'15px'}">
-    <div class="main-continer" @click="mainAreaClickHandler">
+    <div class="main-continer" @click="mainAreaClickHandler" v-if="info">
       <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
         <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
       </div>
       <div class="right-box">
-        <h5 class="estate-name">{{info&&info.linkerName}}</h5>
+        <h5 class="estate-name"><span class="free" v-if="+info.isFree">免费</span>{{info&&info.linkerName}}</h5>
         <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
         <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
         <div class="estate-info">
@@ -95,6 +95,19 @@ export default {
         font-weight: 600;
         color: #333333;
         padding-bottom: 8px;
+        .free{
+          font-size: 10px;
+          width:28px;
+          height:15px;
+          text-align: center;
+          line-height: 15px;
+          background:rgba(234,77,46,1);
+          border-radius:2px;
+          color: #fff;
+          margin-right: 2px;
+          vertical-align: middle;
+          padding: 0 5px;
+        }
       }
       > .estate-location {
         font-size: 12px;
