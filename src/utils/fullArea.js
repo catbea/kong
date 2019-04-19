@@ -51,6 +51,7 @@ const getChildren = (feature, type = 'name') => {
 
 const fullArea = {
   province_list: {
+    '000000': '全国',
     '110000': '北京市',
     '120000': '天津市',
     '130000': '河北省',
