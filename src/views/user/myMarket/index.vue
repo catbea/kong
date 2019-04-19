@@ -793,6 +793,7 @@ export default {
         color: #fff;
         border-radius: 8px;
         font-size: 10px;
+        margin-left: -6px;
       }
     }
   }
