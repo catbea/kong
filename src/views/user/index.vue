@@ -326,6 +326,7 @@ export default {
     }
   }
   .modify-childs {
+    background: #fff;
     display: flex;
     flex-direction: row;
     .head-imgs {
