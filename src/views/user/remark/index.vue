@@ -15,6 +15,7 @@
                                 <swiper-slide
                                 v-for="(a,index) in item.list"
                                 class="swiper-slide"
+                                :key="index"
                                 > 
                                     <div>
                                         <img :src="a.imgUrl" alt=""  style="height:60px;margin-top:12px;margin-bottom:0px;width:80px;border-radius:6px;" @click.stop="houseTypeHandle(a.imgUrl)">   
