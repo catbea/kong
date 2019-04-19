@@ -43,6 +43,9 @@
         <div class="city-index">
           <!-- <mt-index-list :height="mtIndexHeight"> -->
           <mt-index-list>
+            <mt-index-section index="">
+              <mt-cell title="全国" @click.native="chooseItem('全国',2)"></mt-cell>
+            </mt-index-section>
             <mt-index-section index="热" v-if="category===0">
               <mt-cell :title="item.city" v-for="(item,i) in cityListData.hotCityList" :key="i" @click.native="chooseItem(item.city,2)"></mt-cell>
             </mt-index-section>
