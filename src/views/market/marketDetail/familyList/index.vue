@@ -275,7 +275,7 @@ export default {
     }
     .custom-indicator{
       height: 20px;
-      margin: 20px 20px 30px;
+      margin: 10px 20px 40px;
       text-align: center;
       font-size:16px;
       color:rgba(51,51,51,1);

@@ -2,7 +2,7 @@
     <div class="remark_pages">
         <div class="pages_content" v-if="remarkData!=false" @mousewheel="imgScroll" @touchmove="imgScroll">
             <ul class="cart-list">
-                <li class="list-item" v-for="(item,index) in remarkData " data-type="0">
+                <li class="list-item" v-for="(item,index) in remarkData " data-type="0" :key="index">
                     <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
                         <div class="details">
                             <div class="details_title">

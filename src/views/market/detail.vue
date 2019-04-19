@@ -843,6 +843,7 @@ export default {
       // data.push(n)
       // this.$router.push({ name: 'Preview-Picture', query: { arr: data }})
       this.instance = ImagePreview({
+        loop: false,
         images: data,
         startPosition: num
       })
@@ -2158,6 +2159,18 @@ export default {
 </style>
 
 <style lang="less">
+.van-image-preview__image{
+  max-height: 90%!important;
+  max-width: 90%!important;
+}
+.van-image-preview__index{
+  top: 20px;
+  color: #000;
+}
+.van-image-preview__overlay{
+  background-color: rgba(255,255,255,1);
+}
+
 .house-circum {
   .van-tab--active {
     color: #007ae6;
