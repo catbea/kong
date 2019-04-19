@@ -1,6 +1,6 @@
 <template>
     <div class="question_pages">
-        <div class="pages_content" v-if="questionData" @mousewheel="imgScroll" @touchmove="imgScroll"> 
+        <div class="pages_content" v-if="questionData!=false" @mousewheel="imgScroll" @touchmove="imgScroll"> 
             <ul class="cart-list">
                 <li class="list-item" v-for="(item,index) in questionData " data-type="0">
                     <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
