@@ -12,7 +12,7 @@
                     
               </div>
               <ul class="family-list-page-box-center">
-                <li>{{itemA.householdDesc || ''}}</li>
+                <li>{{itemA.householdDesc}}</li>
                 <li v-if="itemA.orientations=='暂无信息'">建面 {{itemA.area}} 暂无朝向信息</li>
                 <li v-else>建面 {{itemA.area}} {{itemA.orientations}}朝向</li>
                 <li>
@@ -34,7 +34,7 @@
     </div>
     
       <div class="img-preview" v-if="showPreview" @click="hidePreview">
-        <div class="title">{{imgData.householdDesc || ''}}</div>
+        <div class="title">{{imgData.householdDesc}}</div>
         <div class="img-box">
           <van-swipe @change="onChange" :initial-swipe="current" :loop="false" :show-indicators="false">
             <van-swipe-item v-for="(item,index) in imgList" :key="index">
@@ -99,11 +99,15 @@ export default {
       return imgs
     },
     imgData() {
+      let data = {}
       if(this.tabs.length){
-        return this.tabs.length && this.tabs[0].cpHouseTypeDetail[this.current]
-      } else {
-        return {}
+        this.tabs.length && this.tabs[0].cpHouseTypeDetail.forEach(item => {
+          if(item.imgUrlList.indexOf(this.imgList[this.current]) > -1) {
+            data = item
+          }
+        })
       }
+      return data
     }
   },
   beforeRouteLeave(to, from, next) {
