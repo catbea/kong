@@ -1,15 +1,15 @@
 <template>
     <div class="answers_pages">
-        <div class="pages_content" v-if="answersData">
+        <div class="pages_content" v-if="answersData!=false" @mousewheel="imgScroll" @touchmove="imgScroll">
             <ul class="cart-list">
-                <li class="list-item" v-for="(item,index) in list " data-type="0">
+                <li class="list-item" v-for="(item,index) in answersData " data-type="0">
                     <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
                         <div class="details">
-                            <p><img src="../../../src/assets/img/user/GroupCopy@2x.png" alt=""></p>
-                            <p>{{item.title}}</p>
+                            <p>问</p>
+                            <p>{{item.content}}</p> 
                         </div>
                     </div>
-                    <div class="delete" @click="deleteItem" :data-index="index">删除</div>
+                    <div class="delete" @click="deleteItem(item.interlocutionId,index)" :data-index="index">删除</div>
                 </li>
             </ul> 
         </div>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import marketService from 'SERVICE/marketService'
 export default {
     props: {
         answersData: { type: Array }, 
@@ -29,16 +30,13 @@ export default {
         return { 
             startX : 0 ,
             endX : 0 ,
-            list: [
-                {title:"#满京华#满京华云楼盘现在还有什么户型在卖啊？周边配套怎样，有幼儿园么？"},
-                {title:"nininini"},
-                {title:"nininini"},
-                {title:"nininini"},
-                {title:"nininini"},
-            ]
+            list: []
         }
     },
     methods : { 
+        imgScroll() {
+            this.restSlide();   
+        },
         calc(item, minusOrPlus,index) {
             if (minusOrPlus === 1) {
                 item.num++;
@@ -94,17 +92,20 @@ export default {
             }
         },
         //删除
-        deleteItem(e){
+        deleteItem(item,index){
             // 当前索引
-            let index = e.currentTarget.dataset.index; 
+            // let index = e.currentTarget.dataset.index; 
             this.$dialog.confirm({
                 title: '确认删除该提问？', 
                 message:"删除该提问后，提问下面的相关回答都会被删除哦"
             }).then(() => { 
-                // 复位
-                this.restSlide();
-                // 删除
-                this.list.splice(index,1); 
+                marketService.getqueryDelete({interlocutionId:item})
+                .then ((result) => {
+                    // 复位
+                    this.restSlide();
+                    // 删除
+                    this.answersData.splice(index,1);
+                })   
             }).catch(() => { 
                 this.restSlide(); 
             }) 
@@ -154,9 +155,15 @@ export default {
                     flex: 1;
                     display: inline-flex;
                     vertical-align: top;
-                    p:nth-child(1) img {
-                        width: 22px;
-                        height: 22px;
+                    p:nth-child(1){
+                        width:22px;
+                        height:22px;
+                        background:rgba(235,108,82,1);
+                        border-radius:6px;
+                        color: #fff;
+                        text-align: center;
+                        line-height: 22px;
+                        margin-right: 5px;
                     } 
                     p:nth-child(2) {
                         margin-left: 1px; 

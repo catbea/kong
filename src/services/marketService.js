@@ -545,5 +545,35 @@ class MarketService {
       body: data
     })
   }
+  //我的点评列表--陈嘉鹏
+  getlinkerList(data) {
+    return xhr({
+      url: '/linkerComment/userList',
+      body: data
+    })
+  }
+  //我的评论删除--陈嘉鹏
+  getdelComment(data) {
+    return xhr({
+      url: '/linkerComment/delComment',
+      method: 'post',
+      body: data
+    })
+  }
+  //我的问答 个人中心-我的问答列表 -- v3.0.9--陈嘉鹏
+  getqueryMyList(data) {
+    return xhr({
+      url: '/linkerInterlocution/queryMyList',
+      body: data
+    })
+  }
+  //我的问答 个人中心-我的问答列表删除 -- v3.0.9--陈嘉鹏
+  getqueryDelete(data) {
+    return xhr({
+      url: '/linkerInterlocution/delete',
+      method:'post',
+      body: data
+    })
+  }
 }
 export default new MarketService()
