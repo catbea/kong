@@ -1,8 +1,8 @@
 <template>
     <div class="main_pages">
-        <div class="pges_content">
+        <div class="pges_content" @mousewheel="isShow" @touchmove="isShow">
             <div class="pages_tabs"> 
-                <van-tabs v-model="active" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated title-active-color="#007AE6" @click="getanswersList(active)">
+                <van-tabs v-model="active" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated title-active-color="#007AE6" @click="getanswersList(active,current)">
                     <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName"></van-tab>
                 </van-tabs>
             </div>
@@ -42,26 +42,40 @@ export default {
             questionData:[],
             answersData:[],
             loading: false,
-            typeId :""
+            typeId :"",
+            current:1,
+            page :""
         }
     },
     mounted () {
-        this.getanswersList(0);
+        this.getanswersList(0,1);
     },
     methods : {
-        getanswersList (data) { 
+        isShow () {  
+            if (this.page > this.current) { 
+                this.current = this.current + 1; 
+                this.getanswersList(this.active,this.current);
+            } 
+        },
+        getanswersList (data,current) {   
             this.active = data
+            this.current = current
             if (this.active ==  0) {
                 this.typeId = 2
             }else{
                 this.typeId = 1
             }
-            marketService.getqueryMyList({interlocutionType:this.typeId
-            }).then((result) => {
+            marketService.getqueryMyList({interlocutionType:this.typeId,current:this.current,size:20
+            }).then((result) => { 
+                this.page = result.pages
                 if (this.typeId == 2) {
-                    this.questionData = result.records  
+                    // this.questionData = result.records  
+                    this.questionData = this.questionData.concat(result.records)
+                    console.log(this.questionData)
                 }else {
-                    this.answersData = result.records  
+                    // this.answersData = result.records  
+                    this.answersData = this.answersData.concat(result.records)
+                    console.log(this.answersData)
                 }
             }).catch((err) => {
                 console.log(err)

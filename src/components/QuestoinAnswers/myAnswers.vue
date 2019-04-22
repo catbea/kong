@@ -6,7 +6,7 @@
                     <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
                         <div class="details">
                             <div class="line_logo">问</div>
-                            <p>{{item.content}}</p> 
+                            <div class="line_right">{{item.content}}</div> 
                         </div>
                     </div>
                     <div class="delete" @click="deleteItem(item.interlocutionId,index)" :data-index="index">
@@ -159,7 +159,7 @@ export default {
                     display: inline-flex;
                     vertical-align: top;
                     .line_logo {
-                        width:22px;
+                        width:22px !important;
                         height:22px;
                         background:rgba(235,108,82,1);
                         border-radius:6px;
@@ -168,7 +168,7 @@ export default {
                         line-height: 22px;
                         margin-right: 5px;
                     } 
-                    p:nth-child(2) {
+                    .line_right {
                         margin-left: 1px; 
                         font-size:16px;
                         font-family:PingFangSC-Regular;
