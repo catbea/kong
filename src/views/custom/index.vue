@@ -118,7 +118,7 @@ export default {
     goactivitDetaily() {
       this.$router.push('/custom/message/activityDetail')
     },
-    onSearchHandler() {
+    onSearchHandler() { 
       this.currentData.page = 1
       this.onLoad()
     },

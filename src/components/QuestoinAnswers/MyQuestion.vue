@@ -8,7 +8,9 @@
                             {{item.content}}
                         </div>
                     </div>
-                    <div class="delete" @click="deleteItem(item.interlocutionId,index)" :data-index="index">删除</div>
+                    <div class="delete" @click="deleteItem(item.interlocutionId,index)" :data-index="index">
+                        <p>删除</p>
+                    </div>
                 </li>
             </ul> 
         </div> 
@@ -133,15 +135,17 @@ export default {
                 padding: 0 16px;
                 .delete{
                     width: 80px;
-                    height: 102px; 
+                    height: 100%; 
                     background: #EA4D2E;
                     font-size: 16px;
                     line-height: 102px;
-                    color: #fff;
-                    text-align: center;
+                    color: #fff; 
                     position: absolute;
                     top:0;
                     right: -80px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
             .list-item[data-type="0"]{
@@ -151,7 +155,7 @@ export default {
                 transform: translate3d(-80px,0,0);
             }
             .list-box{
-                height: 102px;
+                height: 100%;
                 padding: 20px 0;
                 background: #fff;
                 display: flex;
