@@ -236,7 +236,7 @@
           </div>
           <div class="right-body">
             <div class="aa">{{evaluatingInfo&&evaluatingInfo.title}}</div>
-            <div class="bb">{{evaluatingInfo&&evaluatingInfo.content}}</div>
+            <div class="bb">{{evaluatingInfo&&evaluatingInfo.abstrac}}</div>
             <!-- <div class="bb" v-html='evaluatingInfo&&evaluatingInfo.content'></div>  -->
           </div>
         </div>
