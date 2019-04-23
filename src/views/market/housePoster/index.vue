@@ -135,7 +135,7 @@ export default {
           height: 76px;
           border-radius: 6px;
           margin: 0 16px 16px 0;
-          &:nth-child(3){
+          &:nth-child(3n+3){
             margin-right: 0;
           }
         }
