@@ -234,6 +234,8 @@ export default {
             data.marketList.forEach(el => {
               if(el.linkerId === this.linkerId) {
                 el.openStatus = 2
+                el.expireDate = this.projectInfo.expireDate,
+                el.expireTime = this.projectInfo.expireTime
               }
             })
             window.sessionStorage.setItem('marketList',JSON.stringify(data))
@@ -261,7 +263,9 @@ export default {
         openTimes: res.openTimes,
         sale: res.sale,
         commission: res.commission,
-        saleStatus: res.saleStatus
+        saleStatus: res.saleStatus,
+        expireTime: res.expireTime,
+        expireDate: res.expireDate
       }
       this.$store.commit(types.SET_MARKET_OPEN_CACHE, Object.assign(this.marketOpenCache, { linkerId: this.linkerId, projectInfo: this.projectInfo }))
     },
