@@ -76,8 +76,7 @@ export default {
     containerHeight: '0',
     vipInfo: {},
     historyCity: '',
-    scrollTop: 0,
-    changeCity: false
+    scrollTop: 0
   }),
   watch: {
     projectFilters: {
@@ -107,7 +106,7 @@ export default {
     this.getBrokerInfo()
     await this.hotMarketHandle()
     let markList = window.sessionStorage.getItem('marketList')
-    if (markList && !this.changeCity) {
+    if (markList) {
       let item = JSON.parse(markList)
       this.loading = item.loading
       this.finished = item.finished
@@ -123,7 +122,7 @@ export default {
   methods: {
     touchmove() {},
     async getProjectList() {
-      if ( window.sessionStorage.getItem('marketList') && !this.changeCity) {
+      if ( window.sessionStorage.getItem('marketList')) {
         return this.loading = false
       }
       let param = { current: this.page, size: this.pageSize }
@@ -228,24 +227,22 @@ export default {
       this.vipInfo = res
     }
   },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      vm.changeCity = (from.path === '/public/city-list')
-    })
-  },
   beforeRouteLeave (to, from, next) {
-    this.scrollTop = document.querySelector('.router-view').scrollTop
+    this.scrollTop = document.querySelector('.router-view').scrollTop;
+    if (to.name === 'market-detail') {
+      let data = {
+        loading: this.loading,
+        finished: this.finished,
+        marketList: this.marketList,
+        scrollTop: this.scrollTop,
+        page: this.page
+      }
+      window.sessionStorage.setItem('marketList',JSON.stringify(data))
+    }
     next()
   },
   beforeDestroy () {
-    let data = {
-      loading: this.loading,
-      finished: this.finished,
-      marketList: this.marketList,
-      scrollTop: this.scrollTop,
-      page: this.page
-    }
-    window.sessionStorage.setItem('marketList',JSON.stringify(data))
+    
   }
 }
 </script>

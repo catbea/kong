@@ -5,11 +5,13 @@
                 <li class="list-item" v-for="(item,index) in answersData " data-type="0">
                     <div class="list-box" @touchstart.capture="touchStart" @touchend.capture="touchEnd" @click="skip">
                         <div class="details">
-                            <p>问</p>
-                            <p>{{item.content}}</p> 
+                            <div class="line_logo">问</div>
+                            <div class="line_right">{{item.content}}</div> 
                         </div>
                     </div>
-                    <div class="delete" @click="deleteItem(item.interlocutionId,index)" :data-index="index">删除</div>
+                    <div class="delete" @click="deleteItem(item.interlocutionId,index)" :data-index="index">
+                        <p>删除</p>
+                    </div>
                 </li>
             </ul> 
         </div>
@@ -127,15 +129,16 @@ export default {
                 padding: 0 16px;
                 .delete{
                     width: 80px;
-                    height: 76px; 
+                    height: 100%; 
                     background: #EA4D2E;
-                    font-size: 16px;
-                    line-height: 76px;
-                    color: #fff;
-                    text-align: center;
+                    font-size: 16px; 
+                    color: #fff; 
                     position: absolute;
                     top:0;
                     right: -80px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
             .list-item[data-type="0"]{
@@ -145,7 +148,7 @@ export default {
                 transform: translate3d(-80px,0,0);
             }
             .list-box{
-                height: 76px;
+                height: 100%;
                 padding: 20px 0;
                 background: #fff;
                 display: flex;
@@ -155,8 +158,8 @@ export default {
                     flex: 1;
                     display: inline-flex;
                     vertical-align: top;
-                    p:nth-child(1){
-                        width:22px;
+                    .line_logo {
+                        width:22px !important;
                         height:22px;
                         background:rgba(235,108,82,1);
                         border-radius:6px;
@@ -165,7 +168,7 @@ export default {
                         line-height: 22px;
                         margin-right: 5px;
                     } 
-                    p:nth-child(2) {
+                    .line_right {
                         margin-left: 1px; 
                         font-size:16px;
                         font-family:PingFangSC-Regular;

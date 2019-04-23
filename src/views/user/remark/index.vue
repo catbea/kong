@@ -59,25 +59,31 @@ export default {
                 slidesPerView: 2,
                 // spaceBetween: 12
             },  
+            current:1,
+            page:""
         }
     },   
     mounted () { 
         this.getList();  
-        window.addEventListener('scroll',this.hide)
+        window.addEventListener('scroll',this.hide);
     },
     methods : { 
-        imgScroll() {
-            this.restSlide();   
+        imgScroll() { 
+            this.restSlide();  
+            if (this.page > this.current) { 
+                this.current = this.current + 1;
+                this.getList(this.current);
+            } 
         },
         houseTypeHandle(n) {
         //查看户型图片预览
-        let data = []
-        data.push(n) 
-        this.instance = ImagePreview({
-            images: data,
-            startPosition: 0,
-            showIndex:false
-        })
+            let data = []
+            data.push(n) 
+            this.instance = ImagePreview({
+                images: data,
+                startPosition: 0,
+                showIndex:false
+            })
         },
         async getDetailInfo(id) {
             const res = await marketService.getLinkerDetail(id)
@@ -159,10 +165,16 @@ export default {
                 this.restSlide(); 
             }) 
         } ,
-        getList (index) {
-            marketService.getlinkerList({
-            }).then((result) => {
-                this.remarkData = result.records  
+        getList (index) { 
+            marketService.getlinkerList({current:this.current
+            }).then((result) => { 
+                this.page = result.pages
+                if (result.pages > 1) {
+                    this.remarkData = this.remarkData.concat(result.records)  
+                }else {
+                    this.remarkData = result.records
+                }
+                console.log(this.remarkData)
             }).catch((err) => {
                 console.log(err)
             })

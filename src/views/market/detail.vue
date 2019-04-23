@@ -629,7 +629,19 @@ export default {
           duration: 2000,
           message: '已添加成功，请到我的楼盘查看'
         })
+        this.changeCacheStatus()
       }).catch(()=>{})
+    },
+    // 改变缓存数据状态
+    changeCacheStatus () {
+      let data = JSON.parse(window.sessionStorage.getItem('marketList'))
+      data.marketList.forEach(el => {
+        if(el.linkerId === this.id) {
+          el.openStatus = 2
+        }
+      })
+      debugger
+      window.sessionStorage.setItem('marketList',JSON.stringify(data))
     },
     commitQuestion() {
       this.$router.push({ name: 'market-asking-ask', params: { id: this.id }, query: { linkerName: this.linkerName } })

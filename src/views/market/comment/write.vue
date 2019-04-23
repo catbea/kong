@@ -366,6 +366,7 @@ export default {
     flex: 1;
     overflow-y: scroll;
     margin: 16px 16px 0;
+    overflow-x: hidden;
     .house{
       h3{
         font-size: 24px;
