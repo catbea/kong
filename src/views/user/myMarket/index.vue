@@ -311,6 +311,9 @@ export default {
           this.freeContent.siteText = this.selectedCity || '全国'
         }
       }
+      if (val === 1) {
+        this.showGetMyMarketInfo()
+      }
       this.active = val
     },
     // 楼盘详情
