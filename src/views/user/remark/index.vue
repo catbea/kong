@@ -18,7 +18,7 @@
                                 :key="index"
                                 > 
                                     <div>
-                                        <img :src="a.imgUrl" alt=""  style="height:60px;margin-top:12px;margin-bottom:0px;width:80px;border-radius:6px;" @click.stop="houseTypeHandle(a.imgUrl)">   
+                                        <img :src="a.imgUrl" alt=""  style="height:60px;margin-top:12px;margin-bottom:0px;width:80px;border-radius:6px;" @click.stop="houseTypeHandle(item.list,index)">   
                                     </div>
                                 </swiper-slide>
                             </swiper>
@@ -56,11 +56,12 @@ export default {
             remarkData: [],
             img:[],
             swiperOption: {
-                slidesPerView: 2,
+                slidesPerView: 'auto',
                 // spaceBetween: 12
             },  
             current:1,
-            page:""
+            page:"",
+            arr:null
         }
     },   
     mounted () { 
@@ -75,14 +76,18 @@ export default {
                 this.getList(this.current);
             } 
         },
-        houseTypeHandle(n) {
+        houseTypeHandle(a,index) {
         //查看户型图片预览
-            let data = []
-            data.push(n) 
+            this.arr = [] 
+            for (let i = 0;i<a.length;i++) {
+                const url = a[i].imgUrl
+                this.arr.push(url)
+            } 
+            debugger
             this.instance = ImagePreview({
-                images: data,
+                images: this.arr,
                 startPosition: 0,
-                showIndex:false
+                showIndex:true
             })
         },
         async getDetailInfo(id) {
