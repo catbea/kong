@@ -950,7 +950,10 @@ export default {
         let year = time.getFullYear()
         let mou = time.getMonth() + 1
         let date = time.getDate()
-        this.info.expireTime = `0${mou}/0${date}`
+        mou = mou < 10 ? ('0' + mou) : mou
+        date = date < 10 ? ('0' + date) :date
+        this.info.expireTime = `${mou}/${date}`
+        this.info.openStatus = 2
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId } })
       }

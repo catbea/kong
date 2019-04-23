@@ -228,6 +228,16 @@ export default {
           className: 'success-hint'
         })
         .then(() => {
+          // 改变缓存数据状态
+          if (window.sessionStorage.getItem('marketList')) {
+            let data = JSON.parse(window.sessionStorage.getItem('marketList'))
+            data.marketList.forEach(el => {
+              if(el.linkerId === this.linkerId) {
+                el.openStatus = 2
+              }
+            })
+            window.sessionStorage.setItem('marketList',JSON.stringify(data))
+          }
           this.$router.replace('/market/' + this.linkerId)
         })
         .catch(async () => {
