@@ -165,17 +165,17 @@ export default {
       }
     },
    async renewHandle(n) {
-      if (this.renewInfo.thisDistributor === false) {
-        this.$dialog
-          .alert({
-            message: '该楼盘不可续费非当前所属公司下楼盘无法开通续费',
-            confirmButtonText: '知道啦'
-          })
-          .then(() => {
-            // on close
-          })
+      // if (this.renewInfo.thisDistributor === false) {
+      //   this.$dialog
+      //     .alert({
+      //       message: '该楼盘不可续费，非当前所属公司下楼盘无法开通续费',
+      //       confirmButtonText: '知道啦'
+      //     })
+      //     .then(() => {
+      //       // on close
+      //     })
           
-      } else {
+      // } else {
         // let invalidTime = +new Date(this.renewInfo.expireTime.replace(/-/g,'/'))// 楼盘到期时间
         let invalidTime = this.renewInfo.expireDate-0// 含时分秒的楼盘到期时间
         let expireTimestamp = this.vipInfo.expireTimestamp-0 // vip到期时间
@@ -189,13 +189,15 @@ export default {
           let year =time.getFullYear();
           let mou = time.getMonth() + 1
           let date = time.getDate()
-          this.renewInfo.expireTime = `0${mou}/0${date}`
+          mou = mou < 10 ? ('0' + mou) : mou
+          date = date < 10 ? ('0' + date) : date
+          this.renewInfo.expireTime = `${mou}/${date}`
           // this.info.expireTime = this.vipInfo.expireDate.substring(0,9)
           this.renewInfo.openStatus = 2
       }else{
         this.$router.push({ name: 'marketDetail-open', params: { id: n } })
       }
-    }
+    // }
   }
 }
 }
