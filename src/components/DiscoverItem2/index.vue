@@ -8,7 +8,7 @@
       </div>
       <ul>
         <li>
-          <div>{{data.linkerName}}</div>
+          <div><span class="free" v-if="+data.isFree">免费</span>{{data.linkerName}}</div>
         </li>
         <li>{{data.site}}</li>
         <li>
@@ -91,7 +91,7 @@ export default {
     .icon-check {
       flex: 0 0 18px;
       font-size: 18px;
-      margin: 0 16px;
+      margin: 0 10px 0 16px;
       &.icon-chat_register_rb_s {
         color: #2f7bdf;
       }
@@ -129,6 +129,7 @@ export default {
       }
     }
     ul {
+      flex: 1;
       width: 181px;
       li:nth-of-type(1) {
         height: 20px;
@@ -194,6 +195,21 @@ export default {
         margin-top: 12px;
         display: flex;
         justify-content: space-between;
+      }
+      .free{
+        font-size: 10px;
+        width:28px;
+        height:15px;
+        text-align: center;
+        line-height: 15px;
+        background:rgba(234,77,46,1);
+        border-radius:2px;
+        color: #fff;
+        border-radius: 2px;
+        margin-right: 2px;
+        margin-top: 1px;
+        vertical-align: middle;
+        padding: 0 1px;
       }
     }
   }

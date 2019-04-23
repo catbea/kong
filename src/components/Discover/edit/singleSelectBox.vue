@@ -146,7 +146,8 @@ export default {
           disabled: false,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`,
-          buildArea: item.minArea !== '' && item.maxArea !== '' ? `${item.minArea}-${item.maxArea}㎡` : ''
+          buildArea: item.minArea !== '' && item.maxArea !== '' ? `${item.minArea}-${item.maxArea}㎡` : '',
+          isFree: item.isFree || 0
         }
         // if (!obj.city) obj.city = obj.site
         // if (!obj.linkerTags) {
