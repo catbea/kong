@@ -23,7 +23,7 @@
             accept="image/*"
             class="portrait-select-input"
           >
-          <span class="portrait-select-add">+</span>
+          <span class="portrait-select-add"><van-icon name="plus" /></span>
           <!-- <img :src="userIcon" class="portrait-select-Icon" /> -->
           <!-- <div class="portrait-select-add">本地相册</div> -->
         </div>
@@ -196,11 +196,13 @@ export default {
         height: 48px;
       }
       .portrait-select-add {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        font-size: 44px;
+        text-align: center;
+        width: 100%;
+        font-size: 30px;
         color: rgba(177, 194, 222, 1);
+        i{
+          margin: 15px;
+        }
       }
     }
   }
