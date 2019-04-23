@@ -157,6 +157,7 @@ export default {
                 .details{
                     flex: 1;
                     display: inline-flex;
+                    display: -webkit-inline-box;
                     vertical-align: top;
                     .line_logo {
                         width:22px !important;
@@ -169,12 +170,13 @@ export default {
                         margin-right: 5px;
                     } 
                     .line_right {
-                        margin-left: 1px; 
+                        margin-left: 10px; 
                         font-size:16px;
                         font-family:PingFangSC-Regular;
                         font-weight:400;
                         color:rgba(51,51,51,1);
                         line-height:22px;
+                        padding-right: 25px;
                     }
                 }
             }

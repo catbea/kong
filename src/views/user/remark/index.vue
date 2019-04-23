@@ -82,8 +82,7 @@ export default {
             for (let i = 0;i<a.length;i++) {
                 const url = a[i].imgUrl
                 this.arr.push(url)
-            } 
-            debugger
+            }  
             this.instance = ImagePreview({
                 images: this.arr,
                 startPosition: 0,
