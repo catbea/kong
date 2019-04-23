@@ -184,12 +184,12 @@ export default {
     freeOpenHandle () {
       marketService.newOpenLinker({linkerId: this.itemInfo.linkerId}).then(res => {
         this.itemInfo.openStatus = 2
-        let time = new Date(+this.vipInfo.expireTimestamp)
-        let year = time.getFullYear()
-        let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-        let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-        this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
-        this.itemInfo['invalidTime'] = this.vipInfo.expireDate
+        // let time = new Date(+this.vipInfo.expireTimestamp)
+        // let year = time.getFullYear()
+        // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
+        // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+        // this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
+        // this.itemInfo['invalidTime'] = this.vipInfo.expireDate
         this.dredgeColor()
         this.$toast({
           duration: 1000,
