@@ -640,7 +640,6 @@ export default {
           el.openStatus = 2
         }
       })
-      debugger
       window.sessionStorage.setItem('marketList',JSON.stringify(data))
     },
     commitQuestion() {
@@ -662,10 +661,10 @@ export default {
     getPosterList () {
       marketService.getPosterList({linkerId: this.id}).then((result) => {
         this.posterConf.link = `/market/activity/poster/${this.id}`
-        if (result&&result.length) {
+        if (result.records&&result.records.length) {
             let arr = []
             let num = 0
-            result.forEach(ele => {
+            result.records.forEach(ele => {
               num += ele.posterList.length
               arr.push(...ele.posterList)
             })
@@ -1994,12 +1993,14 @@ export default {
           left: 10px;
           bottom: 10px;
           text-shadow: 0 1px 2px #000;
+          width: 100%;
           h3{
             color: #fff;
             font-size: 18px;
             overflow:hidden;
             text-overflow:ellipsis;
             white-space:nowrap;
+            margin-right: 10px;
           }
           .time{
             font-weight:400;

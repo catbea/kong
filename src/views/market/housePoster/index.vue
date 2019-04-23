@@ -64,8 +64,8 @@ export default {
     // 获取海报
     getPosterList () {
       marketService.getPosterList({linkerId: this.marketId}).then((result) => {
-        if (result&&result.length) {
-          this.posterList = result
+        if (result.records&&result.records.length) {
+          this.posterList = result.records
         }
       }).catch((err) => {
         console.log(err)
