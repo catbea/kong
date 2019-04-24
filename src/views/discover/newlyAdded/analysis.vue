@@ -334,14 +334,14 @@ export default {
   }
   .popup-view2{
     width: 311px;
-    height: 443px;
+    height: 380px;
     background: #ffffff;
     border-radius: 12px;
     position: absolute;
     font-size: 14px;
     .err-icon{
       text-align: center;
-      margin: 40px auto 15px;
+      margin: 30px auto 15px;
     }
     .closePopup {
       position: absolute;
