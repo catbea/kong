@@ -235,7 +235,8 @@ export default {
               if(el.linkerId === this.linkerId) {
                 el.openStatus = 2
                 el.expireDate = this.projectInfo.expireDate,
-                el.expireTime = this.projectInfo.expireTime
+                el.expireTime = this.projectInfo.expireTime,
+                el.invalidTimeStr = this.projectInfo.expireTime
               }
             })
             window.sessionStorage.setItem('marketList',JSON.stringify(data))
