@@ -153,6 +153,8 @@ export default {
       flex: 1;
       display: flex;
       align-items: center;
+      justify-content: center;
+      overflow: hidden;
       .van-swipe{
         flex: 1;
       }

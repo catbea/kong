@@ -61,7 +61,8 @@
       :close-on-click-overlay="false"
     > 
       <div class="err-icon">
-        <van-icon name="clear" color="#f98435" size="58px"/>
+        <img src="../../../assets/img/discover/error.png" alt="">
+        <!-- <van-icon name="clear" color="#f98435" size="58px"/> -->
       </div>
       <img class="closePopup" @click="closeDefaultMsg2" :src="closeImg">
       <p class="title">解析失败</p>
@@ -334,7 +335,7 @@ export default {
   }
   .popup-view2{
     width: 311px;
-    height: 380px;
+    height: 400px;
     background: #ffffff;
     border-radius: 12px;
     position: absolute;
@@ -342,12 +343,16 @@ export default {
     .err-icon{
       text-align: center;
       margin: 30px auto 15px;
+      img{
+        width: 58px;
+        height: 79px;
+      }
     }
     .closePopup {
       position: absolute;
       width: 20px;
       height: 20px;
-      right: 20px;
+      right: 16px;
       top: 16px;
     }
     .title{
