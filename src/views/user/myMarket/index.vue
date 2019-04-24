@@ -218,6 +218,9 @@ export default {
     freeMarketList: []
   }),
   async created() {
+    if (window.sessionStorage.getItem('myMarketTab-active')) {
+      this.active = +window.sessionStorage.getItem('myMarketTab-active')
+    }
     if(window.sessionStorage.getItem('myMarketTab')) {
       this.active = +window.sessionStorage.getItem('myMarketTab');
       this.selectedCity = this.userArea.myMarketFreeCity || ''
@@ -750,6 +753,7 @@ export default {
     }
   },
   beforeDestroy() {
+    window.sessionStorage.setItem('myMarketTab-active', this.active)
     try {
       document.querySelector('.router-view').removeEventListener('scroll')
     } catch (error) {}
