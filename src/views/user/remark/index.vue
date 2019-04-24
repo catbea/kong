@@ -85,7 +85,7 @@ export default {
             }  
             this.instance = ImagePreview({
                 images: this.arr,
-                startPosition: 0,
+                startPosition: index,
                 showIndex:true
             })
         },
