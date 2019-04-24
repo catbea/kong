@@ -238,6 +238,7 @@ export default {
                 el.expireTime = this.projectInfo.expireTime,
                 el.invalidTimeStr = this.projectInfo.expireTime,
                 el.openTimes += 1
+                el.openStatus = 2
               }
             })
             window.sessionStorage.setItem('marketList',JSON.stringify(data))

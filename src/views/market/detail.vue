@@ -1273,7 +1273,7 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           margin: 0;
-          width: 130px;
+          width: 150px;
         }
       }
       > .house-info-form {
