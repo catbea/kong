@@ -173,6 +173,7 @@ export default {
           this.itemInfo.invalidTimeStr = `${year}/${mou}/${date}`
           this.itemInfo.invalidTime = this.vipInfo.expireDate
           this.itemInfo.openStatus = 2
+          this.itemInfo.openTimes += 1
           this.status = 2
           this.dredgeColor()
         } else {
@@ -184,6 +185,7 @@ export default {
     freeOpenHandle () {
       marketService.newOpenLinker({linkerId: this.itemInfo.linkerId}).then(res => {
         this.itemInfo.openStatus = 2
+        this.itemInfo.openTimes += 1
         // let time = new Date(+this.vipInfo.expireTimestamp)
         // let year = time.getFullYear()
         // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
@@ -209,6 +211,7 @@ export default {
           }
           this.status = 2
           this.itemInfo.openStatus = 2
+          this.itemInfo.openTimes += 1
           let time = new Date(+this.vipInfo.expireTimestamp)
           let year = time.getFullYear()
           let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
