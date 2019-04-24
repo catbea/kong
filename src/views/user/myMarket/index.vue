@@ -220,6 +220,7 @@ export default {
   async created() {
     if (window.sessionStorage.getItem('myMarketTab-active')) {
       this.active = +window.sessionStorage.getItem('myMarketTab-active')
+      window.sessionStorage.removeItem('myMarketTab-active')
     }
     if(window.sessionStorage.getItem('myMarketTab')) {
       this.active = +window.sessionStorage.getItem('myMarketTab');
