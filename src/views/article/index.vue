@@ -718,15 +718,7 @@ export default {
   },
   beforeDestroy() {
     // 缓存数据
-    // this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
-  },
-  beforeRouteLeave (to, from, next) {
-    if (to.name === 'discover-detail') {
-       this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
-    } else {
-      window.sessionStorage.removeItem('cacheData')
-    }
-    next()
+    this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
   }
 }
 </script>
