@@ -14,7 +14,7 @@
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
     <div class="all-market">
       <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getProjectList">
-        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="borderBottom"></market-describe>
+        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="borderBottom" @updateMarket="updateMarket(index)"></market-describe>
       </van-list>
     </div>
     <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
@@ -121,6 +121,33 @@ export default {
   },
   methods: {
     touchmove() {},
+    // 更新数据
+    updateMarket (index) {
+      let option = this.marketList[index]
+      let current = Math.ceil((index+1) / this.pageSize)
+      let param = { current: current, size: this.pageSize }
+      //组装检索条件
+      let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
+      let _filters = screenFilterHelper(this.projectName, mergeFilters)
+      param = Object.assign(param, _filters)
+      let data = window.localStorage.getItem('marketCity') ? JSON.parse(window.localStorage.getItem('marketCity')) : ''
+      if(data) {
+        if(data.type===1) {
+          param['province'] = data.city
+        } else {
+          param['city'] = data.city
+        }
+      } else {
+        this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
+        param.city = this.selectedCity
+      }
+      marketService.getHouseList(param).then(res => {
+        let item = res.records.filter(el => {
+          return el.linkerId === option.linkerId
+        })
+        this.marketList.splice(index, 1, item[0])
+      }).catch()
+    },
     async getProjectList() {
       if ( window.sessionStorage.getItem('marketList')) {
         return this.loading = false

@@ -166,16 +166,17 @@ export default {
             duration: 1000,
             message: '续费成功！'
           })
-          let time = new Date(+this.vipInfo.expireTimestamp)
-          let year = time.getFullYear()
-          let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-          let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-          this.itemInfo.invalidTimeStr = `${year}/${mou}/${date}`
-          this.itemInfo.invalidTime = this.vipInfo.expireDate
-          this.itemInfo.openStatus = 2
-          this.itemInfo.openTimes += 1
+          // let time = new Date(+this.vipInfo.expireTimestamp)
+          // let year = time.getFullYear()
+          // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
+          // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+          // this.itemInfo.invalidTimeStr = `${year}/${mou}/${date}`
+          // this.itemInfo.invalidTime = this.vipInfo.expireDate
+          // this.itemInfo.openStatus = 2
+          // this.itemInfo.openTimes += 1
           this.status = 2
           this.dredgeColor()
+          this.$emit('updateMarket')
         } else {
           this.openHandle()
         }
@@ -184,20 +185,21 @@ export default {
     // 免费楼盘开通
     freeOpenHandle () {
       marketService.newOpenLinker({linkerId: this.itemInfo.linkerId}).then(res => {
-        this.itemInfo.openStatus = 2
-        this.itemInfo.openTimes += 1
-        let time = new Date(+this.vipInfo.expireTimestamp)
-        let year = time.getFullYear()
-        let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-        let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-        this.itemInfo['invalidTimeStr'] = `${mou}/${date}`
-        this.itemInfo['invalidTime'] = this.vipInfo.expireDate
+        // this.itemInfo.openStatus = 2
+        // this.itemInfo.openTimes += 1
+        // let time = new Date(+this.vipInfo.expireTimestamp)
+        // let year = time.getFullYear()
+        // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
+        // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+        // this.itemInfo['invalidTimeStr'] = `${mou}/${date}`
+        // this.itemInfo['invalidTime'] = this.vipInfo.expireDate
         this.dredgeColor()
         this.$toast({
           duration: 1000,
           message: '已添加成功，请到我的楼盘查看'
         })
         this.$parent.$parent.agentIdInfo++
+        this.$emit('updateMarket')
       }).catch(()=>{})
     },
     async openHandle() {
@@ -210,20 +212,21 @@ export default {
             return
           }
           this.status = 2
-          this.itemInfo.openStatus = 2
-          this.itemInfo.openTimes += 1
-          let time = new Date(+this.vipInfo.expireTimestamp)
-          let year = time.getFullYear()
-          let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-          let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-          this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
-          this.itemInfo['invalidTime'] = this.vipInfo.expireDate
+          // this.itemInfo.openStatus = 2
+          // this.itemInfo.openTimes += 1
+          // let time = new Date(+this.vipInfo.expireTimestamp)
+          // let year = time.getFullYear()
+          // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
+          // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
+          // this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
+          // this.itemInfo['invalidTime'] = this.vipInfo.expireDate
           this.dredgeColor()
           this.$toast({
             duration: 1000,
             message: '已开通成功，请到我的楼盘查看'
           })
           this.$parent.$parent.agentIdInfo++
+          this.$emit('updateMarket')
         } else {
           this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
         }
