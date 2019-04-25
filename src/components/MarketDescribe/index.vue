@@ -21,11 +21,11 @@
               <!-- v-if="+itemInfo.isFree" -->
               <span class="dredge no"  v-if="+itemInfo.isFree && itemInfo.openStatus != 2"  @click.stop="freeConfirmFun">添加</span>
               <span class="dredge add" v-if="+itemInfo.isFree && itemInfo.openStatus == 2">已添加</span>
-              <span class="dredge" :style="style" v-if="!(+itemInfo.isFree)" @click.stop="confirmFun">{{openStatus}}</span>
+              <span class="dredge" :style="style" v-if="!(+itemInfo.isFree) && $route.name!='marketDetail-open'" @click.stop="confirmFun">{{openStatus}}</span>
             </li>
             <li class="site">
               {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
-              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr && $route.path!='/user/myMarket'">{{itemInfo.invalidTimeStr}}到期</span>
+              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
             </li>
             <li class="tag-group-left">
               <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
