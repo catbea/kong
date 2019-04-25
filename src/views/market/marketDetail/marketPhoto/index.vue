@@ -28,7 +28,11 @@ export default {
     show: false,
     templetList: [],
     resultList: [],
-    deployList: []
+    deployList: [],
+    reloadStatus: false,
+    preview: '',
+    inde: 0,
+    listBannerVO: ''
   }),
   components: {
     // FullScreen
@@ -45,20 +49,43 @@ export default {
       this.photoData = res
     },
     previewHandle(listBannerVO, inde) {
+      this.listBannerVO = listBannerVO
+      this.inde = inde
       //预览图片
       this.arr = []
       for (let i = 0; i < listBannerVO.length; i++) {
         const element = listBannerVO[i].imgUrl
         this.arr.push(element)
       }
-      this.arr = ImagePreview({
+      this.preview = ImagePreview({
         images: this.arr,
         startPosition: inde,
         onClose() {
           // do something
         }
       })
+    },
+    orientationchange () {
+      if (window.orientation === 180 || window.orientation === 0) {
+        if (this.reloadStatus) {
+          this.preview && this.preview.close()
+          this.$nextTick(() => {
+            this.previewHandle(this.listBannerVO, this.inde)
+          }) 
+        }
+        this.$dialog.close()
+      }
+      if (window.orientation === 90 || window.orientation === -90 ){
+          this.$dialog.alert({message: '您横屏了，竖屏操作体验更佳！'}).then(() => {
+            if (window.orientation === 90 || window.orientation === -90) {
+              this.reloadStatus = true
+            }
+          })
+      }
     }
+  },
+  mounted () {
+    window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", this.orientationchange, false)
   }
 }
 </script>
