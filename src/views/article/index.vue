@@ -423,8 +423,6 @@ export default {
           this.articleData.push(...records)
         }
         this.current += 1
-        // 缓存数据
-        // this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
       }
       this.nodataStatus = true
       this.showLoading = false
@@ -717,80 +715,18 @@ export default {
     } else {
       this.getCityArticle()
     }
-    // 防止ios弹簧效果
-    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-    // if (isiOS) {
-    //   document.querySelector('body').addEventListener('touchstart', e => {
-    //     this.startY = e.changedTouches[0].pageY
-    //   })
-    //   document.querySelector('body').addEventListener(
-    //     'touchmove',
-    //     e => {
-    //       if (!document.querySelector('.article-list')) {
-    //         return false
-    //       }
-    //       this.endY = e.changedTouches[0].pageY
-    //       let scrollHeight = document.querySelector('.article-list').scrollHeight // 元素高度
-    //       let scrollTop = document.querySelector('.article-list').scrollTop // 滚动高度
-    //       let clientHeight = document.querySelector('.article-list').clientHeight // 可视高度
-    //       let endStatus = scrollHeight <= scrollTop + clientHeight // 是否滚到底了
-    //       if (this.finished && endStatus && this.startY - this.endY > 10) {
-    //         e.preventDefault()
-    //       }
-    //       if (this.endY > this.startY && scrollTop === 0) {
-    //         e.preventDefault()
-    //       }
-    //     },
-    //     { passive: false }
-    //   )
-    //   document.querySelector('.replay').addEventListener(
-    //     'touchmove',
-    //     e => {
-    //       e.preventDefault()
-    //     },
-    //     { passive: false }
-    //   )
-    //   document.querySelector('.submenu').addEventListener(
-    //     'touchmove',
-    //     e => {
-    //       e.preventDefault()
-    //     },
-    //     { passive: false }
-    //   )
-    // }
-    // document.querySelector('.tab-bar').addEventListener(
-    //   'touchstart',
-    //   e => {
-    //     this.startY = e.changedTouches[0].pageY
-    //   },
-    //   { passive: false }
-    // )
-    // document.querySelector('.tab-bar').addEventListener(
-    //   'touchmove',
-    //   e => {
-    //     this.endY = e.changedTouches[0].pageY
-    //     if (this.endY - this.startY > 15) {
-    //       e.preventDefault()
-    //     }
-    //   },
-    //   { passive: false }
-    // )
   },
   beforeDestroy() {
     // 缓存数据
-    this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
-    // let isiOS = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
-    // try {
-    //   if (isiOS) {
-    //     document.querySelector('body').removeEventListener('touchstart')
-    //     document.querySelector('body').removeEventListener('touchmove')
-    //     document.querySelector('.replay').removeEventListener('touchmove')
-    //     document.querySelector('.submenu').removeEventListener('touchmove')
-    //   } else {
-    //     document.querySelector('.tab-bar').removeEventListener('touchstart')
-    //     document.querySelector('.tab-bar').removeEventListener('touchmove')
-    //   }
-    // } catch (error) {}
+    // this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.name === 'discover-detail') {
+       this.cacheDataFn({ itemCode: this.classify, itemName: this.classifyName })
+    } else {
+      window.sessionStorage.removeItem('cacheData')
+    }
+    next()
   }
 }
 </script>
