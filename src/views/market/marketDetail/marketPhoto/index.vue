@@ -69,9 +69,12 @@ export default {
       if (window.orientation === 180 || window.orientation === 0) {
         if (this.reloadStatus) {
           this.preview && this.preview.close()
-          this.$nextTick(() => {
-            this.previewHandle(this.listBannerVO, this.inde)
-          }) 
+          if (this.listBannerVO) {
+            this.$nextTick(() => {
+              this.previewHandle(this.listBannerVO, this.inde)
+            })
+          }
+          
         }
         this.$dialog.close()
       }
