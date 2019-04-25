@@ -2,7 +2,7 @@
     <div class="main_pages">
         <div class="pges_content" @mousewheel="isShow" @touchmove="isShow">
             <div class="pages_tabs"> 
-                <van-tabs v-model="active" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated title-active-color="#007AE6" @click="getanswersList(active,current)">
+                <van-tabs v-model="active" color="#007AE6" :line-width="15" :swipe-threshold="6" sticky animated title-active-color="#007AE6" @click="getanswersList(active,1)">
                     <van-tab v-for="item in tabs" :key="item.index" :title="item.typeName"></van-tab>
                 </van-tabs>
             </div>
@@ -51,13 +51,17 @@ export default {
         this.getanswersList(0,1);
     },
     methods : {
-        isShow () {  
+        isShow () {   
             if (this.page > this.current) { 
                 this.current = this.current + 1; 
                 this.getanswersList(this.active,this.current);
-            } 
+            }
         },
-        getanswersList (data,current) {   
+        getanswersList (data,current) { 
+            if (current == 1) {
+                this.questionData = []
+                this.answersData = []
+            }
             this.active = data
             this.current = current
             if (this.active ==  0) {
@@ -67,13 +71,11 @@ export default {
             }
             marketService.getqueryMyList({interlocutionType:this.typeId,current:this.current,size:20
             }).then((result) => { 
-                this.page = result.pages
-                if (this.typeId == 2) {
-                    // this.questionData = result.records  
+                this.page = result.pages 
+                if (this.typeId == 2) {  
                     this.questionData = this.questionData.concat(result.records)
                     console.log(this.questionData)
-                }else {
-                    // this.answersData = result.records  
+                }else { 
                     this.answersData = this.answersData.concat(result.records)
                     console.log(this.answersData)
                 }
