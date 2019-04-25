@@ -17,8 +17,8 @@
                                 class="swiper-slide"
                                 :key="index"
                                 > 
-                                    <div>
-                                        <img :src="a.imgUrl" alt=""  style="height:60px;margin-top:12px;margin-bottom:0px;width:80px;border-radius:6px;" @click.stop="houseTypeHandle(item.list,index)">   
+                                    <div class="imgfather"> 
+                                        <img :src="a.imgUrl" alt="" :style="imgStyle" @click.stop="houseTypeHandle(item.list,index)" class="imgchild">   
                                     </div>
                                 </swiper-slide>
                             </swiper>
@@ -61,10 +61,16 @@ export default {
             },  
             current:1,
             page:"",
-            arr:null
+            arr:null,
+            imgStyle : {
+                width: "",
+                height:""
+            }
         }
     },   
     mounted () { 
+        this.imgStyle.width = 375 * 0.213 + "px";
+        this.imgStyle.height = 375 * 0.213 * 0.75 + "px";
         this.getList();  
         window.addEventListener('scroll',this.hide);
     },
@@ -257,6 +263,16 @@ export default {
                         font-weight:400;
                         color:rgba(51,51,51,1);
                         line-height:22px;
+                    }
+                }
+                .imgfather {
+                    height:60px;
+                    margin-top:12px;
+                    margin-bottom:0px;
+                    width:80px;
+                    border-radius:6px;
+                    .imgchild {
+                        border-radius:6px;
                     }
                 }
             }
