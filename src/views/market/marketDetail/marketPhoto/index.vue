@@ -72,6 +72,7 @@ export default {
           if (this.listBannerVO) {
             this.$nextTick(() => {
               this.previewHandle(this.listBannerVO, this.inde)
+              this.listBannerVO = ''
             })
           }
           
