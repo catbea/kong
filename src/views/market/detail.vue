@@ -623,8 +623,8 @@ export default {
   methods: {
     // 新商业模式开通楼盘
     newOpenLinker () {
-      marketService.newOpenLinker({linkerId: this.id}).then(res => {
-        this.getDetailInfo(this.id)
+      marketService.newOpenLinker({linkerId: this.id}).then(async res => {
+        await this.getDetailInfo(this.id)
         this.$toast({
           duration: 2000,
           message: '已添加成功，请到我的楼盘查看'
@@ -635,9 +635,12 @@ export default {
     // 改变缓存数据状态
     changeCacheStatus () {
       let data = JSON.parse(window.sessionStorage.getItem('marketList'))
+      let _this = this
       data.marketList.forEach(el => {
         if(el.linkerId === this.id) {
           el.openStatus = 2
+          el.invalidTimeStr = _this.info.expireTime,
+          el.expireDate = _this.info.expireDate
         }
       })
       window.sessionStorage.setItem('marketList',JSON.stringify(data))
