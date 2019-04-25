@@ -23,7 +23,7 @@
         </div>
         <ul>
           <li>
-            <div>{{dataArr.linkerName}}</div>
+            <div><span class="free" v-if="+dataArr.isFree">免费</span>{{dataArr.linkerName}}</div>
           </li>
           <li>{{dataArr.site}}</li>
           <li>
@@ -204,6 +204,21 @@ export default {
           margin-top: 10px;
           display: flex;
           justify-content: space-between;
+        }
+        .free{
+          display: inline-block;
+          font-size: 10px;
+          width:28px;
+          height:15px;
+          text-align: center;
+          line-height: 15px;
+          background:rgba(234,77,46,1);
+          border-radius:2px;
+          color: #fff;
+          border-radius: 2px;
+          margin-right: 2px;
+          vertical-align: middle;
+          padding: 0 2px;
         }
       }
     }
