@@ -14,7 +14,7 @@ import { ImagePreview } from 'vant'
 import marketService from 'SERVICE/marketService'
 export default {
   async created() {
-    this.linkerId = this.$route.params.id
+    this.linkerId = this.$route.query.id
     await this.getMarketDetailPhotoInfo()
     // await this.pushHandle()
   },
@@ -38,8 +38,8 @@ export default {
     // FullScreen
   },
   beforeRouteLeave(to, from, next) {
-    if (this.arr) {
-      this.arr.close()
+    if (this.preview) {
+      this.preview.close()
     }
     next()
   },
@@ -67,15 +67,12 @@ export default {
     },
     orientationchange () {
       if (window.orientation === 180 || window.orientation === 0) {
-        if (this.reloadStatus) {
-          this.preview && this.preview.close()
-          if (this.listBannerVO) {
-            this.$nextTick(() => {
-              this.previewHandle(this.listBannerVO, this.inde)
-              this.listBannerVO = ''
-            })
-          }
-          
+        this.preview && this.preview.close()
+        if (this.listBannerVO) {
+          setTimeout(() => {
+            this.previewHandle(this.listBannerVO, this.inde)
+            this.listBannerVO = ''
+          },500)
         }
         this.$dialog.close()
       }
@@ -94,6 +91,17 @@ export default {
 }
 </script>
 <style lang="less">
+.van-image-preview__image{
+  max-height: 90%!important;
+  max-width: 100%!important;
+}
+.van-image-preview__index{
+  top: 20px;
+  color: #000;
+}
+.van-image-preview__overlay{
+  background-color: rgba(255,255,255,1);
+}
 .detail-photo-page {
   width: 375px;
   height: 100%;
