@@ -148,7 +148,7 @@ export default {
      */
     onClick() {
       this.cleanCurrentData()
-      // this.onLoad()
+      this.onLoad()
     },
     async onLoad() {
       if ( window.sessionStorage.getItem('custom')) {
