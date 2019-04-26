@@ -206,11 +206,12 @@ export default {
     },
     //续费开通
     gopay(item) {
-      if (this.linkerByDistributor) {
-        this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
-      } else {
-        this.$toast('非当前所属公司下楼盘无法开通或续费')
-      }
+      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+      // if (this.linkerByDistributor) {
+      //   this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+      // } else {
+      //   this.$toast('非当前所属公司下楼盘无法开通或续费')
+      // }
     }
   }
 }
