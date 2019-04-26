@@ -800,7 +800,7 @@ export default {
       }
       //进入相册页面
       if (this.photoButton) {
-        this.$router.push({ name: 'photoList', params: { id: this.id } })
+        this.$router.push({ name: 'photoList', query: { id: this.id } })
       } else {
         this.$toast({
           duration: 1000,
