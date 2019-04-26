@@ -12,21 +12,21 @@
       <screen v-model="projectFilters" :local="this.selectedCity"></screen>
     </div>
     <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
-    <div class="all-market">
-      <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getProjectList">
-        <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="borderBottom" @updateMarket="updateMarket(index)"></market-describe>
-      </van-list>
-    </div>
-    <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
-          <title-bar class="title-container" :conf="titleBarConf"/>
-          <market-describe
-            v-for="(item,index) in hotResult"
-            :key="index"
-            :itemInfo="item"
-            @openReturnHandle="opClickHandler(item)"
-            @skipDetail="skipDetail(item)"
-          ></market-describe>
-        </div>
+      <div class="all-market">
+        <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getProjectList">
+          <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="borderBottom" @updateMarket="updateMarket(index)"></market-describe>
+        </van-list>
+      </div>
+      <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
+        <title-bar class="title-container" :conf="titleBarConf"/>
+        <market-describe
+          v-for="(item,index) in hotResult"
+          :key="index"
+          :itemInfo="item"
+          @openReturnHandle="opClickHandler(item)"
+          @skipDetail="skipDetail(item)"
+        ></market-describe>
+      </div>
   </div>
 </template>
 <script>
@@ -102,6 +102,15 @@ export default {
       this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
     }
     this.searchContent.siteText = this.selectedCity || '全国'
+    // 判断青岛用户
+    if (this.userInfo.enterpriseId == 91) {
+      this.selectedCity = '青岛市'
+      this.searchContent.siteText = '青岛市'
+      if (data) {
+        data.city = '青岛市'
+        window.localStorage.setItem('marketCity',JSON.stringify(data))
+      }
+    }
     await this.getVipInfo()
     this.getBrokerInfo()
     await this.hotMarketHandle()
