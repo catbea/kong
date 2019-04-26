@@ -139,6 +139,7 @@ export default {
       this.onLoad()
     },
     cleanCurrentData() {
+      this.currentData.finished = false
       this.currentData.page = 1
       this.currentData.list = []
     },
@@ -147,7 +148,7 @@ export default {
      */
     onClick() {
       this.cleanCurrentData()
-      this.onLoad()
+      // this.onLoad()
     },
     async onLoad() {
       if ( window.sessionStorage.getItem('custom')) {
