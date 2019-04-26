@@ -1828,9 +1828,9 @@ export default {
       button {
         border: 1px solid #445166;
         border-radius: 4px;
+        color: #445166;
         height: 30px;
         padding: 6px 16px;
-        background: rgba(248, 250, 252, 1);
         background-color: #f8fafc;
       }
     }
