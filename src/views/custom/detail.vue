@@ -109,7 +109,7 @@ export default {
     this.getCustomerInfo(this.clientId)
     this.activeIndex = window.localStorage.getItem('activeIndex') == 2 ? 2 : 0
     window.localStorage.setItem('activeIndex', 0)
-    this.onClick()
+    // this.onClick()
     window.localStorage.removeItem('activeIndex')
     // this.queryClientFlag()
   },
