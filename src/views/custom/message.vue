@@ -198,7 +198,8 @@ export default {
         '您什么时候有时间，我这边好提前安排。',
         '非常抱歉，我现在不方便打字，您有任何事情都可以给我留言，我会在方便的时候第一时间给您回复。'
       ],
-      isShowOption: false
+      isShowOption: false,
+      isSendding: false,
     }
   },
   computed: {
@@ -624,9 +625,12 @@ export default {
       }
 
       this.message = ''
+      this.isSendding = false
       this.pyzmaoviwe()
     },
     sendMessage(msgType01, audioTime01) {
+      if(this.isSendding) return
+      this.isSendding = true
       if (this.cardDelFlag == 1) {
         // 小程序端经纪人已经删除
         let obj = {}
@@ -651,6 +655,9 @@ export default {
       let msg = onSendMsg(this.message, true, msgType01, audioTime01, _userInfo)
       if (msg) {
         this.$toast(msg)
+      } else {
+        this.message = ''
+        // this.isSendding = false
       }
 
       document.getElementById('message').focus()
