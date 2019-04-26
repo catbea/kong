@@ -131,7 +131,7 @@ export default {
         // 足迹
         this.trackCurrent = 1
         this.getCustomerDynamicCount(this.clientId)
-        // this.onLoad()
+        this.onLoad()
       } else if (this.activeIndex == 1 && this.isSecondReq == false) {
         // 分析
         this.current = 1
