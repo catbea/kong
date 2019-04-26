@@ -103,7 +103,7 @@ export default {
     }
     this.searchContent.siteText = this.selectedCity || '全国'
     // 判断青岛用户
-    if (this.userInfo.enterpriseId == 91) {
+    if (this.userInfo.enterpriseId == 92 || this.userInfo.enterpriseId == 93) {
       this.selectedCity = '青岛市'
       this.searchContent.siteText = '青岛市'
       if (data) {
