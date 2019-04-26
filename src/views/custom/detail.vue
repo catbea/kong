@@ -109,7 +109,7 @@ export default {
     this.getCustomerInfo(this.clientId)
     this.activeIndex = window.localStorage.getItem('activeIndex') == 2 ? 2 : 0
     window.localStorage.setItem('activeIndex', 0)
-    // this.onClick()
+    this.onClick()
     window.localStorage.removeItem('activeIndex')
     // this.queryClientFlag()
   },
@@ -131,7 +131,7 @@ export default {
         // 足迹
         this.trackCurrent = 1
         this.getCustomerDynamicCount(this.clientId)
-        this.onLoad()
+        // this.onLoad()
       } else if (this.activeIndex == 1 && this.isSecondReq == false) {
         // 分析
         this.current = 1
