@@ -425,7 +425,7 @@ export default {
   },
   beforeDestroy () {
     let data = this.$data
-    window.sessionStorage.setItem('dynamics',JSON.stringify(data))
+    // window.sessionStorage.setItem('dynamics',JSON.stringify(data))
   }
 }
 </script>
