@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="market-detail-page" v-if="info">
+  <div class="market-detail-cnt">
+    <div class="market-detail-page" v-if="info && !showPreview">
       <!-- 新手引导 -->
       <hint-tire></hint-tire>
       <!-- 顶部swipe -->
@@ -458,6 +458,20 @@
     <div class="loading" v-show="showLoading">
       <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
+    <!-- 图片预览 -->
+    <div class="img-preview" v-if="showPreview" @click="hidePreview">
+        <div class="title">{{imgData.householdDesc}}</div>
+        <div class="img-box">
+          <van-swipe @change="onChange" :initial-swipe="current" :loop="false" :show-indicators="false">
+            <van-swipe-item v-for="(item,index) in previewList" :key="index">
+              <img :src="item" alt="" srcset="">
+            </van-swipe-item>
+          </van-swipe>
+        </div>
+        <div class="custom-indicator">
+          {{ current + 1 }}/{{previewList.length}}
+        </div>
+      </div>
   </div>
 </template>
 <script>
@@ -474,7 +488,6 @@ import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import isEmpty from 'lodash/isEmpty'
 import qs from 'qs'
-import { ImagePreview } from 'vant'
 export default {
   components: {
     HintTire,
@@ -579,7 +592,12 @@ export default {
       evaluatingInfo: null,
       showLoading: false,
       posterNum: 0,
-      posterListArr: []
+      posterListArr: [],
+      current: 0,
+      showPreview: false,
+      previewList: [],
+      imgData: {},
+      scrollTop: 0
     }
   },
   async created() {
@@ -875,17 +893,26 @@ export default {
     },
     houseTypeHandle(n) {
       //查看户型图片预览
+      this.scrollTop = document.querySelector('.router-view').scrollTop
       let data = []
       this.info.houseTypeList.forEach(ele => {
         data.push(...ele.imgUrlList)
       })
-      let num = data.indexOf(n)
-      // data.push(n)
-      // this.$router.push({ name: 'Preview-Picture', query: { arr: data }})
-      this.instance = ImagePreview({
-        loop: false,
-        images: data,
-        startPosition: num
+      this.current = data.indexOf(n)
+      this.previewList = data
+      this.imgData = this.info.houseTypeList[this.current]
+      this.showPreview = true
+    },
+    // 预览图片切换
+    onChange (index) {
+      this.current  = index
+      this.imgData = this.info.houseTypeList[index]
+    },
+    // 隐藏预览
+    hidePreview () {
+      this.showPreview = false
+      this.$nextTick(() => {
+        document.querySelector('.router-view').scrollTop = this.scrollTop
       })
     },
     async collectHandler() {
@@ -2221,6 +2248,46 @@ export default {
     margin-top: -25px;
   }
 }
+.market-detail-cnt {
+  height: 100%;
+  position: relative;
+  .img-preview{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .title{
+      height: 30px;
+      margin: 30px 20px;
+      font-size:24px;
+      color:rgba(51,51,51,1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .img-box{
+      flex: 1;
+      margin: 0 20px;
+      text-align: center;
+      .van-swipe-item{
+        img{
+          min-width: 100%;
+          min-height: 100%;
+          object-fit: cover;
+        }
+      }
+      
+    }
+    .custom-indicator{
+      height: 20px;
+      margin: 10px 20px 40px;
+      text-align: center;
+      font-size:16px;
+      color:rgba(51,51,51,1);
+    }
+  }
+}
 </style>
 
 <style lang="less">
@@ -2235,7 +2302,6 @@ export default {
 .van-image-preview__overlay{
   background-color: rgba(255,255,255,1);
 }
-
 .house-circum {
   .van-tab--active {
     color: #007ae6;
