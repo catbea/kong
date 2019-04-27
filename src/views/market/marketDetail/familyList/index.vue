@@ -255,20 +255,31 @@ export default {
     position: relative;
     display: flex;
     flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
     .title{
-      height: 30px;
-      margin: 30px 20px;
+      height: 80px;
+      line-height: 80px;
+      padding: 0 20px;
       font-size:24px;
       color:rgba(51,51,51,1);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      box-shadow: border-box;
     }
     .img-box{
       flex: 1;
+      display: flex;
+      flex-direction: column;
       margin: 0 20px;
       text-align: center;
+      .van-swipe{
+        height: 100%;
+      }
       .van-swipe-item{
+        line-height: 100%;
+        vertical-align: middle;
         img{
           min-width: 100%;
           min-height: 100%;
@@ -278,8 +289,9 @@ export default {
       
     }
     .custom-indicator{
-      height: 20px;
-      margin: 10px 20px 40px;
+      height: 60px;
+      line-height: 60px;
+      padding: 0 20px;
       text-align: center;
       font-size:16px;
       color:rgba(51,51,51,1);

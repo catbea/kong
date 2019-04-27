@@ -412,7 +412,7 @@ export default {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 103px;
+            max-width: 90px;
             line-height: 21px;
           }
           .free{
