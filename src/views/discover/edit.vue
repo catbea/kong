@@ -157,10 +157,18 @@ export default {
           }
           continue
         }
-        this.renderDom.push({
-          text: dom.innerHTML,
-          status: 'edit'
-        })
+        if(dom.tagName == 'IMG') {
+          this.renderDom.push({
+            text: '<p><img src="'+dom.src+'"></p>',
+            status: 'edit'
+          })
+        } else {
+          this.renderDom.push({
+            text: dom.innerHTML,
+            status: 'edit'
+          })
+        }
+        console.log(this.renderDom, '========')
       }
       
       if (this.info.editData !== '') {
