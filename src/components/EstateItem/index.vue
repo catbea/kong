@@ -96,17 +96,16 @@ export default {
         color: #333333;
         padding-bottom: 8px;
         .free{
+          display: inline-block;
           font-size: 10px;
-          width:28px;
-          height:15px;
-          text-align: center;
-          line-height: 15px;
+          height:14px;
+          line-height: 14px;
           background:rgba(234,77,46,1);
-          border-radius:2px;
           color: #fff;
+          border-radius: 2px;
           margin-right: 2px;
-          vertical-align: middle;
           padding: 0 5px;
+          vertical-align: top;
         }
       }
       > .estate-location {

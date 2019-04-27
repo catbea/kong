@@ -8,7 +8,7 @@
         </div>
         <ul>
           <li>
-            <div style="display:flex;">
+            <div style="display:flex; align-items:center;">
               <span class="free" v-if="+dataArr.isFree">免费</span>
               <span class="text">{{dataArr.linkerName}}</span>
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
@@ -416,17 +416,17 @@ export default {
             line-height: 21px;
           }
           .free{
+            display: inline-block;
             font-size: 10px;
-            width:28px;
-            height:15px;
-            text-align: center;
-            line-height: 15px;
+            height:14px;
+            line-height: 14px;
             background:rgba(234,77,46,1);
-            border-radius:2px;
             color: #fff;
             border-radius: 2px;
             margin-right: 2px;
             margin-top: 1px;
+            padding: 0 5px;
+            vertical-align: middle;
           }
           // align-items: center;
           .stick {
