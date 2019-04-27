@@ -323,7 +323,7 @@ export default {
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                max-width: 150px;
+                max-width: 130px;
                 font-size: 16px;
                 font-family: PingFangSC-Semibold;
                 font-weight: 600;
