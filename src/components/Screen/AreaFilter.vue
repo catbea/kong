@@ -27,7 +27,7 @@ export default {
     }
     if (this.parent) this.list = Object.assign(this.list, getChildren(this.parent))
     // 我的楼盘-免费楼盘只展示不限
-    if (this.$parent.$parent && this.$parent.$parent.active === 2) {
+    if (this.$parent.$parent && this.$parent.$parent.$el && this.$parent.$parent.$el.className === 'user-mymarket-page' && this.$parent.$parent.active === 2) {
       this.list = {'0': '不限'}
     }
   },
