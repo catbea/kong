@@ -123,9 +123,9 @@ export default {
     relationHandle() {
       //分享插件
       let host = process.env.VUE_APP_APP_URL
-      // // window.open(`${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`,'_blank') 
+      window.open(`${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`,'_blank')
       // window.location.href = `${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
-      this.$router.push({path: '/user/talk'})
+      // this.$router.push({path: '/user/talk'})
     },
     enterSharePage() {
       this.$router.push({ path: '/user/share-card', query: { agentId: this.userInfo.agentId } })
