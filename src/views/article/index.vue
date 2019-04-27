@@ -856,6 +856,7 @@ export default {
             line-height: 1.25;
             min-height: 52px;
             font-weight: 600;
+            word-break: break-all;
           }
           .attr {
             padding-top: 32px;
@@ -898,6 +899,7 @@ export default {
             min-width: 100%;
             min-height: 100%;
             border-radius: 6px;
+            object-fit: cover;
           }
         }
       }
