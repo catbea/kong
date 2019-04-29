@@ -227,6 +227,8 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
+    // 不知道具体业务逻辑，点击报错，添加了此空方法
+    popHandler () {},
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       if (res.returnCode == 10028) {
