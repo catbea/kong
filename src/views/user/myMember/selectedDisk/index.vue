@@ -136,6 +136,7 @@ export default {
           open: `${item.openTimes}次开通`,
           saleStatus: item.saleStatus,
           isChecked: false,
+          isFree: item.isFree,
           divisionRules: item.divisionRules,
           price: `${item.price} ${item.priceUnit}`
         }

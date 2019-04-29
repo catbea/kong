@@ -14,7 +14,7 @@ import { ImagePreview } from 'vant'
 import marketService from 'SERVICE/marketService'
 export default {
   async created() {
-    this.linkerId = this.$route.params.id
+    this.linkerId = this.$route.query.id
     await this.getMarketDetailPhotoInfo()
     // await this.pushHandle()
   },
@@ -28,14 +28,18 @@ export default {
     show: false,
     templetList: [],
     resultList: [],
-    deployList: []
+    deployList: [],
+    reloadStatus: false,
+    preview: '',
+    inde: 0,
+    listBannerVO: ''
   }),
   components: {
     // FullScreen
   },
   beforeRouteLeave(to, from, next) {
-    if (this.arr) {
-      this.arr.close()
+    if (this.preview) {
+      this.preview.close()
     }
     next()
   },
@@ -45,24 +49,59 @@ export default {
       this.photoData = res
     },
     previewHandle(listBannerVO, inde) {
+      this.listBannerVO = listBannerVO
+      this.inde = inde
       //预览图片
       this.arr = []
       for (let i = 0; i < listBannerVO.length; i++) {
         const element = listBannerVO[i].imgUrl
         this.arr.push(element)
       }
-      this.arr = ImagePreview({
+      this.preview = ImagePreview({
         images: this.arr,
         startPosition: inde,
         onClose() {
           // do something
         }
       })
+    },
+    orientationchange () {
+      if (window.orientation === 180 || window.orientation === 0) {
+        this.preview && this.preview.close()
+        if (this.listBannerVO) {
+          setTimeout(() => {
+            this.previewHandle(this.listBannerVO, this.inde)
+            this.listBannerVO = ''
+          },500)
+        }
+        this.$dialog.close()
+      }
+      if (window.orientation === 90 || window.orientation === -90 ){
+          this.$dialog.alert({message: '您横屏了，竖屏操作体验更佳！'}).then(() => {
+            if (window.orientation === 90 || window.orientation === -90) {
+              this.reloadStatus = true
+            }
+          })
+      }
     }
+  },
+  mounted () {
+    window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", this.orientationchange, false)
   }
 }
 </script>
 <style lang="less">
+.van-image-preview__image{
+  max-height: 90%!important;
+  max-width: 100%!important;
+}
+.van-image-preview__index{
+  top: 20px;
+  color: #000;
+}
+.van-image-preview__overlay{
+  background-color: rgba(255,255,255,1);
+}
 .detail-photo-page {
   width: 375px;
   height: 100%;

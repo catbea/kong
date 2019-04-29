@@ -136,11 +136,13 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .user-myCoupon-page {
+  height: 100%;
+  position: relative;
   .list-wrap {
     width: 100%;
-    height:500px;
+    height: 630px;
     overflow: auto;
   }
   .user-myCoupon-page-top {

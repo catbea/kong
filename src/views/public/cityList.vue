@@ -43,7 +43,7 @@
         <div class="city-index">
           <!-- <mt-index-list :height="mtIndexHeight"> -->
           <mt-index-list>
-            <mt-index-section index="">
+            <mt-index-section index="" v-if="userInfo.enterpriseId != 92 && userInfo.enterpriseId != 93">
               <mt-cell title="全国" @click.native="chooseItem('全国',2)"></mt-cell>
             </mt-index-section>
             <mt-index-section index="热" v-if="category===0">

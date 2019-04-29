@@ -139,6 +139,7 @@ export default {
       this.onLoad()
     },
     cleanCurrentData() {
+      this.currentData.finished = false
       this.currentData.page = 1
       this.currentData.list = []
     },

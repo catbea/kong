@@ -16,13 +16,14 @@
             </span>
             <span class="dynamicsInfo-list-right">
               <div class="dynamicsInfo-list-right-title">
-                 <div class="dynamicsInfo-list-right-title-div">{{linkerVO.linkerName}}</div>
+                <div class="dynamicsInfo-list-right-title-div"><span class="free"  v-if="+linkerVO.isFree">免费</span>{{linkerVO.linkerName}}</div>
                 <div class="dynamicsInfo-list-right-tab-div" @click="gopay(linkerVO)">
                    <span class="left-title-right"  v-if="linkerVO.linkerOpenEndTime !=''">续费</span>
                    <span class="left-title-right-open" v-else>开通</span>
                 </div>
               </div>
-              <p class="dynamicsInfo-list-right-time" @click="godynamicsInfo(linkerVO.linkerId)">{{linkerVO.city}}  {{linkerVO.district}} | {{linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}}到期</p>
+              <!-- {{linkerVO.linkerOpenEndTime | dateTimeFormatter(0,'/')}} -->
+              <p class="dynamicsInfo-list-right-time" @click="godynamicsInfo(linkerVO.linkerId)">{{linkerVO.city}}  {{linkerVO.district}} | {{linkerVO.invalidTimeStr}}到期</p>
               <p class="dynamicsInfo-list-right-label" @click="godynamicsInfo(linkerVO.linkerId)">
                 <button class="right-label right-label-blur" v-show="linkerVO.saleStatus == 0 ">热销中</button>
                 <button class="right-label right-label-red" v-show="linkerVO.saleStatus == 1">即将发售</button>
@@ -206,11 +207,12 @@ export default {
     },
     //续费开通
     gopay(item) {
-      if (this.linkerByDistributor) {
-        this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
-      } else {
-        this.$toast('非当前所属公司下楼盘无法开通或续费')
-      }
+      this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+      // if (this.linkerByDistributor) {
+      //   this.$router.push({ name: 'marketDetail-open', params: { id: item.linkerId } })
+      // } else {
+      //   this.$toast('非当前所属公司下楼盘无法开通或续费')
+      // }
     }
   }
 }
@@ -297,16 +299,30 @@ export default {
             overflow: hidden; /*内容超出后隐藏*/
             text-overflow: ellipsis; /* 超出内容显示为省略号*/
             white-space: nowrap; /*文本不进行换行*/
-            width: 70%;
+            width: 80%;
             font-weight: 600;
             margin-top: -5px;
+            vertical-align: middle;
+            .free{
+              display: inline-block;
+              font-size: 10px;
+              text-align: center;
+              line-height: 14px;
+              background:rgba(234,77,46,1);
+              border-radius:2px;
+              color: #fff;
+              margin-right: 2px;
+              vertical-align: middle;
+              padding: 0 5px;
+              margin-top: -3px;
+            }
           }
           .dynamicsInfo-list-right-tab-div {
             // position: absolute;
             // right: 0px;
             // top: 0;
             float: right;
-            margin-top: -20px;
+            margin-top: -25px;
 
             .left-title-right {
               font-size: 12px;

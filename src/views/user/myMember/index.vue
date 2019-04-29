@@ -183,7 +183,7 @@ export default {
 
       //更新vipInfo
       let _vipInfo = { city: res.city }
-      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo }))
+      this.$store.commit(types.USER_INFO, Object.assign({}, this.userInfo, { vipInfo: _vipInfo }))
       if (res.vipFlag && !res.city) {
         this.unselectedPopup()
       }
@@ -218,7 +218,7 @@ export default {
       let res = await marketService.updateCityByAgentId(this.selectCity)
       let _vipInfo = { city: this.selectCity }
       this.setMealInfo.vipCity = this.selectCity
-      this.$store.commit(types.USER_INFO, Object.assign(this.userInfo, { vipInfo: _vipInfo }))
+      this.$store.commit(types.USER_INFO, Object.assign({}, this.userInfo, { vipInfo: _vipInfo }))
       this.showAddProjectDialog()
       // if(this.showAddProjectDialogFlag) {
       //   this.showAddProjectDialog()

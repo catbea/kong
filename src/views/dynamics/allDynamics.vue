@@ -387,6 +387,7 @@ export default {
           })
           .then(() => {
             // on confirm
+            this.$router.push(`/marketDetail/open/${val.itemDynamiclist.linkerId}`)
           })
           .catch(() => {
             // on cancel
@@ -424,7 +425,7 @@ export default {
   },
   beforeDestroy () {
     let data = this.$data
-    window.sessionStorage.setItem('dynamics',JSON.stringify(data))
+    // window.sessionStorage.setItem('dynamics',JSON.stringify(data))
   }
 }
 </script>

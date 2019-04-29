@@ -307,24 +307,23 @@ export default {
               display: flex;
               // align-items: center;
               .free{
+                display: inline-block;
                 font-size: 10px;
-                width:28px;
-                height:15px;
-                text-align: center;
-                line-height: 15px;
+                height:14px;
+                line-height: 14px;
                 background:rgba(234,77,46,1);
-                border-radius:2px;
                 color: #fff;
                 border-radius: 2px;
                 margin-right: 2px;
                 margin-top: 1px;
+                padding: 0 5px;
               }
               .title {
                 display:inline-block;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                max-width: 110px;
+                max-width: 130px;
                 font-size: 16px;
                 font-family: PingFangSC-Semibold;
                 font-weight: 600;
@@ -367,9 +366,9 @@ export default {
               border:1px solid rgba(204, 204, 204, 1);
               color: rgba(204, 204, 204, 1);
               background-color: transparent;
-              font-size: 10px;
-              height: 22px;
-              line-height: 22px;
+              font-size: 12px;
+              height: 20px;
+              line-height: 20px;
             }
             .open{
               background:linear-gradient(119deg,rgba(234,77,46,1) 0%,rgba(255,156,56,1) 100%);
