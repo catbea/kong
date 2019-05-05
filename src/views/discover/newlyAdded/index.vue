@@ -53,6 +53,8 @@ export default {
     },
     //开始编辑
     startEdit() {
+      // 去掉中文和空格
+      this.linkerText = this.linkerText.replace(/[\u4e00-\u9fa5\s]+/g, '')
       if (!this.editButtonClick) {
         return false
       }
@@ -60,11 +62,11 @@ export default {
       if (!this.linkerText.length) {
         return this.$toast('您尚未填写原文链接')
       }
-      let reg = /(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?/
+      let reg = /^(ht|f)tp(s?)\:\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9\-\.\?\,\'\/\\\+&amp;%\$#_]*)?/g
       if (!reg.test(this.linkerText)) {
         return this.$toast('原文链接填写不正确，请检查!')
       }
-      this.linkerText = this.linkerText.replace(/\s+/g, '')
+      // this.linkerText = this.linkerText.replace(/\s+/g, '')
       this.$router.push({ name: 'analysis', query: { url: this.linkerText, parseType: '1' } })
       // if (this.linkerText.length > 0) {
       //   this.linkerText = this.linkerText.replace(/\s+/g, '')
