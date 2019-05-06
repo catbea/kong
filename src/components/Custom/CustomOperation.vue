@@ -43,14 +43,15 @@ export default {
       this.$emit('onphone')
     },
     consultHandler() {
-      if (this.h5Flag) {
-        this.$dialog.alert({
-          title: '提示',
-          message: '该用户未使用小程序登录，无法收到您的消息!'
-        })
-      } else {
-        this.$emit('onconsult')
-      } 
+      // if (this.h5Flag) {
+      //   this.$dialog.alert({
+      //     title: '提示',
+      //     message: '该用户未使用小程序登录，无法收到您的消息!'
+      //   })
+      // } else {
+      //   this.$emit('onconsult')
+      // } 
+      this.$emit('onconsult')
     }
   }
 }
