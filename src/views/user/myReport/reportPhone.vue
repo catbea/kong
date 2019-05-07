@@ -1,8 +1,14 @@
 <template>
   <div class="user-edit-phone-page">
     <div class="user-edit-phone">
-      <p class="edit-phone-conter">
-        <!-- <input type="number" class="edit-phone-input" maxlength="11" placeholder="请输入手机号码" v-model.trim="Cphone"> -->
+      <b class="title">手机号</b>
+      <p class="phone-number scale-1px-bottom">
+        <input type="text" placeholder="请输入手机号码" maxlength="11" v-model="Cphone">
+      </p>
+      <p class="tips">
+        号码显示方式：前三后四显示
+      </p>
+      <!-- <p class="edit-phone-conter">
         <material-input placeholder="请输入手机号码" :type="'number'" :maxlength="11" v-model="Cphone"></material-input>
       </p>
       <div class="edit-phone-way">
@@ -23,7 +29,7 @@
             ></div>
           </div>
         </div>
-      </div>
+      </div> -->
       <button class="edit-phone-query" @click="godSub">确认</button>
     </div>
   </div>
@@ -46,7 +52,7 @@ export default {
   },
   created() {
     this.Cphone = this.reportAddInfo.clientPhone
-    this.phoneType = this.reportAddInfo.clientPhoneType
+    this.phoneType = this.reportAddInfo.clientPhoneType || ''
   },
   computed: {
     ...mapGetters(['reportAddInfo'])
@@ -56,26 +62,30 @@ export default {
       this.phoneType = val
     },
      godSub() {
-      if (Number(this.Cphone).length == 0) {
-        this.$dialog
-          .alert({
-            message: '名片展示手机号不可为空'
-          })
-          .then(() => {
-            // on close
-          })
-        return
-      }
-      if (this.Cphone.length != 11) {
-        this.$dialog
-          .alert({
-            message: '请输入正确手机号'
-          })
-          .then(() => {
-            // on close
-          })
-        return
-      }
+       let reg = /^1[3-9]\d{9}$/g
+       if (!reg.test(this.Cphone)) {
+         return this.$dialog.alert({message: '手机号码不正确，请重新输入！'})
+       }
+      // if (Number(this.Cphone).length == 0) {
+      //   this.$dialog
+      //     .alert({
+      //       message: '名片展示手机号不可为空'
+      //     })
+      //     .then(() => {
+      //       // on close
+      //     })
+      //   return
+      // }
+      // if (this.Cphone.length != 11) {
+      //   this.$dialog
+      //     .alert({
+      //       message: '请输入正确手机号'
+      //     })
+      //     .then(() => {
+      //       // on close
+      //     })
+      //   return
+      // }
       let _reportAddInfo = {
         clientPhone: this.Cphone,
         clientPhoneType: this.phoneType
@@ -104,7 +114,31 @@ export default {
   padding-left: 16px;
 }
 .user-edit-phone-page {
-  background: #f7f9fa;
+  .title{
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 25px 0 0 16px;
+    color: #333;
+  }
+  .phone-number{
+    margin: 20px 16px;
+    font-size: 16px;
+    &::placeholder{
+      color: #bbb;
+    }
+    input{
+      width: 100%;
+      line-height: 40px;
+      border:none;
+    }
+  }
+  .tips{
+    font-size: 12px;
+    color: #bbb;
+    margin: 12px 16px;
+  }
+  // background: #f7f9fa;
   > .user-edit-phone {
     // margin: 27px 16px;
     > .edit-phone-title {

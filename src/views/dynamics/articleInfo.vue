@@ -193,14 +193,15 @@ export default {
       this.$router.push(`/custom/${item.clientId}`)
     },
     dialogHandle (item) {
-      if (item.h5Flag) {
-        this.$dialog.alert({
-          title: '提示',
-          message: '该用户未使用小程序登录，无法收到您的消息!'
-        })
-      } else {
-        this.goalldynamics(item)
-      }
+      this.goalldynamics(item)
+      // if (item.h5Flag) {
+      //   this.$dialog.alert({
+      //     title: '提示',
+      //     message: '该用户未使用小程序登录，无法收到您的消息!'
+      //   })
+      // } else {
+      //   this.goalldynamics(item)
+      // }
     },
     //联系
     goalldynamics(item) {

@@ -50,7 +50,7 @@ export default {
   created() {
     this.type = this.$route.query.type
     if (this.type == 'vip') {
-      this.searchInfo.siteText = this.userInfo.vipInfo && this.userInfo.vipInfo.city ? this.userInfo.vipInfo.city : ''
+      this.searchInfo.siteText = this.userArea.selectedCity || (this.userInfo.vipInfo && this.userInfo.vipInfo.city ? this.userInfo.vipInfo.city : '')
     } else {
       this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city
     }
@@ -84,9 +84,11 @@ export default {
   methods: {
     areaClickHandle() {
       if (this.type == 'vip') {
-        return
+        this.$router.push({ path: '/public/vip-market', query: {category: 1} })
+      } else {
+        this.$router.push({ path: '/public/area-select' })
       }
-      this.$router.push({ path: '/public/area-select' })
+      
     },
 
     searchChangeHandle(name) {

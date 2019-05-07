@@ -42,6 +42,14 @@
         </div>
       </div>
     </div>
+    <van-actionsheet v-model="showChannel" title="选择渠道">
+      <div class="channel-box">
+        <div class="channel-list">
+          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannelFn(item)">{{item.name}} <span v-if="item.isFree" class="free">免费券</span></p>
+        </div>
+        <div class="cancle" @click="hideChannelFn">取消</div>
+      </div>
+    </van-actionsheet>
   </div>
 </template>
 <script>
@@ -85,7 +93,10 @@ export default {
       style: null,
       panoramaImg: require('IMG/system/icon_panorama@2x.png'),
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-      labelImg: require('IMG/marketDetail/discount@2x.png')
+      labelImg: require('IMG/marketDetail/discount@2x.png'),
+      showChannel: false,
+      channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
+      currentChannel: {}
     }
   },
   created() {
@@ -124,6 +135,20 @@ export default {
     }
   },
   methods: {
+    // 选择渠道
+    changeChannelFn (item){
+      this.currentChannel = item
+      this.freeOpenHandle()
+      this.hideChannelFn()
+    },
+    // 显示渠道
+    showChannelFn () {
+      this.showChannel = true
+    },
+    // 隐藏渠道
+    hideChannelFn () {
+      this.showChannel = false
+    },
     async getDetailInfo(id) {
       // 获取该楼盘详情
       const res = await marketService.getLinkerDetail(id)
@@ -141,7 +166,8 @@ export default {
         title: '提示',
         message: '是否确认添加楼盘？'
       }).then(() => {
-        this.freeOpenHandle()
+        this.showChannelFn()
+        // this.freeOpenHandle()
       }).catch(() => {})
     },
     // 确认支付
@@ -437,6 +463,38 @@ export default {
           width: 130px;
         }
       }
+    }
+  }
+  /deep/ .van-icon-close{
+    display: none;
+  }
+  .channel-box{
+    font-size: 16px;
+    padding: 10px 0 0 0;
+    .channel-list{
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+    .item{
+      padding: 16px 0 10px 16px;
+      .free{
+        display: inline-block;
+        font-size: 10px;
+        color: #fff;
+        background-color: #EA4D2E;
+        line-height: 15px;
+        height: 15px;
+        padding: 0 5px;
+        border-radius: 2px;
+        vertical-align: middle;
+      }
+    }
+    .cancle{
+      margin-top: 20px;
+      height:50px;
+      background:rgba(238,238,238,1);
+      line-height: 50px;
+      text-align: center;
     }
   }
 }

@@ -21,8 +21,8 @@
                 <img class="bg" src="../../../assets/img/share/card1.png" alt="">
                 <h3>{{editData.signature}}</h3>
                 <p><span>Tel :</span>{{editData.mobile}}</p>
-                <p><span>Col :</span>{{editData.institutionName}}</p>
-                <p><span>Add:</span>{{editData.mojarRegion}}</p>
+                <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
+                <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
               </div>
 
             </div>
@@ -42,8 +42,8 @@
                     </div>
                     <div class="info">
                       <p><span>Tel :</span>{{editData.mobile}}</p>
-                      <p><span>Col :</span>{{editData.institutionName}}</p>
-                      <p><span>Add:</span>{{editData.mojarRegion}}</p>
+                      <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
+                      <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
                     </div>
                   </div>
                   <div class="qrcode">
@@ -68,8 +68,8 @@
                 <span>{{editData.mobile}}</span>
               </div>
               <div class="data-info">
-                <p><span>Col : </span>{{editData.institutionName}}</p>
-                <p><span>Add: </span>{{editData.mojarRegion}}</p>
+                <!-- <p><span>Col : </span>{{editData.institutionName}}</p>
+                <p><span>Add: </span>{{editData.mojarRegion}}</p> -->
               </div>
               <div class="qrcode">
                 <img :src="editData.miniQrCode" alt="小程序" >
@@ -92,8 +92,8 @@
                     </div>
                     <div class="info">
                       <p><span>Tel :</span>{{editData.mobile}}</p>
-                      <p><span>Col :</span>{{editData.institutionName}}</p>
-                      <p><span>Add:</span>{{editData.mojarRegion}}</p>
+                      <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
+                      <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
                     </div>
                   </div>
                   <div class="qrcode">
@@ -143,8 +143,8 @@
                   <div class="data">
                     <div class="info">
                       <p><span>Tel :</span>{{editData.mobile}}</p>
-                      <p><span>Col :</span>{{editData.institutionName}}</p>
-                      <p><span>Add:</span>{{editData.mojarRegion}}</p>
+                      <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
+                      <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
                     </div>
                   </div>
                   <div class="qrcode">
@@ -178,10 +178,10 @@
           <span>经纪人电话</span>
           <input type="text" v-model="editData.mobile" maxlength="16" placeholder="请输入电话号码" @blur="blur">
         </div>
-        <div class="group-item">
+        <!-- <div class="group-item">
           <span>机构地址</span>
           <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址" @blur="blur">
-        </div>
+        </div> -->
         <div class="group-item">
           <span>宣传语</span>
           <input type="text" v-model="editData.signature" maxlength="48" placeholder="请输入宣传语" @blur="blur">
@@ -441,13 +441,13 @@ export default {
       if (!checkStrLength(slogan, 48)) {
         return this.$toast('宣传语最多为24个汉字')
       }
-      let reg2 = /^[\u4E00-\u9FA5A-Za-z0-9\/\\]+$/g
-      if (!reg2.test(mojarRegion)) {
-        return this.$toast('机构地址只支持中文、英文和数字')
-      }
-      if (!checkStrLength(mojarRegion, 48)) {
-        return this.$toast('机构地址最多为24个汉字')
-      }
+      // let reg2 = /^[\u4E00-\u9FA5A-Za-z0-9\/\\]+$/g
+      // if (!reg2.test(mojarRegion)) {
+      //   return this.$toast('机构地址只支持中文、英文和数字')
+      // }
+      // if (!checkStrLength(mojarRegion, 48)) {
+      //   return this.$toast('机构地址最多为24个汉字')
+      // }
 
       let result = await userService.updateAgentCard({
         // agentId: this.agentId,
@@ -877,7 +877,7 @@ export default {
             }
 
             .signature {
-              padding: 0 20px 5px 20px;
+              padding: 20px 20px 5px 20px;
               font-size: 14px;
               opacity: 0.5;
               color: #fff;

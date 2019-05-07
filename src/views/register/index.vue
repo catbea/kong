@@ -12,14 +12,17 @@
             <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
             <span class="invite-desc">邀请您加入</span>
           </div>
+          <div class="channel-register" v-show="false">
+            <b>恒大山水郡</b>送您免费开通券，邀请您加入
+          </div>
           <div class="top-phone-cell">
             <input
               class="phone-input"
               placeholder="请使用当前微信绑定手机号"
-              type="number"
+              type="tel"
               oninput="value=value.replace(/[^0-9]/g,'')"
               maxlength="11"
-              v-model="mobile"
+              v-model.trim="mobile"
               @focus="focusHandler"
               @blur="blurHandler"
               @input="inputHandler"
@@ -56,6 +59,10 @@
               @input="inputHandler"
             >
           </div>
+          <div class="user-city" @click="popAreaHandler" v-show="false">
+            <p class="title">主营区域</p>
+            <p class="value" :class="{'disable': !userRegistInfo.majorRegion}">{{userRegistInfo.majorRegion || '请选择'}} <van-icon name="arrow" /></p>
+          </div>
         </div>
         <!-- <router-link :to="params"> -->
         <div class="reg-btn" :class="registDisabled&&'registDisabled'" @click="nextHandler">立即注册</div>
@@ -85,6 +92,7 @@
         </div>
       </div>
     </div>
+    <area-select :show.sync="areaShow" :code.sync="cityCode" :title="areaTitle" @cancel="cancelHandler" @confirm="confirmHandler" :areaList="areaList"></area-select>
   </div>
 </template>
 <script>
@@ -93,6 +101,8 @@ import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import { checkStrLength, checkStrType } from '@/utils/tool'
 import RegisterService from 'SERVICE/registService'
+import AreaSelect from 'COMP/AreaSelect'
+import { fullArea } from '@/utils/fullArea'
 export default {
   data: () => ({
     bgImg: require('IMG/register/registerBg.png'),
@@ -127,8 +137,15 @@ export default {
     institutionName: '',
     majorRegion: '',
     params: null,
-    query: null
+    query: null,
+    areaShow: false,
+    areaTitle: '请选择区域',
+    areaCode: '440305',
+    areaList: {}
   }),
+  components: {
+    AreaSelect
+  },
   created() {
     this.query = this.$route.query
     // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
@@ -153,11 +170,93 @@ export default {
     if (this.registerType === '10' || this.registerType === '20') {
       this.queryRegisterRecommendInfo()
     }
+    this.fullArea = fullArea
+    this.getAreaList(fullArea)
   },
   computed: {
-    ...mapGetters(['userRegistInfo'])
+    ...mapGetters(['userInfo', 'userRegistInfo']),
+    cityCode() {
+      let codes = Object.keys(this.fullArea.city_list)
+      let cityList = Object.values(this.fullArea.city_list)
+      let i = ''
+      cityList.forEach((el, index) => {
+        if (el === this.userInfo.majorCity) {
+          return (i = index)
+        }
+      })
+      return codes[i] || ''
+    }
+  },
+  watch: {
+    mobile (newValue, oldValue) {
+      let reg = /^1[3-9]\d{9}$/g
+      if (reg.test(newValue)) {
+        // 请求用户是否为老用户
+        this.checkUser(newValue)
+      }
+    }
   },
   methods: {
+    // 检测二维码是否有效
+    checkQrcode () {
+      RegisterService.checkQrcode({}).then(res => {}).catch()
+    },
+    // 检测老用户
+    checkUser (phone) {
+      setTimeout(()=>{
+        console.log(phone === this.mobile)
+      },1000)
+      RegisterService.checkUser({}).then(res => {
+        if (phone === this.mobile) {
+          this.$dialog.alert({
+            title: '',
+            message: '该号码已注册，登录后即可免费开通！',
+            confirmButtonText: '立即登录'
+          }).then(() => {
+            this.$toast('已免费开通，请到我的楼盘中查看')
+            // on close
+          })
+        }
+      }).catch()
+    },
+    // areaList 获取
+    getAreaList () {
+      let keys =  Object.keys(this.fullArea.city_list)
+      let data = {}
+      keys.forEach(ele => {
+        data[ele] = '不限'
+      })
+      let county_list = Object.assign({},this.fullArea.county_list, data)
+      this.areaList = Object.assign({},this.fullArea,{county_list: county_list})
+    },
+    confirmHandler(val) {
+      this.areaShow = false
+      if (val[2]) {
+        this.majorRegion = val[0].name + '/' + val[1].name + '/' + val[2].name
+        this.city = val[1].name
+        this.area = val[2].name
+      } else {
+        this.majorRegion = val[0].name + '/' + val[1].name
+        this.city = val[1].name
+        this.area = ''
+      }
+
+      let _userRegistInfo = {
+        majorRegion: this.majorRegion,
+        city: this.city,
+        area: this.area
+      }
+      this.$store.commit(types.USER_REGIST_INFO, _userRegistInfo)
+    },
+    /**
+     * 弹出主营区域选择框
+     */
+    popAreaHandler() {
+      this.areaShow = !this.areaShow
+    },
+    cancelHandler(val) {
+      this.areaShow = false
+    },
     async queryByRegister(enterpriseId) {
       const result = await RegisterService.queryByRegister(enterpriseId)
       this.registerName = result.registerTitle
@@ -196,6 +295,7 @@ export default {
       } else {
         this.clickDisabled = true
         this.registSuccess = true
+        this.$toast('已免费开通，请到我的楼盘中查看')
         // let params = {
         //   enterpriseId: this.enterpriseId
         // }
@@ -315,7 +415,7 @@ export default {
     }
     .top-form-container {
       width: 324px;
-      height: 260px;
+      min-height: 260px;
       background-color: #fff;
       border-radius: 8px;
       padding: 20px;
@@ -373,6 +473,12 @@ export default {
           font-size: 14px;
         }
       }
+      .channel-register{
+        font-size: 14px;
+        b{
+          margin-right: 5px;
+        }
+      }
       > .top-phone-cell,
       > .top-name-cell {
         width: 100%;
@@ -407,6 +513,27 @@ export default {
           &.disabled {
             opacity: 0.5;
             background-color: #b6c0cc;
+          }
+        }
+      }
+      .user-city{
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        .title{
+          width: 64px;
+        }
+        .value{
+          flex: 1;
+          text-align: right;
+          vertical-align: middle;
+          font-size: 14px;
+          color: #445166;
+          i{
+            vertical-align: middle;
+          }
+          &.disable{
+            color: #B8BFCC;
           }
         }
       }

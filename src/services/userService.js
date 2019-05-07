@@ -570,5 +570,14 @@ class UserService {
     })
   }
   
+  /**
+   * 开通vip城市列表
+   */
+  getVipList(data) {
+    return xhr({
+      url: '',
+      body: data
+    })
+  }
 }
 export default new UserService()

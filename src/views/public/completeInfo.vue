@@ -24,7 +24,7 @@
           <i class="icon iconfont icon-arrow"></i>
         </p>
       </div>
-      <div class="van-hairline--bottom company-cell" @click="seachCompanyHandler">
+      <!-- <div class="van-hairline--bottom company-cell" @click="seachCompanyHandler">
         <p class="value" v-if="userInfo.distributorName">
           {{userInfo.distributorName}}
           <i class="icon iconfont icon-arrow"></i>
@@ -43,7 +43,7 @@
           请选择您的机构
           <i class="icon iconfont icon-arrow"></i>
         </p>
-      </div>
+      </div> -->
     </div>
     <div class="bottom-bar" @click="sureHandler">确定</div>
     <area-select

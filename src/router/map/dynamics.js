@@ -86,5 +86,16 @@
         show: false
       }
     }
+  },
+  {
+    path: '/dynamics/todoList',
+    name: 'todoList',
+    component: resolve => require(['@/views/dynamics/todoList.vue'], resolve),
+    meta: {
+      title: '今日待办',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]

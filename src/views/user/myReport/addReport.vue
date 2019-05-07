@@ -1,19 +1,26 @@
 <template>
   <div class="addReport-page">
-    <van-cell-group>
-      <van-cell
-        title="报备楼盘"
-        is-link
-        :value="reportAddInfo.linkerName"
-        :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"
-      />
-      <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomerEdit"/>
-      <van-cell title="手机号" is-link :value="valueComputed" to="reportPhone"/>
-    </van-cell-group>
-    <p class="addReport-remarks">注：客户手机号只提供前三后四给分销商使用，请放心填写。</p>
-    <div class="addReport-botton">
+    <div class="group">
+      <van-cell-group>
+        <van-cell
+          title="报备楼盘"
+          is-link
+          :value="reportAddInfo.linkerName"
+          :to="{path:'/user/myReport/addReport/reportMarket', query:{type:'report'}}"
+        />
+        <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomerEdit"/>
+        <van-cell title="手机号" is-link :value="valueComputed" to="reportPhone"/>
+        <van-cell title="渠道" value="AW大师" />
+      </van-cell-group>
+    </div>
+    
+    <!-- <p class="addReport-remarks">注：客户手机号只提供前三后四给分销商使用，请放心填写。</p> -->
+    <!-- <div class="addReport-botton">
       <button class="addReport-btn addReport-btn-updata" @click="editInstitutionHandler">修改所属机构</button>
       <button class="addReport-btn addReport-btn-up" @click="submitReportHandler">提交报备</button>
+    </div> -->
+    <div class="addReport-submit">
+      <button class="button" @click="submitReportHandler">提交报备</button>
     </div>
   </div>
 </template>
@@ -99,9 +106,13 @@ export default {
 </script>
 <style lang="less">
 .addReport-page {
+  height: 100%;
+  position: relative;
   //#F7F9FA
   background: #f7f9fa;
-  padding-top: 23px;
+  .group{
+   padding-top: 23px;
+  }
   .van-cell {
     width: 100%;
     display: -webkit-box;
@@ -138,7 +149,7 @@ export default {
     color: rgba(153, 153, 153, 1);
     line-height: 21px;
   }
-  > .addReport-remarks {
+  .addReport-remarks {
     font-size: 12px;
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
@@ -146,9 +157,22 @@ export default {
     padding: 0 16px;
     padding-top: 13px;
   }
-  > .addReport-botton {
+  .addReport-submit{
+    margin: 50px 16px 20px;
+    .button{
+      width: 100%;
+      height: 44px;
+      border-radius: 4px;
+      font-weight: 400;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 1);
+      border: 0;
+      background: rgba(0, 122, 230, 1);
+    }
+  }
+  .addReport-botton {
     margin: 56px 32px;
-    > .addReport-btn {
+    .addReport-btn {
       width: 144px;
       height: 44px;
       border-radius: 4px;
@@ -156,13 +180,13 @@ export default {
       font-weight: 400;
       font-size: 16px;
     }
-    > .addReport-btn-updata {
+    .addReport-btn-updata {
       color: rgba(0, 122, 230, 1);
       background: rgba(255, 255, 255, 1);
       border: 1px solid;
       margin-right: 23px;
     }
-    > .addReport-btn-up {
+    .addReport-btn-up {
       color: rgba(255, 255, 255, 1);
       border: 0;
       background: rgba(0, 122, 230, 1);

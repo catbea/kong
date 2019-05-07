@@ -1,12 +1,12 @@
 <template>
   <div class="user-market-page">
-    <div class="user-market-page-box" @click="skipMarketDetail(dataArr.linkerId)">
-      <div class="user-market-page-box-top">
+    <div class="user-market-page-box">
+      <div class="user-market-page-box-top" @click="skipMarketDetail(dataArr.linkerId)">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p>
           <span class="bg_img icon-play"  v-if="dataArr.ifPanorama===1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
-        <ul>
+        <ul >
           <li>
             <div style="display:flex; align-items:center;">
               <span class="free" v-if="+dataArr.isFree">免费</span>
@@ -36,6 +36,11 @@
             </div>
           </li>
         </ul>
+      </div>
+      <div class="channel-box scale-1px" v-if="+dataArr.isFree">
+        <span class="">选择渠道</span>
+        <span class="">切换渠道</span>
+        <span @click="showTaskFn">任务(1/3)</span>
       </div>
       <div class="user-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt srcset>
@@ -69,6 +74,15 @@
         </ul>
       </van-popup>
     </div>
+    <div class="task">
+      <van-popup v-model="showTask">
+        <div class="task-box">
+          <h3>今日分享任务已完成1/3</h3>
+          <p>任务说明：每天都需要完成至少3条以上植入该楼盘的“写一写”分享，或者楼盘相关的其他分享。</p>
+          <button type="button" @click="hideTaskFn">我知道了</button>
+        </div>
+      </van-popup>
+    </div>
   </div>
 </template>
 <script>
@@ -93,7 +107,8 @@ export default {
     imgCommission: require('IMG/user/collection/icon_commission@2x.png'),
     status: ['热销中', '即将发售', '售罄'],
     pastShow: '是否过期',
-    stride: true
+    stride: true,
+    showTask: false
   }),
   props: {
     dataArr: {
@@ -113,6 +128,27 @@ export default {
     
   },
   methods: {
+    // 显示任务
+    showTaskFn () {
+      if (this.dataArr.shelfFlag == 1) {
+        this.$dialog
+          .alert({
+            title: '非常抱歉',
+            message: '该楼盘已被下架或删除',
+            // className: 'renew-Dialog',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      } else {
+        this.showTask = true
+      }
+    },
+    // 隐藏任务
+    hideTaskFn () {
+      this.showTask = false
+    },
     recommendNumHandle() {
       //判断有没有超过5个推荐
       let parent = this.$parent.$parent
@@ -151,7 +187,7 @@ export default {
           .alert({
             title: '非常抱歉',
             message: '该楼盘已被下架或删除',
-            className: 'renew-Dialog',
+            // className: 'renew-Dialog',
             confirmButtonText: '知道啦'
           })
           .then(() => {
@@ -561,6 +597,22 @@ export default {
         width: 130px;
       }
     }
+    .channel-box{
+      font-size: 12px;
+      color: #445166;
+      padding: 10px 0;
+      text-align: right;
+      span{
+        display: inline-block;
+        height: 24px;
+        line-height: 24px;
+        text-align: center;
+        background:#F2F5F9;
+        border-radius:4px;
+        margin-left: 16px;
+        padding: 0 16px;
+      }
+    }
   }
   //弹窗
   .van-popup--bottom {
@@ -596,6 +648,39 @@ export default {
   .van-modal {
     width: 100%;
   }
+  .task{
+    font-size: 14px;
+    .van-popup{
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .task-box{
+        width: 310px;
+        height: 230px;
+        padding: 24px;
+      h3{
+        font-size: 20px;
+        padding-bottom: 15px;
+        font-weight: 600;
+      }
+      p{
+        font-size: 14px;
+        line-height: 1.5;
+        color: #666;
+      }
+      button{
+        width: 100%;
+        height:44px;
+        background:rgba(0,122,230,1);
+        border-radius:6px;
+        color: #fff;
+        font-size: 16px;
+        border:none;
+        margin-top: 30px;
+      }
+    }
+  }
+  
 }
 //弹出确认框
 .hint-alert {

@@ -8,15 +8,16 @@
       </div>
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
         <li>{{userInfo.name}}</li>
-        <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
+        <!-- <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li> -->
+        <li @click="goVipList">已开通城市(22) ></li>
         <li v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
         <li v-show="!isVip">暂未开通VIP功能</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘</router-link>
+      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘 ></router-link>
       </div>
     </div>
-    <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>
+    <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle" :userArea="userArea"></set-meal>
     <member-privilege></member-privilege>
     <privilege-describe></privilege-describe>
     <agreement></agreement>
@@ -90,11 +91,15 @@ export default {
     }
   },
   methods: {
+    // 跳转vip列表
+    goVipList () {
+      this.$router.push('/user/viplist')
+    },
     // 确认支付
     confirmFun () {
       this.$dialog.confirm({
         title: '提示',
-        message: '是否确认开通？'
+        message: `是否确认选择${this.selectCity}作为楼盘开通城市？`
       }).then(() => {
         this.paySubmit()
       }).catch(() => {})
@@ -228,7 +233,7 @@ export default {
     },
 
     checkCityHandle() {
-      this.$router.push({ path: '/public/area-select/', query: { fromPage: 'myMember' } })
+      this.$router.push({ path: '/public/vip-market/', query: { fromPage: 'myMember', category: 0 } })
     }
   },
   beforeDestroy () {

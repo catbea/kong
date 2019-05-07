@@ -4,6 +4,24 @@
       <dynamics-collect :data="collectData" @click="goMessageInfo"/>
       <estate-recommend v-if="recommendData" :info="recommendData" @click="goRecommendInfo"/>
     </div>
+    <div class="todo-box" @click="goTodoList">
+      <div class="todo-list">
+        <div class="info">
+          <div class="icon">
+            <img src="../../assets/img/dynamics/todo.png" alt="">
+          </div>
+          <div class="text">
+            <b>今日待办</b>
+            <p>您今日还有7件待办事项</p>
+          </div>
+        </div>
+      <div class="action">
+        <span class="dot"></span>
+        <img src="../../assets/img/dynamics/arrow.png" alt="">
+      </div>
+    </div>
+    </div>
+    
     <div class="list-container" v-if="estateListData&&estateListData.length>0">
       <my-estate-list :list="estateListData" @click="goRecommendInfo" @share="shareHandler"/>
     </div>
@@ -54,6 +72,10 @@ export default {
     }, 30000)
   },
   methods: {
+    // 跳转待办事项
+    goTodoList () {
+      this.$router.push('/dynamics/todoList')
+    },
     shiftHandle() {
       this.$dialog
         .alert({
@@ -216,6 +238,67 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.dynamics-page{
+  .todo-box{
+    background-color: #fff;
+    border-bottom: 5px solid #f7f9fa;
+    padding: 0 16px 20px 16px;
+    margin-top: -15px;
+    .todo-list{
+      height: 80px;
+      border-radius: 10px;
+      background-color: #fff;
+      border: 1px solid #eee;
+      font-size: 12px;
+      display: flex;
+    .info{
+      flex: 1;
+      display: flex;
+      align-items: center;
+      .icon{
+        img{
+          width: 40px;
+          height: 40px;
+          margin: 0 5px 0 12px;
+        }
+      }
+      .text{
+        b{
+          font-size: 16px;
+          margin-bottom: 4px;
+          display: block;
+        }
+        p{
+          color: #8A9299;
+        }
+      }
+    }
+    .action{
+      width: 40px;
+      height: 80px;
+      line-height: 80px;
+      display: flex;
+      align-items: center;
+      .dot{
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background-color: #EA4D2E;
+        border-radius: 50%;
+      }
+      img{
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+  }
+  
+}
+</style>
+
 <style lang="less">
 .dynamics-page {
   background: #f7f9fa;
