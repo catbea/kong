@@ -422,6 +422,13 @@ export default {
         .edit-houses {
           margin-top: 24px;
         }
+        div,section{
+          width: auto !important;
+        }
+        img{
+          height: auto !important;
+          max-width: 100% !important;
+        }
       }
       > .disclaimer-box {
         font-size: 14px;
