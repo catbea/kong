@@ -132,6 +132,17 @@ export default {
         // return this.itemInfo.saleStatus
         return '热销中'
       }
+    },
+    vipCity() {
+      let status = false
+      if (this.vipInfo.city) {
+        this.vipInfo.city.forEach(el => {
+          if (el.city === this.itemInfo.city && el.vipValid) {
+            status = true
+          }
+        })
+      }
+      return status
     }
   },
   methods: {
@@ -175,6 +186,9 @@ export default {
       if (this.itemInfo.city !== this.vipInfo.city) {
         return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
+      // if (!this.vipCity) {
+      //   return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      // }
       if (!this.status) {
         this.$dialog.confirm({
           title: '提示',

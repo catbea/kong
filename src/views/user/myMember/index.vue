@@ -17,7 +17,7 @@
       <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘 ></router-link>
       </div>
     </div>
-    <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle" :userArea="userArea"></set-meal>
+    <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle" @goVipList="goVipList" :userArea="userArea"></set-meal>
     <member-privilege></member-privilege>
     <privilege-describe></privilege-describe>
     <agreement></agreement>
@@ -107,6 +107,7 @@ export default {
     async paySubmit() {
       let param = {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
+        city: this.selectCity,
         amountId: this.vipList[this.currPriceIndex].id,
         subscribeNum: this.vipList[this.currPriceIndex].subscribeNum,
         payOpenid: this.userInfo.payOpenId

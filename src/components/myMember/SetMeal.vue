@@ -9,7 +9,7 @@
         </div>
       </div> -->
       <div class="mymember-vipcity">
-        <b class="city">{{userArea.vipSelectedCity || setMealInfo.vipCity}}</b><span class="more" @click="checkCityhandle">开通更多<img src="../../assets/img/dynamics/arrow.png" alt=""></span>
+        <b class="city" @click="goVipList">{{userArea.vipSelectedCity || setMealInfo.vipCity}}</b><span class="more" @click="checkCityhandle">开通更多<img src="../../assets/img/dynamics/arrow.png" alt=""></span>
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
         <li :class="{active:num==index}" v-for="(item,index) in vipList" :key="index" @click="taget(index)">
@@ -59,6 +59,9 @@ export default {
     taget(index) {
       this.num = index
       this.$emit('priceClick', index)
+    },
+    goVipList () {
+      this.$emit('goVipList')
     }
   }
 }

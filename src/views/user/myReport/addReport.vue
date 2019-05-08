@@ -22,6 +22,14 @@
     <div class="addReport-submit">
       <button class="button" @click="submitReportHandler">提交报备</button>
     </div>
+    <van-actionsheet v-model="showChannel" title="选择渠道">
+      <div class="channel-box">
+        <div class="channel-list">
+          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.name}} <span v-if="item.isFree" class="free">免费券</span></p>
+        </div>
+        <div class="cancle" @click="hideChannelFn">取消</div>
+      </div>
+    </van-actionsheet>
   </div>
 </template>
 <script>
@@ -30,7 +38,10 @@ import reportService from 'SERVICE/reportService'
 export default {
   data() {
     return {
-      hideClientMobile: ''
+      hideClientMobile: '',
+      showChannel: false,
+      channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
+      currentChannel: {}
     }
   },
 
@@ -42,6 +53,19 @@ export default {
   },
   created() {},
   methods: {
+    // 选择渠道
+    changeChannel (item){
+      this.currentChannel = item
+      this.hideChannelFn()
+    },
+    // 显示渠道
+    showChannelFn () {
+      this.showChannel = true
+    },
+    // 隐藏渠道
+    hideChannelFn () {
+      this.showChannel = false
+    },
     privacyPhone(value) {
       value = String(value)
       return value.length > 7 ? value.substr(0, 3) + '****' + value.substr(7) : ''
@@ -98,6 +122,10 @@ export default {
           title: '请输入客户手机号'
         })
         return
+      }
+      // 没有渠道
+      if(true) {
+        return this.showChannelFn()
       }
       this.addReportInfo()
     }
@@ -190,6 +218,38 @@ export default {
       color: rgba(255, 255, 255, 1);
       border: 0;
       background: rgba(0, 122, 230, 1);
+    }
+  }
+  /deep/ .van-icon-close{
+    display: none;
+  }
+  .channel-box{
+    font-size: 16px;
+    padding: 10px 0 0 0;
+    .channel-list{
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+    .item{
+      padding: 16px 0 10px 16px;
+      .free{
+        display: inline-block;
+        font-size: 10px;
+        color: #fff;
+        background-color: #EA4D2E;
+        line-height: 15px;
+        height: 15px;
+        padding: 0 5px;
+        border-radius: 2px;
+        vertical-align: middle;
+      }
+    }
+    .cancle{
+      margin-top: 20px;
+      height:50px;
+      background:rgba(238,238,238,1);
+      line-height: 50px;
+      text-align: center;
     }
   }
 }

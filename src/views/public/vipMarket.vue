@@ -99,17 +99,17 @@ export default {
     keywords () {
       let res = []
       if(this.keywords){
-        this.cityListData.provinceList.forEach(e => {
-          for (let i=0,l=e.city.length; i<l; i++) {
-            let item = e.city[i]
-            if (item.indexOf(this.keywords) > -1) {
-              res.push({
-                city: item,
-                type: 1
-              })
-            }
-          }
-        })
+        // this.cityListData.provinceList.forEach(e => {
+        //   for (let i=0,l=e.city.length; i<l; i++) {
+        //     let item = e.city[i]
+        //     if (item.indexOf(this.keywords) > -1) {
+        //       res.push({
+        //         city: item,
+        //         type: 1
+        //       })
+        //     }
+        //   }
+        // })
         this.cityListData.cityList.forEach(e => {
           for (let i=0,l=e.city.length; i<l; i++) {
             let item = e.city[i]

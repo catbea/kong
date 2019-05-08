@@ -21,7 +21,7 @@
       </van-list>
       <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-if="!haveData"></null>
     </div>
-    <div class="report-confirm" @click="onSureHandler">
+    <div class="report-confirm" @click="onSureHandler" v-if="haveData">
       <p>确定</p>
     </div>
   </div>

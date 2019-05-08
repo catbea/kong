@@ -10,7 +10,7 @@
         <p class="name">
           {{currentChannel.name}} <span class="free" v-if="currentChannel.isFree">免费券</span>
         </p>
-        <span class="arrow" @click="showChannel">
+        <span class="arrow" @click="showChannelFn">
            <img src="../../../assets/img/dynamics/arrow.png" alt="">
         </span>
       </div>
@@ -27,12 +27,12 @@
     <div class="submit">
       确认修改
     </div>
-    <van-actionsheet v-model="show" title="选择渠道">
+    <van-actionsheet v-model="showChannel" title="选择渠道">
       <div class="channel-box">
         <div class="channel-list">
           <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.name}} <span v-if="item.isFree" class="free">免费券</span></p>
         </div>
-        <div class="cancle" @click="hideChannel">取消</div>
+        <div class="cancle" @click="hideChannelFn">取消</div>
       </div>
     </van-actionsheet>
   </div>
@@ -45,7 +45,7 @@ export default {
     return {
       reasons: ['从渠道离职', '佣金不满意', '渠道无券', '其他'],
       reasonIndex: 0,
-      show: false,
+      showChannel: false,
       channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
       currentChannel: {},
       reasonText: ''
@@ -62,15 +62,15 @@ export default {
     // 选择渠道
     changeChannel (item){
       this.currentChannel = item
-      this.hideChannel()
+      this.hideChannelFn()
     },
     // 显示渠道
-    showChannel () {
-      this.show = true
+    showChannelFn () {
+      this.showChannel = true
     },
     // 隐藏渠道
-    hideChannel () {
-      this.show = false
+    hideChannelFn () {
+      this.showChannel = false
     },
     // 收起键盘弹框
     blur() {
