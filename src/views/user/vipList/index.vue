@@ -1,7 +1,7 @@
 <template>
   <div class="vip-list">
     <div class="open-box">
-      <van-list
+      <!-- <van-list
         v-model="loading"
         :finished="finished"
         finished-text="没有更多了"
@@ -14,54 +14,91 @@
           </div>
           <div class="action">续费</div>
         </div>
-      </van-list>
+      </van-list> -->
+      <div class="vip-item scale-1px-bottom" v-for="(item,index) in vipList" :key="index">
+        <div class="info">
+          <b class="title">{{item.city}}</b>
+          <p class="time" :class="{'disable': !item.vipValid}">{{item.expireTimestamp | formatDate}} <span v-if="!item.vipValid">已</span>到期</p>
+        </div>
+        <div class="action" @click="renewVip(item)">续费</div>
+      </div>
     </div>
     <div class="open-btn" @click="goOpenVip">开通更多城市</div>
   </div>
 </template>
 
 <script>
-import userService from 'SERVICE/userService'
+import marketService from 'SERVICE/marketService'
 export default {
   data () {
     return {
-      loading: false,
-      finished: false,
-      current: 1,
-      pages: 0,
-      pageSize: 10,
-      vipList: [{city: '广州', time: '2019/02/14', valiable: false}, {city: '深圳', time: '2019/08/25', valiable: true},{city: '北京', time: '2019/10/05', valiable: true}]
+      // loading: false,
+      // finished: false,
+      // current: 1,
+      // pages: 0,
+      // pageSize: 10,
+      vipList: []
     }
   },
+  created () {
+    this.getVipInfo()
+  },
   methods: {
-    // 加载数据
-    onLoad () {
-      if (this.current > this.pages) {
-        // 加载状态结束
-        this.finished = true
-        this.loading = false
-      } else {
-        this.getVipList()
-      }
-    },
-    // 获取todoList列表
-    getVipList () {
-      userService.getVipList({}).then(result => {
-        if (result) {
-          this.pages = result.pages
-          let todoList = result.vipList
-          if (this.current === 1) {
-            this.vipList = vipList
-          } else {
-            this.vipList.push(...vipList)
-          }
-          this.current += 1
-        }
-      }).catch()
-    },
     // 跳转开通vip城市
     goOpenVip () {
       this.$router.push('/user/myMember')
+    },
+    // 获取vip城市列表
+    getVipInfo () {
+      marketService.vipInfo().then(res => {
+        this.vipList = res.vipList
+      }).catch()
+    },
+    // vip续费
+    renewVip (item) {
+      this.$store.commit('USER_AREA', { vipSelectedCity: item.city })
+      this.$router.push('/user/myMember')
+    }
+    // 加载数据
+    // onLoad () {
+    //   if (this.current > this.pages) {
+    //     // 加载状态结束
+    //     this.finished = true
+    //     this.loading = false
+    //   } else {
+    //     this.getVipList()
+    //   }
+    // },
+    // 获取todoList列表
+    // getVipList () {
+    //   userService.getVipList({}).then(result => {
+    //     if (result) {
+    //       this.pages = result.pages
+    //       let todoList = result.vipList
+    //       if (this.current === 1) {
+    //         this.vipList = vipList
+    //       } else {
+    //         this.vipList.push(...vipList)
+    //       }
+    //       this.current += 1
+    //     }
+    //   }).catch()
+    // },
+  },
+  filters: {
+    // 格式化时间
+    formatDate (val) {
+      let date = ''
+      if (val) {
+        let time = new Date(+val)
+        let m = time.getMonth() + 1
+        let d = time.getDate()
+        let y = time.getFullYear()
+        m = m < 10 ? '0' + m : m
+        d = d < 10 ? '0' + d :d
+        date = `${y}/${m}/${d}`
+      }
+      return date
     }
   }
 }

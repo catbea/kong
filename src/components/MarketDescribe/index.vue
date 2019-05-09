@@ -96,7 +96,8 @@ export default {
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       showChannel: false,
       channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
-      currentChannel: {}
+      currentChannel: {},
+      vipCity: {}
     }
   },
   created() {
@@ -133,12 +134,14 @@ export default {
         return '热销中'
       }
     },
-    vipCity() {
+    // 判断vip城市和vip有效期
+    checkVipCity() {
       let status = false
-      if (this.vipInfo.city) {
-        this.vipInfo.city.forEach(el => {
+      if (this.vipInfo.vipList) {
+        this.vipInfo.vipList.forEach(el => {
           if (el.city === this.itemInfo.city && el.vipValid) {
             status = true
+            this.vipCity = el
           }
         })
       }
@@ -183,12 +186,13 @@ export default {
     },
     // 确认支付
     async confirmFun () {
-      if (this.itemInfo.city !== this.vipInfo.city) {
-        return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
-      }
-      // if (!this.vipCity) {
+      // if (this.itemInfo.city !== this.vipInfo.city) {
       //   return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       // }
+      // 判断vip城市和vip有效期
+      if (!this.checkVipCity) {
+        return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      }
       if (!this.status) {
         this.$dialog.confirm({
           title: '提示',
@@ -199,8 +203,8 @@ export default {
       } else {
         
         let invalidTime = +new Date(this.itemInfo.invalidTime.replace(/-/g,'/'))// 楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
-        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.itemInfo.city === this.vipInfo.city) {
+        let expireTimestamp = this.vipCity.expireTimestamp // vip到期时间
+        if (this.vipCity.vipValid && expireTimestamp > invalidTime && this.itemInfo.city === this.vipCity.city) {
           const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
           this.$toast({
             duration: 1000,
@@ -244,12 +248,11 @@ export default {
     },
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市
-      if (this.status == 0) {
-        if (this.itemInfo.city === this.vipInfo.city) {
+      if (this.status == 0) {       
+        if (this.itemInfo.city === this.vipCity.city && this.vipCity.vipValid) {
           const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
           if (res.returnCode == 21801) {
-            this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
-            return
+            return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
           }
           this.status = 2
           this.itemInfo.openStatus = 2

@@ -160,13 +160,6 @@ export default {
       this.updateCustomerInfo(params)
     },
     reportHandler() {
-      // 报备失败
-      if(false) {
-        return this.$dialog.alert({
-          title: '提示',
-          message: '非合作楼盘，无渠道可选，报备失败！'
-        })
-      }
       let _reportAddInfo = {
         clientId: this.clientId,
         clientName: this.customBaseInfo.clientName,

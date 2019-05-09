@@ -23,11 +23,11 @@
                 <span class="container-list-title container-spec">{{item.clientName}}</span>
               </p>
               <p class="container-list">
-                <span class="container-list container-list-left">
+                <!-- <span class="container-list container-list-left">
                   代理商
                   <span class="container-list-title">{{item.distributorName}}</span>
-                </span>
-                <span class="container-list-right">{{reportStatusInfo[item.fillingStatus]}}</span>
+                </span> -->
+                <span class="container-list-right" style="margin-top:-30px;">{{reportStatusInfo[item.fillingStatus]}}</span>
               </p>
               <p class="container-list">
                 <span class="container-list">

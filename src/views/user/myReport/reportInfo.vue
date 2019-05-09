@@ -22,18 +22,18 @@
             >{{this.clientMobileStatus}}</span>
             <span class="container-list-call-phone" @click="callUp(reportInfo.clientMobile)">拨打电话</span>
           </p>
-          <p class="container-list container-list-left">
+          <!-- <p class="container-list container-list-left">
             代理商
             <span class="container-list-title">{{reportInfo.distributorName}}</span>
-          </p>
+          </p> -->
           <p class="container-list">
             报备时间
             <span class="container-list-title">{{reportInfo.fillingTime}}</span>
           </p>
-          <p class="container-list container-list-left">
+          <!-- <p class="container-list container-list-left">
             &nbsp;&nbsp;&nbsp;佣金
             <span class="container-list-title">{{reportInfo.divisionRules || '请联系案场'}}</span>
-          </p>
+          </p> -->
         </div>
       </div>
       <div class="report-btn" v-for="(item, index) in auditList" :key="index">

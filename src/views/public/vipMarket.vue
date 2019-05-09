@@ -38,7 +38,7 @@
             <mt-index-section index="" v-if="userInfo.enterpriseId != 92 && userInfo.enterpriseId != 93 && category !=0">
               <mt-cell title="全国" @click.native="chooseItem('全国',2)"></mt-cell>
             </mt-index-section>
-            <mt-index-section :index="item.character" v-for="(item,index) in cityListData.cityList" :key="index">
+            <mt-index-section :index="item.character" v-for="(item,index) in cityListData" :key="index">
               <mt-cell :title="option" @click.native="chooseItem(option,2)" v-for="(option,num) in item.city" :key="num"></mt-cell>
             </mt-index-section>
           </mt-index-list>
@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import marketService from 'SERVICE/marketService'
 import commonService from '@/services/commonService'
+import marketService from 'SERVICE/marketService'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import { IndexList, IndexSection, Cell } from 'mint-ui'
@@ -93,7 +93,11 @@ export default {
     this.mtIndexHeight = (this.fromPage === 'market') ? window.innerHeight : 0
     this.usercity = this.$route.query.searchContent || '深圳市'
     this.category = this.$route.query.category
-    this.getCityList(this.category)
+    if (this.category === 1) {
+      this.getVipCityList()
+    } else {
+      this.getCityList(this.category)
+    } 
   },
   watch: {
     keywords () {
@@ -110,7 +114,7 @@ export default {
         //     }
         //   }
         // })
-        this.cityListData.cityList.forEach(e => {
+        this.cityListData.forEach(e => {
           for (let i=0,l=e.city.length; i<l; i++) {
             let item = e.city[i]
             if (item.indexOf(this.keywords) > -1) {
@@ -128,11 +132,18 @@ export default {
     }
   },
   methods: {
-    // 查询城市列表 0-用于楼盘列表，1-用于我的楼盘
+    // 查询VIP城市列表
+    async getVipCityList () {
+      let res = await commonService.getVipCityList({})
+      if (res) {
+        this.cityListData = res
+      }
+    },
+    // 查询城市列表
     async getCityList (type) {
       let res = await marketService.getCityList({type: type})
       if (res) {
-        this.cityListData = res
+        this.cityListData = res.cityList
       }
     },
     // tab切换

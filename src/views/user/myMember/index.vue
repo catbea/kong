@@ -9,7 +9,7 @@
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
         <li>{{userInfo.name}}</li>
         <!-- <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li> -->
-        <li @click="goVipList">已开通城市(22) ></li>
+        <li @click="goVipList" v-show="isVip">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
         <li v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
         <li v-show="!isVip">暂未开通VIP功能</li>
         <li>余额：{{balance | priceFormart}}元</li>
@@ -76,7 +76,8 @@ export default {
     },
     selectCity: '',
     title: 'VIP生效城市待选',
-    showAddProjectDialogFlag: false
+    showAddProjectDialogFlag: false,
+    vipInfo: ''
   }),
   computed: {
     ...mapGetters(['userInfo', 'userArea']),
@@ -175,11 +176,12 @@ export default {
 
     async getVipInfo() {
       let res = await marketService.vipInfo()
+      this.vipInfo = res
       this.vipList = res.vipSettingList
-      this.isVip = res.vipFlag
+      this.isVip = !!res.expireTimestamp
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
-      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.city }
+      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity }
 
       // 判断是否已过期
       let now = new Date()

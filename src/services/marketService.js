@@ -207,7 +207,7 @@ class MarketService {
    */
   vipInfo() {
     return xhr({
-      url: '/brokerVip/vipInfo',
+      url: '/brokerVip/vipInfoList',
       body: {}
     })
   }

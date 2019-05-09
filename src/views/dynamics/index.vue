@@ -211,7 +211,8 @@ export default {
           .then(() => {
             // on close
           })
-      } else if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
+      // } else if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.distributorName) || isEmpty(this.userInfo.majorCity) || isEmpty(this.userInfo.institutionName)) {
+        } else if (isEmpty(this.userInfo.name) || isEmpty(this.userInfo.majorCity)) {
         this.$dialog
           .confirm({
             title: '您有未完善的信息',

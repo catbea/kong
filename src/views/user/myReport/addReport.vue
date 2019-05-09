@@ -10,7 +10,7 @@
         />
         <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomerEdit"/>
         <van-cell title="手机号" is-link :value="valueComputed" to="reportPhone"/>
-        <van-cell title="渠道" value="AW大师" />
+        <van-cell title="渠道" :value="channel" :is-link="chooseChannel" @click="showChannelFn" />
       </van-cell-group>
     </div>
     
@@ -41,7 +41,9 @@ export default {
       hideClientMobile: '',
       showChannel: false,
       channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
-      currentChannel: {}
+      currentChannel: {},
+      chooseChannel: true,
+      channel: '请选择'
     }
   },
 
@@ -56,10 +58,14 @@ export default {
     // 选择渠道
     changeChannel (item){
       this.currentChannel = item
+      this.channel = item.name
       this.hideChannelFn()
     },
     // 显示渠道
     showChannelFn () {
+      if (!this.chooseChannel) {
+        return false
+      }
       this.showChannel = true
     },
     // 隐藏渠道
@@ -111,6 +117,12 @@ export default {
         })
         return
       }
+      // 非合作楼盘，无渠道可选，报备失败
+      if (!this.channel) {
+        return this.$dialog.alert({
+          title: '非合作楼盘，无渠道可选，报备失败'
+        })
+      }
       if (!this.reportAddInfo.clientName) {
         this.$dialog.alert({
           title: '请选择客户名字'
@@ -123,8 +135,8 @@ export default {
         })
         return
       }
-      // 没有渠道
-      if(true) {
+      // 没有选择渠道
+      if(this.channel === '请选择') {
         return this.showChannelFn()
       }
       this.addReportInfo()
