@@ -589,5 +589,16 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 切换渠道
+   */
+  switchChannel (data) {
+    return xhr({
+      method: 'post',
+      url: ' /channel/switchChannel',
+      body: data
+    })
+  }
 }
 export default new UserService()

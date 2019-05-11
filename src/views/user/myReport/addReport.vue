@@ -29,7 +29,7 @@
           <p class="subtitle">七天只能切换一次</p>
         </div>
         <div class="channel-list">
-          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
+          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannelFn(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
         </div>
         <div class="cancle" @click="hideChannelFn">取消</div>
       </div>
@@ -90,7 +90,7 @@ export default {
       }).catch()
     },
     // 选择渠道
-    changeChannel (item){
+    changeChannelFn (item){
       this.currentChannel = item
       this.channel = `${item.channelName}${item.freeFlag ? '(免费券)' : ''}`
       this.$store.commit('REPORT_INFO', {

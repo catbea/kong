@@ -50,7 +50,7 @@
         </div>
         
         <div class="channel-list">
-         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
+         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannelFn(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
         </div>
         <div class="cancle" @click="hideChannelFn">取消</div>
       </div>
@@ -113,7 +113,9 @@ export default {
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
-    this.getChannelListByLinkerId()
+    if (+this.itemInfo.isFree) {
+      this.getChannelListByLinkerId()
+    }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
@@ -162,10 +164,10 @@ export default {
       }).catch()
     },
     // 选择渠道
-    async changeChannelFn (item){
+    changeChannelFn (item){
       this.currentChannel = item
       this.hideChannelFn()
-      await this.switchChannel()
+      this.switchChannel()
       if (item.freeFlag ) {
         this.freeOpenHandle()
       } else {
@@ -254,7 +256,7 @@ export default {
     },
     // 免费楼盘开通
     freeOpenHandle () {
-      marketService.newOpenLinker({linkerId: this.itemInfo.linkerId}).then(res => {
+      marketService.newOpenLinker({linkerId: this.itemInfo.linkerId, channelId: this.currentChannel.channelId}).then(res => {
         this.itemInfo.openStatus = 2
         this.itemInfo.openTimes += 1
         // let time = new Date(+this.vipInfo.expireTimestamp)
