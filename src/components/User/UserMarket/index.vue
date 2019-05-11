@@ -38,9 +38,9 @@
         </ul>
       </div>
       <div class="channel-box scale-1px" v-if="+dataArr.isFree">
-        <span @click="showChannelFn">选择渠道</span>
-        <span @click="goChangeChannel">切换渠道</span>
-        <span @click="showTaskFn">任务(1/3)</span>
+        <span @click="showChannelFn" v-if="!dataArr.channelId && dataArr.agentType <= 0">选择渠道</span>
+        <span @click="goChangeChannel" v-if="dataArr.channelId && dataArr.agentType <= 0">切换渠道</span>
+        <span @click="showTaskFn">任务({{dataArr.taskQuota}})</span>
       </div>
       <div class="user-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt srcset>
@@ -77,7 +77,7 @@
     <div class="task">
       <van-popup v-model="showTask">
         <div class="task-box">
-          <h3>今日分享任务已完成1/3</h3>
+          <h3>今日分享任务已完成{{dataArr.taskQuota}}</h3>
           <p>任务说明：每天都需要完成至少3条以上植入该楼盘的“写一写”分享，或者楼盘相关的其他分享。</p>
           <button type="button" @click="hideTaskFn">我知道了</button>
         </div>
@@ -91,7 +91,7 @@
         </div>
         
         <div class="channel-list">
-         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
+         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannelFn(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
         </div>
         <div class="cancle" @click="hideChannelFn">取消</div>
       </div>
@@ -139,7 +139,9 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    this.getChannelListByLinkerId()
+    if (+this.dataArr.isFree) {
+      this.getChannelListByLinkerId()
+    }
   },
   mounted() {
     
@@ -147,6 +149,9 @@ export default {
   methods: {
     // 跳转切换渠道
     goChangeChannel () {
+      if (this.dataArr.switchable <= 0) {
+        return this.$toast('渠道7天只能切换一次')
+      }
       this.$router.push({path: '/change/channel', query: {linkerId: this.dataArr.linkerId, channelId: this.dataArr.channelId, channelName: this.dataArr.channelName}})
     },
     // 获取渠道列表
@@ -155,10 +160,24 @@ export default {
         this.channelList = res
       }).catch()
     },
+
     // 选择渠道
     changeChannelFn (item){
       this.currentChannel = item
+      this.switchChannel()
       this.hideChannelFn()
+    },
+    // 切换渠道
+    switchChannel () {
+      userService.switchChannel({
+        linkerId:  this.linkerId,
+        newChannelId: this.currentChannel.channelId,
+        oldChannelId: '',
+        switchingReason: ''
+      }).then(res => {
+        this.dataArr.switchable = 0
+        this.$toast('选择渠道成功')
+      }).catch()
     },
     // 显示渠道
     showChannelFn () {
