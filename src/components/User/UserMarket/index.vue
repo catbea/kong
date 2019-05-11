@@ -176,6 +176,7 @@ export default {
         switchingReason: ''
       }).then(res => {
         this.dataArr.switchable = 0
+        this.dataArr.channelId = this.currentChannel.channelId
         this.$toast('选择渠道成功')
       }).catch()
     },
