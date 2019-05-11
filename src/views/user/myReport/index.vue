@@ -26,13 +26,14 @@
                 <!-- <span class="container-list container-list-left">
                   代理商
                   <span class="container-list-title">{{item.distributorName}}</span>
-                </span> -->
-                <span class="container-list-right" style="margin-top:-30px;">{{reportStatusInfo[item.fillingStatus]}}</span>
+                </span>
+                <span class="container-list-right" style="margin-top:-30px;">{{reportStatusInfo[item.fillingStatus]}}</span> -->
+                <span class="container-list-right" style="margin-top:-30px;">{{reportStatusInfo[item.reportStatus]}}</span>
               </p>
               <p class="container-list">
                 <span class="container-list">
                   报备时间
-                  <span class="container-list-title">{{item.fillingTime}}</span>
+                  <span class="container-list-title">{{item.createTime | dateTimeFormatter}}</span>
                 </span>
                 <span class="container-list-botton" @click="reportInfo(item)">查看详情</span>
               </p>
@@ -73,11 +74,20 @@ export default {
       nullIcon: require('IMG/user/no_report.png'),
       nullcontent: '您还没有任何报备信息',
       reportList: [],
+      // reportStatusInfo: {
+      //   '0': '待确认',
+      //   '1': '报备成功',
+      //   '2': '报备失败',
+      //   '3': '审核中 '
+      // },
       reportStatusInfo: {
-        '0': '待确认',
-        '1': '报备成功',
-        '2': '报备失败',
-        '3': '审核中 '
+        '0': '未到访',
+        '1': '已到访', 
+        '2': '已认筹',
+        '3': '已认购',
+        '4': '已签约',
+        '5': '已结佣',
+        '6': '已放弃',
       },
       reportTimeDict: {
         arriveTime: '到访时间',
@@ -100,7 +110,8 @@ export default {
       haveData: true
     }
   },
-  created() {},
+  created() {
+  },
   methods: {
     /**
      * 上拉加载更多
@@ -209,6 +220,26 @@ export default {
         .catch(() => {
           // on cancel
         })
+    }
+  },
+  filters: {
+    // 格式化时间
+    formatDate (val) {
+      let date = ''
+      if (val) {
+        let time = new Date(+val)
+        let m = time.getMonth() + 1
+        let d = time.getDate()
+        let y = time.getFullYear()
+        let h = time.getHours()
+        let M = time.getMinutes()
+        m = m < 10 ? '0' + m : m
+        d = d < 10 ? '0' + d :d
+        h = h < 10 ? '0' + h :h
+        M = M < 10 ? '0' + M :M
+        date = `${y}/${m}/${d} ${h}:${M}`
+      }
+      return date
     }
   }
 }

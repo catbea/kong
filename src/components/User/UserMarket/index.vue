@@ -38,8 +38,8 @@
         </ul>
       </div>
       <div class="channel-box scale-1px" v-if="+dataArr.isFree">
-        <span class="">选择渠道</span>
-        <span class="">切换渠道</span>
+        <span @click="showChannelFn">选择渠道</span>
+        <span @click="goChangeChannel">切换渠道</span>
         <span @click="showTaskFn">任务(1/3)</span>
       </div>
       <div class="user-market-page-box-bottom" v-if="dataArr.divisionRules">
@@ -83,6 +83,19 @@
         </div>
       </van-popup>
     </div>
+    <van-actionsheet v-model="showChannel">
+      <div class="channel-box">
+        <div class="topbar">
+          <p class="title">渠道选择</p>
+          <p class="subtitle">七天只能切换一次</p>
+        </div>
+        
+        <div class="channel-list">
+         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
+        </div>
+        <div class="cancle" @click="hideChannelFn">取消</div>
+      </div>
+    </van-actionsheet>
   </div>
 </template>
 <script>
@@ -108,7 +121,10 @@ export default {
     status: ['热销中', '即将发售', '售罄'],
     pastShow: '是否过期',
     stride: true,
-    showTask: false
+    showTask: false,
+    showChannel: false,
+    channelList: [],
+    currentChannel: {},
   }),
   props: {
     dataArr: {
@@ -123,11 +139,35 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
+    this.getChannelListByLinkerId()
   },
   mounted() {
     
   },
   methods: {
+    // 跳转切换渠道
+    goChangeChannel () {
+      this.$router.push({path: '/change/channel', query: {linkerId: this.dataArr.linkerId, channelId: this.dataArr.channelId, channelName: this.dataArr.channelName}})
+    },
+    // 获取渠道列表
+    getChannelListByLinkerId () {
+      userService.getChannelListByLinkerId({linkerId: this.linkerId}).then(res => {
+        this.channelList = res
+      }).catch()
+    },
+    // 选择渠道
+    changeChannelFn (item){
+      this.currentChannel = item
+      this.hideChannelFn()
+    },
+    // 显示渠道
+    showChannelFn () {
+      this.showChannel = true
+    },
+    // 隐藏渠道
+    hideChannelFn () {
+      this.showChannel = false
+    },
     // 显示任务
     showTaskFn () {
       if (this.dataArr.shelfFlag == 1) {
@@ -680,7 +720,52 @@ export default {
       }
     }
   }
-  
+  .channel-box{
+    font-size: 16px;
+    padding: 10px 0 0 0;
+    .topbar{
+      text-align: center;
+      padding-bottom: 5px;
+      .title{
+        padding: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+      }
+      .subtitle{
+        font-size: 12px;
+        color: #999;
+        z-index: 9;
+        position: relative;
+      }
+    }
+    
+    .channel-list{
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+    .item{
+      padding: 16px 0 10px 16px;
+      .free{
+        display: inline-block;
+        font-size: 10px;
+        color: #fff;
+        background-color: #EA4D2E;
+        line-height: 15px;
+        height: 15px;
+        padding: 0 5px;
+        border-radius: 2px;
+        vertical-align: middle;
+      }
+    }
+    .cancle{
+      margin-top: 20px;
+      height:50px;
+      background:rgba(238,238,238,1);
+      line-height: 50px;
+      text-align: center;
+    }
+  }
 }
 //弹出确认框
 .hint-alert {

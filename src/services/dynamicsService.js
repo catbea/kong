@@ -257,11 +257,21 @@ class DynamicsService {
   /**
    * 获取待办事项
    */
-  getTodolist(data) {
+  queryIncompleteNum(data) {
     return xhr({
-      url: '',
+      url: '/task/queryIncompleteNum',
       body: data
     })
   }
+  /**
+   * 
+   */
+  queryTaskList(data) {
+    return xhr({
+      url: '/task/queryTaskList',
+      body: data
+    })
+  }
+  
 }
 export default new DynamicsService()

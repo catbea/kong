@@ -50,7 +50,7 @@ export default {
   created() {
     this.type = this.$route.query.type
     if (this.type == 'vip') {
-      this.searchInfo.siteText = this.userArea.selectedCity || (this.userInfo.vipInfo && this.userInfo.vipInfo.city ? this.userInfo.vipInfo.city : '')
+      this.searchInfo.siteText = this.userArea.selectedCity || (this.userInfo.vipInfo && this.userInfo.vipInfo.city ? this.userInfo.vipInfo.city : '全国')
     } else {
       this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city
     }
@@ -107,7 +107,8 @@ export default {
 
     async getLinkerList() {
       this.checkAllShow = false
-      let param = { current: this.page, size: this.pageSize }
+      let city = this.searchInfo.siteText === '全国' ? '' : this.searchInfo.siteText
+      let param = { current: this.page, size: this.pageSize, city: city }
       if (this.projectName) {
         param.projectName = this.projectName
       } else {

@@ -2,13 +2,13 @@
   <div class="channel">
     <div class="current-channel scale-1px-bottom">
       <b class="title">当前渠道<span>(不可更改)</span></b>
-      <p>中原地产</p>
+      <p>{{this.info.channelName}}</p>
     </div>
     <div class="other-channer scale-1px-bottom">
       <b class="title">切换其他渠道</b>
       <div class="change">
         <p class="name">
-          {{currentChannel.name}} <span class="free" v-if="currentChannel.isFree">免费券</span>
+          {{currentChannel.channelName}} <span class="free" v-if="currentChannel.freeFlag">免费券</span>
         </p>
         <span class="arrow" @click="showChannelFn">
            <img src="../../../assets/img/dynamics/arrow.png" alt="">
@@ -24,13 +24,17 @@
         <textarea v-model="reasonText" name="" class="textarea" id="" cols="30" rows="10" placeholder="请输入其他原因" @blur="blur"></textarea>
       </div>
     </div>
-    <div class="submit">
+    <div class="submit" @click="updateChannel">
       确认修改
     </div>
-    <van-actionsheet v-model="showChannel" title="选择渠道">
+    <van-actionsheet v-model="showChannel">
       <div class="channel-box">
+        <div class="topbar">
+          <p class="title">渠道选择</p>
+          <p class="subtitle">七天只能切换一次</p>
+        </div>
         <div class="channel-list">
-          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.name}} <span v-if="item.isFree" class="free">免费券</span></p>
+          <!-- <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p> -->
         </div>
         <div class="cancle" @click="hideChannelFn">取消</div>
       </div>
@@ -43,18 +47,34 @@ import marketService from 'SERVICE/marketService'
 export default {
   data () {
     return {
+      info: {},
       reasons: ['从渠道离职', '佣金不满意', '渠道无券', '其他'],
       reasonIndex: 0,
       showChannel: false,
-      channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
-      currentChannel: {},
-      reasonText: ''
+      channelList: [],
+      currentChannel: {
+        channelId: '',
+        channelName: '',
+        freeFlag: '',
+      },
+      reasonText: '',
+      subClick: false
     }
   },
   created () {
-    this.currentChannel = this.channelList[0]
+    this.info = this.$route.query
+    this.getChannelListByLinkerId()
   },
   methods: {
+    // 获取渠道列表
+    getChannelListByLinkerId () {
+      marketService.getChannelListByLinkerId({linkerId: this.info.linkerId}).then(res => {
+        this.channelList = res
+        if (res.length) {
+          this.currentChannel = res[0]
+        }
+      }).catch()
+    },
     // 选择原因
     changeReason (index) {
       this.reasonIndex = index
@@ -75,6 +95,38 @@ export default {
     // 收起键盘弹框
     blur() {
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
+    },
+    // 提交渠道
+    updateChannel () {
+      if (this.currentChannel.channelId === this.info.channelId) {
+        return this.$toast('切换的渠道与当前渠道一致，请重新选择')
+      }
+      if (this.reasonIndex === 3 && !this.reasonText) {
+        return this.$toast('请填写切换渠道原因')
+      }
+      this.switchChannel()
+    },
+    // 切换渠道
+    switchChannel () {
+      // 防重复提交
+      if (this.subClick) {
+        return false
+      }
+      this.subClick = true
+      let switchingReason = (this.reasonIndex === 3) ? this.reasonText : this.reasons[this.reasonIndex]
+      marketService.switchChannel({
+        linkerId: this.info.linkerId,
+        newChannelId: this.currentChannel.channelId,
+        oldChannelId: this.info.channelId || '4',
+        switchingReason: switchingReason
+      }).then(res => {
+        this.$toast('渠道切换成功')
+        setTimeout(() => {
+          this.$router.go(-1)
+        }, 1500)
+      }).catch(err => {
+         this.subClick = false
+      })
     }
   }
 }
@@ -99,6 +151,7 @@ export default {
     p{
       padding: 8px 0;
       color: #999;
+      margin-top: 12px;
     }
   }
   .other-channer{
@@ -108,6 +161,7 @@ export default {
       align-items: center;
       margin-top: 20px;
       padding-bottom: 10px;
+      justify-content: center;
       .name{
         flex: 1;
         .free{
@@ -180,7 +234,25 @@ export default {
     display: none;
   }
   .channel-box{
-    padding: 10px 0 20px 0;
+    font-size: 16px;
+    padding: 10px 0 0 0;
+    .topbar{
+      text-align: center;
+      padding-bottom: 5px;
+      .title{
+        padding: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+      }
+      .subtitle{
+        font-size: 12px;
+        color: #999;
+        z-index: 9;
+        position: relative;
+      }
+    }
+    
     .channel-list{
       max-height: 500px;
       overflow-y: scroll;

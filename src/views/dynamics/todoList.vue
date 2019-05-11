@@ -1,12 +1,13 @@
 <template>
   <div class="todo-list-page">
     <div class="tips">
-      <h3>7件待办未完成</h3>
+      <h3>{{incompleteNum}}件待办未完成</h3>
+      <!-- <h3 v-else>已完成所有的待办任务</h3> -->
       <p>
         任务说明：每天都需要完成至少3条以上植入该楼盘的写一写分享，或者楼盘相关其他分享。
       </p>
     </div>
-    <div class="list-box">
+    <div class="list-box" v-show="todoList.length">
       <div class="list-head">
         <div class="name">相关楼盘</div>
         <div class="progress">完成进度</div>
@@ -18,10 +19,14 @@
         @load="onLoad"
       >
         <div class="todo-item scale-1px-bottom" v-for="(item,index) in todoList" :key="index">
-          <div class="name">{{item.linkerName}}</div>
-          <div class="progress" :class="{'resovle': item.resolve===item.total}">已完成({{item.resolve}}/{{item.total}})</div>
+          <div class="name">{{item.objectName}}</div>
+          <div class="progress" :class="{'resovle': item.taskStatus}">已完成({{item.taskQuotaStr}})</div>
         </div>
       </van-list>
+    </div>
+    <div class="nodata">
+      <img src="../../assets/img/market/comment/nodata.png" alt="">
+      <p>没有查询到待办任务！</p> 
     </div>
   </div>
 </template>
@@ -33,16 +38,24 @@ export default {
     return {
       loading: false,
       finished: false,
-      todoList: [{linkerName: '三亚恒大', resolve: 6, total: 6}, {linkerName: '三亚恒大', resolve: 1, total: 6}, {linkerName: '三亚恒大', resolve: 1, total: 6}],
+      todoList: [],
       current: 1,
-      pages: 0,
-      pageSize: 10
+      pages: 1,
+      pageSize: 10,
+      incompleteNum: '',
+      nodata : false
     }
   },
   created () {
-
+    this.queryIncompleteNum()
   },
   methods: {
+    // 经纪人未完成任务数量
+    queryIncompleteNum () {
+      dynamicsService.queryIncompleteNum({}).then(res => {
+        this.incompleteNum = res.incompleteNum
+      }).catch()
+    },
     // 加载数据
     onLoad () {
       if (this.current > this.pages) {
@@ -50,21 +63,22 @@ export default {
         this.finished = true
         this.loading = false
       } else {
-        this.getTodoList()
+        this.queryTaskList()
       }
     },
-    // 获取todoList列表
-    getTodoList () {
-      dynamicsService.getTodoList({}).then(result => {
+    // 获取待办事件列表
+    queryTaskList () {
+      dynamicsService.queryTaskList({current: this.current, size: this.pageSize}).then(result => {
         if (result) {
           this.pages = result.pages
-          let todoList = result.todoList
+          let todoList = result.records
           if (this.current === 1) {
             this.todoList = todoList
           } else {
             this.todoList.push(...todoList)
           }
           this.current += 1
+          this.loading = false
         }
       }).catch()
     }
@@ -123,6 +137,19 @@ export default {
           color: #919599;
         }
       }
+    }
+  }
+  .nodata{
+    height: 400px;
+    color: #999;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 12px;
+    img{
+      width: 88px;
     }
   }
 }

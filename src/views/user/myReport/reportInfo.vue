@@ -28,7 +28,7 @@
           </p> -->
           <p class="container-list">
             报备时间
-            <span class="container-list-title">{{reportInfo.fillingTime}}</span>
+            <span class="container-list-title">{{reportInfo.createTime | dateTimeFormatter}}</span>
           </p>
           <!-- <p class="container-list container-list-left">
             &nbsp;&nbsp;&nbsp;佣金
@@ -40,11 +40,11 @@
         <div class="report-btn-left"></div>
         <div class="report-btn-left-x"></div>
         <div class="report-btn-right">
-          <p class="btn-right-title">{{transferInfo[item.transferSts]}}</p>
+          <p class="btn-right-title">{{transferInfo[item.reportStatus]}}</p>
           <p class="btn-right-time">{{item.createTime | dateTimeFormatter}}</p>
         </div>
       </div>
-      <div class="report-bottom">{{reportInfo.expiryTime | dateTimeFormatter}}前有效</div>
+      <div class="report-bottom">{{reportInfo.endTime | dateTimeFormatter}} 前有效</div>
     </div>
   </div>
 </template>
@@ -54,7 +54,7 @@ import { Dialog } from 'vant'
 export default {
   data() {
     return {
-      distClientId: '', // 报备单id
+      reportId: '', // 报备单id
       reportInfo: {}, // 报备信息
       auditList: [], // 报备审核列表
       transferInfo: {
@@ -80,7 +80,7 @@ export default {
     }
   },
   created() {
-    this.distClientId = this.$route.query.id
+    this.reportId = this.$route.query.id
     let info = this.$route.query
     this.reportInfo = info
 
@@ -99,14 +99,14 @@ export default {
     //   this.phoneNum = this.reportInfo.clientMobile
     // }
 
-    this.getReportAuditList(this.distClientId)
+    this.getReportAuditList(this.reportId)
   },
   methods: {
     /**
      * 报备审核列表请求
      */
-    async getReportAuditList(distClientId) {
-      const res = await reportService.reportAuditList(distClientId)
+    async getReportAuditList(reportId) {
+      const res = await reportService.reportAuditList(reportId)
       this.auditList = res
     },
     itemProperties() {
@@ -153,6 +153,26 @@ export default {
         let phone = this.reportInfo.clientMobile.substring(0, 3) + '****' + this.reportInfo.clientMobile.substring(7, 11)
         this.phoneNum = phone
       }
+    }
+  },
+  filters: {
+    // 格式化时间
+    formatDate (val) {
+      let date = ''
+      if (val) {
+        let time = new Date(+val)
+        let m = time.getMonth() + 1
+        let d = time.getDate()
+        let y = time.getFullYear()
+        let h = time.getHours()
+        let M = time.getMinutes()
+        m = m < 10 ? '0' + m : m
+        d = d < 10 ? '0' + d :d
+        h = h < 10 ? '0' + h :h
+        M = M < 10 ? '0' + M :M
+        date = `${y}/${m}/${d} ${h}:${M}`
+      }
+      return date
     }
   }
 }

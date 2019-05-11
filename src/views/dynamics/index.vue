@@ -12,11 +12,12 @@
           </div>
           <div class="text">
             <b>今日待办</b>
-            <p>您今日还有7件待办事项</p>
+            <p>您今日还有{{incompleteNum}}件待办事项</p>
+            <!-- <p v-else>已完成所有的待办任务</p> -->
           </div>
         </div>
       <div class="action">
-        <span class="dot"></span>
+        <span class="dot" v-show="incompleteNum"></span>
         <img src="../../assets/img/dynamics/arrow.png" alt="">
       </div>
     </div>
@@ -58,7 +59,8 @@ export default {
     hotEstateListData: null, // 热门楼盘数据
     timer: null,
     guidanceShow: false,
-    guidanceConf: null
+    guidanceConf: null,
+    incompleteNum: ''
   }),
   created() {
     // this.shiftHandle()//提示被移出分销商弹窗
@@ -66,12 +68,19 @@ export default {
     // this.queryVersion('2', timeStamp)
     this.getCollectInfo()
     this.getEstateList()
+    this.queryIncompleteNum()
     // 30s自动刷新数据
     this.timer = setInterval(() => {
       this.getCollectInfo()
     }, 30000)
   },
   methods: {
+    // 经纪人未完成任务数量
+    queryIncompleteNum () {
+      dynamicsService.queryIncompleteNum({}).then(res => {
+        this.incompleteNum = res.incompleteNum
+      }).catch()
+    },
     // 跳转待办事项
     goTodoList () {
       this.$router.push('/dynamics/todoList')

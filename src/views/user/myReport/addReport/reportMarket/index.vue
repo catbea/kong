@@ -7,7 +7,7 @@
       <screen v-model="projectFilters" :local="this.searchInfo.siteText"></screen>
     </div>
     <div class="market-box" :style="{'margin-top':isShowHeader?'74px':'20px'}">
-      <div class="notice-view">仅能对当前所属分销商下已开通且未过期楼盘进行报备</div>
+      <div class="notice-view">仅能对已开通且未过期的合作楼盘进行报备</div>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
         <meal-market
           v-for="(item,index) in dataArr"
@@ -65,7 +65,7 @@ export default {
     isShowHeader: true
   }),
   computed: {
-    ...mapGetters(['userArea'])
+    ...mapGetters(['userArea','reportAddInfo'])
   },
   created() {
     this.page = 1
@@ -133,6 +133,14 @@ export default {
       let _reportAddInfo = {
         linkerId: obj.linkerId,
         linkerName: obj.linkerName
+      }
+      if (obj.linkerId !== this.reportAddInfo.linkerId) {
+        _reportAddInfo = {
+          linkerId: obj.linkerId,
+          linkerName: obj.linkerName,
+          channel: '',
+          currentChannel: ''
+        }
       }
       this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.back(-1)

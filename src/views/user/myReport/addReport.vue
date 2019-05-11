@@ -10,7 +10,7 @@
         />
         <van-cell title="客户名字" is-link :value="reportAddInfo.clientName" to="reportCustomerEdit"/>
         <van-cell title="手机号" is-link :value="valueComputed" to="reportPhone"/>
-        <van-cell title="渠道" :value="channel" :is-link="chooseChannel" @click="showChannelFn" />
+        <van-cell title="渠道" v-show="angent.agentType !== 1" :value="channel" :is-link="chooseChannel" @click="showChannelFn" />
       </van-cell-group>
     </div>
     
@@ -22,10 +22,14 @@
     <div class="addReport-submit">
       <button class="button" @click="submitReportHandler">提交报备</button>
     </div>
-    <van-actionsheet v-model="showChannel" title="选择渠道">
+    <van-actionsheet v-model="showChannel">
       <div class="channel-box">
+        <div class="topbar">
+          <p class="title">渠道选择</p>
+          <p class="subtitle">七天只能切换一次</p>
+        </div>
         <div class="channel-list">
-          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.name}} <span v-if="item.isFree" class="free">免费券</span></p>
+          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
         </div>
         <div class="cancle" @click="hideChannelFn">取消</div>
       </div>
@@ -40,25 +44,59 @@ export default {
     return {
       hideClientMobile: '',
       showChannel: false,
-      channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
+      channelList: [],
       currentChannel: {},
-      chooseChannel: true,
-      channel: '请选择'
+      chooseChannel: false,
+      channel: '',
+      linkerId: '',
+      angent: {}
     }
   },
 
   computed: {
     ...mapGetters(['reportAddInfo', 'userInfo']),
     valueComputed() {
-      return this.reportAddInfo.clientPhoneType === 'all' ? this.reportAddInfo.clientPhone : this.privacyPhone(this.reportAddInfo.clientPhone)
+      // return this.reportAddInfo.clientPhoneType === 'all' ? this.reportAddInfo.clientPhone : this.privacyPhone(this.reportAddInfo.clientPhone)
+      return this.privacyPhone(this.reportAddInfo.clientPhone)
     }
   },
-  created() {},
+  created() {
+    let linkerId = this.reportAddInfo && this.reportAddInfo.linkerId || ''
+    if (linkerId) {
+      this.linkerId = linkerId
+      this.getAgentTypeByLinkerId()
+      this.getChannelListByLinkerId()
+    }
+  },
   methods: {
+    // 获取渠道列表
+    getChannelListByLinkerId () {
+      reportService.getChannelListByLinkerId({linkerId: this.linkerId}).then(res => {
+        this.channelList = res
+      }).catch()
+    },
+    // 获取经纪人类型
+    getAgentTypeByLinkerId () {
+      reportService.getAgentTypeByLinkerId({linkerId: this.linkerId}).then(res => {
+        this.angent = res
+        if (res.agentType === 0 ) {
+          this.channel = res.channelName
+          if (!res.channelName) {
+            this.chooseChannel = true
+            this.channel = this.reportAddInfo.channel ? this.reportAddInfo.channel : '请选择'
+            this.currentChannel = this.reportAddInfo && this.reportAddInfo.currentChannel
+          }
+        }
+      }).catch()
+    },
     // 选择渠道
     changeChannel (item){
       this.currentChannel = item
-      this.channel = item.name
+      this.channel = `${item.channelName}${item.freeFlag ? '(免费券)' : ''}`
+      this.$store.commit('REPORT_INFO', {
+        channel: this.channel,
+        currentChannel: this.currentChannel
+      })
       this.hideChannelFn()
     },
     // 显示渠道
@@ -77,26 +115,29 @@ export default {
       return value.length > 7 ? value.substr(0, 3) + '****' + value.substr(7) : ''
     },
     async addReportInfo(current) {
-      console.log(this.reportAddInfo.clientPhoneType)
-
       if (this.reportAddInfo.clientPhoneType === 'all') {
         this.hideClientMobile = '0'
       } else {
         this.hideClientMobile = '1'
       }
-
+      let channelId = ''
+      if (this.angent.agentType === 0) {
+        channelId =  this.angent.channelId || this.currentChannel.channelId
+      }
+      let developersId = this.angent.developersId
       let params = {
         clientId: this.reportAddInfo.clientId,
         clientName: this.reportAddInfo.clientName,
         clientMobile: this.reportAddInfo.clientPhone,
         linkerId: this.reportAddInfo.linkerId,
         linkerName: this.reportAddInfo.linkerName,
-        distributorId: this.userInfo.distributorId,
-        institutionId: this.userInfo.institutionId,
-        hideClientMobile: this.hideClientMobile
+        channelId: channelId, 
+        developersId: developersId
+        // distributorId: this.userInfo.distributorId,
+        // institutionId: this.userInfo.institutionId,
+        // hideClientMobile: this.hideClientMobile
       }
-
-      const res = await reportService.addReportInfo(params.clientId, params.clientName, params.clientMobile, params.linkerId, params.linkerName, params.distributorId, params.institutionId,params.hideClientMobile)
+      const res = await reportService.addReportInfo(params)
       this.$toast('提交报备成功')
       this.$router.replace('/user/myReport')
     },
@@ -118,7 +159,7 @@ export default {
         return
       }
       // 非合作楼盘，无渠道可选，报备失败
-      if (!this.channel) {
+      if (!this.angent.freeLinker) {
         return this.$dialog.alert({
           title: '非合作楼盘，无渠道可选，报备失败'
         })
@@ -238,6 +279,23 @@ export default {
   .channel-box{
     font-size: 16px;
     padding: 10px 0 0 0;
+    .topbar{
+      text-align: center;
+      padding-bottom: 5px;
+      .title{
+        padding: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+      }
+      .subtitle{
+        font-size: 12px;
+        color: #999;
+        z-index: 9;
+        position: relative;
+      }
+    }
+    
     .channel-list{
       max-height: 500px;
       overflow-y: scroll;

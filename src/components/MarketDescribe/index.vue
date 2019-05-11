@@ -42,10 +42,15 @@
         </div>
       </div>
     </div>
-    <van-actionsheet v-model="showChannel" title="选择渠道">
+    <van-actionsheet v-model="showChannel">
       <div class="channel-box">
+        <div class="topbar">
+          <p class="title">渠道选择</p>
+          <p class="subtitle">七天只能切换一次</p>
+        </div>
+        
         <div class="channel-list">
-          <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannelFn(item)">{{item.name}} <span v-if="item.isFree" class="free">免费券</span></p>
+         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannel(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
         </div>
         <div class="cancle" @click="hideChannelFn">取消</div>
       </div>
@@ -95,7 +100,7 @@ export default {
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
       labelImg: require('IMG/marketDetail/discount@2x.png'),
       showChannel: false,
-      channelList: [{name: '中原地产', isFree: 1},{name: '中原地产', isFree: 0}, {name: '中原地产', isFree: 1}, {name: '中原地产', isFree: 1}],
+      channelList: [],
       currentChannel: {},
       vipCity: {}
     }
@@ -108,6 +113,7 @@ export default {
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
+    this.getChannelListByLinkerId()
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
@@ -149,11 +155,31 @@ export default {
     }
   },
   methods: {
+    // 获取渠道列表
+    getChannelListByLinkerId () {
+      marketService.getChannelListByLinkerId({linkerId: this.itemInfo.linkerId}).then(res => {
+        this.channelList = res
+      }).catch()
+    },
     // 选择渠道
-    changeChannelFn (item){
+    async changeChannelFn (item){
       this.currentChannel = item
-      this.freeOpenHandle()
       this.hideChannelFn()
+      await this.switchChannel()
+      if (item.freeFlag ) {
+        this.freeOpenHandle()
+      } else {
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      }
+    },
+    // 切换渠道
+    switchChannel () {
+      marketService.switchChannel({
+        linkerId:  this.itemInfo.linkerId,
+        newChannelId: this.currentChannel.channelId,
+        oldChannelId: '',
+        switchingReason: ''
+      }).then(res => {}).catch()
     },
     // 显示渠道
     showChannelFn () {
@@ -482,12 +508,29 @@ export default {
       }
     }
   }
-  /deep/ .van-icon-close{
+  /deep/.van-icon-close{
     display: none;
   }
   .channel-box{
     font-size: 16px;
     padding: 10px 0 0 0;
+    .topbar{
+      text-align: center;
+      padding-bottom: 5px;
+      .title{
+        padding: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+      }
+      .subtitle{
+        font-size: 12px;
+        color: #999;
+        z-index: 9;
+        position: relative;
+      }
+    }
+    
     .channel-list{
       max-height: 500px;
       overflow-y: scroll;

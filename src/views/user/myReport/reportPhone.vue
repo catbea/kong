@@ -52,7 +52,7 @@ export default {
   },
   created() {
     this.Cphone = this.reportAddInfo.clientPhone
-    this.phoneType = this.reportAddInfo.clientPhoneType || ''
+    this.phoneType = this.reportAddInfo.clientPhoneType || 'star'
   },
   computed: {
     ...mapGetters(['reportAddInfo'])
@@ -88,7 +88,8 @@ export default {
       // }
       let _reportAddInfo = {
         clientPhone: this.Cphone,
-        clientPhoneType: this.phoneType
+        // clientPhoneType: this.phoneType
+        clientPhoneType: 'star'
       }
       this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.back(-1)
@@ -124,13 +125,13 @@ export default {
   .phone-number{
     margin: 20px 16px;
     font-size: 16px;
-    &::placeholder{
-      color: #bbb;
-    }
     input{
       width: 100%;
       line-height: 40px;
       border:none;
+      &::placeholder{
+        color: #bbb;
+      }
     }
   }
   .tips{
