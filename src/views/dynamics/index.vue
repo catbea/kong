@@ -78,7 +78,7 @@ export default {
     // 经纪人未完成任务数量
     queryIncompleteNum () {
       dynamicsService.queryIncompleteNum({}).then(res => {
-        this.incompleteNum = res.incompleteNum
+        this.incompleteNum = res.incompleteNum || 0
       }).catch()
     },
     // 跳转待办事项
