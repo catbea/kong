@@ -59,7 +59,7 @@
               @input="inputHandler"
             >
           </div>
-          <div class="user-city" @click="popAreaHandler" v-show="false">
+          <div class="user-city" @click="popAreaHandler" v-show="registerType == 40 || registerType == 30">
             <p class="title">主营区域</p>
             <p class="value" :class="{'disable': !userRegistInfo.majorRegion}">{{userRegistInfo.majorRegion || '请选择'}} <van-icon name="arrow" /></p>
           </div>
@@ -141,26 +141,33 @@ export default {
     areaShow: false,
     areaTitle: '请选择区域',
     areaCode: '440305',
-    areaList: {}
+    areaList: {},
+    belong: '',
+    belongGroup: '',
+    linkerId: ''
   }),
   components: {
     AreaSelect
   },
   created() {
     this.query = this.$route.query
-    // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）
+    // 10：经纪人推荐注册，20：分销商推荐注册,30:普通注册 （搜一搜跳转注册，公众号跳转注册，用户端小程序切换注册）40开发商注册 50渠道注册
     // registerType=10&parentUserId=4746&enterpriseId=90
     // registerType=20&enterpriseId=90&parentUserId=14469&distributorId=268
     // registerType=30&enterpriseId=90
-    if (this.query.registerType == '30') {
-      this.params = `/register/step1?${qs.stringify(this.$route.query)}`
-    } else {
-      this.params = `/register/step3?${qs.stringify(this.$route.query)}`
-    }
-    this.enterpriseId = this.$route.query.enterpriseId
-    this.registerType = this.$route.query.registerType
-    this.parentUserId = this.$route.query.parentUserId
-    this.distributorId = this.$route.query.distributorId
+    // registerType=40&parentUserId=4425&enterpriseId=90&belong=%d&belongGroup=%d&linkerId=%s  （40,50注册参数）
+    // if (this.query.registerType == '30') {
+    //   this.params = `/register/step1?${qs.stringify(this.$route.query)}`
+    // } else {
+    //   this.params = `/register/step3?${qs.stringify(this.$route.query)}`
+    // }
+    this.enterpriseId = this.$route.query.enterpriseId || ''
+    this.registerType = this.$route.query.registerType || ''
+    this.parentUserId = this.$route.query.parentUserId || ''
+    this.distributorId = this.$route.query.distributorId || ''
+    this.belong = this.$route.query.belong || ''
+    this.belongGroup = this.$route.query.belongGroup || ''
+    this.linkerId = this.$route.query.linkerId || ''
     this.mobile = this.userRegistInfo.registerMobile
     this.code = this.userRegistInfo.registerCode
     this.name = this.userRegistInfo.name
@@ -169,6 +176,9 @@ export default {
     this.queryByRegister(this.enterpriseId)
     if (this.registerType === '10' || this.registerType === '20') {
       this.queryRegisterRecommendInfo()
+    }
+    if (this.registerType === '40' || this.registerType === '50') {
+      this.queryLinkerInfo()
     }
     this.fullArea = fullArea
     this.getAreaList(fullArea)
@@ -197,15 +207,15 @@ export default {
     }
   },
   methods: {
+    // 查询楼盘和开发商信息
+    queryLinkerInfo () {
+    },
     // 检测二维码是否有效
     checkQrcode () {
       RegisterService.checkQrcode({}).then(res => {}).catch()
     },
     // 检测老用户
     checkUser (phone) {
-      setTimeout(()=>{
-        console.log(phone === this.mobile)
-      },1000)
       RegisterService.checkUser({}).then(res => {
         if (phone === this.mobile) {
           this.$dialog.alert({
@@ -281,10 +291,14 @@ export default {
         agentName: this.name,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
-        majorRegion: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.majorRegion : '',
-        parentUserId: this.registerType === '10' || this.registerType === '20' ? this.parentUserId : '',
-        distributorId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.distributorId : '',
-        institutionId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.institutionId: ''
+        majorRegion: this.userRegistInfo.majorRegion,
+        parentUserId: this.parentUserId,
+        distributorId: this.userRegistInfo.distributorId,
+        institutionId: this.userRegistInfo.institutionId
+        // majorRegion: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.majorRegion : '',
+        // parentUserId: this.registerType === '10' || this.registerType === '20' ? this.parentUserId : '',
+        // distributorId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.distributorId : '',
+        // institutionId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.institutionId: ''
       }
       const result = await RegisterService.register(vo)
       console.log(result)
@@ -356,7 +370,7 @@ export default {
       }, 1000)
     },
     nextHandler() {
-      if (this.registDisabled == true) return
+      if (this.registDisabled) return
 
       if (this.mobile.length == 0) {
         return this.$toast('请输入微信绑定手机号')
@@ -369,6 +383,9 @@ export default {
       }
       if (!checkStrType(this.name)) {
         return this.$toast('昵称只支持中文、英文和数字')
+      }
+      if ((this.registerType == 30 || this.registerType == 40) && !this.userRegistInfo.majorRegion) {
+        return this.$toast('请选择主营区域')
       }
       if (this.clickDisabled) {
         return
