@@ -11,8 +11,8 @@
       <van-cell class="cell-item" title="联系电话" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
-      <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
-      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" @click="goEdit" />
+      <!-- <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
+      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" @click="goEdit" /> -->
     </van-cell-group>
     <van-cell-group class="user-advance-info">
       <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel'">

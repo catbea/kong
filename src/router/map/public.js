@@ -16,6 +16,14 @@ export default [
     }
   },
   {
+    path: '/public/vip-market',
+    name: 'vip-market',
+    component: resolve => require(['@/views/public/vipMarket.vue'], resolve),
+    meta: {
+      title: '城市选择'
+    }
+  },
+  {
     path: '/public/map-Search',
     name: 'map-Search',
     component: resolve => require(['@/views/public/mapSearch.vue'], resolve),

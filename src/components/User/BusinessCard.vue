@@ -23,7 +23,7 @@
           </div>
           <!-- 公司、标签、签名 -->
           <div class="user-company-box">
-            <p class="campany-view">{{userInfo.distributorName}}</p>
+            <!-- <p class="campany-view">{{userInfo.distributorName}}</p> -->
             <p class="content-left-labe">
               <a class="left-labe-css" v-for="(item,index) in newLabelList" :key="index">{{item.labelName}}</a>
             </p>

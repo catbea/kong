@@ -570,5 +570,24 @@ class UserService {
     })
   }
   
+  /**
+   * 开通vip城市列表
+   */
+  getVipList(data) {
+    return xhr({
+      url: '',
+      body: data
+    })
+  }
+
+  /**
+   * 根据楼盘查询渠道列表
+   */
+  getChannelListByLinkerId (data) {
+    return xhr({
+      url: '/channel/getChannelListByLinkerId',
+      body: data
+    })
+  }
 }
 export default new UserService()

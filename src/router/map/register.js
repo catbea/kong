@@ -52,5 +52,14 @@ export default [
       title: '注册协议',
       skipIM: true
     }
+  },
+  {
+    path: '/register/invalid',
+    name: 'register-invalid',
+    component: resolve => require(['@/views/register/invalid.vue'], resolve),
+    meta: {
+      title: '提示',
+      skipIM: true
+    }
   }
 ]

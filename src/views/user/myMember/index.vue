@@ -8,15 +8,16 @@
       </div>
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
         <li>{{userInfo.name}}</li>
-        <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li>
+        <!-- <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li> -->
+        <li @click="goVipList" v-show="isVip">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
         <li v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
         <li v-show="!isVip">暂未开通VIP功能</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘</router-link>
+      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘 ></router-link>
       </div>
     </div>
-    <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle"></set-meal>
+    <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle" @goVipList="goVipList" :userArea="userArea"></set-meal>
     <member-privilege></member-privilege>
     <privilege-describe></privilege-describe>
     <agreement></agreement>
@@ -75,7 +76,8 @@ export default {
     },
     selectCity: '',
     title: 'VIP生效城市待选',
-    showAddProjectDialogFlag: false
+    showAddProjectDialogFlag: false,
+    vipInfo: ''
   }),
   computed: {
     ...mapGetters(['userInfo', 'userArea']),
@@ -90,11 +92,15 @@ export default {
     }
   },
   methods: {
+    // 跳转vip列表
+    goVipList () {
+      this.$router.push('/user/viplist')
+    },
     // 确认支付
     confirmFun () {
       this.$dialog.confirm({
         title: '提示',
-        message: '是否确认开通？'
+        message: `是否确认选择${this.selectCity}作为楼盘开通城市？`
       }).then(() => {
         this.paySubmit()
       }).catch(() => {})
@@ -102,6 +108,7 @@ export default {
     async paySubmit() {
       let param = {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
+        city: this.selectCity,
         amountId: this.vipList[this.currPriceIndex].id,
         subscribeNum: this.vipList[this.currPriceIndex].subscribeNum,
         payOpenid: this.userInfo.payOpenId
@@ -169,11 +176,12 @@ export default {
 
     async getVipInfo() {
       let res = await marketService.vipInfo()
+      this.vipInfo = res
       this.vipList = res.vipSettingList
-      this.isVip = res.vipFlag
+      this.isVip = !!res.expireTimestamp
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
-      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.city }
+      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity }
 
       // 判断是否已过期
       let now = new Date()
@@ -228,7 +236,7 @@ export default {
     },
 
     checkCityHandle() {
-      this.$router.push({ path: '/public/area-select/', query: { fromPage: 'myMember' } })
+      this.$router.push({ path: '/public/vip-market/', query: { fromPage: 'myMember', category: 0 } })
     }
   },
   beforeDestroy () {

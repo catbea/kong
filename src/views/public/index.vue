@@ -27,8 +27,6 @@ export default {
       //   this.$router.replace('/public/complete-info')
       // } else 
       if(this.userInfo.jumpToDynamicDetail == 1) {
-        // alert(this.userInfo.jumpToDynamicDetail)
-        console.log('jumpToDynamicDetail')
         this.$router.push('/dynamics/allDynamics?allDynamicsNum=0')
       }else {
         this.$router.replace('/dynamics')

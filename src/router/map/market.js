@@ -322,5 +322,16 @@ export default [
       }
     }
   },
-
+  // 切换渠道
+  {
+    path: '/change/channel',
+    name: 'change-channel',
+    component: resolve => require(['@/views/market/channel/index.vue'], resolve),
+    meta: {
+      title: '切换渠道',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]

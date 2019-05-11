@@ -166,5 +166,15 @@ class CommonService {
       }
     })
   }
+
+  /**
+   * 查询经纪人vip城市列表
+   */
+  getVipCityList() {
+    return xhr({
+      url: '/brokerVip/getVipCityByAgentId',
+      body: {}
+    })
+  }
 }
 export default new CommonService()

@@ -253,5 +253,25 @@ class DynamicsService {
       }
     })
   }
+
+  /**
+   * 获取待办事项
+   */
+  queryIncompleteNum(data) {
+    return xhr({
+      url: '/task/queryIncompleteNum',
+      body: data
+    })
+  }
+  /**
+   * 
+   */
+  queryTaskList(data) {
+    return xhr({
+      url: '/task/queryTaskList',
+      body: data
+    })
+  }
+  
 }
 export default new DynamicsService()

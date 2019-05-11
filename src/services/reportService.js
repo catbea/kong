@@ -17,13 +17,13 @@ class reportService {
 
   /**
    * 报备审核列表
-   * @param {*} distClientId
+   * @param {*} reportId
    */
-  reportAuditList(distClientId) {
+  reportAuditList(reportId) {
     return xhr({
       url: '/customerFilling/getFilingAuditList',
       body: {
-        distClientId
+        reportId
       }
     })
   }
@@ -38,20 +38,11 @@ class reportService {
    * @param {*} distributorId 分销商Id
    * @param {*} institutionId 所属机构Id
    */
-  addReportInfo(clientId, clientName, clientMobile, linkerId, linkerName, distributorId, institutionId,hideClientMobile) {
+  addReportInfo(data) {
     return xhr({
       method: 'POST',
       url: '/customerFilling/addFilingInfo',
-      body: {
-        clientId,
-        clientName,
-        clientMobile,
-        linkerId,
-        linkerName,
-        distributorId,
-        institutionId,
-        hideClientMobile
-      }
+      body: data
     })
   }
 
@@ -65,5 +56,26 @@ class reportService {
       body: obj
     })
   }
+
+  /**
+   * 根据楼盘id查询，经纪人的类型
+   */
+  getAgentTypeByLinkerId(data) {
+    return xhr({
+      url: '/user/getAgentTypeByLinkerId',
+      body: data
+    })
+  }
+
+  /**
+   * 根据楼盘查询渠道列表
+   */
+  getChannelListByLinkerId (data) {
+    return xhr({
+      url: '/channel/getChannelListByLinkerId',
+      body: data
+    })
+  }
+
 }
 export default new reportService()

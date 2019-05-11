@@ -408,4 +408,15 @@ export default [
       title: '我的问答'
     }
   },
+  {
+    path: '/user/viplist',
+    name: 'viplist',
+    component: resolve => require(['@/views/user/vipList/index.vue'], resolve),
+    meta: {
+      title: '开通城市',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]
