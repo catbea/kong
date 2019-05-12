@@ -277,9 +277,6 @@ export default {
       virtualDom.innerHTML = this.info.content.replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
 
       for (let dom of virtualDom.children) {
-        if(dom.innerHTML == '<!--VIDEO_0-->') {
-          console.log(this.info.fileUrlMap['VIDEO_0'],'VIDEO_0========')
-        }
         this.renderDom.push({
           text: dom.innerHTML,
           status: 'h5'
