@@ -9,11 +9,11 @@ const state = {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0, // 0启用 1禁用
     devMode: true,
-    agentId: '4626',
+    agentId: '4425',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',
-    enterpriseId: '90',
+    enterpriseId: '91',
     institutionId: '82',
     institutionLogo: '',
     institutionName: 'test',
@@ -50,8 +50,8 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJzNjV4Zm8iLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0MTQ5IiwiZXhwIjoxNTU2ODYzOTgzLCJpYXQiOjE1NTYyNTkxODN9.WRjEpKAV6H00cat3n2BoIw3TUf2dHRfrjs7U7UN1wq9SBtH9WdJ5ACZjgHBoiSMDpMZAkY4rd1UVsK0ZUQiJOg',
-    majorCity: '太原市',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ3bGdrcm8iLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NDI1IiwiZXhwIjoxNTU3NjIyODEyLCJpYXQiOjE1NTcwMTgwMTJ9.SVRjHIoEkP4mdJlqDyNTjfsUQNd78M7jRZzfCDHIhAbcfzrHCT7VyqnuGuEURkhql_AdI9dpdqtPmd8zTRa18g',
+    majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
     nickName: '周丹Nike',

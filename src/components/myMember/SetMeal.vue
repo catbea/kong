@@ -1,13 +1,15 @@
 <template>
   <div class="mymember-set-meal-page">
     <div class="mymember-set-meal-page-content">
-      <div class="mymember-set-meal-page-content-top">
+      <!-- <div class="mymember-set-meal-page-content-top">
         <p class="forestall-open">{{setMealInfo.openCount}}人已经抢先开通VIP套餐</p>
         <div v-show="setMealInfo.isVip" class="meal-site" @click="checkCityhandle">
           <p v-show="!setMealInfo.vipCity">选择城市</p>
           <p v-show="setMealInfo.vipCity">{{setMealInfo.vipCity}}</p>
-          <!-- <span class="bg_img site-icon" :style="{backgroundImage:'url('+siteImg+')'}"></span> -->
         </div>
+      </div> -->
+      <div class="mymember-vipcity">
+        <b class="city" @click="goVipList">{{userArea.vipSelectedCity || setMealInfo.vipCity}}</b><span class="more" @click="checkCityhandle">开通更多<img src="../../assets/img/dynamics/arrow.png" alt=""></span>
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
         <li :class="{active:num==index}" v-for="(item,index) in vipList" :key="index" @click="taget(index)">
@@ -37,6 +39,12 @@ export default {
       default: function() {
         return []
       }
+    },
+    userArea: {
+      type: Object,
+      default: function() {
+        return {}
+      }
     }
   },
   data: () => ({
@@ -45,11 +53,15 @@ export default {
   }),
   methods: {
     checkCityhandle() {
-      if (!this.setMealInfo.vipCity) this.$emit('onCheckCity')
+      // if (!this.setMealInfo.vipCity) this.$emit('onCheckCity')
+      this.$emit('onCheckCity')
     },
     taget(index) {
       this.num = index
       this.$emit('priceClick', index)
+    },
+    goVipList () {
+      this.$emit('goVipList')
     }
   }
 }
@@ -131,6 +143,26 @@ export default {
             font-size: 11px;
             color: rgba(135, 102, 90, 1);
           }
+        }
+      }
+    }
+    .mymember-vipcity{
+      font-size: 14px;
+      display: flex;
+      .city{
+        flex: 1;
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .more{
+        width: 100px;
+        color: #007AE6;
+        vertical-align: middle;
+        text-align: right;
+        img{
+          width: 16px;
+          height: 16px;
+          vertical-align: middle;
         }
       }
     }

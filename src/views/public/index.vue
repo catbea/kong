@@ -23,11 +23,10 @@ export default {
       // alert(defaultPath)
       this.$router.push({ path: defaultPath })
     } else {
-      if (!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
-        this.$router.replace('/public/complete-info')
-      } else if(this.userInfo.jumpToDynamicDetail == 1) {
-        // alert(this.userInfo.jumpToDynamicDetail)
-        console.log('jumpToDynamicDetail')
+      // if (!this.userInfo.name || !this.userInfo.majorRegion || !this.userInfo.distributorName || !this.userInfo.institutionName) {
+      //   this.$router.replace('/public/complete-info')
+      // } else 
+      if(this.userInfo.jumpToDynamicDetail == 1) {
         this.$router.push('/dynamics/allDynamics?allDynamicsNum=0')
       }else {
         this.$router.replace('/dynamics')

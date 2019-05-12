@@ -579,6 +579,12 @@ export default {
       color: #333333;
       font-weight: 400;
       line-height: 28px;
+      div,section{
+        width: auto !important;
+      }
+      img{
+        height: auto !important;
+      }
     }
     > .discover-extra-info {
       display: flex;

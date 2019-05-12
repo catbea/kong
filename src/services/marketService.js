@@ -207,7 +207,7 @@ class MarketService {
    */
   vipInfo() {
     return xhr({
-      url: '/brokerVip/vipInfo',
+      url: '/brokerVip/vipInfoList',
       body: {}
     })
   }
@@ -583,6 +583,27 @@ class MarketService {
     return xhr({
       url: '/linker/newOpenLinker',
       method: 'post',
+      body: data
+    })
+  }
+
+  /**
+   * 根据楼盘查询渠道列表
+   */
+  getChannelListByLinkerId (data) {
+    return xhr({
+      url: '/channel/getChannelListByLinkerId',
+      body: data
+    })
+  }
+
+  /**
+   * 切换渠道
+   */
+  switchChannel (data) {
+    return xhr({
+      method: 'post',
+      url: ' /channel/switchChannel',
       body: data
     })
   }

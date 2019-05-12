@@ -84,5 +84,26 @@ class registService {
       }
     })
   }
+
+  /**
+   * 检测是否老用户
+   */
+  checkUser(data) {
+    return xhr({
+      method: 'POST',
+      url: '',
+      body: data
+    })
+  }
+
+  /**
+   * 检测注册码是否有效
+   */
+  checkQrcode(data) {
+    return xhr({
+      url: '',
+      body: data
+    })
+  }
 }
 export default new registService()

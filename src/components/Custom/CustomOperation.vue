@@ -43,6 +43,7 @@ export default {
       this.$emit('onphone')
     },
     consultHandler() {
+      this.$emit('onconsult')
       // if (this.h5Flag) {
       //   this.$dialog.alert({
       //     title: '提示',
@@ -51,7 +52,6 @@ export default {
       // } else {
       //   this.$emit('onconsult')
       // } 
-      this.$emit('onconsult')
     }
   }
 }

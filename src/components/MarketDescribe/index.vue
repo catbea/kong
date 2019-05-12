@@ -42,6 +42,19 @@
         </div>
       </div>
     </div>
+    <van-actionsheet v-model="showChannel">
+      <div class="channel-box">
+        <div class="topbar">
+          <p class="title">渠道选择</p>
+          <p class="subtitle">七天只能切换一次</p>
+        </div>
+        
+        <div class="channel-list">
+         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannelFn(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
+        </div>
+        <div class="cancle" @click="hideChannelFn">取消</div>
+      </div>
+    </van-actionsheet>
   </div>
 </template>
 <script>
@@ -85,7 +98,11 @@ export default {
       style: null,
       panoramaImg: require('IMG/system/icon_panorama@2x.png'),
       commissionImg: require('IMG/user/collection/icon_commission@2x.png'),
-      labelImg: require('IMG/marketDetail/discount@2x.png')
+      labelImg: require('IMG/marketDetail/discount@2x.png'),
+      showChannel: false,
+      channelList: [],
+      currentChannel: {},
+      vipCity: {}
     }
   },
   created() {
@@ -95,6 +112,9 @@ export default {
       this.tags.unshift(this.saleStatus)
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
+    }
+    if (+this.itemInfo.isFree) {
+      this.getChannelListByLinkerId()
     }
   },
   computed: {
@@ -121,9 +141,56 @@ export default {
         // return this.itemInfo.saleStatus
         return '热销中'
       }
+    },
+    // 判断vip城市和vip有效期
+    checkVipCity() {
+      let status = false
+      if (this.vipInfo.vipList) {
+        this.vipInfo.vipList.forEach(el => {
+          if (el.city === this.itemInfo.city && el.vipValid) {
+            status = true
+            this.vipCity = el
+          }
+        })
+      }
+      return status
     }
   },
   methods: {
+    // 获取渠道列表
+    getChannelListByLinkerId () {
+      marketService.getChannelListByLinkerId({linkerId: this.itemInfo.linkerId}).then(res => {
+        this.channelList = res
+      }).catch()
+    },
+    // 选择渠道
+    changeChannelFn (item){
+      this.currentChannel = item
+      this.hideChannelFn()
+      this.switchChannel()
+      if (item.freeFlag ) {
+        this.freeOpenHandle()
+      } else {
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      }
+    },
+    // 切换渠道
+    switchChannel () {
+      marketService.switchChannel({
+        linkerId:  this.itemInfo.linkerId,
+        newChannelId: this.currentChannel.channelId,
+        oldChannelId: '',
+        switchingReason: ''
+      }).then(res => {}).catch()
+    },
+    // 显示渠道
+    showChannelFn () {
+      this.showChannel = true
+    },
+    // 隐藏渠道
+    hideChannelFn () {
+      this.showChannel = false
+    },
     async getDetailInfo(id) {
       // 获取该楼盘详情
       const res = await marketService.getLinkerDetail(id)
@@ -141,12 +208,17 @@ export default {
         title: '提示',
         message: '是否确认添加楼盘？'
       }).then(() => {
-        this.freeOpenHandle()
+        this.showChannelFn()
+        // this.freeOpenHandle()
       }).catch(() => {})
     },
     // 确认支付
     async confirmFun () {
-      if (this.itemInfo.city !== this.vipInfo.city) {
+      // if (this.itemInfo.city !== this.vipInfo.city) {
+      //   return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+      // }
+      // 判断vip城市和vip有效期
+      if (!this.checkVipCity) {
         return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
       }
       if (!this.status) {
@@ -159,8 +231,8 @@ export default {
       } else {
         
         let invalidTime = +new Date(this.itemInfo.invalidTime.replace(/-/g,'/'))// 楼盘到期时间
-        let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
-        if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.itemInfo.city === this.vipInfo.city) {
+        let expireTimestamp = this.vipCity.expireTimestamp // vip到期时间
+        if (this.vipCity.vipValid && expireTimestamp > invalidTime && this.itemInfo.city === this.vipCity.city) {
           const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
           this.$toast({
             duration: 1000,
@@ -184,7 +256,7 @@ export default {
     },
     // 免费楼盘开通
     freeOpenHandle () {
-      marketService.newOpenLinker({linkerId: this.itemInfo.linkerId}).then(res => {
+      marketService.newOpenLinker({linkerId: this.itemInfo.linkerId, channelId: this.currentChannel.channelId}).then(res => {
         this.itemInfo.openStatus = 2
         this.itemInfo.openTimes += 1
         // let time = new Date(+this.vipInfo.expireTimestamp)
@@ -204,12 +276,11 @@ export default {
     },
     async openHandle() {
       //VIP用户选择城市与VIP开通楼盘同城市
-      if (this.status == 0) {
-        if (this.itemInfo.city === this.vipInfo.city) {
+      if (this.status == 0) {       
+        if (this.itemInfo.city === this.vipCity.city && this.vipCity.vipValid) {
           const res = await marketService.addHouseByVip(this.itemInfo.linkerId)
           if (res.returnCode == 21801) {
-            this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
-            return
+            return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
           }
           this.status = 2
           this.itemInfo.openStatus = 2
@@ -437,6 +508,55 @@ export default {
           width: 130px;
         }
       }
+    }
+  }
+  /deep/.van-icon-close{
+    display: none;
+  }
+  .channel-box{
+    font-size: 16px;
+    padding: 10px 0 0 0;
+    .topbar{
+      text-align: center;
+      padding-bottom: 5px;
+      .title{
+        padding: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+      }
+      .subtitle{
+        font-size: 12px;
+        color: #999;
+        z-index: 9;
+        position: relative;
+      }
+    }
+    
+    .channel-list{
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+    .item{
+      padding: 16px 0 10px 16px;
+      .free{
+        display: inline-block;
+        font-size: 10px;
+        color: #fff;
+        background-color: #EA4D2E;
+        line-height: 15px;
+        height: 15px;
+        padding: 0 5px;
+        border-radius: 2px;
+        vertical-align: middle;
+      }
+    }
+    .cancle{
+      margin-top: 20px;
+      height:50px;
+      background:rgba(238,238,238,1);
+      line-height: 50px;
+      text-align: center;
     }
   }
 }

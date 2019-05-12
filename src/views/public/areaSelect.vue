@@ -1,6 +1,6 @@
 <template>
   <div class="area-selection-page" ref="content">
-    <div class="search-box van-hairline--bottom">
+    <div class="search-box van-hairline--bottom"  v-show="this.fromPage !=='myMember'">
       <search :conf="searchInfo "></search>
     </div>
     <div class="area-selection-box">

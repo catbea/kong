@@ -193,6 +193,7 @@ export default {
       this.$router.push(`/custom/${item.clientId}`)
     },
     dialogHandle (item) {
+      this.goalldynamics(item)
       // if (item.h5Flag) {
       //   this.$dialog.alert({
       //     title: '提示',
@@ -201,7 +202,6 @@ export default {
       // } else {
       //   this.goalldynamics(item)
       // }
-      this.goalldynamics(item)
     },
     //联系
     goalldynamics(item) {

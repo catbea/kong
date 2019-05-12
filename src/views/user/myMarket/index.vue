@@ -219,6 +219,7 @@ export default {
   }),
   async created() {
     if (window.sessionStorage.getItem('myMarketTab-active')) {
+      this.yes = false
       this.active = +window.sessionStorage.getItem('myMarketTab-active')
       window.sessionStorage.removeItem('myMarketTab-active')
     }

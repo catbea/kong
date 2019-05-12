@@ -183,6 +183,7 @@ export default {
     },
     // 联系前确认
     dialogHandle (item) {
+      this.goalldynamics(item)
       // if (item.h5Flag) {
       //   this.$dialog.alert({
       //     title: '提示',
@@ -191,7 +192,6 @@ export default {
       // } else {
       //   this.goalldynamics(item)
       // }
-      this.goalldynamics(item)
     },
     //联系
     goalldynamics(item) {
