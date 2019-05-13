@@ -110,7 +110,7 @@ export default {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
         city: this.selectCity,
         amountId: this.vipList[this.currPriceIndex].id,
-        subscribeNum: this.vipList[this.currPriceIndex].subscribeNum,
+        subscribeNum: this.vipList[this.currPriceIndex].monthNum,
         payOpenid: this.userInfo.payOpenId
       }
       this.isPayLoading = true
@@ -182,7 +182,9 @@ export default {
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
       this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity }
-
+      if (!this.userArea.vipSelectedCity) {
+        this.selectCity = res.lastVipCity
+      }
       // 判断是否已过期
       let now = new Date()
       if (now.getTime() > parseInt(res.expireTimestamp)) {

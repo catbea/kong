@@ -164,14 +164,14 @@ export default {
       }).catch()
     },
     // 选择渠道
-    async changeChannelFn (item){
+    changeChannelFn (item){
       this.currentChannel = item
       this.hideChannelFn()
-      await this.switchChannel()
       if (item.freeFlag ) {
+        this.switchChannel()
         this.freeOpenHandle()
       } else {
-        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId,  newChannelId: this.currentChannel.channelId} })
       }
     },
     // 切换渠道

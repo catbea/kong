@@ -35,9 +35,9 @@
         <div class="city-index">
           <!-- <mt-index-list :height="mtIndexHeight"> -->
           <mt-index-list>
-            <mt-index-section index="" v-if="userInfo.enterpriseId != 92 && userInfo.enterpriseId != 93 && category !=0">
+            <!-- <mt-index-section index="" v-if="userInfo.enterpriseId != 92 && userInfo.enterpriseId != 93">
               <mt-cell title="全国" @click.native="chooseItem('全国',2)"></mt-cell>
-            </mt-index-section>
+            </mt-index-section> -->
             <mt-index-section :index="item.character" v-for="(item,index) in cityListData" :key="index">
               <mt-cell :title="option" @click.native="chooseItem(option,2)" v-for="(option,num) in item.city" :key="num"></mt-cell>
             </mt-index-section>
@@ -183,7 +183,12 @@ export default {
       } else {
         window.localStorage.setItem(`${this.fromPage || 'default'}City`, JSON.stringify(data))
       }
-      this.$router.go(-1)
+      // vip开通多城市
+      if (this.fromPage === 'myMember') {
+        this.$router.push(`/user/${this.fromPage}`)
+      } else {
+        this.$router.go(-1)
+      }
     },
     // 重新定位
     retryLocation() {

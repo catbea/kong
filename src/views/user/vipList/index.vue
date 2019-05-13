@@ -46,7 +46,7 @@ export default {
   methods: {
     // 跳转开通vip城市
     goOpenVip () {
-      this.$router.push('/user/myMember')
+      this.$router.push('/public/vip-market/?fromPage=myMember&category=0')
     },
     // 获取vip城市列表
     getVipInfo () {
