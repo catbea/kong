@@ -98,7 +98,7 @@ export default {
     },
     // 提交渠道
     updateChannel () {
-      if (this.currentChannel.channelId === this.info.channelId) {
+      if (this.currentChannel.channelId == this.info.channelId) {
         return this.$toast('切换的渠道与当前渠道一致，请重新选择')
       }
       if (this.reasonIndex === 3 && !this.reasonText) {

@@ -365,10 +365,12 @@ export default {
       } else {
         this.clickDisabled = true
         this.registSuccess = true
-        this.$toast('已免费开通，请到我的楼盘中查看')
-        if (result.isFollowQrCode) {
-          this.$router.push('/dynamics')
+        if (this.registerType === '40' || this.registerType === '50') {
+          this.$toast('已免费开通，请到我的楼盘中查看')
         }
+        // if (result.isFollowQrCode) {
+        //   this.$router.push('/dynamics')
+        // }
         // let params = {
         //   enterpriseId: this.enterpriseId
         // }

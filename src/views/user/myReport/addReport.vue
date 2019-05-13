@@ -124,7 +124,7 @@ export default {
       if (this.angent.agentType === 0) {
         channelId =  this.angent.channelId || this.currentChannel.channelId
       }
-      let developersId = this.angent.developersId
+      let developersId = this.angent.developersId ? this.angent.developersId : this.currentChannel.developersId
       let params = {
         clientId: this.reportAddInfo.clientId,
         clientName: this.reportAddInfo.clientName,

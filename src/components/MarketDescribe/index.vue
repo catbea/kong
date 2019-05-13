@@ -164,10 +164,10 @@ export default {
       }).catch()
     },
     // 选择渠道
-    changeChannelFn (item){
+    async changeChannelFn (item){
       this.currentChannel = item
       this.hideChannelFn()
-      this.switchChannel()
+      await this.switchChannel()
       if (item.freeFlag ) {
         this.freeOpenHandle()
       } else {
