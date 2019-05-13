@@ -9,8 +9,8 @@
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
         <li>{{userInfo.name}}</li>
         <!-- <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li> -->
-        <li @click="goVipList" v-show="isVip">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
-        <li v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
+        <li @click="goVipList" v-show="isVip && !isExpire">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
+        <li @click="goVipList" v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
         <li v-show="!isVip">暂未开通VIP功能</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
