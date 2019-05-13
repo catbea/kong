@@ -90,18 +90,17 @@ class registService {
    */
   checkUser(data) {
     return xhr({
-      method: 'POST',
-      url: '',
+      url: '/register/checkMobileQrCodeInfo',
       body: data
     })
   }
 
   /**
-   * 检测注册码是否有效
+   * 查询注册楼盘和开发商信息
    */
-  checkQrcode(data) {
+  getQrCodeInfo(data) {
     return xhr({
-      url: '',
+      url: '/register/getQrCodeInfo',
       body: data
     })
   }

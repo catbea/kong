@@ -122,8 +122,8 @@
                 </div>
                 <div class="info">
                   <p><span>Tel :</span>{{editData.mobile}}</p>
-                  <p><span>Col :</span>{{editData.institutionName}}</p>
-                  <p><span>Add:</span>{{editData.mojarRegion}}</p>
+                  <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
+                  <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
                   <p class="signature">{{editData.signature}}</p>
                 </div>
               </div>

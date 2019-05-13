@@ -12,8 +12,8 @@
             <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
             <span class="invite-desc">邀请您加入</span>
           </div>
-          <div class="channel-register" v-show="false">
-            <b>恒大山水郡</b>送您免费开通券，邀请您加入
+          <div class="channel-register" v-show="qrCodeinfo.channelName">
+            <b>{{qrCodeinfo.channelName || qrCodeinfo.projectName}}</b>送您免费开通券，邀请您加入
           </div>
           <div class="top-phone-cell">
             <input
@@ -144,7 +144,8 @@ export default {
     areaList: {},
     belong: '',
     belongGroup: '',
-    linkerId: ''
+    linkerId: '',
+    qrCodeinfo: {}
   }),
   components: {
     AreaSelect
@@ -168,17 +169,17 @@ export default {
     this.belong = this.$route.query.belong || ''
     this.belongGroup = this.$route.query.belongGroup || ''
     this.linkerId = this.$route.query.linkerId || ''
-    this.mobile = this.userRegistInfo.registerMobile
-    this.code = this.userRegistInfo.registerCode
-    this.name = this.userRegistInfo.name
-    this.disabled = this.userRegistInfo.disabled
-    this.registDisabled = this.userRegistInfo.registDisabled
+    this.mobile = this.userRegistInfo.registerMobile || ''
+    this.code = this.userRegistInfo.registerCode || ''
+    this.name = this.userRegistInfo.name || ''
+    this.disabled = this.userRegistInfo.disabled || ''
+    this.registDisabled = this.userRegistInfo.registDisabled || ''
     this.queryByRegister(this.enterpriseId)
     if (this.registerType === '10' || this.registerType === '20') {
       this.queryRegisterRecommendInfo()
     }
     if (this.registerType === '40' || this.registerType === '50') {
-      this.queryLinkerInfo()
+      this.getQrCodeInfo()
     }
     this.fullArea = fullArea
     this.getAreaList(fullArea)
@@ -201,30 +202,68 @@ export default {
     mobile (newValue, oldValue) {
       let reg = /^1[3-9]\d{9}$/g
       if (reg.test(newValue)) {
-        // 请求用户是否为老用户
+        // 检测老用户
         this.checkUser(newValue)
       }
     }
   },
   methods: {
     // 查询楼盘和开发商信息
-    queryLinkerInfo () {
-    },
-    // 检测二维码是否有效
-    checkQrcode () {
-      RegisterService.checkQrcode({}).then(res => {}).catch()
+    getQrCodeInfo () {
+      RegisterService.getQrCodeInfo({
+        registerType: this.registerType,
+        enterpriseId: this.enterpriseId,
+        belong: this.belong,
+        linkerId: this.linkerId
+      }).then(res => {
+        this.qrCodeinfo = res
+      })
     },
     // 检测老用户
     checkUser (phone) {
-      RegisterService.checkUser({}).then(res => {
-        if (phone === this.mobile) {
+      RegisterService.checkUser({
+        parentUserId: this.parentUserId,
+        mobile: phone,
+        registerType: this.registerType,
+        enterpriseId: this.enterpriseId,
+        belong: this.belong,
+        belongGroup: this.belongGroup,
+        linkerId: this.linkerId
+      }).then(res => {
+        if (res.isCouponEnd) {
+          this.$router.push({path:'/register/invalid', query:{type:1}})
+        }
+        if (res.isQrCodeExpire) {
+          this.$router.push({path:'/register/invalid', query:{type:2}})
+        }
+        if (res.isBindChannel) {
           this.$dialog.alert({
             title: '',
-            message: '该号码已注册，登录后即可免费开通！',
+            message: '您已开通过该楼盘并绑定渠道，请进入我的楼盘查看！',
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            // on close
+            this.$router.push('/user/myMarket')
+          })
+        }
+         if (res.isOpenLinker) {
+           this.$dialog.alert({
+            title: '',
+            message: '您已开通过该楼盘，请进入我的楼盘查看！',
+            confirmButtonText: '立即登录'
+          }).then(() => {
+            this.$toast('已免费开通，请到我的楼盘中查看')
+            this.$router.push('/user/myMarket')
+          })
+         }
+        if (res.isOldUser) {
+          this.$dialog.alert({
+            title: '',
+            message: '您已经是老用户，登录后即可免费开通楼盘！',
+            confirmButtonText: '立即登录'
+          }).then(() => {
+            this.$toast('已免费开通，请到我的楼盘中查看')
+            this.$router.push('/user/myMarket')
           })
         }
       }).catch()
@@ -285,20 +324,37 @@ export default {
       this.referName = result.name
     },
     async register() {
+      // let vo = {
+      //   mobile: this.mobile,
+      //   code: this.code,
+      //   agentName: this.name,
+      //   registerType: this.registerType,
+      //   enterpriseId: this.enterpriseId,
+      //   majorRegion: this.userRegistInfo.majorRegion,
+      //   parentUserId: this.parentUserId,
+      //   distributorId: this.userRegistInfo.distributorId,
+      //   institutionId: this.userRegistInfo.institutionId,
+      //   majorRegion: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.majorRegion : '',
+      //   parentUserId: this.registerType === '10' || this.registerType === '20' ? this.parentUserId : '',
+      //   distributorId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.distributorId : '',
+      //   institutionId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.institutionId: ''
+      // }
       let vo = {
-        mobile: this.mobile,
-        code: this.code,
+        activityId: '',
         agentName: this.name,
+        code: this.code,
         registerType: this.registerType,
         enterpriseId: this.enterpriseId,
         majorRegion: this.userRegistInfo.majorRegion,
         parentUserId: this.parentUserId,
+        belong: this.belong,
+        belongGroup: this.belongGroup,
         distributorId: this.userRegistInfo.distributorId,
-        institutionId: this.userRegistInfo.institutionId
-        // majorRegion: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.majorRegion : '',
-        // parentUserId: this.registerType === '10' || this.registerType === '20' ? this.parentUserId : '',
-        // distributorId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.distributorId : '',
-        // institutionId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.institutionId: ''
+        institutionId: this.userRegistInfo.institutionId,
+        linkerId: this.linkerId,
+        mobile: this.mobile,
+        oldParentUserId: this.enterpriseId,
+        registerType: this.registerType
       }
       const result = await RegisterService.register(vo)
       console.log(result)
@@ -310,6 +366,9 @@ export default {
         this.clickDisabled = true
         this.registSuccess = true
         this.$toast('已免费开通，请到我的楼盘中查看')
+        if (result.isFollowQrCode) {
+          this.$router.push('/dynamics')
+        }
         // let params = {
         //   enterpriseId: this.enterpriseId
         // }

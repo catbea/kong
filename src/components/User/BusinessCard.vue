@@ -83,7 +83,8 @@ export default {
       // return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
     },
     vipTimeInfo() {
-      return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
+      // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
+      return this.userVipInfo.isvip ? '已开通部分城市' : '楼盘不限量'
     },
     vipPackage() {
       return this.userVipInfo.packageStatus == 2 ? '任选10个盘' : this.userVipInfo.packageRemark
