@@ -30,6 +30,7 @@ export default {
   },
   created() {
     this.linkerId = this.$route.params.id
+    this.newChannelId = this.$route.params.newChannelId || ''
     if (this.marketOpenCache && this.marketOpenCache.linkerId && this.marketOpenCache.linkerId == this.linkerId) {
       this.priceList = this.marketOpenCache.priceList
       this.projectInfo = this.marketOpenCache.projectInfo
@@ -54,7 +55,8 @@ export default {
     dredge: false,
     userPrice: 0,
     borderBottom: false,
-    vipInfo: {}
+    vipInfo: {},
+    newChannelId: ''
   }),
   computed: {
     ...mapGetters(['userInfo', 'marketOpenCache', 'currSelectedCoupon'])
@@ -213,6 +215,16 @@ export default {
     cancelPayment(purchaseId) {
       commonService.cancelPayment(purchaseId)
     },
+    
+    // 免费楼盘付费渠道切换渠道
+    switchChannel () {
+      marketService.switchChannel({
+        linkerId:  this.linkerId,
+        newChannelId: this.newChannelId,
+        oldChannelId: '',
+        switchingReason: ''
+      }).then(res => {}).catch()
+    },
 
     paySuss() {
       let _pirce = this.userPrice - this.priceSurfacePayInfo.balancePay
@@ -220,6 +232,10 @@ export default {
       this.$store.commit(types.USER_INFO, data)
       this.getMarketDescribeInfo()
       this.getLinkerAmountList()
+      // 免费楼盘付费渠道切换渠道
+      if (this.$route.params.newChannelId) {
+        this.switchChannel()
+      }
       this.$dialog
         .confirm({
           title: '开通成功',

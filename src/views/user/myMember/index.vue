@@ -9,12 +9,12 @@
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
         <li>{{userInfo.name}}</li>
         <!-- <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li> -->
-        <li @click="goVipList" v-show="isVip">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
-        <li v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
+        <li @click="goVipList" v-show="isVip && !isExpire">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
+        <li @click="goVipList" v-show="isVip && isExpire">vip已到期，请继续充值续费 ></li>
         <li v-show="!isVip">暂未开通VIP功能</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘 ></router-link>
+      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip', vipCity: vipInfo.lastVipCity}}">VIP选盘 ></router-link>
       </div>
     </div>
     <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle" @goVipList="goVipList" :userArea="userArea"></set-meal>
@@ -110,7 +110,7 @@ export default {
         // costType: 1, //1、开通vip 2、楼盘开通 3：套盘套餐开通 4：一天体验
         city: this.selectCity,
         amountId: this.vipList[this.currPriceIndex].id,
-        subscribeNum: this.vipList[this.currPriceIndex].subscribeNum,
+        subscribeNum: this.vipList[this.currPriceIndex].monthNum,
         payOpenid: this.userInfo.payOpenId
       }
       this.isPayLoading = true
@@ -182,7 +182,9 @@ export default {
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
       this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity }
-
+      if (!this.userArea.vipSelectedCity) {
+        this.selectCity = res.lastVipCity
+      }
       // 判断是否已过期
       let now = new Date()
       if (now.getTime() > parseInt(res.expireTimestamp)) {
