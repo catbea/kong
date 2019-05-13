@@ -277,10 +277,22 @@ export default {
       virtualDom.innerHTML = this.info.content.replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
 
       for (let dom of virtualDom.children) {
-        this.renderDom.push({
-          text: dom.innerHTML,
-          status: 'h5'
-        })
+        if(dom.innerHTML.indexOf('<!--VIDEO_') == 0) {
+            let videoKey = dom.innerHTML.replace('<!--', '').replace('-->', '')
+            this.renderDom.push({
+              text: '<video src="'+this.info.fileUrlMap[videoKey]+'" controls="controls" />',
+              status: 'h5'
+            })
+        } else {
+            this.renderDom.push({
+              text: dom.innerHTML,
+              status: 'h5'
+            })
+        }
+        // this.renderDom.push({
+        //   text: dom.innerHTML,
+        //   status: 'h5'
+        // })
       }
     },
     // 楼盘信息处理

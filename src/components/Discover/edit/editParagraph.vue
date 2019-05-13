@@ -53,6 +53,7 @@ export default {
   }
   > .repeal-del-container {
     position: absolute;
+    min-width: 100%;
     width: 100%;
     height: 100%;
     top: 0;
@@ -64,6 +65,7 @@ export default {
       transform: translate(-50%, -50%);
       left: 50%;
       top: 50%;
+      min-width: 96px !important;
       width: 96px;
       height: 32px;
       line-height: 32px;
