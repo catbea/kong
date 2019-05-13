@@ -163,12 +163,21 @@ export default {
             status: 'edit'
           })
         } else {
-          this.renderDom.push({
-            text: dom.innerHTML,
-            status: 'edit'
-          })
+          if(dom.innerHTML.indexOf('<!--VIDEO_') == 0) {
+            let videoKey = dom.innerHTML.replace('<!--', '').replace('-->', '')
+            // console.log(this.info.fileUrlMap[videoKey], '========')
+            this.renderDom.push({
+              text: '<!--'+videoKey+'--><video src="'+this.info.fileUrlMap[videoKey]+'" controls="controls" />',
+              status: 'edit'
+            })
+          } else {
+            this.renderDom.push({
+              text: dom.innerHTML,
+              status: 'edit'
+            })
+          }
         }
-        console.log(this.renderDom, '========')
+        // console.log(this.renderDom, '========')
       }
       
       if (this.info.editData !== '') {
@@ -298,6 +307,9 @@ export default {
         if (temp.status === 'edit') content += `<p>${temp.text}</p>`
       }
       let res, targetid
+      let subStr = new RegExp('\<video.*?\>','ig');
+      content = content.replace(subStr, '')
+      // console.log(content, 'content-------')
       // 存在这个字段,说明是再次编辑 source:0 1系统原文章 2:经纪人文章 3:小程序
       if (this.info && this.info.source && (this.info.source == 2 || this.info.source == 3) && this.info.belongeder !== '') {
         res = await cpInformationService.updateArticleForAgent(this.id, JSON.stringify(payload), content)
