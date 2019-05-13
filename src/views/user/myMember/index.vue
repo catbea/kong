@@ -10,11 +10,11 @@
         <li>{{userInfo.name}}</li>
         <!-- <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li> -->
         <li @click="goVipList" v-show="isVip && !isExpire">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
-        <li @click="goVipList" v-show="isVip && isExpire">vip已到期，请继续充值续费</li>
+        <li @click="goVipList" v-show="isVip && isExpire">vip已到期，请继续充值续费 ></li>
         <li v-show="!isVip">暂未开通VIP功能</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip'}}">VIP选盘 ></router-link>
+      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip', vipCity: vipInfo.lastVipCity}}">VIP选盘 ></router-link>
       </div>
     </div>
     <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle" @goVipList="goVipList" :userArea="userArea"></set-meal>
