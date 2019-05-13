@@ -109,6 +109,7 @@ export default {
     target: null,
     helpShow: false,
     pushFlag: false,
+    styleString: '',
     previewFlag: false
   }),
   created() {
@@ -150,6 +151,7 @@ export default {
             let style = document.createElement("style");
             style.type = "text/css";
             let styleStr = dom.innerHTML.replace(/body\{[^\}]*\}/g,"").replace(/\*\{[^\}]*\}/g,"")
+            this.styleString += '<style>'+styleStr+'</style>'
             style.appendChild(document.createTextNode(styleStr))
             head.appendChild(style)
           } else {
@@ -172,7 +174,7 @@ export default {
             })
           } else {
             this.renderDom.push({
-              text: dom.innerHTML,
+              text: '<p style="'+dom.style.cssText+'">'+dom.innerHTML+'</p>',
               status: 'edit'
             })
           }
@@ -309,6 +311,7 @@ export default {
       let res, targetid
       let subStr = new RegExp('\<video.*?\>','ig');
       content = content.replace(subStr, '')
+      content = this.styleString + content
       // console.log(content, 'content-------')
       // 存在这个字段,说明是再次编辑 source:0 1系统原文章 2:经纪人文章 3:小程序
       if (this.info && this.info.source && (this.info.source == 2 || this.info.source == 3) && this.info.belongeder !== '') {
