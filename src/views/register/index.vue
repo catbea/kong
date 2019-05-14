@@ -59,7 +59,7 @@
               @input="inputHandler"
             >
           </div>
-          <div class="user-city" @click="popAreaHandler" v-show="registerType == 40 || registerType == 30">
+          <div class="user-city" @click="popAreaHandler" v-show="registerType == 50 || registerType == 30">
             <p class="title">主营区域</p>
             <p class="value" :class="{'disable': !userRegistInfo.majorRegion}">{{userRegistInfo.majorRegion || '请选择'}} <van-icon name="arrow" /></p>
           </div>
