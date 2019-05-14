@@ -54,6 +54,7 @@ export default {
   },
   created() {
     this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userInfo.majorCity ||  this.userArea.city
+    this.setMealInfo.vipCity = this.selectCity
     this.getVipInfo()
   },
   data: () => ({
