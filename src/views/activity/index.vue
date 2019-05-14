@@ -117,14 +117,17 @@ export default {
     query: null
   }),
   created() {
+    // 跳转公共注册
+    let href = window.location.href
+    window.location.href = href.replace('huiwan-activity', 'register')
     // registerType=20&enterpriseId=91&distributorId=120&parentUserId=492&activityId=22
-    this.query = this.$route.query
-    this.registerType = this.query.registerType
-    this.enterpriseId = this.query.enterpriseId
-    this.parentUserId = this.query.parentUserId
-    this.distributorId = this.query.distributorId
-    this.activityId = this.query.activityId
-    this.queryActivityInfo()
+    // this.query = this.$route.query
+    // this.registerType = this.query.registerType
+    // this.enterpriseId = this.query.enterpriseId
+    // this.parentUserId = this.query.parentUserId
+    // this.distributorId = this.query.distributorId
+    // this.activityId = this.query.activityId
+    // this.queryActivityInfo()
   },
   methods: {
     /**
