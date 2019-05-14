@@ -13,7 +13,7 @@
             <span class="invite-desc">邀请您加入</span>
           </div>
           <div class="channel-register" v-else>
-            <b>{{qrCodeinfo.channelName || qrCodeinfo.projectName}}</b>送您免费开通券，邀请您加入
+            <b>{{qrCodeinfo.channelName || qrCodeinfo.linkerName}}</b>送您免费开通券，邀请您加入
           </div>
           <div class="top-phone-cell">
             <input
