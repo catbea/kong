@@ -52,6 +52,7 @@
 import Avatar from 'COMP/Avatar'
 import TagGroup from 'COMP/TagGroup'
 import { mapGetters } from 'vuex'
+import marketService from 'SERVICE/marketService'
 export default {
   components: {
     TagGroup,
@@ -60,9 +61,17 @@ export default {
   data: () => ({
     modifyImg: require('IMG/user/usercard_bg@2x.png'),
     crownIcon: require('IMG/user/cardGroup5@2x.png'),
-    discountIcon: require('IMG/user/SetmealGroup17@2x.png')
+    discountIcon: require('IMG/user/SetmealGroup17@2x.png'),
+    vipInfo: ''
   }),
+  created () {
+    this.getVipInfo()
+  },
   methods: {
+  async getVipInfo() {
+    let res = await marketService.vipInfo()
+    this.vipInfo = res
+  },
     editCLickHandler() {
       this.$router.push('/user/edit')
     },
@@ -84,7 +93,14 @@ export default {
     },
     vipTimeInfo() {
       // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
-      return this.userVipInfo.vipStatus === 0  ? '已开通部分城市' : '楼盘不限量'
+      if (this.vipInfo) {
+        let time = this.vipInfo.expireTimestamp
+        let text = '楼盘不限量'
+        if (time > +new Date()) {
+          text = '已开通部分城市'
+        }
+        return text
+      }
     },
     vipPackage() {
       return this.userVipInfo.packageStatus == 2 ? '任选10个盘' : this.userVipInfo.packageRemark
