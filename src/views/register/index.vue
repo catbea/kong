@@ -596,11 +596,11 @@ export default {
         }
       }
       .user-city{
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
         align-items: center;
         .title{
-          width: 64px;
+          width: 80px;
         }
         .value{
           flex: 1;
