@@ -31,7 +31,7 @@
               <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             </li>
             <li class="unit-price">
-              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice: parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
+              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice.replace('.00', ''): parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>
             </li>
           </ul>
