@@ -176,8 +176,9 @@ export default {
     this.registDisabled = this.userRegistInfo.registDisabled || ''
     this.queryByRegister(this.enterpriseId)
     // if (this.registerType === '10' || this.registerType === '20') {
-    //   this.queryRegisterRecommendInfo()
-    // }
+    if (this.registerType === '10') {
+      this.queryRegisterRecommendInfo()
+    }
     if (this.registerType === '40' || this.registerType === '50') {
       this.getQrCodeInfo()
     }
