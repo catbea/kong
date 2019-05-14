@@ -7,12 +7,12 @@
       <p class="top-text top-desc">连接客户更简单</p>
       <div class="top-content" v-if="!registSuccess">
         <div class="box-shadow top-form-container">
-          <div class="top-invite-info">
+          <div class="top-invite-info" v-if="registerType!=='40' && registerType !=='50'">
             <div class="bg_img invite-head" :style="{backgroundImage:'url(' + (referLogo || defaultLogo) + ')'}"/>
             <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
             <span class="invite-desc">邀请您加入</span>
           </div>
-          <div class="channel-register" v-show="qrCodeinfo.channelName">
+          <div class="channel-register" v-else>
             <b>{{qrCodeinfo.channelName || qrCodeinfo.projectName}}</b>送您免费开通券，邀请您加入
           </div>
           <div class="top-phone-cell">
