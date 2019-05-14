@@ -277,6 +277,23 @@ export default {
       virtualDom.innerHTML = this.info.content.replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
 
       for (let dom of virtualDom.children) {
+        if(dom.tagName == 'META') {
+          continue
+        }
+        if(dom.tagName == 'STYLE' || dom.tagName == 'LINK') {
+          // console.log(dom, dom.tagName)
+          let head = document.getElementsByTagName("head")[0]
+          if(dom.tagName == 'STYLE') {
+            let style = document.createElement("style");
+            style.type = "text/css";
+            let styleStr = dom.innerHTML.replace(/body\{[^\}]*\}/g,"").replace(/\*\{[^\}]*\}/g,"")
+            style.appendChild(document.createTextNode(styleStr))
+            head.appendChild(style)
+          } else {
+            head.appendChild(dom)
+          }
+          continue
+        }
         if(dom.innerHTML.indexOf('<!--VIDEO_') == 0) {
             let videoKey = dom.innerHTML.replace('<!--', '').replace('-->', '')
             this.renderDom.push({
@@ -284,15 +301,13 @@ export default {
               status: 'h5'
             })
         } else {
+          if(dom.innerText.length>0) {
             this.renderDom.push({
-              text: dom.innerHTML,
+              text: '<'+dom.tagName+' style="'+dom.style.cssText+'">'+dom.innerHTML+'</'+dom.tagName+'>',
               status: 'h5'
             })
+          }
         }
-        // this.renderDom.push({
-        //   text: dom.innerHTML,
-        //   status: 'h5'
-        // })
       }
     },
     // 楼盘信息处理
