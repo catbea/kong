@@ -100,6 +100,8 @@ export default {
           text = '已开通部分城市'
         }
         return text
+      } else {
+        return ''
       }
     },
     vipPackage() {
