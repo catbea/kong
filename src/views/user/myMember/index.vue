@@ -170,7 +170,7 @@ export default {
           cancelButtonText: '取消'
         })
         .then(() => {
-          this.$router.replace({ path: '/user/myMember/selectedDisk', query: { type: 'vip' } })
+          this.$router.replace({ path: '/user/myMember/selectedDisk', query: { type: 'vip', vipCity: this.selectCity} })
         })
         .catch(() => {})
     },
