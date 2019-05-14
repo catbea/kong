@@ -182,7 +182,11 @@ export default {
       this.isVip = !!res.expireTimestamp
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
-      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity }
+      // 未开通vip取主营区域
+      if (!res.lastVipCity) {
+        res.lastVipCity = this.selectCity
+      }
+      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity}
       if (!this.userArea.vipSelectedCity) {
         this.selectCity = res.lastVipCity
       }
