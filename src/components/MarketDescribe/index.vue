@@ -113,9 +113,6 @@ export default {
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
-    if (+this.itemInfo.isFree) {
-      this.getChannelListByLinkerId()
-    }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
@@ -204,6 +201,7 @@ export default {
     },
     // 免费楼盘
     freeConfirmFun () {
+      this.getChannelListByLinkerId()
       this.$dialog.confirm({
         title: '提示',
         message: '是否确认添加楼盘？'
