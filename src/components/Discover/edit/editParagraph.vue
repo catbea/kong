@@ -38,6 +38,7 @@ export default {
   padding: 5px;
   text-indent: unset;
   > .paragraph-container {
+    display: flex;
     > img {
       object-fit: cover;
     }
