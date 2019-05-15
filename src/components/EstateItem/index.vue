@@ -64,6 +64,7 @@ export default {
   position: relative;
   overflow: hidden;
   line-height: 1;
+  width: 100%;
   > .main-continer {
     word-wrap: none;
     display: flex;
