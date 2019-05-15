@@ -162,6 +162,7 @@ export default {
     // } else {
     //   this.params = `/register/step3?${qs.stringify(this.$route.query)}`
     // }
+    this.activityId = this.$route.query.activityId || ''
     this.enterpriseId = this.$route.query.enterpriseId || ''
     this.registerType = this.$route.query.registerType || ''
     this.parentUserId = this.$route.query.parentUserId || ''
@@ -341,7 +342,7 @@ export default {
       //   institutionId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.institutionId: ''
       // }
       let vo = {
-        activityId: '',
+        activityId: this.activityId,
         agentName: this.name,
         code: this.code,
         registerType: this.registerType,
