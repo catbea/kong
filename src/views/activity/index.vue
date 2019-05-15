@@ -117,9 +117,10 @@ export default {
     query: null
   }),
   created() {
-    // 跳转公共注册
-    let href = window.location.href
-    window.location.href = href.replace('huiwan-activity', 'register')
+    // 惠湾活动跳转公共注册
+    let href = window.location.href.replace('huiwan-activity', 'register').replace(/registerType=\d+/,'registerType=30')
+    window.location.href = href
+    
     // registerType=20&enterpriseId=91&distributorId=120&parentUserId=492&activityId=22
     // this.query = this.$route.query
     // this.registerType = this.query.registerType

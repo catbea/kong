@@ -162,6 +162,13 @@ export default {
     // } else {
     //   this.params = `/register/step3?${qs.stringify(this.$route.query)}`
     // }
+    
+    // 优惠券跳转公共注册
+    let href = window.location.href
+    if (href.indexOf('coupons') > -1) {
+      this.$route.query.registerType = '30'
+    }
+
     this.activityId = this.$route.query.activityId || ''
     this.enterpriseId = this.$route.query.enterpriseId || ''
     this.registerType = this.$route.query.registerType || ''
