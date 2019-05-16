@@ -40,7 +40,7 @@
       <div class="channel-box scale-1px" v-if="+dataArr.isFree">
         <span @click="showChannelFn" v-if="!dataArr.channelId && dataArr.agentType <= 0">选择渠道</span>
         <span @click="goChangeChannel" v-if="dataArr.channelId && dataArr.agentType <= 0">切换渠道</span>
-        <span @click="showTaskFn">任务({{dataArr.taskQuota}})</span>
+        <span @click="showTaskFn">任务({{dataArr.taskQuota || 0}})</span>
       </div>
       <div class="user-market-page-box-bottom" v-if="dataArr.divisionRules">
         <img class="bg_img" :src="imgCommission" alt srcset>
@@ -139,9 +139,6 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    if (+this.dataArr.isFree) {
-      this.getChannelListByLinkerId()
-    }
   },
   mounted() {
     
@@ -182,6 +179,7 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      this.getChannelListByLinkerId()
       this.showChannel = true
     },
     // 隐藏渠道
@@ -743,6 +741,7 @@ export default {
   .channel-box{
     font-size: 16px;
     padding: 10px 0 0 0;
+    background-color: #fff;
     .topbar{
       text-align: center;
       padding-bottom: 5px;

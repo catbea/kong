@@ -52,6 +52,7 @@
 import Avatar from 'COMP/Avatar'
 import TagGroup from 'COMP/TagGroup'
 import { mapGetters } from 'vuex'
+import marketService from 'SERVICE/marketService'
 export default {
   components: {
     TagGroup,
@@ -60,9 +61,17 @@ export default {
   data: () => ({
     modifyImg: require('IMG/user/usercard_bg@2x.png'),
     crownIcon: require('IMG/user/cardGroup5@2x.png'),
-    discountIcon: require('IMG/user/SetmealGroup17@2x.png')
+    discountIcon: require('IMG/user/SetmealGroup17@2x.png'),
+    vipInfo: ''
   }),
+  created () {
+    this.getVipInfo()
+  },
   methods: {
+  async getVipInfo() {
+    let res = await marketService.vipInfo()
+    this.vipInfo = res
+  },
     editCLickHandler() {
       this.$router.push('/user/edit')
     },
@@ -83,7 +92,17 @@ export default {
       // return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
     },
     vipTimeInfo() {
-      return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
+      // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
+      if (this.vipInfo) {
+        let time = this.vipInfo.expireTimestamp
+        let text = '楼盘不限量'
+        if (time > +new Date()) {
+          text = '已开通部分城市'
+        }
+        return text
+      } else {
+        return ''
+      }
     },
     vipPackage() {
       return this.userVipInfo.packageStatus == 2 ? '任选10个盘' : this.userVipInfo.packageRemark
@@ -156,7 +175,7 @@ export default {
           color: #aeb1c2;
           line-height: 1.5;
           font-size: 12px;
-          margin-top: 20px;
+          margin-top: 36px;
           > .content-left-labe {
             margin-top: 8px;
             > .left-labe-css {
@@ -213,7 +232,7 @@ export default {
       .info-title {
         position: absolute;
         top: 10px;
-        left: 40px;
+        left: 42px;
         font-size: 16px;
         font-weight: 400;
         color: #87665a;
@@ -222,7 +241,7 @@ export default {
       .info-desc {
         position: absolute;
         top: 33px;
-        left: 40px;
+        left: 42px;
         font-size: 10px;
         font-weight: 400;
         color: #999999;

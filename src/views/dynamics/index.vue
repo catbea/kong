@@ -253,14 +253,15 @@ export default {
 .dynamics-page{
   .todo-box{
     background-color: #fff;
-    border-bottom: 5px solid #f7f9fa;
+    // border-bottom: 1px solid #f7f9fa;
     padding: 0 16px 20px 16px;
-    margin-top: -15px;
+    margin-top: -20px;
     .todo-list{
       height: 80px;
       border-radius: 10px;
       background-color: #fff;
       border: 1px solid #eee;
+      box-shadow:0px 0px 12px 0px rgba(0,20,38,0.1);
       font-size: 12px;
       display: flex;
     .info{
@@ -268,6 +269,8 @@ export default {
       display: flex;
       align-items: center;
       .icon{
+        display: flex;
+        align-items: center;
         img{
           width: 40px;
           height: 40px;

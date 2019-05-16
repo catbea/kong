@@ -13,7 +13,7 @@
       </div>
       <ol class="mymember-set-meal-page-content-bottom">
         <li :class="{active:num==index}" v-for="(item,index) in vipList" :key="index" @click="taget(index)">
-          <p>{{item.subscribeNum}}个月</p>
+          <p>{{item.monthNum}}个月</p>
           <div class="price">
             <span>¥</span>
             <p>{{item.subscribeAmount | priceFormart}}</p> 
@@ -159,6 +159,7 @@ export default {
         color: #007AE6;
         vertical-align: middle;
         text-align: right;
+        line-height: 22px;
         img{
           width: 16px;
           height: 16px;

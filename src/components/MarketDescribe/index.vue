@@ -31,7 +31,7 @@
               <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             </li>
             <li class="unit-price">
-              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice: parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
+              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice.replace('.00', ''): parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>
             </li>
           </ul>
@@ -113,9 +113,6 @@ export default {
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
-    if (+this.itemInfo.isFree) {
-      this.getChannelListByLinkerId()
-    }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
@@ -167,11 +164,11 @@ export default {
     changeChannelFn (item){
       this.currentChannel = item
       this.hideChannelFn()
-      this.switchChannel()
       if (item.freeFlag ) {
+        
         this.freeOpenHandle()
       } else {
-        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId,  newChannelId: this.currentChannel.channelId} })
       }
     },
     // 切换渠道
@@ -185,10 +182,12 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      this.$store.commit('TABBAR', { show: false })
       this.showChannel = true
     },
     // 隐藏渠道
     hideChannelFn () {
+      this.$store.commit('TABBAR', { show: true })
       this.showChannel = false
     },
     async getDetailInfo(id) {
@@ -204,6 +203,7 @@ export default {
     },
     // 免费楼盘
     freeConfirmFun () {
+      this.getChannelListByLinkerId()
       this.$dialog.confirm({
         title: '提示',
         message: '是否确认添加楼盘？'
@@ -238,12 +238,6 @@ export default {
             duration: 1000,
             message: '续费成功！'
           })
-          // let time = new Date(+this.vipInfo.expireTimestamp)
-          // let year = time.getFullYear()
-          // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-          // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-          // this.itemInfo.invalidTimeStr = `${year}/${mou}/${date}`
-          // this.itemInfo.invalidTime = this.vipInfo.expireDate
           this.itemInfo.openStatus = 2
           this.itemInfo.openTimes += 1
           this.status = 2
@@ -257,14 +251,11 @@ export default {
     // 免费楼盘开通
     freeOpenHandle () {
       marketService.newOpenLinker({linkerId: this.itemInfo.linkerId, channelId: this.currentChannel.channelId}).then(res => {
+        // 开通成功切换渠道
+        this.switchChannel()
+
         this.itemInfo.openStatus = 2
         this.itemInfo.openTimes += 1
-        // let time = new Date(+this.vipInfo.expireTimestamp)
-        // let year = time.getFullYear()
-        // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-        // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-        // this.itemInfo['invalidTimeStr'] = `${mou}/${date}`
-        // this.itemInfo['invalidTime'] = this.vipInfo.expireDate
         this.dredgeColor()
         this.$toast({
           duration: 1000,
@@ -285,12 +276,6 @@ export default {
           this.status = 2
           this.itemInfo.openStatus = 2
           this.itemInfo.openTimes += 1
-          // let time = new Date(+this.vipInfo.expireTimestamp)
-          // let year = time.getFullYear()
-          // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-          // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-          // this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
-          // this.itemInfo['invalidTime'] = this.vipInfo.expireDate
           this.dredgeColor()
           this.$toast({
             duration: 1000,
@@ -516,6 +501,7 @@ export default {
   .channel-box{
     font-size: 16px;
     padding: 10px 0 0 0;
+    background-color: #fff;
     .topbar{
       text-align: center;
       padding-bottom: 5px;

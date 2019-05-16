@@ -162,6 +162,7 @@ export default {
     padding: 10px;
     padding-bottom: 20px;
     line-height: 1;
+    border-top:1px solid #C2C7CC;
     > .data-container {
       padding: 14px 5px 16px 5px;
       margin-right: 20px;

@@ -1,7 +1,7 @@
 <template>
   <div class="invalid">
     <img src="../../assets/img/register/invalid.png" alt="">
-    <p v-if="true">二维码已过期！</p>
+    <p v-if="type==1">二维码已过期！</p>
     <p v-else>优惠券已领完！</p>
   </div>
 </template>
@@ -9,7 +9,12 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      type: ''
+    }
+  },
+  created () {
+    this.type = this.$route.query.type || 1
   }
 }
 </script>

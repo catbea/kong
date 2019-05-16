@@ -49,8 +49,9 @@ export default {
   },
   created() {
     this.type = this.$route.query.type
+    this.vipCity = this.$route.query.vipCity
     if (this.type == 'vip') {
-      this.searchInfo.siteText = this.userArea.selectedCity || (this.userInfo.vipInfo && this.userInfo.vipInfo.city ? this.userInfo.vipInfo.city : '全国')
+      this.searchInfo.siteText = this.userArea.selectedCity || this.vipCity || (this.userInfo.vipInfo && this.userInfo.vipInfo.city ? this.userInfo.vipInfo.city : '')
     } else {
       this.searchInfo.siteText = this.userArea.selectedCity || this.userInfo.majorCity || this.userArea.city
     }
@@ -79,7 +80,8 @@ export default {
     checkAllShow: false,
     loading: false,
     finished: false,
-    projectList: []
+    projectList: [],
+    vipCity: ''
   }),
   methods: {
     areaClickHandle() {

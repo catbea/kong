@@ -7,7 +7,7 @@
         任务说明：每天都需要完成至少3条以上植入该楼盘的写一写分享，或者楼盘相关其他分享。
       </p>
     </div>
-    <div class="list-box" v-show="todoList.length">
+    <div class="list-box" v-show="!nodata">
       <div class="list-head">
         <div class="name">相关楼盘</div>
         <div class="progress">完成进度</div>
@@ -15,7 +15,7 @@
       <van-list
         v-model="loading"
         :finished="finished"
-        finished-text="没有更多了"
+        finished-text=""
         @load="onLoad"
       >
         <div class="todo-item scale-1px-bottom" v-for="(item,index) in todoList" :key="index">
@@ -24,7 +24,7 @@
         </div>
       </van-list>
     </div>
-    <div class="nodata">
+    <div class="nodata" v-show="nodata">
       <img src="../../assets/img/market/comment/nodata.png" alt="">
       <p>没有查询到待办任务！</p> 
     </div>
@@ -74,6 +74,10 @@ export default {
           let todoList = result.records
           if (this.current === 1) {
             this.todoList = todoList
+            // 暂无数据
+            if (!todoList.length) {
+              this.nodata = true
+            }
           } else {
             this.todoList.push(...todoList)
           }
@@ -97,6 +101,7 @@ export default {
     h3{
       font-size: 24px;
       padding-bottom: 10px;
+      font-weight: 600;
     }
     p{
       color: rgba(255,255,255,0.8);

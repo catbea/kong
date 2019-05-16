@@ -1,7 +1,7 @@
 <template>
   <div class="channel">
     <div class="current-channel scale-1px-bottom">
-      <b class="title">当前渠道<span>(不可更改)</span></b>
+      <b class="title">当前渠道<span>(不可更改删除)</span></b>
       <p>{{this.info.channelName}}</p>
     </div>
     <div class="other-channer scale-1px-bottom">
@@ -20,8 +20,11 @@
       <div class="reason-list">
         <span v-for="(item,index) in reasons" :key="index" :class="{'active': index === reasonIndex}" @click="changeReason(index)">{{item}}</span>
       </div>
-      <div class="other-reason" v-show="reasonIndex==3">
-        <textarea v-model="reasonText" name="" class="textarea" id="" cols="30" rows="10" placeholder="请输入其他原因" @blur="blur"></textarea>
+      
+      <div class="other-reason">
+        <transition name="slide-fade">
+          <textarea v-show="reasonIndex==3" v-model="reasonText" name="" class="textarea" id="" cols="30" rows="10" placeholder="请输入其他原因" @blur="blur"></textarea>
+        </transition>
       </div>
     </div>
     <div class="submit" @click="updateChannel">
@@ -98,7 +101,7 @@ export default {
     },
     // 提交渠道
     updateChannel () {
-      if (this.currentChannel.channelId === this.info.channelId) {
+      if (this.currentChannel.channelId == this.info.channelId) {
         return this.$toast('切换的渠道与当前渠道一致，请重新选择')
       }
       if (this.reasonIndex === 3 && !this.reasonText) {
@@ -207,6 +210,7 @@ export default {
     }
   }
   .other-reason{
+    height:70px;
     .textarea{
       height:70px;
       border-radius:4px;
@@ -236,6 +240,7 @@ export default {
   .channel-box{
     font-size: 16px;
     padding: 10px 0 0 0;
+    background-color: #fff;
     .topbar{
       text-align: center;
       padding-bottom: 5px;
@@ -278,6 +283,16 @@ export default {
       line-height: 50px;
       text-align: center;
     }
+  }
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+    opacity: 0;
   }
 }
 </style>
