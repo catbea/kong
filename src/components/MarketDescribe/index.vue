@@ -165,9 +165,11 @@ export default {
       this.currentChannel = item
       this.hideChannelFn()
       if (item.freeFlag ) {
-        
         this.freeOpenHandle()
-      } else {
+      } else if (this.checkVipCity) {
+        this.openHandle()
+      } 
+      else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId,  newChannelId: this.currentChannel.channelId} })
       }
     },
