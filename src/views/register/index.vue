@@ -7,13 +7,13 @@
       <p class="top-text top-desc">连接客户更简单</p>
       <div class="top-content" v-if="!registSuccess">
         <div class="box-shadow top-form-container">
-          <div class="top-invite-info">
+          <div class="top-invite-info" v-if="registerType!=='40' && registerType !=='50'">
             <div class="bg_img invite-head" :style="{backgroundImage:'url(' + (referLogo || defaultLogo) + ')'}"/>
             <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
             <span class="invite-desc">邀请您加入</span>
           </div>
-          <div class="channel-register" v-show="qrCodeinfo.channelName">
-            <b>{{qrCodeinfo.channelName || qrCodeinfo.projectName}}</b>送您免费开通券，邀请您加入
+          <div class="channel-register" v-else>
+            <b>{{qrCodeinfo.channelName || qrCodeinfo.linkerName}}</b>送您免费开通券，邀请您加入
           </div>
           <div class="top-phone-cell">
             <input
@@ -59,7 +59,7 @@
               @input="inputHandler"
             >
           </div>
-          <div class="user-city" @click="popAreaHandler" v-show="registerType == 40 || registerType == 30">
+          <div class="user-city" @click="popAreaHandler" v-show="registerType == 50 || registerType == 30">
             <p class="title">主营区域</p>
             <p class="value" :class="{'disable': !userRegistInfo.majorRegion}">{{userRegistInfo.majorRegion || '请选择'}} <van-icon name="arrow" /></p>
           </div>
@@ -162,6 +162,14 @@ export default {
     // } else {
     //   this.params = `/register/step3?${qs.stringify(this.$route.query)}`
     // }
+    
+    // 优惠券跳转公共注册
+    let href = window.location.href
+    if (href.indexOf('coupons') > -1) {
+      this.$route.query.registerType = '30'
+    }
+
+    this.activityId = this.$route.query.activityId || ''
     this.enterpriseId = this.$route.query.enterpriseId || ''
     this.registerType = this.$route.query.registerType || ''
     this.parentUserId = this.$route.query.parentUserId || ''
@@ -175,7 +183,8 @@ export default {
     this.disabled = this.userRegistInfo.disabled || ''
     this.registDisabled = this.userRegistInfo.registDisabled || ''
     this.queryByRegister(this.enterpriseId)
-    if (this.registerType === '10' || this.registerType === '20') {
+    // if (this.registerType === '10' || this.registerType === '20') {
+    if (this.registerType === '10') {
       this.queryRegisterRecommendInfo()
     }
     if (this.registerType === '40' || this.registerType === '50') {
@@ -243,7 +252,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/user/myMarket')
+            this.$router.push('/dynamics')
           })
         }
          if (res.isOpenLinker) {
@@ -253,7 +262,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/user/myMarket')
+            this.$router.push('/dynamics')
           })
          }
         if (res.isOldUser) {
@@ -263,7 +272,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/user/myMarket')
+            this.$router.push('/dynamics')
           })
         }
       }).catch()
@@ -340,7 +349,7 @@ export default {
       //   institutionId: this.registerType === '30' || this.registerType === 'undefined' ? this.userRegistInfo.institutionId: ''
       // }
       let vo = {
-        activityId: '',
+        activityId: this.activityId,
         agentName: this.name,
         code: this.code,
         registerType: this.registerType,
@@ -595,11 +604,11 @@ export default {
         }
       }
       .user-city{
-        font-size: 16px;
+        font-size: 14px;
         display: flex;
         align-items: center;
         .title{
-          width: 64px;
+          width: 80px;
         }
         .value{
           flex: 1;

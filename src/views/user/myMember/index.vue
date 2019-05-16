@@ -54,6 +54,7 @@ export default {
   },
   created() {
     this.selectCity = this.userArea.vipSelectedCity || this.userInfo.vipDefaultCity || this.userInfo.majorCity ||  this.userArea.city
+    this.setMealInfo.vipCity = this.selectCity
     this.getVipInfo()
   },
   data: () => ({
@@ -169,7 +170,7 @@ export default {
           cancelButtonText: '取消'
         })
         .then(() => {
-          this.$router.replace({ path: '/user/myMember/selectedDisk', query: { type: 'vip' } })
+          this.$router.replace({ path: '/user/myMember/selectedDisk', query: { type: 'vip', vipCity: this.selectCity} })
         })
         .catch(() => {})
     },
@@ -181,7 +182,11 @@ export default {
       this.isVip = !!res.expireTimestamp
       this.expireTimestamp = res.expireTimestamp
       this.balance = res.balance
-      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity }
+      // 未开通vip取主营区域
+      if (!res.lastVipCity) {
+        res.lastVipCity = this.selectCity
+      }
+      this.setMealInfo = { isVip: res.vipFlag, openCount: res.count, vipCity: res.lastVipCity}
       if (!this.userArea.vipSelectedCity) {
         this.selectCity = res.lastVipCity
       }

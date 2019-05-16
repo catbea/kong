@@ -139,9 +139,6 @@ export default {
     this.linkerId = this.dataArr.linkerId
     this.time()
     this.strideYear()
-    if (+this.dataArr.isFree) {
-      this.getChannelListByLinkerId()
-    }
   },
   mounted() {
     
@@ -182,6 +179,7 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      this.getChannelListByLinkerId()
       this.showChannel = true
     },
     // 隐藏渠道

@@ -20,6 +20,17 @@ export default {
   }
 }
 </script>
+<style  lang="less">
+.paragraph{
+  div,section{
+    width: auto !important;
+  }
+  img{
+    height: auto !important;
+    max-width: 100% !important;
+  }
+}
+</style>
 <style lang="less" scoped>
 .paragraph {
   position: relative;

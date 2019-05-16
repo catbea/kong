@@ -31,7 +31,7 @@
               <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             </li>
             <li class="unit-price">
-              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice: parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
+              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice.replace('.00', ''): parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
               <span>{{itemInfo.openTimes}}次开通</span>
             </li>
           </ul>
@@ -112,9 +112,6 @@ export default {
       this.tags.unshift(this.saleStatus)
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
-    }
-    if (+this.itemInfo.isFree) {
-      this.getChannelListByLinkerId()
     }
   },
   computed: {
@@ -204,6 +201,7 @@ export default {
     },
     // 免费楼盘
     freeConfirmFun () {
+      this.getChannelListByLinkerId()
       this.$dialog.confirm({
         title: '提示',
         message: '是否确认添加楼盘？'
