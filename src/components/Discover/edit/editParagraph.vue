@@ -39,6 +39,7 @@ export default {
   text-indent: unset;
   > .paragraph-container {
     display: flex;
+    flex-direction: column;
     > img {
       object-fit: cover;
     }
