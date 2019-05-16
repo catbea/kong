@@ -261,6 +261,7 @@ export default {
       border-radius: 10px;
       background-color: #fff;
       border: 1px solid #eee;
+      box-shadow:0px 0px 12px 0px rgba(0,20,38,0.1);
       font-size: 12px;
       display: flex;
     .info{
@@ -268,6 +269,8 @@ export default {
       display: flex;
       align-items: center;
       .icon{
+        display: flex;
+        align-items: center;
         img{
           width: 40px;
           height: 40px;

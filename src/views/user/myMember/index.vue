@@ -9,12 +9,12 @@
       <ul :class="isVip && !isExpire ? 'head-describe' : 'head-describe expire'">
         <li>{{userInfo.name}}</li>
         <!-- <li v-show="isVip && !isExpire">AW大师VIP: {{expireTimestamp | dateTimeFormatter(2,'-')}}</li> -->
-        <li @click="goVipList" v-show="isVip && !isExpire">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) ></li>
+        <li @click="goVipList" v-show="isVip && !isExpire">已开通城市({{vipInfo&&vipInfo.vipList.length || 0}}) <img src="../../../assets/img/myMember/arrow.png" class="arrow" /> </li>
         <li @click="goVipList" v-show="isVip && isExpire">vip已到期，请继续充值续费 ></li>
         <li v-show="!isVip">暂未开通VIP功能</li>
         <li>余额：{{balance | priceFormart}}元</li>
       </ul>
-      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip', vipCity: vipInfo.lastVipCity}}">VIP选盘 ></router-link>
+      <router-link v-show="isVip && !isExpire" tag="p" :to="{path:'/user/myMember/selectedDisk', query: {type: 'vip', vipCity: vipInfo.lastVipCity}}">VIP选盘 <img class="arrow" src="../../../assets/img/myMember/arrow.png" /></router-link>
       </div>
     </div>
     <set-meal :vipList="vipList" @onCheckCity="checkCityHandle" :setMealInfo="setMealInfo" @priceClick="priceClickHandle" @goVipList="goVipList" :userArea="userArea"></set-meal>
@@ -297,6 +297,12 @@ export default {
       margin: 25px 0 0 23px;
       display: flex;
       width: 334px;
+      .arrow{
+        width: 12px;
+        height: 12px;
+        vertical-align: middle;
+        margin-top: -1px;
+      }
       .borderA {
         border: 1px solid #c6c6c6;
       }
@@ -345,14 +351,15 @@ export default {
       }
       p {
         margin-top: 24px;
-        width: 68px;
+        width: 70px;
         height: 24px;
+        line-height: 24px;
         border-radius: 12px;
         border: 1px solid;
         font-size: 11px;
         color: rgba(229, 179, 123, 1);
-        line-height: 24px;
         text-align: center;
+        vertical-align: middle;
       }
     }
   }

@@ -182,10 +182,12 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      this.$store.commit('TABBAR', { show: false })
       this.showChannel = true
     },
     // 隐藏渠道
     hideChannelFn () {
+      this.$store.commit('TABBAR', { show: true })
       this.showChannel = false
     },
     async getDetailInfo(id) {
@@ -514,6 +516,7 @@ export default {
   .channel-box{
     font-size: 16px;
     padding: 10px 0 0 0;
+    background-color: #fff;
     .topbar{
       text-align: center;
       padding-bottom: 5px;

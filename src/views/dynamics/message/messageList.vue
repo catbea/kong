@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="messageInfo-fill"></div>
-      <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getMsgList">
+      <van-list ref="list" v-model="loading" :finished="finished" finished-text="" :offset="500" @load="getMsgList">
         <div v-show="messageList.length !=0"
           class="messageInfo-sys"
           v-for="(item,key) in messageList"

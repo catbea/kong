@@ -175,7 +175,7 @@ export default {
           color: #aeb1c2;
           line-height: 1.5;
           font-size: 12px;
-          margin-top: 20px;
+          margin-top: 36px;
           > .content-left-labe {
             margin-top: 8px;
             > .left-labe-css {
@@ -232,7 +232,7 @@ export default {
       .info-title {
         position: absolute;
         top: 10px;
-        left: 40px;
+        left: 42px;
         font-size: 16px;
         font-weight: 400;
         color: #87665a;
@@ -241,7 +241,7 @@ export default {
       .info-desc {
         position: absolute;
         top: 33px;
-        left: 40px;
+        left: 42px;
         font-size: 10px;
         font-weight: 400;
         color: #999999;
