@@ -488,7 +488,7 @@ export default {
       font-size: 40px;
       height: 40px;
       line-height: 46px;
-      font-family: 'FZY4JW--GB1-0';
+      // font-family: 'FZY4JW--GB1-0';
       margin-bottom: 10px;
     }
     .top-text {

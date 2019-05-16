@@ -165,7 +165,7 @@ export default {
       this.currentChannel = item
       this.hideChannelFn()
       if (item.freeFlag ) {
-        this.switchChannel()
+        
         this.freeOpenHandle()
       } else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId,  newChannelId: this.currentChannel.channelId} })
@@ -182,10 +182,12 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      this.$store.commit('TABBAR', { show: false })
       this.showChannel = true
     },
     // 隐藏渠道
     hideChannelFn () {
+      this.$store.commit('TABBAR', { show: true })
       this.showChannel = false
     },
     async getDetailInfo(id) {
@@ -236,12 +238,6 @@ export default {
             duration: 1000,
             message: '续费成功！'
           })
-          // let time = new Date(+this.vipInfo.expireTimestamp)
-          // let year = time.getFullYear()
-          // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-          // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-          // this.itemInfo.invalidTimeStr = `${year}/${mou}/${date}`
-          // this.itemInfo.invalidTime = this.vipInfo.expireDate
           this.itemInfo.openStatus = 2
           this.itemInfo.openTimes += 1
           this.status = 2
@@ -255,14 +251,11 @@ export default {
     // 免费楼盘开通
     freeOpenHandle () {
       marketService.newOpenLinker({linkerId: this.itemInfo.linkerId, channelId: this.currentChannel.channelId}).then(res => {
+        // 开通成功切换渠道
+        this.switchChannel()
+
         this.itemInfo.openStatus = 2
         this.itemInfo.openTimes += 1
-        // let time = new Date(+this.vipInfo.expireTimestamp)
-        // let year = time.getFullYear()
-        // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-        // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-        // this.itemInfo['invalidTimeStr'] = `${mou}/${date}`
-        // this.itemInfo['invalidTime'] = this.vipInfo.expireDate
         this.dredgeColor()
         this.$toast({
           duration: 1000,
@@ -283,12 +276,6 @@ export default {
           this.status = 2
           this.itemInfo.openStatus = 2
           this.itemInfo.openTimes += 1
-          // let time = new Date(+this.vipInfo.expireTimestamp)
-          // let year = time.getFullYear()
-          // let mou = (time.getMonth() + 1) > 9 ?  (time.getMonth() + 1) : '0' +  (time.getMonth() + 1)
-          // let date = time.getDate() > 9 ? time.getDate() : '0' + time.getDate()
-          // this.itemInfo['invalidTimeStr'] = `${year}/${mou}/${date}`
-          // this.itemInfo['invalidTime'] = this.vipInfo.expireDate
           this.dredgeColor()
           this.$toast({
             duration: 1000,
@@ -514,6 +501,7 @@ export default {
   .channel-box{
     font-size: 16px;
     padding: 10px 0 0 0;
+    background-color: #fff;
     .topbar{
       text-align: center;
       padding-bottom: 5px;

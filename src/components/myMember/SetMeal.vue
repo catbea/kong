@@ -159,6 +159,7 @@ export default {
         color: #007AE6;
         vertical-align: middle;
         text-align: right;
+        line-height: 22px;
         img{
           width: 16px;
           height: 16px;
