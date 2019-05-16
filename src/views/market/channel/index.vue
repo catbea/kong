@@ -1,7 +1,7 @@
 <template>
   <div class="channel">
     <div class="current-channel scale-1px-bottom">
-      <b class="title">当前渠道<span>(不可更改)</span></b>
+      <b class="title">当前渠道<span>(不可更改删除)</span></b>
       <p>{{this.info.channelName}}</p>
     </div>
     <div class="other-channer scale-1px-bottom">
