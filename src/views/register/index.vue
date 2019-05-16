@@ -252,7 +252,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/user/myMarket')
+            this.$router.push('/dynamics')
           })
         }
          if (res.isOpenLinker) {
@@ -262,7 +262,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/user/myMarket')
+            this.$router.push('/dynamics')
           })
          }
         if (res.isOldUser) {
@@ -272,7 +272,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/user/myMarket')
+            this.$router.push('/dynamics')
           })
         }
       }).catch()
