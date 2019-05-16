@@ -101,6 +101,7 @@ export default {
     h3{
       font-size: 24px;
       padding-bottom: 10px;
+      font-weight: 600;
     }
     p{
       color: rgba(255,255,255,0.8);
