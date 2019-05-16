@@ -89,7 +89,11 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
-      this.showChannel = true
+      if (this.channelList.length) {
+        this.showChannel = true
+      } else {
+        this.$toast('该楼盘没有渠道！')
+      }
     },
     // 隐藏渠道
     hideChannelFn () {

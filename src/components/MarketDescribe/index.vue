@@ -184,6 +184,9 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      if (!this.channelList.length) {
+        return this.$toast('该楼盘没有渠道！')
+      }
       this.$store.commit('TABBAR', { show: false })
       this.showChannel = true
     },
