@@ -20,8 +20,11 @@
       <div class="reason-list">
         <span v-for="(item,index) in reasons" :key="index" :class="{'active': index === reasonIndex}" @click="changeReason(index)">{{item}}</span>
       </div>
-      <div class="other-reason" v-show="reasonIndex==3">
-        <textarea v-model="reasonText" name="" class="textarea" id="" cols="30" rows="10" placeholder="请输入其他原因" @blur="blur"></textarea>
+      
+      <div class="other-reason">
+        <transition name="slide-fade">
+          <textarea v-show="reasonIndex==3" v-model="reasonText" name="" class="textarea" id="" cols="30" rows="10" placeholder="请输入其他原因" @blur="blur"></textarea>
+        </transition>
       </div>
     </div>
     <div class="submit" @click="updateChannel">
@@ -207,6 +210,7 @@ export default {
     }
   }
   .other-reason{
+    height:70px;
     .textarea{
       height:70px;
       border-radius:4px;
@@ -279,6 +283,16 @@ export default {
       line-height: 50px;
       text-align: center;
     }
+  }
+  .slide-fade-enter-active {
+    transition: all .3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  }
+  .slide-fade-enter, .slide-fade-leave-to
+  /* .slide-fade-leave-active for below version 2.1.8 */ {
+    opacity: 0;
   }
 }
 </style>
