@@ -275,6 +275,11 @@ export default {
           if (res.returnCode == 21801) {
             return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
           }
+          // 免费楼盘调绑定渠道接口
+          if (this.itemInfo.isFree) {
+            this.switchChannel()
+          }
+
           this.status = 2
           this.itemInfo.openStatus = 2
           this.itemInfo.openTimes += 1
