@@ -301,7 +301,6 @@ export default {
         width: 12px;
         height: 12px;
         vertical-align: middle;
-        margin-top: -1px;
       }
       .borderA {
         border: 1px solid #c6c6c6;
@@ -353,10 +352,10 @@ export default {
         margin-top: 24px;
         width: 70px;
         height: 24px;
-        line-height: 24px;
+        line-height: 22px;
         border-radius: 12px;
         border: 1px solid;
-        font-size: 11px;
+        font-size: 10px;
         color: rgba(229, 179, 123, 1);
         text-align: center;
         vertical-align: middle;

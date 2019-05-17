@@ -65,7 +65,7 @@
           </div>
         </div>
         <!-- <router-link :to="params"> -->
-        <div class="reg-btn" :class="registDisabled&&'registDisabled'" @click="nextHandler">立即注册</div>
+        <div class="reg-btn" :class="registDisabled&&'registDisabled'" @click="nextHandler">{{submitStr}}</div>
         <!-- </router-link> -->
         <p class="top-protocol">
           <span style="opacity:0.6">注册代表您同意&nbsp;&nbsp;</span>
@@ -105,6 +105,7 @@ import AreaSelect from 'COMP/AreaSelect'
 import { fullArea } from '@/utils/fullArea'
 export default {
   data: () => ({
+    submitStr: '立即注册',
     bgImg: require('IMG/register/registerBg.png'),
     borderImg: require('IMG/register/register_border.png'),
     defaultLogo: require('IMG/system/default_logo.png'),
@@ -145,7 +146,8 @@ export default {
     belong: '',
     belongGroup: '',
     linkerId: '',
-    qrCodeinfo: {}
+    qrCodeinfo: {},
+    isUnbindUser: false
   }),
   components: {
     AreaSelect
@@ -240,31 +242,32 @@ export default {
         linkerId: this.linkerId
       }).then(res => {
         if (res.isCouponEnd) {
-          this.$router.push({path:'/register/invalid', query:{type:1}})
-        }
-        if (res.isQrCodeExpire) {
           this.$router.push({path:'/register/invalid', query:{type:2}})
         }
-        if (res.isBindChannel) {
-          this.$dialog.alert({
-            title: '',
-            message: '您已开通过该楼盘并绑定渠道，请进入我的楼盘查看！',
-            confirmButtonText: '立即登录'
-          }).then(() => {
-            this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/dynamics')
-          })
+        if (res.isQrCodeExpire) {
+          this.$router.push({path:'/register/invalid', query:{type:1}})
         }
-         if (res.isOpenLinker) {
-           this.$dialog.alert({
-            title: '',
-            message: '您已开通过该楼盘，请进入我的楼盘查看！',
-            confirmButtonText: '立即登录'
-          }).then(() => {
-            this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/dynamics')
-          })
-         }
+        // if (res.isBindChannel) {
+        //   this.$dialog.alert({
+        //     title: '',
+        //     message: '您已开通过该楼盘并绑定渠道，请进入我的楼盘查看！',
+        //     confirmButtonText: '立即登录'
+        //   }).then(() => {
+        //     this.$toast('已免费开通，请到我的楼盘中查看')
+        //     this.$router.push('/dynamics')
+        //   })
+        // }
+        // if (res.isOpenLinker) {
+        //    this.$dialog.alert({
+        //     title: '',
+        //     message: '您已开通过该楼盘，请进入我的楼盘查看！',
+        //     confirmButtonText: '立即登录'
+        //   }).then(() => {
+        //     this.$toast('已免费开通，请到我的楼盘中查看')
+        //     this.$router.push('/dynamics')
+        //   })
+        // }
+        //注册判断逻辑，如果已经注册过的用户，但是没有绑定当前渠道或者楼盘的，注册按钮文案变为立即绑定，继续注册绑定流程
         if (res.isOldUser) {
           this.$dialog.alert({
             title: '',
@@ -274,6 +277,25 @@ export default {
             this.$toast('已免费开通，请到我的楼盘中查看')
             this.$router.push('/dynamics')
           })
+        } else {
+            if(res.name) {
+              if (this.registerType === '40' || this.registerType === '50') {// 只有40 50的时候，走绑定流程，其他时候是公共注册直接跳首页
+                this.isUnbindUser = true
+                this.name = res.name
+                this.submitStr = '立即绑定'
+              } else {
+                this.$dialog.alert({
+                  title: '',
+                  message: '您已经是老用户，登录后即可免费开通楼盘！',
+                  confirmButtonText: '立即登录'
+                }).then(() => {
+                  this.$toast('已免费开通，请到我的楼盘中查看')
+                  this.$router.push('/dynamics')
+                })
+                return
+              }
+            }
+            this.registDisabled = false
         }
       }).catch()
     },
@@ -372,11 +394,16 @@ export default {
         this.registSuccess = false
         this.$toast(result.msg)
       } else {
-        this.clickDisabled = true
-        this.registSuccess = true
-        if (this.registerType === '40' || this.registerType === '50') {
-          this.$toast('已免费开通，请到我的楼盘中查看')
+        if(this.isUnbindUser) {
+          this.$router.push('/')
+        } else {
+          this.clickDisabled = true
+          this.registSuccess = true
+          if (this.registerType === '40' || this.registerType === '50') {
+            this.$toast('已免费开通，请到我的楼盘中查看')
+          }
         }
+        
         // if (result.isFollowQrCode) {
         //   this.$router.push('/dynamics')
         // }
@@ -455,7 +482,7 @@ export default {
         return this.$toast('昵称只支持中文、英文和数字')
       }
       if ((this.registerType == 30 || this.registerType == 40) && !this.userRegistInfo.majorRegion) {
-        return this.$toast('请选择主营区域')
+        if(!this.isUnbindUser) return this.$toast('请选择主营区域')
       }
       if (this.clickDisabled) {
         return
