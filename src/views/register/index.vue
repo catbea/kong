@@ -278,12 +278,24 @@ export default {
             this.$router.push('/dynamics')
           })
         } else {
-            this.registDisabled = false
             if(res.name) {
-              this.isUnbindUser = true
-              this.name = res.name
-              this.submitStr = '立即绑定'
+              if (this.registerType === '40' || this.registerType === '50') {// 只有40 50的时候，走绑定流程，其他时候是公共注册直接跳首页
+                this.isUnbindUser = true
+                this.name = res.name
+                this.submitStr = '立即绑定'
+              } else {
+                this.$dialog.alert({
+                  title: '',
+                  message: '您已经是老用户，登录后即可免费开通楼盘！',
+                  confirmButtonText: '立即登录'
+                }).then(() => {
+                  this.$toast('已免费开通，请到我的楼盘中查看')
+                  this.$router.push('/dynamics')
+                })
+                return
+              }
             }
+            this.registDisabled = false
         }
       }).catch()
     },
