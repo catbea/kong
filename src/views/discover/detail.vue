@@ -275,6 +275,7 @@ export default {
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content.replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+      console.log(this.info.content)
 
       for (let dom of virtualDom.children) {
         if(dom.tagName == 'META') {
@@ -301,12 +302,10 @@ export default {
               status: 'h5'
             })
         } else {
-          if(dom.innerText.length>0) {
-            this.renderDom.push({
+          this.renderDom.push({
               text: '<'+dom.tagName+' style="'+dom.style.cssText+'">'+dom.innerHTML+'</'+dom.tagName+'>',
               status: 'h5'
-            })
-          }
+          })
         }
       }
     },
