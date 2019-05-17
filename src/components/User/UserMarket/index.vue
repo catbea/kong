@@ -155,6 +155,11 @@ export default {
     getChannelListByLinkerId () {
       userService.getChannelListByLinkerId({linkerId: this.linkerId}).then(res => {
         this.channelList = res
+        if (res.length) {
+          this.showChannel = true
+        } else {
+          this.$toast('该楼盘没有渠道！')
+        }
       }).catch()
     },
 
@@ -180,7 +185,6 @@ export default {
     // 显示渠道
     showChannelFn () {
       this.getChannelListByLinkerId()
-      this.showChannel = true
     },
     // 隐藏渠道
     hideChannelFn () {

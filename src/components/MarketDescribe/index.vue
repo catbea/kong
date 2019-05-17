@@ -165,9 +165,11 @@ export default {
       this.currentChannel = item
       this.hideChannelFn()
       if (item.freeFlag ) {
-        
         this.freeOpenHandle()
-      } else {
+      } else if (this.checkVipCity) {
+        this.openHandle()
+      } 
+      else {
         this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId,  newChannelId: this.currentChannel.channelId} })
       }
     },
@@ -182,6 +184,9 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      if (!this.channelList.length) {
+        return this.$toast('该楼盘没有渠道！')
+      }
       this.$store.commit('TABBAR', { show: false })
       this.showChannel = true
     },
@@ -273,6 +278,11 @@ export default {
           if (res.returnCode == 21801) {
             return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
           }
+          // 免费楼盘调绑定渠道接口
+          if (this.itemInfo.isFree) {
+            this.switchChannel()
+          }
+
           this.status = 2
           this.itemInfo.openStatus = 2
           this.itemInfo.openTimes += 1

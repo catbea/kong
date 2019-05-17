@@ -1,7 +1,7 @@
 <template>
   <div class="channel">
     <div class="current-channel scale-1px-bottom">
-      <b class="title">当前渠道<span>(不可更改删除)</span></b>
+      <b class="title">当前渠道<span></span></b>
       <p>{{this.info.channelName}}</p>
     </div>
     <div class="other-channer scale-1px-bottom">
@@ -89,7 +89,11 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
-      this.showChannel = true
+      if (this.channelList.length) {
+        this.showChannel = true
+      } else {
+        this.$toast('该楼盘没有渠道！')
+      }
     },
     // 隐藏渠道
     hideChannelFn () {
@@ -203,6 +207,7 @@ export default {
       background:rgba(143,159,177,0.15);
       text-align: center;
       margin-bottom: 14px;
+      color: #666;
       &.active{
         background:rgba(0,122,230,1);
         color: #fff;
@@ -226,7 +231,7 @@ export default {
     }
   }
   .submit{
-    margin: 60px 0 0;
+    margin: 44px 0 0;
     background-color: #007AE6;
     color: #fff;
     text-align: center;
