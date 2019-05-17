@@ -240,31 +240,31 @@ export default {
         linkerId: this.linkerId
       }).then(res => {
         if (res.isCouponEnd) {
-          this.$router.push({path:'/register/invalid', query:{type:1}})
-        }
-        if (res.isQrCodeExpire) {
           this.$router.push({path:'/register/invalid', query:{type:2}})
         }
-        if (res.isBindChannel) {
-          this.$dialog.alert({
-            title: '',
-            message: '您已开通过该楼盘并绑定渠道，请进入我的楼盘查看！',
-            confirmButtonText: '立即登录'
-          }).then(() => {
-            this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/dynamics')
-          })
+        if (res.isQrCodeExpire) {
+          this.$router.push({path:'/register/invalid', query:{type:1}})
         }
-         if (res.isOpenLinker) {
-           this.$dialog.alert({
-            title: '',
-            message: '您已开通过该楼盘，请进入我的楼盘查看！',
-            confirmButtonText: '立即登录'
-          }).then(() => {
-            this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/dynamics')
-          })
-         }
+        // if (res.isBindChannel) {
+        //   this.$dialog.alert({
+        //     title: '',
+        //     message: '您已开通过该楼盘并绑定渠道，请进入我的楼盘查看！',
+        //     confirmButtonText: '立即登录'
+        //   }).then(() => {
+        //     this.$toast('已免费开通，请到我的楼盘中查看')
+        //     this.$router.push('/dynamics')
+        //   })
+        // }
+        // if (res.isOpenLinker) {
+        //    this.$dialog.alert({
+        //     title: '',
+        //     message: '您已开通过该楼盘，请进入我的楼盘查看！',
+        //     confirmButtonText: '立即登录'
+        //   }).then(() => {
+        //     this.$toast('已免费开通，请到我的楼盘中查看')
+        //     this.$router.push('/dynamics')
+        //   })
+        // }
         if (res.isOldUser) {
           this.$dialog.alert({
             title: '',
