@@ -279,7 +279,7 @@ export default {
             return this.$router.push({ name: 'marketDetail-open', params: { id: this.itemInfo.linkerId } })
           }
           // 免费楼盘调绑定渠道接口
-          if (this.itemInfo.isFree) {
+          if (parseInt(this.itemInfo.isFree)>0) {
             this.switchChannel()
           }
 
