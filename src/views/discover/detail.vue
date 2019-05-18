@@ -302,8 +302,7 @@ export default {
               status: 'h5'
             })
         } else {
-          if (dom.innerHTML.replace(/<([a-z]+?)(?:\s+?[^>]*?)?>\s*?<\/\1>/ig,'')) {
-            console.log(dom.innerHTML)
+          if (dom.innerHTML) {
             this.renderDom.push({
               text: '<p style="'+dom.style.cssText+'">'+dom.innerHTML+'</p>',
               status: 'h5'
