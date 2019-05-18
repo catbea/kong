@@ -9,7 +9,7 @@
         <div class="box-shadow top-form-container">
           <div class="top-invite-info" v-if="registerType!=='40' && registerType !=='50'">
             <div class="bg_img invite-head" :style="{backgroundImage:'url(' + (referLogo || defaultLogo) + ')'}"/>
-            <span class="invite-name">{{referName ? referName : 'AW大师'}}&nbsp;&nbsp;</span>
+            <span class="invite-name">{{referName ? referName : registerName}}&nbsp;&nbsp;</span>
             <span class="invite-desc">邀请您加入</span>
           </div>
           <div class="channel-register" v-else>
