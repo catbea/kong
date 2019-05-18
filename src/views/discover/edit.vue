@@ -136,7 +136,7 @@ export default {
 
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
-      virtualDom.innerHTML = this.info.content.replace('div', 'p').replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+      virtualDom.innerHTML = this.info.content.replace('div', 'p').replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/<([a-z]+?)(?:\s+?[^>]*?)?>\s*?<\/\1>/ig,'')
       // console.log(virtualDom.children, 'virtualDom')
       
       for (let dom of virtualDom.children) {
@@ -173,11 +173,12 @@ export default {
               status: 'edit'
             })
           } else {
-            if(dom.innerHTML == ' ')console.log('=========================') 
-            this.renderDom.push({
-              text: '<p style="'+dom.style.cssText+'">'+dom.innerHTML+'</p>',
-              status: 'edit'
-            })
+            if (dom.innerHTML) {
+              this.renderDom.push({
+                text: '<p style="'+dom.style.cssText+'">'+dom.innerHTML+'</p>',
+                status: 'edit'
+              })
+            }
           }
         }
         // console.log(this.renderDom, '========')
