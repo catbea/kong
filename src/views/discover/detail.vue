@@ -276,6 +276,10 @@ export default {
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content.replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
       // console.log(this.info.content)
+      // 去掉嵌套空标签
+      while (/<([a-z]+?)(?:\s+?[^>]*?)?>\s*?<\/\1>/ig.test(virtualDom.innerHTML)) {
+        virtualDom.innerHTML = virtualDom.innerHTML.replace(/<([a-z]+?)(?:\s+?[^>]*?)?>\s*?<\/\1>/ig,'')
+      }
 
       for (let dom of virtualDom.children) {
         if(dom.tagName == 'META') {
