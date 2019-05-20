@@ -136,7 +136,7 @@ export default {
 
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
-      virtualDom.innerHTML = this.info.content.replace('div', 'p').replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+      virtualDom.innerHTML = this.info.content.replace('div', 'p').replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/<br style\s*?=\s*?(['"])[\s\S]*?\1>/g,'')
       // 去掉嵌套空标签
       while (/<([a-z]+?)(?:\s+?[^>]*?)?>\s*?<\/\1>/ig.test(virtualDom.innerHTML)) {
         virtualDom.innerHTML = virtualDom.innerHTML.replace(/<([a-z]+?)(?:\s+?[^>]*?)?>\s*?<\/\1>/ig,'')
