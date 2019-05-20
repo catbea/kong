@@ -859,7 +859,7 @@ export default {
         line-height: 17px;
       }
     }
-    .market-left,.market-right {
+    .market-left,.market-right,.my-market {
       width: 100%;
     }
   }
