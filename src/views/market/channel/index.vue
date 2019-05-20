@@ -89,6 +89,9 @@ export default {
     },
     // 显示渠道
     showChannelFn () {
+      if (this.info.switchable <= 0) {
+        return this.$toast('渠道7天只能切换一次')
+      }
       if (this.channelList.length) {
         this.showChannel = true
       } else {
@@ -105,6 +108,9 @@ export default {
     },
     // 提交渠道
     updateChannel () {
+      if (this.info.switchable <= 0) {
+        return this.$toast('渠道7天只能切换一次')
+      }
       if (this.currentChannel.channelId == this.info.channelId) {
         return this.$toast('切换的渠道与当前渠道一致，请重新选择')
       }

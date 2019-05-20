@@ -146,10 +146,7 @@ export default {
   methods: {
     // 跳转切换渠道
     goChangeChannel () {
-      if (this.dataArr.switchable <= 0) {
-        return this.$toast('渠道7天只能切换一次')
-      }
-      this.$router.push({path: '/change/channel', query: {linkerId: this.dataArr.linkerId, channelId: this.dataArr.channelId, channelName: this.dataArr.channelName}})
+      this.$router.push({path: '/change/channel', query: {linkerId: this.dataArr.linkerId, channelId: this.dataArr.channelId, channelName: this.dataArr.channelName, switchable: this.dataArr.switchable}})
     },
     // 获取渠道列表
     getChannelListByLinkerId () {
