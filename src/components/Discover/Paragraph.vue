@@ -34,8 +34,8 @@ export default {
 <style lang="less" scoped>
 .paragraph {
   position: relative;
-  margin: 0 -5px 5px;
-  padding: 5px;
+  // margin: 0 -5px 5px;
+  // padding: 5px;
   text-indent: unset;
   > .paragraph-container {
     > img {
