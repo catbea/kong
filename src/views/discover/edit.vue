@@ -179,7 +179,7 @@ export default {
           } else {
             if (dom.innerHTML) {
               this.renderDom.push({
-                text: '<p style="'+dom.style.cssText+'">'+dom.innerHTML+'</p>',
+                text: '<section style="'+dom.style.cssText+'">'+dom.innerHTML+'</section>',
                 status: 'edit'
               })
             }
