@@ -34,8 +34,8 @@ export default {
 .edit-paragraph {
   position: relative;
   // border: 1px dashed #969ea8;
-  margin: 0 -5px 5px;
-  padding: 5px;
+  // margin: 0 -5px 5px;
+  // padding: 5px;
   text-indent: unset;
   > .paragraph-container {
     display: flex;

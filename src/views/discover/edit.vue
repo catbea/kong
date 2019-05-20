@@ -177,7 +177,7 @@ export default {
               status: 'edit'
             })
           } else {
-            if (dom.innerHTML) {
+            if (dom.innerHTML && dom.style.cssText.indexOf('display: none') < 0) {
               this.renderDom.push({
                 text: '<section style="'+dom.style.cssText+'">'+dom.innerHTML+'</section>',
                 status: 'edit'
