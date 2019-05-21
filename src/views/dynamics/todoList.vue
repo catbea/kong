@@ -18,7 +18,7 @@
         finished-text=""
         @load="onLoad"
       >
-        <div class="todo-item scale-1px-bottom" v-for="(item,index) in todoList" :key="index">
+        <div class="todo-item scale-1px-bottom" v-for="(item,index) in todoList" :key="index" @click="goMarket(item)">
           <div class="name">{{item.objectName}}</div>
           <div class="progress" :class="{'resovle': item.taskStatus}">已完成({{item.taskQuotaStr}})</div>
         </div>
@@ -50,6 +50,10 @@ export default {
     this.queryIncompleteNum()
   },
   methods: {
+    // 跳转楼盘详情
+    goMarket (item) {
+      this.$router.push(`/market/${item.linkerId}`)
+    },
     // 经纪人未完成任务数量
     queryIncompleteNum () {
       dynamicsService.queryIncompleteNum({}).then(res => {
