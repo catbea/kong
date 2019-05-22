@@ -255,7 +255,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push(`/?cropId=${res.cropId}`)
+            this.$router.push(`/?cropId=${res.corpId}`)
           })
         } else {
             if(res.name) {
@@ -270,7 +270,7 @@ export default {
                   confirmButtonText: '立即登录'
                 }).then(() => {
                   this.$toast('已免费开通，请到我的楼盘中查看')
-                  this.$router.push(`/?cropId=${res.cropId}`)
+                  this.$router.push(`/?cropId=${res.corpId}`)
                 })
                 return
               }
@@ -374,8 +374,9 @@ export default {
         this.registSuccess = false
         this.$toast(result.msg)
       } else {
+        debugger
         if(this.isUnbindUser && result.isFollowQrCode) {
-          this.$router.push(`/?cropId=${result.cropId}`)
+          this.$router.push(`/?cropId=${result.corpId}`)
         } else {
           this.clickDisabled = true
           this.registSuccess = true
