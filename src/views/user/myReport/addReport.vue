@@ -56,8 +56,7 @@ export default {
   computed: {
     ...mapGetters(['reportAddInfo', 'userInfo']),
     valueComputed() {
-      // return this.reportAddInfo.clientPhoneType === 'all' ? this.reportAddInfo.clientPhone : this.privacyPhone(this.reportAddInfo.clientPhone)
-      return this.privacyPhone(this.reportAddInfo.clientPhone)
+      return this.reportAddInfo.phoneDisplay ? this.reportAddInfo.clientPhone : this.privacyPhone(this.reportAddInfo.clientPhone)
     }
   },
   created() {
@@ -119,7 +118,7 @@ export default {
       return value.length > 7 ? value.substr(0, 3) + '****' + value.substr(7) : ''
     },
     async addReportInfo(current) {
-      if (this.reportAddInfo.clientPhoneType === 'all') {
+      if (this.reportAddInfo.phoneDisplay) {
         this.hideClientMobile = '0'
       } else {
         this.hideClientMobile = '1'

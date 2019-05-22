@@ -138,6 +138,7 @@ export default {
         _reportAddInfo = {
           linkerId: obj.linkerId,
           linkerName: obj.linkerName,
+          phoneDisplay: obj.phoneDisplay,
           channel: '',
           currentChannel: ''
         }

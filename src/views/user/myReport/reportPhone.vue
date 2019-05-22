@@ -6,7 +6,7 @@
         <input type="text" placeholder="请输入手机号码" maxlength="11" v-model="Cphone">
       </p>
       <p class="tips">
-        号码显示方式：前三后四显示
+        号码显示方式：{{phoneType ? '全号码显示' : '前三后四显示'}}
       </p>
       <!-- <p class="edit-phone-conter">
         <material-input placeholder="请输入手机号码" :type="'number'" :maxlength="11" v-model="Cphone"></material-input>
@@ -52,15 +52,15 @@ export default {
   },
   created() {
     this.Cphone = this.reportAddInfo.clientPhone
-    this.phoneType = this.reportAddInfo.clientPhoneType || 'star'
+    this.phoneType = this.reportAddInfo.phoneDisplay || false
   },
   computed: {
     ...mapGetters(['reportAddInfo'])
   },
   methods: {
-    selectHandler(val){
-      this.phoneType = val
-    },
+    // selectHandler(val){
+    //   this.phoneType = val
+    // },
      godSub() {
        let reg = /^1[3-9]\d{9}$/g
        if (!reg.test(this.Cphone)) {
@@ -87,9 +87,8 @@ export default {
       //   return
       // }
       let _reportAddInfo = {
-        clientPhone: this.Cphone,
+        clientPhone: this.Cphone
         // clientPhoneType: this.phoneType
-        clientPhoneType: 'star'
       }
       this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.back(-1)
