@@ -323,7 +323,7 @@ export default {
         this.$nextTick(function() {
           let top = window.sessionStorage.getItem('scrollTop') || 0
           if (top > 0) {
-            document.querySelector('.article-list').scrollTop = top
+            document.querySelector('.cnt').scrollTop = top
             window.sessionStorage.removeItem('scrollTop')
           }
         })
@@ -640,7 +640,7 @@ export default {
     },
     // 跳转文章详情
     goInfo(item) {
-      window.sessionStorage.setItem('scrollTop', document.querySelector('.article-list').scrollTop)
+      window.sessionStorage.setItem('scrollTop', document.querySelector('.cnt').scrollTop)
       item.scanNum += 1
       let articleId = item.articleId
       let area = this.classifyName === this.userInfo.majorCity ? this.userInfo.majorCity : '全国'
