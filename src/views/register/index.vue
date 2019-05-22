@@ -374,7 +374,6 @@ export default {
         this.registSuccess = false
         this.$toast(result.msg)
       } else {
-        debugger
         if(this.isUnbindUser && result.isFollowQrCode) {
           window.location.href = window.location.href.split('?')[0] + `/?cropId=${result.corpId}`
         } else {
