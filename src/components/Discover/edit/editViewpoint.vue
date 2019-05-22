@@ -60,7 +60,7 @@ export default {
   margin: 0 -5px 27px;
   font-size: 14px;
   color: #13294f;
-  // padding: 7px 9px;
+  padding: 5px;
 
   > .viewpoint-container {
     width: 100%;
