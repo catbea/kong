@@ -247,26 +247,6 @@ export default {
         if (res.isQrCodeExpire) {
           this.$router.push({path:'/register/invalid', query:{type:1}})
         }
-        // if (res.isBindChannel) {
-        //   this.$dialog.alert({
-        //     title: '',
-        //     message: '您已开通过该楼盘并绑定渠道，请进入我的楼盘查看！',
-        //     confirmButtonText: '立即登录'
-        //   }).then(() => {
-        //     this.$toast('已免费开通，请到我的楼盘中查看')
-        //     this.$router.push('/dynamics')
-        //   })
-        // }
-        // if (res.isOpenLinker) {
-        //    this.$dialog.alert({
-        //     title: '',
-        //     message: '您已开通过该楼盘，请进入我的楼盘查看！',
-        //     confirmButtonText: '立即登录'
-        //   }).then(() => {
-        //     this.$toast('已免费开通，请到我的楼盘中查看')
-        //     this.$router.push('/dynamics')
-        //   })
-        // }
         //注册判断逻辑，如果已经注册过的用户，但是没有绑定当前渠道或者楼盘的，注册按钮文案变为立即绑定，继续注册绑定流程
         if (res.isOldUser) {
           this.$dialog.alert({
@@ -275,7 +255,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            this.$router.push('/dynamics')
+            this.$router.push(`/?cropId=${res.cropId}`)
           })
         } else {
             if(res.name) {
@@ -290,7 +270,7 @@ export default {
                   confirmButtonText: '立即登录'
                 }).then(() => {
                   this.$toast('已免费开通，请到我的楼盘中查看')
-                  this.$router.push('/dynamics')
+                  this.$router.push(`/?cropId=${res.cropId}`)
                 })
                 return
               }
@@ -394,8 +374,8 @@ export default {
         this.registSuccess = false
         this.$toast(result.msg)
       } else {
-        if(this.isUnbindUser) {
-          this.$router.push('/')
+        if(this.isUnbindUser && result.isFollowQrCode) {
+          this.$router.push(`/?cropId=${result.cropId}`)
         } else {
           this.clickDisabled = true
           this.registSuccess = true
