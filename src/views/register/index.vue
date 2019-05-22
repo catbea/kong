@@ -255,7 +255,7 @@ export default {
             confirmButtonText: '立即登录'
           }).then(() => {
             this.$toast('已免费开通，请到我的楼盘中查看')
-            window.location.href = window.location.href.split('?')[0] + `/?cropId=${res.corpId}`
+            window.location.href = window.location.href.split('#')[0] + `?cropId=${res.corpId}`
           })
         } else {
             if(res.name) {
@@ -270,7 +270,7 @@ export default {
                   confirmButtonText: '立即登录'
                 }).then(() => {
                   this.$toast('已免费开通，请到我的楼盘中查看')
-                  window.location.href = window.location.href.split('?')[0] + `/?cropId=${res.corpId}`
+                  window.location.href = window.location.href.split('#')[0] + `?cropId=${res.corpId}`
                 })
                 return
               }
@@ -375,7 +375,7 @@ export default {
         this.$toast(result.msg)
       } else {
         if(this.isUnbindUser && result.isFollowQrCode) {
-          window.location.href = window.location.href.split('?')[0] + `/?cropId=${result.corpId}`
+          window.location.href = window.location.href.split('#')[0] + `?cropId=${result.corpId}`
         } else {
           this.clickDisabled = true
           this.registSuccess = true
