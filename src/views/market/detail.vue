@@ -414,7 +414,7 @@
       <!-- 开通提示及开通状态 -->
        <div class="van-hairline--top house-status" v-if="+info.isFree">
           <div class="unopen-status-box" v-if="openStatus&&info.saleStatus!=='售罄'">
-            <div class="open-btn" @click="newOpenLinker">免费添加</div>
+            <div class="open-btn" @click="showChannelFn">免费添加</div>
           </div>
           <market-renew
             v-if="!openStatus&&info.saleStatus!=='售罄'"
@@ -472,6 +472,19 @@
           {{ current + 1 }}/{{previewList.length}}
         </div>
       </div>
+      <van-actionsheet v-model="showChannel">
+      <div class="channel-box">
+        <div class="topbar">
+          <p class="title">渠道选择</p>
+          <p class="subtitle">七天只能切换一次</p>
+        </div>
+        
+        <div class="channel-list">
+         <p class="item" v-for="(item,index) in channelList" :key="index" @click="changeChannelFn(item)">{{item.channelName}} <span v-if="item.freeFlag" class="free">免费券</span></p>
+        </div>
+        <div class="cancle" @click="hideChannelFn">取消</div>
+      </div>
+    </van-actionsheet>
   </div>
 </template>
 <script>
@@ -597,7 +610,11 @@ export default {
       showPreview: false,
       previewList: [],
       imgData: {},
-      scrollTop: 0
+      scrollTop: 0,
+      showChannel: false,
+      channelList: [],
+      currentChannel: {},
+      vipCity: {}
     }
   },
   async created() {
@@ -619,6 +636,8 @@ export default {
     this.getQuestionDetail(this.id)
     this.getEvaluatingInfo(this.id)
     this.getPosterList()
+
+    this.getChannelListByLinkerId()
   },
   beforeRouteLeave(to, from, next) {
     if (this.instance) {
@@ -636,13 +655,55 @@ export default {
       this.buyAskTitleConf.link = `/marketDetail/asking/${this.id}`
       this.getCommentCount()
       this.getCommentList()
+      this.getChannelListByLinkerId()
     }
   },
   methods: {
+    // 获取渠道列表
+    getChannelListByLinkerId () {
+      marketService.getChannelListByLinkerId({linkerId: this.id}).then(res => {
+        this.channelList = res
+      }).catch()
+    },
+    // 选择渠道
+    changeChannelFn (item){
+      this.currentChannel = item
+      this.hideChannelFn()
+      if (item.freeFlag ) {
+        this.newOpenLinker()
+      } else if (this.checkVipCity) {
+        this.openHandler()
+      } 
+      else {
+        this.$router.push({ name: 'marketDetail-open', params: { id: this.info.linkerId,  newChannelId: this.currentChannel.channelId} })
+      }
+    },
+    // 切换渠道
+    switchChannel () {
+      marketService.switchChannel({
+        linkerId:  this.id,
+        newChannelId: this.currentChannel.channelId,
+        oldChannelId: '',
+        switchingReason: ''
+      }).then(res => {}).catch()
+    },
+    // 显示渠道
+    showChannelFn () {
+      if (!this.channelList.length) {
+        return this.$toast('该楼盘没有渠道！')
+      }
+      this.showChannel = true
+    },
+    // 隐藏渠道
+    hideChannelFn () {
+      this.showChannel = false
+    },
     // 新商业模式开通楼盘
     newOpenLinker () {
       marketService.newOpenLinker({linkerId: this.id}).then(async res => {
         await this.getDetailInfo(this.id)
+        // 开通成功切换渠道
+        this.switchChannel()
         this.$toast({
           duration: 2000,
           message: '已添加成功，请到我的楼盘查看'
@@ -969,9 +1030,13 @@ export default {
       // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
       let invalidTime = this.info.expireDate - 0 // 含时分秒的楼盘到期时间
       let expireTimestamp = this.vipInfo.expireTimestamp - 0 // vip到期时间
-      if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+      if (this.vipCity.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipCity.city) {
         const res = await marketService.addHouseByVip(this.info.linkerId)
         await this.getDetailInfo(this.id)
+        // 免费楼盘调绑定渠道接口
+        if (parseInt(this.info.isFree)>0) {
+          this.switchChannel()
+        }
         this.openStatus = false
         this.$toast({
           duration: 1000,
@@ -1023,7 +1088,7 @@ export default {
       let invalidTime = +new Date(this.info.expireTime.replace(/-/g, '/')) // 楼盘到期时间
       // let invalidTime = +new Date(this.info.invalidTime.replace(/-/g,'/'))// 含时分秒的楼盘到期时间
       let expireTimestamp = this.vipInfo.expireTimestamp // vip到期时间
-      if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+      if (this.info.city === this.vipCity.city && this.vipCity.vipValid) {
         const res = await marketService.addHouseByVip(this.info.linkerId)
         this.$toast({
           duration: 1000,
@@ -1047,6 +1112,19 @@ export default {
     ...mapGetters(['userInfo']),
     mapData() {
       return this.info.houseAroundType[this.mapTab]
+    },
+    // 判断vip城市和vip有效期
+    checkVipCity() {
+      let status = false
+      if (this.vipInfo.vipList) {
+        this.vipInfo.vipList.forEach(el => {
+          if (el.city === this.info.city && el.vipValid) {
+            status = true
+            this.vipCity = el
+          }
+        })
+      }
+      return status
     }
     // poster: {
     //   get: function() {
@@ -2301,6 +2379,53 @@ export default {
     }
   }
 }
+.channel-box{
+    font-size: 16px;
+    padding: 10px 0 0 0;
+    background-color: #fff;
+    .topbar{
+      text-align: center;
+      padding-bottom: 5px;
+      .title{
+        padding: 10px 0 5px;
+        font-size: 18px;
+        color: #333;
+        font-weight: 600;
+      }
+      .subtitle{
+        font-size: 12px;
+        color: #999;
+        z-index: 9;
+        position: relative;
+      }
+    }
+    
+    .channel-list{
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+    .item{
+      padding: 16px 0 10px 16px;
+      .free{
+        display: inline-block;
+        font-size: 10px;
+        color: #fff;
+        background-color: #EA4D2E;
+        line-height: 15px;
+        height: 15px;
+        padding: 0 5px;
+        border-radius: 2px;
+        vertical-align: middle;
+      }
+    }
+    .cancle{
+      margin-top: 20px;
+      height:50px;
+      background:rgba(238,238,238,1);
+      line-height: 50px;
+      text-align: center;
+    }
+  }
 </style>
 
 <style lang="less">
