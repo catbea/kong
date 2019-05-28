@@ -9,7 +9,7 @@
         <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.itemName" maxlength="4" @focus="currentIndex=index" @blur="blur(index)">
         <img v-show="index===currentIndex" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
       </div>
-      <div class="item scale-1px-bottom" @click="addLabel">
+      <div class="item scale-1px-bottom" @click="addLabel" v-show="agentLabelList.length < 5">
         <img class="add" src="../../../assets/img/user/userLabel/add.png" alt="">
         新增标签
       </div>
@@ -40,7 +40,7 @@ export default {
         itemCode: '',
         itemName: ''
       }
-      this.agentLabelList.unshift(obj)
+      this.agentLabelList.push(obj)
     },
     deleteLabel (index) {
       this.$dialog.confirm({
