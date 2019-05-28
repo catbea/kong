@@ -1030,7 +1030,7 @@ export default {
       // let invalidTime = +new Date(this.info.expireTime.replace(/-/g,'/'))// 楼盘到期时间
       let invalidTime = this.info.expireDate - 0 // 含时分秒的楼盘到期时间
       let expireTimestamp = this.vipInfo.expireTimestamp - 0 // vip到期时间
-      if (this.vipInfo.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipInfo.city) {
+      if (this.vipCity.vipValid && expireTimestamp > invalidTime && this.info.city === this.vipCity.city) {
         const res = await marketService.addHouseByVip(this.info.linkerId)
         await this.getDetailInfo(this.id)
         // 免费楼盘调绑定渠道接口
