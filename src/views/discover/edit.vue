@@ -124,7 +124,6 @@ export default {
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       this.info = res
-
       if(!this.info || isNaN(Number(this.info.source))) {
         // this.pushFlag = true
         this.loaddingStatus = true
@@ -133,7 +132,6 @@ export default {
         this.loaddingStatus = false
         this.loaddingTxt = '保存中'
       }
-
       // 创建虚拟dom解析html结构
       let virtualDom = document.createElement('div')
       virtualDom.innerHTML = this.info.content.replace('div', 'p').replace(/&lt;/g,'<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/<br style\s*?=\s*?(['"])[\s\S]*?\1>/g,'')

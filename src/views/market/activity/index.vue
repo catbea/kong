@@ -1,33 +1,60 @@
 <template>
-  <div class="house-activity-detail">
+<div class="house-activity-detail-box">
+  <div class="house-activity-detail" v-if="info">
     <div class="pic">
-      <img src="http://pic51.nipic.com/file/20141022/19779658_171158250000_2.jpg" alt="">
+      <img :src="info.imgUrl" alt="">
     </div>
     <div class="activity-info">
-      <p>活动时间：2019年3月5日-2019年3月11日 </p>
-      <p>礼品数量：200份 </p>
-      <p>礼品领取地点：广东省深圳市南山区科技园</p>
+      <p>活动时间：{{info.beginTime}}-{{info.endTime}} </p>
+      <p>礼品数量：{{info.num}}份 </p>
+      <p>礼品领取地点：{{info.province}}{{info.city}}{{info.county}}{{info.address}}</p>
     </div>
     <div class="activity-rule">
       <h3>活动规则</h3>
-      <p>1、请在结账前出示此卡； </p>
+      <p>{{info.remarks}}</p>
+      <!-- <p>1、请在结账前出示此卡； </p>
       <p>2、此卡可享受会员优惠待遇；</p> 
       <p>3、此卡不得购买产品，不得与其它优惠同时使用； </p>
       <p>4、此卡一经售出，概不兑现。如有遗失，请及时挂失；</p> 
-      <p>5、本店保留此卡法律范围内的最终解释权。</p>
+      <p>5、本店保留此卡法律范围内的最终解释权。</p> -->
     </div>
     <div class="tips">
       <img src="../../../assets/img/market/tips.png" alt=""> 说明：如需领取该礼品，请前往AW大师小程序端进行领取！
     </div>
   </div>
+  <div class="nodata" v-show="nodata">
+    <img src="../../../assets/img/market/comment/nodata.png" alt="">
+    <p>没有查询到相关活动！</p> 
+  </div>
+</div>
 </template>
 
 <script>
+import marketService from 'SERVICE/marketService'
 export default {
   data () {
-    return {}
+    return {
+      linkerId: '',
+      info: '',
+      nodata: false
+    }
   },
-  methods: {}
+  created () {
+    document.title = this.$route.query.name || '活动详情'
+    this.linkerId = this.$route.query.linkerId
+    this.getActivityDetail()
+  },
+  methods: {
+    getActivityDetail () {
+      marketService.getActivityDetail({linkerId: this.linkerId}).then(res => {
+        if (res) {
+          this.info = res
+        } else {
+          this.nodata = true
+        }
+      }).catch()
+    }
+  }
 }
 </script>
 
@@ -81,4 +108,17 @@ export default {
     }
   }
 }
+.nodata{
+    height: 400px;
+    color: #999;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 12px;
+    img{
+      width: 88px;
+    }
+  }
 </style>

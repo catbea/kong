@@ -9,7 +9,7 @@
         </span>
       </div>
       <div class="edit-label-div">
-        <button class="edit-self" @click="">自定义标签</button>
+        <button class="edit-self" @click="goEdit">自定义标签</button>
         <button class="edit-label-query" @click="SubLabel">确定修改</button>
       </div>
     </div>
@@ -43,6 +43,10 @@ export default {
   },
 
   methods: {
+    // 跳转自定义标签
+    goEdit () {
+      this.$router.push('/user/edit/editLabel')
+    },
     selectLabel(index) {
       if (this.selectLabelList.length >= 3) {
         return this.$toast('标签个数不得多于3个')

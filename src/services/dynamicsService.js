@@ -278,7 +278,6 @@ class DynamicsService {
    */
   deleteMessage(data) {
     return xhr({
-      method: 'POST',
       url: '/cpIM/deleteSingleClientMessage',
       body: data
     })

@@ -4,14 +4,14 @@
       编辑标签
     </div>
     <div class="content">
+      <div class="item scale-1px-bottom" v-for="(item,index) in agentLabelList" :key="index">
+        <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(index)">
+        <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.itemName" maxlength="4" @focus="currentIndex=index" @blur="blur(index)">
+        <img v-show="index===currentIndex" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
+      </div>
       <div class="item scale-1px-bottom" @click="addLabel">
         <img class="add" src="../../../assets/img/user/userLabel/add.png" alt="">
         新增标签
-      </div>
-      <div class="item scale-1px-bottom" v-for="(item,index) in agentLabelList" :key="index">
-        <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(index)">
-        <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.itemName" @focus="currentIndex=index" @blur="blur(index)">
-        <img v-show="index===currentIndex" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
       </div>
     </div>
     <div class="action" @click="saveLabel">
@@ -30,26 +30,15 @@ export default {
     }
   },
   created () {
-    this.getAgentLabelList()
   },
   methods: {
-    getAgentLabelList () {
-      userService.getAgentLabelList(1).then(res => {
-        this.agentLabelList = res
-      }).catch()
-    },
     addLabel () {
+      if (this.agentLabelList.length >=5) {
+        return this.$toast('最多只能添加5个自定义标签')
+      }
       let obj = {
-        classify: 'user_tag',
-        createId: '',
-        createTime: '',
-        id: '',
         itemCode: '',
-        itemName: '',
-        selectFlag: '',
-        sort: '',
-        status: '',
-        updateTime: ''
+        itemName: ''
       }
       this.agentLabelList.unshift(obj)
     },
@@ -73,7 +62,7 @@ export default {
       })
       if (empty) {
         return this.$dialog.alert({
-          message: '有标签为空，请处理后保存'
+          message: '自定义标签不能为空'
         })
       }
     },

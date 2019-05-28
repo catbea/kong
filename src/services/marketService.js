@@ -607,5 +607,15 @@ class MarketService {
       body: data
     })
   }
+
+  /**
+   * 获取活动详情
+   */
+  getActivityDetail (data) {
+    return xhr({
+      url: ' /linker/activity/detail',
+      body: data
+    })
+  }
 }
 export default new MarketService()

@@ -114,7 +114,7 @@ export default {
         case 'right':
            this.$dialog.confirm({
               title: '删除提示',
-              message: '是否确认删除该消息？',
+              message: '是否确认删除该用户？',
               className: 'delete-dialog'
           }).then(() => {
             this.confirm()

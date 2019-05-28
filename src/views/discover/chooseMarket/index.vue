@@ -22,8 +22,8 @@
           <span slot="right" class="delete-btn"  @click="deleteItem(item)">删除</span>
         </van-swipe-cell>  
       </div>
-      <p class="more" v-if="historyHouse.length > 2 && showHistoryMore && historyCount != historyHouse.length" @click="showMore">更多历史楼盘</p>
-      <p class="more" v-if="historyCount == historyHouse.length && !showHistoryMore && historyHouse.length > 2" @click="hideHistory">收起历史楼盘</p>
+      <p class="more" v-if="historyHouse.length > 3 && showHistoryMore && historyCount != historyHouse.length" @click="showMore">更多历史楼盘</p>
+      <p class="more" v-if="historyCount == historyHouse.length && !showHistoryMore && historyHouse.length > 3" @click="hideHistory">收起历史楼盘</p>
     </div>
     <div class="house-box">
       <h3 class="title" v-if="historyHouse.length">其他楼盘</h3>
@@ -94,21 +94,29 @@ export default {
   created () {
     this.fullPath = this.$route.query.fullPath
     this.type = this.$route.query.type
-    this.city = window.sessionStorage.getItem('writeCity') || this.$route.query.city || this.userArea.vipSelectedCity || this.userInfo.majorCity
     this.selected = this.$route.params && this.$route.params.selected || []
-    let inlayHouse = window.sessionStorage.getItem('inlayHouse')
-    if (inlayHouse) {
-      this.historyHouse.push(JSON.parse(inlayHouse))
-    }
-    let multiHouse =  window.sessionStorage.getItem('multiHouse')
-    if (multiHouse) {
-      this.historyHouse = this.historyHouse.concat(JSON.parse(multiHouse))
-    }
-    this.showHistoryMore = this.historyHouse.length > 2
+    this.getHistoryLinker()
+    this.getHistoryCity()
   },
   methods: {
-    deleteItem (item) {
-      this.currentDel = item
+    // 获取历史城市
+    getHistoryCity () {
+      userService.getHistoryCity({}).then(res => {
+        if (res) {
+          this.city = res
+        } else {
+          this.city =  this.$route.query.city || this.userArea.vipSelectedCity || this.userInfo.majorCity || '深圳市'
+        }
+      }).catch()
+    },
+    // 获取历史楼盘列表
+    getHistoryLinker () {
+      userService.getHistoryLinker({}).then(res => {
+        if (res.length) {
+          this.historyHouse = res
+          this.showHistoryMore = this.historyHouse.length > 3
+        }
+      }).catch()
     },
     // 删除某个历史楼盘
     onClose(clickPosition, instance) {
@@ -132,27 +140,29 @@ export default {
           break
       }
     },
+    deleteItem (item) {
+      this.currentDel = item
+    },
     deletehistory () {
-      let index = this.historyHouse.indexOf(this.currentDel)
-      this.historyHouse.splice(index, 1)
-      if (index === 0) {
-        window.sessionStorage.removeItem('inlayHouse')
-      } else {
-        let multiHouse = JSON.parse(window.sessionStorage.getItem('multiHouse'))
-        let i = multiHouse.indexOf(this.currentDel)
-        multiHouse.splice(i, 1)
-        window.sessionStorage.setItem('multiHouse', JSON.stringify(multiHouse))
-      }
+      userService.clearHistoryOne({id: this.currentDel.id}).then(res => {
+        let index = this.historyHouse.indexOf(this.currentDel)
+        this.historyHouse.splice(index, 1)
+        this.$toast('删除成功')
+      }).catch()
+      
     },
     // 清除历史楼盘
     clearHistory () {
       this.$dialog.confirm({
         title: '删除提醒',
-        message: '是否确认删除历史楼盘？'
+        message: '是否确认清空历史楼盘？'
       }).then(() => {
+        this.clearHistoryAll()
+      }).catch()
+    },
+    clearHistoryAll () {
+      userService.clearHistoryAll({}).then(res => {
         this.historyHouse = []
-        window.sessionStorage.removeItem('inlayHouse')
-        window.sessionStorage.removeItem('multiHouse')
       }).catch()
     },
     // 显示更多历史城市
@@ -163,7 +173,7 @@ export default {
     // 隐藏更多楼盘
     hideHistory () {
       this.showHistoryMore = true
-      this.historyCount = 2
+      this.historyCount = 3
     },
     // 跳转城市选择
     goCity () {
@@ -223,8 +233,7 @@ export default {
         window.sessionStorage.setItem(type,JSON.stringify(this.selected))
       } else {
         window.sessionStorage.setItem(type,JSON.stringify(item))
-      }
-      
+      } 
       this.$router.push({path:this.fullPath})
     },
     // 键盘遮挡

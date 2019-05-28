@@ -26,9 +26,9 @@
         <span>{{info&&info.divisionRules | textOver}}</span>
       </div>
     </div>
-    <div class="house-activity-poster" v-if="$route.path.indexOf('/discover') > -1">
-      <img class="img" src="https://720ljq2-10037467.file.myqcloud.com/linker/henandailishang/a19fcb0658cf4bb295f525811e79a36f.jpg" alt="">
-      <p class="info"><span class="title">500元购物券免费领</span> <span class="btn">立即领取</span></p>
+    <div class="house-activity-poster" v-if="$route.path.indexOf('/discover') > -1 && info.cpActivityVo">
+      <img class="img" :src="info.cpActivityVo.imgUrl">
+      <p class="info"><span class="title">{{info.cpActivityVo.name}}</span> <span class="btn">立即领取</span></p>
     </div>
   </div>
 </template>

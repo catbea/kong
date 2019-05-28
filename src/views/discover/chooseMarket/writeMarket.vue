@@ -41,6 +41,7 @@
 <script>
 import commonService from '@/services/commonService'
 import marketService from 'SERVICE/marketService'
+import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
 import { IndexList, IndexSection, Cell } from 'mint-ui'
@@ -101,7 +102,9 @@ export default {
     },
     // 选择城市
     chooseItem (val) {
-      window.sessionStorage.setItem('writeCity', val)
+      userService.updateHistoryCity({
+        city: val
+      }).then(res => {}).catch()
       this.$router.push({path: '/discover/chooseMarket', query:{city: val}})
     },
   },

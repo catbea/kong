@@ -619,5 +619,53 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 获取历史楼盘
+   */
+  getHistoryLinker (data) {
+    return xhr({
+      url: '/historyLinker/list',
+      body: data
+    })
+  }
+  
+  /**
+   * 清空历史楼盘
+   */
+  clearHistoryAll (data) {
+    return xhr({
+      url: '/historyLinker/clear',
+      body: data
+    })
+  }
+  /**
+   * 删除单个楼盘
+   */
+  clearHistoryOne (data) {
+    return xhr({
+      url: '/historyLinker/delete',
+      body: data
+    })
+  }
+
+  /**
+   * 获取历史城市
+   */
+  getHistoryCity (data) {
+    return xhr({
+      url: '/historyCity/get',
+      body: data
+    })
+  }
+  /**
+   * 更新历史城市
+   */
+  updateHistoryCity (data) {
+    return xhr({
+      url: '/historyCity/update',
+      body: data
+    })
+  }
 }
 export default new UserService()

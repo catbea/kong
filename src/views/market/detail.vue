@@ -161,9 +161,9 @@
         </div>
       </van-popup>
       <!-- 活动海报 -->
-      <div class="house-activity-poster" @click="goActivityDetail">
-        <img class="img" src="https://720ljq2-10037467.file.myqcloud.com/linker/henandailishang/a19fcb0658cf4bb295f525811e79a36f.jpg" alt="">
-        <p class="info"><span class="title">500元购物券免费领</span> <span class="btn">立即领取</span></p>
+      <div class="house-activity-poster" @click="goActivityDetail" v-if="info.cpActivityVo">
+        <img class="img" :src="info.cpActivityVo.imgUrl" alt="">
+        <p class="info"><span class="title">{{info.cpActivityVo.name}}</span> <span class="btn">立即领取</span></p>
       </div>
       <!-- 户型 -->
       <div class="house-type" v-if="info.houseTypeList&&info.houseTypeList.length>0">
@@ -646,7 +646,7 @@ export default {
   methods: {
     // 跳转活动详情
     goActivityDetail () {
-      this.$router.push('/market/rule/detail')
+      this.$router.push({path: '/market/rule/detail', query:{linkerId: this.id, name: this.info.cpActivityVo.name}})
     },
     // 新商业模式开通楼盘
     newOpenLinker () {
