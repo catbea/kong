@@ -334,4 +334,16 @@ export default [
       }
     }
   },
+  // 活动海报
+  {
+    path: '/market/rule/detail',
+    name: 'rule-detail',
+    component: resolve => require(['@/views/market/activity/index.vue'], resolve),
+    meta: {
+      title: '切换渠道',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]

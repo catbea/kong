@@ -272,6 +272,17 @@ class DynamicsService {
       body: data
     })
   }
+
+  /**
+   * 删除消息
+   */
+  deleteMessage(data) {
+    return xhr({
+      method: 'POST',
+      url: '/cpIM/deleteSingleClientMessage',
+      body: data
+    })
+  }
   
 }
 export default new DynamicsService()

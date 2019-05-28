@@ -8,9 +8,9 @@
         ></span>
         <div class="meal-market-page-box-top-left">
           <img class="building-img" :src="dataArr.linkerHeadUrl">
-          <p
+          <!-- <p
             class="bg_img icon-discount"  v-show="dataArr.sale"
-            :style="{'backgroundImage':'url(' + labelImg + ')'}" v-if='dataArr.sale.length'>{{dataArr.sale}}</p>
+            :style="{'backgroundImage':'url(' + labelImg + ')'}" v-if='dataArr.sale.length'>{{dataArr.sale}}</p> -->
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>

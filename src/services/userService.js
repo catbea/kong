@@ -600,5 +600,24 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 获取AI通信开关
+   */
+  getAI (data) {
+    return xhr({
+      url: ' /imaiSetting/get',
+      body: data
+    })
+  }
+  /**
+   * 更新AI通信开通
+   */
+  updateAI (data) {
+    return xhr({
+      url: '/imaiSetting/update',
+      body: data
+    })
+  }
 }
 export default new UserService()

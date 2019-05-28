@@ -61,7 +61,7 @@
                   <p>
                     累计浏览
                     <span>{{item.todayClickCount}}次</span>该名片，平均停留
-                    <span>{{item.totalTime / 1000}}s</span>
+                    <span>{{parseInt(item.totalTime / 1000 / item.todayClickCount) || 0}}s</span>
                   </p>
                 </div>
                 <div class="dynamics-list-btn" v-show="item.clientDelFlag !== 2">

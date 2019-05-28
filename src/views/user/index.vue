@@ -52,7 +52,7 @@
     <div class="business-status-tow">
       <div class="business-status-title">我的服务</div>
       <div class="modify-child">
-        <div v-for="(img,index) in btnIcons" :key="index" class="head-img" @click="selectedHeads(index,img.type,img.itemCode)">
+        <div v-for="(img,index) in btnIcons" :key="index" class="head-img" @click="selectedHeads(index)">
           <!-- <img :src="img.Icon"> -->
           <svg class="icon" aria-hidden="true">
               <use :xlink:href="img.Icon"></use>
@@ -100,7 +100,7 @@ export default {
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }, 
       // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
     ],
-    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '欢迎语设置', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }],
+    btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '欢迎语设置', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }, {title: 'AI客服', Img: require('IMG/user/me_Customer.png'), Icon: '#icon-me_Customer'}],
     openPopup: false,
     qrcodeImg: '',
     oldUrl:0
@@ -190,7 +190,7 @@ export default {
     jumpToAnswers () {
       this.$router.push('/user/questionAnswers')
     },
-    selectedHeads(index, type, itemCode) {
+    selectedHeads(index) {
       switch (index) {
         case 0:
           this.$router.push('/user/noDisturb')
@@ -202,6 +202,7 @@ export default {
           window.location = 'https://support.qq.com/product/31776'
           break
         case 3:
+          this.$router.push('/user/ai')
           break
       }
     }

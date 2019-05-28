@@ -160,6 +160,11 @@
           <p class="van-hairline--top immediately" @click="relationHandle">知道了</p>
         </div>
       </van-popup>
+      <!-- 活动海报 -->
+      <div class="house-activity-poster" @click="goActivityDetail">
+        <img class="img" src="https://720ljq2-10037467.file.myqcloud.com/linker/henandailishang/a19fcb0658cf4bb295f525811e79a36f.jpg" alt="">
+        <p class="info"><span class="title">500元购物券免费领</span> <span class="btn">立即领取</span></p>
+      </div>
       <!-- 户型 -->
       <div class="house-type" v-if="info.houseTypeList&&info.houseTypeList.length>0">
         <title-bar :conf="typeTitleConf"/>
@@ -639,6 +644,10 @@ export default {
     }
   },
   methods: {
+    // 跳转活动详情
+    goActivityDetail () {
+      this.$router.push('/market/rule/detail')
+    },
     // 新商业模式开通楼盘
     newOpenLinker () {
       marketService.newOpenLinker({linkerId: this.id}).then(async res => {
@@ -1382,6 +1391,49 @@ export default {
         font-size: 8px;
         font-family: PingFangSC-Semibold;
         font-weight: 600;
+      }
+    }
+  }
+  .house-activity-poster {
+    margin: 16px;
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 6px;
+    .img{
+      min-height: 100%;
+      min-width: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+    }
+    .info{
+      position: relative;
+      margin-top: 64px;
+      display: flex;
+      .title{
+        flex: 1;
+        overflow: hidden;
+        font-size:20px;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        text-shadow:0px 2px 4px rgba(0,0,0,0.5);
+        color: #fff;
+        padding: 0 16px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .btn{
+        display: inline-block;
+        color: #F4655F;
+        font-size: 12px;
+        border: 1px solid #F4655F;
+        padding: 0 10px;
+        border-radius: 12px;
+        background-color: #fff;
+        margin-right: 16px;
+        height: 24px;
+        line-height: 24px;
       }
     }
   }

@@ -40,11 +40,11 @@
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
       </router-link>
-      <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
+      <!-- <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
         <img :src="discountIcon">
         <p class="info-title welfare-status">特惠套餐</p>
         <p class="info-desc welfare-desc">{{vipPackage}}</p>
-      </router-link>
+      </router-link> -->
     </div>
   </div>
 </template>
@@ -206,7 +206,7 @@ export default {
     font-size: 20px;
     font-weight: 600;
     color: rgba(51, 51, 51, 1);
-    padding: 10px 16px 8px !important;
+    padding: 5px 16px 15px !important;
   }
 
   > .business-status-box {
@@ -216,10 +216,11 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
+    box-sizing: content-box;
     > div {
       position: relative;
-      display: inline-block;
-      width: 167px;
+      // display: inline-block;
+      // width: 167px;
       height: 65px;
       background: #f8f8f8;
       border-radius: 3px;

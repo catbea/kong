@@ -11,7 +11,7 @@
         </div>
       </div>
       <!-- 观点 -->
-      <div class="discover-viewpoint" v-if="editData&&editData.viewpoint" @click="popHandler(1)">
+      <div class="discover-viewpoint" v-if="editData&&editData.viewpoint">
         <div class="viewpoint-line"></div>
         <div class="viewpoint-top">
           <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
@@ -29,7 +29,7 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===parseInt(renderDom.length/2)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click="popHandler(2, inlayHouseInfo)"></estate-item>
+          <estate-item v-if="(index===parseInt(renderDom.length/3)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click.native="popHandler(inlayHouseInfo)"></estate-item>
         </div>
       </div>
       <p class="discover-extra-info" v-show="renderDom.length">
@@ -67,7 +67,7 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(2, item)"></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(item)"></estate-item>
         </div>
       </div>
       <!-- 评论 -->
@@ -123,6 +123,41 @@
     <div class="loading" v-show="!renderDom.length">
       <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
+    <!-- 活动小程序二维码 -->
+    <van-popup v-model="showPopup">
+      <div class="mini-qrcode">
+        <div style="background-color:#fff;">
+          <div class="poster">
+            <div class="logo">
+              <img src="../../assets/img/discover/logo.png" alt="">
+            </div>
+            <div class="pic">
+              <img :src="popupData.linkerUrl" alt="">
+            </div>
+            <div class="coupon">
+              <img src="../../assets/img/discover/coupon.png" alt="">识别二维码领取卡券
+            </div>
+          </div>
+          <div class="market-info scale-1px-bottom">
+            <p class="title"><span class="name">{{popupData.linkerName}}</span><span v-if="popupData.price==='0 万元/套起' || popupData.price==0 || popupData .price=='0 元/㎡'">价格待定</span><span class="price" v-else>{{popupData.price}}{{popupData.priceUnit}}</span></p>
+            <p class="tags"><span v-for="(item,index) in popupData.linkerTags">{{item}}</span></p>
+          </div>
+          <div class="user-info">
+            <div class="qrcode">
+              <img src="http://www.chinanews.com/cj/2019/04-17/U445P4T8D8811703F19930DT20190417145049.jpg" alt="">
+            </div>
+            <div class="user-detail">
+              <p class="name" v-if="agentInfo"><img :src="agentInfo.avatarUrl" alt=""> <span>{{agentInfo.agentName}}</span> <span class="other">一手房源信息</span></p>
+              <p class="tips">识别小程序码，进入查看<span>楼盘详情</span></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="close" @click="showPopup=false">
+          <img src="../../assets/img/discover/close.png" alt="">
+        </div>
+      </div>
+    </van-popup>
   </div>
   <div v-else>
     <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
@@ -203,7 +238,9 @@ export default {
     inlayHouseInfo: null, // 文章插入楼盘信息
     sharePrompt: true,
     startY: '',
-    endY: ''
+    endY: '',
+    showPopup: false,
+    popupData: ''
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -227,8 +264,11 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
-    // 不知道具体业务逻辑，点击报错，添加了此空方法
-    popHandler () {},
+    // 显示小程序二维码
+    popHandler (data) {
+      this.popupData = data
+      this.showPopup = true
+    },
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
       if (res.returnCode == 10028) {
@@ -1032,6 +1072,155 @@ export default {
       margin-left: -25px;
       margin-top: -25px;
     }
+  }
+  .mini-qrcode{
+    width: 310px;
+    height: 430px;
+    position: relative;
+    .poster{
+      height: 205px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      .logo{
+        position: absolute;
+        z-index: 3;
+        right: 10px;
+        top: 10px;
+        img{
+          width: 72px;
+          height: 23px;
+        }
+      }
+      .pic{
+        height: 100%;
+        img{
+          min-width: 100%;
+          object-fit: cover;
+        }
+      }
+      .coupon{
+        position: absolute;
+        left: 0;
+        bottom: 15px;
+        width: 152px;
+        height: 24px;
+        line-height: 24px;
+        background:rgba(207,86,43,1);
+        border-radius:0px 12px 12px 0px;
+        font-size: 12px;
+        color: #fff;
+        vertical-align: middle;
+        img{
+          width: 16px;
+          height: 16px;
+          margin: 0 5px;
+          vertical-align: middle;
+        }
+      }
+    }
+    .market-info{
+      height: 80px;
+      margin: 16px;
+      box-sizing: content-box;
+      .title{
+        font-size:18px;
+        color: #333;
+        font-weight:400;
+        height: 20px;
+        line-height: 20px;
+        display: flex;
+        .name{
+          max-width: 200px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .price{
+          flex: 1;
+          font-size: 12px;
+          color: #999;
+          margin-left: 5px;
+        }
+      }
+      .tags {
+        span{
+          color: #fff;
+          font-size: 10px;
+          font-weight: 400;
+          padding: 2px 5px;
+          margin-right: 5px;
+          border-radius: 2px;
+        }
+        span:nth-child(1) {
+          background-color: #007AE6;
+        }
+        span:nth-child(2) {
+          background-color: #6EB8A3;
+        }
+        span:nth-child(3) {
+          background:rgba(143,159,177,0.15);
+          color: #5C5F66;
+        }
+      }
+    }
+    .user-info{
+      margin: 0 16px;
+      display: flex;
+      .qrcode{
+        width: 60px;
+        height: 60px;
+        overflow: hidden;
+        margin-right: 10px;
+        img{
+          width: 60px;
+          height: 60px;
+          object-fit: contain;
+        }
+      }
+      .user-detail{
+        flex: 1;
+        font-size: 12px;
+        .name{
+          vertical-align: middle;
+          height: 20px;
+          line-height: 20px;
+          color: #333;
+          margin: 8px 0 10px 0;
+          img{
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+          }
+          span{
+            margin-left: 5px;
+          }
+          .other{
+            color: #999;
+          }
+        }
+        .tips{
+          color: #999;
+          span{
+            color: #007AE6;
+          }
+        }
+      }
+    }
+    .close {
+     padding-top: 16px;
+      text-align: center;
+      height: 21px;
+      width: 100%;
+      img{
+        width: 21px;
+        height: 21px;
+      }
+    }
+  }
+  .van-popup{
+    background-color: transparent;
   }
 }
 </style>

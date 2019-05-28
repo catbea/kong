@@ -1,28 +1,34 @@
 <template>
-  <div class=" estate-item" :class="itemBorder&&'van-hairline--bottom'" :style="{paddingBottom:(info&&info.divisionRules)&&'15px'}">
-    <div class="main-continer" @click="mainAreaClickHandler" v-if="info">
-      <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
-        <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
-      </div>
-      <div class="right-box">
-        <h5 class="estate-name"><span class="free" v-if="+info.isFree">免费</span>{{info&&info.linkerName}}</h5>
-        <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
-        <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
-        <div class="estate-info">
-          <p class="estate-price" v-if="info.price==='0 万元/套起' || info.price==0 || info.price=='0 元/㎡'">价格待定</p>
-          <p class="estate-price" v-else>{{info&&info.price}}{{info&&info.priceUnit}}</p>
-          <p class="estate-area">{{info&&info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
+  <div>
+    <div class=" estate-item" :class="itemBorder&&'van-hairline--bottom'" :style="{paddingBottom:(info&&info.divisionRules)&&'15px', border: ($route.path.indexOf('/discover') > -1) && '1px solid rgba(177,189,210,0.5)'}">
+      <div class="main-continer" @click="mainAreaClickHandler" v-if="info">
+        <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
+          <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
+        </div>
+        <div class="right-box">
+          <h5 class="estate-name"><span class="free" v-if="+info.isFree">免费</span>{{info&&info.linkerName}}</h5>
+          <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
+          <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
+          <div class="estate-info">
+            <p class="estate-price" v-if="info.price==='0 万元/套起' || info.price==0 || info.price=='0 元/㎡'">价格待定</p>
+            <p class="estate-price" v-else>{{info&&info.price}}{{info&&info.priceUnit}}</p>
+            <p class="estate-area">{{info&&info.buildArea ? `建面${info.buildArea}㎡`:'建面暂无'}}</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="operate-box">
-      <div class="share-icon" v-if="conf.op === 'share'" @click.stop="shareHandler">
-        <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
+      <div class="operate-box">
+        <div class="share-icon" v-if="conf.op === 'share'" @click.stop="shareHandler">
+          <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
+        </div>
+      </div>
+      <div class="commission-box" v-if="showRules&&info&&info.divisionRules">
+        <img :src="commissionImg" class="bottom-view-img">
+        <span>{{info&&info.divisionRules | textOver}}</span>
       </div>
     </div>
-    <div class="commission-box" v-if="showRules&&info&&info.divisionRules">
-      <img :src="commissionImg" class="bottom-view-img">
-      <span>{{info&&info.divisionRules | textOver}}</span>
+    <div class="house-activity-poster" v-if="$route.path.indexOf('/discover') > -1">
+      <img class="img" src="https://720ljq2-10037467.file.myqcloud.com/linker/henandailishang/a19fcb0658cf4bb295f525811e79a36f.jpg" alt="">
+      <p class="info"><span class="title">500元购物券免费领</span> <span class="btn">立即领取</span></p>
     </div>
   </div>
 </template>
@@ -65,6 +71,7 @@ export default {
   overflow: hidden;
   line-height: 1;
   width: 100%;
+  // border:1px solid rgba(177,189,210,0.5);
   > .main-continer {
     word-wrap: none;
     display: flex;
@@ -177,4 +184,47 @@ export default {
     }
   }
 }
+.house-activity-poster {
+    margin: 8px 0 5px;
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 6px;
+    .img{
+      min-height: 100%;
+      min-width: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+    }
+    .info{
+      position: relative;
+      margin-top: 64px;
+      display: flex;
+      .title{
+        flex: 1;
+        overflow: hidden;
+        font-size:20px;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        text-shadow:0px 2px 4px rgba(0,0,0,0.5);
+        color: #fff;
+        padding: 0 16px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .btn{
+        display: inline-block;
+        color: #F4655F;
+        font-size: 12px;
+        border: 1px solid #F4655F;
+        padding: 0 10px;
+        border-radius: 12px;
+        background-color: #fff;
+        margin-right: 16px;
+        height: 24px;
+        line-height: 24px;
+      }
+    }
+  }
 </style>

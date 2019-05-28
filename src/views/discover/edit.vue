@@ -16,10 +16,10 @@
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'" :class="{viewRedactStyle:previewFlag,viewPreStyle:!previewFlag}"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/2-1)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
+          <edit-houses v-if="index===parseInt(renderDom.length/3)" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
         <div class="disclaimer-box" v-if="previewFlag">
-          免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 。 如有问题请点击
+          免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。版权归原作者所有，如有侵权请告知删除。转载请注明以上信息。如有问题请点击
           <span>举报反馈</span>
         </div>
       </div>
@@ -117,7 +117,7 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
-    this.getDetail()
+    this.getDetail()    
   },
   methods: {
     // 获取文章信息
@@ -187,7 +187,6 @@ export default {
         }
         // console.log(this.renderDom, '========')
       }
-      
       if (this.info.editData !== '') {
         try {
           let editData = JSON.parse(this.info.editData)
@@ -196,9 +195,26 @@ export default {
           this.getMyHouseRecommend()
         }
       } else {
-        this.getMyHouseRecommend()
+        // this.getMyHouseRecommend()
       }
       document.scrollingElement.scrollTop = 0
+      this.$nextTick(() => {
+        let inlayHouse = window.sessionStorage.getItem('inlayHouse')
+        if (inlayHouse) {
+          this.inlayHouse.push(JSON.parse(inlayHouse))
+        }
+        let recommendList = window.sessionStorage.getItem('multiHouse')
+        if (recommendList) {
+          this.recommendList = JSON.parse(recommendList)
+        } else {
+          this.getMyHouseRecommend()
+        }
+        let renderDom = window.sessionStorage.getItem('renderDom')
+        if (renderDom) {
+          this.renderDom = JSON.parse(renderDom)
+          window.sessionStorage.removeItem('renderDom')
+        }
+      })
     },
     // 若出来editData,还原数据
     async restoreData(editData) {
@@ -266,8 +282,10 @@ export default {
         this.$toast('暂无开通楼盘')
         return
       }
-      this.target = 'inlayHouse'
-      this.singleShow = true
+      window.sessionStorage.setItem('renderDom', JSON.stringify(this.renderDom))
+      // this.target = 'inlayHouse'
+      // this.singleShow = true
+      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{selected: this.inlayHouse}, query:{type:'inlayHouse',fullPath: this.$route.fullPath}})
     },
     multiAddClickHandler() {
       console.log(this.recommendList,'有多少',this.info)
@@ -276,8 +294,9 @@ export default {
         this.$toast('暂无更多开通楼盘')
         return
       }
-      this.target = 'multiHouse'
-      this.singleShow = true
+      // this.target = 'multiHouse'
+      // this.singleShow = true
+      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{'selected': this.recommendList}, query:{type:'multiHouse',fullPath: this.$route.fullPath}})
     },
     // 底部栏帮助按钮点击
     helpClickHandler() {

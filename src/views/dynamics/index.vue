@@ -255,7 +255,7 @@ export default {
     background-color: #fff;
     // border-bottom: 1px solid #f7f9fa;
     padding: 0 16px 20px 16px;
-    margin-top: -20px;
+    margin-top: -10px;
     .todo-list{
       height: 80px;
       border-radius: 10px;

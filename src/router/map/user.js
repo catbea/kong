@@ -107,6 +107,14 @@ export default [
     }
   },
   {
+    path: '/user/edit/editLabel',
+    name: 'editLabel',
+    component: resolve => require(['@/views/user/edit/editUserLabel.vue'], resolve),
+    meta: {
+      title: '编辑标签'
+    }
+  },
+  {
     path: '/user/edit/userIntroduction',
     name: 'userIntroduction',
     component: resolve => require(['@/views/user/edit/userIntroduction.vue'], resolve),
@@ -414,6 +422,17 @@ export default [
     component: resolve => require(['@/views/user/vipList/index.vue'], resolve),
     meta: {
       title: '开通城市',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/ai',
+    name: 'ai',
+    component: resolve => require(['@/views/user/ai/index.vue'], resolve),
+    meta: {
+      title: 'AI客服',
       tabbar: {
         show: false
       }

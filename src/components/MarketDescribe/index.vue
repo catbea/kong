@@ -6,9 +6,12 @@
           <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
             <!-- 720标示 -->
             <img class="panorama-mark" :src="panoramaImg" v-if="itemInfo.ifPanorama">
-            <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">
+            <!-- <div class="label bg_img" v-show="itemInfo.sale" :style="{backgroundImage:'url('+labelImg+')'}">
               {{itemInfo.sale}}
               {{itemInfo.labels}}
+            </div> -->
+            <div  v-show="itemInfo.coupon" class="coupon">
+              {{'卡券'}}
             </div>
           </div>
           <ul class="market-describe">
@@ -474,6 +477,18 @@ export default {
               font-family: PingFangSC-Regular;
             }
           }
+        }
+        .coupon{
+          position: absolute;
+          top: 8px;
+          font-size: 12px;
+          color: #fff;
+          padding: 0 10px 0 5px;
+          height: 20px;
+          line-height: 20px;
+          background-color: #CF562B;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
         }
       }
 
