@@ -6,7 +6,7 @@
     <div class="content">
       <div class="item scale-1px-bottom" v-for="(item,index) in agentLabelList" :key="index">
         <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(index)">
-        <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.itemName" maxlength="4" @focus="currentIndex=index" @blur="blur(index)">
+        <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.labelName" maxlength="4" @focus="currentIndex=index" @blur="blur(index)">
         <img v-show="index===currentIndex" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
       </div>
       <div class="item scale-1px-bottom" @click="addLabel" v-show="agentLabelList.length < 5">
@@ -26,19 +26,34 @@ export default {
   data () {
     return {
       agentLabelList: [],
-      currentIndex: ''
+      currentIndex: '',
+      btnStatus: false
     }
   },
   created () {
+    this.getUserLabel()
   },
   methods: {
+    // 获取用户自定义标签
+    getUserLabel () {
+      userService.getUserLabel({}).then(res => {
+        this.agentLabelList = res
+      }).catch()
+    },
+    // 更新用户自定义标签
+    updateUserLabel () {
+      userService.updateUserLabel(this.agentLabelList).then(res => {
+        this.$toast('自定义标签提交成功')
+        this.$router.go(-1)
+      }).catch()
+    },
+    // 新增标签
     addLabel () {
       if (this.agentLabelList.length >=5) {
         return this.$toast('最多只能添加5个自定义标签')
       }
       let obj = {
-        itemCode: '',
-        itemName: ''
+        labelName: ''
       }
       this.agentLabelList.push(obj)
     },
@@ -51,20 +66,28 @@ export default {
       }).catch()
     },
     clearLabel (index) {
-      this.agentLabelList[index].itemName = ''
+      this.agentLabelList[index].labelName = ''
     },
     saveLabel () {
+      if (this.btnStatus) {
+        return this.$toast('正在保存请稍后')
+      }
+      this.btnStatus = true
+      if (!this.agentLabelList.length) {
+        this.btnStatus = false
+        return this.$toast('您没有新增自定义标签，无法保存')
+      }
       let empty = false
       this.agentLabelList.forEach(item => {
-        if (!item.itemName) {
+        if (!item.labelName) {
           empty = true
         }
       })
       if (empty) {
-        return this.$dialog.alert({
-          message: '自定义标签不能为空'
-        })
+        this.btnStatus = false
+        return this.$toast('自定义标签内容不能为空')
       }
+      this.updateUserLabel()
     },
     blur (index) {
       this.currentIndex = ''

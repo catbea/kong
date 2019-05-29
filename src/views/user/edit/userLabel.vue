@@ -77,10 +77,10 @@ export default {
     },
 
     async SubLabel() {
-      var selectidlist = '' //将选中值拼接成字符串
+      var selectidlist = [] //将选中值拼接成字符串
       let obj = {}
       for (var i = 0; i < this.selectLabelList.length; i++) {
-        selectidlist = this.selectLabelList[i].id + ','
+        selectidlist.push(this.selectLabelList[i].id)
       }
       if (!this.selectLabelList.length) {
         this.$dialog
@@ -101,7 +101,7 @@ export default {
             })
         } else {
           let userList = {
-            lableList: selectidlist
+            lableList: selectidlist.join(',')
           }
           const res = await userService.upDateUserInfo(userList)
           if (res) {

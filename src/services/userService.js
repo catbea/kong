@@ -667,5 +667,26 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 查询用户自定义标签
+   */
+  getUserLabel (data) {
+    return xhr({
+      url: '/user/queryLabel',
+      body: data
+    })
+  }
+
+  /**
+   * 更新用户自定义标签
+   */
+  updateUserLabel (data) {
+    return xhr({
+      method: 'post',
+      url: ' /user/updateLabel',
+      body: data
+    })
+  }
 }
 export default new UserService()
