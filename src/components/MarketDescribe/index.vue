@@ -10,7 +10,7 @@
               {{itemInfo.sale}}
               {{itemInfo.labels}}
             </div> -->
-            <div  v-show="itemInfo.coupon" class="coupon">
+            <div  v-show="itemInfo.activityStatus" class="coupon">
               {{'卡券'}}
             </div>
           </div>
