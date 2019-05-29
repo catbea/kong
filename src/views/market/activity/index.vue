@@ -11,7 +11,7 @@
     </div>
     <div class="activity-rule">
       <h3>活动规则</h3>
-      <p>{{info.remarks}}</p>
+      <p v-for="(item,index) in remarksList" :key="index">{{index + 1}}、{{item}}</p>
       <!-- <p>1、请在结账前出示此卡； </p>
       <p>2、此卡可享受会员优惠待遇；</p> 
       <p>3、此卡不得购买产品，不得与其它优惠同时使用； </p>
@@ -36,6 +36,7 @@ export default {
     return {
       linkerId: '',
       info: '',
+      remarksList: [],
       nodata: false
     }
   },
@@ -49,6 +50,7 @@ export default {
       marketService.getActivityDetail({linkerId: this.linkerId}).then(res => {
         if (res) {
           this.info = res
+          this.remarksList = res.remarks.split('\n')
         } else {
           this.nodata = true
         }
