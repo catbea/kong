@@ -12,7 +12,7 @@
     <div class="search-filter">
       <screen v-model.trim="projectFilters" :local="this.city"/>
     </div>
-    <div class="history-house-box" v-if="historyHouse.length">
+    <div class="history-house-box" v-if="historyHouse.length && showHistory">
       <h3 class="title"><span class="name">历史楼盘</span><span class="clear" @click="clearHistory">清除</span></h3>
       <div class="item" v-for="(item,index) in historyHouse" :key="index" v-show='index < historyCount'>
         <van-swipe-cell :right-width="80" :on-close="onClose">          
@@ -26,7 +26,7 @@
       <p class="more" v-if="historyCount == historyHouse.length && !showHistoryMore && historyHouse.length > 3" @click="hideHistory">收起历史楼盘</p>
     </div>
     <div class="house-box">
-      <h3 class="title" v-if="historyHouse.length">其他楼盘</h3>
+      <h3 class="title" v-if="historyHouse.length && showHistory">其他楼盘</h3>
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
         <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :showRules="false" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
       </van-list>
@@ -63,7 +63,8 @@ export default {
       type: '',
       historyHouse: [],
       historyCount: 2,
-      showHistoryMore: false
+      showHistoryMore: false,
+      showHistory: true
     }
   },
   computed: {
@@ -186,6 +187,7 @@ export default {
       this.projectName = name.trim()
       this.projectList = []
       this.getLinkerList()
+      this.showHistory = false
     },
     // 搜索楼盘
     getLinkerList() {
