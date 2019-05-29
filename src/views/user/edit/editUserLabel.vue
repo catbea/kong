@@ -4,14 +4,14 @@
       编辑标签
     </div>
     <div class="content">
+      <div class="item scale-1px-bottom" @click="addLabel" v-show="agentLabelList.length < 5">
+        <img class="add" src="../../../assets/img/user/userLabel/add.png" alt="">
+        新增标签
+      </div>
       <div class="item scale-1px-bottom" v-for="(item,index) in agentLabelList" :key="index">
         <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(index)">
         <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.labelName" maxlength="4" @focus="currentIndex=index" @blur="blur(index)">
         <img v-show="index===currentIndex" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
-      </div>
-      <div class="item scale-1px-bottom" @click="addLabel" v-show="agentLabelList.length < 5">
-        <img class="add" src="../../../assets/img/user/userLabel/add.png" alt="">
-        新增标签
       </div>
     </div>
     <div class="action" @click="saveLabel">
@@ -55,7 +55,7 @@ export default {
       let obj = {
         labelName: ''
       }
-      this.agentLabelList.push(obj)
+      this.agentLabelList.unshift(obj)
     },
     deleteLabel (index) {
       this.$dialog.confirm({
