@@ -646,7 +646,7 @@ export default {
   methods: {
     // 跳转活动详情
     goActivityDetail () {
-      this.$router.push({path: '/market/rule/detail', query:{linkerId: this.id, name: this.info.cpActivityVo.name}})
+      this.$router.push({path: '/market/rule/detail', query:{activityId: this.info.cpActivityVo.id, name: this.info.cpActivityVo.name}})
     },
     // 新商业模式开通楼盘
     newOpenLinker () {

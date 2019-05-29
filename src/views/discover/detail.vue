@@ -144,7 +144,7 @@
           </div>
           <div class="user-info">
             <div class="qrcode">
-              <img src="http://www.chinanews.com/cj/2019/04-17/U445P4T8D8811703F19930DT20190417145049.jpg" alt="">
+              <img :src="miniQrcode" alt="">
             </div>
             <div class="user-detail">
               <p class="name" v-if="agentInfo"><img :src="agentInfo.avatarUrl" alt=""> <span>{{agentInfo.agentName}}</span> <span class="other">一手房源信息</span></p>
@@ -154,7 +154,8 @@
         </div>
         
         <div class="close" @click="showPopup=false">
-          <img src="../../assets/img/discover/close.png" alt="">
+          <!-- <img src="../../assets/img/discover/close.png" alt=""> -->
+          <van-icon name="clear" size="35px" />
         </div>
       </div>
     </van-popup>
@@ -240,7 +241,8 @@ export default {
     startY: '',
     endY: '',
     showPopup: false,
-    popupData: ''
+    popupData: '',
+    miniQrcode: ''
   }),
   created() {
     this.contentHeight = window.innerHeight - 72
@@ -268,6 +270,11 @@ export default {
     popHandler (data) {
       this.popupData = data
       this.showPopup = true
+      discoverService.queryLinkerQrcodeByToken({
+        linkerId: data.linkerId
+      }).then(res => {
+        this.miniQrcode = res.qrCode
+      }).catch()
     },
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
@@ -982,6 +989,9 @@ export default {
     border-top: 10px solid #f7f9fa;
     > .recommend-houses-content {
       padding: 10px 15px;
+      div:nth-child(n) {
+        margin-bottom: 10px;
+      }
       .house-item {
         > .house-img {
           width: 166px;
@@ -1120,8 +1130,8 @@ export default {
       }
     }
     .market-info{
-      height: 80px;
-      margin: 16px;
+      margin: 16px 16px 0;
+      height: 65px;
       box-sizing: content-box;
       .title{
         font-size:18px;
@@ -1166,6 +1176,7 @@ export default {
     }
     .user-info{
       margin: 0 16px;
+      padding: 10px 0;
       display: flex;
       .qrcode{
         width: 60px;
@@ -1181,6 +1192,7 @@ export default {
       .user-detail{
         flex: 1;
         font-size: 12px;
+        margin-top: 3px;
         .name{
           vertical-align: middle;
           height: 20px;
@@ -1209,10 +1221,11 @@ export default {
       }
     }
     .close {
-     padding-top: 16px;
+      padding-top: 16px;
       text-align: center;
-      height: 21px;
       width: 100%;
+      color: #fff;
+      opacity: 0.9;
       img{
         width: 21px;
         height: 21px;

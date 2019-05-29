@@ -34,7 +34,7 @@ import marketService from 'SERVICE/marketService'
 export default {
   data () {
     return {
-      linkerId: '',
+      activityId: '',
       info: '',
       remarksList: [],
       nodata: false
@@ -42,12 +42,12 @@ export default {
   },
   created () {
     document.title = this.$route.query.name || '活动详情'
-    this.linkerId = this.$route.query.linkerId
+    this.activityId = this.$route.query.activityId
     this.getActivityDetail()
   },
   methods: {
     getActivityDetail () {
-      marketService.getActivityDetail({linkerId: this.linkerId}).then(res => {
+      marketService.getActivityDetail({activityId: this.activityId}).then(res => {
         if (res) {
           this.info = res
           this.remarksList = res.remarks.split('\n')

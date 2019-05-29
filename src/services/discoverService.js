@@ -244,14 +244,10 @@ class DiscoverService {
    * 获取楼盘小程序码
    * @param {*} linkerId
    */
-  queryLinkerQrcodeByToken(linkerId) {
+  queryLinkerQrcodeByToken(data) {
     return xhr({
       url: '/cpShare/queryLinkerQrcodeByToken',
-      body: {
-        agentId,
-        linkerId,
-        enterpriseId
-      }
+      body: data
     })
   }
 

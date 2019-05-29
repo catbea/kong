@@ -26,7 +26,7 @@
         <span>{{info&&info.divisionRules | textOver}}</span>
       </div>
     </div>
-    <div class="house-activity-poster" v-if="$route.path.indexOf('/discover') > -1 && info.cpActivityVo">
+    <div class="house-activity-poster" v-if="$route.path.indexOf('/discover') > -1 && info&&info.cpActivityVo">
       <img class="img" :src="info.cpActivityVo.imgUrl">
       <p class="info"><span class="title">{{info.cpActivityVo.name}}</span> <span class="btn">立即领取</span></p>
     </div>
