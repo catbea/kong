@@ -29,7 +29,8 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===parseInt(renderDom.length/3)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" @click.native="popHandler(inlayHouseInfo)"></estate-item>
+          <estate-item v-if="(index===parseInt(renderDom.length/3)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" ></estate-item>
+          <!-- @click.native="popHandler(inlayHouseInfo)" -->
         </div>
       </div>
       <p class="discover-extra-info" v-show="renderDom.length">
@@ -67,7 +68,8 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item" @click="popHandler(item)"></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item"></estate-item>
+          <!-- @click="popHandler(item)" -->
         </div>
       </div>
       <!-- 评论 -->
