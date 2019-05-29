@@ -10,11 +10,11 @@
           class="meal-market-page-box-top-left bg_img"
           :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}"
         >
-          <p
+          <!-- <p
             class="icon-discount bg_img"
             v-show="dataArr.sale"
             :style="{backgroundImage:'url('+discountImg+')'}"
-          >{{dataArr.sale}}</p>
+          >{{dataArr.sale}}</p> -->
           <span
             class="bg_img icon-play"
             v-show="dataArr.ifPanorama==1"

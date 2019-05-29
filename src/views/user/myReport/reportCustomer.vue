@@ -140,7 +140,8 @@ export default {
     sureHandler() {
       let _reportAddInfo = {
         clientId: this.radio.clientId,
-        clientName: this.radio.clientName
+        clientName: this.radio.clientName,
+        clientPhone: this.radio.clientMobile
       }
       this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.replace({ name: 'addReport' })

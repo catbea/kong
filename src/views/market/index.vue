@@ -246,7 +246,7 @@ export default {
       this.$router.push({ name: 'city-list', query: { fromPage: 'market', searchContent: this.searchContent.siteText, category: 0 } })
     },
     focusHandler() {
-      this.$router.push({ name: 'market-search' })
+      this.$router.push({ name: 'market-search', query: {city: this.searchContent.siteText}})
     },
     async hotMarketHandle(arr) {
       let hotParams = {

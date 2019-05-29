@@ -234,15 +234,16 @@ export default {
         margin-right: 20px;
       }
       .van-tag {
-        margin-left: 5px;
-        background-color: rgba(143, 159, 177, 0.15) !important;
-        color: rgba(92, 95, 102, 1);
+        background-color: #fff !important;
+        padding: 0 0.1rem !important;
+        color: #445166;
         font-size: 14px;
+        vertical-align: middle;
       }
       .van-cell__right-icon {
         position: absolute;
         right: 22px;
-        top: 0px;
+        top: 3px;
       }
       .tag-show-container {
         display: flex;

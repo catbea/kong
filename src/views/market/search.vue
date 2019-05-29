@@ -96,10 +96,12 @@ export default {
       title: '热门楼盘'
     },
     nullIcon: require('IMG/market/search/empty.png'),
-    clearIcon: require('IMG/market/search/clear.png')
+    clearIcon: require('IMG/market/search/clear.png'),
+    city: ''
   }),
   created() {
     this.historyController('init')
+    this.city = this.$route.query.city
   },
   methods: {
     leftIconClick() {
@@ -118,6 +120,7 @@ export default {
       // this.searchStatus =  1
       let payload = {
         projectName: this.searchValue,
+        city: this.city,
         orderBy: 1,
         current: 1,
         size: 100

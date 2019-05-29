@@ -9,7 +9,7 @@
       报备
     </div>
     <div class="phone-button" @click="phoneHandler" v-if="clientMobile">
-      <span class="bg_img icon-phone" :style="{backgroundImage:'url('+phoneImg+')'}"></span>
+      <span class="bg_img" :style="{backgroundImage:'url('+phoneImg+')'}"></span>
       电话
     </div>
     <div class="consult-button" :class="clientMobile.length==0&&'button'" @click="consultHandler">

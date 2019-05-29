@@ -6,11 +6,11 @@
 
           <div class="dynamicsInfo-list-top" >
             <span class="dynamicsInfo-list-left" @click="godynamicsInfo(linkerVO.linkerId)">
-               <div
+               <!-- <div
                   v-show="linkerVO.sale !== '' "
                   class="dynamicsInfo-left-bg_img"
                   :style="{backgroundImage:'url('+labelImg+')'}"
-                >{{linkerVO.sale}}</div>
+                >{{linkerVO.sale}}</div> -->
               <img :src="linkerVO.linkerHeadUrl" class="mark-icon">
               <img :src="ovalIcon" class="oval-icon" v-show="linkerVO.ifPanorama == 1">
             </span>
