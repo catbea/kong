@@ -67,7 +67,7 @@
           </marquee>
         </div> -->
       </div>
-      <div v-if="data&&data.simpleDynamic.length===0" class="no-carousel-tips">体验AI拓客新模式,连接客户更简单</div>
+      <!-- <div v-if="data&&data.simpleDynamic.length===0" class="no-carousel-tips">体验AI拓客新模式,连接客户更简单</div> -->
     </div>
   </div>
 </template>
