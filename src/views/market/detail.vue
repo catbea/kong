@@ -448,11 +448,11 @@
         </div>
       </div>
       <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
-      <div class="poster-container" v-show="posterShow">
+      <div class="poster-container" ref="posterContainer" v-show="posterShow">
         <div class="cnt">
           <div class="bg_img poster-img">
             <img :src="info.activityImgUrl" alt="" srcset="">
-            <div class="bg_img close-icon" @click="posterShow=false">
+            <div class="bg_img close-icon" @click.stop="hidePosterShow">
               <img :src="closeIcon" alt="">
             </div>
           </div>
@@ -664,6 +664,10 @@ export default {
     }
   },
   methods: {
+    hidePosterShow () {
+      this.$refs.posterContainer.style.opacity = 0
+      this.posterShow = false
+    },
     // 获取渠道列表
     getChannelListByLinkerId () {
       marketService.getChannelListByLinkerId({linkerId: this.id}).then(res => {
@@ -1479,9 +1483,9 @@ export default {
     overflow: hidden;
     border-radius: 6px;
     .img{
-      min-height: 100%;
       min-width: 100%;
-      object-fit: contain;
+      height: 100%;
+      object-fit: cover;
       position: absolute;
       top: 0;
     }

@@ -5,7 +5,7 @@
       <img :src="info.imgUrl" alt="">
     </div>
     <div class="activity-info">
-      <p>活动时间：{{info.beginTime}}-{{info.endTime}} </p>
+      <p>活动时间：{{info.beginTime | formatTime}} 至 {{info.endTime | formatTime}} </p>
       <p>礼品数量：{{info.num}}份 </p>
       <p>礼品领取地点：{{info.province}}{{info.city}}{{info.county}}{{info.address}}</p>
     </div>
@@ -55,6 +55,13 @@ export default {
           this.nodata = true
         }
       }).catch()
+    }
+  },
+  filters: {
+    formatTime (val) {
+      if (val) {
+        return val.split(' ')[0]
+      }
     }
   }
 }
