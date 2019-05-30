@@ -10,8 +10,8 @@
       </div>
       <div class="item scale-1px-bottom" v-for="(item,index) in agentLabelList" :key="index">
         <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(index)">
-        <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.labelName" maxlength="4" @focus="currentIndex=index" @blur="blur(index)">
-        <img v-show="index===currentIndex" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
+        <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.labelName" maxlength="4" @focus="currentIndex=index" @blur="blur()">
+        <img v-show="index===currentIndex && item.labelName" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
       </div>
     </div>
     <div class="action" @click="saveLabel">
@@ -89,9 +89,12 @@ export default {
       }
       this.updateUserLabel()
     },
-    blur (index) {
-      this.currentIndex = ''
+    blur () {
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
+      // 隐藏清空图标
+      setTimeout(() => {
+        this.currentIndex = ''
+      }, 100)
     }
   }
 }
