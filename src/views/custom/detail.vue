@@ -1,6 +1,6 @@
 <template>
-  <div class="custom-detail">
-    <div class="custom-info-box" v-if="customBaseInfo">
+  <div class="custom-detail" v-if="customBaseInfo">
+    <div class="custom-info-box">
       <avatar class="custom-avatar" :avatar="customBaseInfo.clientAvatarUrl" @click.native="previewAvatarUrl"/>
       <div class="bg_img custom-attention" :style="{backgroundImage:'url('+attentionImg+')'}" v-if="attentionFlag"></div>
       <div class="custom-info">
