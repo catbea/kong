@@ -189,7 +189,7 @@ export default {
         width: 100%;
         height: 100%;
         opacity: 0;
-        
+        z-index: 9999;
       }
       .portrait-select-Icon {
         width: 64px;

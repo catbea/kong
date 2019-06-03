@@ -65,5 +65,27 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/discover/chooseMarket',
+    name: 'chooseMarket',
+    component: resolve => require(['@/views/discover/chooseMarket/index.vue'], resolve),
+    meta: {
+      title: '插入楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/discover/chooseCity',
+    name: 'chooseCity',
+    component: resolve => require(['@/views/discover/chooseMarket/writeMarket.vue'], resolve),
+    meta: {
+      title: '选择城市',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]

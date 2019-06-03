@@ -77,7 +77,7 @@ export default {
   > .house-box {
     margin-bottom: 10px;
     > div {
-      width: 350px;
+      // width: 350px;
     }
     > .house-item {
       position: relative;

@@ -160,6 +160,11 @@
           <p class="van-hairline--top immediately" @click="relationHandle">知道了</p>
         </div>
       </van-popup>
+      <!-- 活动海报 -->
+      <div class="house-activity-poster" @click="goActivityDetail" v-if="info.cpActivityVo">
+        <img class="img" :src="info.cpActivityVo.imgUrl" alt="">
+        <p class="info"><span class="title">{{info.cpActivityVo.name}}</span> <span class="btn">立即领取</span></p>
+      </div>
       <!-- 户型 -->
       <div class="house-type" v-if="info.houseTypeList&&info.houseTypeList.length>0">
         <title-bar :conf="typeTitleConf"/>
@@ -443,11 +448,11 @@
         </div>
       </div>
       <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
-      <div class="poster-container" v-show="posterShow">
+      <div class="poster-container" ref="posterContainer" v-show="posterShow">
         <div class="cnt">
           <div class="bg_img poster-img">
             <img :src="info.activityImgUrl" alt="" srcset="">
-            <div class="bg_img close-icon" @click="posterShow=false">
+            <div class="bg_img close-icon" @click.stop="hidePosterShow">
               <img :src="closeIcon" alt="">
             </div>
           </div>
@@ -659,6 +664,10 @@ export default {
     }
   },
   methods: {
+    hidePosterShow () {
+      this.$refs.posterContainer.style.opacity = 0
+      this.posterShow = false
+    },
     // 获取渠道列表
     getChannelListByLinkerId () {
       marketService.getChannelListByLinkerId({linkerId: this.id}).then(res => {
@@ -697,6 +706,10 @@ export default {
     // 隐藏渠道
     hideChannelFn () {
       this.showChannel = false
+    },
+    // 跳转活动详情
+    goActivityDetail () {
+      this.$router.push({path: '/market/rule/detail', query:{activityId: this.info.cpActivityVo.id, name: this.info.cpActivityVo.name}})
     },
     // 新商业模式开通楼盘
     newOpenLinker () {
@@ -1460,6 +1473,49 @@ export default {
         font-size: 8px;
         font-family: PingFangSC-Semibold;
         font-weight: 600;
+      }
+    }
+  }
+  .house-activity-poster {
+    margin: 16px;
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 6px;
+    .img{
+      min-width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+    }
+    .info{
+      position: relative;
+      margin-top: 64px;
+      display: flex;
+      .title{
+        flex: 1;
+        overflow: hidden;
+        font-size:20px;
+        font-weight:500;
+        color:rgba(255,255,255,1);
+        text-shadow:0px 2px 4px rgba(0,0,0,0.5);
+        color: #fff;
+        padding: 0 16px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .btn{
+        display: inline-block;
+        color: #F4655F;
+        font-size: 12px;
+        border: 1px solid #F4655F;
+        padding: 0 10px;
+        border-radius: 12px;
+        background-color: #fff;
+        margin-right: 16px;
+        height: 24px;
+        line-height: 24px;
       }
     }
   }

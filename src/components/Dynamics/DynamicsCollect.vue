@@ -35,13 +35,13 @@
       <div class="arrow-icon">
         <van-icon name="arrow"/>
       </div>
-      <div class="van-hairline--bottom bottom-line"></div>
-      <div class="carousel-container">
+      <!-- <div class="van-hairline--bottom bottom-line"></div> -->
+      <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
+      <!-- <div class="carousel-container">
         <div class="carousel-swipe">
           <van-swipe :autoplay="3000" vertical :show-indicators="false">
             <van-swipe-item v-for="(item,index) in data.simpleDynamic" :key="index">
               <img class="avatar" :src="item.avatarUrl" />
-              <!-- dynamicType 动态类型：1：名片 2：楼盘 3：文章 ,为了以后方便改直接if区分开 -->
               <p class="card-tips" v-if="item.dynamicType == 1">{{item.clientName}}{{item.timeStr}}浏览了你的{{item.markedWords}}</p>
               <p class="house-tips" v-if="item.dynamicType == 2">
                 {{item.clientName}}{{item.timeStr}}浏览楼盘
@@ -50,7 +50,7 @@
               <p class="article-tips" v-if="item.dynamicType == 3">{{item.clientName}}{{item.timeStr}}浏览了{{item.markedWords}}</p>
             </van-swipe-item>
           </van-swipe>
-        </div>
+        </div> -->
         
         <!-- <div class="marquee-box">
           <marquee :itemHeight="`${50/37.5}rem`" v-if="data.simpleDynamic.length>0">
@@ -67,7 +67,7 @@
           </marquee>
         </div> -->
       </div>
-      <div v-if="data.simpleDynamic.length===0" class="no-carousel-tips">体验AI拓客新模式,连接客户更简单</div>
+      <!-- <div v-if="data&&data.simpleDynamic.length===0" class="no-carousel-tips">体验AI拓客新模式,连接客户更简单</div> -->
     </div>
   </div>
 </template>
@@ -113,7 +113,7 @@ export default {
 <style lang="less">
 .dynamics-collect {
   background-color: #2360ad;
-  margin: 0 0 60px;
+  margin: 0 0 40px;
   height: 175px;
   position: relative;
   > .modify-img {
@@ -158,9 +158,9 @@ export default {
   > .info-box {
     background: #fff;
     position: relative;
-    margin: 0 15px;
+    margin: 30px 15px 0;
     padding: 10px;
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
     line-height: 1;
     border-top:1px solid #C2C7CC;
     > .data-container {

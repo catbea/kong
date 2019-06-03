@@ -334,4 +334,16 @@ export default [
       }
     }
   },
+  // 活动详情
+  {
+    path: '/market/rule/detail',
+    name: 'rule-detail',
+    component: resolve => require(['@/views/market/activity/index.vue'], resolve),
+    meta: {
+      title: '活动详情',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]

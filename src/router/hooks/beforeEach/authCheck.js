@@ -56,6 +56,18 @@ export default async (to, from, next) => {
       let cropId = localStorage.getItem('cropId')
       let userInfo = store.getters.userInfo
       let payCorpId = userInfo.payCorpId
+      if (userInfo.payOpenId) {
+        if (!store.getters.jssdkConfig || !store.getters.jssdkConfig.signature) {
+          try {
+            window.awHelper.wechatHelper.init()
+          } catch (e) {
+            console.log('[error:window.awHelper.wechatHelper]')
+            next()
+          }
+        }
+        next()
+        return
+      }
       if (payCorpId) {
         // 通过payopenid返回的code
         // 获取jssdk授权
@@ -67,10 +79,10 @@ export default async (to, from, next) => {
             next()
           }
         }
-        if (userInfo.payOpenId) {
-          next()
-          return
-        }
+        // if (userInfo.payOpenId) {
+        //   next()
+        //   return
+        // }
 
         let pcOpenid = userInfo.pcOpenid
         const payopenIdObject = await commonService.getPayOpenId(parm.code, cropId, pcOpenid)

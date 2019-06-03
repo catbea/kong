@@ -2,7 +2,7 @@
   <div class="messageInfo-page">
     <div class="messageInfo-back" v-if="haveData">
       <!--  -->
-      <div class="van-hairline--bottom messageInfo-wd" v-show="UnreadMsgTotal != 0">
+      <div class="messageInfo-wd" v-show="UnreadMsgTotal != 0">
         <span class="messageInfo-wd-left">当前共有未读消息 {{UnreadMsgTotal}} 条</span>
         <div class="messageInfo-wd-right">
           <button class="messageInfo-wd-right-select messageInfo-wd-select" @click="goSelestMessage">查 看</button>
@@ -10,8 +10,8 @@
         </div>
       </div>
       <div class=" messageInfo-sys" v-show="sysMessage !='' " @click="gosysMessage">
-        <div class="van-hairline--bottom messageInfo-sys-container">
-          <span class="messageInfo-sys-left">
+        <div class="messageInfo-sys-container">
+          <div class="messageInfo-sys-left">
             <div
               :class="sysMessage.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
               v-if="sysMessage.unreadMsgCount != 0 "
@@ -20,17 +20,17 @@
               <span v-else>{{sysMessage.unreadMsgCount}}</span>
             </div>
             <img :src="backIcon" class="sys-left-img">
-          </span>
-          <span class="messageInfo-sys-right">
+          </div>
+          <div class="messageInfo-sys-right">
             <p class="sys-right-top">
-              系统消息
+              <span class="name">系统消息</span>
               <span
                 class="sys-right-time"
                 v-show="sysMessage !='' "
               >{{sysMessage.createTime | dateFormatterToHuman}}</span>
             </p>
             <p class="sys-right-btn">{{sysMessage.content ? sysMessage.content.replace(/<[^>]+>/g,"") : ''}}</p>
-          </span>
+          </div>
         </div>
       </div>
       <div class="messageInfo-fill"></div>
@@ -39,25 +39,30 @@
           class="messageInfo-sys"
           v-for="(item,key) in messageList"
           :key="key" @click="msgClickHandle(item)">
-          <div class="van-hairline--bottom messageInfo-sys-container">
-            <span class="messageInfo-sys-left">
-              <div
-                :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
-                v-show="item.unreadMsgCount !=0">
-                <span v-if="item.unreadMsgCount > 99 ">99+</span>
-                <span v-else>{{item.unreadMsgCount}}</span>
+          <van-swipe-cell :right-width="80" :on-close="onClose">          
+            <van-cell-group>  
+              <div class="messageInfo-sys-container">
+                <div class="messageInfo-sys-left">
+                  <div
+                    :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
+                    v-show="item.unreadMsgCount !=0">
+                    <span v-if="item.unreadMsgCount > 99 ">99+</span>
+                    <span v-else>{{item.unreadMsgCount}}</span>
+                  </div>
+                  <img :src="item.c2cImage" class="sys-left-img">
+                </div>
+                <div class="messageInfo-sys-right">
+                  <p class="sys-right-top">
+                    <span class="name">{{item.c2cNick}}</span>
+                    <!-- >3分钟前 -->
+                    <span class="sys-right-time">{{ item.msgTimeStamp | dateFormatterToHuman}}</span>
+                  </p>
+                  <p class="sys-right-btn">{{formatMsg(item)}}</p>
+                </div>
               </div>
-              <img :src="item.c2cImage" class="sys-left-img">
-            </span>
-            <span class="messageInfo-sys-right">
-              <p class="sys-right-top">
-                {{item.c2cNick}}
-                <!-- >3分钟前 -->
-                <span class="sys-right-time">{{ item.msgTimeStamp | dateFormatterToHuman}}</span>
-              </p>
-              <p class="sys-right-btn">{{formatMsg(item)}}</p>
-            </span>
-          </div>
+            </van-cell-group>
+            <span slot="right" class="delete-btn" @click="delMsg(key)">删除</span>
+          </van-swipe-cell>
         </div>
       </van-list>
     </div>
@@ -83,7 +88,8 @@ export default {
       size: 20,
       loading: false,
       finished: false,
-      UnreadMsgTotal: 0
+      UnreadMsgTotal: 0,
+      delIndex: ''
     }
   },
   watch: {
@@ -97,6 +103,42 @@ export default {
     // this.getMsgList()
   },
   methods: {
+    // 删除客服提示
+    onClose(clickPosition, instance) {
+      switch (clickPosition) {
+        case 'left':
+        case 'cell':
+        case 'outside':
+          instance.close();
+          break;
+        case 'right':
+           this.$dialog.confirm({
+              title: '删除提示',
+              message: '是否确认删除该用户？',
+              className: 'delete-dialog'
+          }).then(() => {
+            this.confirm()
+            instance.close()
+          }).catch(() => {
+            instance.close()
+          })
+          break
+      }
+    },
+    delMsg (index) {
+      this.delIndex = index
+    },
+    // 删除消息
+    confirm () {
+      let item = this.messageList[this.delIndex]
+      let clientId = item.toAccount.split('_')[1]
+      dynamicsService.deleteMessage({
+        clientId: clientId
+      }).then(res => {
+        this.messageList.splice(this.delIndex, 1)
+        this.$toast('删除成功')
+      }).catch()
+    },
     updateNewMsg() {
       let msgContent = this.$store.getters.newMsgContent
       this.UnreadMsgTotal++
@@ -209,9 +251,9 @@ export default {
 .messageInfo-page {
   width: 100%;
   background: rgba(247, 249, 250, 1);
-  > .messageInfo-back {
+  .messageInfo-back {
     background: #ffffff;
-    > .messageInfo-wd {
+    .messageInfo-wd {
       height: 50px;
       background: rgba(255, 255, 255, 1);
       // border-bottom: 1px solid #eeeeee;
@@ -247,15 +289,13 @@ export default {
     }
     .messageInfo-sys {
       background: #ffffff;
-      padding-top: 16px;
       margin: 0 16px;
-      margin-bottom: 0;
-      // border-bottom: 1px solid #eeeeee;
-      > .messageInfo-sys-container {
+      .messageInfo-sys-container {
         display: flex;
-        padding-bottom: 10px;
-        > .messageInfo-sys-left {
-          > .sys-left-img {
+        padding: 10px 0;
+        .messageInfo-sys-left {
+          width: 50px;
+          .sys-left-img {
             width: 50px;
             height: 50px;
             background: rgba(0, 122, 230, 1);
@@ -293,22 +333,33 @@ export default {
             line-height: 16px;
           }
         }
-        > .messageInfo-sys-right {
+        .messageInfo-sys-right {
           padding-left: 12px;
-          padding-top: 6px;
-          > .sys-right-top {
+          flex: 1;
+          overflow: hidden;
+          line-height: 25px;
+          .sys-right-top {
             font-size: 16px;
             font-weight: 600;
             color: rgba(51, 51, 51, 1);
-            > .sys-right-time {
+            display: flex;
+            .name{
+              flex: 1;
+              margin-right: 20px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+            .sys-right-time {
               font-size: 12px;
               font-weight: 400;
               color: rgba(187, 187, 187, 1);
               line-height: 17px;
               float: right;
+              padding-right: 5px;
             }
           }
-          > .sys-right-btn {
+          .sys-right-btn {
             font-size: 13px;
             font-weight: 400;
             color: rgba(102, 102, 102, 1);
@@ -322,9 +373,19 @@ export default {
         }
       }
     }
-    > .messageInfo-fill {
+    .messageInfo-fill {
       height: 10px;
       background: rgba(247, 249, 250, 1);
+    }
+    .delete-btn{
+      display: block;
+      height: 80px;
+      width: 80px;
+      line-height: 80px;
+      color: #fff;
+      font-size: 16px;
+      background-color: #EA4D2E;
+      text-align: center;
     }
   }
 }

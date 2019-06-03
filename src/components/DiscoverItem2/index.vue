@@ -3,7 +3,7 @@
     <div class="meal-market-page-box-top">
       <span class="icon-check" :class="statusClassCompute" @click="clickHandler"></span>
       <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+data.linkerUrl+')'}">
-        <p class="icon-discount bg_img" v-show="data.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{data.sale}}</p>
+        <!-- <p class="icon-discount bg_img" v-show="data.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{data.sale}}</p> -->
         <span class="bg_img icon-play" v-show="data.ifPanorama==1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
       </div>
       <ul>

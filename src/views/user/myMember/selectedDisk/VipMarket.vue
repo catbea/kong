@@ -4,7 +4,7 @@
       <div class="meal-market-page-box-top">
         <span class="icon-check bg_img" :style="{backgroundImage:'url('+checkImg+')'}"></span>
         <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url(https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/pacific/1026046346.jpg)'}">
-          <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">9.9折</p>
+          <!-- <p class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">9.9折</p> -->
           <span class="bg_img icon-play" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul>

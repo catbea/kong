@@ -600,5 +600,93 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 获取AI通信开关
+   */
+  getAI (data) {
+    return xhr({
+      url: ' /imaiSetting/get',
+      body: data
+    })
+  }
+  /**
+   * 更新AI通信开通
+   */
+  updateAI (data) {
+    return xhr({
+      url: '/imaiSetting/update',
+      body: data
+    })
+  }
+
+  /**
+   * 获取历史楼盘
+   */
+  getHistoryLinker (data) {
+    return xhr({
+      url: '/historyLinker/list',
+      body: data
+    })
+  }
+  
+  /**
+   * 清空历史楼盘
+   */
+  clearHistoryAll (data) {
+    return xhr({
+      url: '/historyLinker/clear',
+      body: data
+    })
+  }
+  /**
+   * 删除单个楼盘
+   */
+  clearHistoryOne (data) {
+    return xhr({
+      url: '/historyLinker/delete',
+      body: data
+    })
+  }
+
+  /**
+   * 获取历史城市
+   */
+  getHistoryCity (data) {
+    return xhr({
+      url: '/historyCity/get',
+      body: data
+    })
+  }
+  /**
+   * 更新历史城市
+   */
+  updateHistoryCity (data) {
+    return xhr({
+      url: '/historyCity/update',
+      body: data
+    })
+  }
+
+  /**
+   * 查询用户自定义标签
+   */
+  getUserLabel (data) {
+    return xhr({
+      url: '/user/queryLabel',
+      body: data
+    })
+  }
+
+  /**
+   * 更新用户自定义标签
+   */
+  updateUserLabel (data) {
+    return xhr({
+      method: 'post',
+      url: ' /user/updateLabel',
+      body: data
+    })
+  }
 }
 export default new UserService()

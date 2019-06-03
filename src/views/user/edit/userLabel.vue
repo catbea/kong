@@ -1,14 +1,15 @@
 <template>
   <div class="user-edit-label-page">
     <div class="user-edit-label">
-      <p class="edit-label-title">选择标签</p>
-      <p class="edit-label-conter">
-        <span v-for="(item,key) in agentLabel" :key="key">
-          <input :id="item.id" type="checkbox" data-type="welfare" name="reason" :value="item.itemName" @click="selectLabel(key)">
-          <label :for="item.id">{{item.itemName}}</label>
+      <!-- <p class="edit-label-title">选择标签</p> -->
+      <div class="edit-label-conter">
+        <span v-for="(item,key) in agentLabel" :key="key" @click="selectLabel(key)">
+          <!-- <input :id="item.id" type="checkbox" data-type="welfare" name="reason" :value="item.itemName" > -->
+          <label :for="item.id" :class="{'checked': selectLabelList.indexOf(item) > -1}">{{item.itemName}}</label>
         </span>
-      </p>
+      </div>
       <div class="edit-label-div">
+        <button class="edit-self" @click="goEdit">自定义标签</button>
         <button class="edit-label-query" @click="SubLabel">确定修改</button>
       </div>
     </div>
@@ -42,7 +43,14 @@ export default {
   },
 
   methods: {
+    // 跳转自定义标签
+    goEdit () {
+      this.$router.push('/user/edit/editLabel')
+    },
     selectLabel(index) {
+      if (this.selectLabelList.length >= 3) {
+        return this.$toast('标签个数不得多于3个')
+      }
       let obj = this.agentLabel[index]
 
       let isExist = this.isExistElement(this.selectLabelList, obj)
@@ -69,17 +77,12 @@ export default {
     },
 
     async SubLabel() {
-      var selectidlist = '' //将选中值拼接成字符串
-      var check = document.getElementsByName('reason')
-
+      var selectidlist = [] //将选中值拼接成字符串
       let obj = {}
-
-      for (var i = 0; i < check.length; i++) {
-        if (check[i].checked == true) {
-          selectidlist = selectidlist + check[i].id + ','
-        }
+      for (var i = 0; i < this.selectLabelList.length; i++) {
+        selectidlist.push(this.selectLabelList[i].id)
       }
-      if (selectidlist.length <= 0) {
+      if (!this.selectLabelList.length) {
         this.$dialog
           .alert({
             message: '请选择个性标签'
@@ -98,11 +101,11 @@ export default {
             })
         } else {
           let userList = {
-            lableList: selectidlist
+            lableList: selectidlist.join(',')
           }
           const res = await userService.upDateUserInfo(userList)
           if (res) {
-            this.$store.dispatch('getUserInfo', Object.assign(this.userInfo, { labelList: this.selectLabelList }))
+            this.$store.dispatch('getUserInfo', Object.assign({}, this.userInfo, { labelList: this.selectLabelList }))
             this.$router.go(-1)
           }
         }
@@ -125,13 +128,16 @@ export default {
 <style lang="less">
 .user-edit-label-page {
   background: #ffffff;
+  height: 100%;
   .my-label-list {
     display: flex;
     flex-wrap: wrap;
     margin-left: 0.15rem;
   }
   > .user-edit-label {
-    margin: 27px 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     > .edit-label-title {
       font-size: 20px;
       font-weight: 600;
@@ -141,10 +147,32 @@ export default {
       margin-left: 16px;
     }
     > .edit-label-conter {
-      margin-left: 2px;
+      margin-top: 20px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-wrap:wrap;
+      align-content: flex-start;
+      align-items: center;
+      span{
+        flex: none;
+        margin-bottom: 16px;
+        font-size: 14px;
+        font-weight: 500;
+        background: #F2F5F9;
+        color: #445166;
+        text-align: center;
+        margin-left: 14px;
+        border-radius: 4px;
+        min-width: 28%;
+      }
     }
     > .edit-label-div {
+      height: 140px;
       margin: 0 16px;
+      display: flex;
+      align-items: flex-end;
+      flex-direction: column;
       > .edit-label-query {
         font-size: 16px;
         font-weight: 400;
@@ -155,32 +183,29 @@ export default {
         border-radius: 4px;
         width: 100%;
         border: 0;
-        margin-top: 25px;
+        margin-top: 16px;
+      }
+      .edit-self{
+        width: 100%;
+        border: 0;
+        font-size: 16px;
+        font-weight: 400;
+        height:44px;
+        background:rgba(242,248,254,1);
+        border-radius:6px;
+        color: #445166;
       }
     }
   }
 }
-input[type='checkbox'] {
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-}
 
-input[type='checkbox'] + label {
+label {
   display: block;
-  padding: 6px 24px;
-  font-size: 14px;
-  font-weight: 500;
-  background: rgba(143, 159, 177, 0.15);
-  color: #666666;
-  text-align: center;
-  float: left;
-  margin-left: 14px;
-  cursor: pointer;
-  border-radius: 4px;
-  margin-bottom: 16px;
+  padding: 8px 20px;
+  font-size: 12px;
 }
 
-input[type='checkbox']:checked + label {
+.checked {
   color: rgba(255, 255, 255, 1);
   background: rgba(0, 122, 230, 1);
   border-radius: 2px;
