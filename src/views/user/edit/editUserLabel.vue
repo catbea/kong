@@ -73,10 +73,10 @@ export default {
         return this.$toast('正在保存请稍后')
       }
       this.btnStatus = true
-      if (!this.agentLabelList.length) {
-        this.btnStatus = false
-        return this.$toast('您没有新增自定义标签，无法保存')
-      }
+      // if (!this.agentLabelList.length) {
+      //   this.btnStatus = false
+      //   return this.$toast('您没有新增自定义标签，无法保存')
+      // }
       let empty = false
       this.agentLabelList.forEach(item => {
         if (!item.labelName) {

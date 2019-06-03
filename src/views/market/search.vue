@@ -21,10 +21,11 @@
         <p class="house-name">{{info.linkerName}}</p>
         <p class="house-info">{{`${info.linkerAddress} ${info.linkerPrice}`}}</p>
       </div>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent" v-show="nodata"></null>
     </div>
     <!-- 搜索结果 -->
     <div class="search-result-container" v-if="searchStatus === 2">
-      <screen v-model="filters"></screen>
+      <screen v-model="filters" v-show=""></screen>
       <div class="search-result-content">
         <van-list
           class="list-container"
@@ -97,7 +98,8 @@ export default {
     },
     nullIcon: require('IMG/market/search/empty.png'),
     clearIcon: require('IMG/market/search/clear.png'),
-    city: ''
+    city: '',
+    nodata: false
   }),
   created() {
     this.historyController('init')
@@ -127,6 +129,7 @@ export default {
       }
       const res = await marketService.getHouseList(payload)
       this.searchBirefList = res.records
+      this.nodata = !res.records.length
     },
     onLoad() {
       this.searchMidator(this.searchValue, this.filters, this.page)
