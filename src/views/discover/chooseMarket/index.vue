@@ -101,7 +101,26 @@ export default {
     getHistoryLinker () {
       userService.getHistoryLinker({}).then(res => {
         if (res.length) {
-          this.historyHouse = res
+          let _list = []
+          res.forEach(item => {
+              let obj = {
+                linkerId: item.linkerId,
+                linkerUrl: item.linkerUrl,
+                sale: item.sale,
+                linkerName: item.linkerName,
+                site: `${item.city ? item.city : ''} ${item.district ? item.district : ''} ${item.price ? item.price : '价格待定'} ${item.priceUnit&&item.price ? item.priceUnit : ''}`, //'深圳 南山 120000元/㎡',
+                condition: item.linkerTags,
+                open: `${item.openTimes}次开通`,
+                saleStatus: item.saleStatus,
+                disabled: false,
+                divisionRules: item.divisionRules,
+                price: `${item.price} ${item.priceUnit}`,
+                buildArea: item.minArea !== '' && item.maxArea !== '' ? `${item.minArea}-${item.maxArea}㎡` : '',
+                isFree: item.isFree || 0
+              }
+              _list.push(obj)
+          })
+          this.historyHouse = _list
           this.showHistoryMore = this.historyHouse.length > 3
         }
       }).catch()
