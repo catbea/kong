@@ -62,14 +62,20 @@ export default {
       location: '',
       fromPage: '',
       searchType: '',
-      searchList: ''
+      searchList: '',
+      selected: [], //已选择楼盘
+      type: '',
+      fullPath: ''
     }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
   },
   created () {
-    this.getCityList(0) 
+    this.getCityList(0)
+    this.fullPath = this.$route.query.fullPath
+    this.type = this.$route.query.type
+    this.selected = this.$route.params && this.$route.params.selected || []
   },
   watch: {
     keywords () {
@@ -105,7 +111,7 @@ export default {
       userService.updateHistoryCity({
         city: val
       }).then(res => {}).catch()
-      this.$router.push({path: '/discover/chooseMarket', query:{city: val}})
+      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{selected: this.selected}, query:{city: val, type: this.type,fullPath: this.fullPath}})
     },
   },
   directives: {

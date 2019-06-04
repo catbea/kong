@@ -26,7 +26,7 @@
       <p class="more" v-if="historyCount == historyHouse.length && !showHistoryMore && historyHouse.length > 3" @click="hideHistory">收起历史楼盘</p>
     </div>
     <div class="house-box" v-if="city">
-      <h3 class="title" v-if="historyHouse.length && showHistory">其他楼盘</h3>
+      <h3 class="title" v-if="historyHouse.length && showHistory && projectList.length">其他楼盘</h3>
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
         <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :showRules="false" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
       </van-list>
@@ -84,7 +84,11 @@ export default {
     this.type = this.$route.query.type
     this.selected = this.$route.params && this.$route.params.selected || []
     this.getHistoryLinker()
-    this.getHistoryCity()
+    if (!this.$route.query.city) {
+      this.getHistoryCity()
+    } else {
+      this.city =  this.$route.query.city
+    }
   },
   methods: {
     // 获取历史城市
@@ -184,7 +188,7 @@ export default {
     },
     // 跳转城市选择
     goCity () {
-      this.$router.push('/discover/chooseCity')
+      this.$router.push({path: '/discover/chooseCity', params:{selected: this.selected}, query:{type: this.query, fullPath: this.fullPath}})  
     },
     // 改变搜索关键词
     changeKeyword () {

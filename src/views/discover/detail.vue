@@ -38,7 +38,7 @@
         <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
       </p>
       <p class="discover-disclaimer"  v-show="renderDom.length">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。 如有问题请点击</span>
+        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。版权归原作者所有，如有侵权请告知删除。转载请注明以上信息。如有问题请点击 </span>
         <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
       </p>
       <!-- 好看 -->
