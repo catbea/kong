@@ -206,7 +206,7 @@ export default {
           return '[语音消息]'
         } else if (msg.Desc == 3) {
           return '【链接】' + JSON.parse(msg.Data).linkerName
-        } else if (msg.Desc == 1) {
+        } else if (msg.Desc == 1 || msg.Desc == 7) {
           return msg.Data
         }
       } else {
