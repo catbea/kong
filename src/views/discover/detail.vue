@@ -268,6 +268,10 @@ export default {
     ...mapGetters(['userInfo'])
   },
   methods: {
+    // 浏览器回退监听
+    goBack () {
+      this.$router.replace({path: '/write-article'});
+    },
     // 显示小程序二维码
     popHandler (data) {
       this.popupData = data
@@ -721,10 +725,15 @@ export default {
       this.touchHandler,
       { passive: false }
     )
+    if (window.history && window.history.pushState) {
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', this.goBack, false);
+    }
   },
   beforeDestroy() {
     try {
       document.querySelector('.tools-bar').removeEventListener('touchmove',this.touchHandler,false)
+      window.removeEventListener('popstate', this.goBack, false)
     } catch (error) {}
   }
 }

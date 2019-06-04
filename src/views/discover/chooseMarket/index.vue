@@ -223,7 +223,7 @@ export default {
       } else {
         window.sessionStorage.setItem(type,JSON.stringify(item))
       } 
-      this.$router.push({path:this.fullPath})
+      this.$router.replace({path:this.fullPath})
     },
     // 键盘遮挡
     blur(){
