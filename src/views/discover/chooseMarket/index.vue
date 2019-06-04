@@ -62,7 +62,7 @@ export default {
       fullPath: '',
       type: '',
       historyHouse: [],
-      historyCount: 2,
+      historyCount: 3,
       showHistoryMore: false,
       showHistory: true
     }
