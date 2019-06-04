@@ -248,6 +248,7 @@ export default {
   .mint-indexlist-nav{
     position: fixed;
     top: 130px;
+    z-index: 9999;
   }
   .mint-indexlist-indicator{
     top: 30%!important;
