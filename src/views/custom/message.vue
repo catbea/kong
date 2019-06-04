@@ -413,7 +413,11 @@ export default {
                 list.content = MsgContent.Data
                 list.msgType = 1
                 msgLists.push(list)
-              }
+              } else if (MsgContent.Desc == 7) {
+                list.content = MsgContent.Data
+                list.msgType = 1
+                msgLists.push(list)
+              } 
             }
           }
           if (msgLists.length > 0) {
