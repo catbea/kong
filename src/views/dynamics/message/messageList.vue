@@ -131,7 +131,7 @@ export default {
     // 删除消息
     confirm () {
       let item = this.messageList[this.delIndex]
-      let clientId = item.toAccount.split('_')[1]
+      let clientId = item.keyword.split('|')[0].split('_')[1]
       dynamicsService.deleteMessage({
         clientId: clientId
       }).then(res => {
