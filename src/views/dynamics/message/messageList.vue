@@ -345,7 +345,7 @@ export default {
             display: flex;
             .name{
               flex: 1;
-              margin-right: 20px;
+              margin-right: 30px;
               overflow: hidden;
               white-space: nowrap;
               text-overflow: ellipsis;
