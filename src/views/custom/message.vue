@@ -35,7 +35,7 @@
                 </div>
                 <div :id="item.id" class="massage-info-msg-me" v-if="item.fromType == 2">
                   <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="avatar">
-                  <div class="msg-customer-con-me" v-if="item.msgType=='1'">{{item.content}}</div>
+                  <div class="msg-customer-con-me" v-if="item.msgType=='1' || item.msgStatus =='1'">{{item.content}}</div>
                   <div class="msg-customer-con-me-voice" v-if="item.msgType=='2'" @click="playVoice(item.content,item.id)">
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                     <img v-if="isplay==item.id" class="left-voice-img" src="@/assets/img/message/right_voice.gif">
