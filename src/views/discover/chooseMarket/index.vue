@@ -155,7 +155,7 @@ export default {
       this.currentDel = item
     },
     deletehistory () {
-      userService.clearHistoryOne({id: this.currentDel.id}).then(res => {
+      userService.clearHistoryOne({linkerId: this.currentDel.linkerId}).then(res => {
         let index = this.historyHouse.indexOf(this.currentDel)
         this.historyHouse.splice(index, 1)
         this.$toast('删除成功')
