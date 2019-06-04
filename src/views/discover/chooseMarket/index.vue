@@ -25,7 +25,7 @@
       <p class="more" v-if="historyHouse.length > 3 && showHistoryMore && historyCount != historyHouse.length" @click="showMore">更多历史楼盘</p>
       <p class="more" v-if="historyCount == historyHouse.length && !showHistoryMore && historyHouse.length > 3" @click="hideHistory">收起历史楼盘</p>
     </div>
-    <div class="house-box">
+    <div class="house-box" v-if="city">
       <h3 class="title" v-if="historyHouse.length && showHistory">其他楼盘</h3>
       <van-list v-model="loading" :finished="finished" :finished-text="'没有更多了'" @load="getLinkerList">
         <discover-item2 v-for="(item,index) in projectList" v-model="item.isChecked" :data="item" :showRules="false" :disabled="item.disabled" :key="index" @click.native="selectHandle(item)"/>
@@ -76,19 +76,6 @@ export default {
            result.push(item.linkerId)
         })
       } 
-      // else {
-      //   let multiHouse =  window.sessionStorage.getItem('multiHouse')
-      //   if (multiHouse) {
-      //     let arr = JSON.parse(multiHouse)
-      //     arr.forEach(item => {
-      //       result.push(item.linkerId)
-      //     })
-      //   }
-      // }
-      let inlayHouse = window.sessionStorage.getItem('inlayHouse')
-      if (inlayHouse) {
-         result.push(JSON.parse(inlayHouse).linkerId)
-      }
       return result
     }
   },
@@ -236,7 +223,7 @@ export default {
       } else {
         window.sessionStorage.setItem(type,JSON.stringify(item))
       } 
-      this.$router.push({path:this.fullPath})
+      this.$router.replace({path:this.fullPath})
     },
     // 键盘遮挡
     blur(){
