@@ -217,8 +217,10 @@ export default {
     // 若出来editData,还原数据
     async restoreData(editData) {
       if (editData.hasOwnProperty('viewpoint')) this.viewpointText = editData.viewpoint
-      if (editData.hasOwnProperty('inlayHouse') && editData.inlayHouse !== '') this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
-      if (editData.hasOwnProperty('recommendHouse') && editData.recommendHouse.length > 0) this.recommendList = await this.getLinkerInfo(editData.recommendHouse.join(','))
+      let inlayHouse = window.sessionStorage.getItem('inlayHouse')
+      let recommendHouse = window.sessionStorage.getItem('multiHouse')
+      if (editData.hasOwnProperty('inlayHouse') && editData.inlayHouse !== '' && !inlayHouse) this.inlayHouse = await this.getLinkerInfo(editData.inlayHouse)
+      if (editData.hasOwnProperty('recommendHouse') && editData.recommendHouse.length > 0 && !recommendHouse) this.recommendList = await this.getLinkerInfo(editData.recommendHouse.join(','))
     },
     // 查询楼盘信息
     async getLinkerInfo(linkerIds) {
@@ -318,6 +320,8 @@ export default {
     // 底部栏保存按钮点击
     async saveClickHandler() {
       if (this.pushFlag) return
+      window.sessionStorage.removeItem('inlayHouse')
+      window.sessionStorage.removeItem('multiHouse')
       this.pushFlag = true
       let payload = {
         viewpoint: this.viewpointText,
