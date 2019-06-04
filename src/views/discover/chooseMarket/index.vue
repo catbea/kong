@@ -188,7 +188,7 @@ export default {
     },
     // 跳转城市选择
     goCity () {
-      this.$router.push({path: '/discover/chooseCity', params:{selected: this.selected}, query:{type: this.query, fullPath: this.fullPath}})  
+      this.$router.push({path: '/discover/chooseCity', params:{selected: this.selected}, query:{type: this.type, fullPath: this.fullPath}})  
     },
     // 改变搜索关键词
     changeKeyword () {
