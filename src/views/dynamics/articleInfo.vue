@@ -80,7 +80,7 @@
                       <span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
                       <samp v-if="item.currentArticleLength >= '100' ">游览</samp>
                       <samp v-else>小于</samp>
-                      <span>{{item.currentArticleLength}}%</span>
+                      <span>{{item.currentArticleLength > 100 ? 100 : item.currentArticleLength}}%</span>
                     </p>
                     <p>
                       累计浏览

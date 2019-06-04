@@ -94,7 +94,7 @@
               <p>{{item.updateTime | dateTimeFormatter(2,"/")}} 日第<span>{{item.clickCount }}次</span>打开 </p>
               <p>浏览时长大于<span>{{item.currentTime / 1000}}s</span>&nbsp;篇幅
               <samp v-if="item.currentArticleLength >= '100' ">游览</samp><samp v-else>小于</samp>
-              <span>{{item.currentArticleLength}}%</span></p>
+              <span>{{item.currentArticleLength > 100 ? 100 : item.currentArticleLength}}%</span></p>
               <p>累计浏览<span>{{item.todayClickCount}}次</span>该楼盘，平均停留<span>{{(item.avgTime / 1000).toFixed(1)}}s</span></p>
             </div>
 
