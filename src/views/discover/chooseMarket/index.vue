@@ -120,7 +120,8 @@ export default {
                 divisionRules: item.divisionRules,
                 price: `${item.price} ${item.priceUnit}`,
                 buildArea: item.minArea !== '' && item.maxArea !== '' ? `${item.minArea}-${item.maxArea}㎡` : '',
-                isFree: item.isFree || 0
+                isFree: item.isFree || 0,
+                cpActivityVo: item.cpActivityVo
               }
               _list.push(obj)
           })
@@ -221,7 +222,8 @@ export default {
               divisionRules: item.divisionRules,
               price: `${item.price} ${item.priceUnit}`,
               buildArea: item.minArea !== '' && item.maxArea !== '' ? `${item.minArea}-${item.maxArea}㎡` : '',
-              isFree: item.isFree || 0
+              isFree: item.isFree || 0,
+              cpActivityVo: item.cpActivityVo
             }
             _list.push(obj)
           }
