@@ -1,7 +1,7 @@
 <template>
   <div class="edit-user-label">
     <div class="title">
-      编辑标签
+      编辑标签（最多新增5个自定义标签）
     </div>
     <div class="content">
       <div class="item scale-1px-bottom" @click="addLabel" v-show="agentLabelList.length < 5">
