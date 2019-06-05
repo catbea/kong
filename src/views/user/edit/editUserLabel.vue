@@ -1,7 +1,7 @@
 <template>
   <div class="edit-user-label">
     <div class="title">
-      编辑标签（最多新增5个自定义标签）
+      编辑标签
     </div>
     <div class="content">
       <div class="item scale-1px-bottom" @click="addLabel" v-show="agentLabelList.length < 5">
@@ -12,6 +12,9 @@
         <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(index)">
         <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.labelName" maxlength="4" @focus="currentIndex=index" @blur="blur()">
         <img v-show="index===currentIndex && item.labelName" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
+      </div>
+      <div class="tips">
+        提示：最多只能新增5个自定义标签
       </div>
     </div>
     <div class="action" @click="saveLabel">
@@ -142,6 +145,10 @@ export default {
         margin-left: 5px;
         margin: 17px 5px;
       }
+    }
+    .tips{
+      font-size: 10px;
+      color: #969EA8;
     }
   }
   .action{
