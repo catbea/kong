@@ -4,6 +4,7 @@
       <div class="user-market-page-box-top" @click="skipMarketDetail(dataArr.linkerId)">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <!-- <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p> -->
+          <div v-show="dataArr.cpActivityVo" class="coupon">卡券</div>
           <span class="bg_img icon-play"  v-if="dataArr.ifPanorama===1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
         </div>
         <ul >
@@ -469,6 +470,19 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        .coupon{
+          position: absolute;
+          left: 0;
+          top: 8px;
+          font-size: 12px;
+          color: #fff;
+          padding: 0 10px 0 5px;
+          height: 20px;
+          line-height: 20px;
+          background-color: #CF562B;
+          border-top-right-radius: 10px;
+          border-bottom-right-radius: 10px;
+        }
         .icon-discount {
           white-space: nowrap;
           overflow: hidden;
