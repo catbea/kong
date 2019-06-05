@@ -1,9 +1,10 @@
 <template>
   <div class="shadow_box meal-market-page-box">
     <div class="meal-market-page-box-top">
-      <span class="icon-check" :class="statusClassCompute" @click="clickHandler"></span>
+      <!-- <span class="icon-check" :class="statusClassCompute" @click="clickHandler"></span> -->
       <div class="meal-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+data.linkerUrl+')'}">
         <!-- <p class="icon-discount bg_img" v-show="data.sale" :style="{backgroundImage:'url('+discountImg+')'}">{{data.sale}}</p> -->
+        <div  v-show="data.cpActivityVo" class="coupon">卡券</div>
         <span class="bg_img icon-play" v-show="data.ifPanorama==1" :style="{backgroundImage:'url('+imgPlay+')'}"></span>
       </div>
       <ul>
@@ -105,12 +106,25 @@ export default {
     .meal-market-page-box-top-left {
       width: 120px;
       height: 90px;
-      margin-right: 10px;
+      margin-right: 15px;
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 8px;
+      .coupon{
+        position: absolute;
+        left: 0;
+        top: 8px;
+        font-size: 12px;
+        color: #fff;
+        padding: 0 10px 0 5px;
+        height: 20px;
+        line-height: 20px;
+        background-color: #CF562B;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
       .icon-discount {
         width: 36px;
         height: 20px;
