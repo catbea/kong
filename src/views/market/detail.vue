@@ -648,6 +648,13 @@ export default {
     if (this.instance) {
       this.instance.close()
     }
+    if (this.showPreview) {
+      this.showPreview = false
+      this.$nextTick(() => {
+        document.querySelector('.router-view').scrollTop = this.scrollTop
+      })
+      return next(false)
+    }
     next()
   },
   watch: {
