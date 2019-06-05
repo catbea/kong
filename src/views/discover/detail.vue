@@ -29,7 +29,7 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===parseInt(renderDom.length/3)) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" ></estate-item>
+          <estate-item v-if="(index===parseInt(renderDom.length/3)-1) && (editData&&editData.inlayHouse)" :info="inlayHouseInfo" ></estate-item>
           <!-- @click.native="popHandler(inlayHouseInfo)" -->
         </div>
       </div>
