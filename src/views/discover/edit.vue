@@ -16,7 +16,7 @@
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'" :class="{viewRedactStyle:previewFlag,viewPreStyle:!previewFlag}"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
-          <edit-houses v-if="index===parseInt(renderDom.length/3)-1" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
+          <edit-houses v-if="index===houseIndex" v-model="inlayHouse" :preview="previewFlag" :count="1" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
         <div class="disclaimer-box" v-if="previewFlag">
           免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。版权归原作者所有，如有侵权请告知删除。转载请注明以上信息。如有问题请点击
@@ -400,6 +400,10 @@ export default {
       } else {
         return null
       }
+    },
+    houseIndex () {
+      let index = parseInt(this.renderDom.length / 3) - 1
+      return index < 0 ? 0 : index
     }
   },
   mounted() {
