@@ -11,7 +11,7 @@
     </div>
     <div class="activity-rule">
       <h3>活动规则</h3>
-      <p v-for="(item,index) in remarksList" :key="index">{{index + 1}}、{{item}}</p>
+      <p v-for="(item,index) in remarksList" :key="index">{{item}}</p>
       <!-- <p>1、请在结账前出示此卡； </p>
       <p>2、此卡可享受会员优惠待遇；</p> 
       <p>3、此卡不得购买产品，不得与其它优惠同时使用； </p>
@@ -50,7 +50,7 @@ export default {
       marketService.getActivityDetail({activityId: this.activityId}).then(res => {
         if (res) {
           this.info = res
-          this.remarksList = res.remarks.split('\n')
+          this.remarksList = res.remarks.split('\n') || ['未设置相关规则']
         } else {
           this.nodata = true
         }
