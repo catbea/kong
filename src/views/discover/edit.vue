@@ -212,6 +212,11 @@ export default {
           this.renderDom = JSON.parse(renderDom)
           window.sessionStorage.removeItem('renderDom')
         }
+        let scrollTop = window.sessionStorage.getItem('scrollTop')
+        if (scrollTop) {
+          document.querySelector('.router-view').scrollTop = scrollTop
+          window.sessionStorage.removeItem('scrollTop')
+        }
       })
     },
     // 若出来editData,还原数据
@@ -282,18 +287,21 @@ export default {
         this.$toast('暂无开通楼盘')
         return
       }
+      let top = document.querySelector('.router-view').scrollTop
+      window.sessionStorage.setItem('scrollTop', top)
       window.sessionStorage.setItem('renderDom', JSON.stringify(this.renderDom))
+
       // this.target = 'inlayHouse'
       // this.singleShow = true
       this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{selected: this.inlayHouse}, query:{type:'inlayHouse',fullPath: this.$route.fullPath}})
     },
     multiAddClickHandler() {
-      console.log(this.recommendList,'有多少',this.info)
-      
       if (this.recommendList.length >= this.info.linkerCount) {
         this.$toast('暂无更多开通楼盘')
         return
       }
+      let top = document.querySelector('.router-view').scrollTop
+      window.sessionStorage.setItem('scrollTop', top)
       // this.target = 'multiHouse'
       // this.singleShow = true
       this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{'selected': this.recommendList}, query:{type:'multiHouse',fullPath: this.$route.fullPath}})
