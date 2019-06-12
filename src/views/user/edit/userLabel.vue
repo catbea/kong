@@ -48,9 +48,6 @@ export default {
       this.$router.push('/user/edit/editLabel')
     },
     selectLabel(index) {
-      if (this.selectLabelList.length >= 3) {
-        return this.$toast('标签个数不得多于3个')
-      }
       let obj = this.agentLabel[index]
 
       let isExist = this.isExistElement(this.selectLabelList, obj)
@@ -62,6 +59,9 @@ export default {
           this.selectLabelList.splice(index, 1)
         }
       } else {
+        if (this.selectLabelList.length >= 3) {
+          return this.$toast('标签个数不得多于3个')
+        }
         //不存在
         this.selectLabelList.push(obj)
       }
