@@ -174,8 +174,8 @@ export default {
       border-bottom: 10px solid #f2f5f9;
       text-align: center;
       .editIcon-icon {
-        width: 80px;
-        height: 80px;
+        width: 80px!important;
+        height: 80px!important;
         border-radius: 50%;
         object-fit: contain;
       }
