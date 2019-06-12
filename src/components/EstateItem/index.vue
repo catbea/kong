@@ -26,7 +26,7 @@
         <span>{{info&&info.divisionRules | textOver}}</span>
       </div>
     </div>
-    <div class="house-activity-poster" v-if="$route.path.indexOf('/discover') > -1 && info&&info.cpActivityVo">
+    <div class="house-activity-poster" v-if="showCard && info&&info.cpActivityVo">
       <img class="img" :src="info.cpActivityVo.imgUrl">
       <p class="info"><span class="title">{{info.cpActivityVo.name}}</span> <span class="btn">立即领取</span></p>
     </div>
@@ -39,6 +39,7 @@ export default {
     info: { type: Object },
     showRules: { type: Boolean, default: true },
     itemBorder: { type: Boolean, default: false },
+    showCard: {type: Boolean, default: false},
     conf: {
       type: Object,
       default: () => {

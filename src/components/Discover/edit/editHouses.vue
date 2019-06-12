@@ -2,7 +2,7 @@
   <div class="edit-houses">
     <div class="house-box" :class="!preview&&'box_border'" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
-        <estate-item :key="index" :showRules="false" :info="itemData(index-1)"/>
+        <estate-item :key="index" :showRules="false" :showCard="showCard"  :info="itemData(index-1)"/>
         <i class="icon iconfont icon-search_empty del-icon" v-if="!preview" @click.stop="delClickHandler(index-1)"/>
       </div>
       <div class="empty-box" v-if="index>currentData.length && !preview" @click="addClickHandler">
@@ -24,6 +24,7 @@ export default {
     EstateItem
   },
   props: {
+    showCard: {type: Boolean, default: false},
     count: { type: Number, default: 3 },
     value: { type: Array },
     status: { tyle: String, default: 'empty' },
