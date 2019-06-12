@@ -3,7 +3,9 @@
     <van-cell-group class="user-base-info">
       <div class="user-avatar">
         <router-link to="/user/edit/userPortrait">
-          <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon" class="editIcon-icon">
+          <div class="editIcon-icon">
+            <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon">
+          </div>
           <p class="user-avatar-clik">点击可编辑头像</p>
         </router-link>
       </div>
@@ -174,10 +176,15 @@ export default {
       border-bottom: 10px solid #f2f5f9;
       text-align: center;
       .editIcon-icon {
-        width: 80px!important;
-        height: 80px!important;
-        border-radius: 50%;
-        object-fit: contain;
+        width: 80px;
+        height: 80px;
+        margin: auto;
+        img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 100%;
+        }
       }
       .user-avatar-clik {
         font-size: 12px;
