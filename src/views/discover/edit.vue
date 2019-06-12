@@ -197,6 +197,11 @@ export default {
       }
       document.scrollingElement.scrollTop = 0
       this.$nextTick(() => {
+        let viewpointText = window.sessionStorage.getItem('viewpointText')
+        if (viewpointText) {
+          this.viewpointText = viewpointText
+          window.sessionStorage.removeItem('viewpointText')
+        }
         let inlayHouse = window.sessionStorage.getItem('inlayHouse')
         if (inlayHouse) {
           this.inlayHouse.push(JSON.parse(inlayHouse))
@@ -293,7 +298,7 @@ export default {
 
       // this.target = 'inlayHouse'
       // this.singleShow = true
-      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{selected: this.inlayHouse}, query:{type:'inlayHouse',fullPath: this.$route.fullPath}})
+      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{selected: this.inlayHouse, viewpointText: this.viewpointText}, query:{type:'inlayHouse',fullPath: this.$route.fullPath}})
     },
     multiAddClickHandler() {
       if (this.recommendList.length >= this.info.linkerCount) {
@@ -304,7 +309,7 @@ export default {
       window.sessionStorage.setItem('scrollTopEdit', top)
       // this.target = 'multiHouse'
       // this.singleShow = true
-      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{'selected': this.recommendList}, query:{type:'multiHouse',fullPath: this.$route.fullPath}})
+      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{'selected': this.recommendList, viewpointText: this.viewpointText}, query:{type:'multiHouse',fullPath: this.$route.fullPath}})
     },
     // 底部栏帮助按钮点击
     helpClickHandler() {

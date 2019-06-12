@@ -64,7 +64,8 @@ export default {
       historyHouse: [],
       historyCount: 3,
       showHistoryMore: false,
-      showHistory: true
+      showHistory: true,
+      viewpointText: ''
     }
   },
   computed: {
@@ -83,6 +84,7 @@ export default {
     this.fullPath = this.$route.query.fullPath
     this.type = this.$route.query.type
     this.selected = this.$route.params && this.$route.params.selected || []
+    this.viewpointText = this.$route.params && this.$route.params.viewpointText || ''
     this.getHistoryLinker()
     if (!this.$route.query.city) {
       this.getHistoryCity()
@@ -189,7 +191,7 @@ export default {
     },
     // 跳转城市选择
     goCity () {
-      this.$router.push({path: '/discover/chooseCity', params:{selected: this.selected}, query:{type: this.type, fullPath: this.fullPath}})  
+      this.$router.push({path: '/discover/chooseCity', name: 'chooseCity', params:{selected: this.selected, viewpointText: this.viewpointText}, query:{type: this.type, fullPath: this.fullPath}})  
     },
     // 改变搜索关键词
     changeKeyword () {
@@ -247,7 +249,8 @@ export default {
         window.sessionStorage.setItem(type,JSON.stringify(this.selected))
       } else {
         window.sessionStorage.setItem(type,JSON.stringify(item))
-      } 
+      }
+      window.sessionStorage.setItem('viewpointText', this.viewpointText)
       this.$router.replace({path:this.fullPath})
     },
     // 键盘遮挡

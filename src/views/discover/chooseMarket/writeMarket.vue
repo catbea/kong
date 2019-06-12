@@ -65,7 +65,8 @@ export default {
       searchList: '',
       selected: [], //已选择楼盘
       type: '',
-      fullPath: ''
+      fullPath: '',
+      viewpointText: ''
     }
   },
   computed: {
@@ -76,6 +77,7 @@ export default {
     this.fullPath = this.$route.query.fullPath
     this.type = this.$route.query.type
     this.selected = this.$route.params && this.$route.params.selected || []
+    this.viewpointText = this.$route.params && this.$route.params.viewpointText || ''
   },
   watch: {
     keywords () {
@@ -111,7 +113,7 @@ export default {
       userService.updateHistoryCity({
         city: val
       }).then(res => {}).catch()
-      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{selected: this.selected}, query:{city: val, type: this.type,fullPath: this.fullPath}})
+      this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{selected: this.selected, viewpointText: this.viewpointText}, query:{city: val, type: this.type,fullPath: this.fullPath}})
     },
   },
   directives: {
