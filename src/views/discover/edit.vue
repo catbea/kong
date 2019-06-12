@@ -212,10 +212,10 @@ export default {
           this.renderDom = JSON.parse(renderDom)
           window.sessionStorage.removeItem('renderDom')
         }
-        let scrollTop = window.sessionStorage.getItem('scrollTop')
+        let scrollTop = window.sessionStorage.getItem('scrollTopEdit')
         if (scrollTop) {
           document.querySelector('.router-view').scrollTop = scrollTop
-          window.sessionStorage.removeItem('scrollTop')
+          window.sessionStorage.removeItem('scrollTopEdit')
         }
       })
     },
@@ -288,7 +288,7 @@ export default {
         return
       }
       let top = document.querySelector('.router-view').scrollTop
-      window.sessionStorage.setItem('scrollTop', top)
+      window.sessionStorage.setItem('scrollTopEdit', top)
       window.sessionStorage.setItem('renderDom', JSON.stringify(this.renderDom))
 
       // this.target = 'inlayHouse'
@@ -301,7 +301,7 @@ export default {
         return
       }
       let top = document.querySelector('.router-view').scrollTop
-      window.sessionStorage.setItem('scrollTop', top)
+      window.sessionStorage.setItem('scrollTopEdit', top)
       // this.target = 'multiHouse'
       // this.singleShow = true
       this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{'selected': this.recommendList}, query:{type:'multiHouse',fullPath: this.$route.fullPath}})
