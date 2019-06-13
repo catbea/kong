@@ -307,6 +307,7 @@ export default {
       }
       let top = document.querySelector('.router-view').scrollTop
       window.sessionStorage.setItem('scrollTopEdit', top)
+      window.sessionStorage.setItem('renderDom', JSON.stringify(this.renderDom))
       // this.target = 'multiHouse'
       // this.singleShow = true
       this.$router.push({path:'/discover/choosemarket', name:'chooseMarket',  params:{'selected': this.recommendList, viewpointText: this.viewpointText}, query:{type:'multiHouse',fullPath: this.$route.fullPath}})
