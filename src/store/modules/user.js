@@ -50,7 +50,7 @@ const state = {
     ],
     leavingStatus: 0,
     token:
-      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI0ZTI5eHoiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjoxMDAxNDc5IiwiZXhwIjoxNTYwMjIxNjIyLCJpYXQiOjE1NTk2MTY4MjJ9.QevmFL2fzUpY4bbLIL3B0VUoVQs7-58969syC4aTYj6JK82WcPwbQ5N-9YDzNKwQq2gkGMWLKlKuAAfjQ4OpzA',
+      'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiJ6ZHJvNWgiLCJzdWIiOiJhZ2VudElkOnd3OGY2ODAxYmE1ZmQyYTExMjo0NjI3IiwiZXhwIjoxNTYxMDIxNDc0LCJpYXQiOjE1NjA0MTY2NzR9.2fvTrnRttLdOITSKl7nTa-5-_oqJgYJNRueTcP1uY7OTNH_VzYxhAP9aXXeDQaavI_O-Jorou3nQkJzB7Upv_w',
     majorCity: '深圳市',
     majorRegion: '广东省/深圳市/南山区',
     name: '周丹Nike',
@@ -64,7 +64,9 @@ const state = {
     tempPhone: '18603000246',
     vipDefaultCity: '',
     vipInfo: '',
-    wechatAccount: ''
+    wechatAccount: '',
+    workingTime:'101',
+    saleType:1
   }),
   userVipInfo: {},
   userArea: {

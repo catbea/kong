@@ -34,7 +34,7 @@ const state = {
         info: 0
       },
       {
-        name: '名片',
+        name: '我的',
         icon: require('IMG/tabbar/Rectangle 13@2x(4).png'),
         icon_atc: require('IMG/tabbar/Rectangle 13@2x(7).png'),
         path: '/user',

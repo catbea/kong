@@ -1,20 +1,36 @@
 <template>
   <div class="user-edit-page">
     <van-cell-group class="user-base-info">
-      <div class="user-avatar">
+      <!-- <div class="user-avatar">
         <router-link to="/user/edit/userPortrait">
           <div class="editIcon-icon">
             <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon">
           </div>
           <p class="user-avatar-clik">点击可编辑头像</p>
         </router-link>
-      </div>
+      </div> -->
+      <van-cell title="头像" is-link :to="{path:'/user/edit/userPortrait'}" class="user-newavatar">
+        <template slot="title"> 
+          <div class="editIcon-icon">
+            <div>
+              <span>头像</span>
+            </div>
+            <div>
+              <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon">
+            </div>
+          </div>
+        </template>
+      </van-cell>
       <van-cell class="cell-item" title="名字" is-link :to="{path:'/user/edit/username',query:{userName:userInfo.name}}" :value="userInfo.name"/>
       <van-cell class="cell-item" title="联系电话" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
+      <van-cell class="cell-item" title="从业时间" is-link :value="userInfo.workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][userInfo.workingTime-100]"  @click="openTimeSelect()"/>
+      <van-cell class="cell-item" title="销售类型" is-link :value="userInfo.saleType==''?'买卖经纪人':['买卖经纪人','内场销售','销售专家'][userInfo.saleType]" @click="openShopSelect()"/>
+      <van-actionsheet v-model="show" :actions="actions" @select="onSelect"/>
+      <van-actionsheet v-model="isshow" :actions="isActions" @select="shopSelect"/>
       <!-- <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
-      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" @click="goEdit" /> -->
+      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" @click="goEdit" /> --> 
     </van-cell-group>
     <van-cell-group class="user-advance-info">
       <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel'">
@@ -37,6 +53,7 @@ import { mapGetters } from 'vuex'
 import areaSelect from 'COMP/AreaSelect/index'
 import userService from 'SERVICE/userService'
 import { fullArea } from '@/utils/fullArea'
+import { Toast } from 'vant';
 export default {
   components: {
     areaSelect
@@ -50,7 +67,20 @@ export default {
       userEditIcon: require('IMG/user/collection/Article@2x.png'),
       isOpen: false,
       fullArea: '',
-      areaList: {}
+      areaList: {},
+      show:false,
+      actions:[
+        { name: '1-3年',workingTime :'101' },
+        { name: '3-5年',workingTime :'102' },
+        { name: '5-8年',workingTime :'103' },
+        { name: '10年以上',workingTime :'104' },
+      ],
+      isshow:false,
+      isActions:[
+        { name: '买卖经纪人',saleType  :'0' },
+        { name: '内场销售',saleType  :'1' },
+        { name: '销售专家',saleType  :'2' }, 
+      ]
     }
   },
   methods: {
@@ -90,7 +120,28 @@ export default {
         this.isOpen = !this.isOpen
       }
     },
-
+    openTimeSelect() {
+      this.show = true
+    },
+    openShopSelect () {
+      this.isshow = true
+    },
+    onSelect(item) {  
+      userService.upDateUserInfo({workingTime:item.workingTime
+      }).then((result) => {  
+          this.show = false 
+      }).catch((err) => {
+          console.log(err)
+      })
+    },
+    shopSelect(item) {
+      userService.upDateUserInfo({saleType:item.saleType
+      }).then((result) => { 
+          this.isshow = false           
+      }).catch((err) => {
+          console.log(err)
+      })
+    },
     getCityName(data) {
       this.majorRegion = data[0].name + '/' + data[1].name
       if (data[2] && data[2].name) this.majorRegion += '/' + data[2].name
@@ -175,24 +226,55 @@ export default {
       padding: 32px 0 18px 0;
       border-bottom: 10px solid #f2f5f9;
       text-align: center;
-      .editIcon-icon {
-        width: 80px;
-        height: 80px;
-        margin: auto;
-        img{
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          border-radius: 100%;
-        }
-      }
+      // .editIcon-icon {
+      //   width: 80px;
+      //   height: 80px;
+      //   margin: auto;
+      //   img{
+      //     width: 100%;
+      //     height: 100%;
+      //     object-fit: cover;
+      //     border-radius: 100%;
+      //   }
+      // }
       .user-avatar-clik {
-        font-size: 12px;
-
+        font-size: 12px; 
         font-weight: 400;
         color: rgba(0, 122, 230, 1);
         line-height: 17px;
       }
+    }
+    > .user-newavatar {
+        line-height: 92px;
+        padding: 0 20px;
+        .van-cell__title {
+          font-size: 16px;
+          font-weight: 400;
+          color: #333333;
+        }
+        .editIcon-icon {  
+          height: 92px;
+          display: flex;
+          div:nth-child(1) {
+            width:50%;
+          }
+          div:nth-child(2) {
+            width: 49%;
+            height: 92px;
+            >img {
+              width:60px;
+              height: 60px;
+              border-radius: 100%;
+              margin-left: 60%;
+              object-fit: cover; 
+              margin-top: 16px;
+              // text-align: right;
+            }
+          } 
+        }
+        .van-cell__right-icon {
+          padding: 38px 0;
+        }
     }
     .cell-item {
       // height: 56px;
@@ -219,7 +301,7 @@ export default {
     }
   }
   > .user-base-info {
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
     .cell-item {
       position: relative;
       .self-avtar {
@@ -236,7 +318,7 @@ export default {
       position: relative;
       display: block;
       // height: 110px;
-      border-bottom: 10px solid #f2f5f9;
+      border-bottom: 0px solid #f2f5f9;
       .user-tag {
         float: right;
         margin-right: 20px;
