@@ -65,7 +65,7 @@ const state = {
     vipDefaultCity: '',
     vipInfo: '',
     wechatAccount: '',
-    workingTime:'101',
+    workingTime:'100',
     saleType:1
   }),
   userVipInfo: {},

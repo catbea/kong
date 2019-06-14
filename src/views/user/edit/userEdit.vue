@@ -70,10 +70,10 @@ export default {
       areaList: {},
       show:false,
       actions:[
-        { name: '1-3年',workingTime :'101' },
-        { name: '3-5年',workingTime :'102' },
-        { name: '5-8年',workingTime :'103' },
-        { name: '10年以上',workingTime :'104' },
+        { name: '1-3年',workingTime :'100' },
+        { name: '3-5年',workingTime :'101' },
+        { name: '5-8年',workingTime :'102' },
+        { name: '10年以上',workingTime :'103' },
       ],
       isshow:false,
       isActions:[
