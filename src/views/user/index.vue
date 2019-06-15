@@ -1,7 +1,7 @@
 <template>
   <div class="user-page">
     <!-- 顶部个人信息及vip信息 -->
-    <business-card @showPopup="this.showPopp" @shareUserCard="enterSharePage"/>
+    <business-card @showPopup="this.showPopp"  @selectedShortcut="shortcut"/>
     <div class="business-status-con">
       <!-- <div class="business-status-title">个人中心</div> -->
       <!-- <div class="modify-child"> -->
@@ -26,12 +26,10 @@
            </svg>
           <p class="grou1Icon-p">拓客关系</p>
         </div>  -->
-      <!-- </div> -->
-
-
+      <!-- </div> --> 
       <div class="div_view">
         <ul class="ul_view">
-          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)">
+          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===5?'li':'li_view'">
             <div>
               <svg class="icon" aria-hidden="true">
                 <use :xlink:href="item.Icon"></use>
@@ -179,7 +177,22 @@ export default {
     async getVipAndPackage() {
       await this.$store.dispatch('getUserVipInfo')
     },
-
+    shortcut(index) {
+      switch (index) {
+        case 0:
+          this.$router.push('/user/myReport')
+          break
+        case 1:
+          this.$router.push({ name: 'historicalArticles', query: { typeCode: '2' } })
+          break
+        case 2:
+          this.$router.push('/user/questionAnswers')
+          break
+        case 3:
+          this.enterSharePage()
+          break
+      } 
+    },
     selectedHead(item, index) {
       switch (index) {
         // case 0:
@@ -320,13 +333,13 @@ export default {
   }
   .business-status-con {
     background: #fff;
-    height: 218px;
+    // height: 218px;
     margin-top: 10px;
     .div_view {
-      background: #fff;
+      background: #fff; 
       .ul_view {
         list-style:none;
-        .li_view {
+        .li_view { 
           width: 100%;
           height: 52px;
           display: flex; 
@@ -341,6 +354,12 @@ export default {
           .icon{
             margin-left: 16px;
           }
+        }
+        .li { 
+          width: 100%;
+          height: 52px;
+          margin-top:10px;
+          display: flex;
         }
       }
     }

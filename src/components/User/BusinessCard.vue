@@ -1,44 +1,76 @@
 <template>
   <div class="business-card-container">
     <div class="business-card-box">
-      <div class="bg_img info-box" @click="editCLickHandler">
+      <div class="bg_img info-box" >
         <!-- 左上二维码形状,点击出名片 -->
-        <i class="icon iconfont icon-me_Qrcode qr-icon" @click.stop="showQrCode"/>
+        <!-- <i class="icon iconfont icon-me_Qrcode qr-icon" @click.stop="showQrCode"/> -->
         <!-- 右上分享 -->
-        <div class="share-box" @click.stop="shareUserCard">
+        <!-- <div class="share-box" @click.stop="shareUserCard">
           <i class="icon iconfont icon-Building_list_share share-icon"/>
           <span class="share-text">分享</span>
-        </div>
+        </div> -->
         <!-- 用户avatar -->
-        <avatar class="user-avatar" :avatar="userInfo.avatarUrl"/>
+        <!-- @click="editCLickHandler" -->
+        <div @click="editCLickHandler" class="info">
+          <avatar class="user-avatar" :avatar="userInfo.avatarUrl" />
+          <div class="user-info-content">
+            <!-- 姓名、主营区域 -->
+            <div class="user-detail-box">
+              <div class="username-box">
+                <span class="username-text">{{userInfo.name}}</span>
+                <!-- <i class="icon iconfont icon-me_editor username-edit-icon"></i> -->
+              </div>
+              <p class="main-camp-view">
+                <span>主营：{{userInfo.majorRegion}}</span> 
+                <svg class="icon" aria-hidden="true" style="width:16px;height:16px;right:16px;position: absolute;">
+                  <use xlink:href="#icon-arrow"></use>
+                </svg> 
+              </p>  
 
-        <div class="user-info-content">
-          <!-- 姓名、主营区域 -->
-          <div class="user-detail-box">
-            <div class="username-box">
-              <span class="username-text">{{userInfo.name}}</span>
-              <i class="icon iconfont icon-me_editor username-edit-icon"></i>
+            </div> 
+            
+            <!-- 公司、标签、签名 -->
+            <div class="user-company-box">
+              <!-- <p class="campany-view">{{userInfo.distributorName}}</p> -->
+              <!-- <p class="content-left-labe">
+                <a class="left-labe-css" v-for="(item,index) in newLabelList" :key="index">{{item.labelName}}</a>
+              </p>
+              <p class="content-left-remar">{{userInfo.signature}}</p> -->
             </div>
-            <p class="main-camp-view">主营：{{userInfo.majorRegion}}</p>
           </div>
-          <!-- 公司、标签、签名 -->
-          <div class="user-company-box">
-            <!-- <p class="campany-view">{{userInfo.distributorName}}</p> -->
-            <p class="content-left-labe">
-              <a class="left-labe-css" v-for="(item,index) in newLabelList" :key="index">{{item.labelName}}</a>
-            </p>
-            <p class="content-left-remar">{{userInfo.signature}}</p>
+          <!-- <div> 
+            <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;position:absolute;">
+              <use xlink:href="#icon-arrow"></use>
+            </svg>
+          </div> -->
+        </div>
+        
+        <!-- 快捷入口 -->
+        <div class="shortcut-box">
+          <div v-for="(img,index) in shortcutIcons" :key="index" class="head-img" @click="selectedShortcut(index)"> 
+            <svg class="icon" aria-hidden="true">
+                <use :xlink:href="img.Icon"></use>
+            </svg>
+            <p class="grou1Icon-p" :class="index === 3?'grou1Icon':'grou1Icon-p'">{{img.title}}</p>
           </div>
         </div>
       </div>
-      <img class="modify-img" :src="modifyImg">
+      
+      <!-- <img class="modify-img" :src="modifyImg"> -->
     </div>
-    <div class="business-status-title">优惠服务</div>
+    <!-- <div class="business-status-title">优惠服务</div> -->
     <div class="business-status-box">
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
+        <p class="info-btn" v-if="vipInfo.expireTimestamp == ''">
+          <button class="btn">立即开通</button>
+        </p>
+        <p class="info-btn_text" v-else>
+          <span style="font-size:10px;">开通更多</span>
+          <img src="../../assets/img/user/arrow2@2x.png" alt="">
+        </p>
       </router-link>
       <!-- <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
         <img :src="discountIcon">
@@ -60,9 +92,15 @@ export default {
   },
   data: () => ({
     modifyImg: require('IMG/user/usercard_bg@2x.png'),
-    crownIcon: require('IMG/user/cardGroup5@2x.png'),
+    crownIcon: require('IMG/user/newCardGroup5@2x.png'),
     discountIcon: require('IMG/user/SetmealGroup17@2x.png'),
-    vipInfo: ''
+    vipInfo: '',
+    shortcutIcons:[
+      { title: '我的报备', Icon: '#icon-wodebaobei' }, 
+      { title: '我的写一写', Icon: '#icon-wodexieyixie' }, 
+      { title: '我的问答', Icon: '#icon-wodewenda' }, 
+      { title: '名片分享', Icon: '#icon-fenxiang' }, 
+    ]
   }),
   created () {
     this.getVipInfo()
@@ -70,7 +108,7 @@ export default {
   methods: {
   async getVipInfo() {
     let res = await marketService.vipInfo()
-    this.vipInfo = res
+    this.vipInfo = res 
   },
     editCLickHandler() {
       this.$router.push('/user/edit')
@@ -82,7 +120,10 @@ export default {
 
     shareUserCard() {
       this.$emit('shareUserCard', '')
-    }
+    },
+    selectedShortcut (index) {
+      this.$emit('selectedShortcut',index)
+    }, 
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
@@ -97,7 +138,8 @@ export default {
         let time = this.vipInfo.expireTimestamp
         let text = '楼盘不限量'
         if (time > +new Date()) {
-          text = '已开通部分城市'
+          let list = this.vipInfo.vipList.map(item=>item.labelName+"").slice(0, 3)
+          text = '已开通' + list.join(",") + '等城市'
         }
         return text
       } else {
@@ -109,7 +151,7 @@ export default {
     },
     newLabelList() {
       return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
-    }
+    }, 
   }
 }
 </script>   
@@ -120,9 +162,9 @@ export default {
     > .info-box {
       position: relative;
       height: 190px;
-      margin: 12px 16px;
-      border-radius: 10px;
-      background: #404456;
+      // margin: 12px 16px;
+      // border-radius: 10px;
+      background: #ffffff;
       > .qr-icon {
         position: absolute;
         top: 5px;
@@ -143,54 +185,85 @@ export default {
           display: block;
           font-size: 10px;
           padding-top: 5px;
+        } 
+      }
+      >.info {
+        > .user-avatar {
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          top: 30px;
+          left: 16px;
         }
-      }
-      > .user-avatar {
-        position: absolute;
-        width: 80px;
-        height: 80px;
-        top: 30px;
-        right: 40px;
-      }
-      > .user-info-content {
-        padding: 25px 30px;
-        > .user-detail-box {
-          line-height: 1;
-          > .username-box {
-            color: #fff;
-            > .username-text {
-              font-size: 20px;
+        > .user-info-content {
+          padding: 25px 86px;
+          padding-bottom: 0px;
+          > .user-detail-box {
+            line-height: 1;
+            > .username-box {
+              color: #1A2733;
+              > .username-text {
+                font-size: 20px;
+              }
+              > .username-edit-icon {
+                color: rgba(255, 255, 255, 0.15);
+              }
             }
-            > .username-edit-icon {
-              color: rgba(255, 255, 255, 0.15);
+            > .main-camp-view {
+              margin-top: 8px;
+              color: #1A2733;
+              font-size: 12px;
             }
           }
-          > .main-camp-view {
-            margin-top: 8px;
+          > .user-company-box {
             color: #aeb1c2;
+            line-height: 1.5;
             font-size: 12px;
-          }
-        }
-        > .user-company-box {
-          color: #aeb1c2;
-          line-height: 1.5;
-          font-size: 12px;
-          margin-top: 36px;
-          > .content-left-labe {
-            margin-top: 8px;
-            > .left-labe-css {
-              background: rgba(143, 159, 177, 0.15);
-              padding: 1px 3px;
-              border-radius: 4px;
-              color: #aeb1c2;
-              margin: 3px 5px 3px 0;
-              transform: scale(0.8);
+            margin-top: 36px;
+            > .content-left-labe {
+              margin-top: 8px;
+              > .left-labe-css {
+                background: rgba(143, 159, 177, 0.15);
+                padding: 1px 3px;
+                border-radius: 4px;
+                color: #aeb1c2;
+                margin: 3px 5px 3px 0;
+                transform: scale(0.8);
+              }
+            }
+            > .content-left-remar {
+              margin-top: 8px;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
-          > .content-left-remar {
-            margin-top: 8px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+        }
+      } 
+      >.shortcut-box {
+        display: flex;
+        justify-content: space-around;
+        .head-img {
+          // float: left;
+          margin-left: 16px;
+          margin-bottom: 16px;
+          height: 60px;
+          width: 65px;
+          // position: relative;
+          margin-right: 10px;
+          text-align: center;
+          .icon {
+            height: 24px;
+            width: 24px;
+          }
+          > .grou1Icon-p {
+            font-size: 10px;
+            font-weight: 400;
+            color: #333333;
+            line-height: 17px;
+            margin-top: 6px;
+          } 
+          > .grou1Icon {
+            color: #E7602E;
           }
         }
       }
@@ -212,7 +285,7 @@ export default {
   > .business-status-box {
     background-color: #ffffff;
     width: 100%;
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
@@ -221,36 +294,63 @@ export default {
       position: relative;
       // display: inline-block;
       // width: 167px;
-      height: 65px;
-      background: #f8f8f8;
+      height: 80px;
+      // background: #f8f8f8;
+      background: #ffffff;
       border-radius: 3px;
       margin-top: 5px;
       > img {
-        margin: 20px 10px;
-        width: 24px;
-        height: 24px;
+        margin: 18px 10px;
+        width: 46px;
+        height: 46px;
       }
       .info-title {
         position: absolute;
-        top: 10px;
-        left: 42px;
-        font-size: 16px;
-        font-weight: 400;
-        color: #87665a;
+        top: 16px;
+        left: 66px;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1A2733;
         line-height: 1.5;
       }
       .info-desc {
         position: absolute;
-        top: 33px;
-        left: 42px;
-        font-size: 10px;
+        top: 43px;
+        left: 66px;
+        font-size: 12px;
         font-weight: 400;
         color: #999999;
         line-height: 22px;
       }
+      .info-btn{
+        position: absolute;
+        top: 24px;
+        left: 71%;  
+        line-height: 22px;
+        .btn {
+          width:80px;
+          height:32px;
+          border: none;
+          border-radius:16px; 
+          color:#66421F;
+          font-size:12px;
+          background: linear-gradient(360deg, rgba(255, 209, 116, 1) 0%, rgba(215, 145, 75, 1) 100%);
+        }
+      }
+      .info-btn_text {
+        position: absolute;
+        top: 24px;
+        left: 80%;  
+        line-height: 22px;
+        color: #8A9299;
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
     > .status-info-left {
-      margin: 0 15px;
+      // margin: 0 15px;
       > .info-desc {
         font-size: 10px;
         overflow: hidden;
