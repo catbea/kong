@@ -136,7 +136,7 @@ export default {
       // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
       if (this.vipInfo) {
         let time = this.vipInfo.expireTimestamp
-        let text = '楼盘不限量'
+        let text = '楼盘开通不限量'
         if (time > +new Date()) {
           let list = this.vipInfo.vipList.map(item=>item.labelName+"").slice(0, 3)
           text = '已开通' + list.join(",") + '等城市'
