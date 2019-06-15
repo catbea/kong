@@ -438,4 +438,15 @@ export default [
       }
     }
   },
+  {
+    path: '/user/set',
+    name: 'set',
+    component: resolve => require(['@/views/user/set/index.vue'], resolve),
+    meta: {
+      title: '设置',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]
