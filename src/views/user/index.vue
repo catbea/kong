@@ -332,24 +332,29 @@ export default {
     padding: 20px 16px 18px; 
   }
   .business-status-con {
-    background: #fff;
+    // background: #fff;
     // height: 218px;
-    margin-top: 10px;
+    margin-top: 6px;
     .div_view {
-      background: #fff; 
+      // background: #fff; 
       .ul_view {
         list-style:none;
         .li_view { 
           width: 100%;
           height: 52px;
           display: flex; 
+          background: #fff; 
           div:nth-child(1) {
             width: 49px;
-            height: 100%;
+            height: 100%; 
           }
           div:nth-child(2) {
             width: 78%;
             height: 100%;
+            border-bottom: 1px solid #E2E8EE;
+          }
+          div:nth-child(3) {
+            border-bottom: 1px solid #E2E8EE;
           }
           .icon{
             margin-left: 16px;
@@ -358,14 +363,14 @@ export default {
         .li { 
           width: 100%;
           height: 52px;
-          margin-top:10px;
+          margin-top:6px;
           display: flex;
         }
       }
     }
   }
   .business-status-tow {
-    background: #fff;
+    // background: #fff;
     height: 140px;
     margin-top: 10px;
   }

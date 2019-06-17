@@ -157,7 +157,7 @@ export default {
 </script>   
 <style lang="less">
 .business-card-container {
-  background: #fff;
+  // background: #fff;
   > .business-card-box {
     > .info-box {
       position: relative;
@@ -298,7 +298,7 @@ export default {
       // background: #f8f8f8;
       background: #ffffff;
       border-radius: 3px;
-      margin-top: 5px;
+      margin-top: 6px;
       > img {
         margin: 18px 10px;
         width: 46px;
