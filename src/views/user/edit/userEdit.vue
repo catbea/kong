@@ -26,7 +26,7 @@
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
       <van-cell class="cell-item" title="从业时间" is-link :value="userInfo.workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][userInfo.workingTime-100]"  @click="openTimeSelect()"/>
-      <van-cell class="cell-item" title="销售类型" is-link :value="userInfo.saleType==''?'买卖经纪人':['买卖经纪人','内场销售','销售专家'][userInfo.saleType]" @click="openShopSelect()"/>
+      <van-cell class="cell-item" title="销售类型" is-link :value="userInfo.saleType==''?'买卖经纪人':userInfo.saleType" @click="openShopSelect()"/>
       <van-actionsheet v-model="show" :actions="actions" @select="onSelect"/>
       <van-actionsheet v-model="isshow" :actions="isActions" @select="shopSelect"/>
       <!-- <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
@@ -135,7 +135,7 @@ export default {
       })
     },
     shopSelect(item) {
-      userService.upDateUserInfo({saleType:item.saleType
+      userService.upDateUserInfo({saleType:item.name
       }).then((result) => { 
           this.isshow = false           
       }).catch((err) => {
