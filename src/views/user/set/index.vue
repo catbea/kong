@@ -59,7 +59,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .div_view {
-    background: #fff;
+    background: #F7F9FA;
     .ul_view {  
         list-style:none;
         .li_view {
@@ -69,6 +69,7 @@ export default {
             justify-content: space-between;
             padding-left: 17px; 
             border-bottom:1px solid #E2E8EE;
+            background: #fff;
             .icon{
                 width:16px;
                 height:16px;
