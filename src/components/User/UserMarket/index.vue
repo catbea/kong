@@ -15,10 +15,10 @@
               <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
-            <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share iconShare" @click.stop="skipShare"></span>
+            <!-- <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share iconShare" @click.stop="skipShare"></span> -->
+            <span class="iconShare"  @click.stop="skipShare">分享</span>
           </li>
-          <li v-if="dataArr.price===0">{{dataArr.city}} {{dataArr.county}} 价格待定</li>
-          <li v-else>{{dataArr.city}} {{dataArr.county}} {{dataArr.price}}{{dataArr.priceUnit}}</li>
+          <li class="area">{{dataArr.city}} {{dataArr.county}}</li>
           <li>
             <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
             <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
@@ -26,9 +26,11 @@
             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags ? dataArr.linkerTags.slice(0,2):[]" :key="index">{{item}}</div>
           </li>
           <li>
-            {{dataArr.openTimes}}次开通
-            <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
-            <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span>
+            <!-- {{dataArr.openTimes}}次开通 -->
+            <!-- <span v-show="!stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期</span>
+            <span v-show="stride">&nbsp;&nbsp;{{dataArr.subscribeInvalidTime | dateTimeFormatter(2)}}到期</span> -->
+            <span v-if="dataArr.price===0">价格待定</span>
+            <span v-else>{{dataArr.price}}{{dataArr.priceUnit}}</span>
             <div class="apostrophe" @click.stop="popupHandle">
               <!-- <span></span>
               <span></span>
@@ -508,15 +510,11 @@ export default {
         width: 181px;
         li:nth-of-type(1) {
           font-size: 16px;
-
           font-weight: 600;
           color: rgba(51, 51, 51, 1);
           line-height: 16px;
+          position: relative;
           display: flex;
-          justify-content: space-between;
-          .iconShare{
-          font-weight:500 !important;
-           }
           .text {
             white-space: nowrap;
             overflow: hidden;
@@ -529,13 +527,14 @@ export default {
             font-size: 10px;
             height:14px;
             line-height: 14px;
-            background:rgba(234,77,46,1);
+            background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
             color: #fff;
             border-radius: 2px;
             margin-right: 2px;
             margin-top: 1px;
             padding: 0 5px;
             vertical-align: middle;
+            font-weight: 300;
           }
           // align-items: center;
           .stick {
@@ -573,12 +572,27 @@ export default {
             width: 16px;
             height: 16px;
           }
+          .iconShare{
+            position: absolute;
+            right: -10px;
+            top: -2px;
+            width: 40px;
+            height:24px;
+            line-height: 24px;
+            background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
+            box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
+            border-radius:12px;
+            font-size: 10px;
+            color: #fff;
+            text-align: center;
+            font-weight: 500;
+            margin-left: 10px;
+          }
         }
         li:nth-of-type(2) {
           font-size: 12px;
-
           font-weight: 400;
-          color: rgba(102, 102, 102, 1);
+          color: #9CA5B5;
           line-height: 15px;
           margin: 6px 0 6px 0;
         }
@@ -587,16 +601,17 @@ export default {
           flex-wrap: nowrap;
           width: 181px;
           height: 20px;
+          font-weight: 400;
           .blue {
-            background: rgba(0, 122, 230, 1);
-            color: #ffffff;
+            background: rgba(0,120,255,0.15);
+            color: #5C5F66;
           }
           .red {
-            background: rgba(234, 77, 46, 0.1);
-            color: #ea4d2e;
+            background:rgba(250,41,41,0.15);;
+            color: #5C5F66;
           }
           .gary {
-            background: rgba(143, 159, 177, 0.15);
+            background: rgba(143,159,177,0.15);
             color: #5c5f66;
           }
           .tag-item-statu,
@@ -619,8 +634,8 @@ export default {
         li:nth-of-type(4) {
           font-size: 12px;
 
-          font-weight: 400;
-          color: rgba(153, 153, 153, 1);
+          font-weight: 600;
+          color: #40516F;
           line-height: 13px;
           margin-top: 10px;
           display: flex;
@@ -763,7 +778,7 @@ export default {
       .title{
         padding: 10px 0 5px;
         font-size: 18px;
-        color: #333;
+        color: #13294F;
         font-weight: 600;
       }
       .subtitle{
