@@ -6,7 +6,7 @@
       <!-- </div> --> 
       <div class="div_view">
         <ul class="ul_view">
-          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===5?'li':'li_view'">
+          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===6?'li':'li_view'">
             <div>
               <svg class="icon" aria-hidden="true">
                 <use :xlink:href="item.Icon"></use>
@@ -49,6 +49,7 @@ export default {
     consultImg: require('IMG/user/Group8@2x.png'),
     closeImg: require('IMG/user/close_popup.png'),
     headIcons: [
+      { title: '我的问答', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-wenda' }, 
       { title: '我的点评', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-dianping' }, 
       { title: '优惠券', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-youhuiquan' }, 
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-dingdan' }, 
@@ -120,21 +121,24 @@ export default {
     selectedHead(item, index) {
       switch (index) {
         case 0:
-          this.$router.push('/user/remark')
+          this.$router.push('/user/questionAnswers')
           break
         case 1:
+          this.$router.push('/user/remark')
+          break
+        case 2:
           this.$router.push('/user/myCoupon')
           break
-        case 2: 
+        case 3: 
           this.$router.push('/user/consumption/consumptionBill')
           break
-        case 3:
+        case 4:
           this.$router.push('/user/invitation/awWelfare')
           break
-        case 4:
+        case 5:
           this.$router.push('/user/talk')
           break
-        case 5:
+        case 6:
           this.$router.push('/user/set')
           break 
       }

@@ -66,7 +66,7 @@ export default {
     shortcutIcons:[
       { title: '我的报备', Icon: '#icon-wodebaobei' }, 
       { title: '我的写一写', Icon: '#icon-wodexieyixie' }, 
-      { title: '我的问答', Icon: '#icon-wodewenda' }, 
+      { title: '培训学院', Icon: '#icon-peixunxueyuan' }, 
       { title: '名片分享', Icon: '#icon-fenxiang' }, 
     ]
   }),
