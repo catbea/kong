@@ -466,9 +466,92 @@ export default [
     component: resolve => require(['@/views/user/learn/record.vue'], resolve),
     meta: {
       title: '学习记录',
+    path: '/user/learn/secondPage/arecProduct',
+    name: 'arecProduct',
+    component: resolve => require(['@/views/user/learn/secondPage/arecProduct.vue'], resolve),
+    meta: {
+      title: '区域竞品分析', 
       tabbar: {
         show: false
       }
     }
   }
+  },
+  {
+    path: '/user/learn/secondPage/commissionRule',
+    name: 'commissionRule',
+    component: resolve => require(['@/views/user/learn/secondPage/commissionRule.vue'], resolve),
+    meta: {
+      title: '佣金结算规则',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/secondPage/contorlTime',
+    name: 'contorlTime',
+    component: resolve => require(['@/views/user/learn/secondPage/contorlTime.vue'], resolve),
+    meta: {
+      title: '实时销控表',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/secondPage/marker',
+    name: 'marker',
+    component: resolve => require(['@/views/user/learn/secondPage/marker.vue'], resolve),
+    meta: {
+      title: '市场政策与对策',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/secondPage/customerPortrait',
+    name: 'customerPortrait',
+    component: resolve => require(['@/views/user/learn/secondPage/customerPortrait.vue'], resolve),
+    meta: {
+      title: '目标客户画像',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/secondPage/salesAsk',
+    name: 'salesAsk',
+    component: resolve => require(['@/views/user/learn/secondPage/salesAsk.vue'], resolve),
+    meta: {
+      title: '销售百问',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/secondPage/floor',
+    name: 'floor',
+    component: resolve => require(['@/views/user/learn/secondPage/floor.vue'], resolve),
+    meta: {
+      title: '楼盘标准化价值点',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/secondPage/salesVideo',
+    name: 'salesVideo',
+    component: resolve => require(['@/views/user/learn/secondPage/salesVideo.vue'], resolve),
+    meta: {
+      title: '销售培训视频列表',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]
