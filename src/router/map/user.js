@@ -449,4 +449,92 @@ export default [
       }
     }
   },
+  {
+    path: '/user/secondPage/arecProduct',
+    name: 'arecProduct',
+    component: resolve => require(['@/views/user/secondPage/arecProduct.vue'], resolve),
+    meta: {
+      title: '区域竞品分析',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/secondPage/commissionRule',
+    name: 'commissionRule',
+    component: resolve => require(['@/views/user/secondPage/commissionRule.vue'], resolve),
+    meta: {
+      title: '佣金结算规则',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/secondPage/contorlTime',
+    name: 'contorlTime',
+    component: resolve => require(['@/views/user/secondPage/contorlTime.vue'], resolve),
+    meta: {
+      title: '实时销控表',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/secondPage/marker',
+    name: 'marker',
+    component: resolve => require(['@/views/user/secondPage/marker.vue'], resolve),
+    meta: {
+      title: '市场政策与对策',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/secondPage/customerPortrait',
+    name: 'customerPortrait',
+    component: resolve => require(['@/views/user/secondPage/customerPortrait.vue'], resolve),
+    meta: {
+      title: '目标客户画像',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/secondPage/salesAsk',
+    name: 'salesAsk',
+    component: resolve => require(['@/views/user/secondPage/salesAsk.vue'], resolve),
+    meta: {
+      title: '销售百问',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/secondPage/floor',
+    name: 'floor',
+    component: resolve => require(['@/views/user/secondPage/floor.vue'], resolve),
+    meta: {
+      title: '楼盘标准化价值点',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/secondPage/salesVideo',
+    name: 'salesVideo',
+    component: resolve => require(['@/views/user/secondPage/salesVideo.vue'], resolve),
+    meta: {
+      title: '销售培训视频列表',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]
