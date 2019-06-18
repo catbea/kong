@@ -449,4 +449,15 @@ export default [
       }
     }
   },
+  {
+    path: '/user/learn',
+    name: 'learn',
+    component: resolve => require(['@/views/user/learn/index.vue'], resolve),
+    meta: {
+      title: 'AW大师培训学院',
+      tabbar: {
+        show: false
+      }
+    }
+  }
 ]
