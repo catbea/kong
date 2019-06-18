@@ -209,10 +209,10 @@ export default {
       line-height: 440px;
       position: relative;
       img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        vertical-align: middle;
+        min-width: 100%;
+        min-height: 100%;
+        height: 440px;
+        object-fit: cover;
       }
     }
     .custom-indicator{

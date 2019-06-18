@@ -15,7 +15,10 @@ export default {
         lng: 114.606628,
       },
       markList: [],
-      city: '深圳市'
+      city: '全国',
+      provice: '',
+      houseList: [],
+      zoom: 5
     }
   },
   computed: {
@@ -30,6 +33,7 @@ export default {
       this.city = this.userArea.city
     }
     this.initMap(this.latLng.lat, this.latLng.lng)
+    this.getRegionTotal(1)
   },
   methods: {
     async initMap(lat, lng) {
@@ -38,7 +42,7 @@ export default {
         center: new qq.maps.LatLng(lat, lng), // 地图的中心地理坐标
         zoom: 5,
         minZoom: 3,
-        maxZoom: 12,
+        maxZoom: 15,
         disableDefaultUI: true, // 禁止所有的默认控件
         scrollwheel: false,
         keyboardShortcuts: false,
@@ -47,33 +51,59 @@ export default {
       qq.maps.event.addListener(this.map, 'zoom_changed', () => {
         this.zoomChange(this.map.getZoom())
       })
-      qq.maps.event.addListener(this.map, 'center_changed', () => {
-        this.latLng = this.map.getCenter()
-        this.getCity(this.latLng.lng, this.latLng.lat)
-      })
       this.updateMark()
     },
+    getCity () {
+      this.latLng = this.map.getCenter()
+      var latLng = new qq.maps.LatLng(this.latLng.lat, this.latLng.lng)
+      geocoder.getAddress(latLng)
+    },
     zoomChange (zoom) {
+      this.zoom = zoom
       if (zoom <= 5) {
-        alert('省')
+        this.city = '全国'
+        this.getRegionTotal(1)
       } else if ( zoom > 5 && zoom <= 7) {
-        alert('市')
+        if (this.provice) {
+          this.city = this.provice
+        }
+        this.getRegionTotal(2)
       } else if (zoom > 7 && zoom <= 10) {
-        alert('区')
+        this.getRegionTotal(3)
       } else {
-        alert('楼盘列表')
+        this.getRegionLinkers()
       }
     },
-    getMarketList () {
-      commonService.getMapMarket().then(res => {
-        this.markList = res.records
+    getRegionLinkers () {
+      commonService.getRegionLinkers({
+        longitude: this.latLng.lng,
+        latitude: this.latLng.lat
+      }).then(res => {
+        let arr = []
+        res.forEach(el => {
+          let obj = {
+            latitude: el.latitude,
+            level: 3,
+            linkerNum: '',
+            longitude: el.longitude,
+            name: el.linkerName
+          }
+          arr.push(obj)
+        })
+        this.houseList = arr
+        this.updateMark()
       }).catch()
     },
-    getCity (lng, lat) {
-      commonService.getLocation(lng, lat).then(res => {
-        this.city = res
-        alert(res)
-      })
+    getRegionTotal (level) {
+      commonService.getRegionTotal({
+        parentName: this.city,
+        longitude: this.latLng.lng,
+        latitude: this.latLng.lat,
+        level: level
+      }).then(res => {
+        this.houseList = res
+        this.updateMark()
+      }).catch()
     },
     updateMark() {
       // clean 当前
@@ -86,14 +116,28 @@ export default {
         shift.setMap(null)
       }
     },
-    markMaker(icon) {
+    markMaker() {
       let scaleSize = new qq.maps.Size(200, 34)
-      for (let temp of markList) {
+      for (let temp of this.houseList) {
         let marker = new qq.maps.Marker({
           icon: new qq.maps.MarkerImage('', null, null, null, scaleSize),
           map: this.map,
-          position: new qq.maps.LatLng(temp.lat, temp.lng),
-          decoration: new qq.maps.MarkerDecoration(`<div class="text">${temp.name} <span class="arrow"></span></div>`, new qq.maps.Point(0, -5))
+          position: new qq.maps.LatLng(temp.latitude, temp.longitude),
+          decoration: new qq.maps.MarkerDecoration(`<div class="text">${temp.name}${temp.linkerNum}<span class="arrow"></span></div>`, new qq.maps.Point(0, -4))
+        })
+        qq.maps.event.addListener(marker, 'click', (e) => {
+          let zoom = this.map.zoom
+          this.latLng = e.latLng
+          this.map.setCenter(new qq.maps.LatLng(e.latLng.lat, e.latLng.lng))
+          if (zoom <= 5) {
+            this.provice = temp.name
+            this.map.setZoom(7)
+          } else if (zoom <= 7) {
+            this.city = temp.name
+            this.map.setZoom(10)
+          } else {
+            this.map.setZoom(zoom + 2)
+          }
         })
         this.markList.push(marker)
       }
@@ -103,11 +147,34 @@ export default {
 </script>
 
 
-<style lang="less" scoped>
+<style lang="less">
 #map-container {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
+  font-size: 12px;
+  color: #fff;
+  .text{
+    margin: auto;
+    padding: 0 10px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: #007AE6;
+    border-radius: 10px;
+    position: relative;
+    .arrow{
+      position: absolute;
+      left: 50%;
+      width: 0; 
+      height: 0;
+      top: 20px;
+      border-width: 5px;
+      border-style: solid;
+      border-color:#007AE6 transparent transparent transparent;
+      transform: translateX(-50%);
+    }
+  }
 }
 </style>
