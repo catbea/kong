@@ -1,6 +1,6 @@
 <template>
   <van-tabbar class="learn-tabbar" active-color="#007AE6" v-model="active">
-    <van-tabbar-item v-for="tab in tabList">
+    <van-tabbar-item :to="{path: tab.url}" :key="tab.name" v-for="tab in tabList">
       <span>{{tab.name}}</span>
       <img slot="icon" slot-scope="props" :src="props.active ? tab.icon[0] : tab.icon[1] ">
     </van-tabbar-item>
@@ -16,13 +16,23 @@ export default {
       tabList: [
         {
           name: '学习',
+          url: '/user/learn',
           icon: [require('IMG/user/learn/home-icon-on.png'), require('IMG/user/learn/home-icon.png')]
         },
         {
           name: '记录',
+          url: '/user/learn/record',
           icon: [require('IMG/user/learn/record-icon-on.png'), require('IMG/user/learn/record-icon.png')]
         }
       ]
+    }
+  },
+  created(){
+    const { path } = this.$route;
+    if(path === '/user/learn'){
+      this.active = 0;
+    }else{
+      this.active = 1;
     }
   }
 }
@@ -31,6 +41,7 @@ export default {
 <style lang="less">
 .learn-tabbar {
   height: 49px;
+  z-index: 999 !important;
   .van-tabbar-item__icon img {
     height: 20px;
   }

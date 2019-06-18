@@ -459,5 +459,16 @@ export default [
         show: false
       }
     }
+  },
+  {
+    path: '/user/learn/record',
+    name: 'learnRecord',
+    component: resolve => require(['@/views/user/learn/record.vue'], resolve),
+    meta: {
+      title: '学习记录',
+      tabbar: {
+        show: false
+      }
+    }
   }
 ]
