@@ -450,11 +450,22 @@ export default [
     }
   },
   {
+    path: '/user/learn',
+    name: 'learn',
+    component: resolve => require(['@/views/user/learn/index.vue'], resolve),
+    meta: {
+      title: 'AW大师培训学院',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
     path: '/user/secondPage/arecProduct',
     name: 'arecProduct',
     component: resolve => require(['@/views/user/secondPage/arecProduct.vue'], resolve),
     meta: {
-      title: '区域竞品分析',
+      title: '区域竞品分析', 
       tabbar: {
         show: false
       }
