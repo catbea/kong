@@ -461,9 +461,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/arecProduct',
+    path: '/user/learn/secondPage/arecProduct',
     name: 'arecProduct',
-    component: resolve => require(['@/views/user/secondPage/arecProduct.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/arecProduct.vue'], resolve),
     meta: {
       title: '区域竞品分析', 
       tabbar: {
@@ -472,9 +472,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/commissionRule',
+    path: '/user/learn/secondPage/commissionRule',
     name: 'commissionRule',
-    component: resolve => require(['@/views/user/secondPage/commissionRule.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/commissionRule.vue'], resolve),
     meta: {
       title: '佣金结算规则',
       tabbar: {
@@ -483,9 +483,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/contorlTime',
+    path: '/user/learn/secondPage/contorlTime',
     name: 'contorlTime',
-    component: resolve => require(['@/views/user/secondPage/contorlTime.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/contorlTime.vue'], resolve),
     meta: {
       title: '实时销控表',
       tabbar: {
@@ -494,9 +494,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/marker',
+    path: '/user/learn/secondPage/marker',
     name: 'marker',
-    component: resolve => require(['@/views/user/secondPage/marker.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/marker.vue'], resolve),
     meta: {
       title: '市场政策与对策',
       tabbar: {
@@ -505,9 +505,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/customerPortrait',
+    path: '/user/learn/secondPage/customerPortrait',
     name: 'customerPortrait',
-    component: resolve => require(['@/views/user/secondPage/customerPortrait.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/customerPortrait.vue'], resolve),
     meta: {
       title: '目标客户画像',
       tabbar: {
@@ -516,9 +516,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/salesAsk',
+    path: '/user/learn/secondPage/salesAsk',
     name: 'salesAsk',
-    component: resolve => require(['@/views/user/secondPage/salesAsk.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/salesAsk.vue'], resolve),
     meta: {
       title: '销售百问',
       tabbar: {
@@ -527,9 +527,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/floor',
+    path: '/user/learn/secondPage/floor',
     name: 'floor',
-    component: resolve => require(['@/views/user/secondPage/floor.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/floor.vue'], resolve),
     meta: {
       title: '楼盘标准化价值点',
       tabbar: {
@@ -538,9 +538,9 @@ export default [
     }
   },
   {
-    path: '/user/secondPage/salesVideo',
+    path: '/user/learn/secondPage/salesVideo',
     name: 'salesVideo',
-    component: resolve => require(['@/views/user/secondPage/salesVideo.vue'], resolve),
+    component: resolve => require(['@/views/user/learn/secondPage/salesVideo.vue'], resolve),
     meta: {
       title: '销售培训视频列表',
       tabbar: {
