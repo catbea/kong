@@ -6,7 +6,7 @@
         <span v-show="item.index==3&&num" :class="{active:item.flag}">({{num}})</span>
         <span class="bg_img" :style="{'backgroundImage':'url(' + (item.index===currentIndex ? arrowUpIcon : arrowDownIcon )  + ')'}"></span>
       </li>
-      <li class="bg_img sort" @click="sortHandle" :style="{'backgroundImage':'url('+(sortFlage?sortColorImg:sortImg)+')'}"></li>
+      <li class="bg_img sort" v-show="showSort"  @click="sortHandle" :style="{'backgroundImage':'url('+(sortFlage?sortColorImg:sortImg)+')'}"></li>
     </ul>
     <div class="van-hairline--top choose-container">
       <area-filter :show="currentIndex===0" :parent="localCity" v-model="filters.baseFilters.area" @activeHandle="areaColorHandle" @checkedText="areaStrChange"></area-filter>
@@ -33,7 +33,8 @@ export default {
       }
     },
     local: { type: String, default: '' },
-    height: { type: String, default: '20rem' }
+    height: { type: String, default: '20rem' },
+    showSort: { type: Boolean, default: true}
   },
   components: {
     AreaFilter,
@@ -187,7 +188,7 @@ export default {
   > .screen-ul {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    // width: 100%;
     height: 32px;
     padding-top: 9px;
     background: rgba(255, 255, 255, 1);
@@ -196,6 +197,7 @@ export default {
     padding-left: 18px;
     margin-bottom: 5px;
     line-height: 23px;
+    margin-right: 13px;
     li {
       display: flex;
       > .value-content {
@@ -220,7 +222,7 @@ export default {
       height: 17px;
       // background: url('../../assets/img/market/Combined Shape@2x.png') no-repeat;
       // background-size: contain;
-      margin-right: 13px;
+      // margin-right: 13px;
     }
   }
   > .choose-container {

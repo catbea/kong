@@ -16,6 +16,9 @@
                 v-if="info.fyVideo"
               >视频</div>
             </div>
+            <div class="top-views">
+              <img src="../../assets/img/market/voice.png" alt="">当前已有<span>{{info.browsCount}}</span>人浏览过/关注了此楼盘
+            </div>
             <van-swipe @change="swipeChange">
               <van-swipe-item v-for="(item,index) in info.bannerList" :key="index">
                 <div
@@ -33,11 +36,11 @@
           <div class="operate-content">
             <!-- 收藏/分享 -->
             <div class="operate-1">
-              <div class="operate-collect" @click.stop="collectHandler">
+              <!-- <div class="operate-collect" @click.stop="collectHandler">
                 <i v-if="status==0" class="bg_img" :style="{backgroundImage:'url('+collectImg+')'}"></i>
                 <i v-else class="bg_img" :style="{backgroundImage:'url('+collectColorImg+')'}"></i>
                 收藏
-              </div>
+              </div> -->
               <div class="operate-share" @click.stop="shareHandler" v-if="info.saleStatus!=='售罄'">
                 <i class="bg_img" :style="{backgroundImage:'url('+shareImg+')'}"></i>
                 分享
@@ -75,7 +78,7 @@
       </div>
       <!-- 楼盘基础信息 -->
       <div class="base-info-container">
-        <div class="info-top-bar">
+        <!-- <div class="info-top-bar">
           <tag-group :arr="tagGroupArr&&tagGroupArr.slice(0,3)"/>
           <div class="browser-info">
             <span>{{info.browsCount}}</span>人浏览过
@@ -90,8 +93,35 @@
               </transition>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="info-content">
+          <div class="linker-name">
+            <h5 class="house-name">{{info.linkerName}}</h5>
+            <p class="teach" v-if="info.openStatus==2 && info.materialStatus"  @click="goLearn"><img src="../../assets/img/market/teach.png" alt="">培训资料</p>
+          </div>
+          
+          <p class="slogen" v-show="info.promotionalLanguage">{{info.promotionalLanguage}}</p>
+          <div class="tags" v-if="tagGroupArr">
+            <span v-for="(item,index) in tagGroupArr.slice(0,3)" :class="{'active': index === 0}">{{item}}</span>
+          </div>
+          <div class="house-info-form">
+            <div class="item">
+              <p class="price"><span>均价:</span><b>{{info.averagePrice}}</b></p>
+              <p class="calculationIcon" @click="goCalculation(info.linkerName)"><img :src="calculationIcon"><span>房贷计算器</span></p>
+            </div>
+            <div class="item">
+              <span>开盘:</span>{{info.openTime}}
+            </div>
+            <div class="item">
+              <span class="title">地址:</span> <p class="address">{{info.detailAddress}}</p>
+            </div>
+            <div class="item" @click="moreInfoHandler">
+              <p class="price"><span class="title">更多:</span>产权年限、装修标准、开发商…</p>
+              <p class="icon"><img src="../../assets/img/marketDetail/arrow2@2x.png" /></p>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="info-content">
           <h5 class="house-name">{{info.linkerName}}</h5>
           <p
             class="house-feature"
@@ -131,10 +161,10 @@
             </p>
           </div>
           <div class="more-info" @click="moreInfoHandler">更多信息</div>
-        </div>
+        </div> -->
       </div>
       <!-- 楼盘分享关系图谱 -->
-      <div class="marker-relation-box">
+      <!-- <div class="marker-relation-box">
         <p>楼盘分享关系图谱</p>
         <ol
           class="bg_img relation-drawing"
@@ -144,7 +174,7 @@
           <li class="bg_img" :style="{backgroundImage:'url('+info.headImgUrl+')'}"></li>
           <li>{{info.linkerName}}</li>
         </ol>
-      </div>
+      </div> -->
       <van-popup v-model="relationShow" class="relationPopup">
         <div class="relationName">
           <p
@@ -226,7 +256,9 @@
         <div class="map-box" @click="mapClickHandler">
           <t-map :latLng="{lat:info.latitude,lng:info.longitude}" :data="mapData" :conf="mapConf"></t-map>
         </div>
+        <div class="tips"><img src="../../assets/img/market/tips.png" alt="" srcset=""> 数据统计范围为楼盘2公里以内，数据来至于腾讯地图，仅供参考！</div>
       </div>
+      <div class="more-info" @click="moreInfoHandler">更多信息</div>
       <!-- 楼盘评测 -->
       <div class="evaluating-box" v-if="this.evaluatingInfo">
         <title-bar :conf="evaluatingTitleConf"/>
@@ -383,10 +415,23 @@
         </div>
       </div>
       <!-- 其他楼盘 -->
-      <div class="house-recommend" v-if="info.linkerOtherList.length>0">
+      <div class="house-recommend scale-1px-bottom" v-if="info.linkerOtherList.length>0">
         <title-bar :conf="othersTitleConf"/>
         <div class="recommend-swipe-content">
-          <swiper :options="swiperOption">
+          <div class="recommend-house-item" v-for="(item,index) in info.linkerOtherList.slice(0,3)" :key='index'>
+            <div class="market-img">
+              <img class="headimg" :src="item.headImgUrl" alt="">
+              <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
+              <div v-show="item.cpActivityVo" class="coupon">卡券</div>
+            </div>
+            <div class="market-info">
+              <p class="market-name">{{item.linkerName}}</p>
+              <p class="market-location">{{item.district}}</p>
+              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '售罄'][item.saleStatus]}}</span><span v-for="(option,i) in item.linkerTags.slice(0,2)" :key="i">{{option}}</span></p>
+              <p class="market-price">{{item.averagePrice}}</p>
+            </div>
+          </div>
+          <!-- <swiper :options="swiperOption">
             <swiper-slide
               v-for="(item,index) in info.linkerOtherList"
               :key="index"
@@ -409,12 +454,12 @@
                 </div>
               </div>
             </swiper-slide>
-          </swiper>
+          </swiper> -->
         </div>
       </div>
       <div class="m-statement">
         <span>免责声明：楼盘信息来源于政府公示网站、开发商、第三方公众平台，最终以政府部门登记备案为准，请谨慎核查。如楼盘信息有误或其他异议，请点击</span>
-        <router-link :to="'/marketDetail/correction/'+id" class="feedback">反馈纠错</router-link>
+        <router-link :to="'/marketDetail/correction/'+id" class="feedback"> 反馈纠错</router-link>
       </div>
       <!-- 开通提示及开通状态 -->
        <div class="van-hairline--top house-status" v-if="+info.isFree">
@@ -506,6 +551,8 @@ import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import isEmpty from 'lodash/isEmpty'
 import qs from 'qs'
+import cloneDeep from 'lodash/cloneDeep';
+import CompileCover from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/CompileCover';
 export default {
   components: {
     HintTire,
@@ -671,6 +718,9 @@ export default {
     }
   },
   methods: {
+    goLearn () {
+      this.$router.push({path: '/user/learn', query:{linkerId: this.info.linkerId}})
+    },
     hidePosterShow () {
       this.$refs.posterContainer.style.opacity = 0
       this.posterShow = false
@@ -1226,6 +1276,29 @@ export default {
         position: relative;
         width: 100%;
         height: 100%;
+        .top-views{
+          position: absolute;
+          z-index: 2;
+          left: 16px;
+          top: 16px;
+          height: 24px;
+          border-radius: 12px;
+          background-color: rgba(255, 255, 255, 0.9);
+          font-size: 12px;
+          line-height: 24px;
+          padding: 0 10px;
+          vertical-align: middle;
+          color: #333;
+          img{
+            width: 14px;
+            height: 12px;
+            vertical-align: middle;
+            margin-right: 5px;
+          }
+          span{
+            color: #007AE6;
+          }
+        }
         .btn-box {
           position: absolute;
           z-index: 2;
@@ -1260,11 +1333,12 @@ export default {
             background: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
             z-index: 5;
-            right: 20px;
+            right: 10px;
             bottom: 15px;
             font-size: 12px;
             padding: 3px 15px;
             border: none;
+            opacity: 0.8;
           }
           .swipe-item {
             width: 100%;
@@ -1361,95 +1435,200 @@ export default {
         }
       }
     }
-    > .info-content {
-      padding: 0 15px;
-      > .house-name {
-        color: #333333;
-        font-size: 26px;
-        font-weight: 600;
-        font-family: PingFangSC-Semibold;
-      }
-      > .house-feature {
-        padding-top: 10px;
-        font-size: 14px;
-        line-height: 1.5;
-      }
-      .specific-market-detail-commission {
-        width: 339px;
-        height: 34px;
-        background: rgba(247, 249, 250, 1);
-        border-radius: 4px;
-        font-size: 15px;
-
-        font-weight: 400;
-        color: rgba(234, 77, 46, 1);
+    .info-content{
+      padding: 15px;
+      .linker-name{
         display: flex;
-        align-items: center;
-        position: relative;
-        .commission-detail {
-          width: 12px;
-          height: 12px;
-          position: absolute;
-          right: 5px;
+        .house-name{
+          flex: 1;
         }
-        span:nth-child(1) {
-          width: 17px;
-          height: 17px;
-          margin: 0 8px;
-        }
-        .commission-text {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          margin: 0;
-          width: 150px;
+        .teach{
+          width: 80px;
+          text-align: right;
+          font-size: 12px;
+          color: #007AE6;
+          vertical-align: middle;
+          padding-top: 4px;
+          img{
+            width: 16px;
+            height: 16px;
+            margin-right: 3px;
+            vertical-align: middle;
+          }
         }
       }
-      > .house-info-form {
-        padding-top: 20px;
-        line-height: 1.5;
-        font-size: 16px;
+      .house-name{
         color: #333333;
-        > p {
-          padding-bottom: 12px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 343px;
-
-          > .calculation-view {
-            float: right;
-            display: flex;
-            align-items: center;
-
-            > img {
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .slogen{
+        font-size: 16px;
+        color: #333;
+        padding: 10px 0 0;
+      }
+      .tags{
+        padding-top: 10px;
+        font-size: 10px;
+        span{
+          display: inline-block;
+          padding:4px 8px;
+          border-radius: 2px;
+          margin-right: 5px;
+          background:rgba(143,159,177,0.15);
+          color: #5C5F66;
+          &.active{
+            background-color: rgba(0,120,255,0.15);
+          }
+        }
+      }
+      .house-info-form{
+        font-size: 14px;
+        .item{
+          padding-top: 15px;
+          display: flex;
+          span{
+            color: #8A8F99;
+            padding-right: 10px;
+          }
+          b{
+            color: #EA4D2E;
+          }
+          .title{
+            width: 45px;
+          }
+          .address{
+            flex: 1;
+          }
+          .price{
+            flex: 1;
+          }
+          .calculationIcon{
+            width: 120px;
+            text-align: right;
+            vertical-align: middle;
+            img{
               width: 16px;
               height: 16px;
+              vertical-align: middle;
+              margin-right: 5px;
             }
-
-            > span {
-              display: inline-block;
-              color: #007ae6;
-              font-size: 12px;
-              margin-left: 2px;
+            span{
+              color: #007AE6;
+            }
+          }
+          .icon{
+            width: 30px;
+            img{
+              width: 12px;
+              height: 12px;
             }
           }
         }
       }
-      > .more-info {
-        width: 335px;
-        height: 44px;
-        line-height: 44px;
-        margin: 5px;
-        margin-left: 0px;
-        background-color: rgba(0, 122, 230, 0.05);
-        color: #445166;
-        font-weight: 400;
-        font-size: 16px;
-        text-align: center;
-        border-radius: 4px;
-      }
     }
+    // > .info-content {
+    //   padding: 15px;
+    //   > .house-name {
+    //     color: #333333;
+    //     font-size: 26px;
+    //     font-weight: 600;
+    //     font-family: PingFangSC-Semibold;
+    //   }
+    //   > .house-feature {
+    //     padding-top: 10px;
+    //     font-size: 14px;
+    //     line-height: 1.5;
+    //   }
+    //   .specific-market-detail-commission {
+    //     width: 339px;
+    //     height: 34px;
+    //     background: rgba(247, 249, 250, 1);
+    //     border-radius: 4px;
+    //     font-size: 15px;
+
+    //     font-weight: 400;
+    //     color: rgba(234, 77, 46, 1);
+    //     display: flex;
+    //     align-items: center;
+    //     position: relative;
+    //     .commission-detail {
+    //       width: 12px;
+    //       height: 12px;
+    //       position: absolute;
+    //       right: 5px;
+    //     }
+    //     span:nth-child(1) {
+    //       width: 17px;
+    //       height: 17px;
+    //       margin: 0 8px;
+    //     }
+    //     .commission-text {
+    //       white-space: nowrap;
+    //       overflow: hidden;
+    //       text-overflow: ellipsis;
+    //       margin: 0;
+    //       width: 150px;
+    //     }
+    //   }
+    //   > .house-info-form {
+    //     padding-top: 20px;
+    //     line-height: 1.5;
+    //     font-size: 16px;
+    //     color: #333333;
+    //     > p {
+    //       padding-bottom: 12px;
+    //       white-space: nowrap;
+    //       overflow: hidden;
+    //       text-overflow: ellipsis;
+    //       max-width: 343px;
+
+    //       > .calculation-view {
+    //         float: right;
+    //         display: flex;
+    //         align-items: center;
+
+    //         > img {
+    //           width: 16px;
+    //           height: 16px;
+    //         }
+
+    //         > span {
+    //           display: inline-block;
+    //           color: #007ae6;
+    //           font-size: 12px;
+    //           margin-left: 2px;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   > .more-info {
+    //     width: 335px;
+    //     height: 44px;
+    //     line-height: 44px;
+    //     margin: 5px;
+    //     margin-left: 0px;
+    //     background-color: rgba(0, 122, 230, 0.05);
+    //     color: #445166;
+    //     font-weight: 400;
+    //     font-size: 16px;
+    //     text-align: center;
+    //     border-radius: 4px;
+    //   }
+    // }
+  }
+  .more-info {
+    height: 44px;
+    line-height: 44px;
+    margin: 5px;
+    margin-left: 0px;
+    background-color: rgba(0, 122, 230, 0.05);
+    color: #445166;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 4px;
+    margin: 20px 15px 15px;
   }
   > .marker-relation-box {
     padding: 40px 0 0 15px;
@@ -1527,7 +1706,7 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 28px;
+    margin-top: 10px;
     .type-swipe-content {
       margin: 16px 22px 0px 22px;
       .house-type {
@@ -1606,6 +1785,20 @@ export default {
       height: 190px;
       border-radius: 10px;
       overflow: hidden;
+    }
+    .tips{
+      margin: 6px 16px;
+      line-height: 1.5;
+      font-size: 12px;
+      color: #999;
+      font-weight: 400;
+      vertical-align: middle;
+      img{
+        width: 12px;
+        height: 13px;
+        vertical-align: middle;
+        margin-right: 2px;
+      }
     }
   }
   > .evaluating-box {
@@ -2034,47 +2227,117 @@ export default {
   }
   > .house-recommend {
     margin-top: 30px;
-    margin-bottom: 10px;
-    > .recommend-swipe-content {
+    padding-bottom: 20px;
+    .recommend-swipe-content{
       margin: 0 15px;
       .recommend-house-item {
-        line-height: 1.5;
-        > .recommend-house-img {
-          margin-top: 18px;
-          margin-bottom: 12px;
-          width: 160px;
+        display: flex;
+        font-size: 14px;
+        margin-top: 15px;
+        .market-img{
+          width: 120px;
           height: 90px;
-          border-radius: 6px;
+          border-radius:6px;
+          overflow: hidden;
+          margin: 0 15px 0 0;
           position: relative;
-          .panorama-icon {
+          .headimg{
+            width: 100%;
+            height: 100%;
+            border-radius:6px;
+            object-fit: cover;
+          }
+          .coupon{
             position: absolute;
-            width: 34px;
-            height: 34px;
-            left: 50%;
-            top: 50%;
-            margin-left: -17px;
-            margin-top: -17px;
+            left: 0;
+            top: 8px;
+            font-size: 12px;
+            color: #fff;
+            padding: 0 10px 0 5px;
+            height: 20px;
+            line-height: 20px;
+            background-color: #CF562B;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
           }
         }
-        > .recommend-house-info {
-          .house-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: #333333;
+        .market-info{
+          flex: 1;
+          p{
+            margin-bottom: 8px;
           }
-          .house-location {
-            font-size: 12px;
-            font-weight: 400;
-            color: #999999;
+          .market-name{
+            font-size:18px;
+            font-weight:600;
+            color:rgba(19,41,79,1);
+          }
+          .market-location{
+            font-size:12px;
+            font-weight:400;
+            color:rgba(64,81,111,1);
+          }
+          .market-tags{
+            font-size: 10px;
+            span{
+              display: inline-block;
+              padding:4px 8px;
+              border-radius: 2px;
+              margin-right: 5px;
+              background:rgba(143,159,177,0.15);
+              color: #5C5F66;
+              &.active{
+                background-color: rgba(0,120,255,0.15);
+              }
+            }
+          }
+          .market-price{
+            font-size: 14px;
+            font-weight:600;
+            color:rgba(68,81,102,1)
           }
         }
       }
     }
+    // > .recommend-swipe-content {
+    //   margin: 0 15px;
+    //   .recommend-house-item {
+    //     line-height: 1.5;
+    //     > .recommend-house-img {
+    //       margin-top: 18px;
+    //       margin-bottom: 12px;
+    //       width: 160px;
+    //       height: 90px;
+    //       border-radius: 6px;
+    //       position: relative;
+    //       .panorama-icon {
+    //         position: absolute;
+    //         width: 34px;
+    //         height: 34px;
+    //         left: 50%;
+    //         top: 50%;
+    //         margin-left: -17px;
+    //         margin-top: -17px;
+    //       }
+    //     }
+    //     > .recommend-house-info {
+    //       .house-name {
+    //         font-size: 16px;
+    //         font-weight: 600;
+    //         color: #333333;
+    //       }
+    //       .house-location {
+    //         font-size: 12px;
+    //         font-weight: 400;
+    //         color: #999999;
+    //       }
+    //     }
+    //   }
+    // }
   }
   .m-statement {
     padding: 16px 23px 90px 16px;
     // width: 343px;
-    background: #f7f9fa;
+    background: #ffffff;
     color: #8a9299;
     font-size: 12px;
     line-height: 1.5;

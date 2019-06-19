@@ -1,12 +1,36 @@
 <template>
-  <div class="detail-photo-page">
-    <ul v-for="(item,index) in photoData" :key="item.groupId">
-      <p>{{item.groupName}} ({{item.listBannerVO.length}})</p>
-      <div class="template-box">
-        <li class="bg_img" v-for="(ite,inde) in item.listBannerVO" :key="ite.id"
-        :style="{backgroundImage:'url('+ite.imgUrl+')'}" @click="previewHandle(item.listBannerVO,inde)"></li>
-      </div>   
-    </ul>
+  <div class="detail-photo-page" v-if="photoData">
+    <div class="tab-cnt">
+      <div class="tab-box">
+        <div class="tab-tags">
+          <p class="item" :class="{'active': index === tabIndex}" v-for="(option,index) in photoData" :key="index" @click="goAnchor('#anchor-' + index, index)"> {{option.groupName}} ({{option.listBannerVO.length}})</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="photo-box" v-show="!showPreview">
+      <ul v-for="(item,index) in photoData" :key="item.groupId" :id="'anchor-' + index">
+        <p>{{item.groupName}} ({{item.listBannerVO.length}})</p>
+        <div class="template-box">
+          <li class="bg_img" v-for="(ite,inde) in item.listBannerVO" :key="ite.id"
+          :style="{backgroundImage:'url('+ite.imgUrl+')'}" @click="previewHandle(item.listBannerVO,inde)"></li>
+        </div>   
+      </ul>
+    </div>
+    <!-- 图片预览 -->
+    <div class="img-preview" v-show="showPreview" @click="hidePreview">
+      <div class="img-box">
+        <van-swipe @change="onChange" :initial-swipe="inde" :loop="false" :show-indicators="false">
+          <van-swipe-item v-for="(item,index) in arr" :key="index">
+            <img :src="item" alt="" srcset="">
+          </van-swipe-item>
+        </van-swipe>
+        <div class="custom-indicator">
+          {{ inde + 1 }}/{{arr.length}}
+        </div>
+      </div>
+      
+    </div>
   </div>
 </template>
 <script>
@@ -22,7 +46,7 @@ export default {
     one: 0,
     two: 0,
     three: 0,
-    arr: null,
+    arr: [],
     linkerId: null,
     photoData: null,
     show: false,
@@ -32,18 +56,38 @@ export default {
     reloadStatus: false,
     preview: '',
     inde: 0,
-    listBannerVO: ''
+    listBannerVO: '',
+    tabIndex: 0,
+    showPreview: false
   }),
   components: {
     // FullScreen
   },
   beforeRouteLeave(to, from, next) {
-    if (this.preview) {
-      this.preview.close()
+    // if (this.preview) {
+    //   this.preview.close()
+    // }
+    if (this.showPreview) {
+      this.showPreview = false
+      return next(false)
+    } else {
+      next()
     }
-    next()
   },
   methods: {
+    // 预览图片切换
+    onChange (index) {
+      this.inde  = index
+    },
+    // 隐藏预览
+    hidePreview () {
+      this.showPreview = false
+    },
+    goAnchor (selector, index) {
+      this.tabIndex = index
+      let anchor = this.$el.querySelector(selector)
+      document.querySelector('.photo-box').scrollTop = anchor.offsetTop - 70
+    },
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
       this.photoData = res
@@ -57,13 +101,14 @@ export default {
         const element = listBannerVO[i].imgUrl
         this.arr.push(element)
       }
-      this.preview = ImagePreview({
-        images: this.arr,
-        startPosition: inde,
-        onClose() {
-          // do something
-        }
-      })
+      this.showPreview = true
+      // this.preview = ImagePreview({
+      //   images: this.arr,
+      //   startPosition: inde,
+      //   onClose() {
+      //     // do something
+      //   }
+      // })
     },
     orientationchange () {
       if (window.orientation === 180 || window.orientation === 0) {
@@ -90,6 +135,105 @@ export default {
   }
 }
 </script>
+
+<style lang="less" scoped>
+.detail-photo-page{
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  .tab-cnt{
+    overflow: hidden;
+  }
+  .tab-box{
+    height: 70px;  
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar{display:none;}
+    padding-bottom: 20px;
+    margin-bottom: -20px;
+    .tab-tags{
+      min-width: 100%;
+      margin: 16px 0 0 16px;
+      display: flex;
+      flex-wrap: nowrap;
+      .item{
+        flex: 0 0 auto;
+        font-size: 12px;
+        font-weight:400;
+        height:30px;
+        line-height: 30px;
+        background:rgba(238,238,238,1);
+        border-radius:15px;
+        padding: 0 10px;
+        margin-right: 10px;
+        text-align: center;
+        &.active{
+          background-color: #007AE6;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .photo-box{
+    flex: 1;
+    overflow-y: scroll;
+    p {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(51, 51, 51, 1);
+      line-height: 28px;
+    }
+    .template-box {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 15px 0 24px 0;
+    }
+    ul {
+      margin: 19px 0 0 15px;
+      li {
+        margin: 0 4px 4px 0;
+        width: 83px;
+        height: 83px;
+      }
+    }
+  }
+  .img-preview{
+    margin: 32px 16px;
+    .img-box{
+      height: 440px;
+      background-color: #eee;
+      line-height: 440px;
+      position: relative;
+      img{
+        min-width: 100%;
+        min-height: 100%;
+        height: 440px;
+        object-fit: cover;
+      }
+    }
+    .custom-indicator{
+      position: absolute;
+      bottom: 18px;
+      right: 8px;
+      height: 20px;
+      width: 48px;
+      font-size:12px;
+      font-weight: 400;
+      background:rgba(0,0,0,0.4);
+      border-radius:10px;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      line-height: 20px;
+    }
+  }
+}
+</style>
+
+
 <style lang="less">
 .van-image-preview__image{
   max-height: 90%!important;
@@ -101,30 +245,5 @@ export default {
 }
 .van-image-preview__overlay{
   background-color: rgba(255,255,255,1);
-}
-.detail-photo-page {
-  width: 375px;
-  height: 100%;
-  background: #ffffff;
-  p {
-    font-size: 20px;
-
-    font-weight: 600;
-    color: rgba(51, 51, 51, 1);
-    line-height: 28px;
-  }
-  .template-box {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 15px 0 46px 0;
-  }
-  ul {
-    margin: 19px 0 0 15px;
-    li {
-      margin: 0 4px 4px 0;
-      width: 83px;
-      height: 83px;
-    }
-  }
 }
 </style>

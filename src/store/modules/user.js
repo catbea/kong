@@ -9,7 +9,7 @@ const state = {
     jumpToDynamicDetail: 1, //是否跳动态详情 0:不跳 1:跳
     userStatus: 0, // 0启用 1禁用
     devMode: true,
-    agentId: '4627',
+    agentId: '4425',
     avatarUrl: 'https://720ljq2test-10037467.file.myqcloud.com/ljqzs/user_head_img/women_007.png',
     distributorId: '124',
     distributorName: '广佛分公司',

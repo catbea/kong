@@ -176,5 +176,25 @@ class CommonService {
       body: {}
     })
   }
+
+  /**
+   * 精选-地图看房-区域楼盘统计
+   */
+  getRegionTotal(data) {
+    return xhr({
+      url: '/linker/regionTotal',
+      body: data
+    })
+  }
+  /**
+   * 精选-地图看房-区域楼盘列表
+   */
+  getRegionLinkers(data) {
+    return xhr({
+      url: '/linker/regionLinkers',
+      body: data
+    })
+  }
+
 }
 export default new CommonService()
