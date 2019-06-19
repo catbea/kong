@@ -466,16 +466,33 @@ export default [
     component: resolve => require(['@/views/user/learn/record.vue'], resolve),
     meta: {
       title: '学习记录',
-    path: '/user/learn/secondPage/arecProduct',
-    name: 'arecProduct',
-    component: resolve => require(['@/views/user/learn/secondPage/arecProduct.vue'], resolve),
-    meta: {
-      title: '区域竞品分析', 
       tabbar: {
         show: false
       }
     }
-  }
+  },
+  {
+    path: '/user/learn/search',
+    name: 'learnRecord',
+    component: resolve => require(['@/views/user/learn/search/index.vue'], resolve),
+    meta: {
+      title: '搜索楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+
+    path: '/user/learn/secondPage/arecProduct',
+    name: 'arecProduct',
+    component: resolve => require(['@/views/user/learn/secondPage/arecProduct.vue'], resolve),
+    meta: {
+      title: '区域竞品分析',
+      tabbar: {
+        show: false
+      }
+    }
   },
   {
     path: '/user/learn/secondPage/commissionRule',
