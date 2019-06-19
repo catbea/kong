@@ -738,6 +738,7 @@ export default {
     }
   },
   beforeDestroy() {
+    this.$store.commit('SHARE_PROMPT', false)
     try {
       document.querySelector('.tools-bar').removeEventListener('touchmove',this.touchHandler,false)
       window.removeEventListener('popstate', this.goBack, false)

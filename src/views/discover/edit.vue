@@ -16,7 +16,7 @@
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'" :class="{viewRedactStyle:previewFlag,viewPreStyle:!previewFlag}"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
-          <edit-houses v-if="index===houseIndex" v-model="inlayHouse" :preview="previewFlag" :count="1" :showCard="true" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
+          <edit-houses v-if="index===houseIndex" v-model="inlayHouse" :preview="previewFlag" :isInArticle="1" :count="1" :showCard="true" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
         <div class="disclaimer-box" v-if="previewFlag">
           免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。版权归原作者所有，如有侵权请告知删除。转载请注明以上信息。如有问题请点击
@@ -27,7 +27,7 @@
     <div class="recommend-house-container" v-if="!(previewFlag&&recommendList.length===0)">
       <title-bar :conf="{title:'推荐房源'}"/>
       <div class="recommend-house-box">
-        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :preview="previewFlag" @delete="multiHouseDelHandler"/>
+        <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :isInArticle="0" :preview="previewFlag" @delete="multiHouseDelHandler"/>
         <p class="open-pormpt" v-if="info&&!previewFlag&&parseInt(info.linkerCount)<3">{{info.linkerCount==0?'您暂未开通任何楼盘，建议开通更多楼盘':'当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用'}}</p>
       </div>
     </div>
