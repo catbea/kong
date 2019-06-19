@@ -35,7 +35,7 @@
     <van-actionsheet v-model="delActionsheetShow" :actions="delActions" cancel-text="取消" @select="onDelSelect"/>
     <!-- 浮动栏 -->
     <div class="fixed-bar" v-show="!loaddingStatus">
-      <div class="left-operation">
+      <!-- <div class="left-operation">
         <div class="left-first" @click="helpClickHandler">
           <i class="icon iconfont icon-write_help" style="fontSize:26px;margin-bottom:3px"></i>
           帮助
@@ -49,7 +49,9 @@
         <div class="preview-btn" @click="previewClickHandler">{{previewFlag? '编辑':'预览'}}</div>
         <div class="save-btn" v-show="!pushFlag" @click="saveClickHandler">保存并分享</div>
         <div class="save-btn" v-show="pushFlag">{{loaddingTxt}}...</div>
-      </div>
+      </div> -->
+      <div class="bar-save-btn" @click="saveClickHandler(0)">保存</div>
+      <div class="bar-share-btn" @click="saveClickHandler(1)">分享</div>
     </div>
     <!-- 楼盘选择 -->
     <single-select-box v-model="singleShow" :maxSelect="countCompute" :selected="selectedCompute" @submit="selectSubmitHandler"/>
@@ -69,10 +71,12 @@
         <div class="help-btn" @click="closeHelp">已阅读并同意</div>
       </div>
     </van-popup>
+    <FirstDialog :isShowFirstDialog="isShowFirstDialog" @firstDialogBtn="firstDialogBtn"></FirstDialog>
   </div>
 </template>
 <script>
 import EditParagraph from 'COMP/Discover/edit/editParagraph'
+import FirstDialog from 'COMP/Discover/FirstDialog'
 import EditViewpoint from 'COMP/Discover/edit/editViewpoint'
 import EditHouses from 'COMP/Discover/edit/editHouses'
 import TitleBar from 'COMP/TitleBar'
@@ -80,8 +84,10 @@ import SingleSelectBox from 'COMP/Discover/edit/singleSelectBox'
 import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import cpInformationService from 'SERVICE/cpInformationService'
+import { Toast } from 'vant'
 export default {
   components: {
+    FirstDialog,
     EditParagraph,
     EditViewpoint,
     EditHouses,
@@ -89,6 +95,8 @@ export default {
     SingleSelectBox
   },
   data: () => ({
+    isInArticle:1,//是否是文章中的楼盘  1 是 ，非 1 否
+    isShowFirstDialog:false,//第一次显示写一写蒙层
     loaddingTxt: '加载中',
     loaddingStatus: true,
     id: '',
@@ -117,9 +125,20 @@ export default {
     this.city = this.$route.params.city
     this.agentId = this.$route.query.agentId
     this.enterpriseId = this.$route.query.enterpriseId
-    this.getDetail()    
+    this.getDetail() 
+    let firstDialog =  localStorage.getItem("firstDialog");
+    if(firstDialog!=null){
+      this.isShowFirstDialog = false;
+    }else{
+       this.isShowFirstDialog = true;
+    }   
   },
   methods: {
+    //第一次写一写显示蒙层
+    firstDialogBtn(){
+      this.isShowFirstDialog = false;
+      localStorage.setItem("firstDialog","true");
+    },
     // 获取文章信息
     async getDetail() {
       const res = await discoverService.getDiscoverDetail(this.id)
@@ -256,19 +275,20 @@ export default {
     // 段落删除弹窗-选择删除当前或删除以下所有
     delParagraphHandler(e) {
       this.currentDelDom = e.dom
-      this.delActionsheetShow = true
+      this.onDelSelect();
+      // this.delActionsheetShow = true
     },
     // 删除段落处理
-    onDelSelect(e) {
-      if (e.type === 1) {
-        // 删除以下所有
-        let lock = false
-        let toDelArr = []
-        for (let dom of this.renderDom) {
-          if (lock) dom.status = 'del'
-          if (this.currentDelDom === dom) lock = true
-        }
-      } else {
+    onDelSelect() {
+      // if (e.type === 1) {
+      //   // 删除以下所有
+      //   let lock = false
+      //   let toDelArr = []
+      //   for (let dom of this.renderDom) {
+      //     if (lock) dom.status = 'del'
+      //     if (this.currentDelDom === dom) lock = true
+      //   }
+      // } else {
         // 删除当前
         // 检查是否为最后一段
         let count = 0
@@ -280,8 +300,8 @@ export default {
         } else {
           this.$toast('请至少保留一个段落!')
         }
-      }
-      this.delActionsheetShow = false
+      // }
+      // this.delActionsheetShow = false
     },
     // 恢复段落处理
     repealParagraphHandler(e) {
@@ -332,7 +352,7 @@ export default {
       }
     },
     // 底部栏保存按钮点击
-    async saveClickHandler() {
+    async saveClickHandler(type) {
       if (this.pushFlag) return
       window.sessionStorage.removeItem('inlayHouse')
       window.sessionStorage.removeItem('multiHouse')
@@ -375,7 +395,9 @@ export default {
           discoverService.insertComment(commentData)
         }
       }
-      this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&sharePrompt=true`)
+      // if(type == 1){
+        this.$router.replace(`/discover/${targetid}/${this.city}?agentId=${this.agentId}&enterpriseId=${this.enterpriseId}&sharePrompt=true&type=${type}`)
+      // }
     },
     selectSubmitHandler(e) {
       if (this.target === 'inlayHouse') {
@@ -530,11 +552,33 @@ export default {
     position: fixed;
     display: flex;
     text-align: center;
+    justify-content: space-between;
     background: #fff;
     left: 0;
     right: 0;
     bottom: 0;
     height: 72px;
+    padding: 14px 16px;
+    > .bar-save-btn{
+      width: 108px;
+      height: 44px;
+      background: #F2F8FE;
+      color: #445166;
+      font-size: 16px;
+      border-radius: 6px;  
+      text-align: center;
+      line-height: 44px;    
+    }
+    > .bar-share-btn{
+      width: 220px;
+      height: 44px;
+      background: #007AE6;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 6px;  
+      text-align: center;
+      line-height: 44px;    
+    }
     > .left-operation {
       flex: 1;
       font-size: 12px;

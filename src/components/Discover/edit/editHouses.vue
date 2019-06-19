@@ -1,6 +1,6 @@
 <template>
   <div class="edit-houses">
-    <div class="house-box" :class="!preview&&'box_border'" v-for="index in count" :key="index">
+    <div class="house-box" :class="!preview&&'box_border_house'" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
         <estate-item :key="index" :showRules="false" :showCard="showCard"  :info="itemData(index-1)"/>
         <i class="icon iconfont icon-search_empty del-icon" v-if="!preview" @click.stop="delClickHandler(index-1)"/>
@@ -74,9 +74,10 @@ export default {
 </script>
 <style lang="less">
 .edit-houses {
-  margin: 0 -5px;
+  margin: 0 -5px;  
   > .house-box {
     margin-bottom: 10px;
+    background: rgba(0,122,230,0.1);
     > div {
       // width: 350px;
     }

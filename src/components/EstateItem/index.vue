@@ -6,9 +6,18 @@
           <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
         </div>
         <div class="right-box">
-          <h5 class="estate-name"><span class="free" v-if="+info.isFree">免费</span>{{info&&info.linkerName}}</h5>
+          <h5 class="estate-name">
+            <span class="estate-name-box">
+              <!-- <span class="free" v-if="info.isFree&&isInArticle!=1&&isInArticle!=0">免费</span> -->
+              {{info&&info.linkerName}}
+            </span> 
+            <span v-if="info.saleStatus==0" class="house-sale-status" style="background: rgba(0, 122, 230, 1);color: #FFFFFF">热销中</span>
+            <span v-if="info.saleStatus==1" class="house-sale-status" style="background: rgba(234, 77, 46, 0.1);color: #EA4D2E">即将发售</span>
+            <span v-if="info.saleStatus==3" class="house-sale-status" style="background: rgba(143, 159, 177, 0.15);color: #5C5F66">售罄</span>
+          </h5>
           <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
-          <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
+          <tag-group class="tag-box" :arr="this.info&&this.info.projectTagArr" />
+          <!-- <tag-group class="tag-box" v-else :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" /> -->
           <div class="estate-info">
             <p class="estate-price" v-if="info.price==='0 万元/套起' || info.price==0 || info.price=='0 元/㎡'">价格待定</p>
             <p class="estate-price" v-else>{{info&&info.price}}{{info&&info.priceUnit}}</p>
@@ -26,6 +35,10 @@
         <span>{{info&&info.divisionRules | textOver}}</span>
       </div>
     </div>
+    <div class="specialOffer">
+      <p class="offer1"><img :src="offerTeIMg" width="16" height="16" alt=""> 小户型住宅，刚需上车福田之选</p>
+      <p class="offer2"><img :src="offerHuiIMg" width="16" height="16" alt=""> 9.9折（按揭）* 9.7折（现场）</p>
+    </div>
     <div class="house-activity-poster" v-if="showCard && info&&info.cpActivityVo">
       <img class="img" :src="info.cpActivityVo.imgUrl">
       <p class="info"><span class="title">{{info.cpActivityVo.name}}</span> <span class="btn">立即领取</span></p>
@@ -40,6 +53,7 @@ export default {
     showRules: { type: Boolean, default: true },
     itemBorder: { type: Boolean, default: false },
     showCard: {type: Boolean, default: false},
+    isInArticle:{ type: Number, default: 0 },
     conf: {
       type: Object,
       default: () => {
@@ -53,6 +67,8 @@ export default {
     TagGroup
   },
   data: () => ({
+    offerTeIMg:require('IMG/discover/te.png'),
+    offerHuiIMg:require('IMG/discover/hui.png'),
     panoramaImg: require('IMG/system/icon_panorama@2x.png'),
     commissionImg: require('IMG/user/collection/icon_commission@2x.png')
   }),
@@ -67,6 +83,29 @@ export default {
 }
 </script>
 <style lang="less">
+.specialOffer{
+  padding: 12px 16px;
+  border: 1px solid rgba(177, 189, 210, 0.5);
+  border-top: 0;
+  p{
+    display: flex;
+    display: -webkit-box-flex;
+    align-items: center;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-size: 14px;
+    img{
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
+    }
+  }
+  .offer1{color: #13284D;margin-bottom: 8px;}
+  .offer2{color:#EA4D2E}
+}
 .estate-item {
   position: relative;
   overflow: hidden;
@@ -99,6 +138,8 @@ export default {
       flex-basis: 225px;
       margin: 16px 16px 16px 0;
       > .estate-name {
+        display: flex;
+        justify-content: space-between;
         font-family: PingFangSC-Semibold;
         font-size: 16px;
         font-weight: 600;
@@ -116,6 +157,21 @@ export default {
           padding: 0 5px;
           vertical-align: top;
         }
+        .estate-name-box{
+          // flex: 1;
+        }      
+        .house-sale-status{
+          display: inline-block;
+          white-space: nowrap;
+          font-size: 10px;
+          padding: 2px 4px;
+          border-radius: 1px;          
+          max-height: 16px;
+          line-height: 1.4;
+          color: #fff;
+          background: #EA4D2E
+        }
+
       }
       > .estate-location {
         font-size: 12px;
