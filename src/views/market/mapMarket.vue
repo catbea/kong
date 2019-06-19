@@ -117,7 +117,7 @@ export default {
       }
     },
     markMaker() {
-      let scaleSize = new qq.maps.Size(200, 34)
+      let scaleSize = new qq.maps.Size(100, 30)
       for (let temp of this.houseList) {
         let marker = new qq.maps.Marker({
           icon: new qq.maps.MarkerImage('', null, null, null, scaleSize),
@@ -131,13 +131,10 @@ export default {
           this.map.setCenter(new qq.maps.LatLng(e.latLng.lat, e.latLng.lng))
           if (zoom <= 5) {
             this.provice = temp.name
-            this.map.setZoom(7)
-          } else if (zoom <= 7) {
+          } else if (zoom > 5 && zoom <= 7) {
             this.city = temp.name
-            this.map.setZoom(10)
-          } else {
-            this.map.setZoom(zoom + 2)
           }
+          this.map.setZoom(zoom + 2)
         })
         this.markList.push(marker)
       }

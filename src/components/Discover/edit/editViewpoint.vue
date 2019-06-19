@@ -66,7 +66,7 @@ export default {
     width: 100%;
     min-height: 140px;
     word-break: break-all;
-    background: rgba(150, 158, 168, 0.08);
+    background: rgba(0,122,230,0.1);
     padding: 7px 9px;
   }
   > .discover-viewpoint {
@@ -74,7 +74,7 @@ export default {
     padding: 16px;
     position: relative;
     box-sizing: border-box;
-    border: 1px dashed #969ea8;
+    border: 1px dashed rgba(0,122,230,0.5);
     > .viewpoint-line {
       width: 2px;
       height: 13px;

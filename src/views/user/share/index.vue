@@ -577,10 +577,6 @@ export default {
       background:rgba(255,255,255,1);
       margin: 16px auto;
       position: relative;
-      pointer-events:none;
-      -webkit-pointer-events:none;
-      -ms-pointer-events:none;
-      -moz-pointer-events:none;
     }
     .item1{
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
@@ -663,7 +659,7 @@ export default {
       .type2-cnt{
         height: 100%;
         width: 100%;
-        background: url('../../../assets/img/user/share/bg3.png') no-repeat center;
+        background: url('../../../assets/img/user/share/bg3.png') repeat left top;
       }
       .logo{
         padding-top: 14px;
@@ -719,6 +715,7 @@ export default {
         img{
           width: 64px;
           height: 64px;
+          border-radius: 40%;
         }
         p{
           height:14px;
@@ -738,7 +735,7 @@ export default {
       .type3-cnt{
         height: 100%;
         width: 100%;
-        background: url('../../../assets/img/user/share/bg2.png') no-repeat center;
+        background: url('../../../assets/img/user/share/bg2.png') repeat left top;
         text-align: center;
       }
       .signature{
@@ -784,6 +781,7 @@ export default {
         img{
           width: 64px;
           height: 64px;
+          border-radius: 40%;
         }
         p{
           height:14px;
@@ -972,6 +970,8 @@ export default {
     .img-box {
       height: 460px;
       width: 300px;
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
     }
   }
   // loading

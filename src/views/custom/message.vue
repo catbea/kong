@@ -1,8 +1,26 @@
 <template>
   <div class="massage-info-body">
     <div class="massage-info-list">
+      <div class="header-nav">
+          <div class="nav-item" @click="projectClick">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEVHcExmZmZlZWVnZ2dnZ2dlZWVmZmZmZmZofd2ZAAAAB3RSTlMA4knxrSbuMB2ZQwAAAGNJREFUOMtjYGBgYHUuRwCTAAY4CCtHBqkICXcUiRKEhDmKRDFCorycATuHdhIIz2BKQD2DRaIEl0QxDsuhIgMuoQh2pRCmhDhYopAECZxGjfp8VAKfhGI5NsAAC3BSJHAYBQC1QcgUK0H73AAAAABJRU5ErkJggg=="/>
+            <span>发送楼盘</span>
+          </div>
+          <div class="nav-item" @click="sendWxAccount">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEVHcExmZmZlZWVnZ2dnZ2dlZWVmZmZmZmZofd2ZAAAAB3RSTlMA4knxrSbuMB2ZQwAAAGNJREFUOMtjYGBgYHUuRwCTAAY4CCtHBqkICXcUiRKEhDmKRDFCorycATuHdhIIz2BKQD2DRaIEl0QxDsuhIgMuoQh2pRCmhDhYopAECZxGjfp8VAKfhGI5NsAAC3BSJHAYBQC1QcgUK0H73AAAAABJRU5ErkJggg=="/>
+            <span>发送微信</span>
+          </div>
+          <div class="nav-item" @click="phoneCall">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEVHcExmZmZlZWVnZ2dnZ2dlZWVmZmZmZmZofd2ZAAAAB3RSTlMA4knxrSbuMB2ZQwAAAGNJREFUOMtjYGBgYHUuRwCTAAY4CCtHBqkICXcUiRKEhDmKRDFCorycATuHdhIIz2BKQD2DRaIEl0QxDsuhIgMuoQh2pRCmhDhYopAECZxGjfp8VAKfhGI5NsAAC3BSJHAYBQC1QcgUK0H73AAAAABJRU5ErkJggg=="/>
+            <span>拨打电话</span>
+          </div>
+          <div class="nav-item" @click="gotoReport">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEVHcExmZmZlZWVnZ2dnZ2dlZWVmZmZmZmZofd2ZAAAAB3RSTlMA4knxrSbuMB2ZQwAAAGNJREFUOMtjYGBgYHUuRwCTAAY4CCtHBqkICXcUiRKEhDmKRDFCorycATuHdhIIz2BKQD2DRaIEl0QxDsuhIgMuoQh2pRCmhDhYopAECZxGjfp8VAKfhGI5NsAAC3BSJHAYBQC1QcgUK0H73AAAAABJRU5ErkJggg=="/>
+            <span>报备客户</span>
+          </div>
+      </div>
       <!--消息-->
-      <div class="msg-box" style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
+      <div class="msg-box" style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:15px;left:0px; overflow-y: scroll">
         <van-pull-refresh v-model="loading" pulling-text="下拉加载下一页" loosing-text="释放加载下一页" @refresh="getmsgListnext">
           <div style="height: auto">
             <div class="massage-info-msg" v-for="(items,index) in msgList" v-bind:key="index">
@@ -35,7 +53,7 @@
                 </div>
                 <div :id="item.id" class="massage-info-msg-me" v-if="item.fromType == 2">
                   <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="avatar">
-                  <div class="msg-customer-con-me" v-if="item.msgType=='1'">{{item.content}}</div>
+                  <div class="msg-customer-con-me" v-if="item.msgType=='1'" v-html="item.content"></div>
                   <div class="msg-customer-con-me-voice" v-if="item.msgType=='2'" @click="playVoice(item.content,item.id)">
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                     <img v-if="isplay==item.id" class="left-voice-img" src="@/assets/img/message/right_voice.gif">
@@ -83,8 +101,8 @@
     </div>
     <div id="footer" ref="inputContent" :class="isShowEmjie || isShowOption?'massage-info-lower-emjie':'massage-info-lower'">
       <div class="massage-info-lower-left" @click="switchMsg">
-        <img v-if="msgType==1" src="@/assets/img/message/Oval@3x.png">
-        <img v-else src="@/assets/img/message/Oval_slices_text.png">
+        <img v-if="msgType==1" src="@/assets/img/message/icon_yy.png">
+        <img v-else src="@/assets/img/message/iocn_jp.png">
       </div>
       <div class="massage-info-lower-cen">
         <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage(1,'')" v-model="message" id="message" v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？" @blur="blur">
@@ -92,11 +110,11 @@
       </div>
       <div class="massage-info-lower-right">
         <div class="lower-right-bnt">
-          <img class="face" src="@/assets/img/message/Oval_bq.png" @click="displayface">
+          <img class="face" src="@/assets/img/message/icon_bq.png" @click="displayface">
         </div>
         <div class="lower-right-bnt">
           <div class="send" v-if="message.length>0" @click="sendMessage(1,'')">发送</div>
-          <img class="selTempl" v-else src="@/assets/img/message/Oval@3x_tpl.png" @click="displayOption">
+          <img class="selTempl" v-else src="@/assets/img/message/icon_chang.png" @click="displayOption">
         </div>
       </div>
     </div>
@@ -104,7 +122,10 @@
       <span v-for="(itemone,emojikeyone) in emojiFactory" @click="emojiSelect(itemone.key)" style="font-size:0.5rem;margin:0.15rem;float:left;" :key="emojikeyone">{{getEmoji(itemone.tag)}}</span>
     </div>
     <div v-show="isShowOption" class="massage_temp_main">
-      <div class="im-option-item" @click="defaultMsgClick">
+      <div class="massage-item" v-for="(item,index) in massageItem" :key="index" @click="defaultMsgClickHandle(item.content)">
+        {{item.content}}
+      </div>
+      <!-- <div class="im-option-item" @click="defaultMsgClick">
         <div class="im-option-icon-item">
           <img :src="iMTempMsgIcon">
         </div>
@@ -130,7 +151,7 @@
           <img :src="iMTempReportIcon">
         </div>
         <div class="im-option-lebal-item">发起报备</div>
-      </div>
+      </div> -->
     </div>
     <audio :src="nowVoiceUrl" ref="audio" id="myaudio" hidden="true" preload="auto" v-show="false"/>
     <van-popup v-model="defaultMsgPopShow" position="bottom" class="default-msg-popup">
@@ -156,7 +177,25 @@ import * as types from '@/store/mutation-types'
 export default {
   name: 'customerdetails',
   data() {
-    return {
+    return {     
+      massageItem:[
+        {
+          content:"您好，请问有什么需要帮助？",
+        },
+        {
+          content:"您是准备用来投资还是自己住呢?",
+        },
+        {
+          content:"您看一下满意否，有合适的话我马上帮您约看",
+        },
+        {
+          content:"您什么时候有时间，我这边好提前安排",
+        },
+        {
+          content:"非常抱歉，我现在不方便打字，您有任何事情都可以给我留言，我会在方便的时候第一时间给您回复。",
+        },
+      ],
+      wechatAccount:"", //微信号
       cardDelFlag: 0,
       customBaseInfo: null,
       defaultMsgPopShow: false,
@@ -215,6 +254,7 @@ export default {
       this.getCustomBaseInfo(this.clientId)
 
       this.agentId = this.userInfo.agentId
+      this.wechatAccount = this.userInfo.wechatAccount||"catbea"
       this.avatar = this.userInfo.avatarUrl
       //加载emoji表情库
       this.emojiFactory = emoji.emojiFactory
@@ -233,6 +273,15 @@ export default {
     setToAccount('')
   },
   methods: {
+    //发送微信号
+    sendWxAccount(){
+      if(this.wechatAccount){
+        this.$toast("请先完善资料");
+        return ;
+      }
+      this.message = "我的微信号：<span style='color:#007AE6'>" + this.wechatAccount +"</span>";
+      this.sendMessage(1,'')
+    },
     blur() {
       // document.activeElement.scrollIntoViewIfNeeded(true)
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
@@ -243,7 +292,7 @@ export default {
     async getCustomBaseInfo(id) {
       const result = await customService.getClientInfo(id)
       this.customBaseInfo = result
-      this.clientMobile = this.customBaseInfo.clientMobile
+      this.clientMobile = this.customBaseInfo.clientMobile||"18018733546"
       this.nickName = this.customBaseInfo.clientRemarkName
       this.headImgUrl = this.customBaseInfo.avatarUrl
     },
@@ -272,6 +321,10 @@ export default {
       this.defaultMsgPopShow = true
     },
     phoneCall() {
+      if(!this.clientMobile){
+        this.$toast("客户未授权电话");
+        return ;
+      }
       window.location.href = 'tel:' + this.clientMobile
     },
     projectClick() {
@@ -715,6 +768,38 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.header-nav{
+  width: 100vw;
+  height: 54px;
+  padding-top: 5px;
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+  z-index: 20;
+  background: #fff;
+  .nav-item{  
+    flex: 1;
+    height: 42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    &:last-child{
+      margin-right: 0;
+    }
+    .nav-cion{
+      display: block;
+      width:24px;
+      height:24px;
+      margin-bottom: 4px;
+    }
+    span{
+      font-size: 10px;
+      color: #666666;
+    }
+  } 
+}
 .massage-info-body {
   position: absolute;
   top: 0;
@@ -815,7 +900,7 @@ export default {
     font-size: 15px;
 
     font-weight: 400;
-    color: rgba(51, 51, 51, 1);
+    color: #fff;
     line-height: 21px;
     margin-top: 10px;
     max-width: 60%;
@@ -828,7 +913,7 @@ export default {
     border-top-right-radius: 8px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-    background: #eee;
+    background: #017fff;
     padding: 10px;
   }
   .msg-customer-con-status {
@@ -911,7 +996,7 @@ export default {
     font-size: 15px;
 
     font-weight: 400;
-    color: rgba(255, 255, 255, 1);
+    color: #333;
     line-height: 21px;
     position: relative;
     border-top-left-radius: 8px;
@@ -919,7 +1004,7 @@ export default {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 10px;
-    background: #017fff;
+    background: #eee;
     text-align: left;
   }
   .msg-customer-con-me-status {
@@ -1198,15 +1283,34 @@ export default {
 }
 
 .massage_temp_main {
-  display: flex;
   height: 190px;
   position: fixed;
   bottom: 0;
   width: 100%;
-  margin-left: 0;
-  padding-left: 11px;
-  padding-top: 29px;
-  background-color: #f4f4f6;
+  padding: 8px 16px 0;
+  background-color: #fff;
+  overflow-y: auto;
+  .massage-item{
+    position: relative;
+    padding: 16px 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333;
+    &::after{
+      content: "";
+      width: 200%;
+      height: 1px;
+      border-bottom: 1px solid #E4E6F0;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform-origin: left bottom;
+      transform: scale(0.5);
+    }
+    &:last-child::after{
+      display: none;
+    }
+  }
   .im-option-item {
     margin-left: 18px;
     width: 66px;

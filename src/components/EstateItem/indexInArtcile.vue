@@ -6,9 +6,18 @@
           <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
         </div>
         <div class="right-box">
-          <h5 class="estate-name"><span class="free" v-if="+info.isFree">免费</span>{{info&&info.linkerName}}</h5>
+          <h5 class="estate-name">
+            <span class="estate-name-box">
+              <!-- <span class="free" v-if="info.isFree&&isInArticle!=1&&isInArticle!=0">免费</span> -->
+              {{info&&info.linkerName}}
+            </span> 
+            <span v-if="info.saleStatus==0&&isInArticle==1" class="house-sale-status" style="background: rgba(0, 122, 230, 1);color: #FFFFFF">热销中</span>
+            <span v-if="info.saleStatus==1&&isInArticle==1" class="house-sale-status" style="background: rgba(234, 77, 46, 0.1);color: #EA4D2E">即将发售</span>
+            <span v-if="info.saleStatus==3&&isInArticle==1" class="house-sale-status" style="background: rgba(143, 159, 177, 0.15);color: #5C5F66">售罄</span>
+          </h5>
           <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
-          <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
+          <tag-group class="tag-box" v-if="isInArticle==1" :arr="this.info&&this.info.projectTagArr" />
+          <tag-group class="tag-box" v-else :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
           <div class="estate-info">
             <p class="estate-price" v-if="info.price==='0 万元/套起' || info.price==0 || info.price=='0 元/㎡'">价格待定</p>
             <p class="estate-price" v-else>{{info&&info.price}}{{info&&info.priceUnit}}</p>
@@ -18,8 +27,7 @@
       </div>
       <div class="operate-box">
         <div class="share-icon" v-if="conf.op === 'share'" @click.stop="shareHandler">
-          <!-- <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i> -->
-          <p class="iconShare">分享</p>
+          <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
         </div>
       </div>
       <div class="commission-box" v-if="showRules&&info&&info.divisionRules">
@@ -27,7 +35,10 @@
         <span>{{info&&info.divisionRules | textOver}}</span>
       </div>
     </div>
-     
+    <div class="specialOffer" v-if="info.promotionalLanguage||info.sale">
+      <p class="offer1" v-if="info.promotionalLanguage"><img :src="offerTeIMg" width="16" height="16" alt="">{{info.promotionalLanguage}}</p>
+      <p class="offer2" v-if="info.sale"><img :src="offerHuiIMg" width="16" height="16" alt="">{{info.sale}}</p>
+    </div>
     <div class="house-activity-poster" v-if="showCard && info&&info.cpActivityVo">
       <img class="img" :src="info.cpActivityVo.imgUrl">
       <p class="info"><span class="title">{{info.cpActivityVo.name}}</span> <span class="btn">立即领取</span></p>
@@ -56,6 +67,8 @@ export default {
     TagGroup
   },
   data: () => ({
+    offerTeIMg:require('IMG/discover/te.png'),
+    offerHuiIMg:require('IMG/discover/hui.png'),
     panoramaImg: require('IMG/system/icon_panorama@2x.png'),
     commissionImg: require('IMG/user/collection/icon_commission@2x.png')
   }),
@@ -70,6 +83,29 @@ export default {
 }
 </script>
 <style lang="less">
+.specialOffer{
+  padding: 12px 16px;
+  border: 1px solid rgba(177, 189, 210, 0.5);
+  border-top: 0;
+  p{
+    display: flex;
+    display: -webkit-box-flex;
+    align-items: center;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-size: 14px;
+    img{
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
+    }
+  }
+  .offer1{color: #13284D;margin-bottom: 8px;}
+  .offer2{color:#EA4D2E}
+}
 .estate-item {
   position: relative;
   overflow: hidden;
@@ -102,27 +138,40 @@ export default {
       flex-basis: 225px;
       margin: 16px 16px 16px 0;
       > .estate-name {
+        display: flex;
+        justify-content: space-between;
+        font-family: PingFangSC-Semibold;
         font-size: 16px;
         font-weight: 600;
         color: #333333;
         padding-bottom: 8px;
-        max-width: 160px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         .free{
           display: inline-block;
           font-size: 10px;
           height:14px;
           line-height: 14px;
-          background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
+          background:rgba(234,77,46,1);
           color: #fff;
           border-radius: 2px;
           margin-right: 2px;
-          padding: 0 2px;
+          padding: 0 5px;
           vertical-align: top;
-          font-weight: 400;
         }
+        .estate-name-box{
+          // flex: 1;
+        }      
+        .house-sale-status{
+          display: inline-block;
+          white-space: nowrap;
+          font-size: 10px;
+          padding: 2px 4px;
+          border-radius: 1px;          
+          max-height: 16px;
+          line-height: 1.4;
+          color: #fff;
+          background: #EA4D2E
+        }
+
       }
       > .estate-location {
         font-size: 12px;
@@ -144,7 +193,7 @@ export default {
           display: inline-block;
         }
         > .estate-price {
-          color: #445166;
+          color: #ea4d2e;
           font-size: 15px;
           font-weight: 600;
           padding-right: 12px;
@@ -167,19 +216,6 @@ export default {
     > .share-icon {
       width: 100%;
       height: 100%;
-      .iconShare{
-        width: 54px;
-        height:30px;
-        line-height: 30px;
-        background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
-        box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
-        border-radius:15px;
-        font-size: 12px;
-        color: #fff;
-        text-align: center;
-        font-weight: 500;
-        margin-left: 10px;
-      }
     }
   }
   > .commission-box {

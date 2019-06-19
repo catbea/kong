@@ -24,8 +24,8 @@
       </div>
     </div>
     <div class="my-markey">
-      <div class="title" @click="goMyMarket">
-        我的楼盘<span> ({{myMarket.length}})</span>
+      <div class="title" @click="goMyMarket"  v-show="myMarket.length">
+        我的楼盘<span> ({{total}})</span>
       </div>
       <div class="market-list">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
@@ -39,8 +39,8 @@
               <p class="market-name"><span class="name">{{item.linkerName}}</span> <span class="iconShare" @click.stop="goShare(item)">分享</span></p>
               <p class="market-location">{{item.city}} {{item.county}}</p>
               <p class="market-tags"><span class="active">{{['热销中', '即将发售', '售罄'][item.saleStatus]}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
-              <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
-              <p class="market-price" v-else  @click.stop="popupHandle(item)"><span class="price">{{item.price}}{{item.priceUnit}}</span><span class="icon iconfont icon-more"></span></p>
+              <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item,index)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
+              <p class="market-price" v-else  @click.stop="popupHandle(item,index)"><span class="price">{{item.price}}{{item.priceUnit}}</span><span class="icon iconfont icon-more"></span></p>
             </div>
           </div>
         </van-list>
@@ -49,13 +49,14 @@
         <img src="../../assets/img/article/noarticle.png" alt="">
         <p>对不起，没有查询到相关楼盘！</p>
       </div>
-      <div style="padding-left:16px">
+    </div>
+    <div>
         <van-popup v-model="showPopup" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
           <ul>
             <li @click="goRenew(currentItem.linkerId)" v-show="!stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
             <li @click="goRenew(currentItem.linkerId)" v-show="stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
             <div v-if="pastShow">
-              <li class="color" @click="stickHandle(marketIndex)">
+              <li class="color" @click="stickHandle">
                 <span v-show="currentItem.recommand==0">置顶</span>
                 <span v-show="currentItem.recommand==10">取消置顶</span>
               </li>
@@ -68,7 +69,6 @@
           </ul>
         </van-popup>
       </div>
-    </div>
   </div>
 </template>
 <script>
@@ -88,13 +88,15 @@ export default {
       size: 10,
       current: 1,
       pages: 1,
+      total: '',
       nodataStatus: false,
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       showPopup: false,
       pastShow: '是否过期',
       stride: true,
       currentItem: {},
-      currentIndex: ''
+      currentIndex: '',
+      stickNum: 0
     }
   },
   computed: {
@@ -117,6 +119,7 @@ export default {
         // 加载状态结束
         this.finished = true
         this.loading = false
+        this.stickNumHandle()
       } else {
         this.getMyMarket()
       }
@@ -130,6 +133,7 @@ export default {
       }
       userService.getMyMarket(parma).then(res => {
         this.pages = res.pages
+        this.total = res.total
         if (this.current === 1) {
           this.myMarket = res.records
         } else {
@@ -177,23 +181,18 @@ export default {
     // 置顶
     popupHandle(item, index) {
       if (item.shelfFlag == 1) {
-        this.$dialog
-          .alert({
-            title: '非常抱歉',
-            message: '该楼盘已被下架或删除',
-            className: 'renew-Dialog',
-            confirmButtonText: '知道啦'
-          })
-          .then(() => {
-            // on close
-          })
+        this.$toast({
+          message: '该楼盘已被下架或删除!',
+          duration: 1000
+        })
       } else {
         //更多
         this.currentItem = item
         this.currentIndex = index
         this.time(item)
         this.strideYear(item)
-        this.showPopup = !this.showPopup
+        this.showPopup = true
+        this.$store.commit('TABBAR', { show: false })
       }
     },
     //比较时间错判断是否过期
@@ -251,6 +250,42 @@ export default {
         this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
       }
     },
+    stickNumHandle() {
+      //判断有没有超过3个置顶
+      for (let i = 0; i < this.myMarket.length; i++) {
+        const element = this.myMarket[i]
+        if (element.recommand == 10) {
+          this.stickNum++
+        }
+      }
+    },
+    // 楼盘置顶
+    stickHandle() {
+      if (this.currentItem.recommand == 10) {
+        this.recommandFalseHandle()
+      } else {
+        this.recommandTrueHandle()
+      }
+    },
+    //-----置顶操作
+    recommandTrueHandle() {
+      this.stickNum++
+      this.myMarket[this.currentIndex].recommand = '10'
+      this.myMarket.unshift(this.myMarket[this.currentIndex])
+      this.myMarket.splice(this.currentIndex + 1, 1)
+      this.changeUserStatus(this.currentItem.linkerId, 40, 10) //改置顶状态
+      this.$toast({duration: 1000,message: '置顶成功'})
+      this.closeHandle()
+    },
+    recommandFalseHandle() {
+      this.stickNum--
+      this.myMarket[this.currentIndex].recommand = '0'
+      this.myMarket.push(this.myMarket[this.currentIndex])
+      this.myMarket.splice(this.currentIndex, 1)
+      this.changeUserStatus(this.currentItem.linkerId, 40, 0) //改置顶状态
+      this.$toast({duration: 1000,message: '取消置顶成功'})
+      this.closeHandle()
+    },
     exhibitionHandle() {
       //关闭楼盘展示
       this.$dialog
@@ -259,9 +294,9 @@ export default {
           message: '关闭该楼盘展示将取消推荐和置顶状态'
         })
         .then(() => {
-          this.showPopup = !this.showPopup
+          this.closeHandle()
           this.changeUserStatus(this.currentItem.linkerId, 30, 1) //改为不展示
-          this.myMarket.splice(currentIndex, 1)
+          this.myMarket.splice(this.currentIndex, 1)
           this.$toast({
             duration: 800,
             message: '关闭展示成功'
@@ -269,7 +304,8 @@ export default {
         })
     },
     closeHandle() {
-      this.showPopup = !this.showPopup
+      this.showPopup = false
+      this.$store.commit('TABBAR', { show: true })
     },
     async changeUserStatus(linkerId, operationType, status) {
       await userService.changeMarketData(linkerId, operationType, status)
@@ -289,7 +325,7 @@ export default {
 .market-page {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  position: relative;
   .market-classify {
     margin: 20px 0;
     font-size: 10px;
@@ -432,6 +468,9 @@ export default {
     width: 100%;
     // height: 250px;
     border-radius: 0;
+    left: 0;
+    bottom: 0;
+    transform: translate3d(0,0,0);
     ul {
       li {
         width: 375px;
@@ -478,6 +517,6 @@ export default {
         height: 24px;
         padding-top: 2px;
       }
-  }
+    }
   }
 </style>

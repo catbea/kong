@@ -1,6 +1,6 @@
 <template>
   <div class="user-market-page">
-    <div class="user-market-page-box">
+    <div class="user-market-page-box scale-1px-bottom">
       <div class="user-market-page-box-top" @click="skipMarketDetail(dataArr.linkerId)">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <!-- <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p> -->
@@ -40,7 +40,7 @@
           </li>
         </ul>
       </div>
-      <div class="channel-box scale-1px" v-if="+dataArr.isFree">
+      <div class="channel-box" v-if="+dataArr.isFree">
         <span @click="showChannelFn" v-if="!dataArr.channelId && dataArr.agentType <= 0">选择渠道</span>
         <span @click="goChangeChannel" v-if="dataArr.channelId && dataArr.agentType <= 0">切换渠道</span>
         <span @click="showTaskFn">任务({{dataArr.taskQuota || 0}})</span>
@@ -456,7 +456,7 @@ export default {
     margin-top: 16px;
     padding: 16px 16px 0 16px;
     width: 343px;
-    box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
+    // box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
     border-radius: 10px;
     display: flex;
     flex-direction: column;

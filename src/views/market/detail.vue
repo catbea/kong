@@ -493,9 +493,9 @@
         </div>
       </div>
       <!-- poster !posterRemind&&info&&info.posterImgUrl != ''-->
-      <div class="poster-container" ref="posterContainer" v-show="posterShow">
+      <div class="poster-container" ref="posterContainer" v-show="posterShow" @click="hidePosterShow">
         <div class="cnt">
-          <div class="bg_img poster-img">
+          <div class="bg_img poster-img" @click.stop="">
             <img :src="info.activityImgUrl" alt="" srcset="">
             <div class="bg_img close-icon" @click.stop="hidePosterShow">
               <img :src="closeIcon" alt="">
@@ -2606,6 +2606,8 @@ export default {
     top: 50%;
     margin-left: -145px;
     margin-top: -250px;
+    -webkit-user-select:none;
+    user-select:none;
     .poster-img {
       position: relative;
       width: 101%;
