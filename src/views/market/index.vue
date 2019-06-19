@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="my-markey">
-      <div class="title" @click="goMyMarket">
+      <div class="title" @click="goMyMarket"  v-show="myMarket.length">
         我的楼盘<span> ({{total}})</span>
       </div>
       <div class="market-list">
