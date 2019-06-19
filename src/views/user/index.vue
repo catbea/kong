@@ -3,33 +3,10 @@
     <!-- 顶部个人信息及vip信息 -->
     <business-card @showPopup="this.showPopp"  @selectedShortcut="shortcut"/>
     <div class="business-status-con">
-      <!-- <div class="business-status-title">个人中心</div> -->
-      <!-- <div class="modify-child"> -->
-        <!-- <div v-for="(item,index) in headIcons" :key="index" class="head-img" @click="selectedHead(item,index)"> 
-           <svg class="icon" aria-hidden="true">
-              <use :xlink:href="item.Icon"></use>
-           </svg>
-          <p class="grou1Icon-p">{{item.title}}</p>
-        </div> -->
-        <!-- 邀请有礼 -->
-        <!-- <div v-if="parseInt(userInfo.ifView)===1" class="head-img" @click="invitationHead"> 
-           <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-me_gift"></use>
-           </svg>
-          <p class="grou1Icon-p">邀请有礼</p>
-          <p class="politeness">有礼</p>
-        </div> -->
-        <!-- 拓客关系 -->
-        <!-- <div class="relation head-img" @click="relationHandle"> 
-           <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-mi_data"></use>
-           </svg>
-          <p class="grou1Icon-p">拓客关系</p>
-        </div>  -->
       <!-- </div> --> 
       <div class="div_view">
         <ul class="ul_view">
-          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===5?'li':'li_view'">
+          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===6?'li':'li_view'">
             <div>
               <svg class="icon" aria-hidden="true">
                 <use :xlink:href="item.Icon"></use>
@@ -46,41 +23,6 @@
           </li>
         </ul>
       </div>  
-    </div>
-    <!--3.0.9迭代-->
-    <div class="modify-childs">
-        <!-- 我的点评 -->
-        <!-- <div class="head-imgs" @click="jumpToRemark">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-me_review"></use>
-          </svg>
-          <p class="grou1Icon-p">我的点评</p>
-        </div> -->
-        <!-- 我的问答 -->  
-        <!-- <div class="head-imgs" @click="jumpToAnswers">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-me_ask"></use>
-          </svg>
-          <p class="grou1Icon-p">我的问答</p>
-        </div> -->
-    </div>
-    <!---->
-    <div class="business-status-tow">
-      <!-- <div class="business-status-title">我的服务</div> -->
-      <div class="modify-child">
-        <!-- <div v-for="(img,index) in btnIcons" :key="index" class="head-img" @click="selectedHeads(index)"> 
-          <svg class="icon" aria-hidden="true">
-              <use :xlink:href="img.Icon"></use>
-           </svg>
-          <p class="grou1Icon-p">{{img.title}}</p>
-        </div> -->
-        <!-- <div class="head-img" onclick="qimoChatClick();">
-          <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-me_Customer"></use>
-           </svg>
-          <p class="grou1Icon-p">在线咨询</p>
-        </div> -->
-      </div>
     </div>
     <van-popup class="popup-view" v-model="openPopup" :click-overlay="overlayClose">
       <div class="close-titile">
@@ -107,21 +49,13 @@ export default {
     consultImg: require('IMG/user/Group8@2x.png'),
     closeImg: require('IMG/user/close_popup.png'),
     headIcons: [
-      // { title: '我的楼盘', Img: require('IMG/user/mm@2x.png'), Icon: '#icon-me_building' },
-      // { title: '我的收藏', Img: require('IMG/user/Group1@2x.png'), Icon: '#icon-me_collection' },
-      // { title: '我的写一写', Img: require('IMG/user/Group3@2x.png'), Icon: '#icon-me_write' },
-      // { title: '我的报备', Img: require('IMG/user/Group6@2x.png'), Icon: '#icon-me_Reported' },
-      // { title: '我的优惠券', Img: require('IMG/user/Group5@2x.png'), Icon: '#icon-me_coupons' },
-      // { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-me_order' }, 
+      { title: '我的问答', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-wenda' }, 
       { title: '我的点评', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-dianping' }, 
       { title: '优惠券', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-youhuiquan' }, 
       { title: '消费账单', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-dingdan' }, 
       { title: '邀请有礼', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-yaoqingyouli' }, 
       { title: '拓客关系', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-guanxitu' }, 
-      { title: '设置', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-shezhi' }, 
-
-
-      // { title: '邀请有礼', Img: require('IMG/user/Group4@2x.png'),Icon:'' }
+      { title: '设置', Img: require('IMG/user/Group2@2x.png'), Icon: '#icon-shezhi' },  
     ],
     btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '欢迎语设置', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }, {title: 'AI客服', Img: require('IMG/user/me_Customer.png'), Icon: '#icon-me_Customer'}],
     openPopup: false,
@@ -134,20 +68,11 @@ export default {
     this.getVipAndPackage()
     
   },
-  // watch: {
-  //   '$route' () {
-  //     window.location.reload()
-  //   }
-  // },
   computed: {
     ...mapGetters(['userInfo'])
   },
   methods: {
-    relationHandle() {
-      //分享插件
-      // let host = process.env.VUE_APP_APP_URL
-      // window.open(`${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`,'_blank')
-      // window.location.href = `${host}panorama-helper/static/customerAnalysis.html?agentId=${this.userInfo.agentId}&enterpriseId=${this.userInfo.enterpriseId}`
+    relationHandle() { 
       this.$router.push({path: '/user/talk'})
     },
     enterSharePage() {
@@ -186,7 +111,7 @@ export default {
           this.$router.push({ name: 'historicalArticles', query: { typeCode: '2' } })
           break
         case 2:
-          this.$router.push('/user/questionAnswers')
+          this.$router.push('/user/learn')
           break
         case 3:
           this.enterSharePage()
@@ -195,41 +120,25 @@ export default {
     },
     selectedHead(item, index) {
       switch (index) {
-        // case 0:
-        //   this.$router.push('/user/myMarket')
-        //   break
-        // case 1:
-        //   this.$router.push('/user/collection/myCollection')
-        //   break
-        // case 2:
-        //   // this.$router.push('/user/articles/historicalArticles')
-        //   this.$router.push({ name: 'historicalArticles', query: { typeCode: '2' } })
-        //   break
-        // case 3:
-        //   this.$router.push('/user/myReport')
-        //   break
-        // case 4:
-        //   this.$router.push('/user/myCoupon')
-        //   break
-        // case 5:
-        //   this.$router.push('/user/consumption/consumptionBill')
-        //   break 
         case 0:
-          this.$router.push('/user/remark')
+          this.$router.push('/user/questionAnswers')
           break
         case 1:
+          this.$router.push('/user/remark')
+          break
+        case 2:
           this.$router.push('/user/myCoupon')
           break
-        case 2: 
+        case 3: 
           this.$router.push('/user/consumption/consumptionBill')
           break
-        case 3:
+        case 4:
           this.$router.push('/user/invitation/awWelfare')
           break
-        case 4:
+        case 5:
           this.$router.push('/user/talk')
           break
-        case 5:
+        case 6:
           this.$router.push('/user/set')
           break 
       }
@@ -243,22 +152,6 @@ export default {
     jumpToAnswers () {
       this.$router.push('/user/questionAnswers')
     },
-    // selectedHeads(index) {
-    //   switch (index) {
-    //     case 0:
-    //       this.$router.push('/user/noDisturb')
-    //       break
-    //     case 1:
-    //       this.$router.push('/user/reply')
-    //       break
-    //     case 2:
-    //       window.location = 'https://support.qq.com/product/31776'
-    //       break
-    //     case 3:
-    //       this.$router.push('/user/ai')
-    //       break
-    //   }
-    // }
   },
   beforeDestroy () {
     // qimosdk.closeChatBox();
@@ -331,25 +224,28 @@ export default {
     line-height: 28px;
     padding: 20px 16px 18px; 
   }
-  .business-status-con {
-    background: #fff;
-    // height: 218px;
-    margin-top: 10px;
+  .business-status-con { 
+    margin-top: 6px;
     .div_view {
-      background: #fff; 
+      // background: #fff; 
       .ul_view {
         list-style:none;
         .li_view { 
           width: 100%;
           height: 52px;
           display: flex; 
+          background: #fff; 
           div:nth-child(1) {
             width: 49px;
-            height: 100%;
+            height: 100%; 
           }
           div:nth-child(2) {
             width: 78%;
             height: 100%;
+            border-bottom: 1px solid #E2E8EE;
+          }
+          div:nth-child(3) {
+            border-bottom: 1px solid #E2E8EE;
           }
           .icon{
             margin-left: 16px;
@@ -358,79 +254,11 @@ export default {
         .li { 
           width: 100%;
           height: 52px;
-          margin-top:10px;
+          margin-top:6px;
           display: flex;
         }
       }
     }
-  }
-  .business-status-tow {
-    background: #fff;
-    height: 140px;
-    margin-top: 10px;
-  }
-  .modify-child {
-    .head-img {
-      float: left;
-      margin-left: 16px;
-      margin-bottom: 16px;
-      height: 60px;
-      width: 65px;
-      position: relative;
-      margin-right: 10px;
-      text-align: center;
-      img {
-        height: 24px;
-        width: 24px;
-      }
-      > .grou1Icon-p {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(102, 102, 102, 1);
-        line-height: 17px;
-        margin-top: 8px;
-      }
-      .politeness {
-        position: absolute;
-        right: -7px;
-        top: -5px;
-        width: 41px;
-        height: 22.3px;
-        line-height: 21.3px;
-        background: rgba(234, 77, 46, 1);
-        border-radius: 10.6px;
-        font-size: 12px;
-        transform: scale(0.75);
-        font-family: PingFangSC-Regular;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 1);
-      }
-    }
-  }
-  .modify-childs {
-    background: #fff;
-    display: flex;
-    flex-direction: row;
-    .head-imgs {
-      margin-left: 16px;
-      margin-bottom: 16px;
-      height: 60px;
-      width: 65px;
-      position: relative;
-      margin-right: 10px;
-      text-align: center;
-      img {
-        height: 24px;
-        width: 24px;
-      }
-      > .grou1Icon-p {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(102, 102, 102, 1);
-        line-height: 17px;
-        margin-top: 8px;
-      }
-    }
-  }
+  } 
 }
 </style>

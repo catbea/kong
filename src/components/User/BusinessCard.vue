@@ -1,16 +1,7 @@
 <template>
   <div class="business-card-container">
     <div class="business-card-box">
-      <div class="bg_img info-box" >
-        <!-- 左上二维码形状,点击出名片 -->
-        <!-- <i class="icon iconfont icon-me_Qrcode qr-icon" @click.stop="showQrCode"/> -->
-        <!-- 右上分享 -->
-        <!-- <div class="share-box" @click.stop="shareUserCard">
-          <i class="icon iconfont icon-Building_list_share share-icon"/>
-          <span class="share-text">分享</span>
-        </div> -->
-        <!-- 用户avatar -->
-        <!-- @click="editCLickHandler" -->
+      <div class="bg_img info-box" > 
         <div @click="editCLickHandler" class="info">
           <avatar class="user-avatar" :avatar="userInfo.avatarUrl" />
           <div class="user-info-content">
@@ -26,23 +17,8 @@
                   <use xlink:href="#icon-arrow"></use>
                 </svg> 
               </p>  
-
             </div> 
-            
-            <!-- 公司、标签、签名 -->
-            <div class="user-company-box">
-              <!-- <p class="campany-view">{{userInfo.distributorName}}</p> -->
-              <!-- <p class="content-left-labe">
-                <a class="left-labe-css" v-for="(item,index) in newLabelList" :key="index">{{item.labelName}}</a>
-              </p>
-              <p class="content-left-remar">{{userInfo.signature}}</p> -->
-            </div>
-          </div>
-          <!-- <div> 
-            <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;position:absolute;">
-              <use xlink:href="#icon-arrow"></use>
-            </svg>
-          </div> -->
+          </div> 
         </div>
         
         <!-- 快捷入口 -->
@@ -54,11 +30,8 @@
             <p class="grou1Icon-p" :class="index === 3?'grou1Icon':'grou1Icon-p'">{{img.title}}</p>
           </div>
         </div>
-      </div>
-      
-      <!-- <img class="modify-img" :src="modifyImg"> -->
-    </div>
-    <!-- <div class="business-status-title">优惠服务</div> -->
+      </div> 
+    </div> 
     <div class="business-status-box">
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
@@ -71,12 +44,7 @@
           <span style="font-size:10px;">开通更多</span>
           <img src="../../assets/img/user/arrow2@2x.png" alt="">
         </p>
-      </router-link>
-      <!-- <router-link tag="div" to="/user/mypreference/openPreference" class="status-info-right">
-        <img :src="discountIcon">
-        <p class="info-title welfare-status">特惠套餐</p>
-        <p class="info-desc welfare-desc">{{vipPackage}}</p>
-      </router-link> -->
+      </router-link> 
     </div>
   </div>
 </template>
@@ -98,7 +66,7 @@ export default {
     shortcutIcons:[
       { title: '我的报备', Icon: '#icon-wodebaobei' }, 
       { title: '我的写一写', Icon: '#icon-wodexieyixie' }, 
-      { title: '我的问答', Icon: '#icon-wodewenda' }, 
+      { title: '培训学院', Icon: '#icon-peixunxueyuan' }, 
       { title: '名片分享', Icon: '#icon-fenxiang' }, 
     ]
   }),
@@ -157,13 +125,11 @@ export default {
 </script>   
 <style lang="less">
 .business-card-container {
-  background: #fff;
+  // background: #fff;
   > .business-card-box {
     > .info-box {
       position: relative;
-      height: 190px;
-      // margin: 12px 16px;
-      // border-radius: 10px;
+      height: 190px; 
       background: #ffffff;
       > .qr-icon {
         position: absolute;
@@ -215,40 +181,17 @@ export default {
               font-size: 12px;
             }
           }
-          > .user-company-box {
-            color: #aeb1c2;
-            line-height: 1.5;
-            font-size: 12px;
-            margin-top: 36px;
-            > .content-left-labe {
-              margin-top: 8px;
-              > .left-labe-css {
-                background: rgba(143, 159, 177, 0.15);
-                padding: 1px 3px;
-                border-radius: 4px;
-                color: #aeb1c2;
-                margin: 3px 5px 3px 0;
-                transform: scale(0.8);
-              }
-            }
-            > .content-left-remar {
-              margin-top: 8px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
-          }
         }
       } 
       >.shortcut-box {
         display: flex;
         justify-content: space-around;
-        .head-img {
-          // float: left;
+            margin-top: 36px;
+        .head-img { 
           margin-left: 16px;
           margin-bottom: 16px;
           height: 60px;
-          width: 65px;
-          // position: relative;
+          width: 65px; 
           margin-right: 10px;
           text-align: center;
           .icon {
@@ -267,12 +210,7 @@ export default {
           }
         }
       }
-    }
-    > .modify-img {
-      width: 100%;
-      position: absolute;
-      margin-top: -40px;
-    }
+    } 
   }
 
   > .business-status-title {
@@ -284,21 +222,17 @@ export default {
 
   > .business-status-box {
     background-color: #ffffff;
-    width: 100%;
-    // padding-bottom: 20px;
+    width: 100%; 
     background-size: contain;
     background-repeat: no-repeat;
     z-index: 10;
     box-sizing: content-box;
     > div {
-      position: relative;
-      // display: inline-block;
-      // width: 167px;
-      height: 80px;
-      // background: #f8f8f8;
+      position: relative; 
+      height: 80px; 
       background: #ffffff;
       border-radius: 3px;
-      margin-top: 5px;
+      margin-top: 6px;
       > img {
         margin: 18px 10px;
         width: 46px;
@@ -349,8 +283,7 @@ export default {
         }
       }
     }
-    > .status-info-left {
-      // margin: 0 15px;
+    > .status-info-left { 
       > .info-desc {
         font-size: 10px;
         overflow: hidden;

@@ -346,4 +346,64 @@ export default [
       }
     }
   },
+  // 所有楼盘
+  {
+    path: '/market/classify/allmarket',
+    name: 'all-market',
+    component: resolve => require(['@/views/market/allMarket.vue'], resolve),
+    meta: {
+      title: '全部楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  // 我的楼盘
+  {
+    path: '/market/classify/mymarket',
+    name: 'my-market',
+    component: resolve => require(['@/views/market/myMarket.vue'], resolve),
+    meta: {
+      title: '我的楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  // 免费楼盘
+  {
+    path: '/market/classify/freemarket',
+    name: 'free-market',
+    component: resolve => require(['@/views/market/freeMarket.vue'], resolve),
+    meta: {
+      title: '免费楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  // 热门楼盘
+  {
+    path: '/market/classify/hotmarket',
+    name: 'hot-market',
+    component: resolve => require(['@/views/market/hotMarket.vue'], resolve),
+    meta: {
+      title: '热门楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  // 地图找房
+  {
+    path: '/market/classify/mapmarket',
+    name: 'hot-market',
+    component: resolve => require(['@/views/market/mapMarket.vue'], resolve),
+    meta: {
+      title: '地图找房',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]

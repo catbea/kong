@@ -112,6 +112,25 @@ export default {
         keyboardShortcuts: this.conf.keyboardShortcuts
       })
       this.updateMark()
+      this.setIcon()
+    },
+    setIcon () {
+      let icon = require('IMG/mapSearch/map.png')
+      //创建marker
+      var marker = new qq.maps.Marker({
+          position: new qq.maps.LatLng(this.latLng.lat, this.latLng.lng),
+          map: this.map
+      })
+      var anchor = new qq.maps.Point(0, 39),
+        size = new qq.maps.Size(73, 39),
+        origin = new qq.maps.Point(0, 0),
+        markerIcon = new qq.maps.MarkerImage(
+          icon,
+          size,
+          origin,
+          anchor
+        )
+      marker.setIcon(markerIcon)
     },
     updateMark() {
       // clean 当前
@@ -131,12 +150,14 @@ export default {
       }
     },
     markMaker(icon) {
-      let scaleSize = new qq.maps.Size(32, 30)
-      for (let temp of this.data.houseAroundList) {
+      let scaleSize = new qq.maps.Size(200, 34)
+      let arr = this.data.houseAroundList.slice(0,5)
+      for (let temp of arr) {
         let marker = new qq.maps.Marker({
-          icon: new qq.maps.MarkerImage(icon, null, null, null, scaleSize),
+          icon: new qq.maps.MarkerImage('', null, null, null, scaleSize),
           map: this.map,
-          position: new qq.maps.LatLng(temp.lat, temp.lng)
+          position: new qq.maps.LatLng(temp.lat, temp.lng),
+          decoration: new qq.maps.MarkerDecoration(`<div class="text">${temp.name} <span class="arrow"></span></div>`, new qq.maps.Point(0, -5))
         })
         this.markList.push(marker)
       }
@@ -153,9 +174,30 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 #map-container {
-  width: 100%;
+  min-width: 100%;
   height: 100%;
+  font-size: 10px;
+  color: #fff;
+  .text{
+    margin: auto;
+    padding: 0 10px;
+    height: 17px;
+    line-height: 17px;
+    text-align: center;
+    background-color: #007AE6;
+    border-radius: 20px;
+    position: relative;
+    .arrow{
+      position: absolute;
+      left: 45%;
+      width: 0; 
+      height: 0;
+      border-width: 5px;
+      border-style: solid;
+      border-color:#007AE6 transparent transparent transparent;
+    }
+  }
 }
 </style>
