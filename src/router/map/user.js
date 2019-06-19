@@ -554,4 +554,15 @@ export default [
       }
     }
   },
+  {
+    path: '/user/learn/thirdPage/pdf',
+    name: 'pdf',
+    component: resolve => require(['@/views/user/learn/thirdPage/pdf.vue'], resolve),
+    meta: {
+      title: 'pdf',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]

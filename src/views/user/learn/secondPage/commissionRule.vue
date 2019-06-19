@@ -12,7 +12,7 @@
                 </div>
                 <div class="li_right">
                     <div class="right_title">
-                        {{item.name}}
+                        {{item.text}}
                     </div>
                     <div class="right_info">
                         <div style="font-size:10px;">更新时间：{{item.name}}</div>
@@ -21,8 +21,7 @@
                 </div> 
             </li>
         </ul>
-                <iframe id="eapPdf" :data-url="url" src="http://192.168.17.204/static/pdf/index.html"  :style="{'height':height+'px', 'width': width+'px'}" > </iframe>
-<!-- http://192.168.17.204/static/pdf/1.pdf -->
+                <!-- http://192.168.17.204/static/pdf/1.pdf -->
     </div> 
 </template>
 
@@ -34,32 +33,19 @@ export default {
     },
     data:() =>({
         ruleList:[
-            {name:'pdf'},
-            {name:'inin'},
+            {name:'pdf',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
+            {name:'inin',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
         ],
-        isTpye:1,
-        height: document.documentElement.clientHeight - 10,
-        width: document.documentElement.clientWidth - 15,
-        url:""
+        isTpye:1, 
     }),
     mounted() { 
-        this.getFile();
+        // this.getFile();
+        // if(this.isTpye == 1) { 
+        //     document.querySelector('.left_icon').style.backgroundColor = 'red';
+        // }
     },
     methods: {
-        getFile() {
-            const url ='http://720ljq2-10037467.file.myqcloud.com/linker/project/application/8d0ca0d59ed145af9696cd44363509a6.pdf'
-            let $this = this;
-            let xhr = new XMLHttpRequest();
-            xhr.open("get", url , true);
-            xhr.responseType = "blob";
-            xhr.onload = function() {
-            if (this.status == 200) {
-                let blob = new Blob([this.response]);
-                $this.url = URL.createObjectURL(blob);
-                }
-            };
-            xhr.send();
-        }
+        
     }
 }
 </script>
@@ -136,7 +122,7 @@ export default {
                 width: 62%;
                 .right_title {
                     height: 42px;
-                    font-size: 20px;
+                    font-size: 14px;
                     color: #333333;
                     font-weight: bold;
                 }
