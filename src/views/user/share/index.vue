@@ -659,7 +659,7 @@ export default {
       .type2-cnt{
         height: 100%;
         width: 100%;
-        background: url('../../../assets/img/user/share/bg3.png') no-repeat center;
+        background: url('../../../assets/img/user/share/bg3.png') repeat left top;
       }
       .logo{
         padding-top: 14px;
@@ -715,6 +715,7 @@ export default {
         img{
           width: 64px;
           height: 64px;
+          border-radius: 40%;
         }
         p{
           height:14px;
@@ -734,7 +735,7 @@ export default {
       .type3-cnt{
         height: 100%;
         width: 100%;
-        background: url('../../../assets/img/user/share/bg2.png') no-repeat center;
+        background: url('../../../assets/img/user/share/bg2.png') repeat left top;
         text-align: center;
       }
       .signature{
@@ -780,6 +781,7 @@ export default {
         img{
           width: 64px;
           height: 64px;
+          border-radius: 40%;
         }
         p{
           height:14px;
