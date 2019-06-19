@@ -21,7 +21,7 @@
           v-if="!yes"
           :class="{screen:flag,marginFlxed:searchBar}"
         >
-          <market-describe v-for="(item,index) in freeMarketList" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="true"></market-describe>
+          <market-describe v-for="(item,index) in freeMarketList" :showFree="false" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="true"></market-describe>
         </van-list>
         <div v-show="yes" class="notMarket">
           <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
