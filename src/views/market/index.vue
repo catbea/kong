@@ -1,322 +1,522 @@
 <template>
   <div class="market-page">
-    <!-- <div style="height:192px;width:300px;"></div> -->
-    <div class="fixed">
-      <div class="van-hairline--bottom">
-      <div class="search-box">
-        <div class="search-comp">
-          <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>
-        </div>
-      </div>
-      </div>
-      <screen v-model="projectFilters" :local="this.selectedCity"></screen>
+    <div class="search-box">
+      <van-search v-model.trim="searchValue" placeholder="请输入楼盘名称" background="#fff" @click.native="goSearch">
+        <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
+      </van-search>
     </div>
-    <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open>
-      <div class="all-market">
-        <van-list ref="list" v-model="loading" :finished="finished" :finished-text="'没有更多了'" :offset="500" @load="getProjectList">
-          <market-describe v-for="(item,index) in marketList" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="borderBottom" @updateMarket="updateMarket(index)"></market-describe>
+    <div class="market-classify">
+      <div class="market-classify-item" @click="goPage('/market/classify/allmarket')">
+        <img src="../../assets/img/market/classify/classify1.png" alt="">
+        <p>全部楼盘</p>
+      </div>
+      <div class="market-classify-item"  @click="goPage('/market/classify/freemarket')">
+        <img src="../../assets/img/market/classify/classify2.png" alt="">
+        <p>免费楼盘</p>
+      </div>
+      <div class="market-classify-item"  @click="goPage('/market/classify/hotmarket')">
+        <img src="../../assets/img/market/classify/classify3.png" alt="">
+        <p>热门楼盘</p>
+      </div>
+      <div class="market-classify-item"  @click="goPage('/market/classify/mapmarket')">
+        <img src="../../assets/img/market/classify/classify4.png" alt="">
+        <p>地图找房</p>
+      </div>
+    </div>
+    <div class="my-markey">
+      <div class="title" @click="goMyMarket"  v-show="myMarket.length">
+        我的楼盘<span> ({{total}})</span>
+      </div>
+      <div class="market-list">
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <div class="market-item" v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
+            <div class="market-img">
+              <img class="headimg" :src="item.linkerUrl" alt="">
+              <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
+              <div v-if="item.cpActivityVo" class="coupon">卡券</div>
+            </div>
+            <div class="market-info">
+              <p class="market-name"><span class="name">{{item.linkerName}}</span> <span class="iconShare" @click.stop="goShare(item)">分享</span></p>
+              <p class="market-location">{{item.city}} {{item.county}}</p>
+              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '售罄'][item.saleStatus]}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
+              <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item,index)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
+              <p class="market-price" v-else  @click.stop="popupHandle(item,index)"><span class="price">{{item.price}}{{item.priceUnit}}</span><span class="icon iconfont icon-more"></span></p>
+            </div>
+          </div>
         </van-list>
       </div>
-      <div class="hot-recommend" v-if="!haveData&&hotResult.length!=0">
-        <title-bar class="title-container" :conf="titleBarConf"/>
-        <market-describe
-          v-for="(item,index) in hotResult"
-          :key="index"
-          :itemInfo="item"
-          @openReturnHandle="opClickHandler(item)"
-          @skipDetail="skipDetail(item)"
-        ></market-describe>
+      <div class="nodata" v-show="!myMarket.length && nodataStatus">
+        <img src="../../assets/img/article/noarticle.png" alt="">
+        <p>对不起，没有查询到相关楼盘！</p>
+      </div>
+    </div>
+    <div>
+        <van-popup v-model="showPopup" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
+          <ul>
+            <li @click="goRenew(currentItem.linkerId)" v-show="!stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+            <li @click="goRenew(currentItem.linkerId)" v-show="stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
+            <div v-if="pastShow">
+              <li class="color" @click="stickHandle">
+                <span v-show="currentItem.recommand==0">置顶</span>
+                <span v-show="currentItem.recommand==10">取消置顶</span>
+              </li>
+              <li @click="exhibitionHandle">
+                <span v-show="currentItem.displayFlag==0">关闭楼盘展示</span>
+                <span v-show="currentItem.displayFlag!=0">开启楼盘展示</span>
+              </li>
+            </div>
+            <li class="cancel" @click="closeHandle">取消</li>
+          </ul>
+        </van-popup>
       </div>
   </div>
 </template>
 <script>
 import Search from 'COMP/Search'
-import Screen from 'COMP/Screen/'
-import MarketDescribe from 'COMP/MarketDescribe/'
-import TitleBar from 'COMP/TitleBar/'
-import AlreadyOpen from 'COMP/Market/AlreadyOpen/'
-import marketService from 'SERVICE/marketService'
-import userService from '@/services/userService'
-import screenFilterHelper from '@/utils/screenFilterHelper'
 import { mapGetters } from 'vuex'
+import userService from 'SERVICE/userService'
 export default {
   components: {
-    Search,
-    Screen,
-    MarketDescribe,
-    TitleBar,
-    AlreadyOpen
+    Search
+  },
+  data () {
+    return {
+      searchValue: '',
+      myMarket: [],
+      loading: false,
+      finished: false,
+      size: 10,
+      current: 1,
+      pages: 1,
+      total: '',
+      nodataStatus: false,
+      panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
+      showPopup: false,
+      pastShow: '是否过期',
+      stride: true,
+      currentItem: {},
+      currentIndex: '',
+      stickNum: 0
+    }
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
   },
-  data: () => ({
-    haveData: true,
-    hotResult: [],
-    titleBarConf: {
-      title: '热门楼盘'
-    },
-    selectedCity: '',
-    broker: 705,
-    marketList: [],
-    page: 1,
-    pageSize: 10,
-    loading: false,
-    finished: false,
-    projectFilters: {},
-    searchContent: {
-      siteText: '深圳市',
-      placeholder: '请输入楼盘名称'
-    },
-    value: '',
-    locationIcon: require('IMG/market/juxing.png'),
-    agentIdInfo: null,
-    resInfo: null,
-    borderBottom: true,
-    containerHeight: '0',
-    vipInfo: {},
-    historyCity: '',
-    scrollTop: 0
-  }),
-  watch: {
-    projectFilters: {
-      handler(val) {
-        this.page = 1
-        this.marketList = []
-        this.loading = false
-        this.finished = false
-        setTimeout(() => {
-          this.$refs.list.check()
-        }, 100)
-      },
-      deep: true
-    }
-  },
-  mounted() {},
-  async created() {
-    let data = window.localStorage.getItem('marketCity') ? JSON.parse(window.localStorage.getItem('marketCity')) : ''
-    if (data) {
-      this.historyCity = data
-      this.selectedCity = data.city || this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
-    } else {
-      this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
-    }
-    this.searchContent.siteText = this.selectedCity || '全国'
-    // 判断青岛用户
-    if (this.userInfo.enterpriseId == 92 || this.userInfo.enterpriseId == 93) {
-      this.selectedCity = '青岛市'
-      this.searchContent.siteText = '青岛市'
-      if (data) {
-        data.city = '青岛市'
-        window.localStorage.setItem('marketCity',JSON.stringify(data))
-      }
-    }
-    await this.getVipInfo()
-    this.getBrokerInfo()
-    await this.hotMarketHandle()
-    let markList = window.sessionStorage.getItem('marketList')
-    if (markList) {
-      let item = JSON.parse(markList)
-      this.loading = item.loading
-      this.finished = item.finished
-      this.marketList = item.marketList
-      this.page = item.page
-      this.scrollTop = item.scrollTop
-      window.sessionStorage.removeItem('marketList')
-      this.$nextTick(() => {
-        document.querySelector('.router-view').scrollTop = this.scrollTop
-      })
-    }
+  created () {
   },
   methods: {
-    touchmove() {},
-    // 更新数据
-    updateMarket (index) {
-      let option = this.marketList[index]
-      let current = Math.ceil((index+1) / this.pageSize)
-      let param = { current: current, size: this.pageSize }
-      //组装检索条件
-      let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
-      let _filters = screenFilterHelper(this.projectName, mergeFilters)
-      param = Object.assign(param, _filters)
-      let data = window.localStorage.getItem('marketCity') ? JSON.parse(window.localStorage.getItem('marketCity')) : ''
-      if(data) {
-        if(data.type===1) {
-          param['province'] = data.city
-        } else {
-          param['city'] = data.city
-        }
-      } else {
-        this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
-        param.city = this.selectedCity
-      }
-      marketService.getHouseList(param).then(res => {
-        let item = res.records.filter(el => {
-          return el.linkerId === option.linkerId
-        })
-        this.marketList.splice(index, 1, item[0])
-      }).catch()
+    // 点击搜索
+    goSearch () {
+      this.$router.push({ name: 'market-search', query: {city: '全国'}})
     },
-    async getProjectList() {
-      if ( window.sessionStorage.getItem('marketList')) {
-        return this.loading = false
-      }
-      let param = { current: this.page, size: this.pageSize }
-      //组装检索条件
-      let mergeFilters = this.projectFilters.baseFilters ? Object.assign(this.projectFilters.baseFilters, this.projectFilters.moreFilters) : {}
-      let _filters = screenFilterHelper(this.projectName, mergeFilters)
-      param = Object.assign(param, _filters)
-      let data = window.localStorage.getItem('marketCity') ? JSON.parse(window.localStorage.getItem('marketCity')) : ''
-      if(data) {
-        if(data.type===1) {
-          param['province'] = data.city
-        } else {
-          param['city'] = data.city
-        }
-      } else {
-        this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
-        param.city = this.selectedCity
-      }
-      const res = await marketService.getHouseList(param)
-
-      if (this.projectFilters.baseFilters) {
-        //筛选时
-        if (res.records.length > 0) {
-          //有结果时
-          this.marketList = this.marketList.concat(res.records)
-          if (res.records.length < 8) {
-            //条数小于8时
-            this.haveData = false
-            let arr = []
-            for (let i = 0; i < this.marketList.length; i++) {
-              const element = this.marketList[i]
-              arr.push(element.linkerId)
-            }
-            arr = arr.join()
-            await this.hotMarketHandle(arr)
-            console.log(this.marketList)
-          }
-          if (res.pages === 0 || this.page === res.pages) {
-            this.finished = true
-          }
-          this.page++
-          this.loading = false
-        } else {
-          this.haveData = false
-          let arr = []
-          for (let i = 0; i < this.marketList.length; i++) {
-            const element = this.marketList[i]
-            arr.push(element.linkerId)
-          }
-          arr = arr.join()
-          await this.hotMarketHandle(arr)
-          if (res.pages === 0 || this.page === res.pages) {
-            this.finished = true
-          }
-          this.loading = false
-        }
-      } else {
-        //未筛选时
-        this.marketList = this.marketList.concat(res.records)
-        if (res.pages === 0 || this.page === res.pages) {
-          this.finished = true
-        }
-        this.page++
+    // 跳转分类
+    goPage (url) {
+      this.$router.push(url)
+    },
+    // 加载更多
+    onLoad () {
+      if (this.current > this.pages) {
+        // 加载状态结束
+        this.finished = true
         this.loading = false
+        this.stickNumHandle()
+      } else {
+        this.getMyMarket()
       }
     },
-    onClickHandler() {
-      this.$router.push('/market/inputSearch')
-    },
-    returnMyMarket() {
-      this.$router.push({ name: 'mymarket' })
-    },
-    async getBrokerInfo() {
-      const res = await marketService.getBrokerMarket()
-      this.agentIdInfo = res
-    },
-    skipDetail(item) {
-      this.$router.push({ name: 'market-detail', params: { id: item.linkerId} })
-    },
-    opClickHandler(item) {
-      this.$router.push(`/marketDetail/open/${item.linkerId}`)
-    },
-    // 搜索区域点击处理
-    areaClickHandler() {
-      this.$router.push({ name: 'city-list', query: { fromPage: 'market', searchContent: this.searchContent.siteText, category: 0 } })
-    },
-    focusHandler() {
-      this.$router.push({ name: 'market-search', query: {city: this.searchContent.siteText}})
-    },
-    async hotMarketHandle(arr) {
-      let hotParams = {
-        city: this.selectedCity || '全国',
-        hotTotal: 5,
-        linkerIds: arr
+    // 获取我的楼
+    getMyMarket () {
+      let parma = {
+        name: '',
+        size: this.size,
+        current: this.current
       }
-      const hotRes = await userService.getHotLinker(hotParams)
-      this.hotResult = hotRes
+      userService.getMyMarket(parma).then(res => {
+        this.pages = res.pages
+        this.total = res.total
+        if (this.current === 1) {
+          this.myMarket = res.records
+        } else {
+          this.myMarket.push(...res.records)
+        }
+        this.current += 1
+        this.nodataStatus = true
+        this.loading = false
+      }).catch(err => {
+      })
     },
-    // 获取VIP详情
-    async getVipInfo() {
-      let res = await marketService.vipInfo()
-      this.vipInfo = res
+    // 跳转楼盘详情
+    goMarketDetail (item) {
+      if (item.shelfFlag == 1) {
+        this.$dialog
+          .alert({
+            title: '非常抱歉',
+            message: '该楼盘已被下架或删除',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      } else {
+        this.$router.push('/market/' + item.linkerId)
+      }
+    },
+    // 分享
+    goShare (item) {
+      if (item.shelfFlag == 1) {
+        this.$dialog
+          .alert({
+            title: '非常抱歉',
+            message: '该楼盘已被下架或删除',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      } else {
+        //去分享
+        this.$router.push({ name: 'market-poster', params: { id: item.linkerId } })
+      }
+    },
+    // 置顶
+    popupHandle(item, index) {
+      if (item.shelfFlag == 1) {
+        this.$toast({
+          message: '该楼盘已被下架或删除!',
+          duration: 1000
+        })
+      } else {
+        //更多
+        this.currentItem = item
+        this.currentIndex = index
+        this.time(item)
+        this.strideYear(item)
+        this.showPopup = true
+        this.$store.commit('TABBAR', { show: false })
+      }
+    },
+    //比较时间错判断是否过期
+    time(item) {
+      let timestamp = new Date().getTime()
+      if (timestamp - item.subscribeInvalidTime > 0) {
+        this.pastShow = false
+      } else {
+        this.pastShow = true
+      }
+    },
+    strideYear(item) {
+      //判断是否跨年
+      let timestamp = new Date().getTime()
+      let usefulLife = item.subscribeInvalidTime - 0 //到期时间错
+      if (new Date(usefulLife).getFullYear() - new Date(timestamp).getFullYear() > 0) {
+        this.stride = true
+      } else {
+        this.stride = false
+      }
+    },
+    goRenew(linkerId) {
+      if (this.currentItem.saleStatus == 3) {
+        this.$dialog
+          .alert({
+            title: '非常抱歉',
+            message: '该楼盘已售罄，无法开通',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      } else if (this.currentItem.shelfFlag == 1) {
+        this.$dialog
+          .alert({
+            title: '非常抱歉',
+            message: '该楼盘已被下架或删除',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      } else if (this.currentItem.thisDistributor === false) {
+        this.$dialog
+          .alert({
+            title: '该楼盘不可续费',
+            message: '非当前所属公司下楼盘无法开通续费',
+            confirmButtonText: '知道啦'
+          })
+          .then(() => {
+            // on close
+          })
+      } else {
+        //去续费
+        this.$router.push({ name: 'marketDetail-open', params: { id: linkerId } })
+      }
+    },
+    stickNumHandle() {
+      //判断有没有超过3个置顶
+      for (let i = 0; i < this.myMarket.length; i++) {
+        const element = this.myMarket[i]
+        if (element.recommand == 10) {
+          this.stickNum++
+        }
+      }
+    },
+    // 楼盘置顶
+    stickHandle() {
+      if (this.currentItem.recommand == 10) {
+        this.recommandFalseHandle()
+      } else {
+        this.recommandTrueHandle()
+      }
+    },
+    //-----置顶操作
+    recommandTrueHandle() {
+      this.stickNum++
+      this.myMarket[this.currentIndex].recommand = '10'
+      this.myMarket.unshift(this.myMarket[this.currentIndex])
+      this.myMarket.splice(this.currentIndex + 1, 1)
+      this.changeUserStatus(this.currentItem.linkerId, 40, 10) //改置顶状态
+      this.$toast({duration: 1000,message: '置顶成功'})
+      this.closeHandle()
+    },
+    recommandFalseHandle() {
+      this.stickNum--
+      this.myMarket[this.currentIndex].recommand = '0'
+      this.myMarket.push(this.myMarket[this.currentIndex])
+      this.myMarket.splice(this.currentIndex, 1)
+      this.changeUserStatus(this.currentItem.linkerId, 40, 0) //改置顶状态
+      this.$toast({duration: 1000,message: '取消置顶成功'})
+      this.closeHandle()
+    },
+    exhibitionHandle() {
+      //关闭楼盘展示
+      this.$dialog
+        .confirm({
+          title: '是否确定关闭该楼盘名片展示',
+          message: '关闭该楼盘展示将取消推荐和置顶状态'
+        })
+        .then(() => {
+          this.closeHandle()
+          this.changeUserStatus(this.currentItem.linkerId, 30, 1) //改为不展示
+          this.myMarket.splice(this.currentIndex, 1)
+          this.$toast({
+            duration: 800,
+            message: '关闭展示成功'
+          })
+        })
+    },
+    closeHandle() {
+      this.showPopup = false
+      this.$store.commit('TABBAR', { show: true })
+    },
+    async changeUserStatus(linkerId, operationType, status) {
+      await userService.changeMarketData(linkerId, operationType, status)
+    }, //修改楼盘状态
+    goMyMarket () {
+      this.$router.push('/market/classify/mymarket')
     }
   },
-  beforeRouteLeave (to, from, next) {
-    this.scrollTop = document.querySelector('.router-view').scrollTop;
-    if (to.name === 'market-detail') {
-      let data = {
-        loading: this.loading,
-        finished: this.finished,
-        marketList: this.marketList,
-        scrollTop: this.scrollTop,
-        page: this.page
-      }
-      window.sessionStorage.setItem('marketList',JSON.stringify(data))
-    }
-    next()
+  mounted () {
   },
   beforeDestroy () {
-    
+
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .market-page {
-  .fixed {
-    position: fixed;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  .market-classify {
+    margin: 20px 0;
+    font-size: 10px;
+    display: flex;
+    .market-classify-item{
+      flex: 1;
+      text-align: center;
+      color:#445166;
+      img{
+        width: 44px;
+        height: 44px;
+      }
+      p{
+        height: 14px;
+        line-height: 14px;
+        margin-top: 4px;
+      }
+    }
+  }
+  .my-markey{
+    flex: 1;
+    overflow-y: scroll;
+    padding: 0 16px;
+    border-top: 8px solid #F2F6F7;
+    .title{
+      padding: 16px 0 16px;
+      font-size: 24px;
+      color: #333;
+      font-weight: 600;
+      font-family: PingFangSC-Semibold;
+      span{
+        font-size: 18px;
+      }
+    }
+  }
+  .market-item {
+    display: flex;
+    font-size: 14px;
+    margin-top: 15px;
+    .market-img{
+      width: 120px;
+      height: 90px;
+      border-radius:6px;
+      overflow: hidden;
+      margin: 5px 12px 0 0;
+      position: relative;
+      .headimg{
+        width: 100%;
+        height: 100%;
+        border-radius:6px;
+        object-fit: cover;
+      }
+      .coupon{
+        position: absolute;
+        left: 0;
+        top: 8px;
+        font-size: 12px;
+        color: #fff;
+        padding: 0 10px 0 5px;
+        height: 20px;
+        line-height: 20px;
+        background-color: #CF562B;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+    }
+    .market-info{
+      flex: 1;
+      p{
+        margin-bottom: 8px;
+      }
+      .market-name{
+        display: flex;
+        font-size:18px;
+        font-weight:600;
+        color:rgba(19,41,79,1);
+        .name {
+          flex: 1;
+          line-height: 30px;
+          max-width: 150px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .iconShare{
+          width: 54px;
+          height:30px;
+          line-height: 30px;
+          background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
+          box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
+          border-radius:15px;
+          font-size: 12px;
+          color: #fff;
+          text-align: center;
+          font-weight: 500;
+          margin-left: 10px;
+        }
+      }
+      .market-location{
+        font-size:12px;
+        font-weight:400;
+        color:rgba(64,81,111,1);
+      }
+      .market-tags{
+        font-size: 10px;
+        span{
+          display: inline-block;
+          padding:3px 6px;
+          border-radius: 2px;
+          margin-right: 5px;
+          background:rgba(143,159,177,0.15);
+          color: #5C5F66;
+          &.active{
+            background-color: rgba(0,120,255,0.15);
+          }
+        }
+      }
+      .market-price{
+        font-size: 14px;
+        font-weight:600;
+        color:rgba(68,81,102,1);
+        display: flex;
+        .price{
+          flex: 1;
+        }
+        .icon-more{
+          width: 50px;
+          text-align: center;
+          color: #9E9E9E;
+        }
+      }
+    }
+  }
+  .pastStyle{
+    height: 106px;
+  }
+  //弹窗
+  .van-popup--bottom {
+    background: rgba(255, 255, 255, 1);
     width: 100%;
-    background: #ffffff;
-    z-index: 3;
-  }
-  .already-open-page {
-    margin-top: 105px;
-  }
-  .search-box {
-    position: relative;
-    width: 375px;
-    height: 44px;
-    padding: 7px 0;
-    > .search-comp {
-      width: 345px;
-      height: 30px;
-      margin: 0px 50px 0px 10px;
+    // height: 250px;
+    border-radius: 0;
+    left: 0;
+    bottom: 0;
+    transform: translate3d(0,0,0);
+    ul {
+      li {
+        width: 375px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+      }
+      .borderDottom {
+        border-bottom: 1px solid #eeeeee;
+      }
+      .color {
+        color: rgba(234, 77, 46, 1);
+        border-bottom: 1px solid #eeeeee;
+      }
+      .cancel {
+        border-top: 6px solid #e8e8e8;
+      }
     }
-    > .location-icon {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      transform: translate(-50%, -50%);
-      right: 8px;
-      top: 15px;
-    }
-  }
-  .all-market {
-    margin-top: 8px;
-  }
-  .hot-recommend {
-    margin-top: 30px;
   }
 }
+</style>
+
+<style lang='less'>
+  .market-page {
+    .search-box {
+      margin-top: 10px;
+      .van-field__body {
+        height: 100%;
+      }
+      .van-field__left-icon{
+        display: flex;
+      }
+      .van-cell {
+        background-color: #f5f5f5;
+      }
+      .search-icon {
+        width: 24px;
+        height: 24px;
+      }
+      .van-field__control {
+        height: 24px;
+        padding-top: 2px;
+      }
+    }
+  }
 </style>

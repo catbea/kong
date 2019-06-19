@@ -9,7 +9,8 @@ export default tag => {
       return {
         background: 'rgba(255,255,255,1)',
         color: '#007AE6',
-        border: '1px solid #007AE6'
+        border: '1px solid #007AE6',
+        display: 'none'
       }
     default:
       // 灰字灰底

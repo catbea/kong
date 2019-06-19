@@ -724,6 +724,9 @@ export default {
     }
   },
   mounted() {
+    if(this.$route.query.type==1){
+       this.$store.commit('SHARE_PROMPT', true)
+    }
     document.querySelector('.tools-bar').addEventListener(
       'touchmove',
       this.touchHandler,
@@ -735,6 +738,7 @@ export default {
     }
   },
   beforeDestroy() {
+    this.$store.commit('SHARE_PROMPT', false)
     try {
       document.querySelector('.tools-bar').removeEventListener('touchmove',this.touchHandler,false)
       window.removeEventListener('popstate', this.goBack, false)

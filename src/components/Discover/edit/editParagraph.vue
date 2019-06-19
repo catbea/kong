@@ -1,12 +1,12 @@
 <template>
-  <div class="edit-paragraph" :class="preview?'':'box_border'">
+  <div class="edit-paragraph" :class="{'box_border':!preview,'edit-paragraph_del':isDelClickHandler}" @click.stop="delClickHandler">
     <div class="paragraph-container" v-if="!(preview && this.info.status === 'del')" v-html="info.text"></div>
     <!-- <i v-if="this.info.status === 'edit' && !preview" class="icon iconfont icon-write_empty del-icon" @click.stop="delClickHandler"/>
      -->
-     <img  v-if="this.info.status === 'edit' && !preview" class="del-icon" :src="closeIcon" @click.stop="delClickHandler">
-    <div v-if="this.info.status === 'del'&& !preview" class="repeal-del-container">
+     <!-- <img  v-if="this.info.status === 'edit' && !preview" class="del-icon" :src="closeIcon" @click.stop="delClickHandler"> -->
+    <!-- <div v-if="this.info.status === 'del'&& !preview" class="repeal-del-container">
       <div class="del-btn" @click="repealClickHandler">撤销删除</div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -16,21 +16,32 @@ export default {
     preview: { type: Boolean, default: false }
   },
   data: () => ({
+    isDelClickHandler:false,//是否点击删除
     closeIcon: require('IMG/discover/closeIcon.png')
   }),
   methods: {
     // 点击删除
     delClickHandler(e) {
-      this.$emit('delParagraph', { dom: this.info })
+      if(this.info.status === 'edit' && !this.preview){
+        this.isDelClickHandler = true;
+        this.$emit('delParagraph', { dom: this.info })       
+      }
+      else if(this.info.status === 'del' && !this.preview){
+         this.isDelClickHandler = false;
+        this.$emit('repealParagraph', { dom: this.info })
+      }
     },
     // 撤销删除
     repealClickHandler(e) {
-      this.$emit('repealParagraph', { dom: this.info })
     }
   }
 }
 </script>
 <style lang="less" scoped>
+.edit-paragraph_del{
+  background:	rgba(68,81,102,0.25);
+  text-decoration: line-through;
+}
 .edit-paragraph {
   position: relative;
   // border: 1px dashed #969ea8;

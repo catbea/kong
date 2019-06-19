@@ -2,9 +2,9 @@
   <div id="share-prompt" v-if="sharePrompt">
     <div class="arrow-box">
       <img :src="arrowImg">
-      <p>点击此处分享给好友</p>
+      <!-- <p>点击此处分享给好友</p> -->
     </div>
-    <div class="van-hairline--surround close-btn" @click="closeHandler">知道了</div>
+    <div class=" close-btn" @click="closeHandler"><img :src="knowImg" alt=""></div>
   </div>
 </template>
 <script>
@@ -16,7 +16,8 @@ export default {
   },
   data: () => ({
     currentValue: false,
-    arrowImg: require('IMG/share/arrow.png')
+    arrowImg: require('IMG/discover/article_share.png'),
+    knowImg:require('IMG/discover/article_btn.png')   
   }),
   methods: {
     closeHandler() {
@@ -31,14 +32,14 @@ export default {
 <style lang="less" scoped>
 #share-prompt {
   position: fixed !important;
-  background: rgba(0, 0, 0, .65);
+  background: rgba(0, 0, 0, 1);
   z-index: 9999;
   > .arrow-box {
     position: absolute;
     top: 5px;
     right: 20px;
-    width: 66px;
-    height: 170px;
+    width: 291px;
+    height: 194px;
     > img {
       object-fit: cover;
     }
@@ -53,18 +54,18 @@ export default {
   > .close-btn {
     position: absolute;
     transform: translateX(-50%);
-    top: 60%;
+    top: 38%;
     left: 50%;
     display: inline-block;
-    border-radius: 100px;
+    // border-radius: 100px;
     font-size: 17px;
     color: #fff;
     font-weight: 400;
     padding: 4px 18px;
-    &::after {
-      border-radius: 100px;
-      color: #fff;
-    }
+    // &::after {
+    //   border-radius: 100px;
+    //   color: #fff;
+    // }
   }
 }
 </style>
