@@ -613,9 +613,20 @@ class MarketService {
    */
   getActivityDetail (data) {
     return xhr({
-      url: ' /linker/activity/detail',
+      url: '/linker/activity/detail',
       body: data
     })
   }
+
+  /**
+   * 获取热门楼盘
+   */
+  getHotLinkerList (data) {
+    return xhr({
+      url: '/linker/getHotLinkerList',
+      body: data
+    })
+  }
+  
 }
 export default new MarketService()

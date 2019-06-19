@@ -17,24 +17,25 @@
           <ul class="market-describe">
             <li class="market-name">
               <div class="box">
-                <span class="free" v-if="+itemInfo.isFree">免费</span>
+                <span class="free" v-if="+itemInfo.isFree && showFree">免费</span>
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>
               <!-- v-if="+itemInfo.isFree" -->
-              <span class="dredge no"  v-if="+itemInfo.isFree && itemInfo.openStatus != 2"  @click.stop="freeConfirmFun">添加</span>
-              <span class="dredge add" v-if="+itemInfo.isFree && itemInfo.openStatus == 2">已添加</span>
+              <span class="dredge no"  v-if="+itemInfo.isFree && itemInfo.openStatus != 2"  @click.stop="freeConfirmFun">免费开通</span>
+              <span class="dredge add" v-if="+itemInfo.isFree && itemInfo.openStatus == 2">已开通</span>
               <span class="dredge" :style="style" v-if="!(+itemInfo.isFree) && $route.name!='marketDetail-open'" @click.stop="confirmFun">{{openStatus}}</span>
             </li>
             <li class="site">
               {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
               <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
+              <span>| {{itemInfo.linkerPrice?itemInfo.linkerPrice.replace('.00', ''): parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
             </li>
             <li class="tag-group-left">
               <tag-group :arr="tags ? tags.slice(0,3) : []"></tag-group>
             </li>
             <li class="unit-price">
-              <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice.replace('.00', ''): parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
+              <!-- <span>{{itemInfo.linkerPrice?itemInfo.linkerPrice.replace('.00', ''): parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span> -->
               <span>{{itemInfo.openTimes}}次开通</span>
             </li>
           </ul>
@@ -91,6 +92,10 @@ export default {
           vipValid: ''
         }
       }
+    },
+    showFree: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -380,23 +385,24 @@ export default {
                 font-size: 10px;
                 height:14px;
                 line-height: 14px;
-                background:rgba(234,77,46,1);
+                background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
                 color: #fff;
                 border-radius: 2px;
                 margin-right: 2px;
                 margin-top: 1px;
-                padding: 0 5px;
+                padding: 0 2px;
+                font-weight: 300;
               }
               .title {
                 display:inline-block;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                max-width: 130px;
+                max-width: 120px;
                 font-size: 16px;
                 font-family: PingFangSC-Semibold;
                 font-weight: 600;
-                color: rgba(51, 51, 51, 1);
+                color: #13294F;
               }
               .past {
                 display: inline-block;
@@ -416,7 +422,7 @@ export default {
               }
             }
             .dredge {
-              flex: 0 0 46px;
+              flex: 0 0 60px;
               height: 24px;
               background: rgba(0, 122, 230, 1);
               border-radius: 12px;
@@ -432,7 +438,7 @@ export default {
               background-color: rgba(0, 122, 230, 1);
             }
             .add{
-              border:1px solid rgba(204, 204, 204, 1);
+              // border:1px solid rgba(204, 204, 204, 1);
               color: rgba(204, 204, 204, 1);
               background-color: transparent;
               font-size: 12px;
@@ -447,7 +453,7 @@ export default {
             font-size: 12px;
             margin-top: 6px;
             font-weight: 400;
-            color: rgba(102, 102, 102, 1);
+            color: #40516F;
             line-height: 12px;
             margin-bottom: 5px;
             font-family: PingFangSC-Regular;
@@ -461,20 +467,20 @@ export default {
             height: 15px;
             margin-top:5px;
             display: flex;
-            span:nth-child(1) {
-              line-height: 15px;
-              font-size: 15px;
-              font-weight: 600;
-              color: rgba(234, 77, 46, 1);
-              font-family: PingFangSC-Semibold;
-            }
-            span:nth-child(2) {
-              margin-left: 12px;
+            // span:nth-child(1) {
+            //   line-height: 15px;
+            //   font-size: 15px;
+            //   font-weight: 600;
+            //   color: rgba(234, 77, 46, 1);
+            //   font-family: PingFangSC-Semibold;
+            // }
+            span{
               line-height: 15px;
               font-size: 12px;
               font-weight: 400;
-              color: rgba(153, 153, 153, 1);
+              color: #445166;
               font-family: PingFangSC-Regular;
+              font-weight:600;
             }
           }
         }

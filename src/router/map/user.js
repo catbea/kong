@@ -461,6 +461,11 @@ export default [
     }
   },
   {
+    path: '/user/learn/record',
+    name: 'learnRecord',
+    component: resolve => require(['@/views/user/learn/record.vue'], resolve),
+    meta: {
+      title: '学习记录',
     path: '/user/learn/secondPage/arecProduct',
     name: 'arecProduct',
     component: resolve => require(['@/views/user/learn/secondPage/arecProduct.vue'], resolve),
@@ -470,6 +475,7 @@ export default [
         show: false
       }
     }
+  }
   },
   {
     path: '/user/learn/secondPage/commissionRule',
@@ -543,6 +549,17 @@ export default [
     component: resolve => require(['@/views/user/learn/secondPage/salesVideo.vue'], resolve),
     meta: {
       title: '销售培训视频列表',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/thirdPage/pdf',
+    name: 'pdf',
+    component: resolve => require(['@/views/user/learn/thirdPage/pdf.vue'], resolve),
+    meta: {
+      title: 'pdf',
       tabbar: {
         show: false
       }
