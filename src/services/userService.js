@@ -688,5 +688,26 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 获取培训学院楼盘列表
+   */
+  getStudyLinkerList () {
+    return xhr({
+      method: 'get',
+      url: ' /studyLinker/list'
+    })
+  }
+
+  /**
+   * 获取培训学院楼盘列表
+   */
+  getStudyListByLinkerId (data) {
+    return xhr({
+      method: 'get',
+      url: ' /developersMaterial/index',
+      body: data
+    })
+  }
 }
 export default new UserService()
