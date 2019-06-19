@@ -816,6 +816,8 @@ export default {
     .img-box {
       height: 400px;
       width: 300px;
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
     }
   }
   // 编辑信息

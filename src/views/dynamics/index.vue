@@ -44,6 +44,7 @@ import dynamicsService from 'SERVICE/dynamicsService'
 import isEmpty from 'lodash/isEmpty'
 import { mapGetters } from 'vuex'
 import * as types from '@/store/mutation-types'
+import { parseTime } from '@/utils/tool';
 export default {
   components: {
     DynamicsCollect,
@@ -321,7 +322,8 @@ export default {
   }
   .list-container {
     background: #fff;
-    margin-top: 10px;
+    margin-top: 8px;
+    padding-top: 5px;
   }
 }
 .renew-Dialog {

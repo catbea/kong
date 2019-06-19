@@ -18,7 +18,8 @@
       </div>
       <div class="operate-box">
         <div class="share-icon" v-if="conf.op === 'share'" @click.stop="shareHandler">
-          <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i>
+          <!-- <i style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share"></i> -->
+          <p class="iconShare">分享</p>
         </div>
       </div>
       <div class="commission-box" v-if="showRules&&info&&info.divisionRules">
@@ -139,7 +140,7 @@ export default {
           display: inline-block;
         }
         > .estate-price {
-          color: #ea4d2e;
+          color: #445166;
           font-size: 15px;
           font-weight: 600;
           padding-right: 12px;
@@ -162,6 +163,19 @@ export default {
     > .share-icon {
       width: 100%;
       height: 100%;
+      .iconShare{
+        width: 54px;
+        height:30px;
+        line-height: 30px;
+        background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
+        box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
+        border-radius:15px;
+        font-size: 12px;
+        color: #fff;
+        text-align: center;
+        font-weight: 500;
+        margin-left: 10px;
+      }
     }
   }
   > .commission-box {
