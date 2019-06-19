@@ -6,7 +6,7 @@
                     <div class="left_img">
                         <img src="../../../../assets/img/user/invitation/aw-banner1@2x.png" alt="" class="img">
                     </div>
-                    <div class="left_icon">
+                    <div class="left_icon" :class="true && 'h5' && 'img'">
                         {{item.name}}
                     </div> 
                 </div>
@@ -40,9 +40,6 @@ export default {
     }),
     mounted() { 
         // this.getFile();
-        // if(this.isTpye == 1) { 
-        //     document.querySelector('.left_icon').style.backgroundColor = 'red';
-        // }
     },
     methods: {
         
@@ -88,34 +85,16 @@ export default {
                     top:0px; 
                     right: 0px;
                 }
-                .left_icon1 {
-                    width: 33px;
-                    height: 15px;
+                .pdf {
+                    background: #2882FF;
+                }
+                .img {
                     background: #FA6400;
-                    font-size: 10px;
-                    color: #ffffff;
-                    text-align: center;
-                    line-height: 15px;
-                    font-weight: 500;
-                    position: absolute;
-                    border-radius: 0px 6px 0px 6px;
-                    top:0px; 
-                    right: 0px;
                 }
-                .left_icon2 {
-                    width: 33px;
-                    height: 15px;
+                .h5 {
                     background: #01B805;
-                    font-size: 10px;
-                    color: #ffffff;
-                    text-align: center;
-                    line-height: 15px;
-                    font-weight: 500;
-                    position: absolute;
-                    border-radius: 0px 6px 0px 6px;
-                    top:0px; 
-                    right: 0px;
                 }
+               
             }
             .li_right {
                 height: 90px;

@@ -915,6 +915,7 @@ export default {
     },
     // 关闭视频
     videoHide() {
+      debugger
       this.$refs.videoplay.pause()
       this.showVideo = false
     },
