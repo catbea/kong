@@ -1,8 +1,26 @@
 <template>
   <div class="massage-info-body">
     <div class="massage-info-list">
+      <div class="header-nav">
+          <div class="nav-item" @click="projectClick">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEVHcExmZmZlZWVnZ2dnZ2dlZWVmZmZmZmZofd2ZAAAAB3RSTlMA4knxrSbuMB2ZQwAAAGNJREFUOMtjYGBgYHUuRwCTAAY4CCtHBqkICXcUiRKEhDmKRDFCorycATuHdhIIz2BKQD2DRaIEl0QxDsuhIgMuoQh2pRCmhDhYopAECZxGjfp8VAKfhGI5NsAAC3BSJHAYBQC1QcgUK0H73AAAAABJRU5ErkJggg=="/>
+            <span>发送楼盘</span>
+          </div>
+          <div class="nav-item" @click="sendWxAccount">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAACnVBMVEVHcExqampoaGhiYmJdXV1gYGBmZmYAAACAgIBmZmZmZmZmZmZmZmZpaWlmZmZnZ2dmZmZlZWVmZmZoaGhlZWVmZmZmZmZmZmZmZmZmZmZlZWVnZ2dmZmZpaWlmZmZnZ2dnZ2dmZmZmZmaAgIBmZmZmZmZmZmZkZGRjY2NhYWFmZmZnZ2dnZ2dnZ2dnZ2dkZGRlZWVmZmZmZmZmZmZnZ2dlZWViYmJmZmZmZmZiYmJpaWlmZmZlZWVlZWVmZmZnZ2dnZ2dnZ2dlZWVAQEBiYmJmZmZmZmZlZWVmZmZmZmZmZmZmZmZmZmZVVVVmZmZmZmZmZmZmZmZkZGRgYGBmZmZmZmZnZ2doaGhmZmZlZWVmZmZmZmZmZmZmZmZlZWVmZmZmZmZxcXFmZmZmZmZoaGhlZWVmZmZmZmZmZmZmZmZmZmZlZWVmZmZmZmZmZmZmZmZqampnZ2dmZmZmZmZlZWVpaWlmZmZlZWVoaGhnZ2dmZmZlZWVkZGRmZmZmZmZkZGRmZmZlZWVlZWVnZ2dmZmZnZ2dlZWVnZ2dnZ2dmZmZlZWVmZmZoaGhjY2NlZWVmZmZlZWVlZWVmZmZnZ2dmZmZnZ2dmZmZqampoaGhnZ2dhYWFnZ2dlZWVmZmb////+/v5ra2v5+fn39/epqam4uLhsbGzf39+BgYGFhYXHx8f8/PyioqJoaGjo6Oj19fVubm6SkpJ5eXmAgIDu7u5nZ2f4+PiysrL09PTp6emdnZ11dXXV1dW1tbWPj4/W1ta6urqfn5+tra2oqKjCwsLs7Ozx8fHIyMjv7+9xcXHOzs6Dg4OXl5d0dHTKysr29vbT09Pg4OB7e3vr6+uYmJjExMSrq6v7+/uIiIjd3d3q6uqVlZXm5ubn5+d3d3f9/f1HGzCQAAAAnXRSTlMADA4NCwjlAQL9BdL6H/Al5P72G8mMeDfgqnmB6BHswk3u9wTq89g4EhVYn4uk4iHvgNsGNFMaHqMXJ8nloqBjlT46BBPTp0f0ac3UmwPM/tCoMxBzS0M7r7XP3ChRTnpBCXXALG3LUJayfeC3Z7HRKezGvK494aZgSLV+LsqUQN5EqzlrroOcfIJb5jEksIr5SQpekZrfNUKmHcTH1i8irgAAA0NJREFUSMe9luVfFEEYxw/kOE66O4WTkC4B6UbpFAFpu7u7u3OWDkFAOgTFbrFb/xafZ/aOqwU++MJ5M8/8nu9vd2bn2Z3l8f5rU9tmab5LZCZa724SOXNKWnDukAGRNp0w08n5ovlEsZXNnhgPOk04mnC32gS86TyW0AvbGqUbGLwncb89K6zx5OT3JdDr5R2QShrZttShvpaD96OLTSpXkK+a0ZsaKvExdD5nlJ+jqjkmjGYp6nEoH8UHO0Mq+pbgvOZiarkCH5UKojEEwWapoRJxiZNWBXTJyyBnECBvWAhaCt72CASSzRIR4oCasxWIc+T4QCFImzAyJkS/QKzeJMRRgMEqyK6TW95BXBeNrNNjEyVqeVllMQ34NpAvljWkg5A1cQmU4Lq9ZRUsIe6aKSjN89Giu5cUmSyVHUFw4ajdohuyVXW54rwk4wRD5RLL0FQsRJsL4pQ6DBR3X8NES8Ldrh63pFvTZAqEOQrTucQSI/ff9VcxtW2fBhvoOJ86FkB0WN5wkaZHfzHjrX+YWoywdo5DsEhDlg/H3NAYI9e+f0U1DkvSAQJXGd5FB4TfAwzTePePmP52r4qpGUFHtnhOeqpSA1QIqf7JMPcJ+cHyfYQMMkxNFyTSADh1FoLV45Py9YJhPWBN0LdTQychPV/gjj2g5AJyDO/lJnHEw6CjBrBRQt5XUcNHQpqwvyOuXN8QdKx0Zg07IG7FdO9w3Qd2Sm/7Pndj/wZStsgEbEaHhzY1hEL4iOFsj/GjQCHPFejQVvWP4fE2QvSC21ALKSd2HichdPD2IvqxEVhEt7gNzyB1QvwKyxdaHbdhDFIhrMFS3jDUwmlohVQEa9jOggn6YgfnnLqxcONZgxWteAuVIDuTpbiI50+U+Srchr3RlL/O4qxZF9+F5nYl/iFeNJxlConNYulXjy7oZZs8X/MKVVsBi2TJ4DxeNF1RQ32tDD/QRT/lhtyfFv4GuvKOurFehFsa6x88RcFx54SHo7vkjX7d1Nw5/lZfmeTEc7XnOMFyJjsjMy2slAylkx+rfH83HyEFPbak0f7a1Cc9X9cvQxv2R2BXCQbRtP4S7PKJUGVaDkGhZu40f0UEmf/yA/MXRvxord78ozMAAAAASUVORK5CYII="/>
+            <span>发送微信</span>
+          </div>
+          <div class="nav-item" @click="phoneCall">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAABzlBMVEVHcExVVVVoaGhmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZpaWlmZmZmZmZnZ2dra2tgYGBmZmZmZmZnZ2dlZWUAAABlZWVmZmZnZ2dmZmZnZ2dmZmZkZGRnZ2dkZGRmZmZmZmZmZmZkZGRmZmaAgIBkZGRlZWVmZmZlZWVqampoaGhlZWVmZmZqampoaGhmZmZmZmZiYmJmZmZnZ2dmZmZoaGhmZmZlZWVlZWVlZWVmZmZmZmZVVVVnZ2dmZmZmZmZmZmZqamplZWVnZ2dmZmZmZmZqampmZmZjY2NmZmZnZ2dmZmZmZmZnZ2dmZmZmZmZnZ2dlZWVlZWVmZmZlZWVmZmb////+/v5vb2/ExMSoqKju7u7Kysrz8/Po6Oj7+/tra2v8/PxoaGh5eXnm5uaQkJD29vaRkZFpaWnt7e2ioqLBwcH09PRnZ2egoKD4+Pitra1ubm5+fn739/eFhYW+vr63t7fd3d3R0dFycnLa2tqjo6P6+vqxsbF4eHjs7OyqqqpxcXFtbW2np6dsbGz5+fnv7++YmJh9fX3X19eEhISsrKzr6+uysrKOjo79/f3S0tLMzMx1dXW8vLy4uLifn5+CgoKBgYH19fVkCdjmAAAAVnRSTlMABjHY5w8K8fzz+ukn/QWVEwjm+/Z+ASbWvZm44SGpHNrs9BctAi5Oxv4kRzpkGGBp3w3kNNVA91azU96qA6u7jIIdvYtwpwyEEs5KeqV83dx5pnx49Cnhh9YAAALdSURBVEjHjZZnXxNBEIdJSEgDAgQEFBEQBCwUUZqFjjS73l16IUG6gBQBpQsC0pt+W2dmU4/LXeZFsjv7f367szs7e0lJzLRtydlFOSlJiVq9hkNLvp+gvtHIMdOkJqQvD+k57tndBPSlBlBOHrq+IlGRrqjPzAPdoJPnhR9ItCoCnSgb58F8w9CqfKCgT9WDaownm/BDu+CxPNANGv8sA/jvg9Azy+rb00ByyodsGnr6e3JAFyiuhDDwcxf6LXJABwjO+Yid4BY8lAFMMB6IAvgjcHyQASwwvh0N7IFD9yI+oIPx0WhAsIKnKj7QB8OLUfp/dtwnVXzADOOXYbljfQaDbpKJoR/GrV+C+nkvpawuVwZIzwLFBdMHWIrXqmWPegAkZ1MEHG9Au/iTwkXtxduwwqbAgE0ZSundAyrvGgE7v6BdqAS8wiiGWDotYAyPlIhqVNkI8O1Ds+GJAnAjH7f2gAj3JrTr7igQtzHuOQ8RTpzuaSRwVZVUXtWgaovt1B8ignPkNuk53WuJbH8ZCUP4je06ikOtY0fZcu0Oat+Ce2SZCM8Qahpgr1JqQ/VNbxZXBnUJuJfcjKA5uMKM9/hnZUiBuPo0YzFYdbBVURycqRh+7MLeEfUqW0U18Q16v7lY5M7N4FpmMJFPdqldIaq7N9H5N0i49xmwzmrJ9CBV6tjaXvac5mCr4n0LmFdeR6jC+ek1iH0/VLfQueoOanbsG9x8+C5ODNOLE5v6mUQsLYdEx9H1x0e1PSc2DBWtasTGS5mA70eRaHPLKHJuyyNFuGAk+1qSfMTz4OYOJIBDDOJ6WjWX0PnaBLHeOQn+NonUVb+jZQ2txerH8Sg0WqnroaXc5bwrUxH57Bi6jPVxblSNgZCzi2CFE07p3IyN8e9gPssM6+Xi6Hbg/Io6hnK5e16dxYksr1Sh+vR8jpZbOjMVH/DeAU1Intad2EdIer+5T2cxdXS1h13/AV1AY59pTROZAAAAAElFTkSuQmCC"/>
+            <span>拨打电话</span>
+          </div>
+          <div class="nav-item" @click="gotoReport">
+            <img class="nav-cion" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAVFBMVEVHcExnZ2dmZmZlZWVlZWVlZWVnZ2eAgIBmZmZmZmZhYWFtbW1mZmZlZWVmZmZlZWVmZmZmZmZnZ2dmZmZnZ2dpaWlmZmZdXV1mZmZoaGhkZGRmZma9I+bqAAAAG3RSTlMA8e7+JkmtAv3iHQ7INbw/9yM5bEMn5AuYICElV+vtAAAAsElEQVRIx+2W2Q7CIBBFh0LR6b5bnf//TyUm6qShMLF9sZ4HHiCHXNYMwBNjFa2grAGGSShAwg1LQSwTXB599qJdKia4KTLwkrnxhQArHEeoa6FQVRKh7GeiuS+jhXFyfdMYH6ltiJpWsIb8cYF0LhC6YhiKTiBcXs2h7tIuQoqfHwWmQQH514LbC+JIv3UO7wXHbivuI4gj/V/c5sL15OW2EFS4ElDflQ7i4iS+/LkDh55I/nVhxSQAAAAASUVORK5CYII="/>
+            <span>报备客户</span>
+          </div>
+      </div>
       <!--消息-->
-      <div class="msg-box" style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:5px;left:0px; overflow-y: scroll">
+      <div class="msg-box" style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:15px;left:0px; overflow-y: scroll">
         <van-pull-refresh v-model="loading" pulling-text="下拉加载下一页" loosing-text="释放加载下一页" @refresh="getmsgListnext">
           <div style="height: auto">
             <div class="massage-info-msg" v-for="(items,index) in msgList" v-bind:key="index">
@@ -35,7 +53,17 @@
                 </div>
                 <div :id="item.id" class="massage-info-msg-me" v-if="item.fromType == 2">
                   <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="avatar">
-                  <div class="msg-customer-con-me" v-if="item.msgType=='1'">{{item.content}}</div>
+                  <div class="msg-customer-con-me" v-if="item.msgType=='1'" v-html="item.content"></div>
+                  <div class="msg-customer-con-me" v-if="item.msgType=='7'">
+                      <div v-if="item.content.type=='ARRAY'">
+                        <div class="robot_keys comm_style">红树湾</div>
+                        <div class="robot_z comm_style robot_keys">我是智能客服小Z，你需要咨询的是以下问题吗</div>
+                        <div class="robot-answer robot_keys" v-for="(item2,index) in item.content.answer" :key="index">{{item2}}</div>                     
+                        <div class="robot_suffix comm_style">如果没有您需要的问题，可尝试更准确的关键字，例如：<span style="font-weight:bold;">“装修标准”</span></div>
+                      </div>
+                      <div v-else class="robot-answer">{{item.content.answer}}</div>
+                    <!-- 是吧{{item.content.answer}} -->
+                  </div>
                   <div class="msg-customer-con-me-voice" v-if="item.msgType=='2'" @click="playVoice(item.content,item.id)">
                     <div class="left-voice-time">{{item.audioTime}}″</div>
                     <img v-if="isplay==item.id" class="left-voice-img" src="@/assets/img/message/right_voice.gif">
@@ -83,8 +111,8 @@
     </div>
     <div id="footer" ref="inputContent" :class="isShowEmjie || isShowOption?'massage-info-lower-emjie':'massage-info-lower'">
       <div class="massage-info-lower-left" @click="switchMsg">
-        <img v-if="msgType==1" src="@/assets/img/message/Oval@3x.png">
-        <img v-else src="@/assets/img/message/Oval_slices_text.png">
+        <img v-if="msgType==1" src="@/assets/img/message/icon_yy.png">
+        <img v-else src="@/assets/img/message/iocn_jp.png">
       </div>
       <div class="massage-info-lower-cen">
         <input type="textarea" autocomplete="off" v-on:keyup.enter="sendMessage(1,'')" v-model="message" id="message" v-if="msgType==1" v-on:focus="hideface()" placeholder="说点什么吧？" @blur="blur">
@@ -92,11 +120,11 @@
       </div>
       <div class="massage-info-lower-right">
         <div class="lower-right-bnt">
-          <img class="face" src="@/assets/img/message/Oval_bq.png" @click="displayface">
+          <img class="face" src="@/assets/img/message/icon_bq.png" @click="displayface">
         </div>
         <div class="lower-right-bnt">
           <div class="send" v-if="message.length>0" @click="sendMessage(1,'')">发送</div>
-          <img class="selTempl" v-else src="@/assets/img/message/Oval@3x_tpl.png" @click="displayOption">
+          <img class="selTempl" v-else src="@/assets/img/message/icon_chang.png" @click="displayOption">
         </div>
       </div>
     </div>
@@ -104,7 +132,10 @@
       <span v-for="(itemone,emojikeyone) in emojiFactory" @click="emojiSelect(itemone.key)" style="font-size:0.5rem;margin:0.15rem;float:left;" :key="emojikeyone">{{getEmoji(itemone.tag)}}</span>
     </div>
     <div v-show="isShowOption" class="massage_temp_main">
-      <div class="im-option-item" @click="defaultMsgClick">
+      <div class="massage-item" v-for="(item,index) in massageItem" :key="index" @click="defaultMsgClickHandle(item.content)">
+        {{item.content}}
+      </div>
+      <!-- <div class="im-option-item" @click="defaultMsgClick">
         <div class="im-option-icon-item">
           <img :src="iMTempMsgIcon">
         </div>
@@ -130,7 +161,7 @@
           <img :src="iMTempReportIcon">
         </div>
         <div class="im-option-lebal-item">发起报备</div>
-      </div>
+      </div> -->
     </div>
     <audio :src="nowVoiceUrl" ref="audio" id="myaudio" hidden="true" preload="auto" v-show="false"/>
     <van-popup v-model="defaultMsgPopShow" position="bottom" class="default-msg-popup">
@@ -142,6 +173,10 @@
         <div class="default-msg-item van-hairline--bottom" v-for="(info,index) in tempValue" :key="index" @click="defaultMsgClickHandle(info)">{{info}}</div>
       </div>
     </van-popup>
+    <div class="error-dialog" v-show="isSHowErroDialog">
+      <img :src="imgUrl" alt="">
+      <p>{{errContent}}</p>
+    </div>
   </div>
 </template>
 <script>
@@ -156,7 +191,28 @@ import * as types from '@/store/mutation-types'
 export default {
   name: 'customerdetails',
   data() {
-    return {
+    return {     
+      isSHowErroDialog:false,
+      imgUrl:require('IMG/custom/message_err.png'),
+      errContent:"未添加微信号，请前往设置微信号",
+      massageItem:[
+        {
+          content:"您好，请问有什么需要帮助？",
+        },
+        {
+          content:"您是准备用来投资还是自己住呢?",
+        },
+        {
+          content:"您看一下满意否，有合适的话我马上帮您约看",
+        },
+        {
+          content:"您什么时候有时间，我这边好提前安排",
+        },
+        {
+          content:"非常抱歉，我现在不方便打字，您有任何事情都可以给我留言，我会在方便的时候第一时间给您回复。",
+        },
+      ],
+      wechatAccount:"", //微信号
       cardDelFlag: 0,
       customBaseInfo: null,
       defaultMsgPopShow: false,
@@ -215,6 +271,7 @@ export default {
       this.getCustomBaseInfo(this.clientId)
 
       this.agentId = this.userInfo.agentId
+      this.wechatAccount = this.userInfo.wechatAccount||"catbea"
       this.avatar = this.userInfo.avatarUrl
       //加载emoji表情库
       this.emojiFactory = emoji.emojiFactory
@@ -233,6 +290,20 @@ export default {
     setToAccount('')
   },
   methods: {
+    //发送微信号
+    sendWxAccount(){
+      if(this.wechatAccount){
+        this.isSHowErroDialog = true;
+        this.errContent = "未添加微信号，请前往设置微信号";
+        let timer = setTimeout(() => {
+          clearTimeout(timer);
+          this.isSHowErroDialog = false;
+        }, 2000);
+        return ;
+      }
+      this.message = "我的微信号：<span style='color:#007AE6'>" + this.wechatAccount +"</span>";
+      this.sendMessage(1,'')
+    },
     blur() {
       // document.activeElement.scrollIntoViewIfNeeded(true)
       setTimeout(()=>{document.activeElement.scrollIntoViewIfNeeded(true)},10)
@@ -243,7 +314,7 @@ export default {
     async getCustomBaseInfo(id) {
       const result = await customService.getClientInfo(id)
       this.customBaseInfo = result
-      this.clientMobile = this.customBaseInfo.clientMobile
+      this.clientMobile = this.customBaseInfo.clientMobile||"18018733546"
       this.nickName = this.customBaseInfo.clientRemarkName
       this.headImgUrl = this.customBaseInfo.avatarUrl
     },
@@ -272,6 +343,10 @@ export default {
       this.defaultMsgPopShow = true
     },
     phoneCall() {
+      if(!this.clientMobile){
+        this.$toast("无法获取客户手机号");
+        return ;
+      }
       window.location.href = 'tel:' + this.clientMobile
     },
     projectClick() {
@@ -414,8 +489,8 @@ export default {
                 list.msgType = 1
                 msgLists.push(list)
               } else if (MsgContent.Desc == 7) {
-                list.content = MsgContent.Data
-                list.msgType = 1
+                list.content = JSON.parse(MsgContent.Data)
+                list.msgType = 7
                 msgLists.push(list)
               } 
             }
@@ -715,6 +790,60 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.error-dialog{
+  position: absolute;
+  top: 182px;
+  left:50%;
+  margin-left: -110px;
+  width: 220px;
+  height: 146px;
+  border-radius: 12px;
+  background: #000;   
+  padding: 24px 32px; 
+  text-align: center;
+  img{
+    width: 44px;
+    height: 44px;
+  }
+  p{
+    margin-top: 12px;
+    font-size: 15px;
+    color: #fff;
+    line-height: 21px;
+  }
+}
+.header-nav{
+  width: 100vw;
+  height: 54px;
+  padding-top: 5px;
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+  z-index: 20;
+  background: #fff;
+  .nav-item{  
+    flex: 1;
+    height: 42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    &:last-child{
+      margin-right: 0;
+    }
+    .nav-cion{
+      display: block;
+      width:24px;
+      height:24px;
+      margin-bottom: 4px;
+    }
+    span{
+      font-size: 10px;
+      color: #666666;
+    }
+  } 
+}
 .massage-info-body {
   position: absolute;
   top: 0;
@@ -815,7 +944,7 @@ export default {
     font-size: 15px;
 
     font-weight: 400;
-    color: rgba(51, 51, 51, 1);
+    color: #fff;
     line-height: 21px;
     margin-top: 10px;
     max-width: 60%;
@@ -828,7 +957,7 @@ export default {
     border-top-right-radius: 8px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-    background: #eee;
+    background: #017fff;
     padding: 10px;
   }
   .msg-customer-con-status {
@@ -911,7 +1040,7 @@ export default {
     font-size: 15px;
 
     font-weight: 400;
-    color: rgba(255, 255, 255, 1);
+    color: #333;
     line-height: 21px;
     position: relative;
     border-top-left-radius: 8px;
@@ -919,8 +1048,22 @@ export default {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     padding: 10px;
-    background: #017fff;
+    background: #eee;
     text-align: left;
+    .comm_style{
+        font-size: 16px;
+        line-height: 24px;
+        color:#333;    
+      }
+      .robot_keys{
+        margin-bottom: 16px;
+      }
+      .robot-answer{
+        color: #007AE6;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: bold;
+      }
   }
   .msg-customer-con-me-status {
     padding-top: 10px;
@@ -1198,15 +1341,34 @@ export default {
 }
 
 .massage_temp_main {
-  display: flex;
   height: 190px;
   position: fixed;
   bottom: 0;
   width: 100%;
-  margin-left: 0;
-  padding-left: 11px;
-  padding-top: 29px;
-  background-color: #f4f4f6;
+  padding: 8px 16px 0;
+  background-color: #fff;
+  overflow-y: auto;
+  .massage-item{
+    position: relative;
+    padding: 16px 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333;
+    &::after{
+      content: "";
+      width: 200%;
+      height: 1px;
+      border-bottom: 1px solid #E4E6F0;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform-origin: left bottom;
+      transform: scale(0.5);
+    }
+    &:last-child::after{
+      display: none;
+    }
+  }
   .im-option-item {
     margin-left: 18px;
     width: 66px;

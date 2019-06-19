@@ -1,126 +1,169 @@
 <template>
   <div class="share-box">
     <!-- 名片海报选择 -->
-    <div class="share-card" :style="{'opacity': !showEdit ? 1 : 0, 'height':!showEdit ? '100%' : 0}">
+    <div class="card-model" :style="{'opacity': showModel ? 1 : 0, 'height': showModel ? '100%' : 0}">
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <div class="card-info card1" v-if="editData">
-              <div class="tag-box">
-                <p><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                <p class="sub" v-if="editData.tagList">GUAN JUN PIN ZHI CHENG SHI JING YANG</p>
-              </div>
-              <div class="cover">
+            <div class="card item1">
+              <div class="pic">
                 <img :src="avatarUrl" alt="">
               </div>
-              <div class="name">
-                <h3>{{editData.linkerName}}</h3>
-                <p v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
-                <p v-else>价格待定</p>
-              </div>
-              <div class="qrcode">
-                <img :src="editData.qrCode" alt="">
-                <p class="agent">
-                  <span class="name">{{editData.agentName}}</span> <span>{{editData.agentMobile}}</span>
-                </p>
-                <p class="company">授权开发商：{{editData.developer}}</p>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="card-info card2"  v-if="editData">
-              <div class="cover">
-                <img :src="avatarUrl" alt="">
-              </div>
-              <div class="data-info">
-                <img class="bg" src="../../../assets/img/market/poster/card2.png" alt="">
-                <div class="name-box">
+              <div class="linker-box scale-1px-bottom">
+                <div class="linker-info">
                   <p class="name">{{editData.linkerName}}</p>
-                  <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                  <p class="price" v-if="editData.linkerPrice-0">价格：{{editData.linkerPrice}} {{editData.priceUnit}}</p>
-                  <p v-else>价格待定</p>
+                  <p class="address">{{editData.city}} {{editData.county}}</p>
                 </div>
-                <div class="qrcode">
-                  <img :src="editData.qrCode" alt="">
-                  <p>长按识别更多</p>
+                <div class="linker-price">
+                  <p class="price" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                  <p class="price" v-else>价格待定</p>
+                  <p class="tips">参考均价</p>
                 </div>
-                <div class="agent">
-                  <div class="agent-info">
-                    <img class="pic" :src="editData.avatarMediaidTwo" alt="">
-                    <div class="text">
-                      <p class="agentName">{{editData.agentName}}</p>
-                      <p>{{editData.agentMobile}}</p>
-                    </div>
-                  </div>
-                  <p class="company">授权开发商：{{editData.developer}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="card-info card3" v-if="editData">
-              <div class="tag-box">
-                <div class="info">
-                  <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                  <p class="sub" v-if="editData.tagList">GUAN JUN PIN ZHI CHENG SHI JING YANG</p>
-                </div>
-                
-              </div>
-              <div class="cover">
-                 <img :src="avatarUrl" alt="">
               </div>
               <div class="agent-box">
-                <div class="name">
-                  <sup>“</sup>{{editData.linkerName}}<sub>”</sub>
-                </div>
-                <p class="price" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
-                <p v-else>价格待定</p>
-              </div>
-              <div class="developer-box">
-                <div class="developer">
-                  <img class="pic" :src="editData.avatarMediaidTwo" alt="">
-                  <p class="agentName">{{editData.agentName}} | {{editData.agentMobile}}</p>
-                  <p class="company">授权开发商：{{editData.developer}}</p>
+                <div class="agent-info">
+                  <div class="agent-cnt">
+                    <div class="img">
+                      <img class="pic" :src="editData.avatarMediaidTwo" alt="">
+                    </div>
+                    <div class="text">
+                      <p class="name">{{editData.agentName}}</p>
+                      <p class="tel">{{editData.agentMobile}}</p>
+                    </div>
+                  </div>
+                  <div class="tips">
+                    长按识别小程序码，查看楼盘详情
+                  </div>
                 </div>
                 <div class="qrcode">
                   <img :src="editData.qrCode" alt="">
-                  <p>长按识别更多</p>
                 </div>
               </div>
             </div>
           </div>
           <div class="swiper-slide">
-            <div class="card-info card4" v-if="editData">
-              <div class="cover">
+            <div class="card item2">
+              <div class="pic">
                 <img :src="avatarUrl" alt="">
               </div>
-              <div class="tag-box">
-                <p class="tag"><span v-if="editData.tagList.length>0">{{editData.tagList[0]}}</span><span  v-if="editData.tagList.length>1"> · {{editData.tagList[1]}}</span></p>
-                <p class="price" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
-                <p v-else>价格待定</p>
-                <p class="pic"><img src="../../../assets/img/market/poster/card4.png" alt=""></p>
+              <div class="linker-box">
+                <div class="name">{{editData.linkerName}}</div>
+                <div class="linker-item">
+                    <div class="price">
+                      <p class="title">价格(/㎡)</p>
+                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                      <p class="text" v-else>价格待定</p>
+                    </div>
+                    <div class="area">
+                      <p class="title">区域</p>
+                      <p class="text">{{editData.city}} {{editData.county}}</p>
+                    </div>
+                    <div class="build">
+                      <p class="title">建面(㎡)</p>
+                      <p class="text">{{editData.buildArea}}</p>
+                    </div>
+                </div>
               </div>
-              <div class="name">
-                <span class="arr-l"></span><h3>{{editData.linkerName}}</h3><span class="arr-r"></span>
+              <div class="agent-box">
+                <div class="agent-info">
+                  <div class="agent-cnt">
+                    <div class="img">
+                      <img class="pic" :src="editData.avatarMediaidTwo" alt="">
+                    </div>
+                    <div class="text">
+                      <p class="name">{{editData.agentName}}</p>
+                      <p class="tel">{{editData.agentMobile}}</p>
+                    </div>
+                  </div>
+                  <div class="tips">
+                    长按识别小程序码，查看楼盘详情
+                  </div>
+                </div>
+                <div class="qrcode">
+                  <img :src="editData.qrCode" alt="">
+                </div>
               </div>
-              <div class="qrcode">
-                <img :src="editData.qrCode" alt="">
-                <p class="agentName">{{editData.agentName}} | {{editData.agentMobile}}</p>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card item3">
+              <div class="pic">
+                <img :src="avatarUrl" alt="">
               </div>
-              <div class="company">
-                授权开发商：{{editData.developer}}
+              <div class="linker-box">
+                <div class="name">{{editData.linkerName}}</div>
+                <div class="linker-item">
+                    <div class="price">
+                      <p class="title">价格(/㎡)</p>
+                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                      <p class="text" v-else>价格待定</p>
+                    </div>
+                    <div class="area">
+                      <p class="title">区域</p>
+                      <p class="text">{{editData.city}} {{editData.county}}</p>
+                    </div>
+                    <div class="build">
+                      <p class="title">建面(㎡)</p>
+                      <p class="text">{{editData.buildArea}}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="agent-box">
+                <div class="agent-info">
+                  <div class="agent-cnt">
+                    <div class="img">
+                      <img class="pic" :src="editData.avatarMediaidTwo" alt="">
+                    </div>
+                    <div class="text">
+                      <p class="name">{{editData.agentName}}</p>
+                      <p class="tel">{{editData.agentMobile}}</p>
+                    </div>
+                  </div>
+                  <div class="tips">
+                    长按识别小程序码，查看楼盘详情
+                  </div>
+                </div>
+                <div class="qrcode">
+                  <img :src="editData.qrCode" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card item4">
+              <div class="pic">
+                <img :src="avatarUrl" alt="">
+              </div>
+              <div class="agent-box">
+                <div class="agent-info">
+                  <div class="agent-cnt">
+                    <div class="img">
+                      <img class="pic" :src="editData.avatarMediaidTwo" alt="">
+                    </div>
+                    <div class="text">
+                      <p class="name">{{editData.agentName}}</p>
+                      <p class="tel">{{editData.agentMobile}}</p>
+                    </div>
+                  </div>
+                  <div class="tips">
+                    长按识别小程序码，查看楼盘详情
+                  </div>
+                </div>
+                <div class="qrcode">
+                  <img :src="editData.qrCode" alt="">
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div class="swiper-pagination"></div> -->
       </div>
-      <div class="share-card-action">
-        <button type="button" class="edit" @click="showEditFn">编辑海报</button>
-        <button type="button" class="save" @click="creatCoverFn">生成海报</button>
-      </div>
+      <div class="card-action">
+         <div class="btn">
+           <button @click="cancleModel">取消</button>
+           <button class="submit" @click="changeModel">确认</button>
+         </div>
+       </div>
     </div>
-
     <!-- 名片海报信息编辑 -->
     <div class="share-detail-edit" v-show="showEdit">
       <div class="form">
@@ -147,18 +190,20 @@
         <button @click="updateAgentCard">保存</button>
       </div>
     </div>
-
     <!-- 名片海报预览 -->
     <div class="share-cover-img" v-show="showView">
       <p class="img-box">
         <img src="" alt="" id="share-cover-img">
       </p>
-      <p class="btn">
-        <span>长按图片保存，分享给好友或朋友圈</span>
-        <button class="save" style="width:100%" @click="closeView">返回</button>
-      </p>
+      <div class="card-action">
+        <p>长按图片保存，分享给好友或朋友圈</p>
+        <div class="btn">
+          <button  @click="showEditFn">编辑信息</button>
+          <button  @click="chooseModel">选择模板</button>
+        </div>
+      </div>
     </div>
-
+    <!-- 加载中 -->
     <div class="loading"  v-show="showLoading" >
        <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
@@ -184,7 +229,8 @@ export default {
       showEdit: false, // 显示编辑信息
       creatCover: false, // 生成海报
       showLoading: false, // 加载中
-      avatarUrl: ''
+      avatarUrl: '',
+      showModel: false
     }
   },
   created() {
@@ -196,6 +242,22 @@ export default {
     this.initSwiper()
   },
   methods: {
+    // 取消模板
+    cancleModel () {
+      this.showView = true
+      this.showModel = false
+    },
+    // 修改模板
+    changeModel () {
+      this.showView = true
+      this.showModel = false
+      this.viewCover()
+    },
+    // 选择模板
+    chooseModel () {
+      this.showView = false
+      this.showModel = true
+    },
     // 初始化swiper
     initSwiper () {
       let _that = this
@@ -240,22 +302,25 @@ export default {
       await this.getAgentLinkerPoster(this.shareBaseInfo.agentId)
       this.editData = Object.assign({}, this.shareBaseInfo)
       this.avatarUrl = this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0] || ''
-      // 合并两个接口参数
       this.showLoading = false
+      if (!this.showEdit) {
+        this.viewCover()
+      }
     },
     // 编辑海报信息按钮
     showEditFn() {
+      this.activeIndexOld = this.activeIndex
+      this.showView = false
       this.showEdit = true
     },
     // 生成海报
     creatCoverFn() {
       this.showLoading = true
-      this.creatCover = true
       this.htmlToImg()
     },
     // 生成图片
     htmlToImg() {
-      let cls = `.card${this.activeIndex + 1}`
+      let cls = `.item${this.activeIndex + 1}`
       let img = document.getElementById('share-cover-img')
       let _that = this
       h2c(document.querySelector(cls), {
@@ -265,7 +330,7 @@ export default {
         allowTaint: false,
         logging: false,
         width: '300px',
-        heigt: '480px'
+        heigt: '460px'
       }).then(canvas => {
         let dataURL = canvas.toDataURL()
         img.src = dataURL
@@ -277,9 +342,16 @@ export default {
     closeView() {
       this.showView = false
     },
+    // 预览名片
+    async viewCover() {
+      this.showLoading = true
+      await this.htmlToImg()
+      this.showEdit =  false
+      this.showView = true
+    },
     // 重置数据
     reset() {
-      this.editData = Object.assign({}, this.shareBaseInfo)
+      this.initData()
     },
     // 保存名片信息
     async updateAgentCard() {
@@ -310,6 +382,8 @@ export default {
         let toast = this.$toast('保存成功')
         setTimeout(() => {
           toast.clear()
+          this.viewCover()
+          this.showView = true
           this.showEdit = false
         }, 500)
       }
@@ -323,378 +397,427 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.share-box {
-  height: 100%;
-  font-family:PingFang-SC-Semibold;
-  .share-card {
-    background: linear-gradient(46deg, rgba(37, 39, 55, 1) 0%, rgba(72, 76, 98, 1) 100%);
-    height: 100%;
-    font-size: 14px;
-    .swiper-container {
-      width: 100%;
-      height: 480px;
-      padding-top: 15px;
-      box-sizing: content-box;
-      .card-info {
-        width: 300px;
-        margin: auto;
-        height: 100%;
-        position: relative;
-        background-color: #fff;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-        pointer-events:none;
-        -webkit-pointer-events:none;
-        -ms-pointer-events:none;
-        -moz-pointer-events:none;
-        &.card1 {
-          background-color: #030303;
-          color: #BF9667;
-          .tag-box{
-            font-size: 20px;
-            font-weight:600;
-            text-align: center;
-            padding-top: 20px;
-            .sub{
-              font-size: 10px;
-              font-weight: 500;
-              margin: 6px 0 20px;
-            }
-          }
-          .cover{
-            width: 260px;
-            height: 194px;
-            margin: auto;
-            overflow: hidden;
-            img{
-              width: 260px;
-              min-height: 100%;
-            }
-          }
+.share-box{
+  font-size: 12px;
+  .card {
+      width:300px;
+      height:400px;
+      background:rgba(255,255,255,1);
+      margin: 16px auto;
+      position: relative;
+    }
+    .item1{
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      .pic{
+        width:300px;
+        height:225px;
+        border-radius:4px 4px 0px 0px;
+        overflow: hidden;
+        img{
+          min-width: 300px;
+          min-height: 225px;
+          object-fit: cover;
+        }
+      }
+      .linker-box{
+        margin: 16px;
+        display: flex;
+        padding-bottom: 16px;
+        .linker-info{
+          flex: 1;
           .name{
-            color: #BF9667;
-            text-align: center;
-            padding-top: 15px;
-            h3{
-              display: inline-block;
-              min-width: 60%;
-              max-width: 80%;
-              margin: auto;
-              font-size: 16px;
-              padding-bottom: 5px;
-              border-bottom: 1px solid  #BF9667;
-              // overflow:hidden;
-              // text-overflow:ellipsis;
-              // white-space:nowrap;
-            }
-            p{
-              font-size: 12px;
-              padding-top: 6px;
-            }
-          }
-          .qrcode{
-            text-align: center;
-            font-size: 12px;
-            padding-top: 20px;
-            img{
-              width: 64px;
-              height: 64px;
-              border-radius: 50%;
-            }
-            .agent{
-              padding-top: 8px;
-              .name{
-                padding-right: 10px;
-              }
-            }
-            .company{
-              padding-top: 12px;
-              font-size: 10px;
-              white-space: normal;
-            }
-          }
-        }
-
-        &.card2 {
-          .cover{
-            height: 300px;
-            overflow: hidden;
-            img{
-              min-height: 300px;
-              width: 100%;
-            }
-          }
-          .data-info{
-            height: 260px;
-            margin-top: -80px;
-            position: relative;
-            img.bg{
-              min-height: 100%;
-              position: absolute;
-              bottom: 0;
-              top: 0;
-            }
-            .name-box{
-              position: relative;
-              color: #E5B37B;
-              padding-top: 50px;
-              padding-left: 20px;
-              border-bottom: 1px dotted  rgba(243, 216, 186,0.3);
-              padding-bottom: 10px;
-              .name{
-                font-size: 22px;
-                // margin-right: 20px;
-                overflow: hidden;
-              }
-              .tag{
-                padding: 8px 0;
-                font-size: 14px;
-              }
-              .price{
-                font-size: 14px;
-              }
-            }
-            .qrcode{
-              position: absolute;
-              top: 100px;
-              right: 15px;
-              img{
-                width: 80px;
-                height: 80px;
-                border-radius: 50%;
-              }
-              p{
-                color:rgba(255,255,255,0.5);
-                font-size: 10px;
-                text-align: center;
-                padding-top: 5px;
-              }
-            }
-          }
-          .agent{
-            position: relative;
-            .agent-info{
-              display: flex;
-              padding: 25px 20px 20px;
-              .pic{
-                width: 44px;
-                height: 44px;
-                border-radius: 50%;
-              }
-              .text{
-                flex: 1;
-                margin-left: 10px;
-                color:rgba(164, 184, 213, 0.6);
-                font-size: 14px;
-                padding-top: 2px;
-                .agentName{
-                  padding-bottom: 5px;
-                }
-              }
-            }
-            .company{
-              padding: 0 20px;
-              font-size: 10px;
-              color: rgba(164, 184, 213, 0.6);
-              white-space: normal;
-            }
-          }
-        }
-
-        &.card3 {
-          color: #0A1930;
-          .tag-box{
-            font-size: 20px;
+            max-width: 170px;
+            font-size:18px;
             font-weight:600;
-            text-align: left;
-            padding: 20px;
-            .info{
-              border-left:4px solid #0A1930;
-              padding-left: 10px;
-            }
-            .sub{
-              font-size: 10px;
-              font-weight: 500;
-              margin: 6px 0 0;
-            }
-          }
-          .cover{
-            width: 260px;
-            height: 194px;
-            margin: auto;
+            color:rgba(26,39,51,1);
             overflow: hidden;
-            img{
-              width: 260px;
-              min-height: 100%;
-            }
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
-          .agent-box{
-            text-align: center;
-            position: relative;
-            padding-top: 30px;
-            .name{
-              font-size: 24px;
-              sup,sub{
-                color: #F5A623;
-                margin: 0 5px;
-              }
-              sub{
-                vertical-align: bottom;
-              }
-            }
-            .price{
-              font-size: 12px;
-              padding-top: 10px;
-            }
+          .address{
+            font-size:10px;
+            font-weight:400;
+            color:rgba(145,149,153,1);
+            line-height:14px;
+            margin-top: 5px;
           }
-          .developer-box{
+        }
+        .linker-price{
+          .price{
+            font-size:16px;
+            color:rgba(234,77,46,1);
+          }
+          .tips{
+            height:14px;
+            font-size:10px;
+            font-weight:400;
+            color:rgba(145,149,153,1);
+            line-height:14px;
+            text-align: right;
+            margin-top: 5px;
+          }
+        }
+      }
+      .agent-box{
+        display: flex;
+        margin: 0 16px;
+        .agent-info{
+          flex: 1;
+          margin-top: 5px;
+          .agent-cnt{
             display: flex;
-            padding-top: 20px;
-            .developer{
-              width: 60%;
-              color: #102849;
-              font-size: 10px;
-              padding: 10px 20px;
-              .pic{
-                width: 34px;
-                height: 34px;
-                border-radius: 50%;
-              }
-              .agentName{
-                line-height: 2;
-              }
-              .company{
-                border-top: 1px solid rgba(16, 40, 73, 0.8);
-                overflow: auto;
-                white-space: normal;
-                padding-top: 5px;
-              }
-            }
-            .qrcode{
-              text-align: center;
-              font-size: 10px;
-              color: #102849;
-              margin: 5px 10px;
+            .img{
               img{
-                width: 64px;
-                height: 64px;
+                width: 32px;
+                height: 32px;
                 border-radius: 50%;
-              }
-              p{
-                padding-top: 5px;
+                margin-right: 8px;
               }
             }
+            .text{
+              flex: 1;
+              max-width: 140px;
+              .name{
+                font-size:12px;
+                font-weight:600;
+                color:rgba(26,39,51,1);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              .tel{
+                font-size:10px;
+                font-weight:400;
+                color:rgba(145,149,153,1);
+                margin-top: 5px;
+              }
+            }
+          }
+          .tips{
+            font-size:10px;
+            font-weight:400;
+            color:rgba(145,149,153,1);
+            margin-top: 5px;
           }
         }
-
-        &.card4 {
-          background:rgba(247,249,250,1);
-          .cover{
-            height: 220px;
-            overflow: hidden;
-            img{
-              width: 100%;
-              min-height: 220px;
-            }
-            
-          }
-          .tag-box{
-            padding-top: 20px;
-            text-align: center;
-            .tag{
-              font-size: 20px;
-            }
-            .price{
-              font-size: 12px;
-              padding: 6px 0 3px 0;
-            }
-            .pic{
-              width: 60%;
-              margin: auto;
-              img{
-                width: 100%;
-              }
-            }
-          }
-          .name{
-            padding-top: 15px;
-            text-align: center;
-            font-size: 16px;
-            position: relative;
-            h3{
-              display: inline-block;
-              position: relative;
-              margin: auto;
-              border:1px solid  #0A1933;
-              border-radius: 2px;
-              line-height: 25px;
-              padding: 0 10px;
-            }
-            span{
-              display: inline-block;
-              width: 3px;
-              height: 18px;
-              border:1px solid  #0A1933;
-              border-radius: 2px;
-              vertical-align: middle;
-              &.arr-l{
-                margin-right: -1px;
-              }
-              &.arr-r{
-                margin-left: -1px;
-              }
-            }
-          }
-          .qrcode{
-            padding-top: 10px;
-            text-align: center;
-            color: #0A1933;
-            img{
-              width: 64px;
-              height: 64px;
-              border-radius: 50%;
-            }
-            p{
-              line-height: 1.5;
-              padding-top: 5px;
-            }
-          }
-          .company{
-            font-size: 10px;
-            white-space: normal;
-            text-align: center;
-            padding-top: 10px;
-            color: #0A1933;
+        .qrcode{
+          width: 64px;
+          img{
+            width: 64px;
+            height: 64px;
           }
         }
-
       }
     }
-
-    .share-card-action {
-      // position: absolute;
-      width: 100%;
-      // bottom: 15px;
-      text-align: center;
-      margin-top: 15px;
-      button {
-        width: 144px;
-        height: 44px;
-        border-radius: 6px;
-        color: #fff;
-        border: none;
-        margin: 0 10px;
-        border: #007ae6 1px solid;
-        &.edit {
-          background: linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
-          color: #fff;
-          border-color: #fff;
-        }
-        &.save {
-          background: rgba(0, 122, 230, 1);
+    .item2{
+      .pic{
+        width:300px;
+        height:225px;
+        border-radius:4px 4px 0px 0px;
+        overflow: hidden;
+        img{
+          min-width: 300px;
+          min-height: 225px;
+          object-fit: cover;
         }
       }
+      .linker-box{
+        margin-bottom: 25px;
+        .name{
+          margin: 10px 16px;
+          font-size:16px;
+          font-weight:600;
+          color:rgba(26,39,51,1);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .linker-item{
+          display: flex;
+          margin: 0 16px;
+          .price,.area,.build{
+            flex: 1;
+            .title{
+              font-size:10px;
+              font-weight:400;
+              color:rgba(145,149,153,1);
+              line-height:14px;
+            }
+            .text{
+              font-size:14px;
+              font-weight:600;
+              color:rgba(234,77,46,1);
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+      .agent-box{
+        display: flex;
+        margin: 0 16px;
+        .agent-info{
+          flex: 1;
+          margin-top: 5px;
+          .agent-cnt{
+            display: flex;
+            .img{
+              img{
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                margin-right: 8px;
+              }
+            }
+            .text{
+              flex: 1;
+              max-width: 140px;
+              .name{
+                font-size:12px;
+                font-weight:600;
+                color:rgba(26,39,51,1);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              .tel{
+                font-size:10px;
+                font-weight:400;
+                color:rgba(145,149,153,1);
+                margin-top: 5px;
+              }
+            }
+          }
+          .tips{
+            font-size:10px;
+            font-weight:400;
+            color:rgba(145,149,153,1);
+            margin-top: 5px;
+          }
+        }
+        .qrcode{
+          width: 64px;
+          img{
+            width: 64px;
+            height: 64px;
+          }
+        }
+      }
+    }
+    .item3{
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      .pic{
+        width:300px;
+        height:225px;
+        border-radius:4px 4px 0px 0px;
+        overflow: hidden;
+        img{
+          min-width: 300px;
+          min-height: 225px;
+          object-fit: cover;
+        }
+      }
+      .linker-box{
+        box-shadow:0px 0px 16px 0px rgba(0,0,0,0.1);
+        border-radius:4px;
+        margin: -55px 16px 40px 16px;
+        z-index: 9;
+        background-color: #fff;
+        padding: 5px 0 20px;
+        position: relative;
+        .name{
+          margin: 10px 16px 20px 16px;
+          font-size:16px;
+          font-weight:600;
+          color:rgba(26,39,51,1);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .linker-item{
+          display: flex;
+          margin: 0 16px;
+          .price,.area,.build{
+            flex: 1;
+            .title{
+              font-size:10px;
+              font-weight:400;
+              color:rgba(145,149,153,1);
+              line-height:14px;
+            }
+            .text{
+              font-size:14px;
+              font-weight:600;
+              color:rgba(234,77,46,1);
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+      .agent-box{
+        display: flex;
+        margin: 0 16px;
+        .agent-info{
+          flex: 1;
+          margin-top: 5px;
+          .agent-cnt{
+            display: flex;
+            .img{
+              img{
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                margin-right: 8px;
+              }
+            }
+            .text{
+              flex: 1;
+              max-width: 140px;
+              .name{
+                font-size:12px;
+                font-weight:600;
+                color:rgba(26,39,51,1);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              .tel{
+                font-size:10px;
+                font-weight:400;
+                color:rgba(145,149,153,1);
+                margin-top: 5px;
+              }
+            }
+          }
+          .tips{
+            font-size:10px;
+            font-weight:400;
+            color:rgba(145,149,153,1);
+            margin-top: 5px;
+          }
+        }
+        .qrcode{
+          width: 64px;
+          img{
+            width: 64px;
+            height: 64px;
+          }
+        }
+      }
+    }
+    .item4{
+      .pic{
+        width:300px;
+        height:325px;
+        border-radius:4px 4px 0px 0px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        img{
+          min-width: 300px;
+          min-height: 325px;
+          object-fit: cover;
+        }
+      }
+      .agent-box{
+        display: flex;
+        margin: 0 16px;
+        .agent-info{
+          flex: 1;
+          margin-top: 5px;
+          .agent-cnt{
+            display: flex;
+            .img{
+              img{
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                margin-right: 8px;
+              }
+            }
+            .text{
+              flex: 1;
+              max-width: 140px;
+              .name{
+                font-size:12px;
+                font-weight:600;
+                color:rgba(26,39,51,1);
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              .tel{
+                font-size:10px;
+                font-weight:400;
+                color:rgba(145,149,153,1);
+                margin-top: 5px;
+              }
+            }
+          }
+          .tips{
+            font-size:10px;
+            font-weight:400;
+            color:rgba(145,149,153,1);
+            // margin-top: 5px;
+          }
+        }
+        .qrcode{
+          width: 64px;
+          img{
+            width: 64px;
+            height: 64px;
+          }
+        }
+      }
+    }
+  .card-action{
+    text-align: center;
+    font-weight: 400;
+    p{
+      color: #1A2733;
+      margin-top: 12px;
+    }
+    .btn{
+      display: flex;
+      margin: 15px 20px;
+      button{
+        flex: 1;
+        height:44px;
+        background:rgba(240,243,245,1);
+        border-radius:4px;
+        border: none;
+        color: #666;
+        &:nth-child(1){
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  .card-model{
+    height: 100%;
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+      box-sizing: content-box;
+    }
+    .card-action{
+      button:nth-child(2){
+        background-color: #007AE6;
+        color: #fff;
+      }
+    }
+  }
+  // 预览名片
+  .share-cover-img {
+    width:300px;
+    height:400px;
+    background:rgba(255,255,255,1);
+    margin: 16px auto;
+    .img-box {
+      height: 400px;
+      width: 300px;
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
     }
   }
   // 编辑信息
@@ -818,52 +941,6 @@ export default {
       }
     }
   }
-  // 预览名片
-  .share-cover-img {
-    position: fixed;
-    z-index: 3;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(37, 39, 55, 1);
-    .img-box {
-      height: 480px;
-      width: 300px;
-      margin: 5px auto;
-    }
-    .btn {
-      width: 300px;
-      margin: auto;
-      font-size: 14px;
-      color: #fff;
-      text-align: center;
-      span {
-        display: block;
-        padding-bottom: 10px;
-        font-size: 12px;
-        opacity: 0.5;
-      }
-      button {
-        height: 44px;
-        width: 120px;
-        border-radius: 6px;
-        border: none;
-        border: 1px solid #007ae6;
-        &.close {
-          margin-right: 20px;
-          background: linear-gradient(46deg, rgba(37, 39, 55, 1) 0%, rgba(72, 76, 98, 1) 100%);
-          color: #007ae6;
-        }
-        &.save {
-          background-color: #007ae6;
-        }
-      }
-      &.btnview {
-        margin-top: 30px;
-      }
-    }
-  }
   // loading
   .loading {
     position: fixed;
@@ -885,6 +962,6 @@ export default {
       margin-top: -25px;
     }
   }
-
 }
 </style>
+

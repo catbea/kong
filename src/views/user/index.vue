@@ -111,7 +111,7 @@ export default {
           this.$router.push({ name: 'historicalArticles', query: { typeCode: '2' } })
           break
         case 2:
-          this.$router.push('/user/questionAnswers')
+          this.$router.push('/user/learn')
           break
         case 3:
           this.enterSharePage()

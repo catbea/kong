@@ -21,7 +21,7 @@ export default {
     titleBarConf: {
       title: '我的楼盘',
       linkText: '更多楼盘',
-      link: '/user/myMarket'
+      link: '/market/classify/mymarket'
     }
   }),
   methods: {

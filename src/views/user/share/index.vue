@@ -1,172 +1,77 @@
 <template>
   <div class="share-box">
     <!-- 名片海报选择 -->
-    <div class="share-card" :style="{'opacity': !showEdit ? 1 : 0, 'height':!showEdit ? '100%' : 0}">
+    <div class="card-model" :style="{'opacity': showModel ? 1 : 0, 'height': showModel ? '100%' : 0}">
       <div class="swiper-container">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
-            <div class="card-info card1">
-              <div class="avat">
-                <img :src="editData.avatarUrl" alt="封面">
+            <div class="card item1">
+              <div class="pic">
+                <img :src="editData.avatarUrl" alt="">
               </div>
-              <div class="name text-one-line">
-                <h3 class="text-one-line">{{editData.agentName}}</h3>
-                <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
+              <div class="agent-info">
+                <p class="name-box"><span class="name">{{editData.agentName}}</span><span class="tel">{{editData.mobile}}</span></p>
+                <p class="signature">{{editData.signature}}</p>
+              </div>
+              <div class="qrcode-box">
+                <div class="tips">
+                  <p class="logo"><img src="../../../assets/img/user/share/logo.png" alt="">AW大师</p>
+                  <p class="text">长按识别小程序码，进入我的名片</p>
+                </div>
+                <div class="qrcode">
+                  <img :src="editData.miniQrCode" alt="小程序">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="card item2">
+              <div class="type2-cnt">
+              <div class="logo">
+                <img src="../../../assets/img/user/share/logo.png" alt="">AW大师
+              </div>
+              <div class="pic">
+                <img :src="editData.avatarUrl" alt="">
+              </div>
+              <div class="agent-info">
+                <p class="name">{{editData.agentName}}</p>
+                <p class="tel">{{editData.mobile}}</p>
+                <p class="signature">{{editData.signature}}</p>
               </div>
               <div class="qrcode">
                 <img :src="editData.miniQrCode" alt="小程序">
-                <span>长按识别更多</span>
+                <p>长按识别小程序码，进入我的名片</p>
               </div>
-              <div class="data-info">
-                <img class="bg" src="../../../assets/img/share/card1.png" alt="">
-                <h3>{{editData.signature}}</h3>
-                <p><span>Tel :</span>{{editData.mobile}}</p>
-                <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
-                <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
-              </div>
-
+            </div>
             </div>
           </div>
           <div class="swiper-slide">
-            <div class="card-info card2">
-              <div class="avat">
-                <img :src="editData.avatarUrl" alt="封面" />
-              </div>
-              <div class="data-info">
-                <img class="bg" src="../../../assets/img/share/card2.png" alt="" />
-                <div class="data-info-box">
-                  <div class="data">
-                    <div class="name text-one-line">
-                      <b>{{editData.agentName}}</b>
-                      <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
-                    </div>
-                    <div class="info">
-                      <p><span>Tel :</span>{{editData.mobile}}</p>
-                      <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
-                      <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
-                    </div>
-                  </div>
-                  <div class="qrcode">
-                    <img :src="editData.miniQrCode" alt="小程序">
-                    <span>长按识别更多</span>
-                  </div>
+            <div class="card item3">
+              <div class="type3-cnt">
+                <div class="signature">{{editData.signature}}</div>
+                <div class="pic">
+                  <img :src="editData.avatarUrl" alt="">
                 </div>
-                <div class="signature">
-                  {{editData.signature}}
+                <div class="agent-info">
+                  <p class="name">{{editData.agentName}}</p>
+                  <p class="tel">{{editData.mobile}}</p>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="card-info card3">
-              <div class="avat">
-                <div class="img"><img :src="editData.avatarUrl" alt="封面" /></div>
-                <p>{{editData.signature}}</p>
-              </div>
-              <div class="name">
-                <h3>{{editData.agentName}}</h3>
-                <span>{{editData.mobile}}</span>
-              </div>
-              <div class="data-info">
-                <!-- <p><span>Col : </span>{{editData.institutionName}}</p>
-                <p><span>Add: </span>{{editData.mojarRegion}}</p> -->
-              </div>
-              <div class="qrcode">
-                <img :src="editData.miniQrCode" alt="小程序" >
-                <span>长按识别更多</span>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="card-info card4">
-              <div class="avat">
-                <img :src="editData.avatarUrl" alt="封面" />
-              </div>
-              <div class="data-info">
-                <img src="../../../assets/img/share/card4.png" alt="" class="bg">
-                <div class="data-info-box">
-                  <div class="data">
-                    <div class="name text-one-line">
-                      <b>{{editData.agentName}}</b>
-                      <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
-                    </div>
-                    <div class="info">
-                      <p><span>Tel :</span>{{editData.mobile}}</p>
-                      <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
-                      <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
-                    </div>
-                  </div>
-                  <div class="qrcode">
-                    <img :src="editData.miniQrCode" alt="小程序">
-                    <span>长按识别更多</span>
-                  </div>
-                </div>
-                <div class="signature">
-                  <p>{{editData.signature}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="card-info card5">
-              <div class="vata">
-                <img :src="editData.avatarUrl" alt="封面" />
-              </div>
-              <div class="qrcode">
-                <img :src="editData.miniQrCode" alt="小程序">
-              </div>
-              <div class="data-info">
-                <div class="name">
-                  <b>{{editData.agentName}}</b>
-                  <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
-                </div>
-                <div class="info">
-                  <p><span>Tel :</span>{{editData.mobile}}</p>
-                  <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
-                  <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
-                  <p class="signature">{{editData.signature}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="card-info card6">
-              <div class="vata">
-                <img :src="editData.avatarUrl" alt="封面" />
-              </div>
-              <div class="name text-one-line">
-                <b>{{editData.agentName}}</b>
-                <span v-show="editData.agentName === shareBaseInfo.agentName">{{editData.pinyin}}</span>
-              </div>
-              <div class="data-info">
-                <div class="data-info-box">
-                  <div class="data">
-                    <div class="info">
-                      <p><span>Tel :</span>{{editData.mobile}}</p>
-                      <!-- <p><span>Col :</span>{{editData.institutionName}}</p>
-                      <p><span>Add:</span>{{editData.mojarRegion}}</p> -->
-                    </div>
-                  </div>
-                  <div class="qrcode">
-                    <img :src="editData.miniQrCode" alt="小程序">
-                    <span>长按识别更多</span>
-                  </div>
-                </div>
-                <div class="signature">
-                  <p>{{editData.signature}}</p>
+                <div class="qrcode">
+                  <img :src="editData.miniQrCode" alt="小程序">
+                  <p>长按识别小程序码，进入我的名片</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- <div class="swiper-pagination"></div> -->
       </div>
-      <div class="share-card-action">
-        <button type="button" class="edit" @click="showEditFn">编辑海报信息</button>
-        <button type="button" class="save" @click="creatCoverFn">生成海报</button>
-      </div>
+      <div class="card-action">
+         <div class="btn">
+           <button @click="cancleModel">取消</button>
+           <button class="submit" @click="changeModel">确认</button>
+         </div>
+       </div>
     </div>
-
     <!-- 名片海报信息编辑 -->
     <div class="share-detail-edit" v-show="showEdit">
       <div class="form">
@@ -178,10 +83,6 @@
           <span>经纪人电话</span>
           <input type="text" v-model="editData.mobile" maxlength="16" placeholder="请输入电话号码" @blur="blur">
         </div>
-        <!-- <div class="group-item">
-          <span>机构地址</span>
-          <input type="text" v-model="editData.mojarRegion" placeholder="请输入机构地址" @blur="blur">
-        </div> -->
         <div class="group-item">
           <span>宣传语</span>
           <input type="text" v-model="editData.signature" maxlength="48" placeholder="请输入宣传语" @blur="blur">
@@ -220,18 +121,19 @@
       <p class="img-box">
         <img src="" alt="" id="share-cover-img">
       </p>
-      <p class="btn btnview" v-if="!creatCover">
-        <button class="close" @click="closeView">关闭预览</button>
-        <button class="save" @click="updateAgentCard">保存信息</button>
-      </p>
-      <p class="btn" v-else>
-        <span>长按图片保存，分享给好友或朋友圈</span>
-        <button class="save" style="width:100%" @click="closeView">返回</button>
-      </p>
+      <div class="card-action">
+        <p>长按图片保存，分享给好友或朋友圈</p>
+        <div class="btn">
+          <button  @click="showEditFn">编辑信息</button>
+          <button  @click="chooseModel">选择模板</button>
+        </div>
+      </div>
     </div>
+    <!-- 加载中 -->
     <div class="loading"  v-show="showLoading" >
        <van-loading type="spinner" color="white" class="van-loading"/>
     </div>
+    <!-- 截图 -->
     <div class="cropper-box" v-show="showCopper">
       <vueCropper
 				ref="cropper"
@@ -273,11 +175,12 @@ export default {
       agentId: 1,
       shareBaseInfo: {}, // 默认数据
       shareInfo: {}, // 用户修改数据
-      activeIndex: 1, // 初始化模板索引
+      activeIndex: 0, // 初始化模板索引
+      activeIndexOld: 0, // 模板索引记录
       editData: {}, // 编辑数据
+      showModel: false, //选择模板
       showView: false, // 图片预览
       showEdit: false, // 显示编辑信息
-      creatCover: false, // 生成海报
       showLoading: false, // 加载中
       cos: null, //封面照片
       appId: '10037467',
@@ -321,6 +224,22 @@ export default {
     })
   },
   methods: {
+    // 取消模板
+    cancleModel () {
+      this.showView = true
+      this.showModel = false
+    },
+    // 修改模板
+    changeModel () {
+      this.showView = true
+      this.showModel = false
+      this.viewCover()
+    },
+    // 选择模板
+    chooseModel () {
+      this.showView = false
+      this.showModel = true
+    },
     // 获取分享卡片详情
     async getCardInfo() {
       let result = await userService.getQrCodeByToken()
@@ -347,20 +266,24 @@ export default {
       this.editData.mojarRegion = this.editData.institutionalAddress || this.editData.mojarRegion
       this.uploadImg = this.editData.avatarUrl
       this.showLoading = false
+      if (!this.showEdit) {
+        this.viewCover()
+      }
     },
     // 编辑海报信息按钮
     showEditFn() {
+      this.activeIndexOld = this.activeIndex
+      this.showView = false
       this.showEdit = true
     },
     // 生成海报
     creatCoverFn() {
       this.showLoading = true
-      this.creatCover = true
       this.htmlToImg()
     },
     // 生成图片
     htmlToImg() {
-      let cls = `.card${this.activeIndex + 1}`
+      let cls = `.item${this.activeIndex + 1}`
       let img = document.getElementById('share-cover-img')
       let _that = this
       h2c(document.querySelector(cls), {
@@ -369,8 +292,8 @@ export default {
         useCORS: true,
         allowTaint: false,
         logging: false,
-        width: '260px',
-        heigt: '420px'
+        width: '300px',
+        heigt: '460px'
       }).then(canvas => {
         let dataURL = canvas.toDataURL()
         img.src = dataURL
@@ -395,9 +318,9 @@ export default {
     },
     // 预览名片
     async viewCover() {
-      this.creatCover = false
       this.showLoading = true
       await this.htmlToImg()
+      this.showEdit =  false
       this.showView = true
     },
     // 重置数据
@@ -419,14 +342,6 @@ export default {
       if (!checkStrType(name)) {
         return this.$toast('姓名只支持中文、英文和数字')
       }
-      // if (mobile.length == 11) {
-      //   if (!checkPhoneNum(mobile)) {
-      //     return this.$toast('电话号码输入有误')
-      //   }
-      // }
-      // if (mobile.length < 11) {
-      //   return this.$toast('电话号码输入有误')
-      // }
       if (!mobile) {
         return this.$toast('电话号码不能为空')
       }
@@ -441,14 +356,6 @@ export default {
       if (!checkStrLength(slogan, 48)) {
         return this.$toast('宣传语最多为24个汉字')
       }
-      // let reg2 = /^[\u4E00-\u9FA5A-Za-z0-9\/\\]+$/g
-      // if (!reg2.test(mojarRegion)) {
-      //   return this.$toast('机构地址只支持中文、英文和数字')
-      // }
-      // if (!checkStrLength(mojarRegion, 48)) {
-      //   return this.$toast('机构地址最多为24个汉字')
-      // }
-
       let result = await userService.updateAgentCard({
         // agentId: this.agentId,
         imageUrl: this.editData.avatarUrl,
@@ -462,7 +369,8 @@ export default {
         // this.initData()
         setTimeout(() => {
           toast.clear()
-          this.showView = false
+          this.viewCover()
+          this.showView = true
           this.showEdit = false
         }, 500)
       }
@@ -661,625 +569,264 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.share-box {
-  height: 100%;
-  .share-card {
-    background: linear-gradient(46deg, rgba(37, 39, 55, 1) 0%, rgba(72, 76, 98, 1) 100%);
-    height: 100%;
-    font-size: 14px;
-
-    .swiper-container {
-      width: 100%;
-      height: 420px;
-      padding-top: 48px;
-      box-sizing: content-box;
-
-      .card-info {
-        width: 260px;
-        margin: auto;
-        height: 100%;
-        position: relative;
-        pointer-events:none;
-        -webkit-pointer-events:none;
-        -ms-pointer-events:none;
-        -moz-pointer-events:none;
-        &.card1 {
-          background-color: #113460;
-          .avat {
-            position: relative;
-            height: 260px;
-            z-index: 1;
-            text-align: center;
-            overflow: hidden;
-            img {
-              width: auto;
-              min-height: 100%;
-            }
-          }
+.share-box{
+  font-size: 12px;
+  .card {
+      width:300px;
+      height:460px;
+      background:rgba(255,255,255,1);
+      margin: 16px auto;
+      position: relative;
+    }
+    .item1{
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      .pic{
+        width:300px;
+        height:300px;
+        border-radius:4px 4px 0px 0px;
+        overflow: hidden;
+        img{
+          min-width: 300px;
+          min-height: 300px;
+          object-fit: cover;
+        }
+      }
+      .agent-info{
+        margin: 16px 16px 0;
+        .name-box{
+          display: flex;
+          line-height: 20px;
           .name {
-            position: absolute;
-            left: 10px;
-            top: 160px;
-            color: #fff;
-            border-bottom: 2px solid #0069ca;
-            padding-bottom: 5px;
-            max-width: 160px;
-            z-index: 4;
-            text-shadow: 0 0 5px #000;
-            h3 {
-              font-size: 22px;
-            }
-
-            span {
-              font-size: 12px;
-            }
-          }
-          .qrcode {
-            position: absolute;
-            top: 36%;
-            right: 5px;
-            z-index: 3;
-            width: 80px;
-            color: #fff;
-            text-align: center;
-
-            img {
-              width: 60px;
-              height: 60px;
-              border-radius: 50%;
-            }
-
-            span {
-              display: block;
-              padding-top: 5px;
-              text-align: center;
-              opacity: 0.44;
-              font-size: 8px;
-            }
-          }
-
-          .data-info {
-            position: relative;
-            // background: url('../../../assets/img/share/card1.png') no-repeat left top;
-            // backgr7und-size: cover;
-            margin-top: -80px;
-            z-index: 2;
-            height: 280px;
-            color: #fff;
-            padding: 0 20px;
+            font-size:16px;
+            font-weight:600;
+            color:rgba(26,39,51,1);
             overflow: hidden;
-            img.bg {
-              position: absolute;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              top: 0;
-              height: 100%;
-              z-index: -1;
-            }
-            h3 {
-              padding-top: 40%;
-              font-size: 14px;
-              // line-height: 1.4;
-              margin-bottom: 15px;
-            }
-
-            p {
-              font-size: 12px;
-              opacity: 0.6;
-              margin-bottom: 5px;
-              line-height: 1.5;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              overflow: hidden;
-
-              span {
-                display: inline-block;
-                padding-right: 8px;
-                text-align: right;
-                min-width: 25px;
-              }
-            }
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+          .tel{
+            font-size: 12px;
+            font-weight:400;
+            font-weight: 400;
+            margin-left: 8px;
+            color:rgba(92,97,102,1);
           }
         }
-
-        &.card2 {
-          .avat {
-            position: relative;
-            height: 220px;
-            z-index: 1;
-            text-align: center;
-            overflow: hidden;
-            img {
-              width: auto;
-              min-height: 100%;
+        .signature{
+          width:167px;
+          height:28px;
+          font-size:10px;
+          font-weight:400;
+          color:rgba(92,97,102,1);
+          line-height:14px;
+          margin-top: 10px;
+        }
+      }
+      .qrcode-box{
+        display: flex;
+        margin: 4px 16px;
+        .tips{
+          flex: 1;
+          font-size: 10px;
+          height: 16px;
+          line-height: 16px;
+          vertical-align: middle;
+          .logo{
+            color: #007AE6;
+            margin-top: 16px;
+            img{
+              width: 16px;
+              height: 16px;
+              margin-right: 5px;
+              vertical-align: middle;
             }
           }
-
-          .data-info {
-            // background: url('../../../assets/img/share/card2.png') no-repeat left top;
-            // background-size: cover;
-            min-height: 220px;
-            width: 100%;
-            left: -1px;
-            margin-top: -20px;
-            padding-right: 2px;
-            position: relative;
-            z-index: 2;
-            img.bg {
-              position: absolute;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              top: 0;
-              height: 100%;
-              z-index: -1;
-            }
-            .data-info-box {
-              display: flex;
-
-              .data {
-                padding-top: 30px;
-                padding: 20px 0 10px 20px;
-                color: #fff;
-                flex: 1;
-
-                .name {
-                  padding-top: 15px;
-                  padding-bottom: 15px;
-                  max-width: 140px;
-                  b {
-                    font-size: 20px;
-                  }
-
-                  span {
-                    font-size: 12px;
-                    opacity: 0.8;
-                    padding-left: 10px;
-                  }
-                }
-
-                .info {
-                  p {
-                    font-size: 12px;
-                    opacity: 0.6;
-                    margin-bottom: 8px;
-
-                    span {
-                      display: inline-block;
-                      padding-right: 8px;
-                      text-align: right;
-                      min-width: 25px;
-                    }
-                  }
-                }
-              }
-
-              .qrcode {
-                width: 80px;
-                text-align: center;
-                color: #fff;
-                margin-top: 30px;
-
-                img {
-                  width: 58px;
-                  height: 58px;
-                  border-radius: 50%;
-                }
-
-                span {
-                  display: block;
-                  font-size: 8px;
-                  opacity: 0.44;
-                  padding-top: 5px;
-                }
-              }
-            }
-
-            .signature {
-              padding: 20px 20px 5px 20px;
-              font-size: 14px;
-              opacity: 0.5;
-              color: #fff;
-              // line-height: 1.5;
-              text-align: center;
-            }
+          .text{
+            color: #919599;
+            margin-top: 5px;
           }
         }
-
-        &.card3 {
-          background-color: #14355f;
-
-          .avat {
-            text-align: center;
-            padding: 15px 20px;
-            .img {
-              width: 120px;
-              height: 120px;
-              overflow: hidden;
-              border-radius: 50%;
-              margin: auto;
-            }
-            img {
-              min-width: 120px;
-              min-height: 120px;
-            }
-
-            p {
-              font-size: 14px;
-              opacity: 0.5;
-              padding-top: 8px;
-              color: #fff;
-              // line-height: 1.5;
-            }
-          }
-
-          .name {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            text-align: center;
-            color: #fff;
-
-            h3 {
-              font-size: 24px;
-              padding-bottom: 5px;
-            }
-
-            span {
-              font-size: 12px;
-              opacity: 0.6;
-            }
-          }
-
-          .data-info {
-            color: #fff;
-            opacity: 0.6;
-            text-align: center;
-            padding-top: 15px;
-
-            p {
-              font-size: 12px;
-              padding-bottom: 8px;
-            }
-          }
-
-          .qrcode {
-            padding-top: 15px;
-            text-align: center;
-            color: #fff;
-
-            img {
-              width: 60px;
-              height: 60px;
-              border-radius: 50%;
-            }
-
-            span {
-              display: block;
-              opacity: 0.6;
-              font-size: 8px;
-              padding-top: 5px;
-            }
-          }
-        }
-
-        &.card4 {
-          overflow: hidden;
-          .avat {
-            position: relative;
-            height: 220px;
-            z-index: 1;
-            overflow: hidden;
-            img {
-              width: auto;
-              min-height: 100%;
-            }
-          }
-
-          .data-info {
-            // background: url('../../../assets/img/share/card4.png') no-repeat left top;
-            // background-size: cover;
-            min-height: 240px;
-            width: 100%;
-            margin-top: -40px;
-            padding-right: 2px;
-            position: relative;
-            left: -1px;
-            z-index: 2;
-            img.bg {
-              position: absolute;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              top: 0;
-              z-index: -1;
-              height: 100%;
-            }
-            .data-info-box {
-              display: flex;
-
-              .data {
-                padding-top: 30px;
-                padding: 20px 0 10px 20px;
-                color: #14355f;
-                flex: 1;
-
-                .name {
-                  padding-top: 15px;
-                  padding-bottom: 15px;
-                  max-width: 140px;
-                  b {
-                    font-size: 20px;
-                  }
-
-                  span {
-                    font-size: 12px;
-                    opacity: 0.8;
-                    padding-left: 10px;
-                  }
-                }
-
-                .info {
-                  p {
-                    font-size: 12px;
-                    opacity: 0.6;
-                    margin-bottom: 8px;
-
-                    span {
-                      display: inline-block;
-                      padding-right: 8px;
-                      text-align: right;
-                      min-width: 25px;
-                    }
-                  }
-                }
-              }
-
-              .qrcode {
-                width: 80px;
-                text-align: center;
-                color: #14355f;
-                margin-top: 40px;
-
-                img {
-                  width: 58px;
-                  height: 58px;
-                  border-radius: 50%;
-                }
-
-                span {
-                  display: block;
-                  font-size: 8px;
-                  opacity: 0.44;
-                  padding-top: 5px;
-                }
-              }
-            }
-
-            .signature {
-              margin: 5px 20px;
-              padding: 10px 0 5px;
-              font-size: 14px;
-              opacity: 0.5;
-              color: #14355f;
-              // line-height: 1.5;
-              text-align: center;
-              position: relative;
-              border: none;
-
-              &:after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                background: #14355f;
-                width: 100%;
-                height: 1px;
-                -webkit-transform: scaleY(0.5);
-                transform: scaleY(0.5);
-                -webkit-transform-origin: 0 0;
-                transform-origin: 0 0;
-              }
-            }
-          }
-        }
-
-        &.card5 {
-          background-color: #fff;
-
-          .vata {
-            position: relative;
-            height: 220px;
-            z-index: 1;
-            text-align: center;
-            overflow: hidden;
-            img {
-              width: auto;
-              min-height: 100%;
-            }
-          }
-
-          .qrcode {
-            width: 80px;
-            margin: -40px auto 0;
-            text-align: center;
-            color: #14355f;
-            z-index: 3;
-            position: relative;
-
-            img {
-              width: 80px;
-              height: 80px;
-              border-radius: 50%;
-            }
-          }
-
-          .data-info {
-            position: relative;
-            z-index: 2;
-            padding: 10px 20px 0 20px;
-            color: #14355f;
-
-            .name {
-              margin-bottom: 10px;
-
-              b {
-                font-size: 24px;
-              }
-
-              span {
-                padding-left: 10px;
-                font-size: 12px;
-              }
-            }
-
-            .info {
-              font-size: 12px;
-              opacity: 0.6;
-              margin-bottom: 8px;
-
-              p {
-                margin: 5px;
-              }
-              .signature {
-                margin-top: 10px;
-                font-size: 14px;
-              }
-              span {
-                display: inline-block;
-                padding-right: 8px;
-                text-align: right;
-                min-width: 25px;
-              }
-            }
-          }
-        }
-
-        &.card6 {
-          overflow: hidden;
-          .vata {
-            position: relative;
-            height: 290px;
-            z-index: 1;
-            text-align: center;
-            overflow: hidden;
-            img {
-              min-height: 100%;
-              min-width: 100%;
-              max-width: 120%;
-              margin-left: -10%;
-            }
-          }
-
-          .name {
-            position: relative;
-            z-index: 2;
-            height: 60px;
-            color: #fff;
-            background: none;
-            margin-top: -60px;
-            padding: 0 20px;
-            max-width: 140px;
-            b {
-              font-size: 24px;
-              text-shadow: 0 0 5px #000;
-            }
-
-            span {
-              font-size: 12px;
-              opacity: 0.8;
-              padding-left: 10px;
-              text-shadow: 0 0 5px #000;
-            }
-          }
-
-          .data-info {
-            background: url('../../../assets/img/share/card6.png') no-repeat left top;
-            background-size: cover;
-            width: 100%;
-            margin-top: -10px;
-            position: relative;
-            height: 120px;
-            z-index: 2;
-            padding-top: 15px;
-            .data-info-box {
-              display: flex;
-
-              .data {
-                padding: 0 0 0 20px;
-                color: #14355f;
-                flex: 1;
-
-                .info {
-                  p {
-                    font-size: 12px;
-                    opacity: 0.6;
-                    margin-bottom: 5px;
-
-                    span {
-                      display: inline-block;
-                      padding-right: 8px;
-                      text-align: right;
-                      min-width: 25px;
-                    }
-                  }
-                }
-              }
-
-              .qrcode {
-                width: 80px;
-                text-align: center;
-                color: #14355f;
-                margin-top: -50px;
-
-                img {
-                  width: 58px;
-                  height: 58px;
-                  border-radius: 50%;
-                }
-
-                span {
-                  display: block;
-                  font-size: 8px;
-                  opacity: 0.44;
-                  padding-top: 5px;
-                }
-              }
-            }
-
-            .signature {
-              margin: 5px 20px;
-              font-size: 14px;
-              opacity: 0.5;
-              color: #14355f;
-              // line-height: 1.5;
-            }
-          }
+        .qrcode{
+          width: 64px;
+          height: 64px;
         }
       }
     }
-
-    .share-card-action {
-      position: absolute;
-      width: 100%;
-      bottom: 24px;
-      text-align: center;
-
-      button {
-        width: 144px;
-        height: 44px;
-        border-radius: 6px;
-        color: #fff;
+    .item2{
+      background: url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
+      background-size:100% 50px;
+      .type2-cnt{
+        height: 100%;
+        width: 100%;
+        background: url('../../../assets/img/user/share/bg3.png') repeat left top;
+      }
+      .logo{
+        padding-top: 14px;
+        margin: 0 0 30px 16px;
+        font-size: 10px;
+        color: #007AE6;
+        height: 16px;
+        line-height: 16px;
+        img{
+          width: 16px;
+          height: 16px;
+          vertical-align: middle;
+          margin-right: 5px;
+        }
+      }
+      .pic{
+        width:150px;
+        height:150px;
+        margin: 0 auto;
+        img{
+          min-width: 150px;
+          min-height: 150px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+      .agent-info{
+        text-align: center;
+        margin-top: 16px;
+        color: #5C6166;
+        font-size: 12px;
+        .name{
+          font-size:16px;
+          font-weight:600;
+          color:rgba(26,39,51,1);
+          line-height:21px;
+        }
+        .tel{
+          margin: 8px 0 16px;
+        }
+        .signature{
+          width:167px;
+          height:28px;
+          font-size:10px;
+          font-weight:400;
+          line-height:14px;
+          margin: auto;
+        }
+      }
+      .qrcode{
+        margin-top: 30px;
+        text-align: center;
+        img{
+          width: 64px;
+          height: 64px;
+          border-radius: 40%;
+        }
+        p{
+          height:14px;
+          font-size:10px;
+          font-weight:400;
+          color:rgba(145,149,153,1);
+          line-height:14px;
+          margin-top: 5px;
+        }
+      }
+    }
+    .item3{
+      background: url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
+      background-size:100% 50px;
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      .type3-cnt{
+        height: 100%;
+        width: 100%;
+        background: url('../../../assets/img/user/share/bg2.png') repeat left top;
+        text-align: center;
+      }
+      .signature{
+        width:200px;
+        height:34px;
+        font-size:12px;
+        font-weight:400;
+        color:rgba(26,39,51,1);
+        line-height:17px;
+        margin: 0 50px 25px;
+        box-sizing: content-box;
+        padding-top: 40px;
+      }
+      .pic{
+        width:160px;
+        height:160px;
+        margin: 0 auto;
+        img{
+          min-width: 160px;
+          min-height: 160px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+      }
+      .agent-info{
+        text-align: center;
+        margin-top: 16px;
+        color: #5C6166;
+        font-size: 12px;
+        .name{
+          font-size:16px;
+          font-weight:600;
+          color:rgba(26,39,51,1);
+          line-height:21px;
+        }
+        .tel{
+          margin: 8px 0 16px;
+        }
+      }
+      .qrcode{
+        margin-top: 30px;
+        text-align: center;
+        img{
+          width: 64px;
+          height: 64px;
+          border-radius: 40%;
+        }
+        p{
+          height:14px;
+          font-size:10px;
+          font-weight:400;
+          color:rgba(145,149,153,1);
+          line-height:14px;
+          margin-top: 5px;
+        }
+      }
+    }
+  .card-action{
+    text-align: center;
+    font-weight: 400;
+    p{
+      color: #1A2733;
+      margin-top: 12px;
+    }
+    .btn{
+      display: flex;
+      margin: 15px 20px;
+      button{
+        flex: 1;
+        height:44px;
+        background:rgba(240,243,245,1);
+        border-radius:4px;
         border: none;
-        margin: 0 10px;
-        border: #007ae6 1px solid;
-        &.edit {
-          background: linear-gradient(46deg, rgba(37, 39, 55, 1) 0%, rgba(72, 76, 98, 1) 100%);
-          color: #007ae6;
+        color: #666;
+        &:nth-child(1){
+          margin-right: 10px;
         }
-        &.save {
-          background: rgba(0, 122, 230, 1);
-        }
+      }
+    }
+  }
+  .card-model{
+    height: 100%;
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+      box-sizing: content-box;
+    }
+    .card-action{
+      button:nth-child(2){
+        background-color: #007AE6;
+        color: #fff;
       }
     }
   }
@@ -1416,48 +963,15 @@ export default {
   }
   // 预览名片
   .share-cover-img {
-    position: fixed;
-    z-index: 3;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(37, 39, 55, 1);
+    width:300px;
+    height:460px;
+    background:rgba(255,255,255,1);
+    margin: 16px auto;
     .img-box {
-      height: 420px;
-      width: 260px;
-      margin: 20px auto;
-    }
-    .btn {
-      width: 260px;
-      margin: auto;
-      font-size: 14px;
-      color: #fff;
-      text-align: center;
-      span {
-        display: block;
-        padding-bottom: 25px;
-        font-size: 12px;
-        opacity: 0.5;
-      }
-      button {
-        height: 44px;
-        width: 120px;
-        border-radius: 6px;
-        border: none;
-        border: 1px solid #007ae6;
-        &.close {
-          margin-right: 20px;
-          background: linear-gradient(46deg, rgba(37, 39, 55, 1) 0%, rgba(72, 76, 98, 1) 100%);
-          color: #007ae6;
-        }
-        &.save {
-          background-color: #007ae6;
-        }
-      }
-      &.btnview {
-        margin-top: 30px;
-      }
+      height: 460px;
+      width: 300px;
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
     }
   }
   // loading
@@ -1513,3 +1027,4 @@ export default {
   }
 }
 </style>
+
