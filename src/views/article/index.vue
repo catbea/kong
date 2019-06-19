@@ -179,9 +179,9 @@
           <p @click="goAdd">
             <img src="../../assets/img/article/plus.png" alt="">
           </p>
-          <p @click="goWrite">
+          <!-- <p @click="goWrite">
             <img src="../../assets/img/article/write.png" alt="">
-          </p>
+          </p> -->
         </div>
         <div class="replay" v-show="showReplay">
           <div class="replay-cnt">

@@ -724,6 +724,9 @@ export default {
     }
   },
   mounted() {
+    if(this.$route.query.type==1){
+       this.$store.commit('SHARE_PROMPT', true)
+    }
     document.querySelector('.tools-bar').addEventListener(
       'touchmove',
       this.touchHandler,
