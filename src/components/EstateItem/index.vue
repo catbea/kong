@@ -102,22 +102,26 @@ export default {
       flex-basis: 225px;
       margin: 16px 16px 16px 0;
       > .estate-name {
-        font-family: PingFangSC-Semibold;
         font-size: 16px;
         font-weight: 600;
         color: #333333;
         padding-bottom: 8px;
+        max-width: 160px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         .free{
           display: inline-block;
           font-size: 10px;
           height:14px;
           line-height: 14px;
-          background:rgba(234,77,46,1);
+          background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
           color: #fff;
           border-radius: 2px;
           margin-right: 2px;
-          padding: 0 5px;
+          padding: 0 2px;
           vertical-align: top;
+          font-weight: 400;
         }
       }
       > .estate-location {

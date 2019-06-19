@@ -423,14 +423,13 @@ export default {
             }
             .dredge {
               flex: 0 0 60px;
-              height: 24px;
+              height: 30px;
               background: rgba(0, 122, 230, 1);
-              border-radius: 12px;
+              border-radius: 15px;
               font-size: 12px;
-
               font-weight: 400;
               color: rgba(255, 255, 255, 1);
-              line-height: 24px;
+              line-height: 30px;
               text-align: center;
               margin-top: -3px;
             }
