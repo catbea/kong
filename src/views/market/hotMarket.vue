@@ -9,7 +9,7 @@
         </div>
       </div>
       </div>
-      <screen v-model="projectFilters" :local="this.selectedCity"></screen>
+      <screen v-model="projectFilters" :local="this.selectedCity" :showSort="false"></screen>
     </div>
     <!-- <already-open :agentIdInfo="agentIdInfo" @returnMyMarket="returnMyMarket"></already-open> -->
       <div class="all-market">
@@ -140,7 +140,8 @@ export default {
         this.selectedCity = this.userArea.marketSelectedCity || this.userInfo.majorCity || ''
         param.city = this.selectedCity
       }
-      marketService.getHouseList(param).then(res => {
+      param.orderBy = 4
+      marketService.getHotLinkerList(param).then(res => {
         let item = res.records.filter(el => {
           return el.linkerId === option.linkerId
         })
@@ -168,7 +169,7 @@ export default {
         param.city = this.selectedCity
       }
       param.orderBy = 4
-      const res = await marketService.getHouseList(param)
+      const res = await marketService.getHotLinkerList(param)
 
       if (this.projectFilters.baseFilters) {
         //筛选时

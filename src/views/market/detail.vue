@@ -95,7 +95,11 @@
           </div>
         </div> -->
         <div class="info-content">
-          <h5 class="house-name">{{info.linkerName}}</h5>
+          <div class="linker-name">
+            <h5 class="house-name">{{info.linkerName}}</h5>
+            <p class="teach" v-if="info.openStatus==2 && info.materialStatus"  @click="goLearn"><img src="../../assets/img/market/teach.png" alt="">培训资料</p>
+          </div>
+          
           <p class="slogen" v-show="info.promotionalLanguage">{{info.promotionalLanguage}}</p>
           <div class="tags" v-if="tagGroupArr">
             <span v-for="(item,index) in tagGroupArr.slice(0,3)" :class="{'active': index === 0}">{{item}}</span>
@@ -714,6 +718,9 @@ export default {
     }
   },
   methods: {
+    goLearn () {
+      this.$router.push({path: '/user/learn', query:{linkerId: this.info.linkerId}})
+    },
     hidePosterShow () {
       this.$refs.posterContainer.style.opacity = 0
       this.posterShow = false
@@ -1430,17 +1437,38 @@ export default {
     }
     .info-content{
       padding: 15px;
+      .linker-name{
+        display: flex;
+        .house-name{
+          flex: 1;
+        }
+        .teach{
+          width: 80px;
+          text-align: right;
+          font-size: 12px;
+          color: #007AE6;
+          vertical-align: middle;
+          padding-top: 4px;
+          img{
+            width: 16px;
+            height: 16px;
+            margin-right: 3px;
+            vertical-align: middle;
+          }
+        }
+      }
       .house-name{
         color: #333333;
-        font-size: 26px;
+        font-size: 24px;
         font-weight: 600;
       }
       .slogen{
         font-size: 16px;
         color: #333;
-        padding: 10px 0;
+        padding: 10px 0 0;
       }
       .tags{
+        padding-top: 10px;
         font-size: 10px;
         span{
           display: inline-block;
