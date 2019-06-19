@@ -25,7 +25,7 @@
     </div>
     <div class="my-markey">
       <div class="title" @click="goMyMarket">
-        我的楼盘<span> ({{myMarket.length}})</span>
+        我的楼盘<span> ({{total}})</span>
       </div>
       <div class="market-list">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
@@ -49,7 +49,8 @@
         <img src="../../assets/img/article/noarticle.png" alt="">
         <p>对不起，没有查询到相关楼盘！</p>
       </div>
-      <div style="padding-left:16px">
+    </div>
+    <div>
         <van-popup v-model="showPopup" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
           <ul>
             <li @click="goRenew(currentItem.linkerId)" v-show="!stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
@@ -68,7 +69,6 @@
           </ul>
         </van-popup>
       </div>
-    </div>
   </div>
 </template>
 <script>
@@ -88,6 +88,7 @@ export default {
       size: 10,
       current: 1,
       pages: 1,
+      total: '',
       nodataStatus: false,
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       showPopup: false,
@@ -130,6 +131,7 @@ export default {
       }
       userService.getMyMarket(parma).then(res => {
         this.pages = res.pages
+        this.total = res.total
         if (this.current === 1) {
           this.myMarket = res.records
         } else {
@@ -177,16 +179,20 @@ export default {
     // 置顶
     popupHandle(item, index) {
       if (item.shelfFlag == 1) {
-        this.$dialog
-          .alert({
-            title: '非常抱歉',
-            message: '该楼盘已被下架或删除',
-            className: 'renew-Dialog',
-            confirmButtonText: '知道啦'
-          })
-          .then(() => {
-            // on close
-          })
+        this.$toast({
+          message: '该楼盘已被下架或删除!',
+          duration: 1000
+        })
+        // this.$dialog
+        //   .alert({
+        //     title: '非常抱歉',
+        //     message: '该楼盘已被下架或删除',
+        //     className: 'renew-Dialog',
+        //     confirmButtonText: '知道啦'
+        //   })
+        //   .then(() => {
+        //     // on close
+        //   })
       } else {
         //更多
         this.currentItem = item
@@ -269,7 +275,7 @@ export default {
         })
     },
     closeHandle() {
-      this.showPopup = !this.showPopup
+      this.showPopup = false
     },
     async changeUserStatus(linkerId, operationType, status) {
       await userService.changeMarketData(linkerId, operationType, status)
@@ -289,7 +295,7 @@ export default {
 .market-page {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  position: relative;
   .market-classify {
     margin: 20px 0;
     font-size: 10px;
@@ -432,6 +438,9 @@ export default {
     width: 100%;
     // height: 250px;
     border-radius: 0;
+    left: 0;
+    bottom: 50px;
+    transform: translate3d(0,0,0);
     ul {
       li {
         width: 375px;
@@ -478,6 +487,6 @@ export default {
         height: 24px;
         padding-top: 2px;
       }
-  }
+    }
   }
 </style>
