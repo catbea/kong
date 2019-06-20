@@ -22,7 +22,7 @@
           <li>
             <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
             <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-            <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">售罄</div>
             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags ? dataArr.linkerTags.slice(0,2):[]" :key="index">{{item}}</div>
           </li>
           <li>
