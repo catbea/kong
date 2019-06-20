@@ -3,58 +3,114 @@
     <div class="search-box">
       <form action="/">
         <van-search
-          v-model="value"
+          v-model="linkerName"
           background="#fff"
           placeholder="输入搜索楼盘"
           show-action
           @search="onSearch"
-          @cancel="onCancel"
+          @cancel="toUserLearn"
         />
       </form>
     </div>
 
     <div class="search-result">
-      <div class="search-result-list">
-        <div class="linker-name">碧桂园·中央公馆</div>
-        <div class="linker-info">南山区-蛇口 120000元/㎡</div>
-      </div>
-
-      <div class="search-result-list">
-        <div class="linker-name">碧桂园·中央公馆</div>
-        <div class="linker-info">南山区-蛇口 120000元/㎡</div>
+      <div class="search-result-list" v-for="item in resultList" @click="toUserLearn(item.linkerId)">
+        <div class="linker-name">{{item.linkerName}}</div>
+        <div class="linker-info">{{item.linkerId}}</div>
       </div>
     </div>
 
-    <!-- <div class="search-history">
+    <div class="search-history" v-if="searchHistory.length > 0">
       <div class="search-title">
         <p class="label">历史搜索</p>
-        <img class="search-icon" :src="require('IMG/user/learn/delete-icon.png')" alt>
+        <img
+          @click="clearHistory"
+          class="search-icon"
+          :src="require('IMG/user/learn/delete-icon.png')"
+          alt
+        >
       </div>
 
       <div class="history-list">
-        <div class="item">万科</div>
-        <div class="item">华侨城</div>
-        <div class="item">城市花园</div>
-        <div class="item">永奥.巴塞罗那</div>
-        <div class="item">城市花园</div>
-        <div class="item">永奥.巴塞罗那</div>
-        <div class="item">城市花园</div>
+        <div @click="historyTag(item)" class="item" v-for="item in searchHistory">{{item}}</div>
       </div>
-    </div>-->
+    </div>
 
-    <!-- <div class="empty-search">
+    <div v-if="linkerName && resultList.length == 0" class="empty-search">
       <img :src="require('IMG/user/learn/empty-house.png')" alt>
       <p>没有搜索到任何楼盘</p>
-    </div>-->
+    </div>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vant'
+import userService from 'SERVICE/userService'
 export default {
   name: 'learnSearch',
   data() {
     return {
-      value: ''
+      linkerName: '',
+      resultList: [],
+      searchHistory: [] //历史搜索记录
+    }
+  },
+  mounted() {
+    const searchHistory = localStorage.getItem('searchStudyHistory')
+    if (searchHistory) {
+      this.searchHistory = searchHistory.split(',')
+    }
+  },
+  methods: {
+    // 点击搜索历史的标签
+    historyTag(linkerName) {
+      this.linkerName = linkerName
+      this.searchLinker()
+    },
+    // 清除历史记录
+    clearHistory() {
+      this.searchHistory = []
+      localStorage.setItem('searchStudyHistory', '')
+    },
+    // 开始的事件搜索
+    onSearch() {
+      this.$nextTick(_ => {
+        this.searchLinker()
+      })
+    },
+    // 跳转到学习首页
+    toUserLearn(linkerId) {
+      console.log(linkerId, 'linkerId');
+      let router = {
+        path: '/user/learn/'
+      }
+      if (linkerId) {
+        router.query = {
+          linkerId
+        }
+      }
+      this.$router.push(router)
+    },
+    // 搜索楼盘列表
+    async searchLinker() {
+      const { linkerName } = this
+      if (!linkerName) return
+
+      Toast.loading({
+        message: '加载中...'
+      })
+
+      const response = await userService.studySearchLinker({
+        linkerName
+      })
+
+      if (!this.searchHistory.includes(linkerName)) {
+        this.searchHistory.push(linkerName)
+        localStorage.setItem('searchStudyHistory', this.searchHistory)
+      }
+
+      Toast.clear()
+      this.resultList = response
     }
   }
 }
@@ -114,7 +170,7 @@ export default {
     }
   }
   .empty-search {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);

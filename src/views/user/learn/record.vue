@@ -1,28 +1,30 @@
 <template>
   <div class="learn-record-page">
-    <!-- <div class="empty-record">
+    <div class="empty-record" v-if="recordList.length == 0">
       <img :src="require('IMG/user/learn/empty-record.png')" alt>
       <p>还没有学习过任何资料！</p>
-    </div>-->
+    </div>
 
-    <div class="learn-list">
-      <div class="learn-item" v-for="item in [,,,,,,,,,,]">
-        <div class="learn-img">
-          <div class="learn-type pdf">PDF</div>
-          <img
-            src="https://720ljq2-10037467.file.myqcloud.com/linker/18907437200/ed85ae82ecf74be1898adf54ad0c439e.jpg?watermark/1/image/aHR0cDovL3Bhbm8tc2NyYXB5LWltZy0xMjUxNDc0NzQxLnBpY2d6Lm15cWNsb3VkLmNvbS9sb2dvMS5wbmc=/blogo/2/gravity/southeast"
-            alt
-          >
+    <div class="learn-list" v-else>
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <div class="learn-item" v-for="item in recordList">
+          <div class="learn-img">
+            <div class="learn-type pdf">PDF</div>
+            <img
+              src="https://720ljq2-10037467.file.myqcloud.com/linker/18907437200/ed85ae82ecf74be1898adf54ad0c439e.jpg?watermark/1/image/aHR0cDovL3Bhbm8tc2NyYXB5LWltZy0xMjUxNDc0NzQxLnBpY2d6Lm15cWNsb3VkLmNvbS9sb2dvMS5wbmc=/blogo/2/gravity/southeast"
+              alt
+            >
+          </div>
+          <div class="learn-info">
+            <h3 class="title">楼盘推介项目介绍资料学习，学习查看楼盘推介项</h3>
+            <p class="linker-name">
+              所属楼盘：
+              <span>山水江南</span>
+            </p>
+            <div class="times">查看时间：2019/03/23 12:23:23</div>
+          </div>
         </div>
-        <div class="learn-info">
-          <h3 class="title">楼盘推介项目介绍资料学习，学习查看楼盘推介项</h3>
-          <p class="linker-name">
-            所属楼盘：
-            <span>山水江南</span>
-          </p>
-          <div class="times">查看时间：2019/03/23 12:23:23</div>
-        </div>
-      </div>
+      </van-list>
     </div>
     <Tabbar name="底部tabbar"/>
   </div>
@@ -30,10 +32,34 @@
 
 <script>
 import Tabbar from './components/tabbar'
+import userService from 'SERVICE/userService'
+import { List, Toast } from 'vant'
+
 export default {
   name: 'learnRecord',
   components: {
     Tabbar
+  },
+  data() {
+    return {
+      loading: false,
+      finished: false,
+      recordList: []
+    }
+  },
+  created() {
+    this.getStudyRecord()
+  },
+  methods: {
+    async getStudyRecord() {
+      Toast.loading({
+        message: '加载中...'
+      })
+      const response = await userService.getStudyRecord()
+      const records = response.records || []
+      this.recordList.push(...records)
+      Toast.clear();
+    }
   }
 }
 </script>
