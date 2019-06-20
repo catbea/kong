@@ -424,7 +424,7 @@ export default {
             .dredge {
               flex: 0 0 60px;
               height: 30px;
-              background: rgba(0, 122, 230, 1);
+              background: linear-gradient(90deg,rgba(0,158,230,1) 0%,rgba(0,122,230,1) 100%);
               border-radius: 15px;
               font-size: 12px;
               font-weight: 400;
@@ -434,7 +434,7 @@ export default {
               margin-top: -3px;
             }
             .no {
-              background-color: rgba(0, 122, 230, 1);
+              background: linear-gradient(90deg,rgba(0,158,230,1) 0%,rgba(0,122,230,1) 100%);
             }
             .add{
               // border:1px solid rgba(204, 204, 204, 1);
