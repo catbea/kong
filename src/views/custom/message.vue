@@ -269,9 +269,8 @@ export default {
         document.title = '聊天'
       }
       this.getCustomBaseInfo(this.clientId)
-
       this.agentId = this.userInfo.agentId
-      this.wechatAccount = this.userInfo.wechatAccount||"catbea"
+      this.wechatAccount = this.userInfo.wechatAccount
       this.avatar = this.userInfo.avatarUrl
       //加载emoji表情库
       this.emojiFactory = emoji.emojiFactory
@@ -292,7 +291,7 @@ export default {
   methods: {
     //发送微信号
     sendWxAccount(){
-      if(this.wechatAccount){
+      if(!this.wechatAccount){
         this.isSHowErroDialog = true;
         this.errContent = "未添加微信号，请前往设置微信号";
         let timer = setTimeout(() => {
