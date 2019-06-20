@@ -1,5 +1,5 @@
 <template>
-    <div class="rule_view"> 
+    <div class="rule_view" @mousewheel="imgScroll" @touchmove="imgScroll"> 
         <ul class="ul_view">
             <li class="li_view" v-for="(item,index) in ruleList" :key="index" @click="select(item)">
                 <div class="li_left">
@@ -21,7 +21,6 @@
                 </div> 
             </li>
         </ul> 
-                <!-- http://192.168.17.204/static/pdf/1.pdf -->
     </div> 
 </template>
 
@@ -35,24 +34,30 @@ export default {
     },
     data:() =>({
         ruleList:[
-            {name:'pdf',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
-            {name:'inin',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
-        ],
-        isTpye:1,
-        linkerId:'00004bab-4992-4104-8ac3-ce6f9e47d5d1',
+        ],  
         current:1,
         size:5 ,
-        imagePreviewObj: '',
-        commnetList: [],
+        page:"",
     }),
     mounted() { 
         this.getList();
     },
     methods: {
+        imgScroll() {   
+            if (this.page > this.current) { 
+                this.current = this.current + 1;
+                this.getList(this.current);
+            } 
+        },
         getList () {
-            userService.getDevelopersMaterialList({linkerId:this.linkerId,type:2,size:this.size,current:this.current
+            userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:2,size:this.size,current:this.current
             }).then((result) => {  
-                this.ruleList = result.records
+                this.page = result.pages
+                if (result.pages > 1) {
+                    this.ruleList = this.ruleList.concat(result.records)  
+                }else {
+                    this.ruleList = result.records
+                }
             }).catch((err) => {
                 console.log(err)
             })

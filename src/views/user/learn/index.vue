@@ -1,109 +1,132 @@
 <template>
-  <div class="learn-page">
-    <div class="header-filter">
-      <div class="linker-box">
-        <span class="linker-name" @click="showFilter = !showFilter">{{defaultLinker.linkerName}}</span>
-        <van-icon class="filter-van-icon-arrow" :name="`arrow-${showFilter ? 'up': 'down'}`"/>
+  <keep-alive>
+    <div class="learn-page">
+      <div class="header-filter">
+        <div class="linker-box">
+          <span class="linker-name" @click="showFilter = !showFilter">{{defaultLinker.linkerName}}</span>
+          <van-icon class="filter-van-icon-arrow" :name="`arrow-${showFilter ? 'up': 'down'}`"/>
 
-        <transition name="fade">
-          <div class="tips-box" v-if="showTips">
-            当前显示“{{defaultLinker.linkerName}}”项目的培训内 容，点击可切换楼盘查看！
-            <div class="square"></div>
-            <img
-              @click="showTips = false"
-              class="close-icon"
-              :src="require('IMG/user/learn/close-icon.png')"
-              alt
-            >
-          </div>
-        </transition>
+          <transition name="fade">
+            <div class="tips-box" v-if="showTips">
+              当前显示“{{defaultLinker.linkerName}}”项目的培训内 容，点击可切换楼盘查看！
+              <div class="square"></div>
+              <img
+                @click="showTips = false"
+                class="close-icon"
+                :src="require('IMG/user/learn/close-icon.png')"
+                alt
+              >
+            </div>
+          </transition>
 
-        <transition name="fade">
-          <div class="linker-filter-list" v-if="showFilter">
-            <ul>
-              <li
-                @click="changeLinker(item)"
-                v-for="(item, index) in linkerList"
-                :key="item.linkerId"
-              >{{item.linkerName}}</li>
-            </ul>
-          </div>
-        </transition>
-      </div>
-      <div class="search-box" @click="$router.push('/user/learn/search')">
-        <img class="search-icon" :src="require('IMG/user/learn/search-icon.png')" alt>
-        <span class="search-text">搜索</span>
-      </div>
-    </div>
-
-    <div class="empty-learn" v-if="learnList.length == 0">
-      <img :src="require('IMG/user/learn/empty-learn.png')" alt>
-      <p>该楼盘还未上传任何学习资料</p>
-    </div>
-
-    <!-- <div v-else> -->
-    <div>
-      <div class="card-box" v-for="(learn, type) in learnCollection">
-        <div class="card-header">
-          <h3 class="card-title">{{type.split('_')[0]}}</h3>
-          <div class="card-do" v-if="showMore(type)" @click="toLearnList(type)">
-            全部
-            <img :src="require('IMG/user/learn/arrow-right.png')" alt>
-          </div>
+          <transition name="fade">
+            <div class="linker-filter-list" v-if="showFilter">
+              <ul>
+                <li
+                  @click="changeLinker(item)"
+                  v-for="(item, index) in linkerList"
+                  :key="item.linkerId"
+                >{{item.linkerName}}</li>
+              </ul>
+            </div>
+          </transition>
         </div>
-        <div class="card-body">
-          <!-- img -->
-          <LearnList
-            v-for="(item, index) in learn.img"
-            fileType="img"
-            :key="item.id"
-            :item="item"
-            :type="1"
-          />
+        <div class="search-box" @click="$router.push('/user/learn/search')">
+          <img class="search-icon" :src="require('IMG/user/learn/search-icon.png')" alt>
+          <span class="search-text">搜索</span>
+        </div>
+      </div>
 
-          <!-- pdf -->
-          <LearnList
-            v-for="(item, index) in learn.pdf"
-            fileType="pdf"
-            :key="item.id"
-            :item="item"
-            :type="1"
-          />
+      <div class="empty-learn" v-if="learnList.length == 0">
+        <img :src="require('IMG/user/learn/empty-learn.png')" alt>
+        <p>该楼盘还未上传任何学习资料</p>
+      </div>
 
-          <!-- video -->
-          <LearnList
-            v-if="learn.video.length == 1"
-            v-for="item in learn.video"
-            fileType="video"
-            :key="item.id"
-            :item="item"
-            :type="1"
-          />
-
-          <div class="learn-list-2" v-if="learn.video && learn.video.length > 1">
+      <div class="learn-wrap">
+        <div class="card-box" v-for="(learn, type) in learnCollection">
+          <div class="card-header">
+            <h3 class="card-title">{{type.split('_')[0]}}</h3>
+            <div class="card-do" v-if="showMore(type)" @click="toLearnList(type)">
+              全部
+              <img :src="require('IMG/user/learn/arrow-right.png')" alt>
+            </div>
+          </div>
+          <div class="card-body">
+            <!-- img -->
             <LearnList
-              v-for="(item, index) in learn.video"
-              fileType="video"
+              v-for="(item, index) in learn.img"
+              fileType="img"
+              @click.native="toLearnDeails(item, 'img')"
               :key="item.id"
               :item="item"
-              :type="2"
+              :type="1"
+            />
+
+            <!-- pdf -->
+            <LearnList
+              v-for="(item, index) in learn.pdf"
+              fileType="pdf"
+              @click.native="toLearnDeails(item, 'pdf')"
+              :key="item.id"
+              :item="item"
+              :type="1"
+            />
+
+            <!-- video -->
+
+            <template v-if="learn.video && learn.video.length == 1">
+              <LearnList
+                v-for="(item, index) in learn.video"
+                @click.native="playVideo(item, index, 'video')"
+                fileType="video"
+                :key="item.id"
+                :item="item"
+                :type="1"
+              />
+              <video
+                v-for="(item, index) in learn.video"
+                ref="video"
+                style="height:0; width: 0; opacity: 0"
+                :src="JSON.parse(item.content).url"
+                controls="controls"
+              ></video>
+            </template>
+
+            <div class="learn-list-2" v-if="learn.video && learn.video.length > 1">
+              <template v-for="(item, index) in learn.video">
+                <video
+                  :src="JSON.parse(item.content).url"
+                  ref="videos"
+                  style="height:0; width: 0; opacity: 0"
+                  controls="controls"
+                ></video>
+                <LearnList
+                  fileType="video"
+                  @click.native="playVideo(item, index, 'videos')"
+                  :duration="getVideoDuration(item.content)"
+                  :key="item.id"
+                  :item="item"
+                  :type="2"
+                />
+              </template>
+            </div>
+
+            <!-- H5 -->
+            <LearnList
+              v-for="(item, index) in learn.h5"
+              fileType="h5"
+              @click.native="toLearnDeails(item, 'h5')"
+              :item="item"
+              :key="item.id"
+              :type="3"
             />
           </div>
-
-          <!-- H5 -->
-          <LearnList
-            v-for="(item, index) in learn.h5"
-            fileType="h5"
-            :item="item"
-            :key="item.id"
-            :type="3"
-          />
         </div>
       </div>
-    </div>
 
-    <Tabbar name="底部tabbar"/>
-  </div>
+      <Tabbar name="底部tabbar"/>
+    </div>
+  </keep-alive>
 </template>
 
 <script>
@@ -269,9 +292,40 @@ export default {
     },
     // 跳转对应的二级页面列表
     toLearnList(type) {
-      type = type.split('_').splice(-1)
       const url = [, 'contorlTime', 'commissionRule', 'salesVideo', 'floor', 'salesAsk', 'customerPortrait', 'arecProduct', 'marker']
-      this.$router.push(`/user/learn/secondPage/${url[type]}`)
+      const linkerId = this.defaultLinker.linkerId;
+      type = type.split('_').splice(-1)
+      this.$router.push(`/user/learn/secondPage/${url[type]}?linkerId=${linkerId}`)
+    },
+    //跳转到详情
+    toLearnDeails(learn, type) {
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+    },
+    // 播放时自动全屏
+    playVideo(learn, index, ref) {
+      let element = this.$refs[ref]
+      if (element instanceof Array) {
+        element = element[index]
+      }
+      this.requestFullscreen(element)
+      element.play()
+    },
+    // 全屏兼容代码
+    requestFullscreen(ele) {
+      if (ele.requestFullscreen) {
+        ele.requestFullscreen()
+      } else if (ele.webkitRequestFullscreen) {
+        ele.webkitRequestFullscreen()
+      } else if (ele.mozRequestFullScreen) {
+        ele.mozRequestFullScreen()
+      } else if (ele.msRequestFullscreen) {
+        ele.msRequestFullscreen()
+      }
+    },
+
+    getVideoDuration(content) {
+      let { duration } = JSON.parse(content)
+      return Math.floor(duration / 60) + ':' + (duration % 60)
     }
   }
 }

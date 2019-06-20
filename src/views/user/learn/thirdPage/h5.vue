@@ -8,17 +8,35 @@
                 <div>更新时间：{{time}}</div>
                 <div>浏览量：{{num}}</div>
             </div>
-            <div class="h5_content" v-html=""></div>
+            <div class="h5_content" v-html="content"></div>
         </div>
     </div>
 </template>
 <script>
+import userService from 'SERVICE/userService'
 export default {
     data:() => ({
         title:"楼盘推介项目介绍资料学习，学习查看楼盘推介项",
         time:'2019/05/13',
-        num:'912'
-    })
+        num:'912',
+        content:""
+    }),
+    mounted() {
+        this.geth5()
+    },
+    methods:{
+        geth5 () {
+            userService.getDevelopersMaterialDetail({id:this.$route.query.id
+            }).then((result) => {   
+                this.content = result.content 
+                this.title = result.title
+                this.time = result.updateTime
+                this.num = result.browseNum
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    }
 }
 </script>
 <style lang="less" scoped>

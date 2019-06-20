@@ -1,31 +1,31 @@
 <template>
-    <div class="time_view"> 
+    <div class="time_view"  @mousewheel="imgScroll" @touchmove="imgScroll"> 
         <ul class="ul_view">
-            <li class="li_view" v-for="(item,index) in ruleList" :key="index" >
+            <li class="li_view" v-for="(item,index) in ruleList" :key="index" @click="select(item)">
                 <div class="li_left">
                     <div class="left_img">
-                        <img src="../../../../assets/img/user/invitation/aw-banner1@2x.png" alt="" class="img">
+                        <img :src="item.coverImgUrl" alt="" class="img">
                     </div>
                     <div class="left_icon" :class="true && 'h5' && 'img'">
-                        {{item.name}}
+                        {{['','图片','视频','PDF','H5'][item.format]}}
                     </div> 
                 </div>
                 <div class="li_right">
                     <div class="right_title">
-                        {{item.text}}
+                        {{item.title}}
                     </div>
                     <div class="right_info">
-                        <div style="font-size:10px;">更新时间：{{item.name}}</div>
-                        <div style="font-size:10px;">{{item.name}}查看</div>
+                        <div style="font-size:10px;">更新时间：{{item.updateTime}}</div>
+                        <div style="font-size:10px;">{{item.browseNum}}查看</div>
                     </div>
                 </div> 
             </li>
         </ul>
-                <!-- http://192.168.17.204/static/pdf/1.pdf -->
     </div> 
 </template>
 
 <script>
+import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 export default {
     components: {
@@ -33,15 +33,47 @@ export default {
     },
     data:() =>({
         ruleList:[
-            {name:'pdf',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
-            {name:'inin',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
-        ],
-        isTpye:1, 
+        ],  
+        current:1,
+        page:"",
+        size:5 ,
     }),
     mounted() {  
+        this.getList();
     },
     methods: {
-        
+        imgScroll() {   
+            if (this.page > this.current) { 
+                this.current = this.current + 1;
+                this.getList(this.current);
+            } 
+        },
+        getList () {
+            userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:7,size:this.size,current:this.current
+            }).then((result) => {  
+                this.page = result.pages
+                if (result.pages > 1) {
+                    this.ruleList = this.ruleList.concat(result.records)  
+                }else {
+                    this.ruleList = result.records
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
+        },
+        select(val) { 
+            switch (val.format) {
+                case 1:
+                this.$router.push(`/user/learn/thirdPage/img?id=${val.id}`)
+                break
+                case 3:
+                this.$router.push(`/user/learn/thirdPage/pdf?id=${val.id}`) 
+                break
+                case 4:
+                this.$router.push(`/user/learn/thirdPage/h5?id=${val.id}`)
+                break
+            } 
+        },
     }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="video_view"> 
+    <div class="video_view" @mousewheel="imgScroll" @touchmove="imgScroll"> 
         <ul class="ul_view">
             <li class="li_view" v-for="(item,index) in videoList" :key="index" >
                 <div class="li_video">
@@ -11,25 +11,23 @@
                         controls="showControls"
                         style="object-fit:fill;border-radius: 6px;                        "
                         webkit-playsinline="true"
-                        :poster="headImgUrl"
+                        :poster="item.coverImgUrl"
                         playsinline="true"
                         x-webkit-airplay="allow"
                         x5-video-player-type="h5"
                         x5-video-player-fullscreen="true"
                     >
-                        <source :src="item.url" type="video/mp4">
-                    </video>
-                    <!-- <div class="close-video" @click="videoHide(index)">退出视频</div> -->
-                    <!-- <div class="span">
-                        67:32
-                    </div> -->
+                        <!-- <div v-for="(a,index) in item.content" :key="index+3"> -->
+                            <source :src="item.content.url" type="video/mp4">
+                        <!-- </div> -->
+                    </video> 
                 </div>
                 <div class="li_title" >
-                    {{item.text}}
+                    {{item.title}}
                 </div>
                 <div class="li_text">
-                    <div style="font-size:10px;">更新时间：{{item.name}}</div>
-                    <div style="font-size:10px;">{{item.name}}查看</div>
+                    <div style="font-size:10px;">更新时间：{{item.updateTime}}</div>
+                    <div style="font-size:10px;">{{item.browseNum}}查看</div>
                 </div>
             </li>
         </ul>
@@ -37,22 +35,40 @@
 </template>
 
 <script>
+import userService from 'SERVICE/userService'
 export default {
     data:() =>({
-        videoList:[
-            {name:'pdf',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项你好hi海海海岸hi阿海',url:'http://720ljq2-10037467.file.myqcloud.com/linker/proxy/video/e13ea36267244971adac1be57f86ee8d.mp4'},
-            {name:'inin',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项',url:'http://720ljq2-10037467.file.myqcloud.com/linker/proxy/video/073fd4cf7cbe49ccb981efc021305bf1.mp4'},
-        ],
-        isTpye:1, 
-        showControls: true,
-        headImgUrl:'http://720ljq2-10037467.file.myqcloud.com/linker/proxy/261c13494b6b4f25bbaeac8638e169ce.png'
+        videoList:[], 
+        current:1,
+        size:2 ,
+        page:"",
+        urlList:{}
     }),
     mounted() {  
+        this.getList();        
     },
     methods: {
-        // 关闭视频
-        videoHide(index) { 
-            this.$refs.videoplay[index].pause()
+        imgScroll() {   
+            if (this.page > this.current) { 
+                this.current = this.current + 1;
+                this.getList(this.current);
+            } 
+        },
+        getList () {
+            userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:3,size:this.size,current:this.current
+            }).then((result) => {  
+                this.page = result.pages
+                if (result.pages > 1) {
+                    this.videoList = this.videoList.concat(result.records)  
+                }else {
+                    this.videoList = result.records
+                } 
+                result.records.map((item,index)=>{
+                    this.videoList[index].content = JSON.parse(item.content);
+                }) 
+            }).catch((err) => {
+                console.log(err)
+            })
         },
     }
 }

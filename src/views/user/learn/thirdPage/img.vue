@@ -29,7 +29,7 @@ export default {
             this.inde  = index
         },
         getImg () {
-            userService.getDevelopersMaterialDetail({id:21
+            userService.getDevelopersMaterialDetail({id:this.$route.query.id
             }).then((result) => {  
                 this.arr = result.content.split(',') 
             }).catch((err) => {
