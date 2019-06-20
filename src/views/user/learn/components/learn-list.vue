@@ -26,7 +26,9 @@
   <div class="learn-block" v-else-if="type == 2">
     <div class="learn-img">
       <img :src="item.coverImgUrl" alt>
-      <span v-if="fileType == 'video'" class="times">67:32</span>
+      <div class="times" v-if="fileType == 'video'">
+        <span >{{duration}}</span>
+      </div>
     </div>
     <h3 class="title ellipsis">{{item.title}}</h3>
     <h3 class="abstract">{{formatDate(item.updateTime)}}更新 · {{item.browseNum}}观看</h3>
@@ -48,7 +50,7 @@
 </template>
 
 <script>
-import { parseTime } from './../../../../utils/tool';
+import { parseTime } from './../../../../utils/tool'
 export default {
   props: {
     type: {
@@ -62,11 +64,15 @@ export default {
     fileType: {
       type: String,
       default: ''
+    },
+    duration: {
+      type: String,
+      default: '0'
     }
   },
   methods: {
-    formatDate(time){
-      return parseTime(time, '{y}-{m}-{d}');
+    formatDate(time) {
+      return parseTime(time, '{y}-{m}-{d}')
     }
   }
 }
