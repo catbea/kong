@@ -56,12 +56,28 @@ export default {
     background: #ffffff;
     height: 100vh;
     .img-preview{
-        padding: 43px 16px 106px 16px;
+        padding: 43px 16px 43px 16px;
         width: 100%;
-        height: 100%;
+        height: 100%; 
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
+        // align-items: center;
         .img-box {
+            height: 100%;
+            width: 100%;  
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             img {
-                width: 100%;
+                width: 100%; 
+            }
+            .custom-indicator {
+                text-align: center;
+                color: #333333;
+                font-size: 14px;
+                margin-top: 18px;
             }
         }
     }
