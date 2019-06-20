@@ -82,7 +82,18 @@ export default {
     overlayClose() {
       this.openPopup = false
     },
-
+    goSchool () {
+      userService.getStudyLinkerList({agentId:this.userInfo.agentId
+      }).then((result) => {  
+        if (result) { 
+          this.$toast('还没有培训资料')
+        }else {
+          this.$router.push('/user/learn')
+        }
+      }).catch((err) => {
+          console.log(err)
+      })
+    }, 
     //展示二维码框
     showPopp() {
       this.openPopup = true
@@ -111,7 +122,8 @@ export default {
           this.$router.push({ name: 'historicalArticles', query: { typeCode: '2' } })
           break
         case 2:
-          this.$router.push('/user/learn')
+          // this.$router.push('/user/learn')
+          this.goSchool()
           break
         case 3:
           this.enterSharePage()

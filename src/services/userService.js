@@ -708,6 +708,25 @@ class UserService {
       url: ' /developersMaterial/index',
       body: data
     })
-  }
+  } 
+  /**
+   * 获取二级列表
+   */
+  getDevelopersMaterialList (data) {
+    return xhr({
+      method: 'get',
+      url: '/developersMaterial/list',
+      body: data
+    })
+  } 
+  /***
+   *  获取study素材详情
+   */
+  getDevelopersMaterialDetail (data) {
+    return xhr({
+      method: 'get',
+      url: `/developersMaterial/detail/${data.id}`, 
+    })
+  }     
 }
 export default new UserService()
