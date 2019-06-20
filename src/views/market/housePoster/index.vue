@@ -19,9 +19,12 @@
           </div>
         </van-swipe>
       </div>
-      <div class="info">
+      <!-- <div class="info">
         <h3 class="title">{{imgData.title}}</h3>
         <p class="time">{{imgData.createTimeStamp | formatData}}</p>
+      </div> -->
+      <div class="action-btn" @click="goSharePoster">
+        分享海报
       </div>
     </div>
     
@@ -61,6 +64,11 @@ export default {
     }
   },
   methods: {
+    // 生成分享海报页面
+    goSharePoster () {
+      let imgUrl = this.imagePreviewList[this.current].posterImage
+      this.$router.push({path: '/market/activity/share/poster', query: {url: imgUrl}})
+    },
     // 获取海报
     getPosterList () {
       marketService.getPosterList({linkerId: this.marketId}).then((result) => {
@@ -147,16 +155,21 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
-    background:linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
+    // background:linear-gradient(46deg,rgba(37,39,55,1) 0%,rgba(72,76,98,1) 100%);
+    background-color: #fff;
     .img-box{
       margin: 20px;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      height: 440px;
       overflow: hidden;
+      background-color: #eeeeee;
       .van-swipe{
-        flex: 1;
+        height: 100%;
+        width: 100%;
+        img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
     .info{
@@ -182,6 +195,16 @@ export default {
       color: #fff;
       border-radius:10px;
       background: rgba(0, 0, 0, 0.6);
+    }
+    .action-btn{
+      margin: 10px 20px;
+      height:44px;
+      background:rgba(0,122,230,1);
+      border-radius:6px;
+      font-size: 16px;
+      text-align: center;
+      line-height: 44px;
+      color: #fff;
     }
   }
 }

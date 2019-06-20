@@ -77,23 +77,7 @@
         </div>
       </div>
       <!-- 楼盘基础信息 -->
-      <div class="base-info-container"  @click="moreInfoHandler">
-        <!-- <div class="info-top-bar">
-          <tag-group :arr="tagGroupArr&&tagGroupArr.slice(0,3)"/>
-          <div class="browser-info">
-            <span>{{info.browsCount}}</span>人浏览过
-            <div class="head-portrait-box">
-              <transition name="show">
-                <avatar
-                  :avatar="item.clientImg"
-                  v-for="(item,index) in info.customerList"
-                  :key="index"
-                  v-if="index===headCurrent"
-                />
-              </transition>
-            </div>
-          </div>
-        </div> -->
+      <div class="base-info-container">
         <div class="info-content">
           <div class="linker-name">
             <h5 class="house-name">{{info.linkerName}}</h5>
