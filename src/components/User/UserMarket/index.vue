@@ -68,10 +68,10 @@
               <span v-show="dataArr.recommand==0">置顶</span>
               <span v-show="dataArr.recommand==10">取消置顶</span>
             </li>
-            <li @click="exhibitionHandle">
+            <!-- <li @click="exhibitionHandle">
               <span v-show="dataArr.displayFlag==0">关闭楼盘展示</span>
               <span v-show="dataArr.displayFlag!=0">开启楼盘展示</span>
-            </li>
+            </li> -->
           </div>
           <li class="cancel" @click="closeHandle">取消</li>
         </ul>
@@ -581,12 +581,12 @@ export default {
             position: absolute;
             right: 0;
             top: -2px;
-            width: 40px;
-            height:24px;
-            line-height: 24px;
+            width: 50px;
+            height:30px;
+            line-height: 30px;
             background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
             box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
-            border-radius:12px;
+            border-radius:15px;
             font-size: 10px;
             color: #fff;
             text-align: center;

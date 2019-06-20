@@ -102,8 +102,8 @@ export default {
       }
     }
     await this.getVipInfo()
-    this.getBrokerInfo()
-    await this.hotMarketHandle()
+    // this.getBrokerInfo()
+    // await this.hotMarketHandle()
     let markList = window.sessionStorage.getItem('marketList')
     if (markList) {
       let item = JSON.parse(markList)
@@ -185,7 +185,7 @@ export default {
               arr.push(element.linkerId)
             }
             arr = arr.join()
-            await this.hotMarketHandle(arr)
+            // await this.hotMarketHandle(arr)
             console.log(this.marketList)
           }
           if (res.pages === 0 || this.page === res.pages) {
@@ -201,7 +201,7 @@ export default {
             arr.push(element.linkerId)
           }
           arr = arr.join()
-          await this.hotMarketHandle(arr)
+          // await this.hotMarketHandle(arr)
           if (res.pages === 0 || this.page === res.pages) {
             this.finished = true
           }

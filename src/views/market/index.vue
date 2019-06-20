@@ -60,10 +60,10 @@
                 <span v-show="currentItem.recommand==0">置顶</span>
                 <span v-show="currentItem.recommand==10">取消置顶</span>
               </li>
-              <li @click="exhibitionHandle">
+              <!-- <li @click="exhibitionHandle">
                 <span v-show="currentItem.displayFlag==0">关闭楼盘展示</span>
                 <span v-show="currentItem.displayFlag!=0">开启楼盘展示</span>
-              </li>
+              </li> -->
             </div>
             <li class="cancel" @click="closeHandle">取消</li>
           </ul>
