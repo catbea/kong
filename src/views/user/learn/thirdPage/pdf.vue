@@ -5,7 +5,8 @@
 </template> 
 
 <script>
-import userService from 'SERVICE/userService'
+import userService from 'SERVICE/userService' 
+import { mapGetters } from 'vuex'
 export default {
     data:() => ({
         height: document.documentElement.clientHeight,
@@ -13,13 +14,27 @@ export default {
         url:"",
         pdfUrl:''
     }),
+    computed: {
+    ...mapGetters(['userInfo']),
+    },
+    created () {
+        console.log(this.userInfo, 11111)  
+    },
     mounted() { 
         this.getList();
+        this.gostudyAdd();
     },
     methods:{
+        gostudyAdd() {
+            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
+            }).then((result) => { 
+            }).catch((err) => {
+                console.log(err)
+            })
+        }, 
         getList () {
             userService.getDevelopersMaterialDetail({id:this.$route.query.id
-            }).then((result) => {    
+            }).then((result) => { 
                 this.pdfUrl = result.content 
                 this.getFile(this.pdfUrl)
             }).catch((err) => {

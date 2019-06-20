@@ -15,6 +15,7 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 export default {
     data:() => ({
@@ -23,8 +24,19 @@ export default {
     }),
     mounted() {
         this.getImg()
+        this.gostudyAdd()
+    },
+    computed: {
+    ...mapGetters(['userInfo']),
     },
     methods:{
+        gostudyAdd() {
+            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
+            }).then((result) => { 
+            }).catch((err) => {
+                console.log(err)
+            })
+        }, 
         onChange(index) {
             this.inde  = index
         },

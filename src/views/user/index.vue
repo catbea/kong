@@ -41,8 +41,7 @@ import userService from 'SERVICE/userService'
 import * as types from '@/store/mutation-types'
 import { mapGetters } from 'vuex'
 export default {
-  components: {
-    ...mapGetters(['userInfo']),
+  components: { 
     businessCard
   },
   data: () => ({

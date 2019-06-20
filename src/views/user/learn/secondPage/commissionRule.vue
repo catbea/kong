@@ -65,13 +65,13 @@ export default {
         select(val) { 
             switch (val.format) {
                 case 1:
-                this.$router.push(`/user/learn/thirdPage/img?id=${val.id}`)
+                this.$router.push(`/user/learn/thirdPage/img?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
                 break
                 case 3:
-                this.$router.push(`/user/learn/thirdPage/pdf?id=${val.id}`) 
+                this.$router.push(`/user/learn/thirdPage/pdf?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`) 
                 break
                 case 4:
-                this.$router.push(`/user/learn/thirdPage/h5?id=${val.id}`)
+                this.$router.push(`/user/learn/thirdPage/h5?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
                 break
             } 
         },

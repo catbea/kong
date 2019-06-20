@@ -14,6 +14,7 @@
 </template>
 <script>
 import userService from 'SERVICE/userService'
+import { mapGetters } from 'vuex'
 export default {
     data:() => ({
         title:"楼盘推介项目介绍资料学习，学习查看楼盘推介项",
@@ -21,10 +22,21 @@ export default {
         num:'912',
         content:""
     }),
+    computed: {
+    ...mapGetters(['userInfo']),
+    },
     mounted() {
         this.geth5()
+        this.gostudyAdd()
     },
     methods:{
+        gostudyAdd() {
+            userService.getDevelopersMaterialadd({materialId :this.$route.query.id,agentId :this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
+            }).then((result) => { 
+            }).catch((err) => {
+                console.log(err)
+            })
+        },  
         geth5 () {
             userService.getDevelopersMaterialDetail({id:this.$route.query.id
             }).then((result) => {   
