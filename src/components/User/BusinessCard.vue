@@ -27,7 +27,7 @@
             <svg class="icon" aria-hidden="true">
                 <use :xlink:href="img.Icon"></use>
             </svg>
-            <p class="grou1Icon-p" :class="index === 3?'grou1Icon':'grou1Icon-p'">{{img.title}}</p>
+                <p class="grou1Icon-p" :class="index === 3?'grou1Icon':'grou1Icon-p'">{{img.title}}</p>
           </div>
         </div>
       </div> 
