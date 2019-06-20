@@ -84,9 +84,13 @@ export default {
       this.showPreview = false
     },
     goAnchor (selector, index) {
-      this.tabIndex = index
-      let anchor = this.$el.querySelector(selector)
-      document.querySelector('.photo-box').scrollTop = anchor.offsetTop - 70
+      this.showPreview = false
+      this.$nextTick(()=>{
+        this.tabIndex = index
+        let anchor = this.$el.querySelector(selector)
+        document.querySelector('.photo-box').scrollTop = anchor.offsetTop - 70
+      })
+      
     },
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
