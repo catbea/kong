@@ -1,5 +1,5 @@
 <template>
-  <div class="user-market-page">
+  <div class="user-market-page" :class="{'active': (dataArr.recommand==10&&pastShow)}">
     <div class="user-market-page-box scale-1px-bottom">
       <div class="user-market-page-box-top" @click="skipMarketDetail(dataArr.linkerId)">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
@@ -12,11 +12,11 @@
             <div style="display:flex; align-items:center;">
               <span class="free" v-if="+dataArr.isFree">免费</span>
               <span class="text">{{dataArr.linkerName}}</span>
-              <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
+              <!-- <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span> -->
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
             <!-- <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share iconShare" @click.stop="skipShare"></span> -->
-            <span class="iconShare"  @click.stop="skipShare">分享</span>
+            <span class="iconShare"  @click.stop="skipShare" v-if="pastShow">分享</span>
           </li>
           <li class="area">{{dataArr.city}} {{dataArr.county}}</li>
           <li>
@@ -50,7 +50,7 @@
         <span>{{dataArr.divisionRules}}</span>
       </div>
     </div>
-    <div style="padding-left:16px">
+    <div>
       <van-popup v-model="show" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
         <ul>
           <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
@@ -288,6 +288,7 @@ export default {
             .then(() => {
               this.$emit('recommandTrueHandle', this.dataArr)
               let parent = this.$parent.$parent
+              debugger
               parent.showMarketList.unshift(parent.showMarketList[index])
               parent.showMarketList.splice(index + 1, 1)
               parent.showMarketList[3].recommand = 0
@@ -450,12 +451,16 @@ export default {
 </script>
 <style lang="less">
 .user-market-page {
-  margin-left: 16px;
+  padding: 0 16px;
   display: flex;
+  &.active{
+    background-color: #F6F6F6;
+  }
   .user-market-page-box {
+    flex: 1;
     margin-top: 16px;
-    padding: 16px 16px 0 16px;
-    width: 343px;
+    // padding: 16px 16px 0 16px;
+    // width: 343px;
     // box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
     border-radius: 10px;
     display: flex;
@@ -507,7 +512,7 @@ export default {
         }
       }
       ul {
-        width: 181px;
+        flex: 1;
         li:nth-of-type(1) {
           font-size: 16px;
           font-weight: 600;
@@ -519,7 +524,7 @@ export default {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 90px;
+            max-width: 140px;
             line-height: 21px;
           }
           .free{
@@ -574,7 +579,7 @@ export default {
           }
           .iconShare{
             position: absolute;
-            right: -10px;
+            right: 0;
             top: -2px;
             width: 40px;
             height:24px;
@@ -690,12 +695,13 @@ export default {
       color: #445166;
       padding: 10px 0;
       text-align: right;
+      background-color: transparent;
       span{
         display: inline-block;
         height: 24px;
         line-height: 24px;
         text-align: center;
-        background:#F2F5F9;
+        background:#e3e8ef;
         border-radius:4px;
         margin-left: 16px;
         padding: 0 16px;
