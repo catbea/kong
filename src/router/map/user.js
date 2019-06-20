@@ -582,4 +582,26 @@ export default [
       }
     }
   },
+  {
+    path: '/user/learn/thirdPage/h5',
+    name: 'h5',
+    component: resolve => require(['@/views/user/learn/thirdPage/h5.vue'], resolve),
+    meta: {
+      title: 'h5',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/thirdPage/img',
+    name: 'h5',
+    component: resolve => require(['@/views/user/learn/thirdPage/img.vue'], resolve),
+    meta: {
+      title: 'img',
+      tabbar: {
+        show: false
+      }
+    }
+  },
 ]

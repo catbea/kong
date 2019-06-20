@@ -13,20 +13,20 @@
         <p>{{item.groupName}} ({{item.listBannerVO.length}})</p>
         <div class="template-box">
           <li class="bg_img" v-for="(ite,inde) in item.listBannerVO" :key="ite.id"
-          :style="{backgroundImage:'url('+ite.imgUrl+')'}" @click="previewHandle(item.listBannerVO,inde)"></li>
+          :style="{backgroundImage:'url('+ite.imgUrl+')'}" @click="previewHandle(item.listBannerVO,inde,index)"></li>
         </div>   
       </ul>
     </div>
     <!-- 图片预览 -->
-    <div class="img-preview" v-show="showPreview" @click="hidePreview">
+    <div class="img-preview" v-if="showPreview" @click="hidePreview">
       <div class="img-box">
-        <van-swipe @change="onChange" :initial-swipe="inde" :loop="false" :show-indicators="false">
+        <van-swipe @change="onChange" :initial-swipe="currentIndex" :loop="false" :show-indicators="false">
           <van-swipe-item v-for="(item,index) in arr" :key="index">
             <img :src="item" alt="" srcset="">
           </van-swipe-item>
         </van-swipe>
         <div class="custom-indicator">
-          {{ inde + 1 }}/{{arr.length}}
+          {{ currentIndex + 1 }}/{{totalImg}}
         </div>
       </div>
       
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import { ImagePreview } from 'vant'
+import { ImagePreview, Toast } from 'vant';
 import marketService from 'SERVICE/marketService'
 export default {
   async created() {
@@ -57,8 +57,9 @@ export default {
     preview: '',
     inde: 0,
     listBannerVO: '',
-    tabIndex: 0,
-    showPreview: false
+    tabIndex: '',
+    showPreview: false,
+    currentIndex : 0
   }),
   components: {
     // FullScreen
@@ -77,38 +78,49 @@ export default {
   methods: {
     // 预览图片切换
     onChange (index) {
-      this.inde  = index
+      this.currentIndex  = index
+      this.changeTabindex(index)
+    },
+    // tab栏切换
+    changeTabindex (index) {
+      let current = 0
+      for (let i = 0; i < this.photoData.length; i++) {
+        current += this.photoData[i].listBannerVO.length
+        if (current > index) {
+          this.tabIndex = i
+          break
+        }
+      }
     },
     // 隐藏预览
     hidePreview () {
       this.showPreview = false
     },
     goAnchor (selector, index) {
+      this.currentIndex = 0
+      for (let i = 0; i < index; i++) {
+        this.currentIndex += this.photoData[i].listBannerVO.length
+      }
       this.tabIndex = index
-      let anchor = this.$el.querySelector(selector)
-      document.querySelector('.photo-box').scrollTop = anchor.offsetTop - 70
+      this.showPreview = true
+      this.$nextTick(()=>{
+        let anchor = this.$el.querySelector(selector)
+        document.querySelector('.photo-box').scrollTop = anchor.offsetTop - 70
+      })
+      
     },
     async getMarketDetailPhotoInfo() {
       const res = await marketService.getMarketDetailPhoto(this.linkerId)
       this.photoData = res
     },
-    previewHandle(listBannerVO, inde) {
+    previewHandle(listBannerVO, inde, index) {
       this.listBannerVO = listBannerVO
-      this.inde = inde
-      //预览图片
-      this.arr = []
-      for (let i = 0; i < listBannerVO.length; i++) {
-        const element = listBannerVO[i].imgUrl
-        this.arr.push(element)
+      this.currentIndex = inde
+      for (let i = 0; i < index; i++) {
+        this.currentIndex += this.photoData[i].listBannerVO.length
       }
+      this.changeTabindex(this.currentIndex)
       this.showPreview = true
-      // this.preview = ImagePreview({
-      //   images: this.arr,
-      //   startPosition: inde,
-      //   onClose() {
-      //     // do something
-      //   }
-      // })
     },
     orientationchange () {
       if (window.orientation === 180 || window.orientation === 0) {
@@ -132,6 +144,20 @@ export default {
   },
   mounted () {
     window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", this.orientationchange, false)
+  },
+  computed: {
+    totalImg () {
+      let total = 0
+      if (this.photoData.length) {
+        this.photoData.forEach(el => {
+          total += el.listBannerVO.length
+          for (let i = 0; i < el.listBannerVO.length; i++) {
+            this.arr.push(el.listBannerVO[i].imgUrl) 
+          }
+        })
+      }
+      return total
+    }
   }
 }
 </script>

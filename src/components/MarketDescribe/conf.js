@@ -2,7 +2,7 @@ export default tag => {
   switch (tag) {
     case '开通': // 白字蓝底
       return {
-        background: 'rgba(0, 122, 230, 1)',
+        background: 'linear-gradient(90deg,rgba(0,158,230,1) 0%,rgba(0,122,230,1) 100%)',
         color: '#FFFFFF'
       }
     case '续费': // 蓝字白底

@@ -11,7 +11,8 @@
               </div>
               <div class="agent-info">
                 <p class="name-box"><span class="name">{{editData.agentName}}</span><span class="tel">{{editData.mobile}}</span></p>
-                <p class="signature">{{editData.signature}}</p>
+                <!-- <p class="signature">{{editData.signature}}</p> -->
+                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType}}</p>
               </div>
               <div class="qrcode-box">
                 <div class="tips">
@@ -36,7 +37,8 @@
               <div class="agent-info">
                 <p class="name">{{editData.agentName}}</p>
                 <p class="tel">{{editData.mobile}}</p>
-                <p class="signature">{{editData.signature}}</p>
+                <!-- <p class="signature">{{editData.signature}}</p> -->
+                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType}}</p>
               </div>
               <div class="qrcode">
                 <img :src="editData.miniQrCode" alt="小程序">
@@ -55,6 +57,7 @@
                 <div class="agent-info">
                   <p class="name">{{editData.agentName}}</p>
                   <p class="tel">{{editData.mobile}}</p>
+                  <p class="worktime">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType}}</p>
                 </div>
                 <div class="qrcode">
                   <img :src="editData.miniQrCode" alt="小程序">
@@ -195,7 +198,7 @@ export default {
     ...mapGetters(['userInfo'])
   },
   created() {
-    // this.showLoading = true
+    this.showLoading = true
     this.agentId = this.$route.query.agentId
     this.initData()
     this.initCos()
@@ -564,6 +567,17 @@ export default {
     blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
     }
+  },
+  filters: {
+    formatWorkTime (val) {
+      let status = {
+        100: '3年',
+        101: '5年',
+        102: '8年',
+        103: '10年以上'
+      }
+      return status[val]
+    }
   }
 }
 </script>
@@ -608,13 +622,12 @@ export default {
           .tel{
             font-size: 12px;
             font-weight:400;
-            font-weight: 400;
             margin-left: 8px;
             color:rgba(92,97,102,1);
           }
         }
         .signature{
-          width:167px;
+          width:170px;
           height:28px;
           font-size:10px;
           font-weight:400;
@@ -680,8 +693,8 @@ export default {
         height:150px;
         margin: 0 auto;
         img{
-          min-width: 150px;
-          min-height: 150px;
+          width: 150px;
+          height: 150px;
           object-fit: cover;
           border-radius: 50%;
         }
@@ -698,15 +711,15 @@ export default {
           line-height:21px;
         }
         .tel{
-          margin: 8px 0 16px;
+          margin: 8px 0;
         }
         .signature{
-          width:167px;
           height:28px;
           font-size:10px;
           font-weight:400;
           line-height:14px;
           margin: auto;
+          margin-bottom: 16px;
         }
       }
       .qrcode{
@@ -754,8 +767,8 @@ export default {
         height:160px;
         margin: 0 auto;
         img{
-          min-width: 160px;
-          min-height: 160px;
+          width: 160px;
+          height: 160px;
           object-fit: cover;
           border-radius: 50%;
         }
@@ -772,11 +785,15 @@ export default {
           line-height:21px;
         }
         .tel{
-          margin: 8px 0 16px;
+          margin: 8px 0;
+        }
+        .worktime{
+          margin-bottom: 16px;
+          font-size: 10px;
         }
       }
       .qrcode{
-        margin-top: 30px;
+        margin-top: 20px;
         text-align: center;
         img{
           width: 64px;

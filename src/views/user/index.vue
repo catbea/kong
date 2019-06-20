@@ -82,7 +82,18 @@ export default {
     overlayClose() {
       this.openPopup = false
     },
-
+    goSchool () {
+      userService.getStudyLinkerList({agentId:this.userInfo.agentId
+      }).then((result) => {  
+        if (result) { 
+          this.$toast('还没有培训资料')
+        }else {
+          this.$router.push('/user/learn')
+        }
+      }).catch((err) => {
+          console.log(err)
+      })
+    }, 
     //展示二维码框
     showPopp() {
       this.openPopup = true
@@ -111,7 +122,8 @@ export default {
           this.$router.push({ name: 'historicalArticles', query: { typeCode: '2' } })
           break
         case 2:
-          this.$router.push('/user/learn')
+          // this.$router.push('/user/learn')
+          this.goSchool()
           break
         case 3:
           this.enterSharePage()
@@ -217,13 +229,13 @@ export default {
 .user-page {
   height: 100%;
   background: #f7f9fa;
-  .business-status-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: rgba(51, 51, 51, 1);
-    line-height: 28px;
-    padding: 20px 16px 18px; 
-  }
+  // .business-status-title {
+  //   font-size: 20px;
+  //   font-weight: 600;
+  //   color: rgba(51, 51, 51, 1);
+  //   line-height: 28px;
+  //   padding: 20px 16px 18px; 
+  // }
   .business-status-con { 
     margin-top: 6px;
     .div_view {
@@ -234,6 +246,7 @@ export default {
           width: 100%;
           height: 52px;
           display: flex; 
+          // line-height: 52px;
           background: #fff; 
           div:nth-child(1) {
             width: 49px;

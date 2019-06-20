@@ -27,7 +27,7 @@
             <svg class="icon" aria-hidden="true">
                 <use :xlink:href="img.Icon"></use>
             </svg>
-            <p class="grou1Icon-p" :class="index === 3?'grou1Icon':'grou1Icon-p'">{{img.title}}</p>
+                <p class="grou1Icon-p" :class="index === 3?'grou1Icon':'grou1Icon-p'">{{img.title}}</p>
           </div>
         </div>
       </div> 
@@ -41,8 +41,10 @@
           <button class="btn">立即开通</button>
         </p>
         <p class="info-btn_text" v-else>
-          <span style="font-size:10px;">开通更多</span>
-          <img src="../../assets/img/user/arrow2@2x.png" alt="">
+          <span style="font-size:10px;display:block;">开通更多</span> 
+          <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;height:80px;line-height: 80px;">
+            <use xlink:href="#icon-arrow"></use>
+          </svg> 
         </p>
       </router-link> 
     </div>
@@ -230,6 +232,7 @@ export default {
     > div {
       position: relative; 
       height: 80px; 
+      line-height:80px;
       background: #ffffff;
       border-radius: 3px;
       margin-top: 6px;
@@ -267,15 +270,17 @@ export default {
           border: none;
           border-radius:16px; 
           color:#66421F;
+          box-shadow:2px 2px rgba(225, 161, 85, 0.4);
           font-size:12px;
-          background: linear-gradient(360deg, rgba(255, 209, 116, 1) 0%, rgba(215, 145, 75, 1) 100%);
+          background: linear-gradient(90deg, rgba(255, 209, 116, 1) 0%, rgba(215, 145, 75, 1) 100%);
         }
       }
       .info-btn_text {
         position: absolute;
-        top: 24px;
-        left: 80%;  
-        line-height: 22px;
+        top: 0px;
+        margin-left:80%;  
+        // line-height: 22px;
+        display: flex;
         color: #8A9299;
         img {
           width: 16px;
