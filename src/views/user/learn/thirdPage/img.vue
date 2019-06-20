@@ -59,17 +59,12 @@ export default {
         padding: 43px 16px 43px 16px;
         width: 100%;
         height: 100%; 
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: center;
-        // align-items: center;
         .img-box {
             height: 100%;
             width: 100%;  
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; 
             img {
                 width: 100%; 
             }
