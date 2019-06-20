@@ -12,7 +12,7 @@
               <div class="linker-box scale-1px-bottom">
                 <div class="linker-info">
                   <p class="name">{{editData.linkerName}}</p>
-                  <p class="address">{{editData.city}} {{editData.county}}</p>
+                  <p class="address">{{editData.city | formatCity}} {{editData.county | formatCounty}}</p>
                 </div>
                 <div class="linker-price">
                   <p class="price" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
@@ -50,13 +50,13 @@
                 <div class="name">{{editData.linkerName}}</div>
                 <div class="linker-item">
                     <div class="price">
-                      <p class="title">价格(/㎡)</p>
-                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                      <p class="title">价格(元/㎡)</p>
+                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}}</p>
                       <p class="text" v-else>价格待定</p>
                     </div>
                     <div class="area">
                       <p class="title">区域</p>
-                      <p class="text">{{editData.city}} {{editData.county}}</p>
+                      <p class="text">{{editData.city | formatCity}} {{editData.county | formatCounty}}</p>
                     </div>
                     <div class="build">
                       <p class="title">建面(㎡)</p>
@@ -94,13 +94,13 @@
                 <div class="name">{{editData.linkerName}}</div>
                 <div class="linker-item">
                     <div class="price">
-                      <p class="title">价格(/㎡)</p>
-                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                      <p class="title">价格(元/㎡)</p>
+                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}}</p>
                       <p class="text" v-else>价格待定</p>
                     </div>
                     <div class="area">
                       <p class="title">区域</p>
-                      <p class="text">{{editData.city}} {{editData.county}}</p>
+                      <p class="text">{{editData.city | formatCity}} {{editData.county | formatCounty}}</p>
                     </div>
                     <div class="build">
                       <p class="title">建面(㎡)</p>
@@ -391,6 +391,18 @@ export default {
     // 键盘遮挡
     blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
+    }
+  },
+  filters: {
+    formatCity (city) {
+      if (city) {
+        return city.split('市').join('')
+      }
+    },
+    formatCounty (county) {
+      if (county) {
+        return county === '片区' ? county :  county.split('区').join('')
+      }
     }
   }
 }

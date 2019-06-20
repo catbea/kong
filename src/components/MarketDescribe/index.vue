@@ -424,7 +424,7 @@ export default {
             .dredge {
               flex: 0 0 60px;
               height: 30px;
-              background: linear-gradient(90deg,rgba(0,158,230,1) 0%,rgba(0,122,230,1) 100%);
+              // background: linear-gradient(90deg,rgba(0,158,230,1) 0%,rgba(0,122,230,1) 100%);
               border-radius: 15px;
               font-size: 12px;
               font-weight: 400;
