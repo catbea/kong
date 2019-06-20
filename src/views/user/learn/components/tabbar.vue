@@ -15,12 +15,12 @@ export default {
       active: 0,
       tabList: [
         {
-          name: '学习',
+          name: '首页',
           url: '/user/learn',
           icon: [require('IMG/user/learn/home-icon-on.png'), require('IMG/user/learn/home-icon.png')]
         },
         {
-          name: '记录',
+          name: '学习记录',
           url: '/user/learn/record',
           icon: [require('IMG/user/learn/record-icon-on.png'), require('IMG/user/learn/record-icon.png')]
         }

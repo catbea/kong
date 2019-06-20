@@ -27,7 +27,7 @@
     <div class="learn-img">
       <img :src="item.coverImgUrl" alt>
       <div class="times" v-if="fileType == 'video'">
-        <span >{{duration}}</span>
+        <span>{{duration}}</span>
       </div>
     </div>
     <h3 class="title ellipsis">{{item.title}}</h3>
