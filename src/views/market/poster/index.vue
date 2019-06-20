@@ -549,7 +549,6 @@ export default {
           display: flex;
           margin: 0 16px;
           .price,.area,.build{
-            flex: 1;
             .title{
               font-size:10px;
               font-weight:400;
@@ -562,6 +561,9 @@ export default {
               color:rgba(234,77,46,1);
               margin-top: 5px;
             }
+          }
+          .area{
+            margin: 0 30px;
           }
         }
       }
@@ -651,7 +653,6 @@ export default {
           display: flex;
           margin: 0 16px;
           .price,.area,.build{
-            flex: 1;
             .title{
               font-size:10px;
               font-weight:400;
@@ -664,6 +665,9 @@ export default {
               color:rgba(234,77,46,1);
               margin-top: 5px;
             }
+          }
+          .area{
+            margin: 0 30px;
           }
         }
       }
