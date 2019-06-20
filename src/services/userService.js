@@ -708,7 +708,29 @@ class UserService {
       url: ' /developersMaterial/index',
       body: data
     })
-  } 
+  }
+
+  /**
+   * 获取培训学院学习记录
+   */
+  getStudyRecord (data) {
+    return xhr({
+      method: 'get',
+      url: ' /developersMaterialAgentRecord/list',
+      body: data
+    })
+  }
+
+  /**
+   * 培训学院搜索
+   */
+   studySearchLinker(data) {
+    return xhr({
+      method: 'get',
+      url: ' /studyLinker/search',
+      body: data
+    })
+  }
   /**
    * 获取二级列表
    */
