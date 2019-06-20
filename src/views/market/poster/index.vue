@@ -905,9 +905,11 @@ export default {
           display: inline-block;
           margin-right: 15px;
           overflow: hidden;
+          background-color: #eee;
           img {
-            min-width: 100%;
-            min-height: 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
           }
           .van-icon {
             background-color: #007ae6;
