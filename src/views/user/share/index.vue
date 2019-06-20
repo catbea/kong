@@ -12,7 +12,7 @@
               <div class="agent-info">
                 <p class="name-box"><span class="name">{{editData.agentName}}</span><span class="tel">{{editData.mobile}}</span></p>
                 <!-- <p class="signature">{{editData.signature}}</p> -->
-                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType}}</p>
+                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '卖房经纪人'}}</p>
               </div>
               <div class="qrcode-box">
                 <div class="tips">
@@ -576,7 +576,7 @@ export default {
         102: '8年',
         103: '10年以上'
       }
-      return status[val]
+      return status[val] || '3年'
     }
   }
 }
@@ -669,6 +669,8 @@ export default {
     .item2{
       background: url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
       background-size:100% 50px;
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
       .type2-cnt{
         height: 100%;
         width: 100%;
@@ -728,7 +730,7 @@ export default {
         img{
           width: 64px;
           height: 64px;
-          border-radius: 40%;
+          border-radius: 30px;
         }
         p{
           height:14px;
@@ -798,7 +800,7 @@ export default {
         img{
           width: 64px;
           height: 64px;
-          border-radius: 40%;
+          border-radius: 30px;
         }
         p{
           height:14px;
@@ -987,8 +989,10 @@ export default {
     .img-box {
       height: 460px;
       width: 300px;
-      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
-      border-radius:4px;
+      img {
+        box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+        border-radius:4px;
+      }
     }
   }
   // loading
