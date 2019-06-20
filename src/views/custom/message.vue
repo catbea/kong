@@ -52,7 +52,7 @@
                   </div>
                 </div>
                 <div :id="item.id" class="massage-info-msg-me" v-if="item.fromType == 2">
-                  <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="avatar">
+                  <img class="massage-info-msg-me-img" v-if="avatar !='' && avatar  !=null && avatar !=undefined" v-bind:src="item.avatar">
                   <div class="msg-customer-con-me" v-if="item.msgType=='1'" v-html="item.content"></div>
                   <div class="msg-customer-con-me" v-if="item.msgType=='7'">
                       <div v-if="item.content.type=='ARRAY'">
@@ -224,6 +224,7 @@ export default {
       clientInfo: '',
       agentId: '',
       avatar: '',
+      robot_avatar:require('IMG/custom/robot_avator.png'),
       closeIcon: require('IMG/custom/close_icon.png'),
       iMTempMsgIcon: require('IMG/custom/im_icon_1.png'),
       iMTempPhoneIcon: require('IMG/custom/im_icon_phone.png'),
@@ -462,9 +463,11 @@ export default {
             if (MsgType == 'TIMTextElem') {
               list.msgType = 1
               list.content = MsgContent.Text
+              list.avatar = this.userInfo.avatarUrl;
               msgLists.push(list)
             } else {
               if (MsgContent.Desc == 2) {
+                list.avatar = this.userInfo.avatarUrl;
                 try {
                   //兼容以前老的消息格式
                   let ext = JSON.parse(MsgContent.Ext)
@@ -480,14 +483,17 @@ export default {
                   msgLists.push(list)
                 }
               } else if (MsgContent.Desc == 3) {
+                list.avatar = this.userInfo.avatarUrl;
                 list.content = JSON.parse(MsgContent.Data)
                 list.msgType = 3
                 msgLists.push(list)
               } else if (MsgContent.Desc == 1) {
+                list.avatar = this.userInfo.avatarUrl;
                 list.content = MsgContent.Data
                 list.msgType = 1
                 msgLists.push(list)
               } else if (MsgContent.Desc == 7) {
+                list.avatar = this.robot_avatar;
                 list.content = JSON.parse(MsgContent.Data)
                 list.msgType = 7
                 msgLists.push(list)
@@ -645,11 +651,17 @@ export default {
             let ext = JSON.parse(elems.content.ext)
             audioTime = ext.audioTime
             content = elems.content.data
-          } else if (elems.content.desc == 3) {
+          } 
+          else if (elems.content.desc == 3) {
             content = JSON.parse(elems.content.data)
-          } else {
+          } 
+          else if (elems.content.desc == "7") {
+            content = JSON.parse(elems.content.data)
+          } 
+          else {
             content = elems.content.data
           }
+
           item = {
             msgStatus: 1, //未读
             content: content,
@@ -668,7 +680,11 @@ export default {
           fromType: msg.isSend == true ? 2 : 1
         }
       }
-
+      if(item.msgType == 7){
+        item.avatar = this.robot_avatar;
+      }else{
+        item.avatar = this.userInfo.avatarUrl;
+      }
       var dats = new Date().getTime()
       var lists = this.msgList
       /*说明已经有记录*/
