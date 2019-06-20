@@ -38,8 +38,7 @@
 import userService from 'SERVICE/userService'
 export default {
     data:() =>({
-        videoList:[],  
-        linkerId:'00004bab-4992-4104-8ac3-ce6f9e47d5d1',
+        videoList:[], 
         current:1,
         size:2 ,
         page:"",
@@ -56,7 +55,7 @@ export default {
             } 
         },
         getList () {
-            userService.getDevelopersMaterialList({linkerId:this.linkerId,type:3,size:this.size,current:this.current
+            userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:3,size:this.size,current:this.current
             }).then((result) => {  
                 this.page = result.pages
                 if (result.pages > 1) {

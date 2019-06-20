@@ -84,8 +84,8 @@ export default {
     },
     goSchool () {
       userService.getStudyLinkerList({agentId:this.userInfo.agentId
-      }).then((result) => {  
-        if (result) { 
+      }).then((result) => {   
+        if (!result) { 
           this.$toast('还没有培训资料')
         }else {
           this.$router.push('/user/learn')
