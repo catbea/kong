@@ -6,8 +6,8 @@
                     <div class="left_img">
                         <img :src="item.coverImgUrl" alt="" class="img">
                     </div>
-                    <div class="left_icon" :class="true && 'h5' && 'img'">
-                        {{['','图片','视频','PDF','H5'][item.format]}}
+                    <div class="left_icon" :class="fileType[item.format]">
+                        {{['','图集','视频','PDF','H5'][item.format]}}
                     </div> 
                 </div>
                 <div class="li_right">
@@ -37,6 +37,13 @@ export default {
         current:1,
         size:5 ,
         page:"",
+        title:'',
+        fileType:{
+            1: 'img',
+            2: 'video',
+            3: 'pdf',
+            4: 'h5'
+        }
     }),
     mounted() {  
         this.getList();
@@ -62,6 +69,7 @@ export default {
             })
         },
         select(val) { 
+            this.title = val.title
             switch (val.format) {
                 case 1:
                 this.$router.push(`/user/learn/thirdPage/img?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
@@ -74,6 +82,10 @@ export default {
                 break
             } 
         },
+    },
+    beforeRouteLeave (to, from, next) {  
+        to.meta.title = this.title
+        next()
     }
 }
 </script>
@@ -116,10 +128,10 @@ export default {
                     top:0px; 
                     right: 0px;
                 }
-                .pdf {
+                .img {
                     background: #2882FF;
                 }
-                .img {
+                .pdf {
                     background: #FA6400;
                 }
                 .h5 {

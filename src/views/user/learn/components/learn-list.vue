@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { parseTime } from './../../../../utils/tool'
+import { formatDate } from './../../../../utils/tool'
 export default {
   props: {
     type: {
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     formatDate(time) {
-      return parseTime(time, '{y}-{m}-{d}')
+      return formatDate(time, 'YYYY-MM-DD')
     }
   }
 }

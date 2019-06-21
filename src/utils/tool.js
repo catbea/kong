@@ -192,3 +192,31 @@ export function trim(str) {
   }
   return str;
 }
+
+
+export function formatDate(val, format) {
+  const REGEX = /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/
+  if (val) {
+    if (val.toString().indexOf('-') > 0) {
+      val = val.replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '').replace(/(-)/g, '/') // 将 '-' 替换成 '/'
+      val = val.slice(0, val.indexOf('.')) // 删除小数点及后面的数字
+    }
+    let date = new Date(val)
+    date.setHours(date.getHours() + 8)
+    const [whole, yy, MM, dd, hh, mm, ss] = date.toISOString().match(REGEX)
+    if (format) {
+      return format
+        .replace('YYYY', yy)
+        .replace('YY', yy.slice(2))
+        .replace('MM', MM)
+        .replace('DD', dd)
+        .replace('hh', hh)
+        .replace('mm', mm)
+        .replace('ss', ss)
+    } else {
+      return [yy, MM, dd].join('-') + ' ' + [hh, mm, ss].join(':')
+    }
+  } else {
+    return '--'
+  }
+}

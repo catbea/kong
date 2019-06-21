@@ -595,7 +595,7 @@ export default [
   },
   {
     path: '/user/learn/thirdPage/img',
-    name: 'h5',
+    name: 'img',
     component: resolve => require(['@/views/user/learn/thirdPage/img.vue'], resolve),
     meta: {
       title: 'img',

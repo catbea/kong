@@ -134,7 +134,8 @@ export default {
       linkerList: [], //楼盘列表
       showFilter: false, //是否显示楼盘列表
       showTips: false, //是否显示提示
-      defaultLinker: {} //默认选择楼盘
+      defaultLinker: {}, //默认选择楼盘
+      title:''
     }
   },
   async created() {
@@ -249,7 +250,8 @@ export default {
     },
     //跳转到详情
     toLearnDeails(learn, type) {
-      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+      this.title = learn.title
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}&linkerId=${learn.linkerId}`)
     },
     // 播放时自动全屏
     playVideo(learn, index, ref) {
@@ -278,6 +280,10 @@ export default {
       let { duration } = JSON.parse(content)
       return Math.floor(duration / 60) + ':' + (duration % 60)
     }
+  },
+  beforeRouteLeave (to, from, next) {  
+      to.meta.title = this.title
+      next()
   }
 }
 </script>
