@@ -16,9 +16,9 @@ export default {
       },
       markList: [],
       city: '全国',
-      provice: '',
       houseList: [],
-      zoom: 5
+      zoom: 5,
+      geocoder: ''
     }
   },
   computed: {
@@ -43,36 +43,52 @@ export default {
         zoom: 5,
         minZoom: 3,
         maxZoom: 15,
-        disableDefaultUI: true, // 禁止所有的默认控件
-        scrollwheel: false,
-        keyboardShortcuts: false,
-        panControl: false
+        // disableDefaultUI: true, // 禁止所有的默认控件
+        // scrollwheel: false,
+        // keyboardShortcuts: false,
+        // panControl: false
       })
       qq.maps.event.addListener(this.map, 'zoom_changed', () => {
         this.zoomChange(this.map.getZoom())
       })
+      this.geocoder = new qq.maps.Geocoder({
+        complete : (result) => {
+          if (this.zoom <= 5) {
+            this.city = '全国'
+            this.getRegionTotal(1)
+          } else if (this.zoom > 5 && this.zoom <= 7) {
+            if (result.detail.address.indexOf('自治区') > -1) {
+              this.city = result.detail.address.split('区')[0].slice(2) + '区'
+            } else {
+              this.city = result.detail.address.split('省')[0].slice(2) + '省'
+            }
+            this.getRegionTotal(2)
+          } else if (this.zoom > 7 && this.zoom <= 10){
+            if (result.detail.address.indexOf('县') > -1) {
+              this.city = result.detail.address.split('县')[0].split('省')[1] + '县'
+            } else if (result.detail.address.indexOf('自治区') > -1){
+              this.city = result.detail.address.split('自治区')[1].split('市')[0] + '市'
+            } else {
+              this.city = result.detail.address.split('市')[0].split('省')[1] + '市'
+            }
+            this.getRegionTotal(3)
+          } else {
+            this.city = ''
+            this.getRegionLinkers()
+          }  
+          
+        }
+    })
       this.updateMark()
     },
     getCity () {
       this.latLng = this.map.getCenter()
       var latLng = new qq.maps.LatLng(this.latLng.lat, this.latLng.lng)
-      geocoder.getAddress(latLng)
+      this.geocoder.getAddress(latLng)
     },
     zoomChange (zoom) {
       this.zoom = zoom
-      if (zoom <= 5) {
-        this.city = '全国'
-        this.getRegionTotal(1)
-      } else if ( zoom > 5 && zoom <= 7) {
-        if (this.provice) {
-          this.city = this.provice
-        }
-        this.getRegionTotal(2)
-      } else if (zoom > 7 && zoom <= 10) {
-        this.getRegionTotal(3)
-      } else {
-        this.getRegionLinkers()
-      }
+      this.getCity()
     },
     getRegionLinkers () {
       commonService.getRegionLinkers({
@@ -117,24 +133,21 @@ export default {
       }
     },
     markMaker() {
-      let scaleSize = new qq.maps.Size(100, 30)
+      let scaleSize = new qq.maps.Size(140, 30)
       for (let temp of this.houseList) {
         let marker = new qq.maps.Marker({
           icon: new qq.maps.MarkerImage('', null, null, null, scaleSize),
           map: this.map,
           position: new qq.maps.LatLng(temp.latitude, temp.longitude),
-          decoration: new qq.maps.MarkerDecoration(`<div class="text">${temp.name}${temp.linkerNum}<span class="arrow"></span></div>`, new qq.maps.Point(0, -4))
+          decoration: new qq.maps.MarkerDecoration(`<div class="text">${temp.name}(${temp.linkerNum})<span class="arrow"></span></div>`, new qq.maps.Point(0, -4))
         })
         qq.maps.event.addListener(marker, 'click', (e) => {
           let zoom = this.map.zoom
-          this.latLng = e.latLng
           this.map.setCenter(new qq.maps.LatLng(e.latLng.lat, e.latLng.lng))
-          if (zoom <= 5) {
-            this.provice = temp.name
-          } else if (zoom > 5 && zoom <= 7) {
+          if (zoom > 5 && zoom <= 7) {
             this.city = temp.name
           }
-          this.map.setZoom(zoom + 2)
+          this.map.setZoom(zoom + 1)
         })
         this.markList.push(marker)
       }
