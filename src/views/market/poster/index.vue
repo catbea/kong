@@ -523,7 +523,7 @@ export default {
           .tips{
             font-size:10px;
             font-weight:400;
-            color:rgba(145,149,153,1);
+            color:#C6C9CC;
             margin-top: 5px;
           }
         }
@@ -622,7 +622,7 @@ export default {
           .tips{
             font-size:10px;
             font-weight:400;
-            color:rgba(145,149,153,1);
+            color:#C6C9CC;
             margin-top: 5px;
           }
         }
@@ -727,7 +727,7 @@ export default {
           .tips{
             font-size:10px;
             font-weight:400;
-            color:rgba(145,149,153,1);
+            color:#C6C9CC;
             margin-top: 5px;
           }
         }
@@ -804,7 +804,7 @@ export default {
           .tips{
             font-size:8px;
             font-weight:400;
-            color:rgba(145,149,153,1);
+            color: #C6C9CC;
             margin-top: 5px;
           }
         }
