@@ -37,7 +37,7 @@
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
-        <p class="info-btn" v-if="vipInfo.expireTimestamp == ''">
+        <p class="info-btn" v-if="vipInfo.expireTimestamp < +new Date()">
           <button class="btn">立即开通</button>
         </p>
         <p class="info-btn_text" v-else>
@@ -78,7 +78,7 @@ export default {
   methods: {
   async getVipInfo() {
     let res = await marketService.vipInfo()
-    this.vipInfo = res 
+    this.vipInfo = res  
   },
     editCLickHandler() {
       this.$router.push('/user/edit')
@@ -99,16 +99,27 @@ export default {
     ...mapGetters(['userInfo', 'userVipInfo']),
 
     isVipInfo() {
-      return '我的vip会员'
-      // return this.userVipInfo.isvip ? '已开通VIP' : '我的vip会员'
+      // return '我的vip会员'
+      if (this.vipInfo) {
+        // debugger
+        let time = this.vipInfo.expireTimestamp
+        let text = '开通VIP会员'
+        if (time > +new Date()) {
+          text = '我的vip会员'
+        }
+        return text
+      } else {
+        return ''
+      }
+      // return this.userVipInfo.isvip ? '我的vip会员':'开通VIP会员'
     },
     vipTimeInfo() {
       // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
-      if (this.vipInfo) {
+      if (this.vipInfo) {  
         let time = this.vipInfo.expireTimestamp
         let text = '楼盘开通不限量'
         if (time > +new Date()) {
-          let list = this.vipInfo.vipList.map(item=>item.labelName+"").slice(0, 3)
+          let list = this.vipInfo.vipList.map(item=>item.city+"").slice(0, 3) 
           text = '已开通' + list.join(",") + '等城市'
         }
         return text
