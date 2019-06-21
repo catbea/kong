@@ -580,7 +580,7 @@ export default {
           .iconShare{
             position: absolute;
             right: 0;
-            top: -2px;
+            top: 0;
             width: 50px;
             height:30px;
             line-height: 30px;
