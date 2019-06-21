@@ -74,7 +74,8 @@ export default {
         2: 'VIDEO',
         3: 'PDF',
         4: 'H5'
-      }
+      },
+      title:''
     }
   },
   created() {
@@ -111,7 +112,8 @@ export default {
       if (type == 'video') {
         return this.playVideo(learn, index)
       }
-      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+      this.title = learn.title
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}&linkerId=${learn.linkerId}`)
     },
     // 播放时自动全屏
     playVideo(learn, index) {
@@ -131,6 +133,10 @@ export default {
         ele.msRequestFullscreen()
       }
     }
+  },
+  beforeRouteLeave (to, from, next) {  
+      to.meta.title = this.title
+      next()
   }
 }
 </script>
