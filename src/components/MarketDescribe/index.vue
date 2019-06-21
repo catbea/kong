@@ -17,7 +17,7 @@
           <ul class="market-describe">
             <li class="market-name">
               <div class="box">
-                <span class="free" v-if="+itemInfo.isFree && showFree">免费</span>
+                <!-- <span class="free" v-if="+itemInfo.isFree && showFree">免费</span> -->
                 <span class="title">{{itemInfo.linkerName}}</span>
                 <span class="past" v-if="itemInfo.openStatus==1">已过期</span>
               </div>

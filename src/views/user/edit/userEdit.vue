@@ -17,24 +17,17 @@
       <van-cell class="cell-item" title="联系电话" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
-      <van-cell class="cell-item" title="从业时间" is-link :value="userInfo.workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][userInfo.workingTime-100]"  @click="openTimeSelect()"/>
-      <van-cell class="cell-item" title="销售类型" is-link :value="userInfo.saleType==''?'买卖经纪人':userInfo.saleType" @click="openShopSelect()"/>
-      <van-actionsheet v-model="show" :actions="actions" @select="onSelect"/>
-      <van-actionsheet v-model="isshow" :actions="isActions" @select="shopSelect"/>
-      <!-- <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
-      <van-cell class="cell-item" title="我的机构" is-link :value="userInfo.institutionName" @click="goEdit" /> --> 
-    </van-cell-group>
-    <van-cell-group class="user-advance-info">
+      <van-cell class="cell-item" title="从业时间" is-link :value="workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][workingTime-100]"  @click="openTimeSelect()"/>
+      <van-cell class="cell-item" title="销售类型" is-link :value="saleType==''?'买卖经纪人':saleType" @click="openShopSelect()"/>
       <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel'">
         <template slot="title">
           <span class="custom-text">标签展示</span>
           <div class="user-tag"><van-tag  v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</van-tag></div>
         </template>
-        <!-- <div slot="extra" class="tag-show-container">
-          <div class="tag-item" v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</div>
-        </div> -->
       </van-cell>
       <van-cell class="cell-item" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature | textOver(10)"/>
+      <van-actionsheet v-model="show" :actions="actions" @select="onSelect"/>
+      <van-actionsheet v-model="isshow" :actions="isActions" @select="shopSelect"/>
     </van-cell-group>
     <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu" :code="cityCode" :areaList="areaList"/>
   </div>
@@ -72,8 +65,14 @@ export default {
         { name: '买卖经纪人',saleType  :'0' },
         { name: '内场销售',saleType  :'1' },
         { name: '销售专家',saleType  :'2' }, 
-      ]
+      ],
+      workingTime:'',
+      saleType:'',
+      list:''
     }
+  },
+  mounted() {
+    this.getlist()
   },
   methods: {
     // areaList 获取
@@ -118,10 +117,21 @@ export default {
     openShopSelect () {
       this.isshow = true
     },
+    getlist(){
+      userService.getUserInfo({agentId:this.userInfo.agentId
+      }).then((result) => {   
+          this.list = result.labelList
+          this.saleType = result.saleType
+          this.workingTime = result.workingTime
+      }).catch((err) => {
+          console.log(err)
+      })
+    },
     onSelect(item) {  
       userService.upDateUserInfo({workingTime:item.workingTime
       }).then((result) => {   
-          this.show = false   
+          this.show = false 
+          this.workingTime = result.workingTime  
           this.$store.dispatch(
             'getUserInfo',
             Object.assign({},this.userInfo, {
@@ -136,6 +146,7 @@ export default {
       userService.upDateUserInfo({saleType:item.name
       }).then((result) => { 
           this.isshow = false  
+          this.saleType = result.saleType 
           this.$store.dispatch(
             'getUserInfo',
             Object.assign({},this.userInfo, {
@@ -178,7 +189,7 @@ export default {
     ...mapGetters(['userInfo']),
 
     newLabelList() {
-      return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
+      return this.list.length > 3 ? this.list.slice(0, 3) : this.list
     },
     cityCode() {
       let codes = Object.keys(this.fullArea.city_list)
@@ -197,27 +208,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
-.van-cell__value {
-  overflow: hidden;
-  text-align: right;
-  position: relative;
-  vertical-align: middle;
-  color: rgba(153, 153, 153, 1);
-}
-.van-dialog {
-  border-radius: 12px;
-  width: 72%;
-  text-align: center;
-}
-.van-dialog__message {
-  font-size: 15px;
-  color: rgba(51, 51, 51, 1);
-}
-.van-button__text {
-  font-size: 18px;
-  color: rgba(0, 122, 230, 1);
-}
+<style lang="less"> 
 .user-edit-page {
   width: 100%;
   height: 100%;
@@ -290,60 +281,19 @@ export default {
         border-radius: 4px;
       }
     }
-  }
-  > .user-advance-info {
     .tag-edit {
       position: relative;
-      display: block; 
-      // border-bottom: 0px solid #f2f5f9;
+      display: block;  
       .user-tag {
         float: right;
         margin-right: 20px;
-      }
-      .van-tag {
-        background-color: #fff !important;
-        padding: 0 0.1rem !important;
-        color: #445166;
-        font-size: 14px;
-        vertical-align: middle;
-      }
+      } 
       .van-cell__right-icon {
         position: absolute;
         right: 22px;
         top: 3px;
-      }
-      .tag-show-container {
-        display: flex;
-        .tag-item {
-          height: 20px;
-          line-height: 10px;
-          display: inline-block;
-          font-size: 12px;
-          color: #666666;
-          background: #f2f5f9;
-          padding: 5px 5px;
-          margin: 0 5px;
-        }
-      }
+      } 
     }
-    .user-signature {
-      // overflow: auto;
-      // text-align: left;
-      .van-cell__value {
-        position: absolute;
-        left: 100px;
-        width: 200px;
-        line-height: 16px;
-        text-align: right;
-        padding: 20px;
-        > span {
-          word-break: break-all;
-          overflow: auto;
-          font-size: 14px;
-          text-align: left;
-        }
-      }
-    }
-  }
+  } 
 }
 </style>

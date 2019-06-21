@@ -12,18 +12,17 @@
       </div>
       <!-- 观点 -->
       <div class="discover-viewpoint" v-if="editData&&editData.viewpoint">
-        <div class="viewpoint-line"></div>
+
+        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
         <div class="viewpoint-top">
-          <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
           <div class="viewpoint-right">
             <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
             <div class="viewpoint-name">
               <span style="color:#333;font-size:14px">{{agentInfo&&agentInfo.agentName}}</span>
-              <span style="color:#969EA8;font-size:14px">点评</span>
+              <span style="color:#9CA5B5;font-size:14px"> 点评</span>
             </div>
           </div>
         </div>
-        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
       <!-- 文章详情 -->
       <div class="discover-detail-content">
@@ -816,13 +815,13 @@ export default {
       background-color: #999999;
     }
     > .discover-viewpoint {
-      border: 1px dashed #969ea8;
       margin: 20px 16px;
       margin-bottom: 5px;
       margin-top: 30px;
-      padding: 16px;
+      padding-left: 16px;
       position: relative;
       box-sizing: border-box;
+      border-left: 3px solid rgba(150,158,168, 0.4);
       > .viewpoint-line {
         width: 2px;
         height: 13px;
@@ -836,6 +835,7 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        margin-top: 8px;
         > .viewpoint-right {
           display: flex;
           > .viewpoint-name {
@@ -845,9 +845,9 @@ export default {
         }
       }
       > .viewpoint-content {
-        color: #445166;
+        color: #13284D;
         font-size: 16px;
-        margin-top: 20px;
+        font-weight: bold;
         line-height: 1.5;
         word-wrap: break-word;
       }

@@ -519,6 +519,14 @@ export default {
         div,section{
           width: auto !important;
         }
+        .img-mask{
+          position: absolute;
+          width: 100% !important;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background: rgba(68, 81, 102, 0.7);
+        }
         img{
           height: auto !important;
           max-width: 100% !important;

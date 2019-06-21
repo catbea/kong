@@ -6,7 +6,8 @@
           <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
         </div>
         <div class="right-box">
-          <h5 class="estate-name"><span class="free" v-if="+info.isFree">免费</span>{{info&&info.linkerName}}</h5>
+          <!-- <span class="free" v-if="+info.isFree">免费</span> -->
+          <h5 class="estate-name">{{info&&info.linkerName}}</h5>
           <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
           <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
           <div class="estate-info">

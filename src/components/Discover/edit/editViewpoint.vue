@@ -1,6 +1,6 @@
 <template>
   <div class="edit-viewpoint-container">
-    <div v-if="status === 'edit'" class="box_border viewpoint-container" @click="viewpointAreaClick">{{currentValue === '' ? '您可以在这里输入观点,若无内容分享后将不会进行展示.' : currentValue}}</div>
+    <div v-if="status === 'edit'" class="box_border viewpoint-container" :class="{'no-content-style':!currentValue,'content-style':currentValue}" @click="viewpointAreaClick">{{currentValue === '' ? '您可以在这里输入观点,若无内容分享后将不会进行展示.' : currentValue}}</div>
     <div v-if="status === 'view' && currentValue !==''" class="discover-viewpoint">
       <div class="viewpoint-line"></div>
       <div class="viewpoint-top">
@@ -8,7 +8,7 @@
         <div class="viewpoint-right">
         </div>
       </div>
-      <div class="viewpoint-content">{{currentValue}}</div>
+      <div class="viewpoint-content content-style">{{currentValue}}</div>
     </div>
     <van-popup class="write-board" v-model="viewpointEditShow" position="bottom">
       <p class="write-title">发表观点</p>
@@ -69,6 +69,15 @@ export default {
     background: rgba(0,122,230,0.1);
     padding: 7px 9px;
   }
+  .no-content-style{
+    color: #9CA5B5;
+    font-size: 16px;
+  }
+  .content-style{
+    color: #13284D;
+    font-size: 16px;
+    font-weight: bold;
+  }
   > .discover-viewpoint {
     // margin: 20px 16px;
     padding: 16px;
@@ -97,8 +106,9 @@ export default {
       }
     }
     > .viewpoint-content {
-      color: #445166;
+      color: #13284D;
       font-size: 16px;
+      font-weight: bold;
       margin-top: 20px;
       line-height: 1.5;
     }

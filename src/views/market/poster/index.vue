@@ -130,29 +130,32 @@
             </div>
           </div>
           <div class="swiper-slide">
-            <div class="card item4">
-              <div class="pic">
-                <img :src="avatarUrl" alt="">
-              </div>
-              <div class="agent-box">
-                <div class="agent-info">
-                  <div class="agent-cnt">
-                    <div class="img">
-                      <img class="pic" :src="editData.avatarMediaidTwo" alt="">
+            <div class="card card2">
+              <div class="item4">
+                <div class="pic">
+                  <img :src="avatarUrl" alt="">
+                </div>
+                <div class="agent-box">
+                  <div class="agent-info">
+                    <div class="agent-cnt">
+                      <div class="img">
+                        <img class="pic" :src="editData.avatarMediaidTwo" alt="">
+                      </div>
+                      <div class="text">
+                        <p class="name">{{editData.agentName}}</p>
+                        <p class="tel">{{editData.agentMobile}}</p>
+                      </div>
                     </div>
-                    <div class="text">
-                      <p class="name">{{editData.agentName}}</p>
-                      <p class="tel">{{editData.agentMobile}}</p>
+                    <div class="tips">
+                      长按识别小程序码，查看楼盘详情
                     </div>
                   </div>
-                  <div class="tips">
-                    长按识别小程序码，查看楼盘详情
+                  <div class="qrcode">
+                    <img :src="editData.qrCode" alt="">
                   </div>
                 </div>
-                <div class="qrcode">
-                  <img :src="editData.qrCode" alt="">
-                </div>
               </div>
+              
             </div>
           </div>
         </div>
@@ -192,7 +195,10 @@
     </div>
     <!-- 名片海报预览 -->
     <div class="share-cover-img" v-show="showView">
-      <p class="img-box">
+      <p class="img-box img-box2" v-if="activeIndex===3">
+        <img src="" alt="" id="share-cover-img2">
+      </p>
+      <p class="img-box" v-else>
         <img src="" alt="" id="share-cover-img">
       </p>
       <div class="card-action">
@@ -323,13 +329,18 @@ export default {
       let cls = `.item${this.activeIndex + 1}`
       let img = document.getElementById('share-cover-img')
       let _that = this
+      let width = '300px'
+      if (this.activeIndex === 3) {
+        width = '224px'
+        img = document.getElementById('share-cover-img2')
+      }
       h2c(document.querySelector(cls), {
         backgroundColor: null,
         scale: 3,
         useCORS: true,
         allowTaint: false,
         logging: false,
-        width: '300px',
+        width: width,
         heigt: '460px'
       }).then(canvas => {
         let dataURL = canvas.toDataURL()
@@ -512,7 +523,7 @@ export default {
           .tips{
             font-size:10px;
             font-weight:400;
-            color:rgba(145,149,153,1);
+            color:#C6C9CC;
             margin-top: 5px;
           }
         }
@@ -611,7 +622,7 @@ export default {
           .tips{
             font-size:10px;
             font-weight:400;
-            color:rgba(145,149,153,1);
+            color:#C6C9CC;
             margin-top: 5px;
           }
         }
@@ -716,7 +727,7 @@ export default {
           .tips{
             font-size:10px;
             font-weight:400;
-            color:rgba(145,149,153,1);
+            color:#C6C9CC;
             margin-top: 5px;
           }
         }
@@ -729,43 +740,53 @@ export default {
         }
       }
     }
-    .item4{
+    .card2 {
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+    }
+    .item4{
       background-color: #fff;
+      width:224px;
+      height:400px;
+      margin: auto;
+      overflow: hidden;
       .pic{
-        width:300px;
-        height:325px;
-        border-radius:4px 4px 0px 0px;
-        overflow: hidden;
-        margin-bottom: 10px;
+        width: 224px;
+        height:326px;
+        // border-radius:4px 4px 0px 0px;
+        margin-bottom: 5px;
+        margin: auto;
         img{
-          min-width: 300px;
-          min-height: 325px;
+          width: 224px;
+          height: 326px;
           object-fit: cover;
         }
       }
       .agent-box{
         display: flex;
-        margin: 0 16px;
+        width: 224px;
+        margin: auto;
+        padding: 0 13px;
+        box-sizing: border-box;
         .agent-info{
           flex: 1;
           margin-top: 5px;
           .agent-cnt{
             display: flex;
+            margin-top: 16px;
             .img{
               img{
-                width: 32px;
-                height: 32px;
+                width: 24px;
+                height: 24px;
                 border-radius: 50%;
-                margin-right: 8px;
+                margin-right: 6px;
               }
             }
             .text{
               flex: 1;
               max-width: 140px;
               .name{
-                font-size:12px;
+                font-size:10px;
                 font-weight:600;
                 color:rgba(26,39,51,1);
                 overflow: hidden;
@@ -773,7 +794,7 @@ export default {
                 white-space: nowrap;
               }
               .tel{
-                font-size:10px;
+                font-size:8px;
                 font-weight:400;
                 color:rgba(145,149,153,1);
                 margin-top: 5px;
@@ -781,17 +802,18 @@ export default {
             }
           }
           .tips{
-            font-size:10px;
+            font-size:8px;
             font-weight:400;
-            color:rgba(145,149,153,1);
-            // margin-top: 5px;
+            color: #C6C9CC;
+            margin-top: 5px;
           }
         }
         .qrcode{
-          width: 64px;
+          width: 44px;
+          margin-top: 16px;
           img{
-            width: 64px;
-            height: 64px;
+            width: 44px;
+            height: 44px;
           }
         }
       }
@@ -845,6 +867,12 @@ export default {
       width: 300px;
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+      text-align: center;
+    }
+    .img-box2 {
+      height: 400px;
+      width: 224px;
+      margin: auto;
     }
   }
   // 编辑信息

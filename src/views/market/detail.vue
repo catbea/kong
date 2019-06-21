@@ -96,8 +96,8 @@
             <div class="item">
               <span>开盘:</span>{{info.openTime}}
             </div>
-            <div class="item">
-              <span class="title">地址:</span> <p class="address">{{info.detailAddress}}</p>
+            <div class="item" @click="mapClickHandler">
+              <span class="title">地址:</span> <p class="address"><span class="adr">{{info.detailAddress}}</span><span class="icon"  v-if="info.houseAroundType&&info.houseAroundType.length>0"><img src="../../assets/img/market/classify/map.png" alt=""> 地图</span></p>
             </div>
             <div class="item" @click="moreInfoHandler">
               <p class="price"><span class="title">更多:</span>产权年限、装修标准、开发商…</p>
@@ -1483,7 +1483,27 @@ export default {
             width: 45px;
           }
           .address{
-            flex: 1;
+            flex:  none;
+            display: flex;
+            .adr {
+              flex: 0 0 auto;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              width: 215px;
+            }
+            .icon {
+              width: 80px;
+              color: #007AE6;
+              font-size: 12px;
+              vertical-align: middle;
+              text-align: right;
+              img{
+                width: 13px;
+                height: 16px;
+                vertical-align: middle;
+              }
+            }
           }
           .price{
             flex: 1;
