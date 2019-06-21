@@ -45,15 +45,20 @@ export default {
     },
     itemData(index) {
       let temp = this.currentData[index]
+
       if (!temp.city) temp.city = temp.site
       if (!temp.linkerTags) {
-        let statusArr = ['热销中', '即将发售', '售罄']
-        temp.linkerTags = [statusArr[temp.saleStatus], ...temp.condition]
+        if(this.isInArticle==1){
+          temp.linkerTags = [...temp.condition]
+        }else{
+          let statusArr = ['热销中', '即将发售', '售罄']
+          temp.linkerTags = [statusArr[temp.saleStatus], ...temp.condition]
+        }
       }
+      console.log(temp.linkerTags);
       while (temp.linkerTags.length > 3) {
         temp.linkerTags.pop()
       }
-
       return temp
     }
   },

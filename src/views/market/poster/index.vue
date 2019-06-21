@@ -401,7 +401,7 @@ export default {
     },
     formatCounty (county) {
       if (county) {
-        return county === '片区' ? county :  county.split('区').join('')
+        return county === '片区' ? county :  county.indexOf('新区') > -1 ? county.split('新区').join('') : county.split('区').join('')
       }
     }
   }
@@ -411,6 +411,7 @@ export default {
 <style lang="less" scoped>
 .share-box{
   font-size: 12px;
+  margin-top: 16px;
   .card {
       width:300px;
       height:400px;
@@ -434,7 +435,7 @@ export default {
         }
       }
       .linker-box{
-        margin: 16px;
+        margin: 20px 16px;
         display: flex;
         padding-bottom: 16px;
         .linker-info{
@@ -453,13 +454,14 @@ export default {
             font-weight:400;
             color:rgba(145,149,153,1);
             line-height:14px;
-            margin-top: 5px;
+            margin-top: 8px;
           }
         }
         .linker-price{
           .price{
             font-size:16px;
             color:rgba(234,77,46,1);
+            font-weight: 600;
           }
           .tips{
             height:14px;
@@ -468,7 +470,7 @@ export default {
             color:rgba(145,149,153,1);
             line-height:14px;
             text-align: right;
-            margin-top: 5px;
+            margin-top: 8px;
           }
         }
       }
@@ -797,13 +799,14 @@ export default {
   .card-action{
     text-align: center;
     font-weight: 400;
+    margin-top: 20px;
     p{
       color: #1A2733;
       margin-top: 12px;
     }
     .btn{
       display: flex;
-      margin: 15px 20px;
+      margin: 30px 20px 15px 20px;
       button{
         flex: 1;
         height:44px;
