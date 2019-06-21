@@ -15,6 +15,7 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 export default {
     data:() => ({
@@ -23,8 +24,19 @@ export default {
     }),
     mounted() {
         this.getImg()
+        this.gostudyAdd()
+    },
+    computed: {
+    ...mapGetters(['userInfo']),
     },
     methods:{
+        gostudyAdd() {
+            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
+            }).then((result) => { 
+            }).catch((err) => {
+                console.log(err)
+            })
+        }, 
         onChange(index) {
             this.inde  = index
         },
@@ -44,12 +56,23 @@ export default {
     background: #ffffff;
     height: 100vh;
     .img-preview{
-        padding: 43px 16px 106px 16px;
+        padding: 43px 16px 43px 16px;
         width: 100%;
         height: 100%;
         .img-box {
+            height: 100%;
+            width: 100%;  
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
             img {
-                width: 100%;
+                width: 100%; 
+            }
+            .custom-indicator {
+                text-align: center;
+                color: #333333;
+                font-size: 14px;
+                margin-top: 18px;
             }
         }
     }

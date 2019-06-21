@@ -73,7 +73,6 @@
             />
 
             <!-- video -->
-
             <template v-if="learn.video && learn.video.length == 1">
               <LearnList
                 v-for="(item, index) in learn.video"
@@ -293,7 +292,7 @@ export default {
     // 跳转对应的二级页面列表
     toLearnList(type) {
       const url = [, 'contorlTime', 'commissionRule', 'salesVideo', 'floor', 'salesAsk', 'customerPortrait', 'arecProduct', 'marker']
-      const linkerId = this.defaultLinker.linkerId;
+      const linkerId = this.defaultLinker.linkerId
       type = type.split('_').splice(-1)
       this.$router.push(`/user/learn/secondPage/${url[type]}?linkerId=${linkerId}`)
     },
@@ -310,6 +309,7 @@ export default {
       this.requestFullscreen(element)
       element.play()
     },
+
     // 全屏兼容代码
     requestFullscreen(ele) {
       if (ele.requestFullscreen) {

@@ -9,6 +9,7 @@
           show-action
           @search="onSearch"
           @cancel="toUserLearn"
+          @keypress="onPress"
         />
       </form>
     </div>
@@ -16,7 +17,7 @@
     <div class="search-result">
       <div class="search-result-list" v-for="item in resultList" @click="toUserLearn(item.linkerId)">
         <div class="linker-name">{{item.linkerName}}</div>
-        <div class="linker-info">{{item.linkerId}}</div>
+        <div class="linker-info">{{item.city}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.averagePrice}}{{item.priceUnit}}</div>
       </div>
     </div>
 
@@ -36,7 +37,7 @@
       </div>
     </div>
 
-    <div v-if="linkerName && resultList.length == 0" class="empty-search">
+    <div v-if="linkerName && resultList.length == 0 && !isPress" class="empty-search">
       <img :src="require('IMG/user/learn/empty-house.png')" alt>
       <p>没有搜索到任何楼盘</p>
     </div>
@@ -52,6 +53,7 @@ export default {
     return {
       linkerName: '',
       resultList: [],
+      isPress: true,
       searchHistory: [] //历史搜索记录
     }
   },
@@ -78,9 +80,11 @@ export default {
         this.searchLinker()
       })
     },
+    onPress(){
+      this.isPress = true;
+    },
     // 跳转到学习首页
     toUserLearn(linkerId) {
-      console.log(linkerId, 'linkerId');
       let router = {
         path: '/user/learn/'
       }
@@ -109,6 +113,7 @@ export default {
         localStorage.setItem('searchStudyHistory', this.searchHistory)
       }
 
+      this.isPress = false;
       Toast.clear()
       this.resultList = response
     }

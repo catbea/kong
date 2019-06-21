@@ -749,6 +749,16 @@ class UserService {
       method: 'get',
       url: `/developersMaterial/detail/${data.id}`, 
     })
-  }     
+  }  
+  /**
+   * 新增学习记录
+   *  */ 
+  getDevelopersMaterialadd (data) {
+    return xhr({
+      method: 'post',
+      url: '/developersMaterialAgentRecord/add',
+      body: data 
+    })
+  }    
 }
 export default new UserService()

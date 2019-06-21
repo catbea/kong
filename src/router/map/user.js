@@ -4,7 +4,7 @@ export default [
     name: 'user',
     component: resolve => require(['@/views/user/index.vue'], resolve),
     meta: {
-      title: '名片',
+      title: '我的',
       tabbar: {
         show: true
       }
@@ -31,7 +31,7 @@ export default [
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
     meta: {
-      title: '名片编辑'
+      title: '个人编辑'
     }
   },
   {

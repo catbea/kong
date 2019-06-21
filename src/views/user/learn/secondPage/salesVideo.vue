@@ -4,6 +4,7 @@
             <li class="li_view" v-for="(item,index) in videoList" :key="index" >
                 <div class="li_video">
                      <video
+                        id="palyId"
                         width="100%"
                         height="100%"
                         ref="videoplay"
@@ -16,6 +17,7 @@
                         x-webkit-airplay="allow"
                         x5-video-player-type="h5"
                         x5-video-player-fullscreen="true"
+                        @play="videoPlay(item,index)"
                     >
                         <!-- <div v-for="(a,index) in item.content" :key="index+3"> -->
                             <source :src="item.content.url" type="video/mp4">
@@ -35,6 +37,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 export default {
     data:() =>({
@@ -45,9 +48,27 @@ export default {
         urlList:{}
     }),
     mounted() {  
-        this.getList();        
+        this.getList();  
+    },
+    computed: {
+    ...mapGetters(['userInfo']),
     },
     methods: {
+        videoPlay(item,index) { 
+            userService.getDevelopersMaterialadd({materialId:item.id,agentId:this.userInfo.agentId,developersId:item.id,linkerId:item.linkerId 
+            }).then((result) => { 
+                // this.getList()
+            }).catch((err) => {
+                console.log(err)
+            })
+        },
+        gostudyAdd() {
+            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
+            }).then((result) => { 
+            }).catch((err) => {
+                console.log(err)
+            })
+        },
         imgScroll() {   
             if (this.page > this.current) { 
                 this.current = this.current + 1;
@@ -59,7 +80,7 @@ export default {
             }).then((result) => {  
                 this.page = result.pages
                 if (result.pages > 1) {
-                    this.videoList = this.videoList.concat(result.records)  
+                    this.videoList = this.videoList.concat(result.records) 
                 }else {
                     this.videoList = result.records
                 } 
