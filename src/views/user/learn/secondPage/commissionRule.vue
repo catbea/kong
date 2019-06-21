@@ -38,6 +38,7 @@ export default {
         current:1,
         size:5 ,
         page:"",
+        title:'',
         fileType:{
             1: 'img',
             2: 'video',
@@ -58,7 +59,7 @@ export default {
         getList () {
             userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:2,size:this.size,current:this.current
             }).then((result) => {  
-                this.page = result.pages
+                this.page = result.pages 
                 if (result.pages > 1) {
                     this.ruleList = this.ruleList.concat(result.records)  
                 }else {
@@ -69,6 +70,7 @@ export default {
             })
         },
         select(val) { 
+            this.title = val.title
             switch (val.format) {
                 case 1:
                 this.$router.push(`/user/learn/thirdPage/img?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
@@ -82,8 +84,9 @@ export default {
             } 
         },
     },
-    beforeDestroy () {
-        this.imagePreviewObj&&this.imagePreviewObj.close()
+    beforeRouteLeave (to, from, next) {  
+        to.meta.title = this.title
+        next()
     }
 }
 </script>

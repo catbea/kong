@@ -37,6 +37,7 @@ export default {
         current:1,
         page:"",
         size:5 ,
+        title:'',
         fileType:{
             1: 'img',
             2: 'video',
@@ -68,6 +69,7 @@ export default {
             })
         },
         select(val) { 
+            this.title = val.title
             switch (val.format) {
                 case 1:
                 this.$router.push(`/user/learn/thirdPage/img?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
@@ -79,7 +81,11 @@ export default {
                 this.$router.push(`/user/learn/thirdPage/h5?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
                 break
             } 
-        },
+        }, 
+    },
+    beforeRouteLeave (to, from, next) {  
+        to.meta.title = this.title
+        next()
     }
 }
 </script>
