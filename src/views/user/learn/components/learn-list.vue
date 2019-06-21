@@ -12,13 +12,11 @@
           <img class="abstract-img" :src="require('IMG/user/learn/img-icon.png')">
         </template>
       </div>
-    </div>
 
+    </div>
+    <slot></slot>
     <template v-if="fileType == 'video'">
-      <div
-        class="abstract-video"
-        :style="{'background-image': `url(${require('IMG/user/learn/video-icon.png')})`}"
-      ></div>
+      <div class="abstract-video" :style="{'background-image': `url(${require('IMG/user/learn/video-icon.png')})`}"></div>
     </template>
   </div>
 
@@ -30,6 +28,7 @@
         <span>{{duration}}</span>
       </div>
     </div>
+    <slot></slot>
     <h3 class="title ellipsis">{{item.title}}</h3>
     <h3 class="abstract">{{formatDate(item.updateTime)}}更新 · {{item.browseNum}}观看</h3>
   </div>

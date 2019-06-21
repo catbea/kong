@@ -11,27 +11,28 @@
 export default {
   name: 'tabbar',
   data() {
+    const { query: { linkerId } } = this.$route;
     return {
       active: 0,
       tabList: [
         {
           name: '首页',
-          url: '/user/learn',
+          url: `/user/learn?linkerId=${linkerId}`,
           icon: [require('IMG/user/learn/home-icon-on.png'), require('IMG/user/learn/home-icon.png')]
         },
         {
           name: '学习记录',
-          url: '/user/learn/record',
+          url: `/user/learn/record?linkerId=${linkerId}`,
           icon: [require('IMG/user/learn/record-icon-on.png'), require('IMG/user/learn/record-icon.png')]
         }
       ]
     }
   },
-  created(){
+  created() {
     const { path } = this.$route;
-    if(path === '/user/learn'){
+    if (path == '/user/learn' ||　path == '/user/learn/') {
       this.active = 0;
-    }else{
+    } else {
       this.active = 1;
     }
   }
