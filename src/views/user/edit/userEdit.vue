@@ -67,7 +67,8 @@ export default {
         { name: '销售专家',saleType  :'2' }, 
       ],
       workingTime:'',
-      saleType:''
+      saleType:'',
+      list:''
     }
   },
   mounted() {
@@ -118,8 +119,8 @@ export default {
     },
     getlist(){
       userService.getUserInfo({agentId:this.userInfo.agentId
-      }).then((result) => {  
-        // debugger
+      }).then((result) => {   
+          this.list = result.labelList
           this.saleType = result.saleType
           this.workingTime = result.workingTime
       }).catch((err) => {
@@ -188,7 +189,7 @@ export default {
     ...mapGetters(['userInfo']),
 
     newLabelList() {
-      return this.userInfo.labelList.length > 3 ? this.userInfo.labelList.slice(0, 3) : this.userInfo.labelList
+      return this.list.length > 3 ? this.list.slice(0, 3) : this.list
     },
     cityCode() {
       let codes = Object.keys(this.fullArea.city_list)
