@@ -4,29 +4,20 @@
       <div class="header-filter">
         <div class="linker-box">
           <span class="linker-name" @click="showFilter = !showFilter">{{defaultLinker.linkerName}}</span>
-          <van-icon class="filter-van-icon-arrow" :name="`arrow-${showFilter ? 'up': 'down'}`"/>
+          <van-icon class="filter-van-icon-arrow" :name="`arrow-${showFilter ? 'up': 'down'}`" />
 
           <transition name="fade">
             <div class="tips-box" v-if="showTips">
               当前显示“{{defaultLinker.linkerName}}”项目的培训内 容，点击可切换楼盘查看！
               <div class="square"></div>
-              <img
-                @click="showTips = false"
-                class="close-icon"
-                :src="require('IMG/user/learn/close-icon.png')"
-                alt
-              >
+              <img @click="showTips = false" class="close-icon" :src="require('IMG/user/learn/close-icon.png')" alt>
             </div>
           </transition>
 
           <transition name="fade">
             <div class="linker-filter-list" v-if="showFilter">
               <ul>
-                <li
-                  @click="changeLinker(item)"
-                  v-for="(item, index) in linkerList"
-                  :key="item.linkerId"
-                >{{item.linkerName}}</li>
+                <li @click="changeLinker(item)" v-for="(item, index) in linkerList" :key="item.linkerId">{{item.linkerName}}</li>
               </ul>
             </div>
           </transition>
@@ -53,77 +44,33 @@
           </div>
           <div class="card-body">
             <!-- img -->
-            <LearnList
-              v-for="(item, index) in learn.img"
-              fileType="img"
-              @click.native="toLearnDeails(item, 'img')"
-              :key="item.id"
-              :item="item"
-              :type="1"
-            />
+            <LearnList v-for="(item, index) in learn.img" fileType="img" @click.native="toLearnDeails(item, 'img')" :key="item.id" :item="item" :type="1" />
 
             <!-- pdf -->
-            <LearnList
-              v-for="(item, index) in learn.pdf"
-              fileType="pdf"
-              @click.native="toLearnDeails(item, 'pdf')"
-              :key="item.id"
-              :item="item"
-              :type="1"
-            />
+            <LearnList v-for="(item, index) in learn.pdf" fileType="pdf" @click.native="toLearnDeails(item, 'pdf')" :key="item.id" :item="item" :type="1" />
 
             <!-- video -->
             <template v-if="learn.video && learn.video.length == 1">
-              <LearnList
-                v-for="(item, index) in learn.video"
-                @click.native="playVideo(item, index, 'video')"
-                fileType="video"
-                :key="item.id"
-                :item="item"
-                :type="1"
-              />
-              <video
-                v-for="(item, index) in learn.video"
-                ref="video"
-                style="height:0; width: 0; opacity: 0"
-                :src="JSON.parse(item.content).url"
-                controls="controls"
-              ></video>
+              <LearnList v-for="(item, index) in learn.video" @click.native="playVideo(item, index, 'video')" fileType="video" :key="item.id" :item="item" :type="1">
+                <video v-for="(item, index) in learn.video" ref="video" style="height:0; width: 0; opacity: 0; position:absolute;" :src="JSON.parse(item.content).url" controls="controls"></video>
+              </LearnList>
             </template>
 
             <div class="learn-list-2" v-if="learn.video && learn.video.length > 1">
               <template v-for="(item, index) in learn.video">
-                <video
-                  :src="JSON.parse(item.content).url"
-                  ref="videos"
-                  style="height:0; width: 0; opacity: 0"
-                  controls="controls"
-                ></video>
-                <LearnList
-                  fileType="video"
-                  @click.native="playVideo(item, index, 'videos')"
-                  :duration="getVideoDuration(item.content)"
-                  :key="item.id"
-                  :item="item"
-                  :type="2"
-                />
+                <LearnList fileType="video" @click.native="playVideo(item, index, 'videos')" :duration="getVideoDuration(item.content)" :key="item.id" :item="item" :type="2">
+                  <video :src="JSON.parse(item.content).url" ref="videos" style="height:0; width: 0; opacity: 0; position:absolute;" controls="controls"></video>
+                </LearnList>
               </template>
             </div>
 
             <!-- H5 -->
-            <LearnList
-              v-for="(item, index) in learn.h5"
-              fileType="h5"
-              @click.native="toLearnDeails(item, 'h5')"
-              :item="item"
-              :key="item.id"
-              :type="3"
-            />
+            <LearnList v-for="(item, index) in learn.h5" fileType="h5" @click.native="toLearnDeails(item, 'h5')" :item="item" :key="item.id" :type="3" />
           </div>
         </div>
       </div>
 
-      <Tabbar name="底部tabbar"/>
+      <Tabbar name="底部tabbar" />
     </div>
   </keep-alive>
 </template>
@@ -193,6 +140,12 @@ export default {
   async created() {
     await this.getStudyLinkerList()
     await this.getStudyList()
+  },
+  watch: {
+    defaultLinker(linker){
+      let path = this.$router.history.current.path
+      this.$router.push({ path, query: { linkerId: linker.linkerId } })
+    }
   },
   methods: {
     // 获取楼盘列表
@@ -273,8 +226,6 @@ export default {
       this.defaultLinker = linker
       this.showFilter = false
 
-      let path = this.$router.history.current.path
-      this.$router.push({ path, query: { linkerId: linker.linkerId } })
       this.getStudyList()
     },
     // 判断该组素材是否超出限制数量则显示更多

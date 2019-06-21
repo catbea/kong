@@ -382,6 +382,7 @@ export default {
               // align-items: center;
               .free{
                 display: inline-block;
+                width: 24px;
                 font-size: 10px;
                 height:14px;
                 line-height: 14px;

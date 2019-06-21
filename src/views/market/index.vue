@@ -422,6 +422,7 @@ export default {
           text-align: center;
           font-weight: 500;
           margin-left: 10px;
+          margin-top: 4px;
         }
       }
       .market-location{

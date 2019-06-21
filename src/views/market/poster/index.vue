@@ -421,6 +421,7 @@ export default {
     .item1{
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:225px;
@@ -523,6 +524,9 @@ export default {
       }
     }
     .item2{
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:225px;
@@ -621,6 +625,7 @@ export default {
     .item3{
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:225px;
@@ -723,6 +728,9 @@ export default {
       }
     }
     .item4{
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:325px;
