@@ -225,12 +225,13 @@ export default {
         if (inlayHouse) {
           this.inlayHouse.push(JSON.parse(inlayHouse))
         }
-        let recommendList = window.sessionStorage.getItem('multiHouse')
-        if (recommendList) {
-          this.recommendList = JSON.parse(recommendList)
-        } else {
-          this.getMyHouseRecommend()
-        }
+        // let recommendList = window.sessionStorage.getItem('multiHouse')
+
+        // if (recommendList) {
+        //   this.recommendList = JSON.parse(recommendList)
+        // } else {
+        this.getMyHouseRecommend()
+        // }
         let renderDom = window.sessionStorage.getItem('renderDom')
         if (renderDom) {
           this.renderDom = JSON.parse(renderDom)
@@ -254,6 +255,10 @@ export default {
     // 查询楼盘信息
     async getLinkerInfo(linkerIds) {
       const res = await discoverService.queryLinkerListByIds(linkerIds)
+      let statusArr = ['热销中', '即将发售', '售罄']
+      for (let temp of res.records) {
+        temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
+      }
       return res
     },
     // 获取我的楼盘推荐
@@ -267,9 +272,10 @@ export default {
       let statusArr = ['热销中', '即将发售', '售罄']
       for (let temp of res.records) {
         temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
-        this.recommendList.push(temp)
+        // this.recommendList.push(temp)
       }
       this.recommendList = res.records
+      console.log("推荐房源",this.recommendList);
     },
 
     // 段落删除弹窗-选择删除当前或删除以下所有

@@ -16,8 +16,8 @@
             <span v-if="info.saleStatus==3&&isInArticle==1" class="house-sale-status" style="background: rgba(143, 159, 177, 0.15);color: #5C5F66">售罄</span>
           </h5>
           <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
-          <tag-group class="tag-box" v-if="isInArticle==1" :arr="this.info&&this.info.projectTagArr" />
-          <tag-group class="tag-box" v-else :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
+          <!-- <tag-group class="tag-box" v-if="isInArticle==1" :arr="this.info&&this.info.projectTagArr" /> -->
+          <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
           <div class="estate-info">
             <p class="estate-price" v-if="info.price==='0 万元/套起' || info.price==0 || info.price=='0 元/㎡'">价格待定</p>
             <p class="estate-price" v-else>{{info&&info.price}}{{info&&info.priceUnit}}</p>
@@ -35,7 +35,7 @@
         <span>{{info&&info.divisionRules | textOver}}</span>
       </div>
     </div>
-    <div class="specialOffer" v-if="info.promotionalLanguage||info.sale">
+    <div class="specialOffer" v-if="info&&info.promotionalLanguage||info&&info.sale">
       <p class="offer1" v-if="info.promotionalLanguage"><img :src="offerTeIMg" width="16" height="16" alt="">{{info.promotionalLanguage}}</p>
       <p class="offer2" v-if="info.sale"><img :src="offerHuiIMg" width="16" height="16" alt="">{{info.sale}}</p>
     </div>
@@ -65,6 +65,9 @@ export default {
   },
   components: {
     TagGroup
+  },
+  created() {
+    console.log(this.info);
   },
   data: () => ({
     offerTeIMg:require('IMG/discover/te.png'),
