@@ -298,7 +298,7 @@ export default {
     },
     //跳转到详情
     toLearnDeails(learn, type) {
-      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}&linkerId=${learn.linkerId}`)
     },
     // 播放时自动全屏
     playVideo(learn, index, ref) {
