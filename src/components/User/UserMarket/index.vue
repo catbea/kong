@@ -35,7 +35,7 @@
               <!-- <span></span>
               <span></span>
               <span></span> -->
-              <p style="font-size:25px;" class="icon iconfont icon-more"></p>
+              <p class="icon iconfont icon-more"></p>
             </div>
           </li>
         </ul>
@@ -587,7 +587,7 @@ export default {
             background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
             box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
             border-radius:15px;
-            font-size: 10px;
+            font-size: 12px;
             color: #fff;
             text-align: center;
             font-weight: 500;
@@ -660,6 +660,11 @@ export default {
               border-radius: 50%;
               margin-right: 4px;
               background: rgba(158, 158, 158, 1);
+            }
+            .icon-more{
+              font-weight: 400;
+              font-size: 20px;
+              color: #9E9E9E;
             }
           }
         }
