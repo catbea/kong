@@ -1,5 +1,6 @@
 <template>
   <keep-alive>
+
     <div class="learn-page">
       <div class="header-filter">
         <div class="linker-box">
@@ -10,7 +11,7 @@
             <div class="tips-box" v-if="showTips">
               当前显示“{{defaultLinker.linkerName}}”项目的培训内 容，点击可切换楼盘查看！
               <div class="square"></div>
-              <img @click="showTips = false" class="close-icon" :src="require('IMG/user/learn/close-icon.png')" alt>
+              <img @click="closeTips()" class="close-icon" :src="require('IMG/user/learn/close-icon.png')" alt>
             </div>
           </transition>
 
@@ -21,6 +22,7 @@
               </ul>
             </div>
           </transition>
+
         </div>
         <div class="search-box" @click="$router.push('/user/learn/search')">
           <img class="search-icon" :src="require('IMG/user/learn/search-icon.png')" alt>
@@ -28,12 +30,14 @@
         </div>
       </div>
 
-      <div class="empty-learn" v-if="learnList.length == 0">
+       <ContentLoader v-if="!loaded" />
+
+      <div class="empty-learn" v-else-if="learnList.length == 0 && loaded">
         <img :src="require('IMG/user/learn/empty-learn.png')" alt>
         <p>该楼盘还未上传任何学习资料</p>
       </div>
 
-      <div class="learn-wrap">
+      <div v-else class="learn-wrap">
         <div class="card-box" v-for="(learn, type) in learnCollection">
           <div class="card-header">
             <h3 class="card-title">{{type.split('_')[0]}}</h3>
@@ -72,12 +76,14 @@
 
       <Tabbar name="底部tabbar" />
     </div>
+
   </keep-alive>
 </template>
 
 <script>
 import Tabbar from './components/tabbar'
 import LearnList from './components/learn-list'
+import ContentLoader from './components/index-content-loader'
 import userService from 'SERVICE/userService'
 import { mapGetters } from 'vuex'
 import { Toast } from 'vant'
@@ -86,7 +92,8 @@ export default {
   name: 'learn',
   components: {
     Tabbar,
-    LearnList
+    LearnList,
+    ContentLoader
   },
   data() {
     return {
@@ -132,16 +139,21 @@ export default {
       },
       learnList: [],
       learnCollection: {},
+      loaded: false,  //加载完成
       linkerList: [], //楼盘列表
       showFilter: false, //是否显示楼盘列表
-      showTips: false, //是否显示提示
+      showTips: true, //是否显示提示
       defaultLinker: {}, //默认选择楼盘
-      title:''
+      title: ''
     }
   },
   async created() {
     await this.getStudyLinkerList()
     await this.getStudyList()
+    const alreadyLearn = localStorage.getItem('already-learn-study')
+    if(alreadyLearn){
+      this.showTips = false;
+    }
   },
 
   computed: {
@@ -176,6 +188,7 @@ export default {
         const { linkerId } = this.defaultLinker
 
         if (linkerId) {
+          this.loaded = false;
           Toast.loading({
             message: '加载中...'
           })
@@ -183,6 +196,8 @@ export default {
           const response = await userService.getStudyListByLinkerId({
             linkerId
           })
+
+          this.loaded = true;
 
           Toast.clear()
 
@@ -239,6 +254,11 @@ export default {
       } catch (error) {
 
       }
+    },
+    // 关闭提示
+    closeTips(){
+      this.showTips = false;
+      localStorage.setItem('already-learn-study', true)
     },
     // 切换楼盘获取对应的数据
     changeLinker(linker) {
@@ -300,9 +320,9 @@ export default {
       return Math.floor(duration / 60) + ':' + (duration % 60)
     }
   },
-  beforeRouteLeave (to, from, next) {  
-      to.meta.title = this.title
-      next()
+  beforeRouteLeave(to, from, next) {
+    to.meta.title = this.title
+    next()
   }
 }
 </script>

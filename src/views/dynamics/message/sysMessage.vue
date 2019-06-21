@@ -18,14 +18,11 @@
                   <div class="left-button">客户详情</div>
                   <div class="right-button">立即报备</div>
                 </div>-->
-                <div
-                  class="button-detail"
-                  v-if="item.type=='11'"
-                  @click="enterActivityDetail(item.activityId)"
-                >
+                <div class="button-detail" v-if="item.type==11 || item.type==101" @click="enterActivityDetail(item)">
                   查看详情
                   <img :src="detailIcon">
                 </div>
+
               </div>
             </div>
           </shadow-box>
@@ -58,15 +55,23 @@ export default {
   },
   methods: {
     async getSystemMessageList() {
-      const res = await dynamicsService.getSystemMessage({current: this.current, size: this.size})
-      console.log(res,'数据')
+      const res = await dynamicsService.getSystemMessage({ current: this.current, size: this.size })
+      console.log(res, '数据')
       this.pages = res.pages
       this.sysMessage.push(...res.records)
       this.current += 1
     },
 
-    enterActivityDetail(id) {
-      this.$router.push({ path: '/huiwan-activity/partake', query: { activityId: id } })
+    enterActivityDetail(item) {
+      // 活动
+      if (item.type == 11) {
+        this.$router.push({ path: '/huiwan-activity/partake', query: { activityId: item.activityId } })
+      }
+      // 培训学院分享
+      if (item.type == 101) {
+        const { linkerId } = JSON.parse(item.extendParam)
+        this.$router.push({ path: '/user/learn', query: { linkerId } })
+      }
     },
 
     // 加载更多
@@ -80,21 +85,21 @@ export default {
         this.loading = false
       }
     },
-   async goDetail(appointmentId){//查看客户详情
-    const res = await dynamicsService.getReportClient(appointmentId)
-    this.$router.push(`/custom/${res.clientId}`)
+    async goDetail(appointmentId) {//查看客户详情
+      const res = await dynamicsService.getReportClient(appointmentId)
+      this.$router.push(`/custom/${res.clientId}`)
     },
-   async goReport(appointmentId){//立即报备
-    const res = await dynamicsService.getReportClient(appointmentId)
-    console.log(res,'报备数据')
-    let _reportAddInfo = {
-        clientId:res.clientId,//客户id
-        clientName:res.clientName,//客户姓名
+    async goReport(appointmentId) {//立即报备
+      const res = await dynamicsService.getReportClient(appointmentId)
+      console.log(res, '报备数据')
+      let _reportAddInfo = {
+        clientId: res.clientId,//客户id
+        clientName: res.clientName,//客户姓名
         clientPhone: res.mobile,//客户号码
-        linkerId:res.linkerId,
-        linkerName:res.linkerName,//楼盘ID
-        distributorId:res.distributorId,// 经纪人所属分销商平台id 
-        institutionId:res.institutionId//经纪人所属分销商机构id 
+        linkerId: res.linkerId,
+        linkerName: res.linkerName,//楼盘ID
+        distributorId: res.distributorId,// 经纪人所属分销商平台id 
+        institutionId: res.institutionId//经纪人所属分销商机构id 
       }
       this.$store.commit(types.REPORT_INFO, _reportAddInfo)
       this.$router.push('/user/myReport/addReport')
@@ -189,30 +194,30 @@ export default {
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
       }
-      .client-detail{
-        width:143px;
-        height:40px;
-        background:rgba(242,244,245,1);
-        border-radius:4px;
-        font-size:14px;
-        font-family:PingFang-SC-Medium;
-        font-weight:600;
-        color:rgba(51,51,51,1);
-        line-height:40px;
-        text-align:center;
+      .client-detail {
+        width: 143px;
+        height: 40px;
+        background: rgba(242, 244, 245, 1);
+        border-radius: 4px;
+        font-size: 14px;
+        font-family: PingFang-SC-Medium;
+        font-weight: 600;
+        color: rgba(51, 51, 51, 1);
+        line-height: 40px;
+        text-align: center;
       }
-      .go-report{
-        margin-left:24px;
-        width:143px;
-        height:40px;
-        background:rgba(242,244,245,1);
-        border-radius:4px;
-        font-size:14px;
-        font-family:PingFang-SC-Medium;
-        font-weight:500;
-        color:rgba(7,125,230,1);
-        line-height:40px;
-        text-align:center;
+      .go-report {
+        margin-left: 24px;
+        width: 143px;
+        height: 40px;
+        background: rgba(242, 244, 245, 1);
+        border-radius: 4px;
+        font-size: 14px;
+        font-family: PingFang-SC-Medium;
+        font-weight: 500;
+        color: rgba(7, 125, 230, 1);
+        line-height: 40px;
+        text-align: center;
       }
     }
   }
