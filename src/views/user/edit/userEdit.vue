@@ -1,14 +1,6 @@
 <template>
   <div class="user-edit-page">
-    <van-cell-group class="user-base-info">
-      <!-- <div class="user-avatar">
-        <router-link to="/user/edit/userPortrait">
-          <div class="editIcon-icon">
-            <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon">
-          </div>
-          <p class="user-avatar-clik">点击可编辑头像</p>
-        </router-link>
-      </div> -->
+    <van-cell-group class="user-base-info"> 
       <van-cell title="头像" is-link :to="{path:'/user/edit/userPortrait'}" class="user-newavatar">
         <template slot="title"> 
           <div class="editIcon-icon">
@@ -25,8 +17,8 @@
       <van-cell class="cell-item" title="联系电话" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
       <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
-      <van-cell class="cell-item" title="从业时间" is-link :value="userInfo.workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][userInfo.workingTime-100]"  @click="openTimeSelect()"/>
-      <van-cell class="cell-item" title="销售类型" is-link :value="userInfo.saleType==''?'买卖经纪人':userInfo.saleType" @click="openShopSelect()"/>
+      <van-cell class="cell-item" title="从业时间" is-link :value="workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][workingTime-100]"  @click="openTimeSelect()"/>
+      <van-cell class="cell-item" title="销售类型" is-link :value="saleType==''?'买卖经纪人':saleType" @click="openShopSelect()"/>
       <van-actionsheet v-model="show" :actions="actions" @select="onSelect"/>
       <van-actionsheet v-model="isshow" :actions="isActions" @select="shopSelect"/>
       <!-- <van-cell class="cell-item" title="平台公司" :to="{path:'/user/edit/userCompany'}" is-link :value="userInfo.distributorName" @click="godistributorName"/>
@@ -80,8 +72,13 @@ export default {
         { name: '买卖经纪人',saleType  :'0' },
         { name: '内场销售',saleType  :'1' },
         { name: '销售专家',saleType  :'2' }, 
-      ]
+      ],
+      workingTime:'',
+      saleType:''
     }
+  },
+  mounted() {
+    this.getlist()
   },
   methods: {
     // areaList 获取
@@ -126,10 +123,21 @@ export default {
     openShopSelect () {
       this.isshow = true
     },
+    getlist(){
+      userService.getUserInfo({agentId:this.userInfo.agentId
+      }).then((result) => {  
+        // debugger
+          this.saleType = result.saleType
+          this.workingTime = result.workingTime
+      }).catch((err) => {
+          console.log(err)
+      })
+    },
     onSelect(item) {  
       userService.upDateUserInfo({workingTime:item.workingTime
       }).then((result) => {   
-          this.show = false   
+          this.show = false 
+          this.workingTime = result.workingTime  
           this.$store.dispatch(
             'getUserInfo',
             Object.assign({},this.userInfo, {
@@ -144,6 +152,7 @@ export default {
       userService.upDateUserInfo({saleType:item.name
       }).then((result) => { 
           this.isshow = false  
+          this.saleType = result.saleType 
           this.$store.dispatch(
             'getUserInfo',
             Object.assign({},this.userInfo, {
@@ -233,29 +242,6 @@ export default {
   > .user-base-info,
   > .user-advance-info {
     background: #fff;
-
-    > .user-avatar {
-      padding: 32px 0 18px 0;
-      border-bottom: 10px solid #f2f5f9;
-      text-align: center;
-      // .editIcon-icon {
-      //   width: 80px;
-      //   height: 80px;
-      //   margin: auto;
-      //   img{
-      //     width: 100%;
-      //     height: 100%;
-      //     object-fit: cover;
-      //     border-radius: 100%;
-      //   }
-      // }
-      .user-avatar-clik {
-        font-size: 12px; 
-        font-weight: 400;
-        color: rgba(0, 122, 230, 1);
-        line-height: 17px;
-      }
-    }
     > .user-newavatar {
         line-height: 92px;
         padding: 0 20px;
@@ -279,8 +265,7 @@ export default {
               border-radius: 100%;
               margin-left: 60%;
               object-fit: cover; 
-              margin-top: 16px;
-              // text-align: right;
+              margin-top: 16px; 
             }
           } 
         }
@@ -288,8 +273,7 @@ export default {
           padding: 38px 0;
         }
     }
-    .cell-item {
-      // height: 56px;
+    .cell-item { 
       line-height: 56px;
       padding: 0 20px;
       &.user-avatar {
@@ -312,8 +296,7 @@ export default {
       }
     }
   }
-  > .user-base-info {
-    // margin-bottom: 10px;
+  > .user-base-info { 
     .cell-item {
       position: relative;
       .self-avtar {
@@ -328,9 +311,8 @@ export default {
   > .user-advance-info {
     .tag-edit {
       position: relative;
-      display: block;
-      // height: 110px;
-      border-bottom: 0px solid #f2f5f9;
+      display: block; 
+      // border-bottom: 0px solid #f2f5f9;
       .user-tag {
         float: right;
         margin-right: 20px;

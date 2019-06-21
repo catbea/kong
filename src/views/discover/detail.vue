@@ -12,24 +12,23 @@
       </div>
       <!-- 观点 -->
       <div class="discover-viewpoint" v-if="editData&&editData.viewpoint">
-        <div class="viewpoint-line"></div>
+
+        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
         <div class="viewpoint-top">
-          <div style="color:#333333;font-size:18px;font-weight:bold;">观点</div>
           <div class="viewpoint-right">
             <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
             <div class="viewpoint-name">
               <span style="color:#333;font-size:14px">{{agentInfo&&agentInfo.agentName}}</span>
-              <span style="color:#969EA8;font-size:14px">点评</span>
+              <span style="color:#9CA5B5;font-size:14px"> 点评</span>
             </div>
           </div>
         </div>
-        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
       </div>
       <!-- 文章详情 -->
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :showCard="true" :info="inlayHouseInfo" ></estate-item>
+          <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :isInArticle="1" :showCard="true" :info="inlayHouseInfo" ></estate-item>
           <!-- @click.native="popHandler(inlayHouseInfo)" -->
         </div>
       </div>
@@ -68,7 +67,7 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item"></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :isInArticle="0" :key="index" :info="item"></estate-item>
           <!-- @click="popHandler(item)" -->
         </div>
       </div>
@@ -179,7 +178,7 @@ import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
 import cpInformationService from 'SERVICE/cpInformationService'
-import EstateItem from 'COMP/EstateItem'
+import EstateItem from 'COMP/EstateItem/indexInArtcile'
 import Paragraph from 'COMP/Discover/Paragraph'
 export default {
   components: {
@@ -192,6 +191,7 @@ export default {
     Null
   },
   data: () => ({
+    isInArticle:1,//是否是文章中的楼盘  1 是 ，非 1 否
     haveData: true,
     nullIcon: require('IMG/article/empty_article@2x.png'),
     nullcontent: '该文章已被下架删除',
@@ -384,16 +384,38 @@ export default {
         // 编辑文章分享
         if (this.editData.inlayHouse && this.editData.inlayHouse !== '') {
           const res = await this.getLinkerInfo(this.editData.inlayHouse)
+          
           this.inlayHouseInfo = res[0]
+
         }
 
         if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
-          this.recommendHouseList = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
+          let res = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
+          res.map((item)=>{
+            if (item.linkerTags) {
+              let statusArr = ['热销中', '即将发售', '售罄']
+              item.linkerTags = [statusArr[item.saleStatus], ...item.linkerTags].splice(0,3);
+            }
+          })
+          this.recommendHouseList = res;
+
         }
       } else {
         // 原文章分享
         // this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
       }
+    },
+    itemData(item) {
+      let temp = item;
+      console.log(temp);
+      if (temp.linkerTags) {
+        let statusArr = ['热销中', '即将发售', '售罄']
+        temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
+      }
+      while (temp.linkerTags.length > 3) {
+        temp.linkerTags.pop()
+      }
+      return temp
     },
     // 查询楼盘信息
     async getLinkerInfo(linkerIds) {
@@ -793,13 +815,13 @@ export default {
       background-color: #999999;
     }
     > .discover-viewpoint {
-      border: 1px dashed #969ea8;
       margin: 20px 16px;
       margin-bottom: 5px;
       margin-top: 30px;
-      padding: 16px;
+      padding-left: 16px;
       position: relative;
       box-sizing: border-box;
+      border-left: 3px solid rgba(150,158,168, 0.4);
       > .viewpoint-line {
         width: 2px;
         height: 13px;
@@ -813,6 +835,7 @@ export default {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        margin-top: 8px;
         > .viewpoint-right {
           display: flex;
           > .viewpoint-name {
@@ -822,9 +845,9 @@ export default {
         }
       }
       > .viewpoint-content {
-        color: #445166;
+        color: #13284D;
         font-size: 16px;
-        margin-top: 20px;
+        font-weight: bold;
         line-height: 1.5;
         word-wrap: break-word;
       }

@@ -79,6 +79,7 @@
 import Tabbar from './components/tabbar'
 import LearnList from './components/learn-list'
 import userService from 'SERVICE/userService'
+import { mapGetters } from 'vuex'
 import { Toast } from 'vant'
 import './style.less'
 export default {
@@ -142,8 +143,12 @@ export default {
     await this.getStudyLinkerList()
     await this.getStudyList()
   },
+
+  computed: {
+    ...mapGetters(['userInfo']),
+  },
   watch: {
-    defaultLinker(linker){
+    defaultLinker(linker) {
       let path = this.$router.history.current.path
       this.$router.push({ path, query: { linkerId: linker.linkerId } })
     }
@@ -220,7 +225,20 @@ export default {
           this.learnList = learnList //原始数据
           this.learnCollection = learnCollection
         }
-      } catch (error) {}
+      } catch (error) { }
+    },
+    // 新增记录学习
+    async addLearnRecord({ id, developersId, linkerId }) {
+      try {
+        await userService.getDevelopersMaterialadd({
+          agentId: this.userInfo.agentId,
+          materialId: id,
+          developersId,
+          linkerId
+        })
+      } catch (error) {
+
+      }
     },
     // 切换楼盘获取对应的数据
     changeLinker(linker) {
@@ -261,6 +279,7 @@ export default {
       }
       this.requestFullscreen(element)
       element.play()
+      this.addLearnRecord(learn);
     },
 
     // 全屏兼容代码

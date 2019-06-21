@@ -59,7 +59,8 @@ export default {
     btnIcons: [{ title: '勿扰模式', Img: require('IMG/user/Group9@2x.png'), Icon: '#icon-me_night' },{ title: '欢迎语设置', Img: require('IMG/user/reply_icon.png'), Icon: '#icon-me_reply' }, { title: '意见反馈', Img: require('IMG/user/Group7@2x.png'), Icon: '#icon-me_opinion' }, {title: 'AI客服', Img: require('IMG/user/me_Customer.png'), Icon: '#icon-me_Customer'}],
     openPopup: false,
     qrcodeImg: '',
-    oldUrl:0
+    oldUrl:0,
+    studyList:[]
   }),
   created() {
     this.getUserInfo()
@@ -83,10 +84,10 @@ export default {
     },
     goSchool () {
       userService.getStudyLinkerList({agentId:this.userInfo.agentId
-      }).then((result) => {   
-        if (!result) { 
-          this.$toast('还没有培训资料')
-        }else {
+      }).then((result) => { 
+        if (result.length == 0 ) { 
+          this.$toast('您开通的楼盘尚未上传培训素材')
+        }else{
           this.$router.push('/user/learn')
         }
       }).catch((err) => {
