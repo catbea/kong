@@ -1,14 +1,6 @@
 <template>
   <div class="user-edit-page">
-    <van-cell-group class="user-base-info">
-      <!-- <div class="user-avatar">
-        <router-link to="/user/edit/userPortrait">
-          <div class="editIcon-icon">
-            <img :src="userInfo.avatarUrl?userInfo.avatarUrl:userEditIcon">
-          </div>
-          <p class="user-avatar-clik">点击可编辑头像</p>
-        </router-link>
-      </div> -->
+    <van-cell-group class="user-base-info"> 
       <van-cell title="头像" is-link :to="{path:'/user/edit/userPortrait'}" class="user-newavatar">
         <template slot="title"> 
           <div class="editIcon-icon">
@@ -233,29 +225,6 @@ export default {
   > .user-base-info,
   > .user-advance-info {
     background: #fff;
-
-    > .user-avatar {
-      padding: 32px 0 18px 0;
-      border-bottom: 10px solid #f2f5f9;
-      text-align: center;
-      // .editIcon-icon {
-      //   width: 80px;
-      //   height: 80px;
-      //   margin: auto;
-      //   img{
-      //     width: 100%;
-      //     height: 100%;
-      //     object-fit: cover;
-      //     border-radius: 100%;
-      //   }
-      // }
-      .user-avatar-clik {
-        font-size: 12px; 
-        font-weight: 400;
-        color: rgba(0, 122, 230, 1);
-        line-height: 17px;
-      }
-    }
     > .user-newavatar {
         line-height: 92px;
         padding: 0 20px;
@@ -279,8 +248,7 @@ export default {
               border-radius: 100%;
               margin-left: 60%;
               object-fit: cover; 
-              margin-top: 16px;
-              // text-align: right;
+              margin-top: 16px; 
             }
           } 
         }
@@ -288,8 +256,7 @@ export default {
           padding: 38px 0;
         }
     }
-    .cell-item {
-      // height: 56px;
+    .cell-item { 
       line-height: 56px;
       padding: 0 20px;
       &.user-avatar {
@@ -312,8 +279,7 @@ export default {
       }
     }
   }
-  > .user-base-info {
-    // margin-bottom: 10px;
+  > .user-base-info { 
     .cell-item {
       position: relative;
       .self-avtar {
@@ -328,9 +294,8 @@ export default {
   > .user-advance-info {
     .tag-edit {
       position: relative;
-      display: block;
-      // height: 110px;
-      border-bottom: 0px solid #f2f5f9;
+      display: block; 
+      // border-bottom: 0px solid #f2f5f9;
       .user-tag {
         float: right;
         margin-right: 20px;
