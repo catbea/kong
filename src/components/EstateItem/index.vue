@@ -106,6 +106,7 @@ export default {
         font-weight: 600;
         color: #333333;
         padding-bottom: 8px;
+        line-height: 16px;
         max-width: 160px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -179,6 +180,7 @@ export default {
         text-align: center;
         font-weight: 500;
         margin-left: 10px;
+        margin-top: 4px;
       }
     }
   }

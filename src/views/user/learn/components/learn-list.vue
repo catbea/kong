@@ -6,7 +6,7 @@
     <div class="learn-info">
       <p class="title ellipsis ellipsis-2">{{item.title}}</p>
       <div class="abstract">
-        {{formatDate(item.updateTime)}}更新 · {{item.browseNum}}查看
+        更新时间：{{formatDate(item.updateTime)}} · {{item.browseNum}}查看
         <template v-if="fileType == 'img'">
           <span>·</span>
           <img class="abstract-img" :src="require('IMG/user/learn/img-icon.png')">
@@ -30,7 +30,7 @@
     </div>
     <slot></slot>
     <h3 class="title ellipsis">{{item.title}}</h3>
-    <h3 class="abstract">{{formatDate(item.updateTime)}}更新 · {{item.browseNum}}观看</h3>
+    <h3 class="abstract">更新时间：{{formatDate(item.updateTime)}} · {{item.browseNum}}查看</h3>
   </div>
 
   <!-- 左右结构 -->
@@ -38,8 +38,8 @@
     <div class="learn-info">
       <h3 class="title ellipsis ellipsis-2">{{item.title}}</h3>
       <div>
-        <span class="abstract">{{formatDate(item.updateTime)}}上传</span>
-        <span class="abstract">{{item.browseNum}}万浏览</span>
+        <span class="abstract">更新时间：{{formatDate(item.updateTime)}}</span>
+        <span class="abstract">{{item.browseNum}}浏览</span>
       </div>
     </div>
     <div class="learn-img">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { parseTime } from './../../../../utils/tool'
+import { formatDate } from './../../../../utils/tool'
 export default {
   props: {
     type: {
@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     formatDate(time) {
-      return parseTime(time, '{y}-{m}-{d}')
+      return formatDate(time, 'YYYY/MM/DD')
     }
   }
 }

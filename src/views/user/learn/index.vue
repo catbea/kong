@@ -79,6 +79,7 @@
 import Tabbar from './components/tabbar'
 import LearnList from './components/learn-list'
 import userService from 'SERVICE/userService'
+import { mapGetters } from 'vuex'
 import { Toast } from 'vant'
 import './style.less'
 export default {
@@ -134,15 +135,20 @@ export default {
       linkerList: [], //楼盘列表
       showFilter: false, //是否显示楼盘列表
       showTips: false, //是否显示提示
-      defaultLinker: {} //默认选择楼盘
+      defaultLinker: {}, //默认选择楼盘
+      title:''
     }
   },
   async created() {
     await this.getStudyLinkerList()
     await this.getStudyList()
   },
+
+  computed: {
+    ...mapGetters(['userInfo']),
+  },
   watch: {
-    defaultLinker(linker){
+    defaultLinker(linker) {
       let path = this.$router.history.current.path
       this.$router.push({ path, query: { linkerId: linker.linkerId } })
     }
@@ -219,7 +225,20 @@ export default {
           this.learnList = learnList //原始数据
           this.learnCollection = learnCollection
         }
-      } catch (error) {}
+      } catch (error) { }
+    },
+    // 新增记录学习
+    async addLearnRecord({ id, developersId, linkerId }) {
+      try {
+        await userService.getDevelopersMaterialadd({
+          agentId: this.userInfo.agentId,
+          materialId: id,
+          developersId,
+          linkerId
+        })
+      } catch (error) {
+
+      }
     },
     // 切换楼盘获取对应的数据
     changeLinker(linker) {
@@ -249,7 +268,8 @@ export default {
     },
     //跳转到详情
     toLearnDeails(learn, type) {
-      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+      this.title = learn.title
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}&linkerId=${learn.linkerId}`)
     },
     // 播放时自动全屏
     playVideo(learn, index, ref) {
@@ -259,6 +279,7 @@ export default {
       }
       this.requestFullscreen(element)
       element.play()
+      this.addLearnRecord(learn);
     },
 
     // 全屏兼容代码
@@ -278,6 +299,10 @@ export default {
       let { duration } = JSON.parse(content)
       return Math.floor(duration / 60) + ':' + (duration % 60)
     }
+  },
+  beforeRouteLeave (to, from, next) {  
+      to.meta.title = this.title
+      next()
   }
 }
 </script>

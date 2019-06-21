@@ -29,7 +29,7 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :showCard="true" :info="inlayHouseInfo" ></estate-item>
+          <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :isInArticle="1" :showCard="true" :info="inlayHouseInfo" ></estate-item>
           <!-- @click.native="popHandler(inlayHouseInfo)" -->
         </div>
       </div>
@@ -68,7 +68,7 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :key="index" :info="item"></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :isInArticle="0" :key="index" :info="item"></estate-item>
           <!-- @click="popHandler(item)" -->
         </div>
       </div>
@@ -179,7 +179,7 @@ import discoverService from 'SERVICE/discoverService'
 import userService from 'SERVICE/userService'
 import articleService from 'SERVICE/articleService'
 import cpInformationService from 'SERVICE/cpInformationService'
-import EstateItem from 'COMP/EstateItem'
+import EstateItem from 'COMP/EstateItem/indexInArtcile'
 import Paragraph from 'COMP/Discover/Paragraph'
 export default {
   components: {
@@ -192,6 +192,7 @@ export default {
     Null
   },
   data: () => ({
+    isInArticle:1,//是否是文章中的楼盘  1 是 ，非 1 否
     haveData: true,
     nullIcon: require('IMG/article/empty_article@2x.png'),
     nullcontent: '该文章已被下架删除',
@@ -384,16 +385,38 @@ export default {
         // 编辑文章分享
         if (this.editData.inlayHouse && this.editData.inlayHouse !== '') {
           const res = await this.getLinkerInfo(this.editData.inlayHouse)
+          
           this.inlayHouseInfo = res[0]
+
         }
 
         if (this.editData.recommendHouse && this.editData.recommendHouse.length > 0) {
-          this.recommendHouseList = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
+          let res = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
+          res.map((item)=>{
+            if (item.linkerTags) {
+              let statusArr = ['热销中', '即将发售', '售罄']
+              item.linkerTags = [statusArr[item.saleStatus], ...item.linkerTags].splice(0,3);
+            }
+          })
+          this.recommendHouseList = res;
+
         }
       } else {
         // 原文章分享
         // this.recommendHouseList = await this.getLinkerInfo(this.agentId, this.enterpriseId, this.shareUuid, '')
       }
+    },
+    itemData(item) {
+      let temp = item;
+      console.log(temp);
+      if (temp.linkerTags) {
+        let statusArr = ['热销中', '即将发售', '售罄']
+        temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
+      }
+      while (temp.linkerTags.length > 3) {
+        temp.linkerTags.pop()
+      }
+      return temp
     },
     // 查询楼盘信息
     async getLinkerInfo(linkerIds) {

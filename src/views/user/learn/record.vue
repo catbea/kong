@@ -14,10 +14,10 @@
         >
           <div class="learn-img">
             <div
-              :class="fileType[item.format]"
+              :class="fileType[item.format].toLowerCase()"
               class="learn-type"
               v-if="item.format != 2"
-            >{{fileType[item.format]}}</div>
+            >{{fileType[item.format].replace('IMG', '图集')}}</div>
 
             <template v-else>
               <div class="video-duration">{{getVideoDuration(item.content)}}</div>
@@ -56,7 +56,7 @@
 import Tabbar from './components/tabbar'
 import userService from 'SERVICE/userService'
 import { List, Toast } from 'vant'
-import { parseTime } from './../../../utils/tool'
+import { formatDate } from './../../../utils/tool'
 export default {
   name: 'learnRecord',
   components: {
@@ -70,11 +70,12 @@ export default {
       current: 1,
       size: 10,
       fileType: {
-        1: 'img',
-        2: 'video',
-        3: 'pdf',
-        4: 'h5'
-      }
+        1: 'IMG',
+        2: 'VIDEO',
+        3: 'PDF',
+        4: 'H5'
+      },
+      title:''
     }
   },
   created() {
@@ -100,7 +101,7 @@ export default {
       Toast.clear()
     },
     formatDate(time) {
-      return parseTime(time, '{y}-{m}-{d}')
+      return formatDate(time, 'YYYY-MM-DD')
     },
     getVideoDuration(content) {
       let { duration } = JSON.parse(content)
@@ -111,7 +112,8 @@ export default {
       if (type == 'video') {
         return this.playVideo(learn, index)
       }
-      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+      this.title = learn.title
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}&linkerId=${learn.linkerId}`)
     },
     // 播放时自动全屏
     playVideo(learn, index) {
@@ -131,6 +133,10 @@ export default {
         ele.msRequestFullscreen()
       }
     }
+  },
+  beforeRouteLeave (to, from, next) {  
+      to.meta.title = this.title
+      next()
   }
 }
 </script>

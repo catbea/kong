@@ -1,6 +1,10 @@
 <template>
-  <div class="edit-paragraph" :class="{'box_border':!preview,'edit-paragraph_del':isDelClickHandler}" @click.stop="delClickHandler">
-    <div class="paragraph-container" v-if="!(preview && this.info.status === 'del')" v-html="info.text"></div>
+  <div class="edit-paragraph" :class="{'box_border':!preview,'edit-paragraph_del':isDelClickHandler}" @click.stop="delClickHandler(info.isExistImg)">
+    <div class="paragraph-container" v-if="!(preview && this.info.status === 'del')" v-html="info.text">
+    </div>
+    <div class="img-mask" v-show="isShowExistImg">
+      
+    </div>
     <!-- <i v-if="this.info.status === 'edit' && !preview" class="icon iconfont icon-write_empty del-icon" @click.stop="delClickHandler"/>
      -->
      <!-- <img  v-if="this.info.status === 'edit' && !preview" class="del-icon" :src="closeIcon" @click.stop="delClickHandler"> -->
@@ -15,19 +19,36 @@ export default {
     info: { type: Object },
     preview: { type: Boolean, default: false }
   },
-  data: () => ({
+  data: () => ({ 
+    isShowExistImg:false,//删除图品   
     isDelClickHandler:false,//是否点击删除
     closeIcon: require('IMG/discover/closeIcon.png')
   }),
+  created() {     
+    let isExistImg = this.info.text.indexOf("img");
+    //1 存在照片 0，不存在
+    if(isExistImg>0){
+      this.info.isExistImg = true;
+    }else{
+      this.info.isExistImg = false;
+    }
+    
+  },
   methods: {
     // 点击删除
-    delClickHandler(e) {
+    delClickHandler(isExistImg) {
       if(this.info.status === 'edit' && !this.preview){
+        if(isExistImg){
+          this.isShowExistImg = true;
+        }
         this.isDelClickHandler = true;
         this.$emit('delParagraph', { dom: this.info })       
       }
       else if(this.info.status === 'del' && !this.preview){
-         this.isDelClickHandler = false;
+        this.isDelClickHandler = false;
+        if(isExistImg){
+          this.isShowExistImg = false;
+        }
         this.$emit('repealParagraph', { dom: this.info })
       }
     },
@@ -49,11 +70,20 @@ export default {
   // padding: 5px;
   text-indent: unset;
   > .paragraph-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     > img {
       object-fit: cover;
     }
+  }
+  .img-mask{
+    position: absolute;
+    width: 100% !important;
+    height: 100%;
+    top:0;
+    left:0;
+    background: rgba(68,81,102,0.7);
   }
   > .del-icon {
     width: 16px;
