@@ -10,7 +10,7 @@
         <ul >
           <li>
             <div style="display:flex; align-items:center;">
-              <span class="free" v-if="+dataArr.isFree">免费</span>
+              <!-- <span class="free" v-if="+dataArr.isFree">免费</span> -->
               <span class="text">{{dataArr.linkerName}}</span>
               <!-- <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span> -->
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
