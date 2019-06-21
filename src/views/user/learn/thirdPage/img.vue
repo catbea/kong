@@ -58,7 +58,7 @@ export default {
     .img-preview{
         padding: 43px 16px 43px 16px;
         width: 100%;
-        height: 100%; 
+        height: 100%;
         .img-box {
             height: 100%;
             width: 100%;  
