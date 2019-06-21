@@ -21,7 +21,7 @@ export default {
     titleBarConf: {
       title: '热门楼盘',
       linkText: '更多楼盘',
-      link: '/market'
+      link: '/market/classify/hotmarket'
     },
     vipInfo: {}
   }),

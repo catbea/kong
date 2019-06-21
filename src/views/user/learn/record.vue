@@ -1,28 +1,52 @@
 <template>
   <div class="learn-record-page">
-    <!-- <div class="empty-record">
+    <div class="empty-record" v-if="recordList.length == 0">
       <img :src="require('IMG/user/learn/empty-record.png')" alt>
       <p>还没有学习过任何资料！</p>
-    </div>-->
+    </div>
 
-    <div class="learn-list">
-      <div class="learn-item" v-for="item in [,,,,,,,,,,]">
-        <div class="learn-img">
-          <div class="learn-type pdf">PDF</div>
-          <img
-            src="https://720ljq2-10037467.file.myqcloud.com/linker/18907437200/ed85ae82ecf74be1898adf54ad0c439e.jpg?watermark/1/image/aHR0cDovL3Bhbm8tc2NyYXB5LWltZy0xMjUxNDc0NzQxLnBpY2d6Lm15cWNsb3VkLmNvbS9sb2dvMS5wbmc=/blogo/2/gravity/southeast"
-            alt
-          >
+    <div class="learn-list" v-else>
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getStudyRecord">
+        <div
+          class="learn-item"
+          v-for="(item, index) in recordList"
+          @click="toLearnDeails(item, fileType[item.format], index)"
+        >
+          <div class="learn-img">
+            <div
+              :class="fileType[item.format]"
+              class="learn-type"
+              v-if="item.format != 2"
+            >{{fileType[item.format]}}</div>
+
+            <template v-else>
+              <div class="video-duration">{{getVideoDuration(item.content)}}</div>
+
+              <div
+                class="abstract-video"
+                :style="{'background-image': `url(${require('IMG/user/learn/video-icon.png')})`}"
+              ></div>
+
+              <video
+                :ref="'video'+ index"
+                style="height:0; width: 0; opacity: 0"
+                :src="JSON.parse(item.content).url"
+                controls="controls"
+              ></video>
+            </template>
+
+            <img :src="item.coverImgUrl" alt>
+          </div>
+          <div class="learn-info">
+            <h3 class="title ellipsis">{{item.title}}</h3>
+            <p class="linker-name">
+              所属楼盘：
+              <span>{{item.linkerName}}</span>
+            </p>
+            <div class="times">查看时间：{{formatDate(item.updateTime)}}</div>
+          </div>
         </div>
-        <div class="learn-info">
-          <h3 class="title">楼盘推介项目介绍资料学习，学习查看楼盘推介项</h3>
-          <p class="linker-name">
-            所属楼盘：
-            <span>山水江南</span>
-          </p>
-          <div class="times">查看时间：2019/03/23 12:23:23</div>
-        </div>
-      </div>
+      </van-list>
     </div>
     <Tabbar name="底部tabbar"/>
   </div>
@@ -30,10 +54,83 @@
 
 <script>
 import Tabbar from './components/tabbar'
+import userService from 'SERVICE/userService'
+import { List, Toast } from 'vant'
+import { parseTime } from './../../../utils/tool'
 export default {
   name: 'learnRecord',
   components: {
     Tabbar
+  },
+  data() {
+    return {
+      loading: false,
+      finished: false,
+      recordList: [],
+      current: 1,
+      size: 10,
+      fileType: {
+        1: 'img',
+        2: 'video',
+        3: 'pdf',
+        4: 'h5'
+      }
+    }
+  },
+  created() {
+    this.getStudyRecord()
+  },
+  methods: {
+    async getStudyRecord() {
+      Toast.loading({
+        message: '加载中...'
+      })
+      this.loading = true
+      const response = await userService.getStudyRecord({
+        current: this.current,
+        size: this.size
+      })
+      const records = response.records || []
+      this.recordList.push(...records)
+      this.loading = false
+      this.current++
+      if (records.length == 0) {
+        this.finished = true
+      }
+      Toast.clear()
+    },
+    formatDate(time) {
+      return parseTime(time, '{y}-{m}-{d}')
+    },
+    getVideoDuration(content) {
+      let { duration } = JSON.parse(content)
+      return Math.floor(duration / 60) + ':' + (duration % 60)
+    },
+    //跳转到详情
+    toLearnDeails(learn, type, index) {
+      if (type == 'video') {
+        return this.playVideo(learn, index)
+      }
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+    },
+    // 播放时自动全屏
+    playVideo(learn, index) {
+      let element = this.$refs['video'+index][0]
+      this.requestFullscreen(element)
+      element.play()
+    },
+    // 全屏兼容代码
+    requestFullscreen(ele) {
+      if (ele.requestFullscreen) {
+        ele.requestFullscreen()
+      } else if (ele.webkitRequestFullscreen) {
+        ele.webkitRequestFullscreen()
+      } else if (ele.mozRequestFullScreen) {
+        ele.mozRequestFullScreen()
+      } else if (ele.msRequestFullscreen) {
+        ele.msRequestFullscreen()
+      }
+    }
   }
 }
 </script>
@@ -42,7 +139,17 @@ export default {
 .learn-record-page {
   padding-bottom: 49px;
   font-family: 'Microsoft YaHei', 'PingFangSC-Regular';
-
+  .ellipsis {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ellipsis-2 {
+    -webkit-line-clamp: 2;
+  }
   .learn-list {
     padding: 0 16px;
     margin-bottom: 24px;
@@ -75,6 +182,28 @@ export default {
       font-size: 10px;
       font-weight: 500;
       color: rgba(255, 255, 255, 1);
+    }
+    .video-duration {
+      position: absolute;
+      right: 4px;
+      bottom: 4px;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 1);
+      line-height: 15px;
+      z-index: 99;
+    }
+    .abstract-video {
+      z-index: 99;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -20px;
+      margin-top: -20px;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      background-size: cover;
     }
     .pdf {
       background: rgba(250, 100, 0, 1);

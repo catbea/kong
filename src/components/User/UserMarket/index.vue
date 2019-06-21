@@ -1,5 +1,5 @@
 <template>
-  <div class="user-market-page">
+  <div class="user-market-page" :class="{'active': (dataArr.recommand==10&&pastShow)}">
     <div class="user-market-page-box scale-1px-bottom">
       <div class="user-market-page-box-top" @click="skipMarketDetail(dataArr.linkerId)">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
@@ -12,17 +12,17 @@
             <div style="display:flex; align-items:center;">
               <span class="free" v-if="+dataArr.isFree">免费</span>
               <span class="text">{{dataArr.linkerName}}</span>
-              <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span>
+              <!-- <span class="van-hairline--surround stick" v-if="dataArr.recommand==10&&pastShow">置顶</span> -->
               <span class="van-hairline--surround past-tag" v-if="!pastShow">已过期</span>
             </div>
             <!-- <span style="color:#999999;font-size:16px;" class="icon iconfont icon-Building_list_share iconShare" @click.stop="skipShare"></span> -->
-            <span class="iconShare"  @click.stop="skipShare">分享</span>
+            <span class="iconShare"  @click.stop="skipShare" v-if="pastShow">分享</span>
           </li>
           <li class="area">{{dataArr.city}} {{dataArr.county}}</li>
           <li>
             <div class="tag-item-statu blue" v-if="0===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
             <div class="tag-item-statu red" v-if="1===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
-            <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">{{status[dataArr.saleStatus]}}</div>
+            <div class="tag-item-statu gary" v-if="3===dataArr.saleStatus">售罄</div>
             <div class="tag-item" v-for="(item,index) in dataArr.linkerTags ? dataArr.linkerTags.slice(0,2):[]" :key="index">{{item}}</div>
           </li>
           <li>
@@ -35,7 +35,7 @@
               <!-- <span></span>
               <span></span>
               <span></span> -->
-              <p style="font-size:25px;" class="icon iconfont icon-more"></p>
+              <p class="icon iconfont icon-more"></p>
             </div>
           </li>
         </ul>
@@ -50,7 +50,7 @@
         <span>{{dataArr.divisionRules}}</span>
       </div>
     </div>
-    <div style="padding-left:16px">
+    <div>
       <van-popup v-model="show" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
         <ul>
           <li @click="goRenew(dataArr.linkerId)" v-show="!stride">续费（{{dataArr.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
@@ -68,10 +68,10 @@
               <span v-show="dataArr.recommand==0">置顶</span>
               <span v-show="dataArr.recommand==10">取消置顶</span>
             </li>
-            <li @click="exhibitionHandle">
+            <!-- <li @click="exhibitionHandle">
               <span v-show="dataArr.displayFlag==0">关闭楼盘展示</span>
               <span v-show="dataArr.displayFlag!=0">开启楼盘展示</span>
-            </li>
+            </li> -->
           </div>
           <li class="cancel" @click="closeHandle">取消</li>
         </ul>
@@ -288,6 +288,7 @@ export default {
             .then(() => {
               this.$emit('recommandTrueHandle', this.dataArr)
               let parent = this.$parent.$parent
+              debugger
               parent.showMarketList.unshift(parent.showMarketList[index])
               parent.showMarketList.splice(index + 1, 1)
               parent.showMarketList[3].recommand = 0
@@ -450,12 +451,16 @@ export default {
 </script>
 <style lang="less">
 .user-market-page {
-  margin-left: 16px;
+  padding: 0 16px;
   display: flex;
+  &.active{
+    background-color: #F6F6F6;
+  }
   .user-market-page-box {
+    flex: 1;
     margin-top: 16px;
-    padding: 16px 16px 0 16px;
-    width: 343px;
+    // padding: 16px 16px 0 16px;
+    // width: 343px;
     // box-shadow: 0px 3px 6px 0px rgba(58, 76, 130, 0.07), 0px 2px 17px 0px rgba(34, 47, 85, 0.05);
     border-radius: 10px;
     display: flex;
@@ -507,7 +512,7 @@ export default {
         }
       }
       ul {
-        width: 181px;
+        flex: 1;
         li:nth-of-type(1) {
           font-size: 16px;
           font-weight: 600;
@@ -519,7 +524,7 @@ export default {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 90px;
+            max-width: 140px;
             line-height: 21px;
           }
           .free{
@@ -574,15 +579,15 @@ export default {
           }
           .iconShare{
             position: absolute;
-            right: -10px;
+            right: 0;
             top: -2px;
-            width: 40px;
-            height:24px;
-            line-height: 24px;
+            width: 50px;
+            height:30px;
+            line-height: 30px;
             background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
             box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
-            border-radius:12px;
-            font-size: 10px;
+            border-radius:15px;
+            font-size: 12px;
             color: #fff;
             text-align: center;
             font-weight: 500;
@@ -656,6 +661,11 @@ export default {
               margin-right: 4px;
               background: rgba(158, 158, 158, 1);
             }
+            .icon-more{
+              font-weight: 400;
+              font-size: 20px;
+              color: #9E9E9E;
+            }
           }
         }
       }
@@ -690,12 +700,13 @@ export default {
       color: #445166;
       padding: 10px 0;
       text-align: right;
+      background-color: transparent;
       span{
         display: inline-block;
         height: 24px;
         line-height: 24px;
         text-align: center;
-        background:#F2F5F9;
+        background:#e3e8ef;
         border-radius:4px;
         margin-left: 16px;
         padding: 0 16px;

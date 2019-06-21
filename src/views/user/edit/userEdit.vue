@@ -128,8 +128,14 @@ export default {
     },
     onSelect(item) {  
       userService.upDateUserInfo({workingTime:item.workingTime
-      }).then((result) => {  
-          this.show = false 
+      }).then((result) => {   
+          this.show = false   
+          this.$store.dispatch(
+            'getUserInfo',
+            Object.assign({},this.userInfo, {
+              workingTime: item.workingTime
+            })
+          )
       }).catch((err) => {
           console.log(err)
       })
@@ -137,7 +143,13 @@ export default {
     shopSelect(item) {
       userService.upDateUserInfo({saleType:item.name
       }).then((result) => { 
-          this.isshow = false           
+          this.isshow = false  
+          this.$store.dispatch(
+            'getUserInfo',
+            Object.assign({},this.userInfo, {
+              saleType: item.name
+            })
+          )         
       }).catch((err) => {
           console.log(err)
       })

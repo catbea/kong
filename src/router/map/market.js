@@ -322,6 +322,18 @@ export default [
       }
     }
   },
+  // 生成楼盘宣传海报
+  {
+    path: '/market/activity/share/poster',
+    name: 'market-activity-share',
+    component: resolve => require(['@/views/market/housePoster/poster.vue'], resolve),
+    meta: {
+      title: '楼盘海报列表',
+      tabbar: {
+        show: false
+      }
+    }
+  },
   // 切换渠道
   {
     path: '/change/channel',

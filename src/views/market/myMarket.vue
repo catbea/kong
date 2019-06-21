@@ -735,11 +735,17 @@ export default {
   }
   .screen {
     overflow: hidden;
-    // height: 580px;
   }
   .search-container {
-    margin-left: 18px;
-    width: 343px;
+    margin: 10px 16px 0;
+    box-sizing: content-box;
+    display: flex;
+    width: auto;
+  }
+  .screen-ul{
+    padding-left: 0;
+    margin-left: 16px;
+    margin-right: 16px;
   }
   .fade-enter-active,
   .fade-leave-active {

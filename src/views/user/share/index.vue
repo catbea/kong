@@ -11,7 +11,8 @@
               </div>
               <div class="agent-info">
                 <p class="name-box"><span class="name">{{editData.agentName}}</span><span class="tel">{{editData.mobile}}</span></p>
-                <p class="signature">{{editData.signature}}</p>
+                <!-- <p class="signature">{{editData.signature}}</p> -->
+                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '卖房经纪人'}}</p>
               </div>
               <div class="qrcode-box">
                 <div class="tips">
@@ -36,7 +37,8 @@
               <div class="agent-info">
                 <p class="name">{{editData.agentName}}</p>
                 <p class="tel">{{editData.mobile}}</p>
-                <p class="signature">{{editData.signature}}</p>
+                <!-- <p class="signature">{{editData.signature}}</p> -->
+                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType}}</p>
               </div>
               <div class="qrcode">
                 <img :src="editData.miniQrCode" alt="小程序">
@@ -55,6 +57,7 @@
                 <div class="agent-info">
                   <p class="name">{{editData.agentName}}</p>
                   <p class="tel">{{editData.mobile}}</p>
+                  <p class="worktime">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType}}</p>
                 </div>
                 <div class="qrcode">
                   <img :src="editData.miniQrCode" alt="小程序">
@@ -195,7 +198,7 @@ export default {
     ...mapGetters(['userInfo'])
   },
   created() {
-    // this.showLoading = true
+    this.showLoading = true
     this.agentId = this.$route.query.agentId
     this.initData()
     this.initCos()
@@ -564,6 +567,17 @@ export default {
     blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
     }
+  },
+  filters: {
+    formatWorkTime (val) {
+      let status = {
+        100: '3年',
+        101: '5年',
+        102: '8年',
+        103: '10年以上'
+      }
+      return status[val] || '3年'
+    }
   }
 }
 </script>
@@ -581,6 +595,7 @@ export default {
     .item1{
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:300px;
@@ -608,13 +623,12 @@ export default {
           .tel{
             font-size: 12px;
             font-weight:400;
-            font-weight: 400;
             margin-left: 8px;
             color:rgba(92,97,102,1);
           }
         }
         .signature{
-          width:167px;
+          width:170px;
           height:28px;
           font-size:10px;
           font-weight:400;
@@ -654,8 +668,10 @@ export default {
       }
     }
     .item2{
-      background: url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
+      background: #fff url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
       background-size:100% 50px;
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
       .type2-cnt{
         height: 100%;
         width: 100%;
@@ -680,8 +696,8 @@ export default {
         height:150px;
         margin: 0 auto;
         img{
-          min-width: 150px;
-          min-height: 150px;
+          width: 150px;
+          height: 150px;
           object-fit: cover;
           border-radius: 50%;
         }
@@ -698,15 +714,15 @@ export default {
           line-height:21px;
         }
         .tel{
-          margin: 8px 0 16px;
+          margin: 8px 0;
         }
         .signature{
-          width:167px;
           height:28px;
           font-size:10px;
           font-weight:400;
           line-height:14px;
           margin: auto;
+          margin-bottom: 16px;
         }
       }
       .qrcode{
@@ -715,7 +731,7 @@ export default {
         img{
           width: 64px;
           height: 64px;
-          border-radius: 40%;
+          border-radius: 30px;
         }
         p{
           height:14px;
@@ -728,7 +744,7 @@ export default {
       }
     }
     .item3{
-      background: url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
+      background: #fff url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
       background-size:100% 50px;
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
@@ -754,8 +770,8 @@ export default {
         height:160px;
         margin: 0 auto;
         img{
-          min-width: 160px;
-          min-height: 160px;
+          width: 160px;
+          height: 160px;
           object-fit: cover;
           border-radius: 50%;
         }
@@ -772,16 +788,20 @@ export default {
           line-height:21px;
         }
         .tel{
-          margin: 8px 0 16px;
+          margin: 8px 0;
+        }
+        .worktime{
+          margin-bottom: 16px;
+          font-size: 10px;
         }
       }
       .qrcode{
-        margin-top: 30px;
+        margin-top: 20px;
         text-align: center;
         img{
           width: 64px;
           height: 64px;
-          border-radius: 40%;
+          border-radius: 30px;
         }
         p{
           height:14px;
@@ -970,8 +990,10 @@ export default {
     .img-box {
       height: 460px;
       width: 300px;
-      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
-      border-radius:4px;
+      img {
+        box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+        border-radius:4px;
+      }
     }
   }
   // loading

@@ -78,22 +78,6 @@
       </div>
       <!-- 楼盘基础信息 -->
       <div class="base-info-container">
-        <!-- <div class="info-top-bar">
-          <tag-group :arr="tagGroupArr&&tagGroupArr.slice(0,3)"/>
-          <div class="browser-info">
-            <span>{{info.browsCount}}</span>人浏览过
-            <div class="head-portrait-box">
-              <transition name="show">
-                <avatar
-                  :avatar="item.clientImg"
-                  v-for="(item,index) in info.customerList"
-                  :key="index"
-                  v-if="index===headCurrent"
-                />
-              </transition>
-            </div>
-          </div>
-        </div> -->
         <div class="info-content">
           <div class="linker-name">
             <h5 class="house-name">{{info.linkerName}}</h5>
@@ -258,7 +242,7 @@
         </div>
         <div class="tips"><img src="../../assets/img/market/tips.png" alt="" srcset=""> 数据统计范围为楼盘2公里以内，数据来至于腾讯地图，仅供参考！</div>
       </div>
-      <div class="more-info" @click="moreInfoHandler">更多信息</div>
+      <!-- <div class="more-info" @click="moreInfoHandler">更多信息</div> -->
       <!-- 楼盘评测 -->
       <div class="evaluating-box" v-if="this.evaluatingInfo">
         <title-bar :conf="evaluatingTitleConf"/>
@@ -965,6 +949,7 @@ export default {
     },
     // 关闭视频
     videoHide() {
+      debugger
       this.$refs.videoplay.pause()
       this.showVideo = false
     },

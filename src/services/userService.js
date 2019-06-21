@@ -688,5 +688,77 @@ class UserService {
       body: data
     })
   }
+
+  /**
+   * 获取培训学院楼盘列表
+   */
+  getStudyLinkerList () {
+    return xhr({
+      method: 'get',
+      url: ' /studyLinker/list'
+    })
+  }
+
+  /**
+   * 获取培训学院楼盘列表
+   */
+  getStudyListByLinkerId (data) {
+    return xhr({
+      method: 'get',
+      url: ' /developersMaterial/index',
+      body: data
+    })
+  }
+
+  /**
+   * 获取培训学院学习记录
+   */
+  getStudyRecord (data) {
+    return xhr({
+      method: 'get',
+      url: ' /developersMaterialAgentRecord/list',
+      body: data
+    })
+  }
+
+  /**
+   * 培训学院搜索
+   */
+   studySearchLinker(data) {
+    return xhr({
+      method: 'get',
+      url: ' /studyLinker/search',
+      body: data
+    })
+  }
+  /**
+   * 获取二级列表
+   */
+  getDevelopersMaterialList (data) {
+    return xhr({
+      method: 'get',
+      url: '/developersMaterial/list',
+      body: data
+    })
+  } 
+  /***
+   *  获取study素材详情
+   */
+  getDevelopersMaterialDetail (data) {
+    return xhr({
+      method: 'get',
+      url: `/developersMaterial/detail/${data.id}`, 
+    })
+  }  
+  /**
+   * 新增学习记录
+   *  */ 
+  getDevelopersMaterialadd (data) {
+    return xhr({
+      method: 'post',
+      url: '/developersMaterialAgentRecord/add',
+      body: data 
+    })
+  }    
 }
 export default new UserService()

@@ -14,11 +14,17 @@
     }
     .header-filter {
       height: 44px;
+      width: 100%;
       box-sizing: border-box;
       padding: 0 16px;
       display: flex;
       align-items: center;
       border-bottom: 1px solid #dce0e3;
+      position: fixed;
+      z-index: 9999;
+      background: #fff;
+      top: 0;
+      left: 0;
       .linker-box {
         display: flex;
         flex: 1;
@@ -37,7 +43,7 @@
             left: -16px;
             max-height: 400px;
             width: 100vw;
-            overflow: scroll;
+            overflow-y: auto;
             background: #fff;
             box-sizing: border-box;
             padding: 0 20px;
@@ -54,12 +60,12 @@
       }
       .linker-name {
         font-size: 14px;
-        font-weight: 600;
+        // font-weight: 600;
         color: rgba(26, 39, 51, 1);
       }
       .filter-van-icon-arrow {
         color: #5c6166;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
       }
       .van-icon-arrow-up{
@@ -75,13 +81,52 @@
       .search-icon {
         height: 16px;
         width: 16px;
-        margin: 0 8px;
+        margin: 0px 3px 0 8px;
       }
       .search-text {
         font-size: 12px;
         font-weight: 400;
         color: rgba(150, 158, 168, 1);
+        margin-top: 3px
       }
+      .tips-box{
+        position: absolute;
+        display: flex;
+        top: 26px;
+        left: 0;
+        box-sizing: border-box;
+        padding-left: 12px;
+        padding-top: 17px;
+        border-radius: 6px;
+        height: 71px;
+        width: 270px;
+        font-size:14px;
+        font-weight:400;
+        color:rgba(255,255,255,1);
+        line-height:21px;
+        background:rgba(0,122,230, .9);
+        opacity: .95;
+        .square{
+          height: 0;
+          width: 0;
+          position: absolute;
+          top: -17px;
+          left: 24px;
+          border: 9px solid transparent; 
+          border-bottom: 9px solid rgba(0,122,230,0.945);
+        }
+        .close-icon{
+          height: 16px;
+          width: 16px;
+          margin-left: 18px;
+          margin-right: 12px;
+          margin-top: 10px;
+        }
+        // 9/5/24
+      }
+    }
+    .learn-wrap{
+      margin-top: 44px;
     }
     //   card-box
     .card-box {
@@ -101,6 +146,7 @@
     }
     .card-title {
       flex: 1;
+      font-weight: 600;
     }
     .card-do {
       display: flex;
@@ -137,6 +183,9 @@
         font-weight: 500;
         color: rgba(255, 255, 255, 1);
       }
+      .learn-type.pdf{
+        background: rgba(250, 100, 0, 1);
+      }
       .learn-info {
         position: absolute;
         bottom: 0;
@@ -144,7 +193,8 @@
         width: 100%;
         box-sizing: border-box;
         padding: 20px 23px 14px 12px;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+        // background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+        background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.6) 100%);
         border-radius: 0px 0px 6px 6px;
         .title {
           // margin-top: 21px;
@@ -195,11 +245,20 @@
       }
       .times {
         position: absolute;
-        right: 8px;
-        bottom: 8px;
+        left: 0;
+        bottom: 0;
+        height:40px;
+        width: 100%;
+        background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.3) 100%);
+        border-radius:0px 0px 4px 4px;
+       span{
+        float: right;
+        margin-top: 20px;
+        margin-right: 8px;
         font-size: 12px;
         font-weight: 400;
         color: rgba(255, 255, 255, 1);
+       }
       }
       .title {
         margin-top: 8px;
@@ -256,5 +315,35 @@
       width: 16px !important;
       position: relative;
       top: 4px;
+    }
+    .abstract-video{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -20px;
+      margin-top: -20px;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      // background:rgba(0,0,0,1);
+      // opacity:0.6557;
+      background-size: cover;
+    }
+    .empty-learn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: -50px;
+        text-align: center;
+        img {
+          height: 88px;
+          width: 88px;
+        }
+        p {
+          font-size: 12px;
+          font-weight: 400;
+          color: rgba(153, 153, 153, 1);
+        }
     }
 }

@@ -12,7 +12,7 @@
               <div class="linker-box scale-1px-bottom">
                 <div class="linker-info">
                   <p class="name">{{editData.linkerName}}</p>
-                  <p class="address">{{editData.city}} {{editData.county}}</p>
+                  <p class="address">{{editData.city | formatCity}} {{editData.county | formatCounty}}</p>
                 </div>
                 <div class="linker-price">
                   <p class="price" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
@@ -50,13 +50,13 @@
                 <div class="name">{{editData.linkerName}}</div>
                 <div class="linker-item">
                     <div class="price">
-                      <p class="title">价格(/㎡)</p>
-                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                      <p class="title">价格(元/㎡)</p>
+                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}}</p>
                       <p class="text" v-else>价格待定</p>
                     </div>
                     <div class="area">
                       <p class="title">区域</p>
-                      <p class="text">{{editData.city}} {{editData.county}}</p>
+                      <p class="text">{{editData.city | formatCity}} {{editData.county | formatCounty}}</p>
                     </div>
                     <div class="build">
                       <p class="title">建面(㎡)</p>
@@ -94,13 +94,13 @@
                 <div class="name">{{editData.linkerName}}</div>
                 <div class="linker-item">
                     <div class="price">
-                      <p class="title">价格(/㎡)</p>
-                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}} {{editData.priceUnit}}</p>
+                      <p class="title">价格(元/㎡)</p>
+                      <p class="text" v-if="editData.linkerPrice-0">{{editData.linkerPrice}}</p>
                       <p class="text" v-else>价格待定</p>
                     </div>
                     <div class="area">
                       <p class="title">区域</p>
-                      <p class="text">{{editData.city}} {{editData.county}}</p>
+                      <p class="text">{{editData.city | formatCity}} {{editData.county | formatCounty}}</p>
                     </div>
                     <div class="build">
                       <p class="title">建面(㎡)</p>
@@ -392,6 +392,18 @@ export default {
     blur() {
       document.activeElement.scrollIntoViewIfNeeded(true)
     }
+  },
+  filters: {
+    formatCity (city) {
+      if (city) {
+        return city.split('市').join('')
+      }
+    },
+    formatCounty (county) {
+      if (county) {
+        return county === '片区' ? county :  county.split('区').join('')
+      }
+    }
   }
 }
 </script>
@@ -409,6 +421,7 @@ export default {
     .item1{
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:225px;
@@ -511,6 +524,9 @@ export default {
       }
     }
     .item2{
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:225px;
@@ -537,7 +553,6 @@ export default {
           display: flex;
           margin: 0 16px;
           .price,.area,.build{
-            flex: 1;
             .title{
               font-size:10px;
               font-weight:400;
@@ -550,6 +565,9 @@ export default {
               color:rgba(234,77,46,1);
               margin-top: 5px;
             }
+          }
+          .area{
+            margin: 0 30px;
           }
         }
       }
@@ -607,6 +625,7 @@ export default {
     .item3{
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:225px;
@@ -639,7 +658,6 @@ export default {
           display: flex;
           margin: 0 16px;
           .price,.area,.build{
-            flex: 1;
             .title{
               font-size:10px;
               font-weight:400;
@@ -652,6 +670,9 @@ export default {
               color:rgba(234,77,46,1);
               margin-top: 5px;
             }
+          }
+          .area{
+            margin: 0 30px;
           }
         }
       }
@@ -707,6 +728,9 @@ export default {
       }
     }
     .item4{
+      box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
+      border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:325px;
@@ -889,9 +913,11 @@ export default {
           display: inline-block;
           margin-right: 15px;
           overflow: hidden;
+          background-color: #eee;
           img {
-            min-width: 100%;
-            min-height: 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
           }
           .van-icon {
             background-color: #007ae6;

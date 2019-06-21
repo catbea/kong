@@ -1,51 +1,83 @@
 <template>
-    <div class="rule_view"> 
+    <div class="rule_view" @mousewheel="imgScroll" @touchmove="imgScroll"> 
         <ul class="ul_view">
-            <li class="li_view" v-for="(item,index) in ruleList" :key="index" >
+            <li class="li_view" v-for="(item,index) in ruleList" :key="index" @click="select(item)">
                 <div class="li_left">
                     <div class="left_img">
-                        <img src="../../../../assets/img/user/invitation/aw-banner1@2x.png" alt="" class="img">
+                        <img :src="item.coverImgUrl" alt="" class="img">
                     </div>
-                    <div class="left_icon">
-                        {{item.name}}
+                    <div class="left_icon" :class="true && 'h5' && 'img'">
+                        {{['','图片','视频','PDF','H5'][item.format]}}
                     </div> 
                 </div>
                 <div class="li_right">
                     <div class="right_title">
-                        {{item.text}}
+                        {{item.title}}
                     </div>
                     <div class="right_info">
-                        <div style="font-size:10px;">更新时间：{{item.name}}</div>
-                        <div style="font-size:10px;">{{item.name}}查看</div>
+                        <div style="font-size:10px;">更新时间：{{item.updateTime}}</div>
+                        <div style="font-size:10px;">{{item.browseNum}}查看</div>
                     </div>
                 </div> 
             </li>
-        </ul>
-                <!-- http://192.168.17.204/static/pdf/1.pdf -->
+        </ul> 
     </div> 
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import userService from 'SERVICE/userService'
+import { ImagePreview } from 'vant'
 export default {
     components: {
     ...mapGetters(['userInfo']), 
     },
     data:() =>({
         ruleList:[
-            {name:'pdf',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
-            {name:'inin',text:'楼盘推介项目介绍资料学习，学习查看楼盘推介项'},
-        ],
-        isTpye:1, 
+        ],  
+        current:1,
+        size:5 ,
+        page:"",
     }),
     mounted() { 
-        // this.getFile();
-        // if(this.isTpye == 1) { 
-        //     document.querySelector('.left_icon').style.backgroundColor = 'red';
-        // }
+        this.getList();
     },
     methods: {
-        
+        imgScroll() {   
+            if (this.page > this.current) { 
+                this.current = this.current + 1;
+                this.getList(this.current);
+            } 
+        },
+        getList () {
+            userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:2,size:this.size,current:this.current
+            }).then((result) => {  
+                this.page = result.pages
+                if (result.pages > 1) {
+                    this.ruleList = this.ruleList.concat(result.records)  
+                }else {
+                    this.ruleList = result.records
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
+        },
+        select(val) { 
+            switch (val.format) {
+                case 1:
+                this.$router.push(`/user/learn/thirdPage/img?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
+                break
+                case 3:
+                this.$router.push(`/user/learn/thirdPage/pdf?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`) 
+                break
+                case 4:
+                this.$router.push(`/user/learn/thirdPage/h5?id=${val.id}&developersId=${val.developersId}&linkerId=${val.linkerId}`)
+                break
+            } 
+        },
+    },
+    beforeDestroy () {
+        this.imagePreviewObj&&this.imagePreviewObj.close()
     }
 }
 </script>
@@ -88,34 +120,16 @@ export default {
                     top:0px; 
                     right: 0px;
                 }
-                .left_icon1 {
-                    width: 33px;
-                    height: 15px;
+                .pdf {
+                    background: #2882FF;
+                }
+                .img {
                     background: #FA6400;
-                    font-size: 10px;
-                    color: #ffffff;
-                    text-align: center;
-                    line-height: 15px;
-                    font-weight: 500;
-                    position: absolute;
-                    border-radius: 0px 6px 0px 6px;
-                    top:0px; 
-                    right: 0px;
                 }
-                .left_icon2 {
-                    width: 33px;
-                    height: 15px;
+                .h5 {
                     background: #01B805;
-                    font-size: 10px;
-                    color: #ffffff;
-                    text-align: center;
-                    line-height: 15px;
-                    font-weight: 500;
-                    position: absolute;
-                    border-radius: 0px 6px 0px 6px;
-                    top:0px; 
-                    right: 0px;
                 }
+               
             }
             .li_right {
                 height: 90px;

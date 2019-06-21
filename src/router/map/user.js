@@ -4,7 +4,7 @@ export default [
     name: 'user',
     component: resolve => require(['@/views/user/index.vue'], resolve),
     meta: {
-      title: '名片',
+      title: '我的',
       tabbar: {
         show: true
       }
@@ -31,7 +31,7 @@ export default [
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
     meta: {
-      title: '名片编辑'
+      title: '个人编辑'
     }
   },
   {
@@ -466,16 +466,33 @@ export default [
     component: resolve => require(['@/views/user/learn/record.vue'], resolve),
     meta: {
       title: '学习记录',
-    path: '/user/learn/secondPage/arecProduct',
-    name: 'arecProduct',
-    component: resolve => require(['@/views/user/learn/secondPage/arecProduct.vue'], resolve),
-    meta: {
-      title: '区域竞品分析', 
       tabbar: {
         show: false
       }
     }
-  }
+  },
+  {
+    path: '/user/learn/search',
+    name: 'learnRecord',
+    component: resolve => require(['@/views/user/learn/search/index.vue'], resolve),
+    meta: {
+      title: '搜索楼盘',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+
+    path: '/user/learn/secondPage/arecProduct',
+    name: 'arecProduct',
+    component: resolve => require(['@/views/user/learn/secondPage/arecProduct.vue'], resolve),
+    meta: {
+      title: '区域竞品分析',
+      tabbar: {
+        show: false
+      }
+    }
   },
   {
     path: '/user/learn/secondPage/commissionRule',
@@ -560,6 +577,28 @@ export default [
     component: resolve => require(['@/views/user/learn/thirdPage/pdf.vue'], resolve),
     meta: {
       title: 'pdf',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/thirdPage/h5',
+    name: 'h5',
+    component: resolve => require(['@/views/user/learn/thirdPage/h5.vue'], resolve),
+    meta: {
+      title: 'h5',
+      tabbar: {
+        show: false
+      }
+    }
+  },
+  {
+    path: '/user/learn/thirdPage/img',
+    name: 'h5',
+    component: resolve => require(['@/views/user/learn/thirdPage/img.vue'], resolve),
+    meta: {
+      title: 'img',
       tabbar: {
         show: false
       }
