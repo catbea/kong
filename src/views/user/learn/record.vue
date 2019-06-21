@@ -7,32 +7,16 @@
 
     <div class="learn-list" v-else>
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="getStudyRecord">
-        <div
-          class="learn-item"
-          v-for="(item, index) in recordList"
-          @click="toLearnDeails(item, fileType[item.format], index)"
-        >
+        <div class="learn-item" v-for="(item, index) in recordList" @click="toLearnDeails(item, fileType[item.format], index)">
           <div class="learn-img">
-            <div
-              :class="fileType[item.format].toLowerCase()"
-              class="learn-type"
-              v-if="item.format != 2"
-            >{{fileType[item.format].replace('IMG', '图集')}}</div>
+            <div :class="fileType[item.format].toLowerCase()" class="learn-type" v-if="item.format != 2">{{fileType[item.format].replace('IMG', '图集')}}</div>
 
             <template v-else>
               <div class="video-duration">{{getVideoDuration(item.content)}}</div>
 
-              <div
-                class="abstract-video"
-                :style="{'background-image': `url(${require('IMG/user/learn/video-icon.png')})`}"
-              ></div>
+              <div class="abstract-video" :style="{'background-image': `url(${require('IMG/user/learn/video-icon.png')})`}"></div>
 
-              <video
-                :ref="'video'+ index"
-                style="height:0; width: 0; opacity: 0"
-                :src="JSON.parse(item.content).url"
-                controls="controls"
-              ></video>
+              <video :ref="'video'+ index" style="height:0; width: 0; opacity: 0" :src="JSON.parse(item.content).url" controls="controls"></video>
             </template>
 
             <img :src="item.coverImgUrl" alt>
@@ -48,7 +32,8 @@
         </div>
       </van-list>
     </div>
-    <Tabbar name="底部tabbar"/>
+
+    <Tabbar name="底部tabbar" />
   </div>
 </template>
 
@@ -57,6 +42,7 @@ import Tabbar from './components/tabbar'
 import userService from 'SERVICE/userService'
 import { List, Toast } from 'vant'
 import { formatDate } from './../../../utils/tool'
+
 export default {
   name: 'learnRecord',
   components: {
@@ -75,7 +61,7 @@ export default {
         3: 'PDF',
         4: 'H5'
       },
-      title:''
+      title: ''
     }
   },
   created() {
@@ -117,7 +103,7 @@ export default {
     },
     // 播放时自动全屏
     playVideo(learn, index) {
-      let element = this.$refs['video'+index][0]
+      let element = this.$refs['video' + index][0]
       this.requestFullscreen(element)
       element.play()
     },
@@ -134,9 +120,9 @@ export default {
       }
     }
   },
-  beforeRouteLeave (to, from, next) {  
-      to.meta.title = this.title
-      next()
+  beforeRouteLeave(to, from, next) {
+    to.meta.title = this.title
+    next()
   }
 }
 </script>

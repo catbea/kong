@@ -30,7 +30,7 @@
         </div>
       </div>
 
-       <ContentLoader v-if="!loaded" />
+      <ContentLoader v-if="!loaded" />
 
       <div class="empty-learn" v-else-if="learnList.length == 0 && loaded">
         <img :src="require('IMG/user/learn/empty-learn.png')" alt>
