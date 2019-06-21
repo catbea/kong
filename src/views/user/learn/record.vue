@@ -111,7 +111,7 @@ export default {
       if (type == 'video') {
         return this.playVideo(learn, index)
       }
-      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}`)
+      this.$router.push(`/user/learn/thirdPage/${type}?id=${learn.id}&linkerId=${learn.linkerId}`)
     },
     // 播放时自动全屏
     playVideo(learn, index) {
