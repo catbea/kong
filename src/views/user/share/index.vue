@@ -595,6 +595,7 @@ export default {
     .item1{
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
+      background-color: #fff;
       .pic{
         width:300px;
         height:300px;
@@ -667,7 +668,7 @@ export default {
       }
     }
     .item2{
-      background: url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
+      background: #fff url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
       background-size:100% 50px;
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
@@ -743,7 +744,7 @@ export default {
       }
     }
     .item3{
-      background: url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
+      background: #fff url('../../../assets/img/user/share/bg1.png') no-repeat center bottom;
       background-size:100% 50px;
       box-shadow:0px 2px 17px 0px rgba(34,47,85,0.1);
       border-radius:4px;
