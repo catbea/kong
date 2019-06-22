@@ -97,7 +97,7 @@ export default {
     },
     //跳转到详情
     toLearnDeails(learn, type, index) {
-      if (type == 'video') {
+      if (type == 'VIDEO') {
         return this.playVideo(learn, index)
       }
       this.title = learn.title
