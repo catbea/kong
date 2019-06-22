@@ -1,6 +1,7 @@
 <template>
   <div class="learn-record-page">
-    <div class="empty-record" v-if="recordList.length == 0">
+    
+    <div class="empty-record" v-if="!loading && recordList.length == 0">
       <img :src="require('IMG/user/learn/empty-record.png')" alt>
       <p>还没有学习过任何资料！</p>
     </div>
@@ -33,6 +34,8 @@
       </van-list>
     </div>
 
+    <ContentLoader v-if="loading" />
+
     <Tabbar name="底部tabbar" />
   </div>
 </template>
@@ -40,13 +43,15 @@
 <script>
 import Tabbar from './components/tabbar'
 import userService from 'SERVICE/userService'
+import ContentLoader from './components/record-content-loader'
 import { List, Toast } from 'vant'
 import { formatDate } from './../../../utils/tool'
 
 export default {
   name: 'learnRecord',
   components: {
-    Tabbar
+    Tabbar,
+    ContentLoader
   },
   data() {
     return {
@@ -69,9 +74,7 @@ export default {
   },
   methods: {
     async getStudyRecord() {
-      Toast.loading({
-        message: '加载中...'
-      })
+
       this.loading = true
       const response = await userService.getStudyRecord({
         current: this.current,
@@ -84,7 +87,6 @@ export default {
       if (records.length == 0) {
         this.finished = true
       }
-      Toast.clear()
     },
     formatDate(time) {
       return formatDate(time, 'YYYY-MM-DD')

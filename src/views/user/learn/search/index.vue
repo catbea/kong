@@ -8,8 +8,8 @@
           placeholder="输入搜索楼盘"
           show-action
           @search="onSearch"
-          @cancel="toUserLearn"
-          @keypress="onPress"
+          @cancel="$router.go(-1)"
+          @focus="onPress"
         />
       </form>
     </div>
@@ -101,6 +101,7 @@ export default {
       if (!linkerName) return
 
       Toast.loading({
+        duration: 0,
         message: '加载中...'
       })
 
