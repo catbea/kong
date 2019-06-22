@@ -21,9 +21,9 @@ const isIOS = () => {
 }
 
 export default async (to, from, next) => {
-  setTimeout(() => {
-    next()
-  }, 3000)
+  // setTimeout(() => {
+  //   next()
+  // }, 3000)
   if (to.meta.skipAuth) return next()
   let parm = getUrlQueryParams(location.href)
   let wxredirecturl = window.location.href.split('#')[0].split('?')[0]
