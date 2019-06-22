@@ -20,7 +20,7 @@
                         @play="videoPlay(item,index)"
                     >
                         <!-- <div v-for="(a,index) in item.content" :key="index+3"> -->
-                            <source :src="item.content.url" type="video/mp4">
+                            <source :src="JSON.parse(item.content).url" type="video/mp4">
                         <!-- </div> -->
                     </video> 
                 </div>
@@ -79,14 +79,11 @@ export default {
             userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:3,size:this.size,current:this.current
             }).then((result) => {  
                 this.page = result.pages
-                if (result.pages > 1) {
-                    this.videoList = this.videoList.concat(result.records) 
+                if (result.pages > 1) { 
+                    this.videoList = this.videoList.concat(result.records)
                 }else {
-                    this.videoList = result.records
+                    this.videoList = result.records 
                 } 
-                result.records.map((item,index)=>{
-                    this.videoList[index].content = JSON.parse(item.content);
-                }) 
             }).catch((err) => {
                 console.log(err)
             })
