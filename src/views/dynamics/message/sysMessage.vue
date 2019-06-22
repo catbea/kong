@@ -6,7 +6,7 @@
         <div class="sysMessage-shadowBox" v-for="(item,key) in time.systemMessages" :key="key">
           <shadow-box>
             <div slot="container">
-              <div class="sys-shadowBox">
+              <div class="sys-shadowBox" @click="enterActivityDetail(item)">
                 <p class="sys-shadowBox-title">{{item.title}}</p>
                 <p class="sys-shadowBox-time" v-html="item.content.replace(/(\r+\n+)|(\n+)/g,'<br>')"></p>
                 <div style="display:flex;" v-show="item.type!==''&&item.type==10">
@@ -18,7 +18,7 @@
                   <div class="left-button">客户详情</div>
                   <div class="right-button">立即报备</div>
                 </div>-->
-                <div class="button-detail" v-if="item.type==11 || item.type==101" @click="enterActivityDetail(item)">
+                <div class="button-detail" v-if="item.type==11 || item.type==101">
                   查看详情
                   <img :src="detailIcon">
                 </div>
@@ -129,7 +129,8 @@ export default {
         width: 100%;
         height: 40px;
         display: flex;
-        justify-content: center;
+        // justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         color: #077de6;
         font-size: 14px;
@@ -186,7 +187,7 @@ export default {
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         line-height: 21px;
-        padding-bottom: 18px;
+        // padding-bottom: 18px;
       }
       .sys-shadowBox-remarks {
         font-size: 14px;

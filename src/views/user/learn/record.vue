@@ -158,6 +158,7 @@ export default {
   .learn-img,
   .learn-img img {
     width: 120px;
+    min-width: 120px;
     height: 90px;
     border-radius: 6px;
     position: relative;
