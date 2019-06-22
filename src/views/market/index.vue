@@ -10,21 +10,21 @@
         <img src="../../assets/img/market/classify/classify1.png" alt="">
         <p>全部楼盘</p>
       </div>
-      <div class="market-classify-item"  @click="goPage('/market/classify/freemarket')">
+      <div class="market-classify-item" @click="goPage('/market/classify/freemarket')">
         <img src="../../assets/img/market/classify/classify2.png" alt="">
         <p>免费楼盘</p>
       </div>
-      <div class="market-classify-item"  @click="goPage('/market/classify/hotmarket')">
+      <div class="market-classify-item" @click="goPage('/market/classify/hotmarket')">
         <img src="../../assets/img/market/classify/classify3.png" alt="">
         <p>热门楼盘</p>
       </div>
-      <div class="market-classify-item"  @click="goPage('/market/classify/mapmarket')">
+      <div class="market-classify-item" @click="goPage('/market/classify/mapmarket')">
         <img src="../../assets/img/market/classify/classify4.png" alt="">
         <p>地图找房</p>
       </div>
     </div>
     <div class="my-markey">
-      <div class="title" @click="goMyMarket"  v-show="myMarket.length">
+      <div class="title" @click="goMyMarket" v-show="myMarket.length">
         我的楼盘<span> ({{total}})</span>
       </div>
       <div class="market-list">
@@ -47,28 +47,29 @@
       </div>
       <div class="nodata" v-show="!myMarket.length && nodataStatus">
         <img src="../../assets/img/article/noarticle.png" alt="">
-        <p>对不起，没有查询到相关楼盘！</p>
+        <p>你还没有开通任何楼盘</p>
+        <button class="add-linker" @click="$router.push('/market/classify/allmarket')">去开通</button>
       </div>
     </div>
     <div>
-        <van-popup v-model="showPopup" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
-          <ul>
-            <li @click="goRenew(currentItem.linkerId)" v-show="!stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
-            <li @click="goRenew(currentItem.linkerId)" v-show="stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
-            <div v-if="pastShow">
-              <li class="color" @click="stickHandle">
-                <span v-show="currentItem.recommand==0">置顶</span>
-                <span v-show="currentItem.recommand==10">取消置顶</span>
-              </li>
-              <!-- <li @click="exhibitionHandle">
+      <van-popup v-model="showPopup" position="bottom" :close-on-click-overlay="true" overlay :class="{pastStyle:!pastShow}">
+        <ul>
+          <li @click="goRenew(currentItem.linkerId)" v-show="!stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(0)}}到期）</li>
+          <li @click="goRenew(currentItem.linkerId)" v-show="stride">续费（{{currentItem.subscribeInvalidTime | dateTimeFormatter(2)}}到期）</li>
+          <div v-if="pastShow">
+            <li class="color" @click="stickHandle">
+              <span v-show="currentItem.recommand==0">置顶</span>
+              <span v-show="currentItem.recommand==10">取消置顶</span>
+            </li>
+            <!-- <li @click="exhibitionHandle">
                 <span v-show="currentItem.displayFlag==0">关闭楼盘展示</span>
                 <span v-show="currentItem.displayFlag!=0">开启楼盘展示</span>
               </li> -->
-            </div>
-            <li class="cancel" @click="closeHandle">取消</li>
-          </ul>
-        </van-popup>
-      </div>
+          </div>
+          <li class="cancel" @click="closeHandle">取消</li>
+        </ul>
+      </van-popup>
+    </div>
   </div>
 </template>
 <script>
@@ -79,7 +80,7 @@ export default {
   components: {
     Search
   },
-  data () {
+  data() {
     return {
       searchValue: '',
       myMarket: [],
@@ -102,19 +103,19 @@ export default {
   computed: {
     ...mapGetters(['userArea', 'userInfo'])
   },
-  created () {
+  created() {
   },
   methods: {
     // 点击搜索
-    goSearch () {
-      this.$router.push({ name: 'market-search', query: {city: '全国'}})
+    goSearch() {
+      this.$router.push({ name: 'market-search', query: { city: '全国' } })
     },
     // 跳转分类
-    goPage (url) {
+    goPage(url) {
       this.$router.push(url)
     },
     // 加载更多
-    onLoad () {
+    onLoad() {
       if (this.current > this.pages) {
         // 加载状态结束
         this.finished = true
@@ -125,7 +126,7 @@ export default {
       }
     },
     // 获取我的楼
-    getMyMarket () {
+    getMyMarket() {
       let parma = {
         name: '',
         size: this.size,
@@ -146,7 +147,7 @@ export default {
       })
     },
     // 跳转楼盘详情
-    goMarketDetail (item) {
+    goMarketDetail(item) {
       if (item.shelfFlag == 1) {
         this.$dialog
           .alert({
@@ -162,7 +163,7 @@ export default {
       }
     },
     // 分享
-    goShare (item) {
+    goShare(item) {
       if (item.shelfFlag == 1) {
         this.$dialog
           .alert({
@@ -274,7 +275,7 @@ export default {
       this.myMarket.unshift(this.myMarket[this.currentIndex])
       this.myMarket.splice(this.currentIndex + 1, 1)
       this.changeUserStatus(this.currentItem.linkerId, 40, 10) //改置顶状态
-      this.$toast({duration: 1000,message: '置顶成功'})
+      this.$toast({ duration: 1000, message: '置顶成功' })
       this.closeHandle()
     },
     recommandFalseHandle() {
@@ -283,7 +284,7 @@ export default {
       this.myMarket.push(this.myMarket[this.currentIndex])
       this.myMarket.splice(this.currentIndex, 1)
       this.changeUserStatus(this.currentItem.linkerId, 40, 0) //改置顶状态
-      this.$toast({duration: 1000,message: '取消置顶成功'})
+      this.$toast({ duration: 1000, message: '取消置顶成功' })
       this.closeHandle()
     },
     exhibitionHandle() {
@@ -310,13 +311,13 @@ export default {
     async changeUserStatus(linkerId, operationType, status) {
       await userService.changeMarketData(linkerId, operationType, status)
     }, //修改楼盘状态
-    goMyMarket () {
+    goMyMarket() {
       this.$router.push('/market/classify/mymarket')
     }
   },
-  mounted () {
+  mounted() {
   },
-  beforeDestroy () {
+  beforeDestroy() {
 
   }
 }
@@ -330,34 +331,65 @@ export default {
     margin: 20px 0;
     font-size: 10px;
     display: flex;
-    .market-classify-item{
+    .market-classify-item {
       flex: 1;
       text-align: center;
-      color:#445166;
-      img{
+      color: #445166;
+      img {
         width: 44px;
         height: 44px;
       }
-      p{
+      p {
         height: 14px;
         line-height: 14px;
         margin-top: 4px;
       }
     }
   }
-  .my-markey{
+  .my-markey {
     flex: 1;
     overflow-y: scroll;
     padding: 0 16px;
-    border-top: 8px solid #F2F6F7;
-    .title{
+    border-top: 8px solid #f2f6f7;
+    .title {
       padding: 16px 0 16px;
       font-size: 24px;
       color: #333;
       font-weight: 600;
       font-family: PingFangSC-Semibold;
-      span{
+      span {
         font-size: 18px;
+      }
+    }
+    .nodata {
+      text-align: center;
+      margin-top: 88px;
+      img {
+        height: 88px;
+        width: 88px;
+        margin: 0 auto;
+      }
+      p {
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(153, 153, 153, 1);
+        line-height: 17px;
+      }
+      .add-linker {
+        margin-top: 16px;
+        width: 64px;
+        height: 32px;
+        border-radius: 16px;
+        line-height: 32px;
+        border: 1px solid rgba(0, 122, 230, 1);
+        font-size: 12px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(0, 122, 230, 1);
+        line-height: 17px;
+        text-align: center;
+        background: #fff;
       }
     }
   }
@@ -365,20 +397,20 @@ export default {
     display: flex;
     font-size: 14px;
     margin-top: 15px;
-    .market-img{
+    .market-img {
       width: 120px;
       height: 90px;
-      border-radius:6px;
+      border-radius: 6px;
       overflow: hidden;
       margin: 5px 12px 0 0;
       position: relative;
-      .headimg{
+      .headimg {
         width: 100%;
         height: 100%;
-        border-radius:6px;
+        border-radius: 6px;
         object-fit: cover;
       }
-      .coupon{
+      .coupon {
         position: absolute;
         left: 0;
         top: 8px;
@@ -387,21 +419,21 @@ export default {
         padding: 0 10px 0 5px;
         height: 20px;
         line-height: 20px;
-        background-color: #CF562B;
+        background-color: #cf562b;
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
       }
     }
-    .market-info{
+    .market-info {
       flex: 1;
-      p{
+      p {
         margin-bottom: 8px;
       }
-      .market-name{
+      .market-name {
         display: flex;
-        font-size:18px;
-        font-weight:600;
-        color:rgba(19,41,79,1);
+        font-size: 18px;
+        font-weight: 600;
+        color: rgba(19, 41, 79, 1);
         .name {
           flex: 1;
           line-height: 30px;
@@ -410,13 +442,13 @@ export default {
           white-space: nowrap;
           text-overflow: ellipsis;
         }
-        .iconShare{
+        .iconShare {
           width: 54px;
-          height:30px;
+          height: 30px;
           line-height: 30px;
-          background:linear-gradient(90deg,rgba(255,153,51,1) 0%,rgba(230,94,46,1) 100%);
-          box-shadow:0px 2px 4px 0px rgba(230,94,46,0.35);
-          border-radius:15px;
+          background: linear-gradient(90deg, rgba(255, 153, 51, 1) 0%, rgba(230, 94, 46, 1) 100%);
+          box-shadow: 0px 2px 4px 0px rgba(230, 94, 46, 0.35);
+          border-radius: 15px;
           font-size: 12px;
           color: #fff;
           text-align: center;
@@ -425,42 +457,42 @@ export default {
           margin-top: 4px;
         }
       }
-      .market-location{
-        font-size:12px;
-        font-weight:400;
-        color:rgba(64,81,111,1);
+      .market-location {
+        font-size: 12px;
+        font-weight: 400;
+        color: rgba(64, 81, 111, 1);
       }
-      .market-tags{
+      .market-tags {
         font-size: 10px;
-        span{
+        span {
           display: inline-block;
-          padding:3px 6px;
+          padding: 3px 6px;
           border-radius: 2px;
           margin-right: 5px;
-          background:rgba(143,159,177,0.15);
-          color: #5C5F66;
-          &.active{
-            background-color: rgba(0,120,255,0.15);
+          background: rgba(143, 159, 177, 0.15);
+          color: #5c5f66;
+          &.active {
+            background-color: rgba(0, 120, 255, 0.15);
           }
         }
       }
-      .market-price{
+      .market-price {
         font-size: 14px;
-        font-weight:600;
-        color:rgba(68,81,102,1);
+        font-weight: 600;
+        color: rgba(68, 81, 102, 1);
         display: flex;
-        .price{
+        .price {
           flex: 1;
         }
-        .icon-more{
+        .icon-more {
           width: 50px;
           text-align: center;
-          color: #9E9E9E;
+          color: #9e9e9e;
         }
       }
     }
   }
-  .pastStyle{
+  .pastStyle {
     height: 106px;
   }
   //弹窗
@@ -471,7 +503,7 @@ export default {
     border-radius: 0;
     left: 0;
     bottom: 0;
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
     ul {
       li {
         width: 375px;
@@ -498,26 +530,26 @@ export default {
 </style>
 
 <style lang='less'>
-  .market-page {
-    .search-box {
-      margin-top: 10px;
-      .van-field__body {
-        height: 100%;
-      }
-      .van-field__left-icon{
-        display: flex;
-      }
-      .van-cell {
-        background-color: #f5f5f5;
-      }
-      .search-icon {
-        width: 24px;
-        height: 24px;
-      }
-      .van-field__control {
-        height: 24px;
-        padding-top: 2px;
-      }
+.market-page {
+  .search-box {
+    margin-top: 10px;
+    .van-field__body {
+      height: 100%;
+    }
+    .van-field__left-icon {
+      display: flex;
+    }
+    .van-cell {
+      background-color: #f5f5f5;
+    }
+    .search-icon {
+      width: 24px;
+      height: 24px;
+    }
+    .van-field__control {
+      height: 24px;
+      padding-top: 2px;
     }
   }
+}
 </style>
