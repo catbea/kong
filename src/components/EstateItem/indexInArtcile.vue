@@ -7,7 +7,7 @@
         </div>
         <div class="right-box">
           <h5 class="estate-name">
-            <span class="estate-name-box">
+            <span :class="{'estate-name-box':isInArticle==1}">
               <!-- <span class="free" v-if="info.isFree&&isInArticle!=1&&isInArticle!=0">免费</span> -->
               {{info&&info.linkerName}}
             </span> 
@@ -161,7 +161,12 @@ export default {
           vertical-align: top;
         }
         .estate-name-box{
-          // flex: 1;
+          display: inline-block;
+          flex: 1;
+          max-width: 3.5rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }      
         .house-sale-status{
           display: inline-block;

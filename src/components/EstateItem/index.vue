@@ -108,10 +108,10 @@ export default {
         color: #333333;
         padding-bottom: 8px;
         line-height: 16px;
-        max-width: 160px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        // max-width: 160px;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
         .free{
           display: inline-block;
           font-size: 10px;
