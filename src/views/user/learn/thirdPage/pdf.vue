@@ -1,6 +1,6 @@
 <template>
     <div>
-        <iframe id="eapPdf" :data-url="url" src="/static/pdf/index.html"   :style="{'height':height+'px', 'width': width+'px'}" > </iframe>        
+        <iframe id="eapPdf" v-if="url.length>0" :data-url="url" src="/static/pdf/index.html"   :style="{'height':height+'px', 'width': width+'px'}" > </iframe>        
     </div>
 </template> 
 
