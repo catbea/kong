@@ -1470,7 +1470,7 @@ export default {
 
   font-weight: 400;
   color: rgba(102, 102, 102, 1);
-  line-height: 0.24rem;
+  // line-height: 0.24rem;
   margin-top: 0.24rem;
   margin-bottom: 0.24rem;
   width: 100%;
