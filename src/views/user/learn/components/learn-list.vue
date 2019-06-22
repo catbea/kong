@@ -6,7 +6,7 @@
     <div class="learn-info">
       <p class="title ellipsis ellipsis-2">{{item.title}}</p>
       <div class="abstract">
-        更新时间：{{formatDate(item.updateTime)}} · {{item.browseNum}}查看
+        更新时间：{{formatDate(item.updateTime)}} · {{item.browseNum}}{{fileType == 'video'? '观看':'查看'}}
         <template v-if="fileType == 'img'">
           <span>·</span>
           <img class="abstract-img" :src="require('IMG/user/learn/img-icon.png')">
@@ -30,7 +30,7 @@
     </div>
     <slot></slot>
     <h3 class="title ellipsis">{{item.title}}</h3>
-    <h3 class="abstract">更新时间：{{formatDate(item.updateTime)}} · {{item.browseNum}}查看</h3>
+    <h3 class="abstract">更新时间：{{formatDate(item.updateTime)}} · {{item.browseNum}}{{fileType == 'video'? '观看':'查看'}}</h3>
   </div>
 
   <!-- 左右结构 -->

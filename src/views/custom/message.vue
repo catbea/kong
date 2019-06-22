@@ -20,7 +20,7 @@
           </div>
       </div>
       <!--消息-->
-      <div class="msg-box" style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:15px;left:0px; overflow-y: scroll">
+      <div class="msg-box" style="width: 100%; -webkit-overflow-scrolling: touch; position: absolute;bottom:38px;top:31px;left:0px; overflow-y: scroll">
         <van-pull-refresh v-model="loading" pulling-text="下拉加载下一页" loosing-text="释放加载下一页" @refresh="getmsgListnext">
           <div style="height: auto">
             <div class="massage-info-msg" v-for="(items,index) in msgList" v-bind:key="index">
@@ -842,7 +842,7 @@ export default {
   border-bottom: 1px solid #ddd;
   align-items: center;
   z-index: 20;
-  background: #fff;
+  background: #F9FAF9;
   .nav-item{  
     flex: 1;
     height: 42px;
@@ -927,7 +927,7 @@ export default {
   padding: 0 15px;
   .massage-info-msg-time {
     margin-top: 36px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     text-align: center;
     font-size: 12px;
     font-weight: 400;
@@ -944,7 +944,7 @@ export default {
   }
   .massage-info-msg-customer {
     display: flex;
-    margin-top: 20px;
+    // margin-top: 20px;
     text-align: left;
   }
   .massage-info-msg-customer + .msg-customer-con-me-status p {
@@ -1470,7 +1470,7 @@ export default {
 
   font-weight: 400;
   color: rgba(102, 102, 102, 1);
-  line-height: 0.24rem;
+  // line-height: 0.24rem;
   margin-top: 0.24rem;
   margin-bottom: 0.24rem;
   width: 100%;

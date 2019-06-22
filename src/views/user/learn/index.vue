@@ -24,13 +24,13 @@
           </transition>
 
         </div>
-        <div class="search-box" @click="$router.push('/user/learn/search')">
+        <div class="search-box" @click="$router.push(`/user/learn/search?linkerId=${defaultLinker.linkerId}`)">
           <img class="search-icon" :src="require('IMG/user/learn/search-icon.png')" alt>
           <span class="search-text">搜索</span>
         </div>
       </div>
 
-       <ContentLoader v-if="!loaded" />
+      <ContentLoader v-if="!loaded" />
 
       <div class="empty-learn" v-else-if="learnList.length == 0 && loaded">
         <img :src="require('IMG/user/learn/empty-learn.png')" alt>
@@ -142,7 +142,7 @@ export default {
       loaded: false,  //加载完成
       linkerList: [], //楼盘列表
       showFilter: false, //是否显示楼盘列表
-      showTips: true, //是否显示提示
+      showTips: false, //是否显示提示.默认不显示
       defaultLinker: {}, //默认选择楼盘
       title: ''
     }
@@ -151,8 +151,8 @@ export default {
     await this.getStudyLinkerList()
     await this.getStudyList()
     const alreadyLearn = localStorage.getItem('already-learn-study')
-    if(alreadyLearn){
-      this.showTips = false;
+    if(!alreadyLearn){
+      this.showTips = true;
     }
   },
 

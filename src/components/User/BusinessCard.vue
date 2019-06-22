@@ -37,11 +37,11 @@
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
         <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
-        <p class="info-btn" v-if="vipInfo.expireTimestamp < +new Date()">
+        <p class="info-btn" v-if="goType==false">
           <button class="btn">立即开通</button>
         </p>
         <p class="info-btn_text" v-else>
-          <span style="font-size:10px;display:block;">开通更多</span> 
+          <span style="font-size:10px;display:block;">{{dredgeText}}</span> 
           <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;height:80px;line-height: 80px;">
             <use xlink:href="#icon-arrow"></use>
           </svg> 
@@ -70,7 +70,9 @@ export default {
       { title: '我的写一写', Icon: '#icon-wodexieyixie' }, 
       { title: '培训学院', Icon: '#icon-peixunxueyuan' }, 
       { title: '名片分享', Icon: '#icon-fenxiang' }, 
-    ]
+    ],
+    goType:false
+
   }),
   created () {
     this.getVipInfo()
@@ -97,14 +99,33 @@ export default {
   },
   computed: {
     ...mapGetters(['userInfo', 'userVipInfo']),
-
+    dredgeText () {
+      if (this.vipInfo) { 
+        let time = this.vipInfo.expireTimestamp
+        let text = '立即续费'
+        if (time > +new Date()) {
+          text = '开通更多'
+        }
+        return text
+      } else {
+        return ''
+      }
+    },
     isVipInfo() {
       // return '我的vip会员'
-      if (this.vipInfo) {
-        // debugger
-        let time = this.vipInfo.expireTimestamp
+      // if (this.vipInfo) { 
+      //   let time = this.vipInfo.expireTimestamp
+      //   let text = '开通VIP会员'
+      //   if (time > +new Date()) {
+      //     text = '我的vip会员'
+      //   }
+      //   return text
+      // } else {
+      //   return ''
+      // }
+      if (this.vipInfo) { 
         let text = '开通VIP会员'
-        if (time > +new Date()) {
+        if (this.goType == true) {
           text = '我的vip会员'
         }
         return text
@@ -114,16 +135,59 @@ export default {
       // return this.userVipInfo.isvip ? '我的vip会员':'开通VIP会员'
     },
     vipTimeInfo() {
-      // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量'
-      if (this.vipInfo) {  
-        let time = this.vipInfo.expireTimestamp
-        let text = '楼盘开通不限量'
-        if (time > +new Date()) {
-          let list = this.vipInfo.vipList.map(item=>item.city+"").slice(0, 3) 
-          text = '已开通' + list.join(",") + '等城市'
-        }
-        return text
-      } else {
+      // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量' 
+      // if (this.vipInfo) {  
+      //   let time = this.vipInfo.expireTimestamp
+      //   let text = '楼盘开通不限量' 
+      //   if (time > +new Date()) {
+      //       let list = this.vipInfo.vipList.map(item=>item.city+"").slice(0, 3) 
+      //       return text = '已开通' + list.join(",") + '等城市' 
+      //   } 
+      //   return text
+      // } else {
+      //   return ''
+      // } 
+      if(this.vipInfo) { 
+        // debugger 
+        let text = '楼盘开通不限量'  
+        let list = this.vipInfo.vipList;
+        this.goType = false;
+        // let goType = false ,//false 没过期，true,有过期
+        let saveIndex = 0;
+        list.map((item,index)=>{
+          //部分过期
+          if(!item.vipValid) {
+            this.goType = true;
+            saveIndex = index;           
+          }         
+        })  
+        if(!this.goType){
+          // debugger
+          if(this.vipInfo.vipList.length == 0) {
+            return text
+          }
+          let cityList = [];
+          let curList = list.splice(0,3);
+          for (let j of curList) { 
+            cityList.push(j.city);
+          }
+          cityList = cityList.join(",");
+          if(list.length>3){
+            text = `已开通${cityList}等城市`;
+          }else{
+            text = `已开通${cityList}城市`;
+          } 
+          return text
+        } 
+        else if(this.goType&&saveIndex!==list.length&&list.length !==1){ 
+          let d = list[saveIndex].city 
+          text = `您开通${d}VIP已过期请续费`; 
+          console.log("asas?>>>>",text);
+          return  text;
+        }else{
+          return text = `您开通的城市VIP已全部到期`;    
+        } 
+      }else {
         return ''
       }
     },

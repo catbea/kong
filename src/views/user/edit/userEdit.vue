@@ -1,8 +1,8 @@
 <template>
   <div class="user-edit-page">
-    <van-cell-group class="user-base-info"> 
+    <van-cell-group class="user-base-info">
       <van-cell title="头像" is-link :to="{path:'/user/edit/userPortrait'}" class="user-newavatar">
-        <template slot="title"> 
+        <template slot="title">
           <div class="editIcon-icon">
             <div>
               <span>头像</span>
@@ -13,23 +13,25 @@
           </div>
         </template>
       </van-cell>
-      <van-cell class="cell-item" title="名字" is-link :to="{path:'/user/edit/username',query:{userName:userInfo.name}}" :value="userInfo.name"/>
-      <van-cell class="cell-item" title="联系电话" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone"/>
-      <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount"/>
-      <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()"/>
-      <van-cell class="cell-item" title="从业时间" is-link :value="workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][workingTime-100]"  @click="openTimeSelect()"/>
-      <van-cell class="cell-item" title="销售类型" is-link :value="saleType==''?'买卖经纪人':saleType" @click="openShopSelect()"/>
+      <van-cell class="cell-item" title="名字" is-link :to="{path:'/user/edit/username',query:{userName:userInfo.name}}" :value="userInfo.name" />
+      <van-cell class="cell-item" title="联系电话" :to="{path:'/user/edit/phone',query:{phoneNum:userInfo.tempPhone}}" is-link :value="userInfo.tempPhone" />
+      <van-cell class="cell-item" title="微信号" :to="{path:'/user/edit/userWechat',query:{weChatNum:userInfo.wechatAccount}}" is-link :value="userInfo.wechatAccount" />
+      <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()" />
+      <van-cell class="cell-item" title="从业时间" is-link :value="workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][workingTime-100]" @click="openTimeSelect()" />
+      <van-cell class="cell-item" title="销售类型" is-link :value="saleType==''?'买卖经纪人':saleType" @click="openShopSelect()" />
       <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel'">
         <template slot="title">
           <span class="custom-text">标签展示</span>
-          <div class="user-tag"><van-tag  v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</van-tag></div>
+          <div class="user-tag">
+            <van-tag v-for="item in newLabelList" :key="item.labelId">{{item.labelName}}</van-tag>
+          </div>
         </template>
       </van-cell>
-      <van-cell class="cell-item" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature | textOver(10)"/>
-      <van-actionsheet v-model="show" :actions="actions" @select="onSelect"/>
-      <van-actionsheet v-model="isshow" :actions="isActions" @select="shopSelect"/>
+      <van-cell class="cell-item" title="个人介绍" is-link :to="{path:'/user/edit/userIntroduction',query:{signature:userInfo.signature}}" :value="userInfo.signature | textOver(10)" />
+      <van-actionsheet v-model="show" :actions="actions" @select="onSelect" />
+      <van-actionsheet v-model="isshow" :actions="isActions" @select="shopSelect" />
     </van-cell-group>
-    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu" :code="cityCode" :areaList="areaList"/>
+    <area-select :show="this.isOpen" @confirm="this.getCityName" @cancel="this.cancelPopu" :code="cityCode" :areaList="areaList" />
   </div>
 </template>
 <script>
@@ -53,22 +55,22 @@ export default {
       isOpen: false,
       fullArea: '',
       areaList: {},
-      show:false,
-      actions:[
-        { name: '1-3年',workingTime :'100' },
-        { name: '3-5年',workingTime :'101' },
-        { name: '5-8年',workingTime :'102' },
-        { name: '10年以上',workingTime :'103' },
+      show: false,
+      actions: [
+        { name: '1-3年', workingTime: '100' },
+        { name: '3-5年', workingTime: '101' },
+        { name: '5-8年', workingTime: '102' },
+        { name: '10年以上', workingTime: '103' },
       ],
-      isshow:false,
-      isActions:[
-        { name: '买卖经纪人',saleType  :'0' },
-        { name: '内场销售',saleType  :'1' },
-        { name: '销售专家',saleType  :'2' }, 
+      isshow: false,
+      isActions: [
+        { name: '买卖经纪人', saleType: '0' },
+        { name: '内场销售', saleType: '1' },
+        { name: '销售专家', saleType: '2' },
       ],
-      workingTime:'',
-      saleType:'',
-      list:''
+      workingTime: '',
+      saleType: '',
+      list: ''
     }
   },
   mounted() {
@@ -76,14 +78,14 @@ export default {
   },
   methods: {
     // areaList 获取
-    getAreaList () {
-      let keys =  Object.keys(this.fullArea.city_list)
+    getAreaList() {
+      let keys = Object.keys(this.fullArea.city_list)
       let data = {}
       keys.forEach(ele => {
         data[ele] = '不限'
       })
-      let county_list = Object.assign({},this.fullArea.county_list, data)
-      this.areaList = Object.assign({},this.fullArea,{county_list: county_list})
+      let county_list = Object.assign({}, this.fullArea.county_list, data)
+      this.areaList = Object.assign({}, this.fullArea, { county_list: county_list })
     },
     goEdit() {
       if (!this.userInfo.institutionName) {
@@ -114,47 +116,47 @@ export default {
     openTimeSelect() {
       this.show = true
     },
-    openShopSelect () {
+    openShopSelect() {
       this.isshow = true
     },
-    getlist(){
-      userService.getUserInfo({agentId:this.userInfo.agentId
-      }).then((result) => {   
-          this.list = result.labelList
-          this.saleType = result.saleType
-          this.workingTime = result.workingTime
+    getlist() {
+      userService.getUserInfo({        agentId: this.userInfo.agentId
+      }).then((result) => {
+        this.list = result.labelList
+        this.saleType = result.saleType
+        this.workingTime = result.workingTime
       }).catch((err) => {
-          console.log(err)
+        console.log(err)
       })
     },
-    onSelect(item) {  
-      userService.upDateUserInfo({workingTime:item.workingTime
-      }).then((result) => {   
-          this.show = false 
-          this.workingTime = result.workingTime  
-          this.$store.dispatch(
-            'getUserInfo',
-            Object.assign({},this.userInfo, {
-              workingTime: item.workingTime
-            })
-          )
+    onSelect(item) {
+      userService.upDateUserInfo({        workingTime: item.workingTime
+      }).then((result) => {
+        this.show = false
+        this.workingTime = result.workingTime
+        this.$store.dispatch(
+          'getUserInfo',
+          Object.assign({}, this.userInfo, {
+            workingTime: item.workingTime
+          })
+        )
       }).catch((err) => {
-          console.log(err)
+        console.log(err)
       })
     },
     shopSelect(item) {
-      userService.upDateUserInfo({saleType:item.name
-      }).then((result) => { 
-          this.isshow = false  
-          this.saleType = result.saleType 
-          this.$store.dispatch(
-            'getUserInfo',
-            Object.assign({},this.userInfo, {
-              saleType: item.name
-            })
-          )         
+      userService.upDateUserInfo({        saleType: item.name
+      }).then((result) => {
+        this.isshow = false
+        this.saleType = result.saleType
+        this.$store.dispatch(
+          'getUserInfo',
+          Object.assign({}, this.userInfo, {
+            saleType: item.name
+          })
+        )
       }).catch((err) => {
-          console.log(err)
+        console.log(err)
       })
     },
     getCityName(data) {
@@ -177,7 +179,7 @@ export default {
       // this.userInfo.majorCity = this.majorCity
       if (result) {
         // this.$store.getUserInfo(types.USER_INFO, this.userInfo)
-        let data =  Object.assign({},this.userInfo,{
+        let data = Object.assign({}, this.userInfo, {
           majorRegion: this.majorRegion,
           majorCity: this.majorCity
         })
@@ -204,11 +206,11 @@ export default {
     }
   },
   watch: {
-    userInfo(v) {}
+    userInfo(v) { }
   }
 }
 </script>
-<style lang="less"> 
+<style lang="less">
 .user-edit-page {
   width: 100%;
   height: 100%;
@@ -217,37 +219,37 @@ export default {
   > .user-advance-info {
     background: #fff;
     > .user-newavatar {
-        line-height: 92px;
-        padding: 0 20px;
-        .van-cell__title {
-          font-size: 16px;
-          font-weight: 400;
-          color: #333333;
+      line-height: 92px;
+      padding: 0 20px;
+      .van-cell__title {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333333;
+      }
+      .editIcon-icon {
+        height: 92px;
+        display: flex;
+        div:nth-child(1) {
+          width: 50%;
         }
-        .editIcon-icon {  
+        div:nth-child(2) {
+          width: 49%;
           height: 92px;
-          display: flex;
-          div:nth-child(1) {
-            width:50%;
+          > img {
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+            margin-left: 60%;
+            object-fit: cover;
+            margin-top: 16px;
           }
-          div:nth-child(2) {
-            width: 49%;
-            height: 92px;
-            >img {
-              width:60px;
-              height: 60px;
-              border-radius: 100%;
-              margin-left: 60%;
-              object-fit: cover; 
-              margin-top: 16px; 
-            }
-          } 
         }
-        .van-cell__right-icon {
-          padding: 38px 0;
-        }
+      }
+      .van-cell__right-icon {
+        padding: 38px 0;
+      }
     }
-    .cell-item { 
+    .cell-item {
       line-height: 56px;
       padding: 0 20px;
       &.user-avatar {
@@ -270,7 +272,7 @@ export default {
       }
     }
   }
-  > .user-base-info { 
+  > .user-base-info {
     .cell-item {
       position: relative;
       .self-avtar {
@@ -283,17 +285,22 @@ export default {
     }
     .tag-edit {
       position: relative;
-      display: block;  
+      display: block;
       .user-tag {
         float: right;
         margin-right: 20px;
-      } 
+        .van-tag {
+          margin-right: 4px;
+          background-color: rgba(143, 159, 177, 0.15) !important;
+          color: rgba(92, 95, 102, 1);
+        }
+      }
       .van-cell__right-icon {
         position: absolute;
         right: 22px;
         top: 3px;
-      } 
+      }
     }
-  } 
+  }
 }
 </style>
