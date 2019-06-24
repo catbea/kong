@@ -213,6 +213,7 @@ export default {
         },
       ],
       wechatAccount:"", //微信号
+      noFocusWx:false,//发送微信不拉起输入框
       cardDelFlag: 0,
       customBaseInfo: null,
       defaultMsgPopShow: false,
@@ -302,6 +303,7 @@ export default {
         return ;
       }
       this.message = "我的微信号：<span style='color:#007AE6'>" + this.wechatAccount +"</span>";
+      this.noFocusWx = true;
       this.sendMessage(1,'')
     },
     blur() {
@@ -759,7 +761,10 @@ export default {
         // this.isSendding = false
       }
 
-      document.getElementById('message').focus()
+      if(!this.noFocusWx){
+        document.getElementById('message').focus()
+      }
+      this.noFocusWx = false;
 
     } /*  切换语音输入*/,
     switchMsg() {
