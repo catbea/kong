@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class=" estate-item" :class="itemBorder&&'van-hairline--bottom'" :style="{paddingBottom:(info&&info.divisionRules)&&'15px', border: ($route.path.indexOf('/discover') > -1) && '1px solid rgba(177,189,210,0.5)'}">
+    <div class=" estate-item" :class="itemBorder&&'van-hairline--bottom'" :style="{paddingBottom:(info&&info.divisionRules)&&'15px', borderBottom: !preview&& '1px solid rgba(177,189,210,0.5)',border: preview&& '1px solid rgba(177,189,210,0.5)'}">
       <div class="main-continer" @click="mainAreaClickHandler" v-if="info">
         <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
           <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
@@ -54,6 +54,7 @@ export default {
     itemBorder: { type: Boolean, default: false },
     showCard: {type: Boolean, default: false},
     isInArticle:{ type: Number, default: 0 },
+    preview: { type: Boolean, default: false },
     conf: {
       type: Object,
       default: () => {
@@ -85,7 +86,7 @@ export default {
   }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .specialOffer{
   padding: 12px 16px;
   border: 1px solid rgba(177, 189, 210, 0.5);
@@ -147,7 +148,7 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: #333333;
-        padding-bottom: 8px;
+        margin-bottom: 8px;
         .free{
           display: inline-block;
           font-size: 10px;
@@ -189,8 +190,8 @@ export default {
         padding-bottom: 3px;
       }
       > .tag-box {
-        padding: 5px 0;
-        margin-left: -3px;
+        padding: 3px 0;
+        margin-left: -5px;
       }
       > .estate-info {
         white-space: nowrap;

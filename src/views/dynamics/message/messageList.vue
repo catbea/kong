@@ -40,8 +40,8 @@
           v-for="(item,key) in messageList"
           :key="key" @click="msgClickHandle(item)">
           <van-swipe-cell :right-width="80" :on-close="onClose">          
-            <van-cell-group>  
-              <div class="messageInfo-sys-container">
+            <!-- <van-cell-group>   -->
+              <div class="messageInfo-sys-container borderBtn">
                 <div class="messageInfo-sys-left">
                   <div
                     :class="item.unreadMsgCount < 10 ? 'messageInfo-sys-nums' :'messageInfo-sys-num' "
@@ -60,7 +60,7 @@
                   <p class="sys-right-btn" v-html="formatMsg(item)"></p>
                 </div>
               </div>
-            </van-cell-group>
+            <!-- </van-cell-group> -->
             <span slot="right" class="delete-btn" @click="delMsg(key)">删除</span>
           </van-swipe-cell>
         </div>
@@ -297,8 +297,10 @@ export default {
       background: #ffffff;
       margin: 0 16px;
       .messageInfo-sys-container {
+        position: relative;
         display: flex;
         padding: 10px 0;
+        margin-right: -2px;
         .messageInfo-sys-left {
           width: 50px;
           .sys-left-img {
@@ -378,6 +380,22 @@ export default {
           }
         }
       }
+      .borderBtn{
+        &::after{
+          content: "";
+          width: 200%;
+          height: 1px;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          transform-origin: left bottom;
+          border-bottom: 1px solid #E2E2E3;
+          transform: scale(0.5);
+        }  
+        // &:last-child::after{
+        //   display: none;
+        // }      
+      }      
     }
     .messageInfo-fill {
       height: 10px;

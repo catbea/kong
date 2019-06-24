@@ -70,6 +70,7 @@ export default {
   // padding: 5px;
   text-indent: unset;
   > .paragraph-container {
+    padding: 8px;
     position: relative;
     display: flex;
     flex-direction: column;

@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="recommend-house-container" v-if="!(previewFlag&&recommendList.length===0)">
-      <title-bar :conf="{title:'推荐房源'}"/>
+      <title-bar :conf="{title:'推荐房源'}" style="margin:0 -7px;"/>
       <div class="recommend-house-box">
         <edit-houses v-model="recommendList" :count="3" :reminder="true" @click="multiAddClickHandler" :isInArticle="0" :preview="previewFlag" @delete="multiHouseDelHandler"/>
         <p class="open-pormpt" v-if="info&&!previewFlag&&parseInt(info.linkerCount)<3">{{info.linkerCount==0?'您暂未开通任何楼盘，建议开通更多楼盘':'当前开通楼盘数量不足3个，建议开通更多楼盘后进行使用'}}</p>
@@ -473,7 +473,7 @@ export default {
     padding-bottom: 10px;
     margin-bottom: 15px;
     > .discover-title {
-      padding: 10px 15px;
+      padding: 10px 8px;
       padding-top: 20px;
       padding-bottom: 17px;
       font-size: 22px;
@@ -482,7 +482,7 @@ export default {
       line-height: 1.3;
     }
     > .discover-view-info {
-      margin: 0 15px;
+      margin: 0 8px;
       font-size: 13px;
       display: flex;
       justify-content: space-between;
@@ -498,9 +498,9 @@ export default {
       }
     }
     > .discover-detail-content {
-      padding: 15px;
+      padding: 8px;
       padding-bottom: 0;
-      padding-top: 34px;
+      padding-top: 32px;
       font-size: 16px;
       color: #333333;
       font-weight: 400;
@@ -512,9 +512,9 @@ export default {
         height: auto !important;
       }
       .edit-box {
-        margin-top: 24px;
-        .edit-houses {
-          margin-top: 24px;
+        margin-top: 16px;
+        .edit-houses {          
+          margin-top: 16px;
         }
         div,section{
           width: auto !important;
@@ -553,7 +553,7 @@ export default {
     padding-bottom: 30px;
     padding-top: 10px;
     > .recommend-house-box {
-      margin: 0 15px;
+      margin: 16px 8px 0;
       > .open-pormpt {
         text-align: center;
         font-size: 12px;
@@ -572,7 +572,7 @@ export default {
     right: 0;
     bottom: 0;
     height: 72px;
-    padding: 14px 16px;
+    padding: 14px 8px;
     > .bar-save-btn{
       width: 108px;
       height: 44px;
