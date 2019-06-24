@@ -57,7 +57,7 @@
                     <!-- >3分钟前 -->
                     <span class="sys-right-time">{{ item.msgTimeStamp | dateFormatterToHuman}}</span>
                   </p>
-                  <p class="sys-right-btn">{{formatMsg(item)}}</p>
+                  <p class="sys-right-btn" v-html="formatMsg(item)"></p>
                 </div>
               </div>
             </van-cell-group>
