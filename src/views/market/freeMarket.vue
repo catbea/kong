@@ -85,7 +85,7 @@ export default {
     notShowFinished: false, //不展示
     showPage: 1,
     notShowPage: 1,
-    pageSize: 4,
+    pageSize: 10,
     showProjectName: '', //展示搜索名
     setShowName: null,
     showProjectFilters: {}, //展示的筛选类型
@@ -172,7 +172,7 @@ export default {
         this.showProjectName = val
         // this.showProjectFilters = {}
         this.showFinished = false
-        this.showMarketList = []
+        this.freeMarketList = []
         if (this.active === 1) {
           this.showGetMyMarketInfo() //根据搜索字请求展示的楼盘数据
         } else {
@@ -184,7 +184,7 @@ export default {
     showProjectFilters: {
       handler(val) {
         this.showPage = 1
-        this.showMarketList = []
+        this.freeMarketList = []
         this.showFinished = false
         if (this.active === 1) {
           this.showGetMyMarketInfo() //根据搜索字请求展示的楼盘数据
@@ -273,8 +273,8 @@ export default {
     },
     stickNumHandle() {
       //判断有没有超过3个置顶
-      for (let i = 0; i < this.showMarketList.length; i++) {
-        const element = this.showMarketList[i]
+      for (let i = 0; i < this.freeMarketList.length; i++) {
+        const element = this.freeMarketList[i]
         if (element.recommand == 10) {
           this.stickNum++
         }
@@ -316,7 +316,7 @@ export default {
     },
     marketShowHandle() {
       //展示/不展示都没数据时
-      if (this.showMarketList.length == 0 && this.notShowMarketList.length == 0) {
+      if (this.freeMarketList.length == 0 && this.notShowMarketList.length == 0) {
         this.marketShow = false
       } else {
         this.marketShow = true
@@ -331,8 +331,8 @@ export default {
           this.commonList.splice(index, 1)
         }
       }
-      for (let i = 0; i < this.showMarketList.length; i++) {
-        const element = this.showMarketList[i] //遍历未/普通推荐改大师
+      for (let i = 0; i < this.freeMarketList.length; i++) {
+        const element = this.freeMarketList[i] //遍历未/普通推荐改大师
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '1'
         }
@@ -359,8 +359,8 @@ export default {
           this.swipeList = this.masterList.concat(this.commonList)
         }
       }
-      for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index] //遍历大师改成未推荐
+      for (let index = 0; index < this.freeMarketList.length; index++) {
+        const element = this.freeMarketList[index] //遍历大师改成未推荐
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '0'
         }
@@ -375,8 +375,8 @@ export default {
           this.masterList.splice(index, 1)
         }
       }
-      for (let i = 0; i < this.showMarketList.length; i++) {
-        const element = this.showMarketList[i] //遍历未/大师推荐改普通
+      for (let i = 0; i < this.freeMarketList.length; i++) {
+        const element = this.freeMarketList[i] //遍历未/大师推荐改普通
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '2'
         }
@@ -402,8 +402,8 @@ export default {
           this.swipeList = this.masterList.concat(this.commonList)
         }
       }
-      for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index] //遍历普通改成未推荐
+      for (let index = 0; index < this.freeMarketList.length; index++) {
+        const element = this.freeMarketList[index] //遍历普通改成未推荐
         if (n.linkerId === element.linkerId) {
           element.masterRecommand = '0'
         }
@@ -412,8 +412,8 @@ export default {
     //-----置顶操作
     recommandTrueHandle(n) {
       this.stickNum++
-      for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index] //遍历未置顶改成置顶
+      for (let index = 0; index < this.freeMarketList.length; index++) {
+        const element = this.freeMarketList[index] //遍历未置顶改成置顶
         if (n.linkerId === element.linkerId) {
           element.recommand = '10'
         }
@@ -421,8 +421,8 @@ export default {
     },
     recommandFalseHandle(n) {
       this.stickNum--
-      for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index] //遍历置顶改成未置顶
+      for (let index = 0; index < this.freeMarketList.length; index++) {
+        const element = this.freeMarketList[index] //遍历置顶改成未置顶
         if (n.linkerId === element.linkerId) {
           element.recommand = '0'
         }
@@ -436,8 +436,8 @@ export default {
           element.masterRecommand = '0'
         }
       }
-      for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index]
+      for (let index = 0; index < this.freeMarketList.length; index++) {
+        const element = this.freeMarketList[index]
         if (n === element.linkerId) {
           element.masterRecommand = '0'
         }
@@ -528,26 +528,26 @@ export default {
       } else {
         obj.city = this.selectedCity
       }
-      const resShow = await userService.getMyMarket(obj)
+      const resShow = await userService.getFreeLinkerList(obj)
       console.log(resShow, '展示的楼盘数据')
       // 数据重复加载
       if (page == 1) {
-        this.showMarketList = resShow.records
+        this.freeMarketList = resShow.records
       } else {
-        this.showMarketList = this.showMarketList.concat(resShow.records)
+        this.freeMarketList = this.freeMarketList.concat(resShow.records)
       }
       this.stickNumHandle() //请求的初始置顶个数
       let arr = []
       let json = {}
-      for (let index = 0; index < this.showMarketList.length; index++) {
-        const element = this.showMarketList[index]
+      for (let index = 0; index < this.freeMarketList.length; index++) {
+        const element = this.freeMarketList[index]
         if (!json[element.linkerId]) {
           arr.push(element)
           json[element] = 1
         }
       }
-      this.showMarketList = arr
-      if (this.showMarketList.length == 0) {
+      this.freeMarketList = arr
+      if (this.freeMarketList.length == 0) {
         this.yes = true
       } else {
         this.yes = false
@@ -615,11 +615,11 @@ export default {
     },
     closeCut(n) {
       this.notShowMarketList.push(n)
-      for (let index = 0; index < this.showMarketList.length; index++) {
+      for (let index = 0; index < this.freeMarketList.length; index++) {
         //关闭展示
-        const element = this.showMarketList[index]
+        const element = this.freeMarketList[index]
         if (n.linkerId == element.linkerId) {
-          this.showMarketList.splice(index, 1)
+          this.freeMarketList.splice(index, 1)
           element.masterRecommand = 0 //变成未推荐
           element.recommand = 0 //变成未置顶
         }
@@ -631,7 +631,7 @@ export default {
           this.swipeList.splice(i, 1)
         }
       }
-      if (this.showMarketList.length == 0) {
+      if (this.freeMarketList.length == 0) {
         this.yes = true
       }
       if (this.notShowMarketList.length != 0) {
@@ -640,7 +640,7 @@ export default {
       }
     },
     openCut(n) {
-      this.showMarketList.push(n)
+      this.freeMarketList.push(n)
       for (let index = 0; index < this.notShowMarketList.length; index++) {
         const element = this.notShowMarketList[index]
         if (n.linkerId == element.linkerId) {

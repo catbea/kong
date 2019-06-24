@@ -12,10 +12,10 @@
                 <use :xlink:href="item.Icon"></use>
               </svg>
             </div>
-            <div class="scale-1px-bottom">
+            <div class="van-hairline--bottom">
               <span class="grou1Icon-p" style="font-size:14px;">{{item.title}}</span>
             </div>
-            <div class="scale-1px-bottom">
+            <div class="van-hairline--bottom">
               <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;">
                 <use xlink:href="#icon-arrow-"></use>
               </svg>

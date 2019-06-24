@@ -213,10 +213,10 @@ export default {
       initialSlide: this.activeIndex,
       coverflowEffect: {
         rotate: 20,
-        stretch: 30,
-        depth: 60,
-        modifier: 1,
-        slideShadows: true
+        stretch: 40,
+        depth: 40,
+        modifier: 2,
+        slideShadows: false
       },
       on: {
         slideChange: function() {

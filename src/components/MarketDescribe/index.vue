@@ -371,7 +371,7 @@ export default {
           // flex: 1;
           height:93px;
           width:227px;
-          padding-right: 12px;
+          // padding-right: 12px;
           .market-name {
             display: flex;
             justify-content: space-between;

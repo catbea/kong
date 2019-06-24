@@ -61,8 +61,8 @@
           <p class="welfare-desc">{{vipTimeInfo}}</p>
         </div>
         <div>
-          <div class="info-btn" v-if="goType==false">
-            <button class="btn">立即开通</button>
+          <div class="info-btn" v-if="goType==false"> 
+            <img src="../../assets/img/user/Rectangle 3@2x.png" alt="" class="btn">
           </div>
           <div class="info-btn_text" v-else>  
               <span style="font-size:10px;">{{dredgeText}}</span> 
@@ -250,6 +250,7 @@ export default {
                 color: #1A2733;
                 > .username-text { 
                   font-size: 20px;
+                  font-weight: bold;
                 }
                 > .username-edit-icon {
                   color: rgba(255, 255, 255, 0.15);
@@ -408,19 +409,13 @@ export default {
         line-height: 22px;
       }
       div>.info-btn{ 
-        margin-top: 24px; 
-        line-height: 22px; 
+        margin-top: 10px; 
+        // line-height: 22px; 
         float: right;
-        margin-right: 16px;
+        // margin-right: 16px;
         .btn {
           width:80px;
-          height:32px;
-          border: none;
-          border-radius:16px; 
-          color:#66421F;
-          box-shadow:2px 2px rgba(225, 161, 85, 0.4);
-          font-size:12px;
-          background: linear-gradient(90deg, rgba(255, 209, 116, 1) 0%, rgba(215, 145, 75, 1) 100%);
+          height:32px;   
         }
       }
       div>.info-btn_text { 

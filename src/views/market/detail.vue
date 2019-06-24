@@ -86,7 +86,7 @@
           
           <p class="slogen" v-show="info.promotionalLanguage">{{info.promotionalLanguage}}</p>
           <div class="tags" v-if="tagGroupArr">
-            <span v-for="(item,index) in tagGroupArr.slice(0,3)" :class="{'active': index === 0}">{{item || '热销中'}}</span>
+            <span v-for="(item,index) in tagGroupArr.slice(0,3)" :class="{'active': item === '热销中', 'red': item === '即将发售'}">{{item || '热销中'}}</span>
           </div>
           <div class="house-info-form">
             <div class="item">
@@ -1464,6 +1464,9 @@ export default {
           color: #5C5F66;
           &.active{
             background-color: rgba(0,120,255,0.15);
+          }
+          &.red{
+            background-color: rgba(250, 41, 41, 0.15);
           }
         }
       }
