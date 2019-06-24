@@ -38,7 +38,7 @@
             <div class="market-info">
               <p class="market-name"><span class="name">{{item.linkerName}}</span> <span class="iconShare" @click.stop="goShare(item)">分享</span></p>
               <p class="market-location">{{item.city}} {{item.county}}</p>
-              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '售罄'][item.saleStatus]}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
+              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '', '售罄'][item.saleStatus]}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
               <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item,index)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
               <p class="market-price" v-else  @click.stop="popupHandle(item,index)"><span class="price">{{item.price}}{{item.priceUnit}}</span><span class="icon iconfont icon-more"></span></p>
             </div>
@@ -396,7 +396,7 @@ export default {
   .market-item {
     display: flex;
     font-size: 14px;
-    margin-top: 15px;
+    margin-bottom: 15px;
     .market-img {
       width: 120px;
       height: 90px;
@@ -434,6 +434,7 @@ export default {
         font-size: 18px;
         font-weight: 600;
         color: rgba(19, 41, 79, 1);
+        margin-bottom: 0;
         .name {
           flex: 1;
           line-height: 30px;
@@ -481,6 +482,7 @@ export default {
         font-weight: 600;
         color: rgba(68, 81, 102, 1);
         display: flex;
+        margin-bottom: 0;
         .price {
           flex: 1;
         }

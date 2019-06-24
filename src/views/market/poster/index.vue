@@ -307,7 +307,7 @@ export default {
       await this.getPosterInfo(this.linkedId)
       await this.getAgentLinkerPoster(this.shareBaseInfo.agentId)
       this.editData = Object.assign({}, this.shareBaseInfo)
-      this.avatarUrl = this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0] || ''
+      this.avatarUrl = (this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0]) || (this.shareInfo && this.shareInfo.imageUrl) || ''
       this.showLoading = false
       if (!this.showEdit) {
         this.viewCover()

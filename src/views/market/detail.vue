@@ -1807,7 +1807,7 @@ export default {
     }
   }
   > .evaluating-box {
-    margin-top: 15px;
+    margin-top: 10px;
     .evaluating-content {
       margin-top: 15px;
       height: 90px;

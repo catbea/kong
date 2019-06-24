@@ -430,27 +430,27 @@ export default {
 <style lang="less">
 #clip_button {
   position: absolute;
-  right: 3%;
+  right: 10%;
   bottom: 20px;
-  width: 80px;
+  width: 120px;
   height: 40px;
   border: none;
   font-size: 0.36rem;
-  border-radius: 2px;
-  /* background: #1AAD19; */
+  border-radius: 6px;
+  background-color: #0069ca;
   color: #fff;
 }
 #cancel_clip {
   position: absolute;
-  left: 3%;
+  left: 10%;
   bottom: 20px;
-  width: 80px;
+  width: 120px;
   height: 40px;
   border: none;
   font-size: 0.36rem;
-  border-radius: 2px;
+  border-radius: 6px;
   color: #fff;
-  /* background:#E64340; */
+  background-color: #999;
 }
 #clip_container.container {
   z-index: 99;

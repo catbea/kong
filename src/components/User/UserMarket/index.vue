@@ -121,7 +121,7 @@ export default {
     imgShare: require('IMG/user/rectangle.png'),
     imgPlay: require('IMG/user/Oval@2x.png'),
     imgCommission: require('IMG/user/collection/icon_commission@2x.png'),
-    status: ['热销中', '即将发售', '售罄'],
+    status: ['热销中', '即将发售', '', '售罄'],
     pastShow: '是否过期',
     stride: true,
     showTask: false,
@@ -649,7 +649,7 @@ export default {
           .apostrophe {
             position: absolute;
             right: -5px;
-            width: 40px;
+            width: 56px;
             height: 40px;
             display: flex;
             align-items: center;
@@ -698,7 +698,7 @@ export default {
     .channel-box{
       font-size: 12px;
       color: #445166;
-      padding: 10px 0;
+      padding: 0 0 10px 0;
       text-align: right;
       background-color: transparent;
       span{

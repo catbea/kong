@@ -3,7 +3,7 @@
     <div class="user-market-box">
       <!-- 免费楼盘 -->
       <div class="my-market">
-        <div :class="{isFixed:searchBar}">
+        <div class="top-search" :class="{isFixed:searchBar}">
           <search v-model="showProjectName" @areaClick="areaClickHandler2" :conf="freeContent"></search>
           <screen
             v-model="showProjectFilters"
@@ -756,7 +756,6 @@ export default {
   .user-market-box {
     position: relative;
     display: flex;
-    margin-top: 5px;
     .notMarket {
       width: 100%;
       margin: 56px 0 100px 0;
@@ -775,6 +774,9 @@ export default {
     }
     .market-left,.market-right,.my-market {
       width: 100%;
+    }
+    .top-search{
+      margin-top: 16px;
     }
   }
   .title-bar {

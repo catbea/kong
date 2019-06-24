@@ -2,7 +2,7 @@
   <div class="market-page">
     <!-- <div style="height:192px;width:300px;"></div> -->
     <div class="fixed">
-      <div class="van-hairline--bottom">
+      <div class="">
       <div class="search-box">
         <div class="search-comp">
           <search :conf="searchContent" @areaClick="areaClickHandler" @focus="focusHandler"></search>

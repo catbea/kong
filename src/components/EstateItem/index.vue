@@ -106,12 +106,12 @@ export default {
         font-size: 16px;
         font-weight: 600;
         color: #333333;
-        padding-bottom: 8px;
-        line-height: 16px;
-        // max-width: 160px;
-        // overflow: hidden;
-        // text-overflow: ellipsis;
-        // white-space: nowrap;
+        margin-bottom: 8px;
+        max-width: 150px;
+        line-height: 1.1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         .free{
           display: inline-block;
           font-size: 10px;
@@ -134,7 +134,7 @@ export default {
         padding-bottom: 3px;
       }
       > .tag-box {
-        padding: 5px 0;
+        padding: 5px 0 4px;
         margin-left: -3px;
       }
       > .estate-info {

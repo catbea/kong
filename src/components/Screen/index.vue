@@ -194,10 +194,8 @@ export default {
     background: rgba(255, 255, 255, 1);
     background-position: center;
     background-repeat: no-repeat;
-    padding-left: 18px;
-    margin-bottom: 5px;
     line-height: 23px;
-    margin-right: 13px;
+    margin: 0 16px 5px 16px;
     li {
       display: flex;
       > .value-content {
