@@ -3,7 +3,7 @@
     <div class="user-market-box">
       <!-- 免费楼盘 -->
       <div class="my-market">
-        <div class="top-search" :class="{isFixed:searchBar}">
+        <div class="top-search isFixed" >
           <search v-model="showProjectName" @areaClick="areaClickHandler2" :conf="freeContent"></search>
           <screen
             v-model="showProjectFilters"
@@ -19,7 +19,7 @@
           finished-text="没有更多了"
           @load="getFreeMarketInfo"
           v-if="!yes"
-          :class="{screen:flag,marginFlxed:searchBar}"
+          class="marginFlxed"
         >
           <market-describe v-for="(item,index) in freeMarketList" :showFree="false" :key="index" :itemInfo="item" :vipInfo="vipInfo" @skipDetail="skipDetail(item)"  :borderBottom="true"></market-describe>
         </van-list>
@@ -55,22 +55,22 @@ export default {
     MarketDescribe
   },
   mounted() {
-    document.querySelector('.router-view').addEventListener(
-      'scroll',
-      () => {
-        let r = (document.querySelector('.router-view') && document.querySelector('.router-view').scrollTop) || 0
-        let u = (document.querySelector('.user-market-box') && document.querySelector('.user-market-box').offsetTop) || 0
-        if (r > u) {
-          this.searchBar = true
-        } else {
-          this.searchBar = false
-        }
-      },
-      false
-    )
+    // document.querySelector('.router-view').addEventListener(
+    //   'scroll',
+    //   () => {
+    //     let r = (document.querySelector('.router-view') && document.querySelector('.router-view').scrollTop) || 0
+    //     let u = (document.querySelector('.user-market-box') && document.querySelector('.user-market-box').offsetTop) || 0
+    //     if (r > u) {
+    //       this.searchBar = true
+    //     } else {
+    //       this.searchBar = false
+    //     }
+    //   },
+    //   false
+    // )
   },
   data: () => ({
-    searchBar: false, //是否吸顶
+    searchBar: true, //是否吸顶
     flag: false,
     screenNum: null,
     stickNum: 0, //置顶个数
@@ -796,7 +796,7 @@ export default {
   background-color: #fff;
   top: 0;
   z-index: 999;
-  padding-top: 3px;
+  padding-top: 16px;
 }
 .marginFlxed {
   margin-top: 78px;
