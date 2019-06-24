@@ -12,7 +12,8 @@ export default {
         height: document.documentElement.clientHeight,
         width: document.documentElement.clientWidth,
         url:"",
-        pdfUrl:''
+        pdfUrl:'',
+        developersId:""
     }),
     computed: {
     ...mapGetters(['userInfo']),
@@ -22,11 +23,11 @@ export default {
     },
     mounted() { 
         this.getList();
-        this.gostudyAdd();
+        // this.gostudyAdd();
     },
     methods:{
         gostudyAdd() {
-            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.developersId,linkerId:this.$route.query.linkerId 
+            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.developersId,linkerId:this.$route.query.linkerId 
             }).then((result) => { 
             }).catch((err) => {
                 console.log(err)
@@ -35,8 +36,10 @@ export default {
         getList () {
             userService.getDevelopersMaterialDetail({id:this.$route.query.id
             }).then((result) => { 
-                this.pdfUrl = result.content 
-                this.getFile(this.pdfUrl)
+                this.pdfUrl = result.content;
+                this.developersId = result.developersId; 
+                this.getFile(this.pdfUrl);
+                this.gostudyAdd();
             }).catch((err) => {
                 console.log(err)
             })

@@ -20,18 +20,19 @@ export default {
         title:"楼盘推介项目介绍资料学习，学习查看楼盘推介项",
         time:'2019/05/13',
         num:'912',
-        content:""
+        content:"",
+        developersId:""
     }),
     computed: {
     ...mapGetters(['userInfo']),
     },
     mounted() {
         this.geth5()
-        this.gostudyAdd()
+        // this.gostudyAdd()
     },
     methods:{
         gostudyAdd() {
-            userService.getDevelopersMaterialadd({materialId :this.$route.query.id,agentId :this.userInfo.agentId,developersId:this.$route.query.developersId,linkerId:this.$route.query.linkerId 
+            userService.getDevelopersMaterialadd({materialId :this.$route.query.id,agentId :this.userInfo.agentId,developersId:this.developersId,linkerId:this.$route.query.linkerId 
             }).then((result) => { 
             }).catch((err) => {
                 console.log(err)
@@ -40,10 +41,12 @@ export default {
         geth5 () {
             userService.getDevelopersMaterialDetail({id:this.$route.query.id
             }).then((result) => {   
-                this.content = result.content 
-                this.title = result.title
-                this.time = result.updateTime
-                this.num = result.browseNum
+                this.content = result.content ;
+                this.title = result.title;
+                this.time = result.updateTime;
+                this.num = result.browseNum;
+                this.developersId = result.developersId;
+                this.gostudyAdd();
             }).catch((err) => {
                 console.log(err)
             })

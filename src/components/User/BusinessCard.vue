@@ -46,6 +46,28 @@
         </p>
       </router-link> 
     </div>
+    <!-- <div class="business-box">
+      <router-link tag="div" to="/user/myMember" class="box_info">
+        <div>
+          <img :src="crownIcon">
+        </div>
+        <div>
+          <p class="info-title vip-status">{{isVipInfo}}</p>
+          <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
+        </div>
+        <div>
+          <p class="info-btn" v-if="goType==false">
+            <button class="btn">立即开通</button>
+          </p>
+          <p class="info-btn_text" v-else>
+            <span style="font-size:10px;display:block;">{{dredgeText}}</span> 
+            <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;height:80px;line-height: 80px;">
+              <use xlink:href="#icon-arrow"></use>
+            </svg> 
+          </p>
+        </div>
+      </router-link> 
+    </div> -->
   </div>
 </template>
 <script>
@@ -368,6 +390,15 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+    }
+  }
+  >.business-box {
+    background: #ffffff;
+    margin-top: 6px;
+    height: 80px;
+    width: 100%;
+    .box_info {
+      display: flex;
     }
   }
 }
