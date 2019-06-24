@@ -28,7 +28,7 @@
       <div class="discover-detail-content">
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
           <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :isInArticle="1" :showCard="true" :info="inlayHouseInfo" ></estate-item>
+          <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :isInArticle="1" :preview="true" :showCard="true" :info="inlayHouseInfo" ></estate-item>
           <!-- @click.native="popHandler(inlayHouseInfo)" -->
         </div>
       </div>
@@ -67,7 +67,7 @@
       <div class="recommend-houses" v-if="recommendHouseList.length>0">
         <title-bar :conf="{title: '推荐房源'}"/>
         <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :isInArticle="0" :key="index" :info="item"></estate-item>
+          <estate-item v-for="(item,index) in recommendHouseList" :isInArticle="0" :preview="true" :key="index" :info="item"></estate-item>
           <!-- @click="popHandler(item)" -->
         </div>
       </div>
@@ -109,13 +109,13 @@
         <i v-else class="icon iconfont icon-Building_details_col1"></i>
         <p>收藏</p>
       </div>
-      <div class="tool-item" @click="shareHandler">
-        <i class="icon iconfont icon-Building_details_for"></i>
-        <p>分享</p>
-      </div>
       <div class="tool-item" v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)" @click="delHandler">
         <i class="icon iconfont icon-delete"></i>
         <p>删除下架</p>
+      </div>
+      <div class="tool-item" @click="shareHandler">
+        <i class="icon iconfont icon-Building_details_for"></i>
+        <p>分享</p>
       </div>
     </div>
     <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
@@ -892,7 +892,7 @@ export default {
       margin-bottom: 10px;
     }
     > .easy-look-container {
-      padding: 10px 16px 24px 16px;
+      padding: 10px 16px 32px 16px;
       // border-bottom: 10px solid #f7f9fa;
       > .easy-look-top {
         display: flex;
@@ -975,7 +975,7 @@ export default {
             width: 100%;
             display: flex;
             flex-direction: row;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
             > .comment-right {
               width: 85%;
               margin-left: 8px;
@@ -1030,7 +1030,7 @@ export default {
     margin-top: 10px;
     border-top: 10px solid #f7f9fa;
     > .recommend-houses-content {
-      padding: 10px 15px;
+      padding: 16px 15px;
       div:nth-child(n) {
         margin-bottom: 10px;
       }
@@ -1085,6 +1085,7 @@ export default {
     height: 72px;
     color: #666666;
     > div {
+      flex: 1;
       text-align: center;
       > i {
         display: block;

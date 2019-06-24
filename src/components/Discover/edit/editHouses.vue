@@ -1,11 +1,11 @@
 <template>
-  <div class="edit-houses">
+  <div class="edit-houses" @click="addClickHandler">
     <div class="house-box" :class="!preview&&'box_border_house'" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
-        <estate-item :key="index" :showRules="false" :showCard="showCard" :isInArticle="isInArticle" :info="itemData(index-1)"/>
+        <estate-item :key="index" :showRules="false" :showCard="showCard" :preview="preview" :isInArticle="isInArticle" :info="itemData(index-1)"/>
         <i class="icon del-icon" v-if="!preview" @click.stop="delClickHandler(index-1)"/>
       </div>
-      <div class="empty-box" v-if="index>currentData.length && !preview" @click="addClickHandler">
+      <div class="empty-box" v-if="index>currentData.length && !preview">
         <div class="info-box">
           <div class="add-icon">
             <i class="icon iconfont icon-write_add"></i>
@@ -55,7 +55,6 @@ export default {
           temp.linkerTags = [statusArr[temp.saleStatus], ...temp.condition]
         }
       }
-      console.log(temp.linkerTags);
       while (temp.linkerTags.length > 3) {
         temp.linkerTags.pop()
       }
@@ -80,7 +79,7 @@ export default {
 </script>
 <style lang="less">
 .edit-houses {
-  margin: 0 -5px;  
+  // margin: 0 -5px;  
   > .house-box {
     margin-bottom: 10px;
     background: rgba(0,122,230,0.1);

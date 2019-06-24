@@ -302,7 +302,7 @@ export default {
         }, 2000);
         return ;
       }
-      this.message = "我的微信号：<span style='color:#007AE6'>" + this.wechatAccount +"</span>";
+      this.message = "我的微信号：" + this.wechatAccount;
       this.noFocusWx = true;
       this.sendMessage(1,'')
     },
@@ -1164,13 +1164,26 @@ export default {
   right: 0;
   // position: fixed;
   // bottom: 0;
-  height: 50px;
+  height: 56px;
   display: flex;
+  align-items: center;
   text-align: center;
   // width: 100%;
   background: rgba(250, 250, 250, 1);
+  
   padding: 8px 10px;
   z-index: 99;
+  &::after{
+    content:"";
+    position: absolute;
+    width: 200%;
+    height: 1px;
+    border-top: 1px solid #CFCFD9;
+    transform-origin: left top;
+    transform: scale(0.5);
+    left: 0;
+    top: 0;
+  }
 }
 
 .massage-info-lower-cen {
@@ -1188,6 +1201,7 @@ export default {
   // border: 1px solid rgba(221, 221, 221, 1);
   border: none;
   height: 36px;
+  line-height: 36px;
   position: relative;
   font-size: 16px;
 }
@@ -1449,9 +1463,9 @@ export default {
 }
 
 .info-img img {
-  width: 80px;
+  min-width: 80px;
   height: 64px;
-  margin-right: 5px;
+  margin-right: 8px;
   border-radius: 4px;
 }
 
@@ -1459,11 +1473,12 @@ export default {
   flex: 1;
 }
 .info-name {
-  padding-top: 8px;
-  font-size: 0.32rem;
+  margin-top: -4px;
+  padding-top: 0px;
+  font-size: 16px;
   font-weight: 600;
   color: rgba(51, 51, 51, 1);
-  line-height: 0.32rem;
+  line-height: 24px;
   width: 100%;
   word-break: keep-all;
   white-space: nowrap;
@@ -1471,13 +1486,14 @@ export default {
 }
 
 .info-address {
-  font-size: 0.24rem;
-
+  font-size: 12px;
   font-weight: 400;
   color: rgba(102, 102, 102, 1);
-  // line-height: 0.24rem;
-  margin-top: 0.24rem;
-  margin-bottom: 0.24rem;
+  line-height:16px;
+  margin-top: 8px;
+  margin-bottom:4px;
+  max-width: 134px;
+  text-overflow: ellipsis;
   width: 100%;
   word-break: keep-all;
   white-space: nowrap;
@@ -1485,11 +1501,10 @@ export default {
 }
 
 .info-Price {
-  font-size: 0.22rem;
-
+  font-size: 14px;
   font-weight: 400;
   color: #666;
-  line-height: 0.22rem;
+  line-height: 20px;
 }
 
 .info-Price span:first-child {
