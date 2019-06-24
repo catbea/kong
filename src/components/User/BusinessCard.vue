@@ -188,8 +188,7 @@ export default {
             saveIndex = index;           
           }         
         })  
-        if(!this.goType){
-          // debugger
+        if(!this.goType){ 
           if(this.vipInfo.vipList.length == 0) {
             return text
           }
@@ -206,7 +205,7 @@ export default {
           } 
           return text
         } 
-        else if(this.goType&&saveIndex!==list.length&&list.length !==1){ 
+        else if(this.goType&&saveIndex+1!==list.length&&list.length!==1){ 
           let d = list[saveIndex].city 
           text = `您开通${d}VIP已过期请续费`; 
           console.log("asas?>>>>",text);
