@@ -1,7 +1,7 @@
 <template>
     <div class="div_view">
         <ul class="ul_view">    
-            <li class="li_view" v-for="(item,index) in btnIcons" :key="index"  @click="selectedHeads(index)"> 
+            <li class="li_view van-hairline--bottom" v-for="(item,index) in btnIcons" :key="index"  @click="selectedHeads(index)"> 
                 <div class="li van-hairline--bottom">
                     <span  style="font-size:14px;">{{item.title}}</span> 
                 </div>
@@ -62,12 +62,13 @@ export default {
     background: #F7F9FA;
     .ul_view {  
         list-style:none;
+        padding-left: 17px;
+        background: #fff;  
         .li_view {
             width: 100%;
             height: 52px;
             display: flex;
             justify-content: space-between;
-            padding-left: 17px;  
             background: #fff;
             .icon{
                 width:16px;
