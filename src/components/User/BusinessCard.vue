@@ -10,18 +10,20 @@
               <div style="margin-top:24px;margin-left:16px;">
                 <avatar class="user-avatar" :avatar="userInfo.avatarUrl"/>
               </div>
-              <div style="margin-left:10px;">
+              <div style="margin-left:10px;width:77%;">
                 <div class="username-box" >
                   <span class="username-text">{{userInfo.name}}</span>
                 </div>
-                <p class="main-camp-view">
-                  <span>主营：</span>
-                  <span>{{city}}</span>
-                  <span>{{area}}</span> 
-                  <svg class="icon" aria-hidden="true" style="width:16px;height:16px;right:16px;position: absolute;">
+                <div class="main-camp-view">
+                  <p>
+                    <span>主营：</span>
+                    <span>{{city}}</span>
+                    <span>{{area}}</span>
+                  </p> 
+                  <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
                     <use xlink:href="#icon-arrow-"></use>
                   </svg> 
-                </p>
+                </div>
               </div> 
             </div> 
           </div> 
@@ -95,8 +97,8 @@ export default {
     this.getVipInfo(); 
     let majorRegion = this.userInfo.majorRegion
     this.majorName = majorRegion.split('/')
-    this.city = this.city.replace(/^{市}|{自治区}/g,'')
-    this.area = this.majorName[2].replace('区|县','')
+    this.city = this.majorName[1].replace('市','') 
+    this.area = this.majorName[2].replace('区','')
     console.log(this.city,1111111111111)
   },
   methods: {
@@ -239,6 +241,12 @@ export default {
                 margin-top: 7px;
                 color: #1A2733;
                 font-size: 12px;
+                margin-right: 16px; 
+                display: flex;
+                align-items: center;
+                width: 100%;
+                right: 16px;
+                justify-content: space-between;
                 span {
                   margin-right: 4px;
                 }
@@ -411,7 +419,10 @@ export default {
         margin-top: 24px;  
         line-height: 22px; 
         text-align: right;
-        color: #8A9299;  
+        color: #8A9299; 
+        display: flex;
+        align-items: center;
+        float: right; 
       }
     }
   }
