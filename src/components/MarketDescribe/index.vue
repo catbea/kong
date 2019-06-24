@@ -1,7 +1,7 @@
 <template>
   <div class="market-box-page" v-if="itemInfo">
-    <div :class="borderBottom ? 'scale-1px-bottom market-box' :'market-box'" @click="itemClickHandler">
-      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
+    <div :class="borderBottom ? 'market-box' :'market-box'" @click="itemClickHandler">
+      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}" class="scale-1px-bottom">
         <div class="market-box-page-top">
           <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
             <!-- 720标示 -->
