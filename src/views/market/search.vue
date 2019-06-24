@@ -273,6 +273,7 @@ export default {
 </script>
 <style lang="less">
 .market-search-page {
+  margin-top: 11px;
   > .search-box {
     .van-field__body {
       height: 100%;

@@ -1,6 +1,6 @@
 <template>
   <div class="market-box-page" v-if="itemInfo">
-    <div :class="borderBottom ? 'van-hairline--bottom market-box' :'market-box'" @click="itemClickHandler">
+    <div :class="borderBottom ? 'scale-1px-bottom market-box' :'market-box'" @click="itemClickHandler">
       <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}">
         <div class="market-box-page-top">
           <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
@@ -28,7 +28,7 @@
             </li>
             <li class="site">
               {{`${itemInfo.city} ${itemInfo.district?itemInfo.district:''}`}}
-              <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span>
+              <!-- <span v-if="itemInfo.openStatus!=0&&itemInfo.invalidTimeStr">{{itemInfo.invalidTimeStr}}到期</span> -->
               <span>| {{itemInfo.linkerPrice?itemInfo.linkerPrice.replace('.00', ''): parseInt(itemInfo.price)===0 ? '价格待定':`${itemInfo.price}${itemInfo.priceUnit}`}}</span>
             </li>
             <li class="tag-group-left">
@@ -326,7 +326,7 @@ export default {
   .market-box {
     // market-describewidth: 343px;
     padding-top: 22px;
-    margin: 0 0px 0 16px;
+    margin: 0 16px;
     .padding {
       padding-bottom: 22px;
     }

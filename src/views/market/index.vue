@@ -25,11 +25,11 @@
     </div>
     <div class="my-markey">
       <div class="title" @click="goMyMarket" v-show="myMarket.length">
-        我的楼盘<span> ({{total}})</span>
+        我的楼盘<span>（{{total}}）</span>
       </div>
       <div class="market-list">
-        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-          <div class="market-item scale-1px-bottom" v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
+        <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
+          <div class="market-item scale-1px-bottom" :class="{'active': item.recommand==10}"  v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
             <div class="market-img">
               <img class="headimg" :src="item.linkerUrl" alt="">
               <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
@@ -38,15 +38,16 @@
             <div class="market-info">
               <p class="market-name"><span class="name">{{item.linkerName}}</span> <span class="iconShare" @click.stop="goShare(item)">分享</span></p>
               <p class="market-location">{{item.city}} {{item.county}}</p>
-              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '', '售罄'][item.saleStatus]}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
+              <p class="market-tags"><span class="active" :class="{'red': item.saleStatus==1,'default': item.saleStatus==3}">{{['热销中', '即将发售', '', '售罄'][item.saleStatus] || '热销中'}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
               <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item,index)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
               <p class="market-price" v-else  @click.stop="popupHandle(item,index)"><span class="price">{{item.price}}{{item.priceUnit}}</span><span class="icon iconfont icon-more"></span></p>
             </div>
           </div>
         </van-list>
       </div>
+      <!-- v-show="!myMarket.length && nodataStatus" -->
       <div class="nodata" v-show="!myMarket.length && nodataStatus">
-        <img src="../../assets/img/article/noarticle.png" alt="">
+        <img src="../../assets/img/market/search/empty.png" alt="">
         <p>你还没有开通任何楼盘</p>
         <button class="add-linker" @click="$router.push('/market/classify/allmarket')">去开通</button>
       </div>
@@ -91,6 +92,7 @@ export default {
       pages: 1,
       total: '',
       nodataStatus: false,
+      finishedText: '没有更多了',
       panoramaIcon: require('IMG/marketDetail/Oval@2x.png'),
       showPopup: false,
       pastShow: '是否过期',
@@ -142,6 +144,9 @@ export default {
         }
         this.current += 1
         this.nodataStatus = true
+        if (!this.myMarket.length) {
+          this.finishedText = ''
+        }
         this.loading = false
       }).catch(err => {
       })
@@ -349,16 +354,16 @@ export default {
   .my-markey {
     flex: 1;
     overflow-y: scroll;
-    padding: 0 16px;
     border-top: 8px solid #f2f6f7;
     .title {
-      padding: 15px 0 0;
+      padding: 15px 16px 5px;
       font-size: 24px;
       color: #333;
       font-weight: 600;
       font-family: PingFangSC-Semibold;
       span {
         font-size: 18px;
+        margin-left: -5px;
       }
     }
     .nodata {
@@ -396,8 +401,11 @@ export default {
   .market-item {
     display: flex;
     font-size: 14px;
-    margin: 15px 0;
-    padding-bottom: 20px;
+    // margin: 15px 0;
+    padding: 16px 16px 20px;
+    &.active{
+      background-color: #F6F6F6;
+    }
     .market-img {
       width: 120px;
       height: 90px;
@@ -475,6 +483,12 @@ export default {
           color: #5c5f66;
           &.active {
             background-color: rgba(0, 120, 255, 0.15);
+          }
+          &.red {
+            background: rgba(250, 41, 41, 0.15);
+          }
+          &.default {
+            background: rgba(143, 159, 177, 0.15);
           }
         }
       }

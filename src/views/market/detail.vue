@@ -86,7 +86,7 @@
           
           <p class="slogen" v-show="info.promotionalLanguage">{{info.promotionalLanguage}}</p>
           <div class="tags" v-if="tagGroupArr">
-            <span v-for="(item,index) in tagGroupArr.slice(0,3)" :class="{'active': index === 0}">{{item}}</span>
+            <span v-for="(item,index) in tagGroupArr.slice(0,3)" :class="{'active': index === 0}">{{item || '热销中'}}</span>
           </div>
           <div class="house-info-form">
             <div class="item">

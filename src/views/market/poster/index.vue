@@ -297,7 +297,7 @@ export default {
     },
     // 获取代理商海报信息
     async getAgentLinkerPoster(agentId) {
-      let result = await marketService.getAgentLinkerPoster({agentId: agentId})
+      let result = await marketService.getAgentLinkerPoster({agentId: agentId, linkerId : this.linkedId})
       if (result) {
         this.shareInfo = result
       }
@@ -307,7 +307,7 @@ export default {
       await this.getPosterInfo(this.linkedId)
       await this.getAgentLinkerPoster(this.shareBaseInfo.agentId)
       this.editData = Object.assign({}, this.shareBaseInfo)
-      this.avatarUrl = (this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0]) || (this.shareInfo && this.shareInfo.imageUrl) || ''
+      this.avatarUrl = (this.shareInfo && this.shareInfo.imageUrl) || (this.shareBaseInfo.postersUrlList && this.shareBaseInfo.postersUrlList[0]) || ''
       this.showLoading = false
       if (!this.showEdit) {
         this.viewCover()
@@ -387,7 +387,8 @@ export default {
         agentMobile: this.editData.agentMobile,
         agentName: this.editData.agentName,
         imageUrl: this.avatarUrl,
-        agentId: this.editData.agentId
+        agentId: this.editData.agentId,
+        linkerId : this.linkedId
       })
       if (result) {
         let toast = this.$toast('保存成功')
