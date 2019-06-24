@@ -63,7 +63,7 @@
               <span style="font-size:10px;">{{dredgeText}}</span> 
               <!-- <p> -->
                 <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
-                  <use xlink:href="#icon-arrow"></use>
+                  <use xlink:href="#icon-arrow-"></use>
                 </svg> 
               <!-- </p>  -->
           </div>
