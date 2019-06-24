@@ -173,7 +173,7 @@ export default {
     .asking-item {
       width: 92%;
       height: auto;
-      max-height: 180px;
+      // max-height: 180px;
       margin-left: 4%;
       margin-right: 4%;
       padding-bottom: 1px;
