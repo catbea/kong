@@ -34,7 +34,7 @@
 
       <div class="empty-learn" v-else-if="learnList.length == 0 && loaded">
         <img :src="require('IMG/user/learn/empty-learn.png')" alt>
-        <p>该楼盘还未上传任何学习资料</p>
+        <p>还未上传任何学习资料</p>
       </div>
 
       <div v-else class="learn-wrap">
@@ -198,9 +198,7 @@ export default {
           })
 
           this.loaded = true;
-
           Toast.clear()
-
           const learnList = response || []
           const learnType = this.learnType
           const fileType = this.fileType
@@ -239,6 +237,8 @@ export default {
           }
           this.learnList = learnList //原始数据
           this.learnCollection = learnCollection
+        }else{
+          this.loaded = true;
         }
       } catch (error) { }
     },
