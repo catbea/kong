@@ -8,7 +8,7 @@
           <van-icon class="filter-van-icon-arrow" :name="`arrow-${showFilter ? 'up': 'down'}`" />
 
           <transition name="fade">
-            <div class="tips-box" v-if="showTips">
+            <div class="tips-box" v-if="showTips && defaultLinker.linkerId">
               当前显示“{{defaultLinker.linkerName}}”项目的培训内 容，点击可切换楼盘查看！
               <div class="square"></div>
               <img @click="closeTips()" class="close-icon" :src="require('IMG/user/learn/close-icon.png')" alt>
@@ -34,7 +34,8 @@
 
       <div class="empty-learn" v-else-if="learnList.length == 0 && loaded">
         <img :src="require('IMG/user/learn/empty-learn.png')" alt>
-        <p>还未上传任何学习资料</p>
+        <p v-if="!defaultLinker.linkerId">请开通楼盘后查看培训资料</p>
+        <p v-else>您开通的楼盘尚未上传培训素材</p>
       </div>
 
       <div v-else class="learn-wrap">
