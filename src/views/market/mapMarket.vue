@@ -43,10 +43,10 @@ export default {
         zoom: 5,
         minZoom: 3,
         maxZoom: 15,
-        // disableDefaultUI: true, // 禁止所有的默认控件
-        // scrollwheel: false,
-        // keyboardShortcuts: false,
-        // panControl: false
+        disableDefaultUI: true, // 禁止所有的默认控件
+        scrollwheel: false,
+        keyboardShortcuts: false,
+        panControl: false
       })
       qq.maps.event.addListener(this.map, 'zoom_changed', () => {
         this.zoomChange(this.map.getZoom())
