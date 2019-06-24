@@ -3,19 +3,24 @@
     <div class="business-card-box">
       <div class="bg_img info-box" > 
         <div @click="editCLickHandler" class="info">
-          <avatar class="user-avatar" :avatar="userInfo.avatarUrl" />
+          <!-- <avatar class="user-avatar" :avatar="userInfo.avatarUrl" /> -->
           <div class="user-info-content">
             <!-- 姓名、主营区域 -->
-            <div class="user-detail-box">
-              <div class="username-box">
-                <span class="username-text">{{userInfo.name}}</span>
+            <div class="user-detail-box" style="display:flex;">
+              <div style="margin-top:24px;margin-left:16px;">
+                <avatar class="user-avatar" :avatar="userInfo.avatarUrl"/>
               </div>
-              <p class="main-camp-view">
-                <span>主营：{{userInfo.majorRegion}}</span> 
-                <svg class="icon" aria-hidden="true" style="width:16px;height:16px;right:16px;position: absolute;">
-                  <use xlink:href="#icon-arrow-"></use>
-                </svg> 
-              </p>  
+              <div style="margin-left:10px;">
+                <div class="username-box" >
+                  <span class="username-text">{{userInfo.name}}</span>
+                </div>
+                <p class="main-camp-view">
+                  <span>主营：{{userInfo.majorRegion}}</span> 
+                  <svg class="icon" aria-hidden="true" style="width:16px;height:16px;right:16px;position: absolute;">
+                    <use xlink:href="#icon-arrow-"></use>
+                  </svg> 
+                </p>
+              </div> 
             </div> 
           </div> 
         </div> 
@@ -226,69 +231,49 @@ export default {
 .business-card-container {
   // background: #fff;
   > .business-card-box {
-    > .info-box {
-      position: relative;
-      height: 190px; 
+    > .info-box { 
+      height: 100%; 
       background: #ffffff;
-      > .qr-icon {
-        position: absolute;
-        top: 5px;
-        left: 5px;
-        font-size: 24px;
-        color: #686b80;
-      }
-      > .share-box {
-        position: absolute;
-        top: 5px;
-        right: 10px;
-        color: #ffffff;
-        > .share-icon {
-          display: block;
-          font-size: 24px;
-        }
-        > .share-text {
-          display: block;
-          font-size: 10px;
-          padding-top: 5px;
-        } 
-      }
       >.info {
-        > .user-avatar {
-          position: absolute;
-          width: 60px;
-          height: 60px;
-          top: 30px;
-          left: 16px;
-        }
-        > .user-info-content {
-          padding: 25px 86px;
-          padding-bottom: 0px;
-          > .user-detail-box {
-            line-height: 1;
-            > .username-box {
-              color: #1A2733;
-              > .username-text {
-                font-size: 20px;
+        > .user-info-content { 
+          // padding-bottom: 0px;
+          > .user-detail-box { 
+            .user-avatar { 
+              width: 60px;
+              height: 60px;
+              // margin-top: 24px;
+              // margin-left: 16px;
+            }
+            div {
+              > .username-box {
+                margin-top: 28px;
+                color: #1A2733;
+                > .username-text { 
+                  font-size: 20px;
+                }
+                > .username-edit-icon {
+                  color: rgba(255, 255, 255, 0.15);
+                }
               }
-              > .username-edit-icon {
-                color: rgba(255, 255, 255, 0.15);
+              > .main-camp-view {
+                margin-top: 3px;
+                color: #1A2733;
+                font-size: 12px;
               }
             }
-            > .main-camp-view {
-              margin-top: 8px;
-              color: #1A2733;
-              font-size: 12px;
-            }
+            
+            
           }
         }
       } 
       >.shortcut-box {
         display: flex;
         justify-content: space-around;
-            margin-top: 36px;
+        margin-top: 20px;
+          margin-bottom: 5px;
         .head-img { 
           margin-left: 16px;
-          margin-bottom: 16px;
+          // margin-bottom: 8px;
           height: 60px;
           width: 65px; 
           margin-right: 10px;
@@ -301,8 +286,8 @@ export default {
             font-size: 10px;
             font-weight: 400;
             color: #333333;
-            line-height: 17px;
-            margin-top: 6px;
+            // line-height: 17px;
+            // margin-top: 6px;
           } 
           > .grou1Icon {
             color: #E7602E;
