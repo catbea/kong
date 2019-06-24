@@ -1,13 +1,13 @@
 <template>
     <div class="div_view">
         <ul class="ul_view">    
-            <li class="li_view van-hairline--bottom" v-for="(item,index) in btnIcons" :key="index"  @click="selectedHeads(index)"> 
-                <div>
+            <li class="li_view" v-for="(item,index) in btnIcons" :key="index"  @click="selectedHeads(index)"> 
+                <div class="li van-hairline--bottom">
                     <span  style="font-size:14px;">{{item.title}}</span> 
                 </div>
-                <div>
+                <div class="li van-hairline--bottom">
                     <van-switch v-model="checked" @change="changeSwitch" v-if="item.title == 'AI客服'" class="switch" size="22px"/>
-                    <img src="../../../assets/img/user/arrow2@2x.png" class="icon" alt="" v-else>
+                    <img src="../../../assets/img/user/setright.png" class="icon" alt="" v-else>
                 </div> 
             </li>
             
@@ -77,6 +77,10 @@ export default {
             .switch {
                 margin-right:15px;
                 margin-top:15px;
+            }
+            .li {
+                display: flex;
+                align-items:center;
             }
         }
     }
