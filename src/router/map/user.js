@@ -31,7 +31,7 @@ export default [
     name: 'user-edit',
     component: resolve => require(['@/views/user/edit/userEdit.vue'], resolve),
     meta: {
-      title: '个人编辑'
+      title: '个人资料'
     }
   },
   {
