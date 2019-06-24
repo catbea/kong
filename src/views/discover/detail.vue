@@ -754,16 +754,16 @@ export default {
       this.touchHandler,
       { passive: false }
     )
-    if (window.history && window.history.pushState) {
-      history.pushState(null, null, document.URL);
-      window.addEventListener('popstate', this.goBack, false);
-    }
+    // if (window.history && window.history.pushState) {
+    //   history.pushState(null, null, document.URL);
+    //   window.addEventListener('popstate', this.goBack, false);
+    // }
   },
   beforeDestroy() {
     this.$store.commit('SHARE_PROMPT', false)
     try {
       document.querySelector('.tools-bar').removeEventListener('touchmove',this.touchHandler,false)
-      window.removeEventListener('popstate', this.goBack, false)
+      // window.removeEventListener('popstate', this.goBack, false)
     } catch (error) {}
   }
 }
