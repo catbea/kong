@@ -29,7 +29,7 @@
       </div>
       <div class="market-list">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-          <div class="market-item" v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
+          <div class="market-item scale-1px-bottom" v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
             <div class="market-img">
               <img class="headimg" :src="item.linkerUrl" alt="">
               <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
@@ -352,7 +352,7 @@ export default {
     padding: 0 16px;
     border-top: 8px solid #f2f6f7;
     .title {
-      padding: 16px 0 16px;
+      padding: 15px 0 0;
       font-size: 24px;
       color: #333;
       font-weight: 600;
@@ -396,7 +396,8 @@ export default {
   .market-item {
     display: flex;
     font-size: 14px;
-    margin-bottom: 15px;
+    margin: 15px 0;
+    padding-bottom: 20px;
     .market-img {
       width: 120px;
       height: 90px;
@@ -455,7 +456,7 @@ export default {
           text-align: center;
           font-weight: 500;
           margin-left: 10px;
-          margin-top: 4px;
+          margin-top: 2px;
         }
       }
       .market-location {
@@ -483,6 +484,7 @@ export default {
         color: rgba(68, 81, 102, 1);
         display: flex;
         margin-bottom: 0;
+        padding-top: 3px;
         .price {
           flex: 1;
         }

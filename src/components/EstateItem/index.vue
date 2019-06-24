@@ -87,7 +87,7 @@ export default {
       width: 120px;
       min-width: 120px;
       height: 90px;
-      margin: 15px;
+      margin: 20px 15px;
       flex-basis: 120px;
       > .panorama-mark {
         position: absolute;
@@ -101,7 +101,7 @@ export default {
     }
     > .right-box {
       flex-basis: 225px;
-      margin: 16px 16px 16px 0;
+      margin: 20px 16px 20px 0;
       > .estate-name {
         font-size: 16px;
         font-weight: 600;
@@ -134,7 +134,7 @@ export default {
         padding-bottom: 3px;
       }
       > .tag-box {
-        padding: 5px 0 4px;
+        padding: 2px 0 4px;
         margin-left: -3px;
       }
       > .estate-info {
@@ -164,7 +164,7 @@ export default {
   }
   > .operate-box {
     position: absolute;
-    top: 8px;
+    top: 14px;
     right: 10px;
     > .share-icon {
       width: 100%;

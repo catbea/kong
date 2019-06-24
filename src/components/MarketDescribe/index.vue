@@ -325,10 +325,10 @@ export default {
   width: 375px;
   .market-box {
     // market-describewidth: 343px;
-    padding-top: 16px;
+    padding-top: 22px;
     margin: 0 0px 0 16px;
     .padding {
-      padding-bottom: 16px;
+      padding-bottom: 22px;
     }
     .allDescribe {
       display: flex;

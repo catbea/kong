@@ -725,8 +725,9 @@ export default {
     // height: 580px;
   }
   .search-container {
-    margin-left: 18px;
-    width: 343px;
+    width: auto;
+    margin: 0 16px;
+    // width: 343px;
   }
   .fade-enter-active,
   .fade-leave-active {
@@ -776,7 +777,7 @@ export default {
       width: 100%;
     }
     .top-search{
-      margin-top: 16px;
+      padding-top: 16px;
     }
   }
   .title-bar {
