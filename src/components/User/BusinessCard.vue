@@ -30,7 +30,7 @@
         </div>
       </div> 
     </div> 
-    <div class="business-status-box">
+    <!-- <div class="business-status-box">
       <router-link tag="div" to="/user/myMember" class="status-info-left">
         <img :src="crownIcon">
         <p class="info-title vip-status">{{isVipInfo}}</p>
@@ -45,29 +45,31 @@
           </svg> 
         </p>
       </router-link> 
-    </div>
-    <!-- <div class="business-box">
+    </div> -->
+    <div class="business-box">
       <router-link tag="div" to="/user/myMember" class="box_info">
         <div>
           <img :src="crownIcon">
         </div>
         <div>
-          <p class="info-title vip-status">{{isVipInfo}}</p>
-          <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
+          <p class="vip-status">{{isVipInfo}}</p>
+          <p class="welfare-desc">{{vipTimeInfo}}</p>
         </div>
         <div>
-          <p class="info-btn" v-if="goType==false">
+          <div class="info-btn" v-if="goType==false">
             <button class="btn">立即开通</button>
-          </p>
-          <p class="info-btn_text" v-else>
-            <span style="font-size:10px;display:block;">{{dredgeText}}</span> 
-            <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;height:80px;line-height: 80px;">
-              <use xlink:href="#icon-arrow"></use>
-            </svg> 
-          </p>
+          </div>
+          <div class="info-btn_text" v-else>  
+              <span style="font-size:10px;">{{dredgeText}}</span> 
+              <!-- <p> -->
+                <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
+                  <use xlink:href="#icon-arrow"></use>
+                </svg> 
+              <!-- </p>  -->
+          </div>
         </div>
       </router-link> 
-    </div> -->
+    </div>
   </div>
 </template>
 <script>
@@ -358,30 +360,26 @@ export default {
         position: absolute;
         top: 24px;
         left: 71%;  
-        line-height: 22px;
+        line-height: 22px; 
         .btn {
           width:80px;
           height:32px;
           border: none;
-          border-radius:16px; 
+          border-radius:16px;
           color:#66421F;
           box-shadow:2px 2px rgba(225, 161, 85, 0.4);
           font-size:12px;
           background: linear-gradient(90deg, rgba(255, 209, 116, 1) 0%, rgba(215, 145, 75, 1) 100%);
         }
       }
-      .info-btn_text {
-        position: absolute;
-        top: 0px;
-        margin-left:80%;  
-        // line-height: 22px;
-        display: flex;
-        color: #8A9299;
-        img {
-          width: 16px;
-          height: 16px;
-        }
-      }
+      // .info-btn_text {
+      //   position: absolute;
+      //   top: 0px;
+      //   margin-left:80%;  
+      //   // line-height: 22px;
+      //   display: flex;
+      //   color: #8A9299;
+      // }
     }
     > .status-info-left { 
       > .info-desc {
@@ -399,6 +397,53 @@ export default {
     width: 100%;
     .box_info {
       display: flex;
+      div>img {
+        margin: 18px 10px;
+        width: 46px;
+        height: 46px; 
+      }
+      div:nth-child(2) {
+        width: 50%;
+      }
+      div:nth-child(3) {
+        width: 32%;
+      }
+      div>.vip-status { 
+        margin-top: 16px; 
+        font-size: 18px;
+        font-weight: 600;
+        color: #1A2733;
+        line-height: 1.5;
+      }
+      div>.welfare-desc { 
+        margin-top: 2px; 
+        font-size: 12px;
+        font-weight: 400;
+        color: #999999;
+        line-height: 22px;
+      }
+      div>.info-btn{ 
+        margin-top: 24px; 
+        line-height: 22px; 
+        float: right;
+        margin-right: 16px;
+        .btn {
+          width:80px;
+          height:32px;
+          border: none;
+          border-radius:16px; 
+          color:#66421F;
+          box-shadow:2px 2px rgba(225, 161, 85, 0.4);
+          font-size:12px;
+          background: linear-gradient(90deg, rgba(255, 209, 116, 1) 0%, rgba(215, 145, 75, 1) 100%);
+        }
+      }
+      div>.info-btn_text { 
+        margin-top: 24px;  
+        line-height: 22px; 
+        text-align: right;
+        color: #8A9299;  
+      }
     }
   }
 }
