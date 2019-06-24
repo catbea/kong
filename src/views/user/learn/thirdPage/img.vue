@@ -4,8 +4,8 @@
             <div class="img-box">
                 <van-swipe @change="onChange" :initial-swipe="inde" :loop="false" :show-indicators="false">
                     <van-swipe-item v-for="(item,index) in arr" :key="index">
-                        <img :src="item" alt="" srcset="">
-                    </van-swipe-item>
+                        <img :src="item" alt="" srcset=""> 
+                    </van-swipe-item> 
                 </van-swipe>
                 <div class="custom-indicator">
                     {{ inde + 1 }}/{{arr.length}}
@@ -67,6 +67,12 @@ export default {
             display: flex;
             flex-direction: column;
             justify-content: center; 
+            .van-swipe {
+                .van-swipe-item {
+                    display: flex; 
+                    align-items: center;
+                }
+            } 
             img {
                 width: 100%; 
             }

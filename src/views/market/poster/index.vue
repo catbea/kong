@@ -60,7 +60,7 @@
                     </div>
                     <div class="build">
                       <p class="title">建面(㎡)</p>
-                      <p class="text">{{editData.buildArea}}</p>
+                      <p class="text">{{editData.buildArea || '暂无'}}</p>
                     </div>
                 </div>
               </div>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="build">
                       <p class="title">建面(㎡)</p>
-                      <p class="text">{{editData.buildArea}}</p>
+                      <p class="text">{{editData.buildArea || '暂无'}}</p>
                     </div>
                 </div>
               </div>
@@ -275,10 +275,10 @@ export default {
         initialSlide: this.activeIndex,
         coverflowEffect: {
           rotate: 20,
-          stretch: 30,
-          depth: 60,
-          modifier: 1,
-          slideShadows: true
+          stretch: 40,
+          depth: 40,
+          modifier: 2,
+          slideShadows: false
         },
         on: {
           slideChange: function() {
@@ -652,13 +652,14 @@ export default {
         }
       }
       .linker-box{
+        background-color: #fff;
         box-shadow:0px 0px 16px 0px rgba(0,0,0,0.1);
         border-radius:4px;
         margin: -55px 16px 40px 16px;
         z-index: 9;
-        background-color: #fff;
         padding: 5px 0 20px;
         position: relative;
+        border: 1px solid #f5f5f5;
         .name{
           margin: 10px 16px 20px 16px;
           font-size:16px;
@@ -734,6 +735,7 @@ export default {
         }
         .qrcode{
           width: 64px;
+          margin-top: -4px;
           img{
             width: 64px;
             height: 64px;
