@@ -75,7 +75,7 @@ export default {
     imgShare: require('IMG/user/rectangle.png'),
     imgPlay: require('IMG/user/Oval@2x.png'),
     imgCommission: require('IMG/user/collection/icon_commission@2x.png'),
-    status: ['热销中', '即将发售', '售罄']
+    status: ['热销中', '即将发售', '', '售罄']
   }),
   props: {
     dataArr: {

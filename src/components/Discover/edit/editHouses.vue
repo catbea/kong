@@ -51,7 +51,7 @@ export default {
         if(this.isInArticle==1){
           temp.linkerTags = [...temp.condition]
         }else{
-          let statusArr = ['热销中', '即将发售', '售罄']
+          let statusArr = ['热销中', '即将发售', '', '售罄']
           temp.linkerTags = [statusArr[temp.saleStatus], ...temp.condition]
         }
       }

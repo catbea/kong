@@ -63,7 +63,7 @@ export default {
     TagGroup
   },
   data: () => ({
-    status: ['热销中', '即将发售', '售罄'],
+    status: ['热销中', '即将发售', '', '售罄'],
     val: null,
     faag: false,
     discountImg: require('IMG/marketDetail/discount@2x.png'),

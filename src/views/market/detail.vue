@@ -411,7 +411,7 @@
             <div class="market-info">
               <p class="market-name">{{item.linkerName}}</p>
               <p class="market-location">{{item.district}}</p>
-              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '售罄'][item.saleStatus]}}</span><span v-for="(option,i) in item.linkerTags.slice(0,2)" :key="i">{{option}}</span></p>
+              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '', '售罄'][item.saleStatus]}}</span><span v-for="(option,i) in item.linkerTags.slice(0,2)" :key="i">{{option}}</span></p>
               <p class="market-price">{{item.averagePrice}}</p>
             </div>
           </div>

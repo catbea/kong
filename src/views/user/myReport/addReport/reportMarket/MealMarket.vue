@@ -55,7 +55,7 @@ export default {
     TagGroup
   },
   data: () => ({
-    status: ['热销中', '即将发售', '售罄'],
+    status: ['热销中', '即将发售', '', '售罄'],
     val: null,
     faag: false,
     checkImg: require('IMG/user/mealMarket/check@2x.png'),

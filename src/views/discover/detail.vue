@@ -393,7 +393,7 @@ export default {
           let res = await this.getLinkerInfo(this.editData.recommendHouse.join(','))
           res.map((item)=>{
             if (item.linkerTags) {
-              let statusArr = ['热销中', '即将发售', '售罄']
+              let statusArr = ['热销中', '即将发售', '', '售罄']
               item.linkerTags = [statusArr[item.saleStatus], ...item.linkerTags].splice(0,3);
             }
           })
@@ -409,7 +409,7 @@ export default {
       let temp = item;
       console.log(temp);
       if (temp.linkerTags) {
-        let statusArr = ['热销中', '即将发售', '售罄']
+        let statusArr = ['热销中', '即将发售', '', '售罄']
         temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
       }
       while (temp.linkerTags.length > 3) {

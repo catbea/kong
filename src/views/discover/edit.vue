@@ -255,7 +255,7 @@ export default {
     // 查询楼盘信息
     async getLinkerInfo(linkerIds) {
       const res = await discoverService.queryLinkerListByIds(linkerIds)
-      let statusArr = ['热销中', '即将发售', '售罄']
+      let statusArr = ['热销中', '即将发售', '', '售罄']
       for (let temp of res.records) {
         temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
       }
@@ -269,7 +269,7 @@ export default {
         size: 3
       }
       const res = await userService.getMyHouses(payload)
-      let statusArr = ['热销中', '即将发售', '售罄']
+      let statusArr = ['热销中', '即将发售', '', '售罄']
       for (let temp of res.records) {
         temp.linkerTags = [statusArr[temp.saleStatus], ...temp.linkerTags]
         this.recommendList.push(temp)

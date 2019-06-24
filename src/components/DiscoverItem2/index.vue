@@ -35,7 +35,7 @@ export default {
   },
   data: () => ({
     currentStatus: false, // 当前存储是否选中
-    status: ['热销中', '即将发售', '售罄'],
+    status: ['热销中', '即将发售', '', '售罄'],
     discountImg: require('IMG/marketDetail/discount@2x.png'),
     checkImg: require('IMG/user/mealMarket/check@2x.png'),
     checkColorImg: require('IMG/user/mealMarket/checkColor@2x.png'),
