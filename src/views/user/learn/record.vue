@@ -1,6 +1,6 @@
 <template>
   <div class="learn-record-page">
-    
+
     <div class="empty-record" v-if="!loading && recordList.length == 0">
       <img :src="require('IMG/user/learn/empty-record.png')" alt>
       <p>还没有学习过任何资料！</p>
@@ -13,6 +13,7 @@
             <div :class="fileType[item.format].toLowerCase()" class="learn-type" v-if="item.format != 2">{{fileType[item.format].replace('IMG', '图集')}}</div>
 
             <template v-else>
+
               <div class="video-duration">{{getVideoDuration(item.content)}}</div>
 
               <div class="abstract-video" :style="{'background-image': `url(${require('IMG/user/learn/video-icon.png')})`}"></div>
@@ -93,7 +94,24 @@ export default {
     },
     getVideoDuration(content) {
       let { duration } = JSON.parse(content)
-      return Math.floor(duration / 60) + ':' + (duration % 60)
+      function zero(times) {
+        return times < 10 ? '0' + times : times;
+      }
+
+      let hour = Math.floor(duration / 3600) < 10 ? '0' + Math.floor(duration / 3600) : Math.floor(duration / 3600);
+      let minutes = Math.floor((duration / 60 % 60)) < 10 ? '0' + Math.floor((duration / 60 % 60)) : Math.floor((duration / 60 % 60));
+      let seconds = Math.floor((duration % 60)) < 10 ? '0' + Math.floor((duration % 60)) : Math.floor((duration % 60));
+      
+      let times = ''
+
+      if (hour > 0) {
+        times += hour+ ' : '
+      }
+
+      times += minutes + ' : '
+      times += seconds
+
+      return times
     },
     //跳转到详情
     toLearnDeails(learn, type, index) {

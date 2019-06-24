@@ -151,7 +151,7 @@ export default {
     await this.getStudyLinkerList()
     await this.getStudyList()
     const alreadyLearn = localStorage.getItem('already-learn-study')
-    if(!alreadyLearn){
+    if (!alreadyLearn) {
       this.showTips = true;
     }
   },
@@ -256,7 +256,7 @@ export default {
       }
     },
     // 关闭提示
-    closeTips(){
+    closeTips() {
       this.showTips = false;
       localStorage.setItem('already-learn-study', true)
     },
@@ -317,7 +317,25 @@ export default {
 
     getVideoDuration(content) {
       let { duration } = JSON.parse(content)
-      return Math.floor(duration / 60) + ':' + (duration % 60)
+
+      function zero(times) {
+        return times < 10 ? '0' + times : times;
+      }
+
+      let hour = Math.floor(duration / 3600) < 10 ? '0' + Math.floor(duration / 3600) : Math.floor(duration / 3600);
+      let minutes = Math.floor((duration / 60 % 60)) < 10 ? '0' + Math.floor((duration / 60 % 60)) : Math.floor((duration / 60 % 60));
+      let seconds = Math.floor((duration % 60)) < 10 ? '0' + Math.floor((duration % 60)) : Math.floor((duration % 60));
+
+      let times = ''
+
+      if (hour > 0) {
+        times += hour + ' : '
+      }
+
+      times += minutes + ' : '
+      times += seconds
+
+      return times
     }
   },
   beforeRouteLeave(to, from, next) {
