@@ -55,8 +55,10 @@ export default {
     },
     methods: {
         videoPlay(item,index) { 
+            if(item.firstPlay) return;
             userService.getDevelopersMaterialadd({materialId:item.id,agentId:this.userInfo.agentId,developersId:item.id,linkerId:item.linkerId 
             }).then((result) => { 
+                item.firstPlay = true;
                 // this.getList()
             }).catch((err) => {
                 console.log(err)

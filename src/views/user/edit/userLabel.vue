@@ -44,7 +44,7 @@ export default {
 
   methods: {
     // 跳转自定义标签
-    goEdit () {
+    goEdit() {
       this.$router.push('/user/edit/editLabel')
     },
     selectLabel(index) {
@@ -74,6 +74,17 @@ export default {
         this.agentLabel[i].labelName = this.agentLabel[i].itemName
         this.agentLabel[i].labelId = this.agentLabel[i].id
       }
+      let tags = this.$route.query.tags;
+      if (tags) {
+        tags = JSON.parse(this.$route.query.tags);
+        let selectedTag = [];
+        tags.map(tag => {
+          const tagItem = this.agentLabel.filter((item, index) => tag.labelId == item.labelId)
+          selectedTag.push(...tagItem);
+        })
+        this.selectLabelList = selectedTag
+      }
+
     },
 
     async SubLabel() {
@@ -151,15 +162,15 @@ export default {
       flex: 1;
       overflow-y: auto;
       display: flex;
-      flex-wrap:wrap;
+      flex-wrap: wrap;
       align-content: flex-start;
       align-items: center;
-      span{
+      span {
         flex: none;
         margin-bottom: 16px;
         font-size: 14px;
         font-weight: 500;
-        background: #F2F5F9;
+        background: #f2f5f9;
         color: #445166;
         text-align: center;
         margin-left: 14px;
@@ -185,14 +196,14 @@ export default {
         border: 0;
         margin-top: 16px;
       }
-      .edit-self{
+      .edit-self {
         width: 100%;
         border: 0;
         font-size: 16px;
         font-weight: 400;
-        height:44px;
-        background:rgba(242,248,254,1);
-        border-radius:6px;
+        height: 44px;
+        background: rgba(242, 248, 254, 1);
+        border-radius: 6px;
         color: #445166;
       }
     }

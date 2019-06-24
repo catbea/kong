@@ -19,7 +19,7 @@
       <van-cell class="cell-item" title="主营区域" is-link :value="userInfo.majorRegion" @click="openAreaSelect()" />
       <van-cell class="cell-item" title="从业时间" is-link :value="workingTime==''?'1-3年':['1-3年','3-5年','5-8年','10年以上'][workingTime-100]" @click="openTimeSelect()" />
       <van-cell class="cell-item" title="销售类型" is-link :value="saleType==''?'买卖经纪人':saleType" @click="openShopSelect()" />
-      <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel'">
+      <van-cell class="cell-item tag-edit" title="" is-link :to="'/user/edit/userLabel?tags=' + JSON.stringify(newLabelList)">
         <template slot="title">
           <span class="custom-text">标签展示</span>
           <div class="user-tag">
