@@ -79,7 +79,7 @@ export default {
         tags = JSON.parse(this.$route.query.tags);
         let selectedTag = [];
         tags.map(tag => {
-          const tagItem = this.agentLabel.filter((item, index) => tag.labelId == item.labelId)
+          const tagItem = this.agentLabel.filter((item, index) => tag.id == item.id)
           selectedTag.push(...tagItem);
         })
         this.selectLabelList = selectedTag
