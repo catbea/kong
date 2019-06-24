@@ -61,7 +61,7 @@
                 </div>
               </div>
             <!-- </van-cell-group> -->
-            <span slot="right" class="delete-btn" @click="delMsg(key)">删除</span>
+            <span slot="right" class="delete-btn" @click="delMsg(key)" style="margin-left:2px;">删除</span>
           </van-swipe-cell>
         </div>
       </van-list>
