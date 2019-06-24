@@ -140,6 +140,8 @@ export default {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    word-wrap: break-word;
+    word-break: break-word;
   }
   .ellipsis-2 {
     -webkit-line-clamp: 2;

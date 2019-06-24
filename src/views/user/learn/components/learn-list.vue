@@ -39,7 +39,7 @@
       <h3 class="title ellipsis ellipsis-2">{{item.title}}</h3>
       <div>
         <span class="abstract">更新时间：{{formatDate(item.updateTime)}}</span>
-        <span class="abstract">{{item.browseNum}}浏览</span>
+        <span class="abstract">{{item.browseNum}}查看</span>
       </div>
     </div>
     <div class="learn-img">
