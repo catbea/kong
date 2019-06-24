@@ -1,6 +1,9 @@
 <template>
     <div>
-        <iframe id="eapPdf" v-if="url.length>0" :data-url="url" src="/static/pdf/index.html"   :style="{'height':height+'px', 'width': width+'px'}" > </iframe>        
+        <iframe id="eapPdf" v-if="url.length>0" :data-url="url" src="/static/pdf/index.html"   :style="{'height':height+'px', 'width': width+'px'}" > </iframe> 
+        <div v-if="url.length==0" class="loading-box">
+            <van-loading type="spinner" color="#1989fa" class="loading_in"/>
+        </div>       
     </div>
 </template> 
 
@@ -64,3 +67,15 @@ export default {
     
 }
 </script>
+<style lang="less" scoped>
+div {
+    .loading-box {
+        z-index: 22px;
+        display: flex;
+        justify-content: center; 
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+    }
+}
+</style>
