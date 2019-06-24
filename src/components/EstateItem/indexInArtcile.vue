@@ -142,7 +142,7 @@ export default {
       margin: 16px 16px 16px 0;
       > .estate-name {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
         font-family: PingFangSC-Semibold;
         font-size: 16px;
         font-weight: 600;

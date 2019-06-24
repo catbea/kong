@@ -21,17 +21,17 @@ export default {
     data:() => ({
         inde: 0,
         arr: [],
+        developersId:""
     }),
     mounted() {
         this.getImg()
-        this.gostudyAdd()
     },
     computed: {
     ...mapGetters(['userInfo']),
     },
     methods:{
         gostudyAdd() {
-            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
+            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.developersId,linkerId:this.$route.query.linkerId 
             }).then((result) => { 
             }).catch((err) => {
                 console.log(err)
@@ -42,8 +42,10 @@ export default {
         },
         getImg () {
             userService.getDevelopersMaterialDetail({id:this.$route.query.id
-            }).then((result) => {  
-                this.arr = result.content.split(',') 
+            }).then((result) => {   
+                this.arr = result.content.split(',') ;
+                this.developersId = result.developersId;
+                this.gostudyAdd();
             }).catch((err) => {
                 console.log(err)
             })

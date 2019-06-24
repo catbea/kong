@@ -6,7 +6,7 @@
       <!-- </div> --> 
       <div class="div_view">
         <ul class="ul_view">
-          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===6?'li':'li_view'">
+          <li class="li_view scale-1px-bottom" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===6?'li':'li_view'">
             <div>
               <svg class="icon" aria-hidden="true">
                 <use :xlink:href="item.Icon"></use>
@@ -245,9 +245,18 @@ export default {
         .li_view { 
           width: 100%;
           height: 52px;
-          display: flex; 
-          // line-height: 52px;
+          display: flex;  
           background: #fff; 
+          // &:after{
+          //   position: absolute;
+          //   content:" ";
+          //   top:0;
+          //   height: 1px;
+          //   width: 100%;
+          //   border-top:1px solid #ccc;
+          //   transform-origin: 0 0;
+          //   transform: scaleY(0.3);
+          // }
           div:nth-child(1) {
             width: 49px;
             height: 100%; 
@@ -255,10 +264,10 @@ export default {
           div:nth-child(2) {
             width: 78%;
             height: 100%;
-            border-bottom: 1px solid #E2E8EE;
+            // border-bottom: 1px solid #E2E8EE;
           }
           div:nth-child(3) {
-            border-bottom: 1px solid #E2E8EE;
+            // border-bottom: 1px solid #E2E8EE;
           }
           .icon{
             margin-left: 16px;

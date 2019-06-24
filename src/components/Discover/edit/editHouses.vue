@@ -3,7 +3,7 @@
     <div class="house-box" :class="!preview&&'box_border_house'" v-for="index in count" :key="index">
       <div class="house-item" v-if="index<=currentData.length">
         <estate-item :key="index" :showRules="false" :showCard="showCard" :isInArticle="isInArticle" :info="itemData(index-1)"/>
-        <i class="icon iconfont icon-search_empty del-icon" v-if="!preview" @click.stop="delClickHandler(index-1)"/>
+        <i class="icon del-icon" v-if="!preview" @click.stop="delClickHandler(index-1)"/>
       </div>
       <div class="empty-box" v-if="index>currentData.length && !preview" @click="addClickHandler">
         <div class="info-box">
@@ -92,10 +92,12 @@ export default {
       line-height: 1;
       > .del-icon {
         position: absolute;
-        font-size: 16px;
-        top: 4px;
-        right: -15px;
-        transform: translate(-50%, -50%);
+        width: 28px;
+        height: 28px;
+        background: url(../../../assets/img/article/articlex.png) center no-repeat;
+        background-size: 100% 100%;
+        top: 0;
+        right: 0;
         color: #ea4d2e;
       }
     }
