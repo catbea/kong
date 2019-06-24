@@ -28,7 +28,7 @@
         我的楼盘<span>（{{total}}）</span>
       </div>
       <div class="market-list">
-        <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
+        <van-list v-model="loading" :finished="myMarket.length > 0 && finished" :finished-text="finishedText" @load="onLoad">
           <div class="market-item scale-1px-bottom" :class="{'active': item.recommand==10}"  v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
             <div class="market-img">
               <img class="headimg" :src="item.linkerUrl" alt="">
