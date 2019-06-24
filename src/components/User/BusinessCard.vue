@@ -62,7 +62,7 @@
         </div>
         <div>
           <div class="info-btn" v-if="goType==false"> 
-            <img src="../../assets/img/user/Rectangle 3@2x.png" alt="" class="btn">
+            <img src="../../assets/img/user/ktpng.png" alt="" class="btn">
           </div>
           <div class="info-btn_text" v-else>  
               <span style="font-size:10px;">{{dredgeText}}</span> 
