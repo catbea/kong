@@ -134,20 +134,28 @@ export default {
     },
     markMaker() {
       let scaleSize = new qq.maps.Size(140, 30)
+      let html = ''
       for (let temp of this.houseList) {
+        if (temp.linkerNum) {
+          html = `<div class="text">${temp.name}(${temp.linkerNum})</span><span class="arrow"></span></div>`
+        } else {
+          html = `<div class="text">${temp.name}</span><span class="arrow"></span></div>`
+        }
         let marker = new qq.maps.Marker({
           icon: new qq.maps.MarkerImage('', null, null, null, scaleSize),
           map: this.map,
           position: new qq.maps.LatLng(temp.latitude, temp.longitude),
-          decoration: new qq.maps.MarkerDecoration(`<div class="text">${temp.name}(${temp.linkerNum})<span class="arrow"></span></div>`, new qq.maps.Point(0, -4))
+          decoration: new qq.maps.MarkerDecoration(html, new qq.maps.Point(0, -4))
         })
         qq.maps.event.addListener(marker, 'click', (e) => {
           let zoom = this.map.zoom
           this.map.setCenter(new qq.maps.LatLng(e.latLng.lat, e.latLng.lng))
           if (zoom > 5 && zoom <= 7) {
             this.city = temp.name
+            this.map.setZoom(zoom + 1)
+          } else {
+            this.map.setZoom(zoom + 2)
           }
-          this.map.setZoom(zoom + 1)
         })
         this.markList.push(marker)
       }
