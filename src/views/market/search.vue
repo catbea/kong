@@ -127,10 +127,9 @@ export default {
         current: 1,
         size: 100
       }
-      this.nodata = false
       const res = await marketService.getHouseList(payload)
       this.searchBirefList = res.records
-      setTimeout(()=>{this.nodata = !res.records.length},1500)
+      this.nodata = !res.records.length
     },
     onLoad() {
       this.searchMidator(this.searchValue, this.filters, this.page)
@@ -252,11 +251,10 @@ export default {
         this.searchStatus = 0
       } else {
         this.searchStatus = 1
-        this.preSearch()
-        // this.autoSearchTimer = setTimeout(() => {
-        //   this.preSearch()
-        //   clearTimeout(this.autoSearchTimer)
-        // }, 500)
+        this.autoSearchTimer = setTimeout(() => {
+          this.preSearch()
+          clearTimeout(this.autoSearchTimer)
+        }, 500)
       }
     },
     filters: {
