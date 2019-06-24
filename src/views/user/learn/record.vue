@@ -182,6 +182,7 @@ export default {
     height: 90px;
     border-radius: 6px;
     position: relative;
+    object-fit: cover;
   }
   .learn-img {
     .learn-type {
