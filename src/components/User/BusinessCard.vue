@@ -58,7 +58,7 @@
         </div>
         <div>
           <p class="vip-status">{{isVipInfo}}</p>
-          <p class="welfare-desc">{{vipTimeInfo}}</p>
+          <p class="welfare-desc" :class="goType === true?'welfare':'welfare-desc'">{{vipTimeInfo}}</p>
         </div>
         <div>
           <div class="info-btn" v-if="goType==false"> 
@@ -406,6 +406,13 @@ export default {
         font-size: 12px;
         font-weight: 400;
         color: #999999;
+        line-height: 22px;
+      }
+      div>.welfare { 
+        margin-top: 2px; 
+        font-size: 12px;
+        font-weight: 400;
+        color: #EA4D2E;
         line-height: 22px;
       }
       div>.info-btn{ 
