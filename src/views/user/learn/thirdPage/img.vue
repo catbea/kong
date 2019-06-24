@@ -31,7 +31,7 @@ export default {
     },
     methods:{
         gostudyAdd() {
-            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
+            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.developersId,linkerId:this.$route.query.linkerId 
             }).then((result) => { 
             }).catch((err) => {
                 console.log(err)

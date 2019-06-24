@@ -9,7 +9,6 @@
             <div class="user-detail-box">
               <div class="username-box">
                 <span class="username-text">{{userInfo.name}}</span>
-                <!-- <i class="icon iconfont icon-me_editor username-edit-icon"></i> -->
               </div>
               <p class="main-camp-view">
                 <span>主营：{{userInfo.majorRegion}}</span> 
@@ -19,8 +18,7 @@
               </p>  
             </div> 
           </div> 
-        </div>
-        
+        </div> 
         <!-- 快捷入口 -->
         <div class="shortcut-box">
           <div v-for="(img,index) in shortcutIcons" :key="index" class="head-img" @click="selectedShortcut(index)"> 
