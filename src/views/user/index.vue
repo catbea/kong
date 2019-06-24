@@ -246,17 +246,7 @@ export default {
           width: 100%;
           height: 52px;
           display: flex;  
-          background: #fff; 
-          // &:after{
-          //   position: absolute;
-          //   content:" ";
-          //   top:0;
-          //   height: 1px;
-          //   width: 100%;
-          //   border-top:1px solid #ccc;
-          //   transform-origin: 0 0;
-          //   transform: scaleY(0.3);
-          // }
+          background: #fff;  
           div:nth-child(1) {
             width: 49px;
             height: 100%; 
@@ -264,8 +254,8 @@ export default {
           div:nth-child(2) {
             width: 78%;
             height: 100%;
+            transition: all .5s ease;
             border-bottom: 1px solid #E2E8EE;
-            // transform: scaleY(.5);
           }
           div:nth-child(3) {
             border-bottom: 1px solid #E2E8EE;

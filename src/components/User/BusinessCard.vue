@@ -13,7 +13,7 @@
               <p class="main-camp-view">
                 <span>主营：{{userInfo.majorRegion}}</span> 
                 <svg class="icon" aria-hidden="true" style="width:16px;height:16px;right:16px;position: absolute;">
-                  <use xlink:href="#icon-arrow"></use>
+                  <use xlink:href="#icon-arrow-"></use>
                 </svg> 
               </p>  
             </div> 
