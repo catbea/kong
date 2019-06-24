@@ -12,10 +12,10 @@
                 <use :xlink:href="item.Icon"></use>
               </svg>
             </div>
-            <div>
+            <div class="scale-1px-bottom">
               <span class="grou1Icon-p" style="font-size:14px;">{{item.title}}</span>
             </div>
-            <div>
+            <div class="scale-1px-bottom">
               <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;">
                 <use xlink:href="#icon-arrow-"></use>
               </svg>
@@ -246,19 +246,22 @@ export default {
           width: 100%;
           height: 52px;
           display: flex;  
-          background: #fff;  
+          background: #fff;
+          div {
+            display: flex;
+            align-items: center;
+          }  
           div:nth-child(1) {
             width: 49px;
-            height: 100%; 
+            height: 100%;  
           }
           div:nth-child(2) {
             width: 78%;
-            height: 100%;
-            transition: all .5s ease;
-            border-bottom: 1px solid #E2E8EE;
+            height: 100%; 
+            // border-bottom: 1px solid #E2E8EE;
           }
-          div:nth-child(3) {
-            border-bottom: 1px solid #E2E8EE;
+          div:nth-child(3) { 
+            // border-bottom: 1px solid #E2E8EE;
             // transform: scaleY(.5);
           }
           .icon{
