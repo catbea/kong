@@ -1507,6 +1507,7 @@ export default {
                 width: 13px;
                 height: 16px;
                 vertical-align: middle;
+                margin-right: 4px;
               }
             }
           }
@@ -1525,10 +1526,12 @@ export default {
             }
             span{
               color: #007AE6;
+              // margin-left: auto;
             }
           }
           .icon{
             width: 30px;
+            text-align: right;
             img{
               width: 12px;
               height: 12px;
