@@ -56,9 +56,11 @@ export default {
     methods: {
         videoPlay(item,index) { 
             if(item.firstPlay) return;
+            console.log('开始调用增加接口');
+            item.firstPlay = true;
             userService.getDevelopersMaterialadd({materialId:item.id,agentId:this.userInfo.agentId,developersId:item.id,linkerId:item.linkerId 
             }).then((result) => { 
-                item.firstPlay = true;
+                console.log('调用接口完毕');
                 // this.getList()
             }).catch((err) => {
                 console.log(err)

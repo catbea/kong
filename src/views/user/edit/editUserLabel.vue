@@ -41,6 +41,7 @@ export default {
     getUserLabel () {
       userService.getUserLabel({}).then(res => {
         this.agentLabelList = res
+        console.log(res, 'res');
       }).catch()
     },
     // 更新用户自定义标签

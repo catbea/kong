@@ -238,7 +238,7 @@ export default {
           }
           this.learnList = learnList //原始数据
           this.learnCollection = learnCollection
-        }else{
+        } else {
           this.loaded = true;
         }
       } catch (error) { }
@@ -251,7 +251,8 @@ export default {
           materialId: id,
           developersId,
           linkerId
-        })
+        });
+        console.log('调用增加接口完毕');
       } catch (error) {
 
       }
@@ -294,12 +295,17 @@ export default {
     },
     // 播放时自动全屏
     playVideo(learn, index, ref) {
+     
       let element = this.$refs[ref]
       if (element instanceof Array) {
         element = element[index]
       }
       this.requestFullscreen(element)
       element.play()
+
+      if (learn.firstPlay) return;
+      console.log('开始调用增加接口');
+      learn.firstPlay = true;
       this.addLearnRecord(learn);
     },
 
