@@ -1028,6 +1028,7 @@ export default {
   .recommend-houses {
     background-color: #fff;
     margin-top: 10px;
+    padding-top: 22px;
     border-top: 10px solid #f7f9fa;
     > .recommend-houses-content {
       padding: 16px 15px;
