@@ -45,7 +45,8 @@ export default {
         current:1,
         size:2 ,
         page:"",
-        urlList:{}
+        urlList:{},
+        developersId:""
     }),
     mounted() {  
         this.getList();  
@@ -54,21 +55,14 @@ export default {
     ...mapGetters(['userInfo']),
     },
     methods: {
-        videoPlay(item,index) { 
+        videoPlay(item,index) {   
             if(item.firstPlay) return;
             console.log('开始调用增加接口');
             item.firstPlay = true;
-            userService.getDevelopersMaterialadd({materialId:item.id,agentId:this.userInfo.agentId,developersId:item.id,linkerId:item.linkerId 
+            userService.getDevelopersMaterialadd({materialId:item.id,agentId:this.userInfo.agentId,developersId:item.developersId,linkerId:item.linkerId 
             }).then((result) => { 
                 console.log('调用接口完毕');
                 // this.getList()
-            }).catch((err) => {
-                console.log(err)
-            })
-        },
-        gostudyAdd() {
-            userService.getDevelopersMaterialadd({materialId:this.$route.query.id,agentId:this.userInfo.agentId,developersId:this.$route.query.id,linkerId:this.$route.query.linkerId 
-            }).then((result) => { 
             }).catch((err) => {
                 console.log(err)
             })
