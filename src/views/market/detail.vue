@@ -402,7 +402,7 @@
       <div class="house-recommend scale-1px-bottom" v-if="info.linkerOtherList.length>0">
         <title-bar :conf="othersTitleConf"/>
         <div class="recommend-swipe-content">
-          <div class="recommend-house-item" v-for="(item,index) in info.linkerOtherList.slice(0,3)" :key='index'>
+          <div class="recommend-house-item" v-for="(item,index) in info.linkerOtherList.slice(0,3)" :key='index'  @click="itemClickHandler(item.linkerId)">
             <div class="market-img">
               <img class="headimg" :src="item.headImgUrl" alt="">
               <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
