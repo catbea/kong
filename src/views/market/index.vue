@@ -400,12 +400,13 @@ export default {
       }
     }
   }
-
   .market-item {
     display: flex;
     font-size: 14px;
-    padding: 11px 16px 16px;
-    margin-top: 5px;
+    padding: 16px;
+    height: 127px;
+    width: 100%;
+    overflow: hidden;
     &.active{
       background-color: #F6F6F6;
     }
