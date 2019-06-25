@@ -160,8 +160,7 @@ export default {
         let saveIndex = 0;
         list.map((item,index)=>{
           //部分过期
-          if(!item.vipValid) {
-            // debugger
+          if(!item.vipValid) { 
             this.listIndex.push(index)
             this.goType = true;
             saveIndex = index;           

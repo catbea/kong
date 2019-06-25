@@ -15,7 +15,7 @@
             </div>
           </div>
           <div class="qrcode">
-            <img :src="agent.miniQrCode" alt="">
+            <img :src="qrcode" alt="">
           </div>
         </div>
       </div>
@@ -37,21 +37,33 @@
 
 <script>
 import userService from 'SERVICE/userService'
+import marketService from '@/services/marketService'
 import h2c from 'html2canvas'
 export default {
   data () {
     return {
+      marketId: '',
       imgUrl: '',
       agent: '',
       showView: false,
-      showLoading: false
+      showLoading: false,
+      qrcode: ''
     }
   },
   created () {
     this.imgUrl = this.$route.query.url
-    this.getQrCodeByToken()
+    this.marketId = this.$route.query.marketId
+    this.getPosterInfo()
   },
   methods: {
+    // 获取海报基本信息
+    async getPosterInfo() {
+      const result = await marketService.shareBuildingCard(this.marketId)
+      if (result) {
+        this.qrcode = result.qrCode
+        this.getQrCodeByToken()
+      }
+    },
     getQrCodeByToken () {
       userService.getQrCodeByToken().then(res => {
         this.agent = res

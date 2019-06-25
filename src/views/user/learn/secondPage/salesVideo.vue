@@ -33,7 +33,7 @@
                 </div>
             </li>
         </ul>
-        <div class="finiish" v-if="total == ruleList.length">没有更多了</div>
+        <div class="finiish" v-if="total == videoList.length">没有更多了</div>
     </div> 
 </template>
 
