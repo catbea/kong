@@ -139,7 +139,7 @@ export default {
       if (this.vipInfo) { 
         let text = '开通VIP会员'
         if (this.goType == true) {
-          text = '我的vip会员'
+          text = '我的VIP会员'
         }
         return text
       } else {
@@ -411,8 +411,8 @@ export default {
         float: right;
         // margin-right: 16px;
         .btn {
-          width:80px;
-          height:32px;   
+          width:88px;
+          height:40px;   
         }
       }
       div>.info-btn_text { 
