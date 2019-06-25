@@ -67,7 +67,7 @@ export default {
     // 生成分享海报页面
     goSharePoster () {
       let imgUrl = this.imagePreviewList[this.current].posterImage
-      this.$router.push({path: '/market/activity/share/poster', query: {url: imgUrl}})
+      this.$router.push({path: '/market/activity/share/poster', query: {url: imgUrl, marketId: this.marketId}})
     },
     // 获取海报
     getPosterList () {
