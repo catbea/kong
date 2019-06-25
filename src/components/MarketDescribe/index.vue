@@ -325,10 +325,10 @@ export default {
   width: 375px;
   .market-box {
     // market-describewidth: 343px;
-    padding-top: 22px;
+    padding-top: 16px;
     margin: 0 16px;
     .padding {
-      padding-bottom: 22px;
+      padding-bottom: 17px;
     }
     .allDescribe {
       display: flex;
@@ -461,19 +461,12 @@ export default {
           .tag-group-left {
             height: 25px;
             width: 100%;
-            margin-left: -3px;
+            margin-top: 10px;
+            // margin-left: -3px;
           }
           .unit-price {
             height: 15px;
-            margin-top:5px;
             display: flex;
-            // span:nth-child(1) {
-            //   line-height: 15px;
-            //   font-size: 15px;
-            //   font-weight: 600;
-            //   color: rgba(234, 77, 46, 1);
-            //   font-family: PingFangSC-Semibold;
-            // }
             span{
               line-height: 15px;
               font-size: 12px;

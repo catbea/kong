@@ -20,19 +20,5 @@ export default {
 <style lang="less">
 .tag-group {
   display: flex;
-  overflow: hidden;
-  padding: 2px 0;
-  .tag-item{
-    height: 12px;
-    line-height: 14px;
-    padding: 4px 8px;
-    box-sizing: content-box;
-  }
-  .tag-item:nth-child(1) {
-    margin-left: 0;
-  }
-  .tag-item:nth-child(3) {
-    margin-left: -6px;
-  }
 }
 </style>

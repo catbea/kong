@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class=" estate-item" :class="itemBorder&&'van-hairline--bottom'" :style="{paddingBottom:(info&&info.divisionRules)&&'15px', border: ($route.path.indexOf('/discover') > -1) && '1px solid rgba(177,189,210,0.5)'}">
+    <div class="estate-item scale-1px-bottom"  :style="{paddingBottom:(info&&info.divisionRules)&&'15px', border: ($route.path.indexOf('/discover') > -1) && '1px solid rgba(177,189,210,0.5)'}">
       <div class="main-continer" @click="mainAreaClickHandler" v-if="info">
         <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
           <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
@@ -73,21 +73,17 @@ export default {
 <style lang="less">
 .estate-item {
   position: relative;
-  overflow: hidden;
-  line-height: 1;
-  width: 100%;
-  // border:1px solid rgba(177,189,210,0.5);
+  margin: 0 16px;
+  padding: 16px 0 20px 0;
   > .main-continer {
-    word-wrap: none;
     display: flex;
     > .left-box {
       position: relative;
       background-color: #999999;
+      margin-right: 12px;
       border-radius: 6px;
       width: 120px;
-      min-width: 120px;
       height: 90px;
-      margin: 20px 15px;
       flex-basis: 120px;
       > .panorama-mark {
         position: absolute;
@@ -100,8 +96,8 @@ export default {
       }
     }
     > .right-box {
-      flex-basis: 225px;
-      margin: 20px 16px 20px 0;
+      flex: none;
+      height: 90px;
       > .estate-name {
         font-size: 16px;
         font-weight: 600;
@@ -134,14 +130,13 @@ export default {
         padding-bottom: 3px;
       }
       > .tag-box {
-        padding: 2px 0 4px;
-        margin-left: -3px;
+        padding: 6px 0;
+        // margin-left: -3px;
       }
       > .estate-info {
         white-space: nowrap;
         line-height: 22px;
         display: flex;
-        padding-top: 2px;
         > p {
           display: inline-block;
         }
@@ -165,7 +160,7 @@ export default {
   > .operate-box {
     position: absolute;
     top: 14px;
-    right: 10px;
+    right: 0;
     > .share-icon {
       width: 100%;
       height: 100%;
@@ -181,7 +176,6 @@ export default {
         text-align: center;
         font-weight: 500;
         margin-left: 10px;
-        margin-top: 4px;
       }
     }
   }

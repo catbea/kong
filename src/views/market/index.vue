@@ -401,8 +401,7 @@ export default {
   .market-item {
     display: flex;
     font-size: 14px;
-    // margin: 15px 0;
-    padding: 16px 16px 20px;
+    padding: 16px;
     &.active{
       background-color: #F6F6F6;
     }
@@ -411,7 +410,7 @@ export default {
       height: 90px;
       border-radius: 6px;
       overflow: hidden;
-      margin: 5px 12px 0 0;
+      margin: 0 12px 0 0;
       position: relative;
       .headimg {
         width: 100%;
@@ -441,12 +440,13 @@ export default {
       .market-name {
         display: flex;
         font-size: 18px;
+        height: 28px;
         font-weight: 600;
         color: rgba(19, 41, 79, 1);
         margin-bottom: 0;
         .name {
           flex: 1;
-          line-height: 30px;
+          // line-height: 30px;
           max-width: 150px;
           overflow: hidden;
           white-space: nowrap;
@@ -464,7 +464,7 @@ export default {
           text-align: center;
           font-weight: 500;
           margin-left: 10px;
-          margin-top: 2px;
+          margin-top: -2px;
         }
       }
       .market-location {
@@ -476,7 +476,8 @@ export default {
         font-size: 10px;
         span {
           display: inline-block;
-          padding: 3px 6px;
+          line-height: 1.6;
+          padding: 0 6px;
           border-radius: 2px;
           margin-right: 5px;
           background: rgba(143, 159, 177, 0.15);
