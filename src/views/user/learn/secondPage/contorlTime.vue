@@ -115,6 +115,7 @@ export default {
                         width: 120px;
                         height: 100%;
                         border-radius: 6px;
+                        object-fit: cover;
                     }
                 }
                 .left_icon {

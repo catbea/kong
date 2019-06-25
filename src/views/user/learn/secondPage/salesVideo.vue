@@ -109,6 +109,7 @@ export default {
                     width: 100%;
                     height: 193px;
                     border-radius: 6px;
+                    object-fit: cover;
                 }
                 .span {
                     position: absolute;
