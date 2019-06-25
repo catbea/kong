@@ -96,7 +96,7 @@ export default {
     // 获取初始化索引
     imagePreview (index,i) {
       let num = i
-      for (let x = 0; x < index - 1; x++) {
+      for (let x = 0; x < index; x++) {
         let item = this.posterList[x]
         num += item.posterList.length
       }
@@ -115,7 +115,14 @@ export default {
   },
   beforeDestroy () {
     this.imagePreviewObj&&this.imagePreviewObj.close()
-  }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.showPreview && to.path != '/market/activity/share/poster') {
+      this.showPreview = false
+      return next(false)
+    }
+    next()
+  },
 }
 </script>
 
