@@ -76,12 +76,13 @@ export default {
       }
       let tags = this.$route.query.tags;
       if (tags) {
-        tags = JSON.parse(this.$route.query.tags);
+        tags = JSON.parse(tags);
         let selectedTag = [];
         tags.map(tag => {
           const tagItem = this.agentLabel.filter((item, index) => tag.id == item.id)
           selectedTag.push(...tagItem);
         })
+        console.log(this.agentLabel, tags, 'selectedTag');
         this.selectLabelList = selectedTag
       }
 

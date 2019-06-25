@@ -98,7 +98,7 @@ export default {
     let majorRegion = this.userInfo.majorRegion
     this.majorName = majorRegion.split('/')
     this.city = this.majorName[1].replace('市','') 
-    this.area = this.majorName[2].replace('区','')
+    this.area = this.majorName[2].replace(/区|县|自治县/g,"")
     console.log(this.city,1111111111111)
   },
   methods: {
@@ -139,7 +139,7 @@ export default {
       if (this.vipInfo) { 
         let text = '开通VIP会员'
         if (this.goType == true) {
-          text = '我的vip会员'
+          text = '我的VIP会员'
         }
         return text
       } else {
@@ -411,13 +411,13 @@ export default {
         float: right;
         // margin-right: 16px;
         .btn {
-          width:80px;
-          height:32px;   
+          width:88px;
+          height:40px;   
         }
       }
       div>.info-btn_text { 
         margin-top: 24px;  
-        line-height: 22px; 
+        line-height: 34px; 
         text-align: right;
         color: #8A9299; 
         display: flex;
