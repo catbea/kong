@@ -64,16 +64,23 @@ export default {
         }
         //不存在
         this.selectLabelList.push(obj)
+        console.log(this.selectLabelList, 'this.selectLabelList');
       }
     },
 
     async getAgentLabelList() {
       const res = await userService.getAgentLabelList(1)
       this.agentLabel = res
-      for (let i = 0; i < this.agentLabel.length; i++) {
-        this.agentLabel[i].labelName = this.agentLabel[i].itemName
-        this.agentLabel[i].labelId = this.agentLabel[i].id
-      }
+      // for (let i = 0; i < this.agentLabel.length; i++) {
+      //   this.agentLabel[i].labelName = this.agentLabel[i].itemName
+      //   this.agentLabel[i].labelId = this.agentLabel[i].id
+      // }
+      this.setDefaultLabel();
+
+
+    },
+    // 设置默认选中
+    setDefaultLabel() {
       let tags = this.$route.query.tags;
       if (tags) {
         tags = JSON.parse(tags);
@@ -82,18 +89,16 @@ export default {
           const tagItem = this.agentLabel.filter((item, index) => tag.id == item.id)
           selectedTag.push(...tagItem);
         })
-        console.log(this.agentLabel, tags, 'selectedTag');
         this.selectLabelList = selectedTag
       }
-
     },
 
     async SubLabel() {
       var selectidlist = [] //将选中值拼接成字符串
       let obj = {}
-      for (var i = 0; i < this.selectLabelList.length; i++) {
-        selectidlist.push(this.selectLabelList[i].id)
-      }
+      // for (var i = 0; i < this.selectLabelList.length; i++) {
+      //   selectidlist.push(this.selectLabelList[i].id)
+      // }
       if (!this.selectLabelList.length) {
         this.$dialog
           .alert({
@@ -112,10 +117,20 @@ export default {
               // on close
             })
         } else {
-          let userList = {
-            lableList: selectidlist.join(',')
-          }
-          const res = await userService.upDateUserInfo(userList)
+          // let userList = {
+          //   lableList: selectidlist.join(',')
+          // }
+          let userList = this.selectLabelList.map(item => {
+            return {
+              id: item.id,
+              labelId: item.labelId,
+              labelName: item.itemName,
+              status: 1, //选中
+            }
+          })
+          const res = await userService.upDateUserInfo({
+            labelList: userList
+          })
           if (res) {
             this.$store.dispatch('getUserInfo', Object.assign({}, this.userInfo, { labelList: this.selectLabelList }))
             this.$router.go(-1)

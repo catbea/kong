@@ -24,12 +24,12 @@
             <img :src="item.coverImgUrl" alt>
           </div>
           <div class="learn-info">
-            <h3 class="title ellipsis">{{item.title}}</h3>
+            <h3 class="title ellipsis ellipsis-2">{{item.title}}</h3>
             <p class="linker-name">
               所属楼盘：
               <span>{{item.linkerName}}</span>
             </p>
-            <div class="times">查看时间：{{formatDate(item.updateTime)}}</div>
+            <div class="times">查看时间：{{item.updateTime}}</div>
           </div>
         </div>
       </van-list>
