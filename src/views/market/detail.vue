@@ -411,7 +411,7 @@
             <div class="market-info">
               <p class="market-name">{{item.linkerName}}</p>
               <p class="market-location">{{item.district}}</p>
-              <p class="market-tags"><span class="active">{{['热销中', '即将发售', '', '售罄'][item.saleStatus]}}</span><span v-for="(option,i) in item.linkerTags.slice(0,2)" :key="i">{{option}}</span></p>
+              <p class="market-tags"><span :class="{'active': item === '热销中', 'red': item === '即将发售'}">{{['热销中', '即将发售', '', '售罄'][item.saleStatus]}}</span><span v-for="(option,i) in item.linkerTags.slice(0,2)" :key="i">{{option}}</span></p>
               <p class="market-price">{{item.averagePrice}}</p>
             </div>
           </div>
@@ -1457,7 +1457,7 @@ export default {
         font-size: 10px;
         span{
           display: inline-block;
-          padding:4px 8px;
+          padding: 4px 8px;
           border-radius: 2px;
           margin-right: 5px;
           background:rgba(143,159,177,0.15);
@@ -2297,6 +2297,9 @@ export default {
               color: #5C5F66;
               &.active{
                 background-color: rgba(0,120,255,0.15);
+              }
+              &.red{
+                background-color: rgba(250, 41, 41, 0.15);
               }
             }
           }

@@ -474,10 +474,10 @@ export default {
       }
       .market-tags {
         font-size: 10px;
+        display: flex;
+        align-items: center;
         span {
-          display: inline-block;
-          line-height: 1.6;
-          padding: 0 6px;
+          padding: 3px 4px 2px;
           border-radius: 2px;
           margin-right: 5px;
           background: rgba(143, 159, 177, 0.15);

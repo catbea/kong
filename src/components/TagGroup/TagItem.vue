@@ -25,8 +25,7 @@ export default {
 <style lang="less">
 .tag-item {
   font-size: 10px;
-  line-height: 1.6;
-  padding: 0 6px;
+  padding: 3px 4px 2px;
   border-radius: 2px;
   margin-right: 5px;
   background: rgba(143, 159, 177, 0.15);
