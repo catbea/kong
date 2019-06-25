@@ -90,17 +90,17 @@
           </div>
           <div class="house-info-form">
             <div class="item">
-              <p class="price"><span>均价:</span><b>{{info.averagePrice}}</b></p>
+              <p class="price"><span class="title">均价:</span><b>{{info.averagePrice}}</b></p>
               <p class="calculationIcon" @click="goCalculation(info.linkerName)"><img :src="calculationIcon"><span>房贷计算器</span></p>
             </div>
             <div class="item">
-              <span>开盘:</span>{{info.openTime}}
+              <span class="title">开盘:</span><span>{{info.openTime}}</span>
             </div>
             <div class="item" @click="mapClickHandler">
-              <span class="title">地址:</span> <p class="address"><span class="adr">{{info.detailAddress}}</span><span class="icon"  v-if="info.houseAroundType&&info.houseAroundType.length>0"><img src="../../assets/img/market/classify/map.png" alt=""> 地图</span></p>
+              <span class="title">地址:</span><p class="address"><span class="adr">{{info.detailAddress}}</span><span class="icon"  v-if="info.houseAroundType&&info.houseAroundType.length>0"><img src="../../assets/img/market/classify/map.png" alt="">地图</span></p>
             </div>
             <div class="item" @click="moreInfoHandler">
-              <p class="price"><span class="title">更多:</span>产权年限、装修标准、开发商…</p>
+              <p class="price"><span class="title">更多:</span><span class="more">产权年限、装修标准、开发商…</span></p>
               <p class="icon"><img src="../../assets/img/marketDetail/arrow2@2x.png" /></p>
             </div>
           </div>
@@ -1475,15 +1475,16 @@ export default {
         .item{
           padding-top: 15px;
           display: flex;
-          span{
-            color: #8A8F99;
-            padding-right: 10px;
+          color: #333;
+          p{
+            display: flex;
           }
           b{
             color: #EA4D2E;
           }
           .title{
-            width: 45px;
+            flex-basis: 40px;
+            color: #8A8F99;
           }
           .address{
             flex:  none;
@@ -1494,6 +1495,7 @@ export default {
               text-overflow: ellipsis;
               white-space: nowrap;
               width: 215px;
+              color: #333;
             }
             .icon {
               width: 80px;
@@ -1512,7 +1514,7 @@ export default {
             flex: 1;
           }
           .calculationIcon{
-            width: 120px;
+            width: 100px;
             text-align: right;
             vertical-align: middle;
             img{
