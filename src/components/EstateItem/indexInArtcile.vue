@@ -116,6 +116,7 @@ export default {
   line-height: 1;
   width: 100%;
   margin: 0;
+  padding: 0;
   // border:1px solid rgba(177,189,210,0.5);
   > .main-continer {
     word-wrap: none;
@@ -127,7 +128,8 @@ export default {
       width: 120px;
       min-width: 120px;
       height: 90px;
-      margin: 15px;
+      margin: 16px;
+      padding: 0;
       flex-basis: 120px;
       > .panorama-mark {
         position: absolute;
@@ -142,6 +144,7 @@ export default {
     > .right-box {
       flex-basis: 225px;
       margin: 16px 16px 16px 0;
+      padding: 0;
       > .estate-name {
         display: flex;
         // justify-content: space-between;
