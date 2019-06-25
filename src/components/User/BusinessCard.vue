@@ -417,7 +417,7 @@ export default {
       }
       div>.info-btn_text { 
         margin-top: 24px;  
-        line-height: 22px; 
+        line-height: 40px; 
         text-align: right;
         color: #8A9299; 
         display: flex;
