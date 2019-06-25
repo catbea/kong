@@ -1421,7 +1421,7 @@ export default {
       }
     }
     .info-content{
-      padding: 15px;
+      padding: 15px 15px 0;
       .linker-name{
         display: flex;
         .house-name{
@@ -1812,7 +1812,7 @@ export default {
     }
   }
   > .evaluating-box {
-    margin-top: 10px;
+    margin-top: 30px;
     .evaluating-content {
       margin-top: 15px;
       height: 90px;
