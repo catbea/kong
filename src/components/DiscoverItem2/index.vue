@@ -9,16 +9,16 @@
       </div>
       <ul>
         <li>
-          <div><span class="free" v-if="+data.isFree">免费</span>{{data.linkerName}}</div>
+          <div>{{data.linkerName}}</div>
         </li>
-        <li>{{data.site}}</li>
+        <li>{{data.site}}<span v-if="data.buildArea"> | {{data.buildArea}}</span></li>
         <li>
           <div class="tag-item-statu blue" v-if="0===data.saleStatus">{{status[data.saleStatus]}}</div>
           <div class="tag-item-statu red" v-if="1===data.saleStatus">{{status[data.saleStatus]}}</div>
           <div class="tag-item-statu gary" v-if="3===data.saleStatus">{{status[data.saleStatus]}}</div>
           <!-- <div class="tag-item" v-if="data&&data.condition&&data.condition!==''" v-for="(item,index) in data.condition.slice(0,1)" :key="index">{{item}}</div> -->
         </li>
-        <li>{{data.open}}</li>
+        <li class="market_price">{{data.price}}</li>
       </ul>
     </div>
     <div class="meal-market-page-box-bottom" v-if="showRules&&data.divisionRules">
@@ -146,11 +146,10 @@ export default {
       flex: 1;
       width: 181px;
       li:nth-of-type(1) {
-        height: 20px;
-        font-size: 16px;
-        font-weight: 600;
+        font-size: 18px;
+        font-weight: bold;
         color: rgba(51, 51, 51, 1);
-        line-height: 20px;
+        line-height: 26px;
         display: flex;
         justify-content: space-between;
         width: 98%;
@@ -166,7 +165,7 @@ export default {
         font-weight: 400;
         color: rgba(102, 102, 102, 1);
         line-height: 15px;
-        margin: 6px 0 4px 0;
+        margin: 7px 0 4px 0;
       }
       li:nth-of-type(3) {
         height: 18px;
@@ -201,14 +200,21 @@ export default {
           color: #5c5f66;
         }
       }
-      li:nth-of-type(4) {
-        font-size: 12px;
-        font-weight: 400;
-        color: rgba(153, 153, 153, 1);
-        // line-height: 11px;
-        margin-top: 12px;
-        display: flex;
-        justify-content: space-between;
+      // li:nth-of-type(4) {
+      //   font-size: 12px;
+      //   font-weight: 400;
+      //   color: rgba(153, 153, 153, 1);
+      //   // line-height: 11px;
+      //   margin-top: 12px;
+      //   display: flex;
+      //   justify-content: space-between;
+      // }
+      .market_price{
+        font-size: 16px;
+        color: #E65E2E;
+        line-height: 24px;
+        font-weight: bold;
+        margin-top: 7px;
       }
       .free{
         font-size: 10px;
