@@ -234,7 +234,7 @@ export default {
             }
             div {
               > .username-box {
-                margin-top: 28px;
+                padding-top: 18px;
                 color: #1A2733;
                 > .username-text { 
                   font-size: 20px;
