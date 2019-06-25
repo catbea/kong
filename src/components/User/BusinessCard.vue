@@ -185,8 +185,8 @@ export default {
         } 
         else if(this.goType&&this.listIndex.length!==list.length&&list.length!==1){  
           // debugger
-          let d = list[saveIndex].city 
-          text = `您开通${d}VIP已过期请续费`; 
+          let d = list[saveIndex].city.replace('市','') 
+          text = `您开通${d}的VIP已过期请续费`; 
           this.vipText ="续费"  
           console.log("asas?>>>>",text);
           return  text;
