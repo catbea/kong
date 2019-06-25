@@ -10,16 +10,20 @@
               <div style="margin-top:24px;margin-left:16px;">
                 <avatar class="user-avatar" :avatar="userInfo.avatarUrl"/>
               </div>
-              <div style="margin-left:10px;">
+              <div style="margin-left:10px;width:77%;">
                 <div class="username-box" >
                   <span class="username-text">{{userInfo.name}}</span>
                 </div>
-                <p class="main-camp-view">
-                  <span>主营：{{userInfo.majorRegion}}</span> 
-                  <svg class="icon" aria-hidden="true" style="width:16px;height:16px;right:16px;position: absolute;">
+                <div class="main-camp-view">
+                  <p>
+                    <span>主营：</span>
+                    <span>{{city}}</span>
+                    <span>{{area}}</span>
+                  </p> 
+                  <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
                     <use xlink:href="#icon-arrow-"></use>
                   </svg> 
-                </p>
+                </div>
               </div> 
             </div> 
           </div> 
@@ -35,22 +39,6 @@
         </div>
       </div> 
     </div> 
-    <!-- <div class="business-status-box">
-      <router-link tag="div" to="/user/myMember" class="status-info-left">
-        <img :src="crownIcon">
-        <p class="info-title vip-status">{{isVipInfo}}</p>
-        <p class="info-desc welfare-desc">{{vipTimeInfo}}</p>
-        <p class="info-btn" v-if="goType==false">
-          <button class="btn">立即开通</button>
-        </p>
-        <p class="info-btn_text" v-else>
-          <span style="font-size:10px;display:block;">{{dredgeText}}</span> 
-          <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;height:80px;line-height: 80px;">
-            <use xlink:href="#icon-arrow"></use>
-          </svg> 
-        </p>
-      </router-link> 
-    </div> -->
     <div class="business-box">
       <router-link tag="div" to="/user/myMember" class="box_info">
         <div>
@@ -65,7 +53,7 @@
             <img src="../../assets/img/user/ktpng.png" alt="" class="btn">
           </div>
           <div class="info-btn_text" v-else>  
-              <span style="font-size:10px;">{{dredgeText}}</span> 
+              <span style="font-size:10px;">{{vipText}}</span> 
               <!-- <p> -->
                 <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
                   <use xlink:href="#icon-arrow-"></use>
@@ -98,11 +86,20 @@ export default {
       { title: '培训学院', Icon: '#icon-peixunxueyuan' }, 
       { title: '名片分享', Icon: '#icon-fenxiang' }, 
     ],
-    goType:false
-
+    goType:false,  
+    majorName:[],
+    city:"内蒙古自治区",
+    area:"",
+    vipText:"",
+    listIndex:[]
   }),
   created () {
-    this.getVipInfo()
+    this.getVipInfo(); 
+    let majorRegion = this.userInfo.majorRegion
+    this.majorName = majorRegion.split('/')
+    this.city = this.majorName[1].replace('市','') 
+    this.area = this.majorName[2].replace('区','')
+    console.log(this.city,1111111111111)
   },
   methods: {
   async getVipInfo() {
@@ -138,18 +135,7 @@ export default {
         return ''
       }
     },
-    isVipInfo() {
-      // return '我的vip会员'
-      // if (this.vipInfo) { 
-      //   let time = this.vipInfo.expireTimestamp
-      //   let text = '开通VIP会员'
-      //   if (time > +new Date()) {
-      //     text = '我的vip会员'
-      //   }
-      //   return text
-      // } else {
-      //   return ''
-      // }
+    isVipInfo() { 
       if (this.vipInfo) { 
         let text = '开通VIP会员'
         if (this.goType == true) {
@@ -161,22 +147,10 @@ export default {
       }
       // return this.userVipInfo.isvip ? '我的vip会员':'开通VIP会员'
     },
-    vipTimeInfo() {
-      // return this.userVipInfo.isvip ? this.userVipInfo.vipRemark : '楼盘不限量' 
-      // if (this.vipInfo) {  
-      //   let time = this.vipInfo.expireTimestamp
-      //   let text = '楼盘开通不限量' 
-      //   if (time > +new Date()) {
-      //       let list = this.vipInfo.vipList.map(item=>item.city+"").slice(0, 3) 
-      //       return text = '已开通' + list.join(",") + '等城市' 
-      //   } 
-      //   return text
-      // } else {
-      //   return ''
-      // } 
+    vipTimeInfo() { 
       if(this.vipInfo) { 
         // debugger 
-        let text = '楼盘开通不限量'  
+        let text = '楼盘开通不限量'
         let list = this.vipInfo.vipList;
         this.goType = false;
         // let goType = false ,//false 没过期，true,有过期
@@ -184,6 +158,8 @@ export default {
         list.map((item,index)=>{
           //部分过期
           if(!item.vipValid) {
+            // debugger
+            this.listIndex.push(index)
             this.goType = true;
             saveIndex = index;           
           }         
@@ -200,18 +176,24 @@ export default {
           cityList = cityList.join(",");
           if(list.length>3){
             text = `已开通${cityList}等城市`;
+            this.vipText ="开通更多"  
           }else{
             text = `已开通${cityList}城市`;
+            this.vipText ="开通更多"  
           } 
           return text
         } 
-        else if(this.goType&&saveIndex+1!==list.length&&list.length!==1){ 
+        else if(this.goType&&this.listIndex.length!==list.length&&list.length!==1){  
+          // debugger
           let d = list[saveIndex].city 
           text = `您开通${d}VIP已过期请续费`; 
+          this.vipText ="续费"  
           console.log("asas?>>>>",text);
           return  text;
         }else{
-          return text = `您开通的城市VIP已全部到期`;    
+          this.vipText ="立即续费";
+          console.log(this.listIndex.length,'00000000000000000000000000') 
+          return text = `您开通的城市VIP已全部到期`; 
         } 
       }else {
         return ''
@@ -256,9 +238,18 @@ export default {
                 }
               }
               > .main-camp-view {
-                margin-top: 3px;
+                margin-top: 7px;
                 color: #1A2733;
                 font-size: 12px;
+                margin-right: 16px; 
+                display: flex;
+                align-items: center;
+                width: 100%;
+                right: 16px;
+                justify-content: space-between;
+                span {
+                  margin-right: 4px;
+                }
               }
             }
             
@@ -428,7 +419,10 @@ export default {
         margin-top: 24px;  
         line-height: 22px; 
         text-align: right;
-        color: #8A9299;  
+        color: #8A9299; 
+        display: flex;
+        align-items: center;
+        float: right; 
       }
     }
   }

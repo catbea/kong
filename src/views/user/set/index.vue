@@ -77,7 +77,6 @@ export default {
             }
             .switch {
                 margin-right:15px;
-                margin-top:15px;
             }
             .li {
                 display: flex;
