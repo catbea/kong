@@ -56,8 +56,7 @@
                   <div class="msg-customer-con-me" v-if="item.msgType=='1'" v-html="item.content"></div>
                   <div class="msg-customer-con-me" v-if="item.msgType=='7'">
                       <div v-if="item.content.type=='ARRAY'">
-                        <div class="robot_keys comm_style">红树湾</div>
-                        <div class="robot_z comm_style robot_keys">我是智能客服小Z，你需要咨询的是以下问题吗</div>
+                        <div class="robot_z comm_style robot_keys">我是智能客服小蓝，你需要咨询的是以下问题吗</div>
                         <div class="robot-answer robot_keys" v-for="(item2,index) in item.content.answer" :key="index">{{item2}}</div>                     
                         <div class="robot_suffix comm_style">如果没有您需要的问题，可尝试更准确的关键字，例如：<span style="font-weight:bold;">“装修标准”</span></div>
                       </div>
