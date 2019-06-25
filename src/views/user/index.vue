@@ -13,7 +13,7 @@
                 <use :xlink:href="item.Icon"></use>
               </svg>
             </div>
-            <div class="scale-1px-bottom">
+            <div :class="index>=5 ? '' : 'scale-1px-bottom'">
               <div style=" width: 100%; height: 52px; ">
                 <span class="grou1Icon-p" style="font-size:14px;">{{item.title}}</span>
               </div>
