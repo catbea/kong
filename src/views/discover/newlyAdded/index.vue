@@ -164,15 +164,17 @@ export default {
     height: 126px;
 
     > .linker-input-body {
-      color: #13294f;
+      color: #13284D;
       font-size: 16px;
+      line-height: 20px;
       padding: 10px;
       width: 100%;
       height: 100%;
       border: none;
       &::placeholder{
         font-size: 12px;
-        line-height: 1.2;
+        line-height: 20px;
+        color: #9CA5B5;
       }
     }
   }
