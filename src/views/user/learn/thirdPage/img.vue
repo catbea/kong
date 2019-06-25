@@ -68,6 +68,7 @@ export default {
             flex-direction: column;
             justify-content: center; 
             .van-swipe {
+                position: static;
                 .van-swipe-item {
                     display: flex; 
                     align-items: center;
@@ -80,7 +81,7 @@ export default {
                 text-align: center;
                 color: #333333;
                 font-size: 14px;
-                margin-top: 18px;
+                // margin-top: 18px;
             }
         }
     }

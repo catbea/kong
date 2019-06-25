@@ -8,8 +8,8 @@
         <img class="add" src="../../../assets/img/user/userLabel/add.png" alt="">
         新增标签
       </div>
-      <div class="item scale-1px-bottom" v-for="(item,index) in agentLabelList" :key="index">
-        <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(index)">
+      <div class="item scale-1px-bottom" v-if="item.status !=2" v-for="(item,index) in agentLabelList" :key="index">
+        <img class="delete" src="../../../assets/img/user/userLabel/delete.png" alt="" @click="deleteLabel(item, index)">
         <input class="label" :ref="item.itemCode" type="text" v-model.trim="item.labelName" maxlength="4" @focus="currentIndex=index" @blur="blur()">
         <img v-show="index===currentIndex && item.labelName" class="clear" src="../../../assets/img/user/userLabel/clear.png" alt="" @click="clearLabel(index)">
       </div>
@@ -41,7 +41,6 @@ export default {
     getUserLabel () {
       userService.getUserLabel({}).then(res => {
         this.agentLabelList = res
-        console.log(res, 'res');
       }).catch()
     },
     // 更新用户自定义标签
@@ -61,12 +60,13 @@ export default {
       }
       this.agentLabelList.unshift(obj)
     },
-    deleteLabel (index) {
+    deleteLabel (item, index) {
       this.$dialog.confirm({
         title: '删除提示',
         message: '是否确认删除该标签？'
       }).then(() => {
-        this.agentLabelList.splice(index,1)
+        item.status = 2; //删除
+        // this.agentLabelList.splice(index,1)
       }).catch()
     },
     clearLabel (index) {

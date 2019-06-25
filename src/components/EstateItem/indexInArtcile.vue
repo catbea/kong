@@ -15,13 +15,13 @@
             <span v-if="info.saleStatus==1&&isInArticle==1" class="house-sale-status" style="background: rgba(234, 77, 46, 0.1);color: #EA4D2E">即将发售</span>
             <span v-if="info.saleStatus==3&&isInArticle==1" class="house-sale-status" style="background: rgba(143, 159, 177, 0.15);color: #5C5F66">售罄</span>
           </h5>
-          <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}}</p>
+          <p class="estate-location">{{`${info&&info.city} ${info&&info.district?info.district:''}`}} <span v-if="info.buildArea"> | {{info&&info.buildArea ? `建面${info.buildArea}${info.buildArea.indexOf('㎡') > -1 ? '':'㎡'}`:'建面暂无'}}</span> </p>
           <!-- <tag-group class="tag-box" v-if="isInArticle==1" :arr="this.info&&this.info.projectTagArr" /> -->
           <tag-group class="tag-box" :arr="this.info&&this.info.linkerTags||this.info&&this.info.projectTagArr" />
           <div class="estate-info">
             <p class="estate-price" v-if="info.price==='0 万元/套起' || info.price==0 || info.price=='0 元/㎡'">价格待定</p>
             <p class="estate-price" v-else>{{info&&info.price}}{{info&&info.priceUnit}}</p>
-            <p class="estate-area">{{info&&info.buildArea ? `建面${info.buildArea}${info.buildArea.indexOf('㎡') > -1 ? '':'㎡'}`:'建面暂无'}}</p>
+            <!-- <p class="estate-area"></p> -->
           </div>
         </div>
       </div>
@@ -115,6 +115,7 @@ export default {
   overflow: hidden;
   line-height: 1;
   width: 100%;
+  margin: 0;
   // border:1px solid rgba(177,189,210,0.5);
   > .main-continer {
     word-wrap: none;
