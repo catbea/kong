@@ -98,7 +98,7 @@ export default {
     let majorRegion = this.userInfo.majorRegion
     this.majorName = majorRegion.split('/')
     this.city = this.majorName[1].replace('市','') 
-    this.area = this.majorName[2].replace('区','')
+    this.area = this.majorName[2].replace(/区|县|自治县/g,"")
     console.log(this.city,1111111111111)
   },
   methods: {
