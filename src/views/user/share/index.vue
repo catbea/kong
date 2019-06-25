@@ -12,7 +12,7 @@
               <div class="agent-info">
                 <p class="name-box"><span class="name">{{editData.agentName}}</span><span class="tel">{{editData.mobile}}</span></p>
                 <!-- <p class="signature">{{editData.signature}}</p> -->
-                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '卖房经纪人'}}</p>
+                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '买卖经纪人'}}</p>
               </div>
               <div class="qrcode-box">
                 <div class="tips">
@@ -38,7 +38,7 @@
                 <p class="name">{{editData.agentName}}</p>
                 <p class="tel">{{editData.mobile}}</p>
                 <!-- <p class="signature">{{editData.signature}}</p> -->
-                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '卖房经纪人'}}</p>
+                <p class="signature">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '买卖经纪人'}}</p>
               </div>
               <div class="qrcode">
                 <img :src="editData.miniQrCode" alt="小程序">
@@ -57,7 +57,7 @@
                 <div class="agent-info">
                   <p class="name">{{editData.agentName}}</p>
                   <p class="tel">{{editData.mobile}}</p>
-                  <p class="worktime">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '卖房经纪人'}}</p>
+                  <p class="worktime">房地产从业时间{{editData.workingTime | formatWorkTime}}的{{editData.saleType || '买卖经纪人'}}</p>
                 </div>
                 <div class="qrcode">
                   <img :src="editData.miniQrCode" alt="小程序">
