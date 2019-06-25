@@ -23,7 +23,7 @@
 import articleService from 'SERVICE/articleService'
 export default {
   data: () => ({
-    defaultText: '请点击喜欢的文章右上角更多进行复制链接地址，并粘贴到这里。目前仅支持：微信公众号、今日头条、腾讯新闻、AW大师分享内容解析',
+    defaultText: '请点击喜欢的微信公众号文章右上角更多进行复制，并粘贴到这里',
     linkerText: '',
     addButtonClick: true,
     editButtonClick: true,
