@@ -34,7 +34,7 @@
 
       <div class="empty-learn" v-else-if="learnList.length == 0 && loaded">
         <img :src="require('IMG/user/learn/empty-learn.png')" alt>
-        <p v-if="!defaultLinker.linkerId">请开通楼盘后查看培训资料</p>
+        <p v-if="!defaultLinker.linkerId">请开通楼盘或上传培训素材</p>
         <p v-else>您开通的楼盘尚未上传培训素材</p>
       </div>
 
