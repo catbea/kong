@@ -83,7 +83,7 @@ export default {
   position: relative;
   margin: 0 16px;
   padding: 16px 0 20px 0;
-  box-shadow: inset 0px -1px 1px -1px #c8c7cc;
+  box-shadow: inset 0px -1px 1px -1px #ddd;
   > .main-continer {
     display: flex;
     > .left-box {

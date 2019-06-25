@@ -331,7 +331,7 @@ export default {
       padding-bottom: 17px;
     }
     .border{
-      box-shadow: inset 0px -1px 1px -1px #c8c7cc;
+      box-shadow: inset 0px -1px 1px -1px #ddd;
     }
     .allDescribe {
       display: flex;

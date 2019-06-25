@@ -404,7 +404,7 @@ export default {
     display: flex;
     font-size: 14px;
     padding: 16px;
-    box-shadow: inset 0px -1px 1px -1px #c8c7cc;
+    box-shadow: inset 0px -1px 1px -1px #ddd;
     &.active{
       background-color: #F6F6F6;
     }
