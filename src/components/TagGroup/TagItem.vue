@@ -31,5 +31,6 @@ export default {
   margin-right: 5px;
   background: rgba(143, 159, 177, 0.15);
   color: #5c5f66;
+  white-space: nowrap;
 }
 </style>
