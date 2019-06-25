@@ -399,6 +399,7 @@ export default {
     }
   }
   .market-item {
+    margin-bottom: 1px;
     display: flex;
     font-size: 14px;
     padding: 16px;
@@ -499,7 +500,7 @@ export default {
         color: rgba(68, 81, 102, 1);
         display: flex;
         margin-bottom: 0;
-        padding-top: 3px;
+        padding-top: 2px;
         .price {
           flex: 1;
         }
