@@ -97,7 +97,7 @@
               <span class="title">开盘:</span><span>{{info.openTime}}</span>
             </div>
             <div class="item" @click="mapClickHandler">
-              <span class="title">地址:</span><p class="address"><span class="adr">{{info.detailAddress}}</span><span class="icon"  v-if="info.houseAroundType&&info.houseAroundType.length>0"><img src="../../assets/img/market/classify/map.png" alt="">地图</span></p>
+              <p class="address"><span class="title">地址:</span><span class="adr">{{info.detailAddress}}</span></p><span class="map" v-if="info.houseAroundType&&info.houseAroundType.length>0"><img src="../../assets/img/market/classify/map.png" alt="">地图</span>
             </div>
             <div class="item" @click="moreInfoHandler">
               <p class="price"><span class="title">更多:</span><span class="more">产权年限、装修标准、开发商…</span></p>
@@ -1487,18 +1487,18 @@ export default {
             color: #8A8F99;
           }
           .address{
-            flex:  none;
+            flex:  1;
             display: flex;
             .adr {
-              flex: 0 0 auto;
+              flex: 1;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
-              width: 215px;
+              max-width: 215px;
               color: #333;
             }
-            .icon {
-              width: 80px;
+          }
+          .map {
               color: #007AE6;
               font-size: 12px;
               vertical-align: middle;
@@ -1510,12 +1510,10 @@ export default {
                 margin-right: 4px;
               }
             }
-          }
           .price{
             flex: 1;
           }
           .calculationIcon{
-            width: 100px;
             text-align: right;
             vertical-align: middle;
             img{
@@ -1530,8 +1528,8 @@ export default {
             }
           }
           .icon{
-            width: 30px;
             text-align: right;
+            justify-content: center;
             img{
               width: 12px;
               height: 12px;
@@ -1719,7 +1717,7 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 10px;
+    margin-top: 30px;
     .type-swipe-content {
       margin: 16px 22px 0px 22px;
       .house-type {
