@@ -115,6 +115,7 @@ export default {
   overflow: hidden;
   line-height: 1;
   width: 100%;
+  margin: 0;
   // border:1px solid rgba(177,189,210,0.5);
   > .main-continer {
     word-wrap: none;
