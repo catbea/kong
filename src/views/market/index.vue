@@ -29,18 +29,20 @@
       </div>
       <div class="market-list">
         <van-list v-model="loading" :finished="myMarket.length > 0 && finished" :finished-text="finishedText" @load="onLoad">
-          <div class="market-item scale-1px-bottom" :class="{'active': item.recommand==10}"  v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
-            <div class="market-img">
-              <img class="headimg" :src="item.linkerUrl" alt="">
-              <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
-              <div v-if="item.cpActivityVo" class="coupon">卡券</div>
-            </div>
-            <div class="market-info">
-              <p class="market-name"><span class="name">{{item.linkerName}}</span> <span class="iconShare" @click.stop="goShare(item)">分享</span></p>
-              <p class="market-location">{{item.city}} {{item.county}}</p>
-              <p class="market-tags"><span class="active" :class="{'red': item.saleStatus==1,'default': item.saleStatus==3}">{{['热销中', '即将发售', '', '售罄'][item.saleStatus] || '热销中'}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
-              <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item,index)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
-              <p class="market-price" v-else  @click.stop="popupHandle(item,index)"><span class="price">{{item.price}}{{item.priceUnit}}</span><span class="icon iconfont icon-more"></span></p>
+          <div class="scale-1px-bottom" :class="{'active': item.recommand==10}"  v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
+            <div class="market-item">
+              <div class="market-img">
+                <img class="headimg" :src="item.linkerUrl" alt="">
+                <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
+                <div v-if="item.cpActivityVo" class="coupon">卡券</div>
+              </div>
+              <div class="market-info">
+                <p class="market-name"><span class="name">{{item.linkerName}}</span> <span class="iconShare" @click.stop="goShare(item)">分享</span></p>
+                <p class="market-location">{{item.city}} {{item.county}}</p>
+                <p class="market-tags"><span class="active" :class="{'red': item.saleStatus==1,'default': item.saleStatus==3}">{{['热销中', '即将发售', '', '售罄'][item.saleStatus] || '热销中'}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
+                <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item,index)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
+                <p class="market-price" v-else  @click.stop="popupHandle(item,index)"><span class="price">{{item.price}}{{item.priceUnit}}</span><span class="icon iconfont icon-more"></span></p>
+              </div>
             </div>
           </div>
         </van-list>
@@ -110,7 +112,7 @@ export default {
   methods: {
     // 点击搜索
     goSearch() {
-      this.$router.push({ name: 'market-search', query: { city: '全国' } })
+      this.$router.push({ name: 'market-search2', query: { city: '全国' } })
     },
     // 跳转分类
     goPage(url) {
@@ -398,11 +400,25 @@ export default {
       }
     }
   }
+
   .market-item {
-    margin-bottom: 1px;
     display: flex;
     font-size: 14px;
     padding: 16px;
+    margin-bottom: 1px;
+    &:after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: #f0f0f0;
+      width: 100%;
+      height: 2px;
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+      -webkit-transform-origin: 0 0;
+      transform-origin: 0 0;
+    }
     &.active{
       background-color: #F6F6F6;
     }
