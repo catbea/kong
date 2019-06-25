@@ -100,7 +100,7 @@ export default {
     },
 
     enterBuilding() {
-      this.$router.push('/user/myMarket')
+      this.$router.push('/market/classify/mymarket')
     },
 
     async getActivityInfo(activityId) {

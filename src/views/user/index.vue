@@ -6,21 +6,40 @@
       <!-- </div> --> 
       <div class="div_view">
         <ul class="ul_view">
+
           <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===6?'li':'li_view'">
             <div>
               <svg class="icon" aria-hidden="true">
                 <use :xlink:href="item.Icon"></use>
               </svg>
             </div>
-            <div class="van-hairline--bottom">
+            <div class="scale-1px-bottom">
+              <div style=" width: 100%; height: 52px; ">
+                <span class="grou1Icon-p" style="font-size:14px;">{{item.title}}</span>
+              </div>
+              <div style="width: 52px; height: 52px; ">
+                <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;">
+                  <use xlink:href="#icon-arrow-"></use>
+                </svg>
+              </div>
+            </div>
+          </li>
+<!--           
+          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===6?'li':'li_view'">
+            <div>
+              <svg class="icon" aria-hidden="true">
+                <use :xlink:href="item.Icon"></use>
+              </svg>
+            </div>
+            <div class="scale-1px-bottom">
               <span class="grou1Icon-p" style="font-size:14px;">{{item.title}}</span>
             </div>
-            <div class="van-hairline--bottom">
+            <div class="scale-1px-bottom">
               <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;">
                 <use xlink:href="#icon-arrow-"></use>
               </svg>
             </div> 
-          </li>
+          </li> -->
         </ul>
       </div>  
     </div>
@@ -244,7 +263,7 @@ export default {
         list-style:none;
         .li_view { 
           width: 100%;
-          height: 52px;
+          // height: 52px;
           display: flex;  
           background: #fff;
           div {
@@ -252,12 +271,12 @@ export default {
             align-items: center;
           }  
           div:nth-child(1) {
+            height: 52px;
             width: 49px;
-            height: 100%;  
           }
           div:nth-child(2) {
-            width: 78%;
-            height: 100%; 
+            margin-left: 8px;
+            width: 100%;
             // border-bottom: 1px solid #E2E8EE;
           }
           div:nth-child(3) { 

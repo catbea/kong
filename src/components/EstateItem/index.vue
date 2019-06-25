@@ -1,6 +1,6 @@
 <template>
   <div class="list-box">
-    <div class="estate-item scale-1px-bottom"  :style="{paddingBottom:(info&&info.divisionRules)&&'15px', border: ($route.path.indexOf('/discover') > -1) && '1px solid rgba(177,189,210,0.5)'}">
+    <div class="estate-item"  :style="{paddingBottom:(info&&info.divisionRules)&&'15px', border: ($route.path.indexOf('/discover') > -1) && '1px solid rgba(177,189,210,0.5)'}">
       <div class="main-continer" @click="mainAreaClickHandler" v-if="info">
         <div class="bg_img left-box" :style="{backgroundImage:'url(' + ((info&&info.linkerUrl) ? info.linkerUrl : (info&&info.headImgUrl) ? info.headImgUrl : '') + ')'}">
           <img class="panorama-mark" :src="panoramaImg" v-if="info&&info.ifPanorama">
@@ -75,11 +75,15 @@ export default {
   .scale-1px-bottom::after{
     height: 0;
   }
+ .estate-item {
+    box-shadow: none;
+ } 
 }
 .estate-item {
   position: relative;
   margin: 0 16px;
   padding: 16px 0 20px 0;
+  box-shadow: inset 0px -1px 1px -1px #ddd;
   > .main-continer {
     display: flex;
     > .left-box {

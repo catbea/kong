@@ -1,6 +1,6 @@
 <template>
   <div class="user-market-page" :class="{'active': (dataArr.recommand==10&&pastShow)}">
-    <div class="user-market-page-box scale-1px-bottom">
+    <div class="user-market-page-box">
       <div class="user-market-page-box-top" @click="skipMarketDetail(dataArr.linkerId)">
         <div class="user-market-page-box-top-left bg_img" :style="{backgroundImage:'url('+dataArr.linkerUrl+')'}">
           <!-- <p v-show="dataArr.sale" class="icon-discount bg_img" :style="{backgroundImage:'url('+discountImg+')'}">{{dataArr.sale}}</p> -->
@@ -465,6 +465,7 @@ export default {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    box-shadow: inset 0px -1px 1px -1px #ddd;
     .user-market-page-box-top {
       display: flex;
       margin-bottom: 16px;

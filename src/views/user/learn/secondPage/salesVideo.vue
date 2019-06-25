@@ -33,6 +33,7 @@
                 </div>
             </li>
         </ul>
+        <div class="finiish" v-if="total == ruleList.length">没有更多了</div>
     </div> 
 </template>
 
@@ -44,6 +45,7 @@ export default {
         videoList:[], 
         current:1,
         size:2 ,
+        total:"",
         page:"",
         urlList:{},
         developersId:""
@@ -77,6 +79,7 @@ export default {
             userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:3,size:this.size,current:this.current
             }).then((result) => {  
                 this.page = result.pages
+                this.total = result.total
                 if (result.pages > 1) { 
                     this.videoList = this.videoList.concat(result.records)
                 }else {
@@ -106,6 +109,7 @@ export default {
                     width: 100%;
                     height: 193px;
                     border-radius: 6px;
+                    object-fit: cover;
                 }
                 .span {
                     position: absolute;
@@ -144,6 +148,12 @@ export default {
                 color: #999999;
             }
         }
+    }
+    .finiish{
+        color: #969799;
+        font-size: 0.34667rem;
+        line-height: 1.33333rem;
+        text-align: center;
     }
 }
 </style>

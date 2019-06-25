@@ -1,7 +1,7 @@
 <template>
   <div class="market-box-page" v-if="itemInfo">
     <div :class="borderBottom ? 'market-box' :'market-box'" @click="itemClickHandler">
-      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}" class="scale-1px-bottom">
+      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}" class="border">
         <div class="market-box-page-top">
           <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
             <!-- 720标示 -->
@@ -322,13 +322,16 @@ export default {
 <style lang="less">
 .market-box-page {
   background: #ffffff;
-  width: 375px;
+  width: 100%;
   .market-box {
     // market-describewidth: 343px;
     padding-top: 16px;
     margin: 0 16px;
     .padding {
       padding-bottom: 17px;
+    }
+    .border{
+      box-shadow: inset 0px -1px 1px -1px #ddd;
     }
     .allDescribe {
       display: flex;

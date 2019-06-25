@@ -87,7 +87,9 @@ export default {
   width: 340px;
   margin: 20px auto;
   .pic{
+    width: 340px;
     height: 400px;
+    overflow: hidden;
     img{
       height: 100%;
       width: 100%;

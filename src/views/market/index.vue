@@ -29,8 +29,8 @@
       </div>
       <div class="market-list">
         <van-list v-model="loading" :finished="myMarket.length > 0 && finished" :finished-text="finishedText" @load="onLoad">
-          <div class="scale-1px-bottom" :class="{'active': item.recommand==10}"  v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
-            <div class="market-item">
+          <div class=""  v-for="(item,index) in myMarket" :key="index" @click="goMarketDetail(item)">
+            <div class="market-item" :class="{'active': item.recommand==10}">
               <div class="market-img">
                 <img class="headimg" :src="item.linkerUrl" alt="">
                 <img v-if="item.ifPanorama==1" class="icon" :src="panoramaIcon" alt="">
@@ -400,25 +400,11 @@ export default {
       }
     }
   }
-
   .market-item {
     display: flex;
     font-size: 14px;
     padding: 16px;
-    margin-bottom: 1px;
-    &:after{
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      background: #f0f0f0;
-      width: 100%;
-      height: 2px;
-      -webkit-transform: scaleY(0.5);
-      transform: scaleY(0.5);
-      -webkit-transform-origin: 0 0;
-      transform-origin: 0 0;
-    }
+    box-shadow: inset 0px -1px 1px -1px #ddd;
     &.active{
       background-color: #F6F6F6;
     }

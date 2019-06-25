@@ -197,7 +197,7 @@ export default {
           cancelButtonText: '取消'
         })
         .then(() => {
-          this.$router.replace({ path: '/user/myMarket' })
+          this.$router.replace({ path: '/market/classify/mymarket' })
         })
         .catch(() => {
           this.page = 1

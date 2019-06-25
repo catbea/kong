@@ -97,7 +97,7 @@
               <span class="title">开盘:</span><span>{{info.openTime}}</span>
             </div>
             <div class="item" @click="mapClickHandler">
-              <span class="title">地址:</span><p class="address"><span class="adr">{{info.detailAddress}}</span><span class="icon"  v-if="info.houseAroundType&&info.houseAroundType.length>0"><img src="../../assets/img/market/classify/map.png" alt="">地图</span></p>
+              <p class="address"><span class="title">地址:</span><span class="adr">{{info.detailAddress}}</span></p><span class="map" v-if="info.houseAroundType&&info.houseAroundType.length>0"><img src="../../assets/img/market/classify/map.png" alt="">地图</span>
             </div>
             <div class="item" @click="moreInfoHandler">
               <p class="price"><span class="title">更多:</span><span class="more">产权年限、装修标准、开发商…</span></p>
@@ -411,7 +411,7 @@
             <div class="market-info">
               <p class="market-name">{{item.linkerName}}</p>
               <p class="market-location">{{item.district}}</p>
-              <p class="market-tags"><span :class="{'active': item === '热销中', 'red': item === '即将发售'}">{{['热销中', '即将发售', '', '售罄'][item.saleStatus]}}</span><span v-for="(option,i) in item.linkerTags.slice(0,2)" :key="i">{{option}}</span></p>
+              <p class="market-tags"><span :class="{'active': item.saleStatus == 0, 'red': item.saleStatus == 1}">{{['热销中', '即将发售', '', '售罄'][item.saleStatus]}}</span><span v-for="(option,i) in item.linkerTags.slice(0,2)" :key="i">{{option}}</span></p>
               <p class="market-price">{{item.averagePrice}}</p>
             </div>
           </div>
@@ -1421,7 +1421,7 @@ export default {
       }
     }
     .info-content{
-      padding: 15px;
+      padding: 15px 15px 0;
       .linker-name{
         display: flex;
         .house-name{
@@ -1487,18 +1487,18 @@ export default {
             color: #8A8F99;
           }
           .address{
-            flex:  none;
+            flex:  1;
             display: flex;
             .adr {
-              flex: 0 0 auto;
+              flex: 1;
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
-              width: 215px;
+              max-width: 215px;
               color: #333;
             }
-            .icon {
-              width: 80px;
+          }
+          .map {
               color: #007AE6;
               font-size: 12px;
               vertical-align: middle;
@@ -1507,14 +1507,13 @@ export default {
                 width: 13px;
                 height: 16px;
                 vertical-align: middle;
+                margin-right: 4px;
               }
             }
-          }
           .price{
             flex: 1;
           }
           .calculationIcon{
-            width: 100px;
             text-align: right;
             vertical-align: middle;
             img{
@@ -1525,10 +1524,12 @@ export default {
             }
             span{
               color: #007AE6;
+              // margin-left: auto;
             }
           }
           .icon{
-            width: 30px;
+            text-align: right;
+            justify-content: center;
             img{
               width: 12px;
               height: 12px;
@@ -1716,7 +1717,7 @@ export default {
     }
   }
   > .house-type {
-    margin-top: 10px;
+    margin-top: 30px;
     .type-swipe-content {
       margin: 16px 22px 0px 22px;
       .house-type {
@@ -1812,7 +1813,7 @@ export default {
     }
   }
   > .evaluating-box {
-    margin-top: 10px;
+    margin-top: 30px;
     .evaluating-content {
       margin-top: 15px;
       height: 90px;

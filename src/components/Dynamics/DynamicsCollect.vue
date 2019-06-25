@@ -114,12 +114,12 @@ export default {
 .dynamics-collect {
   background-color: #2360ad;
   margin: 0 0 40px;
-  height: 175px;
+  height: 149px;
   position: relative;
   > .modify-img {
     width: 100%;
     position: absolute;
-    top: 175px;
+    top: 149px;
   }
   > .top-container {
     position: relative;
@@ -158,7 +158,7 @@ export default {
   > .info-box {
     background: #fff;
     position: relative;
-    margin: 30px 15px 0;
+    margin: 0 15px;
     padding: 10px;
     // padding-bottom: 20px;
     line-height: 1;
