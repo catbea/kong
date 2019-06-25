@@ -75,6 +75,7 @@ export default {
 </script>
 <style lang="less">
 .meal-market-page-box {
+  padding-left: 16px;
   width: 100%;
   display: flex;
   flex-direction: column;

@@ -7,6 +7,13 @@
                         <img :src="item" alt="" srcset=""> 
                     </van-swipe-item> 
                 </van-swipe>
+                <!-- <swiper :options="swiperOption" @change="onChange" style="background:blue;">
+                    <swiper-slide v-for="(item,index) in arr" :key="index" >
+                        <div>
+                            <img :src="item" alt="" srcset="">   
+                        </div>
+                    </swiper-slide>
+                </swiper> -->
                 <div class="custom-indicator">
                     {{ inde + 1 }}/{{arr.length}}
                 </div>
@@ -15,16 +22,26 @@
     </div>
 </template>
 <script>
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { mapGetters } from 'vuex'
 import userService from 'SERVICE/userService'
 export default {
     data:() => ({
         inde: 0,
         arr: [],
-        developersId:""
+        developersId:"",
+        swiperOption: {
+            slidesPerView: 1,
+            spaceBetween: 12,
+        },
     }),
     mounted() {
         this.getImg()
+    },
+    components:{
+        swiper,
+        swiperSlide,
     },
     computed: {
     ...mapGetters(['userInfo']),
@@ -55,34 +72,34 @@ export default {
 </script>
 <style lang="less" scoped>
 .img_view {
-    background: #ffffff;
-    height: 100vh;
+    background: #ffffff; 
     .img-preview{
-        padding: 43px 16px 43px 16px;
-        width: 100%;
-        height: 100%;
-        .img-box {
-            height: 100%;
-            width: 100%;  
-            display: flex;
-            flex-direction: column;
-            justify-content: center; 
-            .van-swipe {
-                position: static;
-                .van-swipe-item {
-                    display: flex; 
-                    align-items: center;
-                }
-            } 
-            img {
-                width: 100%; 
+        margin: 0 16px; 
+        overflow-y: hidden;
+        .img-box{
+            height: 100vh; 
+            line-height: 100vh;
+            position: relative;
+            img{
+                min-width: 100%;
+                min-height: 100%;
+                height: 100vh;
+                object-fit: contain;
             }
-            .custom-indicator {
-                text-align: center;
-                color: #333333;
-                font-size: 14px;
-                // margin-top: 18px;
-            }
+        }
+        .custom-indicator{
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            margin-left: -24px;
+            height: 20px;
+            width: 48px;
+            font-size:12px;
+            font-weight: 400;
+            color: #333333;
+            text-align: center;
+            line-height: 20px;
+            z-index: 20;
         }
     }
 }

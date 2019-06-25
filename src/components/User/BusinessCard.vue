@@ -46,19 +46,17 @@
         </div>
         <div>
           <p class="vip-status">{{isVipInfo}}</p>
-          <p class="welfare-desc" :class="goType === true?'welfare':'welfare-desc'">{{vipTimeInfo}}</p>
+          <p class="welfare-desc" :class="goTypeList[cur]">{{vipTimeInfo}}</p>
         </div>
         <div>
-          <div class="info-btn" v-if="goType==false"> 
+          <div class="info-btn" v-if="goType===false"> 
             <img src="../../assets/img/user/ktpng.png" alt="" class="btn">
           </div>
           <div class="info-btn_text" v-else>  
-              <span style="font-size:10px;">{{vipText}}</span> 
-              <!-- <p> -->
+              <span style="font-size:12px;">{{vipText}}</span>  
                 <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
                   <use xlink:href="#icon-arrow-"></use>
-                </svg> 
-              <!-- </p>  -->
+                </svg>  
           </div>
         </div>
       </router-link> 
@@ -91,7 +89,12 @@ export default {
     city:"内蒙古自治区",
     area:"",
     vipText:"",
-    listIndex:[]
+    listIndex:[],
+    cur:2,
+    goTypeList:{
+      1: 'welfare',
+      2: 'welfare-desc', 
+    }
   }),
   created () {
     this.getVipInfo(); 
@@ -103,7 +106,7 @@ export default {
   },
   methods: {
   async getVipInfo() {
-    let res = await marketService.vipInfo()
+    let res = await marketService.vipInfo() 
     this.vipInfo = res  
   },
     editCLickHandler() {
@@ -136,7 +139,7 @@ export default {
       }
     },
     isVipInfo() { 
-      if (this.vipInfo) { 
+      if (this.vipInfo) {  
         let text = '开通VIP会员'
         if (this.goType == true) {
           text = '我的VIP会员'
@@ -168,30 +171,34 @@ export default {
           if(this.vipInfo.vipList.length == 0) {
             return text
           }
-          let cityList = [];
+          let cityList = []; 
           let curList = list.splice(0,3);
           for (let j of curList) { 
-            cityList.push(j.city);
+            cityList.push(j.city.replace('市',''));
           }
           cityList = cityList.join(",");
-          if(list.length>3){
+          if(list.length>0){
             text = `已开通${cityList}等城市`;
+            this.goType = true
             this.vipText ="开通更多"  
           }else{
-            text = `已开通${cityList}城市`;
+            this.goType = true
+            text = `已开通${cityList}`;
             this.vipText ="开通更多"  
           } 
           return text
         } 
         else if(this.goType&&this.listIndex.length!==list.length&&list.length!==1){  
           // debugger
-          let d = list[saveIndex].city 
-          text = `您开通${d}VIP已过期请续费`; 
+          let d = list[saveIndex].city.replace('市','') 
+          text = `您开通${d}的VIP已过期请续费`; 
+          this.cur = 1
           this.vipText ="续费"  
           console.log("asas?>>>>",text);
           return  text;
         }else{
           this.vipText ="立即续费";
+          this.cur = 1
           console.log(this.listIndex.length,'00000000000000000000000000') 
           return text = `您开通的城市VIP已全部到期`; 
         } 
@@ -227,7 +234,7 @@ export default {
             }
             div {
               > .username-box {
-                margin-top: 28px;
+                padding-top: 18px;
                 color: #1A2733;
                 > .username-text { 
                   font-size: 20px;
@@ -348,14 +355,6 @@ export default {
           background: linear-gradient(90deg, rgba(255, 209, 116, 1) 0%, rgba(215, 145, 75, 1) 100%);
         }
       }
-      // .info-btn_text {
-      //   position: absolute;
-      //   top: 0px;
-      //   margin-left:80%;  
-      //   // line-height: 22px;
-      //   display: flex;
-      //   color: #8A9299;
-      // }
     }
     > .status-info-left { 
       > .info-desc {
@@ -368,7 +367,7 @@ export default {
   }
   >.business-box {
     background: #ffffff;
-    margin-top: 6px;
+    margin-top: 8px;
     height: 80px;
     width: 100%;
     .box_info {

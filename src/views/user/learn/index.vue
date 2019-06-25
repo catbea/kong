@@ -346,7 +346,10 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    to.meta.title = this.title
+    // debugger
+    if (this.title != '') {
+      to.meta.title = this.title
+    }
     next()
   }
 }

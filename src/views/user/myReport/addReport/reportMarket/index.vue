@@ -8,7 +8,7 @@
     </div>
     <div class="market-box" :style="{'margin-top':isShowHeader?'74px':'20px'}">
       <div class="notice-view">仅能对已开通且未过期的合作楼盘进行报备</div>
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-list v-model="loading" :finished="finished" :finished-text="finishedText" @load="onLoad">
         <meal-market
           v-for="(item,index) in dataArr"
           :key="index"
@@ -62,7 +62,8 @@ export default {
     finished: false,
     queryTimer: null,
     nullIcon: require('IMG/user/no_report.png'),
-    isShowHeader: true
+    isShowHeader: true,
+    finishedText: '没有更多了'
   }),
   computed: {
     ...mapGetters(['userArea','reportAddInfo'])
@@ -119,6 +120,9 @@ export default {
         } else {
           this.isShowHeader = true
         }
+      }
+      if (!this.dataArr.length) {
+        this.finishedText = ''
       }
     },
     selectHandle(index) {

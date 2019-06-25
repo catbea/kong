@@ -19,6 +19,14 @@ export default [
     }
   },
   {
+    path: '/market/search2',
+    name: 'market-search2',
+    component: resolve => require(['@/views/market/search2.vue'], resolve),
+    meta: {
+      title: '楼盘搜索'
+    }
+  },
+  {
     path: '/market/:id',
     name: 'market-detail',
     component: resolve => require(['@/views/market/detail.vue'], resolve),

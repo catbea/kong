@@ -38,7 +38,7 @@
         </van-list>
         <div v-show="yes" class="notMarket">
           <p class="bg_img" :style="{backgroundImage:'url('+unShowImg+')'}"></p>
-          <p>暂无开启展示的楼盘</p>
+          <p>暂无相关楼盘</p>
         </div>
       </div>
     </div>
