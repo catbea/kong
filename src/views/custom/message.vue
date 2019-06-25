@@ -841,13 +841,15 @@ export default {
   width: 100vw;
   height: 54px;
   padding-top: 5px;
-  position: relative;
+  position: fixed;
+  top:0;
+  left:0;
   display: flex;
   box-sizing: border-box;
   border-bottom: 1px solid #ddd;
   align-items: center;
   z-index: 20;
-  background: #F9FAF9;
+  background: #ededed;
   .nav-item{  
     flex: 1;
     height: 42px;
@@ -1445,7 +1447,7 @@ export default {
 
 .msg_house_info {
   padding: 12px;
-  background: #eee;
+  background: #F0F2F5;
   border-top-left-radius: 8px;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 8px;
@@ -1463,7 +1465,7 @@ export default {
 }
 
 .info-img img {
-  min-width: 80px;
+  width: 80px;
   height: 64px;
   margin-right: 8px;
   border-radius: 4px;
@@ -1481,6 +1483,8 @@ export default {
   line-height: 24px;
   width: 100%;
   word-break: keep-all;
+  max-width: 134px;
+  text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
