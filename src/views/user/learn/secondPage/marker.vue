@@ -21,6 +21,7 @@
                 </div> 
             </li>
         </ul>
+        <div class="finiish" v-if="total == ruleList.length">没有更多了</div>
     </div> 
 </template>
 
@@ -37,6 +38,7 @@ export default {
         current:1,
         size:5 ,
         page:"",
+        total:"",
         title:'',
         fileType:{
             1: 'img',
@@ -60,6 +62,7 @@ export default {
             userService.getDevelopersMaterialList({linkerId:this.$route.query.linkerId,type:8,size:this.size,current:this.current
             }).then((result) => {  
                 this.page = result.pages
+                this.total = result.total
                 if (result.pages > 1) {
                     this.ruleList = this.ruleList.concat(result.records)  
                 }else {
@@ -158,6 +161,12 @@ export default {
                 }
             }
         }
+    }
+    .finiish{
+        color: #969799;
+        font-size: 0.34667rem;
+        line-height: 1.33333rem;
+        text-align: center;
     }
 }
 </style>
