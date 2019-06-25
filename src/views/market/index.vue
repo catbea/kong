@@ -404,8 +404,8 @@ export default {
   .market-item {
     display: flex;
     font-size: 14px;
-    padding: 16px;
-    margin-bottom: 1px;
+    padding: 11px 16px 16px;
+    margin-top: 5px;
     &.active{
       background-color: #F6F6F6;
     }
