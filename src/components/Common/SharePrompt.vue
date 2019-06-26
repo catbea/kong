@@ -54,7 +54,7 @@ export default {
   > .close-btn {
     position: absolute;
     transform: translateX(-50%);
-    top: 38%;
+    top: 254px;
     left: 50%;
     display: inline-block;
     // border-radius: 100px;
