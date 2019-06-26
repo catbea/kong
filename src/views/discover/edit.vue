@@ -572,7 +572,7 @@ export default {
     right: 0;
     bottom: 0;
     height: 72px;
-    padding: 14px 8px;
+    padding: 14px 16px;
     > .bar-save-btn{
       width: 108px;
       height: 44px;
