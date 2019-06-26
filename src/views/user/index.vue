@@ -23,23 +23,7 @@
                 </svg>
               </div>
             </div>
-          </li>
-<!--           
-          <li class="li_view" v-for="(item,index) in headIcons" :key="index" @click="selectedHead(item,index)" :class="index===6?'li':'li_view'">
-            <div>
-              <svg class="icon" aria-hidden="true">
-                <use :xlink:href="item.Icon"></use>
-              </svg>
-            </div>
-            <div class="scale-1px-bottom">
-              <span class="grou1Icon-p" style="font-size:14px;">{{item.title}}</span>
-            </div>
-            <div class="scale-1px-bottom">
-              <svg class="icon" aria-hidden="true" style="width:16px;heigt:16px;margin-right:16px;">
-                <use xlink:href="#icon-arrow-"></use>
-              </svg>
-            </div> 
-          </li> -->
+          </li> 
         </ul>
       </div>  
     </div>
@@ -212,8 +196,7 @@ export default {
     width: 100%;
     height: 24px;
     display: flex;
-    flex-direction: row-reverse;
-
+    flex-direction: row-reverse; 
     > .closePopup {
       width: 24px;
       height: 24px;
@@ -247,23 +230,14 @@ export default {
 }
 .user-page {
   height: 100%;
-  background: #f7f9fa;
-  // .business-status-title {
-  //   font-size: 20px;
-  //   font-weight: 600;
-  //   color: rgba(51, 51, 51, 1);
-  //   line-height: 28px;
-  //   padding: 20px 16px 18px; 
-  // }
+  background: #f7f9fa; 
   .business-status-con { 
     margin-top: 6px;
-    .div_view {
-      // background: #fff; 
+    .div_view { 
       .ul_view {
         list-style:none;
         .li_view { 
-          width: 100%;
-          // height: 52px;
+          width: 100%; 
           display: flex;  
           background: #fff;
           div {
@@ -276,13 +250,8 @@ export default {
           }
           div:nth-child(2) {
             margin-left: 8px;
-            width: 100%;
-            // border-bottom: 1px solid #E2E8EE;
-          }
-          div:nth-child(3) { 
-            // border-bottom: 1px solid #E2E8EE;
-            // transform: scaleY(.5);
-          }
+            width: 100%; 
+          } 
           .icon{
             margin-left: 16px;
           }
@@ -292,6 +261,7 @@ export default {
           height: 52px;
           margin-top:6px;
           display: flex;
+          background: #fff;
         }
       }
     }

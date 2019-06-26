@@ -217,21 +217,17 @@ export default {
 }
 </script>   
 <style lang="less">
-.business-card-container {
-  // background: #fff;
+.business-card-container { 
   > .business-card-box {
     > .info-box { 
       height: 100%; 
       background: #ffffff;
       >.info {
-        > .user-info-content { 
-          // padding-bottom: 0px;
+        > .user-info-content {  
           > .user-detail-box { 
             .user-avatar { 
               width: 60px;
-              height: 60px;
-              // margin-top: 24px;
-              // margin-left: 16px;
+              height: 60px; 
             }
             div {
               > .username-box {
@@ -256,20 +252,16 @@ export default {
                   margin-right: 4px;
                 }
               }
-            }
-            
-            
+            } 
           }
         }
       } 
       >.shortcut-box {
         display: flex;
-        justify-content: space-around;
-        // margin-top: 20px;
+        justify-content: space-around; 
           margin-bottom: 5px;
         .head-img { 
-          margin-left: 16px;
-          // margin-bottom: 8px;
+          margin-left: 16px; 
           height: 60px;
           width: 65px; 
           margin-right: 10px;
@@ -281,9 +273,7 @@ export default {
           > .grou1Icon-p {
             font-size: 10px;
             font-weight: 400;
-            color: #333333;
-            // line-height: 17px;
-            // margin-top: 6px;
+            color: #333333; 
           } 
           > .grou1Icon {
             color: #E7602E;
