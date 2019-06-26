@@ -7,10 +7,10 @@
           <div class="user-info-content">
             <!-- 姓名、主营区域 -->
             <div class="user-detail-box" style="display:flex;">
-              <div style="margin-top:24px;margin-left:16px;">
+              <div style="padding:24px 0px 24px 16px;">
                 <avatar class="user-avatar" :avatar="userInfo.avatarUrl"/>
               </div>
-              <div style="margin-left:10px;width:77%;">
+              <div style="margin-left:10px;width:77%;display: flex;flex-direction: column;justify-content: center;">
                 <div class="username-box" >
                   <span class="username-text">{{userInfo.name}}</span>
                 </div>
@@ -41,22 +41,24 @@
     </div> 
     <div class="business-box">
       <router-link tag="div" to="/user/myMember" class="box_info">
-        <div>
+        <div class="vipImg">
           <img :src="crownIcon">
         </div>
         <div>
           <p class="vip-status">{{isVipInfo}}</p>
           <p class="welfare-desc" :class="goTypeList[cur]">{{vipTimeInfo}}</p>
         </div>
-        <div>
+        <div style="width:112px;">
           <div class="info-btn" v-if="goType===false"> 
             <img src="../../assets/img/user/ktpng.png" alt="" class="btn">
           </div>
-          <div class="info-btn_text" v-else>  
+          <div class="info-btn_text" v-else>
+            <div style="display: flex;align-items: center;">
               <span style="font-size:12px;">{{vipText}}</span>  
-                <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
-                  <use xlink:href="#icon-arrow-"></use>
-                </svg>  
+              <svg class="icon" aria-hidden="true" style="width:16px;height:16px;margin-right:16px;">
+                <use xlink:href="#icon-arrow-"></use>
+              </svg>  
+            </div>  
           </div>
         </div>
       </router-link> 
@@ -190,7 +192,7 @@ export default {
         else if(this.goType&&this.listIndex.length!==list.length&&list.length!==1){  
           // debugger
           let d = list[saveIndex].city.replace('市','') 
-          text = `您开通${d}的VIP已过期请续费`; 
+          text = `您开通的${d}VIP已过期请续费`; 
           this.cur = 1
           this.vipText ="续费"  
           console.log("asas?>>>>",text);
@@ -233,12 +235,9 @@ export default {
             }
             div {
               > .username-box {
-                padding-top: 18px;
-                color: #1A2733;
-                > .username-text { 
-                  font-size: 20px;
+                  font-size: 0.53333rem;
                   font-weight: bold;
-                }
+                  color: #1A2733;
                 > .username-edit-icon {
                   color: rgba(255, 255, 255, 0.15);
                 }
@@ -266,7 +265,7 @@ export default {
       >.shortcut-box {
         display: flex;
         justify-content: space-around;
-        margin-top: 20px;
+        // margin-top: 20px;
           margin-bottom: 5px;
         .head-img { 
           margin-left: 16px;
@@ -366,21 +365,22 @@ export default {
   }
   >.business-box {
     background: #ffffff;
-    margin-top: 8px;
+    margin-top: 6px;
     height: 80px;
     width: 100%;
     .box_info {
+      height: 80px;
+      width: 100%;
       display: flex;
-      div>img {
-        margin: 18px 10px;
+      div>img { 
         width: 46px;
         height: 46px; 
       }
-      div:nth-child(2) {
-        width: 50%;
-      }
-      div:nth-child(3) {
-        width: 32%;
+      .vipImg { 
+        width: 74px;
+        padding-top: 20px;
+        padding-left: 16px; 
+        margin-right: 12px;
       }
       div>.vip-status { 
         margin-top: 16px; 
@@ -390,24 +390,32 @@ export default {
         line-height: 1.5;
       }
       div>.welfare-desc { 
+        width: 216px;
         margin-top: 2px; 
         font-size: 12px;
         font-weight: 400;
         color: #999999;
         line-height: 22px;
+        overflow: hidden; 
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       div>.welfare { 
+        width: 216px;
         margin-top: 2px; 
         font-size: 12px;
         font-weight: 400;
         color: #EA4D2E;
         line-height: 22px;
+        overflow: hidden; 
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
-      div>.info-btn{ 
-        margin-top: 10px; 
-        // line-height: 22px; 
-        float: right;
-        // margin-right: 16px;
+      div>.info-btn{  
+        padding-top: 22px;
+        padding-bottom: 18px;
+        padding-right: 12px;  
+        float: right; 
         .btn {
           width:88px;
           height:40px;   
@@ -415,11 +423,8 @@ export default {
       }
       div>.info-btn_text { 
         margin-top: 24px;  
-        line-height: 34px; 
-        text-align: right;
-        color: #8A9299; 
-        display: flex;
-        align-items: center;
+        line-height: 34px;  
+        color: #8A9299;  
         float: right; 
       }
     }
