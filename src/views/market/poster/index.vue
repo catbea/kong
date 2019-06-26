@@ -582,6 +582,12 @@ export default {
           }
           .area{
             margin: 0 30px;
+            .text {
+              max-width: 80px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
           }
         }
       }
@@ -688,6 +694,12 @@ export default {
           }
           .area{
             margin: 0 30px;
+            .text {
+              max-width: 80px;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
           }
         }
       }

@@ -530,7 +530,7 @@ export default {
       let obj = screenFilterHelper(name, mergeFilters)
       obj.current = page
       obj.size = this.pageSize
-      obj.displayFlag = 0
+      // obj.displayFlag = 0
       let data = window.localStorage.getItem('myMarketCity') ? JSON.parse(window.localStorage.getItem('myMarketCity')) : ''
       if (data) {
         if (data.type === 1) {
