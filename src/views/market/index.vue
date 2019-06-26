@@ -37,7 +37,7 @@
                 <div v-if="item.cpActivityVo" class="coupon">卡券</div>
               </div>
               <div class="market-info">
-                <p class="market-name"><span class="name">{{item.linkerName}}</span> <span class="iconShare" @click.stop="goShare(item)">分享</span></p>
+                <p class="market-name"><span class="name">{{item.linkerName}}</span> <span v-if="item.subscribeInvalidTime > +new Date()" class="iconShare" @click.stop="goShare(item)">分享</span></p>
                 <p class="market-location">{{item.city}} {{item.county}}</p>
                 <p class="market-tags"><span class="active" :class="{'red': item.saleStatus==1,'default': item.saleStatus==3}">{{['热销中', '即将发售', '', '售罄'][item.saleStatus] || '热销中'}}</span><span v-for="(option, i) in item.linkerTags.slice(0,2)" >{{option}}</span></p>
                 <p class="market-price" v-if="!item.price"  @click.stop="popupHandle(item,index)"><span class="price">价格待定</span> <span class="icon iconfont icon-more"></span></p>
