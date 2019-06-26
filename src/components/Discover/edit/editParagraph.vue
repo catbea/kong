@@ -1,5 +1,5 @@
 <template>
-  <div class="edit-paragraph" :class="{'box_border':!preview,'edit-paragraph_del':isDelClickHandler}" @click.stop="delClickHandler(info.isExistImg)">
+  <div class="edit-paragraph" :class="{'box_border':!preview,'edit-paragraph_del':isDelClickHandler||info.isDelClickHandler}" @click.stop="delClickHandler(info.isExistImg)">
     <div class="paragraph-container" v-if="!(preview && this.info.status === 'del')" v-html="info.text">
     </div>
     <div class="img-mask" v-show="isShowExistImg">
@@ -42,6 +42,7 @@ export default {
           this.isShowExistImg = true;
         }
         this.isDelClickHandler = true;
+        this.info.isDelClickHandler = this.isDelClickHandler
         this.$emit('delParagraph', { dom: this.info })       
       }
       else if(this.info.status === 'del' && !this.preview){
@@ -49,6 +50,7 @@ export default {
         if(isExistImg){
           this.isShowExistImg = false;
         }
+        this.info.isDelClickHandler = this.isDelClickHandler
         this.$emit('repealParagraph', { dom: this.info })
       }
     },
