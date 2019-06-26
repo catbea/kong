@@ -2,7 +2,7 @@
   <keep-alive>
 
     <div class="learn-page">
-      <div class="header-filter">
+      <div class="header-filter scale-1px-bottom">
         <div class="linker-box">
           <span class="linker-name" @click="showFilter = !showFilter">{{defaultLinker.linkerName}}</span>
           <van-icon class="filter-van-icon-arrow" :name="`arrow-${showFilter ? 'up': 'down'}`" />
