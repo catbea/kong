@@ -129,7 +129,7 @@
               </div>
             </div>
           </div>
-          <div class="swiper-slide">
+          <div class="swiper-slide" v-if="false">
             <div class="card card2">
               <div class="item4">
                 <div class="pic">
