@@ -15,7 +15,7 @@
       <div class="discover-detail-content">
         <edit-viewpoint v-model="viewpointText" :status="previewFlag?'view':'edit'" :class="{viewRedactStyle:previewFlag,viewPreStyle:!previewFlag}"/>
         <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
-          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
+          <edit-paragraph :info="paragraph" @delParagraph="delParagraphHandler" :paragraphCount="paragraphCount" @repealParagraph="repealParagraphHandler" :preview="previewFlag"/>
           <edit-houses v-if="index===houseIndex" v-model="inlayHouse" :preview="previewFlag" :isInArticle="1" :count="1" :showCard="true" @click="singleAddClickHandler" @delete="inlayHouseDelHandler"/>
         </div>
         <div class="disclaimer-box" v-if="previewFlag">
@@ -118,7 +118,8 @@ export default {
     helpShow: false,
     pushFlag: false,
     styleString: '',
-    previewFlag: false
+    previewFlag: false,
+    paragraphCount:0 //记录文章段落总数
   }),
   created() {
     this.id = this.$route.params.id
@@ -202,6 +203,7 @@ export default {
             }
           }
         }
+        this.paragraphCount = this.renderDom.length;
         // console.log(this.renderDom, '========')
       }
       if (this.info.editData !== '') {

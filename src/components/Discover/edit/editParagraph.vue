@@ -17,6 +17,7 @@
 export default {
   props: {
     info: { type: Object },
+    paragraphCount: { type: Number,default:0 },
     preview: { type: Boolean, default: false }
   },
   data: () => ({ 
@@ -37,6 +38,10 @@ export default {
   methods: {
     // 点击删除
     delClickHandler(isExistImg) {
+      if(this.paragraphCount<2){
+        this.$toast('请至少保留一个段落!')
+        return ;
+      }
       if(this.info.status === 'edit' && !this.preview){
         if(isExistImg){
           this.isShowExistImg = true;
