@@ -436,6 +436,15 @@ export default {
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
       }
+      .icon{
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+      }
     }
     .market-info {
       flex: 1;
