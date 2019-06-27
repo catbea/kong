@@ -1,7 +1,7 @@
 <template>
   <div class="market-box-page" v-if="itemInfo">
-    <div :class="borderBottom ? 'market-box' :'market-box'" @click="itemClickHandler">
-      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}" class="border">
+    <div class="market-box" @click="itemClickHandler">
+      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}" class="line">
         <div class="market-box-page-top">
           <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
             <!-- 720标示 -->
@@ -320,6 +320,42 @@ export default {
 }
 </script>
 <style lang="less">
+.line{
+  position: relative;
+}
+.line::after {
+  height: 1px;
+  content: '';
+  position: absolute;
+  background: #eee;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .line::after {
+    background: -webkit-linear-gradient(top, #eee, transparent);
+    background: linear-gradient(to bottom, #eee, transparent);
+  }
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  .line::after {
+    background: -webkit-linear-gradient(
+      top,
+      #eee,
+      transparent,
+      transparent
+    );
+    background: linear-gradient(
+      to bottom,
+      #eee,
+      transparent,
+      transparent
+    );
+  }
+}
+
 .market-box-page {
   background: #ffffff;
   width: 100%;
@@ -328,11 +364,11 @@ export default {
     padding-top: 16px;
     margin: 0 16px;
     .padding {
-      padding-bottom: 17px;
+      padding-bottom: 16px;
     }
-    .border{
-      box-shadow: inset 0px -1px 1px -1px #ddd;
-    }
+    // .border{
+      // box-shadow: inset 0px -1px 0.0133333333333333rem -1px #ddd;
+    // }
     .allDescribe {
       display: flex;
       flex-direction: column;
