@@ -6,11 +6,13 @@ import store from '@/store/'
 import '@/filters'
 import '@/directives'
 import '@/vant' // vant
+import Skeleton from './components/Loader/index.js' // 骨架屏
 import global from '@/global/'
 import vconsole from 'vconsole'
 Vue.config.productionTip = false
 Vue.prototype.$devicePixelRatio = window.devicePixelRatio
 global()
+Vue.use(Skeleton)
 
 if (process.env.NODE_ENV === 'development') {
   Vue.config.silent = false

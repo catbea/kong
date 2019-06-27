@@ -1,168 +1,171 @@
 <template>
-  <div class="discover-detail-page" v-if="haveData">
-    <!-- 文章详情和经纪人信息 -->
-    <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
-      <h5 class="discover-title">{{info&&info.title}}</h5>
-      <div class="discover-views">
-        <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
-        <div class="reprint-source">
-          <span>分享源自</span>
-          <span style="color:#445166">AW大师写一写</span>
+  <div>
+    <Skeleton v-if="!info" showSkeleton='5'/>
+    <div class="discover-detail-page" v-if="haveData">
+      <!-- 文章详情和经纪人信息 -->
+      <div class="discover-detail-container" :style="{height:contentHeight + 'px'}">
+        <h5 class="discover-title">{{info&&info.title}}</h5>
+        <div class="discover-views">
+          <div class="reprint-views">浏览量：{{ info&&info.scanNum | numberFormatter}}</div>
+          <div class="reprint-source">
+            <span>分享源自</span>
+            <span style="color:#445166">AW大师写一写</span>
+          </div>
         </div>
-      </div>
-      <!-- 观点 -->
-      <div class="discover-viewpoint" v-if="editData&&editData.viewpoint">
+        <!-- 观点 -->
+        <div class="discover-viewpoint" v-if="editData&&editData.viewpoint">
 
-        <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
-        <div class="viewpoint-top">
-          <div class="viewpoint-right">
-            <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
-            <div class="viewpoint-name">
-              <span style="color:#333;font-size:14px">{{agentInfo&&agentInfo.agentName}}</span>
-              <span style="color:#9CA5B5;font-size:14px"> 点评</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- 文章详情 -->
-      <div class="discover-detail-content">
-        <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
-          <paragraph :info="paragraph"/>
-          <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :isInArticle="1" :preview="true" :showCard="true" :info="inlayHouseInfo" ></estate-item>
-          <!-- @click.native="popHandler(inlayHouseInfo)" -->
-        </div>
-      </div>
-      <p class="discover-extra-info" v-show="renderDom.length">
-        <span class="reprint-from">{{info&&info.publisher}}</span>
-        <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
-      </p>
-      <p class="discover-disclaimer"  v-show="renderDom.length">
-        <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。版权归原作者所有，如有侵权请告知删除。转载请注明以上信息。如有问题请点击 </span>
-        <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
-      </p>
-      <!-- 好看 -->
-      <div class="easy-look-container">
-        <div class="easy-look-top">
-          <div class="easy-look-left">
-            <img src="../../assets/img/article/leftLike1.png" alt>
-            <!-- <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span> -->
-            <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
-          </div>
-          <div class="easy-look-right" @click="easyLookClickHandler">
-            <!-- <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
-            <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span>-->
-            <img src="../../assets/img/article/like2.png" alt v-if="likeFlag">
-            <img src="../../assets/img/article/like1.png" alt v-else>
-            <div class="easy-look-text">好看</div>
-          </div>
-        </div>
-        <div class="easy-look-list">
-          <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
-          <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
-            <van-icon name="arrow-down"/>
-          </div>
-        </div>
-      </div>
-      <!-- 推荐房源 -->
-      <div class="recommend-houses" v-if="recommendHouseList.length>0">
-        <title-bar :conf="{title: '推荐房源'}"/>
-        <div class="recommend-houses-content">
-          <estate-item v-for="(item,index) in recommendHouseList" :isInArticle="0" :preview="true" :key="index" :info="item"></estate-item>
-          <!-- @click="popHandler(item)" -->
-        </div>
-      </div>
-      <!-- 评论 -->
-      <div class="comment-container" v-if="this.isPass=='1'">
-        <div class="comment-box">
-          <title-bar :conf="titleComments"/>
-          <div class="comment-list-wrap" v-if="commentList.length">
-            <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
-              <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
-              <div class="comment-right">
-                <div class="comment-name-wrap">
-                  <span class="comment-name">{{item.senderName}}</span>
-                  <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
-                  <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
-                </div>
-                <div class="comment-content">{{item.content}}</div>
-                <div></div>
+          <div class="viewpoint-content">{{editData&&editData.viewpoint}}</div>
+          <div class="viewpoint-top">
+            <div class="viewpoint-right">
+              <avatar class="avatar" :avatar="agentInfo&&agentInfo.avatarUrl"></avatar>
+              <div class="viewpoint-name">
+                <span style="color:#333;font-size:14px">{{agentInfo&&agentInfo.agentName}}</span>
+                <span style="color:#9CA5B5;font-size:14px"> 点评</span>
               </div>
             </div>
-            <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
           </div>
         </div>
-        <div class="comment-input-wrap">
-          <div class="comment-textarea" @click="commentClickHandler">
-            <div style="color:#969EA8;font-size:14px;">我来说两句</div>
+        <!-- 文章详情 -->
+        <div class="discover-detail-content">
+          <div class="edit-box" v-for="(paragraph,index) in renderDom" :key="index">
+            <paragraph :info="paragraph"/>
+            <estate-item v-if="(index===houseIndex) && (editData&&editData.inlayHouse)" :isInArticle="1" :preview="true" :showCard="true" :info="inlayHouseInfo" ></estate-item>
+            <!-- @click.native="popHandler(inlayHouseInfo)" -->
+          </div>
+        </div>
+        <p class="discover-extra-info" v-show="renderDom.length">
+          <span class="reprint-from">{{info&&info.publisher}}</span>
+          <span class="reprint-time">{{info&&info.createDate | dateTimeFormatter}}</span>
+        </p>
+        <p class="discover-disclaimer"  v-show="renderDom.length">
+          <span class="disclaimer-text">免责声明：文章信息均来源网络，本平台对转载、分享的内容、陈述、观点判断保持中立，不对所包含内容的准确性、可靠性或完善性提供任何明示或暗示的保证，仅供读者参考，本公众平台将不承担任何责任。版权归原作者所有，如有侵权请告知删除。转载请注明以上信息。如有问题请点击 </span>
+          <span class="discover-feedback" style="color:#445166" @click="feedbackClickHandler">举报反馈</span>
+        </p>
+        <!-- 好看 -->
+        <div class="easy-look-container">
+          <div class="easy-look-top">
+            <div class="easy-look-left">
+              <img src="../../assets/img/article/leftLike1.png" alt>
+              <!-- <span style="color:#999999;font-size:17px;" class="icon iconfont icon-found_like"></span> -->
+              <div class="easy-look-text">{{easylookList.length}}人觉得好看</div>
+            </div>
+            <div class="easy-look-right" @click="easyLookClickHandler">
+              <!-- <span style="color:rgb(0, 122, 230);font-size:17px;" class="icon iconfont icon-found_like_pre" v-if="likeFlag"></span>
+              <span style="color:#445166;font-size:17px;" class="icon iconfont icon-found_like" v-else></span>-->
+              <img src="../../assets/img/article/like2.png" alt v-if="likeFlag">
+              <img src="../../assets/img/article/like1.png" alt v-else>
+              <div class="easy-look-text">好看</div>
+            </div>
+          </div>
+          <div class="easy-look-list">
+            <span ref="easyLook" :class="isMoreLike ? 'easy-look-name-clamp': 'easy-look-name'">{{easylookList && easylookList.join('、')}}</span>
+            <div class="easy-look-fold" v-if="isMoreLike" @click="moreLikeListHandler">展开更多
+              <van-icon name="arrow-down"/>
+            </div>
+          </div>
+        </div>
+        <!-- 推荐房源 -->
+        <div class="recommend-houses" v-if="recommendHouseList.length>0">
+          <title-bar :conf="{title: '推荐房源'}"/>
+          <div class="recommend-houses-content">
+            <estate-item v-for="(item,index) in recommendHouseList" :isInArticle="0" :preview="true" :key="index" :info="item"></estate-item>
+            <!-- @click="popHandler(item)" -->
+          </div>
+        </div>
+        <!-- 评论 -->
+        <div class="comment-container" v-if="this.isPass=='1'">
+          <div class="comment-box">
+            <title-bar :conf="titleComments"/>
+            <div class="comment-list-wrap" v-if="commentList.length">
+              <div class="comment-list" v-for="(item, index) in commentList" :key="index" @click="commentSenderClickHandler(item)">
+                <div class="bg_img" :style="{backgroundImage:'url('+item.senderAvatarUrl+')'}" style="width:40px;height:40px;border-radius:50%;"></div>
+                <div class="comment-right">
+                  <div class="comment-name-wrap">
+                    <span class="comment-name">{{item.senderName}}</span>
+                    <span v-if="item.receiverName" style="color:#969EA8;font-size:14px;margin-left:8px;margin-right:8px;">回复</span>
+                    <span class="comment-reply" v-if="item.receiverName">{{item.receiverName}}</span>
+                  </div>
+                  <div class="comment-content">{{item.content}}</div>
+                  <div></div>
+                </div>
+              </div>
+              <div class="comment-list-more" v-if="isMoreComment" @click="moreCommentHandler">查看更多评论</div>
+            </div>
+          </div>
+          <div class="comment-input-wrap">
+            <div class="comment-textarea" @click="commentClickHandler">
+              <div style="color:#969EA8;font-size:14px;">我来说两句</div>
+            </div>
           </div>
         </div>
       </div>
+      <!-- 悬浮工具栏 -->
+      <div class="van-hairline--top tools-bar">
+        <div class="tool-item" @click="editClickHandler">
+          <i class="icon iconfont icon-found_editor"></i>
+          <p>{{info&&(info.source == 0 || info.source == 1)&&info.belongeder === '' ? '编辑' : '更新编辑'}}</p>
+        </div>
+        <div v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
+          <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
+          <i v-else class="icon iconfont icon-Building_details_col1"></i>
+          <p>收藏</p>
+        </div>
+        <div class="tool-item" v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)" @click="delHandler">
+          <i class="icon iconfont icon-delete"></i>
+          <p>删除下架</p>
+        </div>
+        <div class="tool-item" @click="shareHandler">
+          <i class="icon iconfont icon-Building_details_for"></i>
+          <p>分享</p>
+        </div>
+      </div>
+      <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
+      <!-- <open-article :show.sync="guidanceShow"></open-article> -->
+      <comment-alert :show.sync="showCommentAlert" :info="commentInfo" :maxlength="140" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
+      <div class="loading" v-show="!renderDom.length">
+        <van-loading type="spinner" color="white" class="van-loading"/>
+      </div>
+      <!-- 活动小程序二维码 -->
+      <van-popup v-model="showPopup">
+        <div class="mini-qrcode">
+          <div style="background-color:#fff;">
+            <div class="poster">
+              <div class="logo">
+                <img src="../../assets/img/discover/logo.png" alt="">
+              </div>
+              <div class="pic">
+                <img :src="popupData.linkerUrl" alt="">
+              </div>
+              <div class="coupon">
+                <img src="../../assets/img/discover/coupon.png" alt="">识别二维码领取卡券
+              </div>
+            </div>
+            <div class="market-info scale-1px-bottom">
+              <p class="title"><span class="name">{{popupData.linkerName}}</span><span v-if="popupData.price==='0 万元/套起' || popupData.price==0 || popupData .price=='0 元/㎡'">价格待定</span><span class="price" v-else>{{popupData.price}}{{popupData.priceUnit}}</span></p>
+              <p class="tags"><span v-for="(item,index) in popupData.linkerTags">{{item}}</span></p>
+            </div>
+            <div class="user-info">
+              <div class="qrcode">
+                <img :src="miniQrcode" alt="">
+              </div>
+              <div class="user-detail">
+                <p class="name" v-if="agentInfo"><img :src="agentInfo.avatarUrl" alt=""> <span>{{agentInfo.agentName}}</span> <span class="other">一手房源信息</span></p>
+                <p class="tips">识别小程序码，进入查看<span>楼盘详情</span></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="close" @click="showPopup=false">
+            <!-- <img src="../../assets/img/discover/close.png" alt=""> -->
+            <van-icon name="clear" size="35px" />
+          </div>
+        </div>
+      </van-popup>
     </div>
-    <!-- 悬浮工具栏 -->
-    <div class="van-hairline--top tools-bar">
-      <div class="tool-item" @click="editClickHandler">
-        <i class="icon iconfont icon-found_editor"></i>
-        <p>{{info&&(info.source == 0 || info.source == 1)&&info.belongeder === '' ? '编辑' : '更新编辑'}}</p>
-      </div>
-      <div v-if="info&&(info.source == 0 || info.source == 1)&&info.belongeder === ''" class="tool-item" @click="collectHandler()">
-        <i v-if="collectionStatus===1" style="color:#007AE6;" class="icon iconfont icon-Building_details_col"></i>
-        <i v-else class="icon iconfont icon-Building_details_col1"></i>
-        <p>收藏</p>
-      </div>
-      <div class="tool-item" v-if="info&&(info.source != 0 || info.source != 1)&&(info.agentId === info.belongeder)" @click="delHandler">
-        <i class="icon iconfont icon-delete"></i>
-        <p>删除下架</p>
-      </div>
-      <div class="tool-item" @click="shareHandler">
-        <i class="icon iconfont icon-Building_details_for"></i>
-        <p>分享</p>
-      </div>
+    <div v-else>
+      <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
     </div>
-    <van-actionsheet v-model="isShowDeleteComment" :actions="actions" cancel-text="取消" @select="onSelect" @cancel="onCancel"></van-actionsheet>
-    <!-- <open-article :show.sync="guidanceShow"></open-article> -->
-    <comment-alert :show.sync="showCommentAlert" :info="commentInfo" :maxlength="140" @cancel="cancelHandler" @publish="publishHandler" @input="inputHandler"></comment-alert>
-    <div class="loading" v-show="!renderDom.length">
-      <van-loading type="spinner" color="white" class="van-loading"/>
-    </div>
-    <!-- 活动小程序二维码 -->
-    <van-popup v-model="showPopup">
-      <div class="mini-qrcode">
-        <div style="background-color:#fff;">
-          <div class="poster">
-            <div class="logo">
-              <img src="../../assets/img/discover/logo.png" alt="">
-            </div>
-            <div class="pic">
-              <img :src="popupData.linkerUrl" alt="">
-            </div>
-            <div class="coupon">
-              <img src="../../assets/img/discover/coupon.png" alt="">识别二维码领取卡券
-            </div>
-          </div>
-          <div class="market-info scale-1px-bottom">
-            <p class="title"><span class="name">{{popupData.linkerName}}</span><span v-if="popupData.price==='0 万元/套起' || popupData.price==0 || popupData .price=='0 元/㎡'">价格待定</span><span class="price" v-else>{{popupData.price}}{{popupData.priceUnit}}</span></p>
-            <p class="tags"><span v-for="(item,index) in popupData.linkerTags">{{item}}</span></p>
-          </div>
-          <div class="user-info">
-            <div class="qrcode">
-              <img :src="miniQrcode" alt="">
-            </div>
-            <div class="user-detail">
-              <p class="name" v-if="agentInfo"><img :src="agentInfo.avatarUrl" alt=""> <span>{{agentInfo.agentName}}</span> <span class="other">一手房源信息</span></p>
-              <p class="tips">识别小程序码，进入查看<span>楼盘详情</span></p>
-            </div>
-          </div>
-        </div>
-        
-        <div class="close" @click="showPopup=false">
-          <!-- <img src="../../assets/img/discover/close.png" alt=""> -->
-          <van-icon name="clear" size="35px" />
-        </div>
-      </div>
-    </van-popup>
-  </div>
-  <div v-else>
-    <null :nullIcon="nullIcon" :nullcontent="nullcontent"></null>
   </div>
 </template>
 <script>

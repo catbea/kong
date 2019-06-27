@@ -1,5 +1,6 @@
 <template>
   <div class="dynamics-page">
+    <Skeleton v-show="!collectData" showSkeleton='1' />
     <div class="dynamics-top-container">
       <dynamics-collect :data="collectData" @click="goMessageInfo"/>
       <!-- <estate-recommend v-if="recommendData" :info="recommendData" @click="goRecommendInfo"/> -->

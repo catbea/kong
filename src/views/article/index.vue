@@ -211,9 +211,10 @@
             </div>
           </div>
         </div>
-        <div class="loading" v-show="showLoading">
+        <Skeleton v-if="showLoading" showSkeleton='3' />
+        <!-- <div class="loading" v-show="showLoading">
           <van-loading type="spinner" color="white" class="van-loading"/>
-        </div>
+        </div> -->
         <div class="delete-replay">
           <van-actionsheet v-model="showDelete" :actions="actions" @select="onSelect"/>
         </div>

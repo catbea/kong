@@ -1,9 +1,10 @@
 <template>
   <div class="container">
-    <div class="userStatus" v-show="this.userInfo.userStatus == 1">
+    <div class="userStatus" v-if="this.userInfo.userStatus == 1">
       <div><img :src="disabelIcon" /></div>
       <div>用户已被禁用</div>
     </div>
+    <Skeleton v-else />
   </div>
 </template>
 <script>

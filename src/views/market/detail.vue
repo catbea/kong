@@ -1,5 +1,6 @@
 <template>
   <div class="market-detail-cnt">
+    <Skeleton v-show="!info" showSkeleton='4' />
     <div class="market-detail-page" v-if="info && !showPreview">
       <!-- 新手引导 -->
       <hint-tire></hint-tire>
@@ -488,10 +489,9 @@
         </div>
       </div>
     </div>
-    <!-- loading -->
-    <div class="loading" v-show="showLoading">
+    <!-- <div class="loading" v-show="showLoading">
       <van-loading type="spinner" color="white" class="van-loading"/>
-    </div>
+    </div> -->
     <!-- 图片预览 -->
     <div class="img-preview" v-if="showPreview" @click="hidePreview">
         <div class="title">{{imgData.householdDesc}}</div>
@@ -535,8 +535,8 @@ import TMap from 'COMP/TMap'
 import marketService from 'SERVICE/marketService'
 import isEmpty from 'lodash/isEmpty'
 import qs from 'qs'
-import cloneDeep from 'lodash/cloneDeep';
-import CompileCover from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/CompileCover';
+import cloneDeep from 'lodash/cloneDeep'
+import CompileCover from 'COMP/Market/MarketDetail/MarketShare/CompilePoster/CompileCover'
 export default {
   components: {
     HintTire,

@@ -1,5 +1,6 @@
 <template>
   <div class="market-page">
+    <Skeleton v-show="!myMarket.length" showSkeleton='2' />
     <div class="search-box">
       <van-search v-model.trim="searchValue" placeholder="请输入楼盘名称" background="#fff" @click.native="goSearch">
         <img src="../../assets/img/market/Group 3@2x.png" class="search-icon" slot="left-icon">
