@@ -1,7 +1,7 @@
 <template>
   <div class="market-box-page" v-if="itemInfo">
     <div class="market-box" @click="itemClickHandler">
-      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules}" class="line">
+      <div :class="{allDescribe:true,padding:!itemInfo.divisionRules,'line':isAndroid,'scale-1px-bottom':!isAndroid}" >
         <div class="market-box-page-top">
           <div class="img bg_img" :style="{backgroundImage:'url('+(itemInfo.linkerImg ? itemInfo.linkerImg : itemInfo.linkerHeadUrl)+')'}">
             <!-- 720标示 -->
@@ -110,7 +110,8 @@ export default {
       showChannel: false,
       channelList: [],
       currentChannel: {},
-      vipCity: {}
+      vipCity: {},
+      isAndroid:false,
     }
   },
   created() {
@@ -121,6 +122,9 @@ export default {
     } else if (this.tags.indexOf(this.saleStatus) < 0) {
       this.tags.unshift(this.saleStatus)
     }
+    var u = navigator.userAgent;
+    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    this.isAndroid = isAndroid;
   },
   computed: {
     ...mapGetters(['userArea', 'userInfo']),
@@ -327,7 +331,7 @@ export default {
   height: 1px;
   content: '';
   position: absolute;
-  background: #eee;
+  // background: #eee;
   bottom: 0;
   left: 0;
   right: 0;
@@ -335,21 +339,21 @@ export default {
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .line::after {
-    background: -webkit-linear-gradient(top, #eee, transparent);
-    background: linear-gradient(to bottom, #eee, transparent);
+    background: -webkit-linear-gradient(top, #eee 50%, transparent);
+    background: linear-gradient(to bottom, #eee 50%, transparent);
   }
 }
-@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+@media only screen and (-webkit-min-device-pixel-ratio: 3.0) {
   .line::after {
     background: -webkit-linear-gradient(
       top,
-      #eee,
+      #eee 50%,
       transparent,
       transparent
     );
     background: linear-gradient(
       to bottom,
-      #eee,
+      #eee 30%,
       transparent,
       transparent
     );
