@@ -98,6 +98,7 @@ export default {
         let arr = []
         res.forEach(el => {
           let obj = {
+            linkerId: el.linkerId,
             latitude: el.latitude,
             level: 3,
             linkerNum: '',
@@ -148,6 +149,9 @@ export default {
           decoration: new qq.maps.MarkerDecoration(html, new qq.maps.Point(0, -4))
         })
         qq.maps.event.addListener(marker, 'click', (e) => {
+          if (temp.linkerId) {
+            this.$router.push(`/market/${temp.linkerId}`)
+          }
           let zoom = this.map.zoom
           this.map.setCenter(new qq.maps.LatLng(e.latLng.lat, e.latLng.lng))
           if (zoom > 5 && zoom <= 7) {
