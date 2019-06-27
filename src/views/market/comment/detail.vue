@@ -218,7 +218,7 @@ export default {
       if (!data) {
         return this.$toast('回复内容不能为空')
       }
-      if (data > 150) {
+      if (data.length > 150) {
         return this.$toast('回复内容不超过150个字')
       }
       this.insertLinkerComment()

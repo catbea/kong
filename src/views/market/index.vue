@@ -334,6 +334,7 @@ export default {
   display: flex;
   flex-direction: column;
   position: relative;
+  height: 100%;
   .market-classify {
     margin: 20px 0;
     font-size: 10px;

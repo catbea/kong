@@ -98,7 +98,7 @@ export default {
     notShowFinished: false, //不展示
     showPage: 1,
     notShowPage: 1,
-    pageSize: 4,
+    pageSize: 10,
     showProjectName: '', //展示搜索名
     setShowName: null,
     showProjectFilters: {}, //展示的筛选类型
@@ -167,11 +167,11 @@ export default {
     }
     // await this.showGetMyMarketInfo()//请求展示楼盘
     // await this.notShowGetMyMarketInfo()//请求不展示楼盘
-    await this.getRecommendInfo() //请求轮播图数据
-    await this.marketShowHandle() //展示/不展示都没数据时
-    this.getShowProjectCount()
-    this.getUnShowProjectCount()
-    this.notShowGetMyMarketInfo()
+    // await this.getRecommendInfo() //请求轮播图数据
+    // await this.marketShowHandle() //展示/不展示都没数据时
+    // this.getShowProjectCount()
+    // this.getUnShowProjectCount()
+    // this.notShowGetMyMarketInfo()
     this.getVipInfo()
   },
   computed: {
