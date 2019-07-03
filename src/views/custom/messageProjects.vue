@@ -5,7 +5,7 @@
         v-model="loading"
         :finished="finished"
         :finished-text="'没有更多了'"
-        @load="getLinkerList"
+        @load="onLoad"
       >
         <meal-market
           v-for="(item,index) in projectList"
@@ -39,18 +39,31 @@ export default {
   },
   data: () => ({
     checkedList: [],
-    page: 1,
-    pageSize: 8,
+    current:1,
+    size:10,
     loading: false,
     finished: false,
-    projectList: []
+    projectList: [],
+    total:2
   }),
   methods: {
     sendCancel() {
       this.$router.go(-1)
     },
+     // 加载更多
+    async onLoad() {
+        if (this.current > this.total) {
+        // 加载状态结束
+        this.finished = true
+        this.loading = false
+      } else {
+        await this.getLinkerList()        
+        this.loading = false
+      }
+    },
     async getLinkerList() {
-      const res = await userService.getMyMarket(0)
+      const res = await userService.getMyMarket({current:this.current,size:this.size});
+      this.total = res.pages;
       let _list = []
       for (let item of res.records) {
         let buildPrice = ''
@@ -81,12 +94,12 @@ export default {
         _list.push(obj)
       }
       this.projectList = this.projectList.concat(_list)
-      if (res.pages === 0 || this.page === res.pages) {
-        this.finished = true
-      }
+      // if (res.pages === 0 || this.current === res.pages) {
+      //   this.finished = true
+      // }
 
-      this.page++
-      this.loading = false
+      this.current++
+      // this.loading = false
     },
 
     selectHandle(project) {

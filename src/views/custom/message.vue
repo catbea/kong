@@ -315,7 +315,7 @@ export default {
     async getCustomBaseInfo(id) {
       const result = await customService.getClientInfo(id)
       this.customBaseInfo = result
-      this.clientMobile = this.customBaseInfo.clientMobile||"18018733546"
+      this.clientMobile = this.customBaseInfo.clientMobile
       this.nickName = this.customBaseInfo.clientRemarkName
       this.headImgUrl = this.customBaseInfo.avatarUrl
     },
