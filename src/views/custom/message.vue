@@ -216,7 +216,7 @@ export default {
       cardDelFlag: 0,
       customBaseInfo: null,
       defaultMsgPopShow: false,
-      clientMobile: this.$route.query.clientMobile,
+      clientMobile: "",
       loading: false,
       emojiFactory: [],
       clientId: this.$route.query.clientId,
@@ -344,6 +344,7 @@ export default {
       this.defaultMsgPopShow = true
     },
     phoneCall() {
+      console.log("this.clientMobile",this.clientMobile);
       if(!this.clientMobile){
         this.$toast("无法获取客户手机号");
         return ;
