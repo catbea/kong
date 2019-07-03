@@ -100,10 +100,11 @@ class CustomService {
    * 客户详情-分析-客户基础信息以及购房意向度
    * @param {*} clientId
    */
-  getClientInfo(clientId) {
+  getClientInfo(agentId,clientId) {
     return xhr({
       url: '/customer/queryClientInfo',
       body: {
+        agentId,
         clientId
       }
     })

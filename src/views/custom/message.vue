@@ -269,10 +269,10 @@ export default {
       } else {
         document.title = '聊天'
       }
-      this.getCustomBaseInfo(this.clientId)
       this.agentId = this.userInfo.agentId
       this.wechatAccount = this.userInfo.wechatAccount
       this.avatar = this.userInfo.avatarUrl
+      this.getCustomBaseInfo(this.agentId,this.clientId)
       //加载emoji表情库
       this.emojiFactory = emoji.emojiFactory
       this.$_init()
@@ -312,8 +312,8 @@ export default {
     /**
      * 客户基本信息以及购房意向度
      */
-    async getCustomBaseInfo(id) {
-      const result = await customService.getClientInfo(id)
+    async getCustomBaseInfo(agentId,id) {
+      const result = await customService.getClientInfo(agentId,id)
       this.customBaseInfo = result
       this.clientMobile = this.customBaseInfo.clientMobile
       this.nickName = this.customBaseInfo.clientRemarkName
